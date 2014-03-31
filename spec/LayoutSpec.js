@@ -1,0 +1,98 @@
+
+
+
+function setupIframe(callback) {
+  var iframe = document.createElement('iframe');
+  document.body.appendChild(iframe);
+  var doc = iframe.contentDocument;
+
+  var link = document.createElement('link');
+  link.setAttribute('rel', 'stylesheet');
+  link.setAttribute('type', 'text/css');
+  link.setAttribute('href', 'style.css');
+  doc.head.appendChild(link);
+
+  requestAnimationFrame(function wait() {
+    if (doc.styleSheets.length) {
+      callback(iframe);
+    } else {
+      requestAnimationFrame(wait);
+    }
+  })
+}
+
+var iframe = null;
+
+function computeDOMLayout(node) {
+  var body = iframe.contentDocument.body;
+
+  function transferPx(div, node, name) {
+    if (name in node.style) {
+      div.style[name] = node.style[name] + 'px';
+    }
+  }
+
+  function renderNode(parent, node) {
+    var div = document.createElement('div');
+    transferPx(div, node, 'width');
+    transferPx(div, node, 'height');
+    parent.appendChild(div);
+    (node.children || []).forEach(function(child) {
+      renderNode(div, child);
+    });
+    return div;
+  }
+
+  var div = renderNode(body, node);
+
+  function buildLayout(parentRect, div) {
+    var rect = div.getBoundingClientRect();
+    var result = {
+      width: rect.width,
+      height: rect.height,
+      left: rect.left - parentRect.left,
+      top: rect.top - parentRect.top
+    };
+
+    var children = [];
+    for (var child = div.firstChild; child; child = child.nextSibling) {
+      children.push(buildLayout(result, child));
+    }
+    if (children.length) {
+      result.children = children;
+    }
+    return result;
+  }
+  var layout = buildLayout({left: 0, top: 0}, div);
+  body.removeChild(div);
+  return layout;
+}
+
+function testLayout(node, expectedLayout) {
+  var layout = computeLayout(node);
+  var domLayout = computeDOMLayout(node);
+  expect(layout).toEqual(expectedLayout)
+  expect(layout).toEqual(domLayout);
+}
+
+describe('Layout', function() {
+  beforeEach(function(done) {
+    if (iframe) {
+      done();
+    } else {
+      setupIframe(function(ifrm) { iframe = ifrm; done(); });
+    }
+  });
+
+  it('should layout a single node with width and height', function() {
+    testLayout({
+      style: {width: 100, height: 200}
+    }, {
+      width: 100,
+      height: 200,
+      left: 0,
+      top: 0
+    });
+  });
+});
+

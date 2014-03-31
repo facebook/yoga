@@ -1,0 +1,20 @@
+div {
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+* {
+  border-style: solid;
+  border-width: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Helvetica;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
