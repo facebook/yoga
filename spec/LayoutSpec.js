@@ -1,6 +1,4 @@
 
-
-
 function setupIframe(callback) {
   var iframe = document.createElement('iframe');
   document.body.appendChild(iframe);
@@ -51,8 +49,8 @@ function computeDOMLayout(node) {
     var result = {
       width: rect.width,
       height: rect.height,
-      left: rect.left - parentRect.left,
-      top: rect.top - parentRect.top
+      top: rect.top - parentRect.top,
+      left: rect.left - parentRect.left
     };
 
     var children = [];
@@ -74,6 +72,7 @@ function testLayout(node, expectedLayout) {
   var domLayout = computeDOMLayout(node);
   expect(layout).toEqual(expectedLayout)
   expect(layout).toEqual(domLayout);
+  expect(expectedLayout).toEqual(domLayout);
 }
 
 describe('Layout', function() {
@@ -142,6 +141,24 @@ describe('Layout', function() {
       style: {width: 100, height: 200, margin: 10}
     }, {
       width: 100, height: 200, top: 10, left: 10
+    });
+  });
+
+  it('should layout node with several children', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, margin: 10},
+      children: [
+        {style: {width: 100, height: 100, margin: 50}},
+        {style: {width: 100, height: 100, margin: 25}},
+        {style: {width: 100, height: 100, margin: 10}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 10, left: 10,
+      children: [
+        {width: 100, height: 100, top: 50, left: 50},
+        {width: 100, height: 100, top: 225, left: 25},
+        {width: 100, height: 100, top: 360, left: 10}
+      ]
     });
   });
 });

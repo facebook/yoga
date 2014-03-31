@@ -16,7 +16,7 @@ function computeLayout(node) {
         top: top,
         left: 0
       }));
-      top += child.style.height;
+      top += child.style.height + 2 * getMargin(child);
     });
 
     var result = {
