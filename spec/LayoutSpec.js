@@ -88,10 +88,25 @@ describe('Layout', function() {
     testLayout({
       style: {width: 100, height: 200}
     }, {
-      width: 100,
-      height: 200,
-      left: 0,
-      top: 0
+      width: 100, height: 200, left: 0, top: 0
+    });
+  });
+
+  it('should layout node with children', function() {
+    testLayout({
+      style: {width: 1000, height: 1000},
+      children: [
+        {style: {width: 500, height: 500}},
+        {style: {width: 250, height: 250}},
+        {style: {width: 125, height: 125}}
+      ]
+    }, {
+      width: 1000, height: 1000, left: 0, top: 0,
+      children: [
+        {width: 500, height: 500, top: 0, left: 0},
+        {width: 250, height: 250, top: 500, left: 0},
+        {width: 125, height: 125, top: 750, left: 0}
+      ]
     });
   });
 });
