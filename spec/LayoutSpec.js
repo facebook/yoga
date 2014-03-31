@@ -24,17 +24,18 @@ var iframe = null;
 function computeDOMLayout(node) {
   var body = iframe.contentDocument.body;
 
-  function transferPx(div, node, name) {
+  function transfer(div, node, name, ext) {
     if (name in node.style) {
-      div.style[name] = node.style[name] + 'px';
+      div.style[name] = node.style[name] + (ext || '');
     }
   }
 
   function renderNode(parent, node) {
     var div = document.createElement('div');
-    transferPx(div, node, 'width');
-    transferPx(div, node, 'height');
-    transferPx(div, node, 'margin');
+    transfer(div, node, 'width', 'px');
+    transfer(div, node, 'height', 'px');
+    transfer(div, node, 'margin', 'px');
+    transfer(div, node, 'flexDirection');
     parent.appendChild(div);
     (node.children || []).forEach(function(child) {
       renderNode(div, child);
@@ -158,6 +159,22 @@ describe('Layout', function() {
         {width: 100, height: 100, top: 50, left: 50},
         {width: 100, height: 100, top: 225, left: 25},
         {width: 100, height: 100, top: 360, left: 10}
+      ]
+    });
+  });
+
+  it('should layout node with row flex direction', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, flexDirection: 'row'},
+      children: [
+        {style: {width: 100, height: 200}},
+        {style: {width: 300, height: 150}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 100, height: 200, top: 0, left: 0},
+        {width: 300, height: 150, top: 0, left: 100}
       ]
     });
   });

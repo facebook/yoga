@@ -8,22 +8,35 @@ function computeLayout(node) {
     return 0;
   }
 
+  var pos = {
+    row: 'left',
+    column: 'top'
+  };
+  var dim = {
+    row: 'width',
+    column: 'height'
+  };
+
   function layoutNode(node, parent) {
-    var top = 0;
+    var mainAxis = node.style.flexDirection === 'row' ? 'row' : 'column';
+    var crossAxis = mainAxis === 'row' ? 'column' : 'row';
+
+    var mainPos = 0;
     var children = [];
     (node.children || []).forEach(function(child) {
-      children.push(layoutNode(child, {
-        top: top,
-        left: 0
-      }));
-      top += child.style.height + 2 * getMargin(child);
+      var offset = {};
+      offset[pos[mainAxis]] = mainPos;
+      offset[pos[crossAxis]] = 0;
+      children.push(layoutNode(child, offset));
+
+      mainPos += child.style[dim[mainAxis]] + 2 * getMargin(child);
     });
 
     var result = {
       width: node.style.width,
       height: node.style.height,
-      top: getMargin(node) + parent.top + 0,
-      left: getMargin(node) + parent.left + 0
+      top: getMargin(node) + parent.top,
+      left: getMargin(node) + parent.left
     };
 
     if (children.length > 0) {
