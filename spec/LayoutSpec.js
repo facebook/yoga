@@ -36,6 +36,7 @@ function computeDOMLayout(node) {
     var div = document.createElement('div');
     transferPx(div, node, 'width');
     transferPx(div, node, 'height');
+    transferPx(div, node, 'margin');
     parent.appendChild(div);
     (node.children || []).forEach(function(child) {
       renderNode(div, child);
@@ -133,6 +134,14 @@ describe('Layout', function() {
           {width: 250, height: 250, top: 250, left: 0},
         ]
       }]
+    });
+  });
+
+  it('should layout node with margin', function() {
+    testLayout({
+      style: {width: 100, height: 200, margin: 10}
+    }, {
+      width: 100, height: 200, top: 10, left: 10
     });
   });
 });

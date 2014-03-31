@@ -1,6 +1,13 @@
 
 function computeLayout(node) {
 
+  function getMargin(node) {
+    if ('margin' in node.style) {
+      return node.style.margin;
+    }
+    return 0;
+  }
+
   function layoutNode(node, parent) {
     var top = 0;
     var children = [];
@@ -15,8 +22,8 @@ function computeLayout(node) {
     var result = {
       width: node.style.width,
       height: node.style.height,
-      top: parent.top + 0,
-      left: parent.left + 0
+      top: getMargin(node) + parent.top + 0,
+      left: getMargin(node) + parent.left + 0
     };
 
     if (children.length > 0) {
