@@ -1,6 +1,25 @@
 
 function computeLayout(node) {
 
+  function fillNodes(node) {
+    node.layout = {
+      top: undefined,
+      left: undefined,
+      width: undefined,
+      height: undefined
+    };
+    (node.children || []).forEach(fillNodes);
+  }
+
+  function extractNodes(node) {
+    var layout = node.layout;
+    delete node.layout;
+    if (node.children) {
+      layout.children = node.children.map(extractNodes);
+    }
+    return layout;
+  }
+
   function getMargin(node) {
     if ('margin' in node.style) {
       return node.style.margin;
@@ -22,29 +41,25 @@ function computeLayout(node) {
     var crossAxis = mainAxis === 'row' ? 'column' : 'row';
 
     var mainPos = 0;
+
     var children = [];
     (node.children || []).forEach(function(child) {
       var offset = {};
       offset[pos[mainAxis]] = mainPos;
       offset[pos[crossAxis]] = 0;
-      children.push(layoutNode(child, offset));
+      layoutNode(child, offset);
 
-      mainPos += child.style[dim[mainAxis]] + 2 * getMargin(child);
+      mainPos += child.layout[dim[mainAxis]] + 2 * getMargin(child);
     });
 
-    var result = {
-      width: node.style.width,
-      height: node.style.height,
-      top: getMargin(node) + parent.top,
-      left: getMargin(node) + parent.left
-    };
-
-    if (children.length > 0) {
-      result.children = children;
-    }
-    return result;
+    node.layout.width = node.style.width;
+    node.layout.height = node.style.height;
+    node.layout.top = getMargin(node) + parent.top;
+    node.layout.left = getMargin(node) + parent.left;
   }
 
-  return layoutNode(node, {top: 0, left: 0});
+  fillNodes(node);
+  layoutNode(node, {top: 0, left: 0});
+  return extractNodes(node);
 }
 
