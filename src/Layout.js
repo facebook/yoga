@@ -36,7 +36,7 @@ function computeLayout(node) {
     column: 'height'
   };
 
-  function layoutNode(node, parent) {
+  function layoutNode(node) {
     var mainAxis = node.style.flexDirection === 'row' ? 'row' : 'column';
     var crossAxis = mainAxis === 'row' ? 'column' : 'row';
 
@@ -48,10 +48,9 @@ function computeLayout(node) {
     var mainPos = 0;
     var children = [];
     (node.children || []).forEach(function(child) {
-      var offset = {};
-      offset[pos[mainAxis]] = mainPos;
-      offset[pos[crossAxis]] = 0;
-      layoutNode(child, offset);
+      child.layout[pos[mainAxis]] = mainPos;
+      child.layout[pos[crossAxis]] = 0;
+      layoutNode(child);
 
       mainPos += child.layout[dim[mainAxis]] + 2 * getMargin(child);
     });
@@ -60,12 +59,15 @@ function computeLayout(node) {
       node.layout[dim[mainAxis]] = mainPos;
     }
     node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
-    node.layout.top = getMargin(node) + parent.top;
-    node.layout.left = getMargin(node) + parent.left;
+    node.layout.top += getMargin(node);
+    node.layout.left += getMargin(node);
   }
 
   fillNodes(node);
-  layoutNode(node, {top: 0, left: 0});
+  node.layout.top = 0;
+  node.layout.left = 0;
+
+  layoutNode(node);
   return extractNodes(node);
 }
 
