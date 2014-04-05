@@ -71,9 +71,8 @@ function computeDOMLayout(node) {
 function testLayout(node, expectedLayout) {
   var layout = computeLayout(node);
   var domLayout = computeDOMLayout(node);
-  expect(layout).toEqual(expectedLayout)
-  expect(layout).toEqual(domLayout);
   expect(expectedLayout).toEqual(domLayout);
+  expect(layout).toEqual(domLayout);
 }
 
 describe('Layout', function() {
@@ -175,6 +174,22 @@ describe('Layout', function() {
       children: [
         {width: 100, height: 200, top: 0, left: 0},
         {width: 300, height: 150, top: 0, left: 100}
+      ]
+    });
+  });
+
+  it('should layout node based on children main dimensions', function() {
+    testLayout({
+      style: {width: 300},
+      children: [
+        {style: {width: 100, height: 200}},
+        {style: {width: 300, height: 150}}
+      ]
+    }, {
+      width: 300, height: 350, top: 0, left: 0,
+      children: [
+        {width: 100, height: 200, top: 0, left: 0},
+        {width: 300, height: 150, top: 200, left: 0}
       ]
     });
   });

@@ -40,8 +40,12 @@ function computeLayout(node) {
     var mainAxis = node.style.flexDirection === 'row' ? 'row' : 'column';
     var crossAxis = mainAxis === 'row' ? 'column' : 'row';
 
-    var mainPos = 0;
+    var mainDimInStyle = dim[mainAxis] in node.style;
+    if (mainDimInStyle) {
+      node.layout[dim[mainAxis]] = node.style[dim[mainAxis]];
+    }
 
+    var mainPos = 0;
     var children = [];
     (node.children || []).forEach(function(child) {
       var offset = {};
@@ -52,8 +56,10 @@ function computeLayout(node) {
       mainPos += child.layout[dim[mainAxis]] + 2 * getMargin(child);
     });
 
-    node.layout.width = node.style.width;
-    node.layout.height = node.style.height;
+    if (!mainDimInStyle) {
+      node.layout[dim[mainAxis]] = mainPos;
+    }
+    node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
     node.layout.top = getMargin(node) + parent.top;
     node.layout.left = getMargin(node) + parent.left;
   }
