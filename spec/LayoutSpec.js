@@ -223,5 +223,31 @@ describe('Layout', function() {
       ]
     });
   });
+
+  it('should layout node with flex recursively', function() {
+    testLayout({
+      style: {width: 1000, height: 1000},
+      children: [{
+        style: {width: 1000, flex: 1},
+        children: [{
+          style: {width: 1000, flex: 1},
+          children: [{
+            style: {width: 1000, flex: 1}
+          }]
+        }]
+      }]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [{
+        width: 1000, height: 1000, top: 0, left: 0,
+        children: [{
+          width: 1000, height: 1000, top: 0, left: 0,
+          children: [{
+            width: 1000, height: 1000, top: 0, left: 0
+          }]
+        }]
+      }]
+    });
+  });
 });
 

@@ -60,9 +60,10 @@ function computeLayout(node) {
 
     var flexibleMainDim =
       (node.layout[dim[mainAxis]] - mainContentDim) / flexibleChildren.length;
+    // optim: don't allocate a new array, re-traverse + filter the initial one
     flexibleChildren.forEach(function(child) {
-      layoutNode(child);
       child.layout[dim[mainAxis]] = flexibleMainDim;
+      layoutNode(child);
     });
 
     var mainPos = 0;
@@ -72,7 +73,7 @@ function computeLayout(node) {
       mainPos += child.layout[dim[mainAxis]] + 2 * getMargin(child);
     });
 
-    if (!mainDimInStyle) {
+    if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {
       node.layout[dim[mainAxis]] = mainPos;
     }
     node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
