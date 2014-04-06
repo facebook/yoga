@@ -20,13 +20,42 @@ function computeLayout(node) {
     return layout;
   }
 
-  function getMargin(node) {
+  function capitalizeFirst(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  function getMargin(location, node) {
+    var key = 'margin' + capitalizeFirst(location);
+    if (key in node.style) {
+      return node.style[key];
+    }
+
+    key = 'margin' + capitalizeFirst(axis[location]);
+    if (key in node.style) {
+      return node.style[key];
+    }
+
     if ('margin' in node.style) {
       return node.style.margin;
     }
+
     return 0;
   }
 
+  var axis = {
+    left: 'horizontal',
+    right: 'horizontal',
+    top: 'vertical',
+    bottom: 'vertical'
+  };
+  var leading = {
+    row: 'left',
+    column: 'top'
+  };
+  var trailing = {
+    row: 'right',
+    column: 'bottom'
+  };
   var pos = {
     row: 'left',
     column: 'top'
@@ -71,15 +100,17 @@ function computeLayout(node) {
     var mainPos = 0;
     children.forEach(function(child) {
       child.layout[pos[mainAxis]] += mainPos;
-      mainPos += child.layout[dim[mainAxis]] + 2 * getMargin(child);
+      mainPos += child.layout[dim[mainAxis]] +
+        getMargin(leading[mainAxis], child) +
+        getMargin(trailing[mainAxis], child);
     });
 
     if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {
       node.layout[dim[mainAxis]] = mainPos;
     }
     node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
-    node.layout.top += getMargin(node);
-    node.layout.left += getMargin(node);
+    node.layout[leading[mainAxis]] += getMargin(leading[mainAxis], node);
+    node.layout[leading[crossAxis]] += getMargin(leading[crossAxis], node);
   }
 
   fillNodes(node);

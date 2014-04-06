@@ -35,6 +35,10 @@ function computeDOMLayout(node) {
     transfer(div, node, 'width', 'px');
     transfer(div, node, 'height', 'px');
     transfer(div, node, 'margin', 'px');
+    transfer(div, node, 'marginLeft', 'px');
+    transfer(div, node, 'marginTop', 'px');
+    transfer(div, node, 'marginBottom', 'px');
+    transfer(div, node, 'marginRight', 'px');
     transfer(div, node, 'flexDirection');
     transfer(div, node, 'flex');
     parent.appendChild(div);
@@ -249,5 +253,23 @@ describe('Layout', function() {
       }]
     });
   });
+
+  it('should layout node with targetted margin', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, marginTop: 10, marginLeft: 5},
+      children: [
+        {style: {width: 100, height: 100,
+                 marginTop: 50, marginLeft: 15, marginBottom: 20}},
+        {style: {width: 100, height: 100, marginLeft: 30}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 10, left: 5,
+      children: [
+        {width: 100, height: 100, top: 50, left: 15},
+        {width: 100, height: 100, top: 170, left: 30}
+      ]
+    });
+  });
+
 });
 
