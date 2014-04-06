@@ -36,39 +36,40 @@ function computeLayout(node) {
     column: 'height'
   };
 
+  var emptyArray = [];
+
   function layoutNode(node) {
     var mainAxis = node.style.flexDirection === 'row' ? 'row' : 'column';
     var crossAxis = mainAxis === 'row' ? 'column' : 'row';
+    var children = node.children || emptyArray;
 
     var mainDimInStyle = dim[mainAxis] in node.style;
     if (mainDimInStyle) {
       node.layout[dim[mainAxis]] = node.style[dim[mainAxis]];
     }
 
-    var fixedChildren = [];
-    var flexibleChildren = [];
     var mainContentDim = 0;
-    (node.children || []).forEach(function(child) {
-      if (child.style.flex) {
-        flexibleChildren.push(child);
-      } else {
-        fixedChildren.push(child);
+    var flexibleChildrenCount = 0;
+    children.forEach(function(child) {
+      if (!child.style.flex) {
         layoutNode(child);
         mainContentDim += child.layout[dim[mainAxis]];
+      } else {
+        flexibleChildrenCount++;
       }
     });
 
     var flexibleMainDim =
-      (node.layout[dim[mainAxis]] - mainContentDim) / flexibleChildren.length;
-    // optim: don't allocate a new array, re-traverse + filter the initial one
-    flexibleChildren.forEach(function(child) {
-      child.layout[dim[mainAxis]] = flexibleMainDim;
-      layoutNode(child);
+      (node.layout[dim[mainAxis]] - mainContentDim) / flexibleChildrenCount;
+    children.forEach(function(child) {
+      if (child.style.flex) {
+        child.layout[dim[mainAxis]] = flexibleMainDim;
+        layoutNode(child);
+      }
     });
 
     var mainPos = 0;
-    var children = [];
-    (node.children || []).forEach(function(child) {
+    children.forEach(function(child) {
       child.layout[pos[mainAxis]] += mainPos;
       mainPos += child.layout[dim[mainAxis]] + 2 * getMargin(child);
     });
