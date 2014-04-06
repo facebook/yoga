@@ -3,10 +3,10 @@ function computeLayout(node) {
 
   function fillNodes(node) {
     node.layout = {
-      top: undefined,
-      left: undefined,
       width: undefined,
-      height: undefined
+      height: undefined,
+      top: 0,
+      left: 0
     };
     (node.children || []).forEach(fillNodes);
   }
@@ -45,13 +45,30 @@ function computeLayout(node) {
       node.layout[dim[mainAxis]] = node.style[dim[mainAxis]];
     }
 
+    var fixedChildren = [];
+    var flexibleChildren = [];
+    var mainContentDim = 0;
+    (node.children || []).forEach(function(child) {
+      if (child.style.flex) {
+        flexibleChildren.push(child);
+      } else {
+        fixedChildren.push(child);
+        layoutNode(child);
+        mainContentDim += child.layout[dim[mainAxis]];
+      }
+    });
+
+    var flexibleMainDim =
+      (node.layout[dim[mainAxis]] - mainContentDim) / flexibleChildren.length;
+    flexibleChildren.forEach(function(child) {
+      layoutNode(child);
+      child.layout[dim[mainAxis]] = flexibleMainDim;
+    });
+
     var mainPos = 0;
     var children = [];
     (node.children || []).forEach(function(child) {
-      child.layout[pos[mainAxis]] = mainPos;
-      child.layout[pos[crossAxis]] = 0;
-      layoutNode(child);
-
+      child.layout[pos[mainAxis]] += mainPos;
       mainPos += child.layout[dim[mainAxis]] + 2 * getMargin(child);
     });
 

@@ -36,6 +36,7 @@ function computeDOMLayout(node) {
     transfer(div, node, 'height', 'px');
     transfer(div, node, 'margin', 'px');
     transfer(div, node, 'flexDirection');
+    transfer(div, node, 'flex');
     parent.appendChild(div);
     (node.children || []).forEach(function(child) {
       renderNode(div, child);
@@ -68,11 +69,24 @@ function computeDOMLayout(node) {
   return layout;
 }
 
+function nameLayout(name, layout) {
+  var namedLayout = {name: name};
+  for (var key in layout) {
+    namedLayout[key] = layout[key];
+  }
+  return namedLayout;
+}
+
+function testNamedLayout(name, layoutA, layoutB) {
+  expect(nameLayout(name, layoutA))
+    .toEqual(nameLayout(name, layoutB));
+}
+
 function testLayout(node, expectedLayout) {
   var layout = computeLayout(node);
   var domLayout = computeDOMLayout(node);
-  expect(expectedLayout).toEqual(domLayout);
-  expect(layout).toEqual(domLayout);
+  testNamedLayout('expected-dom', expectedLayout, domLayout);
+  testNamedLayout('layout-dom', layout, domLayout);
 }
 
 describe('Layout', function() {
@@ -190,6 +204,22 @@ describe('Layout', function() {
       children: [
         {width: 100, height: 200, top: 0, left: 0},
         {width: 300, height: 150, top: 200, left: 0}
+      ]
+    });
+  });
+
+  it('should layout node with flex', function() {
+    testLayout({
+      style: {width: 1000, height: 1000},
+      children: [
+        {style: {width: 100, height: 200}},
+        {style: {width: 100, flex: 1}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 100, height: 200, top: 0, left: 0},
+        {width: 100, height: 800, top: 200, left: 0}
       ]
     });
   });
