@@ -80,7 +80,7 @@ function computeLayout(node) {
     var children = node.children || emptyArray;
 
     var mainDimInStyle = dim[mainAxis] in node.style;
-    if (mainDimInStyle) {
+    if (node.layout[dim[mainAxis]] === undefined && mainDimInStyle) {
       node.layout[dim[mainAxis]] = node.style[dim[mainAxis]];
     }
 

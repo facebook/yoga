@@ -352,5 +352,19 @@ describe('Layout', function() {
     });
   });
 
+  it('should layout node with flex override height', function() {
+    testLayout({
+      style: {width: 1000, height: 1000},
+      children: [
+        {style: {width: 100, height: 100, flex: 1}},
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 100, height: 1000, top: 0, left: 0}
+      ]
+    });
+  });
+
 });
 
