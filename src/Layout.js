@@ -59,6 +59,13 @@ function computeLayout(node) {
     return 'flex-start';
   }
 
+  function getFlexDirection(node) {
+    if ('flexDirection' in node.style) {
+      return node.style.flexDirection;
+    }
+    return 'column';
+  }
+
   var axis = {
     left: 'horizontal',
     right: 'horizontal',
@@ -85,7 +92,7 @@ function computeLayout(node) {
   var emptyArray = [];
 
   function layoutNode(node) {
-    var mainAxis = node.style.flexDirection === 'row' ? 'row' : 'column';
+    var mainAxis = getFlexDirection(node);
     var crossAxis = mainAxis === 'row' ? 'column' : 'row';
     var children = node.children || emptyArray;
 
