@@ -42,6 +42,8 @@ function computeDOMLayout(node) {
     transfer(div, node, 'flexDirection');
     transfer(div, node, 'flex');
     transfer(div, node, 'justifyContent');
+    transfer(div, node, 'alignSelf');
+    transfer(div, node, 'alignItems');
     parent.appendChild(div);
     (node.children || []).forEach(function(child) {
       renderNode(div, child);
@@ -362,6 +364,70 @@ describe('Layout', function() {
       width: 1000, height: 1000, top: 0, left: 0,
       children: [
         {width: 100, height: 1000, top: 0, left: 0}
+      ]
+    });
+  });
+
+  it('should layout node with alignItems: flex-start', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, alignItems: 'flex-start'},
+      children: [
+        {style: {width: 200, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 200, height: 100, top: 0, left: 0},
+        {width: 100, height: 100, top: 100, left: 0},
+      ]
+    });
+  });
+
+  it('should layout node with alignItems: center', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, alignItems: 'center'},
+      children: [
+        {style: {width: 200, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 200, height: 100, top: 0, left: 400},
+        {width: 100, height: 100, top: 100, left: 450},
+      ]
+    });
+  });
+
+  it('should layout node with alignItems: flex-end', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, alignItems: 'flex-end'},
+      children: [
+        {style: {width: 200, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 200, height: 100, top: 0, left: 800},
+        {width: 100, height: 100, top: 100, left: 900},
+      ]
+    });
+  });
+
+  it('should layout node with alignSelf overrides alignItems', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, alignItems: 'flex-end'},
+      children: [
+        {style: {width: 200, height: 100}},
+        {style: {width: 100, height: 100, alignSelf: 'center'}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 200, height: 100, top: 0, left: 800},
+        {width: 100, height: 100, top: 100, left: 450},
       ]
     });
   });

@@ -49,6 +49,16 @@ function computeLayout(node) {
     return 'flex-start';
   }
 
+  function getAlignItem(node, child) {
+    if ('alignSelf' in child.style) {
+      return child.style.alignSelf;
+    }
+    if ('alignItems' in node.style) {
+      return node.style.alignItems;
+    }
+    return 'flex-start';
+  }
+
   var axis = {
     left: 'horizontal',
     right: 'horizontal',
@@ -82,6 +92,11 @@ function computeLayout(node) {
     var mainDimInStyle = dim[mainAxis] in node.style;
     if (node.layout[dim[mainAxis]] === undefined && mainDimInStyle) {
       node.layout[dim[mainAxis]] = node.style[dim[mainAxis]];
+    }
+
+    var crossDimInStyle = dim[crossAxis] in node.style;
+    if (node.layout[dim[crossAxis]] === undefined && crossDimInStyle) {
+      node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
     }
 
     var mainContentDim = 0;
@@ -129,12 +144,23 @@ function computeLayout(node) {
         getMargin(leading[mainAxis], child) +
         getMargin(trailing[mainAxis], child) +
         betweenMainDim;
+
+      var remainingCrossDim = node.layout[dim[crossAxis]] - child.layout[dim[crossAxis]];
+      var alignItem = getAlignItem(node, child);
+      var leadingCrossDim = 0;
+      if (alignItem === 'flex-start') {
+        // Do nothing
+      } else if (alignItem === 'center') {
+        leadingCrossDim = remainingCrossDim / 2;
+      } else if (alignItem === 'flex-end') {
+        leadingCrossDim = remainingCrossDim;
+      }
+      child.layout[pos[crossAxis]] += leadingCrossDim;
     });
 
     if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {
       node.layout[dim[mainAxis]] = mainPos;
     }
-    node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
     node.layout[leading[mainAxis]] += getMargin(leading[mainAxis], node);
     node.layout[leading[crossAxis]] += getMargin(leading[crossAxis], node);
   }
