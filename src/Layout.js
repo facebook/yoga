@@ -42,6 +42,13 @@ function computeLayout(node) {
     return 0;
   }
 
+  function getJustifyContent(node) {
+    if ('justifyContent' in node.style) {
+      return node.style.justifyContent;
+    }
+    return 'flex-start';
+  }
+
   var axis = {
     left: 'horizontal',
     right: 'horizontal',
@@ -88,21 +95,40 @@ function computeLayout(node) {
       }
     });
 
-    var flexibleMainDim =
-      (node.layout[dim[mainAxis]] - mainContentDim) / flexibleChildrenCount;
-    children.forEach(function(child) {
-      if (child.style.flex) {
-        child.layout[dim[mainAxis]] = flexibleMainDim;
-        layoutNode(child);
+    var remainingMainDim = node.layout[dim[mainAxis]] - mainContentDim;
+    var leadingMainDim = 0;
+    var betweenMainDim = 0;
+    if (flexibleChildrenCount) {
+      var flexibleMainDim = remainingMainDim / flexibleChildrenCount;
+      children.forEach(function(child) {
+        if (child.style.flex) {
+          child.layout[dim[mainAxis]] = flexibleMainDim;
+          layoutNode(child);
+        }
+      });
+    } else {
+      var justifyContent = getJustifyContent(node);
+      if (justifyContent == 'flex-start') {
+        // Do nothing
+      } else if (justifyContent === 'flex-end') {
+        leadingMainDim = remainingMainDim;
+      } else if (justifyContent === 'center') {
+        leadingMainDim = remainingMainDim / 2;
+      } else if (justifyContent === 'space-between') {
+        betweenMainDim = remainingMainDim / (children.length - 1);
+      } else if (justifyContent === 'space-around') {
+        betweenMainDim = remainingMainDim / children.length;
+        leadingMainDim = betweenMainDim / 2;
       }
-    });
+    }
 
-    var mainPos = 0;
+    var mainPos = leadingMainDim;
     children.forEach(function(child) {
       child.layout[pos[mainAxis]] += mainPos;
       mainPos += child.layout[dim[mainAxis]] +
         getMargin(leading[mainAxis], child) +
-        getMargin(trailing[mainAxis], child);
+        getMargin(trailing[mainAxis], child) +
+        betweenMainDim;
     });
 
     if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {

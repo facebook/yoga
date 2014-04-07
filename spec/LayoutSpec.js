@@ -41,6 +41,7 @@ function computeDOMLayout(node) {
     transfer(div, node, 'marginRight', 'px');
     transfer(div, node, 'flexDirection');
     transfer(div, node, 'flex');
+    transfer(div, node, 'justifyContent');
     parent.appendChild(div);
     (node.children || []).forEach(function(child) {
       renderNode(div, child);
@@ -254,7 +255,7 @@ describe('Layout', function() {
     });
   });
 
-  it('should layout node with targetted margin', function() {
+  it('should layout node with targeted margin', function() {
     testLayout({
       style: {width: 1000, height: 1000, marginTop: 10, marginLeft: 5},
       children: [
@@ -267,6 +268,86 @@ describe('Layout', function() {
       children: [
         {width: 100, height: 100, top: 50, left: 15},
         {width: 100, height: 100, top: 170, left: 30}
+      ]
+    });
+  });
+
+  it('should layout node with justifyContent: flex-start', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, justifyContent: 'flex-start'},
+      children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 100, height: 100, top: 0, left: 0},
+        {width: 100, height: 100, top: 100, left: 0}
+      ]
+    });
+  });
+
+  it('should layout node with justifyContent: flex-end', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, justifyContent: 'flex-end'},
+      children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 100, height: 100, top: 800, left: 0},
+        {width: 100, height: 100, top: 900, left: 0}
+      ]
+    });
+  });
+
+  it('should layout node with justifyContent: space-between', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, justifyContent: 'space-between'},
+      children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 100, height: 100, top: 0, left: 0},
+        {width: 100, height: 100, top: 900, left: 0}
+      ]
+    });
+  });
+
+  it('should layout node with justifyContent: space-around', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, justifyContent: 'space-around'},
+      children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 100, height: 100, top: 200, left: 0},
+        {width: 100, height: 100, top: 700, left: 0}
+      ]
+    });
+  });
+
+  it('should layout node with justifyContent: center', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, justifyContent: 'center'},
+      children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 100, height: 100, top: 400, left: 0},
+        {width: 100, height: 100, top: 500, left: 0}
       ]
     });
   });
