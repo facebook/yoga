@@ -154,8 +154,12 @@ function computeLayout(node) {
         betweenMainDim;
 
       if (child.layout[dim[crossAxis]] !== undefined) {
-        if (child.layout[dim[crossAxis]] > crossDim) {
-          crossDim = child.layout[dim[crossAxis]];
+        var childCrossDim = child.layout[dim[crossAxis]] +
+          getMargin(leading[crossAxis], child) +
+          getMargin(trailing[crossAxis], child);
+
+        if (childCrossDim > crossDim) {
+          crossDim = childCrossDim;
         }
       }
     });
@@ -178,7 +182,9 @@ function computeLayout(node) {
       } else if (alignItem === 'flex-end') {
         leadingCrossDim = remainingCrossDim;
       } else if (alignItem === 'stretch') {
-        child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]];
+        child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
+          getMargin(leading[crossAxis], child) -
+          getMargin(trailing[crossAxis], child);
       }
       child.layout[pos[crossAxis]] += leadingCrossDim;
     });
