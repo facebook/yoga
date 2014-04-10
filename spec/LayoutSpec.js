@@ -446,5 +446,19 @@ describe('Layout', function() {
     });
   });
 
+  it('should layout empty node', function() {
+    testLayout({
+      style: {},
+      children: [
+        {style: {}}
+      ]
+    }, {
+      width: 0, height: 0, top: 0, left: 0,
+      children: [
+        {width: 0, height: 0, top: 0, left: 0}
+      ]
+    });
+  });
+
 });
 

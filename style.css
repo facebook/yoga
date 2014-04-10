@@ -1,20 +1,17 @@
-div {
-  display: flex;
-  flex-direction: column;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
 * {
   border-style: solid;
   border-width: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Helvetica;
-}
 
-html, body {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
   margin: 0;
   padding: 0;
 }
