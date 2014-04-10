@@ -1,11 +1,4 @@
 * {
-  border-style: solid;
-  border-width: 0;
-
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-
   box-sizing: border-box;
 
   display: flex;

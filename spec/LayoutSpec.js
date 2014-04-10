@@ -460,5 +460,40 @@ describe('Layout', function() {
     });
   });
 
+  it('should layout randomly', function() {
+    function RNG(seed) {
+      this.state = seed;
+    }
+    RNG.prototype.nextFloat = function() {
+      // LCG using GCC's constants
+      this.state = (1103515245 * this.state + 12345) % 0x80000000;
+      return this.state / (0x80000000 - 1);
+    }
+
+    var rng = new RNG(0);
+    function randMinMax(node, chance, attribute, min, max) {
+      if (rng.nextFloat() < chance) {
+        node.style[attribute] = Math.floor(rng.nextFloat() * (max - min)) + min;
+      }
+    }
+    function generateRandomNode() {
+      var node = {style: {}};
+      randMinMax(node, 0.1, 'width', 0, 1000);
+      randMinMax(node, 0.1, 'height', 0, 1000);
+      randMinMax(node, 0.1, 'margin', -5, 20);
+      randMinMax(node, 0.1, 'marginLeft', -5, 20);
+      randMinMax(node, 0.1, 'marginTop', -5, 20);
+      randMinMax(node, 0.1, 'marginRight', -5, 20);
+      randMinMax(node, 0.1, 'marginBottom', -5, 20);
+      return node;
+    }
+
+    for (var i = 0; i < 100; ++i) {
+      var node = generateRandomNode();
+      expect({node: node, layout: computeLayout(node)})
+        .toEqual({node: node, layout: computeDOMLayout(node)});
+    }
+  })
+
 });
 
