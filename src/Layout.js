@@ -144,6 +144,7 @@ function computeLayout(node) {
       }
     }
 
+    var crossDim = 0;
     var mainPos = leadingMainDim;
     children.forEach(function(child) {
       child.layout[pos[mainAxis]] += mainPos;
@@ -152,8 +153,23 @@ function computeLayout(node) {
         getMargin(trailing[mainAxis], child) +
         betweenMainDim;
 
-      var remainingCrossDim = node.layout[dim[crossAxis]] - child.layout[dim[crossAxis]];
+      if (child.layout[dim[crossAxis]] !== undefined) {
+        if (child.layout[dim[crossAxis]] > crossDim) {
+          crossDim = child.layout[dim[crossAxis]];
+        }
+      }
+    });
+
+    if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {
+      node.layout[dim[mainAxis]] = mainPos;
+    }
+    if (node.layout[dim[crossAxis]] === undefined) {
+      node.layout[dim[crossAxis]] = crossDim;
+    }
+
+    children.forEach(function(child) {
       var alignItem = getAlignItem(node, child);
+      var remainingCrossDim = node.layout[dim[crossAxis]] - child.layout[dim[crossAxis]];
       var leadingCrossDim = 0;
       if (alignItem === 'flex-start') {
         // Do nothing
@@ -161,13 +177,12 @@ function computeLayout(node) {
         leadingCrossDim = remainingCrossDim / 2;
       } else if (alignItem === 'flex-end') {
         leadingCrossDim = remainingCrossDim;
+      } else if (alignItem === 'stretch') {
+        child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]];
       }
       child.layout[pos[crossAxis]] += leadingCrossDim;
     });
 
-    if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {
-      node.layout[dim[mainAxis]] = mainPos;
-    }
     node.layout[leading[mainAxis]] += getMargin(leading[mainAxis], node);
     node.layout[leading[crossAxis]] += getMargin(leading[crossAxis], node);
   }

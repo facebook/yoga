@@ -432,5 +432,19 @@ describe('Layout', function() {
     });
   });
 
+  it('should layout node with alignItem: stretch', function() {
+    testLayout({
+      style: {width: 1000, height: 1000, alignItems: 'stretch'},
+      children: [
+        {style: {height: 100}}
+      ]
+    }, {
+      width: 1000, height: 1000, top: 0, left: 0,
+      children: [
+        {width: 1000, height: 100, top: 0, left: 0}
+      ]
+    });
+  });
+
 });
 
