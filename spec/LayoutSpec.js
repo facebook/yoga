@@ -53,18 +53,18 @@ function computeDOMLayout(node) {
 
   var div = renderNode(body, node);
 
-  function buildLayout(parentRect, div) {
+  function buildLayout(absoluteRect, div) {
     var rect = div.getBoundingClientRect();
     var result = {
       width: rect.width,
       height: rect.height,
-      top: rect.top - parentRect.top,
-      left: rect.left - parentRect.left
+      top: rect.top - absoluteRect.top,
+      left: rect.left - absoluteRect.left
     };
 
     var children = [];
     for (var child = div.firstChild; child; child = child.nextSibling) {
-      children.push(buildLayout(result, child));
+      children.push(buildLayout(rect, child));
     }
     if (children.length) {
       result.children = children;
@@ -492,7 +492,7 @@ describe('Layout', function() {
       }
     }
     function randChildren(node, chance) {
-      while (Math.random() < chance) {
+      while (rng.nextFloat() < chance) {
         if (!node.children) {
           node.children = [];
         }
@@ -514,8 +514,8 @@ describe('Layout', function() {
 
     for (var i = 0; i < 100; ++i) {
       var node = generateRandomNode();
-      expect({node: node, layout: computeLayout(node)})
-        .toEqual({node: node, layout: computeDOMLayout(node)});
+      expect({i: i, node: node, layout: computeLayout(node)})
+        .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
     }
   })
 
