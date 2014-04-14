@@ -485,6 +485,14 @@ describe('Layout', function() {
     });
   });
 
+  it('should layout for center', function() {
+    testLayout({
+      style: {justifyContent: 'center'}
+    }, {
+      width: 0, height: 0, top: 0, left: 0,
+    });
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -499,6 +507,11 @@ describe('Layout', function() {
     function randMinMax(node, chance, attribute, min, max) {
       if (rng.nextFloat() < chance) {
         node.style[attribute] = Math.floor(rng.nextFloat() * (max - min)) + min;
+      }
+    }
+    function randEnum(node, chance, attribute, enumValues) {
+      if (rng.nextFloat() < chance) {
+        node.style[attribute] = enumValues[Math.floor(rng.nextFloat() * enumValues.length)];
       }
     }
     function randChildren(node, chance) {
@@ -518,6 +531,8 @@ describe('Layout', function() {
       randMinMax(node, 0.1, 'marginTop', -5, 20);
       randMinMax(node, 0.1, 'marginRight', -5, 20);
       randMinMax(node, 0.1, 'marginBottom', -5, 20);
+      randEnum(node, 0.1, 'flexDirection', ['row', 'column']);
+      randEnum(node, 0.1, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
       randChildren(node, 0.2);
       return node;
     }
