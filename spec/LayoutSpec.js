@@ -13,6 +13,7 @@ var iframe = (function() {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      flex-shrink: 0;
 
       margin: 0;
       padding: 0;
@@ -468,6 +469,22 @@ describe('Layout', function() {
     });
   });
 
+  it('should not shrink children if not enough space', function() {
+    testLayout({
+      style: {height: 100},
+      children: [
+        {style: {height: 100}},
+        {style: {height: 200}},
+      ]
+    }, {
+      width: 0, height: 100, top: 0, left: 0,
+      children: [
+        {width: 0, height: 100, top: 0, left: 0},
+        {width: 0, height: 200, top: 100, left: 0}
+      ]
+    });
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -505,7 +522,7 @@ describe('Layout', function() {
       return node;
     }
 
-    for (var i = 0; i < 100; ++i) {
+    for (var i = 0; i < 1000; ++i) {
       var node = generateRandomNode();
       expect({i: i, node: node, layout: computeLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
