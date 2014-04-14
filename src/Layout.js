@@ -177,7 +177,10 @@ function computeLayout(node) {
 
     children.forEach(function(child) {
       var alignItem = getAlignItem(node, child);
-      var remainingCrossDim = node.layout[dim[crossAxis]] - child.layout[dim[crossAxis]];
+      var remainingCrossDim = node.layout[dim[crossAxis]] -
+        child.layout[dim[crossAxis]] -
+        getMargin(leading[crossAxis], child) -
+        getMargin(trailing[crossAxis], child);
       var leadingCrossDim = 0;
       if (alignItem === 'flex-start') {
         // Do nothing

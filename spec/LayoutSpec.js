@@ -508,6 +508,28 @@ describe('Layout', function() {
     });
   });
 
+
+  it('should layout alignItems with margin', function() {
+    testLayout({
+      style: {},
+      children: [
+        { style: { alignItems: 'flex-end' }, children: [
+          { style: { margin: 10 } },
+          { style: { height: 100 } } ]
+        }
+      ]
+    }, {
+      width: 20, height: 120, top: 0, left: 0,
+      children: [{
+        width: 20, height: 120, top: 0, left: 0,
+        children: [
+          {width: 0, height: 0, top: 10, left: 10},
+          {width: 0, height: 100, top: 20, left: 20}
+        ]
+      }]
+    });
+  })
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -548,6 +570,7 @@ describe('Layout', function() {
       randMinMax(node, 0.1, 'marginBottom', 0, 20);
       randEnum(node, 0.1, 'flexDirection', ['row', 'column']);
       randEnum(node, 0.1, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
+      randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end']);
       randChildren(node, 0.2);
       return node;
     }
