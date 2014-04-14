@@ -165,10 +165,10 @@ function computeLayout(node) {
     });
 
     if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {
-      node.layout[dim[mainAxis]] = mainPos;
+      node.layout[dim[mainAxis]] = Math.max(mainPos, 0);
     }
     if (node.layout[dim[crossAxis]] === undefined) {
-      node.layout[dim[crossAxis]] = crossDim;
+      node.layout[dim[crossAxis]] = Math.max(crossDim, 0);
     }
 
     children.forEach(function(child) {
