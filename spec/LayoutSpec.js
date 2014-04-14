@@ -1,25 +1,27 @@
 
-function setupIframe(callback) {
+
+var iframe = (function() {
   var iframe = document.createElement('iframe');
   document.body.appendChild(iframe);
   var doc = iframe.contentDocument;
 
-  var link = document.createElement('link');
-  link.setAttribute('rel', 'stylesheet');
-  link.setAttribute('type', 'text/css');
-  link.setAttribute('href', 'style.css');
-  doc.head.appendChild(link);
+  var style = document.createElement('style');
+  style.innerText = (function() {/*
+    body, div {
+      box-sizing: border-box;
 
-  requestAnimationFrame(function wait() {
-    if (doc.styleSheets.length) {
-      callback(iframe);
-    } else {
-      requestAnimationFrame(wait);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      margin: 0;
+      padding: 0;
     }
-  })
-}
+  */} + '').slice(15, -4);
+  doc.head.appendChild(style);
 
-var iframe = null;
+  return iframe;
+})();
 
 function computeDOMLayout(node) {
   var body = iframe.contentDocument.body;
@@ -97,14 +99,6 @@ function testLayout(node, expectedLayout) {
 }
 
 describe('Layout', function() {
-  beforeEach(function(done) {
-    if (iframe) {
-      done();
-    } else {
-      setupIframe(function(ifrm) { iframe = ifrm; done(); });
-    }
-  });
-
   it('should layout a single node with width and height', function() {
     testLayout({
       style: {width: 100, height: 200}
@@ -473,7 +467,6 @@ describe('Layout', function() {
       ]
     });
   });
-
 
   it('should layout randomly', function() {
     function RNG(seed) {
