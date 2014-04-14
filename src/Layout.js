@@ -111,7 +111,9 @@ function computeLayout(node) {
     children.forEach(function(child) {
       if (!child.style.flex) {
         layoutNode(child);
-        mainContentDim += child.layout[dim[mainAxis]];
+        mainContentDim += child.layout[dim[mainAxis]] +
+          getMargin(leading[mainAxis], child) +
+          getMargin(trailing[mainAxis], child);
       } else {
         flexibleChildrenCount++;
       }

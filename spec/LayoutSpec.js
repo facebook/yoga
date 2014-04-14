@@ -493,6 +493,20 @@ describe('Layout', function() {
     });
   });
 
+  it('should layout flex-end taking into account margin', function() {
+    testLayout({
+      style: {height: 100, justifyContent: 'flex-end'},
+      children: [
+        {style: {marginTop: 10}}
+      ]
+    }, {
+      width: 0, height: 100, top: 0, left: 0,
+      children: [
+        {width: 0, height: 0, top: 100, left: 0}
+      ]
+    });
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
