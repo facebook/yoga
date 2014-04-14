@@ -13,6 +13,7 @@ var iframe = (function() {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      justify-content: flex-start;
       flex-shrink: 0;
 
       margin: 0;
@@ -540,11 +541,11 @@ describe('Layout', function() {
       var node = {style: {}};
       randMinMax(node, 0.1, 'width', 0, 1000);
       randMinMax(node, 0.1, 'height', 0, 1000);
-      randMinMax(node, 0.1, 'margin', -5, 20);
-      randMinMax(node, 0.1, 'marginLeft', -5, 20);
-      randMinMax(node, 0.1, 'marginTop', -5, 20);
-      randMinMax(node, 0.1, 'marginRight', -5, 20);
-      randMinMax(node, 0.1, 'marginBottom', -5, 20);
+      randMinMax(node, 0.1, 'margin', 0, 20);
+      randMinMax(node, 0.1, 'marginLeft', 0, 20);
+      randMinMax(node, 0.1, 'marginTop', 0, 20);
+      randMinMax(node, 0.1, 'marginRight', 0, 20);
+      randMinMax(node, 0.1, 'marginBottom', 0, 20);
       randEnum(node, 0.1, 'flexDirection', ['row', 'column']);
       randEnum(node, 0.1, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
       randChildren(node, 0.2);
