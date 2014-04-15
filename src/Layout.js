@@ -70,6 +70,12 @@ function computeLayout(node) {
     return node.style.flex === 1;
   }
 
+  function getDimWithMargin(node, axis) {
+    return node.layout[dim[axis]] +
+      getMargin(leading[axis], node) +
+      getMargin(trailing[axis], node);
+  }
+
   var axis = {
     left: 'horizontal',
     right: 'horizontal',
@@ -115,9 +121,7 @@ function computeLayout(node) {
     children.forEach(function(child) {
       if (node.layout[dim[mainAxis]] === undefined || !getFlex(child)) {
         layoutNode(child);
-        mainContentDim += child.layout[dim[mainAxis]] +
-          getMargin(leading[mainAxis], child) +
-          getMargin(trailing[mainAxis], child);
+        mainContentDim += getDimWithMargin(child, mainAxis);
       } else {
         flexibleChildrenCount++;
       }
@@ -156,16 +160,10 @@ function computeLayout(node) {
     var mainPos = leadingMainDim;
     children.forEach(function(child) {
       child.layout[pos[mainAxis]] += mainPos;
-      mainPos += child.layout[dim[mainAxis]] +
-        getMargin(leading[mainAxis], child) +
-        getMargin(trailing[mainAxis], child) +
-        betweenMainDim;
+      mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 
       if (child.layout[dim[crossAxis]] !== undefined) {
-        var childCrossDim = child.layout[dim[crossAxis]] +
-          getMargin(leading[crossAxis], child) +
-          getMargin(trailing[crossAxis], child);
-
+        var childCrossDim = getDimWithMargin(child, crossAxis);
         if (childCrossDim > crossDim) {
           crossDim = childCrossDim;
         }
@@ -182,9 +180,7 @@ function computeLayout(node) {
     children.forEach(function(child) {
       var alignItem = getAlignItem(node, child);
       var remainingCrossDim = node.layout[dim[crossAxis]] -
-        child.layout[dim[crossAxis]] -
-        getMargin(leading[crossAxis], child) -
-        getMargin(trailing[crossAxis], child);
+        getDimWithMargin(child, crossAxis);
       var leadingCrossDim = 0;
       if (alignItem === 'flex-start') {
         // Do nothing
@@ -193,9 +189,7 @@ function computeLayout(node) {
       } else if (alignItem === 'flex-end') {
         leadingCrossDim = remainingCrossDim;
       } else if (alignItem === 'stretch') {
-        child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
-          getMargin(leading[crossAxis], child) -
-          getMargin(trailing[crossAxis], child);
+        child.layout[dim[crossAxis]] = getDimWithMargin(node, crossAxis);
       }
       child.layout[pos[crossAxis]] += leadingCrossDim;
     });
