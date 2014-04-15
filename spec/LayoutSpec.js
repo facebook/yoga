@@ -571,12 +571,19 @@ describe('Layout', function() {
       randEnum(node, 0.1, 'flexDirection', ['row', 'column']);
       randEnum(node, 0.1, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
       randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end']);
+      randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end']);
       randChildren(node, 0.2);
       return node;
     }
 
     for (var i = 0; i < 1000; ++i) {
       var node = generateRandomNode();
+
+      // The iframe's body has a natural width of 300 that it doesn't really make
+      // to replicate in the test suite. The easiest workaround is not to test
+      // alignSelf property on the top element.
+      delete node.style.alignSelf;
+
       expect({i: i, node: node, layout: computeLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
     }
