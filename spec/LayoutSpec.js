@@ -110,425 +110,340 @@ describe('Layout', function() {
   });
 
   it('should layout node with children', function() {
-    testLayout({
-      style: {width: 1000, height: 1000},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000}, children: [
         {style: {width: 500, height: 500}},
         {style: {width: 250, height: 250}},
         {style: {width: 125, height: 125}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 500, height: 500, top: 0, left: 0},
         {width: 250, height: 250, top: 500, left: 0},
         {width: 125, height: 125, top: 750, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with nested children', function() {
-    testLayout({
-      style: {width: 1000, height: 1000},
-      children: [{
-        style: {width: 500, height: 500}
-      }, {
-        style: {width: 500, height: 500},
-        children: [
+    testLayout(
+      {style: {width: 1000, height: 1000}, children: [
+        {style: {width: 500, height: 500}},
+        {style: {width: 500, height: 500}, children: [
           {style: {width: 250, height: 250}},
           {style: {width: 250, height: 250}}
-        ]
-      }]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [{
-        width: 500, height: 500, top: 0, left: 0
-      }, {
-        width: 500, height: 500, top: 500, left: 0,
-        children: [
+        ]}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 500, height: 500, top: 0, left: 0},
+        {width: 500, height: 500, top: 500, left: 0, children: [
           {width: 250, height: 250, top: 0, left: 0},
           {width: 250, height: 250, top: 250, left: 0},
-        ]
-      }]
-    });
+        ]}
+      ]}
+    );
   });
 
   it('should layout node with margin', function() {
-    testLayout({
-      style: {width: 100, height: 200, margin: 10}
-    }, {
-      width: 100, height: 200, top: 10, left: 10
-    });
+    testLayout(
+      {style: {width: 100, height: 200, margin: 10}},
+      {width: 100, height: 200, top: 10, left: 10}
+    );
   });
 
   it('should layout node with several children', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, margin: 10},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, margin: 10}, children: [
         {style: {width: 100, height: 100, margin: 50}},
         {style: {width: 100, height: 100, margin: 25}},
         {style: {width: 100, height: 100, margin: 10}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 10, left: 10,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 10, left: 10, children: [
         {width: 100, height: 100, top: 50, left: 50},
         {width: 100, height: 100, top: 225, left: 25},
         {width: 100, height: 100, top: 360, left: 10}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with row flex direction', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, flexDirection: 'row'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'row'}, children: [
         {style: {width: 100, height: 200}},
         {style: {width: 300, height: 150}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 200, top: 0, left: 0},
         {width: 300, height: 150, top: 0, left: 100}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node based on children main dimensions', function() {
-    testLayout({
-      style: {width: 300},
-      children: [
+    testLayout(
+      {style: {width: 300}, children: [
         {style: {width: 100, height: 200}},
         {style: {width: 300, height: 150}}
-      ]
-    }, {
-      width: 300, height: 350, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 300, height: 350, top: 0, left: 0, children: [
         {width: 100, height: 200, top: 0, left: 0},
         {width: 300, height: 150, top: 200, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with flex', function() {
-    testLayout({
-      style: {width: 1000, height: 1000},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000}, children: [
         {style: {width: 100, height: 200}},
         {style: {width: 100, flex: 1}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 200, top: 0, left: 0},
         {width: 100, height: 800, top: 200, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with flex recursively', function() {
-    testLayout({
-      style: {width: 1000, height: 1000},
-      children: [{
-        style: {width: 1000, flex: 1},
-        children: [{
-          style: {width: 1000, flex: 1},
-          children: [{
-            style: {width: 1000, flex: 1}
-          }]
-        }]
-      }]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [{
-        width: 1000, height: 1000, top: 0, left: 0,
-        children: [{
-          width: 1000, height: 1000, top: 0, left: 0,
-          children: [{
-            width: 1000, height: 1000, top: 0, left: 0
-          }]
-        }]
-      }]
-    });
+    testLayout(
+      {style: {width: 1000, height: 1000}, children: [
+        {style: {width: 1000, flex: 1}, children: [
+          {style: {width: 1000, flex: 1}, children: [
+            {style: {width: 1000, flex: 1}}
+          ]}
+        ]}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 1000, height: 1000, top: 0, left: 0, children: [
+          {width: 1000, height: 1000, top: 0, left: 0, children: [
+            {width: 1000, height: 1000, top: 0, left: 0}
+          ]}
+        ]}
+      ]}
+    );
   });
 
   it('should layout node with targeted margin', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, marginTop: 10, marginLeft: 5},
-      children: [
-        {style: {width: 100, height: 100,
-                 marginTop: 50, marginLeft: 15, marginBottom: 20}},
+    testLayout(
+      {style: {width: 1000, height: 1000, marginTop: 10, marginLeft: 5}, children: [
+        {style: {width: 100, height: 100, marginTop: 50, marginLeft: 15, marginBottom: 20}},
         {style: {width: 100, height: 100, marginLeft: 30}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 10, left: 5,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 10, left: 5, children: [
         {width: 100, height: 100, top: 50, left: 15},
         {width: 100, height: 100, top: 170, left: 30}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with justifyContent: flex-start', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, justifyContent: 'flex-start'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, justifyContent: 'flex-start'}, children: [
         {style: {width: 100, height: 100}},
         {style: {width: 100, height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 0, left: 0},
         {width: 100, height: 100, top: 100, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with justifyContent: flex-end', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, justifyContent: 'flex-end'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, justifyContent: 'flex-end'}, children: [
         {style: {width: 100, height: 100}},
         {style: {width: 100, height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 800, left: 0},
         {width: 100, height: 100, top: 900, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with justifyContent: space-between', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, justifyContent: 'space-between'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, justifyContent: 'space-between'}, children: [
         {style: {width: 100, height: 100}},
         {style: {width: 100, height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 0, left: 0},
         {width: 100, height: 100, top: 900, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with justifyContent: space-around', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, justifyContent: 'space-around'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, justifyContent: 'space-around'}, children: [
         {style: {width: 100, height: 100}},
         {style: {width: 100, height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 200, left: 0},
         {width: 100, height: 100, top: 700, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with justifyContent: center', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, justifyContent: 'center'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, justifyContent: 'center'}, children: [
         {style: {width: 100, height: 100}},
         {style: {width: 100, height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 400, left: 0},
         {width: 100, height: 100, top: 500, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with flex override height', function() {
-    testLayout({
-      style: {width: 1000, height: 1000},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000}, children: [
         {style: {width: 100, height: 100, flex: 1}},
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 1000, top: 0, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with alignItems: flex-start', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, alignItems: 'flex-start'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, alignItems: 'flex-start'}, children: [
         {style: {width: 200, height: 100}},
         {style: {width: 100, height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 0},
         {width: 100, height: 100, top: 100, left: 0},
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with alignItems: center', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, alignItems: 'center'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, alignItems: 'center'}, children: [
         {style: {width: 200, height: 100}},
         {style: {width: 100, height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 400},
         {width: 100, height: 100, top: 100, left: 450},
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with alignItems: flex-end', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, alignItems: 'flex-end'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, alignItems: 'flex-end'}, children: [
         {style: {width: 200, height: 100}},
         {style: {width: 100, height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 800},
         {width: 100, height: 100, top: 100, left: 900},
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with alignSelf overrides alignItems', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, alignItems: 'flex-end'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, alignItems: 'flex-end'}, children: [
         {style: {width: 200, height: 100}},
         {style: {width: 100, height: 100, alignSelf: 'center'}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 800},
         {width: 100, height: 100, top: 100, left: 450},
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout node with alignItem: stretch', function() {
-    testLayout({
-      style: {width: 1000, height: 1000, alignItems: 'stretch'},
-      children: [
+    testLayout(
+      {style: {width: 1000, height: 1000, alignItems: 'stretch'}, children: [
         {style: {height: 100}}
-      ]
-    }, {
-      width: 1000, height: 1000, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 1000, height: 100, top: 0, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout empty node', function() {
-    testLayout({
-      style: {},
-      children: [
+    testLayout(
+      {style: {}, children: [
         {style: {}}
-      ]
-    }, {
-      width: 0, height: 0, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 0, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout child with margin', function() {
-    testLayout({
-      style: {},
-      children: [
+    testLayout(
+      {style: {}, children: [
         {style: {margin: 5}}
-      ]
-    }, {
-      width: 10, height: 10, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 10, height: 10, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 5, left: 5}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should not shrink children if not enough space', function() {
-    testLayout({
-      style: {height: 100},
-      children: [
+    testLayout(
+      {style: {height: 100}, children: [
         {style: {height: 100}},
         {style: {height: 200}},
-      ]
-    }, {
-      width: 0, height: 100, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 100, top: 0, left: 0},
         {width: 0, height: 200, top: 100, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
   it('should layout for center', function() {
-    testLayout({
-      style: {justifyContent: 'center'}
-    }, {
-      width: 0, height: 0, top: 0, left: 0,
-    });
+    testLayout(
+      {style: {justifyContent: 'center'}},
+      {width: 0, height: 0, top: 0, left: 0}
+    );
   });
 
   it('should layout flex-end taking into account margin', function() {
-    testLayout({
-      style: {height: 100, justifyContent: 'flex-end'},
-      children: [
+    testLayout(
+      {style: {height: 100, justifyContent: 'flex-end'}, children: [
         {style: {marginTop: 10}}
-      ]
-    }, {
-      width: 0, height: 100, top: 0, left: 0,
-      children: [
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 100, left: 0}
-      ]
-    });
+      ]}
+    );
   });
 
-
   it('should layout alignItems with margin', function() {
-    testLayout({
-      style: {},
-      children: [
-        { style: { alignItems: 'flex-end' }, children: [
-          { style: { margin: 10 } },
-          { style: { height: 100 } } ]
-        }
-      ]
-    }, {
-      width: 20, height: 120, top: 0, left: 0,
-      children: [{
-        width: 20, height: 120, top: 0, left: 0,
-        children: [
+    testLayout(
+      {style: {}, children: [
+        {style: {alignItems: 'flex-end'}, children: [
+          {style: {margin: 10}},
+          {style: {height: 100}}
+        ]}
+      ]},
+      {width: 20, height: 120, top: 0, left: 0, children: [{
+        width: 20, height: 120, top: 0, left: 0, children: [
           {width: 0, height: 0, top: 10, left: 10},
           {width: 0, height: 100, top: 20, left: 20}
-        ]
-      }]
-    });
-  })
+        ]}
+      ]}
+    );
+  });
 
   it('should layout randomly', function() {
     function RNG(seed) {
@@ -583,6 +498,7 @@ describe('Layout', function() {
       // to replicate in the test suite. The easiest workaround is not to test
       // alignSelf property on the top element.
       delete node.style.alignSelf;
+      delete node.style.flex;
 
       expect({i: i, node: node, layout: computeLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
