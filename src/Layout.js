@@ -66,6 +66,10 @@ function computeLayout(node) {
     return 'column';
   }
 
+  function getFlex(node) {
+    return node.style.flex === 1;
+  }
+
   var axis = {
     left: 'horizontal',
     right: 'horizontal',
@@ -109,7 +113,7 @@ function computeLayout(node) {
     var mainContentDim = 0;
     var flexibleChildrenCount = 0;
     children.forEach(function(child) {
-      if (!child.style.flex) {
+      if (node.layout[dim[mainAxis]] === undefined || !getFlex(child)) {
         layoutNode(child);
         mainContentDim += child.layout[dim[mainAxis]] +
           getMargin(leading[mainAxis], child) +
@@ -126,7 +130,7 @@ function computeLayout(node) {
       if (flexibleChildrenCount) {
         var flexibleMainDim = remainingMainDim / flexibleChildrenCount;
         children.forEach(function(child) {
-          if (child.style.flex) {
+          if (getFlex(child)) {
             child.layout[dim[mainAxis]] = flexibleMainDim;
             layoutNode(child);
           }

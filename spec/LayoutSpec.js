@@ -436,11 +436,22 @@ describe('Layout', function() {
           {style: {height: 100}}
         ]}
       ]},
-      {width: 20, height: 120, top: 0, left: 0, children: [{
-        width: 20, height: 120, top: 0, left: 0, children: [
+      {width: 20, height: 120, top: 0, left: 0, children: [
+        {width: 20, height: 120, top: 0, left: 0, children: [
           {width: 0, height: 0, top: 10, left: 10},
           {width: 0, height: 100, top: 20, left: 20}
         ]}
+      ]}
+    );
+  });
+
+  it('should layout flex inside of an empty element', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {flex: 1}},
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
       ]}
     );
   });
@@ -487,6 +498,7 @@ describe('Layout', function() {
       randEnum(node, 0.1, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
       randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end']);
       randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end']);
+      randEnum(node, 0.1, 'flex', ['none', 1]);
       randChildren(node, 0.2);
       return node;
     }
