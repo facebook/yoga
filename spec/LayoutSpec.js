@@ -508,7 +508,7 @@ describe('Layout', function() {
 
       // The iframe's body has a natural width of 300 that it doesn't really make
       // to replicate in the test suite. The easiest workaround is not to test
-      // alignSelf property on the top element.
+      // alignSelf and flex properties on the root element.
       delete node.style.alignSelf;
       delete node.style.flex;
 
