@@ -36,7 +36,7 @@ function computeLayout(node) {
     }
 
     if (type in node.style) {
-      return node.style.margin;
+      return node.style[type];
     }
 
     return 0;
@@ -164,8 +164,8 @@ function computeLayout(node) {
       }
     }
 
-    var crossDim = 0;
-    var mainPos = leadingMainDim;
+    var crossDim = getPadding(leading[crossAxis], node);
+    var mainPos = getPadding(leading[mainAxis], node) + leadingMainDim;
     children.forEach(function(child) {
       child.layout[pos[mainAxis]] += mainPos;
       mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
@@ -177,6 +177,8 @@ function computeLayout(node) {
         }
       }
     });
+    mainPos += getPadding(trailing[mainAxis], node);
+    crossDim += getPadding(trailing[crossAxis], node);
 
     if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {
       node.layout[dim[mainAxis]] = Math.max(mainPos, 0);

@@ -472,6 +472,13 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with padding', function() {
+    testLayout(
+      {style: {padding: 5}},
+      {width: 10, height: 10, top: 0, left: 0}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
