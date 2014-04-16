@@ -456,6 +456,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout alignItems stretch and margin', function() {
+    testLayout(
+      {style: {alignItems: 'stretch'}, children: [
+        {style: {marginLeft: 10}}
+      ]},
+      {width: 10, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 10}
+      ]}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -496,8 +507,8 @@ describe('Layout', function() {
       randMinMax(node, 0.1, 'marginBottom', 0, 20);
       randEnum(node, 0.1, 'flexDirection', ['row', 'column']);
       randEnum(node, 0.1, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
-      randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end']);
-      randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end']);
+      randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
+      randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'flex', ['none', 1]);
       randChildren(node, 0.2);
       return node;

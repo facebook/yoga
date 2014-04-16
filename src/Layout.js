@@ -189,7 +189,9 @@ function computeLayout(node) {
       } else if (alignItem === 'flex-end') {
         leadingCrossDim = remainingCrossDim;
       } else if (alignItem === 'stretch') {
-        child.layout[dim[crossAxis]] = getDimWithMargin(node, crossAxis);
+        child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
+          getMargin(leading[crossAxis], child) -
+          getMargin(trailing[crossAxis], child);
       }
       child.layout[pos[crossAxis]] += leadingCrossDim;
     });
