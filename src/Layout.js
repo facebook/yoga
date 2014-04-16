@@ -204,7 +204,9 @@ function computeLayout(node) {
       } else if (alignItem === 'stretch') {
         child.layout[dim[crossAxis]] += node.layout[dim[crossAxis]] -
           getMargin(child, leading[crossAxis]) -
-          getMargin(child, trailing[crossAxis]);
+          getMargin(child, trailing[crossAxis]) -
+          getPadding(child, leading[crossAxis]) -
+          getPadding(child, trailing[crossAxis]);
       }
       child.layout[pos[crossAxis]] += leadingCrossDim;
     });
