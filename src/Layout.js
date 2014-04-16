@@ -202,13 +202,11 @@ function computeLayout(node) {
       } else if (alignItem === 'flex-end') {
         leadingCrossDim += remainingCrossDim;
       } else if (alignItem === 'stretch') {
-        child.layout[dim[crossAxis]] += node.layout[dim[crossAxis]] -
+        child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
           getPadding(node, leading[crossAxis]) -
           getPadding(node, trailing[crossAxis]) -
           getMargin(child, leading[crossAxis]) -
-          getMargin(child, trailing[crossAxis]) -
-          getPadding(child, leading[crossAxis]) -
-          getPadding(child, trailing[crossAxis]);
+          getMargin(child, trailing[crossAxis]);
       }
       child.layout[pos[crossAxis]] += leadingCrossDim;
     });

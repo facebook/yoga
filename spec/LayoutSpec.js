@@ -512,7 +512,6 @@ describe('Layout', function() {
     );
   });
 
-
   it('should layout node with inner & outer padding and stretch', function() {
     testLayout(
       {style: {padding: 50}, children: [
@@ -520,6 +519,22 @@ describe('Layout', function() {
       ]},
       {width: 120, height: 120, top: 0, left: 0, children: [
         {width: 20, height: 20, top: 50, left: 50}
+      ]}
+    );
+  });
+
+  it('should layout node with stretch and child with margin', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {alignSelf: 'stretch'}, children: [
+          {style: {margin: 16}}
+        ]}
+      ]},
+
+      {width: 32, height: 32, top: 0, left: 0, children: [
+        {width: 32, height: 32, top: 0, left: 0, children: [
+          {width: 0, height: 0, top: 16, left: 16}
+        ]}
       ]}
     );
   });
