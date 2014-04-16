@@ -490,6 +490,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with padding and a child with margin', function() {
+    testLayout(
+      {style: {padding: 5}, children: [
+        {style: {margin: 5}}
+      ]},
+      {width: 20, height: 20, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 10, left: 10}
+      ]}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
