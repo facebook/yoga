@@ -24,22 +24,30 @@ function computeLayout(node) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  function getMargin(location, node) {
-    var key = 'margin' + capitalizeFirst(location);
+  function getSpacing(type, location, node) {
+    var key = type + capitalizeFirst(location);
     if (key in node.style) {
       return node.style[key];
     }
 
-    key = 'margin' + capitalizeFirst(axis[location]);
+    key = type + capitalizeFirst(axis[location]);
     if (key in node.style) {
       return node.style[key];
     }
 
-    if ('margin' in node.style) {
+    if (type in node.style) {
       return node.style.margin;
     }
 
     return 0;
+  }
+
+  function getMargin(location, node) {
+    return getSpacing('margin', location, node);
+  }
+
+  function getPadding(location, node) {
+    return getSpacing('padding', location, node);
   }
 
   function getJustifyContent(node) {
