@@ -84,6 +84,13 @@ function computeLayout(node) {
       getMargin(node, trailing[axis]);
   }
 
+  function getPosition(node, pos) {
+    if (pos in node.style) {
+      return node.style[pos];
+    }
+    return 0;
+  }
+
   var axis = {
     left: 'horizontal',
     right: 'horizontal',
@@ -211,8 +218,10 @@ function computeLayout(node) {
       child.layout[pos[crossAxis]] += leadingCrossDim;
     });
 
-    node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]);
-    node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]);
+    node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
+      getPosition(node, leading[mainAxis]);
+    node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
+      getPosition(node, leading[crossAxis]);
   }
 
   fillNodes(node);

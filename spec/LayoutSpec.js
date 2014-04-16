@@ -9,6 +9,7 @@ var iframe = (function() {
   style.innerText = (function() {/*
     body, div {
       box-sizing: border-box;
+      position: relative;
 
       display: flex;
       flex-direction: column;
@@ -46,6 +47,8 @@ function computeDOMLayout(node) {
     var div = document.createElement('div');
     transfer(div, node, 'width', 'px');
     transfer(div, node, 'height', 'px');
+    transfer(div, node, 'top', 'px');
+    transfer(div, node, 'left', 'px');
     transferSpacing(div, node, 'margin');
     transferSpacing(div, node, 'padding');
     transfer(div, node, 'flexDirection');
@@ -536,6 +539,13 @@ describe('Layout', function() {
           {width: 0, height: 0, top: 16, left: 16}
         ]}
       ]}
+    );
+  });
+
+  it('should layout node with top', function() {
+    testLayout(
+      {style: {top: 5, left: 5}},
+      {width: 0, height: 0, top: 5, left: 5}
     );
   });
 
