@@ -49,6 +49,8 @@ function computeDOMLayout(node) {
     transfer(div, node, 'height', 'px');
     transfer(div, node, 'top', 'px');
     transfer(div, node, 'left', 'px');
+    transfer(div, node, 'right', 'px');
+    transfer(div, node, 'bottom', 'px');
     transferSpacing(div, node, 'margin');
     transferSpacing(div, node, 'padding');
     transfer(div, node, 'flexDirection');
@@ -559,6 +561,20 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with bottom', function() {
+    testLayout(
+      {style: {bottom: 5}},
+      {width: 0, height: 0, top: -5, left: 0}
+    );
+  });
+
+  it('should layout node with both top and bottom', function() {
+    testLayout(
+      {style: {top: 10, bottom: 5}},
+      {width: 0, height: 0, top: 10, left: 0}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -601,6 +617,8 @@ describe('Layout', function() {
       randMinMax(node, 0.1, 'height', 0, 1000);
       randMinMax(node, 0.1, 'top', -10, 10);
       randMinMax(node, 0.1, 'left', -10, 10);
+      randMinMax(node, 0.1, 'right', -10, 10);
+      randMinMax(node, 0.1, 'bottom', -10, 10);
       randSpacing(node, 0.1, 'margin', 0, 20);
       randSpacing(node, 0.1, 'padding', 0, 20);
       randEnum(node, 0.1, 'flexDirection', ['row', 'column']);

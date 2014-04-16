@@ -91,6 +91,15 @@ function computeLayout(node) {
     return 0;
   }
 
+  // If both left and right are defined, then use left. Otherwise return
+  // +left or -right depending on which is defined.
+  function getRelativePosition(node, axis) {
+    if (leading[axis] in node.style) {
+      return getPosition(node, leading[axis]);
+    }
+    return -getPosition(node, trailing[axis]);
+  }
+
   var axis = {
     left: 'horizontal',
     right: 'horizontal',
@@ -224,9 +233,9 @@ function computeLayout(node) {
     });
 
     node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
-      getPosition(node, leading[mainAxis]);
+      getRelativePosition(node, mainAxis);
     node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
-      getPosition(node, leading[crossAxis]);
+      getRelativePosition(node, crossAxis);
   }
 
   fillNodes(node);
