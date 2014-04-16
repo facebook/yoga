@@ -599,8 +599,8 @@ describe('Layout', function() {
       var node = {style: {}};
       randMinMax(node, 0.1, 'width', 0, 1000);
       randMinMax(node, 0.1, 'height', 0, 1000);
-      randMinMax(node, 0.1, 'top', 0, 10);
-      randMinMax(node, 0.1, 'left', 0, 10);
+      randMinMax(node, 0.1, 'top', -10, 10);
+      randMinMax(node, 0.1, 'left', -10, 10);
       randSpacing(node, 0.1, 'margin', 0, 20);
       randSpacing(node, 0.1, 'padding', 0, 20);
       randEnum(node, 0.1, 'flexDirection', ['row', 'column']);
