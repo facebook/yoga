@@ -58,6 +58,7 @@ function computeDOMLayout(node) {
     transfer(div, node, 'justifyContent');
     transfer(div, node, 'alignSelf');
     transfer(div, node, 'alignItems');
+    transfer(div, node, 'position');
     parent.appendChild(div);
     (node.children || []).forEach(function(child) {
       renderNode(div, child);
@@ -626,6 +627,7 @@ describe('Layout', function() {
       randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'flex', ['none', 1]);
+      randEnum(node, 0.1, 'position', ['relative', 'absolute']);
       randChildren(node, 0.2);
       return node;
     }
@@ -635,9 +637,10 @@ describe('Layout', function() {
 
       // The iframe's body has a natural width of 300 that it doesn't really make
       // to replicate in the test suite. The easiest workaround is not to test
-      // alignSelf and flex properties on the root element.
+      // alignSelf, position and flex properties on the root element.
       delete node.style.alignSelf;
       delete node.style.flex;
+      delete node.style.position;
 
       expect({i: i, node: node, layout: computeLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
