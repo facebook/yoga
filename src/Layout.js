@@ -190,16 +190,18 @@ function computeLayout(node) {
     children.forEach(function(child) {
       var alignItem = getAlignItem(node, child);
       var remainingCrossDim = node.layout[dim[crossAxis]] -
-        getDimWithMargin(child, crossAxis);
-      var leadingCrossDim = 0;
+        getDimWithMargin(child, crossAxis) -
+        getPadding(leading[crossAxis], node) -
+        getPadding(trailing[crossAxis], node);
+      var leadingCrossDim = getPadding(leading[crossAxis], node);
       if (alignItem === 'flex-start') {
         // Do nothing
       } else if (alignItem === 'center') {
-        leadingCrossDim = remainingCrossDim / 2;
+        leadingCrossDim += remainingCrossDim / 2;
       } else if (alignItem === 'flex-end') {
-        leadingCrossDim = remainingCrossDim;
+        leadingCrossDim += remainingCrossDim;
       } else if (alignItem === 'stretch') {
-        child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
+        child.layout[dim[crossAxis]] += node.layout[dim[crossAxis]] -
           getMargin(leading[crossAxis], child) -
           getMargin(trailing[crossAxis], child);
       }
