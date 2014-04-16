@@ -533,7 +533,6 @@ describe('Layout', function() {
           {style: {margin: 16}}
         ]}
       ]},
-
       {width: 32, height: 32, top: 0, left: 0, children: [
         {width: 32, height: 32, top: 0, left: 0, children: [
           {width: 0, height: 0, top: 16, left: 16}
@@ -542,10 +541,21 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout node with top', function() {
+  it('should layout node with top and left', function() {
     testLayout(
       {style: {top: 5, left: 5}},
       {width: 0, height: 0, top: 5, left: 5}
+    );
+  });
+
+  it('should layout node with height, padding and space-around', function() {
+    testLayout(
+      {style : {height: 10, paddingTop: 5, justifyContent: 'space-around'}, children: [
+        {style: {}}
+      ]},
+      {width: 0, height: 10, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 7.5, left: 0}
+      ]}
     );
   });
 
@@ -589,6 +599,8 @@ describe('Layout', function() {
       var node = {style: {}};
       randMinMax(node, 0.1, 'width', 0, 1000);
       randMinMax(node, 0.1, 'height', 0, 1000);
+      randMinMax(node, 0.1, 'top', 0, 10);
+      randMinMax(node, 0.1, 'left', 0, 10);
       randSpacing(node, 0.1, 'margin', 0, 20);
       randSpacing(node, 0.1, 'padding', 0, 20);
       randEnum(node, 0.1, 'flexDirection', ['row', 'column']);

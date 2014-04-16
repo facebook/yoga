@@ -145,7 +145,11 @@ function computeLayout(node) {
     var leadingMainDim = 0;
     var betweenMainDim = 0;
     if (node.layout[dim[mainAxis]] !== undefined) {
-      var remainingMainDim = node.layout[dim[mainAxis]] - mainContentDim;
+      var remainingMainDim = node.layout[dim[mainAxis]] -
+        getPadding(node, leading[mainAxis]) -
+        getPadding(node, trailing[mainAxis]) -
+        mainContentDim;
+
       if (flexibleChildrenCount) {
         var flexibleMainDim = remainingMainDim / flexibleChildrenCount;
         children.forEach(function(child) {
@@ -201,6 +205,7 @@ function computeLayout(node) {
         getDimWithMargin(child, crossAxis) -
         getPadding(node, leading[crossAxis]) -
         getPadding(node, trailing[crossAxis]);
+
       var leadingCrossDim = getPadding(node, leading[crossAxis]);
       if (alignItem === 'flex-start') {
         // Do nothing
