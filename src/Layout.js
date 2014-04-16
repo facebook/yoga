@@ -203,6 +203,8 @@ function computeLayout(node) {
         leadingCrossDim += remainingCrossDim;
       } else if (alignItem === 'stretch') {
         child.layout[dim[crossAxis]] += node.layout[dim[crossAxis]] -
+          getPadding(node, leading[crossAxis]) -
+          getPadding(node, trailing[crossAxis]) -
           getMargin(child, leading[crossAxis]) -
           getMargin(child, trailing[crossAxis]) -
           getPadding(child, leading[crossAxis]) -

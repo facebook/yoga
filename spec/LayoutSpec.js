@@ -512,6 +512,18 @@ describe('Layout', function() {
     );
   });
 
+
+  it('should layout node with inner & outer padding and stretch', function() {
+    testLayout(
+      {style: {padding: 50}, children: [
+        {style: {padding: 10, alignSelf: 'stretch'}}
+      ]},
+      {width: 120, height: 120, top: 0, left: 0, children: [
+        {width: 20, height: 20, top: 50, left: 50}
+      ]}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
