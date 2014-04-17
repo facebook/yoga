@@ -627,7 +627,6 @@ describe('Layout', function() {
       randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'flex', ['none', 1]);
-      randEnum(node, 0.1, 'position', ['relative', 'absolute']);
       randChildren(node, 0.2);
       return node;
     }
