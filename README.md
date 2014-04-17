@@ -13,8 +13,8 @@ Name | Value
 ----:|------
 width, height | number
 left, right, top, bottom | number
-margin, margin{Left, Right, Top, Bottom} | positive number
-padding, padding{Left, Right, Top, Bottom} | positive number
+margin, marginLeft, marginRight, marginTop, marginBottom | positive number
+padding, paddingLeft, paddingRight, paddingTop, paddingBottom | positive number
 flexDirection | 'column', 'row'
 justifyContent | 'flex-start', 'center', 'flex-end', 'space-between', 'space-around'
 alignItems, alignSelf | 'flex-start', 'center', 'flex-end', 'stretch'
@@ -23,12 +23,13 @@ position | 'relative', 'absolute'
 
 - `inherit` value is not implemented because it's a way to disambiguate between multiple colliding rules. This should be done in a pre-processing step, not in the actual layout algorithm.
 
+
 Usage
 -----
 
 A single function `computeLayout` is exposed and 
  - takes a tree of nodes: `{ style: { ... }, children: [ nodes ] }`
- - returns a tree of rectanges: `{ width: ..., height: ..., top: ..., left: ..., children: [ rectangles ] }`
+ - returns a tree of rectanges: `{ width: ..., height: ..., top: ..., left: ..., children: [ rects ] }`
 
 For example, 
 
