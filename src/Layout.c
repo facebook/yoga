@@ -10,7 +10,6 @@
 #define CSS_UNDEFINED NAN
 
 void init_css_node(css_node_t *node) {
-  memset(node, 0, sizeof(*node));
   node->style.align_items = CSS_ALIGN_FLEX_START;
 
   // Some of the fields default to undefined and not 0
@@ -27,7 +26,7 @@ void init_css_node(css_node_t *node) {
 }
 
 css_node_t *new_css_node() {
-  css_node_t *node = malloc(sizeof(*node));
+  css_node_t *node = calloc(1, sizeof(*node));
   init_css_node(node);
   return node;
 }

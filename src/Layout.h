@@ -60,7 +60,6 @@ typedef struct {
   float padding[4];
   float position[4];
   float dimensions[2];
-  css_layout_t layout;
 } css_style_t;
 
 typedef struct css_node {
