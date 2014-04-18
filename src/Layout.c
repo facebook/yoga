@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
-typedef unsigned char bool;
+#include <stdbool.h>
 
 #define CSS_UNDEFINED NAN
 
