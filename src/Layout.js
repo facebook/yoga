@@ -8,14 +8,19 @@ function computeLayout(node) {
       top: 0,
       left: 0
     };
-    (node.children || []).forEach(fillNodes);
+    if (!node.children) {
+      node.children = [];
+    }
+    node.children.forEach(fillNodes);
   }
 
   function extractNodes(node) {
     var layout = node.layout;
     delete node.layout;
-    if (node.children) {
+    if (node.children.length > 0) {
       layout.children = node.children.map(extractNodes);
+    } else {
+      delete node.children;
     }
     return layout;
   }
@@ -116,12 +121,9 @@ function computeLayout(node) {
     return value === undefined;
   }
 
-  var emptyArray = [];
-
   function layoutNode(node) {
     var mainAxis = getFlexDirection(node);
     var crossAxis = mainAxis === 'row' ? 'column' : 'row';
-    var children = node.children || emptyArray;
 
     var mainDimInStyle = dim[mainAxis] in node.style;
     if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
@@ -135,7 +137,7 @@ function computeLayout(node) {
 
     var mainContentDim = 0;
     var flexibleChildrenCount = 0;
-    children.forEach(function(child) {
+    node.children.forEach(function(child) {
       if (isUndefined(node.layout[dim[mainAxis]]) || !getFlex(child)) {
         layoutNode(child);
         mainContentDim += getDimWithMargin(child, mainAxis);
@@ -154,7 +156,7 @@ function computeLayout(node) {
 
       if (flexibleChildrenCount) {
         var flexibleMainDim = remainingMainDim / flexibleChildrenCount;
-        children.forEach(function(child) {
+        node.children.forEach(function(child) {
           if (getFlex(child)) {
             child.layout[dim[mainAxis]] = flexibleMainDim;
             layoutNode(child);
@@ -169,9 +171,9 @@ function computeLayout(node) {
         } else if (justifyContent === 'center') {
           leadingMainDim = remainingMainDim / 2;
         } else if (justifyContent === 'space-between') {
-          betweenMainDim = remainingMainDim / (children.length - 1);
+          betweenMainDim = remainingMainDim / (node.children.length - 1);
         } else if (justifyContent === 'space-around') {
-          betweenMainDim = remainingMainDim / children.length;
+          betweenMainDim = remainingMainDim / node.children.length;
           leadingMainDim = betweenMainDim / 2;
         }
       }
@@ -179,7 +181,7 @@ function computeLayout(node) {
 
     var crossDim = 0;
     var mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
-    children.forEach(function(child) {
+    node.children.forEach(function(child) {
       child.layout[pos[mainAxis]] += mainPos;
       mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 
@@ -201,7 +203,7 @@ function computeLayout(node) {
       node.layout[dim[crossAxis]] = Math.max(crossDim, 0);
     }
 
-    children.forEach(function(child) {
+    node.children.forEach(function(child) {
       var alignItem = getAlignItem(node, child);
       var remainingCrossDim = node.layout[dim[crossAxis]] -
         getDimWithMargin(child, crossAxis) -
