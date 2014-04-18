@@ -276,6 +276,10 @@ float getDimWithMargin(css_node_t *node, css_flex_direction_t axis) {
     getMargin(node, trailing[axis]);
 }
 
+bool isDimDefined(css_node_t *node, css_flex_direction_t axis) {
+  return !isUndefined(node->style.dimensions[dim[axis]]);
+}
+
 float getPosition(css_node_t *node, css_position_t pos) {
   float result = node->style.position[pos];
   if (!isUndefined(result)) {
@@ -294,19 +298,18 @@ float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
   return getPosition(node, trailing[axis]);
 }
 
-
 void layoutNode(css_node_t *node) {
   css_flex_direction_t mainAxis = getFlexDirection(node);
   css_flex_direction_t crossAxis = mainAxis == CSS_FLEX_DIRECTION_ROW ?
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
 
-  bool mainDimInStyle = !isUndefined(node->style.dimensions[dim[mainAxis]]);
+  bool mainDimInStyle = isDimDefined(node, mainAxis);
   if (isUndefined(node->layout.dimensions[dim[mainAxis]]) && mainDimInStyle) {
     node->layout.dimensions[dim[mainAxis]] = node->style.dimensions[dim[mainAxis]];
   }
 
-  bool crossDimInStyle = !isUndefined(node->style.dimensions[dim[crossAxis]]);
+  bool crossDimInStyle = isDimDefined(node, crossAxis);
   if (isUndefined(node->layout.dimensions[dim[crossAxis]]) && crossDimInStyle) {
     node->layout.dimensions[dim[crossAxis]] = node->style.dimensions[dim[crossAxis]];
   }

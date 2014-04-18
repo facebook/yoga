@@ -88,6 +88,11 @@ function computeLayout(node) {
       getMargin(node, trailing[axis]);
   }
 
+  function isDimDefined(node, axis) {
+    return !isUndefined(node.style[dim[axis]]);
+  }
+
+
   function getPosition(node, pos) {
     if (pos in node.style) {
       return node.style[pos];
@@ -141,12 +146,12 @@ function computeLayout(node) {
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
 
-    var mainDimInStyle = dim[mainAxis] in node.style;
+    var mainDimInStyle = isDimDefined(node, mainAxis);
     if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
       node.layout[dim[mainAxis]] = node.style[dim[mainAxis]];
     }
 
-    var crossDimInStyle = dim[crossAxis] in node.style;
+    var crossDimInStyle = isDimDefined(node, crossAxis);
     if (isUndefined(node.layout[dim[crossAxis]]) && crossDimInStyle) {
       node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
     }
