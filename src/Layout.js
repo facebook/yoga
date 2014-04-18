@@ -121,9 +121,25 @@ function computeLayout(node) {
     column: 'height'
   };
 
+  var CSS_FLEX_DIRECTION_ROW = 'row';
+  var CSS_FLEX_DIRECTION_COLUMN = 'column';
+
+  var CSS_JUSTIFY_FLEX_START = 'flex-start';
+  var CSS_JUSTIFY_CENTER = 'center';
+  var CSS_JUSTIFY_FLEX_END = 'flex-end';
+  var CSS_JUSTIFY_SPACE_BETWEEN = 'space-between';
+  var CSS_JUSTIFY_SPACE_AROUND = 'space-around';
+
+  var CSS_ALIGN_FLEX_START = 'flex-start';
+  var CSS_ALIGN_CENTER = 'center';
+  var CSS_ALIGN_FLEX_END = 'flex-end';
+  var CSS_ALIGN_STRETCH = 'stretch';
+
   function layoutNode(node) {
     var mainAxis = getFlexDirection(node);
-    var crossAxis = mainAxis == 'row' ? 'column' : 'row';
+    var crossAxis = mainAxis == CSS_FLEX_DIRECTION_ROW ?
+      CSS_FLEX_DIRECTION_COLUMN :
+      CSS_FLEX_DIRECTION_ROW;
 
     var mainDimInStyle = dim[mainAxis] in node.style;
     if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
@@ -166,15 +182,15 @@ function computeLayout(node) {
         }
       } else {
         var justifyContent = getJustifyContent(node);
-        if (justifyContent == 'flex-start') {
+        if (justifyContent == CSS_JUSTIFY_FLEX_START) {
           // Do nothing
-        } else if (justifyContent == 'flex-end') {
-          leadingMainDim = remainingMainDim;
-        } else if (justifyContent == 'center') {
+        } else if (justifyContent == CSS_JUSTIFY_CENTER) {
           leadingMainDim = remainingMainDim / 2;
-        } else if (justifyContent == 'space-between') {
+        } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
+          leadingMainDim = remainingMainDim;
+        } else if (justifyContent == CSS_JUSTIFY_SPACE_BETWEEN) {
           betweenMainDim = remainingMainDim / (node.children.length - 1);
-        } else if (justifyContent == 'space-around') {
+        } else if (justifyContent == CSS_JUSTIFY_SPACE_AROUND) {
           betweenMainDim = remainingMainDim / node.children.length;
           leadingMainDim = betweenMainDim / 2;
         }
@@ -215,13 +231,13 @@ function computeLayout(node) {
         getPadding(node, trailing[crossAxis]);
 
       var leadingCrossDim = getPadding(node, leading[crossAxis]);
-      if (alignItem == 'flex-start') {
+      if (alignItem == CSS_ALIGN_FLEX_START) {
         // Do nothing
-      } else if (alignItem == 'center') {
+      } else if (alignItem == CSS_ALIGN_CENTER) {
         leadingCrossDim += remainingCrossDim / 2;
-      } else if (alignItem == 'flex-end') {
+      } else if (alignItem == CSS_ALIGN_FLEX_END) {
         leadingCrossDim += remainingCrossDim;
-      } else if (alignItem == 'stretch') {
+      } else if (alignItem == CSS_ALIGN_STRETCH) {
         child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
           getPadding(node, leading[crossAxis]) -
           getPadding(node, trailing[crossAxis]) -
