@@ -200,10 +200,10 @@ function computeLayout(node) {
       getPadding(node, trailing[crossAxis]);
 
     if (isUndefined(node.layout[dim[mainAxis]]) && !mainDimInStyle) {
-      node.layout[dim[mainAxis]] = Math.max(mainPos, 0);
+      node.layout[dim[mainAxis]] = mainPos > 0 ? mainPos : 0;
     }
     if (isUndefined(node.layout[dim[crossAxis]])) {
-      node.layout[dim[crossAxis]] = Math.max(crossDim, 0);
+      node.layout[dim[crossAxis]] = crossDim > 0 ? crossDim : 0;
     }
 
     for (var i = 0; i < node.children.length; ++i) {
