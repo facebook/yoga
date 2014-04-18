@@ -355,22 +355,3 @@ void layoutNode(css_node_t *node) {
   node->layout.position[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
     getRelativePosition(node, crossAxis);
 }
-
-
-int main()
-{
-  css_node_t *node = new_css_node();
-  node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-  node->style.dimensions[CSS_WIDTH] = 100;
-  node->style.align_items = CSS_ALIGN_STRETCH;
-
-  init_css_node_children(node, 3);
-  node->children[0].style.dimensions[CSS_HEIGHT] = 50;
-  layoutNode(node);
-
-  print_style(node, 0);
-  print_layout(node, 0);
-
-  free_css_node(node);
-}
-
