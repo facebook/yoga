@@ -112,6 +112,10 @@ function computeLayout(node) {
     column: 'height'
   };
 
+  function isUndefined(value) {
+    return value === undefined;
+  }
+
   var emptyArray = [];
 
   function layoutNode(node) {
@@ -120,19 +124,19 @@ function computeLayout(node) {
     var children = node.children || emptyArray;
 
     var mainDimInStyle = dim[mainAxis] in node.style;
-    if (node.layout[dim[mainAxis]] === undefined && mainDimInStyle) {
+    if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
       node.layout[dim[mainAxis]] = node.style[dim[mainAxis]];
     }
 
     var crossDimInStyle = dim[crossAxis] in node.style;
-    if (node.layout[dim[crossAxis]] === undefined && crossDimInStyle) {
+    if (isUndefined(node.layout[dim[crossAxis]]) && crossDimInStyle) {
       node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
     }
 
     var mainContentDim = 0;
     var flexibleChildrenCount = 0;
     children.forEach(function(child) {
-      if (node.layout[dim[mainAxis]] === undefined || !getFlex(child)) {
+      if (isUndefined(node.layout[dim[mainAxis]]) || !getFlex(child)) {
         layoutNode(child);
         mainContentDim += getDimWithMargin(child, mainAxis);
       } else {
@@ -142,7 +146,7 @@ function computeLayout(node) {
 
     var leadingMainDim = 0;
     var betweenMainDim = 0;
-    if (node.layout[dim[mainAxis]] !== undefined) {
+    if (!isUndefined(node.layout[dim[mainAxis]])) {
       var remainingMainDim = node.layout[dim[mainAxis]] -
         getPadding(node, leading[mainAxis]) -
         getPadding(node, trailing[mainAxis]) -
@@ -179,7 +183,7 @@ function computeLayout(node) {
       child.layout[pos[mainAxis]] += mainPos;
       mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 
-      if (child.layout[dim[crossAxis]] !== undefined) {
+      if (!isUndefined(child.layout[dim[crossAxis]])) {
         var childCrossDim = getDimWithMargin(child, crossAxis);
         if (childCrossDim > crossDim) {
           crossDim = childCrossDim;
@@ -190,10 +194,10 @@ function computeLayout(node) {
     crossDim += getPadding(node, leading[crossAxis]) +
       getPadding(node, trailing[crossAxis]);
 
-    if (node.layout[dim[mainAxis]] === undefined && !mainDimInStyle) {
+    if (isUndefined(node.layout[dim[mainAxis]]) && !mainDimInStyle) {
       node.layout[dim[mainAxis]] = Math.max(mainPos, 0);
     }
-    if (node.layout[dim[crossAxis]] === undefined) {
+    if (isUndefined(node.layout[dim[crossAxis]])) {
       node.layout[dim[crossAxis]] = Math.max(crossDim, 0);
     }
 
