@@ -71,7 +71,7 @@ typedef struct css_node {
   css_style_t style;
   css_layout_t layout;
   struct css_node **children;
-  unsigned int children_count;
+  int children_count;
 } css_node_t;
 
 css_node_t *new_css_node() {
@@ -95,16 +95,16 @@ css_node_t *new_css_node() {
   return node;
 }
 
-void new_css_node_children(css_node_t *node, unsigned int children_count) {
+void new_css_node_children(css_node_t *node, int children_count) {
   node->children = malloc(children_count * sizeof(css_node_t *));
-  for (unsigned int i = 0; i < children_count; ++i) {
+  for (int i = 0; i < children_count; ++i) {
     node->children[i] = new_css_node();
   }
   node->children_count = children_count;
 }
 
 void free_css_node(css_node_t *node) {
-  for (unsigned int i = 0; i < node->children_count; ++i) {
+  for (int i = 0; i < node->children_count; ++i) {
     free_css_node(node->children[i]);
   }
   free(node);
@@ -114,8 +114,8 @@ void layout_node(css_node_t *node) {
   node->layout.dimensions[CSS_WIDTH] = node->style.dimensions[CSS_WIDTH];
 }
 
-void indent(unsigned int n) {
-  for (unsigned int i = 0; i < n; ++i) {
+void indent(int n) {
+  for (int i = 0; i < n; ++i) {
     printf("  ");
   }
 }
@@ -129,7 +129,7 @@ void print_number_nan(const char *str, float number) {
     printf("%s: %g, ", str, number);
   }
 }
-void print_style(css_node_t *node, unsigned int level) {
+void print_style(css_node_t *node, int level) {
   indent(level);
   printf("{");
   if (node->style.flex_direction == CSS_FLEX_DIRECTION_ROW) {
@@ -188,7 +188,7 @@ void print_style(css_node_t *node, unsigned int level) {
 
   if (node->children_count > 0) {
     printf("children: [\n");
-    for (unsigned int i = 0; i < node->children_count; ++i) {
+    for (int i = 0; i < node->children_count; ++i) {
       print_style(node->children[i], level + 1);
     }
     indent(level);
@@ -198,7 +198,7 @@ void print_style(css_node_t *node, unsigned int level) {
   }
 }
 
-void print_layout(css_node_t *node, unsigned int level) {
+void print_layout(css_node_t *node, int level) {
   indent(level);
   printf("{");
   printf("width: %g, ", node->layout.dimensions[CSS_WIDTH]);
@@ -208,7 +208,7 @@ void print_layout(css_node_t *node, unsigned int level) {
 
   if (node->children_count > 0) {
     printf("children: [\n");
-    for (unsigned int i = 0; i < node->children_count; ++i) {
+    for (int i = 0; i < node->children_count; ++i) {
       print_layout(node->children[i], level + 1);
     }
     indent(level);
@@ -220,19 +220,19 @@ void print_layout(css_node_t *node, unsigned int level) {
 
 
 
-unsigned int leading[2] = {
+int leading[2] = {
   /* CSS_FLEX_DIRECTION_COLUMN = */ CSS_TOP,
   /* CSS_FLEX_DIRECTION_ROW = */ CSS_LEFT
 };
-unsigned int trailing[2] = {
+int trailing[2] = {
   /* CSS_FLEX_DIRECTION_COLUMN = */ CSS_BOTTOM,
   /* CSS_FLEX_DIRECTION_ROW = */ CSS_RIGHT
 };
-unsigned int pos[2] = {
+int pos[2] = {
   /* CSS_FLEX_DIRECTION_COLUMN = */ CSS_TOP,
   /* CSS_FLEX_DIRECTION_ROW = */ CSS_LEFT
 };
-unsigned int dim[2] = {
+int dim[2] = {
   /* CSS_FLEX_DIRECTION_COLUMN = */ CSS_HEIGHT,
   /* CSS_FLEX_DIRECTION_ROW = */ CSS_WIDTH
 };
@@ -243,11 +243,11 @@ bool isUndefined(float value) {
   return value != value; // NaN check
 }
 
-float getMargin(css_node_t *node, unsigned int location) {
+float getMargin(css_node_t *node, int location) {
   return node->style.margin[location];
 }
 
-float getPadding(css_node_t *node, unsigned int location) {
+float getPadding(css_node_t *node, int location) {
   return node->style.padding[location];
 }
 
@@ -315,8 +315,8 @@ void layoutNode(css_node_t *node) {
   }
 
   float mainContentDim = 0;
-  unsigned int flexibleChildrenCount = 0;
-  for (unsigned int i = 0; i < node->children_count; ++i) {
+  int flexibleChildrenCount = 0;
+  for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = node->children[i];
     if (isUndefined(node->layout.dimensions[dim[mainAxis]]) || !getFlex(child)) {
       layoutNode(child);
@@ -336,7 +336,7 @@ void layoutNode(css_node_t *node) {
 
     if (flexibleChildrenCount) {
       float flexibleMainDim = remainingMainDim / flexibleChildrenCount;
-      for (unsigned int i = 0; i < node->children_count; ++i) {
+      for (int i = 0; i < node->children_count; ++i) {
         css_node_t* child = node->children[i];
         if (getFlex(child)) {
           child->layout.dimensions[dim[mainAxis]] = flexibleMainDim;
@@ -362,7 +362,7 @@ void layoutNode(css_node_t *node) {
 
   float crossDim = 0;
   float mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
-  for (unsigned int i = 0; i < node->children_count; ++i) {
+  for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = node->children[i];
     child->layout.position[pos[mainAxis]] += mainPos;
     mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
@@ -385,7 +385,7 @@ void layoutNode(css_node_t *node) {
     node->layout.dimensions[dim[crossAxis]] = crossDim > 0 ? crossDim : 0;
   }
 
-  for (unsigned int i = 0; i < node->children_count; ++i) {
+  for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = node->children[i];
     css_align_t alignItem = getAlignItem(node, child);
     float remainingCrossDim = node->layout.dimensions[dim[crossAxis]] -

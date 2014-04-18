@@ -160,8 +160,8 @@ var computeLayout = (function() {
     }
 
     var/*float*/ mainContentDim = 0;
-    var/*unsigned int*/ flexibleChildrenCount = 0;
-    for (var/*unsigned int*/ i = 0; i < node.children.length; ++i) {
+    var/*int*/ flexibleChildrenCount = 0;
+    for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
       if (isUndefined(node.layout[dim[mainAxis]]) || !getFlex(child)) {
         layoutNode(child);
@@ -181,7 +181,7 @@ var computeLayout = (function() {
 
       if (flexibleChildrenCount) {
         var/*float*/ flexibleMainDim = remainingMainDim / flexibleChildrenCount;
-        for (var/*unsigned int*/ i = 0; i < node.children.length; ++i) {
+        for (var/*int*/ i = 0; i < node.children.length; ++i) {
           var/*css_node_t**/ child = node.children[i];
           if (getFlex(child)) {
             child.layout[dim[mainAxis]] = flexibleMainDim;
@@ -207,7 +207,7 @@ var computeLayout = (function() {
 
     var/*float*/ crossDim = 0;
     var/*float*/ mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
-    for (var/*unsigned int*/ i = 0; i < node.children.length; ++i) {
+    for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
       child.layout[pos[mainAxis]] += mainPos;
       mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
@@ -230,7 +230,7 @@ var computeLayout = (function() {
       node.layout[dim[crossAxis]] = crossDim > 0 ? crossDim : 0;
     }
 
-    for (var/*unsigned int*/ i = 0; i < node.children.length; ++i) {
+    for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
       var/*css_align_t*/ alignItem = getAlignItem(node, child);
       var/*float*/ remainingCrossDim = node.layout[dim[crossAxis]] -
