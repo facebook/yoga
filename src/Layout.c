@@ -125,7 +125,7 @@ void print_number_0(const char *str, float number) {
   }
 }
 void print_number_nan(const char *str, float number) {
-  if (number == number) {
+  if (!isnan(number)) {
     printf("%s: %g, ", str, number);
   }
 }
@@ -240,7 +240,7 @@ int dim[2] = {
 
 
 bool isUndefined(float value) {
-  return value != value; // NaN check
+  return isnan(value);
 }
 
 float getMargin(css_node_t *node, int location) {
