@@ -423,9 +423,6 @@ int main()
 
   new_css_node_children(node, 3);
   node->children[0]->style.dimensions[CSS_HEIGHT] = 50;
-
-  node->layout.position[CSS_TOP] = 0;
-  node->layout.position[CSS_LEFT] = 0;
   layoutNode(node);
 
   print_style(node, 0);
