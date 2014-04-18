@@ -42,6 +42,10 @@ function computeLayout(node) {
     return 0;
   }
 
+  function isUndefined(value) {
+    return value == undefined;
+  }
+
   function getMargin(node, location) {
     return getSpacing(node, 'margin', location);
   }
@@ -75,7 +79,7 @@ function computeLayout(node) {
   }
 
   function getFlex(node) {
-    return node.style.flex === 1;
+    return node.style.flex == 1;
   }
 
   function getDimWithMargin(node, axis) {
@@ -117,13 +121,9 @@ function computeLayout(node) {
     column: 'height'
   };
 
-  function isUndefined(value) {
-    return value === undefined;
-  }
-
   function layoutNode(node) {
     var mainAxis = getFlexDirection(node);
-    var crossAxis = mainAxis === 'row' ? 'column' : 'row';
+    var crossAxis = mainAxis == 'row' ? 'column' : 'row';
 
     var mainDimInStyle = dim[mainAxis] in node.style;
     if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
@@ -166,13 +166,13 @@ function computeLayout(node) {
         var justifyContent = getJustifyContent(node);
         if (justifyContent == 'flex-start') {
           // Do nothing
-        } else if (justifyContent === 'flex-end') {
+        } else if (justifyContent == 'flex-end') {
           leadingMainDim = remainingMainDim;
-        } else if (justifyContent === 'center') {
+        } else if (justifyContent == 'center') {
           leadingMainDim = remainingMainDim / 2;
-        } else if (justifyContent === 'space-between') {
+        } else if (justifyContent == 'space-between') {
           betweenMainDim = remainingMainDim / (node.children.length - 1);
-        } else if (justifyContent === 'space-around') {
+        } else if (justifyContent == 'space-around') {
           betweenMainDim = remainingMainDim / node.children.length;
           leadingMainDim = betweenMainDim / 2;
         }
@@ -211,13 +211,13 @@ function computeLayout(node) {
         getPadding(node, trailing[crossAxis]);
 
       var leadingCrossDim = getPadding(node, leading[crossAxis]);
-      if (alignItem === 'flex-start') {
+      if (alignItem == 'flex-start') {
         // Do nothing
-      } else if (alignItem === 'center') {
+      } else if (alignItem == 'center') {
         leadingCrossDim += remainingCrossDim / 2;
-      } else if (alignItem === 'flex-end') {
+      } else if (alignItem == 'flex-end') {
         leadingCrossDim += remainingCrossDim;
-      } else if (alignItem === 'stretch') {
+      } else if (alignItem == 'stretch') {
         child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
           getPadding(node, leading[crossAxis]) -
           getPadding(node, trailing[crossAxis]) -
