@@ -107,6 +107,7 @@ void free_css_node(css_node_t *node) {
   for (int i = 0; i < node->children_count; ++i) {
     free_css_node(node->children[i]);
   }
+  free(node->children);
   free(node);
 }
 
