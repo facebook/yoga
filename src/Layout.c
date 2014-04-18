@@ -70,14 +70,12 @@ typedef struct {
 typedef struct css_node {
   css_style_t style;
   css_layout_t layout;
-  struct css_node **children;
+  struct css_node *children;
   int children_count;
 } css_node_t;
 
-css_node_t *new_css_node() {
-  css_node_t *node = malloc(sizeof(css_node_t));
-  memset(node, 0, sizeof(css_node_t));
-
+void init_css_node(css_node_t *node) {
+  memset(node, 0, sizeof(*node));
   node->style.align_items = CSS_ALIGN_FLEX_START;
 
   // Some of the fields default to undefined and not 0
@@ -91,23 +89,31 @@ css_node_t *new_css_node() {
 
   node->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
   node->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
+}
 
+css_node_t *new_css_node() {
+  css_node_t *node = malloc(sizeof(*node));
+  init_css_node(node);
   return node;
 }
 
 void new_css_node_children(css_node_t *node, int children_count) {
-  node->children = malloc(children_count * sizeof(css_node_t *));
+  node->children = malloc(children_count * sizeof(css_node_t));
   for (int i = 0; i < children_count; ++i) {
-    node->children[i] = new_css_node();
+    init_css_node(&node->children[i]);
   }
   node->children_count = children_count;
 }
 
-void free_css_node(css_node_t *node) {
+void cleanup_css_node(css_node_t *node) {
   for (int i = 0; i < node->children_count; ++i) {
-    free_css_node(node->children[i]);
+    cleanup_css_node(&node->children[i]);
   }
   free(node->children);
+}
+
+void free_css_node(css_node_t *node) {
+  cleanup_css_node(node);
   free(node);
 }
 
@@ -190,7 +196,7 @@ void print_style(css_node_t *node, int level) {
   if (node->children_count > 0) {
     printf("children: [\n");
     for (int i = 0; i < node->children_count; ++i) {
-      print_style(node->children[i], level + 1);
+      print_style(&node->children[i], level + 1);
     }
     indent(level);
     printf("]},\n");
@@ -210,7 +216,7 @@ void print_layout(css_node_t *node, int level) {
   if (node->children_count > 0) {
     printf("children: [\n");
     for (int i = 0; i < node->children_count; ++i) {
-      print_layout(node->children[i], level + 1);
+      print_layout(&node->children[i], level + 1);
     }
     indent(level);
     printf("]},\n");
@@ -318,7 +324,7 @@ void layoutNode(css_node_t *node) {
   float mainContentDim = 0;
   int flexibleChildrenCount = 0;
   for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = node->children[i];
+    css_node_t* child = &node->children[i];
     if (isUndefined(node->layout.dimensions[dim[mainAxis]]) || !getFlex(child)) {
       layoutNode(child);
       mainContentDim += getDimWithMargin(child, mainAxis);
@@ -338,7 +344,7 @@ void layoutNode(css_node_t *node) {
     if (flexibleChildrenCount) {
       float flexibleMainDim = remainingMainDim / flexibleChildrenCount;
       for (int i = 0; i < node->children_count; ++i) {
-        css_node_t* child = node->children[i];
+        css_node_t* child = &node->children[i];
         if (getFlex(child)) {
           child->layout.dimensions[dim[mainAxis]] = flexibleMainDim;
           layoutNode(child);
@@ -364,7 +370,7 @@ void layoutNode(css_node_t *node) {
   float crossDim = 0;
   float mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
   for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = node->children[i];
+    css_node_t* child = &node->children[i];
     child->layout.position[pos[mainAxis]] += mainPos;
     mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 
@@ -387,7 +393,7 @@ void layoutNode(css_node_t *node) {
   }
 
   for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = node->children[i];
+    css_node_t* child = &node->children[i];
     css_align_t alignItem = getAlignItem(node, child);
     float remainingCrossDim = node->layout.dimensions[dim[crossAxis]] -
       getDimWithMargin(child, crossAxis) -
@@ -426,7 +432,7 @@ int main()
   node->style.align_items = CSS_ALIGN_STRETCH;
 
   new_css_node_children(node, 3);
-  node->children[0]->style.dimensions[CSS_HEIGHT] = 50;
+  node->children[0].style.dimensions[CSS_HEIGHT] = 50;
   layoutNode(node);
 
   print_style(node, 0);
