@@ -107,6 +107,7 @@ void free_css_node(css_node_t *node) {
   for (int i = 0; i < node->children_count; ++i) {
     free_css_node(node->children[i]);
   }
+  free(node->children);
   free(node);
 }
 
@@ -125,7 +126,7 @@ void print_number_0(const char *str, float number) {
   }
 }
 void print_number_nan(const char *str, float number) {
-  if (number == number) {
+  if (!isnan(number)) {
     printf("%s: %g, ", str, number);
   }
 }
@@ -240,7 +241,7 @@ int dim[2] = {
 
 
 bool isUndefined(float value) {
-  return value != value; // NaN check
+  return isnan(value);
 }
 
 float getMargin(css_node_t *node, int location) {
