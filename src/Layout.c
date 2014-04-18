@@ -328,7 +328,7 @@ void layoutNode(css_node_t *node) {
 
   float leadingMainDim = 0;
   float betweenMainDim = 0;
-  if (isUndefined(node->layout.dimensions[dim[mainAxis]])) {
+  if (!isUndefined(node->layout.dimensions[dim[mainAxis]])) {
     float remainingMainDim = node->layout.dimensions[dim[mainAxis]] -
       getPadding(node, leading[mainAxis]) -
       getPadding(node, trailing[mainAxis]) -
