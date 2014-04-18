@@ -137,14 +137,15 @@ function computeLayout(node) {
 
     var mainContentDim = 0;
     var flexibleChildrenCount = 0;
-    node.children.forEach(function(child) {
+    for (var i = 0; i < node.children.length; ++i) {
+      var child = node.children[i];
       if (isUndefined(node.layout[dim[mainAxis]]) || !getFlex(child)) {
         layoutNode(child);
         mainContentDim += getDimWithMargin(child, mainAxis);
       } else {
         flexibleChildrenCount++;
       }
-    });
+    };
 
     var leadingMainDim = 0;
     var betweenMainDim = 0;
@@ -156,12 +157,13 @@ function computeLayout(node) {
 
       if (flexibleChildrenCount) {
         var flexibleMainDim = remainingMainDim / flexibleChildrenCount;
-        node.children.forEach(function(child) {
+        for (var i = 0; i < node.children.length; ++i) {
+          var child = node.children[i];
           if (getFlex(child)) {
             child.layout[dim[mainAxis]] = flexibleMainDim;
             layoutNode(child);
           }
-        });
+        }
       } else {
         var justifyContent = getJustifyContent(node);
         if (justifyContent == 'flex-start') {
@@ -181,7 +183,8 @@ function computeLayout(node) {
 
     var crossDim = 0;
     var mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
-    node.children.forEach(function(child) {
+    for (var i = 0; i < node.children.length; ++i) {
+      var child = node.children[i];
       child.layout[pos[mainAxis]] += mainPos;
       mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 
@@ -191,7 +194,7 @@ function computeLayout(node) {
           crossDim = childCrossDim;
         }
       }
-    });
+    }
     mainPos += getPadding(node, trailing[mainAxis]);
     crossDim += getPadding(node, leading[crossAxis]) +
       getPadding(node, trailing[crossAxis]);
@@ -203,7 +206,8 @@ function computeLayout(node) {
       node.layout[dim[crossAxis]] = Math.max(crossDim, 0);
     }
 
-    node.children.forEach(function(child) {
+    for (var i = 0; i < node.children.length; ++i) {
+      var child = node.children[i];
       var alignItem = getAlignItem(node, child);
       var remainingCrossDim = node.layout[dim[crossAxis]] -
         getDimWithMargin(child, crossAxis) -
@@ -225,7 +229,7 @@ function computeLayout(node) {
           getMargin(child, trailing[crossAxis]);
       }
       child.layout[pos[crossAxis]] += leadingCrossDim;
-    });
+    }
 
     node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
       getRelativePosition(node, mainAxis);
