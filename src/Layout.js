@@ -30,11 +30,6 @@ function computeLayout(node) {
       return node.style[key];
     }
 
-    key = type + capitalizeFirst(axis[location]);
-    if (key in node.style) {
-      return node.style[key];
-    }
-
     if (type in node.style) {
       return node.style[type];
     }
@@ -100,12 +95,6 @@ function computeLayout(node) {
     return -getPosition(node, trailing[axis]);
   }
 
-  var axis = {
-    left: 'horizontal',
-    right: 'horizontal',
-    top: 'vertical',
-    bottom: 'vertical'
-  };
   var leading = {
     row: 'left',
     column: 'top'

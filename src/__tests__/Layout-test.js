@@ -622,11 +622,12 @@ describe('Layout', function() {
       randMinMax(node, 0.1, 'bottom', -10, 10);
       randSpacing(node, 0.1, 'margin', 0, 20);
       randSpacing(node, 0.1, 'padding', 0, 20);
-      randEnum(node, 0.1, 'flexDirection', ['row', 'column']);
+      randEnum(node, 0.1, 'flexDirection', ['column', 'row']);
       randEnum(node, 0.1, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
       randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'flex', ['none', 1]);
+//      randEnum(node, 0.1, 'position', ['relative', 'absolute']);
       randChildren(node, 0.2);
       return node;
     }
