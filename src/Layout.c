@@ -89,8 +89,8 @@ css_node_t *new_css_node() {
   node->style.position[CSS_RIGHT] = CSS_UNDEFINED;
   node->style.position[CSS_BOTTOM] = CSS_UNDEFINED;
 
-  node->layout.position[CSS_LEFT] = CSS_UNDEFINED;
-  node->layout.position[CSS_TOP] = CSS_UNDEFINED;
+  node->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
+  node->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
 
   return node;
 }
@@ -419,6 +419,7 @@ int main()
   css_node_t *node = new_css_node();
   node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
   node->style.dimensions[CSS_WIDTH] = 100;
+  node->style.align_items = CSS_ALIGN_STRETCH;
 
   new_css_node_children(node, 3);
   node->children[0]->style.dimensions[CSS_HEIGHT] = 50;
