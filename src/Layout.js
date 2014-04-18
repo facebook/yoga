@@ -228,8 +228,6 @@ function computeLayout(node) {
   }
 
   fillNodes(node);
-  node.layout.top = 0;
-  node.layout.left = 0;
 
   layoutNode(node);
   return extractNodes(node);
