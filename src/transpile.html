@@ -19,6 +19,7 @@ document.getElementById('layout_code').value = computeLayout.layoutNode.toString
   .replace(/layout\[pos/g, 'layout.position[pos')
   .replace(/layout\[leading/g, 'layout.position[leading')
   .replace(/style\[dim/g, 'style.dimensions[dim')
+  .replace(/node.children\[i\]/g, '&node.children[i]')
   .replace(/node\./g, 'node->')
   .replace(/child\./g, 'child->')
   .replace(/var\/\*([^\/]+)\*\//g, '$1')
