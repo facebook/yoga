@@ -271,15 +271,3 @@ var computeLayout = (function() {
 })();
 
 
-var c_code = computeLayout.layoutNode.toString()
-  .replace(/\.children\.length/g, '.children_count')
-  .replace(/layout\[dim/g, 'layout.dimensions[dim')
-  .replace(/layout\[pos/g, 'layout.position[pos')
-  .replace(/layout\[leading/g, 'layout.position[leading')
-  .replace(/style\[dim/g, 'style.dimensions[dim')
-  .replace(/node\./g, 'node->')
-  .replace(/child\./g, 'child->')
-  .replace(/var\/\*([^\/]+)\*\//g, '$1')
-  .replace(/\n  /g, '\n');
-
-console.log(c_code);
