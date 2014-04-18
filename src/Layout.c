@@ -301,8 +301,8 @@ float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
 void layoutNode(css_node_t *node) {
   css_flex_direction_t mainAxis = getFlexDirection(node);
   css_flex_direction_t crossAxis = mainAxis == CSS_FLEX_DIRECTION_ROW ?
-      CSS_FLEX_DIRECTION_COLUMN :
-      CSS_FLEX_DIRECTION_ROW;
+    CSS_FLEX_DIRECTION_COLUMN :
+    CSS_FLEX_DIRECTION_ROW;
 
   bool mainDimInStyle = isDimDefined(node, mainAxis);
   if (isUndefined(node->layout.dimensions[dim[mainAxis]]) && mainDimInStyle) {
@@ -317,7 +317,7 @@ void layoutNode(css_node_t *node) {
   float mainContentDim = 0;
   unsigned int flexibleChildrenCount = 0;
   for (unsigned int i = 0; i < node->children_count; ++i) {
-    css_node_t *child = node->children[i];
+    css_node_t* child = node->children[i];
     if (isUndefined(node->layout.dimensions[dim[mainAxis]]) || !getFlex(child)) {
       layoutNode(child);
       mainContentDim += getDimWithMargin(child, mainAxis);
@@ -337,7 +337,7 @@ void layoutNode(css_node_t *node) {
     if (flexibleChildrenCount) {
       float flexibleMainDim = remainingMainDim / flexibleChildrenCount;
       for (unsigned int i = 0; i < node->children_count; ++i) {
-        css_node_t *child = node->children[i];
+        css_node_t* child = node->children[i];
         if (getFlex(child)) {
           child->layout.dimensions[dim[mainAxis]] = flexibleMainDim;
           layoutNode(child);
@@ -347,10 +347,10 @@ void layoutNode(css_node_t *node) {
       css_justify_t justifyContent = getJustifyContent(node);
       if (justifyContent == CSS_JUSTIFY_FLEX_START) {
         // Do nothing
-      } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
-        leadingMainDim = remainingMainDim;
       } else if (justifyContent == CSS_JUSTIFY_CENTER) {
         leadingMainDim = remainingMainDim / 2;
+      } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
+        leadingMainDim = remainingMainDim;
       } else if (justifyContent == CSS_JUSTIFY_SPACE_BETWEEN) {
         betweenMainDim = remainingMainDim / (node->children_count - 1);
       } else if (justifyContent == CSS_JUSTIFY_SPACE_AROUND) {
@@ -363,7 +363,7 @@ void layoutNode(css_node_t *node) {
   float crossDim = 0;
   float mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
   for (unsigned int i = 0; i < node->children_count; ++i) {
-    css_node_t *child = node->children[i];
+    css_node_t* child = node->children[i];
     child->layout.position[pos[mainAxis]] += mainPos;
     mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 
@@ -379,14 +379,14 @@ void layoutNode(css_node_t *node) {
     getPadding(node, trailing[crossAxis]);
 
   if (isUndefined(node->layout.dimensions[dim[mainAxis]]) && !mainDimInStyle) {
-    node->layout.dimensions[dim[mainAxis]] = fmaxf(mainPos, 0);
+    node->layout.dimensions[dim[mainAxis]] = mainPos > 0 ? mainPos : 0;
   }
   if (isUndefined(node->layout.dimensions[dim[crossAxis]])) {
-    node->layout.dimensions[dim[crossAxis]] = fmaxf(crossDim, 0);
+    node->layout.dimensions[dim[crossAxis]] = crossDim > 0 ? crossDim : 0;
   }
 
   for (unsigned int i = 0; i < node->children_count; ++i) {
-    css_node_t *child = node->children[i];
+    css_node_t* child = node->children[i];
     css_align_t alignItem = getAlignItem(node, child);
     float remainingCrossDim = node->layout.dimensions[dim[crossAxis]] -
       getDimWithMargin(child, crossAxis) -
