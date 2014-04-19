@@ -250,7 +250,7 @@ float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
   if (!isUndefined(lead)) {
     return lead;
   }
-  return getPosition(node, trailing[axis]);
+  return -getPosition(node, trailing[axis]);
 }
 
 void layoutNode(css_node_t *node) {
