@@ -86,43 +86,43 @@ function printLayout(test) {
   }
 
   function rec(node) {
-    if (node.children) {
-      addEnum(node, 'flexDirection', 'flex_direction', {
-        'row': 'CSS_FLEX_DIRECTION_ROW',
-        'column': 'CSS_FLEX_DIRECTION_COLUMN'
-      });
-      addEnum(node, 'justifyContent', 'justify_content', {
-        'flex-start': 'CSS_JUSTIFY_FLEX_START',
-        'center': 'CSS_JUSTIFY_CENTER',
-        'flex-end': 'CSS_JUSTIFY_FLEX_END',
-        'space-between': 'CSS_JUSTIFY_SPACE_AROUND',
-        'space-around': 'CSS_JUSTIFY_SPACE_BETWEEN'
-      });
-      addEnum(node, 'alignItems', 'align_items', {
-        'flex-start': 'CSS_ALIGN_FLEX_START',
-        'center': 'CSS_ALIGN_CENTER',
-        'flex-end': 'CSS_ALIGN_FLEX_END',
-        'stretch': 'CSS_ALIGN_STRETCH'
-      });
-      addEnum(node, 'alignSelf', 'align_self', {
-        'flex-start': 'CSS_ALIGN_FLEX_START',
-        'center': 'CSS_ALIGN_CENTER',
-        'flex-end': 'CSS_ALIGN_FLEX_END',
-        'stretch': 'CSS_ALIGN_STRETCH'
-      });
-      addEnum(node, 'flex', 'flex', {
-        'none': 'CSS_FLEX_NONE',
-        '1': 'CSS_FLEX_ONE'
-      });
-      addFloat(node, 'width', 'dimensions[CSS_WIDTH]');
-      addFloat(node, 'height', 'dimensions[CSS_HEIGHT]');
-      addSpacing(node, 'margin');
-      addSpacing(node, 'padding');
-      addFloat(node, 'left', 'position[CSS_LEFT]');
-      addFloat(node, 'top', 'position[CSS_TOP]');
-      addFloat(node, 'right', 'position[CSS_RIGHT]');
-      addFloat(node, 'bottom', 'position[CSS_BOTTOM]');
+    addEnum(node, 'flexDirection', 'flex_direction', {
+      'row': 'CSS_FLEX_DIRECTION_ROW',
+      'column': 'CSS_FLEX_DIRECTION_COLUMN'
+    });
+    addEnum(node, 'justifyContent', 'justify_content', {
+      'flex-start': 'CSS_JUSTIFY_FLEX_START',
+      'center': 'CSS_JUSTIFY_CENTER',
+      'flex-end': 'CSS_JUSTIFY_FLEX_END',
+      'space-between': 'CSS_JUSTIFY_SPACE_AROUND',
+      'space-around': 'CSS_JUSTIFY_SPACE_BETWEEN'
+    });
+    addEnum(node, 'alignItems', 'align_items', {
+      'flex-start': 'CSS_ALIGN_FLEX_START',
+      'center': 'CSS_ALIGN_CENTER',
+      'flex-end': 'CSS_ALIGN_FLEX_END',
+      'stretch': 'CSS_ALIGN_STRETCH'
+    });
+    addEnum(node, 'alignSelf', 'align_self', {
+      'flex-start': 'CSS_ALIGN_FLEX_START',
+      'center': 'CSS_ALIGN_CENTER',
+      'flex-end': 'CSS_ALIGN_FLEX_END',
+      'stretch': 'CSS_ALIGN_STRETCH'
+    });
+    addEnum(node, 'flex', 'flex', {
+      'none': 'CSS_FLEX_NONE',
+      '1': 'CSS_FLEX_ONE'
+    });
+    addFloat(node, 'width', 'dimensions[CSS_WIDTH]');
+    addFloat(node, 'height', 'dimensions[CSS_HEIGHT]');
+    addSpacing(node, 'margin');
+    addSpacing(node, 'padding');
+    addFloat(node, 'left', 'position[CSS_LEFT]');
+    addFloat(node, 'top', 'position[CSS_TOP]');
+    addFloat(node, 'right', 'position[CSS_RIGHT]');
+    addFloat(node, 'bottom', 'position[CSS_BOTTOM]');
 
+    if (node.children) {
       add('init_css_node_children(node, ' + node.children.length + ');');
       add('css_node_t *outer_node = node;');
       add('{');

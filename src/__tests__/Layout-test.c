@@ -10,6 +10,8 @@ int main()
     css_node_t *root_node = new_css_node();
 
     css_node_t *node = root_node;
+    node->style.dimensions[CSS_WIDTH] = 100;
+    node->style.dimensions[CSS_HEIGHT] = 200;
     layoutNode(root_node);
     print_style(root_node, 0);
     print_layout(root_node, 0);
@@ -28,8 +30,14 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 500;
+      node->style.dimensions[CSS_HEIGHT] = 500;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 250;
+      node->style.dimensions[CSS_HEIGHT] = 250;
       node = &outer_node->children[2];
+      node->style.dimensions[CSS_WIDTH] = 125;
+      node->style.dimensions[CSS_HEIGHT] = 125;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -49,6 +57,8 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 500;
+      node->style.dimensions[CSS_HEIGHT] = 500;
       node = &outer_node->children[1];
       node->style.dimensions[CSS_WIDTH] = 500;
       node->style.dimensions[CSS_HEIGHT] = 500;
@@ -57,7 +67,11 @@ int main()
       {
         css_node_t *node;
         node = &outer_node->children[0];
+        node->style.dimensions[CSS_WIDTH] = 250;
+        node->style.dimensions[CSS_HEIGHT] = 250;
         node = &outer_node->children[1];
+        node->style.dimensions[CSS_WIDTH] = 250;
+        node->style.dimensions[CSS_HEIGHT] = 250;
       }
     }
     layoutNode(root_node);
@@ -71,6 +85,12 @@ int main()
     css_node_t *root_node = new_css_node();
 
     css_node_t *node = root_node;
+    node->style.dimensions[CSS_WIDTH] = 100;
+    node->style.dimensions[CSS_HEIGHT] = 200;
+    node->style.margin[CSS_LEFT] = 10;
+    node->style.margin[CSS_TOP] = 10;
+    node->style.margin[CSS_RIGHT] = 10;
+    node->style.margin[CSS_BOTTOM] = 10;
     layoutNode(root_node);
     print_style(root_node, 0);
     print_layout(root_node, 0);
@@ -93,8 +113,26 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
+      node->style.margin[CSS_LEFT] = 50;
+      node->style.margin[CSS_TOP] = 50;
+      node->style.margin[CSS_RIGHT] = 50;
+      node->style.margin[CSS_BOTTOM] = 50;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
+      node->style.margin[CSS_LEFT] = 25;
+      node->style.margin[CSS_TOP] = 25;
+      node->style.margin[CSS_RIGHT] = 25;
+      node->style.margin[CSS_BOTTOM] = 25;
       node = &outer_node->children[2];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
+      node->style.margin[CSS_LEFT] = 10;
+      node->style.margin[CSS_TOP] = 10;
+      node->style.margin[CSS_RIGHT] = 10;
+      node->style.margin[CSS_BOTTOM] = 10;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -115,7 +153,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 200;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 300;
+      node->style.dimensions[CSS_HEIGHT] = 150;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -134,7 +176,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 200;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 300;
+      node->style.dimensions[CSS_HEIGHT] = 150;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -154,7 +200,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 200;
       node = &outer_node->children[1];
+      node->style.flex = CSS_FLEX_ONE;
+      node->style.dimensions[CSS_WIDTH] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -188,6 +238,8 @@ int main()
         {
           css_node_t *node;
           node = &outer_node->children[0];
+          node->style.flex = CSS_FLEX_ONE;
+          node->style.dimensions[CSS_WIDTH] = 1000;
         }
       }
     }
@@ -211,7 +263,15 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
+      node->style.margin[CSS_LEFT] = 15;
+      node->style.margin[CSS_TOP] = 50;
+      node->style.margin[CSS_BOTTOM] = 20;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
+      node->style.margin[CSS_LEFT] = 30;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -232,7 +292,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -253,7 +317,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -274,7 +342,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -295,7 +367,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -316,7 +392,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -336,6 +416,9 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.flex = CSS_FLEX_ONE;
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -356,7 +439,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 200;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -377,7 +464,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 200;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -398,7 +489,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 200;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -419,7 +514,12 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_WIDTH] = 200;
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.align_self = CSS_ALIGN_CENTER;
+      node->style.dimensions[CSS_WIDTH] = 100;
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -440,6 +540,7 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_HEIGHT] = 100;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -474,6 +575,10 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.margin[CSS_LEFT] = 5;
+      node->style.margin[CSS_TOP] = 5;
+      node->style.margin[CSS_RIGHT] = 5;
+      node->style.margin[CSS_BOTTOM] = 5;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -492,7 +597,9 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.dimensions[CSS_HEIGHT] = 100;
       node = &outer_node->children[1];
+      node->style.dimensions[CSS_HEIGHT] = 200;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -505,6 +612,7 @@ int main()
     css_node_t *root_node = new_css_node();
 
     css_node_t *node = root_node;
+    node->style.justify_content = CSS_JUSTIFY_CENTER;
     layoutNode(root_node);
     print_style(root_node, 0);
     print_layout(root_node, 0);
@@ -523,6 +631,7 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.margin[CSS_TOP] = 10;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -546,7 +655,12 @@ int main()
       {
         css_node_t *node;
         node = &outer_node->children[0];
+        node->style.margin[CSS_LEFT] = 10;
+        node->style.margin[CSS_TOP] = 10;
+        node->style.margin[CSS_RIGHT] = 10;
+        node->style.margin[CSS_BOTTOM] = 10;
         node = &outer_node->children[1];
+        node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
     layoutNode(root_node);
@@ -565,6 +679,7 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.flex = CSS_FLEX_ONE;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -583,6 +698,7 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.margin[CSS_LEFT] = 10;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -595,6 +711,10 @@ int main()
     css_node_t *root_node = new_css_node();
 
     css_node_t *node = root_node;
+    node->style.padding[CSS_LEFT] = 5;
+    node->style.padding[CSS_TOP] = 5;
+    node->style.padding[CSS_RIGHT] = 5;
+    node->style.padding[CSS_BOTTOM] = 5;
     layoutNode(root_node);
     print_style(root_node, 0);
     print_layout(root_node, 0);
@@ -636,6 +756,10 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.margin[CSS_LEFT] = 5;
+      node->style.margin[CSS_TOP] = 5;
+      node->style.margin[CSS_RIGHT] = 5;
+      node->style.margin[CSS_BOTTOM] = 5;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -653,6 +777,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.align_self = CSS_ALIGN_STRETCH;
+      node->style.padding[CSS_LEFT] = 10;
+      node->style.padding[CSS_TOP] = 10;
+      node->style.padding[CSS_RIGHT] = 10;
+      node->style.padding[CSS_BOTTOM] = 10;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -674,6 +803,11 @@ int main()
     {
       css_node_t *node;
       node = &outer_node->children[0];
+      node->style.align_self = CSS_ALIGN_STRETCH;
+      node->style.padding[CSS_LEFT] = 10;
+      node->style.padding[CSS_TOP] = 10;
+      node->style.padding[CSS_RIGHT] = 10;
+      node->style.padding[CSS_BOTTOM] = 10;
     }
     layoutNode(root_node);
     print_style(root_node, 0);
@@ -697,6 +831,10 @@ int main()
       {
         css_node_t *node;
         node = &outer_node->children[0];
+        node->style.margin[CSS_LEFT] = 16;
+        node->style.margin[CSS_TOP] = 16;
+        node->style.margin[CSS_RIGHT] = 16;
+        node->style.margin[CSS_BOTTOM] = 16;
       }
     }
     layoutNode(root_node);
@@ -710,6 +848,8 @@ int main()
     css_node_t *root_node = new_css_node();
 
     css_node_t *node = root_node;
+    node->style.position[CSS_LEFT] = 5;
+    node->style.position[CSS_TOP] = 5;
     layoutNode(root_node);
     print_style(root_node, 0);
     print_layout(root_node, 0);
@@ -741,6 +881,7 @@ int main()
     css_node_t *root_node = new_css_node();
 
     css_node_t *node = root_node;
+    node->style.position[CSS_BOTTOM] = 5;
     layoutNode(root_node);
     print_style(root_node, 0);
     print_layout(root_node, 0);
@@ -752,6 +893,8 @@ int main()
     css_node_t *root_node = new_css_node();
 
     css_node_t *node = root_node;
+    node->style.position[CSS_TOP] = 10;
+    node->style.position[CSS_BOTTOM] = 5;
     layoutNode(root_node);
     print_style(root_node, 0);
     print_layout(root_node, 0);
