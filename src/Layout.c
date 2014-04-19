@@ -69,6 +69,13 @@ void print_number_nan(const char *str, float number) {
   }
 }
 
+bool four_equal(float four[4]) {
+  return
+    four[0] == four[1] &&
+    four[0] == four[2] &&
+    four[0] == four[3];
+}
+
 void print_style(css_node_t *node, int level) {
   indent(level);
   printf("{");
@@ -108,15 +115,23 @@ void print_style(css_node_t *node, int level) {
     printf("flex: 1, ");
   }
 
-  print_number_0("marginLeft", node->style.margin[CSS_LEFT]);
-  print_number_0("marginRight", node->style.margin[CSS_RIGHT]);
-  print_number_0("marginTop", node->style.margin[CSS_TOP]);
-  print_number_0("marginBottom", node->style.margin[CSS_BOTTOM]);
+  if (four_equal(node->style.margin)) {
+    print_number_0("margin", node->style.margin[CSS_LEFT]);
+  } else {
+    print_number_0("marginLeft", node->style.margin[CSS_LEFT]);
+    print_number_0("marginRight", node->style.margin[CSS_RIGHT]);
+    print_number_0("marginTop", node->style.margin[CSS_TOP]);
+    print_number_0("marginBottom", node->style.margin[CSS_BOTTOM]);
+  }
 
-  print_number_0("paddingLeft", node->style.padding[CSS_LEFT]);
-  print_number_0("paddingRight", node->style.padding[CSS_RIGHT]);
-  print_number_0("paddingTop", node->style.padding[CSS_TOP]);
-  print_number_0("paddingBottom", node->style.padding[CSS_BOTTOM]);
+  if (four_equal(node->style.padding)) {
+    print_number_0("padding", node->style.margin[CSS_LEFT]);
+  } else {
+    print_number_0("paddingLeft", node->style.padding[CSS_LEFT]);
+    print_number_0("paddingRight", node->style.padding[CSS_RIGHT]);
+    print_number_0("paddingTop", node->style.padding[CSS_TOP]);
+    print_number_0("paddingBottom", node->style.padding[CSS_BOTTOM]);
+  }
 
   print_number_nan("width", node->style.dimensions[CSS_WIDTH]);
   print_number_nan("height", node->style.dimensions[CSS_HEIGHT]);
