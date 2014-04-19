@@ -25,6 +25,14 @@ void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
 
   if (!are_layout_equal(style, expected_layout)) {
     printf("%sFAIL%s %s\n", "\x1B[31m", "\x1B[0m", name);
+
+    printf("Input:    ");
+    print_style(style, 0);
+    printf("Output:   ");
+    print_layout(style, 0);
+
+    printf("Expected: ");
+    print_layout(expected_layout, 0);
   } else {
     printf("%sPASS%s %s\n", "\x1B[32m", "\x1B[0m",  name);
   }
