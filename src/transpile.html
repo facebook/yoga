@@ -25,3 +25,74 @@ document.getElementById('layout_code').value = computeLayout.layoutNode.toString
   .replace(/var\/\*([^\/]+)\*\//g, '$1')
   .replace(/\n  /g, '\n');
 </script>
+
+<h1>Tests</h1>
+<textarea id="test_code" onclick="this.select()"></textarea>
+<script>
+var currentTest = '';
+var allTests = [];
+var layoutTestUtils = {
+  testLayout: function(node, expectedLayout) {
+    allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
+  },
+  testRandomLayout: function(node, i) {
+
+  }
+};
+function describe(name, cb) { cb(); }
+function it(name, cb) { currentTest = name; cb(); }
+</script>
+<script src="__tests__/Layout-test.js"></script>
+<script>
+
+function printLayout(test) {
+  var level = 1;
+  var res = [];
+
+  function add(str) {
+    res.push(indent(level) + str);
+  }
+
+  function indent(level) {
+    var result = '';
+    for (var i = 0; i < level; ++i) {
+      result += '  ';
+    }
+    return result;
+  }
+  function rec(node) {
+    if (node.children) {
+      add('init_css_node_children(node, ' + node.children.length + ');');
+      add('css_node_t *outer_node = node;');
+      add('{');
+      level++;
+      add('css_node_t *node;');
+
+      for (var i = 0; i < node.children.length; ++i) {
+        add('node = &outer_node->children[' + i + '];');
+        rec(node.children[i]);
+      }
+
+      level--;
+      add('}');
+    }
+  }
+
+  add('{');
+  level++;
+  add('printf("%s", "' + test.name.replace(/"/g, '\\"') + '\\n");');
+  add('css_node_t *root_node = new_css_node();');
+  add('');
+  add('css_node_t *node = root_node;');
+  rec(test.node);
+  add('layoutNode(root_node);');
+  add('print_style(root_node, 0);');
+  add('print_layout(root_node, 0);');
+  add('free_css_node(root_node);');
+  level--;
+  add('}');
+
+  return res.join('\n');
+}
+document.getElementById('test_code').value = allTests.map(printLayout).join('\n\n');
+</script>
