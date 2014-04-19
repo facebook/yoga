@@ -23,11 +23,10 @@ bool are_layout_equal(css_node_t *a, css_node_t *b) {
 void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
   layoutNode(style);
 
-  printf("%s\n", name);
   if (!are_layout_equal(style, expected_layout)) {
-    printf("FAIL\n");
+    printf("%sFAIL%s %s\n", "\x1B[31m", "\x1B[0m", name);
   } else {
-    printf("PASS\n");
+    printf("%sPASS%s %s\n", "\x1B[32m", "\x1B[0m",  name);
   }
 
   free_css_node(style);
