@@ -645,7 +645,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.dimensions[CSS_WIDTH] = 1000;
       node->style.dimensions[CSS_HEIGHT] = 1000;
       init_css_node_children(node, 2);
@@ -692,7 +692,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.dimensions[CSS_WIDTH] = 1000;
       node->style.dimensions[CSS_HEIGHT] = 1000;
       init_css_node_children(node, 2);
@@ -1615,7 +1615,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.dimensions[CSS_HEIGHT] = 10;
       node->style.padding[CSS_TOP] = 5;
       init_css_node_children(node, 1);
