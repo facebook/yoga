@@ -85,7 +85,17 @@ function printLayout(test) {
     addFloat(node, spacing + 'Bottom', spacing + '[CSS_BOTTOM]');
   }
 
-  function rec(node) {
+  add('{');
+  level++;
+  add('printf("%s", "' + test.name.replace(/"/g, '\\"') + '\\n");');
+  add('');
+  add('css_node_t *root_node = new_css_node();');
+
+  add('{');
+  level++;
+  add('css_node_t *node = root_node;');
+
+  function rec_style(node) {
     addEnum(node, 'flexDirection', 'flex_direction', {
       'row': 'CSS_FLEX_DIRECTION_ROW',
       'column': 'CSS_FLEX_DIRECTION_COLUMN'
@@ -131,24 +141,54 @@ function printLayout(test) {
 
       for (var i = 0; i < node.children.length; ++i) {
         add('node = &outer_node->children[' + i + '];');
-        rec(node.children[i]);
+        rec_style(node.children[i]);
       }
 
       level--;
       add('}');
     }
   }
+  rec_style(test.node);
+  level--;
+  add('}');
+  add('layoutNode(root_node);');
+  add('');
 
+  add('css_node_t *root_layout = new_css_node();');
   add('{');
   level++;
-  add('printf("%s", "' + test.name.replace(/"/g, '\\"') + '\\n");');
-  add('css_node_t *root_node = new_css_node();');
-  add('');
-  add('css_node_t *node = root_node;');
-  rec(test.node);
-  add('layoutNode(root_node);');
+  add('css_node_t *node = root_layout;');
+
+  function rec_layout(node) {
+    add('node->layout.position[CSS_TOP] = ' + node.top + ';');
+    add('node->layout.position[CSS_LEFT] = ' + node.left + ';');
+    add('node->layout.dimensions[CSS_WIDTH] = ' + node.width + ';');
+    add('node->layout.dimensions[CSS_HEIGHT] = ' + node.height + ';');
+
+    if (node.children) {
+      add('init_css_node_children(node, ' + node.children.length + ');');
+      add('css_node_t *outer_node = node;');
+      add('{');
+      level++;
+      add('css_node_t *node;');
+
+      for (var i = 0; i < node.children.length; ++i) {
+        add('node = &outer_node->children[' + i + '];');
+        rec_layout(node.children[i]);
+      }
+
+      level--;
+      add('}');
+    }
+  }
+  rec_layout(test.expectedLayout);
+  level--;
+  add('}');
+
+
   add('print_style(root_node, 0);');
   add('print_layout(root_node, 0);');
+  add('print_layout(root_layout, 0);');
   add('free_css_node(root_node);');
   level--;
   add('}');
