@@ -87,14 +87,12 @@ function printLayout(test) {
 
   add('{');
   level++;
-  add('printf("%s", "' + test.name.replace(/"/g, '\\"') + '\\n");');
-  add('');
-  add('css_node_t *root_node = new_css_node();');
 
+  // Output the style node
+  add('css_node_t *root_node = new_css_node();');
   add('{');
   level++;
   add('css_node_t *node = root_node;');
-
   function rec_style(node) {
     addEnum(node, 'flexDirection', 'flex_direction', {
       'row': 'CSS_FLEX_DIRECTION_ROW',
@@ -151,9 +149,9 @@ function printLayout(test) {
   rec_style(test.node);
   level--;
   add('}');
-  add('layoutNode(root_node);');
   add('');
 
+  // Output the expected layout node
   add('css_node_t *root_layout = new_css_node();');
   add('{');
   level++;
@@ -184,12 +182,10 @@ function printLayout(test) {
   rec_layout(test.expectedLayout);
   level--;
   add('}');
+  add('');
 
-
-  add('print_style(root_node, 0);');
-  add('print_layout(root_node, 0);');
-  add('print_layout(root_layout, 0);');
-  add('free_css_node(root_node);');
+  // Do the test
+  add('test("' + test.name.replace(/"/g, '\\"') + '", root_node, root_layout);');
   level--;
   add('}');
 

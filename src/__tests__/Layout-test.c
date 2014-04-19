@@ -2,19 +2,47 @@
 #include "../Layout.h"
 
 #include <stdio.h>
+#include <stdbool.h>
+
+bool are_layout_equal(css_node_t *a, css_node_t *b) {
+  if (a->layout.dimensions[CSS_WIDTH] != b->layout.dimensions[CSS_WIDTH] ||
+      a->layout.dimensions[CSS_HEIGHT] != b->layout.dimensions[CSS_HEIGHT] ||
+      a->layout.position[CSS_TOP] != b->layout.position[CSS_TOP] ||
+      a->layout.position[CSS_LEFT] != b->layout.position[CSS_LEFT] ||
+      a->children_count != b->children_count) {
+    return false;
+  }
+  for (int i = 0; i < a->children_count; ++i) {
+    if (!are_layout_equal(&a->children[i], &b->children[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
+  layoutNode(style);
+
+  printf("%s\n", name);
+  if (!are_layout_equal(style, expected_layout)) {
+    printf("FAIL\n");
+  } else {
+    printf("PASS\n");
+  }
+
+  free_css_node(style);
+  free_css_node(expected_layout);
+}
 
 int main()
 {
   {
-    printf("%s", "should layout a single node with width and height\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
       node->style.dimensions[CSS_WIDTH] = 100;
       node->style.dimensions[CSS_HEIGHT] = 200;
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -24,15 +52,11 @@ int main()
       node->layout.dimensions[CSS_WIDTH] = 100;
       node->layout.dimensions[CSS_HEIGHT] = 200;
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout a single node with width and height", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with children\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -53,7 +77,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 125;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -83,15 +106,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 125;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with children", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with nested children\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -120,7 +139,6 @@ int main()
         }
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -160,15 +178,11 @@ int main()
         }
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with nested children", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with margin\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -179,7 +193,6 @@ int main()
       node->style.margin[CSS_RIGHT] = 10;
       node->style.margin[CSS_BOTTOM] = 10;
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -189,15 +202,11 @@ int main()
       node->layout.dimensions[CSS_WIDTH] = 100;
       node->layout.dimensions[CSS_HEIGHT] = 200;
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with margin", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with several children\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -234,7 +243,6 @@ int main()
         node->style.margin[CSS_BOTTOM] = 10;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -264,15 +272,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with several children", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with row flex direction\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -291,7 +295,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 150;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -316,15 +319,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 150;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with row flex direction", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node based on children main dimensions\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -341,7 +340,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 150;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -366,15 +364,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 150;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node based on children main dimensions", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with flex\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -392,7 +386,6 @@ int main()
         node->style.dimensions[CSS_WIDTH] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -417,15 +410,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 800;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with flex", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with flex recursively\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -456,7 +445,6 @@ int main()
         }
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -496,15 +484,11 @@ int main()
         }
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with flex recursively", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with targeted margin\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -528,7 +512,6 @@ int main()
         node->style.margin[CSS_LEFT] = 30;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -553,15 +536,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with targeted margin", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with justifyContent: flex-start\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -580,7 +559,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -605,15 +583,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with justifyContent: flex-start", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with justifyContent: flex-end\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -632,7 +606,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -657,15 +630,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with justifyContent: flex-end", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with justifyContent: space-between\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -684,7 +653,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -709,15 +677,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with justifyContent: space-between", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with justifyContent: space-around\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -736,7 +700,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -761,15 +724,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with justifyContent: space-around", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with justifyContent: center\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -788,7 +747,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -813,15 +771,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with justifyContent: center", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with flex override height\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -837,7 +791,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -857,15 +810,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 1000;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with flex override height", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with alignItems: flex-start\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -884,7 +833,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -909,15 +857,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with alignItems: flex-start", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with alignItems: center\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -936,7 +880,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -961,15 +904,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with alignItems: center", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with alignItems: flex-end\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -988,7 +927,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1013,15 +951,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with alignItems: flex-end", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with alignSelf overrides alignItems\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1041,7 +975,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1066,15 +999,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with alignSelf overrides alignItems", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with alignItem: stretch\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1089,7 +1018,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1109,15 +1037,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 100;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with alignItem: stretch", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout empty node\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1128,7 +1052,6 @@ int main()
         node = &outer_node->children[0];
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1148,15 +1071,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout empty node", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout child with margin\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1171,7 +1090,6 @@ int main()
         node->style.margin[CSS_BOTTOM] = 5;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1191,15 +1109,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout child with margin", root_node, root_layout);
   }
 
   {
-    printf("%s", "should not shrink children if not enough space\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1214,7 +1128,6 @@ int main()
         node->style.dimensions[CSS_HEIGHT] = 200;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1239,21 +1152,16 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 200;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should not shrink children if not enough space", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout for center\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1263,15 +1171,11 @@ int main()
       node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout for center", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout flex-end taking into account margin\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1285,7 +1189,6 @@ int main()
         node->style.margin[CSS_TOP] = 10;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1305,15 +1208,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout flex-end taking into account margin", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout alignItems with margin\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1337,7 +1236,6 @@ int main()
         }
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1372,15 +1270,11 @@ int main()
         }
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout alignItems with margin", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout flex inside of an empty element\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1392,7 +1286,6 @@ int main()
         node->style.flex = CSS_FLEX_ONE;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1412,15 +1305,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout flex inside of an empty element", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout alignItems stretch and margin\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1433,7 +1322,6 @@ int main()
         node->style.margin[CSS_LEFT] = 10;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1453,15 +1341,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout alignItems stretch and margin", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with padding\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1470,7 +1354,6 @@ int main()
       node->style.padding[CSS_RIGHT] = 5;
       node->style.padding[CSS_BOTTOM] = 5;
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1480,15 +1363,11 @@ int main()
       node->layout.dimensions[CSS_WIDTH] = 10;
       node->layout.dimensions[CSS_HEIGHT] = 10;
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with padding", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with padding and a child\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1503,7 +1382,6 @@ int main()
         node = &outer_node->children[0];
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1523,15 +1401,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with padding and a child", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with padding and a child with margin\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1550,7 +1424,6 @@ int main()
         node->style.margin[CSS_BOTTOM] = 5;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1570,15 +1443,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with padding and a child with margin", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with padding and stretch\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1594,7 +1463,6 @@ int main()
         node->style.padding[CSS_BOTTOM] = 10;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1614,15 +1482,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 20;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with padding and stretch", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with inner & outer padding and stretch\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1642,7 +1506,6 @@ int main()
         node->style.padding[CSS_BOTTOM] = 10;
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1662,15 +1525,11 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 20;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with inner & outer padding and stretch", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with stretch and child with margin\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1692,7 +1551,6 @@ int main()
         }
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1722,22 +1580,17 @@ int main()
         }
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with stretch and child with margin", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with top and left\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
       node->style.position[CSS_LEFT] = 5;
       node->style.position[CSS_TOP] = 5;
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1747,15 +1600,11 @@ int main()
       node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with top and left", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with height, padding and space-around\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
@@ -1769,7 +1618,6 @@ int main()
         node = &outer_node->children[0];
       }
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1789,21 +1637,16 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with height, padding and space-around", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with bottom\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
       node->style.position[CSS_BOTTOM] = 5;
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1813,22 +1656,17 @@ int main()
       node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with bottom", root_node, root_layout);
   }
 
   {
-    printf("%s", "should layout node with both top and bottom\n");
-
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
       node->style.position[CSS_TOP] = 10;
       node->style.position[CSS_BOTTOM] = 5;
     }
-    layoutNode(root_node);
 
     css_node_t *root_layout = new_css_node();
     {
@@ -1838,10 +1676,8 @@ int main()
       node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
-    print_style(root_node, 0);
-    print_layout(root_node, 0);
-    print_layout(root_layout, 0);
-    free_css_node(root_node);
+
+    test("should layout node with both top and bottom", root_node, root_layout);
   }
 }
 
