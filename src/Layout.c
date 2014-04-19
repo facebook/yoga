@@ -32,7 +32,7 @@ css_node_t *new_css_node() {
 }
 
 void init_css_node_children(css_node_t *node, int children_count) {
-  node->children = malloc(children_count * sizeof(css_node_t));
+  node->children = calloc(children_count, sizeof(css_node_t));
   for (int i = 0; i < children_count; ++i) {
     init_css_node(&node->children[i]);
   }
