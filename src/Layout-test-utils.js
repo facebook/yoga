@@ -114,6 +114,7 @@ var layoutTestUtils = (function() {
     testRandomLayout: function(node, i) {
       expect({i: i, node: node, layout: computeLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
-    }
+    },
+    computeDOMLayout: computeDOMLayout
   }
 })();

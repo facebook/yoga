@@ -28,15 +28,17 @@ document.getElementById('layout_code').value = computeLayout.layoutNode.toString
 
 <h1>Tests</h1>
 <textarea id="test_code" onclick="this.select()"></textarea>
+<script src="Layout-test-utils.js"></script>
 <script>
 var currentTest = '';
 var allTests = [];
+var computeDOMLayout = layoutTestUtils.computeDOMLayout;
 var layoutTestUtils = {
   testLayout: function(node, expectedLayout) {
     allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
   },
   testRandomLayout: function(node, i) {
-
+    allTests.push({name: 'Random #' + i, node: node, expectedLayout: computeDOMLayout(node)});
   }
 };
 function describe(name, cb) { cb(); }
@@ -132,13 +134,13 @@ function printLayout(test) {
 
     if (node.children) {
       add('init_css_node_children(node, ' + node.children.length + ');');
-      add('css_node_t *outer_node = node;');
       add('{');
       level++;
+      add('css_node_t *outer_node_' + (level - 3) + ' = node;');
       add('css_node_t *node;');
 
       for (var i = 0; i < node.children.length; ++i) {
-        add('node = &outer_node->children[' + i + '];');
+        add('node = &outer_node_' + (level - 3) + '->children[' + i + '];');
         rec_style(node.children[i]);
       }
 
@@ -165,13 +167,13 @@ function printLayout(test) {
 
     if (node.children) {
       add('init_css_node_children(node, ' + node.children.length + ');');
-      add('css_node_t *outer_node = node;');
       add('{');
       level++;
+      add('css_node_t *outer_node_' + (level - 3) + ' = node;');
       add('css_node_t *node;');
 
       for (var i = 0; i < node.children.length; ++i) {
-        add('node = &outer_node->children[' + i + '];');
+        add('node = &outer_node_' + (level - 3) + '->children[' + i + '];');
         rec_layout(node.children[i]);
       }
 
