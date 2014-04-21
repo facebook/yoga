@@ -104,6 +104,85 @@ var layoutTestUtils = (function() {
       .toEqual(nameLayout(name, layoutB));
   }
 
+  function isEqual(a, b) {
+    // computeLayout and computeDOMLayout output a tree with same ordered elements
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+
+  function printNode(node) {
+    console.log(
+      JSON.stringify(node)
+        .replace(/"([a-zA-Z]+)":/g, '$1: ')
+        .replace(/,/g, ', ')
+        .replace(/"/g, '\'')
+    );
+  }
+  function reduceTest(node) {
+    function isWorking() {
+      return isEqual(
+        computeDOMLayout(node),
+        computeLayout(node)
+      );
+    }
+    if (isWorking()) {
+      return console.log('Bail early, already working');
+    }
+
+    var isModified = true;
+
+    function rec(node) {
+      // Style
+      for (var key in node.style) {
+        var value = node.style[key];
+        delete node.style[key];
+        if (isWorking()) {
+          node.style[key] = value;
+        } else {
+          isModified = true;
+        }
+      }
+      // Round values
+      for (var key in node.style) {
+        var value = node.style[key];
+        if (value > 100) {
+          node.style[key] = Math.round(value / 100) * 100;
+        } else if (value > 10) {
+          node.style[key] = Math.round(value / 10) * 10;
+        } else if (value > 0) {
+          node.style[key] = 5;
+        }
+        if (node.style[key] !== value) {
+          if (isWorking()) {
+            node.style[key] = value;
+          } else {
+            isModified = true;
+          }
+        }
+      }
+      // Children
+      for (var i = 0; node.children && i < node.children.length; ++i) {
+        var value = node.children[i];
+        node.children.splice(i, 1);
+        if (isWorking() && node.children) {
+          node.children.splice(i, 0, value);
+          rec(node.children[i]);
+        } else {
+          i--;
+          isModified = true;
+        }
+      }
+    }
+    while (isModified) {
+      isModified = false;
+      rec(node);
+    }
+
+    printNode(node);
+    printNode(computeDOMLayout(node));
+  }
+
+reduceTest({ style : { top : 0, marginLeft : 18 }, children : [ { style : { left : -7, paddingRight : 2, alignItems : 'stretch' }, children : [ { style : { left : 9 } }, { style : { width : 377, top : 0, marginTop : 0, flexDirection : 'column' } }, { style : { paddingTop : 10 } } ] }, { style : { width : 222, paddingTop : 1, alignSelf : 'stretch' } }, { style : { width : 61, left : 3 } } ] })
+
   return {
     testLayout: function(node, expectedLayout) {
       var layout = computeLayout(node);
@@ -115,6 +194,7 @@ var layoutTestUtils = (function() {
       expect({i: i, node: node, layout: computeLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
     },
-    computeDOMLayout: computeDOMLayout
+    computeDOMLayout: computeDOMLayout,
+    reduceTest: reduceTest
   }
 })();

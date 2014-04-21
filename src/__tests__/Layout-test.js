@@ -502,7 +502,7 @@ describe('Layout', function() {
         {width: 12, height: 0, top: 0, left: 0}
       ]}
     );
-  })
+  });
 
   it('should layout randomly', function() {
     function RNG(seed) {
