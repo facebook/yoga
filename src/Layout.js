@@ -221,12 +221,12 @@ var computeLayout = (function() {
       child.layout[pos[mainAxis]] += mainPos;
       if (getPositionType(child) === 'relative') {
         mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
-      }
 
-      if (!isUndefined(child.layout[dim[crossAxis]])) {
-        var/*float*/ childCrossDim = getDimWithMargin(child, crossAxis);
-        if (childCrossDim > crossDim) {
-          crossDim = childCrossDim;
+        if (!isUndefined(child.layout[dim[crossAxis]])) {
+          var/*float*/ childCrossDim = getDimWithMargin(child, crossAxis);
+          if (childCrossDim > crossDim) {
+            crossDim = childCrossDim;
+          }
         }
       }
     }
