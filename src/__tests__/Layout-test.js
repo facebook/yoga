@@ -467,6 +467,21 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with position: absolute', function() {
+    testLayout(
+      {style: {width: 500, flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {position: 'absolute', width: 50}},
+        {style: {flex: 1}},
+      ]},
+      {width: 500, height: 0, top: 0, left: 0, children: [
+        {width: 250, height: 0, top: 0, left: 0},
+        {width: 50, height: 0, top: 0, left: 250},
+        {width: 250, height: 0, top: 0, left: 250}
+      ]}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -518,7 +533,7 @@ describe('Layout', function() {
       randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'flex', ['none', 1]);
-//      randEnum(node, 0.1, 'position', ['relative', 'absolute']);
+      randEnum(node, 0.1, 'position', ['relative', 'absolute']);
       randChildren(node, 0.2);
       return node;
     }

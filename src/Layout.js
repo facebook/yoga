@@ -81,6 +81,13 @@ var computeLayout = (function() {
     return 'column';
   }
 
+  function getPositionType(node) {
+    if ('position' in node.style) {
+      return node.style.position;
+    }
+    return 'relative';
+  }
+
   function getFlex(node) {
     return node.style.flex == 1;
   }
@@ -165,7 +172,9 @@ var computeLayout = (function() {
       var/*css_node_t**/ child = node.children[i];
       if (isUndefined(node.layout[dim[mainAxis]]) || !getFlex(child)) {
         layoutNode(child);
-        mainContentDim += getDimWithMargin(child, mainAxis);
+        if (getPositionType(child) === 'relative') {
+          mainContentDim += getDimWithMargin(child, mainAxis);
+        }
       } else {
         flexibleChildrenCount++;
       }
@@ -210,7 +219,9 @@ var computeLayout = (function() {
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
       child.layout[pos[mainAxis]] += mainPos;
-      mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
+      if (getPositionType(child) === 'relative') {
+        mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
+      }
 
       if (!isUndefined(child.layout[dim[crossAxis]])) {
         var/*float*/ childCrossDim = getDimWithMargin(child, crossAxis);
