@@ -493,6 +493,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with position: absolute, padding and alignSelf: center', function() {
+    testLayout(
+      {style : {}, children : [
+        {style: {paddingRight: 12, alignSelf: 'center', position: 'absolute'}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 12, height: 0, top: 0, left: 0}
+      ]}
+    );
+  })
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;

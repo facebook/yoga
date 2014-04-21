@@ -243,27 +243,30 @@ var computeLayout = (function() {
 
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
-      var/*css_align_t*/ alignItem = getAlignItem(node, child);
-      var/*float*/ remainingCrossDim = node.layout[dim[crossAxis]] -
-        getDimWithMargin(child, crossAxis) -
-        getPadding(node, leading[crossAxis]) -
-        getPadding(node, trailing[crossAxis]);
 
-      var/*float*/ leadingCrossDim = getPadding(node, leading[crossAxis]);
-      if (alignItem == CSS_ALIGN_FLEX_START) {
-        // Do nothing
-      } else if (alignItem == CSS_ALIGN_CENTER) {
-        leadingCrossDim += remainingCrossDim / 2;
-      } else if (alignItem == CSS_ALIGN_FLEX_END) {
-        leadingCrossDim += remainingCrossDim;
-      } else if (alignItem == CSS_ALIGN_STRETCH) {
-        child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
+      if (getPositionType(child) === 'relative') {
+        var/*css_align_t*/ alignItem = getAlignItem(node, child);
+        var/*float*/ remainingCrossDim = node.layout[dim[crossAxis]] -
+          getDimWithMargin(child, crossAxis) -
           getPadding(node, leading[crossAxis]) -
-          getPadding(node, trailing[crossAxis]) -
-          getMargin(child, leading[crossAxis]) -
-          getMargin(child, trailing[crossAxis]);
+          getPadding(node, trailing[crossAxis]);
+
+        var/*float*/ leadingCrossDim = getPadding(node, leading[crossAxis]);
+        if (alignItem == CSS_ALIGN_FLEX_START) {
+          // Do nothing
+        } else if (alignItem == CSS_ALIGN_CENTER) {
+          leadingCrossDim += remainingCrossDim / 2;
+        } else if (alignItem == CSS_ALIGN_FLEX_END) {
+          leadingCrossDim += remainingCrossDim;
+        } else if (alignItem == CSS_ALIGN_STRETCH) {
+          child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
+            getPadding(node, leading[crossAxis]) -
+            getPadding(node, trailing[crossAxis]) -
+            getMargin(child, leading[crossAxis]) -
+            getMargin(child, trailing[crossAxis]);
+        }
+        child.layout[pos[crossAxis]] += leadingCrossDim;
       }
-      child.layout[pos[crossAxis]] += leadingCrossDim;
     }
 
     node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
