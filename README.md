@@ -55,6 +55,7 @@ Since we are only using flexbox, we can use defaults that are much more sensible
 div {
   box-sizing: border-box;
   position: relative;
+  border: 0 solid black;
   margin: 0;
   padding: 0;
   
