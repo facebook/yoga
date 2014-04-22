@@ -633,19 +633,19 @@ describe('Layout', function() {
     }
     function generateRandomNode() {
       var node = {style: {}};
-      randMinMax(node, 0.1, 'width', 0, 1000);
-      randMinMax(node, 0.1, 'height', 0, 1000);
+      randMinMax(node, 0.5, 'width', 0, 1000);
+      randMinMax(node, 0.5, 'height', 0, 1000);
       randMinMax(node, 0.5, 'top', -10, 10);
       randMinMax(node, 0.5, 'left', -10, 10);
-      randMinMax(node, 0.1, 'right', -10, 10);
-      randMinMax(node, 0.1, 'bottom', -10, 10);
-      randSpacing(node, 0.1, 'margin', 0, 20);
-      randSpacing(node, 0.1, 'padding', 0, 20);
-      randEnum(node, 0.1, 'flexDirection', ['column', 'row']);
-      randEnum(node, 0.1, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
-      randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
-      randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
-      randEnum(node, 0.1, 'flex', ['none', 1]);
+      randMinMax(node, 0.5, 'right', -10, 10);
+      randMinMax(node, 0.5, 'bottom', -10, 10);
+      randSpacing(node, 0.5, 'margin', 0, 20);
+      randSpacing(node, 0.5, 'padding', 0, 20);
+      randEnum(node, 0.5, 'flexDirection', ['column', 'row']);
+      randEnum(node, 0.5, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
+      randEnum(node, 0.5, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
+      randEnum(node, 0.5, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
+      randEnum(node, 0.5, 'flex', ['none', 1]);
       randEnum(node, 0.5, 'position', ['relative', 'absolute']);
       randChildren(node, 0.2);
       return node;

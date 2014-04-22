@@ -148,7 +148,7 @@ var layoutTestUtils = (function() {
           node.style[key] = Math.round(value / 100) * 100;
         } else if (value > 10) {
           node.style[key] = Math.round(value / 10) * 10;
-        } else if (value > 0) {
+        } else if (value > 1) {
           node.style[key] = 5;
         }
         if (node.style[key] !== value) {
