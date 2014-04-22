@@ -231,7 +231,8 @@ var computeLayout = (function() {
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
       if (getPositionType(child) === 'absolute' && isPosDefined(child, leading[mainAxis])) {
-        child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]);
+        child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
+          getMargin(child, leading[mainAxis]);
       } else {
         child.layout[pos[mainAxis]] += mainPos;
       }
