@@ -632,6 +632,18 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with multiple flex and margin', function() {
+    testLayout(
+      {style: {width: 700, flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {marginLeft: 5, flex: 1}}
+      ]},
+      {width: 700, height: 0, top: 0, left: 0, children: [
+        {width: 347.5, height: 0, top: 0, left: 0},
+        {width: 347.5, height: 0, top: 0, left: 352.5}
+      ]}
+    )
+  });
 
   it('should layout randomly', function() {
     function RNG(seed) {
