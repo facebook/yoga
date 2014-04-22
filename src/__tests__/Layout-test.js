@@ -606,7 +606,18 @@ describe('Layout', function() {
         {width: 0, height: 0, top: 100, left: 0}
       ]}
     );
-  })
+  });
+
+  it('should llll', function() {
+    testLayout(
+      {style: {width: 700, flexDirection: 'row'}, children: [
+        {style: {marginLeft: 5, flex: 1}}
+      ]},
+      {width: 700, height: 0, top: 0, left: 0, children: [
+        {width: 695, height: 0, top: 0, left: 5}
+      ]}
+    );
+  });
 
   it('should layout randomly', function() {
     function RNG(seed) {

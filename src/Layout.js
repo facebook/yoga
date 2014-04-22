@@ -208,7 +208,9 @@ var computeLayout = (function() {
         for (var/*int*/ i = 0; i < node.children.length; ++i) {
           var/*css_node_t**/ child = node.children[i];
           if (getFlex(child)) {
-            child.layout[dim[mainAxis]] = flexibleMainDim;
+            child.layout[dim[mainAxis]] = flexibleMainDim -
+              getMargin(child, leading[mainAxis]) -
+              getMargin(child, trailing[mainAxis]);
             layoutNode(child);
           }
         }
