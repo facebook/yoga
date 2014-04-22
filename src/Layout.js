@@ -285,7 +285,11 @@ var computeLayout = (function() {
         }
         child.layout[pos[crossAxis]] += leadingCrossDim;
       } else {
-        child.layout[pos[crossAxis]] += getPadding(node, leading[crossAxis]);
+        if (isPosDefined(child, leading[crossAxis])) {
+          child.layout[pos[crossAxis]] = getPosition(child, leading[crossAxis]);
+        } else {
+          child.layout[pos[crossAxis]] += getPadding(node, leading[crossAxis]);
+        }
       }
     }
 

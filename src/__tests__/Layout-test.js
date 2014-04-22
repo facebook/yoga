@@ -559,6 +559,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with padding and child position absolute, left', function() {
+    testLayout(
+      {style: {padding: 20}, children: [
+        {style: {left: 5, position: 'absolute'}}
+      ]},
+      {width: 40, height: 40, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 20, left: 5}
+      ]}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -602,8 +613,8 @@ describe('Layout', function() {
       var node = {style: {}};
       randMinMax(node, 0.1, 'width', 0, 1000);
       randMinMax(node, 0.1, 'height', 0, 1000);
-      randMinMax(node, 0.1, 'top', -10, 10);
-      randMinMax(node, 0.1, 'left', -10, 10);
+      randMinMax(node, 0.5, 'top', -10, 10);
+      randMinMax(node, 0.5, 'left', -10, 10);
       randMinMax(node, 0.1, 'right', -10, 10);
       randMinMax(node, 0.1, 'bottom', -10, 10);
       randSpacing(node, 0.1, 'margin', 0, 20);
@@ -613,7 +624,7 @@ describe('Layout', function() {
       randEnum(node, 0.1, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.1, 'flex', ['none', 1]);
-      randEnum(node, 0.1, 'position', ['relative', 'absolute']);
+      randEnum(node, 0.5, 'position', ['relative', 'absolute']);
       randChildren(node, 0.2);
       return node;
     }
