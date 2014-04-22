@@ -61,7 +61,7 @@ var computeLayout = (function() {
   }
 
   function isUndefined(value) {
-    return value == undefined;
+    return value === undefined;
   }
 
   function getMargin(node, location) {
@@ -120,7 +120,7 @@ var computeLayout = (function() {
   }
 
   function getFlex(node) {
-    return node.style.flex == 1;
+    return node.style.flex === 1;
   }
 
   function getDimWithMargin(node, axis) {
@@ -169,6 +169,13 @@ var computeLayout = (function() {
     column: 'height'
   };
 
+  function fmaxf(a, b) {
+    if (a > b) {
+      return a;
+    }
+    return b;
+  }
+
   var CSS_FLEX_DIRECTION_ROW = 'row';
   var CSS_FLEX_DIRECTION_COLUMN = 'column';
 
@@ -183,15 +190,18 @@ var computeLayout = (function() {
   var CSS_ALIGN_FLEX_END = 'flex-end';
   var CSS_ALIGN_STRETCH = 'stretch';
 
+  var CSS_POSITION_RELATIVE = 'relative';
+  var CSS_POSITION_ABSOLUTE = 'absolute';
+
   function layoutNode(node) {
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
-    var/*css_flex_direction_t*/ crossAxis = mainAxis == CSS_FLEX_DIRECTION_ROW ?
+    var/*css_flex_direction_t*/ crossAxis = mainAxis === CSS_FLEX_DIRECTION_ROW ?
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
 
     var/*bool*/ mainDimInStyle = isDimDefined(node, mainAxis);
     if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
-      node.layout[dim[mainAxis]] = Math.max(
+      node.layout[dim[mainAxis]] = fmaxf(
         node.style[dim[mainAxis]],
         getPaddingAndBorderAxis(node, mainAxis)
       );
@@ -199,7 +209,7 @@ var computeLayout = (function() {
 
     var/*bool*/ crossDimInStyle = isDimDefined(node, crossAxis);
     if (isUndefined(node.layout[dim[crossAxis]]) && crossDimInStyle) {
-      node.layout[dim[crossAxis]] = Math.max(
+      node.layout[dim[crossAxis]] = fmaxf(
         node.style[dim[crossAxis]],
         getPaddingAndBorderAxis(node, crossAxis)
       );
@@ -211,10 +221,10 @@ var computeLayout = (function() {
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
       if (isUndefined(node.layout[dim[mainAxis]]) ||
-          getPositionType(child) === 'absolute' ||
+          getPositionType(child) === CSS_POSITION_ABSOLUTE ||
           !getFlex(child)) {
         layoutNode(child);
-        if (getPositionType(child) === 'relative') {
+        if (getPositionType(child) === CSS_POSITION_RELATIVE) {
           mainContentDim += getDimWithMargin(child, mainAxis);
         } else {
           absoluteChildrenCount++;
@@ -239,22 +249,22 @@ var computeLayout = (function() {
         }
         for (var/*int*/ i = 0; i < node.children.length; ++i) {
           var/*css_node_t**/ child = node.children[i];
-          if (getPositionType(child) === 'relative' && getFlex(child)) {
+          if (getPositionType(child) === CSS_POSITION_RELATIVE && getFlex(child)) {
             child.layout[dim[mainAxis]] = flexibleMainDim + getPaddingAndBorderAxis(child, mainAxis);
             layoutNode(child);
           }
         }
       } else {
         var/*css_justify_t*/ justifyContent = getJustifyContent(node);
-        if (justifyContent == CSS_JUSTIFY_FLEX_START) {
+        if (justifyContent === CSS_JUSTIFY_FLEX_START) {
           // Do nothing
-        } else if (justifyContent == CSS_JUSTIFY_CENTER) {
+        } else if (justifyContent === CSS_JUSTIFY_CENTER) {
           leadingMainDim = remainingMainDim / 2;
-        } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
+        } else if (justifyContent === CSS_JUSTIFY_FLEX_END) {
           leadingMainDim = remainingMainDim;
-        } else if (justifyContent == CSS_JUSTIFY_SPACE_BETWEEN) {
+        } else if (justifyContent === CSS_JUSTIFY_SPACE_BETWEEN) {
           betweenMainDim = remainingMainDim / (node.children.length - absoluteChildrenCount - 1);
-        } else if (justifyContent == CSS_JUSTIFY_SPACE_AROUND) {
+        } else if (justifyContent === CSS_JUSTIFY_SPACE_AROUND) {
           betweenMainDim = remainingMainDim / (node.children.length - absoluteChildrenCount);
           leadingMainDim = betweenMainDim / 2;
         }
@@ -265,14 +275,14 @@ var computeLayout = (function() {
     var/*float*/ mainPos = getPaddingAndBorder(node, leading[mainAxis]) + leadingMainDim;
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
-      if (getPositionType(child) === 'absolute' && isPosDefined(child, leading[mainAxis])) {
+      if (getPositionType(child) === CSS_POSITION_ABSOLUTE && isPosDefined(child, leading[mainAxis])) {
         child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
           getBorder(node, leading[mainAxis]) +
           getMargin(child, leading[mainAxis]);
       } else {
         child.layout[pos[mainAxis]] += mainPos;
       }
-      if (getPositionType(child) === 'relative') {
+      if (getPositionType(child) === CSS_POSITION_RELATIVE) {
         mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 
         if (!isUndefined(child.layout[dim[crossAxis]])) {
@@ -297,20 +307,20 @@ var computeLayout = (function() {
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
 
-      if (getPositionType(child) === 'relative') {
+      if (getPositionType(child) === CSS_POSITION_RELATIVE) {
         var/*css_align_t*/ alignItem = getAlignItem(node, child);
         var/*float*/ remainingCrossDim = node.layout[dim[crossAxis]] -
           getDimWithMargin(child, crossAxis) -
           getPaddingAndBorderAxis(node, crossAxis);
 
         var/*float*/ leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);
-        if (alignItem == CSS_ALIGN_FLEX_START) {
+        if (alignItem === CSS_ALIGN_FLEX_START) {
           // Do nothing
-        } else if (alignItem == CSS_ALIGN_CENTER) {
+        } else if (alignItem === CSS_ALIGN_CENTER) {
           leadingCrossDim += remainingCrossDim / 2;
-        } else if (alignItem == CSS_ALIGN_FLEX_END) {
+        } else if (alignItem === CSS_ALIGN_FLEX_END) {
           leadingCrossDim += remainingCrossDim;
-        } else if (alignItem == CSS_ALIGN_STRETCH) {
+        } else if (alignItem === CSS_ALIGN_STRETCH) {
           if (!isDimDefined(child, crossAxis)) {
             child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
               getPaddingAndBorderAxis(node, crossAxis) -

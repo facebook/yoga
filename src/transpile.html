@@ -23,6 +23,7 @@ document.getElementById('layout_code').value = computeLayout.layoutNode.toString
   .replace(/node\./g, 'node->')
   .replace(/child\./g, 'child->')
   .replace(/var\/\*([^\/]+)\*\//g, '$1')
+  .replace(/ === /g, ' == ')
   .replace(/\n  /g, '\n');
 </script>
 
@@ -75,16 +76,16 @@ function printLayout(test) {
     }
   }
 
-  function addSpacing(node, spacing) {
-    addFloat(node, spacing, spacing + '[CSS_LEFT]');
-    addFloat(node, spacing, spacing + '[CSS_TOP]');
-    addFloat(node, spacing, spacing + '[CSS_RIGHT]');
-    addFloat(node, spacing, spacing + '[CSS_BOTTOM]');
+  function addSpacing(node, spacing, suffix) {
+    addFloat(node, spacing + suffix, spacing + '[CSS_LEFT]');
+    addFloat(node, spacing + suffix, spacing + '[CSS_TOP]');
+    addFloat(node, spacing + suffix, spacing + '[CSS_RIGHT]');
+    addFloat(node, spacing + suffix, spacing + '[CSS_BOTTOM]');
 
-    addFloat(node, spacing + 'Left', spacing + '[CSS_LEFT]');
-    addFloat(node, spacing + 'Top', spacing + '[CSS_TOP]');
-    addFloat(node, spacing + 'Right', spacing + '[CSS_RIGHT]');
-    addFloat(node, spacing + 'Bottom', spacing + '[CSS_BOTTOM]');
+    addFloat(node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
+    addFloat(node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
+    addFloat(node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
+    addFloat(node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
   }
 
   add('{');
@@ -123,10 +124,15 @@ function printLayout(test) {
       'none': 'CSS_FLEX_NONE',
       '1': 'CSS_FLEX_ONE'
     });
+    addEnum(node, 'position', 'position_type', {
+      'relative': 'CSS_POSITION_RELATIVE',
+      'absolute': 'CSS_POSITION_ABSOLUTE'
+    });
     addFloat(node, 'width', 'dimensions[CSS_WIDTH]');
     addFloat(node, 'height', 'dimensions[CSS_HEIGHT]');
-    addSpacing(node, 'margin');
-    addSpacing(node, 'padding');
+    addSpacing(node, 'margin', '');
+    addSpacing(node, 'padding', '');
+    addSpacing(node, 'border', 'Width');
     addFloat(node, 'left', 'position[CSS_LEFT]');
     addFloat(node, 'top', 'position[CSS_TOP]');
     addFloat(node, 'right', 'position[CSS_RIGHT]');

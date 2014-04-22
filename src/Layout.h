@@ -30,6 +30,11 @@ typedef enum {
   CSS_FLEX_ONE
 } css_flex_t;
 
+typedef enum {
+  CSS_POSITION_RELATIVE = 0,
+  CSS_POSITION_ABSOLUTE
+} css_position_type_t;
+
 // Note: left and top are shared between position[2] and position[4], so
 // they have to be before right and bottom.
 typedef enum {
@@ -56,8 +61,10 @@ typedef struct {
   css_align_t align_items;
   css_align_t align_self;
   css_flex_t flex;
+  css_position_type_t position_type;
   float margin[4];
   float padding[4];
+  float border[4];
   float position[4];
   float dimensions[2];
 } css_style_t;

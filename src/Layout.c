@@ -133,6 +133,15 @@ void print_style(css_node_t *node, int level) {
     print_number_0("paddingBottom", node->style.padding[CSS_BOTTOM]);
   }
 
+  if (four_equal(node->style.border)) {
+    print_number_0("borderWidth", node->style.border[CSS_LEFT]);
+  } else {
+    print_number_0("borderLeftWidth", node->style.border[CSS_LEFT]);
+    print_number_0("borderRightWidth", node->style.border[CSS_RIGHT]);
+    print_number_0("borderTopWidth", node->style.border[CSS_TOP]);
+    print_number_0("borderBottomWidth", node->style.border[CSS_BOTTOM]);
+  }
+
   print_number_nan("width", node->style.dimensions[CSS_WIDTH]);
   print_number_nan("height", node->style.dimensions[CSS_HEIGHT]);
 
@@ -203,7 +212,33 @@ float getMargin(css_node_t *node, int location) {
 }
 
 float getPadding(css_node_t *node, int location) {
-  return node->style.padding[location];
+  if (node->style.padding[location] >= 0) {
+    return node->style.padding[location];
+  }
+  return 0;
+}
+
+float getBorder(css_node_t *node, int location) {
+  if (node->style.border[location] >= 0) {
+    return node->style.border[location];
+  }
+  return 0;
+}
+
+float getPaddingAndBorder(css_node_t *node, int location) {
+  return getPadding(node, location) + getBorder(node, location);
+}
+
+float getMarginAxis(css_node_t *node, css_flex_direction_t axis) {
+  return getMargin(node, leading[axis]) + getMargin(node, trailing[axis]);
+}
+
+float getPaddingAndBorderAxis(css_node_t *node, css_flex_direction_t axis) {
+  return getPaddingAndBorder(node, leading[axis]) + getPaddingAndBorder(node, trailing[axis]);
+}
+
+css_position_type_t getPositionType(css_node_t *node) {
+  return node->style.position_type;
 }
 
 css_justify_t getJustifyContent(css_node_t *node) {
@@ -235,6 +270,10 @@ bool isDimDefined(css_node_t *node, css_flex_direction_t axis) {
   return !isUndefined(node->style.dimensions[dim[axis]]);
 }
 
+bool isPosDefined(css_node_t *node, css_position_t pos) {
+  return !isUndefined(node->style.position[pos]);
+}
+
 float getPosition(css_node_t *node, css_position_t pos) {
   float result = node->style.position[pos];
   if (!isUndefined(result)) {
@@ -261,23 +300,37 @@ void layoutNode(css_node_t *node) {
 
   bool mainDimInStyle = isDimDefined(node, mainAxis);
   if (isUndefined(node->layout.dimensions[dim[mainAxis]]) && mainDimInStyle) {
-    node->layout.dimensions[dim[mainAxis]] = node->style.dimensions[dim[mainAxis]];
+    node->layout.dimensions[dim[mainAxis]] = fmaxf(
+      node->style.dimensions[dim[mainAxis]],
+      getPaddingAndBorderAxis(node, mainAxis)
+    );
   }
 
   bool crossDimInStyle = isDimDefined(node, crossAxis);
   if (isUndefined(node->layout.dimensions[dim[crossAxis]]) && crossDimInStyle) {
-    node->layout.dimensions[dim[crossAxis]] = node->style.dimensions[dim[crossAxis]];
+    node->layout.dimensions[dim[crossAxis]] = fmaxf(
+      node->style.dimensions[dim[crossAxis]],
+      getPaddingAndBorderAxis(node, crossAxis)
+    );
   }
 
   float mainContentDim = 0;
   int flexibleChildrenCount = 0;
+  int absoluteChildrenCount = 0;
   for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = &node->children[i];
-    if (isUndefined(node->layout.dimensions[dim[mainAxis]]) || !getFlex(child)) {
+    if (isUndefined(node->layout.dimensions[dim[mainAxis]]) ||
+        getPositionType(child) == CSS_POSITION_ABSOLUTE ||
+        !getFlex(child)) {
       layoutNode(child);
-      mainContentDim += getDimWithMargin(child, mainAxis);
+      if (getPositionType(child) == CSS_POSITION_RELATIVE) {
+        mainContentDim += getDimWithMargin(child, mainAxis);
+      } else {
+        absoluteChildrenCount++;
+      }
     } else {
       flexibleChildrenCount++;
+      mainContentDim += getPaddingAndBorderAxis(child, mainAxis) + getMarginAxis(child, mainAxis);
     }
   }
 
@@ -285,16 +338,18 @@ void layoutNode(css_node_t *node) {
   float betweenMainDim = 0;
   if (!isUndefined(node->layout.dimensions[dim[mainAxis]])) {
     float remainingMainDim = node->layout.dimensions[dim[mainAxis]] -
-      getPadding(node, leading[mainAxis]) -
-      getPadding(node, trailing[mainAxis]) -
+      getPaddingAndBorderAxis(node, mainAxis) -
       mainContentDim;
 
     if (flexibleChildrenCount) {
       float flexibleMainDim = remainingMainDim / flexibleChildrenCount;
+      if (flexibleMainDim < 0) {
+        flexibleMainDim = 0;
+      }
       for (int i = 0; i < node->children_count; ++i) {
         css_node_t* child = &node->children[i];
-        if (getFlex(child)) {
-          child->layout.dimensions[dim[mainAxis]] = flexibleMainDim;
+        if (getPositionType(child) == CSS_POSITION_RELATIVE && getFlex(child)) {
+          child->layout.dimensions[dim[mainAxis]] = flexibleMainDim + getPaddingAndBorderAxis(child, mainAxis);
           layoutNode(child);
         }
       }
@@ -307,31 +362,39 @@ void layoutNode(css_node_t *node) {
       } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
         leadingMainDim = remainingMainDim;
       } else if (justifyContent == CSS_JUSTIFY_SPACE_BETWEEN) {
-        betweenMainDim = remainingMainDim / (node->children_count - 1);
+        betweenMainDim = remainingMainDim / (node->children_count - absoluteChildrenCount - 1);
       } else if (justifyContent == CSS_JUSTIFY_SPACE_AROUND) {
-        betweenMainDim = remainingMainDim / node->children_count;
+        betweenMainDim = remainingMainDim / (node->children_count - absoluteChildrenCount);
         leadingMainDim = betweenMainDim / 2;
       }
     }
   }
 
   float crossDim = 0;
-  float mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
+  float mainPos = getPaddingAndBorder(node, leading[mainAxis]) + leadingMainDim;
   for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = &node->children[i];
-    child->layout.position[pos[mainAxis]] += mainPos;
-    mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
+    if (getPositionType(child) == CSS_POSITION_ABSOLUTE && isPosDefined(child, leading[mainAxis])) {
+      child->layout.position[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
+        getBorder(node, leading[mainAxis]) +
+        getMargin(child, leading[mainAxis]);
+    } else {
+      child->layout.position[pos[mainAxis]] += mainPos;
+    }
+    if (getPositionType(child) == CSS_POSITION_RELATIVE) {
+      mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 
-    if (!isUndefined(child->layout.dimensions[dim[crossAxis]])) {
-      float childCrossDim = getDimWithMargin(child, crossAxis);
-      if (childCrossDim > crossDim) {
-        crossDim = childCrossDim;
+      if (!isUndefined(child->layout.dimensions[dim[crossAxis]])) {
+        float childCrossDim = getDimWithMargin(child, crossAxis);
+        if (childCrossDim > crossDim) {
+          crossDim = childCrossDim;
+        }
       }
     }
   }
-  mainPos += getPadding(node, trailing[mainAxis]);
-  crossDim += getPadding(node, leading[crossAxis]) +
-    getPadding(node, trailing[crossAxis]);
+  mainPos += getPaddingAndBorder(node, trailing[mainAxis]);
+  crossDim += getPaddingAndBorder(node, leading[crossAxis]) +
+    getPaddingAndBorder(node, trailing[crossAxis]);
 
   if (isUndefined(node->layout.dimensions[dim[mainAxis]]) && !mainDimInStyle) {
     node->layout.dimensions[dim[mainAxis]] = mainPos > 0 ? mainPos : 0;
@@ -342,27 +405,37 @@ void layoutNode(css_node_t *node) {
 
   for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = &node->children[i];
-    css_align_t alignItem = getAlignItem(node, child);
-    float remainingCrossDim = node->layout.dimensions[dim[crossAxis]] -
-      getDimWithMargin(child, crossAxis) -
-      getPadding(node, leading[crossAxis]) -
-      getPadding(node, trailing[crossAxis]);
 
-    float leadingCrossDim = getPadding(node, leading[crossAxis]);
-    if (alignItem == CSS_ALIGN_FLEX_START) {
-      // Do nothing
-    } else if (alignItem == CSS_ALIGN_CENTER) {
-      leadingCrossDim += remainingCrossDim / 2;
-    } else if (alignItem == CSS_ALIGN_FLEX_END) {
-      leadingCrossDim += remainingCrossDim;
-    } else if (alignItem == CSS_ALIGN_STRETCH) {
-      child->layout.dimensions[dim[crossAxis]] = node->layout.dimensions[dim[crossAxis]] -
-        getPadding(node, leading[crossAxis]) -
-        getPadding(node, trailing[crossAxis]) -
-        getMargin(child, leading[crossAxis]) -
-        getMargin(child, trailing[crossAxis]);
+    if (getPositionType(child) == CSS_POSITION_RELATIVE) {
+      css_align_t alignItem = getAlignItem(node, child);
+      float remainingCrossDim = node->layout.dimensions[dim[crossAxis]] -
+        getDimWithMargin(child, crossAxis) -
+        getPaddingAndBorderAxis(node, crossAxis);
+
+      float leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);
+      if (alignItem == CSS_ALIGN_FLEX_START) {
+        // Do nothing
+      } else if (alignItem == CSS_ALIGN_CENTER) {
+        leadingCrossDim += remainingCrossDim / 2;
+      } else if (alignItem == CSS_ALIGN_FLEX_END) {
+        leadingCrossDim += remainingCrossDim;
+      } else if (alignItem == CSS_ALIGN_STRETCH) {
+        if (!isDimDefined(child, crossAxis)) {
+          child->layout.dimensions[dim[crossAxis]] = node->layout.dimensions[dim[crossAxis]] -
+            getPaddingAndBorderAxis(node, crossAxis) -
+            getMarginAxis(child, crossAxis);
+        }
+      }
+      child->layout.position[pos[crossAxis]] += leadingCrossDim;
+    } else {
+      if (isPosDefined(child, leading[crossAxis])) {
+        child->layout.position[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
+          getBorder(node, leading[crossAxis]) +
+          getMargin(child, leading[crossAxis]);
+      } else {
+        child->layout.position[pos[crossAxis]] += getPaddingAndBorder(node, leading[crossAxis]);
+      }
     }
-    child->layout.position[pos[crossAxis]] += leadingCrossDim;
   }
 
   node->layout.position[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
