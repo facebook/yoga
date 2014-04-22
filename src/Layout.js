@@ -102,6 +102,10 @@ var computeLayout = (function() {
     return !isUndefined(node.style[dim[axis]]);
   }
 
+  function isPosDefined(node, pos) {
+    return !isUndefined(node.style[pos]);
+  }
+
 
   function getPosition(node, pos) {
     if (pos in node.style) {
@@ -226,7 +230,11 @@ var computeLayout = (function() {
     var/*float*/ mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
-      child.layout[pos[mainAxis]] += mainPos;
+      if (getPositionType(child) === 'absolute' && isPosDefined(child, leading[mainAxis])) {
+        child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]);
+      } else {
+        child.layout[pos[mainAxis]] += mainPos;
+      }
       if (getPositionType(child) === 'relative') {
         mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
 

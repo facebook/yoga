@@ -535,13 +535,26 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout node with specified width', function() {
+  it('should layout node with padding and child with position absolute', function() {
     testLayout(
       {style: {padding: 5}, children: [
         {style: {position: 'absolute'}}
       ]},
       {width: 10, height: 10, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 5, left: 5}
+      ]}
+    );
+  });
+
+  it('should layout node with position absolute, top and left', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {height: 100}},
+        {style: {position: 'absolute', top: 10, left: 10}}
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 100, top: 0, left: 0},
+        {width: 0, height: 0, top: 10, left: 10}
       ]}
     );
   });
@@ -559,7 +572,7 @@ describe('Layout', function() {
     var rng = new RNG(0);
     function randMinMax(node, chance, attribute, min, max) {
       if (rng.nextFloat() < chance) {
-        if (attribute === 'left' || attribute === 'top' || attribute === 'right' || attribute === 'bottom') {
+        if (attribute === 'right' || attribute === 'bottom') {
           return;
         }
         node.style[attribute] = Math.floor(rng.nextFloat() * (max - min)) + min;
