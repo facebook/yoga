@@ -447,7 +447,7 @@ describe('Layout', function() {
 
   it('should layout node with height, padding and space-around', function() {
     testLayout(
-      {style : {height: 10, paddingTop: 5, justifyContent: 'space-around'}, children: [
+      {style: {height: 10, paddingTop: 5, justifyContent: 'space-around'}, children: [
         {style: {}}
       ]},
       {width: 0, height: 10, top: 0, left: 0, children: [
@@ -608,7 +608,7 @@ describe('Layout', function() {
     );
   });
 
-  it('should llll', function() {
+  it('should layout node with flex and main margin', function() {
     testLayout(
       {style: {width: 700, flexDirection: 'row'}, children: [
         {style: {marginLeft: 5, flex: 1}}
@@ -618,6 +618,20 @@ describe('Layout', function() {
       ]}
     );
   });
+
+  it('should layout node with multiple flex and padding', function() {
+    testLayout(
+      {style: {width: 700, flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {paddingRight: 5, flex: 1}}
+      ]},
+      {width: 700, height: 0, top: 0, left: 0, children: [
+        {width: 347.5, height: 0, top: 0, left: 0},
+        {width: 352.5, height: 0, top: 0, left: 347.5}
+      ]}
+    );
+  });
+
 
   it('should layout randomly', function() {
     function RNG(seed) {

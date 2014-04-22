@@ -192,6 +192,8 @@ var computeLayout = (function() {
         }
       } else {
         flexibleChildrenCount++;
+        mainContentDim += getPadding(child, leading[mainAxis]) +
+          getPadding(child, trailing[mainAxis]);
       }
     }
 
@@ -210,7 +212,9 @@ var computeLayout = (function() {
           if (getFlex(child)) {
             child.layout[dim[mainAxis]] = flexibleMainDim -
               getMargin(child, leading[mainAxis]) -
-              getMargin(child, trailing[mainAxis]);
+              getMargin(child, trailing[mainAxis]) +
+              getPadding(child, leading[mainAxis]) +
+              getPadding(child, trailing[mainAxis]);
             layoutNode(child);
           }
         }
