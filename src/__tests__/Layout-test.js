@@ -682,6 +682,14 @@ describe('Layout', function() {
     )
   });
 
+  it('should layout node with borderWidth', function() {
+    testLayout(
+      {style: {borderWidth: 5}},
+      {width: 10, height: 10, top: 0, left: 0}
+    )
+  });
+
+
 
   it('should layout randomly', function() {
     function RNG(seed) {
@@ -715,12 +723,12 @@ describe('Layout', function() {
         node.children.push(generateRandomNode());
       }
     }
-    function randSpacing(node, chance, type, min, max) {
-      randMinMax(node, chance, type, min, max);
-      randMinMax(node, chance, type + 'Left', min, max);
-      randMinMax(node, chance, type + 'Top', min, max);
-      randMinMax(node, chance, type + 'Right', min, max);
-      randMinMax(node, chance, type + 'Bottom', min, max);
+    function randSpacing(node, chance, type, suffix, min, max) {
+      randMinMax(node, chance, type + suffix, min, max);
+      randMinMax(node, chance, type + 'Left' + suffix, min, max);
+      randMinMax(node, chance, type + 'Top' + suffix, min, max);
+      randMinMax(node, chance, type + 'Right' + suffix, min, max);
+      randMinMax(node, chance, type + 'Bottom' + suffix, min, max);
     }
     function generateRandomNode() {
       var node = {style: {}};
@@ -730,8 +738,9 @@ describe('Layout', function() {
       randMinMax(node, 0.5, 'left', -10, 10);
       randMinMax(node, 0.5, 'right', -10, 10);
       randMinMax(node, 0.5, 'bottom', -10, 10);
-      randSpacing(node, 0.5, 'margin', 0, 20);
-      randSpacing(node, 0.5, 'padding', 0, 20);
+      randSpacing(node, 0.5, 'margin', '', 0, 20);
+      randSpacing(node, 0.5, 'padding', '', 0, 20);
+      randSpacing(node, 0.5, 'border', 'Width', 0, 4);
       randEnum(node, 0.5, 'flexDirection', ['column', 'row']);
       randEnum(node, 0.5, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
       randEnum(node, 0.5, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
@@ -742,7 +751,7 @@ describe('Layout', function() {
       return node;
     }
 
-    for (var i = 0; i < 1000; ++i) {
+    for (var i = 0; i < 100; ++i) {
       var node = generateRandomNode();
 
       if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout)) {

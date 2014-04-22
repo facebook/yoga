@@ -9,6 +9,7 @@ var layoutTestUtils = (function() {
     style.innerText = (function() {/*
       body, div {
         box-sizing: border-box;
+        border: 0 solid black;
         position: relative;
 
         display: flex;
@@ -35,12 +36,12 @@ var layoutTestUtils = (function() {
       }
     }
 
-    function transferSpacing(div, node, type) {
-      transfer(div, node, type, 'px');
-      transfer(div, node, type + 'Left', 'px');
-      transfer(div, node, type + 'Top', 'px');
-      transfer(div, node, type + 'Bottom', 'px');
-      transfer(div, node, type + 'Right', 'px');
+    function transferSpacing(div, node, type, suffix) {
+      transfer(div, node, type + suffix, 'px');
+      transfer(div, node, type + 'Left' + suffix, 'px');
+      transfer(div, node, type + 'Top' + suffix, 'px');
+      transfer(div, node, type + 'Bottom' + suffix, 'px');
+      transfer(div, node, type + 'Right' + suffix, 'px');
     }
 
     function renderNode(parent, node) {
@@ -51,8 +52,9 @@ var layoutTestUtils = (function() {
       transfer(div, node, 'left', 'px');
       transfer(div, node, 'right', 'px');
       transfer(div, node, 'bottom', 'px');
-      transferSpacing(div, node, 'margin');
-      transferSpacing(div, node, 'padding');
+      transferSpacing(div, node, 'margin', '');
+      transferSpacing(div, node, 'padding', '');
+      transferSpacing(div, node, 'border', 'Width');
       transfer(div, node, 'flexDirection');
       transfer(div, node, 'flex');
       transfer(div, node, 'justifyContent');
