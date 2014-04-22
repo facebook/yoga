@@ -307,6 +307,7 @@ var computeLayout = (function() {
       } else {
         if (isPosDefined(child, leading[crossAxis])) {
           child.layout[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
+            getBorder(node, leading[crossAxis]) +
             getMargin(child, leading[crossAxis]);
         } else {
           child.layout[pos[crossAxis]] += getPaddingAndBorder(node, leading[crossAxis]);
