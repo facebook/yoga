@@ -55,16 +55,23 @@ var computeLayout = (function() {
   }
 
   function getPadding(node, location) {
-    return getSpacing(node, 'padding', '', location) +
-      getSpacing(node, 'border', 'Width', location);
+    return getSpacing(node, 'padding', '', location);
+  }
+
+  function getBorder(node, location) {
+    return getSpacing(node, 'border', 'Width', location);
+  }
+
+  function getPaddingAndBorder(node, location) {
+    return getPadding(node, location) + getBorder(node, location);
   }
 
   function getMarginAxis(node, axis) {
     return getMargin(node, leading[axis]) + getMargin(node, trailing[axis]);
   }
 
-  function getPaddingAxis(node, axis) {
-    return getPadding(node, leading[axis]) + getPadding(node, trailing[axis]);
+  function getPaddingAndBorderAxis(node, axis) {
+    return getPaddingAndBorder(node, leading[axis]) + getPaddingAndBorder(node, trailing[axis]);
   }
 
   function getJustifyContent(node) {
@@ -172,7 +179,7 @@ var computeLayout = (function() {
     if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
       node.layout[dim[mainAxis]] = Math.max(
         node.style[dim[mainAxis]],
-        getPaddingAxis(node, mainAxis)
+        getPaddingAndBorderAxis(node, mainAxis)
       );
     }
 
@@ -180,7 +187,7 @@ var computeLayout = (function() {
     if (isUndefined(node.layout[dim[crossAxis]]) && crossDimInStyle) {
       node.layout[dim[crossAxis]] = Math.max(
         node.style[dim[crossAxis]],
-        getPaddingAxis(node, crossAxis)
+        getPaddingAndBorderAxis(node, crossAxis)
       );
     }
 
@@ -200,7 +207,7 @@ var computeLayout = (function() {
         }
       } else {
         flexibleChildrenCount++;
-        mainContentDim += getPaddingAxis(child, mainAxis) + getMarginAxis(child, mainAxis);
+        mainContentDim += getPaddingAndBorderAxis(child, mainAxis) + getMarginAxis(child, mainAxis);
       }
     }
 
@@ -208,7 +215,7 @@ var computeLayout = (function() {
     var/*float*/ betweenMainDim = 0;
     if (!isUndefined(node.layout[dim[mainAxis]])) {
       var/*float*/ remainingMainDim = node.layout[dim[mainAxis]] -
-        getPaddingAxis(node, mainAxis) -
+        getPaddingAndBorderAxis(node, mainAxis) -
         mainContentDim;
 
       if (flexibleChildrenCount) {
@@ -219,7 +226,7 @@ var computeLayout = (function() {
         for (var/*int*/ i = 0; i < node.children.length; ++i) {
           var/*css_node_t**/ child = node.children[i];
           if (getPositionType(child) === 'relative' && getFlex(child)) {
-            child.layout[dim[mainAxis]] = flexibleMainDim + getPaddingAxis(child, mainAxis);
+            child.layout[dim[mainAxis]] = flexibleMainDim + getPaddingAndBorderAxis(child, mainAxis);
             layoutNode(child);
           }
         }
@@ -241,11 +248,12 @@ var computeLayout = (function() {
     }
 
     var/*float*/ crossDim = 0;
-    var/*float*/ mainPos = getPadding(node, leading[mainAxis]) + leadingMainDim;
+    var/*float*/ mainPos = getPaddingAndBorder(node, leading[mainAxis]) + leadingMainDim;
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
       if (getPositionType(child) === 'absolute' && isPosDefined(child, leading[mainAxis])) {
         child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
+          getBorder(node, leading[mainAxis]) +
           getMargin(child, leading[mainAxis]);
       } else {
         child.layout[pos[mainAxis]] += mainPos;
@@ -261,9 +269,9 @@ var computeLayout = (function() {
         }
       }
     }
-    mainPos += getPadding(node, trailing[mainAxis]);
-    crossDim += getPadding(node, leading[crossAxis]) +
-      getPadding(node, trailing[crossAxis]);
+    mainPos += getPaddingAndBorder(node, trailing[mainAxis]);
+    crossDim += getPaddingAndBorder(node, leading[crossAxis]) +
+      getPaddingAndBorder(node, trailing[crossAxis]);
 
     if (isUndefined(node.layout[dim[mainAxis]]) && !mainDimInStyle) {
       node.layout[dim[mainAxis]] = mainPos > 0 ? mainPos : 0;
@@ -279,9 +287,9 @@ var computeLayout = (function() {
         var/*css_align_t*/ alignItem = getAlignItem(node, child);
         var/*float*/ remainingCrossDim = node.layout[dim[crossAxis]] -
           getDimWithMargin(child, crossAxis) -
-          getPaddingAxis(node, crossAxis);
+          getPaddingAndBorderAxis(node, crossAxis);
 
-        var/*float*/ leadingCrossDim = getPadding(node, leading[crossAxis]);
+        var/*float*/ leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);
         if (alignItem == CSS_ALIGN_FLEX_START) {
           // Do nothing
         } else if (alignItem == CSS_ALIGN_CENTER) {
@@ -291,7 +299,7 @@ var computeLayout = (function() {
         } else if (alignItem == CSS_ALIGN_STRETCH) {
           if (!isDimDefined(child, crossAxis)) {
             child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
-              getPaddingAxis(node, crossAxis) -
+              getPaddingAndBorderAxis(node, crossAxis) -
               getMarginAxis(child, crossAxis);
           }
         }
@@ -301,7 +309,7 @@ var computeLayout = (function() {
           child.layout[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
             getMargin(child, leading[crossAxis]);
         } else {
-          child.layout[pos[crossAxis]] += getPadding(node, leading[crossAxis]);
+          child.layout[pos[crossAxis]] += getPaddingAndBorder(node, leading[crossAxis]);
         }
       }
     }

@@ -689,6 +689,17 @@ describe('Layout', function() {
     )
   });
 
+  it('should layout node with borderWidth and position: absolute, top', function() {
+    testLayout(
+      {style: {borderTopWidth: 1}, children: [
+        {style: {top: -1, position: 'absolute'}}
+      ]},
+      {width: 0, height: 1, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
+      ]}
+    )
+  });
+
 
 
   it('should layout randomly', function() {
