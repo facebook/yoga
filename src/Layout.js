@@ -209,6 +209,9 @@ var computeLayout = (function() {
 
       if (flexibleChildrenCount) {
         var/*float*/ flexibleMainDim = remainingMainDim / flexibleChildrenCount;
+        if (flexibleMainDim < 0) {
+          flexibleMainDim = 0;
+        }
         for (var/*int*/ i = 0; i < node.children.length; ++i) {
           var/*css_node_t**/ child = node.children[i];
           if (getFlex(child)) {

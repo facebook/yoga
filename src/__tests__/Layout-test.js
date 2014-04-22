@@ -645,6 +645,22 @@ describe('Layout', function() {
     )
   });
 
+  it('should layout node with flex and overflow', function() {
+    testLayout(
+      {style: {height: 300}, children: [
+        {style: {height: 600}},
+        {style: {flex: 1}}
+      ]},
+      {width: 0, height: 300, top: 0, left: 0, children: [
+        {width: 0, height: 600, top: 0, left: 0},
+        {width: 0, height: 0, top: 600, left: 0}
+      ]}
+    );
+  });
+
+
+
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
