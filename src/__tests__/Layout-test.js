@@ -658,6 +658,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with flex and position absolute', function() {
+    testLayout(
+      {style: {width: 600, flexDirection: 'row'}, children: [
+        {style: {flex: 1, position: 'absolute'}}
+      ]},
+      {width: 600, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
 
 
 
@@ -720,7 +731,7 @@ describe('Layout', function() {
       return node;
     }
 
-    for (var i = 0; i < 100; ++i) {
+    for (var i = 0; i < 1000; ++i) {
       var node = generateRandomNode();
 
       if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout)) {

@@ -183,7 +183,9 @@ var computeLayout = (function() {
     var/*int*/ absoluteChildrenCount = 0;
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
-      if (isUndefined(node.layout[dim[mainAxis]]) || !getFlex(child)) {
+      if (isUndefined(node.layout[dim[mainAxis]]) ||
+          getPositionType(child) === 'absolute' ||
+          !getFlex(child)) {
         layoutNode(child);
         if (getPositionType(child) === 'relative') {
           mainContentDim += getDimWithMargin(child, mainAxis);
