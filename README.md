@@ -13,9 +13,9 @@ Name | Value
 ----:|------
 width, height | number
 left, right, top, bottom | number
-margin, marginLeft, marginRight, marginTop, marginBottom | positive number
-padding, paddingLeft, paddingRight, paddingTop, paddingBottom | positive number
-borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth | positive number
+margin, marginLeft, marginRight, marginTop, marginBottom | number
+padding, paddingLeft, paddingRight, paddingTop, paddingBottom | number
+borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth | number
 flexDirection | 'column', 'row'
 justifyContent | 'flex-start', 'center', 'flex-end', 'space-between', 'space-around'
 alignItems, alignSelf | 'flex-start', 'center', 'flex-end', 'stretch'
