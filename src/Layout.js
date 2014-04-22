@@ -180,12 +180,15 @@ var computeLayout = (function() {
 
     var/*float*/ mainContentDim = 0;
     var/*int*/ flexibleChildrenCount = 0;
+    var/*int*/ absoluteChildrenCount = 0;
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
       if (isUndefined(node.layout[dim[mainAxis]]) || !getFlex(child)) {
         layoutNode(child);
         if (getPositionType(child) === 'relative') {
           mainContentDim += getDimWithMargin(child, mainAxis);
+        } else {
+          absoluteChildrenCount++;
         }
       } else {
         flexibleChildrenCount++;
@@ -218,9 +221,9 @@ var computeLayout = (function() {
         } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
           leadingMainDim = remainingMainDim;
         } else if (justifyContent == CSS_JUSTIFY_SPACE_BETWEEN) {
-          betweenMainDim = remainingMainDim / (node.children.length - 1);
+          betweenMainDim = remainingMainDim / (node.children.length - absoluteChildrenCount - 1);
         } else if (justifyContent == CSS_JUSTIFY_SPACE_AROUND) {
-          betweenMainDim = remainingMainDim / node.children.length;
+          betweenMainDim = remainingMainDim / (node.children.length - absoluteChildrenCount);
           leadingMainDim = betweenMainDim / 2;
         }
       }

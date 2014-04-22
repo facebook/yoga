@@ -109,14 +109,6 @@ var layoutTestUtils = (function() {
     return JSON.stringify(a) === JSON.stringify(b);
   }
 
-  function printNode(node) {
-    console.log(
-      JSON.stringify(node)
-        .replace(/"([a-zA-Z]+)":/g, '$1: ')
-        .replace(/,/g, ', ')
-        .replace(/"/g, '\'')
-    );
-  }
   function reduceTest(node) {
     function isWorking() {
       return isEqual(
@@ -125,7 +117,7 @@ var layoutTestUtils = (function() {
       );
     }
     if (isWorking()) {
-      return console.log('Bail early, already working');
+      return node;
     }
 
     var isModified = true;
@@ -180,9 +172,7 @@ var layoutTestUtils = (function() {
       rec(node);
     }
 
-    printNode(node);
-    printNode(computeDOMLayout(node));
-    printNode(computeLayout(node));
+    return node;
   }
 
   return {
@@ -196,6 +186,7 @@ var layoutTestUtils = (function() {
       expect({i: i, node: node, layout: computeLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
     },
+    computeLayout: computeLayout,
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest
   }

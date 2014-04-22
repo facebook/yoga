@@ -1,6 +1,9 @@
 
 var testLayout = layoutTestUtils.testLayout;
 var testRandomLayout = layoutTestUtils.testRandomLayout;
+var computeLayout = layoutTestUtils.computeLayout;
+var computeDOMLayout = layoutTestUtils.computeDOMLayout;
+var reduceTest = layoutTestUtils.reduceTest;
 
 describe('Layout', function() {
   it('should layout a single node with width and height', function() {
@@ -592,6 +595,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with space-around and child position absolute', function() {
+    testLayout(
+      {style: {height: 200, justifyContent: 'space-around'}, children: [
+        {style: {position: 'absolute'}},
+        {style: {}}
+      ]},
+      {width: 0, height: 200, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 100, left: 0},
+        {width: 0, height: 0, top: 100, left: 0}
+      ]}
+    );
+  })
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -651,8 +667,12 @@ describe('Layout', function() {
       return node;
     }
 
-    for (var i = 0; i < 1000; ++i) {
+    for (var i = 0; i < 100; ++i) {
       var node = generateRandomNode();
+
+      if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout)) {
+        node = reduceTest(node);
+      }
 
       // The iframe's body has a natural width of 300 that it doesn't really make
       // to replicate in the test suite. The easiest workaround is not to test
