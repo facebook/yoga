@@ -669,7 +669,18 @@ describe('Layout', function() {
     );
   });
 
-
+  it('should layout node with double flex and position absolute', function() {
+    testLayout(
+      {style: {height: 500}, children: [
+        {style: {flex: 1}},
+        {style: {flex: 1, position: 'absolute'}}
+      ]},
+      {width: 0, height: 500, top: 0, left: 0, children: [
+        {width: 0, height: 500, top: 0, left: 0},
+        {width: 0, height: 0, top: 500, left: 0},
+      ]}
+    )
+  });
 
 
   it('should layout randomly', function() {
