@@ -581,6 +581,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with position: absolute, left and marginLeft', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {left: 5, marginLeft: 5, position: 'absolute'}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 10}
+      ]}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
