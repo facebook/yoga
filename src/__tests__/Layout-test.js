@@ -535,6 +535,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with specified width', function() {
+    testLayout(
+      {style: {padding: 5}, children: [
+        {style: {position: 'absolute'}}
+      ]},
+      {width: 10, height: 10, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 5, left: 5}
+      ]}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
@@ -556,9 +567,6 @@ describe('Layout', function() {
     }
     function randEnum(node, chance, attribute, enumValues) {
       if (rng.nextFloat() < chance) {
-        if (attribute === 'position') {
-          return;
-        }
         node.style[attribute] = enumValues[Math.floor(rng.nextFloat() * enumValues.length)];
       }
     }
