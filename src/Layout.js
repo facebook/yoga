@@ -267,11 +267,13 @@ var computeLayout = (function() {
         } else if (alignItem == CSS_ALIGN_FLEX_END) {
           leadingCrossDim += remainingCrossDim;
         } else if (alignItem == CSS_ALIGN_STRETCH) {
-          child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
-            getPadding(node, leading[crossAxis]) -
-            getPadding(node, trailing[crossAxis]) -
-            getMargin(child, leading[crossAxis]) -
-            getMargin(child, trailing[crossAxis]);
+          if (!isDimDefined(child, crossAxis)) {
+            child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
+              getPadding(node, leading[crossAxis]) -
+              getPadding(node, trailing[crossAxis]) -
+              getMargin(child, leading[crossAxis]) -
+              getMargin(child, trailing[crossAxis]);
+          }
         }
         child.layout[pos[crossAxis]] += leadingCrossDim;
       }

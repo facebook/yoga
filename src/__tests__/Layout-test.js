@@ -518,6 +518,23 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with specified width and stretch', function() {
+    testLayout(
+      {style: {}, children: [{
+        style: {}, children: [
+          {style: {width: 400}}
+        ]},
+        {style: {width: 200, alignSelf: 'stretch'}}
+      ]},
+      {width: 400, height: 0, top: 0, left: 0, children: [
+        {width: 400, height: 0, top: 0, left: 0, children: [
+          {width: 400, height: 0, top: 0, left: 0}
+        ]},
+        {width: 200, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
   it('should layout randomly', function() {
     function RNG(seed) {
       this.state = seed;
