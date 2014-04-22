@@ -158,12 +158,20 @@ var computeLayout = (function() {
 
     var/*bool*/ mainDimInStyle = isDimDefined(node, mainAxis);
     if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
-      node.layout[dim[mainAxis]] = node.style[dim[mainAxis]];
+      node.layout[dim[mainAxis]] = Math.max(
+        node.style[dim[mainAxis]],
+        getPadding(node, leading[mainAxis]) +
+          getPadding(node, trailing[mainAxis])
+      );
     }
 
     var/*bool*/ crossDimInStyle = isDimDefined(node, crossAxis);
     if (isUndefined(node.layout[dim[crossAxis]]) && crossDimInStyle) {
-      node.layout[dim[crossAxis]] = node.style[dim[crossAxis]];
+      node.layout[dim[crossAxis]] = Math.max(
+        node.style[dim[crossAxis]],
+        getPadding(node, leading[crossAxis]) +
+          getPadding(node, trailing[crossAxis])
+      );
     }
 
     var/*float*/ mainContentDim = 0;

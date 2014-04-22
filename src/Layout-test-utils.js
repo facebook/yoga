@@ -163,7 +163,10 @@ var layoutTestUtils = (function() {
       for (var i = 0; node.children && i < node.children.length; ++i) {
         var value = node.children[i];
         node.children.splice(i, 1);
-        if (isWorking() && node.children) {
+        if (isWorking()) {
+          if (!node.children) {
+            node.children = [];
+          }
           node.children.splice(i, 0, value);
           rec(node.children[i]);
         } else {
@@ -179,9 +182,8 @@ var layoutTestUtils = (function() {
 
     printNode(node);
     printNode(computeDOMLayout(node));
+    printNode(computeLayout(node));
   }
-
-reduceTest({ style : { top : 0, marginLeft : 18 }, children : [ { style : { left : -7, paddingRight : 2, alignItems : 'stretch' }, children : [ { style : { left : 9 } }, { style : { width : 377, top : 0, marginTop : 0, flexDirection : 'column' } }, { style : { paddingTop : 10 } } ] }, { style : { width : 222, paddingTop : 1, alignSelf : 'stretch' } }, { style : { width : 61, left : 3 } } ] })
 
   return {
     testLayout: function(node, expectedLayout) {

@@ -495,12 +495,26 @@ describe('Layout', function() {
 
   it('should layout node with position: absolute, padding and alignSelf: center', function() {
     testLayout(
-      {style : {}, children : [
+      {style: {}, children: [
         {style: {paddingRight: 12, alignSelf: 'center', position: 'absolute'}}
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
         {width: 12, height: 0, top: 0, left: 0}
       ]}
+    );
+  });
+
+  it('should work with height smaller than paddingBottom', function() {
+    testLayout(
+      {style: {height: 5, paddingBottom: 20}},
+      {width: 0, height: 20, top: 0, left: 0}
+    );
+  });
+
+  it('should work with width smaller than paddingLeft', function() {
+    testLayout(
+      {style: {width: 5, paddingLeft: 20}},
+      {width: 20, height: 0, top: 0, left: 0}
     );
   });
 
@@ -517,11 +531,17 @@ describe('Layout', function() {
     var rng = new RNG(0);
     function randMinMax(node, chance, attribute, min, max) {
       if (rng.nextFloat() < chance) {
+        if (attribute === 'left' || attribute === 'top' || attribute === 'right' || attribute === 'bottom') {
+          return;
+        }
         node.style[attribute] = Math.floor(rng.nextFloat() * (max - min)) + min;
       }
     }
     function randEnum(node, chance, attribute, enumValues) {
       if (rng.nextFloat() < chance) {
+        if (attribute === 'position') {
+          return;
+        }
         node.style[attribute] = enumValues[Math.floor(rng.nextFloat() * enumValues.length)];
       }
     }
