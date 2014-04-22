@@ -322,9 +322,12 @@ var computeLayout = (function() {
           leadingCrossDim += remainingCrossDim;
         } else if (alignItem === CSS_ALIGN_STRETCH) {
           if (!isDimDefined(child, crossAxis)) {
-            child.layout[dim[crossAxis]] = node.layout[dim[crossAxis]] -
-              getPaddingAndBorderAxis(node, crossAxis) -
-              getMarginAxis(child, crossAxis);
+            child.layout[dim[crossAxis]] = fmaxf(
+              node.layout[dim[crossAxis]] -
+                getPaddingAndBorderAxis(node, crossAxis) -
+                getMarginAxis(child, crossAxis),
+              getPaddingAndBorderAxis(child, crossAxis)
+            );
           }
         }
         child.layout[pos[crossAxis]] += leadingCrossDim;

@@ -711,6 +711,16 @@ describe('Layout', function() {
     )
   });
 
+  it('should correctly take into account min padding for stretch', function() {
+    testLayout(
+      {style: {width: 50}, children: [
+        {style: {marginLeft: 20, padding: 20, alignSelf: 'stretch'}}
+      ]},
+      {width: 50, height: 40, top: 0, left: 0, children: [
+        {width: 40, height: 40, top: 0, left: 20}
+      ]}
+    );
+  });
 
 
 
@@ -774,10 +784,10 @@ describe('Layout', function() {
       return node;
     }
 
-    for (var i = 0; i < 100; ++i) {
+    for (var i = 0; i < 1000; ++i) {
       var node = generateRandomNode();
 
-      if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout)) {
+      if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
         node = reduceTest(node);
       }
 
