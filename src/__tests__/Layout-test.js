@@ -761,9 +761,9 @@ describe('Layout', function() {
       randMinMax(node, 0.5, 'left', -10, 10);
       randMinMax(node, 0.5, 'right', -10, 10);
       randMinMax(node, 0.5, 'bottom', -10, 10);
-      randSpacing(node, 0.5, 'margin', '', 0, 20);
-      randSpacing(node, 0.5, 'padding', '', 0, 20);
-      randSpacing(node, 0.5, 'border', 'Width', 0, 4);
+      randSpacing(node, 0.5, 'margin', '', -10, 20);
+      randSpacing(node, 0.5, 'padding', '', -10, 20);
+      randSpacing(node, 0.5, 'border', 'Width', -4, 4);
       randEnum(node, 0.5, 'flexDirection', ['column', 'row']);
       randEnum(node, 0.5, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
       randEnum(node, 0.5, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);

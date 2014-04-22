@@ -46,6 +46,20 @@ var computeLayout = (function() {
     return 0;
   }
 
+  function getPositiveSpacing(node, type, suffix, location) {
+    var key = type + capitalizeFirst(location) + suffix;
+    if (key in node.style && node.style[key] >= 0) {
+      return node.style[key];
+    }
+
+    key = type + suffix;
+    if (key in node.style && node.style[key] >= 0) {
+      return node.style[key];
+    }
+
+    return 0;
+  }
+
   function isUndefined(value) {
     return value == undefined;
   }
@@ -55,11 +69,11 @@ var computeLayout = (function() {
   }
 
   function getPadding(node, location) {
-    return getSpacing(node, 'padding', '', location);
+    return getPositiveSpacing(node, 'padding', '', location);
   }
 
   function getBorder(node, location) {
-    return getSpacing(node, 'border', 'Width', location);
+    return getPositiveSpacing(node, 'border', 'Width', location);
   }
 
   function getPaddingAndBorder(node, location) {
