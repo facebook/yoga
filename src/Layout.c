@@ -421,9 +421,12 @@ void layoutNode(css_node_t *node) {
         leadingCrossDim += remainingCrossDim;
       } else if (alignItem == CSS_ALIGN_STRETCH) {
         if (!isDimDefined(child, crossAxis)) {
-          child->layout.dimensions[dim[crossAxis]] = node->layout.dimensions[dim[crossAxis]] -
-            getPaddingAndBorderAxis(node, crossAxis) -
-            getMarginAxis(child, crossAxis);
+          child->layout.dimensions[dim[crossAxis]] = fmaxf(
+            node->layout.dimensions[dim[crossAxis]] -
+              getPaddingAndBorderAxis(node, crossAxis) -
+              getMarginAxis(child, crossAxis),
+            getPaddingAndBorderAxis(child, crossAxis)
+          );
         }
       }
       child->layout.position[pos[crossAxis]] += leadingCrossDim;

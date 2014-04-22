@@ -786,7 +786,6 @@ describe('Layout', function() {
 
     for (var i = 0; i < 1000; ++i) {
       var node = generateRandomNode();
-
       if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
         node = reduceTest(node);
       }

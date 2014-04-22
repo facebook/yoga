@@ -63,9 +63,19 @@ typedef struct {
   css_flex_t flex;
   css_position_type_t position_type;
   float margin[4];
+  float position[4];
+  /**
+   * You should skip all the rules that contain negative values for the
+   * following attributes. For example:
+   *   {padding: 10, paddingLeft: -5}
+   * should output:
+   *   {left: 10 ...}
+   * the following two are incorrect:
+   *   {left: -5 ...}
+   *   {left: 0 ...}
+   */
   float padding[4];
   float border[4];
-  float position[4];
   float dimensions[2];
 } css_style_t;
 

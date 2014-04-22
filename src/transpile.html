@@ -34,13 +34,18 @@ document.getElementById('layout_code').value = computeLayout.layoutNode.toString
 var currentTest = '';
 var allTests = [];
 var computeDOMLayout = layoutTestUtils.computeDOMLayout;
+var computeLayout = layoutTestUtils.computeLayout;
+var reduceTest = layoutTestUtils.reduceTest;
 var layoutTestUtils = {
   testLayout: function(node, expectedLayout) {
     allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
   },
   testRandomLayout: function(node, i) {
     allTests.push({name: 'Random #' + i, node: node, expectedLayout: computeDOMLayout(node)});
-  }
+  },
+  computeLayout: computeLayout,
+  computeDOMLayout: computeDOMLayout,
+  reduceTest: reduceTest
 };
 function describe(name, cb) { cb(); }
 function it(name, cb) { currentTest = name; cb(); }
@@ -70,22 +75,26 @@ function printLayout(test) {
     }
   }
 
-  function addFloat(node, js_key, c_key) {
+  function addFloat(positive, node, js_key, c_key) {
     if (js_key in node.style) {
-      add('node->style' + '.' + c_key + ' = ' + node.style[js_key] + ';');
+      if (positive === 'positive' && node.style[js_key] < 0) {
+        // do nothing
+      } else {
+        add('node->style' + '.' + c_key + ' = ' + node.style[js_key] + ';');
+      }
     }
   }
 
-  function addSpacing(node, spacing, suffix) {
-    addFloat(node, spacing + suffix, spacing + '[CSS_LEFT]');
-    addFloat(node, spacing + suffix, spacing + '[CSS_TOP]');
-    addFloat(node, spacing + suffix, spacing + '[CSS_RIGHT]');
-    addFloat(node, spacing + suffix, spacing + '[CSS_BOTTOM]');
+  function addSpacing(positive, node, spacing, suffix) {
+    addFloat(positive, node, spacing + suffix, spacing + '[CSS_LEFT]');
+    addFloat(positive, node, spacing + suffix, spacing + '[CSS_TOP]');
+    addFloat(positive, node, spacing + suffix, spacing + '[CSS_RIGHT]');
+    addFloat(positive, node, spacing + suffix, spacing + '[CSS_BOTTOM]');
 
-    addFloat(node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
-    addFloat(node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
-    addFloat(node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
-    addFloat(node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
+    addFloat(positive, node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
+    addFloat(positive, node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
+    addFloat(positive, node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
+    addFloat(positive, node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
   }
 
   add('{');
@@ -128,15 +137,15 @@ function printLayout(test) {
       'relative': 'CSS_POSITION_RELATIVE',
       'absolute': 'CSS_POSITION_ABSOLUTE'
     });
-    addFloat(node, 'width', 'dimensions[CSS_WIDTH]');
-    addFloat(node, 'height', 'dimensions[CSS_HEIGHT]');
-    addSpacing(node, 'margin', '');
-    addSpacing(node, 'padding', '');
-    addSpacing(node, 'border', 'Width');
-    addFloat(node, 'left', 'position[CSS_LEFT]');
-    addFloat(node, 'top', 'position[CSS_TOP]');
-    addFloat(node, 'right', 'position[CSS_RIGHT]');
-    addFloat(node, 'bottom', 'position[CSS_BOTTOM]');
+    addFloat('positive', node, 'width', 'dimensions[CSS_WIDTH]');
+    addFloat('positive', node, 'height', 'dimensions[CSS_HEIGHT]');
+    addSpacing('all', node, 'margin', '');
+    addSpacing('positive', node, 'padding', '');
+    addSpacing('positive', node, 'border', 'Width');
+    addFloat('all', node, 'left', 'position[CSS_LEFT]');
+    addFloat('all', node, 'top', 'position[CSS_TOP]');
+    addFloat('all', node, 'right', 'position[CSS_RIGHT]');
+    addFloat('all', node, 'bottom', 'position[CSS_BOTTOM]');
 
     if (node.children) {
       add('init_css_node_children(node, ' + node.children.length + ');');
