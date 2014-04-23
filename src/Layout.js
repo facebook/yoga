@@ -123,6 +123,10 @@ var computeLayout = (function() {
     return node.style.flex === 1;
   }
 
+  function isFlex(node) {
+    return getPositionType(node) === CSS_POSITION_RELATIVE && getFlex(node);
+  }
+
   function getDimWithMargin(node, axis) {
     return node.layout[dim[axis]] + getMarginAxis(node, axis);
   }
@@ -217,9 +221,7 @@ var computeLayout = (function() {
     var/*int*/ absoluteChildrenCount = 0;
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
-      if (isUndefined(node.layout[dim[mainAxis]]) ||
-          getPositionType(child) === CSS_POSITION_ABSOLUTE ||
-          !getFlex(child)) {
+      if (isUndefined(node.layout[dim[mainAxis]]) || !isFlex(child)) {
         layoutNode(child);
         if (getPositionType(child) === CSS_POSITION_RELATIVE) {
           mainContentDim += getDimWithMargin(child, mainAxis);
@@ -246,7 +248,7 @@ var computeLayout = (function() {
         }
         for (var/*int*/ i = 0; i < node.children.length; ++i) {
           var/*css_node_t**/ child = node.children[i];
-          if (getPositionType(child) === CSS_POSITION_RELATIVE && getFlex(child)) {
+          if (isFlex(child)) {
             child.layout[dim[mainAxis]] = flexibleMainDim + getPaddingAndBorderAxis(child, mainAxis);
             layoutNode(child);
           }
