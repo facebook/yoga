@@ -128,7 +128,7 @@ var computeLayout = (function() {
   }
 
   function isDimDefined(node, axis) {
-    return !isUndefined(node.style[dim[axis]]);
+    return !isUndefined(node.style[dim[axis]]) && node.style[dim[axis]] >= 0;
   }
 
   function isPosDefined(node, pos) {

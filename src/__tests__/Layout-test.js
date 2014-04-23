@@ -722,6 +722,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with negative width', function() {
+    testLayout(
+      {style: {width: -31}, children: [
+        {style: {borderRightWidth: 5}}
+      ]},
+      {width: 5, height: 0, top: 0, left: 0, children: [
+        {width: 5, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
+
+
 
 
   it('should layout randomly', function() {
@@ -765,8 +778,8 @@ describe('Layout', function() {
     }
     function generateRandomNode() {
       var node = {style: {}};
-      randMinMax(node, 0.5, 'width', 0, 1000);
-      randMinMax(node, 0.5, 'height', 0, 1000);
+      randMinMax(node, 0.5, 'width', -100, 1000);
+      randMinMax(node, 0.5, 'height', -100, 1000);
       randMinMax(node, 0.5, 'top', -10, 10);
       randMinMax(node, 0.5, 'left', -10, 10);
       randMinMax(node, 0.5, 'right', -10, 10);
