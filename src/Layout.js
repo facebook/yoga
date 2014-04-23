@@ -146,13 +146,24 @@ var computeLayout = (function() {
     return 0;
   }
 
+
+  // This function handles when the user specifically sets a value
+  // for `width` or `height`
   function setDimension(node, axis) {
-    if (isUndefined(node.layout[dim[axis]]) && isDimDefined(node, axis)) {
-      node.layout[dim[axis]] = fmaxf(
-        node.style[dim[axis]],
-        getPaddingAndBorderAxis(node, axis)
-      );
+    // The parent already computed us a width or height. We just skip it
+    if (!isUndefined(node.layout[dim[axis]])) {
+      return;
     }
+    // We only run if there's a width or height defined
+    if (!isDimDefined(node, axis)) {
+      return;
+    }
+
+    // The dimensions can never be smaller than the padding and border
+    node.layout[dim[axis]] = fmaxf(
+      node.style[dim[axis]],
+      getPaddingAndBorderAxis(node, axis)
+    );
   }
 
   // If both left and right are defined, then use left. Otherwise return
@@ -211,24 +222,54 @@ var computeLayout = (function() {
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
 
+    // Handle width and height attributes
     setDimension(node, mainAxis);
     setDimension(node, crossAxis);
 
+    // The algorithm is divided into two main steps:
+    // (1) We first layout all the children that aren't flexible
+    // (2) At this point, we know the total size and the size of all the non
+    //     flexible children. We can now set the dimensions of the flexible
+    //     children
+
+
+    // <Loop A> Measure non flexible children and count children by type
+
+    // mainContentDim is accumulation of the dimensions and margin of all the
+    // non flexible children. This will be used in order to either set the
+    // dimensions of the node if none already exist, or to compute the
+    // remaining space left for the flexible children.
     var/*float*/ mainContentDim = 0;
+
+    // There are three kind of children, non flexible, flexible and absolute.
+    // We need to know how many there are in order to distribute the space.
     var/*int*/ flexibleChildrenCount = 0;
-    var/*int*/ absoluteChildrenCount = 0;
+    var/*int*/ nonFlexibleChildrenCount = 0;
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
-      if (isUndefined(node.layout[dim[mainAxis]]) || !isFlex(child)) {
-        layoutNode(child);
-        if (getPositionType(child) === CSS_POSITION_RELATIVE) {
-          mainContentDim += getDimWithMargin(child, mainAxis);
-        } else {
-          absoluteChildrenCount++;
-        }
-      } else {
+
+      // It only makes sense to consider a child flexible if we have a computed
+      // dimension for the node.
+      if (!isUndefined(node.layout[dim[mainAxis]]) && isFlex(child)) {
         flexibleChildrenCount++;
-        mainContentDim += getPaddingAndBorderAxis(child, mainAxis) + getMarginAxis(child, mainAxis);
+
+        // Even if we don't know its exact size yet, we already know the padding,
+        // border and margin. We'll use this partial information to compute the
+        // remaining space.
+        mainContentDim += getPaddingAndBorderAxis(child, mainAxis) +
+          getMarginAxis(child, mainAxis);
+
+      } else {
+        // This is the main recursive call. We layout non flexible children.
+        layoutNode(child);
+
+        // Absolute positioned elements do not take part of the layout, so we
+        // don't use them to compute mainContentDim
+        if (getPositionType(child) === CSS_POSITION_RELATIVE) {
+          nonFlexibleChildrenCount++;
+          // At this point we know the final size and margin of the element.
+          mainContentDim += getDimWithMargin(child, mainAxis);
+        }
       }
     }
 
@@ -260,9 +301,9 @@ var computeLayout = (function() {
         } else if (justifyContent === CSS_JUSTIFY_FLEX_END) {
           leadingMainDim = remainingMainDim;
         } else if (justifyContent === CSS_JUSTIFY_SPACE_BETWEEN) {
-          betweenMainDim = remainingMainDim / (node.children.length - absoluteChildrenCount - 1);
+          betweenMainDim = remainingMainDim / (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
         } else if (justifyContent === CSS_JUSTIFY_SPACE_AROUND) {
-          betweenMainDim = remainingMainDim / (node.children.length - absoluteChildrenCount);
+          betweenMainDim = remainingMainDim / (flexibleChildrenCount + nonFlexibleChildrenCount);
           leadingMainDim = betweenMainDim / 2;
         }
       }
