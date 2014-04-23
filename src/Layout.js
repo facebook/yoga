@@ -146,6 +146,15 @@ var computeLayout = (function() {
     return 0;
   }
 
+  function setDimension(node, axis) {
+    if (isUndefined(node.layout[dim[axis]]) && isDimDefined(node, axis)) {
+      node.layout[dim[axis]] = fmaxf(
+        node.style[dim[axis]],
+        getPaddingAndBorderAxis(node, axis)
+      );
+    }
+  }
+
   // If both left and right are defined, then use left. Otherwise return
   // +left or -right depending on which is defined.
   function getRelativePosition(node, axis) {
@@ -202,19 +211,8 @@ var computeLayout = (function() {
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
 
-    if (isUndefined(node.layout[dim[mainAxis]]) && isDimDefined(node, mainAxis)) {
-      node.layout[dim[mainAxis]] = fmaxf(
-        node.style[dim[mainAxis]],
-        getPaddingAndBorderAxis(node, mainAxis)
-      );
-    }
-
-    if (isUndefined(node.layout[dim[crossAxis]]) && isDimDefined(node, crossAxis)) {
-      node.layout[dim[crossAxis]] = fmaxf(
-        node.style[dim[crossAxis]],
-        getPaddingAndBorderAxis(node, crossAxis)
-      );
-    }
+    setDimension(node, mainAxis);
+    setDimension(node, crossAxis);
 
     var/*float*/ mainContentDim = 0;
     var/*int*/ flexibleChildrenCount = 0;
