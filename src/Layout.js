@@ -135,7 +135,6 @@ var computeLayout = (function() {
     return !isUndefined(node.style[pos]);
   }
 
-
   function getPosition(node, pos) {
     if (pos in node.style) {
       return node.style[pos];
@@ -293,15 +292,15 @@ var computeLayout = (function() {
         }
       }
     }
+
     mainPos += getPaddingAndBorder(node, trailing[mainAxis]);
-    crossDim += getPaddingAndBorder(node, leading[crossAxis]) +
-      getPaddingAndBorder(node, trailing[crossAxis]);
+    crossDim += getPaddingAndBorderAxis(node, crossAxis);
 
     if (isUndefined(node.layout[dim[mainAxis]]) && !mainDimInStyle) {
-      node.layout[dim[mainAxis]] = mainPos > 0 ? mainPos : 0;
+      node.layout[dim[mainAxis]] = fmaxf(mainPos, getPaddingAndBorderAxis(node, mainAxis));
     }
     if (isUndefined(node.layout[dim[crossAxis]])) {
-      node.layout[dim[crossAxis]] = crossDim > 0 ? crossDim : 0;
+      node.layout[dim[crossAxis]] = fmaxf(crossDim, getPaddingAndBorderAxis(node, crossAxis));
     }
 
     for (var/*int*/ i = 0; i < node.children.length; ++i) {

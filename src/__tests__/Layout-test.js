@@ -733,7 +733,16 @@ describe('Layout', function() {
     );
   });
 
-
+  it('should handle negative margin and min padding correctly', function() {
+    testLayout(
+      {style: {borderRightWidth: 1, flexDirection: 'row'}, children: [
+        {style: {marginRight: -8}}
+      ]},
+      {width: 1, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
+      ]}
+    )
+  });
 
 
 
