@@ -392,15 +392,15 @@ void layoutNode(css_node_t *node) {
       }
     }
   }
+
   mainPos += getPaddingAndBorder(node, trailing[mainAxis]);
-  crossDim += getPaddingAndBorder(node, leading[crossAxis]) +
-    getPaddingAndBorder(node, trailing[crossAxis]);
+  crossDim += getPaddingAndBorderAxis(node, crossAxis);
 
   if (isUndefined(node->layout.dimensions[dim[mainAxis]]) && !mainDimInStyle) {
-    node->layout.dimensions[dim[mainAxis]] = mainPos > 0 ? mainPos : 0;
+    node->layout.dimensions[dim[mainAxis]] = fmaxf(mainPos, getPaddingAndBorderAxis(node, mainAxis));
   }
   if (isUndefined(node->layout.dimensions[dim[crossAxis]])) {
-    node->layout.dimensions[dim[crossAxis]] = crossDim > 0 ? crossDim : 0;
+    node->layout.dimensions[dim[crossAxis]] = fmaxf(crossDim, getPaddingAndBorderAxis(node, crossAxis));
   }
 
   for (int i = 0; i < node->children_count; ++i) {

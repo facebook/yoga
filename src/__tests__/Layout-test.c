@@ -2548,6 +2548,78 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
+      init_css_node_children(node, 1);
+      {
+        css_node_t *outer_node_1 = node;
+        css_node_t *node;
+        node = &outer_node_1->children[0];
+        node->style.border[CSS_RIGHT] = 5;
+      }
+    }
+
+    css_node_t *root_layout = new_css_node();
+    {
+      css_node_t *node = root_layout;
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 5;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node, 1);
+      {
+        css_node_t *outer_node_1 = node;
+        css_node_t *node;
+        node = &outer_node_1->children[0];
+        node->layout.position[CSS_TOP] = 0;
+        node->layout.position[CSS_LEFT] = 0;
+        node->layout.dimensions[CSS_WIDTH] = 5;
+        node->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout node with negative width", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_css_node();
+    {
+      css_node_t *node = root_node;
+      node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node->style.border[CSS_RIGHT] = 1;
+      init_css_node_children(node, 1);
+      {
+        css_node_t *outer_node_1 = node;
+        css_node_t *node;
+        node = &outer_node_1->children[0];
+        node->style.margin[CSS_RIGHT] = -8;
+      }
+    }
+
+    css_node_t *root_layout = new_css_node();
+    {
+      css_node_t *node = root_layout;
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 1;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node, 1);
+      {
+        css_node_t *outer_node_1 = node;
+        css_node_t *node;
+        node = &outer_node_1->children[0];
+        node->layout.position[CSS_TOP] = 0;
+        node->layout.position[CSS_LEFT] = 0;
+        node->layout.dimensions[CSS_WIDTH] = 0;
+        node->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should handle negative margin and min padding correctly", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_css_node();
+    {
+      css_node_t *node = root_node;
     }
 
     css_node_t *root_layout = new_css_node();
@@ -2587,8 +2659,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 954;
-      node->style.dimensions[CSS_HEIGHT] = 519;
+      node->style.dimensions[CSS_WIDTH] = 949;
+      node->style.dimensions[CSS_HEIGHT] = 471;
       node->style.margin[CSS_LEFT] = 14;
       node->style.margin[CSS_RIGHT] = 13;
       node->style.border[CSS_LEFT] = 3;
@@ -2601,8 +2673,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 954;
-      node->layout.dimensions[CSS_HEIGHT] = 519;
+      node->layout.dimensions[CSS_WIDTH] = 949;
+      node->layout.dimensions[CSS_HEIGHT] = 471;
     }
 
     test("Random #2", root_node, root_layout);
@@ -2663,8 +2735,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 433;
-      node->style.dimensions[CSS_HEIGHT] = 590;
+      node->style.dimensions[CSS_WIDTH] = 377;
+      node->style.dimensions[CSS_HEIGHT] = 549;
       node->style.margin[CSS_LEFT] = -9;
       node->style.margin[CSS_TOP] = 1;
       node->style.padding[CSS_LEFT] = 2;
@@ -2682,8 +2754,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = -9;
-      node->layout.dimensions[CSS_WIDTH] = 433;
-      node->layout.dimensions[CSS_HEIGHT] = 590;
+      node->layout.dimensions[CSS_WIDTH] = 377;
+      node->layout.dimensions[CSS_HEIGHT] = 549;
     }
 
     test("Random #5", root_node, root_layout);
@@ -2749,8 +2821,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 62;
-      node->style.dimensions[CSS_HEIGHT] = 921;
+      node->style.dimensions[CSS_HEIGHT] = 913;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -2789,7 +2860,6 @@ int main()
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_ONE;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_HEIGHT] = 5;
         node->style.margin[CSS_TOP] = 15;
         node->style.margin[CSS_RIGHT] = 7;
         node->style.margin[CSS_BOTTOM] = 0;
@@ -2809,8 +2879,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 12;
-      node->layout.dimensions[CSS_WIDTH] = 62;
-      node->layout.dimensions[CSS_HEIGHT] = 921;
+      node->layout.dimensions[CSS_WIDTH] = 15;
+      node->layout.dimensions[CSS_HEIGHT] = 913;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -2822,9 +2892,9 @@ int main()
         node->layout.dimensions[CSS_HEIGHT] = 11;
         node = &outer_node_1->children[1];
         node->layout.position[CSS_TOP] = 12;
-        node->layout.position[CSS_LEFT] = 20.5;
+        node->layout.position[CSS_LEFT] = -3;
         node->layout.dimensions[CSS_WIDTH] = 4;
-        node->layout.dimensions[CSS_HEIGHT] = 900;
+        node->layout.dimensions[CSS_HEIGHT] = 892;
       }
     }
 
@@ -2918,7 +2988,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_HEIGHT] = 342;
+      node->style.dimensions[CSS_HEIGHT] = 277;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -2940,7 +3010,7 @@ int main()
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 22;
       node->layout.dimensions[CSS_WIDTH] = 2;
-      node->layout.dimensions[CSS_HEIGHT] = 342;
+      node->layout.dimensions[CSS_HEIGHT] = 277;
     }
 
     test("Random #13", root_node, root_layout);
@@ -2971,7 +3041,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 599;
+      node->style.dimensions[CSS_WIDTH] = 559;
       node->style.margin[CSS_LEFT] = 17;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 17;
@@ -2993,7 +3063,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 599;
+      node->layout.dimensions[CSS_WIDTH] = 559;
       node->layout.dimensions[CSS_HEIGHT] = 14;
     }
 
@@ -3111,7 +3181,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 320;
+      node->style.dimensions[CSS_WIDTH] = 252;
       node->style.margin[CSS_BOTTOM] = -8;
       node->style.padding[CSS_BOTTOM] = 1;
       node->style.border[CSS_RIGHT] = 0;
@@ -3122,7 +3192,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 320;
+      node->layout.dimensions[CSS_WIDTH] = 252;
       node->layout.dimensions[CSS_HEIGHT] = 1;
     }
 
@@ -3153,7 +3223,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 668;
+      node->style.dimensions[CSS_HEIGHT] = 635;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = -3;
       node->style.margin[CSS_RIGHT] = 0;
@@ -3168,7 +3238,7 @@ int main()
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 4;
       node->layout.dimensions[CSS_WIDTH] = 19;
-      node->layout.dimensions[CSS_HEIGHT] = 668;
+      node->layout.dimensions[CSS_HEIGHT] = 635;
     }
 
     test("Random #23", root_node, root_layout);
@@ -3197,7 +3267,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_HEIGHT] = 108;
+      node->style.dimensions[CSS_HEIGHT] = 18;
       node->style.margin[CSS_LEFT] = 12;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 12;
@@ -3216,7 +3286,7 @@ int main()
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 21;
       node->layout.dimensions[CSS_WIDTH] = 15;
-      node->layout.dimensions[CSS_HEIGHT] = 108;
+      node->layout.dimensions[CSS_HEIGHT] = 18;
     }
 
     test("Random #25", root_node, root_layout);
@@ -3229,7 +3299,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 455;
+      node->style.dimensions[CSS_HEIGHT] = 400;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -3246,7 +3316,7 @@ int main()
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = -2;
       node->layout.dimensions[CSS_WIDTH] = 2;
-      node->layout.dimensions[CSS_HEIGHT] = 455;
+      node->layout.dimensions[CSS_HEIGHT] = 400;
     }
 
     test("Random #26", root_node, root_layout);
@@ -3369,7 +3439,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 455;
+      node->style.dimensions[CSS_HEIGHT] = 401;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -3392,7 +3462,7 @@ int main()
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 1;
       node->layout.dimensions[CSS_WIDTH] = 16;
-      node->layout.dimensions[CSS_HEIGHT] = 455;
+      node->layout.dimensions[CSS_HEIGHT] = 401;
     }
 
     test("Random #32", root_node, root_layout);
@@ -3404,7 +3474,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 227;
+      node->style.dimensions[CSS_WIDTH] = 150;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 15;
@@ -3427,7 +3497,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 227;
+      node->layout.dimensions[CSS_WIDTH] = 150;
       node->layout.dimensions[CSS_HEIGHT] = 15;
     }
 
@@ -3439,7 +3509,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 184;
+      node->style.dimensions[CSS_HEIGHT] = 103;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 15;
@@ -3454,7 +3524,7 @@ int main()
       node->layout.position[CSS_TOP] = 15;
       node->layout.position[CSS_LEFT] = 6;
       node->layout.dimensions[CSS_WIDTH] = 10;
-      node->layout.dimensions[CSS_HEIGHT] = 184;
+      node->layout.dimensions[CSS_HEIGHT] = 103;
     }
 
     test("Random #34", root_node, root_layout);
@@ -3484,7 +3554,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 539;
+      node->style.dimensions[CSS_WIDTH] = 493;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = -6;
@@ -3504,7 +3574,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 12;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 539;
+      node->layout.dimensions[CSS_WIDTH] = 493;
       node->layout.dimensions[CSS_HEIGHT] = 6;
     }
 
@@ -3626,30 +3696,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 204;
-      node->style.margin[CSS_LEFT] = 17;
-      node->style.margin[CSS_TOP] = 17;
-      node->style.margin[CSS_RIGHT] = 17;
-      node->style.margin[CSS_BOTTOM] = 17;
-      node->style.margin[CSS_TOP] = 5;
-      node->style.padding[CSS_LEFT] = 8;
-      node->style.padding[CSS_TOP] = 8;
-      node->style.padding[CSS_RIGHT] = 8;
-      node->style.padding[CSS_BOTTOM] = 8;
-      node->style.padding[CSS_TOP] = 2;
-      node->style.border[CSS_LEFT] = 0;
-      node->style.position[CSS_LEFT] = 2;
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = 5;
-      node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 16;
-      node->layout.dimensions[CSS_HEIGHT] = 204;
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #40", root_node, root_layout);
@@ -3685,7 +3740,7 @@ int main()
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_ONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 347;
+        node->style.dimensions[CSS_WIDTH] = 282;
         node->style.margin[CSS_LEFT] = 19;
         node->style.padding[CSS_LEFT] = 8;
         node->style.padding[CSS_TOP] = 17;
@@ -3698,8 +3753,8 @@ int main()
           node = &outer_node_2->children[0];
           node->style.justify_content = CSS_JUSTIFY_FLEX_START;
           node->style.align_self = CSS_ALIGN_FLEX_START;
-          node->style.dimensions[CSS_WIDTH] = 894;
-          node->style.dimensions[CSS_HEIGHT] = 135;
+          node->style.dimensions[CSS_WIDTH] = 883;
+          node->style.dimensions[CSS_HEIGHT] = 49;
           node->style.margin[CSS_LEFT] = -3;
           node->style.margin[CSS_RIGHT] = 18;
           node->style.padding[CSS_LEFT] = 2;
@@ -3722,8 +3777,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 14;
         node->layout.position[CSS_LEFT] = 37;
-        node->layout.dimensions[CSS_WIDTH] = 347;
-        node->layout.dimensions[CSS_HEIGHT] = 154;
+        node->layout.dimensions[CSS_WIDTH] = 282;
+        node->layout.dimensions[CSS_HEIGHT] = 68;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -3731,8 +3786,8 @@ int main()
           node = &outer_node_2->children[0];
           node->layout.position[CSS_TOP] = 19;
           node->layout.position[CSS_LEFT] = 7;
-          node->layout.dimensions[CSS_WIDTH] = 894;
-          node->layout.dimensions[CSS_HEIGHT] = 135;
+          node->layout.dimensions[CSS_WIDTH] = 883;
+          node->layout.dimensions[CSS_HEIGHT] = 49;
         }
       }
     }
@@ -3745,7 +3800,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 548;
+      node->style.dimensions[CSS_WIDTH] = 502;
       node->style.margin[CSS_LEFT] = -2;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = -2;
@@ -3764,7 +3819,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 28;
-      node->layout.dimensions[CSS_WIDTH] = 548;
+      node->layout.dimensions[CSS_WIDTH] = 502;
       node->layout.dimensions[CSS_HEIGHT] = 11;
     }
 
@@ -3794,8 +3849,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 609;
-      node->style.dimensions[CSS_HEIGHT] = 25;
+      node->style.dimensions[CSS_WIDTH] = 570;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 14;
       node->style.margin[CSS_BOTTOM] = -8;
@@ -3812,7 +3866,7 @@ int main()
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.align_self = CSS_ALIGN_FLEX_END;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_HEIGHT] = 365;
+        node->style.dimensions[CSS_HEIGHT] = 302;
         node->style.margin[CSS_LEFT] = 8;
         node->style.margin[CSS_TOP] = 8;
         node->style.margin[CSS_RIGHT] = 8;
@@ -3834,17 +3888,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 609;
-      node->layout.dimensions[CSS_HEIGHT] = 25;
+      node->layout.dimensions[CSS_WIDTH] = 570;
+      node->layout.dimensions[CSS_HEIGHT] = 319;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = -352;
+        node->layout.position[CSS_TOP] = 5;
         node->layout.position[CSS_LEFT] = 5;
-        node->layout.dimensions[CSS_WIDTH] = 584;
-        node->layout.dimensions[CSS_HEIGHT] = 365;
+        node->layout.dimensions[CSS_WIDTH] = 545;
+        node->layout.dimensions[CSS_HEIGHT] = 302;
       }
     }
 
@@ -3857,7 +3911,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 893;
+      node->style.dimensions[CSS_HEIGHT] = 882;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -3877,7 +3931,7 @@ int main()
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 893;
+      node->layout.dimensions[CSS_HEIGHT] = 882;
     }
 
     test("Random #45", root_node, root_layout);
@@ -3888,7 +3942,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_HEIGHT] = 701;
+      node->style.dimensions[CSS_HEIGHT] = 671;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_BOTTOM] = 12;
@@ -3921,7 +3975,7 @@ int main()
           node = &outer_node_2->children[0];
           node->style.justify_content = CSS_JUSTIFY_FLEX_START;
           node->style.flex = CSS_FLEX_NONE;
-          node->style.dimensions[CSS_WIDTH] = 956;
+          node->style.dimensions[CSS_WIDTH] = 952;
           node->style.margin[CSS_LEFT] = 1;
           node->style.margin[CSS_TOP] = 1;
           node->style.margin[CSS_RIGHT] = 1;
@@ -3949,8 +4003,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 4;
-      node->layout.dimensions[CSS_WIDTH] = 1022;
-      node->layout.dimensions[CSS_HEIGHT] = 701;
+      node->layout.dimensions[CSS_WIDTH] = 1018;
+      node->layout.dimensions[CSS_HEIGHT] = 671;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -3958,7 +4012,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 22;
         node->layout.position[CSS_LEFT] = 15;
-        node->layout.dimensions[CSS_WIDTH] = 985;
+        node->layout.dimensions[CSS_WIDTH] = 981;
         node->layout.dimensions[CSS_HEIGHT] = 29;
         init_css_node_children(node, 1);
         {
@@ -3967,7 +4021,7 @@ int main()
           node = &outer_node_2->children[0];
           node->layout.position[CSS_TOP] = 4;
           node->layout.position[CSS_LEFT] = -1;
-          node->layout.dimensions[CSS_WIDTH] = 956;
+          node->layout.dimensions[CSS_WIDTH] = 952;
           node->layout.dimensions[CSS_HEIGHT] = 26;
         }
       }
@@ -3981,7 +4035,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 230;
+      node->style.dimensions[CSS_WIDTH] = 154;
       node->style.margin[CSS_BOTTOM] = -3;
       node->style.padding[CSS_LEFT] = 10;
       node->style.padding[CSS_TOP] = 2;
@@ -3993,7 +4047,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 230;
+      node->layout.dimensions[CSS_WIDTH] = 154;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -4041,8 +4095,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 500;
-      node->style.dimensions[CSS_HEIGHT] = 298;
+      node->style.dimensions[CSS_WIDTH] = 451;
+      node->style.dimensions[CSS_HEIGHT] = 228;
       node->style.margin[CSS_BOTTOM] = 10;
       node->style.padding[CSS_LEFT] = 9;
       node->style.padding[CSS_TOP] = 9;
@@ -4057,7 +4111,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-        node->style.dimensions[CSS_HEIGHT] = 927;
+        node->style.dimensions[CSS_HEIGHT] = 919;
         node->style.margin[CSS_RIGHT] = -5;
         node->style.margin[CSS_BOTTOM] = 12;
         node->style.padding[CSS_LEFT] = 14;
@@ -4071,8 +4125,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 500;
-      node->layout.dimensions[CSS_HEIGHT] = 298;
+      node->layout.dimensions[CSS_WIDTH] = 451;
+      node->layout.dimensions[CSS_HEIGHT] = 228;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -4081,7 +4135,7 @@ int main()
         node->layout.position[CSS_TOP] = 2;
         node->layout.position[CSS_LEFT] = 14;
         node->layout.dimensions[CSS_WIDTH] = 14;
-        node->layout.dimensions[CSS_HEIGHT] = 927;
+        node->layout.dimensions[CSS_HEIGHT] = 919;
       }
     }
 
@@ -4128,8 +4182,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 860;
-      node->style.dimensions[CSS_HEIGHT] = 59;
+      node->style.dimensions[CSS_WIDTH] = 846;
       node->style.margin[CSS_LEFT] = -3;
       node->style.margin[CSS_RIGHT] = 2;
       node->style.margin[CSS_BOTTOM] = -3;
@@ -4145,8 +4198,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.align_items = CSS_ALIGN_FLEX_END;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 89;
-        node->style.dimensions[CSS_HEIGHT] = 571;
+        node->style.dimensions[CSS_HEIGHT] = 528;
         node->style.margin[CSS_LEFT] = 14;
         node->style.margin[CSS_TOP] = 14;
         node->style.margin[CSS_RIGHT] = 14;
@@ -4165,7 +4217,7 @@ int main()
           node->style.align_self = CSS_ALIGN_CENTER;
           node->style.flex = CSS_FLEX_NONE;
           node->style.position_type = CSS_POSITION_ABSOLUTE;
-          node->style.dimensions[CSS_HEIGHT] = 894;
+          node->style.dimensions[CSS_HEIGHT] = 883;
           node->style.margin[CSS_RIGHT] = -3;
           node->style.margin[CSS_BOTTOM] = 8;
           node->style.padding[CSS_RIGHT] = 7;
@@ -4174,8 +4226,8 @@ int main()
           node = &outer_node_2->children[1];
           node->style.flex = CSS_FLEX_NONE;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_WIDTH] = 174;
-          node->style.dimensions[CSS_HEIGHT] = 488;
+          node->style.dimensions[CSS_WIDTH] = 92;
+          node->style.dimensions[CSS_HEIGHT] = 437;
           node->style.margin[CSS_LEFT] = -9;
           node->style.margin[CSS_TOP] = -9;
           node->style.margin[CSS_RIGHT] = -9;
@@ -4190,7 +4242,7 @@ int main()
           node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
           node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_HEIGHT] = 256;
+          node->style.dimensions[CSS_HEIGHT] = 182;
           node->style.margin[CSS_LEFT] = -6;
           node->style.margin[CSS_TOP] = -6;
           node->style.margin[CSS_RIGHT] = -6;
@@ -4229,8 +4281,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = -11;
-      node->layout.dimensions[CSS_WIDTH] = 860;
-      node->layout.dimensions[CSS_HEIGHT] = 59;
+      node->layout.dimensions[CSS_WIDTH] = 846;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -4238,8 +4290,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 9;
         node->layout.position[CSS_LEFT] = 15;
-        node->layout.dimensions[CSS_WIDTH] = 89;
-        node->layout.dimensions[CSS_HEIGHT] = 571;
+        node->layout.dimensions[CSS_WIDTH] = 130;
+        node->layout.dimensions[CSS_HEIGHT] = 528;
         init_css_node_children(node, 3);
         {
           css_node_t *outer_node_2 = node;
@@ -4248,17 +4300,17 @@ int main()
           node->layout.position[CSS_TOP] = -8;
           node->layout.position[CSS_LEFT] = 15;
           node->layout.dimensions[CSS_WIDTH] = 7;
-          node->layout.dimensions[CSS_HEIGHT] = 894;
+          node->layout.dimensions[CSS_HEIGHT] = 883;
           node = &outer_node_2->children[1];
           node->layout.position[CSS_TOP] = -9;
-          node->layout.position[CSS_LEFT] = -94;
-          node->layout.dimensions[CSS_WIDTH] = 174;
-          node->layout.dimensions[CSS_HEIGHT] = 488;
+          node->layout.position[CSS_LEFT] = 29;
+          node->layout.dimensions[CSS_WIDTH] = 92;
+          node->layout.dimensions[CSS_HEIGHT] = 437;
           node = &outer_node_2->children[2];
-          node->layout.position[CSS_TOP] = 464;
-          node->layout.position[CSS_LEFT] = 14;
+          node->layout.position[CSS_TOP] = 413;
+          node->layout.position[CSS_LEFT] = 55;
           node->layout.dimensions[CSS_WIDTH] = 63;
-          node->layout.dimensions[CSS_HEIGHT] = 256;
+          node->layout.dimensions[CSS_HEIGHT] = 182;
           init_css_node_children(node, 1);
           {
             css_node_t *outer_node_3 = node;
@@ -4313,8 +4365,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 918;
-      node->style.dimensions[CSS_HEIGHT] = 45;
+      node->style.dimensions[CSS_WIDTH] = 909;
       node->style.margin[CSS_RIGHT] = 3;
       node->style.margin[CSS_BOTTOM] = -7;
       node->style.padding[CSS_LEFT] = 18;
@@ -4331,8 +4382,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 918;
-      node->layout.dimensions[CSS_HEIGHT] = 45;
+      node->layout.dimensions[CSS_WIDTH] = 909;
+      node->layout.dimensions[CSS_HEIGHT] = 36;
     }
 
     test("Random #55", root_node, root_layout);
@@ -4344,8 +4395,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 618;
-      node->style.dimensions[CSS_HEIGHT] = 187;
+      node->style.dimensions[CSS_WIDTH] = 580;
+      node->style.dimensions[CSS_HEIGHT] = 106;
       node->style.margin[CSS_LEFT] = 11;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = 11;
@@ -4365,8 +4416,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 618;
-      node->layout.dimensions[CSS_HEIGHT] = 187;
+      node->layout.dimensions[CSS_WIDTH] = 580;
+      node->layout.dimensions[CSS_HEIGHT] = 106;
     }
 
     test("Random #56", root_node, root_layout);
@@ -4396,7 +4447,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 922;
+      node->style.dimensions[CSS_WIDTH] = 914;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_RIGHT] = -6;
       node->style.margin[CSS_BOTTOM] = 17;
@@ -4415,7 +4466,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 922;
+      node->layout.dimensions[CSS_WIDTH] = 914;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -4508,8 +4559,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 820;
-      node->style.dimensions[CSS_HEIGHT] = 549;
+      node->style.dimensions[CSS_WIDTH] = 802;
+      node->style.dimensions[CSS_HEIGHT] = 503;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -4528,8 +4579,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 820;
-      node->layout.dimensions[CSS_HEIGHT] = 549;
+      node->layout.dimensions[CSS_WIDTH] = 802;
+      node->layout.dimensions[CSS_HEIGHT] = 503;
     }
 
     test("Random #62", root_node, root_layout);
@@ -4593,7 +4644,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 525;
+      node->style.dimensions[CSS_HEIGHT] = 478;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = 15;
       node->style.margin[CSS_RIGHT] = 15;
@@ -4614,7 +4665,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_CENTER;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 801;
+        node->style.dimensions[CSS_WIDTH] = 781;
         node->style.margin[CSS_LEFT] = -4;
         node->style.margin[CSS_TOP] = -4;
         node->style.margin[CSS_RIGHT] = -4;
@@ -4624,7 +4675,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_HEIGHT] = 801;
+        node->style.dimensions[CSS_HEIGHT] = 781;
         node->style.margin[CSS_BOTTOM] = 10;
         node->style.padding[CSS_LEFT] = 8;
         node->style.padding[CSS_TOP] = 19;
@@ -4632,7 +4683,7 @@ int main()
         node->style.position[CSS_TOP] = 3;
         node = &outer_node_1->children[2];
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-        node->style.dimensions[CSS_WIDTH] = 154;
+        node->style.dimensions[CSS_WIDTH] = 70;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 5;
         node->style.margin[CSS_RIGHT] = 5;
@@ -4658,30 +4709,30 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 813;
-      node->layout.dimensions[CSS_HEIGHT] = 525;
+      node->layout.dimensions[CSS_WIDTH] = 793;
+      node->layout.dimensions[CSS_HEIGHT] = 478;
       init_css_node_children(node, 4);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = -292;
+        node->layout.position[CSS_TOP] = -319;
         node->layout.position[CSS_LEFT] = 16;
-        node->layout.dimensions[CSS_WIDTH] = 801;
+        node->layout.dimensions[CSS_WIDTH] = 781;
         node->layout.dimensions[CSS_HEIGHT] = 0;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = -293;
+        node->layout.position[CSS_TOP] = -320;
         node->layout.position[CSS_LEFT] = 0;
         node->layout.dimensions[CSS_WIDTH] = 10;
-        node->layout.dimensions[CSS_HEIGHT] = 801;
+        node->layout.dimensions[CSS_HEIGHT] = 781;
         node = &outer_node_1->children[2];
-        node->layout.position[CSS_TOP] = 523;
+        node->layout.position[CSS_TOP] = 476;
         node->layout.position[CSS_LEFT] = 5;
-        node->layout.dimensions[CSS_WIDTH] = 154;
+        node->layout.dimensions[CSS_WIDTH] = 70;
         node->layout.dimensions[CSS_HEIGHT] = 0;
         node = &outer_node_1->children[3];
-        node->layout.position[CSS_TOP] = 525;
-        node->layout.position[CSS_LEFT] = 805;
+        node->layout.position[CSS_TOP] = 478;
+        node->layout.position[CSS_LEFT] = 785;
         node->layout.dimensions[CSS_WIDTH] = 0;
         node->layout.dimensions[CSS_HEIGHT] = 0;
       }
@@ -4697,7 +4748,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 840;
+      node->style.dimensions[CSS_HEIGHT] = 824;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -4723,7 +4774,7 @@ int main()
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 10;
       node->layout.dimensions[CSS_WIDTH] = 8;
-      node->layout.dimensions[CSS_HEIGHT] = 840;
+      node->layout.dimensions[CSS_HEIGHT] = 824;
     }
 
     test("Random #66", root_node, root_layout);
@@ -4770,8 +4821,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 463;
-      node->style.dimensions[CSS_HEIGHT] = 799;
+      node->style.dimensions[CSS_WIDTH] = 409;
+      node->style.dimensions[CSS_HEIGHT] = 779;
       node->style.margin[CSS_TOP] = -7;
       node->style.padding[CSS_LEFT] = 10;
       node->style.padding[CSS_TOP] = 16;
@@ -4789,8 +4840,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 463;
-      node->layout.dimensions[CSS_HEIGHT] = 799;
+      node->layout.dimensions[CSS_WIDTH] = 409;
+      node->layout.dimensions[CSS_HEIGHT] = 779;
     }
 
     test("Random #69", root_node, root_layout);
@@ -4861,7 +4912,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_HEIGHT] = 190;
+      node->style.dimensions[CSS_HEIGHT] = 109;
       node->style.margin[CSS_TOP] = 11;
       node->style.padding[CSS_TOP] = 8;
       node->style.border[CSS_LEFT] = 0;
@@ -4876,7 +4927,7 @@ int main()
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = -3;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 190;
+      node->layout.dimensions[CSS_HEIGHT] = 109;
     }
 
     test("Random #71", root_node, root_layout);
@@ -4942,8 +4993,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 763;
-      node->style.dimensions[CSS_HEIGHT] = 232;
+      node->style.dimensions[CSS_WIDTH] = 739;
+      node->style.dimensions[CSS_HEIGHT] = 155;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -4967,8 +5018,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -6;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 763;
-      node->layout.dimensions[CSS_HEIGHT] = 232;
+      node->layout.dimensions[CSS_WIDTH] = 739;
+      node->layout.dimensions[CSS_HEIGHT] = 155;
     }
 
     test("Random #75", root_node, root_layout);
@@ -4997,7 +5048,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 381;
+      node->style.dimensions[CSS_HEIGHT] = 319;
       node->style.margin[CSS_LEFT] = 12;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 12;
@@ -5016,7 +5067,7 @@ int main()
       node->layout.position[CSS_TOP] = 20;
       node->layout.position[CSS_LEFT] = 13;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 381;
+      node->layout.dimensions[CSS_HEIGHT] = 319;
     }
 
     test("Random #77", root_node, root_layout);
@@ -5027,8 +5078,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 613;
-      node->style.dimensions[CSS_HEIGHT] = 205;
+      node->style.dimensions[CSS_WIDTH] = 575;
+      node->style.dimensions[CSS_HEIGHT] = 126;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_BOTTOM] = 15;
       node->style.padding[CSS_LEFT] = 5;
@@ -5048,8 +5099,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 613;
-      node->layout.dimensions[CSS_HEIGHT] = 205;
+      node->layout.dimensions[CSS_WIDTH] = 575;
+      node->layout.dimensions[CSS_HEIGHT] = 126;
     }
 
     test("Random #78", root_node, root_layout);
@@ -5061,8 +5112,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 574;
-      node->style.dimensions[CSS_HEIGHT] = 786;
+      node->style.dimensions[CSS_WIDTH] = 532;
+      node->style.dimensions[CSS_HEIGHT] = 765;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -5083,8 +5134,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -11;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 574;
-      node->layout.dimensions[CSS_HEIGHT] = 786;
+      node->layout.dimensions[CSS_WIDTH] = 532;
+      node->layout.dimensions[CSS_HEIGHT] = 765;
     }
 
     test("Random #79", root_node, root_layout);
@@ -5150,7 +5201,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 397;
+      node->style.dimensions[CSS_WIDTH] = 337;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -5175,7 +5226,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 12;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 397;
+      node->layout.dimensions[CSS_WIDTH] = 337;
       node->layout.dimensions[CSS_HEIGHT] = 24;
     }
 
@@ -5187,8 +5238,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 326;
-      node->style.dimensions[CSS_HEIGHT] = 527;
+      node->style.dimensions[CSS_WIDTH] = 258;
+      node->style.dimensions[CSS_HEIGHT] = 480;
       node->style.margin[CSS_LEFT] = -9;
       node->style.margin[CSS_TOP] = -9;
       node->style.margin[CSS_RIGHT] = -9;
@@ -5212,8 +5263,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -9;
-      node->layout.dimensions[CSS_WIDTH] = 326;
-      node->layout.dimensions[CSS_HEIGHT] = 527;
+      node->layout.dimensions[CSS_WIDTH] = 258;
+      node->layout.dimensions[CSS_HEIGHT] = 480;
     }
 
     test("Random #84", root_node, root_layout);
@@ -5225,7 +5276,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 298;
+      node->style.dimensions[CSS_HEIGHT] = 228;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -5250,7 +5301,7 @@ int main()
       node->layout.position[CSS_TOP] = 25;
       node->layout.position[CSS_LEFT] = 0;
       node->layout.dimensions[CSS_WIDTH] = 10;
-      node->layout.dimensions[CSS_HEIGHT] = 298;
+      node->layout.dimensions[CSS_HEIGHT] = 228;
     }
 
     test("Random #85", root_node, root_layout);
@@ -5285,7 +5336,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 344;
+      node->style.dimensions[CSS_WIDTH] = 279;
       node->style.margin[CSS_RIGHT] = 15;
       node->style.padding[CSS_LEFT] = 13;
       node->style.padding[CSS_TOP] = 13;
@@ -5302,8 +5353,8 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-        node->style.dimensions[CSS_WIDTH] = 639;
-        node->style.dimensions[CSS_HEIGHT] = 463;
+        node->style.dimensions[CSS_WIDTH] = 603;
+        node->style.dimensions[CSS_HEIGHT] = 409;
         node->style.margin[CSS_LEFT] = -3;
         node->style.padding[CSS_LEFT] = 12;
         node->style.padding[CSS_TOP] = 12;
@@ -5317,7 +5368,7 @@ int main()
         node = &outer_node_1->children[1];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 120;
+        node->style.dimensions[CSS_WIDTH] = 32;
         node->style.margin[CSS_LEFT] = 18;
         node->style.margin[CSS_TOP] = 18;
         node->style.margin[CSS_RIGHT] = 18;
@@ -5335,21 +5386,21 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 344;
-      node->layout.dimensions[CSS_HEIGHT] = 513;
+      node->layout.dimensions[CSS_WIDTH] = 279;
+      node->layout.dimensions[CSS_HEIGHT] = 459;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 4;
-        node->layout.position[CSS_LEFT] = -157;
-        node->layout.dimensions[CSS_WIDTH] = 639;
-        node->layout.dimensions[CSS_HEIGHT] = 463;
+        node->layout.position[CSS_LEFT] = -171.5;
+        node->layout.dimensions[CSS_WIDTH] = 603;
+        node->layout.dimensions[CSS_HEIGHT] = 409;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 473;
-        node->layout.position[CSS_LEFT] = 101;
-        node->layout.dimensions[CSS_WIDTH] = 120;
+        node->layout.position[CSS_TOP] = 419;
+        node->layout.position[CSS_LEFT] = 112.5;
+        node->layout.dimensions[CSS_WIDTH] = 32;
         node->layout.dimensions[CSS_HEIGHT] = 17;
       }
     }
@@ -5363,8 +5414,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 711;
-      node->style.dimensions[CSS_HEIGHT] = 627;
+      node->style.dimensions[CSS_WIDTH] = 682;
+      node->style.dimensions[CSS_HEIGHT] = 589;
       node->style.margin[CSS_LEFT] = -3;
       node->style.margin[CSS_TOP] = -3;
       node->style.margin[CSS_RIGHT] = -3;
@@ -5385,8 +5436,8 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 566;
-        node->style.dimensions[CSS_HEIGHT] = 252;
+        node->style.dimensions[CSS_WIDTH] = 523;
+        node->style.dimensions[CSS_HEIGHT] = 177;
         node->style.margin[CSS_LEFT] = 10;
         node->style.margin[CSS_TOP] = 15;
         node->style.margin[CSS_RIGHT] = -1;
@@ -5404,7 +5455,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_HEIGHT] = 159;
+        node->style.dimensions[CSS_HEIGHT] = 75;
         node->style.margin[CSS_LEFT] = 18;
         node->style.margin[CSS_TOP] = 18;
         node->style.margin[CSS_RIGHT] = 18;
@@ -5426,8 +5477,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = -3;
-      node->layout.dimensions[CSS_WIDTH] = 711;
-      node->layout.dimensions[CSS_HEIGHT] = 627;
+      node->layout.dimensions[CSS_WIDTH] = 682;
+      node->layout.dimensions[CSS_HEIGHT] = 589;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -5435,13 +5486,13 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 24;
         node->layout.position[CSS_LEFT] = 18;
-        node->layout.dimensions[CSS_WIDTH] = 566;
-        node->layout.dimensions[CSS_HEIGHT] = 252;
+        node->layout.dimensions[CSS_WIDTH] = 523;
+        node->layout.dimensions[CSS_HEIGHT] = 177;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 233.5;
+        node->layout.position[CSS_TOP] = 256.5;
         node->layout.position[CSS_LEFT] = 30;
         node->layout.dimensions[CSS_WIDTH] = 16;
-        node->layout.dimensions[CSS_HEIGHT] = 159;
+        node->layout.dimensions[CSS_HEIGHT] = 75;
       }
     }
 
@@ -5455,7 +5506,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 665;
+      node->style.dimensions[CSS_HEIGHT] = 632;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 8;
       node->style.margin[CSS_BOTTOM] = 0;
@@ -5515,7 +5566,7 @@ int main()
           node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
           node->style.align_items = CSS_ALIGN_FLEX_START;
           node->style.flex = CSS_FLEX_NONE;
-          node->style.dimensions[CSS_HEIGHT] = 417;
+          node->style.dimensions[CSS_HEIGHT] = 359;
           node->style.margin[CSS_LEFT] = -5;
           node->style.margin[CSS_TOP] = -5;
           node->style.margin[CSS_RIGHT] = -5;
@@ -5539,8 +5590,8 @@ int main()
             node = &outer_node_3->children[0];
             node->style.align_items = CSS_ALIGN_STRETCH;
             node->style.position_type = CSS_POSITION_RELATIVE;
-            node->style.dimensions[CSS_WIDTH] = 952;
-            node->style.dimensions[CSS_HEIGHT] = 775;
+            node->style.dimensions[CSS_WIDTH] = 947;
+            node->style.dimensions[CSS_HEIGHT] = 753;
             node->style.margin[CSS_LEFT] = 18;
             node->style.margin[CSS_TOP] = 18;
             node->style.margin[CSS_RIGHT] = 18;
@@ -5561,8 +5612,8 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 931;
-        node->style.dimensions[CSS_HEIGHT] = 480;
+        node->style.dimensions[CSS_WIDTH] = 924;
+        node->style.dimensions[CSS_HEIGHT] = 428;
         node->style.margin[CSS_TOP] = 17;
         node->style.margin[CSS_RIGHT] = -9;
         node->style.border[CSS_LEFT] = 0;
@@ -5579,17 +5630,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 1040;
-      node->layout.dimensions[CSS_HEIGHT] = 665;
+      node->layout.dimensions[CSS_WIDTH] = 1035;
+      node->layout.dimensions[CSS_HEIGHT] = 632;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = -328;
+        node->layout.position[CSS_TOP] = -251;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 1040;
-        node->layout.dimensions[CSS_HEIGHT] = 484;
+        node->layout.dimensions[CSS_WIDTH] = 1035;
+        node->layout.dimensions[CSS_HEIGHT] = 426;
         init_css_node_children(node, 2);
         {
           css_node_t *outer_node_2 = node;
@@ -5602,8 +5653,8 @@ int main()
           node = &outer_node_2->children[1];
           node->layout.position[CSS_TOP] = 56;
           node->layout.position[CSS_LEFT] = 21;
-          node->layout.dimensions[CSS_WIDTH] = 1010;
-          node->layout.dimensions[CSS_HEIGHT] = 417;
+          node->layout.dimensions[CSS_WIDTH] = 1005;
+          node->layout.dimensions[CSS_HEIGHT] = 359;
           init_css_node_children(node, 1);
           {
             css_node_t *outer_node_3 = node;
@@ -5611,15 +5662,15 @@ int main()
             node = &outer_node_3->children[0];
             node->layout.position[CSS_TOP] = 20;
             node->layout.position[CSS_LEFT] = 9;
-            node->layout.dimensions[CSS_WIDTH] = 952;
-            node->layout.dimensions[CSS_HEIGHT] = 775;
+            node->layout.dimensions[CSS_WIDTH] = 947;
+            node->layout.dimensions[CSS_HEIGHT] = 753;
           }
         }
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 173;
-        node->layout.position[CSS_LEFT] = 60;
-        node->layout.dimensions[CSS_WIDTH] = 931;
-        node->layout.dimensions[CSS_HEIGHT] = 480;
+        node->layout.position[CSS_TOP] = 192;
+        node->layout.position[CSS_LEFT] = 61;
+        node->layout.dimensions[CSS_WIDTH] = 924;
+        node->layout.dimensions[CSS_HEIGHT] = 428;
       }
     }
 
@@ -5632,7 +5683,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 556;
+      node->style.dimensions[CSS_WIDTH] = 511;
       node->style.margin[CSS_TOP] = -2;
       node->style.padding[CSS_TOP] = 2;
       node->style.padding[CSS_RIGHT] = 0;
@@ -5647,7 +5698,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -2;
       node->layout.position[CSS_LEFT] = -10;
-      node->layout.dimensions[CSS_WIDTH] = 556;
+      node->layout.dimensions[CSS_WIDTH] = 511;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -5660,8 +5711,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 633;
-      node->style.dimensions[CSS_HEIGHT] = 459;
+      node->style.dimensions[CSS_WIDTH] = 597;
+      node->style.dimensions[CSS_HEIGHT] = 405;
       node->style.margin[CSS_RIGHT] = 4;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 1;
@@ -5676,8 +5727,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 633;
-      node->layout.dimensions[CSS_HEIGHT] = 459;
+      node->layout.dimensions[CSS_WIDTH] = 597;
+      node->layout.dimensions[CSS_HEIGHT] = 405;
     }
 
     test("Random #91", root_node, root_layout);
@@ -5712,7 +5763,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 648;
+      node->style.dimensions[CSS_HEIGHT] = 612;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -5735,7 +5786,7 @@ int main()
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 648;
+      node->layout.dimensions[CSS_HEIGHT] = 612;
     }
 
     test("Random #93", root_node, root_layout);
@@ -5747,7 +5798,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 410;
+      node->style.dimensions[CSS_WIDTH] = 351;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = -10;
       node->style.padding[CSS_LEFT] = 7;
@@ -5760,7 +5811,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 410;
+      node->layout.dimensions[CSS_WIDTH] = 351;
       node->layout.dimensions[CSS_HEIGHT] = 19;
     }
 
@@ -5804,7 +5855,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 66;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_RIGHT] = 4;
@@ -5820,7 +5870,7 @@ int main()
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 4;
       node->layout.dimensions[CSS_WIDTH] = 19;
-      node->layout.dimensions[CSS_HEIGHT] = 66;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #96", root_node, root_layout);
@@ -5831,7 +5881,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 483;
+      node->style.dimensions[CSS_HEIGHT] = 432;
       node->style.margin[CSS_LEFT] = 17;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = -8;
@@ -5849,7 +5899,7 @@ int main()
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 25;
       node->layout.dimensions[CSS_WIDTH] = 20;
-      node->layout.dimensions[CSS_HEIGHT] = 483;
+      node->layout.dimensions[CSS_HEIGHT] = 432;
     }
 
     test("Random #97", root_node, root_layout);
@@ -5896,8 +5946,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 202;
-      node->style.dimensions[CSS_HEIGHT] = 589;
+      node->style.dimensions[CSS_WIDTH] = 122;
+      node->style.dimensions[CSS_HEIGHT] = 548;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -5918,8 +5968,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -2;
       node->layout.position[CSS_LEFT] = -10;
-      node->layout.dimensions[CSS_WIDTH] = 202;
-      node->layout.dimensions[CSS_HEIGHT] = 589;
+      node->layout.dimensions[CSS_WIDTH] = 122;
+      node->layout.dimensions[CSS_HEIGHT] = 548;
     }
 
     test("Random #100", root_node, root_layout);
@@ -5930,7 +5980,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 222;
+      node->style.dimensions[CSS_WIDTH] = 144;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -5953,7 +6003,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 222;
+      node->layout.dimensions[CSS_WIDTH] = 144;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -5983,7 +6033,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 461;
+      node->style.dimensions[CSS_WIDTH] = 407;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_RIGHT] = 3;
       node->style.padding[CSS_LEFT] = 10;
@@ -6001,7 +6051,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.align_self = CSS_ALIGN_CENTER;
-        node->style.dimensions[CSS_HEIGHT] = 517;
+        node->style.dimensions[CSS_HEIGHT] = 469;
         node->style.margin[CSS_LEFT] = -4;
         node->style.margin[CSS_TOP] = -3;
         node->style.padding[CSS_RIGHT] = 2;
@@ -6021,17 +6071,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = -4;
-      node->layout.dimensions[CSS_WIDTH] = 461;
-      node->layout.dimensions[CSS_HEIGHT] = 534;
+      node->layout.dimensions[CSS_WIDTH] = 407;
+      node->layout.dimensions[CSS_HEIGHT] = 486;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 7;
-        node->layout.position[CSS_LEFT] = 231;
+        node->layout.position[CSS_LEFT] = 204;
         node->layout.dimensions[CSS_WIDTH] = 7;
-        node->layout.dimensions[CSS_HEIGHT] = 517;
+        node->layout.dimensions[CSS_HEIGHT] = 469;
       }
     }
 
@@ -6044,7 +6094,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 784;
+      node->style.dimensions[CSS_WIDTH] = 763;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -6063,7 +6113,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 2;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 784;
+      node->layout.dimensions[CSS_WIDTH] = 763;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -6074,8 +6124,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 788;
-      node->style.dimensions[CSS_HEIGHT] = 892;
+      node->style.dimensions[CSS_WIDTH] = 766;
+      node->style.dimensions[CSS_HEIGHT] = 881;
       node->style.margin[CSS_BOTTOM] = -3;
       node->style.padding[CSS_RIGHT] = 4;
       node->style.border[CSS_LEFT] = 2;
@@ -6089,8 +6139,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 4;
-      node->layout.dimensions[CSS_WIDTH] = 788;
-      node->layout.dimensions[CSS_HEIGHT] = 892;
+      node->layout.dimensions[CSS_WIDTH] = 766;
+      node->layout.dimensions[CSS_HEIGHT] = 881;
     }
 
     test("Random #105", root_node, root_layout);
@@ -6102,7 +6152,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 312;
+      node->style.dimensions[CSS_HEIGHT] = 244;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -6146,7 +6196,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 4;
       node->layout.dimensions[CSS_WIDTH] = 18;
-      node->layout.dimensions[CSS_HEIGHT] = 312;
+      node->layout.dimensions[CSS_HEIGHT] = 244;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -6155,7 +6205,7 @@ int main()
         node->layout.position[CSS_TOP] = -3;
         node->layout.position[CSS_LEFT] = -3;
         node->layout.dimensions[CSS_WIDTH] = 24;
-        node->layout.dimensions[CSS_HEIGHT] = 303;
+        node->layout.dimensions[CSS_HEIGHT] = 235;
       }
     }
 
@@ -6168,7 +6218,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 457;
+      node->style.dimensions[CSS_WIDTH] = 403;
       node->style.margin[CSS_LEFT] = 12;
       node->style.margin[CSS_RIGHT] = 4;
       node->style.margin[CSS_BOTTOM] = 0;
@@ -6184,7 +6234,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 18;
-      node->layout.dimensions[CSS_WIDTH] = 457;
+      node->layout.dimensions[CSS_WIDTH] = 403;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -6195,66 +6245,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 71;
-      node->style.dimensions[CSS_HEIGHT] = 78;
-      node->style.margin[CSS_LEFT] = 15;
-      node->style.margin[CSS_TOP] = 15;
-      node->style.margin[CSS_RIGHT] = 15;
-      node->style.margin[CSS_BOTTOM] = 15;
-      node->style.margin[CSS_RIGHT] = 17;
-      node->style.padding[CSS_RIGHT] = 4;
-      node->style.border[CSS_RIGHT] = 0;
-      node->style.position[CSS_LEFT] = -2;
-      node->style.position[CSS_TOP] = 1;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-        node->style.align_items = CSS_ALIGN_STRETCH;
-        node->style.align_self = CSS_ALIGN_FLEX_END;
-        node->style.flex = CSS_FLEX_NONE;
-        node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 95;
-        node->style.dimensions[CSS_HEIGHT] = 406;
-        node->style.margin[CSS_LEFT] = -8;
-        node->style.margin[CSS_TOP] = -8;
-        node->style.margin[CSS_RIGHT] = -8;
-        node->style.margin[CSS_BOTTOM] = -8;
-        node->style.margin[CSS_LEFT] = 2;
-        node->style.margin[CSS_TOP] = -7;
-        node->style.margin[CSS_RIGHT] = 4;
-        node->style.padding[CSS_LEFT] = 2;
-        node->style.padding[CSS_TOP] = 2;
-        node->style.padding[CSS_RIGHT] = 2;
-        node->style.padding[CSS_BOTTOM] = 2;
-        node->style.border[CSS_TOP] = 3;
-        node->style.border[CSS_RIGHT] = 1;
-        node->style.position[CSS_TOP] = -3;
-      }
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = 16;
-      node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 71;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = -10;
-        node->layout.position[CSS_LEFT] = -32;
-        node->layout.dimensions[CSS_WIDTH] = 95;
-        node->layout.dimensions[CSS_HEIGHT] = 406;
-      }
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #108", root_node, root_layout);
@@ -6354,7 +6353,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 684;
+      node->style.dimensions[CSS_HEIGHT] = 652;
       node->style.margin[CSS_LEFT] = 14;
       node->style.margin[CSS_TOP] = 14;
       node->style.margin[CSS_RIGHT] = 14;
@@ -6377,7 +6376,7 @@ int main()
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 9;
       node->layout.dimensions[CSS_WIDTH] = 14;
-      node->layout.dimensions[CSS_HEIGHT] = 684;
+      node->layout.dimensions[CSS_HEIGHT] = 652;
     }
 
     test("Random #113", root_node, root_layout);
@@ -6388,7 +6387,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 266;
+      node->style.dimensions[CSS_WIDTH] = 193;
       node->style.margin[CSS_LEFT] = 14;
       node->style.margin[CSS_TOP] = 14;
       node->style.margin[CSS_RIGHT] = 14;
@@ -6409,8 +6408,8 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 835;
-        node->style.dimensions[CSS_HEIGHT] = 209;
+        node->style.dimensions[CSS_WIDTH] = 819;
+        node->style.dimensions[CSS_HEIGHT] = 130;
         node->style.margin[CSS_LEFT] = -9;
         node->style.margin[CSS_TOP] = -9;
         node->style.margin[CSS_RIGHT] = -9;
@@ -6429,17 +6428,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 266;
-      node->layout.dimensions[CSS_HEIGHT] = 221;
+      node->layout.dimensions[CSS_WIDTH] = 193;
+      node->layout.dimensions[CSS_HEIGHT] = 142;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 10;
-        node->layout.position[CSS_LEFT] = -281.5;
-        node->layout.dimensions[CSS_WIDTH] = 835;
-        node->layout.dimensions[CSS_HEIGHT] = 209;
+        node->layout.position[CSS_LEFT] = -310;
+        node->layout.dimensions[CSS_WIDTH] = 819;
+        node->layout.dimensions[CSS_HEIGHT] = 130;
       }
     }
 
@@ -6484,7 +6483,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 793;
+      node->style.dimensions[CSS_WIDTH] = 772;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -6507,7 +6506,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_CENTER;
-        node->style.dimensions[CSS_WIDTH] = 433;
+        node->style.dimensions[CSS_WIDTH] = 377;
         node->style.margin[CSS_TOP] = 6;
         node->style.margin[CSS_BOTTOM] = 13;
         node->style.padding[CSS_LEFT] = 10;
@@ -6528,7 +6527,7 @@ int main()
           node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
           node->style.flex = CSS_FLEX_ONE;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_HEIGHT] = 345;
+          node->style.dimensions[CSS_HEIGHT] = 280;
           node->style.margin[CSS_RIGHT] = 3;
           node->style.padding[CSS_LEFT] = 17;
           node->style.padding[CSS_RIGHT] = 19;
@@ -6562,7 +6561,6 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_CENTER;
         node->style.align_items = CSS_ALIGN_FLEX_END;
         node->style.align_self = CSS_ALIGN_FLEX_START;
-        node->style.dimensions[CSS_WIDTH] = 27;
         node->style.margin[CSS_LEFT] = 16;
         node->style.margin[CSS_TOP] = 1;
         node->style.margin[CSS_RIGHT] = 13;
@@ -6579,17 +6577,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 793;
-      node->layout.dimensions[CSS_HEIGHT] = 411;
+      node->layout.dimensions[CSS_WIDTH] = 772;
+      node->layout.dimensions[CSS_HEIGHT] = 346;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 19;
-        node->layout.position[CSS_LEFT] = 171.5;
-        node->layout.dimensions[CSS_WIDTH] = 433;
-        node->layout.dimensions[CSS_HEIGHT] = 358;
+        node->layout.position[CSS_LEFT] = 189;
+        node->layout.dimensions[CSS_WIDTH] = 377;
+        node->layout.dimensions[CSS_HEIGHT] = 293;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -6598,7 +6596,7 @@ int main()
           node->layout.position[CSS_TOP] = 18;
           node->layout.position[CSS_LEFT] = 16;
           node->layout.dimensions[CSS_WIDTH] = 36;
-          node->layout.dimensions[CSS_HEIGHT] = 345;
+          node->layout.dimensions[CSS_HEIGHT] = 280;
           init_css_node_children(node, 1);
           {
             css_node_t *outer_node_3 = node;
@@ -6611,9 +6609,9 @@ int main()
           }
         }
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 381;
+        node->layout.position[CSS_TOP] = 316;
         node->layout.position[CSS_LEFT] = 24;
-        node->layout.dimensions[CSS_WIDTH] = 27;
+        node->layout.dimensions[CSS_WIDTH] = 2;
         node->layout.dimensions[CSS_HEIGHT] = 11;
       }
     }
@@ -6627,8 +6625,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 680;
-      node->style.dimensions[CSS_HEIGHT] = 153;
+      node->style.dimensions[CSS_WIDTH] = 648;
+      node->style.dimensions[CSS_HEIGHT] = 69;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = -9;
       node->style.margin[CSS_RIGHT] = -8;
@@ -6646,8 +6644,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -15;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 680;
-      node->layout.dimensions[CSS_HEIGHT] = 153;
+      node->layout.dimensions[CSS_WIDTH] = 648;
+      node->layout.dimensions[CSS_HEIGHT] = 69;
     }
 
     test("Random #117", root_node, root_layout);
@@ -6658,7 +6656,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 667;
+      node->style.dimensions[CSS_WIDTH] = 634;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 5;
@@ -6679,7 +6677,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 667;
+      node->layout.dimensions[CSS_WIDTH] = 634;
       node->layout.dimensions[CSS_HEIGHT] = 28;
     }
 
@@ -6693,8 +6691,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 267;
-      node->style.dimensions[CSS_HEIGHT] = 862;
+      node->style.dimensions[CSS_WIDTH] = 194;
+      node->style.dimensions[CSS_HEIGHT] = 848;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -6736,15 +6734,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 267;
-      node->layout.dimensions[CSS_HEIGHT] = 862;
+      node->layout.dimensions[CSS_WIDTH] = 194;
+      node->layout.dimensions[CSS_HEIGHT] = 848;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 14;
-        node->layout.position[CSS_LEFT] = 253;
+        node->layout.position[CSS_LEFT] = 180;
         node->layout.dimensions[CSS_WIDTH] = 7;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -6759,7 +6757,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 358;
+      node->style.dimensions[CSS_WIDTH] = 294;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = -6;
@@ -6779,7 +6777,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 358;
+      node->layout.dimensions[CSS_WIDTH] = 294;
       node->layout.dimensions[CSS_HEIGHT] = 22;
     }
 
@@ -6791,7 +6789,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_HEIGHT] = 261;
+      node->style.dimensions[CSS_HEIGHT] = 188;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_RIGHT] = 5;
       node->style.margin[CSS_BOTTOM] = 14;
@@ -6804,7 +6802,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 3;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 261;
+      node->layout.dimensions[CSS_HEIGHT] = 188;
     }
 
     test("Random #121", root_node, root_layout);
@@ -6815,8 +6813,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 531;
-      node->style.dimensions[CSS_HEIGHT] = 411;
+      node->style.dimensions[CSS_WIDTH] = 484;
+      node->style.dimensions[CSS_HEIGHT] = 352;
       node->style.margin[CSS_RIGHT] = 18;
       node->style.padding[CSS_LEFT] = 18;
       node->style.border[CSS_LEFT] = 1;
@@ -6833,8 +6831,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
-      node->layout.dimensions[CSS_WIDTH] = 531;
-      node->layout.dimensions[CSS_HEIGHT] = 411;
+      node->layout.dimensions[CSS_WIDTH] = 484;
+      node->layout.dimensions[CSS_HEIGHT] = 352;
     }
 
     test("Random #122", root_node, root_layout);
@@ -6916,7 +6914,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 172;
+      node->style.dimensions[CSS_WIDTH] = 89;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -6935,7 +6933,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 172;
+      node->layout.dimensions[CSS_WIDTH] = 89;
       node->layout.dimensions[CSS_HEIGHT] = 21;
     }
 
@@ -7010,7 +7008,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 864;
+      node->style.dimensions[CSS_WIDTH] = 850;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -7025,7 +7023,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 864;
+      node->layout.dimensions[CSS_WIDTH] = 850;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -7037,7 +7035,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 868;
+      node->style.dimensions[CSS_WIDTH] = 855;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -7054,7 +7052,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 868;
+      node->layout.dimensions[CSS_WIDTH] = 855;
       node->layout.dimensions[CSS_HEIGHT] = 3;
     }
 
@@ -7066,7 +7064,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 520;
+      node->style.dimensions[CSS_WIDTH] = 472;
       node->style.margin[CSS_LEFT] = -2;
       node->style.padding[CSS_LEFT] = 1;
       node->style.border[CSS_LEFT] = 3;
@@ -7078,7 +7076,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 520;
+      node->layout.dimensions[CSS_WIDTH] = 472;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -7108,8 +7106,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 828;
-      node->style.dimensions[CSS_HEIGHT] = 41;
+      node->style.dimensions[CSS_WIDTH] = 811;
       node->style.margin[CSS_LEFT] = 17;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 17;
@@ -7125,8 +7122,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 12;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 828;
-      node->layout.dimensions[CSS_HEIGHT] = 41;
+      node->layout.dimensions[CSS_WIDTH] = 811;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #133", root_node, root_layout);
@@ -7137,7 +7134,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 107;
+      node->style.dimensions[CSS_WIDTH] = 18;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -7157,7 +7154,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -7168,7 +7165,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 423;
+      node->style.dimensions[CSS_HEIGHT] = 366;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 10;
       node->style.padding[CSS_BOTTOM] = 9;
@@ -7181,7 +7178,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 10;
-      node->layout.dimensions[CSS_HEIGHT] = 423;
+      node->layout.dimensions[CSS_HEIGHT] = 366;
     }
 
     test("Random #135", root_node, root_layout);
@@ -7191,90 +7188,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 82;
-      node->style.dimensions[CSS_HEIGHT] = 492;
-      node->style.margin[CSS_TOP] = 12;
-      node->style.margin[CSS_BOTTOM] = 18;
-      node->style.padding[CSS_TOP] = 10;
-      node->style.padding[CSS_BOTTOM] = 15;
-      node->style.border[CSS_LEFT] = 0;
-      node->style.border[CSS_BOTTOM] = 2;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-        node->style.align_self = CSS_ALIGN_FLEX_START;
-        node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 65;
-        node->style.margin[CSS_LEFT] = 3;
-        node->style.margin[CSS_TOP] = 3;
-        node->style.margin[CSS_RIGHT] = 3;
-        node->style.margin[CSS_BOTTOM] = 3;
-        node->style.margin[CSS_TOP] = 7;
-        node->style.border[CSS_LEFT] = 0;
-        node->style.border[CSS_TOP] = 0;
-        node->style.position[CSS_TOP] = -4;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-          node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-          node->style.align_self = CSS_ALIGN_FLEX_END;
-          node->style.flex = CSS_FLEX_NONE;
-          node->style.dimensions[CSS_HEIGHT] = 742;
-          node->style.margin[CSS_LEFT] = 1;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_TOP] = 11;
-          node->style.padding[CSS_RIGHT] = 11;
-          node->style.padding[CSS_BOTTOM] = 11;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_RIGHT] = 13;
-          node->style.border[CSS_LEFT] = 0;
-          node->style.border[CSS_TOP] = 0;
-          node->style.border[CSS_RIGHT] = 0;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.border[CSS_LEFT] = 3;
-          node->style.border[CSS_TOP] = 3;
-          node->style.border[CSS_RIGHT] = 1;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.position[CSS_LEFT] = -2;
-          node->style.position[CSS_TOP] = -2;
-        }
-      }
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = 12;
+      node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 82;
-      node->layout.dimensions[CSS_HEIGHT] = 492;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 3;
-        node->layout.dimensions[CSS_WIDTH] = 65;
-        node->layout.dimensions[CSS_HEIGHT] = 742;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = -2;
-          node->layout.position[CSS_LEFT] = 35;
-          node->layout.dimensions[CSS_WIDTH] = 28;
-          node->layout.dimensions[CSS_HEIGHT] = 742;
-        }
-      }
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #136", root_node, root_layout);
@@ -7285,7 +7207,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 615;
+      node->style.dimensions[CSS_WIDTH] = 577;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -7304,7 +7226,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 615;
+      node->layout.dimensions[CSS_WIDTH] = 577;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -7316,7 +7238,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 799;
+      node->style.dimensions[CSS_HEIGHT] = 779;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -8;
       node->style.margin[CSS_RIGHT] = -8;
@@ -7334,7 +7256,7 @@ int main()
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 8;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 799;
+      node->layout.dimensions[CSS_HEIGHT] = 779;
     }
 
     test("Random #138", root_node, root_layout);
@@ -7364,7 +7286,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 556;
+      node->style.dimensions[CSS_WIDTH] = 512;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -7385,7 +7307,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 556;
+      node->layout.dimensions[CSS_WIDTH] = 512;
       node->layout.dimensions[CSS_HEIGHT] = 10;
     }
 
@@ -7416,8 +7338,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 960;
-      node->style.dimensions[CSS_HEIGHT] = 309;
+      node->style.dimensions[CSS_WIDTH] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 240;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -7434,8 +7356,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 960;
-      node->layout.dimensions[CSS_HEIGHT] = 309;
+      node->layout.dimensions[CSS_WIDTH] = 956;
+      node->layout.dimensions[CSS_HEIGHT] = 240;
     }
 
     test("Random #142", root_node, root_layout);
@@ -7494,8 +7416,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 983;
-      node->style.dimensions[CSS_HEIGHT] = 422;
+      node->style.dimensions[CSS_WIDTH] = 982;
+      node->style.dimensions[CSS_HEIGHT] = 365;
       node->style.margin[CSS_LEFT] = -9;
       node->style.margin[CSS_TOP] = -9;
       node->style.margin[CSS_BOTTOM] = 19;
@@ -7514,8 +7436,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 983;
-      node->layout.dimensions[CSS_HEIGHT] = 422;
+      node->layout.dimensions[CSS_WIDTH] = 982;
+      node->layout.dimensions[CSS_HEIGHT] = 365;
     }
 
     test("Random #145", root_node, root_layout);
@@ -7525,8 +7447,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 329;
-      node->style.dimensions[CSS_HEIGHT] = 836;
+      node->style.dimensions[CSS_WIDTH] = 262;
+      node->style.dimensions[CSS_HEIGHT] = 820;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -7565,15 +7487,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 329;
-      node->layout.dimensions[CSS_HEIGHT] = 836;
+      node->layout.dimensions[CSS_WIDTH] = 262;
+      node->layout.dimensions[CSS_HEIGHT] = 820;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 27;
-        node->layout.position[CSS_LEFT] = 160;
+        node->layout.position[CSS_LEFT] = 126.5;
         node->layout.dimensions[CSS_WIDTH] = 19;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -7587,7 +7509,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 873;
+      node->style.dimensions[CSS_HEIGHT] = 861;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -7604,7 +7526,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -12;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 873;
+      node->layout.dimensions[CSS_HEIGHT] = 861;
     }
 
     test("Random #147", root_node, root_layout);
@@ -7615,7 +7537,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 991;
+      node->style.dimensions[CSS_WIDTH] = 990;
       node->style.margin[CSS_BOTTOM] = -7;
       node->style.padding[CSS_RIGHT] = 0;
       node->style.border[CSS_LEFT] = 1;
@@ -7630,7 +7552,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 991;
+      node->layout.dimensions[CSS_WIDTH] = 990;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -7643,7 +7565,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 660;
+      node->style.dimensions[CSS_HEIGHT] = 626;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -7666,7 +7588,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 9;
       node->layout.dimensions[CSS_WIDTH] = 21;
-      node->layout.dimensions[CSS_HEIGHT] = 660;
+      node->layout.dimensions[CSS_HEIGHT] = 626;
     }
 
     test("Random #149", root_node, root_layout);
@@ -7740,7 +7662,6 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 24;
         node->style.margin[CSS_LEFT] = 11;
         node->style.margin[CSS_TOP] = 11;
         node->style.margin[CSS_RIGHT] = 11;
@@ -7760,7 +7681,7 @@ int main()
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 13;
       node->layout.dimensions[CSS_WIDTH] = 62;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_HEIGHT] = 70;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -7769,7 +7690,7 @@ int main()
         node->layout.position[CSS_TOP] = 24;
         node->layout.position[CSS_LEFT] = 17;
         node->layout.dimensions[CSS_WIDTH] = 16;
-        node->layout.dimensions[CSS_HEIGHT] = 24;
+        node->layout.dimensions[CSS_HEIGHT] = 16;
       }
     }
 
@@ -7800,7 +7721,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 952;
+      node->style.dimensions[CSS_WIDTH] = 948;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -7818,7 +7739,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 952;
+      node->layout.dimensions[CSS_WIDTH] = 948;
       node->layout.dimensions[CSS_HEIGHT] = 11;
     }
 
@@ -7867,7 +7788,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 942;
+      node->style.dimensions[CSS_WIDTH] = 936;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = 8;
@@ -7899,7 +7820,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 942;
+      node->layout.dimensions[CSS_WIDTH] = 936;
       node->layout.dimensions[CSS_HEIGHT] = 2;
       init_css_node_children(node, 1);
       {
@@ -7920,30 +7841,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 225;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_TOP] = -10;
-      node->style.margin[CSS_RIGHT] = -10;
-      node->style.margin[CSS_BOTTOM] = -10;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_RIGHT] = -2;
-      node->style.margin[CSS_BOTTOM] = 8;
-      node->style.padding[CSS_LEFT] = 4;
-      node->style.padding[CSS_RIGHT] = 16;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.position[CSS_LEFT] = 8;
-      node->style.position[CSS_TOP] = 0;
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = -10;
-      node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 20;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #158", root_node, root_layout);
@@ -7954,7 +7860,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 210;
+      node->style.dimensions[CSS_WIDTH] = 131;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -7973,7 +7879,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -3;
-      node->layout.dimensions[CSS_WIDTH] = 210;
+      node->layout.dimensions[CSS_WIDTH] = 131;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -8114,7 +8020,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 867;
+      node->style.dimensions[CSS_WIDTH] = 854;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -8134,7 +8040,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 867;
+      node->layout.dimensions[CSS_WIDTH] = 854;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -8146,8 +8052,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 47;
-      node->style.dimensions[CSS_HEIGHT] = 689;
+      node->style.dimensions[CSS_HEIGHT] = 658;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -8192,7 +8097,7 @@ int main()
           node->style.align_self = CSS_ALIGN_FLEX_START;
           node->style.flex = CSS_FLEX_ONE;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_HEIGHT] = 445;
+          node->style.dimensions[CSS_HEIGHT] = 389;
           node->style.margin[CSS_LEFT] = -7;
           node->style.margin[CSS_BOTTOM] = 1;
           node->style.padding[CSS_LEFT] = 15;
@@ -8211,8 +8116,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 47;
-      node->layout.dimensions[CSS_HEIGHT] = 689;
+      node->layout.dimensions[CSS_WIDTH] = 95;
+      node->layout.dimensions[CSS_HEIGHT] = 658;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -8220,8 +8125,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 11;
         node->layout.position[CSS_LEFT] = 31;
-        node->layout.dimensions[CSS_WIDTH] = 38;
-        node->layout.dimensions[CSS_HEIGHT] = 658;
+        node->layout.dimensions[CSS_WIDTH] = 58;
+        node->layout.dimensions[CSS_HEIGHT] = 627;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -8230,7 +8135,7 @@ int main()
           node->layout.position[CSS_TOP] = 19;
           node->layout.position[CSS_LEFT] = 16;
           node->layout.dimensions[CSS_WIDTH] = 27;
-          node->layout.dimensions[CSS_HEIGHT] = 619;
+          node->layout.dimensions[CSS_HEIGHT] = 588;
         }
       }
     }
@@ -8316,8 +8221,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 181;
-      node->style.dimensions[CSS_HEIGHT] = 404;
+      node->style.dimensions[CSS_WIDTH] = 99;
+      node->style.dimensions[CSS_HEIGHT] = 344;
       node->style.margin[CSS_TOP] = 2;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_RIGHT] = 2;
@@ -8331,7 +8236,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 509;
+        node->style.dimensions[CSS_HEIGHT] = 460;
         node->style.margin[CSS_LEFT] = 6;
         node->style.margin[CSS_TOP] = 6;
         node->style.margin[CSS_RIGHT] = 6;
@@ -8363,17 +8268,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 2;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 181;
-      node->layout.dimensions[CSS_HEIGHT] = 404;
+      node->layout.dimensions[CSS_WIDTH] = 99;
+      node->layout.dimensions[CSS_HEIGHT] = 344;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 88.5;
+        node->layout.position[CSS_LEFT] = 47.5;
         node->layout.dimensions[CSS_WIDTH] = 11;
-        node->layout.dimensions[CSS_HEIGHT] = 509;
+        node->layout.dimensions[CSS_HEIGHT] = 460;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -8396,7 +8301,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 456;
+      node->style.dimensions[CSS_WIDTH] = 401;
       node->style.margin[CSS_TOP] = 12;
       node->style.padding[CSS_LEFT] = 9;
       node->style.padding[CSS_TOP] = 9;
@@ -8415,8 +8320,8 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 259;
-        node->style.dimensions[CSS_HEIGHT] = 808;
+        node->style.dimensions[CSS_WIDTH] = 185;
+        node->style.dimensions[CSS_HEIGHT] = 789;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -8438,8 +8343,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 456;
-      node->layout.dimensions[CSS_HEIGHT] = 822;
+      node->layout.dimensions[CSS_WIDTH] = 401;
+      node->layout.dimensions[CSS_HEIGHT] = 803;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -8447,8 +8352,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 8;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 259;
-        node->layout.dimensions[CSS_HEIGHT] = 808;
+        node->layout.dimensions[CSS_WIDTH] = 185;
+        node->layout.dimensions[CSS_HEIGHT] = 789;
       }
     }
 
@@ -8462,8 +8367,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 76;
-      node->style.dimensions[CSS_HEIGHT] = 284;
+      node->style.dimensions[CSS_HEIGHT] = 213;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_TOP] = 0;
       node->style.padding[CSS_RIGHT] = 0;
@@ -8479,8 +8383,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 76;
-      node->layout.dimensions[CSS_HEIGHT] = 284;
+      node->layout.dimensions[CSS_WIDTH] = 2;
+      node->layout.dimensions[CSS_HEIGHT] = 213;
     }
 
     test("Random #173", root_node, root_layout);
@@ -8492,8 +8396,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 973;
-      node->style.dimensions[CSS_HEIGHT] = 592;
+      node->style.dimensions[CSS_WIDTH] = 970;
+      node->style.dimensions[CSS_HEIGHT] = 552;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -8512,8 +8416,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 973;
-      node->layout.dimensions[CSS_HEIGHT] = 592;
+      node->layout.dimensions[CSS_WIDTH] = 970;
+      node->layout.dimensions[CSS_HEIGHT] = 552;
     }
 
     test("Random #174", root_node, root_layout);
@@ -8561,8 +8465,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 157;
-      node->style.dimensions[CSS_HEIGHT] = 377;
+      node->style.dimensions[CSS_WIDTH] = 73;
+      node->style.dimensions[CSS_HEIGHT] = 315;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_RIGHT] = 4;
@@ -8579,8 +8483,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 157;
-      node->layout.dimensions[CSS_HEIGHT] = 377;
+      node->layout.dimensions[CSS_WIDTH] = 73;
+      node->layout.dimensions[CSS_HEIGHT] = 315;
     }
 
     test("Random #177", root_node, root_layout);
@@ -8592,8 +8496,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 565;
-      node->style.dimensions[CSS_HEIGHT] = 394;
+      node->style.dimensions[CSS_WIDTH] = 522;
+      node->style.dimensions[CSS_HEIGHT] = 333;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -8613,8 +8517,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 565;
-      node->layout.dimensions[CSS_HEIGHT] = 394;
+      node->layout.dimensions[CSS_WIDTH] = 522;
+      node->layout.dimensions[CSS_HEIGHT] = 333;
     }
 
     test("Random #178", root_node, root_layout);
@@ -8698,8 +8602,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 863;
-      node->style.dimensions[CSS_HEIGHT] = 137;
+      node->style.dimensions[CSS_WIDTH] = 849;
+      node->style.dimensions[CSS_HEIGHT] = 51;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -8717,8 +8621,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 21;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 863;
-      node->layout.dimensions[CSS_HEIGHT] = 137;
+      node->layout.dimensions[CSS_WIDTH] = 849;
+      node->layout.dimensions[CSS_HEIGHT] = 51;
     }
 
     test("Random #182", root_node, root_layout);
@@ -8731,7 +8635,6 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 23;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 0;
@@ -8745,7 +8648,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 23;
+      node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -8757,7 +8660,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 341;
+      node->style.dimensions[CSS_HEIGHT] = 275;
       node->style.margin[CSS_LEFT] = -4;
       node->style.border[CSS_LEFT] = 0;
       node->style.border[CSS_TOP] = 0;
@@ -8774,7 +8677,7 @@ int main()
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -11;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 341;
+      node->layout.dimensions[CSS_HEIGHT] = 275;
     }
 
     test("Random #184", root_node, root_layout);
@@ -8786,7 +8689,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 943;
+      node->style.dimensions[CSS_HEIGHT] = 937;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 4;
@@ -8811,8 +8714,8 @@ int main()
         node->style.align_items = CSS_ALIGN_FLEX_END;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 960;
-        node->style.dimensions[CSS_HEIGHT] = 722;
+        node->style.dimensions[CSS_WIDTH] = 956;
+        node->style.dimensions[CSS_HEIGHT] = 694;
         node->style.margin[CSS_LEFT] = 13;
         node->style.margin[CSS_TOP] = 13;
         node->style.margin[CSS_RIGHT] = 13;
@@ -8836,17 +8739,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 975;
-      node->layout.dimensions[CSS_HEIGHT] = 943;
+      node->layout.dimensions[CSS_WIDTH] = 971;
+      node->layout.dimensions[CSS_HEIGHT] = 937;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 116.5;
+        node->layout.position[CSS_TOP] = 127.5;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 960;
-        node->layout.dimensions[CSS_HEIGHT] = 722;
+        node->layout.dimensions[CSS_WIDTH] = 956;
+        node->layout.dimensions[CSS_HEIGHT] = 694;
       }
     }
 
@@ -8876,7 +8779,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 565;
+      node->style.dimensions[CSS_WIDTH] = 521;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = -10;
@@ -8897,7 +8800,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 565;
+      node->layout.dimensions[CSS_WIDTH] = 521;
       node->layout.dimensions[CSS_HEIGHT] = 27;
     }
 
@@ -8941,7 +8844,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 676;
+      node->style.dimensions[CSS_WIDTH] = 644;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -8956,7 +8859,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 676;
+      node->layout.dimensions[CSS_WIDTH] = 644;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -8987,7 +8890,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 611;
+      node->style.dimensions[CSS_HEIGHT] = 572;
       node->style.margin[CSS_TOP] = 14;
       node->style.margin[CSS_RIGHT] = 10;
       node->style.border[CSS_LEFT] = 2;
@@ -9003,7 +8906,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
       node->layout.dimensions[CSS_WIDTH] = 4;
-      node->layout.dimensions[CSS_HEIGHT] = 611;
+      node->layout.dimensions[CSS_HEIGHT] = 572;
     }
 
     test("Random #191", root_node, root_layout);
@@ -9013,7 +8916,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 120;
+      node->style.dimensions[CSS_HEIGHT] = 32;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -9034,7 +8937,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 12;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 120;
+      node->layout.dimensions[CSS_HEIGHT] = 32;
     }
 
     test("Random #192", root_node, root_layout);
@@ -9046,8 +8949,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 396;
-      node->style.dimensions[CSS_HEIGHT] = 696;
+      node->style.dimensions[CSS_WIDTH] = 336;
+      node->style.dimensions[CSS_HEIGHT] = 666;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -9067,8 +8970,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 396;
-      node->layout.dimensions[CSS_HEIGHT] = 696;
+      node->layout.dimensions[CSS_WIDTH] = 336;
+      node->layout.dimensions[CSS_HEIGHT] = 666;
     }
 
     test("Random #193", root_node, root_layout);
@@ -9080,7 +8983,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 131;
+      node->style.dimensions[CSS_WIDTH] = 45;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -9098,7 +9001,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.align_items = CSS_ALIGN_FLEX_END;
-        node->style.dimensions[CSS_HEIGHT] = 565;
+        node->style.dimensions[CSS_HEIGHT] = 522;
         node->style.margin[CSS_LEFT] = -5;
         node->style.margin[CSS_TOP] = -5;
         node->style.margin[CSS_RIGHT] = -5;
@@ -9112,8 +9015,8 @@ int main()
         node = &outer_node_1->children[1];
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 807;
-        node->style.dimensions[CSS_HEIGHT] = 353;
+        node->style.dimensions[CSS_WIDTH] = 788;
+        node->style.dimensions[CSS_HEIGHT] = 288;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -9133,8 +9036,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 131;
-      node->layout.dimensions[CSS_HEIGHT] = 590;
+      node->layout.dimensions[CSS_WIDTH] = 45;
+      node->layout.dimensions[CSS_HEIGHT] = 547;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -9143,12 +9046,12 @@ int main()
         node->layout.position[CSS_TOP] = 19;
         node->layout.position[CSS_LEFT] = 10;
         node->layout.dimensions[CSS_WIDTH] = 4;
-        node->layout.dimensions[CSS_HEIGHT] = 565;
+        node->layout.dimensions[CSS_HEIGHT] = 522;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 243;
+        node->layout.position[CSS_TOP] = 265;
         node->layout.position[CSS_LEFT] = 10;
-        node->layout.dimensions[CSS_WIDTH] = 131;
-        node->layout.dimensions[CSS_HEIGHT] = 353;
+        node->layout.dimensions[CSS_WIDTH] = 45;
+        node->layout.dimensions[CSS_HEIGHT] = 288;
       }
     }
 
@@ -9159,7 +9062,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 718;
+      node->style.dimensions[CSS_WIDTH] = 690;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_RIGHT] = -10;
       node->style.position[CSS_LEFT] = 2;
@@ -9171,7 +9074,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 718;
+      node->layout.dimensions[CSS_WIDTH] = 690;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -9184,7 +9087,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 443;
+      node->style.dimensions[CSS_WIDTH] = 388;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -9202,7 +9105,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 443;
+      node->layout.dimensions[CSS_WIDTH] = 388;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -9215,7 +9118,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 951;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -9230,8 +9133,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 500;
-        node->style.dimensions[CSS_HEIGHT] = 875;
+        node->style.dimensions[CSS_WIDTH] = 450;
+        node->style.dimensions[CSS_HEIGHT] = 863;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 5;
         node->style.margin[CSS_RIGHT] = 5;
@@ -9258,7 +9161,6 @@ int main()
           node->style.justify_content = CSS_JUSTIFY_FLEX_END;
           node->style.align_self = CSS_ALIGN_FLEX_END;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_WIDTH] = 15;
           node->style.margin[CSS_LEFT] = 5;
           node->style.margin[CSS_RIGHT] = 15;
           node->style.padding[CSS_TOP] = 12;
@@ -9275,8 +9177,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 503;
-      node->layout.dimensions[CSS_HEIGHT] = 956;
+      node->layout.dimensions[CSS_WIDTH] = 453;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -9284,12 +9186,12 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 5;
         node->layout.position[CSS_LEFT] = 5;
-        node->layout.dimensions[CSS_WIDTH] = 500;
-        node->layout.dimensions[CSS_HEIGHT] = 875;
+        node->layout.dimensions[CSS_WIDTH] = 450;
+        node->layout.dimensions[CSS_HEIGHT] = 863;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 899;
-        node->layout.position[CSS_LEFT] = 243.5;
-        node->layout.dimensions[CSS_WIDTH] = 36;
+        node->layout.position[CSS_TOP] = 887;
+        node->layout.position[CSS_LEFT] = 224;
+        node->layout.dimensions[CSS_WIDTH] = 25;
         node->layout.dimensions[CSS_HEIGHT] = 29;
         init_css_node_children(node, 1);
         {
@@ -9298,7 +9200,7 @@ int main()
           node = &outer_node_2->children[0];
           node->layout.position[CSS_TOP] = 0;
           node->layout.position[CSS_LEFT] = 12;
-          node->layout.dimensions[CSS_WIDTH] = 15;
+          node->layout.dimensions[CSS_WIDTH] = 4;
           node->layout.dimensions[CSS_HEIGHT] = 13;
         }
       }
@@ -9313,7 +9215,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 409;
+      node->style.dimensions[CSS_WIDTH] = 350;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.margin[CSS_BOTTOM] = -5;
@@ -9330,7 +9232,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 409;
+      node->layout.dimensions[CSS_WIDTH] = 350;
       node->layout.dimensions[CSS_HEIGHT] = 18;
     }
 
@@ -9378,7 +9280,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 387;
+      node->style.dimensions[CSS_WIDTH] = 326;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_RIGHT] = 9;
       node->style.padding[CSS_LEFT] = 1;
@@ -9393,7 +9295,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 387;
+      node->layout.dimensions[CSS_WIDTH] = 326;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -9404,7 +9306,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 709;
+      node->style.dimensions[CSS_HEIGHT] = 680;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -9423,7 +9325,7 @@ int main()
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 5;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 709;
+      node->layout.dimensions[CSS_HEIGHT] = 680;
     }
 
     test("Random #202", root_node, root_layout);
@@ -9434,8 +9336,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 320;
+      node->style.dimensions[CSS_WIDTH] = 146;
+      node->style.dimensions[CSS_HEIGHT] = 252;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -9452,8 +9354,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 18;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 320;
+      node->layout.dimensions[CSS_WIDTH] = 146;
+      node->layout.dimensions[CSS_HEIGHT] = 252;
     }
 
     test("Random #203", root_node, root_layout);
@@ -9464,8 +9366,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 487;
-      node->style.dimensions[CSS_HEIGHT] = 107;
+      node->style.dimensions[CSS_WIDTH] = 436;
+      node->style.dimensions[CSS_HEIGHT] = 18;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -9487,8 +9389,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 487;
-      node->layout.dimensions[CSS_HEIGHT] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 436;
+      node->layout.dimensions[CSS_HEIGHT] = 23;
     }
 
     test("Random #204", root_node, root_layout);
@@ -9537,8 +9439,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 206;
-      node->style.dimensions[CSS_HEIGHT] = 168;
+      node->style.dimensions[CSS_WIDTH] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 85;
       node->style.margin[CSS_RIGHT] = -3;
       node->style.padding[CSS_TOP] = 1;
       node->style.border[CSS_LEFT] = 0;
@@ -9553,8 +9455,8 @@ int main()
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 866;
-        node->style.dimensions[CSS_HEIGHT] = 292;
+        node->style.dimensions[CSS_WIDTH] = 853;
+        node->style.dimensions[CSS_HEIGHT] = 222;
         node->style.margin[CSS_LEFT] = 1;
         node->style.margin[CSS_RIGHT] = 19;
         node->style.margin[CSS_BOTTOM] = 5;
@@ -9578,8 +9480,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 206;
-      node->layout.dimensions[CSS_HEIGHT] = 168;
+      node->layout.dimensions[CSS_WIDTH] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 85;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -9587,8 +9489,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = 1;
-        node->layout.dimensions[CSS_WIDTH] = 866;
-        node->layout.dimensions[CSS_HEIGHT] = 292;
+        node->layout.dimensions[CSS_WIDTH] = 853;
+        node->layout.dimensions[CSS_HEIGHT] = 222;
       }
     }
 
@@ -9648,7 +9550,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 280;
+      node->style.dimensions[CSS_WIDTH] = 208;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.padding[CSS_LEFT] = 19;
@@ -9666,7 +9568,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 280;
+      node->layout.dimensions[CSS_WIDTH] = 208;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -9764,7 +9666,6 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 70;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -9779,7 +9680,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 70;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 1;
     }
 
@@ -9807,8 +9708,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 978;
-        node->style.dimensions[CSS_HEIGHT] = 59;
+        node->style.dimensions[CSS_WIDTH] = 976;
         node->style.margin[CSS_TOP] = 8;
         node->style.padding[CSS_LEFT] = 10;
         node->style.border[CSS_LEFT] = 3;
@@ -9843,8 +9743,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 17;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 978;
-        node->layout.dimensions[CSS_HEIGHT] = 59;
+        node->layout.dimensions[CSS_WIDTH] = 976;
+        node->layout.dimensions[CSS_HEIGHT] = 19;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -9865,8 +9765,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 726;
-      node->style.dimensions[CSS_HEIGHT] = 6;
+      node->style.dimensions[CSS_WIDTH] = 699;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -2;
       node->style.padding[CSS_LEFT] = 1;
@@ -9882,7 +9781,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 273;
+        node->style.dimensions[CSS_WIDTH] = 200;
         node->style.margin[CSS_LEFT] = -2;
         node->style.margin[CSS_TOP] = -2;
         node->style.margin[CSS_RIGHT] = -2;
@@ -9901,8 +9800,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -6;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 726;
-      node->layout.dimensions[CSS_HEIGHT] = 9;
+      node->layout.dimensions[CSS_WIDTH] = 699;
+      node->layout.dimensions[CSS_HEIGHT] = 36;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -9910,7 +9809,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
         node->layout.position[CSS_LEFT] = 15;
-        node->layout.dimensions[CSS_WIDTH] = 273;
+        node->layout.dimensions[CSS_WIDTH] = 200;
         node->layout.dimensions[CSS_HEIGHT] = 19;
       }
     }
@@ -9951,8 +9850,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 403;
-      node->style.dimensions[CSS_HEIGHT] = 202;
+      node->style.dimensions[CSS_WIDTH] = 343;
+      node->style.dimensions[CSS_HEIGHT] = 122;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 2;
@@ -9970,8 +9869,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 403;
-      node->layout.dimensions[CSS_HEIGHT] = 202;
+      node->layout.dimensions[CSS_WIDTH] = 343;
+      node->layout.dimensions[CSS_HEIGHT] = 122;
     }
 
     test("Random #218", root_node, root_layout);
@@ -10015,7 +9914,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 448;
+      node->style.dimensions[CSS_HEIGHT] = 392;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_BOTTOM] = -4;
       node->style.padding[CSS_LEFT] = 17;
@@ -10032,7 +9931,7 @@ int main()
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 448;
+      node->layout.dimensions[CSS_HEIGHT] = 392;
     }
 
     test("Random #220", root_node, root_layout);
@@ -10043,8 +9942,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 16;
-      node->style.dimensions[CSS_HEIGHT] = 643;
+      node->style.dimensions[CSS_HEIGHT] = 607;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -10064,8 +9962,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 16;
-      node->layout.dimensions[CSS_HEIGHT] = 643;
+      node->layout.dimensions[CSS_WIDTH] = 6;
+      node->layout.dimensions[CSS_HEIGHT] = 607;
     }
 
     test("Random #221", root_node, root_layout);
@@ -10078,7 +9976,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 322;
+      node->style.dimensions[CSS_WIDTH] = 254;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -10102,7 +10000,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 322;
+      node->layout.dimensions[CSS_WIDTH] = 254;
       node->layout.dimensions[CSS_HEIGHT] = 38;
     }
 
@@ -10144,8 +10042,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 495;
-      node->style.dimensions[CSS_HEIGHT] = 558;
+      node->style.dimensions[CSS_WIDTH] = 444;
+      node->style.dimensions[CSS_HEIGHT] = 513;
       node->style.margin[CSS_RIGHT] = 6;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_TOP] = 2;
@@ -10157,8 +10055,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 8;
-      node->layout.dimensions[CSS_WIDTH] = 495;
-      node->layout.dimensions[CSS_HEIGHT] = 558;
+      node->layout.dimensions[CSS_WIDTH] = 444;
+      node->layout.dimensions[CSS_HEIGHT] = 513;
     }
 
     test("Random #224", root_node, root_layout);
@@ -10187,8 +10085,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 136;
+      node->style.dimensions[CSS_WIDTH] = 147;
+      node->style.dimensions[CSS_HEIGHT] = 50;
       node->style.margin[CSS_LEFT] = 12;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 12;
@@ -10204,8 +10102,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 18;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 136;
+      node->layout.dimensions[CSS_WIDTH] = 147;
+      node->layout.dimensions[CSS_HEIGHT] = 50;
     }
 
     test("Random #226", root_node, root_layout);
@@ -10216,8 +10114,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 652;
-      node->style.dimensions[CSS_HEIGHT] = 833;
+      node->style.dimensions[CSS_WIDTH] = 618;
+      node->style.dimensions[CSS_HEIGHT] = 816;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 19;
@@ -10232,8 +10130,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 652;
-      node->layout.dimensions[CSS_HEIGHT] = 833;
+      node->layout.dimensions[CSS_WIDTH] = 618;
+      node->layout.dimensions[CSS_HEIGHT] = 816;
     }
 
     test("Random #227", root_node, root_layout);
@@ -10264,8 +10162,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 731;
-      node->style.dimensions[CSS_HEIGHT] = 807;
+      node->style.dimensions[CSS_WIDTH] = 704;
+      node->style.dimensions[CSS_HEIGHT] = 787;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 13;
@@ -10282,8 +10180,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -18;
       node->layout.position[CSS_LEFT] = -10;
-      node->layout.dimensions[CSS_WIDTH] = 731;
-      node->layout.dimensions[CSS_HEIGHT] = 807;
+      node->layout.dimensions[CSS_WIDTH] = 704;
+      node->layout.dimensions[CSS_HEIGHT] = 787;
     }
 
     test("Random #229", root_node, root_layout);
@@ -10318,8 +10216,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 526;
-      node->style.dimensions[CSS_HEIGHT] = 416;
+      node->style.dimensions[CSS_WIDTH] = 478;
+      node->style.dimensions[CSS_HEIGHT] = 358;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -10336,7 +10234,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_HEIGHT] = 905;
+        node->style.dimensions[CSS_HEIGHT] = 896;
         node->style.margin[CSS_LEFT] = 19;
         node->style.margin[CSS_TOP] = 19;
         node->style.margin[CSS_RIGHT] = 19;
@@ -10378,7 +10276,6 @@ int main()
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_ONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 50;
         node->style.margin[CSS_LEFT] = 10;
         node->style.margin[CSS_TOP] = 10;
         node->style.margin[CSS_RIGHT] = 10;
@@ -10401,8 +10298,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 526;
-      node->layout.dimensions[CSS_HEIGHT] = 416;
+      node->layout.dimensions[CSS_WIDTH] = 478;
+      node->layout.dimensions[CSS_HEIGHT] = 358;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -10411,13 +10308,13 @@ int main()
         node->layout.position[CSS_TOP] = 28;
         node->layout.position[CSS_LEFT] = -6;
         node->layout.dimensions[CSS_WIDTH] = 37;
-        node->layout.dimensions[CSS_HEIGHT] = 905;
+        node->layout.dimensions[CSS_HEIGHT] = 896;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
           css_node_t *node;
           node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = 867;
+          node->layout.position[CSS_TOP] = 858;
           node->layout.position[CSS_LEFT] = 1;
           node->layout.dimensions[CSS_WIDTH] = 0;
           node->layout.dimensions[CSS_HEIGHT] = 14;
@@ -10425,7 +10322,7 @@ int main()
         node = &outer_node_1->children[1];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = -4;
-        node->layout.dimensions[CSS_WIDTH] = 50;
+        node->layout.dimensions[CSS_WIDTH] = 39;
         node->layout.dimensions[CSS_HEIGHT] = 37;
       }
     }
@@ -10462,8 +10359,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 203;
-      node->style.dimensions[CSS_HEIGHT] = 599;
+      node->style.dimensions[CSS_WIDTH] = 123;
+      node->style.dimensions[CSS_HEIGHT] = 559;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -10483,8 +10380,8 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 890;
-        node->style.dimensions[CSS_HEIGHT] = 586;
+        node->style.dimensions[CSS_WIDTH] = 879;
+        node->style.dimensions[CSS_HEIGHT] = 545;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 14;
         node->style.margin[CSS_BOTTOM] = 10;
@@ -10504,17 +10401,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -14;
       node->layout.position[CSS_LEFT] = -12;
-      node->layout.dimensions[CSS_WIDTH] = 203;
-      node->layout.dimensions[CSS_HEIGHT] = 599;
+      node->layout.dimensions[CSS_WIDTH] = 123;
+      node->layout.dimensions[CSS_HEIGHT] = 559;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 4;
+        node->layout.position[CSS_TOP] = 4.5;
         node->layout.position[CSS_LEFT] = 7;
-        node->layout.dimensions[CSS_WIDTH] = 890;
-        node->layout.dimensions[CSS_HEIGHT] = 586;
+        node->layout.dimensions[CSS_WIDTH] = 879;
+        node->layout.dimensions[CSS_HEIGHT] = 545;
       }
     }
 
@@ -10544,8 +10441,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 936;
-      node->style.dimensions[CSS_HEIGHT] = 78;
+      node->style.dimensions[CSS_WIDTH] = 930;
       node->style.margin[CSS_TOP] = -3;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 8;
@@ -10561,8 +10457,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 936;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_WIDTH] = 930;
+      node->layout.dimensions[CSS_HEIGHT] = 12;
     }
 
     test("Random #235", root_node, root_layout);
@@ -10573,8 +10469,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 536;
-      node->style.dimensions[CSS_HEIGHT] = 921;
+      node->style.dimensions[CSS_WIDTH] = 489;
+      node->style.dimensions[CSS_HEIGHT] = 913;
       node->style.border[CSS_LEFT] = 2;
       node->style.border[CSS_TOP] = 2;
       node->style.border[CSS_RIGHT] = 2;
@@ -10586,8 +10482,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 395;
-        node->style.dimensions[CSS_HEIGHT] = 206;
+        node->style.dimensions[CSS_WIDTH] = 334;
+        node->style.dimensions[CSS_HEIGHT] = 127;
         node->style.margin[CSS_LEFT] = -2;
         node->style.margin[CSS_TOP] = -2;
         node->style.margin[CSS_RIGHT] = -2;
@@ -10615,8 +10511,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -6;
-      node->layout.dimensions[CSS_WIDTH] = 536;
-      node->layout.dimensions[CSS_HEIGHT] = 921;
+      node->layout.dimensions[CSS_WIDTH] = 489;
+      node->layout.dimensions[CSS_HEIGHT] = 913;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -10624,8 +10520,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 21;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 395;
-        node->layout.dimensions[CSS_HEIGHT] = 206;
+        node->layout.dimensions[CSS_WIDTH] = 334;
+        node->layout.dimensions[CSS_HEIGHT] = 127;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -10667,7 +10563,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 462;
+      node->style.dimensions[CSS_WIDTH] = 408;
       node->style.margin[CSS_LEFT] = 11;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = 11;
@@ -10694,7 +10590,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 462;
+      node->layout.dimensions[CSS_WIDTH] = 408;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -10705,18 +10601,6 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 197;
-      node->style.margin[CSS_RIGHT] = 1;
-      node->style.margin[CSS_BOTTOM] = 13;
-      node->style.padding[CSS_LEFT] = 19;
-      node->style.padding[CSS_TOP] = 19;
-      node->style.padding[CSS_RIGHT] = 19;
-      node->style.padding[CSS_BOTTOM] = 19;
-      node->style.padding[CSS_TOP] = 12;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.border[CSS_BOTTOM] = 1;
     }
 
     css_node_t *root_layout = new_css_node();
@@ -10724,8 +10608,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 38;
-      node->layout.dimensions[CSS_HEIGHT] = 197;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #239", root_node, root_layout);
@@ -10773,7 +10657,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 768;
+      node->style.dimensions[CSS_WIDTH] = 744;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 15;
@@ -10789,7 +10673,7 @@ int main()
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 927;
+        node->style.dimensions[CSS_WIDTH] = 920;
         node->style.margin[CSS_LEFT] = -7;
         node->style.margin[CSS_TOP] = -7;
         node->style.margin[CSS_RIGHT] = -7;
@@ -10809,7 +10693,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -16;
-      node->layout.dimensions[CSS_WIDTH] = 768;
+      node->layout.dimensions[CSS_WIDTH] = 744;
       node->layout.dimensions[CSS_HEIGHT] = 4;
       init_css_node_children(node, 1);
       {
@@ -10818,7 +10702,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 6;
         node->layout.position[CSS_LEFT] = -7;
-        node->layout.dimensions[CSS_WIDTH] = 927;
+        node->layout.dimensions[CSS_WIDTH] = 920;
         node->layout.dimensions[CSS_HEIGHT] = 3;
       }
     }
@@ -10832,7 +10716,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 673;
+      node->style.dimensions[CSS_HEIGHT] = 640;
       node->style.padding[CSS_BOTTOM] = 8;
       node->style.position[CSS_LEFT] = 4;
     }
@@ -10843,7 +10727,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 673;
+      node->layout.dimensions[CSS_HEIGHT] = 640;
     }
 
     test("Random #243", root_node, root_layout);
@@ -10855,7 +10739,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 339;
+      node->style.dimensions[CSS_HEIGHT] = 273;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -10873,7 +10757,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_HEIGHT] = 885;
+        node->style.dimensions[CSS_HEIGHT] = 873;
         node->style.margin[CSS_BOTTOM] = 15;
         node->style.padding[CSS_TOP] = 0;
         node->style.padding[CSS_RIGHT] = 0;
@@ -10890,7 +10774,7 @@ int main()
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 339;
+      node->layout.dimensions[CSS_HEIGHT] = 273;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -10899,7 +10783,7 @@ int main()
         node->layout.position[CSS_TOP] = 1;
         node->layout.position[CSS_LEFT] = 12;
         node->layout.dimensions[CSS_WIDTH] = 0;
-        node->layout.dimensions[CSS_HEIGHT] = 885;
+        node->layout.dimensions[CSS_HEIGHT] = 873;
       }
     }
 
@@ -10912,7 +10796,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 817;
+      node->style.dimensions[CSS_WIDTH] = 799;
       node->style.margin[CSS_BOTTOM] = 3;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_BOTTOM] = 3;
@@ -10929,7 +10813,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 817;
+      node->layout.dimensions[CSS_WIDTH] = 799;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -10942,7 +10826,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_HEIGHT] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 40;
       node->style.margin[CSS_LEFT] = 19;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 19;
@@ -10962,7 +10846,7 @@ int main()
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 19;
       node->layout.dimensions[CSS_WIDTH] = 32;
-      node->layout.dimensions[CSS_HEIGHT] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 40;
     }
 
     test("Random #246", root_node, root_layout);
@@ -10991,8 +10875,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 690;
-      node->style.dimensions[CSS_HEIGHT] = 163;
+      node->style.dimensions[CSS_WIDTH] = 659;
+      node->style.dimensions[CSS_HEIGHT] = 79;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -11032,8 +10916,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 690;
-      node->layout.dimensions[CSS_HEIGHT] = 163;
+      node->layout.dimensions[CSS_WIDTH] = 659;
+      node->layout.dimensions[CSS_HEIGHT] = 79;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -11091,7 +10975,6 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 17;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -11108,7 +10991,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 17;
+      node->layout.dimensions[CSS_WIDTH] = 6;
       node->layout.dimensions[CSS_HEIGHT] = 17;
     }
 
@@ -11228,8 +11111,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 262;
-      node->style.dimensions[CSS_HEIGHT] = 843;
+      node->style.dimensions[CSS_WIDTH] = 188;
+      node->style.dimensions[CSS_HEIGHT] = 828;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -11243,8 +11126,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 262;
-      node->layout.dimensions[CSS_HEIGHT] = 843;
+      node->layout.dimensions[CSS_WIDTH] = 188;
+      node->layout.dimensions[CSS_HEIGHT] = 828;
     }
 
     test("Random #256", root_node, root_layout);
@@ -11255,7 +11138,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 335;
+      node->style.dimensions[CSS_HEIGHT] = 269;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -11274,7 +11157,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 2;
-      node->layout.dimensions[CSS_HEIGHT] = 335;
+      node->layout.dimensions[CSS_HEIGHT] = 269;
     }
 
     test("Random #257", root_node, root_layout);
@@ -11285,8 +11168,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 83;
-      node->style.dimensions[CSS_HEIGHT] = 445;
+      node->style.dimensions[CSS_HEIGHT] = 389;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_BOTTOM] = 10;
@@ -11301,8 +11183,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 83;
-      node->layout.dimensions[CSS_HEIGHT] = 445;
+      node->layout.dimensions[CSS_WIDTH] = 5;
+      node->layout.dimensions[CSS_HEIGHT] = 389;
     }
 
     test("Random #258", root_node, root_layout);
@@ -11314,8 +11196,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 573;
-      node->style.dimensions[CSS_HEIGHT] = 202;
+      node->style.dimensions[CSS_WIDTH] = 531;
+      node->style.dimensions[CSS_HEIGHT] = 122;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -11336,8 +11218,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 573;
-      node->layout.dimensions[CSS_HEIGHT] = 202;
+      node->layout.dimensions[CSS_WIDTH] = 531;
+      node->layout.dimensions[CSS_HEIGHT] = 122;
     }
 
     test("Random #259", root_node, root_layout);
@@ -11395,8 +11277,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 198;
-      node->style.dimensions[CSS_HEIGHT] = 655;
+      node->style.dimensions[CSS_WIDTH] = 118;
+      node->style.dimensions[CSS_HEIGHT] = 621;
       node->style.margin[CSS_LEFT] = -9;
     }
 
@@ -11405,8 +11287,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -9;
-      node->layout.dimensions[CSS_WIDTH] = 198;
-      node->layout.dimensions[CSS_HEIGHT] = 655;
+      node->layout.dimensions[CSS_WIDTH] = 118;
+      node->layout.dimensions[CSS_HEIGHT] = 621;
     }
 
     test("Random #262", root_node, root_layout);
@@ -11419,7 +11301,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 659;
+      node->style.dimensions[CSS_WIDTH] = 625;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -11439,7 +11321,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 659;
+      node->layout.dimensions[CSS_WIDTH] = 625;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -11469,8 +11351,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 154;
-      node->style.dimensions[CSS_HEIGHT] = 149;
+      node->style.dimensions[CSS_WIDTH] = 69;
+      node->style.dimensions[CSS_HEIGHT] = 64;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -11497,8 +11379,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = -17;
-      node->layout.dimensions[CSS_WIDTH] = 154;
-      node->layout.dimensions[CSS_HEIGHT] = 149;
+      node->layout.dimensions[CSS_WIDTH] = 69;
+      node->layout.dimensions[CSS_HEIGHT] = 64;
     }
 
     test("Random #265", root_node, root_layout);
@@ -11510,8 +11392,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 324;
-      node->style.dimensions[CSS_HEIGHT] = 649;
+      node->style.dimensions[CSS_WIDTH] = 256;
+      node->style.dimensions[CSS_HEIGHT] = 614;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.margin[CSS_BOTTOM] = -6;
@@ -11531,8 +11413,8 @@ int main()
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 545;
-        node->style.dimensions[CSS_HEIGHT] = 488;
+        node->style.dimensions[CSS_WIDTH] = 500;
+        node->style.dimensions[CSS_HEIGHT] = 437;
         node->style.margin[CSS_LEFT] = -8;
         node->style.margin[CSS_TOP] = -8;
         node->style.margin[CSS_RIGHT] = -8;
@@ -11550,17 +11432,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 15;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 324;
-      node->layout.dimensions[CSS_HEIGHT] = 649;
+      node->layout.dimensions[CSS_WIDTH] = 256;
+      node->layout.dimensions[CSS_HEIGHT] = 614;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 78.5;
+        node->layout.position[CSS_TOP] = 86.5;
         node->layout.position[CSS_LEFT] = -10;
-        node->layout.dimensions[CSS_WIDTH] = 545;
-        node->layout.dimensions[CSS_HEIGHT] = 488;
+        node->layout.dimensions[CSS_WIDTH] = 500;
+        node->layout.dimensions[CSS_HEIGHT] = 437;
       }
     }
 
@@ -11632,7 +11514,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 778;
+      node->style.dimensions[CSS_HEIGHT] = 756;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -11661,7 +11543,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 17;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 778;
+      node->layout.dimensions[CSS_HEIGHT] = 756;
     }
 
     test("Random #270", root_node, root_layout);
@@ -11706,8 +11588,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 776;
-      node->style.dimensions[CSS_HEIGHT] = 856;
+      node->style.dimensions[CSS_WIDTH] = 753;
+      node->style.dimensions[CSS_HEIGHT] = 842;
       node->style.margin[CSS_LEFT] = 17;
       node->style.padding[CSS_LEFT] = 16;
       node->style.padding[CSS_TOP] = 16;
@@ -11724,8 +11606,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 17;
-      node->layout.dimensions[CSS_WIDTH] = 776;
-      node->layout.dimensions[CSS_HEIGHT] = 856;
+      node->layout.dimensions[CSS_WIDTH] = 753;
+      node->layout.dimensions[CSS_HEIGHT] = 842;
     }
 
     test("Random #272", root_node, root_layout);
@@ -11786,7 +11668,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 338;
+      node->style.dimensions[CSS_WIDTH] = 272;
       node->style.margin[CSS_LEFT] = 14;
       node->style.margin[CSS_BOTTOM] = 9;
       node->style.padding[CSS_BOTTOM] = 6;
@@ -11802,7 +11684,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 338;
+      node->layout.dimensions[CSS_WIDTH] = 272;
       node->layout.dimensions[CSS_HEIGHT] = 6;
     }
 
@@ -11813,8 +11695,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 239;
-      node->style.dimensions[CSS_HEIGHT] = 740;
+      node->style.dimensions[CSS_WIDTH] = 163;
+      node->style.dimensions[CSS_HEIGHT] = 714;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -11835,8 +11717,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 14;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 239;
-      node->layout.dimensions[CSS_HEIGHT] = 740;
+      node->layout.dimensions[CSS_WIDTH] = 163;
+      node->layout.dimensions[CSS_HEIGHT] = 714;
     }
 
     test("Random #276", root_node, root_layout);
@@ -11849,8 +11731,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 410;
-      node->style.dimensions[CSS_HEIGHT] = 798;
+      node->style.dimensions[CSS_WIDTH] = 351;
+      node->style.dimensions[CSS_HEIGHT] = 777;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -11875,8 +11757,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 410;
-      node->layout.dimensions[CSS_HEIGHT] = 798;
+      node->layout.dimensions[CSS_WIDTH] = 351;
+      node->layout.dimensions[CSS_HEIGHT] = 777;
     }
 
     test("Random #277", root_node, root_layout);
@@ -11888,8 +11770,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 95;
-      node->style.dimensions[CSS_HEIGHT] = 295;
+      node->style.dimensions[CSS_WIDTH] = 5;
+      node->style.dimensions[CSS_HEIGHT] = 225;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.margin[CSS_BOTTOM] = 1;
@@ -11902,8 +11784,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 95;
-      node->layout.dimensions[CSS_HEIGHT] = 295;
+      node->layout.dimensions[CSS_WIDTH] = 15;
+      node->layout.dimensions[CSS_HEIGHT] = 225;
     }
 
     test("Random #278", root_node, root_layout);
@@ -11996,7 +11878,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 671;
+      node->style.dimensions[CSS_HEIGHT] = 638;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -12019,7 +11901,7 @@ int main()
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 2;
       node->layout.dimensions[CSS_WIDTH] = 8;
-      node->layout.dimensions[CSS_HEIGHT] = 671;
+      node->layout.dimensions[CSS_HEIGHT] = 638;
     }
 
     test("Random #282", root_node, root_layout);
@@ -12066,7 +11948,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 486;
+      node->style.dimensions[CSS_WIDTH] = 434;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -12085,7 +11967,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -5;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 486;
+      node->layout.dimensions[CSS_WIDTH] = 434;
       node->layout.dimensions[CSS_HEIGHT] = 9;
     }
 
@@ -12096,7 +11978,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 271;
+      node->style.dimensions[CSS_HEIGHT] = 198;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -12113,7 +11995,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 6;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 271;
+      node->layout.dimensions[CSS_HEIGHT] = 198;
     }
 
     test("Random #285", root_node, root_layout);
@@ -12125,8 +12007,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 317;
-      node->style.dimensions[CSS_HEIGHT] = 473;
+      node->style.dimensions[CSS_WIDTH] = 249;
+      node->style.dimensions[CSS_HEIGHT] = 420;
       node->style.margin[CSS_LEFT] = 19;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 19;
@@ -12146,8 +12028,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 27;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 317;
-      node->layout.dimensions[CSS_HEIGHT] = 473;
+      node->layout.dimensions[CSS_WIDTH] = 249;
+      node->layout.dimensions[CSS_HEIGHT] = 420;
     }
 
     test("Random #286", root_node, root_layout);
@@ -12176,8 +12058,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 578;
-      node->style.dimensions[CSS_HEIGHT] = 225;
+      node->style.dimensions[CSS_WIDTH] = 536;
+      node->style.dimensions[CSS_HEIGHT] = 147;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -12200,8 +12082,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 578;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.dimensions[CSS_WIDTH] = 536;
+      node->layout.dimensions[CSS_HEIGHT] = 147;
     }
 
     test("Random #288", root_node, root_layout);
@@ -12231,8 +12113,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 967;
-      node->style.dimensions[CSS_HEIGHT] = 659;
+      node->style.dimensions[CSS_WIDTH] = 964;
+      node->style.dimensions[CSS_HEIGHT] = 625;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -5;
       node->style.padding[CSS_LEFT] = 19;
@@ -12251,8 +12133,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -14;
-      node->layout.dimensions[CSS_WIDTH] = 967;
-      node->layout.dimensions[CSS_HEIGHT] = 659;
+      node->layout.dimensions[CSS_WIDTH] = 964;
+      node->layout.dimensions[CSS_HEIGHT] = 625;
     }
 
     test("Random #290", root_node, root_layout);
@@ -12263,8 +12145,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 0;
-      node->style.dimensions[CSS_HEIGHT] = 34;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -12287,7 +12167,7 @@ int main()
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 20;
       node->layout.dimensions[CSS_WIDTH] = 12;
-      node->layout.dimensions[CSS_HEIGHT] = 34;
+      node->layout.dimensions[CSS_HEIGHT] = 24;
     }
 
     test("Random #291", root_node, root_layout);
@@ -12297,7 +12177,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 346;
+      node->style.dimensions[CSS_WIDTH] = 281;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -12332,7 +12212,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 930;
+        node->style.dimensions[CSS_HEIGHT] = 923;
         node->style.margin[CSS_LEFT] = 14;
         node->style.margin[CSS_RIGHT] = 18;
         node->style.margin[CSS_BOTTOM] = -5;
@@ -12359,8 +12239,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 346;
-      node->layout.dimensions[CSS_HEIGHT] = 958;
+      node->layout.dimensions[CSS_WIDTH] = 281;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 3);
       {
         css_node_t *outer_node_1 = node;
@@ -12374,7 +12254,7 @@ int main()
         node->layout.position[CSS_TOP] = 9;
         node->layout.position[CSS_LEFT] = 14;
         node->layout.dimensions[CSS_WIDTH] = 0;
-        node->layout.dimensions[CSS_HEIGHT] = 930;
+        node->layout.dimensions[CSS_HEIGHT] = 923;
         node = &outer_node_1->children[2];
         node->layout.position[CSS_TOP] = -17;
         node->layout.position[CSS_LEFT] = -14;
@@ -12391,8 +12271,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 353;
-      node->style.dimensions[CSS_HEIGHT] = 475;
+      node->style.dimensions[CSS_WIDTH] = 288;
+      node->style.dimensions[CSS_HEIGHT] = 423;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -12415,8 +12295,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 17;
-      node->layout.dimensions[CSS_WIDTH] = 353;
-      node->layout.dimensions[CSS_HEIGHT] = 475;
+      node->layout.dimensions[CSS_WIDTH] = 288;
+      node->layout.dimensions[CSS_HEIGHT] = 423;
     }
 
     test("Random #293", root_node, root_layout);
@@ -12428,7 +12308,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 200;
+      node->style.dimensions[CSS_WIDTH] = 120;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_BOTTOM] = 9;
@@ -12446,7 +12326,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_HEIGHT] = 252;
+        node->style.dimensions[CSS_HEIGHT] = 177;
         node->style.margin[CSS_LEFT] = -3;
         node->style.padding[CSS_BOTTOM] = 3;
         node->style.border[CSS_LEFT] = 3;
@@ -12460,7 +12340,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 200;
+      node->layout.dimensions[CSS_WIDTH] = 120;
       node->layout.dimensions[CSS_HEIGHT] = 38;
       init_css_node_children(node, 1);
       {
@@ -12470,7 +12350,7 @@ int main()
         node->layout.position[CSS_TOP] = 6;
         node->layout.position[CSS_LEFT] = 0;
         node->layout.dimensions[CSS_WIDTH] = 3;
-        node->layout.dimensions[CSS_HEIGHT] = 252;
+        node->layout.dimensions[CSS_HEIGHT] = 177;
       }
     }
 
@@ -12481,7 +12361,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 472;
+      node->style.dimensions[CSS_WIDTH] = 419;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 14;
       node->style.padding[CSS_BOTTOM] = 7;
@@ -12512,7 +12392,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 472;
+      node->layout.dimensions[CSS_WIDTH] = 419;
       node->layout.dimensions[CSS_HEIGHT] = 9;
       init_css_node_children(node, 1);
       {
@@ -12535,8 +12415,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 711;
-      node->style.dimensions[CSS_HEIGHT] = 446;
+      node->style.dimensions[CSS_WIDTH] = 682;
+      node->style.dimensions[CSS_HEIGHT] = 390;
       node->style.margin[CSS_LEFT] = -10;
       node->style.padding[CSS_LEFT] = 6;
       node->style.padding[CSS_TOP] = 6;
@@ -12553,8 +12433,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
-      node->layout.dimensions[CSS_WIDTH] = 711;
-      node->layout.dimensions[CSS_HEIGHT] = 446;
+      node->layout.dimensions[CSS_WIDTH] = 682;
+      node->layout.dimensions[CSS_HEIGHT] = 390;
     }
 
     test("Random #296", root_node, root_layout);
@@ -12565,7 +12445,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 715;
+      node->style.dimensions[CSS_WIDTH] = 687;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -12587,7 +12467,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 715;
+      node->layout.dimensions[CSS_WIDTH] = 687;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -12601,7 +12481,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 253;
+      node->style.dimensions[CSS_HEIGHT] = 179;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.padding[CSS_LEFT] = 17;
@@ -12625,7 +12505,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -2;
       node->layout.dimensions[CSS_WIDTH] = 25;
-      node->layout.dimensions[CSS_HEIGHT] = 253;
+      node->layout.dimensions[CSS_HEIGHT] = 179;
     }
 
     test("Random #298", root_node, root_layout);
@@ -12654,7 +12534,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 643;
+      node->style.dimensions[CSS_HEIGHT] = 607;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -12673,7 +12553,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -4;
       node->layout.dimensions[CSS_WIDTH] = 18;
-      node->layout.dimensions[CSS_HEIGHT] = 643;
+      node->layout.dimensions[CSS_HEIGHT] = 607;
     }
 
     test("Random #300", root_node, root_layout);
@@ -12685,8 +12565,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 751;
-      node->style.dimensions[CSS_HEIGHT] = 729;
+      node->style.dimensions[CSS_WIDTH] = 726;
+      node->style.dimensions[CSS_HEIGHT] = 702;
       node->style.margin[CSS_TOP] = 19;
       node->style.padding[CSS_LEFT] = 16;
       node->style.padding[CSS_TOP] = 16;
@@ -12705,8 +12585,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 22;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 751;
-      node->layout.dimensions[CSS_HEIGHT] = 729;
+      node->layout.dimensions[CSS_WIDTH] = 726;
+      node->layout.dimensions[CSS_HEIGHT] = 702;
     }
 
     test("Random #301", root_node, root_layout);
@@ -12765,8 +12645,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 93;
-      node->style.dimensions[CSS_HEIGHT] = 292;
+      node->style.dimensions[CSS_WIDTH] = 2;
+      node->style.dimensions[CSS_HEIGHT] = 221;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -12785,8 +12665,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -7;
-      node->layout.dimensions[CSS_WIDTH] = 93;
-      node->layout.dimensions[CSS_HEIGHT] = 292;
+      node->layout.dimensions[CSS_WIDTH] = 4;
+      node->layout.dimensions[CSS_HEIGHT] = 221;
     }
 
     test("Random #304", root_node, root_layout);
@@ -12835,7 +12715,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 533;
+      node->style.dimensions[CSS_WIDTH] = 486;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = -5;
@@ -12849,7 +12729,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 533;
+      node->layout.dimensions[CSS_WIDTH] = 486;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -12918,7 +12798,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_HEIGHT] = 35;
       node->style.margin[CSS_LEFT] = -2;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = -2;
@@ -12938,7 +12817,7 @@ int main()
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = -6;
       node->layout.dimensions[CSS_WIDTH] = 5;
-      node->layout.dimensions[CSS_HEIGHT] = 35;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #310", root_node, root_layout);
@@ -12949,7 +12828,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 539;
+      node->style.dimensions[CSS_WIDTH] = 493;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 15;
@@ -12964,7 +12843,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 539;
+      node->layout.dimensions[CSS_WIDTH] = 493;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -13043,8 +12922,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 17;
-      node->style.dimensions[CSS_HEIGHT] = 480;
+      node->style.dimensions[CSS_HEIGHT] = 428;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -13066,7 +12944,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-        node->style.dimensions[CSS_HEIGHT] = 153;
+        node->style.dimensions[CSS_HEIGHT] = 69;
         node->style.margin[CSS_LEFT] = 3;
         node->style.margin[CSS_TOP] = -9;
         node->style.margin[CSS_RIGHT] = -8;
@@ -13085,8 +12963,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 480;
+      node->layout.dimensions[CSS_WIDTH] = 3;
+      node->layout.dimensions[CSS_HEIGHT] = 428;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -13095,7 +12973,7 @@ int main()
         node->layout.position[CSS_TOP] = -4;
         node->layout.position[CSS_LEFT] = 13;
         node->layout.dimensions[CSS_WIDTH] = 2;
-        node->layout.dimensions[CSS_HEIGHT] = 153;
+        node->layout.dimensions[CSS_HEIGHT] = 69;
       }
     }
 
@@ -13141,8 +13019,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 267;
-      node->style.dimensions[CSS_HEIGHT] = 862;
+      node->style.dimensions[CSS_WIDTH] = 194;
+      node->style.dimensions[CSS_HEIGHT] = 848;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -13184,15 +13062,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 267;
-      node->layout.dimensions[CSS_HEIGHT] = 862;
+      node->layout.dimensions[CSS_WIDTH] = 194;
+      node->layout.dimensions[CSS_HEIGHT] = 848;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 14;
-        node->layout.position[CSS_LEFT] = 253;
+        node->layout.position[CSS_LEFT] = 180;
         node->layout.dimensions[CSS_WIDTH] = 7;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -13207,7 +13085,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 358;
+      node->style.dimensions[CSS_WIDTH] = 294;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = -6;
@@ -13227,7 +13105,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 358;
+      node->layout.dimensions[CSS_WIDTH] = 294;
       node->layout.dimensions[CSS_HEIGHT] = 22;
     }
 
@@ -13239,7 +13117,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_HEIGHT] = 261;
+      node->style.dimensions[CSS_HEIGHT] = 188;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_RIGHT] = 5;
       node->style.margin[CSS_BOTTOM] = 14;
@@ -13252,7 +13130,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 3;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 261;
+      node->layout.dimensions[CSS_HEIGHT] = 188;
     }
 
     test("Random #319", root_node, root_layout);
@@ -13263,8 +13141,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 531;
-      node->style.dimensions[CSS_HEIGHT] = 411;
+      node->style.dimensions[CSS_WIDTH] = 484;
+      node->style.dimensions[CSS_HEIGHT] = 352;
       node->style.margin[CSS_RIGHT] = 18;
       node->style.padding[CSS_LEFT] = 18;
       node->style.border[CSS_LEFT] = 1;
@@ -13281,8 +13159,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
-      node->layout.dimensions[CSS_WIDTH] = 531;
-      node->layout.dimensions[CSS_HEIGHT] = 411;
+      node->layout.dimensions[CSS_WIDTH] = 484;
+      node->layout.dimensions[CSS_HEIGHT] = 352;
     }
 
     test("Random #320", root_node, root_layout);
@@ -13364,7 +13242,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 172;
+      node->style.dimensions[CSS_WIDTH] = 89;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -13383,7 +13261,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 172;
+      node->layout.dimensions[CSS_WIDTH] = 89;
       node->layout.dimensions[CSS_HEIGHT] = 21;
     }
 
@@ -13458,7 +13336,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 864;
+      node->style.dimensions[CSS_WIDTH] = 850;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -13473,7 +13351,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 864;
+      node->layout.dimensions[CSS_WIDTH] = 850;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -13485,7 +13363,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 868;
+      node->style.dimensions[CSS_WIDTH] = 855;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -13502,7 +13380,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 868;
+      node->layout.dimensions[CSS_WIDTH] = 855;
       node->layout.dimensions[CSS_HEIGHT] = 3;
     }
 
@@ -13514,7 +13392,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 520;
+      node->style.dimensions[CSS_WIDTH] = 472;
       node->style.margin[CSS_LEFT] = -2;
       node->style.padding[CSS_LEFT] = 1;
       node->style.border[CSS_LEFT] = 3;
@@ -13526,7 +13404,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 520;
+      node->layout.dimensions[CSS_WIDTH] = 472;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -13556,8 +13434,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 828;
-      node->style.dimensions[CSS_HEIGHT] = 41;
+      node->style.dimensions[CSS_WIDTH] = 811;
       node->style.margin[CSS_LEFT] = 17;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 17;
@@ -13573,8 +13450,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 12;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 828;
-      node->layout.dimensions[CSS_HEIGHT] = 41;
+      node->layout.dimensions[CSS_WIDTH] = 811;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #331", root_node, root_layout);
@@ -13585,7 +13462,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 107;
+      node->style.dimensions[CSS_WIDTH] = 18;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -13605,7 +13482,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -13616,7 +13493,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 423;
+      node->style.dimensions[CSS_HEIGHT] = 366;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 10;
       node->style.padding[CSS_BOTTOM] = 9;
@@ -13629,7 +13506,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 10;
-      node->layout.dimensions[CSS_HEIGHT] = 423;
+      node->layout.dimensions[CSS_HEIGHT] = 366;
     }
 
     test("Random #333", root_node, root_layout);
@@ -13639,90 +13516,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 82;
-      node->style.dimensions[CSS_HEIGHT] = 492;
-      node->style.margin[CSS_TOP] = 12;
-      node->style.margin[CSS_BOTTOM] = 18;
-      node->style.padding[CSS_TOP] = 10;
-      node->style.padding[CSS_BOTTOM] = 15;
-      node->style.border[CSS_LEFT] = 0;
-      node->style.border[CSS_BOTTOM] = 2;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-        node->style.align_self = CSS_ALIGN_FLEX_START;
-        node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 65;
-        node->style.margin[CSS_LEFT] = 3;
-        node->style.margin[CSS_TOP] = 3;
-        node->style.margin[CSS_RIGHT] = 3;
-        node->style.margin[CSS_BOTTOM] = 3;
-        node->style.margin[CSS_TOP] = 7;
-        node->style.border[CSS_LEFT] = 0;
-        node->style.border[CSS_TOP] = 0;
-        node->style.position[CSS_TOP] = -4;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-          node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-          node->style.align_self = CSS_ALIGN_FLEX_END;
-          node->style.flex = CSS_FLEX_NONE;
-          node->style.dimensions[CSS_HEIGHT] = 742;
-          node->style.margin[CSS_LEFT] = 1;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_TOP] = 11;
-          node->style.padding[CSS_RIGHT] = 11;
-          node->style.padding[CSS_BOTTOM] = 11;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_RIGHT] = 13;
-          node->style.border[CSS_LEFT] = 0;
-          node->style.border[CSS_TOP] = 0;
-          node->style.border[CSS_RIGHT] = 0;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.border[CSS_LEFT] = 3;
-          node->style.border[CSS_TOP] = 3;
-          node->style.border[CSS_RIGHT] = 1;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.position[CSS_LEFT] = -2;
-          node->style.position[CSS_TOP] = -2;
-        }
-      }
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = 12;
+      node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 82;
-      node->layout.dimensions[CSS_HEIGHT] = 492;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 3;
-        node->layout.dimensions[CSS_WIDTH] = 65;
-        node->layout.dimensions[CSS_HEIGHT] = 742;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = -2;
-          node->layout.position[CSS_LEFT] = 35;
-          node->layout.dimensions[CSS_WIDTH] = 28;
-          node->layout.dimensions[CSS_HEIGHT] = 742;
-        }
-      }
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #334", root_node, root_layout);
@@ -13733,7 +13535,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 615;
+      node->style.dimensions[CSS_WIDTH] = 577;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -13752,7 +13554,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 615;
+      node->layout.dimensions[CSS_WIDTH] = 577;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -13764,7 +13566,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 799;
+      node->style.dimensions[CSS_HEIGHT] = 779;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -8;
       node->style.margin[CSS_RIGHT] = -8;
@@ -13782,7 +13584,7 @@ int main()
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 8;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 799;
+      node->layout.dimensions[CSS_HEIGHT] = 779;
     }
 
     test("Random #336", root_node, root_layout);
@@ -13812,7 +13614,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 556;
+      node->style.dimensions[CSS_WIDTH] = 512;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -13833,7 +13635,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 556;
+      node->layout.dimensions[CSS_WIDTH] = 512;
       node->layout.dimensions[CSS_HEIGHT] = 10;
     }
 
@@ -13864,8 +13666,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 960;
-      node->style.dimensions[CSS_HEIGHT] = 309;
+      node->style.dimensions[CSS_WIDTH] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 240;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -13882,8 +13684,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 960;
-      node->layout.dimensions[CSS_HEIGHT] = 309;
+      node->layout.dimensions[CSS_WIDTH] = 956;
+      node->layout.dimensions[CSS_HEIGHT] = 240;
     }
 
     test("Random #340", root_node, root_layout);
@@ -13942,8 +13744,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 983;
-      node->style.dimensions[CSS_HEIGHT] = 422;
+      node->style.dimensions[CSS_WIDTH] = 982;
+      node->style.dimensions[CSS_HEIGHT] = 365;
       node->style.margin[CSS_LEFT] = -9;
       node->style.margin[CSS_TOP] = -9;
       node->style.margin[CSS_BOTTOM] = 19;
@@ -13962,8 +13764,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 983;
-      node->layout.dimensions[CSS_HEIGHT] = 422;
+      node->layout.dimensions[CSS_WIDTH] = 982;
+      node->layout.dimensions[CSS_HEIGHT] = 365;
     }
 
     test("Random #343", root_node, root_layout);
@@ -13973,8 +13775,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 329;
-      node->style.dimensions[CSS_HEIGHT] = 836;
+      node->style.dimensions[CSS_WIDTH] = 262;
+      node->style.dimensions[CSS_HEIGHT] = 820;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -14013,15 +13815,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 329;
-      node->layout.dimensions[CSS_HEIGHT] = 836;
+      node->layout.dimensions[CSS_WIDTH] = 262;
+      node->layout.dimensions[CSS_HEIGHT] = 820;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 27;
-        node->layout.position[CSS_LEFT] = 160;
+        node->layout.position[CSS_LEFT] = 126.5;
         node->layout.dimensions[CSS_WIDTH] = 19;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -14035,7 +13837,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 873;
+      node->style.dimensions[CSS_HEIGHT] = 861;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -14052,7 +13854,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -12;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 873;
+      node->layout.dimensions[CSS_HEIGHT] = 861;
     }
 
     test("Random #345", root_node, root_layout);
@@ -14063,7 +13865,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 991;
+      node->style.dimensions[CSS_WIDTH] = 990;
       node->style.margin[CSS_BOTTOM] = -7;
       node->style.padding[CSS_RIGHT] = 0;
       node->style.border[CSS_LEFT] = 1;
@@ -14078,7 +13880,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 991;
+      node->layout.dimensions[CSS_WIDTH] = 990;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -14091,7 +13893,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 660;
+      node->style.dimensions[CSS_HEIGHT] = 626;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -14114,7 +13916,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 9;
       node->layout.dimensions[CSS_WIDTH] = 21;
-      node->layout.dimensions[CSS_HEIGHT] = 660;
+      node->layout.dimensions[CSS_HEIGHT] = 626;
     }
 
     test("Random #347", root_node, root_layout);
@@ -14188,7 +13990,6 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 24;
         node->style.margin[CSS_LEFT] = 11;
         node->style.margin[CSS_TOP] = 11;
         node->style.margin[CSS_RIGHT] = 11;
@@ -14208,7 +14009,7 @@ int main()
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 13;
       node->layout.dimensions[CSS_WIDTH] = 62;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_HEIGHT] = 70;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -14217,7 +14018,7 @@ int main()
         node->layout.position[CSS_TOP] = 24;
         node->layout.position[CSS_LEFT] = 17;
         node->layout.dimensions[CSS_WIDTH] = 16;
-        node->layout.dimensions[CSS_HEIGHT] = 24;
+        node->layout.dimensions[CSS_HEIGHT] = 16;
       }
     }
 
@@ -14248,7 +14049,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 952;
+      node->style.dimensions[CSS_WIDTH] = 948;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -14266,7 +14067,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 952;
+      node->layout.dimensions[CSS_WIDTH] = 948;
       node->layout.dimensions[CSS_HEIGHT] = 11;
     }
 
@@ -14315,7 +14116,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 942;
+      node->style.dimensions[CSS_WIDTH] = 936;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = 8;
@@ -14347,7 +14148,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 942;
+      node->layout.dimensions[CSS_WIDTH] = 936;
       node->layout.dimensions[CSS_HEIGHT] = 2;
       init_css_node_children(node, 1);
       {
@@ -14368,30 +14169,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 225;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_TOP] = -10;
-      node->style.margin[CSS_RIGHT] = -10;
-      node->style.margin[CSS_BOTTOM] = -10;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_RIGHT] = -2;
-      node->style.margin[CSS_BOTTOM] = 8;
-      node->style.padding[CSS_LEFT] = 4;
-      node->style.padding[CSS_RIGHT] = 16;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.position[CSS_LEFT] = 8;
-      node->style.position[CSS_TOP] = 0;
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = -10;
-      node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 20;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #356", root_node, root_layout);
@@ -14402,7 +14188,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 210;
+      node->style.dimensions[CSS_WIDTH] = 131;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -14421,7 +14207,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -3;
-      node->layout.dimensions[CSS_WIDTH] = 210;
+      node->layout.dimensions[CSS_WIDTH] = 131;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -14562,7 +14348,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 867;
+      node->style.dimensions[CSS_WIDTH] = 854;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -14582,7 +14368,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 867;
+      node->layout.dimensions[CSS_WIDTH] = 854;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -14594,8 +14380,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 47;
-      node->style.dimensions[CSS_HEIGHT] = 689;
+      node->style.dimensions[CSS_HEIGHT] = 658;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -14640,7 +14425,7 @@ int main()
           node->style.align_self = CSS_ALIGN_FLEX_START;
           node->style.flex = CSS_FLEX_ONE;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_HEIGHT] = 445;
+          node->style.dimensions[CSS_HEIGHT] = 389;
           node->style.margin[CSS_LEFT] = -7;
           node->style.margin[CSS_BOTTOM] = 1;
           node->style.padding[CSS_LEFT] = 15;
@@ -14659,8 +14444,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 47;
-      node->layout.dimensions[CSS_HEIGHT] = 689;
+      node->layout.dimensions[CSS_WIDTH] = 95;
+      node->layout.dimensions[CSS_HEIGHT] = 658;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -14668,8 +14453,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 11;
         node->layout.position[CSS_LEFT] = 31;
-        node->layout.dimensions[CSS_WIDTH] = 38;
-        node->layout.dimensions[CSS_HEIGHT] = 658;
+        node->layout.dimensions[CSS_WIDTH] = 58;
+        node->layout.dimensions[CSS_HEIGHT] = 627;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -14678,7 +14463,7 @@ int main()
           node->layout.position[CSS_TOP] = 19;
           node->layout.position[CSS_LEFT] = 16;
           node->layout.dimensions[CSS_WIDTH] = 27;
-          node->layout.dimensions[CSS_HEIGHT] = 619;
+          node->layout.dimensions[CSS_HEIGHT] = 588;
         }
       }
     }
@@ -14764,8 +14549,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 181;
-      node->style.dimensions[CSS_HEIGHT] = 404;
+      node->style.dimensions[CSS_WIDTH] = 99;
+      node->style.dimensions[CSS_HEIGHT] = 344;
       node->style.margin[CSS_TOP] = 2;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_RIGHT] = 2;
@@ -14779,7 +14564,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 509;
+        node->style.dimensions[CSS_HEIGHT] = 460;
         node->style.margin[CSS_LEFT] = 6;
         node->style.margin[CSS_TOP] = 6;
         node->style.margin[CSS_RIGHT] = 6;
@@ -14811,17 +14596,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 2;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 181;
-      node->layout.dimensions[CSS_HEIGHT] = 404;
+      node->layout.dimensions[CSS_WIDTH] = 99;
+      node->layout.dimensions[CSS_HEIGHT] = 344;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 88.5;
+        node->layout.position[CSS_LEFT] = 47.5;
         node->layout.dimensions[CSS_WIDTH] = 11;
-        node->layout.dimensions[CSS_HEIGHT] = 509;
+        node->layout.dimensions[CSS_HEIGHT] = 460;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -14844,7 +14629,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 456;
+      node->style.dimensions[CSS_WIDTH] = 401;
       node->style.margin[CSS_TOP] = 12;
       node->style.padding[CSS_LEFT] = 9;
       node->style.padding[CSS_TOP] = 9;
@@ -14863,8 +14648,8 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 259;
-        node->style.dimensions[CSS_HEIGHT] = 808;
+        node->style.dimensions[CSS_WIDTH] = 185;
+        node->style.dimensions[CSS_HEIGHT] = 789;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -14886,8 +14671,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 456;
-      node->layout.dimensions[CSS_HEIGHT] = 822;
+      node->layout.dimensions[CSS_WIDTH] = 401;
+      node->layout.dimensions[CSS_HEIGHT] = 803;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -14895,8 +14680,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 8;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 259;
-        node->layout.dimensions[CSS_HEIGHT] = 808;
+        node->layout.dimensions[CSS_WIDTH] = 185;
+        node->layout.dimensions[CSS_HEIGHT] = 789;
       }
     }
 
@@ -14910,8 +14695,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 76;
-      node->style.dimensions[CSS_HEIGHT] = 284;
+      node->style.dimensions[CSS_HEIGHT] = 213;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_TOP] = 0;
       node->style.padding[CSS_RIGHT] = 0;
@@ -14927,8 +14711,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 76;
-      node->layout.dimensions[CSS_HEIGHT] = 284;
+      node->layout.dimensions[CSS_WIDTH] = 2;
+      node->layout.dimensions[CSS_HEIGHT] = 213;
     }
 
     test("Random #371", root_node, root_layout);
@@ -14940,8 +14724,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 973;
-      node->style.dimensions[CSS_HEIGHT] = 592;
+      node->style.dimensions[CSS_WIDTH] = 970;
+      node->style.dimensions[CSS_HEIGHT] = 552;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -14960,8 +14744,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 973;
-      node->layout.dimensions[CSS_HEIGHT] = 592;
+      node->layout.dimensions[CSS_WIDTH] = 970;
+      node->layout.dimensions[CSS_HEIGHT] = 552;
     }
 
     test("Random #372", root_node, root_layout);
@@ -15009,8 +14793,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 157;
-      node->style.dimensions[CSS_HEIGHT] = 377;
+      node->style.dimensions[CSS_WIDTH] = 73;
+      node->style.dimensions[CSS_HEIGHT] = 315;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_RIGHT] = 4;
@@ -15027,8 +14811,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 157;
-      node->layout.dimensions[CSS_HEIGHT] = 377;
+      node->layout.dimensions[CSS_WIDTH] = 73;
+      node->layout.dimensions[CSS_HEIGHT] = 315;
     }
 
     test("Random #375", root_node, root_layout);
@@ -15040,8 +14824,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 565;
-      node->style.dimensions[CSS_HEIGHT] = 394;
+      node->style.dimensions[CSS_WIDTH] = 522;
+      node->style.dimensions[CSS_HEIGHT] = 333;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -15061,8 +14845,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 565;
-      node->layout.dimensions[CSS_HEIGHT] = 394;
+      node->layout.dimensions[CSS_WIDTH] = 522;
+      node->layout.dimensions[CSS_HEIGHT] = 333;
     }
 
     test("Random #376", root_node, root_layout);
@@ -15146,8 +14930,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 863;
-      node->style.dimensions[CSS_HEIGHT] = 137;
+      node->style.dimensions[CSS_WIDTH] = 849;
+      node->style.dimensions[CSS_HEIGHT] = 51;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -15165,8 +14949,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 21;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 863;
-      node->layout.dimensions[CSS_HEIGHT] = 137;
+      node->layout.dimensions[CSS_WIDTH] = 849;
+      node->layout.dimensions[CSS_HEIGHT] = 51;
     }
 
     test("Random #380", root_node, root_layout);
@@ -15179,7 +14963,6 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 23;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 0;
@@ -15193,7 +14976,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 23;
+      node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -15205,7 +14988,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 341;
+      node->style.dimensions[CSS_HEIGHT] = 275;
       node->style.margin[CSS_LEFT] = -4;
       node->style.border[CSS_LEFT] = 0;
       node->style.border[CSS_TOP] = 0;
@@ -15222,7 +15005,7 @@ int main()
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -11;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 341;
+      node->layout.dimensions[CSS_HEIGHT] = 275;
     }
 
     test("Random #382", root_node, root_layout);
@@ -15234,7 +15017,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 943;
+      node->style.dimensions[CSS_HEIGHT] = 937;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 4;
@@ -15259,8 +15042,8 @@ int main()
         node->style.align_items = CSS_ALIGN_FLEX_END;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 960;
-        node->style.dimensions[CSS_HEIGHT] = 722;
+        node->style.dimensions[CSS_WIDTH] = 956;
+        node->style.dimensions[CSS_HEIGHT] = 694;
         node->style.margin[CSS_LEFT] = 13;
         node->style.margin[CSS_TOP] = 13;
         node->style.margin[CSS_RIGHT] = 13;
@@ -15284,17 +15067,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 975;
-      node->layout.dimensions[CSS_HEIGHT] = 943;
+      node->layout.dimensions[CSS_WIDTH] = 971;
+      node->layout.dimensions[CSS_HEIGHT] = 937;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 116.5;
+        node->layout.position[CSS_TOP] = 127.5;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 960;
-        node->layout.dimensions[CSS_HEIGHT] = 722;
+        node->layout.dimensions[CSS_WIDTH] = 956;
+        node->layout.dimensions[CSS_HEIGHT] = 694;
       }
     }
 
@@ -15324,7 +15107,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 565;
+      node->style.dimensions[CSS_WIDTH] = 521;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = -10;
@@ -15345,7 +15128,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 565;
+      node->layout.dimensions[CSS_WIDTH] = 521;
       node->layout.dimensions[CSS_HEIGHT] = 27;
     }
 
@@ -15389,7 +15172,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 676;
+      node->style.dimensions[CSS_WIDTH] = 644;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -15404,7 +15187,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 676;
+      node->layout.dimensions[CSS_WIDTH] = 644;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -15435,7 +15218,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 611;
+      node->style.dimensions[CSS_HEIGHT] = 572;
       node->style.margin[CSS_TOP] = 14;
       node->style.margin[CSS_RIGHT] = 10;
       node->style.border[CSS_LEFT] = 2;
@@ -15451,7 +15234,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
       node->layout.dimensions[CSS_WIDTH] = 4;
-      node->layout.dimensions[CSS_HEIGHT] = 611;
+      node->layout.dimensions[CSS_HEIGHT] = 572;
     }
 
     test("Random #389", root_node, root_layout);
@@ -15461,7 +15244,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 120;
+      node->style.dimensions[CSS_HEIGHT] = 32;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -15482,7 +15265,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 12;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 120;
+      node->layout.dimensions[CSS_HEIGHT] = 32;
     }
 
     test("Random #390", root_node, root_layout);
@@ -15494,8 +15277,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 396;
-      node->style.dimensions[CSS_HEIGHT] = 696;
+      node->style.dimensions[CSS_WIDTH] = 336;
+      node->style.dimensions[CSS_HEIGHT] = 666;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -15515,8 +15298,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 396;
-      node->layout.dimensions[CSS_HEIGHT] = 696;
+      node->layout.dimensions[CSS_WIDTH] = 336;
+      node->layout.dimensions[CSS_HEIGHT] = 666;
     }
 
     test("Random #391", root_node, root_layout);
@@ -15528,7 +15311,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 131;
+      node->style.dimensions[CSS_WIDTH] = 45;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -15546,7 +15329,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.align_items = CSS_ALIGN_FLEX_END;
-        node->style.dimensions[CSS_HEIGHT] = 565;
+        node->style.dimensions[CSS_HEIGHT] = 522;
         node->style.margin[CSS_LEFT] = -5;
         node->style.margin[CSS_TOP] = -5;
         node->style.margin[CSS_RIGHT] = -5;
@@ -15560,8 +15343,8 @@ int main()
         node = &outer_node_1->children[1];
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 807;
-        node->style.dimensions[CSS_HEIGHT] = 353;
+        node->style.dimensions[CSS_WIDTH] = 788;
+        node->style.dimensions[CSS_HEIGHT] = 288;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -15581,8 +15364,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 131;
-      node->layout.dimensions[CSS_HEIGHT] = 590;
+      node->layout.dimensions[CSS_WIDTH] = 45;
+      node->layout.dimensions[CSS_HEIGHT] = 547;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -15591,12 +15374,12 @@ int main()
         node->layout.position[CSS_TOP] = 19;
         node->layout.position[CSS_LEFT] = 10;
         node->layout.dimensions[CSS_WIDTH] = 4;
-        node->layout.dimensions[CSS_HEIGHT] = 565;
+        node->layout.dimensions[CSS_HEIGHT] = 522;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 243;
+        node->layout.position[CSS_TOP] = 265;
         node->layout.position[CSS_LEFT] = 10;
-        node->layout.dimensions[CSS_WIDTH] = 131;
-        node->layout.dimensions[CSS_HEIGHT] = 353;
+        node->layout.dimensions[CSS_WIDTH] = 45;
+        node->layout.dimensions[CSS_HEIGHT] = 288;
       }
     }
 
@@ -15607,7 +15390,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 718;
+      node->style.dimensions[CSS_WIDTH] = 690;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_RIGHT] = -10;
       node->style.position[CSS_LEFT] = 2;
@@ -15619,7 +15402,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 718;
+      node->layout.dimensions[CSS_WIDTH] = 690;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -15632,7 +15415,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 443;
+      node->style.dimensions[CSS_WIDTH] = 388;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -15650,7 +15433,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 443;
+      node->layout.dimensions[CSS_WIDTH] = 388;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -15663,7 +15446,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 951;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -15678,8 +15461,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 500;
-        node->style.dimensions[CSS_HEIGHT] = 875;
+        node->style.dimensions[CSS_WIDTH] = 450;
+        node->style.dimensions[CSS_HEIGHT] = 863;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 5;
         node->style.margin[CSS_RIGHT] = 5;
@@ -15706,7 +15489,6 @@ int main()
           node->style.justify_content = CSS_JUSTIFY_FLEX_END;
           node->style.align_self = CSS_ALIGN_FLEX_END;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_WIDTH] = 15;
           node->style.margin[CSS_LEFT] = 5;
           node->style.margin[CSS_RIGHT] = 15;
           node->style.padding[CSS_TOP] = 12;
@@ -15723,8 +15505,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 503;
-      node->layout.dimensions[CSS_HEIGHT] = 956;
+      node->layout.dimensions[CSS_WIDTH] = 453;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -15732,12 +15514,12 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 5;
         node->layout.position[CSS_LEFT] = 5;
-        node->layout.dimensions[CSS_WIDTH] = 500;
-        node->layout.dimensions[CSS_HEIGHT] = 875;
+        node->layout.dimensions[CSS_WIDTH] = 450;
+        node->layout.dimensions[CSS_HEIGHT] = 863;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 899;
-        node->layout.position[CSS_LEFT] = 243.5;
-        node->layout.dimensions[CSS_WIDTH] = 36;
+        node->layout.position[CSS_TOP] = 887;
+        node->layout.position[CSS_LEFT] = 224;
+        node->layout.dimensions[CSS_WIDTH] = 25;
         node->layout.dimensions[CSS_HEIGHT] = 29;
         init_css_node_children(node, 1);
         {
@@ -15746,7 +15528,7 @@ int main()
           node = &outer_node_2->children[0];
           node->layout.position[CSS_TOP] = 0;
           node->layout.position[CSS_LEFT] = 12;
-          node->layout.dimensions[CSS_WIDTH] = 15;
+          node->layout.dimensions[CSS_WIDTH] = 4;
           node->layout.dimensions[CSS_HEIGHT] = 13;
         }
       }
@@ -15761,7 +15543,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 409;
+      node->style.dimensions[CSS_WIDTH] = 350;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.margin[CSS_BOTTOM] = -5;
@@ -15778,7 +15560,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 409;
+      node->layout.dimensions[CSS_WIDTH] = 350;
       node->layout.dimensions[CSS_HEIGHT] = 18;
     }
 
@@ -15826,7 +15608,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 387;
+      node->style.dimensions[CSS_WIDTH] = 326;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_RIGHT] = 9;
       node->style.padding[CSS_LEFT] = 1;
@@ -15841,7 +15623,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 387;
+      node->layout.dimensions[CSS_WIDTH] = 326;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -15852,7 +15634,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 709;
+      node->style.dimensions[CSS_HEIGHT] = 680;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -15871,7 +15653,7 @@ int main()
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 5;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 709;
+      node->layout.dimensions[CSS_HEIGHT] = 680;
     }
 
     test("Random #400", root_node, root_layout);
@@ -15882,8 +15664,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 320;
+      node->style.dimensions[CSS_WIDTH] = 146;
+      node->style.dimensions[CSS_HEIGHT] = 252;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -15900,8 +15682,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 18;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 320;
+      node->layout.dimensions[CSS_WIDTH] = 146;
+      node->layout.dimensions[CSS_HEIGHT] = 252;
     }
 
     test("Random #401", root_node, root_layout);
@@ -15912,8 +15694,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 487;
-      node->style.dimensions[CSS_HEIGHT] = 107;
+      node->style.dimensions[CSS_WIDTH] = 436;
+      node->style.dimensions[CSS_HEIGHT] = 18;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -15935,8 +15717,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 487;
-      node->layout.dimensions[CSS_HEIGHT] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 436;
+      node->layout.dimensions[CSS_HEIGHT] = 23;
     }
 
     test("Random #402", root_node, root_layout);
@@ -15985,8 +15767,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 206;
-      node->style.dimensions[CSS_HEIGHT] = 168;
+      node->style.dimensions[CSS_WIDTH] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 85;
       node->style.margin[CSS_RIGHT] = -3;
       node->style.padding[CSS_TOP] = 1;
       node->style.border[CSS_LEFT] = 0;
@@ -16001,8 +15783,8 @@ int main()
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 866;
-        node->style.dimensions[CSS_HEIGHT] = 292;
+        node->style.dimensions[CSS_WIDTH] = 853;
+        node->style.dimensions[CSS_HEIGHT] = 222;
         node->style.margin[CSS_LEFT] = 1;
         node->style.margin[CSS_RIGHT] = 19;
         node->style.margin[CSS_BOTTOM] = 5;
@@ -16026,8 +15808,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 206;
-      node->layout.dimensions[CSS_HEIGHT] = 168;
+      node->layout.dimensions[CSS_WIDTH] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 85;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -16035,8 +15817,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = 1;
-        node->layout.dimensions[CSS_WIDTH] = 866;
-        node->layout.dimensions[CSS_HEIGHT] = 292;
+        node->layout.dimensions[CSS_WIDTH] = 853;
+        node->layout.dimensions[CSS_HEIGHT] = 222;
       }
     }
 
@@ -16096,7 +15878,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 280;
+      node->style.dimensions[CSS_WIDTH] = 208;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.padding[CSS_LEFT] = 19;
@@ -16114,7 +15896,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 280;
+      node->layout.dimensions[CSS_WIDTH] = 208;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -16212,7 +15994,6 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 70;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -16227,7 +16008,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 70;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 1;
     }
 
@@ -16255,8 +16036,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 978;
-        node->style.dimensions[CSS_HEIGHT] = 59;
+        node->style.dimensions[CSS_WIDTH] = 976;
         node->style.margin[CSS_TOP] = 8;
         node->style.padding[CSS_LEFT] = 10;
         node->style.border[CSS_LEFT] = 3;
@@ -16291,8 +16071,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 17;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 978;
-        node->layout.dimensions[CSS_HEIGHT] = 59;
+        node->layout.dimensions[CSS_WIDTH] = 976;
+        node->layout.dimensions[CSS_HEIGHT] = 19;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -16313,8 +16093,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 726;
-      node->style.dimensions[CSS_HEIGHT] = 6;
+      node->style.dimensions[CSS_WIDTH] = 699;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -2;
       node->style.padding[CSS_LEFT] = 1;
@@ -16330,7 +16109,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 273;
+        node->style.dimensions[CSS_WIDTH] = 200;
         node->style.margin[CSS_LEFT] = -2;
         node->style.margin[CSS_TOP] = -2;
         node->style.margin[CSS_RIGHT] = -2;
@@ -16349,8 +16128,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -6;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 726;
-      node->layout.dimensions[CSS_HEIGHT] = 9;
+      node->layout.dimensions[CSS_WIDTH] = 699;
+      node->layout.dimensions[CSS_HEIGHT] = 36;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -16358,7 +16137,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
         node->layout.position[CSS_LEFT] = 15;
-        node->layout.dimensions[CSS_WIDTH] = 273;
+        node->layout.dimensions[CSS_WIDTH] = 200;
         node->layout.dimensions[CSS_HEIGHT] = 19;
       }
     }
@@ -16399,8 +16178,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 403;
-      node->style.dimensions[CSS_HEIGHT] = 202;
+      node->style.dimensions[CSS_WIDTH] = 343;
+      node->style.dimensions[CSS_HEIGHT] = 122;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 2;
@@ -16418,8 +16197,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 403;
-      node->layout.dimensions[CSS_HEIGHT] = 202;
+      node->layout.dimensions[CSS_WIDTH] = 343;
+      node->layout.dimensions[CSS_HEIGHT] = 122;
     }
 
     test("Random #416", root_node, root_layout);
@@ -16463,7 +16242,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 448;
+      node->style.dimensions[CSS_HEIGHT] = 392;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_BOTTOM] = -4;
       node->style.padding[CSS_LEFT] = 17;
@@ -16480,7 +16259,7 @@ int main()
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 448;
+      node->layout.dimensions[CSS_HEIGHT] = 392;
     }
 
     test("Random #418", root_node, root_layout);
@@ -16491,8 +16270,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 16;
-      node->style.dimensions[CSS_HEIGHT] = 643;
+      node->style.dimensions[CSS_HEIGHT] = 607;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -16512,8 +16290,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 16;
-      node->layout.dimensions[CSS_HEIGHT] = 643;
+      node->layout.dimensions[CSS_WIDTH] = 6;
+      node->layout.dimensions[CSS_HEIGHT] = 607;
     }
 
     test("Random #419", root_node, root_layout);
@@ -16526,7 +16304,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 322;
+      node->style.dimensions[CSS_WIDTH] = 254;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -16550,7 +16328,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 322;
+      node->layout.dimensions[CSS_WIDTH] = 254;
       node->layout.dimensions[CSS_HEIGHT] = 38;
     }
 
@@ -16592,8 +16370,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 495;
-      node->style.dimensions[CSS_HEIGHT] = 558;
+      node->style.dimensions[CSS_WIDTH] = 444;
+      node->style.dimensions[CSS_HEIGHT] = 513;
       node->style.margin[CSS_RIGHT] = 6;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_TOP] = 2;
@@ -16605,8 +16383,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 8;
-      node->layout.dimensions[CSS_WIDTH] = 495;
-      node->layout.dimensions[CSS_HEIGHT] = 558;
+      node->layout.dimensions[CSS_WIDTH] = 444;
+      node->layout.dimensions[CSS_HEIGHT] = 513;
     }
 
     test("Random #422", root_node, root_layout);
@@ -16635,8 +16413,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 136;
+      node->style.dimensions[CSS_WIDTH] = 147;
+      node->style.dimensions[CSS_HEIGHT] = 50;
       node->style.margin[CSS_LEFT] = 12;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 12;
@@ -16652,8 +16430,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 18;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 136;
+      node->layout.dimensions[CSS_WIDTH] = 147;
+      node->layout.dimensions[CSS_HEIGHT] = 50;
     }
 
     test("Random #424", root_node, root_layout);
@@ -16664,8 +16442,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 652;
-      node->style.dimensions[CSS_HEIGHT] = 833;
+      node->style.dimensions[CSS_WIDTH] = 618;
+      node->style.dimensions[CSS_HEIGHT] = 816;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 19;
@@ -16680,8 +16458,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 652;
-      node->layout.dimensions[CSS_HEIGHT] = 833;
+      node->layout.dimensions[CSS_WIDTH] = 618;
+      node->layout.dimensions[CSS_HEIGHT] = 816;
     }
 
     test("Random #425", root_node, root_layout);
@@ -16712,8 +16490,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 731;
-      node->style.dimensions[CSS_HEIGHT] = 807;
+      node->style.dimensions[CSS_WIDTH] = 704;
+      node->style.dimensions[CSS_HEIGHT] = 787;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 13;
@@ -16730,8 +16508,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -18;
       node->layout.position[CSS_LEFT] = -10;
-      node->layout.dimensions[CSS_WIDTH] = 731;
-      node->layout.dimensions[CSS_HEIGHT] = 807;
+      node->layout.dimensions[CSS_WIDTH] = 704;
+      node->layout.dimensions[CSS_HEIGHT] = 787;
     }
 
     test("Random #427", root_node, root_layout);
@@ -16766,8 +16544,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 526;
-      node->style.dimensions[CSS_HEIGHT] = 416;
+      node->style.dimensions[CSS_WIDTH] = 478;
+      node->style.dimensions[CSS_HEIGHT] = 358;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -16784,7 +16562,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_HEIGHT] = 905;
+        node->style.dimensions[CSS_HEIGHT] = 896;
         node->style.margin[CSS_LEFT] = 19;
         node->style.margin[CSS_TOP] = 19;
         node->style.margin[CSS_RIGHT] = 19;
@@ -16826,7 +16604,6 @@ int main()
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_ONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 50;
         node->style.margin[CSS_LEFT] = 10;
         node->style.margin[CSS_TOP] = 10;
         node->style.margin[CSS_RIGHT] = 10;
@@ -16849,8 +16626,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 526;
-      node->layout.dimensions[CSS_HEIGHT] = 416;
+      node->layout.dimensions[CSS_WIDTH] = 478;
+      node->layout.dimensions[CSS_HEIGHT] = 358;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -16859,13 +16636,13 @@ int main()
         node->layout.position[CSS_TOP] = 28;
         node->layout.position[CSS_LEFT] = -6;
         node->layout.dimensions[CSS_WIDTH] = 37;
-        node->layout.dimensions[CSS_HEIGHT] = 905;
+        node->layout.dimensions[CSS_HEIGHT] = 896;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
           css_node_t *node;
           node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = 867;
+          node->layout.position[CSS_TOP] = 858;
           node->layout.position[CSS_LEFT] = 1;
           node->layout.dimensions[CSS_WIDTH] = 0;
           node->layout.dimensions[CSS_HEIGHT] = 14;
@@ -16873,7 +16650,7 @@ int main()
         node = &outer_node_1->children[1];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = -4;
-        node->layout.dimensions[CSS_WIDTH] = 50;
+        node->layout.dimensions[CSS_WIDTH] = 39;
         node->layout.dimensions[CSS_HEIGHT] = 37;
       }
     }
@@ -16910,8 +16687,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 203;
-      node->style.dimensions[CSS_HEIGHT] = 599;
+      node->style.dimensions[CSS_WIDTH] = 123;
+      node->style.dimensions[CSS_HEIGHT] = 559;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -16931,8 +16708,8 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 890;
-        node->style.dimensions[CSS_HEIGHT] = 586;
+        node->style.dimensions[CSS_WIDTH] = 879;
+        node->style.dimensions[CSS_HEIGHT] = 545;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 14;
         node->style.margin[CSS_BOTTOM] = 10;
@@ -16952,17 +16729,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -14;
       node->layout.position[CSS_LEFT] = -12;
-      node->layout.dimensions[CSS_WIDTH] = 203;
-      node->layout.dimensions[CSS_HEIGHT] = 599;
+      node->layout.dimensions[CSS_WIDTH] = 123;
+      node->layout.dimensions[CSS_HEIGHT] = 559;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 4;
+        node->layout.position[CSS_TOP] = 4.5;
         node->layout.position[CSS_LEFT] = 7;
-        node->layout.dimensions[CSS_WIDTH] = 890;
-        node->layout.dimensions[CSS_HEIGHT] = 586;
+        node->layout.dimensions[CSS_WIDTH] = 879;
+        node->layout.dimensions[CSS_HEIGHT] = 545;
       }
     }
 
@@ -16992,8 +16769,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 936;
-      node->style.dimensions[CSS_HEIGHT] = 78;
+      node->style.dimensions[CSS_WIDTH] = 930;
       node->style.margin[CSS_TOP] = -3;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 8;
@@ -17009,8 +16785,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 936;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_WIDTH] = 930;
+      node->layout.dimensions[CSS_HEIGHT] = 12;
     }
 
     test("Random #433", root_node, root_layout);
@@ -17021,8 +16797,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 536;
-      node->style.dimensions[CSS_HEIGHT] = 921;
+      node->style.dimensions[CSS_WIDTH] = 489;
+      node->style.dimensions[CSS_HEIGHT] = 913;
       node->style.border[CSS_LEFT] = 2;
       node->style.border[CSS_TOP] = 2;
       node->style.border[CSS_RIGHT] = 2;
@@ -17034,8 +16810,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 395;
-        node->style.dimensions[CSS_HEIGHT] = 206;
+        node->style.dimensions[CSS_WIDTH] = 334;
+        node->style.dimensions[CSS_HEIGHT] = 127;
         node->style.margin[CSS_LEFT] = -2;
         node->style.margin[CSS_TOP] = -2;
         node->style.margin[CSS_RIGHT] = -2;
@@ -17063,8 +16839,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -6;
-      node->layout.dimensions[CSS_WIDTH] = 536;
-      node->layout.dimensions[CSS_HEIGHT] = 921;
+      node->layout.dimensions[CSS_WIDTH] = 489;
+      node->layout.dimensions[CSS_HEIGHT] = 913;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -17072,8 +16848,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 21;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 395;
-        node->layout.dimensions[CSS_HEIGHT] = 206;
+        node->layout.dimensions[CSS_WIDTH] = 334;
+        node->layout.dimensions[CSS_HEIGHT] = 127;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -17115,7 +16891,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 462;
+      node->style.dimensions[CSS_WIDTH] = 408;
       node->style.margin[CSS_LEFT] = 11;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = 11;
@@ -17142,7 +16918,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 462;
+      node->layout.dimensions[CSS_WIDTH] = 408;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -17153,18 +16929,6 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 197;
-      node->style.margin[CSS_RIGHT] = 1;
-      node->style.margin[CSS_BOTTOM] = 13;
-      node->style.padding[CSS_LEFT] = 19;
-      node->style.padding[CSS_TOP] = 19;
-      node->style.padding[CSS_RIGHT] = 19;
-      node->style.padding[CSS_BOTTOM] = 19;
-      node->style.padding[CSS_TOP] = 12;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.border[CSS_BOTTOM] = 1;
     }
 
     css_node_t *root_layout = new_css_node();
@@ -17172,8 +16936,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 38;
-      node->layout.dimensions[CSS_HEIGHT] = 197;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #437", root_node, root_layout);
@@ -17221,7 +16985,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 768;
+      node->style.dimensions[CSS_WIDTH] = 744;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 15;
@@ -17237,7 +17001,7 @@ int main()
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 927;
+        node->style.dimensions[CSS_WIDTH] = 920;
         node->style.margin[CSS_LEFT] = -7;
         node->style.margin[CSS_TOP] = -7;
         node->style.margin[CSS_RIGHT] = -7;
@@ -17257,7 +17021,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -16;
-      node->layout.dimensions[CSS_WIDTH] = 768;
+      node->layout.dimensions[CSS_WIDTH] = 744;
       node->layout.dimensions[CSS_HEIGHT] = 4;
       init_css_node_children(node, 1);
       {
@@ -17266,7 +17030,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 6;
         node->layout.position[CSS_LEFT] = -7;
-        node->layout.dimensions[CSS_WIDTH] = 927;
+        node->layout.dimensions[CSS_WIDTH] = 920;
         node->layout.dimensions[CSS_HEIGHT] = 3;
       }
     }
@@ -17280,7 +17044,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 673;
+      node->style.dimensions[CSS_HEIGHT] = 640;
       node->style.padding[CSS_BOTTOM] = 8;
       node->style.position[CSS_LEFT] = 4;
     }
@@ -17291,7 +17055,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 673;
+      node->layout.dimensions[CSS_HEIGHT] = 640;
     }
 
     test("Random #441", root_node, root_layout);
@@ -17303,7 +17067,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 339;
+      node->style.dimensions[CSS_HEIGHT] = 273;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -17321,7 +17085,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_HEIGHT] = 885;
+        node->style.dimensions[CSS_HEIGHT] = 873;
         node->style.margin[CSS_BOTTOM] = 15;
         node->style.padding[CSS_TOP] = 0;
         node->style.padding[CSS_RIGHT] = 0;
@@ -17338,7 +17102,7 @@ int main()
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 339;
+      node->layout.dimensions[CSS_HEIGHT] = 273;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -17347,7 +17111,7 @@ int main()
         node->layout.position[CSS_TOP] = 1;
         node->layout.position[CSS_LEFT] = 12;
         node->layout.dimensions[CSS_WIDTH] = 0;
-        node->layout.dimensions[CSS_HEIGHT] = 885;
+        node->layout.dimensions[CSS_HEIGHT] = 873;
       }
     }
 
@@ -17360,7 +17124,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 817;
+      node->style.dimensions[CSS_WIDTH] = 799;
       node->style.margin[CSS_BOTTOM] = 3;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_BOTTOM] = 3;
@@ -17377,7 +17141,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 817;
+      node->layout.dimensions[CSS_WIDTH] = 799;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -17390,7 +17154,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_HEIGHT] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 40;
       node->style.margin[CSS_LEFT] = 19;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 19;
@@ -17410,7 +17174,7 @@ int main()
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 19;
       node->layout.dimensions[CSS_WIDTH] = 32;
-      node->layout.dimensions[CSS_HEIGHT] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 40;
     }
 
     test("Random #444", root_node, root_layout);
@@ -17439,8 +17203,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 690;
-      node->style.dimensions[CSS_HEIGHT] = 163;
+      node->style.dimensions[CSS_WIDTH] = 659;
+      node->style.dimensions[CSS_HEIGHT] = 79;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -17480,8 +17244,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 690;
-      node->layout.dimensions[CSS_HEIGHT] = 163;
+      node->layout.dimensions[CSS_WIDTH] = 659;
+      node->layout.dimensions[CSS_HEIGHT] = 79;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -17539,7 +17303,6 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 17;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -17556,7 +17319,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 17;
+      node->layout.dimensions[CSS_WIDTH] = 6;
       node->layout.dimensions[CSS_HEIGHT] = 17;
     }
 
@@ -17676,8 +17439,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 262;
-      node->style.dimensions[CSS_HEIGHT] = 843;
+      node->style.dimensions[CSS_WIDTH] = 188;
+      node->style.dimensions[CSS_HEIGHT] = 828;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -17691,8 +17454,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 262;
-      node->layout.dimensions[CSS_HEIGHT] = 843;
+      node->layout.dimensions[CSS_WIDTH] = 188;
+      node->layout.dimensions[CSS_HEIGHT] = 828;
     }
 
     test("Random #454", root_node, root_layout);
@@ -17703,7 +17466,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 335;
+      node->style.dimensions[CSS_HEIGHT] = 269;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -17722,7 +17485,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 2;
-      node->layout.dimensions[CSS_HEIGHT] = 335;
+      node->layout.dimensions[CSS_HEIGHT] = 269;
     }
 
     test("Random #455", root_node, root_layout);
@@ -17733,8 +17496,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 83;
-      node->style.dimensions[CSS_HEIGHT] = 445;
+      node->style.dimensions[CSS_HEIGHT] = 389;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_BOTTOM] = 10;
@@ -17749,8 +17511,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 83;
-      node->layout.dimensions[CSS_HEIGHT] = 445;
+      node->layout.dimensions[CSS_WIDTH] = 5;
+      node->layout.dimensions[CSS_HEIGHT] = 389;
     }
 
     test("Random #456", root_node, root_layout);
@@ -17762,8 +17524,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 573;
-      node->style.dimensions[CSS_HEIGHT] = 202;
+      node->style.dimensions[CSS_WIDTH] = 531;
+      node->style.dimensions[CSS_HEIGHT] = 122;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -17784,8 +17546,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 573;
-      node->layout.dimensions[CSS_HEIGHT] = 202;
+      node->layout.dimensions[CSS_WIDTH] = 531;
+      node->layout.dimensions[CSS_HEIGHT] = 122;
     }
 
     test("Random #457", root_node, root_layout);
@@ -17843,8 +17605,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 198;
-      node->style.dimensions[CSS_HEIGHT] = 655;
+      node->style.dimensions[CSS_WIDTH] = 118;
+      node->style.dimensions[CSS_HEIGHT] = 621;
       node->style.margin[CSS_LEFT] = -9;
     }
 
@@ -17853,8 +17615,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -9;
-      node->layout.dimensions[CSS_WIDTH] = 198;
-      node->layout.dimensions[CSS_HEIGHT] = 655;
+      node->layout.dimensions[CSS_WIDTH] = 118;
+      node->layout.dimensions[CSS_HEIGHT] = 621;
     }
 
     test("Random #460", root_node, root_layout);
@@ -17867,7 +17629,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 659;
+      node->style.dimensions[CSS_WIDTH] = 625;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -17887,7 +17649,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 659;
+      node->layout.dimensions[CSS_WIDTH] = 625;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -17917,8 +17679,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 154;
-      node->style.dimensions[CSS_HEIGHT] = 149;
+      node->style.dimensions[CSS_WIDTH] = 69;
+      node->style.dimensions[CSS_HEIGHT] = 64;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -17945,8 +17707,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = -17;
-      node->layout.dimensions[CSS_WIDTH] = 154;
-      node->layout.dimensions[CSS_HEIGHT] = 149;
+      node->layout.dimensions[CSS_WIDTH] = 69;
+      node->layout.dimensions[CSS_HEIGHT] = 64;
     }
 
     test("Random #463", root_node, root_layout);
@@ -17958,8 +17720,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 324;
-      node->style.dimensions[CSS_HEIGHT] = 649;
+      node->style.dimensions[CSS_WIDTH] = 256;
+      node->style.dimensions[CSS_HEIGHT] = 614;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.margin[CSS_BOTTOM] = -6;
@@ -17979,8 +17741,8 @@ int main()
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 545;
-        node->style.dimensions[CSS_HEIGHT] = 488;
+        node->style.dimensions[CSS_WIDTH] = 500;
+        node->style.dimensions[CSS_HEIGHT] = 437;
         node->style.margin[CSS_LEFT] = -8;
         node->style.margin[CSS_TOP] = -8;
         node->style.margin[CSS_RIGHT] = -8;
@@ -17998,17 +17760,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 15;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 324;
-      node->layout.dimensions[CSS_HEIGHT] = 649;
+      node->layout.dimensions[CSS_WIDTH] = 256;
+      node->layout.dimensions[CSS_HEIGHT] = 614;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 78.5;
+        node->layout.position[CSS_TOP] = 86.5;
         node->layout.position[CSS_LEFT] = -10;
-        node->layout.dimensions[CSS_WIDTH] = 545;
-        node->layout.dimensions[CSS_HEIGHT] = 488;
+        node->layout.dimensions[CSS_WIDTH] = 500;
+        node->layout.dimensions[CSS_HEIGHT] = 437;
       }
     }
 
@@ -18080,7 +17842,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 778;
+      node->style.dimensions[CSS_HEIGHT] = 756;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -18109,7 +17871,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 17;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 778;
+      node->layout.dimensions[CSS_HEIGHT] = 756;
     }
 
     test("Random #468", root_node, root_layout);
@@ -18154,8 +17916,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 776;
-      node->style.dimensions[CSS_HEIGHT] = 856;
+      node->style.dimensions[CSS_WIDTH] = 753;
+      node->style.dimensions[CSS_HEIGHT] = 842;
       node->style.margin[CSS_LEFT] = 17;
       node->style.padding[CSS_LEFT] = 16;
       node->style.padding[CSS_TOP] = 16;
@@ -18172,8 +17934,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 17;
-      node->layout.dimensions[CSS_WIDTH] = 776;
-      node->layout.dimensions[CSS_HEIGHT] = 856;
+      node->layout.dimensions[CSS_WIDTH] = 753;
+      node->layout.dimensions[CSS_HEIGHT] = 842;
     }
 
     test("Random #470", root_node, root_layout);
@@ -18234,7 +17996,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 338;
+      node->style.dimensions[CSS_WIDTH] = 272;
       node->style.margin[CSS_LEFT] = 14;
       node->style.margin[CSS_BOTTOM] = 9;
       node->style.padding[CSS_BOTTOM] = 6;
@@ -18250,7 +18012,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 338;
+      node->layout.dimensions[CSS_WIDTH] = 272;
       node->layout.dimensions[CSS_HEIGHT] = 6;
     }
 
@@ -18261,8 +18023,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 239;
-      node->style.dimensions[CSS_HEIGHT] = 740;
+      node->style.dimensions[CSS_WIDTH] = 163;
+      node->style.dimensions[CSS_HEIGHT] = 714;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -18283,8 +18045,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 14;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 239;
-      node->layout.dimensions[CSS_HEIGHT] = 740;
+      node->layout.dimensions[CSS_WIDTH] = 163;
+      node->layout.dimensions[CSS_HEIGHT] = 714;
     }
 
     test("Random #474", root_node, root_layout);
@@ -18297,8 +18059,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 410;
-      node->style.dimensions[CSS_HEIGHT] = 798;
+      node->style.dimensions[CSS_WIDTH] = 351;
+      node->style.dimensions[CSS_HEIGHT] = 777;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -18323,8 +18085,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 410;
-      node->layout.dimensions[CSS_HEIGHT] = 798;
+      node->layout.dimensions[CSS_WIDTH] = 351;
+      node->layout.dimensions[CSS_HEIGHT] = 777;
     }
 
     test("Random #475", root_node, root_layout);
@@ -18336,8 +18098,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 95;
-      node->style.dimensions[CSS_HEIGHT] = 295;
+      node->style.dimensions[CSS_WIDTH] = 5;
+      node->style.dimensions[CSS_HEIGHT] = 225;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.margin[CSS_BOTTOM] = 1;
@@ -18350,8 +18112,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 95;
-      node->layout.dimensions[CSS_HEIGHT] = 295;
+      node->layout.dimensions[CSS_WIDTH] = 15;
+      node->layout.dimensions[CSS_HEIGHT] = 225;
     }
 
     test("Random #476", root_node, root_layout);
@@ -18444,7 +18206,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 671;
+      node->style.dimensions[CSS_HEIGHT] = 638;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -18467,7 +18229,7 @@ int main()
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 2;
       node->layout.dimensions[CSS_WIDTH] = 8;
-      node->layout.dimensions[CSS_HEIGHT] = 671;
+      node->layout.dimensions[CSS_HEIGHT] = 638;
     }
 
     test("Random #480", root_node, root_layout);
@@ -18514,7 +18276,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 486;
+      node->style.dimensions[CSS_WIDTH] = 434;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -18533,7 +18295,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -5;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 486;
+      node->layout.dimensions[CSS_WIDTH] = 434;
       node->layout.dimensions[CSS_HEIGHT] = 9;
     }
 
@@ -18544,7 +18306,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 271;
+      node->style.dimensions[CSS_HEIGHT] = 198;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -18561,7 +18323,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 6;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 271;
+      node->layout.dimensions[CSS_HEIGHT] = 198;
     }
 
     test("Random #483", root_node, root_layout);
@@ -18573,8 +18335,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 317;
-      node->style.dimensions[CSS_HEIGHT] = 473;
+      node->style.dimensions[CSS_WIDTH] = 249;
+      node->style.dimensions[CSS_HEIGHT] = 420;
       node->style.margin[CSS_LEFT] = 19;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 19;
@@ -18594,8 +18356,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 27;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 317;
-      node->layout.dimensions[CSS_HEIGHT] = 473;
+      node->layout.dimensions[CSS_WIDTH] = 249;
+      node->layout.dimensions[CSS_HEIGHT] = 420;
     }
 
     test("Random #484", root_node, root_layout);
@@ -18624,8 +18386,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 578;
-      node->style.dimensions[CSS_HEIGHT] = 225;
+      node->style.dimensions[CSS_WIDTH] = 536;
+      node->style.dimensions[CSS_HEIGHT] = 147;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -18648,8 +18410,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 578;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.dimensions[CSS_WIDTH] = 536;
+      node->layout.dimensions[CSS_HEIGHT] = 147;
     }
 
     test("Random #486", root_node, root_layout);
@@ -18679,8 +18441,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 967;
-      node->style.dimensions[CSS_HEIGHT] = 659;
+      node->style.dimensions[CSS_WIDTH] = 964;
+      node->style.dimensions[CSS_HEIGHT] = 625;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -5;
       node->style.padding[CSS_LEFT] = 19;
@@ -18699,8 +18461,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -14;
-      node->layout.dimensions[CSS_WIDTH] = 967;
-      node->layout.dimensions[CSS_HEIGHT] = 659;
+      node->layout.dimensions[CSS_WIDTH] = 964;
+      node->layout.dimensions[CSS_HEIGHT] = 625;
     }
 
     test("Random #488", root_node, root_layout);
@@ -18711,8 +18473,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 0;
-      node->style.dimensions[CSS_HEIGHT] = 34;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -18735,7 +18495,7 @@ int main()
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 20;
       node->layout.dimensions[CSS_WIDTH] = 12;
-      node->layout.dimensions[CSS_HEIGHT] = 34;
+      node->layout.dimensions[CSS_HEIGHT] = 24;
     }
 
     test("Random #489", root_node, root_layout);
@@ -18745,7 +18505,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 346;
+      node->style.dimensions[CSS_WIDTH] = 281;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -18780,7 +18540,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 930;
+        node->style.dimensions[CSS_HEIGHT] = 923;
         node->style.margin[CSS_LEFT] = 14;
         node->style.margin[CSS_RIGHT] = 18;
         node->style.margin[CSS_BOTTOM] = -5;
@@ -18807,8 +18567,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 346;
-      node->layout.dimensions[CSS_HEIGHT] = 958;
+      node->layout.dimensions[CSS_WIDTH] = 281;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 3);
       {
         css_node_t *outer_node_1 = node;
@@ -18822,7 +18582,7 @@ int main()
         node->layout.position[CSS_TOP] = 9;
         node->layout.position[CSS_LEFT] = 14;
         node->layout.dimensions[CSS_WIDTH] = 0;
-        node->layout.dimensions[CSS_HEIGHT] = 930;
+        node->layout.dimensions[CSS_HEIGHT] = 923;
         node = &outer_node_1->children[2];
         node->layout.position[CSS_TOP] = -17;
         node->layout.position[CSS_LEFT] = -14;
@@ -18839,8 +18599,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 353;
-      node->style.dimensions[CSS_HEIGHT] = 475;
+      node->style.dimensions[CSS_WIDTH] = 288;
+      node->style.dimensions[CSS_HEIGHT] = 423;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -18863,8 +18623,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 17;
-      node->layout.dimensions[CSS_WIDTH] = 353;
-      node->layout.dimensions[CSS_HEIGHT] = 475;
+      node->layout.dimensions[CSS_WIDTH] = 288;
+      node->layout.dimensions[CSS_HEIGHT] = 423;
     }
 
     test("Random #491", root_node, root_layout);
@@ -18876,7 +18636,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 200;
+      node->style.dimensions[CSS_WIDTH] = 120;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_BOTTOM] = 9;
@@ -18894,7 +18654,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_HEIGHT] = 252;
+        node->style.dimensions[CSS_HEIGHT] = 177;
         node->style.margin[CSS_LEFT] = -3;
         node->style.padding[CSS_BOTTOM] = 3;
         node->style.border[CSS_LEFT] = 3;
@@ -18908,7 +18668,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 200;
+      node->layout.dimensions[CSS_WIDTH] = 120;
       node->layout.dimensions[CSS_HEIGHT] = 38;
       init_css_node_children(node, 1);
       {
@@ -18918,7 +18678,7 @@ int main()
         node->layout.position[CSS_TOP] = 6;
         node->layout.position[CSS_LEFT] = 0;
         node->layout.dimensions[CSS_WIDTH] = 3;
-        node->layout.dimensions[CSS_HEIGHT] = 252;
+        node->layout.dimensions[CSS_HEIGHT] = 177;
       }
     }
 
@@ -18929,7 +18689,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 472;
+      node->style.dimensions[CSS_WIDTH] = 419;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 14;
       node->style.padding[CSS_BOTTOM] = 7;
@@ -18960,7 +18720,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 472;
+      node->layout.dimensions[CSS_WIDTH] = 419;
       node->layout.dimensions[CSS_HEIGHT] = 9;
       init_css_node_children(node, 1);
       {
@@ -18983,8 +18743,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 711;
-      node->style.dimensions[CSS_HEIGHT] = 446;
+      node->style.dimensions[CSS_WIDTH] = 682;
+      node->style.dimensions[CSS_HEIGHT] = 390;
       node->style.margin[CSS_LEFT] = -10;
       node->style.padding[CSS_LEFT] = 6;
       node->style.padding[CSS_TOP] = 6;
@@ -19001,8 +18761,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
-      node->layout.dimensions[CSS_WIDTH] = 711;
-      node->layout.dimensions[CSS_HEIGHT] = 446;
+      node->layout.dimensions[CSS_WIDTH] = 682;
+      node->layout.dimensions[CSS_HEIGHT] = 390;
     }
 
     test("Random #494", root_node, root_layout);
@@ -19013,7 +18773,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 715;
+      node->style.dimensions[CSS_WIDTH] = 687;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -19035,7 +18795,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 715;
+      node->layout.dimensions[CSS_WIDTH] = 687;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -19049,7 +18809,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 253;
+      node->style.dimensions[CSS_HEIGHT] = 179;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.padding[CSS_LEFT] = 17;
@@ -19073,7 +18833,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -2;
       node->layout.dimensions[CSS_WIDTH] = 25;
-      node->layout.dimensions[CSS_HEIGHT] = 253;
+      node->layout.dimensions[CSS_HEIGHT] = 179;
     }
 
     test("Random #496", root_node, root_layout);
@@ -19102,7 +18862,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 643;
+      node->style.dimensions[CSS_HEIGHT] = 607;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -19121,7 +18881,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -4;
       node->layout.dimensions[CSS_WIDTH] = 18;
-      node->layout.dimensions[CSS_HEIGHT] = 643;
+      node->layout.dimensions[CSS_HEIGHT] = 607;
     }
 
     test("Random #498", root_node, root_layout);
@@ -19133,8 +18893,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 751;
-      node->style.dimensions[CSS_HEIGHT] = 729;
+      node->style.dimensions[CSS_WIDTH] = 726;
+      node->style.dimensions[CSS_HEIGHT] = 702;
       node->style.margin[CSS_TOP] = 19;
       node->style.padding[CSS_LEFT] = 16;
       node->style.padding[CSS_TOP] = 16;
@@ -19153,8 +18913,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 22;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 751;
-      node->layout.dimensions[CSS_HEIGHT] = 729;
+      node->layout.dimensions[CSS_WIDTH] = 726;
+      node->layout.dimensions[CSS_HEIGHT] = 702;
     }
 
     test("Random #499", root_node, root_layout);
@@ -19213,8 +18973,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 93;
-      node->style.dimensions[CSS_HEIGHT] = 292;
+      node->style.dimensions[CSS_WIDTH] = 2;
+      node->style.dimensions[CSS_HEIGHT] = 221;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -19233,8 +18993,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -7;
-      node->layout.dimensions[CSS_WIDTH] = 93;
-      node->layout.dimensions[CSS_HEIGHT] = 292;
+      node->layout.dimensions[CSS_WIDTH] = 4;
+      node->layout.dimensions[CSS_HEIGHT] = 221;
     }
 
     test("Random #502", root_node, root_layout);
@@ -19283,7 +19043,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 533;
+      node->style.dimensions[CSS_WIDTH] = 486;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = -5;
@@ -19297,7 +19057,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 533;
+      node->layout.dimensions[CSS_WIDTH] = 486;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -19366,7 +19126,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_HEIGHT] = 35;
       node->style.margin[CSS_LEFT] = -2;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = -2;
@@ -19386,7 +19145,7 @@ int main()
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = -6;
       node->layout.dimensions[CSS_WIDTH] = 5;
-      node->layout.dimensions[CSS_HEIGHT] = 35;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #508", root_node, root_layout);
@@ -19397,7 +19156,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 539;
+      node->style.dimensions[CSS_WIDTH] = 493;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 15;
@@ -19412,7 +19171,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 539;
+      node->layout.dimensions[CSS_WIDTH] = 493;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -19491,8 +19250,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 17;
-      node->style.dimensions[CSS_HEIGHT] = 480;
+      node->style.dimensions[CSS_HEIGHT] = 428;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -19514,7 +19272,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-        node->style.dimensions[CSS_HEIGHT] = 153;
+        node->style.dimensions[CSS_HEIGHT] = 69;
         node->style.margin[CSS_LEFT] = 3;
         node->style.margin[CSS_TOP] = -9;
         node->style.margin[CSS_RIGHT] = -8;
@@ -19533,8 +19291,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 480;
+      node->layout.dimensions[CSS_WIDTH] = 3;
+      node->layout.dimensions[CSS_HEIGHT] = 428;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -19543,7 +19301,7 @@ int main()
         node->layout.position[CSS_TOP] = -4;
         node->layout.position[CSS_LEFT] = 13;
         node->layout.dimensions[CSS_WIDTH] = 2;
-        node->layout.dimensions[CSS_HEIGHT] = 153;
+        node->layout.dimensions[CSS_HEIGHT] = 69;
       }
     }
 
@@ -19589,8 +19347,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 267;
-      node->style.dimensions[CSS_HEIGHT] = 862;
+      node->style.dimensions[CSS_WIDTH] = 194;
+      node->style.dimensions[CSS_HEIGHT] = 848;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -19632,15 +19390,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 267;
-      node->layout.dimensions[CSS_HEIGHT] = 862;
+      node->layout.dimensions[CSS_WIDTH] = 194;
+      node->layout.dimensions[CSS_HEIGHT] = 848;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 14;
-        node->layout.position[CSS_LEFT] = 253;
+        node->layout.position[CSS_LEFT] = 180;
         node->layout.dimensions[CSS_WIDTH] = 7;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -19655,7 +19413,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 358;
+      node->style.dimensions[CSS_WIDTH] = 294;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = -6;
@@ -19675,7 +19433,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 358;
+      node->layout.dimensions[CSS_WIDTH] = 294;
       node->layout.dimensions[CSS_HEIGHT] = 22;
     }
 
@@ -19687,7 +19445,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_HEIGHT] = 261;
+      node->style.dimensions[CSS_HEIGHT] = 188;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_RIGHT] = 5;
       node->style.margin[CSS_BOTTOM] = 14;
@@ -19700,7 +19458,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 3;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 261;
+      node->layout.dimensions[CSS_HEIGHT] = 188;
     }
 
     test("Random #517", root_node, root_layout);
@@ -19711,8 +19469,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 531;
-      node->style.dimensions[CSS_HEIGHT] = 411;
+      node->style.dimensions[CSS_WIDTH] = 484;
+      node->style.dimensions[CSS_HEIGHT] = 352;
       node->style.margin[CSS_RIGHT] = 18;
       node->style.padding[CSS_LEFT] = 18;
       node->style.border[CSS_LEFT] = 1;
@@ -19729,8 +19487,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
-      node->layout.dimensions[CSS_WIDTH] = 531;
-      node->layout.dimensions[CSS_HEIGHT] = 411;
+      node->layout.dimensions[CSS_WIDTH] = 484;
+      node->layout.dimensions[CSS_HEIGHT] = 352;
     }
 
     test("Random #518", root_node, root_layout);
@@ -19812,7 +19570,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 172;
+      node->style.dimensions[CSS_WIDTH] = 89;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -19831,7 +19589,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 172;
+      node->layout.dimensions[CSS_WIDTH] = 89;
       node->layout.dimensions[CSS_HEIGHT] = 21;
     }
 
@@ -19906,7 +19664,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 864;
+      node->style.dimensions[CSS_WIDTH] = 850;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -19921,7 +19679,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 864;
+      node->layout.dimensions[CSS_WIDTH] = 850;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -19933,7 +19691,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 868;
+      node->style.dimensions[CSS_WIDTH] = 855;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -19950,7 +19708,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 868;
+      node->layout.dimensions[CSS_WIDTH] = 855;
       node->layout.dimensions[CSS_HEIGHT] = 3;
     }
 
@@ -19962,7 +19720,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 520;
+      node->style.dimensions[CSS_WIDTH] = 472;
       node->style.margin[CSS_LEFT] = -2;
       node->style.padding[CSS_LEFT] = 1;
       node->style.border[CSS_LEFT] = 3;
@@ -19974,7 +19732,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 520;
+      node->layout.dimensions[CSS_WIDTH] = 472;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -20004,8 +19762,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 828;
-      node->style.dimensions[CSS_HEIGHT] = 41;
+      node->style.dimensions[CSS_WIDTH] = 811;
       node->style.margin[CSS_LEFT] = 17;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 17;
@@ -20021,8 +19778,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 12;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 828;
-      node->layout.dimensions[CSS_HEIGHT] = 41;
+      node->layout.dimensions[CSS_WIDTH] = 811;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #529", root_node, root_layout);
@@ -20033,7 +19790,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 107;
+      node->style.dimensions[CSS_WIDTH] = 18;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -20053,7 +19810,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -20064,7 +19821,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 423;
+      node->style.dimensions[CSS_HEIGHT] = 366;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 10;
       node->style.padding[CSS_BOTTOM] = 9;
@@ -20077,7 +19834,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 10;
-      node->layout.dimensions[CSS_HEIGHT] = 423;
+      node->layout.dimensions[CSS_HEIGHT] = 366;
     }
 
     test("Random #531", root_node, root_layout);
@@ -20087,90 +19844,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 82;
-      node->style.dimensions[CSS_HEIGHT] = 492;
-      node->style.margin[CSS_TOP] = 12;
-      node->style.margin[CSS_BOTTOM] = 18;
-      node->style.padding[CSS_TOP] = 10;
-      node->style.padding[CSS_BOTTOM] = 15;
-      node->style.border[CSS_LEFT] = 0;
-      node->style.border[CSS_BOTTOM] = 2;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-        node->style.align_self = CSS_ALIGN_FLEX_START;
-        node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 65;
-        node->style.margin[CSS_LEFT] = 3;
-        node->style.margin[CSS_TOP] = 3;
-        node->style.margin[CSS_RIGHT] = 3;
-        node->style.margin[CSS_BOTTOM] = 3;
-        node->style.margin[CSS_TOP] = 7;
-        node->style.border[CSS_LEFT] = 0;
-        node->style.border[CSS_TOP] = 0;
-        node->style.position[CSS_TOP] = -4;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-          node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-          node->style.align_self = CSS_ALIGN_FLEX_END;
-          node->style.flex = CSS_FLEX_NONE;
-          node->style.dimensions[CSS_HEIGHT] = 742;
-          node->style.margin[CSS_LEFT] = 1;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_TOP] = 11;
-          node->style.padding[CSS_RIGHT] = 11;
-          node->style.padding[CSS_BOTTOM] = 11;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_RIGHT] = 13;
-          node->style.border[CSS_LEFT] = 0;
-          node->style.border[CSS_TOP] = 0;
-          node->style.border[CSS_RIGHT] = 0;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.border[CSS_LEFT] = 3;
-          node->style.border[CSS_TOP] = 3;
-          node->style.border[CSS_RIGHT] = 1;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.position[CSS_LEFT] = -2;
-          node->style.position[CSS_TOP] = -2;
-        }
-      }
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = 12;
+      node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 82;
-      node->layout.dimensions[CSS_HEIGHT] = 492;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 3;
-        node->layout.dimensions[CSS_WIDTH] = 65;
-        node->layout.dimensions[CSS_HEIGHT] = 742;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = -2;
-          node->layout.position[CSS_LEFT] = 35;
-          node->layout.dimensions[CSS_WIDTH] = 28;
-          node->layout.dimensions[CSS_HEIGHT] = 742;
-        }
-      }
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #532", root_node, root_layout);
@@ -20181,7 +19863,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 615;
+      node->style.dimensions[CSS_WIDTH] = 577;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -20200,7 +19882,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 615;
+      node->layout.dimensions[CSS_WIDTH] = 577;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -20212,7 +19894,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 799;
+      node->style.dimensions[CSS_HEIGHT] = 779;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -8;
       node->style.margin[CSS_RIGHT] = -8;
@@ -20230,7 +19912,7 @@ int main()
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 8;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 799;
+      node->layout.dimensions[CSS_HEIGHT] = 779;
     }
 
     test("Random #534", root_node, root_layout);
@@ -20260,7 +19942,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 556;
+      node->style.dimensions[CSS_WIDTH] = 512;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -20281,7 +19963,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 556;
+      node->layout.dimensions[CSS_WIDTH] = 512;
       node->layout.dimensions[CSS_HEIGHT] = 10;
     }
 
@@ -20312,8 +19994,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 960;
-      node->style.dimensions[CSS_HEIGHT] = 309;
+      node->style.dimensions[CSS_WIDTH] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 240;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -20330,8 +20012,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 960;
-      node->layout.dimensions[CSS_HEIGHT] = 309;
+      node->layout.dimensions[CSS_WIDTH] = 956;
+      node->layout.dimensions[CSS_HEIGHT] = 240;
     }
 
     test("Random #538", root_node, root_layout);
@@ -20390,8 +20072,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 983;
-      node->style.dimensions[CSS_HEIGHT] = 422;
+      node->style.dimensions[CSS_WIDTH] = 982;
+      node->style.dimensions[CSS_HEIGHT] = 365;
       node->style.margin[CSS_LEFT] = -9;
       node->style.margin[CSS_TOP] = -9;
       node->style.margin[CSS_BOTTOM] = 19;
@@ -20410,8 +20092,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 983;
-      node->layout.dimensions[CSS_HEIGHT] = 422;
+      node->layout.dimensions[CSS_WIDTH] = 982;
+      node->layout.dimensions[CSS_HEIGHT] = 365;
     }
 
     test("Random #541", root_node, root_layout);
@@ -20421,8 +20103,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 329;
-      node->style.dimensions[CSS_HEIGHT] = 836;
+      node->style.dimensions[CSS_WIDTH] = 262;
+      node->style.dimensions[CSS_HEIGHT] = 820;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -20461,15 +20143,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 329;
-      node->layout.dimensions[CSS_HEIGHT] = 836;
+      node->layout.dimensions[CSS_WIDTH] = 262;
+      node->layout.dimensions[CSS_HEIGHT] = 820;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 27;
-        node->layout.position[CSS_LEFT] = 160;
+        node->layout.position[CSS_LEFT] = 126.5;
         node->layout.dimensions[CSS_WIDTH] = 19;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -20483,7 +20165,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 873;
+      node->style.dimensions[CSS_HEIGHT] = 861;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -20500,7 +20182,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -12;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 873;
+      node->layout.dimensions[CSS_HEIGHT] = 861;
     }
 
     test("Random #543", root_node, root_layout);
@@ -20511,7 +20193,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 991;
+      node->style.dimensions[CSS_WIDTH] = 990;
       node->style.margin[CSS_BOTTOM] = -7;
       node->style.padding[CSS_RIGHT] = 0;
       node->style.border[CSS_LEFT] = 1;
@@ -20526,7 +20208,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 991;
+      node->layout.dimensions[CSS_WIDTH] = 990;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -20539,7 +20221,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 660;
+      node->style.dimensions[CSS_HEIGHT] = 626;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -20562,7 +20244,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 9;
       node->layout.dimensions[CSS_WIDTH] = 21;
-      node->layout.dimensions[CSS_HEIGHT] = 660;
+      node->layout.dimensions[CSS_HEIGHT] = 626;
     }
 
     test("Random #545", root_node, root_layout);
@@ -20636,7 +20318,6 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 24;
         node->style.margin[CSS_LEFT] = 11;
         node->style.margin[CSS_TOP] = 11;
         node->style.margin[CSS_RIGHT] = 11;
@@ -20656,7 +20337,7 @@ int main()
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 13;
       node->layout.dimensions[CSS_WIDTH] = 62;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_HEIGHT] = 70;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -20665,7 +20346,7 @@ int main()
         node->layout.position[CSS_TOP] = 24;
         node->layout.position[CSS_LEFT] = 17;
         node->layout.dimensions[CSS_WIDTH] = 16;
-        node->layout.dimensions[CSS_HEIGHT] = 24;
+        node->layout.dimensions[CSS_HEIGHT] = 16;
       }
     }
 
@@ -20696,7 +20377,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 952;
+      node->style.dimensions[CSS_WIDTH] = 948;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -20714,7 +20395,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 952;
+      node->layout.dimensions[CSS_WIDTH] = 948;
       node->layout.dimensions[CSS_HEIGHT] = 11;
     }
 
@@ -20763,7 +20444,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 942;
+      node->style.dimensions[CSS_WIDTH] = 936;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = 8;
@@ -20795,7 +20476,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 942;
+      node->layout.dimensions[CSS_WIDTH] = 936;
       node->layout.dimensions[CSS_HEIGHT] = 2;
       init_css_node_children(node, 1);
       {
@@ -20816,30 +20497,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 225;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_TOP] = -10;
-      node->style.margin[CSS_RIGHT] = -10;
-      node->style.margin[CSS_BOTTOM] = -10;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_RIGHT] = -2;
-      node->style.margin[CSS_BOTTOM] = 8;
-      node->style.padding[CSS_LEFT] = 4;
-      node->style.padding[CSS_RIGHT] = 16;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.position[CSS_LEFT] = 8;
-      node->style.position[CSS_TOP] = 0;
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = -10;
-      node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 20;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #554", root_node, root_layout);
@@ -20850,7 +20516,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 210;
+      node->style.dimensions[CSS_WIDTH] = 131;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -20869,7 +20535,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -3;
-      node->layout.dimensions[CSS_WIDTH] = 210;
+      node->layout.dimensions[CSS_WIDTH] = 131;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -21010,7 +20676,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 867;
+      node->style.dimensions[CSS_WIDTH] = 854;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -21030,7 +20696,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 867;
+      node->layout.dimensions[CSS_WIDTH] = 854;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -21042,8 +20708,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 47;
-      node->style.dimensions[CSS_HEIGHT] = 689;
+      node->style.dimensions[CSS_HEIGHT] = 658;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -21088,7 +20753,7 @@ int main()
           node->style.align_self = CSS_ALIGN_FLEX_START;
           node->style.flex = CSS_FLEX_ONE;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_HEIGHT] = 445;
+          node->style.dimensions[CSS_HEIGHT] = 389;
           node->style.margin[CSS_LEFT] = -7;
           node->style.margin[CSS_BOTTOM] = 1;
           node->style.padding[CSS_LEFT] = 15;
@@ -21107,8 +20772,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 47;
-      node->layout.dimensions[CSS_HEIGHT] = 689;
+      node->layout.dimensions[CSS_WIDTH] = 95;
+      node->layout.dimensions[CSS_HEIGHT] = 658;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -21116,8 +20781,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 11;
         node->layout.position[CSS_LEFT] = 31;
-        node->layout.dimensions[CSS_WIDTH] = 38;
-        node->layout.dimensions[CSS_HEIGHT] = 658;
+        node->layout.dimensions[CSS_WIDTH] = 58;
+        node->layout.dimensions[CSS_HEIGHT] = 627;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -21126,7 +20791,7 @@ int main()
           node->layout.position[CSS_TOP] = 19;
           node->layout.position[CSS_LEFT] = 16;
           node->layout.dimensions[CSS_WIDTH] = 27;
-          node->layout.dimensions[CSS_HEIGHT] = 619;
+          node->layout.dimensions[CSS_HEIGHT] = 588;
         }
       }
     }
@@ -21212,8 +20877,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 181;
-      node->style.dimensions[CSS_HEIGHT] = 404;
+      node->style.dimensions[CSS_WIDTH] = 99;
+      node->style.dimensions[CSS_HEIGHT] = 344;
       node->style.margin[CSS_TOP] = 2;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_RIGHT] = 2;
@@ -21227,7 +20892,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 509;
+        node->style.dimensions[CSS_HEIGHT] = 460;
         node->style.margin[CSS_LEFT] = 6;
         node->style.margin[CSS_TOP] = 6;
         node->style.margin[CSS_RIGHT] = 6;
@@ -21259,17 +20924,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 2;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 181;
-      node->layout.dimensions[CSS_HEIGHT] = 404;
+      node->layout.dimensions[CSS_WIDTH] = 99;
+      node->layout.dimensions[CSS_HEIGHT] = 344;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 88.5;
+        node->layout.position[CSS_LEFT] = 47.5;
         node->layout.dimensions[CSS_WIDTH] = 11;
-        node->layout.dimensions[CSS_HEIGHT] = 509;
+        node->layout.dimensions[CSS_HEIGHT] = 460;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -21292,7 +20957,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 456;
+      node->style.dimensions[CSS_WIDTH] = 401;
       node->style.margin[CSS_TOP] = 12;
       node->style.padding[CSS_LEFT] = 9;
       node->style.padding[CSS_TOP] = 9;
@@ -21311,8 +20976,8 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 259;
-        node->style.dimensions[CSS_HEIGHT] = 808;
+        node->style.dimensions[CSS_WIDTH] = 185;
+        node->style.dimensions[CSS_HEIGHT] = 789;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -21334,8 +20999,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 456;
-      node->layout.dimensions[CSS_HEIGHT] = 822;
+      node->layout.dimensions[CSS_WIDTH] = 401;
+      node->layout.dimensions[CSS_HEIGHT] = 803;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -21343,8 +21008,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 8;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 259;
-        node->layout.dimensions[CSS_HEIGHT] = 808;
+        node->layout.dimensions[CSS_WIDTH] = 185;
+        node->layout.dimensions[CSS_HEIGHT] = 789;
       }
     }
 
@@ -21358,8 +21023,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 76;
-      node->style.dimensions[CSS_HEIGHT] = 284;
+      node->style.dimensions[CSS_HEIGHT] = 213;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_TOP] = 0;
       node->style.padding[CSS_RIGHT] = 0;
@@ -21375,8 +21039,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 76;
-      node->layout.dimensions[CSS_HEIGHT] = 284;
+      node->layout.dimensions[CSS_WIDTH] = 2;
+      node->layout.dimensions[CSS_HEIGHT] = 213;
     }
 
     test("Random #569", root_node, root_layout);
@@ -21388,8 +21052,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 973;
-      node->style.dimensions[CSS_HEIGHT] = 592;
+      node->style.dimensions[CSS_WIDTH] = 970;
+      node->style.dimensions[CSS_HEIGHT] = 552;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -21408,8 +21072,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 973;
-      node->layout.dimensions[CSS_HEIGHT] = 592;
+      node->layout.dimensions[CSS_WIDTH] = 970;
+      node->layout.dimensions[CSS_HEIGHT] = 552;
     }
 
     test("Random #570", root_node, root_layout);
@@ -21457,8 +21121,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 157;
-      node->style.dimensions[CSS_HEIGHT] = 377;
+      node->style.dimensions[CSS_WIDTH] = 73;
+      node->style.dimensions[CSS_HEIGHT] = 315;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_RIGHT] = 4;
@@ -21475,8 +21139,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 157;
-      node->layout.dimensions[CSS_HEIGHT] = 377;
+      node->layout.dimensions[CSS_WIDTH] = 73;
+      node->layout.dimensions[CSS_HEIGHT] = 315;
     }
 
     test("Random #573", root_node, root_layout);
@@ -21488,8 +21152,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 565;
-      node->style.dimensions[CSS_HEIGHT] = 394;
+      node->style.dimensions[CSS_WIDTH] = 522;
+      node->style.dimensions[CSS_HEIGHT] = 333;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -21509,8 +21173,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 565;
-      node->layout.dimensions[CSS_HEIGHT] = 394;
+      node->layout.dimensions[CSS_WIDTH] = 522;
+      node->layout.dimensions[CSS_HEIGHT] = 333;
     }
 
     test("Random #574", root_node, root_layout);
@@ -21594,8 +21258,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 863;
-      node->style.dimensions[CSS_HEIGHT] = 137;
+      node->style.dimensions[CSS_WIDTH] = 849;
+      node->style.dimensions[CSS_HEIGHT] = 51;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -21613,8 +21277,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 21;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 863;
-      node->layout.dimensions[CSS_HEIGHT] = 137;
+      node->layout.dimensions[CSS_WIDTH] = 849;
+      node->layout.dimensions[CSS_HEIGHT] = 51;
     }
 
     test("Random #578", root_node, root_layout);
@@ -21627,7 +21291,6 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 23;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 0;
@@ -21641,7 +21304,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 23;
+      node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -21653,7 +21316,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 341;
+      node->style.dimensions[CSS_HEIGHT] = 275;
       node->style.margin[CSS_LEFT] = -4;
       node->style.border[CSS_LEFT] = 0;
       node->style.border[CSS_TOP] = 0;
@@ -21670,7 +21333,7 @@ int main()
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -11;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 341;
+      node->layout.dimensions[CSS_HEIGHT] = 275;
     }
 
     test("Random #580", root_node, root_layout);
@@ -21682,7 +21345,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 943;
+      node->style.dimensions[CSS_HEIGHT] = 937;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 4;
@@ -21707,8 +21370,8 @@ int main()
         node->style.align_items = CSS_ALIGN_FLEX_END;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 960;
-        node->style.dimensions[CSS_HEIGHT] = 722;
+        node->style.dimensions[CSS_WIDTH] = 956;
+        node->style.dimensions[CSS_HEIGHT] = 694;
         node->style.margin[CSS_LEFT] = 13;
         node->style.margin[CSS_TOP] = 13;
         node->style.margin[CSS_RIGHT] = 13;
@@ -21732,17 +21395,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 975;
-      node->layout.dimensions[CSS_HEIGHT] = 943;
+      node->layout.dimensions[CSS_WIDTH] = 971;
+      node->layout.dimensions[CSS_HEIGHT] = 937;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 116.5;
+        node->layout.position[CSS_TOP] = 127.5;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 960;
-        node->layout.dimensions[CSS_HEIGHT] = 722;
+        node->layout.dimensions[CSS_WIDTH] = 956;
+        node->layout.dimensions[CSS_HEIGHT] = 694;
       }
     }
 
@@ -21772,7 +21435,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 565;
+      node->style.dimensions[CSS_WIDTH] = 521;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = -10;
@@ -21793,7 +21456,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 565;
+      node->layout.dimensions[CSS_WIDTH] = 521;
       node->layout.dimensions[CSS_HEIGHT] = 27;
     }
 
@@ -21837,7 +21500,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 676;
+      node->style.dimensions[CSS_WIDTH] = 644;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -21852,7 +21515,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 676;
+      node->layout.dimensions[CSS_WIDTH] = 644;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -21883,7 +21546,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 611;
+      node->style.dimensions[CSS_HEIGHT] = 572;
       node->style.margin[CSS_TOP] = 14;
       node->style.margin[CSS_RIGHT] = 10;
       node->style.border[CSS_LEFT] = 2;
@@ -21899,7 +21562,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
       node->layout.dimensions[CSS_WIDTH] = 4;
-      node->layout.dimensions[CSS_HEIGHT] = 611;
+      node->layout.dimensions[CSS_HEIGHT] = 572;
     }
 
     test("Random #587", root_node, root_layout);
@@ -21909,7 +21572,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 120;
+      node->style.dimensions[CSS_HEIGHT] = 32;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -21930,7 +21593,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 12;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 120;
+      node->layout.dimensions[CSS_HEIGHT] = 32;
     }
 
     test("Random #588", root_node, root_layout);
@@ -21942,8 +21605,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 396;
-      node->style.dimensions[CSS_HEIGHT] = 696;
+      node->style.dimensions[CSS_WIDTH] = 336;
+      node->style.dimensions[CSS_HEIGHT] = 666;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -21963,8 +21626,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 396;
-      node->layout.dimensions[CSS_HEIGHT] = 696;
+      node->layout.dimensions[CSS_WIDTH] = 336;
+      node->layout.dimensions[CSS_HEIGHT] = 666;
     }
 
     test("Random #589", root_node, root_layout);
@@ -21976,7 +21639,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 131;
+      node->style.dimensions[CSS_WIDTH] = 45;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -21994,7 +21657,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.align_items = CSS_ALIGN_FLEX_END;
-        node->style.dimensions[CSS_HEIGHT] = 565;
+        node->style.dimensions[CSS_HEIGHT] = 522;
         node->style.margin[CSS_LEFT] = -5;
         node->style.margin[CSS_TOP] = -5;
         node->style.margin[CSS_RIGHT] = -5;
@@ -22008,8 +21671,8 @@ int main()
         node = &outer_node_1->children[1];
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 807;
-        node->style.dimensions[CSS_HEIGHT] = 353;
+        node->style.dimensions[CSS_WIDTH] = 788;
+        node->style.dimensions[CSS_HEIGHT] = 288;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -22029,8 +21692,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 131;
-      node->layout.dimensions[CSS_HEIGHT] = 590;
+      node->layout.dimensions[CSS_WIDTH] = 45;
+      node->layout.dimensions[CSS_HEIGHT] = 547;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -22039,12 +21702,12 @@ int main()
         node->layout.position[CSS_TOP] = 19;
         node->layout.position[CSS_LEFT] = 10;
         node->layout.dimensions[CSS_WIDTH] = 4;
-        node->layout.dimensions[CSS_HEIGHT] = 565;
+        node->layout.dimensions[CSS_HEIGHT] = 522;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 243;
+        node->layout.position[CSS_TOP] = 265;
         node->layout.position[CSS_LEFT] = 10;
-        node->layout.dimensions[CSS_WIDTH] = 131;
-        node->layout.dimensions[CSS_HEIGHT] = 353;
+        node->layout.dimensions[CSS_WIDTH] = 45;
+        node->layout.dimensions[CSS_HEIGHT] = 288;
       }
     }
 
@@ -22055,7 +21718,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 718;
+      node->style.dimensions[CSS_WIDTH] = 690;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_RIGHT] = -10;
       node->style.position[CSS_LEFT] = 2;
@@ -22067,7 +21730,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 718;
+      node->layout.dimensions[CSS_WIDTH] = 690;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -22080,7 +21743,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 443;
+      node->style.dimensions[CSS_WIDTH] = 388;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -22098,7 +21761,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 443;
+      node->layout.dimensions[CSS_WIDTH] = 388;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -22111,7 +21774,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 951;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -22126,8 +21789,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 500;
-        node->style.dimensions[CSS_HEIGHT] = 875;
+        node->style.dimensions[CSS_WIDTH] = 450;
+        node->style.dimensions[CSS_HEIGHT] = 863;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 5;
         node->style.margin[CSS_RIGHT] = 5;
@@ -22154,7 +21817,6 @@ int main()
           node->style.justify_content = CSS_JUSTIFY_FLEX_END;
           node->style.align_self = CSS_ALIGN_FLEX_END;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_WIDTH] = 15;
           node->style.margin[CSS_LEFT] = 5;
           node->style.margin[CSS_RIGHT] = 15;
           node->style.padding[CSS_TOP] = 12;
@@ -22171,8 +21833,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 503;
-      node->layout.dimensions[CSS_HEIGHT] = 956;
+      node->layout.dimensions[CSS_WIDTH] = 453;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -22180,12 +21842,12 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 5;
         node->layout.position[CSS_LEFT] = 5;
-        node->layout.dimensions[CSS_WIDTH] = 500;
-        node->layout.dimensions[CSS_HEIGHT] = 875;
+        node->layout.dimensions[CSS_WIDTH] = 450;
+        node->layout.dimensions[CSS_HEIGHT] = 863;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 899;
-        node->layout.position[CSS_LEFT] = 243.5;
-        node->layout.dimensions[CSS_WIDTH] = 36;
+        node->layout.position[CSS_TOP] = 887;
+        node->layout.position[CSS_LEFT] = 224;
+        node->layout.dimensions[CSS_WIDTH] = 25;
         node->layout.dimensions[CSS_HEIGHT] = 29;
         init_css_node_children(node, 1);
         {
@@ -22194,7 +21856,7 @@ int main()
           node = &outer_node_2->children[0];
           node->layout.position[CSS_TOP] = 0;
           node->layout.position[CSS_LEFT] = 12;
-          node->layout.dimensions[CSS_WIDTH] = 15;
+          node->layout.dimensions[CSS_WIDTH] = 4;
           node->layout.dimensions[CSS_HEIGHT] = 13;
         }
       }
@@ -22209,7 +21871,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 409;
+      node->style.dimensions[CSS_WIDTH] = 350;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.margin[CSS_BOTTOM] = -5;
@@ -22226,7 +21888,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 409;
+      node->layout.dimensions[CSS_WIDTH] = 350;
       node->layout.dimensions[CSS_HEIGHT] = 18;
     }
 
@@ -22274,7 +21936,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 387;
+      node->style.dimensions[CSS_WIDTH] = 326;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_RIGHT] = 9;
       node->style.padding[CSS_LEFT] = 1;
@@ -22289,7 +21951,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 387;
+      node->layout.dimensions[CSS_WIDTH] = 326;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -22300,7 +21962,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 709;
+      node->style.dimensions[CSS_HEIGHT] = 680;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -22319,7 +21981,7 @@ int main()
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 5;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 709;
+      node->layout.dimensions[CSS_HEIGHT] = 680;
     }
 
     test("Random #598", root_node, root_layout);
@@ -22330,8 +21992,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 320;
+      node->style.dimensions[CSS_WIDTH] = 146;
+      node->style.dimensions[CSS_HEIGHT] = 252;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -22348,8 +22010,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 18;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 320;
+      node->layout.dimensions[CSS_WIDTH] = 146;
+      node->layout.dimensions[CSS_HEIGHT] = 252;
     }
 
     test("Random #599", root_node, root_layout);
@@ -22360,8 +22022,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 487;
-      node->style.dimensions[CSS_HEIGHT] = 107;
+      node->style.dimensions[CSS_WIDTH] = 436;
+      node->style.dimensions[CSS_HEIGHT] = 18;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -22383,8 +22045,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 487;
-      node->layout.dimensions[CSS_HEIGHT] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 436;
+      node->layout.dimensions[CSS_HEIGHT] = 23;
     }
 
     test("Random #600", root_node, root_layout);
@@ -22433,8 +22095,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 206;
-      node->style.dimensions[CSS_HEIGHT] = 168;
+      node->style.dimensions[CSS_WIDTH] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 85;
       node->style.margin[CSS_RIGHT] = -3;
       node->style.padding[CSS_TOP] = 1;
       node->style.border[CSS_LEFT] = 0;
@@ -22449,8 +22111,8 @@ int main()
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 866;
-        node->style.dimensions[CSS_HEIGHT] = 292;
+        node->style.dimensions[CSS_WIDTH] = 853;
+        node->style.dimensions[CSS_HEIGHT] = 222;
         node->style.margin[CSS_LEFT] = 1;
         node->style.margin[CSS_RIGHT] = 19;
         node->style.margin[CSS_BOTTOM] = 5;
@@ -22474,8 +22136,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 206;
-      node->layout.dimensions[CSS_HEIGHT] = 168;
+      node->layout.dimensions[CSS_WIDTH] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 85;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -22483,8 +22145,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = 1;
-        node->layout.dimensions[CSS_WIDTH] = 866;
-        node->layout.dimensions[CSS_HEIGHT] = 292;
+        node->layout.dimensions[CSS_WIDTH] = 853;
+        node->layout.dimensions[CSS_HEIGHT] = 222;
       }
     }
 
@@ -22544,7 +22206,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 280;
+      node->style.dimensions[CSS_WIDTH] = 208;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.padding[CSS_LEFT] = 19;
@@ -22562,7 +22224,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 280;
+      node->layout.dimensions[CSS_WIDTH] = 208;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -22660,7 +22322,6 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 70;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -22675,7 +22336,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 70;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 1;
     }
 
@@ -22703,8 +22364,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 978;
-        node->style.dimensions[CSS_HEIGHT] = 59;
+        node->style.dimensions[CSS_WIDTH] = 976;
         node->style.margin[CSS_TOP] = 8;
         node->style.padding[CSS_LEFT] = 10;
         node->style.border[CSS_LEFT] = 3;
@@ -22739,8 +22399,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 17;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 978;
-        node->layout.dimensions[CSS_HEIGHT] = 59;
+        node->layout.dimensions[CSS_WIDTH] = 976;
+        node->layout.dimensions[CSS_HEIGHT] = 19;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -22761,8 +22421,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 726;
-      node->style.dimensions[CSS_HEIGHT] = 6;
+      node->style.dimensions[CSS_WIDTH] = 699;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -2;
       node->style.padding[CSS_LEFT] = 1;
@@ -22778,7 +22437,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 273;
+        node->style.dimensions[CSS_WIDTH] = 200;
         node->style.margin[CSS_LEFT] = -2;
         node->style.margin[CSS_TOP] = -2;
         node->style.margin[CSS_RIGHT] = -2;
@@ -22797,8 +22456,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -6;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 726;
-      node->layout.dimensions[CSS_HEIGHT] = 9;
+      node->layout.dimensions[CSS_WIDTH] = 699;
+      node->layout.dimensions[CSS_HEIGHT] = 36;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -22806,7 +22465,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
         node->layout.position[CSS_LEFT] = 15;
-        node->layout.dimensions[CSS_WIDTH] = 273;
+        node->layout.dimensions[CSS_WIDTH] = 200;
         node->layout.dimensions[CSS_HEIGHT] = 19;
       }
     }
@@ -22847,8 +22506,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 403;
-      node->style.dimensions[CSS_HEIGHT] = 202;
+      node->style.dimensions[CSS_WIDTH] = 343;
+      node->style.dimensions[CSS_HEIGHT] = 122;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 2;
@@ -22866,8 +22525,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 403;
-      node->layout.dimensions[CSS_HEIGHT] = 202;
+      node->layout.dimensions[CSS_WIDTH] = 343;
+      node->layout.dimensions[CSS_HEIGHT] = 122;
     }
 
     test("Random #614", root_node, root_layout);
@@ -22911,7 +22570,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 448;
+      node->style.dimensions[CSS_HEIGHT] = 392;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_BOTTOM] = -4;
       node->style.padding[CSS_LEFT] = 17;
@@ -22928,7 +22587,7 @@ int main()
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 448;
+      node->layout.dimensions[CSS_HEIGHT] = 392;
     }
 
     test("Random #616", root_node, root_layout);
@@ -22939,8 +22598,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 16;
-      node->style.dimensions[CSS_HEIGHT] = 643;
+      node->style.dimensions[CSS_HEIGHT] = 607;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -22960,8 +22618,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 16;
-      node->layout.dimensions[CSS_HEIGHT] = 643;
+      node->layout.dimensions[CSS_WIDTH] = 6;
+      node->layout.dimensions[CSS_HEIGHT] = 607;
     }
 
     test("Random #617", root_node, root_layout);
@@ -22974,7 +22632,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 322;
+      node->style.dimensions[CSS_WIDTH] = 254;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -22998,7 +22656,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 322;
+      node->layout.dimensions[CSS_WIDTH] = 254;
       node->layout.dimensions[CSS_HEIGHT] = 38;
     }
 
@@ -23040,8 +22698,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 495;
-      node->style.dimensions[CSS_HEIGHT] = 558;
+      node->style.dimensions[CSS_WIDTH] = 444;
+      node->style.dimensions[CSS_HEIGHT] = 513;
       node->style.margin[CSS_RIGHT] = 6;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_TOP] = 2;
@@ -23053,8 +22711,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 8;
-      node->layout.dimensions[CSS_WIDTH] = 495;
-      node->layout.dimensions[CSS_HEIGHT] = 558;
+      node->layout.dimensions[CSS_WIDTH] = 444;
+      node->layout.dimensions[CSS_HEIGHT] = 513;
     }
 
     test("Random #620", root_node, root_layout);
@@ -23083,8 +22741,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 136;
+      node->style.dimensions[CSS_WIDTH] = 147;
+      node->style.dimensions[CSS_HEIGHT] = 50;
       node->style.margin[CSS_LEFT] = 12;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 12;
@@ -23100,8 +22758,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 18;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 136;
+      node->layout.dimensions[CSS_WIDTH] = 147;
+      node->layout.dimensions[CSS_HEIGHT] = 50;
     }
 
     test("Random #622", root_node, root_layout);
@@ -23112,8 +22770,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 652;
-      node->style.dimensions[CSS_HEIGHT] = 833;
+      node->style.dimensions[CSS_WIDTH] = 618;
+      node->style.dimensions[CSS_HEIGHT] = 816;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 19;
@@ -23128,8 +22786,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 652;
-      node->layout.dimensions[CSS_HEIGHT] = 833;
+      node->layout.dimensions[CSS_WIDTH] = 618;
+      node->layout.dimensions[CSS_HEIGHT] = 816;
     }
 
     test("Random #623", root_node, root_layout);
@@ -23160,8 +22818,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 731;
-      node->style.dimensions[CSS_HEIGHT] = 807;
+      node->style.dimensions[CSS_WIDTH] = 704;
+      node->style.dimensions[CSS_HEIGHT] = 787;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 13;
@@ -23178,8 +22836,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -18;
       node->layout.position[CSS_LEFT] = -10;
-      node->layout.dimensions[CSS_WIDTH] = 731;
-      node->layout.dimensions[CSS_HEIGHT] = 807;
+      node->layout.dimensions[CSS_WIDTH] = 704;
+      node->layout.dimensions[CSS_HEIGHT] = 787;
     }
 
     test("Random #625", root_node, root_layout);
@@ -23214,8 +22872,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 526;
-      node->style.dimensions[CSS_HEIGHT] = 416;
+      node->style.dimensions[CSS_WIDTH] = 478;
+      node->style.dimensions[CSS_HEIGHT] = 358;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -23232,7 +22890,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_HEIGHT] = 905;
+        node->style.dimensions[CSS_HEIGHT] = 896;
         node->style.margin[CSS_LEFT] = 19;
         node->style.margin[CSS_TOP] = 19;
         node->style.margin[CSS_RIGHT] = 19;
@@ -23274,7 +22932,6 @@ int main()
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_ONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 50;
         node->style.margin[CSS_LEFT] = 10;
         node->style.margin[CSS_TOP] = 10;
         node->style.margin[CSS_RIGHT] = 10;
@@ -23297,8 +22954,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 526;
-      node->layout.dimensions[CSS_HEIGHT] = 416;
+      node->layout.dimensions[CSS_WIDTH] = 478;
+      node->layout.dimensions[CSS_HEIGHT] = 358;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -23307,13 +22964,13 @@ int main()
         node->layout.position[CSS_TOP] = 28;
         node->layout.position[CSS_LEFT] = -6;
         node->layout.dimensions[CSS_WIDTH] = 37;
-        node->layout.dimensions[CSS_HEIGHT] = 905;
+        node->layout.dimensions[CSS_HEIGHT] = 896;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
           css_node_t *node;
           node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = 867;
+          node->layout.position[CSS_TOP] = 858;
           node->layout.position[CSS_LEFT] = 1;
           node->layout.dimensions[CSS_WIDTH] = 0;
           node->layout.dimensions[CSS_HEIGHT] = 14;
@@ -23321,7 +22978,7 @@ int main()
         node = &outer_node_1->children[1];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = -4;
-        node->layout.dimensions[CSS_WIDTH] = 50;
+        node->layout.dimensions[CSS_WIDTH] = 39;
         node->layout.dimensions[CSS_HEIGHT] = 37;
       }
     }
@@ -23358,8 +23015,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 203;
-      node->style.dimensions[CSS_HEIGHT] = 599;
+      node->style.dimensions[CSS_WIDTH] = 123;
+      node->style.dimensions[CSS_HEIGHT] = 559;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -23379,8 +23036,8 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 890;
-        node->style.dimensions[CSS_HEIGHT] = 586;
+        node->style.dimensions[CSS_WIDTH] = 879;
+        node->style.dimensions[CSS_HEIGHT] = 545;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 14;
         node->style.margin[CSS_BOTTOM] = 10;
@@ -23400,17 +23057,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -14;
       node->layout.position[CSS_LEFT] = -12;
-      node->layout.dimensions[CSS_WIDTH] = 203;
-      node->layout.dimensions[CSS_HEIGHT] = 599;
+      node->layout.dimensions[CSS_WIDTH] = 123;
+      node->layout.dimensions[CSS_HEIGHT] = 559;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 4;
+        node->layout.position[CSS_TOP] = 4.5;
         node->layout.position[CSS_LEFT] = 7;
-        node->layout.dimensions[CSS_WIDTH] = 890;
-        node->layout.dimensions[CSS_HEIGHT] = 586;
+        node->layout.dimensions[CSS_WIDTH] = 879;
+        node->layout.dimensions[CSS_HEIGHT] = 545;
       }
     }
 
@@ -23440,8 +23097,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 936;
-      node->style.dimensions[CSS_HEIGHT] = 78;
+      node->style.dimensions[CSS_WIDTH] = 930;
       node->style.margin[CSS_TOP] = -3;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 8;
@@ -23457,8 +23113,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 936;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_WIDTH] = 930;
+      node->layout.dimensions[CSS_HEIGHT] = 12;
     }
 
     test("Random #631", root_node, root_layout);
@@ -23469,8 +23125,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 536;
-      node->style.dimensions[CSS_HEIGHT] = 921;
+      node->style.dimensions[CSS_WIDTH] = 489;
+      node->style.dimensions[CSS_HEIGHT] = 913;
       node->style.border[CSS_LEFT] = 2;
       node->style.border[CSS_TOP] = 2;
       node->style.border[CSS_RIGHT] = 2;
@@ -23482,8 +23138,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 395;
-        node->style.dimensions[CSS_HEIGHT] = 206;
+        node->style.dimensions[CSS_WIDTH] = 334;
+        node->style.dimensions[CSS_HEIGHT] = 127;
         node->style.margin[CSS_LEFT] = -2;
         node->style.margin[CSS_TOP] = -2;
         node->style.margin[CSS_RIGHT] = -2;
@@ -23511,8 +23167,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -6;
-      node->layout.dimensions[CSS_WIDTH] = 536;
-      node->layout.dimensions[CSS_HEIGHT] = 921;
+      node->layout.dimensions[CSS_WIDTH] = 489;
+      node->layout.dimensions[CSS_HEIGHT] = 913;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -23520,8 +23176,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 21;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 395;
-        node->layout.dimensions[CSS_HEIGHT] = 206;
+        node->layout.dimensions[CSS_WIDTH] = 334;
+        node->layout.dimensions[CSS_HEIGHT] = 127;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -23563,7 +23219,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 462;
+      node->style.dimensions[CSS_WIDTH] = 408;
       node->style.margin[CSS_LEFT] = 11;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = 11;
@@ -23590,7 +23246,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 462;
+      node->layout.dimensions[CSS_WIDTH] = 408;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -23601,18 +23257,6 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 197;
-      node->style.margin[CSS_RIGHT] = 1;
-      node->style.margin[CSS_BOTTOM] = 13;
-      node->style.padding[CSS_LEFT] = 19;
-      node->style.padding[CSS_TOP] = 19;
-      node->style.padding[CSS_RIGHT] = 19;
-      node->style.padding[CSS_BOTTOM] = 19;
-      node->style.padding[CSS_TOP] = 12;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.border[CSS_BOTTOM] = 1;
     }
 
     css_node_t *root_layout = new_css_node();
@@ -23620,8 +23264,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 38;
-      node->layout.dimensions[CSS_HEIGHT] = 197;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #635", root_node, root_layout);
@@ -23669,7 +23313,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 768;
+      node->style.dimensions[CSS_WIDTH] = 744;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 15;
@@ -23685,7 +23329,7 @@ int main()
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 927;
+        node->style.dimensions[CSS_WIDTH] = 920;
         node->style.margin[CSS_LEFT] = -7;
         node->style.margin[CSS_TOP] = -7;
         node->style.margin[CSS_RIGHT] = -7;
@@ -23705,7 +23349,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -16;
-      node->layout.dimensions[CSS_WIDTH] = 768;
+      node->layout.dimensions[CSS_WIDTH] = 744;
       node->layout.dimensions[CSS_HEIGHT] = 4;
       init_css_node_children(node, 1);
       {
@@ -23714,7 +23358,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 6;
         node->layout.position[CSS_LEFT] = -7;
-        node->layout.dimensions[CSS_WIDTH] = 927;
+        node->layout.dimensions[CSS_WIDTH] = 920;
         node->layout.dimensions[CSS_HEIGHT] = 3;
       }
     }
@@ -23728,7 +23372,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 673;
+      node->style.dimensions[CSS_HEIGHT] = 640;
       node->style.padding[CSS_BOTTOM] = 8;
       node->style.position[CSS_LEFT] = 4;
     }
@@ -23739,7 +23383,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 673;
+      node->layout.dimensions[CSS_HEIGHT] = 640;
     }
 
     test("Random #639", root_node, root_layout);
@@ -23751,7 +23395,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 339;
+      node->style.dimensions[CSS_HEIGHT] = 273;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -23769,7 +23413,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_HEIGHT] = 885;
+        node->style.dimensions[CSS_HEIGHT] = 873;
         node->style.margin[CSS_BOTTOM] = 15;
         node->style.padding[CSS_TOP] = 0;
         node->style.padding[CSS_RIGHT] = 0;
@@ -23786,7 +23430,7 @@ int main()
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 339;
+      node->layout.dimensions[CSS_HEIGHT] = 273;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -23795,7 +23439,7 @@ int main()
         node->layout.position[CSS_TOP] = 1;
         node->layout.position[CSS_LEFT] = 12;
         node->layout.dimensions[CSS_WIDTH] = 0;
-        node->layout.dimensions[CSS_HEIGHT] = 885;
+        node->layout.dimensions[CSS_HEIGHT] = 873;
       }
     }
 
@@ -23808,7 +23452,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 817;
+      node->style.dimensions[CSS_WIDTH] = 799;
       node->style.margin[CSS_BOTTOM] = 3;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_BOTTOM] = 3;
@@ -23825,7 +23469,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 817;
+      node->layout.dimensions[CSS_WIDTH] = 799;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -23838,7 +23482,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_HEIGHT] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 40;
       node->style.margin[CSS_LEFT] = 19;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 19;
@@ -23858,7 +23502,7 @@ int main()
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 19;
       node->layout.dimensions[CSS_WIDTH] = 32;
-      node->layout.dimensions[CSS_HEIGHT] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 40;
     }
 
     test("Random #642", root_node, root_layout);
@@ -23887,8 +23531,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 690;
-      node->style.dimensions[CSS_HEIGHT] = 163;
+      node->style.dimensions[CSS_WIDTH] = 659;
+      node->style.dimensions[CSS_HEIGHT] = 79;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -23928,8 +23572,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 690;
-      node->layout.dimensions[CSS_HEIGHT] = 163;
+      node->layout.dimensions[CSS_WIDTH] = 659;
+      node->layout.dimensions[CSS_HEIGHT] = 79;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -23987,7 +23631,6 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 17;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -24004,7 +23647,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 17;
+      node->layout.dimensions[CSS_WIDTH] = 6;
       node->layout.dimensions[CSS_HEIGHT] = 17;
     }
 
@@ -24124,8 +23767,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 262;
-      node->style.dimensions[CSS_HEIGHT] = 843;
+      node->style.dimensions[CSS_WIDTH] = 188;
+      node->style.dimensions[CSS_HEIGHT] = 828;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -24139,8 +23782,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 262;
-      node->layout.dimensions[CSS_HEIGHT] = 843;
+      node->layout.dimensions[CSS_WIDTH] = 188;
+      node->layout.dimensions[CSS_HEIGHT] = 828;
     }
 
     test("Random #652", root_node, root_layout);
@@ -24151,7 +23794,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 335;
+      node->style.dimensions[CSS_HEIGHT] = 269;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -24170,7 +23813,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 2;
-      node->layout.dimensions[CSS_HEIGHT] = 335;
+      node->layout.dimensions[CSS_HEIGHT] = 269;
     }
 
     test("Random #653", root_node, root_layout);
@@ -24181,8 +23824,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 83;
-      node->style.dimensions[CSS_HEIGHT] = 445;
+      node->style.dimensions[CSS_HEIGHT] = 389;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_BOTTOM] = 10;
@@ -24197,8 +23839,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 83;
-      node->layout.dimensions[CSS_HEIGHT] = 445;
+      node->layout.dimensions[CSS_WIDTH] = 5;
+      node->layout.dimensions[CSS_HEIGHT] = 389;
     }
 
     test("Random #654", root_node, root_layout);
@@ -24210,8 +23852,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 573;
-      node->style.dimensions[CSS_HEIGHT] = 202;
+      node->style.dimensions[CSS_WIDTH] = 531;
+      node->style.dimensions[CSS_HEIGHT] = 122;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -24232,8 +23874,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 573;
-      node->layout.dimensions[CSS_HEIGHT] = 202;
+      node->layout.dimensions[CSS_WIDTH] = 531;
+      node->layout.dimensions[CSS_HEIGHT] = 122;
     }
 
     test("Random #655", root_node, root_layout);
@@ -24291,8 +23933,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 198;
-      node->style.dimensions[CSS_HEIGHT] = 655;
+      node->style.dimensions[CSS_WIDTH] = 118;
+      node->style.dimensions[CSS_HEIGHT] = 621;
       node->style.margin[CSS_LEFT] = -9;
     }
 
@@ -24301,8 +23943,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -9;
-      node->layout.dimensions[CSS_WIDTH] = 198;
-      node->layout.dimensions[CSS_HEIGHT] = 655;
+      node->layout.dimensions[CSS_WIDTH] = 118;
+      node->layout.dimensions[CSS_HEIGHT] = 621;
     }
 
     test("Random #658", root_node, root_layout);
@@ -24315,7 +23957,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 659;
+      node->style.dimensions[CSS_WIDTH] = 625;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -24335,7 +23977,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 659;
+      node->layout.dimensions[CSS_WIDTH] = 625;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -24365,8 +24007,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 154;
-      node->style.dimensions[CSS_HEIGHT] = 149;
+      node->style.dimensions[CSS_WIDTH] = 69;
+      node->style.dimensions[CSS_HEIGHT] = 64;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -24393,8 +24035,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = -17;
-      node->layout.dimensions[CSS_WIDTH] = 154;
-      node->layout.dimensions[CSS_HEIGHT] = 149;
+      node->layout.dimensions[CSS_WIDTH] = 69;
+      node->layout.dimensions[CSS_HEIGHT] = 64;
     }
 
     test("Random #661", root_node, root_layout);
@@ -24406,8 +24048,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 324;
-      node->style.dimensions[CSS_HEIGHT] = 649;
+      node->style.dimensions[CSS_WIDTH] = 256;
+      node->style.dimensions[CSS_HEIGHT] = 614;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.margin[CSS_BOTTOM] = -6;
@@ -24427,8 +24069,8 @@ int main()
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 545;
-        node->style.dimensions[CSS_HEIGHT] = 488;
+        node->style.dimensions[CSS_WIDTH] = 500;
+        node->style.dimensions[CSS_HEIGHT] = 437;
         node->style.margin[CSS_LEFT] = -8;
         node->style.margin[CSS_TOP] = -8;
         node->style.margin[CSS_RIGHT] = -8;
@@ -24446,17 +24088,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 15;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 324;
-      node->layout.dimensions[CSS_HEIGHT] = 649;
+      node->layout.dimensions[CSS_WIDTH] = 256;
+      node->layout.dimensions[CSS_HEIGHT] = 614;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 78.5;
+        node->layout.position[CSS_TOP] = 86.5;
         node->layout.position[CSS_LEFT] = -10;
-        node->layout.dimensions[CSS_WIDTH] = 545;
-        node->layout.dimensions[CSS_HEIGHT] = 488;
+        node->layout.dimensions[CSS_WIDTH] = 500;
+        node->layout.dimensions[CSS_HEIGHT] = 437;
       }
     }
 
@@ -24528,7 +24170,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 778;
+      node->style.dimensions[CSS_HEIGHT] = 756;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -24557,7 +24199,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 17;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 778;
+      node->layout.dimensions[CSS_HEIGHT] = 756;
     }
 
     test("Random #666", root_node, root_layout);
@@ -24602,8 +24244,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 776;
-      node->style.dimensions[CSS_HEIGHT] = 856;
+      node->style.dimensions[CSS_WIDTH] = 753;
+      node->style.dimensions[CSS_HEIGHT] = 842;
       node->style.margin[CSS_LEFT] = 17;
       node->style.padding[CSS_LEFT] = 16;
       node->style.padding[CSS_TOP] = 16;
@@ -24620,8 +24262,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 17;
-      node->layout.dimensions[CSS_WIDTH] = 776;
-      node->layout.dimensions[CSS_HEIGHT] = 856;
+      node->layout.dimensions[CSS_WIDTH] = 753;
+      node->layout.dimensions[CSS_HEIGHT] = 842;
     }
 
     test("Random #668", root_node, root_layout);
@@ -24682,7 +24324,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 338;
+      node->style.dimensions[CSS_WIDTH] = 272;
       node->style.margin[CSS_LEFT] = 14;
       node->style.margin[CSS_BOTTOM] = 9;
       node->style.padding[CSS_BOTTOM] = 6;
@@ -24698,7 +24340,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 338;
+      node->layout.dimensions[CSS_WIDTH] = 272;
       node->layout.dimensions[CSS_HEIGHT] = 6;
     }
 
@@ -24709,8 +24351,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 239;
-      node->style.dimensions[CSS_HEIGHT] = 740;
+      node->style.dimensions[CSS_WIDTH] = 163;
+      node->style.dimensions[CSS_HEIGHT] = 714;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -24731,8 +24373,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 14;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 239;
-      node->layout.dimensions[CSS_HEIGHT] = 740;
+      node->layout.dimensions[CSS_WIDTH] = 163;
+      node->layout.dimensions[CSS_HEIGHT] = 714;
     }
 
     test("Random #672", root_node, root_layout);
@@ -24745,8 +24387,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 410;
-      node->style.dimensions[CSS_HEIGHT] = 798;
+      node->style.dimensions[CSS_WIDTH] = 351;
+      node->style.dimensions[CSS_HEIGHT] = 777;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -24771,8 +24413,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 410;
-      node->layout.dimensions[CSS_HEIGHT] = 798;
+      node->layout.dimensions[CSS_WIDTH] = 351;
+      node->layout.dimensions[CSS_HEIGHT] = 777;
     }
 
     test("Random #673", root_node, root_layout);
@@ -24784,8 +24426,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 95;
-      node->style.dimensions[CSS_HEIGHT] = 295;
+      node->style.dimensions[CSS_WIDTH] = 5;
+      node->style.dimensions[CSS_HEIGHT] = 225;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.margin[CSS_BOTTOM] = 1;
@@ -24798,8 +24440,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 95;
-      node->layout.dimensions[CSS_HEIGHT] = 295;
+      node->layout.dimensions[CSS_WIDTH] = 15;
+      node->layout.dimensions[CSS_HEIGHT] = 225;
     }
 
     test("Random #674", root_node, root_layout);
@@ -24892,7 +24534,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 671;
+      node->style.dimensions[CSS_HEIGHT] = 638;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -24915,7 +24557,7 @@ int main()
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 2;
       node->layout.dimensions[CSS_WIDTH] = 8;
-      node->layout.dimensions[CSS_HEIGHT] = 671;
+      node->layout.dimensions[CSS_HEIGHT] = 638;
     }
 
     test("Random #678", root_node, root_layout);
@@ -24962,7 +24604,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 486;
+      node->style.dimensions[CSS_WIDTH] = 434;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -24981,7 +24623,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -5;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 486;
+      node->layout.dimensions[CSS_WIDTH] = 434;
       node->layout.dimensions[CSS_HEIGHT] = 9;
     }
 
@@ -24992,7 +24634,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 271;
+      node->style.dimensions[CSS_HEIGHT] = 198;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -25009,7 +24651,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 6;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 271;
+      node->layout.dimensions[CSS_HEIGHT] = 198;
     }
 
     test("Random #681", root_node, root_layout);
@@ -25021,8 +24663,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 317;
-      node->style.dimensions[CSS_HEIGHT] = 473;
+      node->style.dimensions[CSS_WIDTH] = 249;
+      node->style.dimensions[CSS_HEIGHT] = 420;
       node->style.margin[CSS_LEFT] = 19;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 19;
@@ -25042,8 +24684,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 27;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 317;
-      node->layout.dimensions[CSS_HEIGHT] = 473;
+      node->layout.dimensions[CSS_WIDTH] = 249;
+      node->layout.dimensions[CSS_HEIGHT] = 420;
     }
 
     test("Random #682", root_node, root_layout);
@@ -25072,8 +24714,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 578;
-      node->style.dimensions[CSS_HEIGHT] = 225;
+      node->style.dimensions[CSS_WIDTH] = 536;
+      node->style.dimensions[CSS_HEIGHT] = 147;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -25096,8 +24738,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 578;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.dimensions[CSS_WIDTH] = 536;
+      node->layout.dimensions[CSS_HEIGHT] = 147;
     }
 
     test("Random #684", root_node, root_layout);
@@ -25127,8 +24769,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 967;
-      node->style.dimensions[CSS_HEIGHT] = 659;
+      node->style.dimensions[CSS_WIDTH] = 964;
+      node->style.dimensions[CSS_HEIGHT] = 625;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -5;
       node->style.padding[CSS_LEFT] = 19;
@@ -25147,8 +24789,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -14;
-      node->layout.dimensions[CSS_WIDTH] = 967;
-      node->layout.dimensions[CSS_HEIGHT] = 659;
+      node->layout.dimensions[CSS_WIDTH] = 964;
+      node->layout.dimensions[CSS_HEIGHT] = 625;
     }
 
     test("Random #686", root_node, root_layout);
@@ -25159,8 +24801,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 0;
-      node->style.dimensions[CSS_HEIGHT] = 34;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -25183,7 +24823,7 @@ int main()
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 20;
       node->layout.dimensions[CSS_WIDTH] = 12;
-      node->layout.dimensions[CSS_HEIGHT] = 34;
+      node->layout.dimensions[CSS_HEIGHT] = 24;
     }
 
     test("Random #687", root_node, root_layout);
@@ -25193,7 +24833,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 346;
+      node->style.dimensions[CSS_WIDTH] = 281;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -25228,7 +24868,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 930;
+        node->style.dimensions[CSS_HEIGHT] = 923;
         node->style.margin[CSS_LEFT] = 14;
         node->style.margin[CSS_RIGHT] = 18;
         node->style.margin[CSS_BOTTOM] = -5;
@@ -25255,8 +24895,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 346;
-      node->layout.dimensions[CSS_HEIGHT] = 958;
+      node->layout.dimensions[CSS_WIDTH] = 281;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 3);
       {
         css_node_t *outer_node_1 = node;
@@ -25270,7 +24910,7 @@ int main()
         node->layout.position[CSS_TOP] = 9;
         node->layout.position[CSS_LEFT] = 14;
         node->layout.dimensions[CSS_WIDTH] = 0;
-        node->layout.dimensions[CSS_HEIGHT] = 930;
+        node->layout.dimensions[CSS_HEIGHT] = 923;
         node = &outer_node_1->children[2];
         node->layout.position[CSS_TOP] = -17;
         node->layout.position[CSS_LEFT] = -14;
@@ -25287,8 +24927,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 353;
-      node->style.dimensions[CSS_HEIGHT] = 475;
+      node->style.dimensions[CSS_WIDTH] = 288;
+      node->style.dimensions[CSS_HEIGHT] = 423;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -25311,8 +24951,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 17;
-      node->layout.dimensions[CSS_WIDTH] = 353;
-      node->layout.dimensions[CSS_HEIGHT] = 475;
+      node->layout.dimensions[CSS_WIDTH] = 288;
+      node->layout.dimensions[CSS_HEIGHT] = 423;
     }
 
     test("Random #689", root_node, root_layout);
@@ -25324,7 +24964,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 200;
+      node->style.dimensions[CSS_WIDTH] = 120;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_BOTTOM] = 9;
@@ -25342,7 +24982,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_HEIGHT] = 252;
+        node->style.dimensions[CSS_HEIGHT] = 177;
         node->style.margin[CSS_LEFT] = -3;
         node->style.padding[CSS_BOTTOM] = 3;
         node->style.border[CSS_LEFT] = 3;
@@ -25356,7 +24996,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 200;
+      node->layout.dimensions[CSS_WIDTH] = 120;
       node->layout.dimensions[CSS_HEIGHT] = 38;
       init_css_node_children(node, 1);
       {
@@ -25366,7 +25006,7 @@ int main()
         node->layout.position[CSS_TOP] = 6;
         node->layout.position[CSS_LEFT] = 0;
         node->layout.dimensions[CSS_WIDTH] = 3;
-        node->layout.dimensions[CSS_HEIGHT] = 252;
+        node->layout.dimensions[CSS_HEIGHT] = 177;
       }
     }
 
@@ -25377,7 +25017,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 472;
+      node->style.dimensions[CSS_WIDTH] = 419;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 14;
       node->style.padding[CSS_BOTTOM] = 7;
@@ -25408,7 +25048,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 472;
+      node->layout.dimensions[CSS_WIDTH] = 419;
       node->layout.dimensions[CSS_HEIGHT] = 9;
       init_css_node_children(node, 1);
       {
@@ -25431,8 +25071,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 711;
-      node->style.dimensions[CSS_HEIGHT] = 446;
+      node->style.dimensions[CSS_WIDTH] = 682;
+      node->style.dimensions[CSS_HEIGHT] = 390;
       node->style.margin[CSS_LEFT] = -10;
       node->style.padding[CSS_LEFT] = 6;
       node->style.padding[CSS_TOP] = 6;
@@ -25449,8 +25089,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
-      node->layout.dimensions[CSS_WIDTH] = 711;
-      node->layout.dimensions[CSS_HEIGHT] = 446;
+      node->layout.dimensions[CSS_WIDTH] = 682;
+      node->layout.dimensions[CSS_HEIGHT] = 390;
     }
 
     test("Random #692", root_node, root_layout);
@@ -25461,7 +25101,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 715;
+      node->style.dimensions[CSS_WIDTH] = 687;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -25483,7 +25123,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 715;
+      node->layout.dimensions[CSS_WIDTH] = 687;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -25497,7 +25137,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 253;
+      node->style.dimensions[CSS_HEIGHT] = 179;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.padding[CSS_LEFT] = 17;
@@ -25521,7 +25161,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -2;
       node->layout.dimensions[CSS_WIDTH] = 25;
-      node->layout.dimensions[CSS_HEIGHT] = 253;
+      node->layout.dimensions[CSS_HEIGHT] = 179;
     }
 
     test("Random #694", root_node, root_layout);
@@ -25550,7 +25190,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 643;
+      node->style.dimensions[CSS_HEIGHT] = 607;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -25569,7 +25209,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -4;
       node->layout.dimensions[CSS_WIDTH] = 18;
-      node->layout.dimensions[CSS_HEIGHT] = 643;
+      node->layout.dimensions[CSS_HEIGHT] = 607;
     }
 
     test("Random #696", root_node, root_layout);
@@ -25581,8 +25221,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 751;
-      node->style.dimensions[CSS_HEIGHT] = 729;
+      node->style.dimensions[CSS_WIDTH] = 726;
+      node->style.dimensions[CSS_HEIGHT] = 702;
       node->style.margin[CSS_TOP] = 19;
       node->style.padding[CSS_LEFT] = 16;
       node->style.padding[CSS_TOP] = 16;
@@ -25601,8 +25241,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 22;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 751;
-      node->layout.dimensions[CSS_HEIGHT] = 729;
+      node->layout.dimensions[CSS_WIDTH] = 726;
+      node->layout.dimensions[CSS_HEIGHT] = 702;
     }
 
     test("Random #697", root_node, root_layout);
@@ -25661,8 +25301,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 93;
-      node->style.dimensions[CSS_HEIGHT] = 292;
+      node->style.dimensions[CSS_WIDTH] = 2;
+      node->style.dimensions[CSS_HEIGHT] = 221;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -25681,8 +25321,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -7;
-      node->layout.dimensions[CSS_WIDTH] = 93;
-      node->layout.dimensions[CSS_HEIGHT] = 292;
+      node->layout.dimensions[CSS_WIDTH] = 4;
+      node->layout.dimensions[CSS_HEIGHT] = 221;
     }
 
     test("Random #700", root_node, root_layout);
@@ -25731,7 +25371,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 533;
+      node->style.dimensions[CSS_WIDTH] = 486;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = -5;
@@ -25745,7 +25385,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 533;
+      node->layout.dimensions[CSS_WIDTH] = 486;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -25814,7 +25454,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_HEIGHT] = 35;
       node->style.margin[CSS_LEFT] = -2;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = -2;
@@ -25834,7 +25473,7 @@ int main()
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = -6;
       node->layout.dimensions[CSS_WIDTH] = 5;
-      node->layout.dimensions[CSS_HEIGHT] = 35;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #706", root_node, root_layout);
@@ -25845,7 +25484,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 539;
+      node->style.dimensions[CSS_WIDTH] = 493;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 15;
@@ -25860,7 +25499,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 539;
+      node->layout.dimensions[CSS_WIDTH] = 493;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -25939,8 +25578,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 17;
-      node->style.dimensions[CSS_HEIGHT] = 480;
+      node->style.dimensions[CSS_HEIGHT] = 428;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -25962,7 +25600,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-        node->style.dimensions[CSS_HEIGHT] = 153;
+        node->style.dimensions[CSS_HEIGHT] = 69;
         node->style.margin[CSS_LEFT] = 3;
         node->style.margin[CSS_TOP] = -9;
         node->style.margin[CSS_RIGHT] = -8;
@@ -25981,8 +25619,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 480;
+      node->layout.dimensions[CSS_WIDTH] = 3;
+      node->layout.dimensions[CSS_HEIGHT] = 428;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -25991,7 +25629,7 @@ int main()
         node->layout.position[CSS_TOP] = -4;
         node->layout.position[CSS_LEFT] = 13;
         node->layout.dimensions[CSS_WIDTH] = 2;
-        node->layout.dimensions[CSS_HEIGHT] = 153;
+        node->layout.dimensions[CSS_HEIGHT] = 69;
       }
     }
 
@@ -26037,8 +25675,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 267;
-      node->style.dimensions[CSS_HEIGHT] = 862;
+      node->style.dimensions[CSS_WIDTH] = 194;
+      node->style.dimensions[CSS_HEIGHT] = 848;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -26080,15 +25718,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 267;
-      node->layout.dimensions[CSS_HEIGHT] = 862;
+      node->layout.dimensions[CSS_WIDTH] = 194;
+      node->layout.dimensions[CSS_HEIGHT] = 848;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 14;
-        node->layout.position[CSS_LEFT] = 253;
+        node->layout.position[CSS_LEFT] = 180;
         node->layout.dimensions[CSS_WIDTH] = 7;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -26103,7 +25741,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 358;
+      node->style.dimensions[CSS_WIDTH] = 294;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = -6;
@@ -26123,7 +25761,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 358;
+      node->layout.dimensions[CSS_WIDTH] = 294;
       node->layout.dimensions[CSS_HEIGHT] = 22;
     }
 
@@ -26135,7 +25773,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_HEIGHT] = 261;
+      node->style.dimensions[CSS_HEIGHT] = 188;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_RIGHT] = 5;
       node->style.margin[CSS_BOTTOM] = 14;
@@ -26148,7 +25786,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 3;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 261;
+      node->layout.dimensions[CSS_HEIGHT] = 188;
     }
 
     test("Random #715", root_node, root_layout);
@@ -26159,8 +25797,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 531;
-      node->style.dimensions[CSS_HEIGHT] = 411;
+      node->style.dimensions[CSS_WIDTH] = 484;
+      node->style.dimensions[CSS_HEIGHT] = 352;
       node->style.margin[CSS_RIGHT] = 18;
       node->style.padding[CSS_LEFT] = 18;
       node->style.border[CSS_LEFT] = 1;
@@ -26177,8 +25815,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
-      node->layout.dimensions[CSS_WIDTH] = 531;
-      node->layout.dimensions[CSS_HEIGHT] = 411;
+      node->layout.dimensions[CSS_WIDTH] = 484;
+      node->layout.dimensions[CSS_HEIGHT] = 352;
     }
 
     test("Random #716", root_node, root_layout);
@@ -26260,7 +25898,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 172;
+      node->style.dimensions[CSS_WIDTH] = 89;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -26279,7 +25917,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 172;
+      node->layout.dimensions[CSS_WIDTH] = 89;
       node->layout.dimensions[CSS_HEIGHT] = 21;
     }
 
@@ -26354,7 +25992,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 864;
+      node->style.dimensions[CSS_WIDTH] = 850;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -26369,7 +26007,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 864;
+      node->layout.dimensions[CSS_WIDTH] = 850;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -26381,7 +26019,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 868;
+      node->style.dimensions[CSS_WIDTH] = 855;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -26398,7 +26036,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 868;
+      node->layout.dimensions[CSS_WIDTH] = 855;
       node->layout.dimensions[CSS_HEIGHT] = 3;
     }
 
@@ -26410,7 +26048,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 520;
+      node->style.dimensions[CSS_WIDTH] = 472;
       node->style.margin[CSS_LEFT] = -2;
       node->style.padding[CSS_LEFT] = 1;
       node->style.border[CSS_LEFT] = 3;
@@ -26422,7 +26060,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 520;
+      node->layout.dimensions[CSS_WIDTH] = 472;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -26452,8 +26090,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 828;
-      node->style.dimensions[CSS_HEIGHT] = 41;
+      node->style.dimensions[CSS_WIDTH] = 811;
       node->style.margin[CSS_LEFT] = 17;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 17;
@@ -26469,8 +26106,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 12;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 828;
-      node->layout.dimensions[CSS_HEIGHT] = 41;
+      node->layout.dimensions[CSS_WIDTH] = 811;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #727", root_node, root_layout);
@@ -26481,7 +26118,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 107;
+      node->style.dimensions[CSS_WIDTH] = 18;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -26501,7 +26138,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -26512,7 +26149,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 423;
+      node->style.dimensions[CSS_HEIGHT] = 366;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 10;
       node->style.padding[CSS_BOTTOM] = 9;
@@ -26525,7 +26162,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 10;
-      node->layout.dimensions[CSS_HEIGHT] = 423;
+      node->layout.dimensions[CSS_HEIGHT] = 366;
     }
 
     test("Random #729", root_node, root_layout);
@@ -26535,90 +26172,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 82;
-      node->style.dimensions[CSS_HEIGHT] = 492;
-      node->style.margin[CSS_TOP] = 12;
-      node->style.margin[CSS_BOTTOM] = 18;
-      node->style.padding[CSS_TOP] = 10;
-      node->style.padding[CSS_BOTTOM] = 15;
-      node->style.border[CSS_LEFT] = 0;
-      node->style.border[CSS_BOTTOM] = 2;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-        node->style.align_self = CSS_ALIGN_FLEX_START;
-        node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 65;
-        node->style.margin[CSS_LEFT] = 3;
-        node->style.margin[CSS_TOP] = 3;
-        node->style.margin[CSS_RIGHT] = 3;
-        node->style.margin[CSS_BOTTOM] = 3;
-        node->style.margin[CSS_TOP] = 7;
-        node->style.border[CSS_LEFT] = 0;
-        node->style.border[CSS_TOP] = 0;
-        node->style.position[CSS_TOP] = -4;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-          node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-          node->style.align_self = CSS_ALIGN_FLEX_END;
-          node->style.flex = CSS_FLEX_NONE;
-          node->style.dimensions[CSS_HEIGHT] = 742;
-          node->style.margin[CSS_LEFT] = 1;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_TOP] = 11;
-          node->style.padding[CSS_RIGHT] = 11;
-          node->style.padding[CSS_BOTTOM] = 11;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_RIGHT] = 13;
-          node->style.border[CSS_LEFT] = 0;
-          node->style.border[CSS_TOP] = 0;
-          node->style.border[CSS_RIGHT] = 0;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.border[CSS_LEFT] = 3;
-          node->style.border[CSS_TOP] = 3;
-          node->style.border[CSS_RIGHT] = 1;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.position[CSS_LEFT] = -2;
-          node->style.position[CSS_TOP] = -2;
-        }
-      }
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = 12;
+      node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 82;
-      node->layout.dimensions[CSS_HEIGHT] = 492;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 3;
-        node->layout.dimensions[CSS_WIDTH] = 65;
-        node->layout.dimensions[CSS_HEIGHT] = 742;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = -2;
-          node->layout.position[CSS_LEFT] = 35;
-          node->layout.dimensions[CSS_WIDTH] = 28;
-          node->layout.dimensions[CSS_HEIGHT] = 742;
-        }
-      }
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #730", root_node, root_layout);
@@ -26629,7 +26191,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 615;
+      node->style.dimensions[CSS_WIDTH] = 577;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -26648,7 +26210,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 615;
+      node->layout.dimensions[CSS_WIDTH] = 577;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -26660,7 +26222,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 799;
+      node->style.dimensions[CSS_HEIGHT] = 779;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -8;
       node->style.margin[CSS_RIGHT] = -8;
@@ -26678,7 +26240,7 @@ int main()
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 8;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 799;
+      node->layout.dimensions[CSS_HEIGHT] = 779;
     }
 
     test("Random #732", root_node, root_layout);
@@ -26708,7 +26270,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 556;
+      node->style.dimensions[CSS_WIDTH] = 512;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -26729,7 +26291,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 556;
+      node->layout.dimensions[CSS_WIDTH] = 512;
       node->layout.dimensions[CSS_HEIGHT] = 10;
     }
 
@@ -26760,8 +26322,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 960;
-      node->style.dimensions[CSS_HEIGHT] = 309;
+      node->style.dimensions[CSS_WIDTH] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 240;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -26778,8 +26340,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 960;
-      node->layout.dimensions[CSS_HEIGHT] = 309;
+      node->layout.dimensions[CSS_WIDTH] = 956;
+      node->layout.dimensions[CSS_HEIGHT] = 240;
     }
 
     test("Random #736", root_node, root_layout);
@@ -26838,8 +26400,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 983;
-      node->style.dimensions[CSS_HEIGHT] = 422;
+      node->style.dimensions[CSS_WIDTH] = 982;
+      node->style.dimensions[CSS_HEIGHT] = 365;
       node->style.margin[CSS_LEFT] = -9;
       node->style.margin[CSS_TOP] = -9;
       node->style.margin[CSS_BOTTOM] = 19;
@@ -26858,8 +26420,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 983;
-      node->layout.dimensions[CSS_HEIGHT] = 422;
+      node->layout.dimensions[CSS_WIDTH] = 982;
+      node->layout.dimensions[CSS_HEIGHT] = 365;
     }
 
     test("Random #739", root_node, root_layout);
@@ -26869,8 +26431,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 329;
-      node->style.dimensions[CSS_HEIGHT] = 836;
+      node->style.dimensions[CSS_WIDTH] = 262;
+      node->style.dimensions[CSS_HEIGHT] = 820;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -26909,15 +26471,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 329;
-      node->layout.dimensions[CSS_HEIGHT] = 836;
+      node->layout.dimensions[CSS_WIDTH] = 262;
+      node->layout.dimensions[CSS_HEIGHT] = 820;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 27;
-        node->layout.position[CSS_LEFT] = 160;
+        node->layout.position[CSS_LEFT] = 126.5;
         node->layout.dimensions[CSS_WIDTH] = 19;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -26931,7 +26493,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 873;
+      node->style.dimensions[CSS_HEIGHT] = 861;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -26948,7 +26510,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -12;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 873;
+      node->layout.dimensions[CSS_HEIGHT] = 861;
     }
 
     test("Random #741", root_node, root_layout);
@@ -26959,7 +26521,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 991;
+      node->style.dimensions[CSS_WIDTH] = 990;
       node->style.margin[CSS_BOTTOM] = -7;
       node->style.padding[CSS_RIGHT] = 0;
       node->style.border[CSS_LEFT] = 1;
@@ -26974,7 +26536,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 991;
+      node->layout.dimensions[CSS_WIDTH] = 990;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -26987,7 +26549,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 660;
+      node->style.dimensions[CSS_HEIGHT] = 626;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -27010,7 +26572,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 9;
       node->layout.dimensions[CSS_WIDTH] = 21;
-      node->layout.dimensions[CSS_HEIGHT] = 660;
+      node->layout.dimensions[CSS_HEIGHT] = 626;
     }
 
     test("Random #743", root_node, root_layout);
@@ -27084,7 +26646,6 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 24;
         node->style.margin[CSS_LEFT] = 11;
         node->style.margin[CSS_TOP] = 11;
         node->style.margin[CSS_RIGHT] = 11;
@@ -27104,7 +26665,7 @@ int main()
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 13;
       node->layout.dimensions[CSS_WIDTH] = 62;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_HEIGHT] = 70;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -27113,7 +26674,7 @@ int main()
         node->layout.position[CSS_TOP] = 24;
         node->layout.position[CSS_LEFT] = 17;
         node->layout.dimensions[CSS_WIDTH] = 16;
-        node->layout.dimensions[CSS_HEIGHT] = 24;
+        node->layout.dimensions[CSS_HEIGHT] = 16;
       }
     }
 
@@ -27144,7 +26705,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 952;
+      node->style.dimensions[CSS_WIDTH] = 948;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -27162,7 +26723,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 952;
+      node->layout.dimensions[CSS_WIDTH] = 948;
       node->layout.dimensions[CSS_HEIGHT] = 11;
     }
 
@@ -27211,7 +26772,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 942;
+      node->style.dimensions[CSS_WIDTH] = 936;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = 8;
@@ -27243,7 +26804,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 942;
+      node->layout.dimensions[CSS_WIDTH] = 936;
       node->layout.dimensions[CSS_HEIGHT] = 2;
       init_css_node_children(node, 1);
       {
@@ -27264,30 +26825,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 225;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_TOP] = -10;
-      node->style.margin[CSS_RIGHT] = -10;
-      node->style.margin[CSS_BOTTOM] = -10;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_RIGHT] = -2;
-      node->style.margin[CSS_BOTTOM] = 8;
-      node->style.padding[CSS_LEFT] = 4;
-      node->style.padding[CSS_RIGHT] = 16;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.position[CSS_LEFT] = 8;
-      node->style.position[CSS_TOP] = 0;
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = -10;
-      node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 20;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #752", root_node, root_layout);
@@ -27298,7 +26844,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 210;
+      node->style.dimensions[CSS_WIDTH] = 131;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -27317,7 +26863,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -3;
-      node->layout.dimensions[CSS_WIDTH] = 210;
+      node->layout.dimensions[CSS_WIDTH] = 131;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -27458,7 +27004,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 867;
+      node->style.dimensions[CSS_WIDTH] = 854;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -27478,7 +27024,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 867;
+      node->layout.dimensions[CSS_WIDTH] = 854;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -27490,8 +27036,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 47;
-      node->style.dimensions[CSS_HEIGHT] = 689;
+      node->style.dimensions[CSS_HEIGHT] = 658;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -27536,7 +27081,7 @@ int main()
           node->style.align_self = CSS_ALIGN_FLEX_START;
           node->style.flex = CSS_FLEX_ONE;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_HEIGHT] = 445;
+          node->style.dimensions[CSS_HEIGHT] = 389;
           node->style.margin[CSS_LEFT] = -7;
           node->style.margin[CSS_BOTTOM] = 1;
           node->style.padding[CSS_LEFT] = 15;
@@ -27555,8 +27100,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 47;
-      node->layout.dimensions[CSS_HEIGHT] = 689;
+      node->layout.dimensions[CSS_WIDTH] = 95;
+      node->layout.dimensions[CSS_HEIGHT] = 658;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -27564,8 +27109,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 11;
         node->layout.position[CSS_LEFT] = 31;
-        node->layout.dimensions[CSS_WIDTH] = 38;
-        node->layout.dimensions[CSS_HEIGHT] = 658;
+        node->layout.dimensions[CSS_WIDTH] = 58;
+        node->layout.dimensions[CSS_HEIGHT] = 627;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -27574,7 +27119,7 @@ int main()
           node->layout.position[CSS_TOP] = 19;
           node->layout.position[CSS_LEFT] = 16;
           node->layout.dimensions[CSS_WIDTH] = 27;
-          node->layout.dimensions[CSS_HEIGHT] = 619;
+          node->layout.dimensions[CSS_HEIGHT] = 588;
         }
       }
     }
@@ -27660,8 +27205,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 181;
-      node->style.dimensions[CSS_HEIGHT] = 404;
+      node->style.dimensions[CSS_WIDTH] = 99;
+      node->style.dimensions[CSS_HEIGHT] = 344;
       node->style.margin[CSS_TOP] = 2;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_RIGHT] = 2;
@@ -27675,7 +27220,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 509;
+        node->style.dimensions[CSS_HEIGHT] = 460;
         node->style.margin[CSS_LEFT] = 6;
         node->style.margin[CSS_TOP] = 6;
         node->style.margin[CSS_RIGHT] = 6;
@@ -27707,17 +27252,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 2;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 181;
-      node->layout.dimensions[CSS_HEIGHT] = 404;
+      node->layout.dimensions[CSS_WIDTH] = 99;
+      node->layout.dimensions[CSS_HEIGHT] = 344;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 88.5;
+        node->layout.position[CSS_LEFT] = 47.5;
         node->layout.dimensions[CSS_WIDTH] = 11;
-        node->layout.dimensions[CSS_HEIGHT] = 509;
+        node->layout.dimensions[CSS_HEIGHT] = 460;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -27740,7 +27285,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 456;
+      node->style.dimensions[CSS_WIDTH] = 401;
       node->style.margin[CSS_TOP] = 12;
       node->style.padding[CSS_LEFT] = 9;
       node->style.padding[CSS_TOP] = 9;
@@ -27759,8 +27304,8 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 259;
-        node->style.dimensions[CSS_HEIGHT] = 808;
+        node->style.dimensions[CSS_WIDTH] = 185;
+        node->style.dimensions[CSS_HEIGHT] = 789;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -27782,8 +27327,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 456;
-      node->layout.dimensions[CSS_HEIGHT] = 822;
+      node->layout.dimensions[CSS_WIDTH] = 401;
+      node->layout.dimensions[CSS_HEIGHT] = 803;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -27791,8 +27336,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 8;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 259;
-        node->layout.dimensions[CSS_HEIGHT] = 808;
+        node->layout.dimensions[CSS_WIDTH] = 185;
+        node->layout.dimensions[CSS_HEIGHT] = 789;
       }
     }
 
@@ -27806,8 +27351,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 76;
-      node->style.dimensions[CSS_HEIGHT] = 284;
+      node->style.dimensions[CSS_HEIGHT] = 213;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_TOP] = 0;
       node->style.padding[CSS_RIGHT] = 0;
@@ -27823,8 +27367,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 76;
-      node->layout.dimensions[CSS_HEIGHT] = 284;
+      node->layout.dimensions[CSS_WIDTH] = 2;
+      node->layout.dimensions[CSS_HEIGHT] = 213;
     }
 
     test("Random #767", root_node, root_layout);
@@ -27836,8 +27380,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 973;
-      node->style.dimensions[CSS_HEIGHT] = 592;
+      node->style.dimensions[CSS_WIDTH] = 970;
+      node->style.dimensions[CSS_HEIGHT] = 552;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -27856,8 +27400,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 973;
-      node->layout.dimensions[CSS_HEIGHT] = 592;
+      node->layout.dimensions[CSS_WIDTH] = 970;
+      node->layout.dimensions[CSS_HEIGHT] = 552;
     }
 
     test("Random #768", root_node, root_layout);
@@ -27905,8 +27449,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 157;
-      node->style.dimensions[CSS_HEIGHT] = 377;
+      node->style.dimensions[CSS_WIDTH] = 73;
+      node->style.dimensions[CSS_HEIGHT] = 315;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_RIGHT] = 4;
@@ -27923,8 +27467,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 157;
-      node->layout.dimensions[CSS_HEIGHT] = 377;
+      node->layout.dimensions[CSS_WIDTH] = 73;
+      node->layout.dimensions[CSS_HEIGHT] = 315;
     }
 
     test("Random #771", root_node, root_layout);
@@ -27936,8 +27480,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 565;
-      node->style.dimensions[CSS_HEIGHT] = 394;
+      node->style.dimensions[CSS_WIDTH] = 522;
+      node->style.dimensions[CSS_HEIGHT] = 333;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -27957,8 +27501,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 565;
-      node->layout.dimensions[CSS_HEIGHT] = 394;
+      node->layout.dimensions[CSS_WIDTH] = 522;
+      node->layout.dimensions[CSS_HEIGHT] = 333;
     }
 
     test("Random #772", root_node, root_layout);
@@ -28042,8 +27586,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 863;
-      node->style.dimensions[CSS_HEIGHT] = 137;
+      node->style.dimensions[CSS_WIDTH] = 849;
+      node->style.dimensions[CSS_HEIGHT] = 51;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -28061,8 +27605,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 21;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 863;
-      node->layout.dimensions[CSS_HEIGHT] = 137;
+      node->layout.dimensions[CSS_WIDTH] = 849;
+      node->layout.dimensions[CSS_HEIGHT] = 51;
     }
 
     test("Random #776", root_node, root_layout);
@@ -28075,7 +27619,6 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 23;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 0;
@@ -28089,7 +27632,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 23;
+      node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -28101,7 +27644,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 341;
+      node->style.dimensions[CSS_HEIGHT] = 275;
       node->style.margin[CSS_LEFT] = -4;
       node->style.border[CSS_LEFT] = 0;
       node->style.border[CSS_TOP] = 0;
@@ -28118,7 +27661,7 @@ int main()
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -11;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 341;
+      node->layout.dimensions[CSS_HEIGHT] = 275;
     }
 
     test("Random #778", root_node, root_layout);
@@ -28130,7 +27673,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 943;
+      node->style.dimensions[CSS_HEIGHT] = 937;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 4;
@@ -28155,8 +27698,8 @@ int main()
         node->style.align_items = CSS_ALIGN_FLEX_END;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 960;
-        node->style.dimensions[CSS_HEIGHT] = 722;
+        node->style.dimensions[CSS_WIDTH] = 956;
+        node->style.dimensions[CSS_HEIGHT] = 694;
         node->style.margin[CSS_LEFT] = 13;
         node->style.margin[CSS_TOP] = 13;
         node->style.margin[CSS_RIGHT] = 13;
@@ -28180,17 +27723,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 975;
-      node->layout.dimensions[CSS_HEIGHT] = 943;
+      node->layout.dimensions[CSS_WIDTH] = 971;
+      node->layout.dimensions[CSS_HEIGHT] = 937;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 116.5;
+        node->layout.position[CSS_TOP] = 127.5;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 960;
-        node->layout.dimensions[CSS_HEIGHT] = 722;
+        node->layout.dimensions[CSS_WIDTH] = 956;
+        node->layout.dimensions[CSS_HEIGHT] = 694;
       }
     }
 
@@ -28220,7 +27763,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 565;
+      node->style.dimensions[CSS_WIDTH] = 521;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = -10;
@@ -28241,7 +27784,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 565;
+      node->layout.dimensions[CSS_WIDTH] = 521;
       node->layout.dimensions[CSS_HEIGHT] = 27;
     }
 
@@ -28285,7 +27828,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 676;
+      node->style.dimensions[CSS_WIDTH] = 644;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -28300,7 +27843,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 676;
+      node->layout.dimensions[CSS_WIDTH] = 644;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -28331,7 +27874,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 611;
+      node->style.dimensions[CSS_HEIGHT] = 572;
       node->style.margin[CSS_TOP] = 14;
       node->style.margin[CSS_RIGHT] = 10;
       node->style.border[CSS_LEFT] = 2;
@@ -28347,7 +27890,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
       node->layout.dimensions[CSS_WIDTH] = 4;
-      node->layout.dimensions[CSS_HEIGHT] = 611;
+      node->layout.dimensions[CSS_HEIGHT] = 572;
     }
 
     test("Random #785", root_node, root_layout);
@@ -28357,7 +27900,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 120;
+      node->style.dimensions[CSS_HEIGHT] = 32;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -28378,7 +27921,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 12;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 120;
+      node->layout.dimensions[CSS_HEIGHT] = 32;
     }
 
     test("Random #786", root_node, root_layout);
@@ -28390,8 +27933,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 396;
-      node->style.dimensions[CSS_HEIGHT] = 696;
+      node->style.dimensions[CSS_WIDTH] = 336;
+      node->style.dimensions[CSS_HEIGHT] = 666;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -28411,8 +27954,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 396;
-      node->layout.dimensions[CSS_HEIGHT] = 696;
+      node->layout.dimensions[CSS_WIDTH] = 336;
+      node->layout.dimensions[CSS_HEIGHT] = 666;
     }
 
     test("Random #787", root_node, root_layout);
@@ -28424,7 +27967,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 131;
+      node->style.dimensions[CSS_WIDTH] = 45;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -28442,7 +27985,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.align_items = CSS_ALIGN_FLEX_END;
-        node->style.dimensions[CSS_HEIGHT] = 565;
+        node->style.dimensions[CSS_HEIGHT] = 522;
         node->style.margin[CSS_LEFT] = -5;
         node->style.margin[CSS_TOP] = -5;
         node->style.margin[CSS_RIGHT] = -5;
@@ -28456,8 +27999,8 @@ int main()
         node = &outer_node_1->children[1];
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 807;
-        node->style.dimensions[CSS_HEIGHT] = 353;
+        node->style.dimensions[CSS_WIDTH] = 788;
+        node->style.dimensions[CSS_HEIGHT] = 288;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -28477,8 +28020,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 131;
-      node->layout.dimensions[CSS_HEIGHT] = 590;
+      node->layout.dimensions[CSS_WIDTH] = 45;
+      node->layout.dimensions[CSS_HEIGHT] = 547;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -28487,12 +28030,12 @@ int main()
         node->layout.position[CSS_TOP] = 19;
         node->layout.position[CSS_LEFT] = 10;
         node->layout.dimensions[CSS_WIDTH] = 4;
-        node->layout.dimensions[CSS_HEIGHT] = 565;
+        node->layout.dimensions[CSS_HEIGHT] = 522;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 243;
+        node->layout.position[CSS_TOP] = 265;
         node->layout.position[CSS_LEFT] = 10;
-        node->layout.dimensions[CSS_WIDTH] = 131;
-        node->layout.dimensions[CSS_HEIGHT] = 353;
+        node->layout.dimensions[CSS_WIDTH] = 45;
+        node->layout.dimensions[CSS_HEIGHT] = 288;
       }
     }
 
@@ -28503,7 +28046,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 718;
+      node->style.dimensions[CSS_WIDTH] = 690;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_RIGHT] = -10;
       node->style.position[CSS_LEFT] = 2;
@@ -28515,7 +28058,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 718;
+      node->layout.dimensions[CSS_WIDTH] = 690;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -28528,7 +28071,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 443;
+      node->style.dimensions[CSS_WIDTH] = 388;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -28546,7 +28089,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 443;
+      node->layout.dimensions[CSS_WIDTH] = 388;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -28559,7 +28102,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 951;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -28574,8 +28117,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 500;
-        node->style.dimensions[CSS_HEIGHT] = 875;
+        node->style.dimensions[CSS_WIDTH] = 450;
+        node->style.dimensions[CSS_HEIGHT] = 863;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 5;
         node->style.margin[CSS_RIGHT] = 5;
@@ -28602,7 +28145,6 @@ int main()
           node->style.justify_content = CSS_JUSTIFY_FLEX_END;
           node->style.align_self = CSS_ALIGN_FLEX_END;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_WIDTH] = 15;
           node->style.margin[CSS_LEFT] = 5;
           node->style.margin[CSS_RIGHT] = 15;
           node->style.padding[CSS_TOP] = 12;
@@ -28619,8 +28161,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 503;
-      node->layout.dimensions[CSS_HEIGHT] = 956;
+      node->layout.dimensions[CSS_WIDTH] = 453;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -28628,12 +28170,12 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 5;
         node->layout.position[CSS_LEFT] = 5;
-        node->layout.dimensions[CSS_WIDTH] = 500;
-        node->layout.dimensions[CSS_HEIGHT] = 875;
+        node->layout.dimensions[CSS_WIDTH] = 450;
+        node->layout.dimensions[CSS_HEIGHT] = 863;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 899;
-        node->layout.position[CSS_LEFT] = 243.5;
-        node->layout.dimensions[CSS_WIDTH] = 36;
+        node->layout.position[CSS_TOP] = 887;
+        node->layout.position[CSS_LEFT] = 224;
+        node->layout.dimensions[CSS_WIDTH] = 25;
         node->layout.dimensions[CSS_HEIGHT] = 29;
         init_css_node_children(node, 1);
         {
@@ -28642,7 +28184,7 @@ int main()
           node = &outer_node_2->children[0];
           node->layout.position[CSS_TOP] = 0;
           node->layout.position[CSS_LEFT] = 12;
-          node->layout.dimensions[CSS_WIDTH] = 15;
+          node->layout.dimensions[CSS_WIDTH] = 4;
           node->layout.dimensions[CSS_HEIGHT] = 13;
         }
       }
@@ -28657,7 +28199,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 409;
+      node->style.dimensions[CSS_WIDTH] = 350;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.margin[CSS_BOTTOM] = -5;
@@ -28674,7 +28216,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 409;
+      node->layout.dimensions[CSS_WIDTH] = 350;
       node->layout.dimensions[CSS_HEIGHT] = 18;
     }
 
@@ -28722,7 +28264,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 387;
+      node->style.dimensions[CSS_WIDTH] = 326;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_RIGHT] = 9;
       node->style.padding[CSS_LEFT] = 1;
@@ -28737,7 +28279,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 387;
+      node->layout.dimensions[CSS_WIDTH] = 326;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -28748,7 +28290,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 709;
+      node->style.dimensions[CSS_HEIGHT] = 680;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -28767,7 +28309,7 @@ int main()
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 5;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 709;
+      node->layout.dimensions[CSS_HEIGHT] = 680;
     }
 
     test("Random #796", root_node, root_layout);
@@ -28778,8 +28320,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 320;
+      node->style.dimensions[CSS_WIDTH] = 146;
+      node->style.dimensions[CSS_HEIGHT] = 252;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -28796,8 +28338,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 18;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 320;
+      node->layout.dimensions[CSS_WIDTH] = 146;
+      node->layout.dimensions[CSS_HEIGHT] = 252;
     }
 
     test("Random #797", root_node, root_layout);
@@ -28808,8 +28350,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 487;
-      node->style.dimensions[CSS_HEIGHT] = 107;
+      node->style.dimensions[CSS_WIDTH] = 436;
+      node->style.dimensions[CSS_HEIGHT] = 18;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -28831,8 +28373,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 487;
-      node->layout.dimensions[CSS_HEIGHT] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 436;
+      node->layout.dimensions[CSS_HEIGHT] = 23;
     }
 
     test("Random #798", root_node, root_layout);
@@ -28881,8 +28423,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 206;
-      node->style.dimensions[CSS_HEIGHT] = 168;
+      node->style.dimensions[CSS_WIDTH] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 85;
       node->style.margin[CSS_RIGHT] = -3;
       node->style.padding[CSS_TOP] = 1;
       node->style.border[CSS_LEFT] = 0;
@@ -28897,8 +28439,8 @@ int main()
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 866;
-        node->style.dimensions[CSS_HEIGHT] = 292;
+        node->style.dimensions[CSS_WIDTH] = 853;
+        node->style.dimensions[CSS_HEIGHT] = 222;
         node->style.margin[CSS_LEFT] = 1;
         node->style.margin[CSS_RIGHT] = 19;
         node->style.margin[CSS_BOTTOM] = 5;
@@ -28922,8 +28464,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 206;
-      node->layout.dimensions[CSS_HEIGHT] = 168;
+      node->layout.dimensions[CSS_WIDTH] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 85;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -28931,8 +28473,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = 1;
-        node->layout.dimensions[CSS_WIDTH] = 866;
-        node->layout.dimensions[CSS_HEIGHT] = 292;
+        node->layout.dimensions[CSS_WIDTH] = 853;
+        node->layout.dimensions[CSS_HEIGHT] = 222;
       }
     }
 
@@ -28992,7 +28534,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 280;
+      node->style.dimensions[CSS_WIDTH] = 208;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.padding[CSS_LEFT] = 19;
@@ -29010,7 +28552,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 280;
+      node->layout.dimensions[CSS_WIDTH] = 208;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -29108,7 +28650,6 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 70;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -29123,7 +28664,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 70;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 1;
     }
 
@@ -29151,8 +28692,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 978;
-        node->style.dimensions[CSS_HEIGHT] = 59;
+        node->style.dimensions[CSS_WIDTH] = 976;
         node->style.margin[CSS_TOP] = 8;
         node->style.padding[CSS_LEFT] = 10;
         node->style.border[CSS_LEFT] = 3;
@@ -29187,8 +28727,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 17;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 978;
-        node->layout.dimensions[CSS_HEIGHT] = 59;
+        node->layout.dimensions[CSS_WIDTH] = 976;
+        node->layout.dimensions[CSS_HEIGHT] = 19;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -29209,8 +28749,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 726;
-      node->style.dimensions[CSS_HEIGHT] = 6;
+      node->style.dimensions[CSS_WIDTH] = 699;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -2;
       node->style.padding[CSS_LEFT] = 1;
@@ -29226,7 +28765,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 273;
+        node->style.dimensions[CSS_WIDTH] = 200;
         node->style.margin[CSS_LEFT] = -2;
         node->style.margin[CSS_TOP] = -2;
         node->style.margin[CSS_RIGHT] = -2;
@@ -29245,8 +28784,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -6;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 726;
-      node->layout.dimensions[CSS_HEIGHT] = 9;
+      node->layout.dimensions[CSS_WIDTH] = 699;
+      node->layout.dimensions[CSS_HEIGHT] = 36;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -29254,7 +28793,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
         node->layout.position[CSS_LEFT] = 15;
-        node->layout.dimensions[CSS_WIDTH] = 273;
+        node->layout.dimensions[CSS_WIDTH] = 200;
         node->layout.dimensions[CSS_HEIGHT] = 19;
       }
     }
@@ -29295,8 +28834,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 403;
-      node->style.dimensions[CSS_HEIGHT] = 202;
+      node->style.dimensions[CSS_WIDTH] = 343;
+      node->style.dimensions[CSS_HEIGHT] = 122;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 2;
@@ -29314,8 +28853,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 403;
-      node->layout.dimensions[CSS_HEIGHT] = 202;
+      node->layout.dimensions[CSS_WIDTH] = 343;
+      node->layout.dimensions[CSS_HEIGHT] = 122;
     }
 
     test("Random #812", root_node, root_layout);
@@ -29359,7 +28898,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 448;
+      node->style.dimensions[CSS_HEIGHT] = 392;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_BOTTOM] = -4;
       node->style.padding[CSS_LEFT] = 17;
@@ -29376,7 +28915,7 @@ int main()
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 448;
+      node->layout.dimensions[CSS_HEIGHT] = 392;
     }
 
     test("Random #814", root_node, root_layout);
@@ -29387,8 +28926,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 16;
-      node->style.dimensions[CSS_HEIGHT] = 643;
+      node->style.dimensions[CSS_HEIGHT] = 607;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -29408,8 +28946,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 16;
-      node->layout.dimensions[CSS_HEIGHT] = 643;
+      node->layout.dimensions[CSS_WIDTH] = 6;
+      node->layout.dimensions[CSS_HEIGHT] = 607;
     }
 
     test("Random #815", root_node, root_layout);
@@ -29422,7 +28960,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 322;
+      node->style.dimensions[CSS_WIDTH] = 254;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -29446,7 +28984,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 322;
+      node->layout.dimensions[CSS_WIDTH] = 254;
       node->layout.dimensions[CSS_HEIGHT] = 38;
     }
 
@@ -29488,8 +29026,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 495;
-      node->style.dimensions[CSS_HEIGHT] = 558;
+      node->style.dimensions[CSS_WIDTH] = 444;
+      node->style.dimensions[CSS_HEIGHT] = 513;
       node->style.margin[CSS_RIGHT] = 6;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_TOP] = 2;
@@ -29501,8 +29039,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 8;
-      node->layout.dimensions[CSS_WIDTH] = 495;
-      node->layout.dimensions[CSS_HEIGHT] = 558;
+      node->layout.dimensions[CSS_WIDTH] = 444;
+      node->layout.dimensions[CSS_HEIGHT] = 513;
     }
 
     test("Random #818", root_node, root_layout);
@@ -29531,8 +29069,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 136;
+      node->style.dimensions[CSS_WIDTH] = 147;
+      node->style.dimensions[CSS_HEIGHT] = 50;
       node->style.margin[CSS_LEFT] = 12;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 12;
@@ -29548,8 +29086,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 18;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 136;
+      node->layout.dimensions[CSS_WIDTH] = 147;
+      node->layout.dimensions[CSS_HEIGHT] = 50;
     }
 
     test("Random #820", root_node, root_layout);
@@ -29560,8 +29098,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 652;
-      node->style.dimensions[CSS_HEIGHT] = 833;
+      node->style.dimensions[CSS_WIDTH] = 618;
+      node->style.dimensions[CSS_HEIGHT] = 816;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 19;
@@ -29576,8 +29114,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 652;
-      node->layout.dimensions[CSS_HEIGHT] = 833;
+      node->layout.dimensions[CSS_WIDTH] = 618;
+      node->layout.dimensions[CSS_HEIGHT] = 816;
     }
 
     test("Random #821", root_node, root_layout);
@@ -29608,8 +29146,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 731;
-      node->style.dimensions[CSS_HEIGHT] = 807;
+      node->style.dimensions[CSS_WIDTH] = 704;
+      node->style.dimensions[CSS_HEIGHT] = 787;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 13;
@@ -29626,8 +29164,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -18;
       node->layout.position[CSS_LEFT] = -10;
-      node->layout.dimensions[CSS_WIDTH] = 731;
-      node->layout.dimensions[CSS_HEIGHT] = 807;
+      node->layout.dimensions[CSS_WIDTH] = 704;
+      node->layout.dimensions[CSS_HEIGHT] = 787;
     }
 
     test("Random #823", root_node, root_layout);
@@ -29662,8 +29200,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 526;
-      node->style.dimensions[CSS_HEIGHT] = 416;
+      node->style.dimensions[CSS_WIDTH] = 478;
+      node->style.dimensions[CSS_HEIGHT] = 358;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -29680,7 +29218,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_HEIGHT] = 905;
+        node->style.dimensions[CSS_HEIGHT] = 896;
         node->style.margin[CSS_LEFT] = 19;
         node->style.margin[CSS_TOP] = 19;
         node->style.margin[CSS_RIGHT] = 19;
@@ -29722,7 +29260,6 @@ int main()
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_ONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 50;
         node->style.margin[CSS_LEFT] = 10;
         node->style.margin[CSS_TOP] = 10;
         node->style.margin[CSS_RIGHT] = 10;
@@ -29745,8 +29282,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 526;
-      node->layout.dimensions[CSS_HEIGHT] = 416;
+      node->layout.dimensions[CSS_WIDTH] = 478;
+      node->layout.dimensions[CSS_HEIGHT] = 358;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -29755,13 +29292,13 @@ int main()
         node->layout.position[CSS_TOP] = 28;
         node->layout.position[CSS_LEFT] = -6;
         node->layout.dimensions[CSS_WIDTH] = 37;
-        node->layout.dimensions[CSS_HEIGHT] = 905;
+        node->layout.dimensions[CSS_HEIGHT] = 896;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
           css_node_t *node;
           node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = 867;
+          node->layout.position[CSS_TOP] = 858;
           node->layout.position[CSS_LEFT] = 1;
           node->layout.dimensions[CSS_WIDTH] = 0;
           node->layout.dimensions[CSS_HEIGHT] = 14;
@@ -29769,7 +29306,7 @@ int main()
         node = &outer_node_1->children[1];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = -4;
-        node->layout.dimensions[CSS_WIDTH] = 50;
+        node->layout.dimensions[CSS_WIDTH] = 39;
         node->layout.dimensions[CSS_HEIGHT] = 37;
       }
     }
@@ -29806,8 +29343,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 203;
-      node->style.dimensions[CSS_HEIGHT] = 599;
+      node->style.dimensions[CSS_WIDTH] = 123;
+      node->style.dimensions[CSS_HEIGHT] = 559;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -29827,8 +29364,8 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 890;
-        node->style.dimensions[CSS_HEIGHT] = 586;
+        node->style.dimensions[CSS_WIDTH] = 879;
+        node->style.dimensions[CSS_HEIGHT] = 545;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 14;
         node->style.margin[CSS_BOTTOM] = 10;
@@ -29848,17 +29385,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -14;
       node->layout.position[CSS_LEFT] = -12;
-      node->layout.dimensions[CSS_WIDTH] = 203;
-      node->layout.dimensions[CSS_HEIGHT] = 599;
+      node->layout.dimensions[CSS_WIDTH] = 123;
+      node->layout.dimensions[CSS_HEIGHT] = 559;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 4;
+        node->layout.position[CSS_TOP] = 4.5;
         node->layout.position[CSS_LEFT] = 7;
-        node->layout.dimensions[CSS_WIDTH] = 890;
-        node->layout.dimensions[CSS_HEIGHT] = 586;
+        node->layout.dimensions[CSS_WIDTH] = 879;
+        node->layout.dimensions[CSS_HEIGHT] = 545;
       }
     }
 
@@ -29888,8 +29425,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 936;
-      node->style.dimensions[CSS_HEIGHT] = 78;
+      node->style.dimensions[CSS_WIDTH] = 930;
       node->style.margin[CSS_TOP] = -3;
       node->style.margin[CSS_BOTTOM] = 19;
       node->style.padding[CSS_LEFT] = 8;
@@ -29905,8 +29441,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 936;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_WIDTH] = 930;
+      node->layout.dimensions[CSS_HEIGHT] = 12;
     }
 
     test("Random #829", root_node, root_layout);
@@ -29917,8 +29453,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 536;
-      node->style.dimensions[CSS_HEIGHT] = 921;
+      node->style.dimensions[CSS_WIDTH] = 489;
+      node->style.dimensions[CSS_HEIGHT] = 913;
       node->style.border[CSS_LEFT] = 2;
       node->style.border[CSS_TOP] = 2;
       node->style.border[CSS_RIGHT] = 2;
@@ -29930,8 +29466,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 395;
-        node->style.dimensions[CSS_HEIGHT] = 206;
+        node->style.dimensions[CSS_WIDTH] = 334;
+        node->style.dimensions[CSS_HEIGHT] = 127;
         node->style.margin[CSS_LEFT] = -2;
         node->style.margin[CSS_TOP] = -2;
         node->style.margin[CSS_RIGHT] = -2;
@@ -29959,8 +29495,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -6;
-      node->layout.dimensions[CSS_WIDTH] = 536;
-      node->layout.dimensions[CSS_HEIGHT] = 921;
+      node->layout.dimensions[CSS_WIDTH] = 489;
+      node->layout.dimensions[CSS_HEIGHT] = 913;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -29968,8 +29504,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 21;
         node->layout.position[CSS_LEFT] = 0;
-        node->layout.dimensions[CSS_WIDTH] = 395;
-        node->layout.dimensions[CSS_HEIGHT] = 206;
+        node->layout.dimensions[CSS_WIDTH] = 334;
+        node->layout.dimensions[CSS_HEIGHT] = 127;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -30011,7 +29547,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 462;
+      node->style.dimensions[CSS_WIDTH] = 408;
       node->style.margin[CSS_LEFT] = 11;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = 11;
@@ -30038,7 +29574,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 462;
+      node->layout.dimensions[CSS_WIDTH] = 408;
       node->layout.dimensions[CSS_HEIGHT] = 25;
     }
 
@@ -30049,18 +29585,6 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 197;
-      node->style.margin[CSS_RIGHT] = 1;
-      node->style.margin[CSS_BOTTOM] = 13;
-      node->style.padding[CSS_LEFT] = 19;
-      node->style.padding[CSS_TOP] = 19;
-      node->style.padding[CSS_RIGHT] = 19;
-      node->style.padding[CSS_BOTTOM] = 19;
-      node->style.padding[CSS_TOP] = 12;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.border[CSS_BOTTOM] = 1;
     }
 
     css_node_t *root_layout = new_css_node();
@@ -30068,8 +29592,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 38;
-      node->layout.dimensions[CSS_HEIGHT] = 197;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #833", root_node, root_layout);
@@ -30117,7 +29641,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 768;
+      node->style.dimensions[CSS_WIDTH] = 744;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 15;
@@ -30133,7 +29657,7 @@ int main()
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 927;
+        node->style.dimensions[CSS_WIDTH] = 920;
         node->style.margin[CSS_LEFT] = -7;
         node->style.margin[CSS_TOP] = -7;
         node->style.margin[CSS_RIGHT] = -7;
@@ -30153,7 +29677,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -16;
-      node->layout.dimensions[CSS_WIDTH] = 768;
+      node->layout.dimensions[CSS_WIDTH] = 744;
       node->layout.dimensions[CSS_HEIGHT] = 4;
       init_css_node_children(node, 1);
       {
@@ -30162,7 +29686,7 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 6;
         node->layout.position[CSS_LEFT] = -7;
-        node->layout.dimensions[CSS_WIDTH] = 927;
+        node->layout.dimensions[CSS_WIDTH] = 920;
         node->layout.dimensions[CSS_HEIGHT] = 3;
       }
     }
@@ -30176,7 +29700,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 673;
+      node->style.dimensions[CSS_HEIGHT] = 640;
       node->style.padding[CSS_BOTTOM] = 8;
       node->style.position[CSS_LEFT] = 4;
     }
@@ -30187,7 +29711,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 673;
+      node->layout.dimensions[CSS_HEIGHT] = 640;
     }
 
     test("Random #837", root_node, root_layout);
@@ -30199,7 +29723,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 339;
+      node->style.dimensions[CSS_HEIGHT] = 273;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -30217,7 +29741,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_HEIGHT] = 885;
+        node->style.dimensions[CSS_HEIGHT] = 873;
         node->style.margin[CSS_BOTTOM] = 15;
         node->style.padding[CSS_TOP] = 0;
         node->style.padding[CSS_RIGHT] = 0;
@@ -30234,7 +29758,7 @@ int main()
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -10;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 339;
+      node->layout.dimensions[CSS_HEIGHT] = 273;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -30243,7 +29767,7 @@ int main()
         node->layout.position[CSS_TOP] = 1;
         node->layout.position[CSS_LEFT] = 12;
         node->layout.dimensions[CSS_WIDTH] = 0;
-        node->layout.dimensions[CSS_HEIGHT] = 885;
+        node->layout.dimensions[CSS_HEIGHT] = 873;
       }
     }
 
@@ -30256,7 +29780,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 817;
+      node->style.dimensions[CSS_WIDTH] = 799;
       node->style.margin[CSS_BOTTOM] = 3;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_BOTTOM] = 3;
@@ -30273,7 +29797,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 817;
+      node->layout.dimensions[CSS_WIDTH] = 799;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -30286,7 +29810,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_HEIGHT] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 40;
       node->style.margin[CSS_LEFT] = 19;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 19;
@@ -30306,7 +29830,7 @@ int main()
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 19;
       node->layout.dimensions[CSS_WIDTH] = 32;
-      node->layout.dimensions[CSS_HEIGHT] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 40;
     }
 
     test("Random #840", root_node, root_layout);
@@ -30335,8 +29859,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 690;
-      node->style.dimensions[CSS_HEIGHT] = 163;
+      node->style.dimensions[CSS_WIDTH] = 659;
+      node->style.dimensions[CSS_HEIGHT] = 79;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -30376,8 +29900,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 690;
-      node->layout.dimensions[CSS_HEIGHT] = 163;
+      node->layout.dimensions[CSS_WIDTH] = 659;
+      node->layout.dimensions[CSS_HEIGHT] = 79;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -30435,7 +29959,6 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 17;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -30452,7 +29975,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 17;
+      node->layout.dimensions[CSS_WIDTH] = 6;
       node->layout.dimensions[CSS_HEIGHT] = 17;
     }
 
@@ -30572,8 +30095,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 262;
-      node->style.dimensions[CSS_HEIGHT] = 843;
+      node->style.dimensions[CSS_WIDTH] = 188;
+      node->style.dimensions[CSS_HEIGHT] = 828;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -30587,8 +30110,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 262;
-      node->layout.dimensions[CSS_HEIGHT] = 843;
+      node->layout.dimensions[CSS_WIDTH] = 188;
+      node->layout.dimensions[CSS_HEIGHT] = 828;
     }
 
     test("Random #850", root_node, root_layout);
@@ -30599,7 +30122,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 335;
+      node->style.dimensions[CSS_HEIGHT] = 269;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -30618,7 +30141,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 2;
-      node->layout.dimensions[CSS_HEIGHT] = 335;
+      node->layout.dimensions[CSS_HEIGHT] = 269;
     }
 
     test("Random #851", root_node, root_layout);
@@ -30629,8 +30152,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 83;
-      node->style.dimensions[CSS_HEIGHT] = 445;
+      node->style.dimensions[CSS_HEIGHT] = 389;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_BOTTOM] = 10;
@@ -30645,8 +30167,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 83;
-      node->layout.dimensions[CSS_HEIGHT] = 445;
+      node->layout.dimensions[CSS_WIDTH] = 5;
+      node->layout.dimensions[CSS_HEIGHT] = 389;
     }
 
     test("Random #852", root_node, root_layout);
@@ -30658,8 +30180,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 573;
-      node->style.dimensions[CSS_HEIGHT] = 202;
+      node->style.dimensions[CSS_WIDTH] = 531;
+      node->style.dimensions[CSS_HEIGHT] = 122;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -30680,8 +30202,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 573;
-      node->layout.dimensions[CSS_HEIGHT] = 202;
+      node->layout.dimensions[CSS_WIDTH] = 531;
+      node->layout.dimensions[CSS_HEIGHT] = 122;
     }
 
     test("Random #853", root_node, root_layout);
@@ -30739,8 +30261,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 198;
-      node->style.dimensions[CSS_HEIGHT] = 655;
+      node->style.dimensions[CSS_WIDTH] = 118;
+      node->style.dimensions[CSS_HEIGHT] = 621;
       node->style.margin[CSS_LEFT] = -9;
     }
 
@@ -30749,8 +30271,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -9;
-      node->layout.dimensions[CSS_WIDTH] = 198;
-      node->layout.dimensions[CSS_HEIGHT] = 655;
+      node->layout.dimensions[CSS_WIDTH] = 118;
+      node->layout.dimensions[CSS_HEIGHT] = 621;
     }
 
     test("Random #856", root_node, root_layout);
@@ -30763,7 +30285,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 659;
+      node->style.dimensions[CSS_WIDTH] = 625;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -30783,7 +30305,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 659;
+      node->layout.dimensions[CSS_WIDTH] = 625;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -30813,8 +30335,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 154;
-      node->style.dimensions[CSS_HEIGHT] = 149;
+      node->style.dimensions[CSS_WIDTH] = 69;
+      node->style.dimensions[CSS_HEIGHT] = 64;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -30841,8 +30363,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = -17;
-      node->layout.dimensions[CSS_WIDTH] = 154;
-      node->layout.dimensions[CSS_HEIGHT] = 149;
+      node->layout.dimensions[CSS_WIDTH] = 69;
+      node->layout.dimensions[CSS_HEIGHT] = 64;
     }
 
     test("Random #859", root_node, root_layout);
@@ -30854,8 +30376,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 324;
-      node->style.dimensions[CSS_HEIGHT] = 649;
+      node->style.dimensions[CSS_WIDTH] = 256;
+      node->style.dimensions[CSS_HEIGHT] = 614;
       node->style.margin[CSS_TOP] = 12;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.margin[CSS_BOTTOM] = -6;
@@ -30875,8 +30397,8 @@ int main()
         node->style.align_items = CSS_ALIGN_STRETCH;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 545;
-        node->style.dimensions[CSS_HEIGHT] = 488;
+        node->style.dimensions[CSS_WIDTH] = 500;
+        node->style.dimensions[CSS_HEIGHT] = 437;
         node->style.margin[CSS_LEFT] = -8;
         node->style.margin[CSS_TOP] = -8;
         node->style.margin[CSS_RIGHT] = -8;
@@ -30894,17 +30416,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 15;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 324;
-      node->layout.dimensions[CSS_HEIGHT] = 649;
+      node->layout.dimensions[CSS_WIDTH] = 256;
+      node->layout.dimensions[CSS_HEIGHT] = 614;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 78.5;
+        node->layout.position[CSS_TOP] = 86.5;
         node->layout.position[CSS_LEFT] = -10;
-        node->layout.dimensions[CSS_WIDTH] = 545;
-        node->layout.dimensions[CSS_HEIGHT] = 488;
+        node->layout.dimensions[CSS_WIDTH] = 500;
+        node->layout.dimensions[CSS_HEIGHT] = 437;
       }
     }
 
@@ -30976,7 +30498,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 778;
+      node->style.dimensions[CSS_HEIGHT] = 756;
       node->style.margin[CSS_LEFT] = -10;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_RIGHT] = -10;
@@ -31005,7 +30527,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 17;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 778;
+      node->layout.dimensions[CSS_HEIGHT] = 756;
     }
 
     test("Random #864", root_node, root_layout);
@@ -31050,8 +30572,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 776;
-      node->style.dimensions[CSS_HEIGHT] = 856;
+      node->style.dimensions[CSS_WIDTH] = 753;
+      node->style.dimensions[CSS_HEIGHT] = 842;
       node->style.margin[CSS_LEFT] = 17;
       node->style.padding[CSS_LEFT] = 16;
       node->style.padding[CSS_TOP] = 16;
@@ -31068,8 +30590,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 17;
-      node->layout.dimensions[CSS_WIDTH] = 776;
-      node->layout.dimensions[CSS_HEIGHT] = 856;
+      node->layout.dimensions[CSS_WIDTH] = 753;
+      node->layout.dimensions[CSS_HEIGHT] = 842;
     }
 
     test("Random #866", root_node, root_layout);
@@ -31130,7 +30652,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 338;
+      node->style.dimensions[CSS_WIDTH] = 272;
       node->style.margin[CSS_LEFT] = 14;
       node->style.margin[CSS_BOTTOM] = 9;
       node->style.padding[CSS_BOTTOM] = 6;
@@ -31146,7 +30668,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 338;
+      node->layout.dimensions[CSS_WIDTH] = 272;
       node->layout.dimensions[CSS_HEIGHT] = 6;
     }
 
@@ -31157,8 +30679,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 239;
-      node->style.dimensions[CSS_HEIGHT] = 740;
+      node->style.dimensions[CSS_WIDTH] = 163;
+      node->style.dimensions[CSS_HEIGHT] = 714;
       node->style.margin[CSS_LEFT] = -6;
       node->style.margin[CSS_TOP] = -6;
       node->style.margin[CSS_RIGHT] = -6;
@@ -31179,8 +30701,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 14;
       node->layout.position[CSS_LEFT] = 3;
-      node->layout.dimensions[CSS_WIDTH] = 239;
-      node->layout.dimensions[CSS_HEIGHT] = 740;
+      node->layout.dimensions[CSS_WIDTH] = 163;
+      node->layout.dimensions[CSS_HEIGHT] = 714;
     }
 
     test("Random #870", root_node, root_layout);
@@ -31193,8 +30715,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 410;
-      node->style.dimensions[CSS_HEIGHT] = 798;
+      node->style.dimensions[CSS_WIDTH] = 351;
+      node->style.dimensions[CSS_HEIGHT] = 777;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -31219,8 +30741,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 410;
-      node->layout.dimensions[CSS_HEIGHT] = 798;
+      node->layout.dimensions[CSS_WIDTH] = 351;
+      node->layout.dimensions[CSS_HEIGHT] = 777;
     }
 
     test("Random #871", root_node, root_layout);
@@ -31232,8 +30754,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 95;
-      node->style.dimensions[CSS_HEIGHT] = 295;
+      node->style.dimensions[CSS_WIDTH] = 5;
+      node->style.dimensions[CSS_HEIGHT] = 225;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.margin[CSS_BOTTOM] = 1;
@@ -31246,8 +30768,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 95;
-      node->layout.dimensions[CSS_HEIGHT] = 295;
+      node->layout.dimensions[CSS_WIDTH] = 15;
+      node->layout.dimensions[CSS_HEIGHT] = 225;
     }
 
     test("Random #872", root_node, root_layout);
@@ -31340,7 +30862,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_HEIGHT] = 671;
+      node->style.dimensions[CSS_HEIGHT] = 638;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -31363,7 +30885,7 @@ int main()
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 2;
       node->layout.dimensions[CSS_WIDTH] = 8;
-      node->layout.dimensions[CSS_HEIGHT] = 671;
+      node->layout.dimensions[CSS_HEIGHT] = 638;
     }
 
     test("Random #876", root_node, root_layout);
@@ -31410,7 +30932,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 486;
+      node->style.dimensions[CSS_WIDTH] = 434;
       node->style.margin[CSS_LEFT] = -7;
       node->style.margin[CSS_TOP] = -7;
       node->style.margin[CSS_RIGHT] = -7;
@@ -31429,7 +30951,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -5;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 486;
+      node->layout.dimensions[CSS_WIDTH] = 434;
       node->layout.dimensions[CSS_HEIGHT] = 9;
     }
 
@@ -31440,7 +30962,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 271;
+      node->style.dimensions[CSS_HEIGHT] = 198;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -31457,7 +30979,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 6;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 271;
+      node->layout.dimensions[CSS_HEIGHT] = 198;
     }
 
     test("Random #879", root_node, root_layout);
@@ -31469,8 +30991,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 317;
-      node->style.dimensions[CSS_HEIGHT] = 473;
+      node->style.dimensions[CSS_WIDTH] = 249;
+      node->style.dimensions[CSS_HEIGHT] = 420;
       node->style.margin[CSS_LEFT] = 19;
       node->style.margin[CSS_TOP] = 19;
       node->style.margin[CSS_RIGHT] = 19;
@@ -31490,8 +31012,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 27;
       node->layout.position[CSS_LEFT] = 9;
-      node->layout.dimensions[CSS_WIDTH] = 317;
-      node->layout.dimensions[CSS_HEIGHT] = 473;
+      node->layout.dimensions[CSS_WIDTH] = 249;
+      node->layout.dimensions[CSS_HEIGHT] = 420;
     }
 
     test("Random #880", root_node, root_layout);
@@ -31520,8 +31042,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 578;
-      node->style.dimensions[CSS_HEIGHT] = 225;
+      node->style.dimensions[CSS_WIDTH] = 536;
+      node->style.dimensions[CSS_HEIGHT] = 147;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -31544,8 +31066,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 578;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.dimensions[CSS_WIDTH] = 536;
+      node->layout.dimensions[CSS_HEIGHT] = 147;
     }
 
     test("Random #882", root_node, root_layout);
@@ -31575,8 +31097,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 967;
-      node->style.dimensions[CSS_HEIGHT] = 659;
+      node->style.dimensions[CSS_WIDTH] = 964;
+      node->style.dimensions[CSS_HEIGHT] = 625;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -5;
       node->style.padding[CSS_LEFT] = 19;
@@ -31595,8 +31117,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -14;
-      node->layout.dimensions[CSS_WIDTH] = 967;
-      node->layout.dimensions[CSS_HEIGHT] = 659;
+      node->layout.dimensions[CSS_WIDTH] = 964;
+      node->layout.dimensions[CSS_HEIGHT] = 625;
     }
 
     test("Random #884", root_node, root_layout);
@@ -31607,8 +31129,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 0;
-      node->style.dimensions[CSS_HEIGHT] = 34;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -31631,7 +31151,7 @@ int main()
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 20;
       node->layout.dimensions[CSS_WIDTH] = 12;
-      node->layout.dimensions[CSS_HEIGHT] = 34;
+      node->layout.dimensions[CSS_HEIGHT] = 24;
     }
 
     test("Random #885", root_node, root_layout);
@@ -31641,7 +31161,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 346;
+      node->style.dimensions[CSS_WIDTH] = 281;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -31676,7 +31196,7 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 930;
+        node->style.dimensions[CSS_HEIGHT] = 923;
         node->style.margin[CSS_LEFT] = 14;
         node->style.margin[CSS_RIGHT] = 18;
         node->style.margin[CSS_BOTTOM] = -5;
@@ -31703,8 +31223,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 346;
-      node->layout.dimensions[CSS_HEIGHT] = 958;
+      node->layout.dimensions[CSS_WIDTH] = 281;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 3);
       {
         css_node_t *outer_node_1 = node;
@@ -31718,7 +31238,7 @@ int main()
         node->layout.position[CSS_TOP] = 9;
         node->layout.position[CSS_LEFT] = 14;
         node->layout.dimensions[CSS_WIDTH] = 0;
-        node->layout.dimensions[CSS_HEIGHT] = 930;
+        node->layout.dimensions[CSS_HEIGHT] = 923;
         node = &outer_node_1->children[2];
         node->layout.position[CSS_TOP] = -17;
         node->layout.position[CSS_LEFT] = -14;
@@ -31735,8 +31255,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 353;
-      node->style.dimensions[CSS_HEIGHT] = 475;
+      node->style.dimensions[CSS_WIDTH] = 288;
+      node->style.dimensions[CSS_HEIGHT] = 423;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -31759,8 +31279,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 17;
-      node->layout.dimensions[CSS_WIDTH] = 353;
-      node->layout.dimensions[CSS_HEIGHT] = 475;
+      node->layout.dimensions[CSS_WIDTH] = 288;
+      node->layout.dimensions[CSS_HEIGHT] = 423;
     }
 
     test("Random #887", root_node, root_layout);
@@ -31772,7 +31292,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 200;
+      node->style.dimensions[CSS_WIDTH] = 120;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_BOTTOM] = 9;
@@ -31790,7 +31310,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.flex = CSS_FLEX_NONE;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_HEIGHT] = 252;
+        node->style.dimensions[CSS_HEIGHT] = 177;
         node->style.margin[CSS_LEFT] = -3;
         node->style.padding[CSS_BOTTOM] = 3;
         node->style.border[CSS_LEFT] = 3;
@@ -31804,7 +31324,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 200;
+      node->layout.dimensions[CSS_WIDTH] = 120;
       node->layout.dimensions[CSS_HEIGHT] = 38;
       init_css_node_children(node, 1);
       {
@@ -31814,7 +31334,7 @@ int main()
         node->layout.position[CSS_TOP] = 6;
         node->layout.position[CSS_LEFT] = 0;
         node->layout.dimensions[CSS_WIDTH] = 3;
-        node->layout.dimensions[CSS_HEIGHT] = 252;
+        node->layout.dimensions[CSS_HEIGHT] = 177;
       }
     }
 
@@ -31825,7 +31345,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 472;
+      node->style.dimensions[CSS_WIDTH] = 419;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 14;
       node->style.padding[CSS_BOTTOM] = 7;
@@ -31856,7 +31376,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 17;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 472;
+      node->layout.dimensions[CSS_WIDTH] = 419;
       node->layout.dimensions[CSS_HEIGHT] = 9;
       init_css_node_children(node, 1);
       {
@@ -31879,8 +31399,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 711;
-      node->style.dimensions[CSS_HEIGHT] = 446;
+      node->style.dimensions[CSS_WIDTH] = 682;
+      node->style.dimensions[CSS_HEIGHT] = 390;
       node->style.margin[CSS_LEFT] = -10;
       node->style.padding[CSS_LEFT] = 6;
       node->style.padding[CSS_TOP] = 6;
@@ -31897,8 +31417,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
-      node->layout.dimensions[CSS_WIDTH] = 711;
-      node->layout.dimensions[CSS_HEIGHT] = 446;
+      node->layout.dimensions[CSS_WIDTH] = 682;
+      node->layout.dimensions[CSS_HEIGHT] = 390;
     }
 
     test("Random #890", root_node, root_layout);
@@ -31909,7 +31429,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 715;
+      node->style.dimensions[CSS_WIDTH] = 687;
       node->style.margin[CSS_LEFT] = 2;
       node->style.margin[CSS_TOP] = 2;
       node->style.margin[CSS_RIGHT] = 2;
@@ -31931,7 +31451,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 2;
-      node->layout.dimensions[CSS_WIDTH] = 715;
+      node->layout.dimensions[CSS_WIDTH] = 687;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -31945,7 +31465,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 253;
+      node->style.dimensions[CSS_HEIGHT] = 179;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 0;
       node->style.padding[CSS_LEFT] = 17;
@@ -31969,7 +31489,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -2;
       node->layout.dimensions[CSS_WIDTH] = 25;
-      node->layout.dimensions[CSS_HEIGHT] = 253;
+      node->layout.dimensions[CSS_HEIGHT] = 179;
     }
 
     test("Random #892", root_node, root_layout);
@@ -31998,7 +31518,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 643;
+      node->style.dimensions[CSS_HEIGHT] = 607;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -32017,7 +31537,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = -4;
       node->layout.dimensions[CSS_WIDTH] = 18;
-      node->layout.dimensions[CSS_HEIGHT] = 643;
+      node->layout.dimensions[CSS_HEIGHT] = 607;
     }
 
     test("Random #894", root_node, root_layout);
@@ -32029,8 +31549,8 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 751;
-      node->style.dimensions[CSS_HEIGHT] = 729;
+      node->style.dimensions[CSS_WIDTH] = 726;
+      node->style.dimensions[CSS_HEIGHT] = 702;
       node->style.margin[CSS_TOP] = 19;
       node->style.padding[CSS_LEFT] = 16;
       node->style.padding[CSS_TOP] = 16;
@@ -32049,8 +31569,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 22;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 751;
-      node->layout.dimensions[CSS_HEIGHT] = 729;
+      node->layout.dimensions[CSS_WIDTH] = 726;
+      node->layout.dimensions[CSS_HEIGHT] = 702;
     }
 
     test("Random #895", root_node, root_layout);
@@ -32109,8 +31629,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 93;
-      node->style.dimensions[CSS_HEIGHT] = 292;
+      node->style.dimensions[CSS_WIDTH] = 2;
+      node->style.dimensions[CSS_HEIGHT] = 221;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -32129,8 +31649,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -7;
-      node->layout.dimensions[CSS_WIDTH] = 93;
-      node->layout.dimensions[CSS_HEIGHT] = 292;
+      node->layout.dimensions[CSS_WIDTH] = 4;
+      node->layout.dimensions[CSS_HEIGHT] = 221;
     }
 
     test("Random #898", root_node, root_layout);
@@ -32179,7 +31699,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 533;
+      node->style.dimensions[CSS_WIDTH] = 486;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = 11;
       node->style.margin[CSS_RIGHT] = -5;
@@ -32193,7 +31713,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 533;
+      node->layout.dimensions[CSS_WIDTH] = 486;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -32262,7 +31782,6 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_HEIGHT] = 35;
       node->style.margin[CSS_LEFT] = -2;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = -2;
@@ -32282,7 +31801,7 @@ int main()
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = -6;
       node->layout.dimensions[CSS_WIDTH] = 5;
-      node->layout.dimensions[CSS_HEIGHT] = 35;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #904", root_node, root_layout);
@@ -32293,7 +31812,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 539;
+      node->style.dimensions[CSS_WIDTH] = 493;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 15;
@@ -32308,7 +31827,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 5;
-      node->layout.dimensions[CSS_WIDTH] = 539;
+      node->layout.dimensions[CSS_WIDTH] = 493;
       node->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
@@ -32387,8 +31906,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 17;
-      node->style.dimensions[CSS_HEIGHT] = 480;
+      node->style.dimensions[CSS_HEIGHT] = 428;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -32410,7 +31928,7 @@ int main()
         node = &outer_node_1->children[0];
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-        node->style.dimensions[CSS_HEIGHT] = 153;
+        node->style.dimensions[CSS_HEIGHT] = 69;
         node->style.margin[CSS_LEFT] = 3;
         node->style.margin[CSS_TOP] = -9;
         node->style.margin[CSS_RIGHT] = -8;
@@ -32429,8 +31947,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 480;
+      node->layout.dimensions[CSS_WIDTH] = 3;
+      node->layout.dimensions[CSS_HEIGHT] = 428;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -32439,7 +31957,7 @@ int main()
         node->layout.position[CSS_TOP] = -4;
         node->layout.position[CSS_LEFT] = 13;
         node->layout.dimensions[CSS_WIDTH] = 2;
-        node->layout.dimensions[CSS_HEIGHT] = 153;
+        node->layout.dimensions[CSS_HEIGHT] = 69;
       }
     }
 
@@ -32485,8 +32003,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 267;
-      node->style.dimensions[CSS_HEIGHT] = 862;
+      node->style.dimensions[CSS_WIDTH] = 194;
+      node->style.dimensions[CSS_HEIGHT] = 848;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -32528,15 +32046,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 267;
-      node->layout.dimensions[CSS_HEIGHT] = 862;
+      node->layout.dimensions[CSS_WIDTH] = 194;
+      node->layout.dimensions[CSS_HEIGHT] = 848;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 14;
-        node->layout.position[CSS_LEFT] = 253;
+        node->layout.position[CSS_LEFT] = 180;
         node->layout.dimensions[CSS_WIDTH] = 7;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -32551,7 +32069,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 358;
+      node->style.dimensions[CSS_WIDTH] = 294;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = -6;
@@ -32571,7 +32089,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 358;
+      node->layout.dimensions[CSS_WIDTH] = 294;
       node->layout.dimensions[CSS_HEIGHT] = 22;
     }
 
@@ -32583,7 +32101,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_HEIGHT] = 261;
+      node->style.dimensions[CSS_HEIGHT] = 188;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_RIGHT] = 5;
       node->style.margin[CSS_BOTTOM] = 14;
@@ -32596,7 +32114,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 3;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 261;
+      node->layout.dimensions[CSS_HEIGHT] = 188;
     }
 
     test("Random #913", root_node, root_layout);
@@ -32607,8 +32125,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 531;
-      node->style.dimensions[CSS_HEIGHT] = 411;
+      node->style.dimensions[CSS_WIDTH] = 484;
+      node->style.dimensions[CSS_HEIGHT] = 352;
       node->style.margin[CSS_RIGHT] = 18;
       node->style.padding[CSS_LEFT] = 18;
       node->style.border[CSS_LEFT] = 1;
@@ -32625,8 +32143,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 4;
-      node->layout.dimensions[CSS_WIDTH] = 531;
-      node->layout.dimensions[CSS_HEIGHT] = 411;
+      node->layout.dimensions[CSS_WIDTH] = 484;
+      node->layout.dimensions[CSS_HEIGHT] = 352;
     }
 
     test("Random #914", root_node, root_layout);
@@ -32708,7 +32226,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 172;
+      node->style.dimensions[CSS_WIDTH] = 89;
       node->style.margin[CSS_LEFT] = 3;
       node->style.margin[CSS_TOP] = 3;
       node->style.margin[CSS_RIGHT] = 3;
@@ -32727,7 +32245,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 172;
+      node->layout.dimensions[CSS_WIDTH] = 89;
       node->layout.dimensions[CSS_HEIGHT] = 21;
     }
 
@@ -32802,7 +32320,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 864;
+      node->style.dimensions[CSS_WIDTH] = 850;
       node->style.margin[CSS_LEFT] = 6;
       node->style.margin[CSS_TOP] = 6;
       node->style.margin[CSS_RIGHT] = 6;
@@ -32817,7 +32335,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 6;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 864;
+      node->layout.dimensions[CSS_WIDTH] = 850;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -32829,7 +32347,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 868;
+      node->style.dimensions[CSS_WIDTH] = 855;
       node->style.margin[CSS_LEFT] = 9;
       node->style.margin[CSS_TOP] = 9;
       node->style.margin[CSS_RIGHT] = 9;
@@ -32846,7 +32364,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 16;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 868;
+      node->layout.dimensions[CSS_WIDTH] = 855;
       node->layout.dimensions[CSS_HEIGHT] = 3;
     }
 
@@ -32858,7 +32376,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 520;
+      node->style.dimensions[CSS_WIDTH] = 472;
       node->style.margin[CSS_LEFT] = -2;
       node->style.padding[CSS_LEFT] = 1;
       node->style.border[CSS_LEFT] = 3;
@@ -32870,7 +32388,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 520;
+      node->layout.dimensions[CSS_WIDTH] = 472;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -32900,8 +32418,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 828;
-      node->style.dimensions[CSS_HEIGHT] = 41;
+      node->style.dimensions[CSS_WIDTH] = 811;
       node->style.margin[CSS_LEFT] = 17;
       node->style.margin[CSS_TOP] = 17;
       node->style.margin[CSS_RIGHT] = 17;
@@ -32917,8 +32434,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 12;
       node->layout.position[CSS_LEFT] = 1;
-      node->layout.dimensions[CSS_WIDTH] = 828;
-      node->layout.dimensions[CSS_HEIGHT] = 41;
+      node->layout.dimensions[CSS_WIDTH] = 811;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #925", root_node, root_layout);
@@ -32929,7 +32446,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 107;
+      node->style.dimensions[CSS_WIDTH] = 18;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -32949,7 +32466,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 18;
       node->layout.dimensions[CSS_HEIGHT] = 7;
     }
 
@@ -32960,7 +32477,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 423;
+      node->style.dimensions[CSS_HEIGHT] = 366;
       node->style.margin[CSS_BOTTOM] = -6;
       node->style.padding[CSS_RIGHT] = 10;
       node->style.padding[CSS_BOTTOM] = 9;
@@ -32973,7 +32490,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -7;
       node->layout.dimensions[CSS_WIDTH] = 10;
-      node->layout.dimensions[CSS_HEIGHT] = 423;
+      node->layout.dimensions[CSS_HEIGHT] = 366;
     }
 
     test("Random #927", root_node, root_layout);
@@ -32983,90 +32500,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 82;
-      node->style.dimensions[CSS_HEIGHT] = 492;
-      node->style.margin[CSS_TOP] = 12;
-      node->style.margin[CSS_BOTTOM] = 18;
-      node->style.padding[CSS_TOP] = 10;
-      node->style.padding[CSS_BOTTOM] = 15;
-      node->style.border[CSS_LEFT] = 0;
-      node->style.border[CSS_BOTTOM] = 2;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-        node->style.align_self = CSS_ALIGN_FLEX_START;
-        node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 65;
-        node->style.margin[CSS_LEFT] = 3;
-        node->style.margin[CSS_TOP] = 3;
-        node->style.margin[CSS_RIGHT] = 3;
-        node->style.margin[CSS_BOTTOM] = 3;
-        node->style.margin[CSS_TOP] = 7;
-        node->style.border[CSS_LEFT] = 0;
-        node->style.border[CSS_TOP] = 0;
-        node->style.position[CSS_TOP] = -4;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-          node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-          node->style.align_self = CSS_ALIGN_FLEX_END;
-          node->style.flex = CSS_FLEX_NONE;
-          node->style.dimensions[CSS_HEIGHT] = 742;
-          node->style.margin[CSS_LEFT] = 1;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_TOP] = 11;
-          node->style.padding[CSS_RIGHT] = 11;
-          node->style.padding[CSS_BOTTOM] = 11;
-          node->style.padding[CSS_LEFT] = 11;
-          node->style.padding[CSS_RIGHT] = 13;
-          node->style.border[CSS_LEFT] = 0;
-          node->style.border[CSS_TOP] = 0;
-          node->style.border[CSS_RIGHT] = 0;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.border[CSS_LEFT] = 3;
-          node->style.border[CSS_TOP] = 3;
-          node->style.border[CSS_RIGHT] = 1;
-          node->style.border[CSS_BOTTOM] = 0;
-          node->style.position[CSS_LEFT] = -2;
-          node->style.position[CSS_TOP] = -2;
-        }
-      }
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = 12;
+      node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 82;
-      node->layout.dimensions[CSS_HEIGHT] = 492;
-      init_css_node_children(node, 1);
-      {
-        css_node_t *outer_node_1 = node;
-        css_node_t *node;
-        node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 3;
-        node->layout.dimensions[CSS_WIDTH] = 65;
-        node->layout.dimensions[CSS_HEIGHT] = 742;
-        init_css_node_children(node, 1);
-        {
-          css_node_t *outer_node_2 = node;
-          css_node_t *node;
-          node = &outer_node_2->children[0];
-          node->layout.position[CSS_TOP] = -2;
-          node->layout.position[CSS_LEFT] = 35;
-          node->layout.dimensions[CSS_WIDTH] = 28;
-          node->layout.dimensions[CSS_HEIGHT] = 742;
-        }
-      }
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #928", root_node, root_layout);
@@ -33077,7 +32519,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 615;
+      node->style.dimensions[CSS_WIDTH] = 577;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -33096,7 +32538,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 615;
+      node->layout.dimensions[CSS_WIDTH] = 577;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -33108,7 +32550,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 799;
+      node->style.dimensions[CSS_HEIGHT] = 779;
       node->style.margin[CSS_LEFT] = -8;
       node->style.margin[CSS_TOP] = -8;
       node->style.margin[CSS_RIGHT] = -8;
@@ -33126,7 +32568,7 @@ int main()
       node->layout.position[CSS_TOP] = 1;
       node->layout.position[CSS_LEFT] = 8;
       node->layout.dimensions[CSS_WIDTH] = 17;
-      node->layout.dimensions[CSS_HEIGHT] = 799;
+      node->layout.dimensions[CSS_HEIGHT] = 779;
     }
 
     test("Random #930", root_node, root_layout);
@@ -33156,7 +32598,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 556;
+      node->style.dimensions[CSS_WIDTH] = 512;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -33177,7 +32619,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 556;
+      node->layout.dimensions[CSS_WIDTH] = 512;
       node->layout.dimensions[CSS_HEIGHT] = 10;
     }
 
@@ -33208,8 +32650,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node->style.dimensions[CSS_WIDTH] = 960;
-      node->style.dimensions[CSS_HEIGHT] = 309;
+      node->style.dimensions[CSS_WIDTH] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 240;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -33226,8 +32668,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 11;
-      node->layout.dimensions[CSS_WIDTH] = 960;
-      node->layout.dimensions[CSS_HEIGHT] = 309;
+      node->layout.dimensions[CSS_WIDTH] = 956;
+      node->layout.dimensions[CSS_HEIGHT] = 240;
     }
 
     test("Random #934", root_node, root_layout);
@@ -33286,8 +32728,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 983;
-      node->style.dimensions[CSS_HEIGHT] = 422;
+      node->style.dimensions[CSS_WIDTH] = 982;
+      node->style.dimensions[CSS_HEIGHT] = 365;
       node->style.margin[CSS_LEFT] = -9;
       node->style.margin[CSS_TOP] = -9;
       node->style.margin[CSS_BOTTOM] = 19;
@@ -33306,8 +32748,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 983;
-      node->layout.dimensions[CSS_HEIGHT] = 422;
+      node->layout.dimensions[CSS_WIDTH] = 982;
+      node->layout.dimensions[CSS_HEIGHT] = 365;
     }
 
     test("Random #937", root_node, root_layout);
@@ -33317,8 +32759,8 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 329;
-      node->style.dimensions[CSS_HEIGHT] = 836;
+      node->style.dimensions[CSS_WIDTH] = 262;
+      node->style.dimensions[CSS_HEIGHT] = 820;
       node->style.margin[CSS_LEFT] = -1;
       node->style.margin[CSS_TOP] = -1;
       node->style.margin[CSS_RIGHT] = -1;
@@ -33357,15 +32799,15 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 6;
-      node->layout.dimensions[CSS_WIDTH] = 329;
-      node->layout.dimensions[CSS_HEIGHT] = 836;
+      node->layout.dimensions[CSS_WIDTH] = 262;
+      node->layout.dimensions[CSS_HEIGHT] = 820;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 27;
-        node->layout.position[CSS_LEFT] = 160;
+        node->layout.position[CSS_LEFT] = 126.5;
         node->layout.dimensions[CSS_WIDTH] = 19;
         node->layout.dimensions[CSS_HEIGHT] = 12;
       }
@@ -33379,7 +32821,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 873;
+      node->style.dimensions[CSS_HEIGHT] = 861;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -33396,7 +32838,7 @@ int main()
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -12;
       node->layout.dimensions[CSS_WIDTH] = 0;
-      node->layout.dimensions[CSS_HEIGHT] = 873;
+      node->layout.dimensions[CSS_HEIGHT] = 861;
     }
 
     test("Random #939", root_node, root_layout);
@@ -33407,7 +32849,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.dimensions[CSS_WIDTH] = 991;
+      node->style.dimensions[CSS_WIDTH] = 990;
       node->style.margin[CSS_BOTTOM] = -7;
       node->style.padding[CSS_RIGHT] = 0;
       node->style.border[CSS_LEFT] = 1;
@@ -33422,7 +32864,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 991;
+      node->layout.dimensions[CSS_WIDTH] = 990;
       node->layout.dimensions[CSS_HEIGHT] = 4;
     }
 
@@ -33435,7 +32877,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 660;
+      node->style.dimensions[CSS_HEIGHT] = 626;
       node->style.margin[CSS_LEFT] = 16;
       node->style.margin[CSS_TOP] = 16;
       node->style.margin[CSS_RIGHT] = 16;
@@ -33458,7 +32900,7 @@ int main()
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 9;
       node->layout.dimensions[CSS_WIDTH] = 21;
-      node->layout.dimensions[CSS_HEIGHT] = 660;
+      node->layout.dimensions[CSS_HEIGHT] = 626;
     }
 
     test("Random #941", root_node, root_layout);
@@ -33532,7 +32974,6 @@ int main()
         node->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node->style.align_self = CSS_ALIGN_STRETCH;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 24;
         node->style.margin[CSS_LEFT] = 11;
         node->style.margin[CSS_TOP] = 11;
         node->style.margin[CSS_RIGHT] = 11;
@@ -33552,7 +32993,7 @@ int main()
       node->layout.position[CSS_TOP] = -3;
       node->layout.position[CSS_LEFT] = 13;
       node->layout.dimensions[CSS_WIDTH] = 62;
-      node->layout.dimensions[CSS_HEIGHT] = 78;
+      node->layout.dimensions[CSS_HEIGHT] = 70;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -33561,7 +33002,7 @@ int main()
         node->layout.position[CSS_TOP] = 24;
         node->layout.position[CSS_LEFT] = 17;
         node->layout.dimensions[CSS_WIDTH] = 16;
-        node->layout.dimensions[CSS_HEIGHT] = 24;
+        node->layout.dimensions[CSS_HEIGHT] = 16;
       }
     }
 
@@ -33592,7 +33033,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 952;
+      node->style.dimensions[CSS_WIDTH] = 948;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -33610,7 +33051,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 952;
+      node->layout.dimensions[CSS_WIDTH] = 948;
       node->layout.dimensions[CSS_HEIGHT] = 11;
     }
 
@@ -33659,7 +33100,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 942;
+      node->style.dimensions[CSS_WIDTH] = 936;
       node->style.margin[CSS_LEFT] = 15;
       node->style.margin[CSS_TOP] = -2;
       node->style.margin[CSS_RIGHT] = 8;
@@ -33691,7 +33132,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 942;
+      node->layout.dimensions[CSS_WIDTH] = 936;
       node->layout.dimensions[CSS_HEIGHT] = 2;
       init_css_node_children(node, 1);
       {
@@ -33712,30 +33153,15 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_HEIGHT] = 225;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_TOP] = -10;
-      node->style.margin[CSS_RIGHT] = -10;
-      node->style.margin[CSS_BOTTOM] = -10;
-      node->style.margin[CSS_LEFT] = -10;
-      node->style.margin[CSS_RIGHT] = -2;
-      node->style.margin[CSS_BOTTOM] = 8;
-      node->style.padding[CSS_LEFT] = 4;
-      node->style.padding[CSS_RIGHT] = 16;
-      node->style.padding[CSS_BOTTOM] = 7;
-      node->style.position[CSS_LEFT] = 8;
-      node->style.position[CSS_TOP] = 0;
     }
 
     css_node_t *root_layout = new_css_node();
     {
       css_node_t *node = root_layout;
-      node->layout.position[CSS_TOP] = -10;
-      node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 20;
-      node->layout.dimensions[CSS_HEIGHT] = 225;
+      node->layout.position[CSS_TOP] = 0;
+      node->layout.position[CSS_LEFT] = 0;
+      node->layout.dimensions[CSS_WIDTH] = 0;
+      node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #950", root_node, root_layout);
@@ -33746,7 +33172,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 210;
+      node->style.dimensions[CSS_WIDTH] = 131;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -33765,7 +33191,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = -3;
-      node->layout.dimensions[CSS_WIDTH] = 210;
+      node->layout.dimensions[CSS_WIDTH] = 131;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -33906,7 +33332,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 867;
+      node->style.dimensions[CSS_WIDTH] = 854;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -33926,7 +33352,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 9;
       node->layout.position[CSS_LEFT] = 14;
-      node->layout.dimensions[CSS_WIDTH] = 867;
+      node->layout.dimensions[CSS_WIDTH] = 854;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -33938,8 +33364,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 47;
-      node->style.dimensions[CSS_HEIGHT] = 689;
+      node->style.dimensions[CSS_HEIGHT] = 658;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -33984,7 +33409,7 @@ int main()
           node->style.align_self = CSS_ALIGN_FLEX_START;
           node->style.flex = CSS_FLEX_ONE;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_HEIGHT] = 445;
+          node->style.dimensions[CSS_HEIGHT] = 389;
           node->style.margin[CSS_LEFT] = -7;
           node->style.margin[CSS_BOTTOM] = 1;
           node->style.padding[CSS_LEFT] = 15;
@@ -34003,8 +33428,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 47;
-      node->layout.dimensions[CSS_HEIGHT] = 689;
+      node->layout.dimensions[CSS_WIDTH] = 95;
+      node->layout.dimensions[CSS_HEIGHT] = 658;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -34012,8 +33437,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 11;
         node->layout.position[CSS_LEFT] = 31;
-        node->layout.dimensions[CSS_WIDTH] = 38;
-        node->layout.dimensions[CSS_HEIGHT] = 658;
+        node->layout.dimensions[CSS_WIDTH] = 58;
+        node->layout.dimensions[CSS_HEIGHT] = 627;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -34022,7 +33447,7 @@ int main()
           node->layout.position[CSS_TOP] = 19;
           node->layout.position[CSS_LEFT] = 16;
           node->layout.dimensions[CSS_WIDTH] = 27;
-          node->layout.dimensions[CSS_HEIGHT] = 619;
+          node->layout.dimensions[CSS_HEIGHT] = 588;
         }
       }
     }
@@ -34108,8 +33533,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 181;
-      node->style.dimensions[CSS_HEIGHT] = 404;
+      node->style.dimensions[CSS_WIDTH] = 99;
+      node->style.dimensions[CSS_HEIGHT] = 344;
       node->style.margin[CSS_TOP] = 2;
       node->style.border[CSS_LEFT] = 1;
       node->style.border[CSS_RIGHT] = 2;
@@ -34123,7 +33548,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node->style.justify_content = CSS_JUSTIFY_FLEX_START;
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_HEIGHT] = 509;
+        node->style.dimensions[CSS_HEIGHT] = 460;
         node->style.margin[CSS_LEFT] = 6;
         node->style.margin[CSS_TOP] = 6;
         node->style.margin[CSS_RIGHT] = 6;
@@ -34155,17 +33580,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 2;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 181;
-      node->layout.dimensions[CSS_HEIGHT] = 404;
+      node->layout.dimensions[CSS_WIDTH] = 99;
+      node->layout.dimensions[CSS_HEIGHT] = 344;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 13;
-        node->layout.position[CSS_LEFT] = 88.5;
+        node->layout.position[CSS_LEFT] = 47.5;
         node->layout.dimensions[CSS_WIDTH] = 11;
-        node->layout.dimensions[CSS_HEIGHT] = 509;
+        node->layout.dimensions[CSS_HEIGHT] = 460;
         init_css_node_children(node, 1);
         {
           css_node_t *outer_node_2 = node;
@@ -34188,7 +33613,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 456;
+      node->style.dimensions[CSS_WIDTH] = 401;
       node->style.margin[CSS_TOP] = 12;
       node->style.padding[CSS_LEFT] = 9;
       node->style.padding[CSS_TOP] = 9;
@@ -34207,8 +33632,8 @@ int main()
         node = &outer_node_1->children[0];
         node->style.align_self = CSS_ALIGN_FLEX_START;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 259;
-        node->style.dimensions[CSS_HEIGHT] = 808;
+        node->style.dimensions[CSS_WIDTH] = 185;
+        node->style.dimensions[CSS_HEIGHT] = 789;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -34230,8 +33655,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 19;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 456;
-      node->layout.dimensions[CSS_HEIGHT] = 822;
+      node->layout.dimensions[CSS_WIDTH] = 401;
+      node->layout.dimensions[CSS_HEIGHT] = 803;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -34239,8 +33664,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 8;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 259;
-        node->layout.dimensions[CSS_HEIGHT] = 808;
+        node->layout.dimensions[CSS_WIDTH] = 185;
+        node->layout.dimensions[CSS_HEIGHT] = 789;
       }
     }
 
@@ -34254,8 +33679,7 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 76;
-      node->style.dimensions[CSS_HEIGHT] = 284;
+      node->style.dimensions[CSS_HEIGHT] = 213;
       node->style.padding[CSS_LEFT] = 0;
       node->style.padding[CSS_TOP] = 0;
       node->style.padding[CSS_RIGHT] = 0;
@@ -34271,8 +33695,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -8;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 76;
-      node->layout.dimensions[CSS_HEIGHT] = 284;
+      node->layout.dimensions[CSS_WIDTH] = 2;
+      node->layout.dimensions[CSS_HEIGHT] = 213;
     }
 
     test("Random #965", root_node, root_layout);
@@ -34284,8 +33708,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 973;
-      node->style.dimensions[CSS_HEIGHT] = 592;
+      node->style.dimensions[CSS_WIDTH] = 970;
+      node->style.dimensions[CSS_HEIGHT] = 552;
       node->style.margin[CSS_LEFT] = 8;
       node->style.margin[CSS_TOP] = 8;
       node->style.margin[CSS_RIGHT] = 8;
@@ -34304,8 +33728,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 8;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 973;
-      node->layout.dimensions[CSS_HEIGHT] = 592;
+      node->layout.dimensions[CSS_WIDTH] = 970;
+      node->layout.dimensions[CSS_HEIGHT] = 552;
     }
 
     test("Random #966", root_node, root_layout);
@@ -34353,8 +33777,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 157;
-      node->style.dimensions[CSS_HEIGHT] = 377;
+      node->style.dimensions[CSS_WIDTH] = 73;
+      node->style.dimensions[CSS_HEIGHT] = 315;
       node->style.margin[CSS_LEFT] = 4;
       node->style.margin[CSS_TOP] = 4;
       node->style.margin[CSS_RIGHT] = 4;
@@ -34371,8 +33795,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 4;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 157;
-      node->layout.dimensions[CSS_HEIGHT] = 377;
+      node->layout.dimensions[CSS_WIDTH] = 73;
+      node->layout.dimensions[CSS_HEIGHT] = 315;
     }
 
     test("Random #969", root_node, root_layout);
@@ -34384,8 +33808,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 565;
-      node->style.dimensions[CSS_HEIGHT] = 394;
+      node->style.dimensions[CSS_WIDTH] = 522;
+      node->style.dimensions[CSS_HEIGHT] = 333;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -34405,8 +33829,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 16;
-      node->layout.dimensions[CSS_WIDTH] = 565;
-      node->layout.dimensions[CSS_HEIGHT] = 394;
+      node->layout.dimensions[CSS_WIDTH] = 522;
+      node->layout.dimensions[CSS_HEIGHT] = 333;
     }
 
     test("Random #970", root_node, root_layout);
@@ -34490,8 +33914,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 863;
-      node->style.dimensions[CSS_HEIGHT] = 137;
+      node->style.dimensions[CSS_WIDTH] = 849;
+      node->style.dimensions[CSS_HEIGHT] = 51;
       node->style.margin[CSS_LEFT] = 13;
       node->style.margin[CSS_TOP] = 13;
       node->style.margin[CSS_RIGHT] = 13;
@@ -34509,8 +33933,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 21;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 863;
-      node->layout.dimensions[CSS_HEIGHT] = 137;
+      node->layout.dimensions[CSS_WIDTH] = 849;
+      node->layout.dimensions[CSS_HEIGHT] = 51;
     }
 
     test("Random #974", root_node, root_layout);
@@ -34523,7 +33947,6 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 23;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 0;
@@ -34537,7 +33960,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 23;
+      node->layout.dimensions[CSS_WIDTH] = 0;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -34549,7 +33972,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_HEIGHT] = 341;
+      node->style.dimensions[CSS_HEIGHT] = 275;
       node->style.margin[CSS_LEFT] = -4;
       node->style.border[CSS_LEFT] = 0;
       node->style.border[CSS_TOP] = 0;
@@ -34566,7 +33989,7 @@ int main()
       node->layout.position[CSS_TOP] = -9;
       node->layout.position[CSS_LEFT] = -11;
       node->layout.dimensions[CSS_WIDTH] = 3;
-      node->layout.dimensions[CSS_HEIGHT] = 341;
+      node->layout.dimensions[CSS_HEIGHT] = 275;
     }
 
     test("Random #976", root_node, root_layout);
@@ -34578,7 +34001,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_CENTER;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 943;
+      node->style.dimensions[CSS_HEIGHT] = 937;
       node->style.margin[CSS_TOP] = -10;
       node->style.margin[CSS_BOTTOM] = 0;
       node->style.padding[CSS_LEFT] = 4;
@@ -34603,8 +34026,8 @@ int main()
         node->style.align_items = CSS_ALIGN_FLEX_END;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_RELATIVE;
-        node->style.dimensions[CSS_WIDTH] = 960;
-        node->style.dimensions[CSS_HEIGHT] = 722;
+        node->style.dimensions[CSS_WIDTH] = 956;
+        node->style.dimensions[CSS_HEIGHT] = 694;
         node->style.margin[CSS_LEFT] = 13;
         node->style.margin[CSS_TOP] = 13;
         node->style.margin[CSS_RIGHT] = 13;
@@ -34628,17 +34051,17 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = -2;
-      node->layout.dimensions[CSS_WIDTH] = 975;
-      node->layout.dimensions[CSS_HEIGHT] = 943;
+      node->layout.dimensions[CSS_WIDTH] = 971;
+      node->layout.dimensions[CSS_HEIGHT] = 937;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
         css_node_t *node;
         node = &outer_node_1->children[0];
-        node->layout.position[CSS_TOP] = 116.5;
+        node->layout.position[CSS_TOP] = 127.5;
         node->layout.position[CSS_LEFT] = 6;
-        node->layout.dimensions[CSS_WIDTH] = 960;
-        node->layout.dimensions[CSS_HEIGHT] = 722;
+        node->layout.dimensions[CSS_WIDTH] = 956;
+        node->layout.dimensions[CSS_HEIGHT] = 694;
       }
     }
 
@@ -34668,7 +34091,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 565;
+      node->style.dimensions[CSS_WIDTH] = 521;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = -10;
@@ -34689,7 +34112,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = -5;
-      node->layout.dimensions[CSS_WIDTH] = 565;
+      node->layout.dimensions[CSS_WIDTH] = 521;
       node->layout.dimensions[CSS_HEIGHT] = 27;
     }
 
@@ -34733,7 +34156,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 676;
+      node->style.dimensions[CSS_WIDTH] = 644;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_TOP] = 7;
       node->style.margin[CSS_RIGHT] = 7;
@@ -34748,7 +34171,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 676;
+      node->layout.dimensions[CSS_WIDTH] = 644;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -34779,7 +34202,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_START;
-      node->style.dimensions[CSS_HEIGHT] = 611;
+      node->style.dimensions[CSS_HEIGHT] = 572;
       node->style.margin[CSS_TOP] = 14;
       node->style.margin[CSS_RIGHT] = 10;
       node->style.border[CSS_LEFT] = 2;
@@ -34795,7 +34218,7 @@ int main()
       node->layout.position[CSS_TOP] = 5;
       node->layout.position[CSS_LEFT] = 0;
       node->layout.dimensions[CSS_WIDTH] = 4;
-      node->layout.dimensions[CSS_HEIGHT] = 611;
+      node->layout.dimensions[CSS_HEIGHT] = 572;
     }
 
     test("Random #983", root_node, root_layout);
@@ -34805,7 +34228,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 120;
+      node->style.dimensions[CSS_HEIGHT] = 32;
       node->style.margin[CSS_LEFT] = 1;
       node->style.margin[CSS_TOP] = 1;
       node->style.margin[CSS_RIGHT] = 1;
@@ -34826,7 +34249,7 @@ int main()
       node->layout.position[CSS_TOP] = 3;
       node->layout.position[CSS_LEFT] = 12;
       node->layout.dimensions[CSS_WIDTH] = 28;
-      node->layout.dimensions[CSS_HEIGHT] = 120;
+      node->layout.dimensions[CSS_HEIGHT] = 32;
     }
 
     test("Random #984", root_node, root_layout);
@@ -34838,8 +34261,8 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node->style.dimensions[CSS_WIDTH] = 396;
-      node->style.dimensions[CSS_HEIGHT] = 696;
+      node->style.dimensions[CSS_WIDTH] = 336;
+      node->style.dimensions[CSS_HEIGHT] = 666;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -34859,8 +34282,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 10;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 396;
-      node->layout.dimensions[CSS_HEIGHT] = 696;
+      node->layout.dimensions[CSS_WIDTH] = 336;
+      node->layout.dimensions[CSS_HEIGHT] = 666;
     }
 
     test("Random #985", root_node, root_layout);
@@ -34872,7 +34295,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 131;
+      node->style.dimensions[CSS_WIDTH] = 45;
       node->style.margin[CSS_LEFT] = 0;
       node->style.margin[CSS_TOP] = 0;
       node->style.margin[CSS_RIGHT] = 0;
@@ -34890,7 +34313,7 @@ int main()
         node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.align_items = CSS_ALIGN_FLEX_END;
-        node->style.dimensions[CSS_HEIGHT] = 565;
+        node->style.dimensions[CSS_HEIGHT] = 522;
         node->style.margin[CSS_LEFT] = -5;
         node->style.margin[CSS_TOP] = -5;
         node->style.margin[CSS_RIGHT] = -5;
@@ -34904,8 +34327,8 @@ int main()
         node = &outer_node_1->children[1];
         node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node->style.flex = CSS_FLEX_ONE;
-        node->style.dimensions[CSS_WIDTH] = 807;
-        node->style.dimensions[CSS_HEIGHT] = 353;
+        node->style.dimensions[CSS_WIDTH] = 788;
+        node->style.dimensions[CSS_HEIGHT] = 288;
         node->style.margin[CSS_LEFT] = -10;
         node->style.margin[CSS_TOP] = -10;
         node->style.margin[CSS_RIGHT] = -10;
@@ -34925,8 +34348,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 131;
-      node->layout.dimensions[CSS_HEIGHT] = 590;
+      node->layout.dimensions[CSS_WIDTH] = 45;
+      node->layout.dimensions[CSS_HEIGHT] = 547;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -34935,12 +34358,12 @@ int main()
         node->layout.position[CSS_TOP] = 19;
         node->layout.position[CSS_LEFT] = 10;
         node->layout.dimensions[CSS_WIDTH] = 4;
-        node->layout.dimensions[CSS_HEIGHT] = 565;
+        node->layout.dimensions[CSS_HEIGHT] = 522;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 243;
+        node->layout.position[CSS_TOP] = 265;
         node->layout.position[CSS_LEFT] = 10;
-        node->layout.dimensions[CSS_WIDTH] = 131;
-        node->layout.dimensions[CSS_HEIGHT] = 353;
+        node->layout.dimensions[CSS_WIDTH] = 45;
+        node->layout.dimensions[CSS_HEIGHT] = 288;
       }
     }
 
@@ -34951,7 +34374,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_WIDTH] = 718;
+      node->style.dimensions[CSS_WIDTH] = 690;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_RIGHT] = -10;
       node->style.position[CSS_LEFT] = 2;
@@ -34963,7 +34386,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 20;
-      node->layout.dimensions[CSS_WIDTH] = 718;
+      node->layout.dimensions[CSS_WIDTH] = 690;
       node->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -34976,7 +34399,7 @@ int main()
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_WIDTH] = 443;
+      node->style.dimensions[CSS_WIDTH] = 388;
       node->style.margin[CSS_LEFT] = -4;
       node->style.margin[CSS_TOP] = -4;
       node->style.margin[CSS_RIGHT] = -4;
@@ -34994,7 +34417,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -4;
       node->layout.position[CSS_LEFT] = -1;
-      node->layout.dimensions[CSS_WIDTH] = 443;
+      node->layout.dimensions[CSS_WIDTH] = 388;
       node->layout.dimensions[CSS_HEIGHT] = 5;
     }
 
@@ -35007,7 +34430,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node->style.align_items = CSS_ALIGN_CENTER;
-      node->style.dimensions[CSS_HEIGHT] = 956;
+      node->style.dimensions[CSS_HEIGHT] = 951;
       node->style.margin[CSS_LEFT] = -5;
       node->style.margin[CSS_TOP] = -5;
       node->style.margin[CSS_RIGHT] = -5;
@@ -35022,8 +34445,8 @@ int main()
         css_node_t *node;
         node = &outer_node_1->children[0];
         node->style.flex = CSS_FLEX_NONE;
-        node->style.dimensions[CSS_WIDTH] = 500;
-        node->style.dimensions[CSS_HEIGHT] = 875;
+        node->style.dimensions[CSS_WIDTH] = 450;
+        node->style.dimensions[CSS_HEIGHT] = 863;
         node->style.margin[CSS_LEFT] = 5;
         node->style.margin[CSS_TOP] = 5;
         node->style.margin[CSS_RIGHT] = 5;
@@ -35050,7 +34473,6 @@ int main()
           node->style.justify_content = CSS_JUSTIFY_FLEX_END;
           node->style.align_self = CSS_ALIGN_FLEX_END;
           node->style.position_type = CSS_POSITION_RELATIVE;
-          node->style.dimensions[CSS_WIDTH] = 15;
           node->style.margin[CSS_LEFT] = 5;
           node->style.margin[CSS_RIGHT] = 15;
           node->style.padding[CSS_TOP] = 12;
@@ -35067,8 +34489,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -10;
       node->layout.position[CSS_LEFT] = 13;
-      node->layout.dimensions[CSS_WIDTH] = 503;
-      node->layout.dimensions[CSS_HEIGHT] = 956;
+      node->layout.dimensions[CSS_WIDTH] = 453;
+      node->layout.dimensions[CSS_HEIGHT] = 951;
       init_css_node_children(node, 2);
       {
         css_node_t *outer_node_1 = node;
@@ -35076,12 +34498,12 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 5;
         node->layout.position[CSS_LEFT] = 5;
-        node->layout.dimensions[CSS_WIDTH] = 500;
-        node->layout.dimensions[CSS_HEIGHT] = 875;
+        node->layout.dimensions[CSS_WIDTH] = 450;
+        node->layout.dimensions[CSS_HEIGHT] = 863;
         node = &outer_node_1->children[1];
-        node->layout.position[CSS_TOP] = 899;
-        node->layout.position[CSS_LEFT] = 243.5;
-        node->layout.dimensions[CSS_WIDTH] = 36;
+        node->layout.position[CSS_TOP] = 887;
+        node->layout.position[CSS_LEFT] = 224;
+        node->layout.dimensions[CSS_WIDTH] = 25;
         node->layout.dimensions[CSS_HEIGHT] = 29;
         init_css_node_children(node, 1);
         {
@@ -35090,7 +34512,7 @@ int main()
           node = &outer_node_2->children[0];
           node->layout.position[CSS_TOP] = 0;
           node->layout.position[CSS_LEFT] = 12;
-          node->layout.dimensions[CSS_WIDTH] = 15;
+          node->layout.dimensions[CSS_WIDTH] = 4;
           node->layout.dimensions[CSS_HEIGHT] = 13;
         }
       }
@@ -35105,7 +34527,7 @@ int main()
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node->style.align_items = CSS_ALIGN_STRETCH;
-      node->style.dimensions[CSS_WIDTH] = 409;
+      node->style.dimensions[CSS_WIDTH] = 350;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_RIGHT] = -9;
       node->style.margin[CSS_BOTTOM] = -5;
@@ -35122,7 +34544,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 0;
       node->layout.position[CSS_LEFT] = 10;
-      node->layout.dimensions[CSS_WIDTH] = 409;
+      node->layout.dimensions[CSS_WIDTH] = 350;
       node->layout.dimensions[CSS_HEIGHT] = 18;
     }
 
@@ -35170,7 +34592,7 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node->style.dimensions[CSS_WIDTH] = 387;
+      node->style.dimensions[CSS_WIDTH] = 326;
       node->style.margin[CSS_LEFT] = 7;
       node->style.margin[CSS_RIGHT] = 9;
       node->style.padding[CSS_LEFT] = 1;
@@ -35185,7 +34607,7 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -7;
       node->layout.position[CSS_LEFT] = 7;
-      node->layout.dimensions[CSS_WIDTH] = 387;
+      node->layout.dimensions[CSS_WIDTH] = 326;
       node->layout.dimensions[CSS_HEIGHT] = 2;
     }
 
@@ -35196,7 +34618,7 @@ int main()
     css_node_t *root_node = new_css_node();
     {
       css_node_t *node = root_node;
-      node->style.dimensions[CSS_HEIGHT] = 709;
+      node->style.dimensions[CSS_HEIGHT] = 680;
       node->style.margin[CSS_LEFT] = 5;
       node->style.margin[CSS_TOP] = 5;
       node->style.margin[CSS_RIGHT] = 5;
@@ -35215,7 +34637,7 @@ int main()
       node->layout.position[CSS_TOP] = 11;
       node->layout.position[CSS_LEFT] = 5;
       node->layout.dimensions[CSS_WIDTH] = 11;
-      node->layout.dimensions[CSS_HEIGHT] = 709;
+      node->layout.dimensions[CSS_HEIGHT] = 680;
     }
 
     test("Random #994", root_node, root_layout);
@@ -35226,8 +34648,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 224;
-      node->style.dimensions[CSS_HEIGHT] = 320;
+      node->style.dimensions[CSS_WIDTH] = 146;
+      node->style.dimensions[CSS_HEIGHT] = 252;
       node->style.margin[CSS_LEFT] = 18;
       node->style.margin[CSS_TOP] = 18;
       node->style.margin[CSS_RIGHT] = 18;
@@ -35244,8 +34666,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 18;
       node->layout.position[CSS_LEFT] = 15;
-      node->layout.dimensions[CSS_WIDTH] = 224;
-      node->layout.dimensions[CSS_HEIGHT] = 320;
+      node->layout.dimensions[CSS_WIDTH] = 146;
+      node->layout.dimensions[CSS_HEIGHT] = 252;
     }
 
     test("Random #995", root_node, root_layout);
@@ -35256,8 +34678,8 @@ int main()
     {
       css_node_t *node = root_node;
       node->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node->style.dimensions[CSS_WIDTH] = 487;
-      node->style.dimensions[CSS_HEIGHT] = 107;
+      node->style.dimensions[CSS_WIDTH] = 436;
+      node->style.dimensions[CSS_HEIGHT] = 18;
       node->style.margin[CSS_LEFT] = 10;
       node->style.margin[CSS_TOP] = 10;
       node->style.margin[CSS_RIGHT] = 10;
@@ -35279,8 +34701,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = 13;
       node->layout.position[CSS_LEFT] = 19;
-      node->layout.dimensions[CSS_WIDTH] = 487;
-      node->layout.dimensions[CSS_HEIGHT] = 107;
+      node->layout.dimensions[CSS_WIDTH] = 436;
+      node->layout.dimensions[CSS_HEIGHT] = 23;
     }
 
     test("Random #996", root_node, root_layout);
@@ -35329,8 +34751,8 @@ int main()
       node->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node->style.align_items = CSS_ALIGN_FLEX_END;
-      node->style.dimensions[CSS_WIDTH] = 206;
-      node->style.dimensions[CSS_HEIGHT] = 168;
+      node->style.dimensions[CSS_WIDTH] = 127;
+      node->style.dimensions[CSS_HEIGHT] = 85;
       node->style.margin[CSS_RIGHT] = -3;
       node->style.padding[CSS_TOP] = 1;
       node->style.border[CSS_LEFT] = 0;
@@ -35345,8 +34767,8 @@ int main()
         node->style.align_items = CSS_ALIGN_CENTER;
         node->style.align_self = CSS_ALIGN_CENTER;
         node->style.position_type = CSS_POSITION_ABSOLUTE;
-        node->style.dimensions[CSS_WIDTH] = 866;
-        node->style.dimensions[CSS_HEIGHT] = 292;
+        node->style.dimensions[CSS_WIDTH] = 853;
+        node->style.dimensions[CSS_HEIGHT] = 222;
         node->style.margin[CSS_LEFT] = 1;
         node->style.margin[CSS_RIGHT] = 19;
         node->style.margin[CSS_BOTTOM] = 5;
@@ -35370,8 +34792,8 @@ int main()
       css_node_t *node = root_layout;
       node->layout.position[CSS_TOP] = -1;
       node->layout.position[CSS_LEFT] = 0;
-      node->layout.dimensions[CSS_WIDTH] = 206;
-      node->layout.dimensions[CSS_HEIGHT] = 168;
+      node->layout.dimensions[CSS_WIDTH] = 127;
+      node->layout.dimensions[CSS_HEIGHT] = 85;
       init_css_node_children(node, 1);
       {
         css_node_t *outer_node_1 = node;
@@ -35379,8 +34801,8 @@ int main()
         node = &outer_node_1->children[0];
         node->layout.position[CSS_TOP] = 0;
         node->layout.position[CSS_LEFT] = 1;
-        node->layout.dimensions[CSS_WIDTH] = 866;
-        node->layout.dimensions[CSS_HEIGHT] = 292;
+        node->layout.dimensions[CSS_WIDTH] = 853;
+        node->layout.dimensions[CSS_HEIGHT] = 222;
       }
     }
 
