@@ -198,16 +198,14 @@ var computeLayout = (function() {
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
 
-    var/*bool*/ mainDimInStyle = isDimDefined(node, mainAxis);
-    if (isUndefined(node.layout[dim[mainAxis]]) && mainDimInStyle) {
+    if (isUndefined(node.layout[dim[mainAxis]]) && isDimDefined(node, mainAxis)) {
       node.layout[dim[mainAxis]] = fmaxf(
         node.style[dim[mainAxis]],
         getPaddingAndBorderAxis(node, mainAxis)
       );
     }
 
-    var/*bool*/ crossDimInStyle = isDimDefined(node, crossAxis);
-    if (isUndefined(node.layout[dim[crossAxis]]) && crossDimInStyle) {
+    if (isUndefined(node.layout[dim[crossAxis]]) && isDimDefined(node, crossAxis)) {
       node.layout[dim[crossAxis]] = fmaxf(
         node.style[dim[crossAxis]],
         getPaddingAndBorderAxis(node, crossAxis)
@@ -296,7 +294,7 @@ var computeLayout = (function() {
     mainPos += getPaddingAndBorder(node, trailing[mainAxis]);
     crossDim += getPaddingAndBorderAxis(node, crossAxis);
 
-    if (isUndefined(node.layout[dim[mainAxis]]) && !mainDimInStyle) {
+    if (isUndefined(node.layout[dim[mainAxis]]) && !isDimDefined(node, mainAxis)) {
       node.layout[dim[mainAxis]] = fmaxf(mainPos, getPaddingAndBorderAxis(node, mainAxis));
     }
     if (isUndefined(node.layout[dim[crossAxis]])) {
