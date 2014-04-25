@@ -339,38 +339,64 @@ var computeLayout = (function() {
       }
     }
 
+
+    // <Loop C> Position elements in the main axis and compute dimensions
+
+    // At this point, all the children have their dimensions set. We need to
+    // find their position. In order to do that, we accumulate data in
+    // variables that are also useful to compute the total dimensions of the
+    // container!
     var/*float*/ crossDim = 0;
-    var/*float*/ mainPos = getPaddingAndBorder(node, leading[mainAxis]) + leadingMainDim;
+    var/*float*/ mainDim = leadingMainDim +
+      getPaddingAndBorder(node, leading[mainAxis]);
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
-      if (getPositionType(child) === CSS_POSITION_ABSOLUTE && isPosDefined(child, leading[mainAxis])) {
+
+
+      if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
+          isPosDefined(child, leading[mainAxis])) {
+        // In case the child is position absolute and has left/top being
+        // defined, we override the position to whatever the user said
+        // (and margin/border).
         child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
           getBorder(node, leading[mainAxis]) +
           getMargin(child, leading[mainAxis]);
       } else {
-        child.layout[pos[mainAxis]] += mainPos;
+        // If the child is position absolute (without top/left) or relative,
+        // we put it at the current accumulated offset.
+        child.layout[pos[mainAxis]] += mainDim;
       }
+
+      // Now that we placed the element, we need to update the variables
+      // We only need to do that for relative elements. Absolute elements
+      // do not take part in that phase.
       if (getPositionType(child) === CSS_POSITION_RELATIVE) {
-        mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
-
-        if (!isUndefined(child.layout[dim[crossAxis]])) {
-          var/*float*/ childCrossDim = getDimWithMargin(child, crossAxis);
-          if (childCrossDim > crossDim) {
-            crossDim = childCrossDim;
-          }
-        }
+        // The main dimension is the sum of all the elements dimension plus
+        // the spacing.
+        mainDim += betweenMainDim + getDimWithMargin(child, mainAxis);
+        // The cross dimension is the max of the elements dimension since there
+        // can only be one element in that cross dimension.
+        crossDim = fmaxf(crossDim, getDimWithMargin(child, crossAxis));
       }
     }
 
-    mainPos += getPaddingAndBorder(node, trailing[mainAxis]);
-    crossDim += getPaddingAndBorderAxis(node, crossAxis);
-
-    if (isUndefined(node.layout[dim[mainAxis]]) && !isDimDefined(node, mainAxis)) {
-      node.layout[dim[mainAxis]] = fmaxf(mainPos, getPaddingAndBorderAxis(node, mainAxis));
+    mainDim += getPaddingAndBorder(node, trailing[mainAxis]);
+    if (isUndefined(node.layout[dim[mainAxis]])) {
+      node.layout[dim[mainAxis]] = fmaxf(mainDim, getPaddingAndBorderAxis(node, mainAxis));
     }
+
+    crossDim += getPaddingAndBorderAxis(node, crossAxis);
     if (isUndefined(node.layout[dim[crossAxis]])) {
       node.layout[dim[crossAxis]] = fmaxf(crossDim, getPaddingAndBorderAxis(node, crossAxis));
     }
+
+    node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
+      getRelativePosition(node, mainAxis);
+    node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
+      getRelativePosition(node, crossAxis);
+
+
+    // <Loop D> Position elements in the cross axis
 
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
@@ -409,11 +435,6 @@ var computeLayout = (function() {
         }
       }
     }
-
-    node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
-      getRelativePosition(node, mainAxis);
-    node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
-      getRelativePosition(node, crossAxis);
   }
 
   var fn = function(node) {
