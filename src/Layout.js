@@ -147,9 +147,8 @@ var computeLayout = (function() {
   }
 
 
-  // This function handles when the user specifically sets a value
-  // for `width` or `height`
-  function setDimension(node, axis) {
+  // When the user specifically sets a value for width or height
+  function setDimensionFromStyle(node, axis) {
     // The parent already computed us a width or height. We just skip it
     if (!isUndefined(node.layout[dim[axis]])) {
       return;
@@ -162,6 +161,21 @@ var computeLayout = (function() {
     // The dimensions can never be smaller than the padding and border
     node.layout[dim[axis]] = fmaxf(
       node.style[dim[axis]],
+      getPaddingAndBorderAxis(node, axis)
+    );
+  }
+
+  // The user didn't specify width or height, we use the computed values from
+  // the children
+  function setDimensionFromLayout(node, axis, dimension) {
+    if (!isUndefined(node.layout[dim[axis]])) {
+      return;
+    }
+
+    node.layout[dim[axis]] = fmaxf(
+      // In our previous computation, we're missing the trailing part
+      dimension + getPaddingAndBorder(node, trailing[axis]),
+      // We can never be smaller than the specified padding + border
       getPaddingAndBorderAxis(node, axis)
     );
   }
@@ -222,15 +236,16 @@ var computeLayout = (function() {
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
 
-    // Handle width and height attributes
-    setDimension(node, mainAxis);
-    setDimension(node, crossAxis);
+    // Handle width and height style attributes
+    setDimensionFromStyle(node, mainAxis);
+    setDimensionFromStyle(node, crossAxis);
 
-    // The algorithm is divided into two main steps:
-    // (1) We first layout all the children that aren't flexible
-    // (2) At this point, we know the total size and the size of all the non
-    //     flexible children. We can now set the dimensions of the flexible
-    //     children
+    // The position is set by the parent, but we need to complete it with a
+    // delta composed of the margin and left/top/right/bottom
+    node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
+      getRelativePosition(node, mainAxis);
+    node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
+      getRelativePosition(node, crossAxis);
 
 
     // <Loop A> Layout non flexible children and count children by type
@@ -352,7 +367,6 @@ var computeLayout = (function() {
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
 
-
       if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
           isPosDefined(child, leading[mainAxis])) {
         // In case the child is position absolute and has left/top being
@@ -380,20 +394,27 @@ var computeLayout = (function() {
       }
     }
 
-    mainDim += getPaddingAndBorder(node, trailing[mainAxis]);
+    // If the user didn't specify a width or height, and it has not been set
+    // by the container, then we set it via the children.
     if (isUndefined(node.layout[dim[mainAxis]])) {
-      node.layout[dim[mainAxis]] = fmaxf(mainDim, getPaddingAndBorderAxis(node, mainAxis));
+      node.layout[dim[mainAxis]] = fmaxf(
+        // We're missing the last padding at this point to get the final
+        // dimension
+        mainDim + getPaddingAndBorder(node, trailing[mainAxis]),
+        // We can never assign a width smaller than the padding and borders
+        getPaddingAndBorderAxis(node, mainAxis)
+      );
     }
 
-    crossDim += getPaddingAndBorderAxis(node, crossAxis);
     if (isUndefined(node.layout[dim[crossAxis]])) {
-      node.layout[dim[crossAxis]] = fmaxf(crossDim, getPaddingAndBorderAxis(node, crossAxis));
+      node.layout[dim[crossAxis]] = fmaxf(
+        // For the cross dim, we add both sides at the end because the value
+        // is aggregate via a max function. Intermediate negative values
+        // can mess this computation otherwise
+        crossDim + getPaddingAndBorderAxis(node, crossAxis),
+        getPaddingAndBorderAxis(node, crossAxis)
+      );
     }
-
-    node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
-      getRelativePosition(node, mainAxis);
-    node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
-      getRelativePosition(node, crossAxis);
 
 
     // <Loop D> Position elements in the cross axis
