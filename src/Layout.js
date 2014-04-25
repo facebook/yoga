@@ -422,38 +422,53 @@ var computeLayout = (function() {
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
 
-      if (getPositionType(child) === CSS_POSITION_RELATIVE) {
-        var/*css_align_t*/ alignItem = getAlignItem(node, child);
-        var/*float*/ remainingCrossDim = node.layout[dim[crossAxis]] -
-          getDimWithMargin(child, crossAxis) -
-          getPaddingAndBorderAxis(node, crossAxis);
+      if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
+          isPosDefined(child, leading[crossAxis])) {
+        // In case the child is absolutely positionned and has a
+        // top/left/bottom/right being set, we override all the previously
+        // computed positions to set it correctly.
+        child.layout[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
+          getBorder(node, leading[crossAxis]) +
+          getMargin(child, leading[crossAxis]);
 
+      } else {
         var/*float*/ leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);
-        if (alignItem === CSS_ALIGN_FLEX_START) {
-          // Do nothing
-        } else if (alignItem === CSS_ALIGN_CENTER) {
-          leadingCrossDim += remainingCrossDim / 2;
-        } else if (alignItem === CSS_ALIGN_FLEX_END) {
-          leadingCrossDim += remainingCrossDim;
-        } else if (alignItem === CSS_ALIGN_STRETCH) {
-          if (!isDimDefined(child, crossAxis)) {
-            child.layout[dim[crossAxis]] = fmaxf(
-              node.layout[dim[crossAxis]] -
-                getPaddingAndBorderAxis(node, crossAxis) -
-                getMarginAxis(child, crossAxis),
-              getPaddingAndBorderAxis(child, crossAxis)
-            );
+
+        // For a relative children, we're either using alignItems (parent) or
+        // alignSelf (child) in order to determine the position in the cross axis
+        if (getPositionType(child) === CSS_POSITION_RELATIVE) {
+          var/*css_align_t*/ alignItem = getAlignItem(node, child);
+          if (alignItem === CSS_ALIGN_FLEX_START) {
+            // Do nothing
+          } else if (alignItem === CSS_ALIGN_STRETCH) {
+            // You can only stretch if the dimension has not already been set
+            // previously.
+            if (!isDimDefined(child, crossAxis)) {
+              child.layout[dim[crossAxis]] = fmaxf(
+                node.layout[dim[crossAxis]] -
+                  getPaddingAndBorderAxis(node, crossAxis) -
+                  getMarginAxis(child, crossAxis),
+                // You never want to go smaller than padding
+                getPaddingAndBorderAxis(child, crossAxis)
+              );
+            }
+          } else {
+            // The remaining space between the parent dimensions+padding and child
+            // dimensions+margin.
+            var/*float*/ remainingCrossDim = node.layout[dim[crossAxis]] -
+              getPaddingAndBorderAxis(node, crossAxis) -
+              getDimWithMargin(child, crossAxis);
+
+            if (alignItem === CSS_ALIGN_CENTER) {
+              leadingCrossDim += remainingCrossDim / 2;
+            } else { // CSS_ALIGN_FLEX_END
+              leadingCrossDim += remainingCrossDim;
+            }
           }
         }
+
+        // And we apply the position
         child.layout[pos[crossAxis]] += leadingCrossDim;
-      } else {
-        if (isPosDefined(child, leading[crossAxis])) {
-          child.layout[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
-            getBorder(node, leading[crossAxis]) +
-            getMargin(child, leading[crossAxis]);
-        } else {
-          child.layout[pos[crossAxis]] += getPaddingAndBorder(node, leading[crossAxis]);
-        }
       }
     }
   }
