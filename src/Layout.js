@@ -146,7 +146,6 @@ var computeLayout = (function() {
     return 0;
   }
 
-
   // When the user specifically sets a value for width or height
   function setDimensionFromStyle(node, axis) {
     // The parent already computed us a width or height. We just skip it
@@ -161,21 +160,6 @@ var computeLayout = (function() {
     // The dimensions can never be smaller than the padding and border
     node.layout[dim[axis]] = fmaxf(
       node.style[dim[axis]],
-      getPaddingAndBorderAxis(node, axis)
-    );
-  }
-
-  // The user didn't specify width or height, we use the computed values from
-  // the children
-  function setDimensionFromLayout(node, axis, dimension) {
-    if (!isUndefined(node.layout[dim[axis]])) {
-      return;
-    }
-
-    node.layout[dim[axis]] = fmaxf(
-      // In our previous computation, we're missing the trailing part
-      dimension + getPaddingAndBorder(node, trailing[axis]),
-      // We can never be smaller than the specified padding + border
       getPaddingAndBorderAxis(node, axis)
     );
   }

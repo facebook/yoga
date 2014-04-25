@@ -260,6 +260,10 @@ css_flex_t getFlex(css_node_t *node) {
   return node->style.flex;
 }
 
+bool isFlex(css_node_t *node) {
+  return getPositionType(node) == CSS_POSITION_RELATIVE && getFlex(node);
+}
+
 float getDimWithMargin(css_node_t *node, css_flex_direction_t axis) {
   return node->layout.dimensions[dim[axis]] +
     getMargin(node, leading[axis]) +
@@ -282,6 +286,24 @@ float getPosition(css_node_t *node, css_position_t pos) {
   return 0;
 }
 
+// When the user specifically sets a value for width or height
+void setDimensionFromStyle(css_node_t *node, css_flex_direction_t axis) {
+  // The parent already computed us a width or height. We just skip it
+  if (!isUndefined(node->layout.dimensions[dim[axis]])) {
+    return;
+  }
+  // We only run if there's a width or height defined
+  if (!isDimDefined(node, axis)) {
+    return;
+  }
+
+  // The dimensions can never be smaller than the padding and border
+  node->layout.dimensions[dim[axis]] = fmaxf(
+    node->style.dimensions[dim[axis]],
+    getPaddingAndBorderAxis(node, axis)
+  );
+}
+
 // If both left and right are defined, then use left. Otherwise return
 // +left or -right depending on which is defined.
 float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
@@ -298,61 +320,104 @@ void layoutNode(css_node_t *node) {
     CSS_FLEX_DIRECTION_COLUMN :
     CSS_FLEX_DIRECTION_ROW;
 
-  bool mainDimInStyle = isDimDefined(node, mainAxis);
-  if (isUndefined(node->layout.dimensions[dim[mainAxis]]) && mainDimInStyle) {
-    node->layout.dimensions[dim[mainAxis]] = fmaxf(
-      node->style.dimensions[dim[mainAxis]],
-      getPaddingAndBorderAxis(node, mainAxis)
-    );
-  }
+  // Handle width and height style attributes
+  setDimensionFromStyle(node, mainAxis);
+  setDimensionFromStyle(node, crossAxis);
 
-  bool crossDimInStyle = isDimDefined(node, crossAxis);
-  if (isUndefined(node->layout.dimensions[dim[crossAxis]]) && crossDimInStyle) {
-    node->layout.dimensions[dim[crossAxis]] = fmaxf(
-      node->style.dimensions[dim[crossAxis]],
-      getPaddingAndBorderAxis(node, crossAxis)
-    );
-  }
+  // The position is set by the parent, but we need to complete it with a
+  // delta composed of the margin and left/top/right/bottom
+  node->layout.position[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
+    getRelativePosition(node, mainAxis);
+  node->layout.position[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
+    getRelativePosition(node, crossAxis);
 
+
+  // <Loop A> Layout non flexible children and count children by type
+
+  // mainContentDim is accumulation of the dimensions and margin of all the
+  // non flexible children. This will be used in order to either set the
+  // dimensions of the node if none already exist, or to compute the
+  // remaining space left for the flexible children.
   float mainContentDim = 0;
+
+  // There are three kind of children, non flexible, flexible and absolute.
+  // We need to know how many there are in order to distribute the space.
   int flexibleChildrenCount = 0;
-  int absoluteChildrenCount = 0;
+  int nonFlexibleChildrenCount = 0;
   for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = &node->children[i];
-    if (isUndefined(node->layout.dimensions[dim[mainAxis]]) ||
-        getPositionType(child) == CSS_POSITION_ABSOLUTE ||
-        !getFlex(child)) {
-      layoutNode(child);
-      if (getPositionType(child) == CSS_POSITION_RELATIVE) {
-        mainContentDim += getDimWithMargin(child, mainAxis);
-      } else {
-        absoluteChildrenCount++;
-      }
-    } else {
+
+    // It only makes sense to consider a child flexible if we have a computed
+    // dimension for the node->
+    if (!isUndefined(node->layout.dimensions[dim[mainAxis]]) && isFlex(child)) {
       flexibleChildrenCount++;
-      mainContentDim += getPaddingAndBorderAxis(child, mainAxis) + getMarginAxis(child, mainAxis);
+
+      // Even if we don't know its exact size yet, we already know the padding,
+      // border and margin. We'll use this partial information to compute the
+      // remaining space.
+      mainContentDim += getPaddingAndBorderAxis(child, mainAxis) +
+        getMarginAxis(child, mainAxis);
+
+    } else {
+      // This is the main recursive call. We layout non flexible children.
+      layoutNode(child);
+
+      // Absolute positioned elements do not take part of the layout, so we
+      // don't use them to compute mainContentDim
+      if (getPositionType(child) == CSS_POSITION_RELATIVE) {
+        nonFlexibleChildrenCount++;
+        // At this point we know the final size and margin of the element.
+        mainContentDim += getDimWithMargin(child, mainAxis);
+      }
     }
   }
 
+  // <Loop B> Layout flexible children and allocate empty space
+
+  // In order to position the elements in the main axis, we have two
+  // controls. The space between the beginning and the first element
+  // and the space between each two elements.
   float leadingMainDim = 0;
   float betweenMainDim = 0;
+
+  // If the dimensions of the current node is defined by its children, they
+  // are all going to be packed together and we don't need to compute
+  // anything.
   if (!isUndefined(node->layout.dimensions[dim[mainAxis]])) {
+
+    // The remaining available space that's needs to be allocated
     float remainingMainDim = node->layout.dimensions[dim[mainAxis]] -
       getPaddingAndBorderAxis(node, mainAxis) -
       mainContentDim;
 
+    // If there are flexible children in the mix, they are going to fill the
+    // remaining space
     if (flexibleChildrenCount) {
       float flexibleMainDim = remainingMainDim / flexibleChildrenCount;
+
+      // The non flexible children can overflow the container, in this case
+      // we should just assume that there is no space available.
       if (flexibleMainDim < 0) {
         flexibleMainDim = 0;
       }
+      // We iterate over the full array and only apply the action on flexible
+      // children. This is faster than actually allocating a new array that
+      // contains only flexible children.
       for (int i = 0; i < node->children_count; ++i) {
         css_node_t* child = &node->children[i];
-        if (getPositionType(child) == CSS_POSITION_RELATIVE && getFlex(child)) {
-          child->layout.dimensions[dim[mainAxis]] = flexibleMainDim + getPaddingAndBorderAxis(child, mainAxis);
+        if (isFlex(child)) {
+          // At this point we know the final size of the element in the main
+          // dimension
+          child->layout.dimensions[dim[mainAxis]] = flexibleMainDim +
+            getPaddingAndBorderAxis(child, mainAxis);
+
+          // And we recursively call the layout algorithm for this child
           layoutNode(child);
         }
       }
+
+    // We use justifyContent to figure out how to allocate the remaining
+    // space available
     } else {
       css_justify_t justifyContent = getJustifyContent(node);
       if (justifyContent == CSS_JUSTIFY_FLEX_START) {
@@ -362,87 +427,132 @@ void layoutNode(css_node_t *node) {
       } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
         leadingMainDim = remainingMainDim;
       } else if (justifyContent == CSS_JUSTIFY_SPACE_BETWEEN) {
-        betweenMainDim = remainingMainDim / (node->children_count - absoluteChildrenCount - 1);
+        betweenMainDim = remainingMainDim /
+          (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
       } else if (justifyContent == CSS_JUSTIFY_SPACE_AROUND) {
-        betweenMainDim = remainingMainDim / (node->children_count - absoluteChildrenCount);
+        // Space on the edges is half of the space between elements
+        betweenMainDim = remainingMainDim /
+          (flexibleChildrenCount + nonFlexibleChildrenCount);
         leadingMainDim = betweenMainDim / 2;
       }
     }
   }
 
+
+  // <Loop C> Position elements in the main axis and compute dimensions
+
+  // At this point, all the children have their dimensions set. We need to
+  // find their position. In order to do that, we accumulate data in
+  // variables that are also useful to compute the total dimensions of the
+  // container!
   float crossDim = 0;
-  float mainPos = getPaddingAndBorder(node, leading[mainAxis]) + leadingMainDim;
+  float mainDim = leadingMainDim +
+    getPaddingAndBorder(node, leading[mainAxis]);
   for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = &node->children[i];
-    if (getPositionType(child) == CSS_POSITION_ABSOLUTE && isPosDefined(child, leading[mainAxis])) {
+
+    if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
+        isPosDefined(child, leading[mainAxis])) {
+      // In case the child is position absolute and has left/top being
+      // defined, we override the position to whatever the user said
+      // (and margin/border).
       child->layout.position[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
         getBorder(node, leading[mainAxis]) +
         getMargin(child, leading[mainAxis]);
     } else {
-      child->layout.position[pos[mainAxis]] += mainPos;
+      // If the child is position absolute (without top/left) or relative,
+      // we put it at the current accumulated offset.
+      child->layout.position[pos[mainAxis]] += mainDim;
     }
+
+    // Now that we placed the element, we need to update the variables
+    // We only need to do that for relative elements. Absolute elements
+    // do not take part in that phase.
     if (getPositionType(child) == CSS_POSITION_RELATIVE) {
-      mainPos += getDimWithMargin(child, mainAxis) + betweenMainDim;
-
-      if (!isUndefined(child->layout.dimensions[dim[crossAxis]])) {
-        float childCrossDim = getDimWithMargin(child, crossAxis);
-        if (childCrossDim > crossDim) {
-          crossDim = childCrossDim;
-        }
-      }
+      // The main dimension is the sum of all the elements dimension plus
+      // the spacing.
+      mainDim += betweenMainDim + getDimWithMargin(child, mainAxis);
+      // The cross dimension is the max of the elements dimension since there
+      // can only be one element in that cross dimension.
+      crossDim = fmaxf(crossDim, getDimWithMargin(child, crossAxis));
     }
   }
 
-  mainPos += getPaddingAndBorder(node, trailing[mainAxis]);
-  crossDim += getPaddingAndBorderAxis(node, crossAxis);
+  // If the user didn't specify a width or height, and it has not been set
+  // by the container, then we set it via the children.
+  if (isUndefined(node->layout.dimensions[dim[mainAxis]])) {
+    node->layout.dimensions[dim[mainAxis]] = fmaxf(
+      // We're missing the last padding at this point to get the final
+      // dimension
+      mainDim + getPaddingAndBorder(node, trailing[mainAxis]),
+      // We can never assign a width smaller than the padding and borders
+      getPaddingAndBorderAxis(node, mainAxis)
+    );
+  }
 
-  if (isUndefined(node->layout.dimensions[dim[mainAxis]]) && !mainDimInStyle) {
-    node->layout.dimensions[dim[mainAxis]] = fmaxf(mainPos, getPaddingAndBorderAxis(node, mainAxis));
-  }
   if (isUndefined(node->layout.dimensions[dim[crossAxis]])) {
-    node->layout.dimensions[dim[crossAxis]] = fmaxf(crossDim, getPaddingAndBorderAxis(node, crossAxis));
+    node->layout.dimensions[dim[crossAxis]] = fmaxf(
+      // For the cross dim, we add both sides at the end because the value
+      // is aggregate via a max function. Intermediate negative values
+      // can mess this computation otherwise
+      crossDim + getPaddingAndBorderAxis(node, crossAxis),
+      getPaddingAndBorderAxis(node, crossAxis)
+    );
   }
+
+
+  // <Loop D> Position elements in the cross axis
 
   for (int i = 0; i < node->children_count; ++i) {
     css_node_t* child = &node->children[i];
 
-    if (getPositionType(child) == CSS_POSITION_RELATIVE) {
-      css_align_t alignItem = getAlignItem(node, child);
-      float remainingCrossDim = node->layout.dimensions[dim[crossAxis]] -
-        getDimWithMargin(child, crossAxis) -
-        getPaddingAndBorderAxis(node, crossAxis);
+    if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
+        isPosDefined(child, leading[crossAxis])) {
+      // In case the child is absolutely positionned and has a
+      // top/left/bottom/right being set, we override all the previously
+      // computed positions to set it correctly.
+      child->layout.position[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
+        getBorder(node, leading[crossAxis]) +
+        getMargin(child, leading[crossAxis]);
 
+    } else {
       float leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);
-      if (alignItem == CSS_ALIGN_FLEX_START) {
-        // Do nothing
-      } else if (alignItem == CSS_ALIGN_CENTER) {
-        leadingCrossDim += remainingCrossDim / 2;
-      } else if (alignItem == CSS_ALIGN_FLEX_END) {
-        leadingCrossDim += remainingCrossDim;
-      } else if (alignItem == CSS_ALIGN_STRETCH) {
-        if (!isDimDefined(child, crossAxis)) {
-          child->layout.dimensions[dim[crossAxis]] = fmaxf(
-            node->layout.dimensions[dim[crossAxis]] -
-              getPaddingAndBorderAxis(node, crossAxis) -
-              getMarginAxis(child, crossAxis),
-            getPaddingAndBorderAxis(child, crossAxis)
-          );
+
+      // For a relative children, we're either using alignItems (parent) or
+      // alignSelf (child) in order to determine the position in the cross axis
+      if (getPositionType(child) == CSS_POSITION_RELATIVE) {
+        css_align_t alignItem = getAlignItem(node, child);
+        if (alignItem == CSS_ALIGN_FLEX_START) {
+          // Do nothing
+        } else if (alignItem == CSS_ALIGN_STRETCH) {
+          // You can only stretch if the dimension has not already been set
+          // previously.
+          if (!isDimDefined(child, crossAxis)) {
+            child->layout.dimensions[dim[crossAxis]] = fmaxf(
+              node->layout.dimensions[dim[crossAxis]] -
+                getPaddingAndBorderAxis(node, crossAxis) -
+                getMarginAxis(child, crossAxis),
+              // You never want to go smaller than padding
+              getPaddingAndBorderAxis(child, crossAxis)
+            );
+          }
+        } else {
+          // The remaining space between the parent dimensions+padding and child
+          // dimensions+margin.
+          float remainingCrossDim = node->layout.dimensions[dim[crossAxis]] -
+            getPaddingAndBorderAxis(node, crossAxis) -
+            getDimWithMargin(child, crossAxis);
+
+          if (alignItem == CSS_ALIGN_CENTER) {
+            leadingCrossDim += remainingCrossDim / 2;
+          } else { // CSS_ALIGN_FLEX_END
+            leadingCrossDim += remainingCrossDim;
+          }
         }
       }
+
+      // And we apply the position
       child->layout.position[pos[crossAxis]] += leadingCrossDim;
-    } else {
-      if (isPosDefined(child, leading[crossAxis])) {
-        child->layout.position[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
-          getBorder(node, leading[crossAxis]) +
-          getMargin(child, leading[crossAxis]);
-      } else {
-        child->layout.position[pos[crossAxis]] += getPaddingAndBorder(node, leading[crossAxis]);
-      }
     }
   }
-
-  node->layout.position[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
-    getRelativePosition(node, mainAxis);
-  node->layout.position[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
-    getRelativePosition(node, crossAxis);
 }
