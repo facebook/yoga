@@ -65,6 +65,9 @@ var layoutTestUtils = (function() {
       (node.children || []).forEach(function(child) {
         renderNode(div, child);
       });
+      if (node.style.text) {
+        div.innerText = node.style.text;
+      }
       return div;
     }
 
@@ -81,7 +84,9 @@ var layoutTestUtils = (function() {
 
       var children = [];
       for (var child = div.firstChild; child; child = child.nextSibling) {
-        children.push(buildLayout(rect, child));
+        if (child.nodeType !== 3 /* textNode */) {
+          children.push(buildLayout(rect, child));
+        }
       }
       if (children.length) {
         result.children = children;

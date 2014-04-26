@@ -1,6 +1,7 @@
 #ifndef __LAYOUT_H
 #define __LAYOUT_H
 
+#define CSS_UNDEFINED NAN
 
 typedef enum {
   CSS_FLEX_DIRECTION_COLUMN = 0,

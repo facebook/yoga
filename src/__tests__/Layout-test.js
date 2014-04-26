@@ -744,6 +744,13 @@ describe('Layout', function() {
     )
   });
 
+  it('should layout node with text', function() {
+    testLayout(
+      {style: {text: 'kikoo'}},
+      {width: 36, height: 18, top: 0, left: 0}
+    )
+  });
+
 
 
   it('should layout randomly', function() {
@@ -806,7 +813,7 @@ describe('Layout', function() {
       return node;
     }
 
-    for (var i = 0; i < 1000; ++i) {
+    for (var i = 0; i < 100; ++i) {
       var node = generateRandomNode();
       if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
         node = reduceTest(node);

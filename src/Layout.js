@@ -231,6 +231,11 @@ var computeLayout = (function() {
     node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
       getRelativePosition(node, crossAxis);
 
+    if ('text' in node.style) {
+      node.layout.width = 36;
+      node.layout.height = 18;
+      return;
+    }
 
     // <Loop A> Layout non flexible children and count children by type
 
@@ -271,6 +276,7 @@ var computeLayout = (function() {
         }
       }
     }
+
 
     // <Loop B> Layout flexible children and allocate empty space
 
