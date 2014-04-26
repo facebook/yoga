@@ -751,6 +751,13 @@ describe('Layout', function() {
     )
   });
 
+  it('should layout node with text and width', function() {
+    testLayout(
+      {style: {text: 'kikoo loool', width: 10}},
+      {width: 10, height: 36, top: 0, left: 0}
+    )
+  });
+
 
 
   it('should layout randomly', function() {

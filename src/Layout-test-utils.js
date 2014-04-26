@@ -27,6 +27,50 @@ var layoutTestUtils = (function() {
     return iframe;
   })();
 
+  var realComputeLayout = computeLayout;
+
+  function computeCSSLayout(rootNode) {
+    var body = iframe.contentDocument.body;
+
+    function fillNodes(node) {
+      node.layout = {
+        width: undefined,
+        height: undefined,
+        top: 0,
+        left: 0
+      };
+      if (!node.style) {
+        node.style = {};
+      }
+
+      if ('text' in node.style) {
+        node.style.measure = function(width) {
+          var span = document.createElement('span');
+          span.style.position = 'absolute';
+          if (width !== undefined) {
+            span.style.width = width + 'px';
+          }
+          span.innerText = node.style.text;
+          body.appendChild(span);
+          var rect = span.getBoundingClientRect();
+          body.removeChild(span);
+          return {
+            width: rect.width,
+            height: rect.height
+          };
+        }
+      }
+
+      if (!node.children) {
+        node.children = [];
+      }
+      node.children.forEach(fillNodes);
+    }
+
+    fillNodes(rootNode);
+    return realComputeLayout(rootNode);
+  }
+
   function computeDOMLayout(node) {
     var body = iframe.contentDocument.body;
 
@@ -112,7 +156,7 @@ var layoutTestUtils = (function() {
   }
 
   function isEqual(a, b) {
-    // computeLayout and computeDOMLayout output a tree with same ordered elements
+    // computeCSSLayout and computeDOMLayout output a tree with same ordered elements
     return JSON.stringify(a) === JSON.stringify(b);
   }
 
@@ -120,7 +164,7 @@ var layoutTestUtils = (function() {
     function isWorking() {
       return isEqual(
         computeDOMLayout(node),
-        computeLayout(node)
+        computeCSSLayout(node)
       );
     }
     if (isWorking()) {
@@ -184,16 +228,16 @@ var layoutTestUtils = (function() {
 
   return {
     testLayout: function(node, expectedLayout) {
-      var layout = computeLayout(node);
+      var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
       testNamedLayout('expected-dom', expectedLayout, domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
     testRandomLayout: function(node, i) {
-      expect({i: i, node: node, layout: computeLayout(node)})
+      expect({i: i, node: node, layout: computeCSSLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
     },
-    computeLayout: computeLayout,
+    computeLayout: computeCSSLayout,
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest
   }

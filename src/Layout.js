@@ -1,22 +1,6 @@
 
 var computeLayout = (function() {
 
-  function fillNodes(node) {
-    node.layout = {
-      width: undefined,
-      height: undefined,
-      top: 0,
-      left: 0
-    };
-    if (!node.style) {
-      node.style = {};
-    }
-    if (!node.children) {
-      node.children = [];
-    }
-    node.children.forEach(fillNodes);
-  }
-
   function extractNodes(node) {
     var layout = node.layout;
     delete node.layout;
@@ -231,9 +215,10 @@ var computeLayout = (function() {
     node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
       getRelativePosition(node, crossAxis);
 
-    if ('text' in node.style) {
-      node.layout.width = 36;
-      node.layout.height = 18;
+    if ('measure' in node.style) {
+      var dimensions = node.style.measure(node.style.width);
+      node.layout.width = dimensions.width;
+      node.layout.height = dimensions.height;
       return;
     }
 
@@ -464,7 +449,6 @@ var computeLayout = (function() {
   }
 
   var fn = function(node) {
-    fillNodes(node);
     layoutNode(node);
     return extractNodes(node);
   };
