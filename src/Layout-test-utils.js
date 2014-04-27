@@ -26,12 +26,11 @@ var layoutTestUtils = (function() {
 
     return iframe;
   })();
+  var body = iframe.contentDocument.body;
 
   var realComputeLayout = computeLayout;
 
   function computeCSSLayout(rootNode) {
-    var body = iframe.contentDocument.body;
-
     function fillNodes(node) {
       node.layout = {
         width: undefined,
@@ -43,25 +42,7 @@ var layoutTestUtils = (function() {
         node.style = {};
       }
 
-      if ('text' in node.style) {
-        node.style.measure = function(width) {
-          var span = document.createElement('span');
-          span.style.position = 'absolute';
-          if (width !== undefined) {
-            span.style.width = width + 'px';
-          }
-          span.innerText = node.style.text;
-          body.appendChild(span);
-          var rect = span.getBoundingClientRect();
-          body.removeChild(span);
-          return {
-            width: rect.width,
-            height: rect.height
-          };
-        }
-      }
-
-      if (!node.children) {
+      if (!node.children || node.style.measure) {
         node.children = [];
       }
       node.children.forEach(fillNodes);
@@ -109,8 +90,8 @@ var layoutTestUtils = (function() {
       (node.children || []).forEach(function(child) {
         renderNode(div, child);
       });
-      if (node.style.text) {
-        div.innerText = node.style.text;
+      if (node.style.measure) {
+        div.innerText = node.style.measure.toString();
       }
       return div;
     }
@@ -239,6 +220,25 @@ var layoutTestUtils = (function() {
     },
     computeLayout: computeCSSLayout,
     computeDOMLayout: computeDOMLayout,
-    reduceTest: reduceTest
+    reduceTest: reduceTest,
+    text: function(text) {
+      var fn = function(width) {
+        var span = document.createElement('span');
+        span.style.position = 'absolute';
+        if (width !== undefined) {
+          span.style.width = width + 'px';
+        }
+        span.innerText = text;
+        body.appendChild(span);
+        var rect = span.getBoundingClientRect();
+        body.removeChild(span);
+        return {
+          width: rect.width,
+          height: rect.height
+        };
+      };
+      fn.toString = function() { return text; }
+      return fn;
+    }
   }
 })();

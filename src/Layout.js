@@ -217,8 +217,12 @@ var computeLayout = (function() {
 
     if ('measure' in node.style) {
       var dimensions = node.style.measure(node.style.width);
-      node.layout.width = dimensions.width;
-      node.layout.height = dimensions.height;
+      if (!isDimDefined(node, 'row')) {
+        node.layout.width = dimensions.width + getPaddingAndBorderAxis(node, 'row');
+      }
+      if (!isDimDefined(node, 'column')) {
+        node.layout.height = dimensions.height + getPaddingAndBorderAxis(node, 'column');
+      }
       return;
     }
 

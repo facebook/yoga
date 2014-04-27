@@ -4,6 +4,7 @@ var testRandomLayout = layoutTestUtils.testRandomLayout;
 var computeLayout = layoutTestUtils.computeLayout;
 var computeDOMLayout = layoutTestUtils.computeDOMLayout;
 var reduceTest = layoutTestUtils.reduceTest;
+var text = layoutTestUtils.text;
 
 describe('Layout', function() {
   it('should layout a single node with width and height', function() {
@@ -746,15 +747,22 @@ describe('Layout', function() {
 
   it('should layout node with text', function() {
     testLayout(
-      {style: {text: 'kikoo'}},
+      {style: {measure: text('kikoo')}},
       {width: 36, height: 18, top: 0, left: 0}
     )
   });
 
   it('should layout node with text and width', function() {
     testLayout(
-      {style: {text: 'kikoo loool', width: 10}},
+      {style: {measure: text('kikoo loool'), width: 10}},
       {width: 10, height: 36, top: 0, left: 0}
+    )
+  });
+
+  it('should layout node with padding and margin', function() {
+    testLayout(
+      {style: {measure: text('kikoo loool'), padding: 5, margin: 5}},
+      {width: 82, height: 28, top: 5, left: 5}
     )
   });
 
@@ -816,6 +824,7 @@ describe('Layout', function() {
       randEnum(node, 0.5, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.5, 'flex', ['none', 1]);
       randEnum(node, 0.5, 'position', ['relative', 'absolute']);
+      randEnum(node, 0.5, 'measure', [text('kikoo'), text('kikooooooooooooo looool')]);
       randChildren(node, 0.2);
       return node;
     }
