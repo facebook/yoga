@@ -1,17 +1,6 @@
 
 var computeLayout = (function() {
 
-  function extractNodes(node) {
-    var layout = node.layout;
-    delete node.layout;
-    if (node.children.length > 0) {
-      layout.children = node.children.map(extractNodes);
-    } else {
-      delete node.children;
-    }
-    return layout;
-  }
-
   function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -198,7 +187,7 @@ var computeLayout = (function() {
   var CSS_POSITION_RELATIVE = 'relative';
   var CSS_POSITION_ABSOLUTE = 'absolute';
 
-  function layoutNode(node) {
+  return function layoutNode(node) {
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
     var/*css_flex_direction_t*/ crossAxis = mainAxis === CSS_FLEX_DIRECTION_ROW ?
       CSS_FLEX_DIRECTION_COLUMN :
@@ -459,13 +448,6 @@ var computeLayout = (function() {
       }
     }
   }
-
-  var fn = function(node) {
-    layoutNode(node);
-    return extractNodes(node);
-  };
-  fn.layoutNode = layoutNode;
-  return fn;
 })();
 
 

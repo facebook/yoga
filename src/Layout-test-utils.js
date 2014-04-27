@@ -51,8 +51,20 @@ var layoutTestUtils = (function() {
       node.children.forEach(fillNodes);
     }
 
+    function extractNodes(node) {
+      var layout = node.layout;
+      delete node.layout;
+      if (node.children.length > 0) {
+        layout.children = node.children.map(extractNodes);
+      } else {
+        delete node.children;
+      }
+      return layout;
+    }
+
     fillNodes(rootNode);
-    return realComputeLayout(rootNode);
+    realComputeLayout(rootNode);
+    return extractNodes(rootNode);
   }
 
   function computeDOMLayout(node) {
