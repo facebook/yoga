@@ -745,7 +745,7 @@ describe('Layout', function() {
     )
   });
 
-  it('should layout node with text', function() {
+  it('should layout node with just text', function() {
     testLayout(
       {style: {measure: text('kikoo')}},
       {width: 36, height: 18, top: 0, left: 0}
@@ -759,10 +759,21 @@ describe('Layout', function() {
     )
   });
 
-  it('should layout node with padding and margin', function() {
+  it('should layout node with text, padding and margin', function() {
     testLayout(
       {style: {measure: text('kikoo loool'), padding: 5, margin: 5}},
       {width: 82, height: 28, top: 5, left: 5}
+    )
+  });
+
+  it('should layout node with text and position absolute', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {measure: text('kikoo loool'), position: 'absolute'}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 36, height: 36, top: 0, left: 0}
+      ]}
     )
   });
 

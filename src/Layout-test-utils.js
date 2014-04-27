@@ -28,6 +28,9 @@ var layoutTestUtils = (function() {
   })();
   var body = iframe.contentDocument.body;
 
+  var iframeText = document.createElement('iframe');
+  document.body.appendChild(iframeText);
+
   var realComputeLayout = computeLayout;
 
   function computeCSSLayout(rootNode) {
@@ -222,16 +225,27 @@ var layoutTestUtils = (function() {
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest,
     text: function(text) {
+      var body = iframeText.contentDocument.body;
       var fn = function(width) {
+        var div = document.createElement('div');
         var span = document.createElement('span');
-        span.style.position = 'absolute';
-        if (width !== undefined) {
+        span.style.display = 'flex';
+        body.style.display = 'block';
+        if (width === 'grow') {
+          span.style.position = 'absolute';
+        } else if (width === 'shrink') {
+          div.style.display = 'flex';
+          div.style.position = 'relative';
+          body.style.display = 'flex';
+          span.style.position = 'absolute';
+        } else {
           span.style.width = width + 'px';
         }
         span.innerText = text;
-        body.appendChild(span);
+        div.appendChild(span);
+        body.appendChild(div);
         var rect = span.getBoundingClientRect();
-        body.removeChild(span);
+        body.removeChild(div);
         return {
           width: rect.width,
           height: rect.height

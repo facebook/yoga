@@ -216,7 +216,15 @@ var computeLayout = (function() {
       getRelativePosition(node, crossAxis);
 
     if ('measure' in node.style) {
-      var dimensions = node.style.measure(node.style.width);
+      var width;
+      if (isDimDefined(node, 'row')) {
+        width = node.style.width;
+      } else if (node.style.position === 'absolute') {
+        width = 'shrink';
+      } else {
+        width = 'grow';
+      }
+      var dimensions = node.style.measure(width);
       if (!isDimDefined(node, 'row')) {
         node.layout.width = dimensions.width + getPaddingAndBorderAxis(node, 'row');
       }
