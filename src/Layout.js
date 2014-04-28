@@ -112,6 +112,10 @@ var computeLayout = (function() {
     return !isUndefined(node.style[pos]);
   }
 
+  function isMeasureDefined(node) {
+    return 'measure' in node.style;
+  }
+
   function getPosition(node, pos) {
     if (pos in node.style) {
       return node.style[pos];
@@ -170,6 +174,8 @@ var computeLayout = (function() {
     return b;
   }
 
+  var CSS_UNDEFINED = undefined;
+
   var CSS_FLEX_DIRECTION_ROW = 'row';
   var CSS_FLEX_DIRECTION_COLUMN = 'column';
 
@@ -186,6 +192,10 @@ var computeLayout = (function() {
 
   var CSS_POSITION_RELATIVE = 'relative';
   var CSS_POSITION_ABSOLUTE = 'absolute';
+
+  var CSS_MEASURE_VALUE = 'value';
+  var CSS_MEASURE_GROW = 'grow';
+  var CSS_MEASURE_SHRINK = 'shrink';
 
   return function layoutNode(node) {
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
@@ -204,22 +214,29 @@ var computeLayout = (function() {
     node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
       getRelativePosition(node, crossAxis);
 
-    if ('measure' in node.style) {
-      var width;
+    if (isMeasureDefined(node)) {
+      var/*float*/ width = CSS_UNDEFINED;
+      var/*css_measure_type_t*/ type = CSS_MEASURE_VALUE;
+
       if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
         width = node.style.width;
-      } else if (getPositionType(node) === CSS_POSITION_ABSOLUTE) {
-        width = 'shrink';
+      } else if (getPositionType(node) == CSS_POSITION_ABSOLUTE) {
+        type = CSS_MEASURE_SHRINK;
       } else {
-        width = 'grow';
+        type = CSS_MEASURE_GROW;
       }
-      var dimensions = node.style.measure(width);
+
+      var/*css_dim_t*/ measure_dim = node.style.measure(
+        /*!node->style.measure_context,*/
+        type,
+        width
+      );
       if (!isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
-        node.layout.width = dimensions.width +
+        node.layout.width = measure_dim.width +
           getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
       }
       if (!isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
-        node.layout.height = dimensions.height +
+        node.layout.height = measure_dim.height +
           getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
       }
       return;

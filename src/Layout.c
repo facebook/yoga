@@ -275,6 +275,10 @@ bool isPosDefined(css_node_t *node, css_position_t pos) {
   return !isUndefined(node->style.position[pos]);
 }
 
+bool isMeasureDefined(css_node_t *node) {
+  return node->style.measure;
+}
+
 float getPosition(css_node_t *node, css_position_t pos) {
   float result = node->style.position[pos];
   if (!isUndefined(result)) {
@@ -328,7 +332,7 @@ void layoutNode(css_node_t *node) {
   node->layout.position[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
     getRelativePosition(node, crossAxis);
 
-  if (node->style.measure) {
+  if (isMeasureDefined(node)) {
     float width = CSS_UNDEFINED;
     css_measure_type_t type = CSS_MEASURE_VALUE;
 
@@ -340,22 +344,21 @@ void layoutNode(css_node_t *node) {
       type = CSS_MEASURE_GROW;
     }
 
-    css_dim_t dim = node->style.measure(
+    css_dim_t measure_dim = node->style.measure(
       node->style.measure_context,
       type,
       width
     );
     if (!isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
-      node->layout.dimensions[CSS_WIDTH] = dim.dimensions[CSS_WIDTH] +
+      node->layout.dimensions[CSS_WIDTH] = measure_dim.dimensions[CSS_WIDTH] +
         getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
     }
     if (!isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
-      node->layout.dimensions[CSS_HEIGHT] = dim.dimensions[CSS_HEIGHT] +
+      node->layout.dimensions[CSS_HEIGHT] = measure_dim.dimensions[CSS_HEIGHT] +
         getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
     }
     return;
   }
-
 
   // <Loop A> Layout non flexible children and count children by type
 
@@ -396,6 +399,7 @@ void layoutNode(css_node_t *node) {
       }
     }
   }
+
 
   // <Loop B> Layout flexible children and allocate empty space
 
