@@ -1,6 +1,7 @@
 #ifndef __LAYOUT_H
 #define __LAYOUT_H
 
+#include <math.h>
 #define CSS_UNDEFINED NAN
 
 typedef enum {
@@ -50,11 +51,21 @@ typedef enum {
   CSS_HEIGHT
 } css_dimension_t;
 
-
 typedef struct {
   float position[2];
   float dimensions[2];
 } css_layout_t;
+
+
+typedef enum {
+  CSS_MEASURE_GROW = 0,
+  CSS_MEASURE_SHRINK,
+  CSS_MEASURE_VALUE
+} css_measure_type_t;
+
+typedef struct {
+  float dimensions[2];
+} css_dim_t;
 
 typedef struct {
   css_flex_direction_t flex_direction;
@@ -78,6 +89,9 @@ typedef struct {
   float padding[4];
   float border[4];
   float dimensions[2];
+
+  css_dim_t (*measure)(void *context, css_measure_type_t type, float width);
+  void *measure_context;
 } css_style_t;
 
 typedef struct css_node {

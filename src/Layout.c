@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <stdbool.h>
 
 #include "Layout.h"
@@ -328,6 +327,34 @@ void layoutNode(css_node_t *node) {
     getRelativePosition(node, mainAxis);
   node->layout.position[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
     getRelativePosition(node, crossAxis);
+
+  if (node->style.measure) {
+    float width = CSS_UNDEFINED;
+    css_measure_type_t type = CSS_MEASURE_VALUE;
+
+    if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+      width = node->style.dimensions[CSS_WIDTH];
+    } else if (getPositionType(node) == CSS_POSITION_ABSOLUTE) {
+      type = CSS_MEASURE_SHRINK;
+    } else {
+      type = CSS_MEASURE_GROW;
+    }
+
+    css_dim_t dim = node->style.measure(
+      node->style.measure_context,
+      type,
+      width
+    );
+    if (!isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+      node->layout.dimensions[CSS_WIDTH] = dim.dimensions[CSS_WIDTH] +
+        getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+    }
+    if (!isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
+      node->layout.dimensions[CSS_HEIGHT] = dim.dimensions[CSS_HEIGHT] +
+        getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+    }
+    return;
+  }
 
 
   // <Loop A> Layout non flexible children and count children by type

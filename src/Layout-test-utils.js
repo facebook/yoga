@@ -239,6 +239,26 @@ var layoutTestUtils = (function() {
     text: function(text) {
       var body = iframeText.contentDocument.body;
       var fn = function(width) {
+        // Constants for testing purposes between C/JS and other platforms
+        // Comment this block of code if you want to use the browser to
+        // generate proper sizes
+        if (text === 'small') {
+          if (width === 'grow' || width === 'shrink') {
+            return {width: 33, height: 18}
+          }
+          return {width: width, height: 18};
+        }
+        if (text === 'loooooooooong with space') {
+          if (width === 'grow') {
+            return {width: 171, height: 18};
+          }
+          if (width === 'shrink') {
+            return {width: 100, height: 36};
+          }
+          return {width: width, height: width >= 171 ? 18 : 36};
+        }
+        return;
+
         var div = document.createElement('div');
         var span = document.createElement('span');
         span.style.display = 'flex';

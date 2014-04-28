@@ -13,7 +13,7 @@ textarea {
 <h1>layoutCode</h1>
 <textarea id="layout_code" onclick="this.select()"></textarea>
 <script>
-document.getElementById('layout_code').value = computeLayout.layoutNode.toString()
+document.getElementById('layout_code').value = computeLayout.toString()
   .replace(/\.children\.length/g, '.children_count')
   .replace(/layout\[dim/g, 'layout.dimensions[dim')
   .replace(/layout\[pos/g, 'layout.position[pos')
@@ -36,6 +36,7 @@ var allTests = [];
 var computeDOMLayout = layoutTestUtils.computeDOMLayout;
 var computeLayout = layoutTestUtils.computeLayout;
 var reduceTest = layoutTestUtils.reduceTest;
+var text = layoutTestUtils.text;
 var layoutTestUtils = {
   testLayout: function(node, expectedLayout) {
     allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
@@ -45,7 +46,8 @@ var layoutTestUtils = {
   },
   computeLayout: computeLayout,
   computeDOMLayout: computeDOMLayout,
-  reduceTest: reduceTest
+  reduceTest: reduceTest,
+  text: text
 };
 function describe(name, cb) { cb(); }
 function it(name, cb) { currentTest = name; cb(); }
@@ -97,6 +99,13 @@ function printLayout(test) {
     addFloat(positive, node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
   }
 
+  function addMeasure(node) {
+    if ('measure' in node.style) {
+      add('node->style.measure = measure;');
+      add('node->style.measure_context = "' + node.style.measure.toString() + '";');
+    }
+  }
+
   add('{');
   level++;
 
@@ -146,6 +155,7 @@ function printLayout(test) {
     addFloat('all', node, 'top', 'position[CSS_TOP]');
     addFloat('all', node, 'right', 'position[CSS_RIGHT]');
     addFloat('all', node, 'bottom', 'position[CSS_BOTTOM]');
+    addMeasure(node);
 
     if (node.children) {
       add('init_css_node_children(node, ' + node.children.length + ');');

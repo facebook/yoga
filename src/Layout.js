@@ -208,7 +208,7 @@ var computeLayout = (function() {
       var width;
       if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
         width = node.style.width;
-      } else if (node.style.position === CSS_POSITION_ABSOLUTE) {
+      } else if (getPositionType(node) === CSS_POSITION_ABSOLUTE) {
         width = 'shrink';
       } else {
         width = 'grow';

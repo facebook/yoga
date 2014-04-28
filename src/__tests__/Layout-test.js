@@ -747,32 +747,32 @@ describe('Layout', function() {
 
   it('should layout node with just text', function() {
     testLayout(
-      {style: {measure: text('kikoo')}},
-      {width: 36, height: 18, top: 0, left: 0}
+      {style: {measure: text('small')}},
+      {width: 33, height: 18, top: 0, left: 0}
     )
   });
 
   it('should layout node with text and width', function() {
     testLayout(
-      {style: {measure: text('kikoo loool'), width: 10}},
-      {width: 10, height: 36, top: 0, left: 0}
+      {style: {measure: text('small'), width: 10}},
+      {width: 10, height: 18, top: 0, left: 0}
     )
   });
 
   it('should layout node with text, padding and margin', function() {
     testLayout(
-      {style: {measure: text('kikoo loool'), padding: 5, margin: 5}},
-      {width: 82, height: 28, top: 5, left: 5}
+      {style: {measure: text('loooooooooong with space'), padding: 5, margin: 5}},
+      {width: 181, height: 28, top: 5, left: 5}
     )
   });
 
   it('should layout node with text and position absolute', function() {
     testLayout(
       {style: {}, children: [
-        {style: {measure: text('kikoo loool'), position: 'absolute'}}
+        {style: {measure: text('loooooooooong with space'), position: 'absolute'}}
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 36, height: 36, top: 0, left: 0}
+        {width: 100, height: 36, top: 0, left: 0}
       ]}
     )
   });
@@ -835,7 +835,7 @@ describe('Layout', function() {
       randEnum(node, 0.5, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.5, 'flex', ['none', 1]);
       randEnum(node, 0.5, 'position', ['relative', 'absolute']);
-      randEnum(node, 0.5, 'measure', [text('kikoo'), text('kikooooooooooooo looool')]);
+      randEnum(node, 0.5, 'measure', [text('small'), text('loooooooooong with space')]);
       randChildren(node, 0.2);
       return node;
     }
