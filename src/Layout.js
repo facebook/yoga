@@ -206,19 +206,21 @@ var computeLayout = (function() {
 
     if ('measure' in node.style) {
       var width;
-      if (isDimDefined(node, 'row')) {
+      if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
         width = node.style.width;
-      } else if (node.style.position === 'absolute') {
+      } else if (node.style.position === CSS_POSITION_ABSOLUTE) {
         width = 'shrink';
       } else {
         width = 'grow';
       }
       var dimensions = node.style.measure(width);
-      if (!isDimDefined(node, 'row')) {
-        node.layout.width = dimensions.width + getPaddingAndBorderAxis(node, 'row');
+      if (!isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+        node.layout.width = dimensions.width +
+          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
       }
-      if (!isDimDefined(node, 'column')) {
-        node.layout.height = dimensions.height + getPaddingAndBorderAxis(node, 'column');
+      if (!isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
+        node.layout.height = dimensions.height +
+          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
       }
       return;
     }
