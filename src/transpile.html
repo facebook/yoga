@@ -67,47 +67,19 @@ function printLayout(test) {
     res.push(indent(level) + str);
   }
 
+  function isEmpty(obj) {
+    for (var key in obj) {
+      return false;
+    }
+    return true;
+  }
+
   function indent(level) {
     var result = '';
     for (var i = 0; i < level; ++i) {
       result += '  ';
     }
     return result;
-  }
-
-  function addEnum(node, js_key, c_key, dict) {
-    if (js_key in node.style) {
-      add('node->style' + '.' + c_key + ' = ' + dict[node.style[js_key]] + ';');
-    }
-  }
-
-  function addFloat(positive, node, js_key, c_key) {
-    if (js_key in node.style) {
-      if (positive === 'positive' && node.style[js_key] < 0) {
-        // do nothing
-      } else {
-        add('node->style' + '.' + c_key + ' = ' + node.style[js_key] + ';');
-      }
-    }
-  }
-
-  function addSpacing(positive, node, spacing, suffix) {
-    addFloat(positive, node, spacing + suffix, spacing + '[CSS_LEFT]');
-    addFloat(positive, node, spacing + suffix, spacing + '[CSS_TOP]');
-    addFloat(positive, node, spacing + suffix, spacing + '[CSS_RIGHT]');
-    addFloat(positive, node, spacing + suffix, spacing + '[CSS_BOTTOM]');
-
-    addFloat(positive, node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
-    addFloat(positive, node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
-    addFloat(positive, node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
-    addFloat(positive, node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
-  }
-
-  function addMeasure(node) {
-    if ('measure' in node.style) {
-      add('node->style.measure = measure;');
-      add('node->style.measure_context = "' + node.style.measure.toString() + '";');
-    }
   }
 
   add('{');
@@ -117,8 +89,50 @@ function printLayout(test) {
   add('css_node_t *root_node = new_css_node();');
   add('{');
   level++;
-  add('css_node_t *node = root_node;');
+  if (!isEmpty(test.node.style) || test.node.children && test.node.children.length) {
+    add('css_node_t *node_0 = root_node;');
+  }
   function rec_style(node) {
+
+    function addStyle(str) {
+      add('node_' + (level - 3) + '->style.' + str);
+    }
+
+    function addEnum(node, js_key, c_key, dict) {
+      if (js_key in node.style) {
+        addStyle(c_key + ' = ' + dict[node.style[js_key]] + ';');
+      }
+    }
+
+    function addFloat(positive, node, js_key, c_key) {
+      if (js_key in node.style) {
+        if (positive === 'positive' && node.style[js_key] < 0) {
+          // do nothing
+        } else {
+          addStyle(c_key + ' = ' + node.style[js_key] + ';');
+        }
+      }
+    }
+
+    function addSpacing(positive, node, spacing, suffix) {
+      addFloat(positive, node, spacing + suffix, spacing + '[CSS_LEFT]');
+      addFloat(positive, node, spacing + suffix, spacing + '[CSS_TOP]');
+      addFloat(positive, node, spacing + suffix, spacing + '[CSS_RIGHT]');
+      addFloat(positive, node, spacing + suffix, spacing + '[CSS_BOTTOM]');
+
+      addFloat(positive, node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
+      addFloat(positive, node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
+      addFloat(positive, node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
+      addFloat(positive, node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
+    }
+
+    function addMeasure(node) {
+      if ('measure' in node.style) {
+        addStyle('measure = measure;');
+        addStyle('measure_context = "' + node.style.measure.toString() + '";');
+      }
+    }
+
     addEnum(node, 'flexDirection', 'flex_direction', {
       'row': 'CSS_FLEX_DIRECTION_ROW',
       'column': 'CSS_FLEX_DIRECTION_COLUMN'
@@ -162,14 +176,13 @@ function printLayout(test) {
     addMeasure(node);
 
     if (node.children) {
-      add('init_css_node_children(node, ' + node.children.length + ');');
+      add('init_css_node_children(node_' + (level - 3) +', ' + node.children.length + ');');
       add('{');
       level++;
-      add('css_node_t *outer_node_' + (level - 3) + ' = node;');
-      add('css_node_t *node;');
+      add('css_node_t *node_' + (level - 3) + ';');
 
       for (var i = 0; i < node.children.length; ++i) {
-        add('node = &outer_node_' + (level - 3) + '->children[' + i + '];');
+        add('node_' + (level - 3) + ' = &node_' + (level - 4) + '->children[' + i + '];');
         rec_style(node.children[i]);
       }
 
@@ -186,23 +199,26 @@ function printLayout(test) {
   add('css_node_t *root_layout = new_css_node();');
   add('{');
   level++;
-  add('css_node_t *node = root_layout;');
+  add('css_node_t *node_0 = root_layout;');
 
   function rec_layout(node) {
-    add('node->layout.position[CSS_TOP] = ' + node.top + ';');
-    add('node->layout.position[CSS_LEFT] = ' + node.left + ';');
-    add('node->layout.dimensions[CSS_WIDTH] = ' + node.width + ';');
-    add('node->layout.dimensions[CSS_HEIGHT] = ' + node.height + ';');
+    function addLayout(str) {
+      add('node_' + (level - 3) + '->layout.' + str);
+    }
+
+    addLayout('position[CSS_TOP] = ' + node.top + ';');
+    addLayout('position[CSS_LEFT] = ' + node.left + ';');
+    addLayout('dimensions[CSS_WIDTH] = ' + node.width + ';');
+    addLayout('dimensions[CSS_HEIGHT] = ' + node.height + ';');
 
     if (node.children) {
-      add('init_css_node_children(node, ' + node.children.length + ');');
+      add('init_css_node_children(node_' + (level - 3) +', ' + node.children.length + ');');
       add('{');
       level++;
-      add('css_node_t *outer_node_' + (level - 3) + ' = node;');
-      add('css_node_t *node;');
+      add('css_node_t *node_' + (level - 3) + ';');
 
       for (var i = 0; i < node.children.length; ++i) {
-        add('node = &outer_node_' + (level - 3) + '->children[' + i + '];');
+        add('node_' + (level - 3) + ' = &node_' + (level - 4) + '->children[' + i + '];');
         rec_layout(node.children[i]);
       }
 

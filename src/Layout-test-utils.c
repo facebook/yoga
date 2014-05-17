@@ -1,12 +1,16 @@
 
 #include "Layout-test-utils.h"
 
-bool are_layout_equal(css_node_t *a, css_node_t *b) {
-  if (a->layout.dimensions[CSS_WIDTH] != b->layout.dimensions[CSS_WIDTH] ||
-      a->layout.dimensions[CSS_HEIGHT] != b->layout.dimensions[CSS_HEIGHT] ||
-      a->layout.position[CSS_TOP] != b->layout.position[CSS_TOP] ||
-      a->layout.position[CSS_LEFT] != b->layout.position[CSS_LEFT] ||
-      a->children_count != b->children_count) {
+static bool eq(float a, float b) {
+  return fabs(a - b) < 0.0001;
+}
+
+static bool are_layout_equal(css_node_t *a, css_node_t *b) {
+  if (!eq(a->layout.dimensions[CSS_WIDTH], b->layout.dimensions[CSS_WIDTH]) ||
+      !eq(a->layout.dimensions[CSS_HEIGHT], b->layout.dimensions[CSS_HEIGHT]) ||
+      !eq(a->layout.position[CSS_TOP], b->layout.position[CSS_TOP]) ||
+      !eq(a->layout.position[CSS_LEFT], b->layout.position[CSS_LEFT]) ||
+      !eq(a->children_count, b->children_count)) {
     return false;
   }
   for (int i = 0; i < a->children_count; ++i) {

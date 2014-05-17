@@ -6,7 +6,11 @@
 
 #include "Layout.h"
 
-void init_css_node(css_node_t *node) {
+static bool eq(float a, float b) {
+  return fabs(a - b) < 0.0001;
+}
+
+static void init_css_node(css_node_t *node) {
   node->style.align_items = CSS_ALIGN_FLEX_START;
 
   // Some of the fields default to undefined and not 0
@@ -29,14 +33,14 @@ css_node_t *new_css_node() {
 }
 
 void init_css_node_children(css_node_t *node, int children_count) {
-  node->children = calloc(children_count, sizeof(css_node_t));
+  node->children = calloc((unsigned long)children_count, sizeof(css_node_t));
   for (int i = 0; i < children_count; ++i) {
     init_css_node(&node->children[i]);
   }
   node->children_count = children_count;
 }
 
-void cleanup_css_node(css_node_t *node) {
+static void cleanup_css_node(css_node_t *node) {
   for (int i = 0; i < node->children_count; ++i) {
     cleanup_css_node(&node->children[i]);
   }
@@ -48,29 +52,29 @@ void free_css_node(css_node_t *node) {
   free(node);
 }
 
-void indent(int n) {
+static void indent(int n) {
   for (int i = 0; i < n; ++i) {
     printf("  ");
   }
 }
 
-void print_number_0(const char *str, float number) {
-  if (number != 0) {
+static void print_number_0(const char *str, float number) {
+  if (!eq(number, 0)) {
     printf("%s: %g, ", str, number);
   }
 }
 
-void print_number_nan(const char *str, float number) {
+static void print_number_nan(const char *str, float number) {
   if (!isnan(number)) {
     printf("%s: %g, ", str, number);
   }
 }
 
-bool four_equal(float four[4]) {
+static bool four_equal(float four[4]) {
   return
-    four[0] == four[1] &&
-    four[0] == four[2] &&
-    four[0] == four[3];
+    eq(four[0], four[1]) &&
+    eq(four[0], four[2]) &&
+    eq(four[0], four[3]);
 }
 
 void print_style(css_node_t *node, int level) {
@@ -181,106 +185,106 @@ void print_layout(css_node_t *node, int level) {
 
 
 
-int leading[2] = {
+static css_position_t leading[2] = {
   /* CSS_FLEX_DIRECTION_COLUMN = */ CSS_TOP,
   /* CSS_FLEX_DIRECTION_ROW = */ CSS_LEFT
 };
-int trailing[2] = {
+static css_position_t trailing[2] = {
   /* CSS_FLEX_DIRECTION_COLUMN = */ CSS_BOTTOM,
   /* CSS_FLEX_DIRECTION_ROW = */ CSS_RIGHT
 };
-int pos[2] = {
+static css_position_t pos[2] = {
   /* CSS_FLEX_DIRECTION_COLUMN = */ CSS_TOP,
   /* CSS_FLEX_DIRECTION_ROW = */ CSS_LEFT
 };
-int dim[2] = {
+static css_dimension_t dim[2] = {
   /* CSS_FLEX_DIRECTION_COLUMN = */ CSS_HEIGHT,
   /* CSS_FLEX_DIRECTION_ROW = */ CSS_WIDTH
 };
 
 
 
-bool isUndefined(float value) {
+static bool isUndefined(float value) {
   return isnan(value);
 }
 
-float getMargin(css_node_t *node, int location) {
+static float getMargin(css_node_t *node, int location) {
   return node->style.margin[location];
 }
 
-float getPadding(css_node_t *node, int location) {
+static float getPadding(css_node_t *node, int location) {
   if (node->style.padding[location] >= 0) {
     return node->style.padding[location];
   }
   return 0;
 }
 
-float getBorder(css_node_t *node, int location) {
+static float getBorder(css_node_t *node, int location) {
   if (node->style.border[location] >= 0) {
     return node->style.border[location];
   }
   return 0;
 }
 
-float getPaddingAndBorder(css_node_t *node, int location) {
+static float getPaddingAndBorder(css_node_t *node, int location) {
   return getPadding(node, location) + getBorder(node, location);
 }
 
-float getMarginAxis(css_node_t *node, css_flex_direction_t axis) {
+static float getMarginAxis(css_node_t *node, css_flex_direction_t axis) {
   return getMargin(node, leading[axis]) + getMargin(node, trailing[axis]);
 }
 
-float getPaddingAndBorderAxis(css_node_t *node, css_flex_direction_t axis) {
+static float getPaddingAndBorderAxis(css_node_t *node, css_flex_direction_t axis) {
   return getPaddingAndBorder(node, leading[axis]) + getPaddingAndBorder(node, trailing[axis]);
 }
 
-css_position_type_t getPositionType(css_node_t *node) {
+static css_position_type_t getPositionType(css_node_t *node) {
   return node->style.position_type;
 }
 
-css_justify_t getJustifyContent(css_node_t *node) {
+static css_justify_t getJustifyContent(css_node_t *node) {
   return node->style.justify_content;
 }
 
-css_align_t getAlignItem(css_node_t *node, css_node_t *child) {
+static css_align_t getAlignItem(css_node_t *node, css_node_t *child) {
   if (child->style.align_self != CSS_ALIGN_AUTO) {
     return child->style.align_self;
   }
   return node->style.align_items;
 }
 
-css_flex_direction_t getFlexDirection(css_node_t *node) {
+static css_flex_direction_t getFlexDirection(css_node_t *node) {
   return node->style.flex_direction;
 }
 
-css_flex_t getFlex(css_node_t *node) {
+static css_flex_t getFlex(css_node_t *node) {
   return node->style.flex;
 }
 
-bool isFlex(css_node_t *node) {
+static bool isFlex(css_node_t *node) {
   return getPositionType(node) == CSS_POSITION_RELATIVE && getFlex(node);
 }
 
-float getDimWithMargin(css_node_t *node, css_flex_direction_t axis) {
+static float getDimWithMargin(css_node_t *node, css_flex_direction_t axis) {
   return node->layout.dimensions[dim[axis]] +
     getMargin(node, leading[axis]) +
     getMargin(node, trailing[axis]);
 }
 
-bool isDimDefined(css_node_t *node, css_flex_direction_t axis) {
+static bool isDimDefined(css_node_t *node, css_flex_direction_t axis) {
   return !isUndefined(node->style.dimensions[dim[axis]]);
 }
 
-bool isPosDefined(css_node_t *node, css_position_t pos) {
-  return !isUndefined(node->style.position[pos]);
+static bool isPosDefined(css_node_t *node, css_position_t position) {
+  return !isUndefined(node->style.position[position]);
 }
 
-bool isMeasureDefined(css_node_t *node) {
+static bool isMeasureDefined(css_node_t *node) {
   return node->style.measure;
 }
 
-float getPosition(css_node_t *node, css_position_t pos) {
-  float result = node->style.position[pos];
+static float getPosition(css_node_t *node, css_position_t position) {
+  float result = node->style.position[position];
   if (!isUndefined(result)) {
     return result;
   }
@@ -288,7 +292,7 @@ float getPosition(css_node_t *node, css_position_t pos) {
 }
 
 // When the user specifically sets a value for width or height
-void setDimensionFromStyle(css_node_t *node, css_flex_direction_t axis) {
+static void setDimensionFromStyle(css_node_t *node, css_flex_direction_t axis) {
   // The parent already computed us a width or height. We just skip it
   if (!isUndefined(node->layout.dimensions[dim[axis]])) {
     return;
@@ -307,7 +311,7 @@ void setDimensionFromStyle(css_node_t *node, css_flex_direction_t axis) {
 
 // If both left and right are defined, then use left. Otherwise return
 // +left or -right depending on which is defined.
-float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
+static float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
   float lead = node->style.position[leading[axis]];
   if (!isUndefined(lead)) {
     return lead;

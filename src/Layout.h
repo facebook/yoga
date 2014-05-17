@@ -103,7 +103,7 @@ typedef struct css_node {
 
 
 // Lifecycle of nodes and children
-css_node_t *new_css_node();
+css_node_t *new_css_node(void);
 void init_css_node_children(css_node_t *node, int children_count);
 void free_css_node(css_node_t *node);
 
