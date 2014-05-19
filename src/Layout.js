@@ -242,6 +242,25 @@ var computeLayout = (function() {
       return;
     }
 
+    // Pre-fill cross axis dimensions when the child is using stretch before
+    // we call the recursive layout pass
+    for (var/*int*/ i = 0; i < node.children.length; ++i) {
+      var/*css_node_t**/ child = node.children[i];
+      if (getAlignItem(node, child) === CSS_ALIGN_STRETCH &&
+          getPositionType(child) === CSS_POSITION_RELATIVE &&
+          !isUndefined(node.layout[dim[crossAxis]]) &&
+          !isDimDefined(child, crossAxis) &&
+          !isPosDefined(child, leading[crossAxis])) {
+        child.layout[dim[crossAxis]] = fmaxf(
+          node.layout[dim[crossAxis]] -
+            getPaddingAndBorderAxis(node, crossAxis) -
+            getMarginAxis(child, crossAxis),
+          // You never want to go smaller than padding
+          getPaddingAndBorderAxis(child, crossAxis)
+        );
+      }
+    }
+
     // <Loop A> Layout non flexible children and count children by type
 
     // mainContentDim is accumulation of the dimensions and margin of all the

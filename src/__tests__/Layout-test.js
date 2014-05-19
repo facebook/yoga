@@ -777,7 +777,20 @@ describe('Layout', function() {
     )
   });
 
-
+  it('should layout node with nested alignSelf: stretch', function() {
+    testLayout(
+      {style: {width: 300}, children: [
+        {style: {alignSelf: 'stretch'}, children: [
+          {style: {alignSelf: 'stretch'}}
+        ]}
+      ]},
+      {width: 300, height: 0, top: 0, left: 0, children: [
+        {width: 300, height: 0, top: 0, left: 0, children: [
+          {width: 300, height: 0, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
 
   it('should layout randomly', function() {
     function RNG(seed) {

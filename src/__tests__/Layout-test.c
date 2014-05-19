@@ -2566,6 +2566,55 @@ int main()
   {
     css_node_t *root_node = new_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = &node_0->children[0];
+        node_1->style.align_self = CSS_ALIGN_STRETCH;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = &node_1->children[0];
+          node_2->style.align_self = CSS_ALIGN_STRETCH;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = &node_0->children[0];
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 300;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = &node_1->children[0];
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 300;
+          node_2->layout.dimensions[CSS_HEIGHT] = 0;
+        }
+      }
+    }
+
+    test("should layout node with nested alignSelf: stretch", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_css_node();
+    {
     }
 
     css_node_t *root_layout = new_css_node();
