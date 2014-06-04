@@ -56,13 +56,6 @@ typedef struct {
   float dimensions[2];
 } css_layout_t;
 
-
-typedef enum {
-  CSS_MEASURE_GROW = 0,
-  CSS_MEASURE_SHRINK,
-  CSS_MEASURE_VALUE
-} css_measure_type_t;
-
 typedef struct {
   float dimensions[2];
 } css_dim_t;
@@ -90,7 +83,7 @@ typedef struct {
   float border[4];
   float dimensions[2];
 
-  css_dim_t (*measure)(void *context, css_measure_type_t type, float width);
+  css_dim_t (*measure)(void *context, float width);
   void *measure_context;
 } css_style_t;
 
@@ -108,10 +101,13 @@ void init_css_node_children(css_node_t *node, int children_count);
 void free_css_node(css_node_t *node);
 
 // Print utilities
-void print_style(css_node_t *node, int level);
-void print_layout(css_node_t *node, int level);
+typedef enum {
+  CSS_PRINT_LAYOUT = 1,
+  CSS_PRINT_STYLE = 2
+} css_print_options_t;
+void print_css_node(css_node_t *node, css_print_options_t options);
 
 // Function that computes the layout!
-void layoutNode(css_node_t *node);
+void layoutNode(css_node_t *node, float maxWidth);
 
 #endif

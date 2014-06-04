@@ -1,3 +1,4 @@
+/** @nolint */
 
 var computeLayout = (function() {
 
@@ -193,11 +194,7 @@ var computeLayout = (function() {
   var CSS_POSITION_RELATIVE = 'relative';
   var CSS_POSITION_ABSOLUTE = 'absolute';
 
-  var CSS_MEASURE_VALUE = 'value';
-  var CSS_MEASURE_GROW = 'grow';
-  var CSS_MEASURE_SHRINK = 'shrink';
-
-  return function layoutNode(node) {
+  return function layoutNode(node, parentMaxWidth) {
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
     var/*css_flex_direction_t*/ crossAxis = mainAxis === CSS_FLEX_DIRECTION_ROW ?
       CSS_FLEX_DIRECTION_COLUMN :
@@ -216,28 +213,38 @@ var computeLayout = (function() {
 
     if (isMeasureDefined(node)) {
       var/*float*/ width = CSS_UNDEFINED;
-      var/*css_measure_type_t*/ type = CSS_MEASURE_VALUE;
-
       if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
         width = node.style.width;
-      } else if (getPositionType(node) == CSS_POSITION_ABSOLUTE) {
-        type = CSS_MEASURE_SHRINK;
+      } else if (!isUndefined(node.layout[dim[CSS_FLEX_DIRECTION_ROW]])) {
+        width = node.layout[dim[CSS_FLEX_DIRECTION_ROW]];
       } else {
-        type = CSS_MEASURE_GROW;
+        width = parentMaxWidth -
+          getMarginAxis(node, CSS_FLEX_DIRECTION_ROW);
       }
+      width -= getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
 
-      var/*css_dim_t*/ measure_dim = node.style.measure(
-        /*!node->style.measure_context,*/
-        type,
-        width
-      );
-      if (!isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
-        node.layout.width = measure_dim.width +
-          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
-      }
-      if (!isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
-        node.layout.height = measure_dim.height +
-          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+      // We only need to give a dimension for the text if we haven't got any
+      // for it computed yet. It can either be from the style attribute or because
+      // the element is flexible.
+      var/*bool*/ isRowUndefined = !isDimDefined(node, CSS_FLEX_DIRECTION_ROW) &&
+        isUndefined(node.layout[dim[CSS_FLEX_DIRECTION_ROW]]);
+      var/*bool*/ isColumnUndefined = !isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
+        isUndefined(node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]]);
+
+      // Let's not measure the text if we already know both dimensions
+      if (isRowUndefined || isColumnUndefined) {
+        var/*css_dim_t*/ measure_dim = node.style.measure(
+          /*!node->style.measure_context,*/
+          width
+        );
+        if (isRowUndefined) {
+          node.layout.width = measure_dim.width +
+            getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+        }
+        if (isColumnUndefined) {
+          node.layout.height = measure_dim.height +
+            getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+        }
       }
       return;
     }
@@ -288,8 +295,20 @@ var computeLayout = (function() {
           getMarginAxis(child, mainAxis);
 
       } else {
+        var/*float*/ maxWidth = CSS_UNDEFINED;
+        if (mainAxis === CSS_FLEX_DIRECTION_ROW) {
+          // do nothing
+        } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+          maxWidth = node.layout[dim[CSS_FLEX_DIRECTION_ROW]] -
+            getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+        } else {
+          maxWidth = parentMaxWidth -
+            getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
+            getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+        }
+
         // This is the main recursive call. We layout non flexible children.
-        layoutNode(child);
+        layoutNode(child, maxWidth);
 
         // Absolute positioned elements do not take part of the layout, so we
         // don't use them to compute mainContentDim
@@ -314,8 +333,7 @@ var computeLayout = (function() {
     // are all going to be packed together and we don't need to compute
     // anything.
     if (!isUndefined(node.layout[dim[mainAxis]])) {
-
-      // The remaining available space that's needs to be allocated
+      // The remaining available space that needs to be allocated
       var/*float*/ remainingMainDim = node.layout[dim[mainAxis]] -
         getPaddingAndBorderAxis(node, mainAxis) -
         mainContentDim;
@@ -341,8 +359,20 @@ var computeLayout = (function() {
             child.layout[dim[mainAxis]] = flexibleMainDim +
               getPaddingAndBorderAxis(child, mainAxis);
 
+            var/*float*/ maxWidth = CSS_UNDEFINED;
+            if (mainAxis === CSS_FLEX_DIRECTION_ROW) {
+              // do nothing
+            } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+              maxWidth = node.layout[dim[CSS_FLEX_DIRECTION_ROW]] -
+                getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+            } else {
+              maxWidth = parentMaxWidth -
+                getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
+                getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+            }
+
             // And we recursively call the layout algorithm for this child
-            layoutNode(child);
+            layoutNode(child, maxWidth);
           }
         }
 
@@ -357,6 +387,7 @@ var computeLayout = (function() {
         } else if (justifyContent === CSS_JUSTIFY_FLEX_END) {
           leadingMainDim = remainingMainDim;
         } else if (justifyContent === CSS_JUSTIFY_SPACE_BETWEEN) {
+          remainingMainDim = fmaxf(remainingMainDim, 0);
           betweenMainDim = remainingMainDim /
             (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
         } else if (justifyContent === CSS_JUSTIFY_SPACE_AROUND) {

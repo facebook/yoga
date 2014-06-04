@@ -77,84 +77,99 @@ static bool four_equal(float four[4]) {
     eq(four[0], four[3]);
 }
 
-void print_style(css_node_t *node, int level) {
+
+static void print_css_node_rec(
+  css_node_t *node,
+  css_print_options_t options,
+  int level
+) {
   indent(level);
   printf("{");
-  if (node->style.flex_direction == CSS_FLEX_DIRECTION_ROW) {
-    printf("flexDirection: 'row', ");
+
+  if (options & CSS_PRINT_LAYOUT) {
+    printf("width: %g, ", node->layout.dimensions[CSS_WIDTH]);
+    printf("height: %g, ", node->layout.dimensions[CSS_HEIGHT]);
+    printf("top: %g, ", node->layout.position[CSS_TOP]);
+    printf("left: %g, ", node->layout.position[CSS_LEFT]);
   }
 
-  if (node->style.justify_content == CSS_JUSTIFY_CENTER) {
-    printf("justifyContent: 'center', ");
-  } else if (node->style.justify_content == CSS_JUSTIFY_FLEX_END) {
-    printf("justifyContent: 'flex-end', ");
-  } else if (node->style.justify_content == CSS_JUSTIFY_SPACE_AROUND) {
-    printf("justifyContent: 'space-around', ");
-  } else if (node->style.justify_content == CSS_JUSTIFY_SPACE_BETWEEN) {
-    printf("justifyContent: 'space-between', ");
+  if (options & CSS_PRINT_STYLE) {
+    if (node->style.flex_direction == CSS_FLEX_DIRECTION_ROW) {
+      printf("flexDirection: 'row', ");
+    }
+
+    if (node->style.justify_content == CSS_JUSTIFY_CENTER) {
+      printf("justifyContent: 'center', ");
+    } else if (node->style.justify_content == CSS_JUSTIFY_FLEX_END) {
+      printf("justifyContent: 'flex-end', ");
+    } else if (node->style.justify_content == CSS_JUSTIFY_SPACE_AROUND) {
+      printf("justifyContent: 'space-around', ");
+    } else if (node->style.justify_content == CSS_JUSTIFY_SPACE_BETWEEN) {
+      printf("justifyContent: 'space-between', ");
+    }
+
+    if (node->style.align_items == CSS_ALIGN_CENTER) {
+      printf("alignItems: 'center', ");
+    } else if (node->style.align_items == CSS_ALIGN_FLEX_END) {
+      printf("alignItems: 'flex-end', ");
+    } else if (node->style.align_items == CSS_ALIGN_STRETCH) {
+      printf("alignItems: 'stretch', ");
+    }
+
+    if (node->style.align_self == CSS_ALIGN_FLEX_START) {
+      printf("alignSelf: 'flex-start', ");
+    } else if (node->style.align_self == CSS_ALIGN_CENTER) {
+      printf("alignSelf: 'center', ");
+    } else if (node->style.align_self == CSS_ALIGN_FLEX_END) {
+      printf("alignSelf: 'flex-end', ");
+    } else if (node->style.align_self == CSS_ALIGN_STRETCH) {
+      printf("alignSelf: 'stretch', ");
+    }
+
+    if (node->style.flex == CSS_FLEX_ONE) {
+      printf("flex: 1, ");
+    }
+
+    if (four_equal(node->style.margin)) {
+      print_number_0("margin", node->style.margin[CSS_LEFT]);
+    } else {
+      print_number_0("marginLeft", node->style.margin[CSS_LEFT]);
+      print_number_0("marginRight", node->style.margin[CSS_RIGHT]);
+      print_number_0("marginTop", node->style.margin[CSS_TOP]);
+      print_number_0("marginBottom", node->style.margin[CSS_BOTTOM]);
+    }
+
+    if (four_equal(node->style.padding)) {
+      print_number_0("padding", node->style.margin[CSS_LEFT]);
+    } else {
+      print_number_0("paddingLeft", node->style.padding[CSS_LEFT]);
+      print_number_0("paddingRight", node->style.padding[CSS_RIGHT]);
+      print_number_0("paddingTop", node->style.padding[CSS_TOP]);
+      print_number_0("paddingBottom", node->style.padding[CSS_BOTTOM]);
+    }
+
+    if (four_equal(node->style.border)) {
+      print_number_0("borderWidth", node->style.border[CSS_LEFT]);
+    } else {
+      print_number_0("borderLeftWidth", node->style.border[CSS_LEFT]);
+      print_number_0("borderRightWidth", node->style.border[CSS_RIGHT]);
+      print_number_0("borderTopWidth", node->style.border[CSS_TOP]);
+      print_number_0("borderBottomWidth", node->style.border[CSS_BOTTOM]);
+    }
+
+    print_number_nan("width", node->style.dimensions[CSS_WIDTH]);
+    print_number_nan("height", node->style.dimensions[CSS_HEIGHT]);
+
+    print_number_nan("left", node->style.position[CSS_LEFT]);
+    print_number_nan("right", node->style.position[CSS_RIGHT]);
+    print_number_nan("top", node->style.position[CSS_TOP]);
+    print_number_nan("bottom", node->style.position[CSS_BOTTOM]);
   }
-
-  if (node->style.align_items == CSS_ALIGN_CENTER) {
-    printf("alignItems: 'center', ");
-  } else if (node->style.align_items == CSS_ALIGN_FLEX_END) {
-    printf("alignItems: 'flex-end', ");
-  } else if (node->style.align_items == CSS_ALIGN_STRETCH) {
-    printf("alignItems: 'stretch', ");
-  }
-
-  if (node->style.align_self == CSS_ALIGN_FLEX_START) {
-    printf("alignSelf: 'flex-start', ");
-  } else if (node->style.align_self == CSS_ALIGN_CENTER) {
-    printf("alignSelf: 'center', ");
-  } else if (node->style.align_self == CSS_ALIGN_FLEX_END) {
-    printf("alignSelf: 'flex-end', ");
-  } else if (node->style.align_self == CSS_ALIGN_STRETCH) {
-    printf("alignSelf: 'stretch', ");
-  }
-
-  if (node->style.flex == CSS_FLEX_ONE) {
-    printf("flex: 1, ");
-  }
-
-  if (four_equal(node->style.margin)) {
-    print_number_0("margin", node->style.margin[CSS_LEFT]);
-  } else {
-    print_number_0("marginLeft", node->style.margin[CSS_LEFT]);
-    print_number_0("marginRight", node->style.margin[CSS_RIGHT]);
-    print_number_0("marginTop", node->style.margin[CSS_TOP]);
-    print_number_0("marginBottom", node->style.margin[CSS_BOTTOM]);
-  }
-
-  if (four_equal(node->style.padding)) {
-    print_number_0("padding", node->style.margin[CSS_LEFT]);
-  } else {
-    print_number_0("paddingLeft", node->style.padding[CSS_LEFT]);
-    print_number_0("paddingRight", node->style.padding[CSS_RIGHT]);
-    print_number_0("paddingTop", node->style.padding[CSS_TOP]);
-    print_number_0("paddingBottom", node->style.padding[CSS_BOTTOM]);
-  }
-
-  if (four_equal(node->style.border)) {
-    print_number_0("borderWidth", node->style.border[CSS_LEFT]);
-  } else {
-    print_number_0("borderLeftWidth", node->style.border[CSS_LEFT]);
-    print_number_0("borderRightWidth", node->style.border[CSS_RIGHT]);
-    print_number_0("borderTopWidth", node->style.border[CSS_TOP]);
-    print_number_0("borderBottomWidth", node->style.border[CSS_BOTTOM]);
-  }
-
-  print_number_nan("width", node->style.dimensions[CSS_WIDTH]);
-  print_number_nan("height", node->style.dimensions[CSS_HEIGHT]);
-
-  print_number_nan("left", node->style.position[CSS_LEFT]);
-  print_number_nan("right", node->style.position[CSS_RIGHT]);
-  print_number_nan("top", node->style.position[CSS_TOP]);
-  print_number_nan("bottom", node->style.position[CSS_BOTTOM]);
 
   if (node->children_count > 0) {
     printf("children: [\n");
     for (int i = 0; i < node->children_count; ++i) {
-      print_style(&node->children[i], level + 1);
+      print_css_node_rec(&node->children[i], options, level + 1);
     }
     indent(level);
     printf("]},\n");
@@ -163,26 +178,9 @@ void print_style(css_node_t *node, int level) {
   }
 }
 
-void print_layout(css_node_t *node, int level) {
-  indent(level);
-  printf("{");
-  printf("width: %g, ", node->layout.dimensions[CSS_WIDTH]);
-  printf("height: %g, ", node->layout.dimensions[CSS_HEIGHT]);
-  printf("top: %g, ", node->layout.position[CSS_TOP]);
-  printf("left: %g, ", node->layout.position[CSS_LEFT]);
-
-  if (node->children_count > 0) {
-    printf("children: [\n");
-    for (int i = 0; i < node->children_count; ++i) {
-      print_layout(&node->children[i], level + 1);
-    }
-    indent(level);
-    printf("]},\n");
-  } else {
-    printf("},\n");
-  }
+void print_css_node(css_node_t *node, css_print_options_t options) {
+  print_css_node_rec(node, options, 0);
 }
-
 
 
 static css_position_t leading[2] = {
@@ -319,7 +317,7 @@ static float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
   return -getPosition(node, trailing[axis]);
 }
 
-void layoutNode(css_node_t *node) {
+void layoutNode(css_node_t *node, float parentMaxWidth) {
   css_flex_direction_t mainAxis = getFlexDirection(node);
   css_flex_direction_t crossAxis = mainAxis == CSS_FLEX_DIRECTION_ROW ?
     CSS_FLEX_DIRECTION_COLUMN :
@@ -338,28 +336,38 @@ void layoutNode(css_node_t *node) {
 
   if (isMeasureDefined(node)) {
     float width = CSS_UNDEFINED;
-    css_measure_type_t type = CSS_MEASURE_VALUE;
-
     if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
       width = node->style.dimensions[CSS_WIDTH];
-    } else if (getPositionType(node) == CSS_POSITION_ABSOLUTE) {
-      type = CSS_MEASURE_SHRINK;
+    } else if (!isUndefined(node->layout.dimensions[dim[CSS_FLEX_DIRECTION_ROW]])) {
+      width = node->layout.dimensions[dim[CSS_FLEX_DIRECTION_ROW]];
     } else {
-      type = CSS_MEASURE_GROW;
+      width = parentMaxWidth -
+        getMarginAxis(node, CSS_FLEX_DIRECTION_ROW);
     }
+    width -= getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
 
-    css_dim_t measure_dim = node->style.measure(
-      node->style.measure_context,
-      type,
-      width
-    );
-    if (!isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
-      node->layout.dimensions[CSS_WIDTH] = measure_dim.dimensions[CSS_WIDTH] +
-        getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
-    }
-    if (!isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
-      node->layout.dimensions[CSS_HEIGHT] = measure_dim.dimensions[CSS_HEIGHT] +
-        getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+    // We only need to give a dimension for the text if we haven't got any
+    // for it computed yet. It can either be from the style attribute or because
+    // the element is flexible.
+    bool isRowUndefined = !isDimDefined(node, CSS_FLEX_DIRECTION_ROW) &&
+      isUndefined(node->layout.dimensions[dim[CSS_FLEX_DIRECTION_ROW]]);
+    bool isColumnUndefined = !isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
+      isUndefined(node->layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]);
+
+    // Let's not measure the text if we already know both dimensions
+    if (isRowUndefined || isColumnUndefined) {
+      css_dim_t measure_dim = node->style.measure(
+        node->style.measure_context,
+        width
+      );
+      if (isRowUndefined) {
+        node->layout.dimensions[CSS_WIDTH] = measure_dim.dimensions[CSS_WIDTH] +
+          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+      }
+      if (isColumnUndefined) {
+        node->layout.dimensions[CSS_HEIGHT] = measure_dim.dimensions[CSS_HEIGHT] +
+          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+      }
     }
     return;
   }
@@ -410,8 +418,20 @@ void layoutNode(css_node_t *node) {
         getMarginAxis(child, mainAxis);
 
     } else {
+      float maxWidth = CSS_UNDEFINED;
+      if (mainAxis == CSS_FLEX_DIRECTION_ROW) {
+        // do nothing
+      } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+        maxWidth = node->layout.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] -
+          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+      } else {
+        maxWidth = parentMaxWidth -
+          getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
+          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+      }
+
       // This is the main recursive call. We layout non flexible children.
-      layoutNode(child);
+      layoutNode(child, maxWidth);
 
       // Absolute positioned elements do not take part of the layout, so we
       // don't use them to compute mainContentDim
@@ -436,8 +456,7 @@ void layoutNode(css_node_t *node) {
   // are all going to be packed together and we don't need to compute
   // anything.
   if (!isUndefined(node->layout.dimensions[dim[mainAxis]])) {
-
-    // The remaining available space that's needs to be allocated
+    // The remaining available space that needs to be allocated
     float remainingMainDim = node->layout.dimensions[dim[mainAxis]] -
       getPaddingAndBorderAxis(node, mainAxis) -
       mainContentDim;
@@ -463,8 +482,20 @@ void layoutNode(css_node_t *node) {
           child->layout.dimensions[dim[mainAxis]] = flexibleMainDim +
             getPaddingAndBorderAxis(child, mainAxis);
 
+          float maxWidth = CSS_UNDEFINED;
+          if (mainAxis == CSS_FLEX_DIRECTION_ROW) {
+            // do nothing
+          } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+            maxWidth = node->layout.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] -
+              getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+          } else {
+            maxWidth = parentMaxWidth -
+              getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
+              getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+          }
+
           // And we recursively call the layout algorithm for this child
-          layoutNode(child);
+          layoutNode(child, maxWidth);
         }
       }
 
@@ -479,6 +510,7 @@ void layoutNode(css_node_t *node) {
       } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
         leadingMainDim = remainingMainDim;
       } else if (justifyContent == CSS_JUSTIFY_SPACE_BETWEEN) {
+        remainingMainDim = fmaxf(remainingMainDim, 0);
         betweenMainDim = remainingMainDim /
           (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
       } else if (justifyContent == CSS_JUSTIFY_SPACE_AROUND) {

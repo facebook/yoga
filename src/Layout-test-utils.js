@@ -1,3 +1,4 @@
+/** @nolint */
 
 var layoutTestUtils = (function() {
   var iframe = (function() {
@@ -238,42 +239,38 @@ var layoutTestUtils = (function() {
     reduceTest: reduceTest,
     text: function(text) {
       var body = iframeText.contentDocument.body;
-      var fn = function(type, width) {
+      var fn = function(width) {
+        if (width === undefined || width !== width) {
+          width = Infinity;
+        }
+
         // Constants for testing purposes between C/JS and other platforms
         // Comment this block of code if you want to use the browser to
         // generate proper sizes
         if (text === 'small') {
-          if (type === 'grow' || type === 'shrink') {
-            return {width: 33, height: 18}
-          }
-          return {width: width, height: 18};
+          return {width: Math.min(33, width), height: 18};
         }
         if (text === 'loooooooooong with space') {
-          if (type === 'grow') {
-            return {width: 171, height: 18};
-          }
-          if (type === 'shrink') {
-            return {width: 100, height: 36};
-          }
-          return {width: width, height: width >= 171 ? 18 : 36};
+          var res = {
+            width: width >= 171 ? 171 : Math.max(100, width),
+            height: width >= 171 ? 18 : 36
+          };
+          return res
         }
         return;
 
         var div = document.createElement('div');
+        div.style.width = (width === Infinity ? 10000000 : width) + 'px';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.alignItems = 'flex-start';
+
         var span = document.createElement('span');
         span.style.display = 'flex';
-        body.style.display = 'block';
-        if (width === 'grow') {
-          span.style.position = 'absolute';
-        } else if (width === 'shrink') {
-          div.style.display = 'flex';
-          div.style.position = 'relative';
-          body.style.display = 'flex';
-          span.style.position = 'absolute';
-        } else {
-          span.style.width = width + 'px';
-        }
+        span.style.flexDirection = 'column';
+        span.style.alignItems = 'flex-start';
         span.innerText = text;
+
         div.appendChild(span);
         body.appendChild(div);
         var rect = span.getBoundingClientRect();

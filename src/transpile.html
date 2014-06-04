@@ -24,6 +24,7 @@ document.getElementById('layout_code').value = computeLayout.toString()
   .replace(/node.children\[i\]/g, '&node.children[i]')
   .replace(/node\./g, 'node->')
   .replace(/child\./g, 'child->')
+  .replace(/parent\./g, 'parent->')
   .replace(/var\/\*([^\/]+)\*\//g, '$1')
   .replace(/ === /g, ' == ')
   .replace(/\n  /g, '\n')
@@ -55,6 +56,7 @@ var layoutTestUtils = {
 };
 function describe(name, cb) { cb(); }
 function it(name, cb) { currentTest = name; cb(); }
+xit = it;
 </script>
 <script src="__tests__/Layout-test.js"></script>
 <script>
