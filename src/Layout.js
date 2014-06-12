@@ -484,11 +484,12 @@ var computeLayout = (function() {
             getPosition(child, trailing[mainAxis]);
         }
         if (leadingPos && trailingPos) {
-          child.layout[dim[mainAxis]] =
+          child.layout[dim[mainAxis]] = fmaxf(0,
             node.layout[dim[mainAxis]] -
             child.layout[pos[mainAxis]] -
             getMargin(child, trailing[mainAxis]) -
-            getPosition(child, trailing[mainAxis]);
+            getPosition(child, trailing[mainAxis])
+          );
         }
       }
     }
@@ -520,11 +521,12 @@ var computeLayout = (function() {
             getPosition(child, trailing[crossAxis]);
         }
         if (leadingPos && trailingPos) {
-          child.layout[dim[crossAxis]] =
+          child.layout[dim[crossAxis]] = fmaxf(0,
             node.layout[dim[crossAxis]] -
             child.layout[pos[crossAxis]] -
             getMargin(child, trailing[crossAxis]) -
-            getPosition(child, trailing[crossAxis]);
+            getPosition(child, trailing[crossAxis])
+          );
         }
       } else {
         var/*float*/ leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);

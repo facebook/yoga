@@ -690,7 +690,7 @@ describe('Layout', function() {
     )
   });
 
-  it('should layout node with borderWidth and position: absolute, top', function() {
+  it('should layout node with borderWidth and position: absolute, top, main axis', function() {
     testLayout(
       {style: {borderTopWidth: 1}, children: [
         {style: {top: -1, position: 'absolute'}}
@@ -701,7 +701,7 @@ describe('Layout', function() {
     )
   });
 
-  it('should layout node with borderWidth and position: absolute, top. cross axis', function() {
+  it('should layout node with borderWidth and position: absolute, top, cross axis', function() {
     testLayout(
       {style: {borderWidth: 1}, children: [
         {style: {left: 5, position: 'absolute'}}
@@ -946,6 +946,17 @@ describe('Layout', function() {
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
         {width: 0, height: 5, top: -10, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout with position absolute left and negative right', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {left: 5, right: -1, position: 'absolute'}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 5}
       ]}
     );
   });
