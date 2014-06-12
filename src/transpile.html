@@ -14,6 +14,7 @@ textarea {
 <textarea id="layout_code" onclick="this.select()"></textarea>
 <script>
 document.getElementById('layout_code').value = computeLayout.toString()
+  .replace('node.style.measure', 'node.measure')
   .replace(/\.children\.length/g, '.children_count')
   .replace(/\.width/g, '.dimensions[CSS_WIDTH]')
   .replace(/\.height/g, '.dimensions[CSS_HEIGHT]')
@@ -130,8 +131,8 @@ function printLayout(test) {
 
     function addMeasure(node) {
       if ('measure' in node.style) {
-        addStyle('measure = measure;');
-        addStyle('measure_context = "' + node.style.measure.toString() + '";');
+        add('node_' + (level - 3) + '->measure = measure;');
+        add('node_' + (level - 3) + '->context = "' + node.style.measure.toString() + '";');
       }
     }
 

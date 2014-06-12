@@ -82,9 +82,6 @@ typedef struct {
   float padding[4];
   float border[4];
   float dimensions[2];
-
-  css_dim_t (*measure)(void *context, float width);
-  void *measure_context;
 } css_style_t;
 
 typedef struct css_node {
@@ -92,6 +89,10 @@ typedef struct css_node {
   css_layout_t layout;
   struct css_node *children;
   int children_count;
+
+  css_dim_t (*measure)(void *context, float width);
+  void (*print)(void *context);
+  void *context;
 } css_node_t;
 
 

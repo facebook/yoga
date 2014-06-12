@@ -86,11 +86,17 @@ static void print_css_node_rec(
   indent(level);
   printf("{");
 
+  if (node->print) {
+    node->print(node->context);
+  }
+
   if (options & CSS_PRINT_LAYOUT) {
+    printf("layout: {");
     printf("width: %g, ", node->layout.dimensions[CSS_WIDTH]);
     printf("height: %g, ", node->layout.dimensions[CSS_HEIGHT]);
     printf("top: %g, ", node->layout.position[CSS_TOP]);
-    printf("left: %g, ", node->layout.position[CSS_LEFT]);
+    printf("left: %g", node->layout.position[CSS_LEFT]);
+    printf("}, ");
   }
 
   if (options & CSS_PRINT_STYLE) {
@@ -159,6 +165,10 @@ static void print_css_node_rec(
 
     print_number_nan("width", node->style.dimensions[CSS_WIDTH]);
     print_number_nan("height", node->style.dimensions[CSS_HEIGHT]);
+
+    if (node->style.position_type == CSS_POSITION_ABSOLUTE) {
+      printf("position: 'absolute', ");
+    }
 
     print_number_nan("left", node->style.position[CSS_LEFT]);
     print_number_nan("right", node->style.position[CSS_RIGHT]);
@@ -278,7 +288,7 @@ static bool isPosDefined(css_node_t *node, css_position_t position) {
 }
 
 static bool isMeasureDefined(css_node_t *node) {
-  return node->style.measure;
+  return node->measure;
 }
 
 static float getPosition(css_node_t *node, css_position_t position) {
@@ -356,8 +366,8 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
 
     // Let's not measure the text if we already know both dimensions
     if (isRowUndefined || isColumnUndefined) {
-      css_dim_t measure_dim = node->style.measure(
-        node->style.measure_context,
+      css_dim_t measure_dim = node->measure(
+        node->context,
         width
       );
       if (isRowUndefined) {

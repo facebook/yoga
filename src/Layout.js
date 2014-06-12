@@ -234,7 +234,7 @@ var computeLayout = (function() {
       // Let's not measure the text if we already know both dimensions
       if (isRowUndefined || isColumnUndefined) {
         var/*css_dim_t*/ measure_dim = node.style.measure(
-          /*!node->style.measure_context,*/
+          /*!node->context,*/
           width
         );
         if (isRowUndefined) {
