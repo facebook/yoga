@@ -412,14 +412,12 @@ var computeLayout = (function() {
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
 
+      var/*bool*/ leadingPos = isPosDefined(child, leading[mainAxis]);
+      var/*bool*/ trailingPos = isPosDefined(child, trailing[mainAxis]);
+
       if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
-          isPosDefined(child, leading[mainAxis])) {
-        // In case the child is position absolute and has left/top being
-        // defined, we override the position to whatever the user said
-        // (and margin/border).
-        child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
-          getBorder(node, leading[mainAxis]) +
-          getMargin(child, leading[mainAxis]);
+          (leadingPos || trailingPos)) {
+        // see the loop afterwards
       } else {
         // If the child is position absolute (without top/left) or relative,
         // we put it at the current accumulated offset.
@@ -461,6 +459,39 @@ var computeLayout = (function() {
       );
     }
 
+    for (var/*int*/ i = 0; i < node.children.length; ++i) {
+      var/*css_node_t**/ child = node.children[i];
+
+      var/*bool*/ leadingPos = isPosDefined(child, leading[mainAxis]);
+      var/*bool*/ trailingPos = isPosDefined(child, trailing[mainAxis]);
+
+      if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
+          (leadingPos || trailingPos)) {
+        // In case the child is absolutely positionned and has a
+        // top/left/bottom/right being set, we override all the previously
+        // computed positions to set it correctly.
+        if (leadingPos) {
+          child.layout[pos[mainAxis]] =
+            getPosition(child, leading[mainAxis]) +
+            getBorder(node, leading[mainAxis]) +
+            getMargin(child, leading[mainAxis]);
+        }
+        if (!leadingPos && trailingPos) {
+          child.layout[pos[mainAxis]] =
+            node.layout[dim[mainAxis]] -
+            child.layout[dim[mainAxis]] -
+            getMargin(child, trailing[mainAxis]) -
+            getPosition(child, trailing[mainAxis]);
+        }
+        if (leadingPos && trailingPos) {
+          child.layout[dim[mainAxis]] =
+            node.layout[dim[mainAxis]] -
+            child.layout[pos[mainAxis]] -
+            getMargin(child, trailing[mainAxis]) -
+            getPosition(child, trailing[mainAxis]);
+        }
+      }
+    }
 
     // <Loop D> Position elements in the cross axis
 

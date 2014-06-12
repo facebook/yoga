@@ -939,6 +939,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout with position absolute bottom', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {bottom: 5, paddingTop: 5, position: 'absolute'}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 5, top: -10, left: 0}
+      ]}
+    );
+  });
+
   xit('should layout text with alignItems: stretch', function() {
     testLayout(
       {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text('loooooooooong with space')}},
@@ -997,10 +1008,10 @@ describe('Layout', function() {
       var node = {style: {}};
       randMinMax(node, 0.5, 'width', -100, 1000);
       randMinMax(node, 0.5, 'height', -100, 1000);
-      randMinMax(node, 0.5, 'top', -10, 10);
-      randMinMax(node, 0.5, 'left', -10, 10);
-      randMinMax(node, 0.5, 'right', -10, 10);
-      randMinMax(node, 0.5, 'bottom', -10, 10);
+      randMinMax(node, 0.9, 'top', -10, 10);
+      randMinMax(node, 0.9, 'left', -10, 10);
+      randMinMax(node, 0.9, 'right', -10, 10);
+      randMinMax(node, 0.9, 'bottom', -10, 10);
       randSpacing(node, 0.5, 'margin', '', -10, 20);
       randSpacing(node, 0.5, 'padding', '', -10, 20);
       randSpacing(node, 0.5, 'border', 'Width', -4, 4);
@@ -1010,7 +1021,7 @@ describe('Layout', function() {
       randEnum(node, 0.5, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.5, 'flex', ['none', 1]);
       randEnum(node, 0.5, 'position', ['relative', 'absolute']);
-      randEnum(node, 0.5, 'measure', [text('small'), text('loooooooooong with space')]);
+//      randEnum(node, 0.5, 'measure', [text('small'), text('loooooooooong with space')]);
 
       if (node.style.measure) {
         // align-items: stretch on a text node makes it wrap in a different way.
