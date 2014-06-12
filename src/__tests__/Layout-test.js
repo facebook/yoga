@@ -1005,6 +1005,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout with border and right absolute child', function() {
+    testLayout(
+      {style: {borderRightWidth: 5}, children: [
+        {style: {right: -10, position: 'absolute'}}
+      ]},
+      {width: 5, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 10}
+      ]}
+    );
+  });
+
   xit('should layout text with alignItems: stretch', function() {
     testLayout(
       {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text('loooooooooong with space')}},
