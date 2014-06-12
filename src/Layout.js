@@ -484,12 +484,19 @@ var computeLayout = (function() {
             getPosition(child, trailing[mainAxis]);
         }
         if (leadingPos && trailingPos) {
-          child.layout[dim[mainAxis]] = fmaxf(0,
-            node.layout[dim[mainAxis]] -
-            child.layout[pos[mainAxis]] -
-            getMargin(child, trailing[mainAxis]) -
-            getPosition(child, trailing[mainAxis])
-          ) + getPaddingAndBorderAxis(child, mainAxis);
+          if (isDimDefined(child, mainAxis)) {
+            child.layout[dim[mainAxis]] = fmaxf(
+              child.style[dim[mainAxis]],
+              getPaddingAndBorderAxis(node, mainAxis)
+            );
+          } else {
+            child.layout[dim[mainAxis]] = fmaxf(0,
+              node.layout[dim[mainAxis]] -
+              child.layout[pos[mainAxis]] -
+              getMargin(child, trailing[mainAxis]) -
+              getPosition(child, trailing[mainAxis])
+            ) + getPaddingAndBorderAxis(child, mainAxis);
+          }
         }
       }
     }
