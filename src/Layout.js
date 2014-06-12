@@ -489,7 +489,7 @@ var computeLayout = (function() {
             child.layout[pos[mainAxis]] -
             getMargin(child, trailing[mainAxis]) -
             getPosition(child, trailing[mainAxis])
-          );
+          ) + getPaddingAndBorderAxis(child, mainAxis);
         }
       }
     }

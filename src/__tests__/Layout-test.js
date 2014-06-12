@@ -961,6 +961,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout with position absolute top, bottom and padding', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {top: 5, bottom: 5, paddingTop: 5, position: 'absolute'}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 5, top: 5, left: 0}
+      ]}
+    );
+  });
+
   xit('should layout text with alignItems: stretch', function() {
     testLayout(
       {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text('loooooooooong with space')}},
