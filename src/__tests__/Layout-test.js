@@ -906,6 +906,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout with position absolute right', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {right: 5, borderWidth: 5, position: 'absolute'}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 10, height: 10, top: 0, left: -15}
+      ]}
+    );
+  });
+
   xit('should layout text with alignItems: stretch', function() {
     testLayout(
       {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text('loooooooooong with space')}},
@@ -937,9 +948,6 @@ describe('Layout', function() {
     var rng = new RNG(0);
     function randMinMax(node, chance, attribute, min, max) {
       if (rng.nextFloat() < chance) {
-        if (attribute === 'right' || attribute === 'bottom') {
-          return;
-        }
         node.style[attribute] = Math.floor(rng.nextFloat() * (max - min)) + min;
       }
     }

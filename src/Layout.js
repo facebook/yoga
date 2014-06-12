@@ -467,15 +467,26 @@ var computeLayout = (function() {
     for (var/*int*/ i = 0; i < node.children.length; ++i) {
       var/*css_node_t**/ child = node.children[i];
 
+      var/*bool*/ leadingPos = isPosDefined(child, leading[crossAxis]);
+      var/*bool*/ trailingPos = isPosDefined(child, trailing[crossAxis]);
+
       if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
-          isPosDefined(child, leading[crossAxis])) {
+          (leadingPos || trailingPos)) {
         // In case the child is absolutely positionned and has a
         // top/left/bottom/right being set, we override all the previously
         // computed positions to set it correctly.
-        child.layout[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
-          getBorder(node, leading[crossAxis]) +
-          getMargin(child, leading[crossAxis]);
-
+        if (leadingPos && !trailingPos) {
+          child.layout[pos[crossAxis]] =
+            getPosition(child, leading[crossAxis]) +
+            getBorder(node, leading[crossAxis]) +
+            getMargin(child, leading[crossAxis]);
+        }
+        if (!leadingPos && trailingPos) {
+          child.layout[pos[crossAxis]] =
+            node.layout[dim[crossAxis]] -
+            getDimWithMargin(child, crossAxis) -
+            getPosition(child, trailing[crossAxis]);
+        }
       } else {
         var/*float*/ leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);
 
