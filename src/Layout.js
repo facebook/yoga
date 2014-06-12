@@ -475,7 +475,7 @@ var computeLayout = (function() {
         // In case the child is absolutely positionned and has a
         // top/left/bottom/right being set, we override all the previously
         // computed positions to set it correctly.
-        if (leadingPos && !trailingPos) {
+        if (leadingPos) {
           child.layout[pos[crossAxis]] =
             getPosition(child, leading[crossAxis]) +
             getBorder(node, leading[crossAxis]) +
@@ -485,6 +485,12 @@ var computeLayout = (function() {
           child.layout[pos[crossAxis]] =
             node.layout[dim[crossAxis]] -
             child.layout[dim[crossAxis]] -
+            getMargin(child, trailing[crossAxis]) -
+            getPosition(child, trailing[crossAxis]);
+        }
+        if (leadingPos && trailingPos) {
+          child.layout[dim[crossAxis]] =
+            node.layout[dim[crossAxis]] -
             getMargin(child, trailing[crossAxis]) -
             getPosition(child, trailing[crossAxis]);
         }

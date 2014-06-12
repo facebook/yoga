@@ -928,6 +928,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout with position absolute left and right', function() {
+    testLayout(
+      {style: {width: 100}, children: [
+        {style: {right: 5, left: 5, position: 'absolute'}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 5, height: 0, top: 0, left: -20}
+      ]}
+    );
+  });
+
   xit('should layout text with alignItems: stretch', function() {
     testLayout(
       {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text('loooooooooong with space')}},
