@@ -491,6 +491,7 @@ var computeLayout = (function() {
         if (leadingPos && trailingPos) {
           child.layout[dim[crossAxis]] =
             node.layout[dim[crossAxis]] -
+            child.layout[pos[crossAxis]] -
             getMargin(child, trailing[crossAxis]) -
             getPosition(child, trailing[crossAxis]);
         }

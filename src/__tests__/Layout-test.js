@@ -933,8 +933,8 @@ describe('Layout', function() {
       {style: {width: 100}, children: [
         {style: {right: 5, left: 5, position: 'absolute'}}
       ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 5, height: 0, top: 0, left: -20}
+      {width: 100, height: 0, top: 0, left: 0, children: [
+        {width: 90, height: 0, top: 0, left: 5}
       ]}
     );
   });
