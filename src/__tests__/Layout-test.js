@@ -690,7 +690,7 @@ describe('Layout', function() {
     )
   });
 
-  it('should layout node with borderWidth and position: absolute, top, main axis', function() {
+  it('should layout node with borderWidth and position: absolute, top', function() {
     testLayout(
       {style: {borderTopWidth: 1}, children: [
         {style: {top: -1, position: 'absolute'}}
@@ -701,7 +701,7 @@ describe('Layout', function() {
     )
   });
 
-  it('should layout node with borderWidth and position: absolute, top, cross axis', function() {
+  it('should layout node with borderWidth and position: absolute, top. cross axis', function() {
     testLayout(
       {style: {borderWidth: 1}, children: [
         {style: {left: 5, position: 'absolute'}}
@@ -906,112 +906,39 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout with position absolute right', function() {
+  it('should layout with position absolute, top, left, bottom, right', function() {
     testLayout(
-      {style: {}, children: [
-        {style: {right: 5, borderWidth: 5, position: 'absolute'}}
+      {style: {width: 100, height: 100}, children: [
+        {style: {position: 'absolute', top: 0, left: 0, bottom: 0, right: 0}}
       ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 10, height: 10, top: 0, left: -15}
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 0, left: 0}
       ]}
     );
   });
 
-  it('should layout with position absolute right and negative margin', function() {
+  it('should layout with arbitrary flex', function() {
     testLayout(
-      {style: {}, children: [
-        {style: {right: 20, marginLeft: 5, marginRight: -5, width: 5, position: 'absolute'}}
+      {style: {width: 100, height: 100}, children: [
+        {style: {flex: 2.5}},
+        {style: {flex: 7.5}}
       ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 5, height: 0, top: 0, left: -20}
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 25, top: 0, left: 0},
+        {width: 0, height: 75, top: 25, left: 0},
       ]}
     );
   });
 
-  it('should layout with position absolute left and right', function() {
+  it('should layout with negative flex', function() {
     testLayout(
-      {style: {width: 100}, children: [
-        {style: {right: 5, left: 5, position: 'absolute'}}
+      {style: {width: 100, height: 100}, children: [
+        {style: {flex: -2.5}},
+        {style: {flex: 0}}
       ]},
-      {width: 100, height: 0, top: 0, left: 0, children: [
-        {width: 90, height: 0, top: 0, left: 5}
-      ]}
-    );
-  });
-
-  it('should layout with position absolute bottom', function() {
-    testLayout(
-      {style: {}, children: [
-        {style: {bottom: 5, paddingTop: 5, position: 'absolute'}}
-      ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 0, height: 5, top: -10, left: 0}
-      ]}
-    );
-  });
-
-  it('should layout with position absolute left and negative right', function() {
-    testLayout(
-      {style: {}, children: [
-        {style: {left: 5, right: -1, position: 'absolute'}}
-      ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 0, height: 0, top: 0, left: 5}
-      ]}
-    );
-  });
-
-  it('should layout with position absolute top, bottom and padding', function() {
-    testLayout(
-      {style: {}, children: [
-        {style: {top: 5, bottom: 5, paddingTop: 5, position: 'absolute'}}
-      ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 0, height: 5, top: 5, left: 0}
-      ]}
-    );
-  });
-
-  it('should layout with position absolute top, bottom and height', function() {
-    testLayout(
-      {style: {}, children: [
-        {style: {top: 5, bottom: 5, height: 900, position: 'absolute'}}
-      ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 0, height: 900, top: 5, left: 0}
-      ]}
-    );
-  });
-
-  it('should layout with position absolute left, right and width', function() {
-    testLayout(
-      {style: {}, children: [
-        {style: {left: 5, right: -1, width: 300, position: 'absolute'}}
-      ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 300, height: 0, top: 0, left: 5}
-      ]}
-    );
-  });
-
-  it('should layout with position absolute top, bottom and min padding', function() {
-    testLayout(
-      {style: {}, children: [
-        {style: {top: -5, bottom: -5, paddingTop: 5, position: 'absolute'}}
-      ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 0, height: 10, top: -5, left: 0}
-      ]}
-    );
-  });
-
-  it('should layout with border and right absolute child', function() {
-    testLayout(
-      {style: {borderRightWidth: 5}, children: [
-        {style: {right: -10, position: 'absolute'}}
-      ]},
-      {width: 5, height: 0, top: 0, left: 0, children: [
-        {width: 0, height: 0, top: 0, left: 10}
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0},
+        {width: 0, height: 0, top: 0, left: 0},
       ]}
     );
   });
@@ -1047,6 +974,9 @@ describe('Layout', function() {
     var rng = new RNG(0);
     function randMinMax(node, chance, attribute, min, max) {
       if (rng.nextFloat() < chance) {
+        if (attribute === 'right' || attribute === 'bottom') {
+          return;
+        }
         node.style[attribute] = Math.floor(rng.nextFloat() * (max - min)) + min;
       }
     }
@@ -1074,20 +1004,20 @@ describe('Layout', function() {
       var node = {style: {}};
       randMinMax(node, 0.5, 'width', -100, 1000);
       randMinMax(node, 0.5, 'height', -100, 1000);
-      randMinMax(node, 0.9, 'top', -10, 10);
-      randMinMax(node, 0.9, 'left', -10, 10);
-      randMinMax(node, 0.9, 'right', -10, 10);
-      randMinMax(node, 0.9, 'bottom', -10, 10);
+      randMinMax(node, 0.5, 'top', -10, 10);
+      randMinMax(node, 0.5, 'left', -10, 10);
+      randMinMax(node, 0.5, 'right', -10, 10);
+      randMinMax(node, 0.5, 'bottom', -10, 10);
       randSpacing(node, 0.5, 'margin', '', -10, 20);
       randSpacing(node, 0.5, 'padding', '', -10, 20);
       randSpacing(node, 0.5, 'border', 'Width', -4, 4);
+      randMinMax(node, 0.5, 'flex', -10, 10);
       randEnum(node, 0.5, 'flexDirection', ['column', 'row']);
       randEnum(node, 0.5, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
       randEnum(node, 0.5, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.5, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
-      randEnum(node, 0.5, 'flex', ['none', 1]);
       randEnum(node, 0.5, 'position', ['relative', 'absolute']);
-//      randEnum(node, 0.5, 'measure', [text('small'), text('loooooooooong with space')]);
+      randEnum(node, 0.5, 'measure', [text('small'), text('loooooooooong with space')]);
 
       if (node.style.measure) {
         // align-items: stretch on a text node makes it wrap in a different way.

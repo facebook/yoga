@@ -6,11 +6,18 @@
 
 #include "Layout.h"
 
+static bool isUndefined(float value) {
+  return isnan(value);
+}
+
 static bool eq(float a, float b) {
+  if (isUndefined(a)) {
+    return isUndefined(b);
+  }
   return fabs(a - b) < 0.0001;
 }
 
-static void init_css_node(css_node_t *node) {
+void init_css_node(css_node_t *node) {
   node->style.align_items = CSS_ALIGN_FLEX_START;
 
   // Some of the fields default to undefined and not 0
@@ -24,6 +31,12 @@ static void init_css_node(css_node_t *node) {
 
   node->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
   node->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
+
+  // Such that the comparison is always going to be false
+  node->layout.last_requested_dimensions[CSS_WIDTH] = -1;
+  node->layout.last_requested_dimensions[CSS_HEIGHT] = -1;
+  node->layout.last_parent_max_width = -1;
+  node->layout.should_update = true;
 }
 
 css_node_t *new_css_node() {
@@ -32,23 +45,7 @@ css_node_t *new_css_node() {
   return node;
 }
 
-void init_css_node_children(css_node_t *node, int children_count) {
-  node->children = calloc((unsigned long)children_count, sizeof(css_node_t));
-  for (int i = 0; i < children_count; ++i) {
-    init_css_node(&node->children[i]);
-  }
-  node->children_count = children_count;
-}
-
-static void cleanup_css_node(css_node_t *node) {
-  for (int i = 0; i < node->children_count; ++i) {
-    cleanup_css_node(&node->children[i]);
-  }
-  free(node->children);
-}
-
 void free_css_node(css_node_t *node) {
-  cleanup_css_node(node);
   free(node);
 }
 
@@ -132,9 +129,7 @@ static void print_css_node_rec(
       printf("alignSelf: 'stretch', ");
     }
 
-    if (node->style.flex == CSS_FLEX_ONE) {
-      printf("flex: 1, ");
-    }
+    print_number_nan("flex", node->style.flex);
 
     if (four_equal(node->style.margin)) {
       print_number_0("margin", node->style.margin[CSS_LEFT]);
@@ -176,10 +171,10 @@ static void print_css_node_rec(
     print_number_nan("bottom", node->style.position[CSS_BOTTOM]);
   }
 
-  if (node->children_count > 0) {
+  if (options & CSS_PRINT_CHILDREN && node->children_count > 0) {
     printf("children: [\n");
     for (int i = 0; i < node->children_count; ++i) {
-      print_css_node_rec(&node->children[i], options, level + 1);
+      print_css_node_rec(node->get_child(node->context, i), options, level + 1);
     }
     indent(level);
     printf("]},\n");
@@ -211,10 +206,6 @@ static css_dimension_t dim[2] = {
 };
 
 
-
-static bool isUndefined(float value) {
-  return isnan(value);
-}
 
 static float getMargin(css_node_t *node, int location) {
   return node->style.margin[location];
@@ -265,12 +256,15 @@ static css_flex_direction_t getFlexDirection(css_node_t *node) {
   return node->style.flex_direction;
 }
 
-static css_flex_t getFlex(css_node_t *node) {
+static float getFlex(css_node_t *node) {
   return node->style.flex;
 }
 
 static bool isFlex(css_node_t *node) {
-  return getPositionType(node) == CSS_POSITION_RELATIVE && getFlex(node);
+  return (
+    getPositionType(node) == CSS_POSITION_RELATIVE &&
+    getFlex(node) > 0
+  );
 }
 
 static float getDimWithMargin(css_node_t *node, css_flex_direction_t axis) {
@@ -327,7 +321,7 @@ static float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
   return -getPosition(node, trailing[axis]);
 }
 
-void layoutNode(css_node_t *node, float parentMaxWidth) {
+static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
   css_flex_direction_t mainAxis = getFlexDirection(node);
   css_flex_direction_t crossAxis = mainAxis == CSS_FLEX_DIRECTION_ROW ?
     CSS_FLEX_DIRECTION_COLUMN :
@@ -382,10 +376,11 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
     return;
   }
 
-  // Pre-fill cross axis dimensions when the child is using stretch before
-  // we call the recursive layout pass
+  // Pre-fill some dimensions straight from the parent
   for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = &node->children[i];
+    css_node_t* child = node->get_child(node->context, i);
+    // Pre-fill cross axis dimensions when the child is using stretch before
+    // we call the recursive layout pass
     if (getAlignItem(node, child) == CSS_ALIGN_STRETCH &&
         getPositionType(child) == CSS_POSITION_RELATIVE &&
         !isUndefined(node->layout.dimensions[dim[crossAxis]]) &&
@@ -398,6 +393,26 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
         // You never want to go smaller than padding
         getPaddingAndBorderAxis(child, crossAxis)
       );
+    } else if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
+      // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
+      // left and right or top and bottom).
+      for (int ii = 0; ii < 2; ii++) {
+        css_flex_direction_t axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
+            !isDimDefined(child, axis) &&
+            isPosDefined(child, leading[axis]) &&
+            isPosDefined(child, trailing[axis])) {
+          child->layout.dimensions[dim[axis]] = fmaxf(
+            node->layout.dimensions[dim[axis]] -
+            getPaddingAndBorderAxis(node, axis) -
+            getMarginAxis(child, axis) -
+            getPosition(child, leading[axis]) -
+            getPosition(child, trailing[axis]),
+            // You never want to go smaller than padding
+            getPaddingAndBorderAxis(child, axis)
+          );
+        }
+      }
     }
   }
 
@@ -412,14 +427,16 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
   // There are three kind of children, non flexible, flexible and absolute.
   // We need to know how many there are in order to distribute the space.
   int flexibleChildrenCount = 0;
+  float totalFlexible = 0;
   int nonFlexibleChildrenCount = 0;
   for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = &node->children[i];
+    css_node_t* child = node->get_child(node->context, i);
 
     // It only makes sense to consider a child flexible if we have a computed
     // dimension for the node->
     if (!isUndefined(node->layout.dimensions[dim[mainAxis]]) && isFlex(child)) {
       flexibleChildrenCount++;
+      totalFlexible += getFlex(child);
 
       // Even if we don't know its exact size yet, we already know the padding,
       // border and margin. We'll use this partial information to compute the
@@ -474,7 +491,7 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
     // If there are flexible children in the mix, they are going to fill the
     // remaining space
     if (flexibleChildrenCount) {
-      float flexibleMainDim = remainingMainDim / flexibleChildrenCount;
+      float flexibleMainDim = remainingMainDim / totalFlexible;
 
       // The non flexible children can overflow the container, in this case
       // we should just assume that there is no space available.
@@ -485,11 +502,11 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
       // children. This is faster than actually allocating a new array that
       // contains only flexible children.
       for (int i = 0; i < node->children_count; ++i) {
-        css_node_t* child = &node->children[i];
+        css_node_t* child = node->get_child(node->context, i);
         if (isFlex(child)) {
           // At this point we know the final size of the element in the main
           // dimension
-          child->layout.dimensions[dim[mainAxis]] = flexibleMainDim +
+          child->layout.dimensions[dim[mainAxis]] = flexibleMainDim * getFlex(child) +
             getPaddingAndBorderAxis(child, mainAxis);
 
           float maxWidth = CSS_UNDEFINED;
@@ -543,7 +560,7 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
   float mainDim = leadingMainDim +
     getPaddingAndBorder(node, leading[mainAxis]);
   for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = &node->children[i];
+    css_node_t* child = node->get_child(node->context, i);
 
     if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
         isPosDefined(child, leading[mainAxis])) {
@@ -598,7 +615,7 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
   // <Loop D> Position elements in the cross axis
 
   for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = &node->children[i];
+    css_node_t* child = node->get_child(node->context, i);
 
     if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
         isPosDefined(child, leading[crossAxis])) {
@@ -650,3 +667,33 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
     }
   }
 }
+
+void layoutNode(css_node_t *node, float parentMaxWidth) {
+  css_layout_t *layout = &node->layout;
+  layout->should_update = true;
+
+  bool skipLayout =
+    !node->is_dirty(node->context) &&
+    eq(layout->last_requested_dimensions[CSS_WIDTH], layout->dimensions[CSS_WIDTH]) &&
+    eq(layout->last_requested_dimensions[CSS_HEIGHT], layout->dimensions[CSS_HEIGHT]) &&
+    eq(layout->last_parent_max_width, parentMaxWidth);
+
+  if (skipLayout) {
+    layout->dimensions[CSS_WIDTH] = layout->last_dimensions[CSS_WIDTH];
+    layout->dimensions[CSS_HEIGHT] = layout->last_dimensions[CSS_HEIGHT];
+    layout->position[CSS_TOP] = layout->last_position[CSS_TOP];
+    layout->position[CSS_LEFT] = layout->last_position[CSS_LEFT];
+  } else {
+    layout->last_requested_dimensions[CSS_WIDTH] = layout->dimensions[CSS_WIDTH];
+    layout->last_requested_dimensions[CSS_HEIGHT] = layout->dimensions[CSS_HEIGHT];
+    layout->last_parent_max_width = parentMaxWidth;
+
+    layoutNodeImpl(node, parentMaxWidth);
+
+    layout->last_dimensions[CSS_WIDTH] = layout->dimensions[CSS_WIDTH];
+    layout->last_dimensions[CSS_HEIGHT] = layout->dimensions[CSS_HEIGHT];
+    layout->last_position[CSS_TOP] = layout->position[CSS_TOP];
+    layout->last_position[CSS_LEFT] = layout->position[CSS_LEFT];
+  }
+}
+

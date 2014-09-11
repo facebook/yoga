@@ -6,14 +6,14 @@
 int main()
 {
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       node_0->style.dimensions[CSS_HEIGHT] = 200;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -26,7 +26,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
@@ -34,19 +34,19 @@ int main()
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 500;
         node_1->style.dimensions[CSS_HEIGHT] = 500;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 250;
         node_1->style.dimensions[CSS_HEIGHT] = 250;
-        node_1 = &node_0->children[2];
+        node_1 = node_0->get_child(node_0->context, 2);
         node_1->style.dimensions[CSS_WIDTH] = 125;
         node_1->style.dimensions[CSS_HEIGHT] = 125;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -56,17 +56,17 @@ int main()
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 500;
         node_1->layout.dimensions[CSS_HEIGHT] = 500;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 500;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 250;
         node_1->layout.dimensions[CSS_HEIGHT] = 250;
-        node_1 = &node_0->children[2];
+        node_1 = node_0->get_child(node_0->context, 2);
         node_1->layout.position[CSS_TOP] = 750;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 125;
@@ -78,7 +78,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
@@ -86,26 +86,26 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 500;
         node_1->style.dimensions[CSS_HEIGHT] = 500;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 500;
         node_1->style.dimensions[CSS_HEIGHT] = 500;
         init_css_node_children(node_1, 2);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->style.dimensions[CSS_WIDTH] = 250;
           node_2->style.dimensions[CSS_HEIGHT] = 250;
-          node_2 = &node_1->children[1];
+          node_2 = node_1->get_child(node_1->context, 1);
           node_2->style.dimensions[CSS_WIDTH] = 250;
           node_2->style.dimensions[CSS_HEIGHT] = 250;
         }
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -115,12 +115,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 500;
         node_1->layout.dimensions[CSS_HEIGHT] = 500;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 500;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 500;
@@ -128,12 +128,12 @@ int main()
         init_css_node_children(node_1, 2);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 250;
           node_2->layout.dimensions[CSS_HEIGHT] = 250;
-          node_2 = &node_1->children[1];
+          node_2 = node_1->get_child(node_1->context, 1);
           node_2->layout.position[CSS_TOP] = 250;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 250;
@@ -146,7 +146,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 100;
@@ -157,7 +157,7 @@ int main()
       node_0->style.margin[CSS_BOTTOM] = 10;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 10;
@@ -170,7 +170,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
@@ -182,21 +182,21 @@ int main()
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
         node_1->style.margin[CSS_LEFT] = 50;
         node_1->style.margin[CSS_TOP] = 50;
         node_1->style.margin[CSS_RIGHT] = 50;
         node_1->style.margin[CSS_BOTTOM] = 50;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
         node_1->style.margin[CSS_LEFT] = 25;
         node_1->style.margin[CSS_TOP] = 25;
         node_1->style.margin[CSS_RIGHT] = 25;
         node_1->style.margin[CSS_BOTTOM] = 25;
-        node_1 = &node_0->children[2];
+        node_1 = node_0->get_child(node_0->context, 2);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
         node_1->style.margin[CSS_LEFT] = 10;
@@ -206,7 +206,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 10;
@@ -216,17 +216,17 @@ int main()
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 50;
         node_1->layout.position[CSS_LEFT] = 50;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 225;
         node_1->layout.position[CSS_LEFT] = 25;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[2];
+        node_1 = node_0->get_child(node_0->context, 2);
         node_1->layout.position[CSS_TOP] = 360;
         node_1->layout.position[CSS_LEFT] = 10;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -238,7 +238,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -247,16 +247,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 200;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 300;
         node_1->style.dimensions[CSS_HEIGHT] = 150;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -266,12 +266,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 200;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 100;
         node_1->layout.dimensions[CSS_WIDTH] = 300;
@@ -283,23 +283,23 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 300;
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 200;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 300;
         node_1->style.dimensions[CSS_HEIGHT] = 150;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -309,12 +309,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 200;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 200;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 300;
@@ -326,7 +326,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
@@ -334,16 +334,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 200;
-        node_1 = &node_0->children[1];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
         node_1->style.dimensions[CSS_WIDTH] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -353,12 +353,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 200;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 200;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -370,7 +370,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
@@ -378,27 +378,27 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
         node_1->style.dimensions[CSS_WIDTH] = 1000;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
-          node_2->style.flex = CSS_FLEX_ONE;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = 1;
           node_2->style.dimensions[CSS_WIDTH] = 1000;
           init_css_node_children(node_2, 1);
           {
             css_node_t *node_3;
-            node_3 = &node_2->children[0];
-            node_3->style.flex = CSS_FLEX_ONE;
+            node_3 = node_2->get_child(node_2->context, 0);
+            node_3->style.flex = 1;
             node_3->style.dimensions[CSS_WIDTH] = 1000;
           }
         }
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -408,7 +408,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 1000;
@@ -416,7 +416,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 1000;
@@ -424,7 +424,7 @@ int main()
           init_css_node_children(node_2, 1);
           {
             css_node_t *node_3;
-            node_3 = &node_2->children[0];
+            node_3 = node_2->get_child(node_2->context, 0);
             node_3->layout.position[CSS_TOP] = 0;
             node_3->layout.position[CSS_LEFT] = 0;
             node_3->layout.dimensions[CSS_WIDTH] = 1000;
@@ -438,7 +438,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
@@ -448,20 +448,20 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
         node_1->style.margin[CSS_LEFT] = 15;
         node_1->style.margin[CSS_TOP] = 50;
         node_1->style.margin[CSS_BOTTOM] = 20;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
         node_1->style.margin[CSS_LEFT] = 30;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 10;
@@ -471,12 +471,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 50;
         node_1->layout.position[CSS_LEFT] = 15;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 170;
         node_1->layout.position[CSS_LEFT] = 30;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -488,7 +488,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
@@ -497,16 +497,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -516,12 +516,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -533,7 +533,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
@@ -542,16 +542,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -561,12 +561,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 800;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 900;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -578,7 +578,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
@@ -587,16 +587,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -606,12 +606,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 900;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -623,7 +623,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
@@ -632,16 +632,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -651,12 +651,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 200;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 700;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -668,7 +668,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_CENTER;
@@ -677,16 +677,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -696,12 +696,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 400;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 500;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -713,7 +713,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
@@ -721,14 +721,14 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -738,7 +738,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -750,7 +750,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_FLEX_START;
@@ -759,16 +759,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 200;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -778,12 +778,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -795,7 +795,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_CENTER;
@@ -804,16 +804,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 200;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -823,12 +823,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 400;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 450;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -840,7 +840,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_FLEX_END;
@@ -849,16 +849,16 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 200;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -868,12 +868,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 800;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 900;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -885,7 +885,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_FLEX_END;
@@ -894,17 +894,17 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 200;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.align_self = CSS_ALIGN_CENTER;
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -914,12 +914,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 800;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 450;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -931,7 +931,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_STRETCH;
@@ -940,12 +940,12 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_HEIGHT] = 100;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -955,7 +955,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 1000;
@@ -967,17 +967,17 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -987,7 +987,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -999,13 +999,13 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.margin[CSS_LEFT] = 5;
         node_1->style.margin[CSS_TOP] = 5;
         node_1->style.margin[CSS_RIGHT] = 5;
@@ -1013,7 +1013,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1023,7 +1023,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 5;
         node_1->layout.position[CSS_LEFT] = 5;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1035,21 +1035,21 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_HEIGHT] = 100;
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_HEIGHT] = 200;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1059,12 +1059,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1076,13 +1076,13 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_CENTER;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1095,7 +1095,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
@@ -1103,12 +1103,12 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.margin[CSS_TOP] = 10;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1118,7 +1118,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1130,29 +1130,29 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_items = CSS_ALIGN_FLEX_END;
         init_css_node_children(node_1, 2);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->style.margin[CSS_LEFT] = 10;
           node_2->style.margin[CSS_TOP] = 10;
           node_2->style.margin[CSS_RIGHT] = 10;
           node_2->style.margin[CSS_BOTTOM] = 10;
-          node_2 = &node_1->children[1];
+          node_2 = node_1->get_child(node_1->context, 1);
           node_2->style.dimensions[CSS_HEIGHT] = 100;
         }
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1162,7 +1162,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 20;
@@ -1170,12 +1170,12 @@ int main()
         init_css_node_children(node_1, 2);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 10;
           node_2->layout.position[CSS_LEFT] = 10;
           node_2->layout.dimensions[CSS_WIDTH] = 0;
           node_2->layout.dimensions[CSS_HEIGHT] = 0;
-          node_2 = &node_1->children[1];
+          node_2 = node_1->get_child(node_1->context, 1);
           node_2->layout.position[CSS_TOP] = 20;
           node_2->layout.position[CSS_LEFT] = 20;
           node_2->layout.dimensions[CSS_WIDTH] = 0;
@@ -1188,18 +1188,18 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1209,7 +1209,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1221,19 +1221,19 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_STRETCH;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.margin[CSS_LEFT] = 10;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1243,7 +1243,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 10;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1255,7 +1255,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.padding[CSS_LEFT] = 5;
@@ -1264,7 +1264,7 @@ int main()
       node_0->style.padding[CSS_BOTTOM] = 5;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1277,7 +1277,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.padding[CSS_LEFT] = 5;
@@ -1287,11 +1287,11 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1301,7 +1301,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 5;
         node_1->layout.position[CSS_LEFT] = 5;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1313,7 +1313,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.padding[CSS_LEFT] = 5;
@@ -1323,7 +1323,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.margin[CSS_LEFT] = 5;
         node_1->style.margin[CSS_TOP] = 5;
         node_1->style.margin[CSS_RIGHT] = 5;
@@ -1331,7 +1331,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1341,7 +1341,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 10;
         node_1->layout.position[CSS_LEFT] = 10;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1353,13 +1353,13 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_self = CSS_ALIGN_STRETCH;
         node_1->style.padding[CSS_LEFT] = 10;
         node_1->style.padding[CSS_TOP] = 10;
@@ -1368,7 +1368,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1378,7 +1378,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 20;
@@ -1390,7 +1390,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.padding[CSS_LEFT] = 50;
@@ -1400,7 +1400,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_self = CSS_ALIGN_STRETCH;
         node_1->style.padding[CSS_LEFT] = 10;
         node_1->style.padding[CSS_TOP] = 10;
@@ -1409,7 +1409,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1419,7 +1419,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 50;
         node_1->layout.position[CSS_LEFT] = 50;
         node_1->layout.dimensions[CSS_WIDTH] = 20;
@@ -1431,18 +1431,18 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_self = CSS_ALIGN_STRETCH;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->style.margin[CSS_LEFT] = 16;
           node_2->style.margin[CSS_TOP] = 16;
           node_2->style.margin[CSS_RIGHT] = 16;
@@ -1451,7 +1451,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1461,7 +1461,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 32;
@@ -1469,7 +1469,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 16;
           node_2->layout.position[CSS_LEFT] = 16;
           node_2->layout.dimensions[CSS_WIDTH] = 0;
@@ -1482,14 +1482,14 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.position[CSS_LEFT] = 5;
       node_0->style.position[CSS_TOP] = 5;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 5;
@@ -1502,7 +1502,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
@@ -1511,11 +1511,11 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1525,7 +1525,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 7.5;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1537,13 +1537,13 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.position[CSS_BOTTOM] = 5;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -5;
@@ -1556,14 +1556,14 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.position[CSS_TOP] = 10;
       node_0->style.position[CSS_BOTTOM] = 5;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 10;
@@ -1576,7 +1576,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -1584,17 +1584,17 @@ int main()
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.dimensions[CSS_WIDTH] = 50;
-        node_1 = &node_0->children[2];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1604,17 +1604,17 @@ int main()
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 250;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 250;
         node_1->layout.dimensions[CSS_WIDTH] = 50;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
-        node_1 = &node_0->children[2];
+        node_1 = node_0->get_child(node_0->context, 2);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 250;
         node_1->layout.dimensions[CSS_WIDTH] = 250;
@@ -1626,19 +1626,19 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.margin[CSS_RIGHT] = 15;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1648,7 +1648,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1660,20 +1660,20 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_self = CSS_ALIGN_CENTER;
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.padding[CSS_RIGHT] = 12;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1683,7 +1683,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 12;
@@ -1695,14 +1695,14 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_HEIGHT] = 5;
       node_0->style.padding[CSS_BOTTOM] = 20;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1715,14 +1715,14 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 5;
       node_0->style.padding[CSS_LEFT] = 20;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1735,26 +1735,26 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->style.dimensions[CSS_WIDTH] = 400;
         }
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.align_self = CSS_ALIGN_STRETCH;
         node_1->style.dimensions[CSS_WIDTH] = 200;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1764,7 +1764,7 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 400;
@@ -1772,13 +1772,13 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 400;
           node_2->layout.dimensions[CSS_HEIGHT] = 0;
         }
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
@@ -1790,7 +1790,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.padding[CSS_LEFT] = 5;
@@ -1800,12 +1800,12 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1815,7 +1815,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 5;
         node_1->layout.position[CSS_LEFT] = 5;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1827,22 +1827,22 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.position[CSS_LEFT] = 10;
         node_1->style.position[CSS_TOP] = 10;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1852,12 +1852,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
         node_1->layout.dimensions[CSS_HEIGHT] = 100;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 10;
         node_1->layout.position[CSS_LEFT] = 10;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1869,7 +1869,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.padding[CSS_LEFT] = 20;
@@ -1879,13 +1879,13 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.position[CSS_LEFT] = 5;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1895,7 +1895,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 20;
         node_1->layout.position[CSS_LEFT] = 5;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1907,20 +1907,20 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.margin[CSS_TOP] = 5;
         node_1->style.position[CSS_TOP] = 5;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1930,7 +1930,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 10;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1942,20 +1942,20 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.margin[CSS_LEFT] = 5;
         node_1->style.position[CSS_LEFT] = 5;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -1965,7 +1965,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 10;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -1977,7 +1977,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
@@ -1985,13 +1985,13 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2001,12 +2001,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -2018,7 +2018,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -2026,13 +2026,13 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
         node_1->style.margin[CSS_LEFT] = 5;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2042,7 +2042,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 5;
         node_1->layout.dimensions[CSS_WIDTH] = 695;
@@ -2054,7 +2054,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -2062,15 +2062,15 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
-        node_1 = &node_0->children[1];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
         node_1->style.padding[CSS_RIGHT] = 5;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2080,12 +2080,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 347.5;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 347.5;
         node_1->layout.dimensions[CSS_WIDTH] = 352.5;
@@ -2097,7 +2097,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -2105,15 +2105,15 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
-        node_1 = &node_0->children[1];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
         node_1->style.margin[CSS_LEFT] = 5;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2123,12 +2123,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 347.5;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 352.5;
         node_1->layout.dimensions[CSS_WIDTH] = 347.5;
@@ -2140,21 +2140,21 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_HEIGHT] = 300;
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_HEIGHT] = 600;
-        node_1 = &node_0->children[1];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2164,12 +2164,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
         node_1->layout.dimensions[CSS_HEIGHT] = 600;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 600;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -2181,7 +2181,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -2189,13 +2189,13 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.flex = 1;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2205,7 +2205,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -2217,22 +2217,22 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_HEIGHT] = 500;
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex = CSS_FLEX_ONE;
-        node_1 = &node_0->children[1];
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.flex = 1;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2242,12 +2242,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
         node_1->layout.dimensions[CSS_HEIGHT] = 500;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 500;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -2259,7 +2259,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.border[CSS_LEFT] = 5;
@@ -2268,7 +2268,7 @@ int main()
       node_0->style.border[CSS_BOTTOM] = 5;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2281,20 +2281,20 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.border[CSS_TOP] = 1;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.position[CSS_TOP] = -1;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2304,7 +2304,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -2316,7 +2316,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.border[CSS_LEFT] = 1;
@@ -2326,13 +2326,13 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.position[CSS_LEFT] = 5;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2342,7 +2342,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 1;
         node_1->layout.position[CSS_LEFT] = 6;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -2354,14 +2354,14 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 50;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_self = CSS_ALIGN_STRETCH;
         node_1->style.margin[CSS_LEFT] = 20;
         node_1->style.padding[CSS_LEFT] = 20;
@@ -2371,7 +2371,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2381,7 +2381,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 20;
         node_1->layout.dimensions[CSS_WIDTH] = 40;
@@ -2393,18 +2393,18 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.border[CSS_RIGHT] = 5;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2414,7 +2414,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 5;
@@ -2426,7 +2426,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -2434,12 +2434,12 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.margin[CSS_RIGHT] = -8;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2449,7 +2449,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -2461,14 +2461,14 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->measure = measure;
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2481,7 +2481,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 10;
@@ -2489,7 +2489,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2502,7 +2502,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.margin[CSS_LEFT] = 5;
@@ -2517,7 +2517,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 5;
@@ -2530,25 +2530,25 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 300;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_self = CSS_ALIGN_STRETCH;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->style.align_self = CSS_ALIGN_STRETCH;
         }
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2558,7 +2558,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 300;
@@ -2566,7 +2566,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 300;
@@ -2579,27 +2579,27 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node_1->style.dimensions[CSS_WIDTH] = 500;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
-          node_2->style.flex = CSS_FLEX_ONE;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = 1;
           node_2->measure = measure;
           node_2->context = "loooooooooong with space";
         }
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2609,7 +2609,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 500;
@@ -2617,7 +2617,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 500;
@@ -2630,27 +2630,27 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 130;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_items = CSS_ALIGN_STRETCH;
         node_1->style.align_self = CSS_ALIGN_STRETCH;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->measure = measure;
           node_2->context = "loooooooooong with space";
         }
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2660,7 +2660,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 130;
@@ -2668,7 +2668,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 130;
@@ -2681,20 +2681,20 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 200;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.align_items = CSS_ALIGN_STRETCH;
         node_1->style.align_self = CSS_ALIGN_STRETCH;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->style.dimensions[CSS_WIDTH] = 130;
           node_2->measure = measure;
           node_2->context = "loooooooooong with space";
@@ -2702,7 +2702,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2712,7 +2712,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
@@ -2720,7 +2720,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 130;
@@ -2733,20 +2733,20 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->measure = measure;
         node_1->context = "loooooooooong with space";
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2756,7 +2756,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -2768,7 +2768,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 100;
@@ -2779,7 +2779,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.margin[CSS_LEFT] = 10;
         node_1->style.margin[CSS_TOP] = 10;
         node_1->style.margin[CSS_RIGHT] = 10;
@@ -2787,14 +2787,14 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->measure = measure;
           node_2->context = "loooooooooong with space";
         }
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2804,7 +2804,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 20;
         node_1->layout.position[CSS_LEFT] = 20;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -2812,7 +2812,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 100;
@@ -2825,7 +2825,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
@@ -2833,13 +2833,13 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_HEIGHT] = 900;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2849,12 +2849,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
         node_1->layout.dimensions[CSS_HEIGHT] = 900;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 900;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
@@ -2866,7 +2866,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -2875,12 +2875,12 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 900;
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2890,7 +2890,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = -700;
         node_1->layout.dimensions[CSS_WIDTH] = 900;
@@ -2902,19 +2902,19 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node_1->style.dimensions[CSS_WIDTH] = 200;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->style.margin[CSS_LEFT] = 20;
           node_2->style.margin[CSS_TOP] = 20;
           node_2->style.margin[CSS_RIGHT] = 20;
@@ -2925,7 +2925,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2935,7 +2935,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
@@ -2943,7 +2943,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 20;
           node_2->layout.position[CSS_LEFT] = 20;
           node_2->layout.dimensions[CSS_WIDTH] = 171;
@@ -2956,18 +2956,18 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 200;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->style.margin[CSS_LEFT] = 20;
           node_2->style.margin[CSS_TOP] = 20;
           node_2->style.margin[CSS_RIGHT] = 20;
@@ -2978,7 +2978,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -2988,7 +2988,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
@@ -2996,7 +2996,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 20;
           node_2->layout.position[CSS_LEFT] = 20;
           node_2->layout.dimensions[CSS_WIDTH] = 160;
@@ -3009,7 +3009,129 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.position[CSS_LEFT] = 0;
+        node_1->style.position[CSS_TOP] = 0;
+        node_1->style.position[CSS_RIGHT] = 0;
+        node_1->style.position[CSS_BOTTOM] = 0;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout with position absolute, top, left, bottom, right", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 2.5;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 7.5;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 25;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 25;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 75;
+      }
+    }
+
+    test("should layout with arbitrary flex", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 0;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout with negative flex", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_STRETCH;
@@ -3022,7 +3144,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3035,20 +3157,20 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->measure = measure;
         node_1->context = "loooooooooong with space";
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3058,7 +3180,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
@@ -3070,24 +3192,36 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.dimensions[CSS_WIDTH] = 620;
+      node_0->style.dimensions[CSS_HEIGHT] = 595;
+      node_0->style.margin[CSS_BOTTOM] = 13;
+      node_0->style.padding[CSS_LEFT] = 7;
+      node_0->style.padding[CSS_TOP] = 7;
+      node_0->style.padding[CSS_RIGHT] = 7;
+      node_0->style.padding[CSS_BOTTOM] = 7;
+      node_0->style.border[CSS_RIGHT] = 3;
+      node_0->measure = measure;
+      node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 620;
+      node_0->layout.dimensions[CSS_HEIGHT] = 595;
     }
 
     test("Random #0", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 603;
@@ -3104,7 +3238,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 6;
@@ -3117,11 +3251,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3134,10 +3268,9 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_HEIGHT] = 338;
       node_0->style.margin[CSS_LEFT] = -5;
       node_0->style.margin[CSS_TOP] = -5;
@@ -3152,7 +3285,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 18;
@@ -3165,10 +3298,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node_0->style.dimensions[CSS_WIDTH] = 255;
       node_0->style.margin[CSS_RIGHT] = -6;
       node_0->style.margin[CSS_BOTTOM] = -3;
@@ -3186,7 +3319,7 @@ int main()
       node_0->style.border[CSS_BOTTOM] = 1;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3199,7 +3332,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_HEIGHT] = 116;
@@ -3207,9 +3340,9 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.justify_content = CSS_JUSTIFY_CENTER;
         node_1->style.align_self = CSS_ALIGN_FLEX_START;
-        node_1->style.flex = CSS_FLEX_NONE;
         node_1->style.dimensions[CSS_HEIGHT] = 633;
         node_1->style.margin[CSS_LEFT] = 19;
         node_1->style.margin[CSS_TOP] = 19;
@@ -3224,11 +3357,10 @@ int main()
         node_1->style.position[CSS_TOP] = 8;
         node_1->measure = measure;
         node_1->context = "small";
-        node_1 = &node_0->children[1];
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-        node_1->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-        node_1->style.align_items = CSS_ALIGN_CENTER;
-        node_1->style.align_self = CSS_ALIGN_FLEX_END;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.justify_content = CSS_JUSTIFY_FLEX_END;
+        node_1->style.align_items = CSS_ALIGN_FLEX_END;
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.margin[CSS_LEFT] = 4;
         node_1->style.margin[CSS_TOP] = 13;
@@ -3246,7 +3378,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 10;
@@ -3256,12 +3388,12 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 25;
         node_1->layout.position[CSS_LEFT] = -7;
         node_1->layout.dimensions[CSS_WIDTH] = 35;
         node_1->layout.dimensions[CSS_HEIGHT] = 633;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 3;
         node_1->layout.position[CSS_LEFT] = -3;
         node_1->layout.dimensions[CSS_WIDTH] = 7;
@@ -3273,9 +3405,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node_0->style.dimensions[CSS_WIDTH] = 426;
       node_0->style.dimensions[CSS_HEIGHT] = 497;
@@ -3289,7 +3422,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3302,11 +3435,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3319,91 +3452,97 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.dimensions[CSS_HEIGHT] = 757;
+      node_0->style.margin[CSS_LEFT] = 8;
+      node_0->style.margin[CSS_TOP] = 6;
+      node_0->style.margin[CSS_RIGHT] = -1;
+      node_0->style.margin[CSS_BOTTOM] = 15;
+      node_0->style.border[CSS_LEFT] = 2;
+      node_0->style.border[CSS_TOP] = 1;
+      node_0->style.border[CSS_BOTTOM] = 0;
+      node_0->style.position[CSS_LEFT] = 5;
+      node_0->style.position[CSS_TOP] = -2;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+        node_1->style.align_items = CSS_ALIGN_CENTER;
+        node_1->style.margin[CSS_LEFT] = 16;
+        node_1->style.margin[CSS_TOP] = 16;
+        node_1->style.margin[CSS_RIGHT] = 16;
+        node_1->style.margin[CSS_BOTTOM] = 16;
+        node_1->style.margin[CSS_LEFT] = 11;
+        node_1->style.margin[CSS_TOP] = -2;
+        node_1->style.padding[CSS_LEFT] = 3;
+        node_1->style.padding[CSS_TOP] = 3;
+        node_1->style.padding[CSS_RIGHT] = 3;
+        node_1->style.padding[CSS_BOTTOM] = 3;
+        node_1->style.padding[CSS_TOP] = 18;
+        node_1->style.border[CSS_TOP] = 1;
+        node_1->style.border[CSS_BOTTOM] = 3;
+        node_1->style.position[CSS_LEFT] = -7;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+          node_2->style.align_self = CSS_ALIGN_STRETCH;
+          node_2->style.dimensions[CSS_HEIGHT] = 626;
+          node_2->style.margin[CSS_LEFT] = 18;
+          node_2->style.margin[CSS_TOP] = 18;
+          node_2->style.margin[CSS_RIGHT] = 18;
+          node_2->style.margin[CSS_BOTTOM] = 18;
+          node_2->style.margin[CSS_BOTTOM] = 0;
+          node_2->style.padding[CSS_RIGHT] = 2;
+          node_2->style.border[CSS_RIGHT] = 3;
+          node_2->measure = measure;
+          node_2->context = "small";
+        }
+      }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_TOP] = 4;
+      node_0->layout.position[CSS_LEFT] = 13;
+      node_0->layout.dimensions[CSS_WIDTH] = 109;
+      node_0->layout.dimensions[CSS_HEIGHT] = 757;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 35.5;
+        node_1->layout.position[CSS_LEFT] = 6;
+        node_1->layout.dimensions[CSS_WIDTH] = 80;
+        node_1->layout.dimensions[CSS_HEIGHT] = 669;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 37;
+          node_2->layout.position[CSS_LEFT] = 21;
+          node_2->layout.dimensions[CSS_WIDTH] = 38;
+          node_2->layout.dimensions[CSS_HEIGHT] = 626;
+        }
+      }
     }
 
     test("Random #8", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
-      node_0->style.dimensions[CSS_WIDTH] = 477;
-      node_0->style.dimensions[CSS_HEIGHT] = 300;
-      node_0->style.margin[CSS_LEFT] = 9;
-      node_0->style.padding[CSS_LEFT] = 0;
-      node_0->style.padding[CSS_TOP] = 0;
-      node_0->style.padding[CSS_RIGHT] = 0;
-      node_0->style.padding[CSS_BOTTOM] = 0;
-      node_0->style.padding[CSS_LEFT] = 0;
-      node_0->style.padding[CSS_TOP] = 15;
-      node_0->style.padding[CSS_RIGHT] = 17;
-      node_0->style.padding[CSS_BOTTOM] = 16;
-      node_0->style.position[CSS_TOP] = 0;
-      node_0->measure = measure;
-      node_0->context = "loooooooooong with space";
-    }
-
-    css_node_t *root_layout = new_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 9;
-      node_0->layout.dimensions[CSS_WIDTH] = 477;
-      node_0->layout.dimensions[CSS_HEIGHT] = 300;
-    }
-
-    test("Random #9", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node_0->style.align_items = CSS_ALIGN_FLEX_END;
-      node_0->style.dimensions[CSS_HEIGHT] = 601;
-      node_0->style.margin[CSS_LEFT] = 17;
-      node_0->style.margin[CSS_TOP] = 17;
-      node_0->style.margin[CSS_RIGHT] = 17;
-      node_0->style.margin[CSS_BOTTOM] = 17;
-      node_0->style.border[CSS_LEFT] = 0;
-      node_0->style.border[CSS_BOTTOM] = 2;
-      node_0->style.position[CSS_LEFT] = 9;
-      node_0->style.position[CSS_TOP] = -6;
-    }
-
-    css_node_t *root_layout = new_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 11;
-      node_0->layout.position[CSS_LEFT] = 26;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 601;
-    }
-
-    test("Random #10", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3412,15 +3551,91 @@ int main()
       node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
+    test("Random #9", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+    }
+
+    test("Random #10", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.align_items = CSS_ALIGN_FLEX_END;
+      node_0->style.dimensions[CSS_WIDTH] = 179;
+      node_0->style.margin[CSS_TOP] = 7;
+      node_0->style.padding[CSS_LEFT] = 5;
+      node_0->style.padding[CSS_TOP] = 17;
+      node_0->style.padding[CSS_BOTTOM] = 16;
+      node_0->style.border[CSS_TOP] = 0;
+      node_0->style.border[CSS_BOTTOM] = 1;
+      node_0->style.position[CSS_LEFT] = -4;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.align_self = CSS_ALIGN_CENTER;
+        node_1->style.dimensions[CSS_WIDTH] = 277;
+        node_1->style.margin[CSS_RIGHT] = 6;
+        node_1->style.margin[CSS_BOTTOM] = -10;
+        node_1->style.padding[CSS_LEFT] = 4;
+        node_1->style.padding[CSS_TOP] = 4;
+        node_1->style.padding[CSS_RIGHT] = 4;
+        node_1->style.padding[CSS_BOTTOM] = 4;
+        node_1->style.padding[CSS_LEFT] = 11;
+        node_1->style.border[CSS_LEFT] = 1;
+        node_1->style.border[CSS_TOP] = 1;
+        node_1->style.border[CSS_RIGHT] = 1;
+        node_1->style.border[CSS_BOTTOM] = 1;
+        node_1->style.border[CSS_TOP] = 1;
+        node_1->style.position[CSS_TOP] = 1;
+        node_1->measure = measure;
+        node_1->context = "small";
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 7;
+      node_0->layout.position[CSS_LEFT] = -4;
+      node_0->layout.dimensions[CSS_WIDTH] = 179;
+      node_0->layout.dimensions[CSS_HEIGHT] = 52;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 18;
+        node_1->layout.position[CSS_LEFT] = -49.5;
+        node_1->layout.dimensions[CSS_WIDTH] = 277;
+        node_1->layout.dimensions[CSS_HEIGHT] = 28;
+      }
+    }
+
     test("Random #11", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_HEIGHT] = 948;
       node_0->style.margin[CSS_LEFT] = 10;
       node_0->style.margin[CSS_TOP] = 10;
@@ -3438,7 +3653,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 6;
@@ -3451,7 +3666,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
@@ -3468,7 +3683,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 12;
@@ -3481,27 +3696,60 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = 0;
+          node_2->measure = measure;
+          node_2->context = "loooooooooong with space";
+        }
+      }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 171;
+      node_0->layout.dimensions[CSS_HEIGHT] = 36;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 171;
+        node_1->layout.dimensions[CSS_HEIGHT] = 36;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 0;
+          node_2->layout.dimensions[CSS_HEIGHT] = 36;
+        }
+      }
     }
 
     test("Random #14", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node_0->style.dimensions[CSS_WIDTH] = 809;
       node_0->style.margin[CSS_LEFT] = 6;
       node_0->style.margin[CSS_TOP] = 8;
@@ -3511,7 +3759,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 8;
@@ -3524,189 +3772,61 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node_0->style.dimensions[CSS_WIDTH] = 779;
-      node_0->style.dimensions[CSS_HEIGHT] = 982;
-      node_0->style.margin[CSS_LEFT] = -3;
-      node_0->style.margin[CSS_TOP] = -3;
-      node_0->style.margin[CSS_RIGHT] = -3;
-      node_0->style.margin[CSS_BOTTOM] = -3;
-      node_0->style.margin[CSS_LEFT] = -5;
-      node_0->style.margin[CSS_RIGHT] = 6;
-      node_0->style.padding[CSS_LEFT] = 18;
-      node_0->style.padding[CSS_TOP] = 18;
-      node_0->style.padding[CSS_RIGHT] = 18;
-      node_0->style.padding[CSS_BOTTOM] = 18;
-      node_0->style.padding[CSS_LEFT] = 1;
-      node_0->style.padding[CSS_RIGHT] = 14;
-      node_0->style.border[CSS_LEFT] = 2;
-      node_0->style.position[CSS_LEFT] = 3;
-      node_0->style.position[CSS_TOP] = 5;
-      node_0->measure = measure;
-      node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 2;
-      node_0->layout.position[CSS_LEFT] = -2;
-      node_0->layout.dimensions[CSS_WIDTH] = 779;
-      node_0->layout.dimensions[CSS_HEIGHT] = 982;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #16", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.margin[CSS_RIGHT] = -2;
-      node_0->style.margin[CSS_BOTTOM] = 16;
-      node_0->style.padding[CSS_BOTTOM] = 14;
-      node_0->style.position[CSS_TOP] = 6;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 6;
+      node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
       node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 14;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #17", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node_0->style.dimensions[CSS_WIDTH] = 666;
-      node_0->style.dimensions[CSS_HEIGHT] = 562;
-      node_0->style.margin[CSS_LEFT] = -2;
-      node_0->style.margin[CSS_TOP] = -2;
-      node_0->style.margin[CSS_RIGHT] = -2;
-      node_0->style.margin[CSS_BOTTOM] = -2;
-      node_0->style.margin[CSS_LEFT] = 12;
-      node_0->style.margin[CSS_TOP] = -3;
-      node_0->style.margin[CSS_RIGHT] = 13;
-      node_0->style.padding[CSS_LEFT] = 9;
-      node_0->style.padding[CSS_TOP] = 9;
-      node_0->style.padding[CSS_RIGHT] = 9;
-      node_0->style.padding[CSS_BOTTOM] = 9;
-      node_0->style.padding[CSS_LEFT] = 15;
-      node_0->style.padding[CSS_TOP] = 3;
-      node_0->style.border[CSS_LEFT] = 1;
-      node_0->style.border[CSS_TOP] = 1;
-      node_0->style.border[CSS_RIGHT] = 1;
-      node_0->style.border[CSS_BOTTOM] = 1;
-      node_0->style.border[CSS_BOTTOM] = 3;
-      init_css_node_children(node_0, 2);
-      {
-        css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node_1->style.flex = CSS_FLEX_ONE;
-        node_1->style.dimensions[CSS_WIDTH] = 287;
-        node_1->style.dimensions[CSS_HEIGHT] = 860;
-        node_1->style.margin[CSS_BOTTOM] = 9;
-        node_1->style.border[CSS_LEFT] = 3;
-        node_1->style.border[CSS_TOP] = 3;
-        node_1->style.border[CSS_RIGHT] = 3;
-        node_1->style.border[CSS_BOTTOM] = 3;
-        node_1->style.position[CSS_LEFT] = -3;
-        node_1->style.position[CSS_TOP] = 0;
-        node_1->measure = measure;
-        node_1->context = "loooooooooong with space";
-        node_1 = &node_0->children[1];
-        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
-        node_1->style.margin[CSS_LEFT] = -7;
-        node_1->style.margin[CSS_TOP] = 11;
-        node_1->style.margin[CSS_RIGHT] = 3;
-        node_1->style.padding[CSS_LEFT] = 15;
-        node_1->style.padding[CSS_TOP] = 15;
-        node_1->style.padding[CSS_RIGHT] = 15;
-        node_1->style.padding[CSS_BOTTOM] = 15;
-        node_1->style.padding[CSS_TOP] = 11;
-        node_1->style.position[CSS_LEFT] = -10;
-        node_1->style.position[CSS_TOP] = 8;
-        init_css_node_children(node_1, 1);
-        {
-          css_node_t *node_2;
-          node_2 = &node_1->children[0];
-          node_2->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-          node_2->style.flex = CSS_FLEX_NONE;
-          node_2->style.dimensions[CSS_HEIGHT] = 689;
-          node_2->style.margin[CSS_LEFT] = 4;
-          node_2->style.margin[CSS_TOP] = 4;
-          node_2->style.margin[CSS_RIGHT] = 4;
-          node_2->style.margin[CSS_BOTTOM] = 4;
-          node_2->style.margin[CSS_TOP] = 9;
-          node_2->style.margin[CSS_RIGHT] = 11;
-          node_2->style.padding[CSS_LEFT] = 6;
-          node_2->style.padding[CSS_TOP] = 6;
-          node_2->style.padding[CSS_RIGHT] = 6;
-          node_2->style.padding[CSS_BOTTOM] = 6;
-          node_2->style.padding[CSS_RIGHT] = 5;
-          node_2->style.padding[CSS_BOTTOM] = 0;
-          node_2->style.border[CSS_LEFT] = 0;
-          node_2->style.position[CSS_LEFT] = 0;
-          node_2->measure = measure;
-          node_2->context = "small";
-        }
-      }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = -3;
-      node_0->layout.position[CSS_LEFT] = 12;
-      node_0->layout.dimensions[CSS_WIDTH] = 666;
-      node_0->layout.dimensions[CSS_HEIGHT] = 562;
-      init_css_node_children(node_0, 2);
-      {
-        css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->layout.position[CSS_TOP] = 4;
-        node_1->layout.position[CSS_LEFT] = 13;
-        node_1->layout.dimensions[CSS_WIDTH] = 287;
-        node_1->layout.dimensions[CSS_HEIGHT] = 537;
-        node_1 = &node_0->children[1];
-        node_1->layout.position[CSS_TOP] = 20;
-        node_1->layout.position[CSS_LEFT] = -16;
-        node_1->layout.dimensions[CSS_WIDTH] = 89;
-        node_1->layout.dimensions[CSS_HEIGHT] = 728;
-        init_css_node_children(node_1, 1);
-        {
-          css_node_t *node_2;
-          node_2 = &node_1->children[0];
-          node_2->layout.position[CSS_TOP] = 20;
-          node_2->layout.position[CSS_LEFT] = 19;
-          node_2->layout.dimensions[CSS_WIDTH] = 44;
-          node_2->layout.dimensions[CSS_HEIGHT] = 689;
-        }
-      }
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #18", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.align_items = CSS_ALIGN_FLEX_START;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node_0->style.margin[CSS_LEFT] = 6;
       node_0->style.margin[CSS_TOP] = 6;
       node_0->style.margin[CSS_RIGHT] = 6;
@@ -3717,7 +3837,7 @@ int main()
       node_0->style.position[CSS_LEFT] = 8;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 6;
@@ -3730,11 +3850,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node_0->style.dimensions[CSS_WIDTH] = 161;
       node_0->style.dimensions[CSS_HEIGHT] = 261;
       node_0->style.margin[CSS_LEFT] = 3;
@@ -3749,9 +3868,9 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node_1->style.justify_content = CSS_JUSTIFY_FLEX_END;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+        node_1->style.flex = 1;
         node_1->style.dimensions[CSS_WIDTH] = 860;
         node_1->style.dimensions[CSS_HEIGHT] = 424;
         node_1->style.margin[CSS_LEFT] = 10;
@@ -3775,7 +3894,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3785,10 +3904,10 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 10;
-        node_1->layout.position[CSS_LEFT] = -688;
-        node_1->layout.dimensions[CSS_WIDTH] = 860;
+        node_1->layout.position[CSS_LEFT] = 17;
+        node_1->layout.dimensions[CSS_WIDTH] = 155;
         node_1->layout.dimensions[CSS_HEIGHT] = 424;
       }
     }
@@ -3797,10 +3916,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 596;
       node_0->style.margin[CSS_TOP] = 12;
       node_0->style.margin[CSS_RIGHT] = 6;
@@ -3818,7 +3937,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 12;
@@ -3831,11 +3950,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3848,11 +3967,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3865,11 +3984,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_HEIGHT] = 605;
       node_0->style.margin[CSS_BOTTOM] = 10;
       node_0->style.padding[CSS_LEFT] = 6;
@@ -3883,7 +4001,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 7;
@@ -3896,10 +4014,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node_0->style.dimensions[CSS_HEIGHT] = 846;
       node_0->style.margin[CSS_LEFT] = 19;
       node_0->style.margin[CSS_TOP] = 19;
@@ -3910,7 +4028,7 @@ int main()
       node_0->style.padding[CSS_TOP] = 6;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 19;
@@ -3923,10 +4041,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 726;
       node_0->style.margin[CSS_LEFT] = 16;
       node_0->style.margin[CSS_TOP] = 16;
@@ -3942,7 +4060,7 @@ int main()
       node_0->style.position[CSS_LEFT] = -1;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 15;
@@ -3955,11 +4073,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3972,11 +4090,41 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.margin[CSS_LEFT] = 1;
+      node_0->style.margin[CSS_RIGHT] = -2;
+      node_0->style.padding[CSS_LEFT] = 4;
+      node_0->style.padding[CSS_TOP] = 4;
+      node_0->style.padding[CSS_RIGHT] = 4;
+      node_0->style.padding[CSS_BOTTOM] = 4;
+      node_0->style.padding[CSS_LEFT] = 19;
+      node_0->style.border[CSS_LEFT] = 1;
+      node_0->style.border[CSS_TOP] = 1;
+      node_0->style.position[CSS_TOP] = -3;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = -3;
+      node_0->layout.position[CSS_LEFT] = 1;
+      node_0->layout.dimensions[CSS_WIDTH] = 24;
+      node_0->layout.dimensions[CSS_HEIGHT] = 9;
+    }
+
+    test("Random #28", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -3985,47 +4133,15 @@ int main()
       node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
-    test("Random #28", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.dimensions[CSS_WIDTH] = 75;
-      node_0->style.margin[CSS_LEFT] = 19;
-      node_0->style.margin[CSS_TOP] = 19;
-      node_0->style.margin[CSS_RIGHT] = 19;
-      node_0->style.margin[CSS_BOTTOM] = 19;
-      node_0->style.margin[CSS_LEFT] = 17;
-      node_0->style.margin[CSS_TOP] = -5;
-      node_0->style.margin[CSS_RIGHT] = 10;
-      node_0->style.margin[CSS_BOTTOM] = 1;
-      node_0->style.padding[CSS_BOTTOM] = 12;
-      node_0->style.border[CSS_LEFT] = 2;
-      node_0->style.position[CSS_LEFT] = -6;
-      node_0->measure = measure;
-      node_0->context = "small";
-    }
-
-    css_node_t *root_layout = new_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = -5;
-      node_0->layout.position[CSS_LEFT] = 11;
-      node_0->layout.dimensions[CSS_WIDTH] = 75;
-      node_0->layout.dimensions[CSS_HEIGHT] = 30;
-    }
-
     test("Random #29", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -4038,11 +4154,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -4055,11 +4171,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -4072,10 +4188,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node_0->style.dimensions[CSS_HEIGHT] = 315;
       node_0->style.margin[CSS_TOP] = -2;
       node_0->style.margin[CSS_RIGHT] = -4;
@@ -4086,7 +4202,7 @@ int main()
       node_0->style.position[CSS_TOP] = -2;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -4;
@@ -4099,50 +4215,28 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.dimensions[CSS_WIDTH] = 337;
-      node_0->style.margin[CSS_LEFT] = 8;
-      node_0->style.margin[CSS_TOP] = 8;
-      node_0->style.margin[CSS_RIGHT] = 8;
-      node_0->style.margin[CSS_BOTTOM] = 8;
-      node_0->style.margin[CSS_TOP] = 12;
-      node_0->style.padding[CSS_LEFT] = 6;
-      node_0->style.padding[CSS_TOP] = 6;
-      node_0->style.padding[CSS_RIGHT] = 6;
-      node_0->style.padding[CSS_BOTTOM] = 6;
-      node_0->style.padding[CSS_TOP] = 18;
-      node_0->style.padding[CSS_RIGHT] = 5;
-      node_0->style.border[CSS_LEFT] = 0;
-      node_0->style.border[CSS_TOP] = 0;
-      node_0->style.border[CSS_RIGHT] = 0;
-      node_0->style.border[CSS_BOTTOM] = 0;
-      node_0->style.border[CSS_TOP] = 0;
-      node_0->style.position[CSS_LEFT] = 1;
-      node_0->measure = measure;
-      node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 12;
-      node_0->layout.position[CSS_LEFT] = 9;
-      node_0->layout.dimensions[CSS_WIDTH] = 337;
-      node_0->layout.dimensions[CSS_HEIGHT] = 42;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #34", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node_0->style.align_items = CSS_ALIGN_FLEX_END;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
       node_0->style.dimensions[CSS_HEIGHT] = 819;
       node_0->style.margin[CSS_LEFT] = 1;
       node_0->style.margin[CSS_TOP] = 1;
@@ -4157,11 +4251,10 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node_1->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-        node_1->style.align_self = CSS_ALIGN_FLEX_END;
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1->style.align_self = CSS_ALIGN_STRETCH;
+        node_1->style.flex = 8;
         node_1->style.dimensions[CSS_WIDTH] = 532;
         node_1->style.margin[CSS_LEFT] = 8;
         node_1->style.margin[CSS_TOP] = 8;
@@ -4181,7 +4274,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -3;
@@ -4191,7 +4284,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 8;
         node_1->layout.position[CSS_LEFT] = 40;
         node_1->layout.dimensions[CSS_WIDTH] = 532;
@@ -4203,45 +4296,72 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.align_items = CSS_ALIGN_CENTER;
+      node_0->style.margin[CSS_LEFT] = 13;
+      node_0->style.margin[CSS_TOP] = 13;
+      node_0->style.margin[CSS_RIGHT] = 13;
+      node_0->style.margin[CSS_BOTTOM] = 13;
+      node_0->style.margin[CSS_BOTTOM] = 0;
+      node_0->style.border[CSS_TOP] = 1;
+      node_0->style.border[CSS_RIGHT] = 1;
+      node_0->style.position[CSS_TOP] = 8;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_TOP] = 21;
+      node_0->layout.position[CSS_LEFT] = 13;
+      node_0->layout.dimensions[CSS_WIDTH] = 1;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1;
     }
 
     test("Random #36", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.align_items = CSS_ALIGN_FLEX_END;
+      node_0->style.dimensions[CSS_WIDTH] = 632;
+      node_0->style.dimensions[CSS_HEIGHT] = 907;
+      node_0->style.margin[CSS_LEFT] = -3;
+      node_0->style.margin[CSS_TOP] = 5;
+      node_0->style.margin[CSS_RIGHT] = -6;
+      node_0->style.margin[CSS_BOTTOM] = -5;
+      node_0->style.padding[CSS_LEFT] = 1;
+      node_0->style.padding[CSS_TOP] = 1;
+      node_0->style.padding[CSS_RIGHT] = 1;
+      node_0->style.padding[CSS_BOTTOM] = 1;
+      node_0->style.padding[CSS_BOTTOM] = 6;
+      node_0->style.border[CSS_BOTTOM] = 3;
+      node_0->style.position[CSS_LEFT] = -9;
+      node_0->style.position[CSS_TOP] = 4;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_TOP] = 9;
+      node_0->layout.position[CSS_LEFT] = -12;
+      node_0->layout.dimensions[CSS_WIDTH] = 632;
+      node_0->layout.dimensions[CSS_HEIGHT] = 907;
     }
 
     test("Random #37", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -4254,11 +4374,36 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_HEIGHT] = 635;
+      node_0->style.margin[CSS_LEFT] = 3;
+      node_0->style.margin[CSS_TOP] = 6;
+      node_0->style.border[CSS_BOTTOM] = 1;
+      node_0->style.position[CSS_LEFT] = -5;
+      node_0->measure = measure;
+      node_0->context = "loooooooooong with space";
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 6;
+      node_0->layout.position[CSS_LEFT] = -2;
+      node_0->layout.dimensions[CSS_WIDTH] = 171;
+      node_0->layout.dimensions[CSS_HEIGHT] = 635;
+    }
+
+    test("Random #39", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -4267,76 +4412,31 @@ int main()
       node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
-    test("Random #39", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.dimensions[CSS_HEIGHT] = 257;
-      node_0->style.margin[CSS_LEFT] = 18;
-      node_0->style.margin[CSS_TOP] = 18;
-      node_0->style.margin[CSS_RIGHT] = 18;
-      node_0->style.margin[CSS_BOTTOM] = 18;
-      node_0->style.margin[CSS_LEFT] = 15;
-      node_0->style.margin[CSS_RIGHT] = 0;
-      node_0->style.margin[CSS_BOTTOM] = 6;
-      node_0->style.padding[CSS_LEFT] = 17;
-      node_0->style.padding[CSS_RIGHT] = 3;
-      node_0->style.padding[CSS_BOTTOM] = 5;
-      node_0->style.border[CSS_TOP] = 2;
-      node_0->style.border[CSS_RIGHT] = 3;
-      node_0->style.border[CSS_BOTTOM] = 0;
-      node_0->style.position[CSS_LEFT] = 2;
-      node_0->measure = measure;
-      node_0->context = "small";
-    }
-
-    css_node_t *root_layout = new_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 18;
-      node_0->layout.position[CSS_LEFT] = 17;
-      node_0->layout.dimensions[CSS_WIDTH] = 56;
-      node_0->layout.dimensions[CSS_HEIGHT] = 257;
-    }
-
     test("Random #40", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node_0->style.dimensions[CSS_HEIGHT] = 308;
-      node_0->style.margin[CSS_LEFT] = 9;
-      node_0->style.margin[CSS_TOP] = 6;
-      node_0->style.padding[CSS_LEFT] = 9;
-      node_0->style.border[CSS_RIGHT] = 0;
-      node_0->style.position[CSS_LEFT] = -5;
-      node_0->measure = measure;
-      node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 6;
-      node_0->layout.position[CSS_LEFT] = 4;
-      node_0->layout.dimensions[CSS_WIDTH] = 42;
-      node_0->layout.dimensions[CSS_HEIGHT] = 308;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #41", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node_0->style.dimensions[CSS_WIDTH] = 398;
       node_0->style.dimensions[CSS_HEIGHT] = 198;
       node_0->style.margin[CSS_LEFT] = 9;
@@ -4349,7 +4449,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -11;
@@ -4362,12 +4462,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
-      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node_0->style.dimensions[CSS_HEIGHT] = 514;
       node_0->style.margin[CSS_LEFT] = 16;
       node_0->style.margin[CSS_TOP] = 16;
@@ -4383,7 +4482,7 @@ int main()
       node_0->style.position[CSS_LEFT] = 5;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 5;
@@ -4396,69 +4495,27 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node_0->style.dimensions[CSS_WIDTH] = 387;
-      node_0->style.margin[CSS_LEFT] = 19;
-      node_0->style.margin[CSS_TOP] = 19;
-      node_0->style.margin[CSS_RIGHT] = 19;
-      node_0->style.margin[CSS_BOTTOM] = 19;
-      node_0->style.margin[CSS_LEFT] = 11;
-      node_0->style.padding[CSS_TOP] = 15;
-      node_0->style.padding[CSS_RIGHT] = 14;
-      node_0->style.border[CSS_LEFT] = 0;
-      node_0->style.border[CSS_RIGHT] = 1;
-      node_0->style.position[CSS_LEFT] = 8;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.justify_content = CSS_JUSTIFY_FLEX_START;
-        node_1->style.flex = CSS_FLEX_ONE;
-        node_1->style.margin[CSS_RIGHT] = -6;
-        node_1->style.padding[CSS_LEFT] = 5;
-        node_1->style.padding[CSS_TOP] = 5;
-        node_1->style.padding[CSS_RIGHT] = 5;
-        node_1->style.padding[CSS_BOTTOM] = 5;
-        node_1->style.padding[CSS_RIGHT] = 13;
-        node_1->style.border[CSS_LEFT] = 0;
-        node_1->style.border[CSS_TOP] = 3;
-        node_1->style.position[CSS_LEFT] = -1;
-        node_1->measure = measure;
-        node_1->context = "small";
-      }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 19;
-      node_0->layout.position[CSS_LEFT] = 19;
-      node_0->layout.dimensions[CSS_WIDTH] = 387;
-      node_0->layout.dimensions[CSS_HEIGHT] = 46;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->layout.position[CSS_TOP] = 15;
-        node_1->layout.position[CSS_LEFT] = -1;
-        node_1->layout.dimensions[CSS_WIDTH] = 378;
-        node_1->layout.dimensions[CSS_HEIGHT] = 31;
-      }
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #44", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.align_items = CSS_ALIGN_CENTER;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
       node_0->style.dimensions[CSS_WIDTH] = 952;
       node_0->style.margin[CSS_LEFT] = -2;
       node_0->style.margin[CSS_TOP] = -2;
@@ -4471,7 +4528,7 @@ int main()
       node_0->style.position[CSS_TOP] = -10;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -9;
@@ -4484,10 +4541,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 937;
       node_0->style.border[CSS_LEFT] = 0;
       node_0->style.border[CSS_TOP] = 0;
@@ -4499,7 +4556,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -4512,11 +4569,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node_0->style.dimensions[CSS_WIDTH] = 530;
       node_0->style.dimensions[CSS_HEIGHT] = 726;
       node_0->style.margin[CSS_LEFT] = -5;
@@ -4530,8 +4586,8 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.justify_content = CSS_JUSTIFY_FLEX_END;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node_1->style.dimensions[CSS_WIDTH] = 195;
         node_1->style.margin[CSS_TOP] = -2;
         node_1->style.margin[CSS_RIGHT] = 15;
@@ -4541,8 +4597,8 @@ int main()
         node_1->style.position[CSS_TOP] = -1;
         node_1->measure = measure;
         node_1->context = "small";
-        node_1 = &node_0->children[1];
-        node_1->style.align_self = CSS_ALIGN_STRETCH;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node_1->style.dimensions[CSS_WIDTH] = 638;
         node_1->style.dimensions[CSS_HEIGHT] = 753;
         node_1->style.margin[CSS_LEFT] = 19;
@@ -4559,7 +4615,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -5;
@@ -4569,14 +4625,14 @@ int main()
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
-        node_1->layout.position[CSS_LEFT] = -347;
+        node_1->layout.position[CSS_LEFT] = 2;
         node_1->layout.dimensions[CSS_WIDTH] = 195;
         node_1->layout.dimensions[CSS_HEIGHT] = 20;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 6;
-        node_1->layout.position[CSS_LEFT] = -125;
+        node_1->layout.position[CSS_LEFT] = 224;
         node_1->layout.dimensions[CSS_WIDTH] = 638;
         node_1->layout.dimensions[CSS_HEIGHT] = 753;
       }
@@ -4586,45 +4642,72 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_HEIGHT] = 712;
+      node_0->style.margin[CSS_LEFT] = 16;
+      node_0->style.margin[CSS_TOP] = 16;
+      node_0->style.margin[CSS_RIGHT] = 16;
+      node_0->style.margin[CSS_BOTTOM] = 16;
+      node_0->style.margin[CSS_RIGHT] = -2;
+      node_0->style.margin[CSS_BOTTOM] = 15;
+      node_0->style.padding[CSS_TOP] = 19;
+      node_0->style.position[CSS_TOP] = 1;
+      node_0->measure = measure;
+      node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_TOP] = 17;
+      node_0->layout.position[CSS_LEFT] = 16;
+      node_0->layout.dimensions[CSS_WIDTH] = 171;
+      node_0->layout.dimensions[CSS_HEIGHT] = 712;
     }
 
     test("Random #48", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.dimensions[CSS_HEIGHT] = 194;
+      node_0->style.margin[CSS_LEFT] = 1;
+      node_0->style.margin[CSS_TOP] = 1;
+      node_0->style.margin[CSS_RIGHT] = 1;
+      node_0->style.margin[CSS_BOTTOM] = 1;
+      node_0->style.margin[CSS_TOP] = -7;
+      node_0->style.margin[CSS_RIGHT] = -6;
+      node_0->style.padding[CSS_LEFT] = 18;
+      node_0->style.padding[CSS_TOP] = 18;
+      node_0->style.padding[CSS_RIGHT] = 18;
+      node_0->style.padding[CSS_BOTTOM] = 18;
+      node_0->style.border[CSS_BOTTOM] = 0;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_TOP] = -7;
+      node_0->layout.position[CSS_LEFT] = 1;
+      node_0->layout.dimensions[CSS_WIDTH] = 36;
+      node_0->layout.dimensions[CSS_HEIGHT] = 194;
     }
 
     test("Random #49", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node_0->style.dimensions[CSS_HEIGHT] = 335;
       node_0->style.margin[CSS_LEFT] = -6;
       node_0->style.margin[CSS_TOP] = -9;
@@ -4636,7 +4719,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -10;
@@ -4649,10 +4732,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 648;
       node_0->style.margin[CSS_LEFT] = -1;
       node_0->style.margin[CSS_TOP] = 15;
@@ -4668,10 +4751,10 @@ int main()
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
         node_1->style.align_items = CSS_ALIGN_FLEX_END;
-        node_1->style.align_self = CSS_ALIGN_FLEX_END;
-        node_1->style.flex = CSS_FLEX_NONE;
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.dimensions[CSS_WIDTH] = 928;
         node_1->style.margin[CSS_LEFT] = 5;
@@ -4686,11 +4769,11 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
-          node_2->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-          node_2->style.justify_content = CSS_JUSTIFY_CENTER;
-          node_2->style.align_self = CSS_ALIGN_FLEX_START;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+          node_2->style.align_items = CSS_ALIGN_FLEX_START;
           node_2->style.position_type = CSS_POSITION_RELATIVE;
+          node_2->style.flex = 9;
           node_2->style.dimensions[CSS_HEIGHT] = 898;
           node_2->style.margin[CSS_LEFT] = 11;
           node_2->style.margin[CSS_TOP] = 11;
@@ -4706,10 +4789,9 @@ int main()
           init_css_node_children(node_2, 1);
           {
             css_node_t *node_3;
-            node_3 = &node_2->children[0];
+            node_3 = node_2->get_child(node_2->context, 0);
             node_3->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-            node_3->style.justify_content = CSS_JUSTIFY_CENTER;
-            node_3->style.align_items = CSS_ALIGN_CENTER;
+            node_3->style.justify_content = CSS_JUSTIFY_FLEX_END;
             node_3->style.dimensions[CSS_HEIGHT] = 274;
             node_3->style.margin[CSS_LEFT] = 6;
             node_3->style.margin[CSS_TOP] = 6;
@@ -4723,10 +4805,10 @@ int main()
             init_css_node_children(node_3, 2);
             {
               css_node_t *node_4;
-              node_4 = &node_3->children[0];
-              node_4->style.justify_content = CSS_JUSTIFY_FLEX_END;
+              node_4 = node_3->get_child(node_3->context, 0);
+              node_4->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+              node_4->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
               node_4->style.align_items = CSS_ALIGN_STRETCH;
-              node_4->style.align_self = CSS_ALIGN_STRETCH;
               node_4->style.position_type = CSS_POSITION_ABSOLUTE;
               node_4->style.margin[CSS_LEFT] = 3;
               node_4->style.margin[CSS_TOP] = 3;
@@ -4736,7 +4818,7 @@ int main()
               node_4->style.padding[CSS_RIGHT] = 8;
               node_4->style.border[CSS_BOTTOM] = 3;
               node_4->style.position[CSS_LEFT] = -8;
-              node_4 = &node_3->children[1];
+              node_4 = node_3->get_child(node_3->context, 1);
               node_4->style.margin[CSS_LEFT] = 16;
               node_4->style.margin[CSS_TOP] = 16;
               node_4->style.margin[CSS_RIGHT] = 16;
@@ -4750,8 +4832,9 @@ int main()
             }
           }
         }
-        node_1 = &node_0->children[1];
-        node_1->style.flex = CSS_FLEX_NONE;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.justify_content = CSS_JUSTIFY_FLEX_END;
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
         node_1->style.dimensions[CSS_HEIGHT] = 49;
         node_1->style.margin[CSS_TOP] = 8;
         node_1->style.margin[CSS_BOTTOM] = 9;
@@ -4761,10 +4844,9 @@ int main()
         node_1->style.position[CSS_TOP] = 4;
         node_1->measure = measure;
         node_1->context = "small";
-        node_1 = &node_0->children[2];
-        node_1->style.justify_content = CSS_JUSTIFY_FLEX_START;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node_1->style.align_self = CSS_ALIGN_CENTER;
-        node_1->style.flex = CSS_FLEX_NONE;
         node_1->style.margin[CSS_RIGHT] = 18;
         node_1->style.margin[CSS_BOTTOM] = -1;
         node_1->style.padding[CSS_TOP] = 14;
@@ -4776,17 +4858,17 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 22;
       node_0->layout.position[CSS_LEFT] = -1;
       node_0->layout.dimensions[CSS_WIDTH] = 648;
-      node_0->layout.dimensions[CSS_HEIGHT] = 136;
+      node_0->layout.dimensions[CSS_HEIGHT] = 91;
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 2;
         node_1->layout.position[CSS_LEFT] = 8;
         node_1->layout.dimensions[CSS_WIDTH] = 928;
@@ -4794,15 +4876,15 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 31;
-          node_2->layout.position[CSS_LEFT] = 16;
+          node_2->layout.position[CSS_LEFT] = 806;
           node_2->layout.dimensions[CSS_WIDTH] = 115;
           node_2->layout.dimensions[CSS_HEIGHT] = 898;
           init_css_node_children(node_2, 1);
           {
             css_node_t *node_3;
-            node_3 = &node_2->children[0];
+            node_3 = node_2->get_child(node_2->context, 0);
             node_3->layout.position[CSS_TOP] = 1;
             node_3->layout.position[CSS_LEFT] = 6;
             node_3->layout.dimensions[CSS_WIDTH] = 103;
@@ -4810,27 +4892,27 @@ int main()
             init_css_node_children(node_3, 2);
             {
               css_node_t *node_4;
-              node_4 = &node_3->children[0];
-              node_4->layout.position[CSS_TOP] = 106.5;
+              node_4 = node_3->get_child(node_3->context, 0);
+              node_4->layout.position[CSS_TOP] = 210;
               node_4->layout.position[CSS_LEFT] = -3;
               node_4->layout.dimensions[CSS_WIDTH] = 8;
               node_4->layout.dimensions[CSS_HEIGHT] = 3;
-              node_4 = &node_3->children[1];
-              node_4->layout.position[CSS_TOP] = 104.5;
+              node_4 = node_3->get_child(node_3->context, 1);
+              node_4->layout.position[CSS_TOP] = 208;
               node_4->layout.position[CSS_LEFT] = 34;
               node_4->layout.dimensions[CSS_WIDTH] = 53;
               node_4->layout.dimensions[CSS_HEIGHT] = 37;
             }
           }
         }
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 33;
         node_1->layout.position[CSS_LEFT] = 23;
         node_1->layout.dimensions[CSS_WIDTH] = 47;
         node_1->layout.dimensions[CSS_HEIGHT] = 49;
-        node_1 = &node_0->children[2];
-        node_1->layout.position[CSS_TOP] = 87;
-        node_1->layout.position[CSS_LEFT] = 307;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 31.5;
+        node_1->layout.position[CSS_LEFT] = 66;
         node_1->layout.dimensions[CSS_WIDTH] = 33;
         node_1->layout.dimensions[CSS_HEIGHT] = 46;
       }
@@ -4840,7 +4922,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 803;
@@ -4856,7 +4938,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -4869,9 +4951,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node_0->style.dimensions[CSS_HEIGHT] = 861;
       node_0->style.margin[CSS_LEFT] = 0;
       node_0->style.margin[CSS_TOP] = 0;
@@ -4885,7 +4968,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -4898,32 +4981,24 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.margin[CSS_RIGHT] = -7;
-      node_0->style.margin[CSS_BOTTOM] = -5;
-      node_0->style.padding[CSS_TOP] = 0;
-      node_0->style.padding[CSS_BOTTOM] = 11;
-      node_0->style.border[CSS_RIGHT] = 3;
-      node_0->measure = measure;
-      node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 174;
-      node_0->layout.dimensions[CSS_HEIGHT] = 29;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #54", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 134;
@@ -4944,7 +5019,7 @@ int main()
       node_0->style.position[CSS_TOP] = -2;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 7;
@@ -4957,10 +5032,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node_0->style.dimensions[CSS_WIDTH] = 216;
       node_0->style.dimensions[CSS_HEIGHT] = 721;
       node_0->style.margin[CSS_LEFT] = -6;
@@ -4980,7 +5055,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -1;
@@ -4993,41 +5068,27 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node_0->style.dimensions[CSS_WIDTH] = 526;
-      node_0->style.margin[CSS_RIGHT] = 11;
-      node_0->style.margin[CSS_BOTTOM] = 5;
-      node_0->style.padding[CSS_LEFT] = 13;
-      node_0->style.border[CSS_LEFT] = 2;
-      node_0->style.border[CSS_TOP] = 2;
-      node_0->style.border[CSS_RIGHT] = 2;
-      node_0->style.border[CSS_BOTTOM] = 2;
-      node_0->style.border[CSS_TOP] = 1;
-      node_0->style.border[CSS_RIGHT] = 1;
-      node_0->measure = measure;
-      node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 526;
-      node_0->layout.dimensions[CSS_HEIGHT] = 21;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #57", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.align_items = CSS_ALIGN_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 173;
       node_0->style.margin[CSS_LEFT] = 11;
       node_0->style.margin[CSS_TOP] = 11;
@@ -5041,7 +5102,7 @@ int main()
       node_0->style.position[CSS_LEFT] = 8;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 17;
@@ -5054,43 +5115,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node_0->style.margin[CSS_LEFT] = -5;
-      node_0->style.margin[CSS_TOP] = -5;
-      node_0->style.margin[CSS_RIGHT] = -5;
-      node_0->style.margin[CSS_BOTTOM] = -5;
-      node_0->style.margin[CSS_RIGHT] = -8;
-      node_0->style.padding[CSS_TOP] = 4;
-      node_0->style.padding[CSS_BOTTOM] = 15;
-      node_0->style.border[CSS_TOP] = 3;
-      node_0->style.border[CSS_BOTTOM] = 3;
-      node_0->style.position[CSS_LEFT] = -5;
-      node_0->style.position[CSS_TOP] = 2;
-      node_0->measure = measure;
-      node_0->context = "small";
-    }
-
-    css_node_t *root_layout = new_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = -3;
-      node_0->layout.position[CSS_LEFT] = -10;
-      node_0->layout.dimensions[CSS_WIDTH] = 33;
-      node_0->layout.dimensions[CSS_HEIGHT] = 43;
-    }
-
-    test("Random #59", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5099,15 +5128,131 @@ int main()
       node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
+    test("Random #59", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.align_items = CSS_ALIGN_CENTER;
+      node_0->style.dimensions[CSS_WIDTH] = 632;
+      node_0->style.dimensions[CSS_HEIGHT] = 810;
+      node_0->style.margin[CSS_LEFT] = 1;
+      node_0->style.margin[CSS_TOP] = 1;
+      node_0->style.margin[CSS_RIGHT] = 1;
+      node_0->style.margin[CSS_BOTTOM] = 1;
+      node_0->style.margin[CSS_LEFT] = -9;
+      node_0->style.margin[CSS_TOP] = 10;
+      node_0->style.padding[CSS_BOTTOM] = 1;
+      node_0->style.border[CSS_RIGHT] = 3;
+      node_0->style.position[CSS_LEFT] = -4;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+        node_1->style.margin[CSS_TOP] = 15;
+        node_1->style.padding[CSS_TOP] = 0;
+        node_1->style.padding[CSS_BOTTOM] = 12;
+        node_1->style.border[CSS_LEFT] = 1;
+        node_1->style.border[CSS_TOP] = 1;
+        node_1->style.border[CSS_RIGHT] = 1;
+        node_1->style.border[CSS_BOTTOM] = 1;
+        node_1->style.border[CSS_TOP] = 2;
+        node_1->style.position[CSS_LEFT] = -5;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.justify_content = CSS_JUSTIFY_CENTER;
+          node_2->style.align_self = CSS_ALIGN_CENTER;
+          node_2->style.position_type = CSS_POSITION_ABSOLUTE;
+          node_2->style.dimensions[CSS_HEIGHT] = 674;
+          node_2->style.margin[CSS_RIGHT] = 11;
+          node_2->style.padding[CSS_LEFT] = 4;
+          node_2->style.padding[CSS_RIGHT] = 10;
+          node_2->style.border[CSS_LEFT] = 2;
+          node_2->style.border[CSS_TOP] = 1;
+          node_2->style.border[CSS_BOTTOM] = 1;
+          node_2->style.position[CSS_LEFT] = 6;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+          node_2->style.justify_content = CSS_JUSTIFY_FLEX_START;
+          node_2->style.dimensions[CSS_WIDTH] = 811;
+          node_2->style.margin[CSS_TOP] = -5;
+          node_2->style.padding[CSS_LEFT] = 16;
+          node_2->style.padding[CSS_TOP] = 16;
+          node_2->style.padding[CSS_RIGHT] = 16;
+          node_2->style.padding[CSS_BOTTOM] = 16;
+          node_2->style.border[CSS_LEFT] = 0;
+          node_2->measure = measure;
+          node_2->context = "small";
+        }
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.justify_content = CSS_JUSTIFY_CENTER;
+        node_1->style.dimensions[CSS_HEIGHT] = 51;
+        node_1->style.margin[CSS_TOP] = -4;
+        node_1->style.margin[CSS_RIGHT] = 14;
+        node_1->style.padding[CSS_LEFT] = 3;
+        node_1->style.padding[CSS_TOP] = 3;
+        node_1->style.padding[CSS_RIGHT] = 3;
+        node_1->style.padding[CSS_BOTTOM] = 3;
+        node_1->style.padding[CSS_LEFT] = 11;
+        node_1->style.padding[CSS_BOTTOM] = 18;
+        node_1->style.position[CSS_LEFT] = -9;
+        node_1->measure = measure;
+        node_1->context = "loooooooooong with space";
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 10;
+      node_0->layout.position[CSS_LEFT] = -13;
+      node_0->layout.dimensions[CSS_WIDTH] = 632;
+      node_0->layout.dimensions[CSS_HEIGHT] = 810;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 15;
+        node_1->layout.position[CSS_LEFT] = -97;
+        node_1->layout.dimensions[CSS_WIDTH] = 813;
+        node_1->layout.dimensions[CSS_HEIGHT] = 60;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 2;
+          node_2->layout.position[CSS_LEFT] = 7;
+          node_2->layout.dimensions[CSS_WIDTH] = 16;
+          node_2->layout.dimensions[CSS_HEIGHT] = 674;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->layout.position[CSS_TOP] = -3;
+          node_2->layout.position[CSS_LEFT] = 1;
+          node_2->layout.dimensions[CSS_WIDTH] = 811;
+          node_2->layout.dimensions[CSS_HEIGHT] = 50;
+        }
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 71;
+        node_1->layout.position[CSS_LEFT] = 206;
+        node_1->layout.dimensions[CSS_WIDTH] = 185;
+        node_1->layout.dimensions[CSS_HEIGHT] = 51;
+      }
+    }
+
     test("Random #60", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5120,7 +5265,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 671;
@@ -5135,7 +5280,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5148,11 +5293,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5165,43 +5310,28 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.dimensions[CSS_HEIGHT] = 898;
-      node_0->style.margin[CSS_LEFT] = 14;
-      node_0->style.margin[CSS_TOP] = 14;
-      node_0->style.margin[CSS_RIGHT] = 14;
-      node_0->style.margin[CSS_BOTTOM] = 14;
-      node_0->style.margin[CSS_TOP] = 13;
-      node_0->style.padding[CSS_LEFT] = 12;
-      node_0->style.padding[CSS_TOP] = 12;
-      node_0->style.padding[CSS_RIGHT] = 12;
-      node_0->style.padding[CSS_BOTTOM] = 12;
-      node_0->style.padding[CSS_BOTTOM] = 7;
-      node_0->style.position[CSS_LEFT] = -3;
-      node_0->measure = measure;
-      node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 13;
-      node_0->layout.position[CSS_LEFT] = 11;
-      node_0->layout.dimensions[CSS_WIDTH] = 57;
-      node_0->layout.dimensions[CSS_HEIGHT] = 898;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #64", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5214,11 +5344,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5231,27 +5361,49 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node_0->style.dimensions[CSS_WIDTH] = 516;
+      node_0->style.dimensions[CSS_HEIGHT] = 712;
+      node_0->style.margin[CSS_LEFT] = 15;
+      node_0->style.margin[CSS_TOP] = 15;
+      node_0->style.margin[CSS_RIGHT] = 15;
+      node_0->style.margin[CSS_BOTTOM] = 15;
+      node_0->style.margin[CSS_LEFT] = -8;
+      node_0->style.margin[CSS_RIGHT] = 11;
+      node_0->style.padding[CSS_LEFT] = 17;
+      node_0->style.padding[CSS_TOP] = 17;
+      node_0->style.padding[CSS_RIGHT] = 17;
+      node_0->style.padding[CSS_BOTTOM] = 17;
+      node_0->style.padding[CSS_TOP] = 4;
+      node_0->style.border[CSS_LEFT] = 1;
+      node_0->style.border[CSS_TOP] = 1;
+      node_0->style.border[CSS_RIGHT] = 1;
+      node_0->style.border[CSS_BOTTOM] = 1;
+      node_0->style.position[CSS_TOP] = 4;
+      node_0->measure = measure;
+      node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_TOP] = 19;
+      node_0->layout.position[CSS_LEFT] = -8;
+      node_0->layout.dimensions[CSS_WIDTH] = 516;
+      node_0->layout.dimensions[CSS_HEIGHT] = 712;
     }
 
     test("Random #67", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
       node_0->style.align_items = CSS_ALIGN_CENTER;
       node_0->style.margin[CSS_TOP] = 7;
       node_0->style.padding[CSS_LEFT] = 8;
@@ -5265,11 +5417,10 @@ int main()
       init_css_node_children(node_0, 4);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.justify_content = CSS_JUSTIFY_FLEX_END;
         node_1->style.align_items = CSS_ALIGN_CENTER;
-        node_1->style.align_self = CSS_ALIGN_CENTER;
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1->style.align_self = CSS_ALIGN_STRETCH;
         node_1->style.dimensions[CSS_HEIGHT] = 952;
         node_1->style.margin[CSS_LEFT] = 17;
         node_1->style.margin[CSS_TOP] = 17;
@@ -5284,8 +5435,8 @@ int main()
         node_1->style.padding[CSS_BOTTOM] = 11;
         node_1->style.border[CSS_BOTTOM] = 2;
         node_1->style.position[CSS_TOP] = 4;
-        node_1 = &node_0->children[1];
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node_1->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node_1->style.dimensions[CSS_WIDTH] = 229;
         node_1->style.margin[CSS_LEFT] = 1;
@@ -5301,11 +5452,10 @@ int main()
         node_1->style.position[CSS_TOP] = -3;
         node_1->measure = measure;
         node_1->context = "loooooooooong with space";
-        node_1 = &node_0->children[2];
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node_1->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
         node_1->style.align_self = CSS_ALIGN_FLEX_END;
-        node_1->style.flex = CSS_FLEX_ONE;
         node_1->style.dimensions[CSS_WIDTH] = 971;
         node_1->style.margin[CSS_LEFT] = 15;
         node_1->style.margin[CSS_TOP] = 1;
@@ -5315,8 +5465,9 @@ int main()
         node_1->style.padding[CSS_BOTTOM] = 0;
         node_1->measure = measure;
         node_1->context = "small";
-        node_1 = &node_0->children[3];
-        node_1->style.flex = CSS_FLEX_NONE;
+        node_1 = node_0->get_child(node_0->context, 3);
+        node_1->style.justify_content = CSS_JUSTIFY_FLEX_END;
+        node_1->style.align_self = CSS_ALIGN_CENTER;
         node_1->style.margin[CSS_LEFT] = 0;
         node_1->style.margin[CSS_TOP] = 0;
         node_1->style.margin[CSS_RIGHT] = 0;
@@ -5336,7 +5487,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 8;
@@ -5346,22 +5497,22 @@ int main()
       init_css_node_children(node_0, 4);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 13;
-        node_1->layout.position[CSS_LEFT] = 498.5;
-        node_1->layout.dimensions[CSS_WIDTH] = 22;
+        node_1->layout.position[CSS_LEFT] = 25;
+        node_1->layout.dimensions[CSS_WIDTH] = 969;
         node_1->layout.dimensions[CSS_HEIGHT] = 952;
-        node_1 = &node_0->children[1];
+        node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 987;
         node_1->layout.position[CSS_LEFT] = 388;
         node_1->layout.dimensions[CSS_WIDTH] = 229;
         node_1->layout.dimensions[CSS_HEIGHT] = 21;
-        node_1 = &node_0->children[2];
+        node_1 = node_0->get_child(node_0->context, 2);
         node_1->layout.position[CSS_TOP] = 1013;
         node_1->layout.position[CSS_LEFT] = 23;
         node_1->layout.dimensions[CSS_WIDTH] = 971;
         node_1->layout.dimensions[CSS_HEIGHT] = 18;
-        node_1 = &node_0->children[3];
+        node_1 = node_0->get_child(node_0->context, 3);
         node_1->layout.position[CSS_TOP] = 1026;
         node_1->layout.position[CSS_LEFT] = 480;
         node_1->layout.dimensions[CSS_WIDTH] = 35;
@@ -5373,11 +5524,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
       node_0->style.dimensions[CSS_WIDTH] = 486;
       node_0->style.margin[CSS_LEFT] = 19;
       node_0->style.margin[CSS_TOP] = 19;
@@ -5391,11 +5541,11 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node_1->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-        node_1->style.align_items = CSS_ALIGN_FLEX_START;
-        node_1->style.align_self = CSS_ALIGN_STRETCH;
+        node_1->style.justify_content = CSS_JUSTIFY_FLEX_START;
+        node_1->style.align_items = CSS_ALIGN_STRETCH;
+        node_1->style.flex = 1;
         node_1->style.dimensions[CSS_WIDTH] = 482;
         node_1->style.dimensions[CSS_HEIGHT] = 818;
         node_1->style.margin[CSS_RIGHT] = 14;
@@ -5408,7 +5558,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 13;
@@ -5418,7 +5568,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 3;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 482;
@@ -5430,43 +5580,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
-      node_0->style.dimensions[CSS_WIDTH] = 36;
-      node_0->style.margin[CSS_LEFT] = 18;
-      node_0->style.margin[CSS_TOP] = 18;
-      node_0->style.margin[CSS_RIGHT] = 18;
-      node_0->style.margin[CSS_BOTTOM] = 18;
-      node_0->style.margin[CSS_TOP] = 8;
-      node_0->style.margin[CSS_RIGHT] = -9;
-      node_0->style.padding[CSS_LEFT] = 12;
-      node_0->style.padding[CSS_RIGHT] = 14;
-      node_0->style.padding[CSS_BOTTOM] = 10;
-      node_0->style.position[CSS_LEFT] = -1;
-      node_0->measure = measure;
-      node_0->context = "loooooooooong with space";
-    }
-
-    css_node_t *root_layout = new_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 8;
-      node_0->layout.position[CSS_LEFT] = 17;
-      node_0->layout.dimensions[CSS_WIDTH] = 36;
-      node_0->layout.dimensions[CSS_HEIGHT] = 46;
-    }
-
-    test("Random #70", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5475,14 +5593,233 @@ int main()
       node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
+    test("Random #70", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.margin[CSS_LEFT] = -7;
+      node_0->style.margin[CSS_TOP] = -7;
+      node_0->style.margin[CSS_RIGHT] = -7;
+      node_0->style.margin[CSS_BOTTOM] = -7;
+      node_0->style.margin[CSS_TOP] = -6;
+      node_0->style.margin[CSS_RIGHT] = 3;
+      node_0->style.margin[CSS_BOTTOM] = 1;
+      node_0->style.padding[CSS_LEFT] = 19;
+      node_0->style.padding[CSS_TOP] = 19;
+      node_0->style.padding[CSS_RIGHT] = 19;
+      node_0->style.padding[CSS_BOTTOM] = 19;
+      node_0->style.padding[CSS_LEFT] = 3;
+      node_0->style.border[CSS_LEFT] = 1;
+      node_0->style.border[CSS_TOP] = 1;
+      node_0->style.border[CSS_RIGHT] = 1;
+      node_0->style.border[CSS_BOTTOM] = 1;
+      node_0->style.border[CSS_LEFT] = 0;
+      node_0->style.border[CSS_TOP] = 3;
+      node_0->style.border[CSS_RIGHT] = 1;
+      node_0->style.position[CSS_LEFT] = -3;
+      node_0->style.position[CSS_TOP] = 8;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+        node_1->style.justify_content = CSS_JUSTIFY_FLEX_START;
+        node_1->style.align_items = CSS_ALIGN_CENTER;
+        node_1->style.align_self = CSS_ALIGN_FLEX_END;
+        node_1->style.position_type = CSS_POSITION_RELATIVE;
+        node_1->style.dimensions[CSS_WIDTH] = 422;
+        node_1->style.dimensions[CSS_HEIGHT] = 971;
+        node_1->style.margin[CSS_BOTTOM] = 10;
+        node_1->style.padding[CSS_BOTTOM] = 3;
+        node_1->style.border[CSS_RIGHT] = 1;
+        node_1->style.position[CSS_LEFT] = -3;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+          node_2->style.justify_content = CSS_JUSTIFY_FLEX_END;
+          node_2->style.align_items = CSS_ALIGN_CENTER;
+          node_2->style.position_type = CSS_POSITION_ABSOLUTE;
+          node_2->style.margin[CSS_LEFT] = 6;
+          node_2->style.padding[CSS_LEFT] = 0;
+          node_2->style.padding[CSS_TOP] = 0;
+          node_2->style.padding[CSS_RIGHT] = 0;
+          node_2->style.padding[CSS_BOTTOM] = 0;
+          node_2->style.padding[CSS_RIGHT] = 2;
+          node_2->style.border[CSS_TOP] = 1;
+          init_css_node_children(node_2, 3);
+          {
+            css_node_t *node_3;
+            node_3 = node_2->get_child(node_2->context, 0);
+            node_3->style.margin[CSS_LEFT] = 6;
+            node_3->style.margin[CSS_TOP] = 6;
+            node_3->style.margin[CSS_RIGHT] = 6;
+            node_3->style.margin[CSS_BOTTOM] = 6;
+            node_3->style.margin[CSS_BOTTOM] = 2;
+            node_3->style.padding[CSS_TOP] = 8;
+            node_3->style.padding[CSS_RIGHT] = 6;
+            node_3->style.padding[CSS_BOTTOM] = 6;
+            node_3->style.position[CSS_LEFT] = -5;
+            node_3->measure = measure;
+            node_3->context = "loooooooooong with space";
+            node_3 = node_2->get_child(node_2->context, 1);
+            node_3->style.margin[CSS_LEFT] = 4;
+            node_3->style.margin[CSS_TOP] = 8;
+            node_3->style.margin[CSS_RIGHT] = 15;
+            node_3->style.padding[CSS_LEFT] = 18;
+            node_3->style.padding[CSS_TOP] = 18;
+            node_3->style.padding[CSS_RIGHT] = 18;
+            node_3->style.padding[CSS_BOTTOM] = 18;
+            init_css_node_children(node_3, 2);
+            {
+              css_node_t *node_4;
+              node_4 = node_3->get_child(node_3->context, 0);
+              node_4->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+              node_4->style.justify_content = CSS_JUSTIFY_FLEX_START;
+              node_4->style.align_self = CSS_ALIGN_CENTER;
+              node_4->style.dimensions[CSS_HEIGHT] = 96;
+              node_4->style.margin[CSS_RIGHT] = 7;
+              node_4->style.margin[CSS_BOTTOM] = -4;
+              node_4->style.padding[CSS_TOP] = 0;
+              node_4->style.padding[CSS_RIGHT] = 16;
+              node_4->style.position[CSS_TOP] = 8;
+              node_4->measure = measure;
+              node_4->context = "small";
+              node_4 = node_3->get_child(node_3->context, 1);
+              node_4->style.justify_content = CSS_JUSTIFY_FLEX_START;
+              node_4->style.align_items = CSS_ALIGN_CENTER;
+              node_4->style.position_type = CSS_POSITION_ABSOLUTE;
+              node_4->style.dimensions[CSS_WIDTH] = 493;
+              node_4->style.margin[CSS_LEFT] = 12;
+              node_4->style.margin[CSS_TOP] = 12;
+              node_4->style.margin[CSS_RIGHT] = 12;
+              node_4->style.margin[CSS_BOTTOM] = 12;
+              node_4->style.margin[CSS_LEFT] = -5;
+              node_4->style.margin[CSS_TOP] = 13;
+              node_4->style.margin[CSS_RIGHT] = -10;
+              node_4->style.margin[CSS_BOTTOM] = 1;
+              node_4->style.border[CSS_LEFT] = 0;
+              node_4->style.border[CSS_TOP] = 0;
+              node_4->style.border[CSS_RIGHT] = 0;
+              node_4->style.border[CSS_BOTTOM] = 0;
+              node_4->style.position[CSS_LEFT] = 9;
+              init_css_node_children(node_4, 1);
+              {
+                css_node_t *node_5;
+                node_5 = node_4->get_child(node_4->context, 0);
+                node_5->style.align_self = CSS_ALIGN_FLEX_START;
+                node_5->style.dimensions[CSS_WIDTH] = 450;
+                node_5->style.dimensions[CSS_HEIGHT] = 863;
+                node_5->style.margin[CSS_LEFT] = 5;
+                node_5->style.margin[CSS_TOP] = 5;
+                node_5->style.margin[CSS_RIGHT] = 5;
+                node_5->style.margin[CSS_BOTTOM] = 5;
+                node_5->style.margin[CSS_RIGHT] = -2;
+                node_5->style.padding[CSS_RIGHT] = 10;
+                node_5->style.border[CSS_RIGHT] = 2;
+                node_5->measure = measure;
+                node_5->context = "small";
+              }
+            }
+            node_3 = node_2->get_child(node_2->context, 2);
+            node_3->style.justify_content = CSS_JUSTIFY_FLEX_START;
+            node_3->style.align_self = CSS_ALIGN_FLEX_END;
+            node_3->style.margin[CSS_LEFT] = 13;
+            node_3->style.margin[CSS_BOTTOM] = -2;
+            node_3->style.padding[CSS_LEFT] = 16;
+            node_3->style.padding[CSS_RIGHT] = 9;
+            node_3->style.border[CSS_BOTTOM] = 0;
+            node_3->style.position[CSS_LEFT] = 4;
+            node_3->style.position[CSS_TOP] = 6;
+            node_3->measure = measure;
+            node_3->context = "loooooooooong with space";
+          }
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 2;
+      node_0->layout.position[CSS_LEFT] = -10;
+      node_0->layout.dimensions[CSS_WIDTH] = 445;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1023;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 22;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 422;
+        node_1->layout.dimensions[CSS_HEIGHT] = 971;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 6;
+          node_2->layout.dimensions[CSS_WIDTH] = 211;
+          node_2->layout.dimensions[CSS_HEIGHT] = 193;
+          init_css_node_children(node_2, 3);
+          {
+            css_node_t *node_3;
+            node_3 = node_2->get_child(node_2->context, 0);
+            node_3->layout.position[CSS_TOP] = 7;
+            node_3->layout.position[CSS_LEFT] = 11;
+            node_3->layout.dimensions[CSS_WIDTH] = 177;
+            node_3->layout.dimensions[CSS_HEIGHT] = 32;
+            node_3 = node_2->get_child(node_2->context, 1);
+            node_3->layout.position[CSS_TOP] = 49;
+            node_3->layout.position[CSS_LEFT] = 53;
+            node_3->layout.dimensions[CSS_WIDTH] = 92;
+            node_3->layout.dimensions[CSS_HEIGHT] = 128;
+            init_css_node_children(node_3, 2);
+            {
+              css_node_t *node_4;
+              node_4 = node_3->get_child(node_3->context, 0);
+              node_4->layout.position[CSS_TOP] = 26;
+              node_4->layout.position[CSS_LEFT] = 18;
+              node_4->layout.dimensions[CSS_WIDTH] = 49;
+              node_4->layout.dimensions[CSS_HEIGHT] = 96;
+              node_4 = node_3->get_child(node_3->context, 1);
+              node_4->layout.position[CSS_TOP] = 123;
+              node_4->layout.position[CSS_LEFT] = 4;
+              node_4->layout.dimensions[CSS_WIDTH] = 493;
+              node_4->layout.dimensions[CSS_HEIGHT] = 873;
+              init_css_node_children(node_4, 1);
+              {
+                css_node_t *node_5;
+                node_5 = node_4->get_child(node_4->context, 0);
+                node_5->layout.position[CSS_TOP] = 5;
+                node_5->layout.position[CSS_LEFT] = 5;
+                node_5->layout.dimensions[CSS_WIDTH] = 450;
+                node_5->layout.dimensions[CSS_HEIGHT] = 863;
+              }
+            }
+            node_3 = node_2->get_child(node_2->context, 2);
+            node_3->layout.position[CSS_TOP] = 183;
+            node_3->layout.position[CSS_LEFT] = 17;
+            node_3->layout.dimensions[CSS_WIDTH] = 196;
+            node_3->layout.dimensions[CSS_HEIGHT] = 18;
+          }
+        }
+      }
+    }
+
     test("Random #71", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node_0->style.margin[CSS_LEFT] = 12;
       node_0->style.margin[CSS_TOP] = 12;
       node_0->style.margin[CSS_RIGHT] = 12;
@@ -5498,9 +5835,9 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.align_self = CSS_ALIGN_FLEX_START;
-        node_1->style.flex = CSS_FLEX_NONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.align_items = CSS_ALIGN_FLEX_START;
+        node_1->style.align_self = CSS_ALIGN_CENTER;
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.margin[CSS_LEFT] = -6;
         node_1->style.margin[CSS_TOP] = -6;
@@ -5524,10 +5861,10 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
-          node_2->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-          node_2->style.align_items = CSS_ALIGN_CENTER;
-          node_2->style.align_self = CSS_ALIGN_FLEX_END;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+          node_2->style.justify_content = CSS_JUSTIFY_CENTER;
+          node_2->style.align_items = CSS_ALIGN_FLEX_END;
           node_2->style.margin[CSS_RIGHT] = 6;
           node_2->style.margin[CSS_BOTTOM] = 16;
           node_2->style.padding[CSS_TOP] = 6;
@@ -5537,7 +5874,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 19;
@@ -5547,7 +5884,7 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = -15;
         node_1->layout.position[CSS_LEFT] = -12;
         node_1->layout.dimensions[CSS_WIDTH] = 42;
@@ -5555,7 +5892,7 @@ int main()
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
-          node_2 = &node_1->children[0];
+          node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 16;
           node_2->layout.position[CSS_LEFT] = 18;
           node_2->layout.dimensions[CSS_WIDTH] = 2;
@@ -5568,10 +5905,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node_0->style.margin[CSS_LEFT] = 17;
       node_0->style.margin[CSS_TOP] = 17;
       node_0->style.margin[CSS_RIGHT] = 17;
@@ -5588,7 +5925,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 20;
@@ -5601,38 +5938,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.dimensions[CSS_WIDTH] = 23;
-      node_0->style.dimensions[CSS_HEIGHT] = 892;
-      node_0->style.margin[CSS_LEFT] = 13;
-      node_0->style.margin[CSS_BOTTOM] = -8;
-      node_0->style.padding[CSS_TOP] = 11;
-      node_0->style.padding[CSS_RIGHT] = 5;
-      node_0->style.border[CSS_RIGHT] = 1;
-      node_0->measure = measure;
-      node_0->context = "loooooooooong with space";
-    }
-
-    css_node_t *root_layout = new_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 13;
-      node_0->layout.dimensions[CSS_WIDTH] = 23;
-      node_0->layout.dimensions[CSS_HEIGHT] = 892;
-    }
-
-    test("Random #74", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5641,15 +5951,78 @@ int main()
       node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
+    test("Random #74", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.align_items = CSS_ALIGN_FLEX_END;
+      node_0->style.dimensions[CSS_WIDTH] = 332;
+      node_0->style.margin[CSS_LEFT] = 18;
+      node_0->style.margin[CSS_TOP] = 18;
+      node_0->style.margin[CSS_RIGHT] = 18;
+      node_0->style.margin[CSS_BOTTOM] = 18;
+      node_0->style.margin[CSS_RIGHT] = -5;
+      node_0->style.padding[CSS_LEFT] = 12;
+      node_0->style.padding[CSS_TOP] = 12;
+      node_0->style.padding[CSS_RIGHT] = 12;
+      node_0->style.padding[CSS_BOTTOM] = 12;
+      node_0->style.padding[CSS_BOTTOM] = 2;
+      node_0->style.border[CSS_LEFT] = 1;
+      node_0->style.border[CSS_TOP] = 1;
+      node_0->style.border[CSS_RIGHT] = 1;
+      node_0->style.border[CSS_BOTTOM] = 1;
+      node_0->style.border[CSS_LEFT] = 1;
+      node_0->style.position[CSS_LEFT] = -9;
+      node_0->style.position[CSS_TOP] = -5;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.dimensions[CSS_WIDTH] = 818;
+        node_1->style.dimensions[CSS_HEIGHT] = 543;
+        node_1->style.margin[CSS_LEFT] = -2;
+        node_1->style.margin[CSS_TOP] = -2;
+        node_1->style.margin[CSS_RIGHT] = -2;
+        node_1->style.margin[CSS_BOTTOM] = -2;
+        node_1->style.margin[CSS_LEFT] = 8;
+        node_1->style.margin[CSS_TOP] = 14;
+        node_1->style.padding[CSS_TOP] = 10;
+        node_1->measure = measure;
+        node_1->context = "small";
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 13;
+      node_0->layout.position[CSS_LEFT] = 9;
+      node_0->layout.dimensions[CSS_WIDTH] = 332;
+      node_0->layout.dimensions[CSS_HEIGHT] = 571;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 27;
+        node_1->layout.position[CSS_LEFT] = 21;
+        node_1->layout.dimensions[CSS_WIDTH] = 818;
+        node_1->layout.dimensions[CSS_HEIGHT] = 543;
+      }
+    }
+
     test("Random #75", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_HEIGHT] = 885;
       node_0->style.margin[CSS_LEFT] = 13;
       node_0->style.margin[CSS_BOTTOM] = -2;
@@ -5657,7 +6030,7 @@ int main()
       node_0->style.position[CSS_LEFT] = -4;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5670,11 +6043,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5687,38 +6060,27 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.dimensions[CSS_WIDTH] = 885;
-      node_0->style.margin[CSS_LEFT] = 14;
-      node_0->style.margin[CSS_TOP] = -3;
-      node_0->style.padding[CSS_TOP] = 13;
-      node_0->style.padding[CSS_RIGHT] = 10;
-      node_0->style.border[CSS_LEFT] = 0;
-      node_0->style.position[CSS_LEFT] = -4;
-      node_0->measure = measure;
-      node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = -3;
-      node_0->layout.position[CSS_LEFT] = 10;
-      node_0->layout.dimensions[CSS_WIDTH] = 885;
-      node_0->layout.dimensions[CSS_HEIGHT] = 31;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #78", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.align_items = CSS_ALIGN_FLEX_END;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node_0->style.dimensions[CSS_HEIGHT] = 332;
       node_0->style.margin[CSS_LEFT] = 7;
       node_0->style.margin[CSS_TOP] = 7;
@@ -5738,7 +6100,7 @@ int main()
       node_0->style.position[CSS_TOP] = -2;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 15;
@@ -5751,28 +6113,49 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node_0->style.dimensions[CSS_WIDTH] = 410;
+      node_0->style.dimensions[CSS_HEIGHT] = 614;
+      node_0->style.margin[CSS_LEFT] = -2;
+      node_0->style.margin[CSS_TOP] = -2;
+      node_0->style.margin[CSS_RIGHT] = -2;
+      node_0->style.margin[CSS_BOTTOM] = -2;
+      node_0->style.margin[CSS_TOP] = 16;
+      node_0->style.margin[CSS_RIGHT] = 3;
+      node_0->style.margin[CSS_BOTTOM] = -7;
+      node_0->style.padding[CSS_TOP] = 6;
+      node_0->style.border[CSS_LEFT] = 3;
+      node_0->style.border[CSS_TOP] = 3;
+      node_0->style.border[CSS_RIGHT] = 3;
+      node_0->style.border[CSS_BOTTOM] = 3;
+      node_0->style.border[CSS_BOTTOM] = 0;
+      node_0->style.position[CSS_TOP] = 1;
+      node_0->measure = measure;
+      node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_TOP] = 17;
+      node_0->layout.position[CSS_LEFT] = -2;
+      node_0->layout.dimensions[CSS_WIDTH] = 410;
+      node_0->layout.dimensions[CSS_HEIGHT] = 614;
     }
 
     test("Random #80", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5785,11 +6168,11 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5802,11 +6185,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node_0->style.dimensions[CSS_WIDTH] = 978;
       node_0->style.dimensions[CSS_HEIGHT] = 446;
       node_0->style.margin[CSS_LEFT] = 10;
@@ -5819,10 +6201,8 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-        node_1->style.align_self = CSS_ALIGN_CENTER;
-        node_1->style.flex = CSS_FLEX_ONE;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.align_self = CSS_ALIGN_FLEX_END;
         node_1->style.dimensions[CSS_WIDTH] = 256;
         node_1->style.dimensions[CSS_HEIGHT] = 883;
         node_1->style.margin[CSS_LEFT] = -8;
@@ -5836,7 +6216,7 @@ int main()
       }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = -4;
@@ -5846,10 +6226,10 @@ int main()
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->layout.position[CSS_TOP] = -221.5;
-        node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 986;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = -3;
+        node_1->layout.position[CSS_LEFT] = 730;
+        node_1->layout.dimensions[CSS_WIDTH] = 256;
         node_1->layout.dimensions[CSS_HEIGHT] = 883;
       }
     }
@@ -5858,28 +6238,41 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
+      node_0->style.margin[CSS_LEFT] = 18;
+      node_0->style.margin[CSS_TOP] = 18;
+      node_0->style.margin[CSS_RIGHT] = 18;
+      node_0->style.margin[CSS_BOTTOM] = 18;
+      node_0->style.margin[CSS_LEFT] = 18;
+      node_0->style.margin[CSS_TOP] = -8;
+      node_0->style.padding[CSS_BOTTOM] = 2;
+      node_0->style.position[CSS_TOP] = -5;
+      node_0->measure = measure;
+      node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_TOP] = -13;
+      node_0->layout.position[CSS_LEFT] = 18;
+      node_0->layout.dimensions[CSS_WIDTH] = 171;
+      node_0->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
     test("Random #84", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5892,11 +6285,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.align_items = CSS_ALIGN_FLEX_START;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
       node_0->style.margin[CSS_RIGHT] = -4;
       node_0->style.margin[CSS_BOTTOM] = 6;
       node_0->style.padding[CSS_LEFT] = 11;
@@ -5905,7 +6297,7 @@ int main()
       node_0->style.position[CSS_LEFT] = 7;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -5918,9 +6310,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 335;
       node_0->style.margin[CSS_LEFT] = 17;
       node_0->style.margin[CSS_TOP] = 17;
@@ -5935,7 +6328,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 24;
@@ -5948,10 +6341,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node_0->style.dimensions[CSS_WIDTH] = 903;
       node_0->style.margin[CSS_LEFT] = 7;
       node_0->style.margin[CSS_TOP] = 7;
@@ -5962,7 +6355,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 7;
@@ -5975,7 +6368,7 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 380;
@@ -5998,7 +6391,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 13;
@@ -6011,115 +6404,27 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.align_items = CSS_ALIGN_STRETCH;
-      node_0->style.margin[CSS_TOP] = -2;
-      node_0->style.margin[CSS_RIGHT] = -9;
-      node_0->style.margin[CSS_BOTTOM] = 3;
-      node_0->style.padding[CSS_RIGHT] = 12;
-      node_0->style.position[CSS_LEFT] = -10;
-      init_css_node_children(node_0, 2);
-      {
-        css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-        node_1->style.dimensions[CSS_WIDTH] = 641;
-        node_1->style.margin[CSS_LEFT] = 18;
-        node_1->style.margin[CSS_TOP] = 18;
-        node_1->style.margin[CSS_RIGHT] = 18;
-        node_1->style.margin[CSS_BOTTOM] = 18;
-        node_1->style.margin[CSS_LEFT] = 3;
-        node_1->style.margin[CSS_RIGHT] = 15;
-        node_1->style.margin[CSS_BOTTOM] = 19;
-        node_1->style.padding[CSS_LEFT] = 13;
-        node_1->style.padding[CSS_TOP] = 13;
-        node_1->style.padding[CSS_RIGHT] = 13;
-        node_1->style.padding[CSS_BOTTOM] = 13;
-        node_1->style.padding[CSS_RIGHT] = 0;
-        node_1->style.border[CSS_LEFT] = 3;
-        node_1->style.border[CSS_RIGHT] = 3;
-        node_1->style.position[CSS_LEFT] = 6;
-        node_1 = &node_0->children[1];
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
-        node_1->style.align_self = CSS_ALIGN_FLEX_END;
-        node_1->style.flex = CSS_FLEX_NONE;
-        node_1->style.margin[CSS_LEFT] = 16;
-        node_1->style.margin[CSS_TOP] = 16;
-        node_1->style.margin[CSS_RIGHT] = 16;
-        node_1->style.margin[CSS_BOTTOM] = 16;
-        node_1->style.margin[CSS_LEFT] = 12;
-        node_1->style.margin[CSS_TOP] = 9;
-        node_1->style.margin[CSS_RIGHT] = 1;
-        node_1->style.border[CSS_LEFT] = 1;
-        node_1->style.border[CSS_TOP] = 1;
-        node_1->style.border[CSS_RIGHT] = 1;
-        node_1->style.border[CSS_BOTTOM] = 1;
-        node_1->style.border[CSS_RIGHT] = 2;
-        init_css_node_children(node_1, 1);
-        {
-          css_node_t *node_2;
-          node_2 = &node_1->children[0];
-          node_2->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-          node_2->style.align_self = CSS_ALIGN_CENTER;
-          node_2->style.dimensions[CSS_WIDTH] = 180;
-          node_2->style.margin[CSS_LEFT] = 11;
-          node_2->style.margin[CSS_TOP] = 11;
-          node_2->style.margin[CSS_RIGHT] = 11;
-          node_2->style.margin[CSS_BOTTOM] = 11;
-          node_2->style.margin[CSS_LEFT] = 14;
-          node_2->style.margin[CSS_TOP] = -6;
-          node_2->style.margin[CSS_BOTTOM] = 14;
-          node_2->style.padding[CSS_BOTTOM] = 13;
-          node_2->style.position[CSS_LEFT] = -5;
-          node_2->style.position[CSS_TOP] = 6;
-          node_2->measure = measure;
-          node_2->context = "loooooooooong with space";
-        }
-      }
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = -2;
-      node_0->layout.position[CSS_LEFT] = -10;
-      node_0->layout.dimensions[CSS_WIDTH] = 671;
-      node_0->layout.dimensions[CSS_HEIGHT] = 129;
-      init_css_node_children(node_0, 2);
-      {
-        css_node_t *node_1;
-        node_1 = &node_0->children[0];
-        node_1->layout.position[CSS_TOP] = 18;
-        node_1->layout.position[CSS_LEFT] = 9;
-        node_1->layout.dimensions[CSS_WIDTH] = 641;
-        node_1->layout.dimensions[CSS_HEIGHT] = 26;
-        node_1 = &node_0->children[1];
-        node_1->layout.position[CSS_TOP] = 72;
-        node_1->layout.position[CSS_LEFT] = 450;
-        node_1->layout.dimensions[CSS_WIDTH] = 208;
-        node_1->layout.dimensions[CSS_HEIGHT] = 41;
-        init_css_node_children(node_1, 1);
-        {
-          css_node_t *node_2;
-          node_2 = &node_1->children[0];
-          node_2->layout.position[CSS_TOP] = 1;
-          node_2->layout.position[CSS_LEFT] = 10;
-          node_2->layout.dimensions[CSS_WIDTH] = 180;
-          node_2->layout.dimensions[CSS_HEIGHT] = 31;
-        }
-      }
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #90", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
       node_0->style.margin[CSS_BOTTOM] = 7;
       node_0->style.padding[CSS_LEFT] = 3;
       node_0->style.padding[CSS_TOP] = 3;
@@ -6130,7 +6435,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 4;
@@ -6143,56 +6448,38 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node_0->style.margin[CSS_LEFT] = -8;
+      node_0->style.margin[CSS_RIGHT] = -2;
+      node_0->style.margin[CSS_BOTTOM] = 4;
+      node_0->style.padding[CSS_RIGHT] = 0;
+      node_0->style.border[CSS_TOP] = 2;
+      node_0->measure = measure;
+      node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      node_0->layout.position[CSS_LEFT] = -8;
+      node_0->layout.dimensions[CSS_WIDTH] = 33;
+      node_0->layout.dimensions[CSS_HEIGHT] = 20;
     }
 
     test("Random #92", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
-      node_0->style.dimensions[CSS_WIDTH] = 310;
-      node_0->style.margin[CSS_TOP] = 4;
-      node_0->style.padding[CSS_RIGHT] = 6;
-      node_0->style.border[CSS_LEFT] = 1;
-      node_0->style.border[CSS_TOP] = 0;
-      node_0->style.border[CSS_RIGHT] = 0;
-      node_0->measure = measure;
-      node_0->context = "small";
-    }
-
-    css_node_t *root_layout = new_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 4;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 310;
-      node_0->layout.dimensions[CSS_HEIGHT] = 18;
-    }
-
-    test("Random #93", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
@@ -6201,13 +6488,51 @@ int main()
       node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
+    test("Random #93", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
+      node_0->style.dimensions[CSS_WIDTH] = 922;
+      node_0->style.margin[CSS_LEFT] = 6;
+      node_0->style.margin[CSS_TOP] = 6;
+      node_0->style.margin[CSS_RIGHT] = 6;
+      node_0->style.margin[CSS_BOTTOM] = 6;
+      node_0->style.margin[CSS_LEFT] = 18;
+      node_0->style.margin[CSS_TOP] = -10;
+      node_0->style.margin[CSS_BOTTOM] = 15;
+      node_0->style.padding[CSS_TOP] = 3;
+      node_0->style.border[CSS_LEFT] = 0;
+      node_0->style.border[CSS_TOP] = 0;
+      node_0->style.border[CSS_RIGHT] = 0;
+      node_0->style.border[CSS_BOTTOM] = 0;
+      node_0->style.border[CSS_LEFT] = 2;
+      node_0->style.border[CSS_TOP] = 1;
+      node_0->style.border[CSS_BOTTOM] = 0;
+      node_0->measure = measure;
+      node_0->context = "small";
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = -10;
+      node_0->layout.position[CSS_LEFT] = 18;
+      node_0->layout.dimensions[CSS_WIDTH] = 922;
+      node_0->layout.dimensions[CSS_HEIGHT] = 22;
+    }
+
     test("Random #94", root_node, root_layout);
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
       node_0->style.dimensions[CSS_WIDTH] = 779;
       node_0->style.margin[CSS_LEFT] = 3;
       node_0->style.margin[CSS_BOTTOM] = 19;
@@ -6222,7 +6547,7 @@ int main()
       node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 9;
@@ -6235,10 +6560,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
       node_0->style.dimensions[CSS_HEIGHT] = 863;
       node_0->style.margin[CSS_TOP] = 6;
       node_0->style.margin[CSS_RIGHT] = -7;
@@ -6250,7 +6575,7 @@ int main()
       node_0->context = "small";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 3;
@@ -6263,26 +6588,16 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
-      node_0->style.align_items = CSS_ALIGN_FLEX_START;
-      node_0->style.margin[CSS_TOP] = -4;
-      node_0->style.margin[CSS_BOTTOM] = -5;
-      node_0->style.padding[CSS_RIGHT] = 5;
-      node_0->style.border[CSS_RIGHT] = 3;
-      node_0->style.position[CSS_LEFT] = 1;
-      node_0->style.position[CSS_TOP] = -4;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = -8;
-      node_0->layout.position[CSS_LEFT] = 1;
-      node_0->layout.dimensions[CSS_WIDTH] = 8;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
       node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
@@ -6290,10 +6605,10 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 770;
       node_0->style.dimensions[CSS_HEIGHT] = 873;
       node_0->style.margin[CSS_BOTTOM] = 15;
@@ -6305,7 +6620,7 @@ int main()
       node_0->style.position[CSS_TOP] = 1;
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 1;
@@ -6318,32 +6633,17 @@ int main()
   }
 
   {
-    css_node_t *root_node = new_css_node();
+    css_node_t *root_node = new_test_css_node();
     {
-      css_node_t *node_0 = root_node;
-      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
-      node_0->style.dimensions[CSS_WIDTH] = 799;
-      node_0->style.margin[CSS_BOTTOM] = 3;
-      node_0->style.padding[CSS_LEFT] = 0;
-      node_0->style.padding[CSS_BOTTOM] = 3;
-      node_0->style.border[CSS_LEFT] = 3;
-      node_0->style.border[CSS_TOP] = 3;
-      node_0->style.border[CSS_RIGHT] = 3;
-      node_0->style.border[CSS_BOTTOM] = 3;
-      node_0->style.border[CSS_LEFT] = 1;
-      node_0->style.border[CSS_BOTTOM] = 1;
-      node_0->measure = measure;
-      node_0->context = "loooooooooong with space";
     }
 
-    css_node_t *root_layout = new_css_node();
+    css_node_t *root_layout = new_test_css_node();
     {
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 799;
-      node_0->layout.dimensions[CSS_HEIGHT] = 25;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
     }
 
     test("Random #99", root_node, root_layout);

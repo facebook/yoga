@@ -22,7 +22,7 @@ document.getElementById('layout_code').value = computeLayout.toString()
   .replace(/layout\[pos/g, 'layout.position[pos')
   .replace(/layout\[leading/g, 'layout.position[leading')
   .replace(/style\[dim/g, 'style.dimensions[dim')
-  .replace(/node.children\[i\]/g, '&node.children[i]')
+  .replace(/node.children\[i\]/g, 'node->get_child(node->context, i)')
   .replace(/node\./g, 'node->')
   .replace(/child\./g, 'child->')
   .replace(/parent\./g, 'parent->')
@@ -89,7 +89,7 @@ function printLayout(test) {
   level++;
 
   // Output the style node
-  add('css_node_t *root_node = new_css_node();');
+  add('css_node_t *root_node = new_test_css_node();');
   add('{');
   level++;
   if (!isEmpty(test.node.style) || test.node.children && test.node.children.length) {
@@ -159,14 +159,11 @@ function printLayout(test) {
       'flex-end': 'CSS_ALIGN_FLEX_END',
       'stretch': 'CSS_ALIGN_STRETCH'
     });
-    addEnum(node, 'flex', 'flex', {
-      'none': 'CSS_FLEX_NONE',
-      '1': 'CSS_FLEX_ONE'
-    });
     addEnum(node, 'position', 'position_type', {
       'relative': 'CSS_POSITION_RELATIVE',
       'absolute': 'CSS_POSITION_ABSOLUTE'
     });
+    addFloat('positive', node, 'flex', 'flex');
     addFloat('positive', node, 'width', 'dimensions[CSS_WIDTH]');
     addFloat('positive', node, 'height', 'dimensions[CSS_HEIGHT]');
     addSpacing('all', node, 'margin', '');
@@ -185,7 +182,7 @@ function printLayout(test) {
       add('css_node_t *node_' + (level - 3) + ';');
 
       for (var i = 0; i < node.children.length; ++i) {
-        add('node_' + (level - 3) + ' = &node_' + (level - 4) + '->children[' + i + '];');
+        add('node_' + (level - 3) + ' = node_' + (level - 4) + '->get_child(node_' + (level - 4) + '->context, ' + i + ');');
         rec_style(node.children[i]);
       }
 
@@ -199,7 +196,7 @@ function printLayout(test) {
   add('');
 
   // Output the expected layout node
-  add('css_node_t *root_layout = new_css_node();');
+  add('css_node_t *root_layout = new_test_css_node();');
   add('{');
   level++;
   add('css_node_t *node_0 = root_layout;');
@@ -221,7 +218,7 @@ function printLayout(test) {
       add('css_node_t *node_' + (level - 3) + ';');
 
       for (var i = 0; i < node.children.length; ++i) {
-        add('node_' + (level - 3) + ' = &node_' + (level - 4) + '->children[' + i + '];');
+        add('node_' + (level - 3) + ' = node_' + (level - 4) + '->get_child(node_' + (level - 4) + '->context, ' + i + ');');
         rec_layout(node.children[i]);
       }
 

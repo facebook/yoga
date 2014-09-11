@@ -2,6 +2,7 @@
 #define __LAYOUT_H
 
 #include <math.h>
+#include <stdbool.h>
 #define CSS_UNDEFINED NAN
 
 typedef enum {
@@ -28,11 +29,6 @@ typedef enum {
 } css_align_t;
 
 typedef enum {
-  CSS_FLEX_NONE = 0,
-  CSS_FLEX_ONE
-} css_flex_t;
-
-typedef enum {
   CSS_POSITION_RELATIVE = 0,
   CSS_POSITION_ABSOLUTE
 } css_position_type_t;
@@ -54,6 +50,14 @@ typedef enum {
 typedef struct {
   float position[2];
   float dimensions[2];
+
+  // Instead of recomputing the entire layout every single time, we
+  // cache some information to break early when nothing changed
+  bool should_update;
+  float last_requested_dimensions[2];
+  float last_parent_max_width;
+  float last_dimensions[2];
+  float last_position[2];
 } css_layout_t;
 
 typedef struct {
@@ -65,8 +69,8 @@ typedef struct {
   css_justify_t justify_content;
   css_align_t align_items;
   css_align_t align_self;
-  css_flex_t flex;
   css_position_type_t position_type;
+  float flex;
   float margin[4];
   float position[4];
   /**
@@ -87,24 +91,26 @@ typedef struct {
 typedef struct css_node {
   css_style_t style;
   css_layout_t layout;
-  struct css_node *children;
   int children_count;
 
   css_dim_t (*measure)(void *context, float width);
   void (*print)(void *context);
+  struct css_node* (*get_child)(void *context, int i);
+  bool (*is_dirty)(void *context);
   void *context;
 } css_node_t;
 
 
 // Lifecycle of nodes and children
 css_node_t *new_css_node(void);
-void init_css_node_children(css_node_t *node, int children_count);
+void init_css_node(css_node_t *node);
 void free_css_node(css_node_t *node);
 
 // Print utilities
 typedef enum {
   CSS_PRINT_LAYOUT = 1,
-  CSS_PRINT_STYLE = 2
+  CSS_PRINT_STYLE = 2,
+  CSS_PRINT_CHILDREN = 4,
 } css_print_options_t;
 void print_css_node(css_node_t *node, css_print_options_t options);
 

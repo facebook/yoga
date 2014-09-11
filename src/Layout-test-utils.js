@@ -114,22 +114,13 @@ var layoutTestUtils = (function() {
 
     var div = renderNode(body, node);
 
-    function isInt(n) {
-      return n === ~~n;
-    }
-
     function buildLayout(absoluteRect, div) {
       var rect = div.getBoundingClientRect();
-      // There's a bug with getBoundingClientRect() with position absolute
-      // and overlapping left and right.
-      // https://code.google.com/p/chromium/issues/detail?id=383936
-      // In order to workaround, we can check if offsetWidth is negative and
-      // return 0 in this case.
       var result = {
-        width: div.offsetWidth < 0 ? 0 : rect.width,
-        height: div.offsetHeight < 0 ? 0 : rect.height,
-        top: div.offsetHeight < 0 ? div.offsetTop : rect.top - absoluteRect.top,
-        left: div.offsetWidth < 0 ? div.offsetLeft : rect.left - absoluteRect.left
+        width: rect.width,
+        height: rect.height,
+        top: rect.top - absoluteRect.top,
+        left: rect.left - absoluteRect.left
       };
 
       var children = [];
