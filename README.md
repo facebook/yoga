@@ -19,7 +19,7 @@ borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidt
 flexDirection | 'column', 'row'
 justifyContent | 'flex-start', 'center', 'flex-end', 'space-between', 'space-around'
 alignItems, alignSelf | 'flex-start', 'center', 'flex-end', 'stretch'
-flex | 'none', 1
+flex | positive number
 position | 'relative', 'absolute'
 
 - `inherit` value is not implemented because it's a way to disambiguate between multiple colliding rules. This should be done in a pre-processing step, not in the actual layout algorithm.
@@ -49,10 +49,10 @@ computeLayout(
 
 Default values
 --------------
-Since we are only using flexbox, we can use defaults that are much more sensible. This is the configuration to use in order to get the same behavior using the DOM and CSS.
+Since we are only using flexbox, we can use defaults that are much more sensible. This is the configuration to use in order to get the same behavior using the DOM and CSS. You can try those default settings with the [following JSFiddle](http://jsfiddle.net/vjeux/y11txxv9/).
 
 ```css
-div {
+div, span {
   box-sizing: border-box;
   position: relative;
   border: 0 solid black;
@@ -61,6 +61,7 @@ div {
   
   display: flex;
   flex-direction: column;
+  align-self: stretch;
   align-items: flex-start;
   justify-content: flex-start;
   flex-shrink: 0;
