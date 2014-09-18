@@ -7,13 +7,28 @@ textarea {
   border: 1px solid black;
   font-size: 12px;
   font-family: monospace;
+  margin-bottom: 20px;
 }
 </style>
 
-<h1>layoutCode</h1>
-<textarea id="layout_code" onclick="this.select()"></textarea>
+<h1>Layout Code</h1>
+<h2>C</h2>
+<textarea id="c_layout_code" onclick="this.select()"></textarea>
+<h2>Java</h2>
+<textarea id="java_layout_code" onclick="this.select()"></textarea>
+
+<h1>Tests</h1>
+<h2>C</h2>
+<textarea id="c_test_code" onclick="this.select()"></textarea>
+<h2>Java</h2>
+<textarea id="java_test_code" onclick="this.select()"></textarea>
+
+<script src="transpile-java.js"></script>
 <script>
-document.getElementById('layout_code').value = computeLayout.toString()
+console.log("scr");
+document.getElementById('java_layout_code').value = transpileLayoutEngineToJava(computeLayout.toString())
+  .split('\n').slice(1).join('\n');
+document.getElementById('c_layout_code').value = computeLayout.toString()
   .replace('node.style.measure', 'node.measure')
   .replace(/\.children\.length/g, '.children_count')
   .replace(/\.width/g, '.dimensions[CSS_WIDTH]')
@@ -30,11 +45,9 @@ document.getElementById('layout_code').value = computeLayout.toString()
   .replace(/ === /g, ' == ')
   .replace(/\n  /g, '\n')
   .replace(/\/[*]!([^*]+)[*]\//g, '$1')
+  .replace(/\/[*]\(c\)!([^*]+)[*]\//g, '$1')
   .split('\n').slice(1).join('\n');
 </script>
-
-<h1>Tests</h1>
-<textarea id="test_code" onclick="this.select()"></textarea>
 <script src="Layout-test-utils.js"></script>
 <script>
 var currentTest = '';
@@ -238,5 +251,8 @@ function printLayout(test) {
 
   return res.join('\n');
 }
-document.getElementById('test_code').value = allTests.map(printLayout).join('\n\n');
+
+var allTestsInC = allTests.map(printLayout);
+document.getElementById('c_test_code').value = allTestsInC.join('\n\n');
+document.getElementById('java_test_code').value = transpileCTestsArrayToJava(allTestsInC);
 </script>
