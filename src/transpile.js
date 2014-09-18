@@ -1,6 +1,7 @@
 var layoutTestUtils = require('./Layout-test-utils.js');
 var computeLayout = require('./Layout.js');
 var fs = require('fs');
+var JavaTranspiler = require('./JavaTranspiler.js');
 
 var currentTest = '';
 var allTests = [];
@@ -223,6 +224,7 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/var\/\*([^\/]+)\*\//g, '$1')
     .replace(/ === /g, ' == ')
     .replace(/\n  /g, '\n')
+    .replace(/\/\*\(c\)!([^*]+)\*\//g, '$1')
     .replace(/\/[*]!([^*]+)[*]\//g, '$1')
     .split('\n').slice(1, -1).join('\n');
 }
@@ -250,6 +252,10 @@ function generateFile(fileName, generatedContent) {
 }
 
 
-generateFile(__dirname + '/__tests__/Layout-test.c', allTests.map(printLayout).join('\n\n'));
+var allTestsInC = allTests.map(printLayout);
+generateFile(__dirname + '/__tests__/Layout-test.c', allTestsInC.join('\n\n'));
 generateFile(__dirname + '/Layout-test-utils.c', makeConstDefs());
 generateFile(__dirname + '/Layout.c', transpileAnnotatedJStoC(computeLayout.toString()));
+generateFile(__dirname + '/java/src/com/facebook/csslayout/LayoutEngine.java', JavaTranspiler.transpileLayoutEngine(computeLayout.toString()));
+generateFile(__dirname + '/java/tests/com/facebook/csslayout/TestConstants.java', JavaTranspiler.transpileCConstDefs(makeConstDefs()));
+generateFile(__dirname + '/java/tests/com/facebook/csslayout/LayoutEngineTest.java', JavaTranspiler.transpileCTestsArray(allTestsInC));

@@ -398,7 +398,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
       // left and right or top and bottom).
       for (int ii = 0; ii < 2; ii++) {
-        css_flex_direction_t axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        css_flex_direction_t axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
         if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
             !isDimDefined(child, axis) &&
             isPosDefined(child, leading[axis]) &&
@@ -491,7 +491,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
 
     // If there are flexible children in the mix, they are going to fill the
     // remaining space
-    if (flexibleChildrenCount) {
+    if (flexibleChildrenCount != 0) {
       float flexibleMainDim = remainingMainDim / totalFlexible;
 
       // The non flexible children can overflow the container, in this case
@@ -675,7 +675,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
       // left and right or top and bottom).
       for (int ii = 0; ii < 2; ii++) {
-        css_flex_direction_t axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        css_flex_direction_t axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
         if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
             !isDimDefined(child, axis) &&
             isPosDefined(child, leading[axis]) &&
@@ -692,7 +692,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         }
       }
       for (int ii = 0; ii < 2; ii++) {
-        css_flex_direction_t axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        css_flex_direction_t axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
         if (isPosDefined(child, trailing[axis]) &&
             !isPosDefined(child, leading[axis])) {
           child->layout.position[leading[axis]] =
