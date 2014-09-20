@@ -5,6 +5,7 @@ var computeLayout = layoutTestUtils.computeLayout;
 var computeDOMLayout = layoutTestUtils.computeDOMLayout;
 var reduceTest = layoutTestUtils.reduceTest;
 var text = layoutTestUtils.text;
+var texts = layoutTestUtils.texts;
 var textSizes = layoutTestUtils.textSizes;
 
 describe('Layout', function() {
@@ -748,22 +749,22 @@ describe('Layout', function() {
 
   it('should layout node with just text', function() {
     testLayout(
-      {style: {measure: text('small')}},
+      {style: {measure: text(texts.small)}},
       {width: textSizes.smallWidth, height: textSizes.smallHeight, top: 0, left: 0}
     );
   });
 
   it('should layout node with text and width', function() {
     testLayout(
-      {style: {measure: text('small'), width: 10}},
+      {style: {measure: text(texts.small), width: 10}},
       {width: 10, height: textSizes.smallHeight, top: 0, left: 0}
     );
   });
 
   it('should layout node with text, padding and margin', function() {
     testLayout(
-      {style: {measure: text('loooooooooong with space'), padding: 5, margin: 5}},
-      {width: 10 + textSizes.bigWidth, height: 10 + textSizes.smallHeight, top: 5, left: 5}
+      {style: {measure: text(texts.big)}},
+      {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 0, left: 0}
     );
   });
 
@@ -786,7 +787,7 @@ describe('Layout', function() {
     testLayout(
       {style: {}, children: [
         {style: {width: 500, flexDirection: 'row'}, children: [
-          {style: {flex: 1, measure: text('loooooooooong with space')}}
+          {style: {flex: 1, measure: text(texts.big)}}
         ]}
       ]},
       {width: 500, height: textSizes.smallHeight, top: 0, left: 0, children: [
@@ -801,7 +802,7 @@ describe('Layout', function() {
     testLayout(
       {style: {width: 130}, children: [
         {style: {alignSelf: 'stretch', alignItems: 'stretch'}, children: [
-          {style: {measure: text('loooooooooong with space')}}
+          {style: {measure: text(texts.big)}}
         ]}
       ]},
       {width: 130, height: textSizes.bigHeight, top: 0, left: 0, children: [
@@ -816,7 +817,7 @@ describe('Layout', function() {
     testLayout(
       {style: {width: 200}, children: [
         {style: {alignSelf: 'stretch', alignItems: 'stretch'}, children: [
-          {style: {width: 130, measure: text('loooooooooong with space')}}
+          {style: {width: 130, measure: text(texts.big)}}
         ]}
       ]},
       {width: 200, height: textSizes.bigHeight, top: 0, left: 0, children: [
@@ -830,7 +831,7 @@ describe('Layout', function() {
   it('should layout node with text bounded by parent', function() {
     testLayout(
       {style: {width: 100}, children: [
-        {style: {measure: text('loooooooooong with space')}}
+        {style: {measure: text(texts.big)}}
       ]},
       {width: 100, height: textSizes.bigHeight, top: 0, left: 0, children: [
         {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
@@ -842,7 +843,7 @@ describe('Layout', function() {
     testLayout(
       {style: {width: 100, padding: 10}, children: [
         {style: {margin: 10}, children: [
-          {style: {measure: text('loooooooooong with space')}}
+          {style: {measure: text(texts.big)}}
         ]}
       ]},
       {width: 100, height: 40 + textSizes.bigHeight, top: 0, left: 0, children: [
@@ -881,7 +882,7 @@ describe('Layout', function() {
     testLayout(
       {style: {}, children: [
         {style: {width: 200, flexDirection: 'row'}, children: [
-          {style: {margin: 20, measure: text('loooooooooong with space')}}
+          {style: {margin: 20, measure: text(texts.big)}}
         ]}
       ]},
       {width: 200, height: 58, top: 0, left: 0, children: [
@@ -896,7 +897,7 @@ describe('Layout', function() {
     testLayout(
       {style: {}, children: [
         {style: {width: 200}, children: [
-          {style: {margin: 20, measure: text('loooooooooong with space')}}
+          {style: {margin: 20, measure: text(texts.big)}}
         ]}
       ]},
       {width: 200, height: 76, top: 0, left: 0, children: [
@@ -946,7 +947,7 @@ describe('Layout', function() {
 
   xit('should layout text with alignItems: stretch', function() {
     testLayout(
-      {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text('loooooooooong with space')}},
+      {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text(texts.big)}},
       {width: 80, height: 68, top: 0, left: 0}
     );
   });
@@ -954,7 +955,7 @@ describe('Layout', function() {
   xit('should layout node with text and position absolute', function() {
     testLayout(
       {style: {}, children: [
-        {style: {measure: text('loooooooooong with space'), position: 'absolute'}}
+        {style: {measure: text(texts.big)}}
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
         {width: 100, height: textSizes.bigHeight, top: 0, left: 0}
@@ -1018,7 +1019,7 @@ describe('Layout', function() {
       randEnum(node, 0.5, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.5, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
       randEnum(node, 0.5, 'position', ['relative', 'absolute']);
-      randEnum(node, 0.5, 'measure', [text('small'), text('loooooooooong with space')]);
+      randEnum(node, 0.5, 'measure', [text(texts.small), text(texts.big)]);
 
       if (node.style.measure) {
         // align-items: stretch on a text node makes it wrap in a different way.

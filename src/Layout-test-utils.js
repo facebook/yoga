@@ -229,15 +229,49 @@ var layoutTestUtils = (function() {
     return node;
   }
 
+  function measureTextSizes(text, width) {
+    var body = iframeText.contentDocument.body;
+    if (width === undefined || width !== width) {
+      width = Infinity;
+    }
+
+    var div = document.createElement('div');
+    div.style.width = (width === Infinity ? 10000000 : width) + 'px';
+    div.style.display = 'flex';
+    div.style.flexDirection = 'column';
+    div.style.alignItems = 'flex-start';
+
+    var span = document.createElement('span');
+    span.style.display = 'flex';
+    span.style.flexDirection = 'column';
+    span.style.alignItems = 'flex-start';
+    span.innerText = text;
+
+    div.appendChild(span);
+    body.appendChild(div);
+    var rect = span.getBoundingClientRect();
+    body.removeChild(div);
+    return {
+      width: rect.width,
+      height: rect.height
+    };
+  }
+
+  var texts = {
+    small: 'small',
+    big: 'loooooooooong with space',
+  };
+
   var textSizes = {
-    smallWidth: 34.671875,
-    smallHeight: 18,
-    bigWidth: 172.421875,
-    bigHeight: 36,
-    bigMinWidth: 100.453125,
+    smallWidth: measureTextSizes(texts.small, 0).width,
+    smallHeight: measureTextSizes(texts.small, 0).height,
+    bigWidth: measureTextSizes(texts.big).width,
+    bigHeight: measureTextSizes(texts.big, 0).height,
+    bigMinWidth: measureTextSizes(texts.big, 0).width,
   };
 
   return {
+    texts: texts,
     textSizes: textSizes,
     testLayout: function(node, expectedLayout) {
       var layout = computeCSSLayout(node);
@@ -253,8 +287,6 @@ var layoutTestUtils = (function() {
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest,
     text: function(text) {
-
-      var body = iframeText.contentDocument.body;
       var fn = function(width) {
         if (width === undefined || width !== width) {
           width = Infinity;
@@ -263,43 +295,21 @@ var layoutTestUtils = (function() {
         // Constants for testing purposes between C/JS and other platforms
         // Comment this block of code if you want to use the browser to
         // generate proper sizes
-        if (text === 'small') {
+        if (text === texts.small) {
           return {
             width: Math.min(textSizes.smallWidth, width),
             height: textSizes.smallHeight
           };
         }
-        if (text === 'loooooooooong with space') {
+        if (text === texts.big) {
           var res = {
             width: width >= textSizes.bigWidth ? textSizes.bigWidth : Math.max(textSizes.bigMinWidth, width),
             height: width >= textSizes.bigWidth ? textSizes.smallHeight : textSizes.bigHeight
           };
           return res;
         }
-        return;
-
-        var div = document.createElement('div');
-        div.style.width = (width === Infinity ? 10000000 : width) + 'px';
-        div.style.display = 'flex';
-        div.style.flexDirection = 'column';
-        div.style.alignItems = 'flex-start';
-
-        var span = document.createElement('span');
-        span.style.display = 'flex';
-        span.style.flexDirection = 'column';
-        span.style.alignItems = 'flex-start';
-        span.innerText = text;
-
-        div.appendChild(span);
-        body.appendChild(div);
-        var rect = span.getBoundingClientRect();
-        body.removeChild(div);
-        return {
-          width: rect.width,
-          height: rect.height
-        };
       };
-      fn.toString = function() { return text; }
+      fn.toString = function() { return text; };
       return fn;
     }
   }
