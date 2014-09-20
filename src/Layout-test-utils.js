@@ -223,7 +223,16 @@ var layoutTestUtils = (function() {
     return node;
   }
 
+  var textSizes = {
+    smallWidth: 34.671875,
+    smallHeight: 18,
+    bigWidth: 172.421875,
+    bigHeight: 36,
+    bigMinWidth: 100.453125,
+  };
+
   return {
+    textSizes: textSizes,
     testLayout: function(node, expectedLayout) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
@@ -238,6 +247,7 @@ var layoutTestUtils = (function() {
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest,
     text: function(text) {
+
       var body = iframeText.contentDocument.body;
       var fn = function(width) {
         if (width === undefined || width !== width) {
@@ -248,14 +258,17 @@ var layoutTestUtils = (function() {
         // Comment this block of code if you want to use the browser to
         // generate proper sizes
         if (text === 'small') {
-          return {width: Math.min(33, width), height: 18};
+          return {
+            width: Math.min(textSizes.smallWidth, width),
+            height: textSizes.smallHeight
+          };
         }
         if (text === 'loooooooooong with space') {
           var res = {
-            width: width >= 171 ? 171 : Math.max(100, width),
-            height: width >= 171 ? 18 : 36
+            width: width >= textSizes.bigWidth ? textSizes.bigWidth : Math.max(textSizes.bigMinWidth, width),
+            height: width >= textSizes.bigWidth ? textSizes.smallHeight : textSizes.bigHeight
           };
-          return res
+          return res;
         }
         return;
 

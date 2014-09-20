@@ -5,6 +5,7 @@ var computeLayout = layoutTestUtils.computeLayout;
 var computeDOMLayout = layoutTestUtils.computeDOMLayout;
 var reduceTest = layoutTestUtils.reduceTest;
 var text = layoutTestUtils.text;
+var textSizes = layoutTestUtils.textSizes;
 
 describe('Layout', function() {
   it('should layout a single node with width and height', function() {
@@ -748,21 +749,21 @@ describe('Layout', function() {
   it('should layout node with just text', function() {
     testLayout(
       {style: {measure: text('small')}},
-      {width: 33, height: 18, top: 0, left: 0}
+      {width: textSizes.smallWidth, height: textSizes.smallHeight, top: 0, left: 0}
     );
   });
 
   it('should layout node with text and width', function() {
     testLayout(
       {style: {measure: text('small'), width: 10}},
-      {width: 10, height: 18, top: 0, left: 0}
+      {width: 10, height: textSizes.smallHeight, top: 0, left: 0}
     );
   });
 
   it('should layout node with text, padding and margin', function() {
     testLayout(
       {style: {measure: text('loooooooooong with space'), padding: 5, margin: 5}},
-      {width: 181, height: 28, top: 5, left: 5}
+      {width: 10 + textSizes.bigWidth, height: 10 + textSizes.smallHeight, top: 5, left: 5}
     );
   });
 
@@ -788,9 +789,9 @@ describe('Layout', function() {
           {style: {flex: 1, measure: text('loooooooooong with space')}}
         ]}
       ]},
-      {width: 500, height: 18, top: 0, left: 0, children: [
-        {width: 500, height: 18, top: 0, left: 0, children: [
-          {width: 500, height: 18, top: 0, left: 0}
+      {width: 500, height: textSizes.smallHeight, top: 0, left: 0, children: [
+        {width: 500, height: textSizes.smallHeight, top: 0, left: 0, children: [
+          {width: 500, height: textSizes.smallHeight, top: 0, left: 0}
         ]}
       ]}
     );
@@ -803,9 +804,9 @@ describe('Layout', function() {
           {style: {measure: text('loooooooooong with space')}}
         ]}
       ]},
-      {width: 130, height: 36, top: 0, left: 0, children: [
-        {width: 130, height: 36, top: 0, left: 0, children: [
-          {width: 130, height: 36, top: 0, left: 0}
+      {width: 130, height: textSizes.bigHeight, top: 0, left: 0, children: [
+        {width: 130, height: textSizes.bigHeight, top: 0, left: 0, children: [
+          {width: 130, height: textSizes.bigHeight, top: 0, left: 0}
         ]}
       ]}
     );
@@ -818,9 +819,9 @@ describe('Layout', function() {
           {style: {width: 130, measure: text('loooooooooong with space')}}
         ]}
       ]},
-      {width: 200, height: 36, top: 0, left: 0, children: [
-        {width: 200, height: 36, top: 0, left: 0, children: [
-          {width: 130, height: 36, top: 0, left: 0}
+      {width: 200, height: textSizes.bigHeight, top: 0, left: 0, children: [
+        {width: 200, height: textSizes.bigHeight, top: 0, left: 0, children: [
+          {width: 130, height: textSizes.bigHeight, top: 0, left: 0}
         ]}
       ]}
     );
@@ -831,8 +832,8 @@ describe('Layout', function() {
       {style: {width: 100}, children: [
         {style: {measure: text('loooooooooong with space')}}
       ]},
-      {width: 100, height: 36, top: 0, left: 0, children: [
-        {width: 100, height: 36, top: 0, left: 0}
+      {width: 100, height: textSizes.bigHeight, top: 0, left: 0, children: [
+        {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
       ]}
     );
   });
@@ -844,9 +845,9 @@ describe('Layout', function() {
           {style: {measure: text('loooooooooong with space')}}
         ]}
       ]},
-      {width: 100, height: 76, top: 0, left: 0, children: [
-        {width: 100, height: 36, top: 20, left: 20, children: [
-          {width: 100, height: 36, top: 0, left: 0}
+      {width: 100, height: 40 + textSizes.bigHeight, top: 0, left: 0, children: [
+        {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 20, left: 20, children: [
+          {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
         ]}
       ]}
     );
@@ -885,7 +886,7 @@ describe('Layout', function() {
       ]},
       {width: 200, height: 58, top: 0, left: 0, children: [
         {width: 200, height: 58, top: 0, left: 0, children: [
-          {width: 171, height: 18, top: 20, left: 20}
+          {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 20, left: 20}
         ]}
       ]}
     );
@@ -900,7 +901,7 @@ describe('Layout', function() {
       ]},
       {width: 200, height: 76, top: 0, left: 0, children: [
         {width: 200, height: 76, top: 0, left: 0, children: [
-          {width: 160, height: 36, top: 20, left: 20}
+          {width: 160, height: textSizes.bigHeight, top: 20, left: 20}
         ]}
       ]}
     );
@@ -956,9 +957,9 @@ describe('Layout', function() {
         {style: {measure: text('loooooooooong with space'), position: 'absolute'}}
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 100, height: 36, top: 0, left: 0}
+        {width: 100, height: textSizes.bigHeight, top: 0, left: 0}
       ]}
-    )
+    );
   });
 
   it('should layout randomly', function() {
@@ -969,7 +970,7 @@ describe('Layout', function() {
       // LCG using GCC's constants
       this.state = (1103515245 * this.state + 12345) % 0x80000000;
       return this.state / (0x80000000 - 1);
-    }
+    };
 
     var rng = new RNG(0);
     function randMinMax(node, chance, attribute, min, max) {
