@@ -14,10 +14,15 @@ var layoutTestUtils = (function() {
         position: relative;
 
         display: flex;
+        display: -webkit-flex;
         flex-direction: column;
+        -webkit-flex-direction: column;
         align-items: flex-start;
+        -webkit-align-items: flex-start;
         justify-content: flex-start;
+        -webkit-justify-content: flex-start;
         flex-shrink: 0;
+        -webkit-flex-shrink: 0;
 
         margin: 0;
         padding: 0;
@@ -73,6 +78,7 @@ var layoutTestUtils = (function() {
 
     function transfer(div, node, name, ext) {
       if (name in node.style) {
+        div.style['-webkit-' + name] = node.style[name] + (ext || '');
         div.style[name] = node.style[name] + (ext || '');
       }
     }
