@@ -68,10 +68,10 @@ public class CSSNode {
   @Override
   public String toString() {
     String layoutString = "layout: {" +
-        "top: " + layout.position[CSSConstants.POSITION_INDEX_TOP] + ", " +
-        "left: " + layout.position[CSSConstants.POSITION_INDEX_LEFT] + ", " +
-        "width: " + layout.dimensions[CSSConstants.DIMENSION_INDEX_WIDTH] + ", " +
-        "height: " + layout.dimensions[CSSConstants.DIMENSION_INDEX_HEIGHT] +
+        "x: " + layout.x + ", " +
+        "y: " + layout.y + ", " +
+        "width: " + layout.width + ", " +
+        "height: " + layout.height +
         "}";
 
     if (getChildCount() == 0) {

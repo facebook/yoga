@@ -5,19 +5,33 @@ package com.facebook.csslayout;
  */
 public class CSSStyle {
 
-  public CSSFlexDirection flex_direction = CSSFlexDirection.COLUMN;
-  public CSSJustify justify_content = CSSJustify.FLEX_START;
-  public CSSAlign align_items = CSSAlign.FLEX_START;
-  public CSSAlign align_self = CSSAlign.AUTO;
-  public CSSPositionType position_type = CSSPositionType.RELATIVE;
+  public CSSFlexDirection flexDirection = CSSFlexDirection.COLUMN;
+  public CSSJustify justifyContent = CSSJustify.FLEX_START;
+  public CSSAlign alignItems = CSSAlign.STRETCH;
+  public CSSAlign alignSelf = CSSAlign.AUTO;
+  public CSSPositionType positionType = CSSPositionType.RELATIVE;
   public float flex;
-  public final float[] margin = new float[4];
-  public final float[] position = {
-      CSSConstants.UNDEFINED,
-      CSSConstants.UNDEFINED,
-      CSSConstants.UNDEFINED,
-      CSSConstants.UNDEFINED};
-  public final float[] padding = new float[4];
-  public final float[] border = new float[4];
-  public final float[] dimensions = {CSSConstants.UNDEFINED, CSSConstants.UNDEFINED};
+
+  public float marginTop;
+  public float marginBottom;
+  public float marginLeft;
+  public float marginRight;
+
+  public float paddingTop;
+  public float paddingBottom;
+  public float paddingLeft;
+  public float paddingRight;
+
+  public float positionTop = CSSConstants.UNDEFINED;
+  public float positionBottom = CSSConstants.UNDEFINED;
+  public float positionLeft = CSSConstants.UNDEFINED;
+  public float positionRight = CSSConstants.UNDEFINED;
+
+  public float borderTop;
+  public float borderBottom;
+  public float borderLeft;
+  public float borderRight;
+
+  public float width = CSSConstants.UNDEFINED;
+  public float height = CSSConstants.UNDEFINED;
 }
