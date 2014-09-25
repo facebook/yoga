@@ -945,6 +945,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout with ne3gative flex', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {width: 50, height: 100}},
+        {style: {position: 'absolute', left: 0, right: 0}}
+      ]},
+      {width: 50, height: 100, top: 0, left: 0, children: [
+        {width: 50, height: 100, top: 0, left: 0},
+        {width: 50, height: 0, top: 100, left: 0},
+      ]}
+    );
+  });
+
   xit('should layout text with alignItems: stretch', function() {
     testLayout(
       {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text(texts.big)}},

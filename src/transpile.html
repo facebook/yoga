@@ -53,7 +53,9 @@ var layoutTestUtils = {
   computeLayout: computeLayout,
   computeDOMLayout: computeDOMLayout,
   reduceTest: reduceTest,
-  text: text
+  text: text,
+  texts: layoutTestUtils.texts,
+  textSizes: layoutTestUtils.textSizes,
 };
 function describe(name, cb) { cb(); }
 function it(name, cb) { currentTest = name; cb(); }

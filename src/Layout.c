@@ -393,26 +393,6 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         // You never want to go smaller than padding
         getPaddingAndBorderAxis(child, crossAxis)
       );
-    } else if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
-      // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
-      // left and right or top and bottom).
-      for (int ii = 0; ii < 2; ii++) {
-        css_flex_direction_t axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-        if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
-            !isDimDefined(child, axis) &&
-            isPosDefined(child, leading[axis]) &&
-            isPosDefined(child, trailing[axis])) {
-          child->layout.dimensions[dim[axis]] = fmaxf(
-            node->layout.dimensions[dim[axis]] -
-            getPaddingAndBorderAxis(node, axis) -
-            getMarginAxis(child, axis) -
-            getPosition(child, leading[axis]) -
-            getPosition(child, trailing[axis]),
-            // You never want to go smaller than padding
-            getPaddingAndBorderAxis(child, axis)
-          );
-        }
-      }
     }
   }
 
@@ -549,7 +529,6 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     }
   }
 
-
   // <Loop C> Position elements in the main axis and compute dimensions
 
   // At this point, all the children have their dimensions set. We need to
@@ -664,6 +643,33 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
 
       // And we apply the position
       child->layout.position[pos[crossAxis]] += leadingCrossDim;
+    }
+  }
+
+  // <Loop E> Calculate dimensions for absolutely positioned elements
+
+  for (int i = 0; i < node->children_count; ++i) {
+    css_node_t* child = node->get_child(node->context, i);
+    if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
+      // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
+      // left and right or top and bottom).
+      for (int ii = 0; ii < 2; ii++) {
+        css_flex_direction_t axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
+            !isDimDefined(child, axis) &&
+            isPosDefined(child, leading[axis]) &&
+            isPosDefined(child, trailing[axis])) {
+          child->layout.dimensions[dim[axis]] = fmaxf(
+            node->layout.dimensions[dim[axis]] -
+            getPaddingAndBorderAxis(node, axis) -
+            getMarginAxis(child, axis) -
+            getPosition(child, leading[axis]) -
+            getPosition(child, trailing[axis]),
+            // You never want to go smaller than padding
+            getPaddingAndBorderAxis(child, axis)
+          );
+        }
+      }
     }
   }
 }

@@ -269,26 +269,6 @@ var computeLayout = (function() {
           // You never want to go smaller than padding
           getPaddingAndBorderAxis(child, crossAxis)
         );
-      } else if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
-        // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
-        // left and right or top and bottom).
-        for (var/*int*/ ii = 0; ii < 2; ii++) {
-          var/*css_flex_direction_t*/ axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-          if (!isUndefined(node.layout[dim[axis]]) &&
-              !isDimDefined(child, axis) &&
-              isPosDefined(child, leading[axis]) &&
-              isPosDefined(child, trailing[axis])) {
-            child.layout[dim[axis]] = fmaxf(
-              node.layout[dim[axis]] -
-              getPaddingAndBorderAxis(node, axis) -
-              getMarginAxis(child, axis) -
-              getPosition(child, leading[axis]) -
-              getPosition(child, trailing[axis]),
-              // You never want to go smaller than padding
-              getPaddingAndBorderAxis(child, axis)
-            );
-          }
-        }
       }
     }
 
@@ -425,7 +405,6 @@ var computeLayout = (function() {
       }
     }
 
-
     // <Loop C> Position elements in the main axis and compute dimensions
 
     // At this point, all the children have their dimensions set. We need to
@@ -542,7 +521,34 @@ var computeLayout = (function() {
         child.layout[pos[crossAxis]] += leadingCrossDim;
       }
     }
-  }
+
+    // <Loop E> Calculate dimensions for absolutely positioned elements
+
+    for (var/*int*/ i = 0; i < node.children.length; ++i) {
+      var/*css_node_t**/ child = node.children[i];
+      if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
+        // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
+        // left and right or top and bottom).
+        for (var/*int*/ ii = 0; ii < 2; ii++) {
+          var/*css_flex_direction_t*/ axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+          if (!isUndefined(node.layout[dim[axis]]) &&
+              !isDimDefined(child, axis) &&
+              isPosDefined(child, leading[axis]) &&
+              isPosDefined(child, trailing[axis])) {
+            child.layout[dim[axis]] = fmaxf(
+              node.layout[dim[axis]] -
+              getPaddingAndBorderAxis(node, axis) -
+              getMarginAxis(child, axis) -
+              getPosition(child, leading[axis]) -
+              getPosition(child, trailing[axis]),
+              // You never want to go smaller than padding
+              getPaddingAndBorderAxis(child, axis)
+            );
+          }
+        }
+      }
+    }
+  };
 })();
 
 
