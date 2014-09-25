@@ -945,7 +945,7 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout with ne3gative flex', function() {
+  it('should layout with absolutely position bottom', function() {
     testLayout(
       {style: {}, children: [
         {style: {width: 50, height: 100}},

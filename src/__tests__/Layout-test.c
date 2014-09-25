@@ -3162,7 +3162,7 @@ int main()
       }
     }
 
-    test("should layout with ne3gative flex", root_node, root_layout);
+    test("should layout with absolutely position bottom", root_node, root_layout);
   }
 
   {
