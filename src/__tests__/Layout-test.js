@@ -1,9 +1,6 @@
+/* globals layoutTestUtils */
 
 var testLayout = layoutTestUtils.testLayout;
-var testRandomLayout = layoutTestUtils.testRandomLayout;
-var computeLayout = layoutTestUtils.computeLayout;
-var computeDOMLayout = layoutTestUtils.computeDOMLayout;
-var reduceTest = layoutTestUtils.reduceTest;
 var text = layoutTestUtils.text;
 var texts = layoutTestUtils.texts;
 var textSizes = layoutTestUtils.textSizes;

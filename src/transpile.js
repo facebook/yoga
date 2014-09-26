@@ -1,75 +1,41 @@
-<script src="Layout.js"></script>
+var layoutTestUtils = require('./Layout-test-utils.js');
+var computeLayout = require('./Layout.js');
+var fs = require('fs');
 
-<style>
-textarea {
-  height: 200px;
-  width: 800px;
-  border: 1px solid black;
-  font-size: 12px;
-  font-family: monospace;
-}
-</style>
-
-<h1>layoutCode</h1>
-<textarea id="layout_code" onclick="this.select()"></textarea>
-<script>
-document.getElementById('layout_code').value = computeLayout.toString()
-  .replace('node.style.measure', 'node.measure')
-  .replace(/\.children\.length/g, '.children_count')
-  .replace(/\.width/g, '.dimensions[CSS_WIDTH]')
-  .replace(/\.height/g, '.dimensions[CSS_HEIGHT]')
-  .replace(/layout\[dim/g, 'layout.dimensions[dim')
-  .replace(/layout\[pos/g, 'layout.position[pos')
-  .replace(/layout\[leading/g, 'layout.position[leading')
-  .replace(/style\[dim/g, 'style.dimensions[dim')
-  .replace(/node.children\[i\]/g, 'node->get_child(node->context, i)')
-  .replace(/node\./g, 'node->')
-  .replace(/child\./g, 'child->')
-  .replace(/parent\./g, 'parent->')
-  .replace(/var\/\*([^\/]+)\*\//g, '$1')
-  .replace(/ === /g, ' == ')
-  .replace(/\n  /g, '\n')
-  .replace(/\/[*]!([^*]+)[*]\//g, '$1')
-  .split('\n').slice(1).join('\n');
-</script>
-
-<h1>Tests</h1>
-<textarea id="test_code" onclick="this.select()"></textarea>
-<script src="Layout-test-utils.js"></script>
-<script>
 var currentTest = '';
 var allTests = [];
 var computeDOMLayout = layoutTestUtils.computeDOMLayout;
-var computeLayout = layoutTestUtils.computeLayout;
 var reduceTest = layoutTestUtils.reduceTest;
-var text = layoutTestUtils.text;
-var layoutTestUtils = {
+global.layoutTestUtils = {
   testLayout: function(node, expectedLayout) {
     allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
   },
   testRandomLayout: function(node, i) {
     allTests.push({name: 'Random #' + i, node: node, expectedLayout: computeDOMLayout(node)});
   },
-  computeLayout: computeLayout,
-  computeDOMLayout: computeDOMLayout,
+  computeLayout: layoutTestUtils.computeLayout,
   reduceTest: reduceTest,
-  text: text,
+  text: layoutTestUtils.text,
   texts: layoutTestUtils.texts,
-  textSizes: layoutTestUtils.textSizes,
+  textSizes: layoutTestUtils.textSizes
 };
-function describe(name, cb) { cb(); }
-function it(name, cb) { currentTest = name; cb(); }
-xit = it;
-</script>
-<script src="__tests__/Layout-test.js"></script>
-<script>
+
+global.describe = function(name, cb) { cb(); };
+global.it = function(name, cb) { currentTest = name; cb(); };
+global.xit = global.it;
+
+require('./__tests__/Layout-test.js');
+
 
 function printLayout(test) {
   var level = 1;
   var res = [];
 
   function add(str) {
-    res.push(indent(level) + str);
+    if (str.length > 0) {
+      str = indent(level) + str;
+    }
+    res.push(str);
   }
 
   function isEmpty(obj) {
@@ -237,10 +203,53 @@ function printLayout(test) {
   add('test("' + test.name.replace(/"/g, '\\"') + '", root_node, root_layout);');
   level--;
   add('}');
-  add('');
-  add('tests_finished();');
-
   return res.join('\n');
 }
-document.getElementById('test_code').value = allTests.map(printLayout).join('\n\n');
-</script>
+
+function transpileAnnotatedJStoC(jsCode) {
+  return jsCode
+    .replace('node.style.measure', 'node.measure')
+    .replace(/\.children\.length/g, '.children_count')
+    .replace(/\.width/g, '.dimensions[CSS_WIDTH]')
+    .replace(/\.height/g, '.dimensions[CSS_HEIGHT]')
+    .replace(/layout\[dim/g, 'layout.dimensions[dim')
+    .replace(/layout\[pos/g, 'layout.position[pos')
+    .replace(/layout\[leading/g, 'layout.position[leading')
+    .replace(/style\[dim/g, 'style.dimensions[dim')
+    .replace(/node.children\[i\]/g, 'node->get_child(node->context, i)')
+    .replace(/node\./g, 'node->')
+    .replace(/child\./g, 'child->')
+    .replace(/parent\./g, 'parent->')
+    .replace(/var\/\*([^\/]+)\*\//g, '$1')
+    .replace(/ === /g, ' == ')
+    .replace(/\n  /g, '\n')
+    .replace(/\/[*]!([^*]+)[*]\//g, '$1')
+    .split('\n').slice(1, -1).join('\n');
+}
+
+function makeConstDefs() {
+  var lines = [
+    '#define SMALL_WIDTH '   + layoutTestUtils.textSizes.smallWidth,
+    '#define SMALL_HEIGHT '  + layoutTestUtils.textSizes.smallHeight,
+    '#define BIG_WIDTH '     + layoutTestUtils.textSizes.bigWidth,
+    '#define BIG_HEIGHT '    + layoutTestUtils.textSizes.bigHeight,
+    '#define BIG_MIN_WIDTH ' + layoutTestUtils.textSizes.bigMinWidth,
+    '#define SMALL_TEXT "'   + layoutTestUtils.texts.small + '"',
+    '#define LONG_TEXT "'    + layoutTestUtils.texts.big + '"'
+  ];
+  return lines.join('\n');
+}
+
+function generateFile(fileName, generatedContent) {
+  var content = fs.readFileSync(fileName, 'utf8').toString();
+  content = content.replace(new RegExp(
+    /\/\*\* START_GENERATED \*\*\/[\s\S]*\/\*\* END_GENERATED \*\*\//
+  ), '/** START_GENERATED **/\n' + generatedContent + '\n  /** END_GENERATED **/');
+
+  fs.writeFileSync(fileName, content);
+}
+
+
+generateFile(__dirname + '/__tests__/Layout-test.c', allTests.map(printLayout).join('\n\n'));
+generateFile(__dirname + '/Layout-test-utils.c', makeConstDefs());
+generateFile(__dirname + '/Layout.c', transpileAnnotatedJStoC(computeLayout.toString()));
