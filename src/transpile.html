@@ -237,6 +237,8 @@ function printLayout(test) {
   add('test("' + test.name.replace(/"/g, '\\"') + '", root_node, root_layout);');
   level--;
   add('}');
+  add('');
+  add('tests_finished();');
 
   return res.join('\n');
 }

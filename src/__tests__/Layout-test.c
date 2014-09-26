@@ -6525,4 +6525,6 @@ int main()
 
     test("Random #99", root_node, root_layout);
   }
+
+  tests_finished();
 }

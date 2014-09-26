@@ -2,6 +2,30 @@
 #include "Layout-test-utils.h"
 #include <stdlib.h>
 
+typedef struct failed_test_t {
+  struct failed_test_t *next;
+  const char *name;
+  css_node_t *style;
+  css_node_t *expected;
+} failed_test_t;
+
+static failed_test_t *failed_test_head = NULL;
+static failed_test_t *failed_test_tail = NULL;
+static void add_failed_test(const char *name, css_node_t *style, css_node_t *expected) {
+  failed_test_t *failed_test = malloc(sizeof(failed_test_t));
+  failed_test->name = name;
+  failed_test->style = style;
+  failed_test->expected = expected;
+
+  if (!failed_test_head) {
+    failed_test_head = failed_test;
+    failed_test_tail = failed_test;
+  } else {
+    failed_test_tail->next = failed_test;
+    failed_test_tail = failed_test;
+  }
+}
+
 static bool eq(float a, float b) {
   return fabs(a - b) < 0.0001;
 }
@@ -49,21 +73,47 @@ void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
   layoutNode(style, CSS_UNDEFINED);
 
   if (!are_layout_equal(style, expected_layout)) {
-    printf("%sFAIL%s %s\n", "\x1B[31m", "\x1B[0m", name);
+    printf("%sF%s", "\x1B[31m", "\x1B[0m");
+    add_failed_test(name, style, expected_layout);
+  } else {
+    printf("%s.%s", "\x1B[32m", "\x1B[0m");
+    free_css_node(style);
+    free_css_node(expected_layout);
+  }
+}
+
+void tests_finished() {
+  failed_test_t *failed_test = failed_test_head;
+  printf("\n");
+
+  int tests_failed = 0;
+  while (failed_test) {
+    printf("%sFAIL%s %s\n", "\x1B[31m", "\x1B[0m", failed_test->name);
 
     printf("Input:    ");
-    print_css_node(style, CSS_PRINT_STYLE);
+    print_css_node(failed_test->style, CSS_PRINT_STYLE);
     printf("Output:   ");
-    print_css_node(style, CSS_PRINT_LAYOUT);
+    print_css_node(failed_test->style, CSS_PRINT_LAYOUT);
 
     printf("Expected: ");
-    print_css_node(expected_layout, CSS_PRINT_LAYOUT);
-  } else {
-    printf("%sPASS%s %s\n", "\x1B[32m", "\x1B[0m",  name);
-  }
+    print_css_node(failed_test->expected, CSS_PRINT_LAYOUT);
 
-  free_css_node(style);
-  free_css_node(expected_layout);
+    free_css_node(failed_test->style);
+    free_css_node(failed_test->expected);
+
+    failed_test_t *next_failed_test = failed_test->next;
+    free(failed_test);
+    failed_test = next_failed_test;
+
+    tests_failed++;
+  }
+  printf("\n\n");
+
+  if (tests_failed > 0) {
+    printf("TESTS FAILED: %d\n", tests_failed);
+  } else {
+    printf("ALL TESTS PASSED\n");
+  }
 }
 
 static css_node_t* get_child(void *context, int i) {

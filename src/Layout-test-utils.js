@@ -283,6 +283,9 @@ var layoutTestUtils = (function() {
       expect({i: i, node: node, layout: computeCSSLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
     },
+    testsFinished: function() {
+      console.log('tests finished!');
+    },
     computeLayout: computeCSSLayout,
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest,
