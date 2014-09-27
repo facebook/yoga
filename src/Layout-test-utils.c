@@ -92,7 +92,7 @@ void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
   }
 }
 
-void tests_finished() {
+int tests_finished() {
   failed_test_t *failed_test = failed_test_head;
   printf("\n");
 
@@ -121,8 +121,10 @@ void tests_finished() {
 
   if (tests_failed > 0) {
     printf("TESTS FAILED: %d\n", tests_failed);
+    return 1;
   } else {
     printf("ALL TESTS PASSED\n");
+    return 0;
   }
 }
 
