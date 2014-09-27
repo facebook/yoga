@@ -269,15 +269,17 @@ var layoutTestUtils = (function() {
     big: 'loooooooooong with space',
   };
 
+  var preDefinedTextSizes = {
+    smallWidth: 34.671875,
+    smallHeight: 18,
+    bigWidth: 172.421875,
+    bigHeight: 36,
+    bigMinWidth: 100.453125
+  };
+
   var textSizes;
   if (typeof require === 'function') {
-    textSizes =  {
-      smallWidth: 34.671875,
-      smallHeight: 18,
-      bigWidth: 172.421875,
-      bigHeight: 36,
-      bigMinWidth: 100.453125
-    };
+    textSizes = preDefinedTextSizes;
   } else {
     textSizes = {
       smallWidth: measureTextSizes(texts.small, 0).width,
@@ -291,6 +293,7 @@ var layoutTestUtils = (function() {
   return {
     texts: texts,
     textSizes: textSizes,
+    preDefinedTextSizes: preDefinedTextSizes,
     testLayout: function(node, expectedLayout) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
@@ -333,7 +336,7 @@ var layoutTestUtils = (function() {
       fn.toString = function() { return text; };
       return fn;
     }
-  }
+  };
 })();
 
 if (typeof module !== 'undefined') {
