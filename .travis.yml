@@ -1,0 +1,8 @@
+language: c
+compiler:
+  - clang
+  - gcc
+before_script:
+  - sudo apt-get update -q
+  - sudo apt-get install nodejs
+script: make
