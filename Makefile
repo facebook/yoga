@@ -7,9 +7,9 @@ c:
 	@node ./src/transpile.js
 
 test:
-	@gcc -Weverything -Werror -Wno-padded $(FILES) && ./a.out
+	@gcc -std=c99 -Werror -Wno-padded $(FILES) -lm && ./a.out
 	@rm a.out
 
 debug:
-	@gcc -ggdb $(FILES) && lldb ./a.out
+	@gcc -ggdb $(FILES) -lm && lldb ./a.out
 	@rm a.out
