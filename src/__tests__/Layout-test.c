@@ -3166,5 +3166,5 @@ int main()
     test("should layout with absolutely position bottom", root_node, root_layout);
   }
   /** END_GENERATED **/
-  tests_finished();
+  return tests_finished();
 }
