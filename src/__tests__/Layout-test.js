@@ -945,7 +945,7 @@ describe('Layout', function() {
   it('should layout with absolutely position bottom', function() {
     testLayout(
       {style: {}, children: [
-        {style: {width: 50, height: 100}},
+        {style: {width: 50, height: 101}},
         {style: {position: 'absolute', left: 0, right: 0}}
       ]},
       {width: 50, height: 100, top: 0, left: 0, children: [

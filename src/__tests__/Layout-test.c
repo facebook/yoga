@@ -3132,7 +3132,7 @@ int main()
         css_node_t *node_1;
         node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.dimensions[CSS_WIDTH] = 50;
-        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 101;
         node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.position_type = CSS_POSITION_ABSOLUTE;
         node_1->style.position[CSS_LEFT] = 0;
