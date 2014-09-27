@@ -31,7 +31,7 @@ describe('Layout', function() {
 
   it('should layout node with nested children', function() {
     testLayout(
-      {style: {width: 1000, height: 1000}, children: [
+      {style: {width: 1001, height: 1000}, children: [
         {style: {width: 500, height: 500}},
         {style: {width: 500, height: 500}, children: [
           {style: {width: 250, height: 250}},
@@ -945,7 +945,7 @@ describe('Layout', function() {
   it('should layout with absolutely position bottom', function() {
     testLayout(
       {style: {}, children: [
-        {style: {width: 50, height: 100}},
+        {style: {width: 50, height: 101}},
         {style: {position: 'absolute', left: 0, right: 0}}
       ]},
       {width: 50, height: 100, top: 0, left: 0, children: [
