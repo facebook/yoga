@@ -322,6 +322,7 @@ static float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
 }
 
 static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
+  /** START_GENERATED **/
   css_flex_direction_t mainAxis = getFlexDirection(node);
   css_flex_direction_t crossAxis = mainAxis == CSS_FLEX_DIRECTION_ROW ?
     CSS_FLEX_DIRECTION_COLUMN :
@@ -672,6 +673,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       }
     }
   }
+  /** END_GENERATED **/
 }
 
 void layoutNode(css_node_t *node, float parentMaxWidth) {
@@ -702,4 +704,3 @@ void layoutNode(css_node_t *node, float parentMaxWidth) {
     layout->last_position[CSS_LEFT] = layout->position[CSS_LEFT];
   }
 }
-

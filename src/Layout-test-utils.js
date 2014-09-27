@@ -1,7 +1,11 @@
-/** @nolint */
+/* globals document, computeLayout */
 
 var layoutTestUtils = (function() {
-  var iframe = (function() {
+  var cachedIframe;
+  function getIframe() {
+    if (cachedIframe) {
+      return cachedIframe;
+    }
     var iframe = document.createElement('iframe');
     document.body.appendChild(iframe);
     var doc = iframe.contentDocument;
@@ -29,15 +33,14 @@ var layoutTestUtils = (function() {
       }
     */} + '').slice(15, -4);
     doc.head.appendChild(style);
-
+    cachedIframe = iframe;
     return iframe;
-  })();
-  var body = iframe.contentDocument.body;
+  }
 
-  var iframeText = document.createElement('iframe');
-  document.body.appendChild(iframeText);
 
-  var realComputeLayout = computeLayout;
+  if (typeof computeLayout === 'function') {
+    var realComputeLayout = computeLayout;
+  }
 
   function computeCSSLayout(rootNode) {
     function fillNodes(node) {
@@ -74,7 +77,7 @@ var layoutTestUtils = (function() {
   }
 
   function computeDOMLayout(node) {
-    var body = iframe.contentDocument.body;
+    var body = getIframe().contentDocument.body;
 
     function transfer(div, node, name, ext) {
       if (name in node.style) {
@@ -229,7 +232,11 @@ var layoutTestUtils = (function() {
     return node;
   }
 
+  var iframeText;
   function measureTextSizes(text, width) {
+    iframeText = iframeText || document.createElement('iframe');
+    document.body.appendChild(iframeText);
+
     var body = iframeText.contentDocument.body;
     if (width === undefined || width !== width) {
       width = Infinity;
@@ -262,13 +269,24 @@ var layoutTestUtils = (function() {
     big: 'loooooooooong with space',
   };
 
-  var textSizes = {
-    smallWidth: measureTextSizes(texts.small, 0).width,
-    smallHeight: measureTextSizes(texts.small, 0).height,
-    bigWidth: measureTextSizes(texts.big).width,
-    bigHeight: measureTextSizes(texts.big, 0).height,
-    bigMinWidth: measureTextSizes(texts.big, 0).width,
-  };
+  var textSizes;
+  if (typeof require === 'function') {
+    textSizes =  {
+      smallWidth: 34.671875,
+      smallHeight: 18,
+      bigWidth: 172.421875,
+      bigHeight: 36,
+      bigMinWidth: 100.453125
+    };
+  } else {
+    textSizes = {
+      smallWidth: measureTextSizes(texts.small, 0).width,
+      smallHeight: measureTextSizes(texts.small, 0).height,
+      bigWidth: measureTextSizes(texts.big).width,
+      bigHeight: measureTextSizes(texts.big, 0).height,
+      bigMinWidth: measureTextSizes(texts.big, 0).width,
+    };
+  }
 
   return {
     texts: texts,
@@ -317,3 +335,7 @@ var layoutTestUtils = (function() {
     }
   }
 })();
+
+if (typeof module !== 'undefined') {
+  module.exports = layoutTestUtils;
+}

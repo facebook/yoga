@@ -2,6 +2,16 @@
 #include "Layout-test-utils.h"
 #include <stdlib.h>
 
+  /** START_GENERATED **/
+#define SMALL_WIDTH 34.671875
+#define SMALL_HEIGHT 18
+#define BIG_WIDTH 172.421875
+#define BIG_HEIGHT 36
+#define BIG_MIN_WIDTH 100.453125
+#define SMALL_TEXT "small"
+#define LONG_TEXT "loooooooooong with space"
+  /** END_GENERATED **/
+
 typedef struct failed_test_t {
   struct failed_test_t *next;
   const char *name;
@@ -52,14 +62,14 @@ css_dim_t measure(void *context, float width) {
   if (width != width) {
     width = 1000000;
   }
-  if (strcmp(text, "small") == 0) {
-    dim.dimensions[CSS_WIDTH] = fminf(33, width);
-    dim.dimensions[CSS_HEIGHT] = 18;
+  if (strcmp(text, SMALL_TEXT) == 0) {
+    dim.dimensions[CSS_WIDTH] = fminf(SMALL_WIDTH, width);
+    dim.dimensions[CSS_HEIGHT] = SMALL_HEIGHT;
     return dim;
   }
-  if (strcmp(text, "loooooooooong with space") == 0) {
-    dim.dimensions[CSS_WIDTH] = width >= 171 ? 171 : fmaxf(100, width);
-    dim.dimensions[CSS_HEIGHT] = width >= 171 ? 18 : 36;
+  if (strcmp(text, LONG_TEXT) == 0) {
+    dim.dimensions[CSS_WIDTH] = width >= BIG_WIDTH ? BIG_WIDTH : fmaxf(BIG_MIN_WIDTH, width);
+    dim.dimensions[CSS_HEIGHT] = width >= BIG_WIDTH ? SMALL_HEIGHT : BIG_HEIGHT;
     return dim;
   }
 
