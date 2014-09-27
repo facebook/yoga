@@ -3165,66 +3165,6 @@ int main()
 
     test("should layout with absolutely position bottom", root_node, root_layout);
   }
-
-  {
-    css_node_t *root_node = new_test_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.align_items = CSS_ALIGN_STRETCH;
-      node_0->style.dimensions[CSS_WIDTH] = 80;
-      node_0->style.padding[CSS_LEFT] = 7;
-      node_0->style.padding[CSS_TOP] = 7;
-      node_0->style.padding[CSS_RIGHT] = 7;
-      node_0->style.padding[CSS_BOTTOM] = 7;
-      node_0->measure = measure;
-      node_0->context = "loooooooooong with space";
-    }
-
-    css_node_t *root_layout = new_test_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 80;
-      node_0->layout.dimensions[CSS_HEIGHT] = 68;
-    }
-
-    test("should layout text with alignItems: stretch", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_test_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->measure = measure;
-        node_1->context = "loooooooooong with space";
-      }
-    }
-
-    css_node_t *root_layout = new_test_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 0;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->layout.position[CSS_TOP] = 0;
-        node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 100;
-        node_1->layout.dimensions[CSS_HEIGHT] = 36;
-      }
-    }
-
-    test("should layout node with text and position absolute", root_node, root_layout);
-  }
   /** END_GENERATED **/
   tests_finished();
 }

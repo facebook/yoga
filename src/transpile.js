@@ -22,7 +22,7 @@ global.layoutTestUtils = {
 
 global.describe = function(name, cb) { cb(); };
 global.it = function(name, cb) { currentTest = name; cb(); };
-global.xit = global.it;
+global.xit = function() { /* ignore skipped tests */ };
 
 require('./__tests__/Layout-test.js');
 
