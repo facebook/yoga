@@ -31,7 +31,7 @@ describe('Layout', function() {
 
   it('should layout node with nested children', function() {
     testLayout(
-      {style: {width: 1000, height: 1000}, children: [
+      {style: {width: 1001, height: 1000}, children: [
         {style: {width: 500, height: 500}},
         {style: {width: 500, height: 500}, children: [
           {style: {width: 250, height: 250}},

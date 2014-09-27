@@ -82,7 +82,7 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_WIDTH] = 1001;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
       init_css_node_children(node_0, 2);
       {
