@@ -942,7 +942,7 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout with absolutely position bottom', function() {
+  it('should layout with position: absolute and another sibling', function() {
     testLayout(
       {style: {}, children: [
         {style: {width: 50, height: 100}},

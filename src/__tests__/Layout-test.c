@@ -3163,7 +3163,7 @@ int main()
       }
     }
 
-    test("should layout with absolutely position bottom", root_node, root_layout);
+    test("should layout with position: absolute and another sibling", root_node, root_layout);
   }
   /** END_GENERATED **/
   return tests_finished();
