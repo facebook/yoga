@@ -566,6 +566,16 @@ var computeLayout = (function() {
             );
           }
         }
+        for (var/*int*/ ii = 0; ii < 2; ii++) {
+          var/*css_flex_direction_t*/ axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+          if (isPosDefined(child, trailing[axis]) &&
+              !isPosDefined(child, leading[axis])) {
+            child.layout[leading[axis]] =
+              node.layout[dim[axis]] -
+              child.layout[dim[axis]] -
+              getPosition(child, trailing[axis]);
+          }
+        }
       }
     }
   };

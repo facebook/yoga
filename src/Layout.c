@@ -691,6 +691,16 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
           );
         }
       }
+      for (int ii = 0; ii < 2; ii++) {
+        css_flex_direction_t axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        if (isPosDefined(child, trailing[axis]) &&
+            !isPosDefined(child, leading[axis])) {
+          child->layout.position[leading[axis]] =
+            node->layout.dimensions[dim[axis]] -
+            child->layout.dimensions[dim[axis]] -
+            getPosition(child, trailing[axis]);
+        }
+      }
     }
   }
   /** END_GENERATED **/

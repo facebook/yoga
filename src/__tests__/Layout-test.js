@@ -955,30 +955,12 @@ describe('Layout', function() {
     );
   });
 
-  xit('should layout text with alignItems: stretch', function() {
+  it('should calculate height properly with position: absolute top and bottom', function() {
     testLayout(
-      {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text(texts.big)}},
-      {width: 80, height: 68, top: 0, left: 0}
-    );
-  });
-
-  xit('should layout node with text and position absolute', function() {
-    testLayout(
-      {style: {}, children: [
-        {style: {measure: text(texts.big)}}
-      ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 100, height: textSizes.bigHeight, top: 0, left: 0}
-      ]}
-    );
-  });
-
-  it('should layout with position: absolute, bottom', function() {
-    testLayout(
-      {style: {width: 100, height: 100}, children: [
+      {style: {height: 100}, children: [
         {style: {position: 'absolute', top: 0, bottom: 20}}
       ]},
-      {width: 100, height: 100, top: 0, left: 0, children: [
+      {width: 0, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 80, top: 0, left: 0}
       ]}
     );
@@ -995,6 +977,90 @@ describe('Layout', function() {
         {width: 200, height: 200, top: 0, left: 0, children: [
           {width: 100, height: 100, top: 50, left: 0}
         ]}
+      ]}
+    );
+  });
+
+  it('should calculate top properly with position: absolute bottom', function() {
+    testLayout(
+      {style: {height: 100}, children: [
+        {style: {position: 'absolute', bottom: 0}}
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 100, left: 0}
+      ]}
+    );
+  });
+
+  it('should calcluate left properly with position: absolute right', function() {
+    testLayout(
+      {style: {width: 100}, children: [
+        {style: {position: 'absolute', right: 0}}
+      ]},
+      {width: 100, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 100}
+      ]}
+    );
+  });
+
+  it('should calculate top properly with position: absolute bottom and height', function() {
+    testLayout(
+      {style: {height: 100}, children: [
+        {style: {height: 10, position: 'absolute', bottom: 0}}
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 10, top: 90, left: 0}
+      ]}
+    );
+  });
+
+  it('should calcluate left properly with position: absolute right and width', function() {
+    testLayout(
+      {style: {width: 100}, children: [
+        {style: {width: 10, position: 'absolute', right: 0}}
+      ]},
+      {width: 100, height: 0, top: 0, left: 0, children: [
+        {width: 10, height: 0, top: 0, left: 90}
+      ]}
+    );
+  });
+
+  it('should calcluate top properly with position: absolute right, width, and no parent dimensions', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {height: 10, position: 'absolute', bottom: 0}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 10, top: -10, left: 0}
+      ]}
+    );
+  });
+
+  it('should calcluate left properly with position: absolute right, width, and no parent dimensions', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {width: 10, position: 'absolute', right: 0}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 10, height: 0, top: 0, left: -10}
+      ]}
+    );
+  });
+
+  xit('should layout text with alignItems: stretch', function() {
+    testLayout(
+      {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text(texts.big)}},
+      {width: 80, height: 68, top: 0, left: 0}
+    );
+  });
+
+  xit('should layout node with text and position absolute', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {measure: text(texts.big)}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 100, height: textSizes.bigHeight, top: 0, left: 0}
       ]}
     );
   });

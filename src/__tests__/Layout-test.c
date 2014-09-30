@@ -3170,7 +3170,6 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.dimensions[CSS_WIDTH] = 100;
       node_0->style.dimensions[CSS_HEIGHT] = 100;
       init_css_node_children(node_0, 1);
       {
@@ -3187,7 +3186,7 @@ int main()
       css_node_t *node_0 = root_layout;
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
       node_0->layout.dimensions[CSS_HEIGHT] = 100;
       init_css_node_children(node_0, 1);
       {
@@ -3200,7 +3199,7 @@ int main()
       }
     }
 
-    test("should layout with position: absolute, bottom", root_node, root_layout);
+    test("should calculate height properly with position: absolute top and bottom", root_node, root_layout);
   }
 
   {
@@ -3257,6 +3256,218 @@ int main()
     }
 
     test("should layout with complicated position: absolute and justifyContent: center combo", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.position[CSS_BOTTOM] = 0;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should calculate top properly with position: absolute bottom", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.position[CSS_RIGHT] = 0;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 100;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should calcluate left properly with position: absolute right", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.dimensions[CSS_HEIGHT] = 10;
+        node_1->style.position[CSS_BOTTOM] = 0;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 90;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 10;
+      }
+    }
+
+    test("should calculate top properly with position: absolute bottom and height", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.dimensions[CSS_WIDTH] = 10;
+        node_1->style.position[CSS_RIGHT] = 0;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 90;
+        node_1->layout.dimensions[CSS_WIDTH] = 10;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should calcluate left properly with position: absolute right and width", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.dimensions[CSS_HEIGHT] = 10;
+        node_1->style.position[CSS_BOTTOM] = 0;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = -10;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 10;
+      }
+    }
+
+    test("should calcluate top properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.dimensions[CSS_WIDTH] = 10;
+        node_1->style.position[CSS_RIGHT] = 0;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = -10;
+        node_1->layout.dimensions[CSS_WIDTH] = 10;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should calcluate left properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
   }
   /** END_GENERATED **/
   return tests_finished();
