@@ -6,7 +6,7 @@
 
 #include "Layout.h"
 
-static bool isUndefined(float value) {
+bool isUndefined(float value) {
   return isnan(value);
 }
 

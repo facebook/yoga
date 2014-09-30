@@ -39,7 +39,8 @@ typedef enum {
   CSS_LEFT = 0,
   CSS_TOP,
   CSS_RIGHT,
-  CSS_BOTTOM
+  CSS_BOTTOM,
+  CSS_POSITION_COUNT
 } css_position_t;
 
 typedef enum {
@@ -116,5 +117,6 @@ void print_css_node(css_node_t *node, css_print_options_t options);
 
 // Function that computes the layout!
 void layoutNode(css_node_t *node, float maxWidth);
+bool isUndefined(float value);
 
 #endif
