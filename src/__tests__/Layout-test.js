@@ -973,5 +973,31 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout with position: absolute, bottom', function() {
+    testLayout(
+      {style: {width: 100, height: 100}, children: [
+        {style: {position: 'absolute', top: 0, bottom: 20}}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 80, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout with complicated position: absolute and justifyContent: center combo', function() {
+    testLayout(
+      {style: {width: 200, height: 200}, children: [
+        {style: {position: 'absolute', justifyContent: 'center', top: 0, left: 0, right: 0, bottom: 0}, children: [
+          {style: {width: 100, height: 100}}
+        ]}
+      ]},
+      {width: 200, height: 200, top: 0, left: 0, children: [
+        {width: 200, height: 200, top: 0, left: 0, children: [
+          {width: 100, height: 100, top: 50, left: 0}
+        ]}
+      ]}
+    );
+  });
+
 });
 

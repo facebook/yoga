@@ -3165,6 +3165,99 @@ int main()
 
     test("should layout with position: absolute and another sibling", root_node, root_layout);
   }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.position[CSS_TOP] = 0;
+        node_1->style.position[CSS_BOTTOM] = 20;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 80;
+      }
+    }
+
+    test("should layout with position: absolute, bottom", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.justify_content = CSS_JUSTIFY_CENTER;
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.position[CSS_LEFT] = 0;
+        node_1->style.position[CSS_TOP] = 0;
+        node_1->style.position[CSS_RIGHT] = 0;
+        node_1->style.position[CSS_BOTTOM] = 0;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 100;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 50;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 100;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should layout with complicated position: absolute and justifyContent: center combo", root_node, root_layout);
+  }
   /** END_GENERATED **/
   return tests_finished();
 }
