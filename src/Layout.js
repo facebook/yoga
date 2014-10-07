@@ -237,7 +237,7 @@ var computeLayout = (function() {
       // Let's not measure the text if we already know both dimensions
       if (isRowUndefined || isColumnUndefined) {
         var/*css_dim_t*/ measure_dim = node.style.measure(
-          /*!node->context,*/
+          /*(c)!node->context,*/
           width
         );
         if (isRowUndefined) {
@@ -273,7 +273,7 @@ var computeLayout = (function() {
         // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
         // left and right or top and bottom).
         for (var/*int*/ ii = 0; ii < 2; ii++) {
-          var/*css_flex_direction_t*/ axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+          var/*css_flex_direction_t*/ axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
           if (!isUndefined(node.layout[dim[axis]]) &&
               !isDimDefined(child, axis) &&
               isPosDefined(child, leading[axis]) &&
@@ -366,7 +366,7 @@ var computeLayout = (function() {
 
       // If there are flexible children in the mix, they are going to fill the
       // remaining space
-      if (flexibleChildrenCount) {
+      if (flexibleChildrenCount != 0) {
         var/*float*/ flexibleMainDim = remainingMainDim / totalFlexible;
 
         // The non flexible children can overflow the container, in this case
@@ -550,7 +550,7 @@ var computeLayout = (function() {
         // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
         // left and right or top and bottom).
         for (var/*int*/ ii = 0; ii < 2; ii++) {
-          var/*css_flex_direction_t*/ axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+          var/*css_flex_direction_t*/ axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
           if (!isUndefined(node.layout[dim[axis]]) &&
               !isDimDefined(child, axis) &&
               isPosDefined(child, leading[axis]) &&
@@ -567,7 +567,7 @@ var computeLayout = (function() {
           }
         }
         for (var/*int*/ ii = 0; ii < 2; ii++) {
-          var/*css_flex_direction_t*/ axis = ii ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+          var/*css_flex_direction_t*/ axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
           if (isPosDefined(child, trailing[axis]) &&
               !isPosDefined(child, leading[axis])) {
             child.layout[leading[axis]] =
