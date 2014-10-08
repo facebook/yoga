@@ -21,8 +21,8 @@ var layoutTestUtils = (function() {
         display: -webkit-flex;
         flex-direction: column;
         -webkit-flex-direction: column;
-        align-items: flex-start;
-        -webkit-align-items: flex-start;
+        align-items: stretch;
+        -webkit-align-items: stretch;
         justify-content: flex-start;
         -webkit-justify-content: flex-start;
         flex-shrink: 0;
@@ -72,6 +72,7 @@ var layoutTestUtils = (function() {
     }
 
     fillNodes(rootNode);
+    rootNode.style.alignSelf = 'flex-start';
     realComputeLayout(rootNode);
     return extractNodes(rootNode);
   }

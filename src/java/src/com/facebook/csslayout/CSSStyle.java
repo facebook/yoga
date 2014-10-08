@@ -7,7 +7,7 @@ public class CSSStyle {
 
   public CSSFlexDirection flexDirection = CSSFlexDirection.COLUMN;
   public CSSJustify justifyContent = CSSJustify.FLEX_START;
-  public CSSAlign alignItems = CSSAlign.FLEX_START;
+  public CSSAlign alignItems = CSSAlign.STRETCH;
   public CSSAlign alignSelf = CSSAlign.AUTO;
   public CSSPositionType positionType = CSSPositionType.RELATIVE;
   public float flex;

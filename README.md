@@ -28,11 +28,11 @@ position | 'relative', 'absolute'
 Usage
 -----
 
-A single function `computeLayout` is exposed and 
+A single function `computeLayout` is exposed and
  - takes a tree of nodes: `{ style: { ... }, children: [ nodes ] }`
  - returns a tree of rectanges: `{ width: ..., height: ..., top: ..., left: ..., children: [ rects ] }`
 
-For example, 
+For example,
 
 ```javascript
 computeLayout(
@@ -58,11 +58,10 @@ div, span {
   border: 0 solid black;
   margin: 0;
   padding: 0;
-  
+
   display: flex;
   flex-direction: column;
-  align-self: stretch;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: flex-start;
   flex-shrink: 0;
 }
