@@ -831,7 +831,7 @@ describe('Layout', function() {
         {style: {measure: text(texts.big), alignSelf: 'flex-start'}}
       ]},
       {width: 100, height: textSizes.bigHeight, top: 0, left: 0, children: [
-        {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
+        {width: 100, height: textSizes.bigHeight, top: 0, left: 0}
       ]}
     );
   });
@@ -844,8 +844,8 @@ describe('Layout', function() {
         ]}
       ]},
       {width: 100, height: 40 + textSizes.bigHeight, top: 0, left: 0, children: [
-        {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 20, left: 20, children: [
-          {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
+        {width: 60, height: textSizes.bigHeight, top: 20, left: 20, children: [
+          {width: 60, height: textSizes.bigHeight, top: 0, left: 0}
         ]}
       ]}
     );
@@ -923,8 +923,8 @@ describe('Layout', function() {
         {style: {flex: 7.5, alignSelf: 'flex-start'}}
       ]},
       {width: 100, height: 100, top: 0, left: 0, children: [
-        {width: 0, height: 25, top: 0, left: 0},
-        {width: 0, height: 75, top: 25, left: 0},
+        {width: 100, height: 25, top: 0, left: 0},
+        {width: 100, height: 75, top: 25, left: 0},
       ]}
     );
   });
@@ -936,8 +936,8 @@ describe('Layout', function() {
         {style: {flex: 0, alignSelf: 'flex-start'}}
       ]},
       {width: 100, height: 100, top: 0, left: 0, children: [
-        {width: 0, height: 0, top: 0, left: 0},
-        {width: 0, height: 0, top: 0, left: 0},
+        {width: 100, height: 0, top: 0, left: 0},
+        {width: 100, height: 0, top: 0, left: 0},
       ]}
     );
   });

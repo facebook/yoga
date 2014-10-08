@@ -2754,7 +2754,7 @@ int main()
         node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 100.453125;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 36;
       }
     }
@@ -2804,7 +2804,7 @@ int main()
         node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 20;
         node_1->layout.position[CSS_LEFT] = 20;
-        node_1->layout.dimensions[CSS_WIDTH] = 100.453125;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
         node_1->layout.dimensions[CSS_HEIGHT] = 36;
         init_css_node_children(node_1, 1);
         {
@@ -2812,7 +2812,7 @@ int main()
           node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
-          node_2->layout.dimensions[CSS_WIDTH] = 100.453125;
+          node_2->layout.dimensions[CSS_WIDTH] = 60;
           node_2->layout.dimensions[CSS_HEIGHT] = 36;
         }
       }
@@ -3076,12 +3076,12 @@ int main()
         node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 25;
         node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 25;
         node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 75;
       }
     }
@@ -3120,12 +3120,12 @@ int main()
         node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
         node_1 = node_0->get_child(node_0->context, 1);
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
