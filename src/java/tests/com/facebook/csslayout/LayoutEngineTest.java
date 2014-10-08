@@ -2944,11 +2944,13 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.alignSelf = CSSAlign.FLEX_START;
       node_0.style.width = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
         node_1.setMeasureFunction(sTestMeasureFunction);
         node_1.context = "loooooooooong with space";
       }
@@ -2981,6 +2983,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.alignSelf = CSSAlign.FLEX_START;
       node_0.style.width = 100;
       node_0.style.paddingLeft = 10;
       node_0.style.paddingTop = 10;
@@ -2990,6 +2993,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
         node_1.style.marginLeft = 10;
         node_1.style.marginTop = 10;
         node_1.style.marginRight = 10;
@@ -3273,14 +3277,17 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.alignSelf = CSSAlign.FLEX_START;
       node_0.style.width = 100;
       node_0.style.height = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
         node_1.style.flex = 2.5f;
         node_1 = node_0.getChildAt(1);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
         node_1.style.flex = 7.5f;
       }
     }
@@ -3317,13 +3324,16 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.alignSelf = CSSAlign.FLEX_START;
       node_0.style.width = 100;
       node_0.style.height = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
         node_1 = node_0.getChildAt(1);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
         node_1.style.flex = 0;
       }
     }

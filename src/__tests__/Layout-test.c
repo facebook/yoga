@@ -2729,11 +2729,13 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.align_self = CSS_ALIGN_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
         node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
         node_1->measure = measure;
         node_1->context = "loooooooooong with space";
       }
@@ -2764,6 +2766,7 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.align_self = CSS_ALIGN_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       node_0->style.padding[CSS_LEFT] = 10;
       node_0->style.padding[CSS_TOP] = 10;
@@ -2773,6 +2776,7 @@ int main()
       {
         css_node_t *node_1;
         node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
         node_1->style.margin[CSS_LEFT] = 10;
         node_1->style.margin[CSS_TOP] = 10;
         node_1->style.margin[CSS_RIGHT] = 10;
@@ -3044,14 +3048,17 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.align_self = CSS_ALIGN_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       node_0->style.dimensions[CSS_HEIGHT] = 100;
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
         node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
         node_1->style.flex = 2.5;
         node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
         node_1->style.flex = 7.5;
       }
     }
@@ -3086,13 +3093,16 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.align_self = CSS_ALIGN_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       node_0->style.dimensions[CSS_HEIGHT] = 100;
       init_css_node_children(node_0, 2);
       {
         css_node_t *node_1;
         node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
         node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
         node_1->style.flex = 0;
       }
     }

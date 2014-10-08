@@ -18,7 +18,7 @@ static bool eq(float a, float b) {
 }
 
 void init_css_node(css_node_t *node) {
-  node->style.align_items = CSS_ALIGN_FLEX_START;
+  node->style.align_items = CSS_ALIGN_STRETCH;
 
   // Some of the fields default to undefined and not 0
   node->style.dimensions[CSS_WIDTH] = CSS_UNDEFINED;

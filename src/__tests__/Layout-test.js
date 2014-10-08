@@ -827,8 +827,8 @@ describe('Layout', function() {
 
   it('should layout node with text bounded by parent', function() {
     testLayout(
-      {style: {width: 100}, children: [
-        {style: {measure: text(texts.big)}}
+      {style: {width: 100, alignSelf: 'flex-start'}, children: [
+        {style: {measure: text(texts.big), alignSelf: 'flex-start'}}
       ]},
       {width: 100, height: textSizes.bigHeight, top: 0, left: 0, children: [
         {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
@@ -838,8 +838,8 @@ describe('Layout', function() {
 
   it('should layout node with text bounded by grand-parent', function() {
     testLayout(
-      {style: {width: 100, padding: 10}, children: [
-        {style: {margin: 10}, children: [
+      {style: {width: 100, padding: 10, alignSelf: 'flex-start'}, children: [
+        {style: {margin: 10, alignSelf: 'flex-start'}, children: [
           {style: {measure: text(texts.big)}}
         ]}
       ]},
@@ -918,9 +918,9 @@ describe('Layout', function() {
 
   it('should layout with arbitrary flex', function() {
     testLayout(
-      {style: {width: 100, height: 100}, children: [
-        {style: {flex: 2.5}},
-        {style: {flex: 7.5}}
+      {style: {width: 100, height: 100, alignSelf: 'flex-start'}, children: [
+        {style: {flex: 2.5, alignSelf: 'flex-start'}},
+        {style: {flex: 7.5, alignSelf: 'flex-start'}}
       ]},
       {width: 100, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 25, top: 0, left: 0},
@@ -931,9 +931,9 @@ describe('Layout', function() {
 
   it('should layout with negative flex', function() {
     testLayout(
-      {style: {width: 100, height: 100}, children: [
-        {style: {flex: -2.5}},
-        {style: {flex: 0}}
+      {style: {width: 100, height: 100, alignSelf: 'flex-start'}, children: [
+        {style: {flex: -2.5, alignSelf: 'flex-start'}},
+        {style: {flex: 0, alignSelf: 'flex-start'}}
       ]},
       {width: 100, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 0, left: 0},

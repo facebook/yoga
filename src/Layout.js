@@ -76,7 +76,7 @@ var computeLayout = (function() {
     if ('alignItems' in node.style) {
       return node.style.alignItems;
     }
-    return 'flex-start';
+    return 'stretch';
   }
 
   function getFlexDirection(node) {
