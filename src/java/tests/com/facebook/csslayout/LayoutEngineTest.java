@@ -2967,7 +2967,7 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.layout.y = 0;
         node_1.layout.x = 0;
-        node_1.layout.width = 100.453125f;
+        node_1.layout.width = 100;
         node_1.layout.height = 36;
       }
     }
@@ -3017,7 +3017,7 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.layout.y = 20;
         node_1.layout.x = 20;
-        node_1.layout.width = 100.453125f;
+        node_1.layout.width = 60;
         node_1.layout.height = 36;
         addChildren(node_1, 1);
         {
@@ -3025,7 +3025,7 @@ public class LayoutEngineTest {
           node_2 = node_1.getChildAt(0);
           node_2.layout.y = 0;
           node_2.layout.x = 0;
-          node_2.layout.width = 100.453125f;
+          node_2.layout.width = 60;
           node_2.layout.height = 36;
         }
       }
@@ -3298,12 +3298,12 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.layout.y = 0;
         node_1.layout.x = 0;
-        node_1.layout.width = 0;
+        node_1.layout.width = 100;
         node_1.layout.height = 25;
         node_1 = node_0.getChildAt(1);
         node_1.layout.y = 25;
         node_1.layout.x = 0;
-        node_1.layout.width = 0;
+        node_1.layout.width = 100;
         node_1.layout.height = 75;
       }
     }
@@ -3341,12 +3341,12 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.layout.y = 0;
         node_1.layout.x = 0;
-        node_1.layout.width = 0;
+        node_1.layout.width = 100;
         node_1.layout.height = 0;
         node_1 = node_0.getChildAt(1);
         node_1.layout.y = 0;
         node_1.layout.x = 0;
-        node_1.layout.width = 0;
+        node_1.layout.width = 100;
         node_1.layout.height = 0;
       }
     }
