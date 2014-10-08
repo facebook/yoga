@@ -4,6 +4,8 @@ package com.facebook.csslayout;
 
 public class FloatUtil {
 
+  private static final float EPSILON = .00001f;
+
   public static boolean isUndefined(float f) {
     return Float.compare(f, CSSConstants.UNDEFINED) == 0;
   }
@@ -12,6 +14,6 @@ public class FloatUtil {
     if (isUndefined(f1)) {
       return isUndefined(f2);
     }
-    return Math.abs(f2 - f1) < .00001;
+    return Math.abs(f2 - f1) < EPSILON;
   }
 }

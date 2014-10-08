@@ -16,13 +16,13 @@ public class CSSNode {
     DIRTY,
 
     /**
-     * This node has a new layout relative to the last time {@link #markLayoutApplied()} was called.
+     * This node has a new layout relative to the last time {@link #markLayoutSeen()} was called.
      */
     HAS_NEW_LAYOUT,
 
     /**
      * {@link #layout} is valid for the node's properties and this layout has been marked as
-     * having been applied.
+     * having been seen.
      */
     UP_TO_DATE,
   }
@@ -81,8 +81,10 @@ public class CSSNode {
   }
 
   public void setMeasureFunction(MeasureFunction measureFunction) {
-    dirtyIfDifferent(mMeasureFunction, measureFunction);
-    mMeasureFunction = measureFunction;
+    if (!valuesEqual(mMeasureFunction, measureFunction)) {
+      mMeasureFunction = measureFunction;
+      dirty();
+    }
   }
 
   public boolean isMeasureDefined() {
@@ -125,8 +127,7 @@ public class CSSNode {
     if (mLayoutState == LayoutState.DIRTY) {
       return;
     } else if (mLayoutState == LayoutState.HAS_NEW_LAYOUT) {
-      throw new IllegalStateException(
-          "Previous layout was ignored! markLayoutApplied() never called");
+      throw new IllegalStateException("Previous layout was ignored! markLayoutSeen() never called");
     }
 
     mLayoutState = LayoutState.DIRTY;
@@ -141,13 +142,13 @@ public class CSSNode {
   }
 
   /**
-   * Tells the node that the current values in {@link #layout} have been applied. Subsequent calls
+   * Tells the node that the current values in {@link #layout} have been seen. Subsequent calls
    * to {@link #hasNewLayout()} will return false until this node is laid out with new parameters.
    * You must call this each time the layout is generated if the node has a new layout.
    */
-  public void markLayoutApplied() {
+  public void markLayoutSeen() {
     if (!hasNewLayout()) {
-      throw new IllegalStateException("Expected node to have a new layout to apply!");
+      throw new IllegalStateException("Expected node to have a new layout to be seen!");
     }
 
     mLayoutState = LayoutState.UP_TO_DATE;
@@ -181,143 +182,183 @@ public class CSSNode {
     }
   }
 
-  protected void dirtyIfDifferent(float f1, float f2) {
-    if (!FloatUtil.floatsEqual(f1, f2)) {
-      dirty();
-    }
+  protected boolean valuesEqual(float f1, float f2) {
+    return FloatUtil.floatsEqual(f1, f2);
   }
 
-  private static <T> boolean objectsEqual(T o1, T o2) {
+  protected <T> boolean valuesEqual(T o1, T o2) {
     if (o1 == null) {
       return o2 == null;
     }
     return o1.equals(o2);
   }
 
-  protected <T> void dirtyIfDifferent(T o1, T o2) {
-    if (!objectsEqual(o1, o2)) {
+  public void setFlexDirection(CSSFlexDirection flexDirection) {
+    if (!valuesEqual(style.flexDirection, flexDirection)) {
+      style.flexDirection = flexDirection;
       dirty();
     }
   }
 
-  public void setFlexDirection(CSSFlexDirection flexDirection) {
-    dirtyIfDifferent(style.flexDirection, flexDirection);
-    style.flexDirection = flexDirection;
-  }
-
   public void setJustifyContent(CSSJustify justifyContent) {
-    dirtyIfDifferent(style.justifyContent, justifyContent);
-    style.justifyContent = justifyContent;
+    if (!valuesEqual(style.justifyContent, justifyContent)) {
+      style.justifyContent = justifyContent;
+      dirty();
+    }
   }
 
   public void setAlignItems(CSSAlign alignItems) {
-    dirtyIfDifferent(style.alignItems, alignItems);
-    style.alignItems = alignItems;
+    if (!valuesEqual(style.alignItems, alignItems)) {
+      style.alignItems = alignItems;
+      dirty();
+    }
   }
 
   public void setAlignSelf(CSSAlign alignSelf) {
-    dirtyIfDifferent(style.alignSelf, alignSelf);
-    style.alignSelf = alignSelf;
+    if (!valuesEqual(style.alignSelf, alignSelf)) {
+      style.alignSelf = alignSelf;
+      dirty();
+    }
   }
 
   public void setPositionType(CSSPositionType positionType) {
-    dirtyIfDifferent(style.positionType, positionType);
-    style.positionType = positionType;
+    if (!valuesEqual(style.positionType, positionType)) {
+      style.positionType = positionType;
+      dirty();
+    }
   }
 
   public void setFlex(float flex) {
-    dirtyIfDifferent(style.flex, flex);
-    style.flex = flex;
+    if (!valuesEqual(style.flex, flex)) {
+      style.flex = flex;
+      dirty();
+    }
   }
 
   public void setMarginTop(float marginTop) {
-    dirtyIfDifferent(style.marginTop, marginTop);
-    style.marginTop = marginTop;
+    if (!valuesEqual(style.marginTop, marginTop)) {
+      style.marginTop = marginTop;
+      dirty();
+    }
   }
 
   public void setMarginBottom(float marginBottom) {
-    dirtyIfDifferent(style.marginBottom, marginBottom);
-    style.marginBottom = marginBottom;
+    if (!valuesEqual(style.marginBottom, marginBottom)) {
+      style.marginBottom = marginBottom;
+      dirty();
+    }
   }
 
   public void setMarginLeft(float marginLeft) {
-    dirtyIfDifferent(style.marginLeft, marginLeft);
-    style.marginLeft = marginLeft;
+    if (!valuesEqual(style.marginLeft, marginLeft)) {
+      style.marginLeft = marginLeft;
+      dirty();
+    }
   }
 
   public void setMarginRight(float marginRight) {
-    dirtyIfDifferent(style.marginRight, marginRight);
-    style.marginRight = marginRight;
+    if (!valuesEqual(style.marginRight, marginRight)) {
+      style.marginRight = marginRight;
+      dirty();
+    }
   }
 
   public void setPaddingTop(float paddingTop) {
-    dirtyIfDifferent(style.paddingTop, paddingTop);
-    style.paddingTop = paddingTop;
+    if (!valuesEqual(style.paddingTop, paddingTop)) {
+      style.paddingTop = paddingTop;
+      dirty();
+    }
   }
 
   public void setPaddingBottom(float paddingBottom) {
-    dirtyIfDifferent(style.paddingBottom, paddingBottom);
-    style.paddingBottom = paddingBottom;
+    if (!valuesEqual(style.paddingBottom, paddingBottom)) {
+      style.paddingBottom = paddingBottom;
+      dirty();
+    }
   }
 
   public void setPaddingLeft(float paddingLeft) {
-    dirtyIfDifferent(style.paddingLeft, paddingLeft);
-    style.paddingLeft = paddingLeft;
+    if (!valuesEqual(style.paddingLeft, paddingLeft)) {
+      style.paddingLeft = paddingLeft;
+      dirty();
+    }
   }
 
   public void setPaddingRight(float paddingRight) {
-    dirtyIfDifferent(style.paddingRight, paddingRight);
-    style.paddingRight = paddingRight;
+    if (!valuesEqual(style.paddingRight, paddingRight)) {
+      style.paddingRight = paddingRight;
+      dirty();
+    }
   }
 
   public void setPositionTop(float positionTop) {
-    dirtyIfDifferent(style.positionTop, positionTop);
-    style.positionTop = positionTop;
+    if (!valuesEqual(style.positionTop, positionTop)) {
+      style.positionTop = positionTop;
+      dirty();
+    }
   }
 
   public void setPositionBottom(float positionBottom) {
-    dirtyIfDifferent(style.positionBottom, positionBottom);
-    style.positionBottom = positionBottom;
+    if (!valuesEqual(style.positionBottom, positionBottom)) {
+      style.positionBottom = positionBottom;
+      dirty();
+    }
   }
 
   public void setPositionLeft(float positionLeft) {
-    dirtyIfDifferent(style.positionLeft, positionLeft);
-    style.positionLeft = positionLeft;
+    if (!valuesEqual(style.positionLeft, positionLeft)) {
+      style.positionLeft = positionLeft;
+      dirty();
+    }
   }
 
   public void setPositionRight(float positionRight) {
-    dirtyIfDifferent(style.positionRight, positionRight);
-    style.positionRight = positionRight;
+    if (!valuesEqual(style.positionRight, positionRight)) {
+      style.positionRight = positionRight;
+      dirty();
+    }
   }
 
   public void setBorderTop(float borderTop) {
-    dirtyIfDifferent(style.borderTop, borderTop);
-    style.borderTop = borderTop;
+    if (!valuesEqual(style.borderTop, borderTop)) {
+      style.borderTop = borderTop;
+      dirty();
+    }
   }
 
   public void setBorderBottom(float borderBottom) {
-    dirtyIfDifferent(style.borderBottom, borderBottom);
-    style.borderBottom = borderBottom;
+    if (!valuesEqual(style.borderBottom, borderBottom)) {
+      style.borderBottom = borderBottom;
+      dirty();
+    }
   }
 
   public void setBorderLeft(float borderLeft) {
-    dirtyIfDifferent(style.borderLeft, borderLeft);
-    style.borderLeft = borderLeft;
+    if (!valuesEqual(style.borderLeft, borderLeft)) {
+      style.borderLeft = borderLeft;
+      dirty();
+    }
   }
 
   public void setBorderRight(float borderRight) {
-    dirtyIfDifferent(style.borderRight, borderRight);
-    style.borderRight = borderRight;
+    if (!valuesEqual(style.borderRight, borderRight)) {
+      style.borderRight = borderRight;
+      dirty();
+    }
   }
 
   public void setStyleWidth(float width) {
-    dirtyIfDifferent(style.width, width);
-    style.width = width;
+    if (!valuesEqual(style.width, width)) {
+      style.width = width;
+      dirty();
+    }
   }
 
   public void setStyleHeight(float height) {
-    dirtyIfDifferent(style.height, height);
-    style.height = height;
+    if (!valuesEqual(style.height, height)) {
+      style.height = height;
+      dirty();
+    }
   }
 
   public float getLayoutX() {
