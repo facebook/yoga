@@ -19,7 +19,7 @@ public class LayoutCachingTest {
   }
 
   private void markLayoutAppliedForTree(CSSNode root) {
-    root.markLayoutApplied();
+    root.markLayoutSeen();
     for (int i = 0; i < root.getChildCount(); i++) {
       markLayoutAppliedForTree(root.getChildAt(i));
     }
@@ -57,11 +57,7 @@ public class LayoutCachingTest {
     c0.addChildAt(c0c0, 0);
 
     root.calculateLayout();
-    assertTreeHasNewLayout(true, root);
     markLayoutAppliedForTree(root);
-
-    root.calculateLayout();
-    assertTreeHasNewLayout(false, root);
 
     c0.addChildAt(c0c1, 1);
 
@@ -85,11 +81,7 @@ public class LayoutCachingTest {
     c0.addChildAt(c0c0, 0);
 
     root.calculateLayout();
-    assertTreeHasNewLayout(true, root);
     markLayoutAppliedForTree(root);
-
-    root.calculateLayout();
-    assertTreeHasNewLayout(false, root);
 
     c1.setAlignSelf(CSSAlign.CENTER);
     root.calculateLayout();
@@ -112,11 +104,7 @@ public class LayoutCachingTest {
     c0.addChildAt(c0c0, 0);
 
     root.calculateLayout();
-    assertTreeHasNewLayout(true, root);
     markLayoutAppliedForTree(root);
-
-    root.calculateLayout();
-    assertTreeHasNewLayout(false, root);
 
     c1.setMarginLeft(10);
     root.calculateLayout();
@@ -139,11 +127,7 @@ public class LayoutCachingTest {
     c0.addChildAt(c0c0, 0);
 
     root.calculateLayout();
-    assertTreeHasNewLayout(true, root);
     markLayoutAppliedForTree(root);
-
-    root.calculateLayout();
-    assertTreeHasNewLayout(false, root);
 
     c0.setStyleWidth(200);
     root.calculateLayout();
@@ -167,14 +151,40 @@ public class LayoutCachingTest {
     root.setStyleWidth(200);
 
     root.calculateLayout();
-    assertTreeHasNewLayout(true, root);
     markLayoutAppliedForTree(root);
-
-    root.calculateLayout();
-    assertTreeHasNewLayout(false, root);
 
     root.setStyleWidth(200);
     root.calculateLayout();
     assertTreeHasNewLayout(false, root);
+  }
+
+  @Test
+  public void testInvalidatesOnNewMeasureFunction() {
+    CSSNode root = new CSSNode();
+    CSSNode c0 = new CSSNode();
+    CSSNode c1 = new CSSNode();
+    CSSNode c0c0 = new CSSNode();
+    root.addChildAt(c0, 0);
+    root.addChildAt(c1, 1);
+    c0.addChildAt(c0c0, 0);
+
+    root.calculateLayout();
+    markLayoutAppliedForTree(root);
+
+    c1.setMeasureFunction(new CSSNode.MeasureFunction() {
+      @Override
+      public void measure(CSSNode node, float width, MeasureOutput measureOutput) {
+        measureOutput.width = 100;
+        measureOutput.height = 20;
+      }
+    });
+
+    root.calculateLayout();
+
+    assertTrue(root.hasNewLayout());
+    assertTrue(c1.hasNewLayout());
+
+    assertFalse(c0.hasNewLayout());
+    assertFalse(c0c0.hasNewLayout());
   }
 }

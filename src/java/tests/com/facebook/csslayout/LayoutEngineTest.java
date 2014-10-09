@@ -8,7 +8,8 @@ import org.junit.Test;
  */
 public class LayoutEngineTest {
 
-  private static CSSNode.MeasureFunction sTestMeasureFunction = new CSSNode.MeasureFunction() {
+  private static final CSSNode.MeasureFunction sTestMeasureFunction =
+      new CSSNode.MeasureFunction() {
 
     @Override
     public void measure(CSSNode node, float width, MeasureOutput measureOutput) {
