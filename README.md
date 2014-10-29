@@ -9,6 +9,8 @@ This project implements a subset of CSS including flexbox and the box model usin
 
 In order to make sure that the code is correct, it is developped using TDD where each commit adds a unit test and the associated code to make it work. All the unit tests are tested against Chrome's implementation of CSS.
 
+The JavaScript version has been implemented in a way that can be easily transpiled to C and Java via regexes. The layout function doesn't do any allocation nor uses any of the dynamic aspect of JavaScript. The tests are also transpiled to make sure that the implementations are correct everywhere.
+
 
 Supported Attributes
 --------------------
