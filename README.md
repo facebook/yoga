@@ -1,34 +1,15 @@
 
-Attention: This project is still very experimental and not used in any production application!
+Attention: This project is still **very experimental** and not used in any production application!
 
 
 css-layout
 ==========
 
-This project implements a subset of CSS including flexbox and the box model using pure JavaScript. The goal is to have a small standalone library to layout elements. It doesn't rely on the DOM at all.
+This project implements a subset of CSS including flexbox and the box model using pure JavaScript, C and Java. The goal is to have a small standalone library to layout elements. It doesn't rely on the DOM at all.
 
-In order to make sure that the code is correct, it is developped using TDD where each commit adds a unit test and the associated code to make it work. All the unit tests are tested against Chrome's implementation of CSS.
+In order to make sure that the code is correct, it is developped in JavaScript using TDD where each commit adds a unit test and the associated code to make it work. All the unit tests are tested against Chrome's implementation of CSS.
 
 The JavaScript version has been implemented in a way that can be easily transpiled to C and Java via regexes. The layout function doesn't do any allocation nor uses any of the dynamic aspect of JavaScript. The tests are also transpiled to make sure that the implementations are correct everywhere.
-
-
-Supported Attributes
---------------------
-
-Name | Value
-----:|------
-width, height | positive number
-left, right, top, bottom | number
-margin, marginLeft, marginRight, marginTop, marginBottom | number
-padding, paddingLeft, paddingRight, paddingTop, paddingBottom | positive number
-borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth | positive number
-flexDirection | 'column', 'row'
-justifyContent | 'flex-start', 'center', 'flex-end', 'space-between', 'space-around'
-alignItems, alignSelf | 'flex-start', 'center', 'flex-end', 'stretch'
-flex | positive number
-position | 'relative', 'absolute'
-
-- `inherit` value is not implemented because it's a way to disambiguate between multiple colliding rules. This should be done in a pre-processing step, not in the actual layout algorithm.
 
 
 Usage
@@ -51,6 +32,30 @@ computeLayout(
   {width: 0, height: 0, top: 100, left: 0}
 ]}
 ```
+
+To run the tests
+
+- For the JS tests: Open `RunLayoutTests.html` and `RunLayoutRandomTests.html` in Chrome
+- For the C and Java tests: run `make` in your terminal. It will also transpile the JS code
+
+Supported Attributes
+--------------------
+
+Name | Value
+----:|------
+width, height | positive number
+left, right, top, bottom | number
+margin, marginLeft, marginRight, marginTop, marginBottom | number
+padding, paddingLeft, paddingRight, paddingTop, paddingBottom | positive number
+borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth | positive number
+flexDirection | 'column', 'row'
+justifyContent | 'flex-start', 'center', 'flex-end', 'space-between', 'space-around'
+alignItems, alignSelf | 'flex-start', 'center', 'flex-end', 'stretch'
+flex | positive number
+position | 'relative', 'absolute'
+
+- `inherit` value is not implemented because it's a way to disambiguate between multiple colliding rules. This should be done in a pre-processing step, not in the actual layout algorithm.
+
 
 
 Default values
