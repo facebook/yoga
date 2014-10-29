@@ -1,3 +1,7 @@
+
+Attention: This project is still very experimental and not used in any production application!
+
+
 css-layout
 ==========
 
@@ -62,7 +66,6 @@ div, span {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: flex-start;
   flex-shrink: 0;
 }
 ```
