@@ -23,13 +23,13 @@ For example,
 
 ```javascript
 computeLayout(
-  {style: {height: 100, justifyContent: 'flex-end'}, children: [
-    {style: {marginTop: 10}}
+  {style: {padding: 50}, children: [
+    {style: {padding: 10, alignSelf: 'stretch'}}
   ]}
-)
+);
 // =>
-{width: 0, height: 100, top: 0, left: 0, children: [
-  {width: 0, height: 0, top: 100, left: 0}
+{width: 120, height: 120, top: 0, left: 0, children: [
+  {width: 20, height: 20, top: 50, left: 50}
 ]}
 ```
 
