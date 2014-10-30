@@ -17,7 +17,7 @@ Usage
 
 A single function `computeLayout` is exposed and
  - takes a tree of nodes: `{ style: { ... }, children: [ nodes ] }`
- - returns a tree of rectanges: `{ width: ..., height: ..., top: ..., left: ..., children: [ rects ] }`
+ - returns a tree of rectangles: `{ width: ..., height: ..., top: ..., left: ..., children: [ rects ] }`
 
 For example,
 
