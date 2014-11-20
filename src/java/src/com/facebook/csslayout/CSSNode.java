@@ -53,6 +53,26 @@ public class CSSNode {
       Float.NaN
   };
 
+  private final float[] mPadding = new float[] {
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN
+  };
+
+  private final float[] mBorder = new float[] {
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN
+  };
+
   // Only one copy kept around to keep from allocating a bunch of MeasureOutput objects
   // NOT THREAD SAFE! NOT RE-ENTRANT SAFE!
   private static final MeasureOutput MEASURE_OUTPUT = new MeasureOutput();
@@ -265,6 +285,14 @@ public class CSSNode {
     setSpacing(mMargin, spacingType, margin, style.margin);
   }
 
+  public void setPadding(int spacingType, float padding) {
+    setSpacing(mPadding, spacingType, padding, style.padding);
+  }
+
+  public void setBorder(int spacingType, float border) {
+    setSpacing(mBorder, spacingType, border, style.border);
+  }
+
   protected void setSpacing(float[] spacingDef, int spacingType, float spacing, float[] cssStyle) {
     if (!valuesEqual(spacingDef[spacingType], spacing)) {
       spacingDef[spacingType] = spacing;
@@ -288,34 +316,6 @@ public class CSSNode {
               : !Float.isNaN(spacingDef[SPACING_HORIZONTAL]) ? spacingDef[SPACING_HORIZONTAL]
               : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
               : 0;
-      dirty();
-    }
-  }
-
-  public void setPaddingTop(float paddingTop) {
-    if (!valuesEqual(style.paddingTop, paddingTop)) {
-      style.paddingTop = paddingTop;
-      dirty();
-    }
-  }
-
-  public void setPaddingBottom(float paddingBottom) {
-    if (!valuesEqual(style.paddingBottom, paddingBottom)) {
-      style.paddingBottom = paddingBottom;
-      dirty();
-    }
-  }
-
-  public void setPaddingLeft(float paddingLeft) {
-    if (!valuesEqual(style.paddingLeft, paddingLeft)) {
-      style.paddingLeft = paddingLeft;
-      dirty();
-    }
-  }
-
-  public void setPaddingRight(float paddingRight) {
-    if (!valuesEqual(style.paddingRight, paddingRight)) {
-      style.paddingRight = paddingRight;
       dirty();
     }
   }
@@ -344,34 +344,6 @@ public class CSSNode {
   public void setPositionRight(float positionRight) {
     if (!valuesEqual(style.positionRight, positionRight)) {
       style.positionRight = positionRight;
-      dirty();
-    }
-  }
-
-  public void setBorderTop(float borderTop) {
-    if (!valuesEqual(style.borderTop, borderTop)) {
-      style.borderTop = borderTop;
-      dirty();
-    }
-  }
-
-  public void setBorderBottom(float borderBottom) {
-    if (!valuesEqual(style.borderBottom, borderBottom)) {
-      style.borderBottom = borderBottom;
-      dirty();
-    }
-  }
-
-  public void setBorderLeft(float borderLeft) {
-    if (!valuesEqual(style.borderLeft, borderLeft)) {
-      style.borderLeft = borderLeft;
-      dirty();
-    }
-  }
-
-  public void setBorderRight(float borderRight) {
-    if (!valuesEqual(style.borderRight, borderRight)) {
-      style.borderRight = borderRight;
       dirty();
     }
   }

@@ -1401,10 +1401,10 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.paddingLeft = 5;
-      node_0.style.paddingTop = 5;
-      node_0.style.paddingRight = 5;
-      node_0.style.paddingBottom = 5;
+      node_0.style.padding[CSSStyle.SPACING_LEFT] = 5;
+      node_0.style.padding[CSSStyle.SPACING_TOP] = 5;
+      node_0.style.padding[CSSStyle.SPACING_RIGHT] = 5;
+      node_0.style.padding[CSSStyle.SPACING_BOTTOM] = 5;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
@@ -1425,10 +1425,10 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.paddingLeft = 5;
-      node_0.style.paddingTop = 5;
-      node_0.style.paddingRight = 5;
-      node_0.style.paddingBottom = 5;
+      node_0.style.padding[CSSStyle.SPACING_LEFT] = 5;
+      node_0.style.padding[CSSStyle.SPACING_TOP] = 5;
+      node_0.style.padding[CSSStyle.SPACING_RIGHT] = 5;
+      node_0.style.padding[CSSStyle.SPACING_BOTTOM] = 5;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -1463,10 +1463,10 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.paddingLeft = 5;
-      node_0.style.paddingTop = 5;
-      node_0.style.paddingRight = 5;
-      node_0.style.paddingBottom = 5;
+      node_0.style.padding[CSSStyle.SPACING_LEFT] = 5;
+      node_0.style.padding[CSSStyle.SPACING_TOP] = 5;
+      node_0.style.padding[CSSStyle.SPACING_RIGHT] = 5;
+      node_0.style.padding[CSSStyle.SPACING_BOTTOM] = 5;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -1510,10 +1510,10 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.STRETCH;
-        node_1.style.paddingLeft = 10;
-        node_1.style.paddingTop = 10;
-        node_1.style.paddingRight = 10;
-        node_1.style.paddingBottom = 10;
+        node_1.style.padding[CSSStyle.SPACING_LEFT] = 10;
+        node_1.style.padding[CSSStyle.SPACING_TOP] = 10;
+        node_1.style.padding[CSSStyle.SPACING_RIGHT] = 10;
+        node_1.style.padding[CSSStyle.SPACING_BOTTOM] = 10;
       }
     }
 
@@ -1544,19 +1544,19 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.paddingLeft = 50;
-      node_0.style.paddingTop = 50;
-      node_0.style.paddingRight = 50;
-      node_0.style.paddingBottom = 50;
+      node_0.style.padding[CSSStyle.SPACING_LEFT] = 50;
+      node_0.style.padding[CSSStyle.SPACING_TOP] = 50;
+      node_0.style.padding[CSSStyle.SPACING_RIGHT] = 50;
+      node_0.style.padding[CSSStyle.SPACING_BOTTOM] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.STRETCH;
-        node_1.style.paddingLeft = 10;
-        node_1.style.paddingTop = 10;
-        node_1.style.paddingRight = 10;
-        node_1.style.paddingBottom = 10;
+        node_1.style.padding[CSSStyle.SPACING_LEFT] = 10;
+        node_1.style.padding[CSSStyle.SPACING_TOP] = 10;
+        node_1.style.padding[CSSStyle.SPACING_RIGHT] = 10;
+        node_1.style.padding[CSSStyle.SPACING_BOTTOM] = 10;
       }
     }
 
@@ -1664,7 +1664,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.SPACE_AROUND;
       node_0.style.height = 10;
-      node_0.style.paddingTop = 5;
+      node_0.style.padding[CSSStyle.SPACING_TOP] = 5;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -1836,7 +1836,7 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.CENTER;
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.paddingRight = 12;
+        node_1.style.padding[CSSStyle.SPACING_RIGHT] = 12;
       }
     }
 
@@ -1868,7 +1868,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.height = 5;
-      node_0.style.paddingBottom = 20;
+      node_0.style.padding[CSSStyle.SPACING_BOTTOM] = 20;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
@@ -1890,7 +1890,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.width = 5;
-      node_0.style.paddingLeft = 20;
+      node_0.style.padding[CSSStyle.SPACING_LEFT] = 20;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
@@ -1968,10 +1968,10 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.paddingLeft = 5;
-      node_0.style.paddingTop = 5;
-      node_0.style.paddingRight = 5;
-      node_0.style.paddingBottom = 5;
+      node_0.style.padding[CSSStyle.SPACING_LEFT] = 5;
+      node_0.style.padding[CSSStyle.SPACING_TOP] = 5;
+      node_0.style.padding[CSSStyle.SPACING_RIGHT] = 5;
+      node_0.style.padding[CSSStyle.SPACING_BOTTOM] = 5;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2051,10 +2051,10 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.paddingLeft = 20;
-      node_0.style.paddingTop = 20;
-      node_0.style.paddingRight = 20;
-      node_0.style.paddingBottom = 20;
+      node_0.style.padding[CSSStyle.SPACING_LEFT] = 20;
+      node_0.style.padding[CSSStyle.SPACING_TOP] = 20;
+      node_0.style.padding[CSSStyle.SPACING_RIGHT] = 20;
+      node_0.style.padding[CSSStyle.SPACING_BOTTOM] = 20;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2255,7 +2255,7 @@ public class LayoutEngineTest {
         node_1.style.flex = 1;
         node_1 = node_0.getChildAt(1);
         node_1.style.flex = 1;
-        node_1.style.paddingRight = 5;
+        node_1.style.padding[CSSStyle.SPACING_RIGHT] = 5;
       }
     }
 
@@ -2461,10 +2461,10 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.borderLeft = 5;
-      node_0.style.borderTop = 5;
-      node_0.style.borderRight = 5;
-      node_0.style.borderBottom = 5;
+      node_0.style.border[CSSStyle.SPACING_LEFT] = 5;
+      node_0.style.border[CSSStyle.SPACING_TOP] = 5;
+      node_0.style.border[CSSStyle.SPACING_RIGHT] = 5;
+      node_0.style.border[CSSStyle.SPACING_BOTTOM] = 5;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
@@ -2485,7 +2485,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.borderTop = 1;
+      node_0.style.border[CSSStyle.SPACING_TOP] = 1;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2522,10 +2522,10 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.borderLeft = 1;
-      node_0.style.borderTop = 1;
-      node_0.style.borderRight = 1;
-      node_0.style.borderBottom = 1;
+      node_0.style.border[CSSStyle.SPACING_LEFT] = 1;
+      node_0.style.border[CSSStyle.SPACING_TOP] = 1;
+      node_0.style.border[CSSStyle.SPACING_RIGHT] = 1;
+      node_0.style.border[CSSStyle.SPACING_BOTTOM] = 1;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2569,10 +2569,10 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.STRETCH;
         node_1.style.margin[CSSStyle.SPACING_LEFT] = 20;
-        node_1.style.paddingLeft = 20;
-        node_1.style.paddingTop = 20;
-        node_1.style.paddingRight = 20;
-        node_1.style.paddingBottom = 20;
+        node_1.style.padding[CSSStyle.SPACING_LEFT] = 20;
+        node_1.style.padding[CSSStyle.SPACING_TOP] = 20;
+        node_1.style.padding[CSSStyle.SPACING_RIGHT] = 20;
+        node_1.style.padding[CSSStyle.SPACING_BOTTOM] = 20;
       }
     }
 
@@ -2607,7 +2607,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.borderRight = 5;
+        node_1.style.border[CSSStyle.SPACING_RIGHT] = 5;
       }
     }
 
@@ -2639,7 +2639,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.borderRight = 1;
+      node_0.style.border[CSSStyle.SPACING_RIGHT] = 1;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2994,10 +2994,10 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.alignSelf = CSSAlign.FLEX_START;
       node_0.style.width = 100;
-      node_0.style.paddingLeft = 10;
-      node_0.style.paddingTop = 10;
-      node_0.style.paddingRight = 10;
-      node_0.style.paddingBottom = 10;
+      node_0.style.padding[CSSStyle.SPACING_LEFT] = 10;
+      node_0.style.padding[CSSStyle.SPACING_TOP] = 10;
+      node_0.style.padding[CSSStyle.SPACING_RIGHT] = 10;
+      node_0.style.padding[CSSStyle.SPACING_BOTTOM] = 10;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;

@@ -146,13 +146,13 @@ public class LayoutEngine {
   private static float getPadding(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.paddingTop;
+        return node.style.padding[CSSStyle.SPACING_TOP];
       case BOTTOM:
-        return node.style.paddingBottom;
+        return node.style.padding[CSSStyle.SPACING_BOTTOM];
       case LEFT:
-        return node.style.paddingLeft;
+        return node.style.padding[CSSStyle.SPACING_LEFT];
       case RIGHT:
-        return node.style.paddingRight;
+        return node.style.padding[CSSStyle.SPACING_RIGHT];
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
@@ -161,13 +161,13 @@ public class LayoutEngine {
   private static float getBorder(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.borderTop;
+        return node.style.border[CSSStyle.SPACING_TOP];
       case BOTTOM:
-        return node.style.borderBottom;
+        return node.style.border[CSSStyle.SPACING_BOTTOM];
       case LEFT:
-        return node.style.borderLeft;
+        return node.style.border[CSSStyle.SPACING_LEFT];
       case RIGHT:
-        return node.style.borderRight;
+        return node.style.border[CSSStyle.SPACING_RIGHT];
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
