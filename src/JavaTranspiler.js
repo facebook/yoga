@@ -54,9 +54,14 @@ function __transpileSingleTestToJava(code) {
             return 'layout.' + (match1 == 'TOP' ? 'y' : 'x');
         })
     .replace( // style.position[CSS_TOP] => style.positionTop
-        /style\.(position|margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
+        /style\.(position|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
         function (str, match1, match2) {
             return 'style.' + match1 + match2[0] + match2.substring(1).toLowerCase();
+        })
+    .replace( // style.margin[CSS_TOP] => style.margin[CSSStyle.SPACING_TOP]
+        /style\.(margin)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
+        function (str, match1, match2) {
+          return 'style.' + match1 + '[CSSStyle.SPACING_' + match2 + ']';
         })
     .replace(/get_child\(.*context\,\s([^\)]+)\)/g, 'getChildAt($1)')
     .replace(/init_css_node_children/g, 'addChildren')
@@ -64,7 +69,7 @@ function __transpileSingleTestToJava(code) {
     .replace(/\->/g, '.')
     .replace(/(\d+\.\d+)/g, '$1f')
     .replace( // style.flex_direction => style.flexDirection
-        /style\.([^_\s]+)_(\w)(\w+)/g,
+        /style\.([^_\[\]\s]+)_(\w)(\w+)/g,
         function (str, match1, match2, match3) {
             return 'style.' + match1 + match2.toUpperCase() + match3;
         })

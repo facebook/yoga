@@ -114,7 +114,7 @@ public class LayoutCachingTest {
     root.calculateLayout();
     markLayoutAppliedForTree(root);
 
-    c1.setMarginLeft(10);
+    c1.setMargin(CSSNode.SPACING_LEFT, 10);
     root.calculateLayout();
 
     assertTrue(root.hasNewLayout());
