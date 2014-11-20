@@ -131,13 +131,13 @@ public class LayoutEngine {
   private static float getMargin(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.marginTop;
+        return node.style.margin[CSSStyle.SPACING_TOP];
       case BOTTOM:
-        return node.style.marginBottom;
+        return node.style.margin[CSSStyle.SPACING_BOTTOM];
       case LEFT:
-        return node.style.marginLeft;
+        return node.style.margin[CSSStyle.SPACING_LEFT];
       case RIGHT:
-        return node.style.marginRight;
+        return node.style.margin[CSSStyle.SPACING_RIGHT];
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }

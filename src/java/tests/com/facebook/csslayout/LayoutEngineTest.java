@@ -242,10 +242,10 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.width = 100;
       node_0.style.height = 200;
-      node_0.style.marginLeft = 10;
-      node_0.style.marginTop = 10;
-      node_0.style.marginRight = 10;
-      node_0.style.marginBottom = 10;
+      node_0.style.margin[CSSStyle.SPACING_LEFT] = 10;
+      node_0.style.margin[CSSStyle.SPACING_TOP] = 10;
+      node_0.style.margin[CSSStyle.SPACING_RIGHT] = 10;
+      node_0.style.margin[CSSStyle.SPACING_BOTTOM] = 10;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
@@ -268,34 +268,34 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.width = 1000;
       node_0.style.height = 1000;
-      node_0.style.marginLeft = 10;
-      node_0.style.marginTop = 10;
-      node_0.style.marginRight = 10;
-      node_0.style.marginBottom = 10;
+      node_0.style.margin[CSSStyle.SPACING_LEFT] = 10;
+      node_0.style.margin[CSSStyle.SPACING_TOP] = 10;
+      node_0.style.margin[CSSStyle.SPACING_RIGHT] = 10;
+      node_0.style.margin[CSSStyle.SPACING_BOTTOM] = 10;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.width = 100;
         node_1.style.height = 100;
-        node_1.style.marginLeft = 50;
-        node_1.style.marginTop = 50;
-        node_1.style.marginRight = 50;
-        node_1.style.marginBottom = 50;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 50;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 50;
+        node_1.style.margin[CSSStyle.SPACING_RIGHT] = 50;
+        node_1.style.margin[CSSStyle.SPACING_BOTTOM] = 50;
         node_1 = node_0.getChildAt(1);
         node_1.style.width = 100;
         node_1.style.height = 100;
-        node_1.style.marginLeft = 25;
-        node_1.style.marginTop = 25;
-        node_1.style.marginRight = 25;
-        node_1.style.marginBottom = 25;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 25;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 25;
+        node_1.style.margin[CSSStyle.SPACING_RIGHT] = 25;
+        node_1.style.margin[CSSStyle.SPACING_BOTTOM] = 25;
         node_1 = node_0.getChildAt(2);
         node_1.style.width = 100;
         node_1.style.height = 100;
-        node_1.style.marginLeft = 10;
-        node_1.style.marginTop = 10;
-        node_1.style.marginRight = 10;
-        node_1.style.marginBottom = 10;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 10;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 10;
+        node_1.style.margin[CSSStyle.SPACING_RIGHT] = 10;
+        node_1.style.margin[CSSStyle.SPACING_BOTTOM] = 10;
       }
     }
 
@@ -546,21 +546,21 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.width = 1000;
       node_0.style.height = 1000;
-      node_0.style.marginLeft = 5;
-      node_0.style.marginTop = 10;
+      node_0.style.margin[CSSStyle.SPACING_LEFT] = 5;
+      node_0.style.margin[CSSStyle.SPACING_TOP] = 10;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.width = 100;
         node_1.style.height = 100;
-        node_1.style.marginLeft = 15;
-        node_1.style.marginTop = 50;
-        node_1.style.marginBottom = 20;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 15;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 50;
+        node_1.style.margin[CSSStyle.SPACING_BOTTOM] = 20;
         node_1 = node_0.getChildAt(1);
         node_1.style.width = 100;
         node_1.style.height = 100;
-        node_1.style.marginLeft = 30;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 30;
       }
     }
 
@@ -1135,10 +1135,10 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.marginLeft = 5;
-        node_1.style.marginTop = 5;
-        node_1.style.marginRight = 5;
-        node_1.style.marginBottom = 5;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 5;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 5;
+        node_1.style.margin[CSSStyle.SPACING_RIGHT] = 5;
+        node_1.style.margin[CSSStyle.SPACING_BOTTOM] = 5;
       }
     }
 
@@ -1239,7 +1239,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.marginTop = 10;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 10;
       }
     }
 
@@ -1279,10 +1279,10 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.marginLeft = 10;
-          node_2.style.marginTop = 10;
-          node_2.style.marginRight = 10;
-          node_2.style.marginBottom = 10;
+          node_2.style.margin[CSSStyle.SPACING_LEFT] = 10;
+          node_2.style.margin[CSSStyle.SPACING_TOP] = 10;
+          node_2.style.margin[CSSStyle.SPACING_RIGHT] = 10;
+          node_2.style.margin[CSSStyle.SPACING_BOTTOM] = 10;
           node_2 = node_1.getChildAt(1);
           node_2.style.height = 100;
         }
@@ -1370,7 +1370,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.marginLeft = 10;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 10;
       }
     }
 
@@ -1471,10 +1471,10 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.marginLeft = 5;
-        node_1.style.marginTop = 5;
-        node_1.style.marginRight = 5;
-        node_1.style.marginBottom = 5;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 5;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 5;
+        node_1.style.margin[CSSStyle.SPACING_RIGHT] = 5;
+        node_1.style.margin[CSSStyle.SPACING_BOTTOM] = 5;
       }
     }
 
@@ -1596,10 +1596,10 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.marginLeft = 16;
-          node_2.style.marginTop = 16;
-          node_2.style.marginRight = 16;
-          node_2.style.marginBottom = 16;
+          node_2.style.margin[CSSStyle.SPACING_LEFT] = 16;
+          node_2.style.margin[CSSStyle.SPACING_TOP] = 16;
+          node_2.style.margin[CSSStyle.SPACING_RIGHT] = 16;
+          node_2.style.margin[CSSStyle.SPACING_BOTTOM] = 16;
         }
       }
     }
@@ -1799,7 +1799,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.marginRight = 15;
+        node_1.style.margin[CSSStyle.SPACING_RIGHT] = 15;
       }
     }
 
@@ -2096,7 +2096,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.marginTop = 5;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 5;
         node_1.style.positionTop = 5;
       }
     }
@@ -2133,7 +2133,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.marginLeft = 5;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 5;
         node_1.style.positionLeft = 5;
       }
     }
@@ -2215,7 +2215,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.flex = 1;
-        node_1.style.marginLeft = 5;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 5;
       }
     }
 
@@ -2300,7 +2300,7 @@ public class LayoutEngineTest {
         node_1.style.flex = 1;
         node_1 = node_0.getChildAt(1);
         node_1.style.flex = 1;
-        node_1.style.marginLeft = 5;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 5;
       }
     }
 
@@ -2568,7 +2568,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.STRETCH;
-        node_1.style.marginLeft = 20;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 20;
         node_1.style.paddingLeft = 20;
         node_1.style.paddingTop = 20;
         node_1.style.paddingRight = 20;
@@ -2644,7 +2644,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.marginRight = -8;
+        node_1.style.margin[CSSStyle.SPACING_RIGHT] = -8;
       }
     }
 
@@ -3003,10 +3003,10 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.marginLeft = 10;
-        node_1.style.marginTop = 10;
-        node_1.style.marginRight = 10;
-        node_1.style.marginBottom = 10;
+        node_1.style.margin[CSSStyle.SPACING_LEFT] = 10;
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 10;
+        node_1.style.margin[CSSStyle.SPACING_RIGHT] = 10;
+        node_1.style.margin[CSSStyle.SPACING_BOTTOM] = 10;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -3144,10 +3144,10 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.marginLeft = 20;
-          node_2.style.marginTop = 20;
-          node_2.style.marginRight = 20;
-          node_2.style.marginBottom = 20;
+          node_2.style.margin[CSSStyle.SPACING_LEFT] = 20;
+          node_2.style.margin[CSSStyle.SPACING_TOP] = 20;
+          node_2.style.margin[CSSStyle.SPACING_RIGHT] = 20;
+          node_2.style.margin[CSSStyle.SPACING_BOTTOM] = 20;
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = "loooooooooong with space";
         }
@@ -3199,10 +3199,10 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.marginLeft = 20;
-          node_2.style.marginTop = 20;
-          node_2.style.marginRight = 20;
-          node_2.style.marginBottom = 20;
+          node_2.style.margin[CSSStyle.SPACING_LEFT] = 20;
+          node_2.style.margin[CSSStyle.SPACING_TOP] = 20;
+          node_2.style.margin[CSSStyle.SPACING_RIGHT] = 20;
+          node_2.style.margin[CSSStyle.SPACING_BOTTOM] = 20;
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = "loooooooooong with space";
         }

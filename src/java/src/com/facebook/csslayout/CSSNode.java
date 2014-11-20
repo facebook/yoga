@@ -35,6 +35,24 @@ public class CSSNode {
     UP_TO_DATE,
   }
 
+  public static final int SPACING_ALL = 0;
+  public static final int SPACING_VERTICAL = 1;
+  public static final int SPACING_HORIZONTAL = 2;
+  public static final int SPACING_LEFT = 3;
+  public static final int SPACING_RIGHT = 4;
+  public static final int SPACING_TOP = 5;
+  public static final int SPACING_BOTTOM = 6;
+
+  private final float[] mMargin = new float[] {
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN,
+      Float.NaN
+  };
+
   // Only one copy kept around to keep from allocating a bunch of MeasureOutput objects
   // NOT THREAD SAFE! NOT RE-ENTRANT SAFE!
   private static final MeasureOutput MEASURE_OUTPUT = new MeasureOutput();
@@ -243,30 +261,33 @@ public class CSSNode {
     }
   }
 
-  public void setMarginTop(float marginTop) {
-    if (!valuesEqual(style.marginTop, marginTop)) {
-      style.marginTop = marginTop;
-      dirty();
-    }
+  public void setMargin(int spacingType, float margin) {
+    setSpacing(mMargin, spacingType, margin, style.margin);
   }
 
-  public void setMarginBottom(float marginBottom) {
-    if (!valuesEqual(style.marginBottom, marginBottom)) {
-      style.marginBottom = marginBottom;
-      dirty();
-    }
-  }
-
-  public void setMarginLeft(float marginLeft) {
-    if (!valuesEqual(style.marginLeft, marginLeft)) {
-      style.marginLeft = marginLeft;
-      dirty();
-    }
-  }
-
-  public void setMarginRight(float marginRight) {
-    if (!valuesEqual(style.marginRight, marginRight)) {
-      style.marginRight = marginRight;
+  protected void setSpacing(float[] spacingDef, int spacingType, float spacing, float[] cssStyle) {
+    if (!valuesEqual(spacingDef[spacingType], spacing)) {
+      spacingDef[spacingType] = spacing;
+      cssStyle[CSSStyle.SPACING_TOP] =
+          !Float.isNaN(spacingDef[SPACING_TOP]) ? spacingDef[SPACING_TOP]
+              : !Float.isNaN(spacingDef[SPACING_VERTICAL]) ? spacingDef[SPACING_VERTICAL]
+              : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
+              : 0;
+      cssStyle[CSSStyle.SPACING_BOTTOM] =
+          !Float.isNaN(spacingDef[SPACING_BOTTOM]) ? spacingDef[SPACING_BOTTOM]
+              : !Float.isNaN(spacingDef[SPACING_VERTICAL]) ? spacingDef[SPACING_VERTICAL]
+              : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
+              : 0;
+      cssStyle[CSSStyle.SPACING_LEFT] =
+          !Float.isNaN(spacingDef[SPACING_LEFT]) ? spacingDef[SPACING_LEFT]
+              : !Float.isNaN(spacingDef[SPACING_HORIZONTAL]) ? spacingDef[SPACING_HORIZONTAL]
+              : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
+              : 0;
+      cssStyle[CSSStyle.SPACING_RIGHT] =
+          !Float.isNaN(spacingDef[SPACING_RIGHT]) ? spacingDef[SPACING_RIGHT]
+              : !Float.isNaN(spacingDef[SPACING_HORIZONTAL]) ? spacingDef[SPACING_HORIZONTAL]
+              : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
+              : 0;
       dirty();
     }
   }
