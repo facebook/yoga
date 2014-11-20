@@ -26,21 +26,13 @@ public class CSSStyle {
   public float flex;
 
   public float[] margin = new float[4];
-
-  public float paddingTop;
-  public float paddingBottom;
-  public float paddingLeft;
-  public float paddingRight;
+  public float[] padding = new float[4];
+  public float[] border = new float[4];
 
   public float positionTop = CSSConstants.UNDEFINED;
   public float positionBottom = CSSConstants.UNDEFINED;
   public float positionLeft = CSSConstants.UNDEFINED;
   public float positionRight = CSSConstants.UNDEFINED;
-
-  public float borderTop;
-  public float borderBottom;
-  public float borderLeft;
-  public float borderRight;
 
   public float width = CSSConstants.UNDEFINED;
   public float height = CSSConstants.UNDEFINED;

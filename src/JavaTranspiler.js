@@ -54,12 +54,12 @@ function __transpileSingleTestToJava(code) {
             return 'layout.' + (match1 == 'TOP' ? 'y' : 'x');
         })
     .replace( // style.position[CSS_TOP] => style.positionTop
-        /style\.(position|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
+        /style\.(position)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
         function (str, match1, match2) {
             return 'style.' + match1 + match2[0] + match2.substring(1).toLowerCase();
         })
     .replace( // style.margin[CSS_TOP] => style.margin[CSSStyle.SPACING_TOP]
-        /style\.(margin)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
+        /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
         function (str, match1, match2) {
           return 'style.' + match1 + '[CSSStyle.SPACING_' + match2 + ']';
         })
