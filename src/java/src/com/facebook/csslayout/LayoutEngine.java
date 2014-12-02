@@ -273,6 +273,10 @@ public class LayoutEngine {
 
   private static void layoutNodeImpl(CSSNode node, float parentMaxWidth) {
 
+    for (int i = 0; i < node.getChildCount(); i++) {
+      node.getChildAt(i).layout.resetResult();
+    }
+
     /** START_GENERATED **/
   
     CSSFlexDirection mainAxis = getFlexDirection(node);

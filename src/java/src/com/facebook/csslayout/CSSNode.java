@@ -98,6 +98,15 @@ public class CSSNode {
   private CSSNode mParent;
   private MeasureFunction mMeasureFunction = null;
   private LayoutState mLayoutState = LayoutState.DIRTY;
+  private int mTag;
+
+  public int getTag() {
+    return mTag;
+  }
+
+  public void setTag(int tag) {
+    mTag = tag;
+  }
 
   public int getChildCount() {
     return mChildren.size();
@@ -151,7 +160,7 @@ public class CSSNode {
    * Performs the actual layout and saves the results in {@link #layout}
    */
   public void calculateLayout() {
-    resetLayoutResultRecursive();
+    layout.resetResult();
     LayoutEngine.layoutNode(this, CSSConstants.UNDEFINED);
   }
 
@@ -200,32 +209,33 @@ public class CSSNode {
     mLayoutState = LayoutState.UP_TO_DATE;
   }
 
-  @Override
-  public String toString() {
-    String layoutString = layout.toString();
+  private void toStringWithIndentation(StringBuilder result, int level) {
+    // Spaces and tabs are dropped by IntelliJ logcat integration, so rely on __ instead.
+    StringBuilder indentation = new StringBuilder();
+    for (int i = 0; i < level; ++i) {
+      indentation.append("__");
+    }
+
+    result.append(indentation.toString());
+    result.append(layout.toString());
 
     if (getChildCount() == 0) {
-      return layoutString;
+      return;
     }
 
-    layoutString += ", children: [\n";
-
+    result.append(", children: [\n");
     for (int i = 0; i < getChildCount(); i++) {
-      String childString = getChildAt(i).toString();
-      childString = childString.replaceAll("\n", "\n\t");
-      layoutString += "\t" + childString + "\n";
+      getChildAt(i).toStringWithIndentation(result, level + 1);
+      result.append("\n");
     }
-
-    layoutString += "]";
-
-    return layoutString;
+    result.append(indentation + "]");
   }
 
-  private void resetLayoutResultRecursive() {
-    layout.resetResult();
-    for (int i = 0; i < getChildCount(); i++) {
-      getChildAt(i).resetLayoutResultRecursive();
-    }
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    this.toStringWithIndentation(sb, 0);
+    return sb.toString();
   }
 
   protected boolean valuesEqual(float f1, float f2) {
