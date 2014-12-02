@@ -21,7 +21,7 @@ public class LayoutEngineTest {
 
     @Override
     public void measure(CSSNode node, float width, MeasureOutput measureOutput) {
-      if (FloatUtil.isUndefined(width)) {
+      if (CSSConstants.isUndefined(width)) {
         width = 10000000;
       }
 

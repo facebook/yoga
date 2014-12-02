@@ -12,13 +12,9 @@ public class FloatUtil {
 
   private static final float EPSILON = .00001f;
 
-  public static boolean isUndefined(float f) {
-    return Float.compare(f, CSSConstants.UNDEFINED) == 0;
-  }
-
   public static boolean floatsEqual(float f1, float f2) {
-    if (isUndefined(f1)) {
-      return isUndefined(f2);
+    if (Float.isNaN(f1) || Float.isNaN(f2)) {
+      return Float.isNaN(f1) && Float.isNaN(f2);
     }
     return Math.abs(f2 - f1) < EPSILON;
   }
