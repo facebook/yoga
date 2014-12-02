@@ -116,16 +116,16 @@ public class LayoutEngine {
   }
 
   private static boolean isDimDefined(CSSNode node, CSSFlexDirection axis) {
-    return !FloatUtil.isUndefined(getStyleDimension(node, getDim(axis)));
+    return !CSSConstants.isUndefined(getStyleDimension(node, getDim(axis)));
   }
 
   private static boolean isPosDefined(CSSNode node, PositionIndex position) {
-    return !FloatUtil.isUndefined(getStylePosition(node, position));
+    return !CSSConstants.isUndefined(getStylePosition(node, position));
   }
 
   private static float getPosition(CSSNode node, PositionIndex position) {
     float result = getStylePosition(node, position);
-    return FloatUtil.isUndefined(result) ? 0 : result;
+    return CSSConstants.isUndefined(result) ? 0 : result;
   }
 
   private static float getMargin(CSSNode node, PositionIndex position) {
@@ -189,7 +189,7 @@ public class LayoutEngine {
 
   private static void setDimensionFromStyle(CSSNode node, CSSFlexDirection axis) {
     // The parent already computed us a width or height. We just skip it
-    if (!FloatUtil.isUndefined(getLayoutDimension(node, getDim(axis)))) {
+    if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(axis)))) {
       return;
     }
     // We only run if there's a width or height defined
@@ -206,7 +206,7 @@ public class LayoutEngine {
 
   private static float getRelativePosition(CSSNode node, CSSFlexDirection axis) {
     float lead = getStylePosition(node, getLeading(axis));
-    if (!FloatUtil.isUndefined(lead)) {
+    if (!CSSConstants.isUndefined(lead)) {
       return lead;
     }
     return -getPosition(node, getTrailing(axis));
@@ -299,7 +299,7 @@ public class LayoutEngine {
       float width = CSSConstants.UNDEFINED;
       if (isDimDefined(node, CSSFlexDirection.ROW)) {
         width = node.style.width;
-      } else if (!FloatUtil.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.ROW)))) {
+      } else if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.ROW)))) {
         width = getLayoutDimension(node, getDim(CSSFlexDirection.ROW));
       } else {
         width = parentMaxWidth -
@@ -311,9 +311,9 @@ public class LayoutEngine {
       // for it computed yet. It can either be from the style attribute or because
       // the element is flexible.
       boolean isRowUndefined = !isDimDefined(node, CSSFlexDirection.ROW) &&
-        FloatUtil.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.ROW)));
+        CSSConstants.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.ROW)));
       boolean isColumnUndefined = !isDimDefined(node, CSSFlexDirection.COLUMN) &&
-        FloatUtil.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.COLUMN)));
+        CSSConstants.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.COLUMN)));
   
       // Let's not measure the text if we already know both dimensions
       if (isRowUndefined || isColumnUndefined) {
@@ -339,7 +339,7 @@ public class LayoutEngine {
       // we call the recursive layout pass
       if (getAlignItem(node, child) == CSSAlign.STRETCH &&
           getPositionType(child) == CSSPositionType.RELATIVE &&
-          !FloatUtil.isUndefined(getLayoutDimension(node, getDim(crossAxis))) &&
+          !CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis))) &&
           !isDimDefined(child, crossAxis) &&
           !isPosDefined(child, getLeading(crossAxis))) {
         setLayoutDimension(child, getDim(crossAxis), Math.max(
@@ -354,7 +354,7 @@ public class LayoutEngine {
         // left and right or top and bottom).
         for (int ii = 0; ii < 2; ii++) {
           CSSFlexDirection axis = (ii != 0) ? CSSFlexDirection.ROW : CSSFlexDirection.COLUMN;
-          if (!FloatUtil.isUndefined(getLayoutDimension(node, getDim(axis))) &&
+          if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(axis))) &&
               !isDimDefined(child, axis) &&
               isPosDefined(child, getLeading(axis)) &&
               isPosDefined(child, getTrailing(axis))) {
@@ -390,7 +390,7 @@ public class LayoutEngine {
   
       // It only makes sense to consider a child flexible if we have a computed
       // dimension for the node.
-      if (!FloatUtil.isUndefined(getLayoutDimension(node, getDim(mainAxis))) && isFlex(child)) {
+      if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis))) && isFlex(child)) {
         flexibleChildrenCount++;
         totalFlexible = totalFlexible + getFlex(child);
   
@@ -438,7 +438,7 @@ public class LayoutEngine {
     // If the dimensions of the current node is defined by its children, they
     // are all going to be packed together and we don't need to compute
     // anything.
-    if (!FloatUtil.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
+    if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
       // The remaining available space that needs to be allocated
       float remainingMainDim = getLayoutDimension(node, getDim(mainAxis)) -
         getPaddingAndBorderAxis(node, mainAxis) -
@@ -546,7 +546,7 @@ public class LayoutEngine {
   
     // If the user didn't specify a width or height, and it has not been set
     // by the container, then we set it via the children.
-    if (FloatUtil.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
+    if (CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
       setLayoutDimension(node, getDim(mainAxis), Math.max(
         // We're missing the last padding at this point to get the final
         // dimension
@@ -556,7 +556,7 @@ public class LayoutEngine {
       ));
     }
   
-    if (FloatUtil.isUndefined(getLayoutDimension(node, getDim(crossAxis)))) {
+    if (CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis)))) {
       setLayoutDimension(node, getDim(crossAxis), Math.max(
         // For the cross dim, we add both sides at the end because the value
         // is aggregate via a max function. Intermediate negative values
@@ -631,7 +631,7 @@ public class LayoutEngine {
         // left and right or top and bottom).
         for (int ii = 0; ii < 2; ii++) {
           CSSFlexDirection axis = (ii != 0) ? CSSFlexDirection.ROW : CSSFlexDirection.COLUMN;
-          if (!FloatUtil.isUndefined(getLayoutDimension(node, getDim(axis))) &&
+          if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(axis))) &&
               !isDimDefined(child, axis) &&
               isPosDefined(child, getLeading(axis)) &&
               isPosDefined(child, getTrailing(axis))) {

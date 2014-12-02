@@ -24,7 +24,7 @@ function __transpileToJavaCommon(code) {
     .replace(/trailing\[([^\]]+)\]/g, 'getTrailing($1)')
     .replace(/pos\[([^\]]+)\]/g, 'getPos($1)')
     .replace(/dim\[([^\]]+)\]/g, 'getDim($1)')
-    .replace(/isUndefined/g, 'FloatUtil.isUndefined')
+    .replace(/isUndefined/g, 'CSSConstants.isUndefined')
 
     // Since Java doesn't store its attributes in arrays, we need to use setters/getters to access
     // the appropriate layout/style fields
