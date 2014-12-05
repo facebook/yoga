@@ -17,7 +17,8 @@ c_test: c
 
 java: transpile_all src/java
 	@if [ ! -f lib/junit4.jar ]; then mkdir lib/; wget -O lib/junit4.jar http://search.maven.org/remotecontent?filepath=junit/junit/4.10/junit-4.10.jar; fi
-	@javac -cp ./lib/junit4.jar -sourcepath ./src/java/src:./src/java/tests src/java/tests/com/facebook/csslayout/*.java
+	@if [ ! -f lib/jsr305.jar ]; then mkdir lib/; wget -O lib/jsr305.jar http://search.maven.org/remotecontent?filepath=net/sourceforge/findbugs/jsr305/1.3.7/jsr305-1.3.7.jar; fi
+	@javac -cp ./lib/junit4.jar:./lib/jsr305.jar -sourcepath ./src/java/src:./src/java/tests src/java/tests/com/facebook/csslayout/*.java
 
 java_test: java
 	@java -cp ./src/java/src:./src/java/tests:./lib/junit4.jar org.junit.runner.JUnitCore \
