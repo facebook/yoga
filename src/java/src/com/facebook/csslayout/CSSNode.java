@@ -6,7 +6,10 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+
 package com.facebook.csslayout;
+
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -242,7 +245,7 @@ public class CSSNode {
     return FloatUtil.floatsEqual(f1, f2);
   }
 
-  protected <T> boolean valuesEqual(T o1, T o2) {
+  protected <T> boolean valuesEqual(@Nullable T o1, @Nullable T o2) {
     if (o1 == null) {
       return o2 == null;
     }
