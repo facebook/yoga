@@ -71,8 +71,10 @@ var layoutTestUtils = (function() {
         margin: 0;
         padding: 0;
       }
-      body {
-        width: 0;
+
+      hack to ignore three hundred px width of the body {}
+      body > div {
+        align-self: flex-start;
       }
     */} + '').slice(15, -4);
     doc.head.appendChild(style);
