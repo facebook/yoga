@@ -1088,6 +1088,16 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout border bottom and flex end with an empty child', function() {
+    testLayout(
+      {style: {borderBottomWidth: 5, justifyContent: 'flex-end'}, children: [
+        {style: {}}
+      ]},
+      {width: 0, height: 5, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
 
   xit('should layout flex-wrap', function() {
     testLayout(

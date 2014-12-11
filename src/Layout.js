@@ -363,13 +363,11 @@ var computeLayout = (function() {
 
     var/*float*/ definedMainDim = fmaxf(mainContentDim, 0);
     if (!isUndefined(node.layout[dim[mainAxis]])) {
-      definedMainDim = node.layout[dim[mainAxis]];
+      definedMainDim = node.layout[dim[mainAxis]] -
+        getPaddingAndBorderAxis(node, mainAxis);
     }
-
     // The remaining available space that needs to be allocated
-    var/*float*/ remainingMainDim = definedMainDim -
-      getPaddingAndBorderAxis(node, mainAxis) -
-      mainContentDim;
+    var/*float*/ remainingMainDim = definedMainDim - mainContentDim;
 
     // If there are flexible children in the mix, they are going to fill the
     // remaining space
