@@ -80,7 +80,6 @@ var layoutTestUtils = (function() {
     }
 
     fillNodes(rootNode);
-    rootNode.style.alignSelf = 'flex-start';
     realComputeLayout(rootNode);
     return extractNodes(rootNode);
   }
@@ -304,12 +303,16 @@ var layoutTestUtils = (function() {
     textSizes: textSizes,
     preDefinedTextSizes: preDefinedTextSizes,
     testLayout: function(node, expectedLayout) {
+      node.style = node.style || {};
+      node.style.alignSelf = 'flex-start';
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
       testNamedLayout('expected-dom', expectedLayout, domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
     testRandomLayout: function(node, i) {
+      node.style = node.style || {};
+      node.style.alignSelf = 'flex-start';
       expect({i: i, node: node, layout: computeCSSLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
     },
