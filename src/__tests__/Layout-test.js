@@ -1044,13 +1044,29 @@ describe('Layout', function() {
     );
   });
 
-  it('should calcluate left properly with position: absolute right, width, and no parent dimensions', function() {
+  it('should calculate left properly with position: absolute right, width, and no parent dimensions', function() {
     testLayout(
       {style: {}, children: [
         {style: {width: 10, position: 'absolute', right: 0}}
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
         {width: 10, height: 0, top: 0, left: -10}
+      ]}
+    );
+  });
+
+  xit('should layout flex-wrap', function() {
+    testLayout(
+      {style: {flexWrap: 'wrap', flexDirection: 'row', width: 100}, children: [
+        {style: {width: 40, height: 10}},
+        {style: {width: 40, height: 10}},
+        {style: {flex: 1}},
+        {style: {width: 40, height: 10}},
+      ]},
+      {width: 100, height: 20, top: 0, left: 0, children: [
+        {width: 40, height: 10, top: 0, left: 0},
+        {width: 40, height: 10, top: 0, left: 40},
+        {width: 40, height: 10, top: 10, left: 0}
       ]}
     );
   });
