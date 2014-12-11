@@ -2,3 +2,4 @@ a.out
 *.class
 /**/java/out/*
 /**/.idea/workspace.xml
+/lib/

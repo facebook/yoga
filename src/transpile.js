@@ -232,6 +232,7 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/parent\./g, 'parent->')
     .replace(/var\/\*([^\/]+)\*\//g, '$1')
     .replace(/ === /g, ' == ')
+    .replace(/ !== /g, ' != ')
     .replace(/\n  /g, '\n')
     .replace(/\/\*\(c\)!([^*]+)\*\//g, '$1')
     .replace(/\/[*]!([^*]+)[*]\//g, '$1')

@@ -95,6 +95,7 @@ var JavaTranspiler = {
         .replace(/\/\*\([^\/]+\*\/\n/g, '') // remove comments for other languages
         .replace(/var\/\*([^\/]+)\*\//g, '$1')
         .replace(/ === /g, ' == ')
+        .replace(/ !== /g, ' != ')
         .replace(/\n  /g, '\n')
         .replace(/\/[*]!([^*]+)[*]\//g, '$1')
         .replace(/css_node_t\*/g, 'CSSNode'));

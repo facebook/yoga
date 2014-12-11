@@ -10,37 +10,39 @@
 
 var layoutTestUtils = (function() {
 
-  jasmine.matchersUtil.buildFailureMessage = function () {
-    var args = Array.prototype.slice.call(arguments, 0),
-      matcherName = args[0],
-      isNot = args[1],
-      actual = args[2],
-      expected = args.slice(3),
-      englishyPredicate = matcherName.replace(/[A-Z]/g, function(s) { return ' ' + s.toLowerCase(); });
+  if (typeof jasmine !== 'undefined') {
+    jasmine.matchersUtil.buildFailureMessage = function () {
+      var args = Array.prototype.slice.call(arguments, 0),
+        matcherName = args[0],
+        isNot = args[1],
+        actual = args[2],
+        expected = args.slice(3),
+        englishyPredicate = matcherName.replace(/[A-Z]/g, function(s) { return ' ' + s.toLowerCase(); });
 
-    var pp = function(node) {
-      return jasmine.pp(node)
-        .replace(/([\{\[]) /g, '$1')
-        .replace(/ ([\}\]:])/g, '$1');
-    };
+      var pp = function(node) {
+        return jasmine.pp(node)
+          .replace(/([\{\[]) /g, '$1')
+          .replace(/ ([\}\]:])/g, '$1');
+      };
 
-    var message = 'Expected ' +
-      pp(actual) +
-      (isNot ? ' not ' : ' ') +
-      '\n' +
-      englishyPredicate;
+      var message = 'Expected ' +
+        pp(actual) +
+        (isNot ? ' not ' : ' ') +
+        '\n' +
+        englishyPredicate;
 
-    if (expected.length > 0) {
-      for (var i = 0; i < expected.length; i++) {
-        if (i > 0) {
-          message += ',';
+      if (expected.length > 0) {
+        for (var i = 0; i < expected.length; i++) {
+          if (i > 0) {
+            message += ',';
+          }
+          message += ' ' + pp(expected[i]);
         }
-        message += ' ' + pp(expected[i]);
       }
-    }
 
-    return message + '.';
-  };
+      return message + '.';
+    };
+  }
 
   var cachedIframe;
   function getIframe() {

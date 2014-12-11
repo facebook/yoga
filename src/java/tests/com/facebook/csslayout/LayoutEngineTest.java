@@ -3585,7 +3585,7 @@ public class LayoutEngineTest {
       }
     }
 
-    test("should calcluate left properly with position: absolute right", root_node, root_layout);
+    test("should calculate left properly with position: absolute right", root_node, root_layout);
   }
 
   @Test
@@ -3661,7 +3661,7 @@ public class LayoutEngineTest {
       }
     }
 
-    test("should calcluate left properly with position: absolute right and width", root_node, root_layout);
+    test("should calculate left properly with position: absolute right and width", root_node, root_layout);
   }
 
   @Test
@@ -3698,7 +3698,7 @@ public class LayoutEngineTest {
       }
     }
 
-    test("should calcluate top properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
+    test("should calculate top properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
   }
 
   @Test
@@ -3735,7 +3735,201 @@ public class LayoutEngineTest {
       }
     }
 
-    test("should calcluate left properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
+    test("should calculate left properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase88()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.justifyContent = CSSJustify.SPACE_BETWEEN;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.border[CSSStyle.SPACING_BOTTOM] = 1;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 0;
+      node_0.layout.height = 1;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 0;
+        node_1.layout.height = 1;
+      }
+    }
+
+    test("should layout border bottom inside of justify content space between container", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase89()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.justifyContent = CSSJustify.CENTER;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.margin[CSSStyle.SPACING_TOP] = -6;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 0;
+      node_0.layout.height = 0;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = -3;
+        node_1.layout.x = 0;
+        node_1.layout.width = 0;
+        node_1.layout.height = 0;
+      }
+    }
+
+    test("should layout negative margin top inside of justify content center container", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase90()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.justifyContent = CSSJustify.CENTER;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.margin[CSSStyle.SPACING_TOP] = 20;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 0;
+      node_0.layout.height = 20;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 20;
+        node_1.layout.x = 0;
+        node_1.layout.width = 0;
+        node_1.layout.height = 0;
+      }
+    }
+
+    test("should layout positive margin top inside of justify content center container", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase91()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.justifyContent = CSSJustify.FLEX_END;
+      node_0.style.border[CSSStyle.SPACING_BOTTOM] = 5;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 0;
+      node_0.layout.height = 5;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 0;
+        node_1.layout.height = 0;
+      }
+    }
+
+    test("should layout border bottom and flex end with an empty child", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase92()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 800;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.positionLeft = 5;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 800;
+      node_0.layout.height = 0;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 5;
+        node_1.layout.width = 800;
+        node_1.layout.height = 0;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.y = 0;
+          node_2.layout.x = 0;
+          node_2.layout.width = 800;
+          node_2.layout.height = 0;
+        }
+      }
+    }
+
+    test("should layout with children of a contain with left", root_node, root_layout);
   }
   /** END_GENERATED **/
 }

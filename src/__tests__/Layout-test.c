@@ -3343,7 +3343,7 @@ int main()
       }
     }
 
-    test("should calcluate left properly with position: absolute right", root_node, root_layout);
+    test("should calculate left properly with position: absolute right", root_node, root_layout);
   }
 
   {
@@ -3415,7 +3415,7 @@ int main()
       }
     }
 
-    test("should calcluate left properly with position: absolute right and width", root_node, root_layout);
+    test("should calculate left properly with position: absolute right and width", root_node, root_layout);
   }
 
   {
@@ -3450,7 +3450,7 @@ int main()
       }
     }
 
-    test("should calcluate top properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
+    test("should calculate top properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
   }
 
   {
@@ -3485,7 +3485,191 @@ int main()
       }
     }
 
-    test("should calcluate left properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
+    test("should calculate left properly with position: absolute right, width, and no parent dimensions", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.border[CSS_BOTTOM] = 1;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 1;
+      }
+    }
+
+    test("should layout border bottom inside of justify content space between container", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.margin[CSS_TOP] = -6;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = -3;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout negative margin top inside of justify content center container", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.margin[CSS_TOP] = 20;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 20;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 20;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout positive margin top inside of justify content center container", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
+      node_0->style.border[CSS_BOTTOM] = 5;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 5;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout border bottom and flex end with an empty child", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 800;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position[CSS_LEFT] = 5;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 800;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 5;
+        node_1->layout.dimensions[CSS_WIDTH] = 800;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 800;
+          node_2->layout.dimensions[CSS_HEIGHT] = 0;
+        }
+      }
+    }
+
+    test("should layout with children of a contain with left", root_node, root_layout);
   }
   /** END_GENERATED **/
   return tests_finished();
