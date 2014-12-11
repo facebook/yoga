@@ -1055,6 +1055,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout negative margin top and center justify content', function() {
+    testLayout(
+      {style: {justifyContent: 'center'}, children: [
+        {style: {marginTop: -6}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: -3, left: 0}
+      ]}
+    );
+  });
+
   xit('should layout flex-wrap', function() {
     testLayout(
       {style: {flexWrap: 'wrap', flexDirection: 'row', width: 100}, children: [

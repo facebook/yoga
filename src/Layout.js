@@ -362,73 +362,73 @@ var computeLayout = (function() {
     var/*float*/ leadingMainDim = 0;
     var/*float*/ betweenMainDim = 0;
 
-    // If the dimensions of the current node is defined by its children, they
-    // are all going to be packed together and we don't need to compute
-    // anything.
+    var/*float*/ definedMainDim = 0;
     if (!isUndefined(node.layout[dim[mainAxis]])) {
-      // The remaining available space that needs to be allocated
-      var/*float*/ remainingMainDim = node.layout[dim[mainAxis]] -
-        getPaddingAndBorderAxis(node, mainAxis) -
-        mainContentDim;
+      definedMainDim = node.layout[dim[mainAxis]];
+    }
 
-      // If there are flexible children in the mix, they are going to fill the
-      // remaining space
-      if (flexibleChildrenCount != 0) {
-        var/*float*/ flexibleMainDim = remainingMainDim / totalFlexible;
+    // The remaining available space that needs to be allocated
+    var/*float*/ remainingMainDim = definedMainDim -
+      getPaddingAndBorderAxis(node, mainAxis) -
+      mainContentDim;
 
-        // The non flexible children can overflow the container, in this case
-        // we should just assume that there is no space available.
-        if (flexibleMainDim < 0) {
-          flexibleMainDim = 0;
-        }
-        // We iterate over the full array and only apply the action on flexible
-        // children. This is faster than actually allocating a new array that
-        // contains only flexible children.
-        for (var/*int*/ i = 0; i < node.children.length; ++i) {
-          var/*css_node_t**/ child = node.children[i];
-          if (isFlex(child)) {
-            // At this point we know the final size of the element in the main
-            // dimension
-            child.layout[dim[mainAxis]] = flexibleMainDim * getFlex(child) +
-              getPaddingAndBorderAxis(child, mainAxis);
+    // If there are flexible children in the mix, they are going to fill the
+    // remaining space
+    if (flexibleChildrenCount != 0) {
+      var/*float*/ flexibleMainDim = remainingMainDim / totalFlexible;
 
-            var/*float*/ maxWidth = CSS_UNDEFINED;
-            if (mainAxis === CSS_FLEX_DIRECTION_ROW) {
-              // do nothing
-            } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
-              maxWidth = node.layout[dim[CSS_FLEX_DIRECTION_ROW]] -
-                getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
-            } else {
-              maxWidth = parentMaxWidth -
-                getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
-                getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
-            }
+      // The non flexible children can overflow the container, in this case
+      // we should just assume that there is no space available.
+      if (flexibleMainDim < 0) {
+        flexibleMainDim = 0;
+      }
+      // We iterate over the full array and only apply the action on flexible
+      // children. This is faster than actually allocating a new array that
+      // contains only flexible children.
+      for (var/*int*/ i = 0; i < node.children.length; ++i) {
+        var/*css_node_t**/ child = node.children[i];
+        if (isFlex(child)) {
+          // At this point we know the final size of the element in the main
+          // dimension
+          child.layout[dim[mainAxis]] = flexibleMainDim * getFlex(child) +
+            getPaddingAndBorderAxis(child, mainAxis);
 
-            // And we recursively call the layout algorithm for this child
-            layoutNode(child, maxWidth);
+          var/*float*/ maxWidth = CSS_UNDEFINED;
+          if (mainAxis === CSS_FLEX_DIRECTION_ROW) {
+            // do nothing
+          } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+            maxWidth = node.layout[dim[CSS_FLEX_DIRECTION_ROW]] -
+              getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+          } else {
+            maxWidth = parentMaxWidth -
+              getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
+              getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
           }
-        }
 
-      // We use justifyContent to figure out how to allocate the remaining
-      // space available
-      } else {
-        var/*css_justify_t*/ justifyContent = getJustifyContent(node);
-        if (justifyContent === CSS_JUSTIFY_FLEX_START) {
-          // Do nothing
-        } else if (justifyContent === CSS_JUSTIFY_CENTER) {
-          leadingMainDim = remainingMainDim / 2;
-        } else if (justifyContent === CSS_JUSTIFY_FLEX_END) {
-          leadingMainDim = remainingMainDim;
-        } else if (justifyContent === CSS_JUSTIFY_SPACE_BETWEEN) {
-          remainingMainDim = fmaxf(remainingMainDim, 0);
-          betweenMainDim = remainingMainDim /
-            (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
-        } else if (justifyContent === CSS_JUSTIFY_SPACE_AROUND) {
-          // Space on the edges is half of the space between elements
-          betweenMainDim = remainingMainDim /
-            (flexibleChildrenCount + nonFlexibleChildrenCount);
-          leadingMainDim = betweenMainDim / 2;
+          // And we recursively call the layout algorithm for this child
+          layoutNode(child, maxWidth);
         }
+      }
+
+    // We use justifyContent to figure out how to allocate the remaining
+    // space available
+    } else {
+      var/*css_justify_t*/ justifyContent = getJustifyContent(node);
+      if (justifyContent === CSS_JUSTIFY_FLEX_START) {
+        // Do nothing
+      } else if (justifyContent === CSS_JUSTIFY_CENTER) {
+        leadingMainDim = remainingMainDim / 2;
+      } else if (justifyContent === CSS_JUSTIFY_FLEX_END) {
+        leadingMainDim = remainingMainDim;
+      } else if (justifyContent === CSS_JUSTIFY_SPACE_BETWEEN) {
+        remainingMainDim = fmaxf(remainingMainDim, 0);
+        betweenMainDim = remainingMainDim /
+          (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
+      } else if (justifyContent === CSS_JUSTIFY_SPACE_AROUND) {
+        // Space on the edges is half of the space between elements
+        betweenMainDim = remainingMainDim /
+          (flexibleChildrenCount + nonFlexibleChildrenCount);
+        leadingMainDim = betweenMainDim / 2;
       }
     }
 
