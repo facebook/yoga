@@ -71,8 +71,13 @@ describe('Random layout', function() {
     randEnum(node, 0.5, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
     randEnum(node, 0.5, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
     randEnum(node, 0.5, 'position', ['relative', 'absolute']);
-    //randEnum(node, 0.5, 'flexWrap', ['nowrap', 'wrap']);
+    randEnum(node, 0.5, 'flexWrap', ['nowrap', 'wrap']);
     //randEnum(node, 0.5, 'measure', [text(texts.small), text(texts.big)]);
+
+    // Chrome is doing some very weird things with this. Probably not worth supporting
+    if (node.style.flex === 0) {
+      delete node.style.flex;
+    }
 
     if (node.style.measure) {
       // align-items: stretch on a text node makes it wrap in a different way.

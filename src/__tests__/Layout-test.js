@@ -1114,6 +1114,19 @@ describe('Layout', function() {
     );
   });
 
+  // This behavior is very weird. The child has a width of 0 but somehow the
+  // parent has a width of 500. Looks like a bug rather than a feature.
+  xit('should layout with flex: 0 and a specific width', function() {
+    testLayout(
+      {style: {flexDirection: 'row'}, children: [
+        {style: {width: 500, flex: 0}}
+      ]},
+      {width: 500, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
   xit('should layout with nested padding', function() {
     testLayout(
       {style: {}, children: [
