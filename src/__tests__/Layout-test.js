@@ -1000,7 +1000,7 @@ describe('Layout', function() {
     );
   });
 
-  it('should calcluate left properly with position: absolute right', function() {
+  it('should calculate left properly with position: absolute right', function() {
     testLayout(
       {style: {width: 100}, children: [
         {style: {position: 'absolute', right: 0}}
@@ -1022,7 +1022,7 @@ describe('Layout', function() {
     );
   });
 
-  it('should calcluate left properly with position: absolute right and width', function() {
+  it('should calculate left properly with position: absolute right and width', function() {
     testLayout(
       {style: {width: 100}, children: [
         {style: {width: 10, position: 'absolute', right: 0}}
@@ -1033,7 +1033,7 @@ describe('Layout', function() {
     );
   });
 
-  it('should calcluate top properly with position: absolute right, width, and no parent dimensions', function() {
+  it('should calculate top properly with position: absolute right, width, and no parent dimensions', function() {
     testLayout(
       {style: {}, children: [
         {style: {height: 10, position: 'absolute', bottom: 0}}
@@ -1062,6 +1062,17 @@ describe('Layout', function() {
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
         {width: 0, height: 0, top: -3, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout border bottom inside of justify content space between container', function() {
+    testLayout(
+      {style: {justifyContent: 'space-between'}, children: [
+        {style: {borderBottomWidth: 1}}
+      ]},
+      {width: 0, height: 1, top: 0, left: 0, children: [
+        {width: 0, height: 1, top: 0, left: 0}
       ]}
     );
   });

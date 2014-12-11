@@ -353,7 +353,6 @@ var computeLayout = (function() {
       }
     }
 
-
     // <Loop B> Layout flexible children and allocate empty space
 
     // In order to position the elements in the main axis, we have two
@@ -422,8 +421,12 @@ var computeLayout = (function() {
         leadingMainDim = remainingMainDim;
       } else if (justifyContent === CSS_JUSTIFY_SPACE_BETWEEN) {
         remainingMainDim = fmaxf(remainingMainDim, 0);
-        betweenMainDim = remainingMainDim /
-          (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
+        if (flexibleChildrenCount + nonFlexibleChildrenCount - 1 !== 0) {
+          betweenMainDim = remainingMainDim /
+            (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
+        } else {
+          betweenMainDim = 0;
+        }
       } else if (justifyContent === CSS_JUSTIFY_SPACE_AROUND) {
         // Space on the edges is half of the space between elements
         betweenMainDim = remainingMainDim /
