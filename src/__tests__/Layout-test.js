@@ -1099,6 +1099,21 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout with children of a contain with left', function() {
+    testLayout(
+      {style: {width: 800}, children: [
+        {style: {left: 5}, children: [
+          {style: {}}
+        ]}
+      ]},
+      {width: 800, height: 0, top: 0, left: 0, children: [
+        {width: 800, height: 0, top: 0, left: 5, children: [
+          {width: 800, height: 0, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+
   xit('should layout flex-wrap', function() {
     testLayout(
       {style: {flexWrap: 'wrap', flexDirection: 'row', width: 100}, children: [

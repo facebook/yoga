@@ -267,8 +267,7 @@ var computeLayout = (function() {
       if (getAlignItem(node, child) === CSS_ALIGN_STRETCH &&
           getPositionType(child) === CSS_POSITION_RELATIVE &&
           !isUndefined(node.layout[dim[crossAxis]]) &&
-          !isDimDefined(child, crossAxis) &&
-          !isPosDefined(child, leading[crossAxis])) {
+          !isDimDefined(child, crossAxis)) {
         child.layout[dim[crossAxis]] = fmaxf(
           node.layout[dim[crossAxis]] -
             getPaddingAndBorderAxis(node, crossAxis) -
