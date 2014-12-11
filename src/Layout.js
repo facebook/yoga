@@ -361,7 +361,7 @@ var computeLayout = (function() {
     var/*float*/ leadingMainDim = 0;
     var/*float*/ betweenMainDim = 0;
 
-    var/*float*/ definedMainDim = 0;
+    var/*float*/ definedMainDim = fmaxf(mainContentDim, 0);
     if (!isUndefined(node.layout[dim[mainAxis]])) {
       definedMainDim = node.layout[dim[mainAxis]];
     }
@@ -373,7 +373,7 @@ var computeLayout = (function() {
 
     // If there are flexible children in the mix, they are going to fill the
     // remaining space
-    if (flexibleChildrenCount != 0) {
+    if (flexibleChildrenCount !== 0) {
       var/*float*/ flexibleMainDim = remainingMainDim / totalFlexible;
 
       // The non flexible children can overflow the container, in this case

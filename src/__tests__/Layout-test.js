@@ -1055,17 +1055,6 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout negative margin top and center justify content', function() {
-    testLayout(
-      {style: {justifyContent: 'center'}, children: [
-        {style: {marginTop: -6}}
-      ]},
-      {width: 0, height: 0, top: 0, left: 0, children: [
-        {width: 0, height: 0, top: -3, left: 0}
-      ]}
-    );
-  });
-
   it('should layout border bottom inside of justify content space between container', function() {
     testLayout(
       {style: {justifyContent: 'space-between'}, children: [
@@ -1076,6 +1065,29 @@ describe('Layout', function() {
       ]}
     );
   });
+
+  it('should layout negative margin top inside of justify content center container', function() {
+    testLayout(
+      {style: {justifyContent: 'center'}, children: [
+        {style: {marginTop: -6}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: -3, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout positive margin top inside of justify content center container', function() {
+    testLayout(
+      {style: {justifyContent: 'center'}, children: [
+        {style: {marginTop: 20}}
+      ]},
+      {width: 0, height: 20, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 20, left: 0}
+      ]}
+    );
+  });
+
 
   xit('should layout flex-wrap', function() {
     testLayout(
