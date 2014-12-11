@@ -19,8 +19,9 @@ var layoutTestUtils = (function() {
       englishyPredicate = matcherName.replace(/[A-Z]/g, function(s) { return ' ' + s.toLowerCase(); });
 
     var pp = function(node) {
-      return JSON.stringify(node, null, 2)
-        .replace(/"([a-zA-Z]+)":/g, '$1:');
+      return jasmine.pp(node)
+        .replace(/([\{\[]) /g, '$1')
+        .replace(/ ([\}\]:])/g, '$1');
     };
 
     var message = 'Expected ' +
@@ -347,8 +348,8 @@ var layoutTestUtils = (function() {
       testNamedLayout('layout-dom', layout, domLayout);
     },
     testRandomLayout: function(node, i) {
-      expect({i: i, node: node, layout: computeCSSLayout(node)})
-        .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
+      expect({node: node, layout: computeCSSLayout(node)})
+        .toEqual({node: node, layout: computeDOMLayout(node)});
     },
     testsFinished: function() {
       console.log('tests finished!');
