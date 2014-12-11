@@ -88,6 +88,44 @@ var layoutTestUtils = (function() {
     var realComputeLayout = computeLayout;
   }
 
+  function roundLayout(layout) {
+    // Chrome rounds all the numbers with a precision of 1/64
+    // Reproduce the same behavior
+    function round(number) {
+      var floored = Math.floor(number);
+      var decimal = number - floored;
+      if (decimal === 0) {
+        return number;
+      }
+      var minDifference = Infinity;
+      var minDecimal = Infinity;
+      for (var i = 1; i < 64; ++i) {
+        var roundedDecimal = i / 64;
+        var difference = Math.abs(roundedDecimal - decimal);
+        if (difference < minDifference) {
+          minDifference = difference;
+          minDecimal = roundedDecimal;
+        }
+      }
+      return floored + minDecimal;
+    }
+
+    function rec(layout) {
+      layout.top = round(layout.top);
+      layout.left = round(layout.left);
+      layout.width = round(layout.width);
+      layout.height = round(layout.height);
+      if (layout.children) {
+        for (var i = 0; i < layout.children.length; ++i) {
+          rec(layout.children[i]);
+        }
+      }
+    }
+
+    rec(layout);
+    return layout;
+  }
+
   function computeCSSLayout(rootNode) {
     function fillNodes(node) {
       node.layout = {
@@ -119,7 +157,7 @@ var layoutTestUtils = (function() {
 
     fillNodes(rootNode);
     realComputeLayout(rootNode);
-    return extractNodes(rootNode);
+    return roundLayout(extractNodes(rootNode));
   }
 
   function computeDOMLayout(node) {

@@ -89,17 +89,17 @@ describe('Random layout', function() {
 
   for (var i = 0; i < 100; ++i) {
     var node = generateRandomNode();
+    // The iframe's body has a natural width of 300 that it doesn't really make
+    // to replicate in the test suite. The easiest workaround is not to test
+    // alignSelf, position and flex properties on the root element.
+    delete node.style.alignSelf;
+    delete node.style.flex;
+    delete node.style.position;
+
     it('should layout randomly #' + i +'.', function(node) {
       if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
         node = reduceTest(node);
       }
-
-      // The iframe's body has a natural width of 300 that it doesn't really make
-      // to replicate in the test suite. The easiest workaround is not to test
-      // alignSelf, position and flex properties on the root element.
-      delete node.style.alignSelf;
-      delete node.style.flex;
-      delete node.style.position;
 
       testRandomLayout(node, i);
     }.bind(this, node));

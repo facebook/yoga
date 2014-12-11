@@ -1114,6 +1114,23 @@ describe('Layout', function() {
     );
   });
 
+  xit('should layout with nested padding', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {}, children: [
+          {style: {}}
+        ]},
+        {style: {padding: 5}}
+      ]},
+      {width: 10, height: 10, top: 0, left: 0, children: [
+        {width: 10, height: 0, top: 0, left: 0, children: [
+          {width: 10, height: 0, top: 0, left: 0}
+        ]},
+        {width: 10, height: 10, top: 0, left: 0}
+      ]}
+    );
+  });
+
   xit('should layout flex-wrap', function() {
     testLayout(
       {style: {flexWrap: 'wrap', flexDirection: 'row', width: 100}, children: [
