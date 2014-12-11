@@ -9,6 +9,38 @@
 /* globals document, computeLayout */
 
 var layoutTestUtils = (function() {
+
+  jasmine.matchersUtil.buildFailureMessage = function () {
+    var args = Array.prototype.slice.call(arguments, 0),
+      matcherName = args[0],
+      isNot = args[1],
+      actual = args[2],
+      expected = args.slice(3),
+      englishyPredicate = matcherName.replace(/[A-Z]/g, function(s) { return ' ' + s.toLowerCase(); });
+
+    var pp = function(node) {
+      return JSON.stringify(node, null, 2)
+        .replace(/"([a-zA-Z]+)":/g, '$1:');
+    };
+
+    var message = 'Expected ' +
+      pp(actual) +
+      (isNot ? ' not ' : ' ') +
+      '\n' +
+      englishyPredicate;
+
+    if (expected.length > 0) {
+      for (var i = 0; i < expected.length; i++) {
+        if (i > 0) {
+          message += ',';
+        }
+        message += ' ' + pp(expected[i]);
+      }
+    }
+
+    return message + '.';
+  };
+
   var cachedIframe;
   function getIframe() {
     if (cachedIframe) {
@@ -38,6 +70,9 @@ var layoutTestUtils = (function() {
 
         margin: 0;
         padding: 0;
+      }
+      body {
+        width: 0;
       }
     */} + '').slice(15, -4);
     doc.head.appendChild(style);
@@ -115,6 +150,7 @@ var layoutTestUtils = (function() {
       transferSpacing(div, node, 'border', 'Width');
       transfer(div, node, 'flexDirection');
       transfer(div, node, 'flex');
+      transfer(div, node, 'flexWrap');
       transfer(div, node, 'justifyContent');
       transfer(div, node, 'alignSelf');
       transfer(div, node, 'alignItems');
@@ -303,16 +339,12 @@ var layoutTestUtils = (function() {
     textSizes: textSizes,
     preDefinedTextSizes: preDefinedTextSizes,
     testLayout: function(node, expectedLayout) {
-      node.style = node.style || {};
-      node.style.alignSelf = 'flex-start';
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
       testNamedLayout('expected-dom', expectedLayout, domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
     testRandomLayout: function(node, i) {
-      node.style = node.style || {};
-      node.style.alignSelf = 'flex-start';
       expect({i: i, node: node, layout: computeCSSLayout(node)})
         .toEqual({i: i, node: node, layout: computeDOMLayout(node)});
     },
