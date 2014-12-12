@@ -1172,6 +1172,22 @@ describe('Layout', function() {
     );
   });
 
+  // The container should be width = 25 because the width of the two children
+  // are 20 and 5. It's likely a bug in Chrome
+  xit('should layout flex wrap with padding and borders', function() {
+    testLayout(
+      {style: {height: 100, flexWrap: 'wrap'}, children: [
+        {style: {height: 500, paddingRight: 20}},
+        {style: {borderLeftWidth: 5}}
+      ]},
+      {width: 20, height: 100, top: 0, left: 0, children: [
+        {width: 20, height: 500, top: 0, left: 0},
+        {width: 5, height: 0, top: 0, left: 20}
+      ]}
+    );
+  });
+
+
   xit('should layout text with alignItems: stretch', function() {
     testLayout(
       {style: {width: 80, padding: 7, alignItems: 'stretch', measure: text(texts.big)}},
