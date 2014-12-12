@@ -1116,6 +1116,7 @@ describe('Layout', function() {
 
   // This behavior is very weird. The child has a width of 0 but somehow the
   // parent has a width of 500. Looks like a bug rather than a feature.
+  // https://code.google.com/p/chromium/issues/detail?id=441768
   xit('should layout with flex: 0 and a specific width', function() {
     testLayout(
       {style: {flexDirection: 'row'}, children: [
@@ -1174,6 +1175,7 @@ describe('Layout', function() {
 
   // The container should be width = 25 because the width of the two children
   // are 20 and 5. It's likely a bug in Chrome
+  // https://code.google.com/p/chromium/issues/detail?id=247963#c16
   xit('should layout flex wrap with padding and borders', function() {
     testLayout(
       {style: {height: 100, flexWrap: 'wrap'}, children: [
