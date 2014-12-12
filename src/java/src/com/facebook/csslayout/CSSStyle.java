@@ -23,6 +23,7 @@ public class CSSStyle {
   public CSSAlign alignItems = CSSAlign.STRETCH;
   public CSSAlign alignSelf = CSSAlign.AUTO;
   public CSSPositionType positionType = CSSPositionType.RELATIVE;
+  public CSSWrap flexWrap = CSSWrap.NOWRAP;
   public float flex;
 
   public float[] margin = new float[4];

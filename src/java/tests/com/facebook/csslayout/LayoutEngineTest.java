@@ -3931,5 +3931,60 @@ public class LayoutEngineTest {
 
     test("should layout with children of a contain with left", root_node, root_layout);
   }
+
+  @Test
+  public void testCase93()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.flexWrap = CSSWrap.WRAP;
+      node_0.style.width = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.width = 40;
+        node_1.style.height = 10;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.width = 40;
+        node_1.style.height = 10;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.width = 40;
+        node_1.style.height = 10;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 100;
+      node_0.layout.height = 20;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 40;
+        node_1.layout.height = 10;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 0;
+        node_1.layout.x = 40;
+        node_1.layout.width = 40;
+        node_1.layout.height = 10;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.y = 10;
+        node_1.layout.x = 0;
+        node_1.layout.width = 40;
+        node_1.layout.height = 10;
+      }
+    }
+
+    test("should layout flex-wrap", root_node, root_layout);
+  }
   /** END_GENERATED **/
 }

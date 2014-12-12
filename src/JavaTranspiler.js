@@ -14,6 +14,7 @@ function __transpileToJavaCommon(code) {
     .replace(/CSS_FLEX_DIRECTION_/g, 'CSSFlexDirection.')
     .replace(/css_align_t/g, 'CSSAlign')
     .replace(/CSS_ALIGN_/g, 'CSSAlign.')
+    .replace(/CSS_WRAP/g, 'CSSWrap.WRAP')
     .replace(/CSS_POSITION_/g, 'CSSPositionType.')
     .replace(/css_justify_t/g, 'CSSJustify')
     .replace(/CSS_JUSTIFY_/g, 'CSSJustify.')

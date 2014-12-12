@@ -287,6 +287,13 @@ public class CSSNode {
     }
   }
 
+  public void setWrap(CSSWrap flexWrap) {
+    if (!valuesEqual(style.flexWrap, flexWrap)) {
+      style.flexWrap = flexWrap;
+      dirty();
+    }
+  }
+
   public void setFlex(float flex) {
     if (!valuesEqual(style.flex, flex)) {
       style.flex = flex;

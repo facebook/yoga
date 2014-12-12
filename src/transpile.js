@@ -141,6 +141,10 @@ function printLayout(test) {
       'relative': 'CSS_POSITION_RELATIVE',
       'absolute': 'CSS_POSITION_ABSOLUTE'
     });
+    addEnum(node, 'flexWrap', 'flex_wrap', {
+      'nowrap': 'CSS_NOWRAP',
+      'wrap': 'CSS_WRAP'
+    });
     addFloat('positive', node, 'flex', 'flex');
     addFloat('positive', node, 'width', 'dimensions[CSS_WIDTH]');
     addFloat('positive', node, 'height', 'dimensions[CSS_HEIGHT]');

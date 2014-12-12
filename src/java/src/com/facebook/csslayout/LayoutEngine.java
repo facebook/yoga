@@ -235,6 +235,10 @@ public class LayoutEngine {
     return node.style.justifyContent;
   }
 
+  private static boolean isFlexWrap(CSSNode node) {
+    return node.style.flexWrap == CSSWrap.WRAP;
+  }
+
   private static boolean isFlex(CSSNode node) {
     return getPositionType(node) == CSSPositionType.RELATIVE && getFlex(node) > 0;
   }
@@ -371,97 +375,50 @@ public class LayoutEngine {
       }
     }
   
-    // <Loop A> Layout non flexible children and count children by type
-  
-    // mainContentDim is accumulation of the dimensions and margin of all the
-    // non flexible children. This will be used in order to either set the
-    // dimensions of the node if none already exist, or to compute the
-    // remaining space left for the flexible children.
-    float mainContentDim = 0;
-  
-    // There are three kind of children, non flexible, flexible and absolute.
-    // We need to know how many there are in order to distribute the space.
-    int flexibleChildrenCount = 0;
-    float totalFlexible = 0;
-    int nonFlexibleChildrenCount = 0;
-    for (int i = 0; i < node.getChildCount(); ++i) {
-      CSSNode child = node.getChildAt(i);
-  
-      // It only makes sense to consider a child flexible if we have a computed
-      // dimension for the node.
-      if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis))) && isFlex(child)) {
-        flexibleChildrenCount++;
-        totalFlexible = totalFlexible + getFlex(child);
-  
-        // Even if we don't know its exact size yet, we already know the padding,
-        // border and margin. We'll use this partial information to compute the
-        // remaining space.
-        mainContentDim = mainContentDim + getPaddingAndBorderAxis(child, mainAxis) +
-          getMarginAxis(child, mainAxis);
-  
-      } else {
-        float maxWidth = CSSConstants.UNDEFINED;
-        if (mainAxis == CSSFlexDirection.ROW) {
-          // do nothing
-        } else if (isDimDefined(node, CSSFlexDirection.ROW)) {
-          maxWidth = getLayoutDimension(node, getDim(CSSFlexDirection.ROW)) -
-            getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
-        } else {
-          maxWidth = parentMaxWidth -
-            getMarginAxis(node, CSSFlexDirection.ROW) -
-            getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
-        }
-  
-        // This is the main recursive call. We layout non flexible children.
-        layoutNode(child, maxWidth);
-  
-        // Absolute positioned elements do not take part of the layout, so we
-        // don't use them to compute mainContentDim
-        if (getPositionType(child) == CSSPositionType.RELATIVE) {
-          nonFlexibleChildrenCount++;
-          // At this point we know the final size and margin of the element.
-          mainContentDim = mainContentDim + getDimWithMargin(child, mainAxis);
-        }
-      }
-    }
-  
-    // <Loop B> Layout flexible children and allocate empty space
-  
-    // In order to position the elements in the main axis, we have two
-    // controls. The space between the beginning and the first element
-    // and the space between each two elements.
-    float leadingMainDim = 0;
-    float betweenMainDim = 0;
-  
-    float definedMainDim = Math.max(mainContentDim, 0);
+    float definedMainDim = CSSConstants.UNDEFINED;
     if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
       definedMainDim = getLayoutDimension(node, getDim(mainAxis)) -
-        getPaddingAndBorderAxis(node, mainAxis);
+          getPaddingAndBorderAxis(node, mainAxis);
     }
-    // The remaining available space that needs to be allocated
-    float remainingMainDim = definedMainDim - mainContentDim;
   
-    // If there are flexible children in the mix, they are going to fill the
-    // remaining space
-    if (flexibleChildrenCount != 0) {
-      float flexibleMainDim = remainingMainDim / totalFlexible;
+    // We want to execute the next two loops one per line with flex-wrap
+    int startLine = 0;
+    int endLine = 0;
+    int nextLine = 0;
+    // We aggregate the total dimensions of the container in those two variables
+    float linesCrossDim = 0;
+    float linesMainDim = 0;
+    while (endLine != node.getChildCount()) {
+      // <Loop A> Layout non flexible children and count children by type
   
-      // The non flexible children can overflow the container, in this case
-      // we should just assume that there is no space available.
-      if (flexibleMainDim < 0) {
-        flexibleMainDim = 0;
-      }
-      // We iterate over the full array and only apply the action on flexible
-      // children. This is faster than actually allocating a new array that
-      // contains only flexible children.
-      for (int i = 0; i < node.getChildCount(); ++i) {
+      // mainContentDim is accumulation of the dimensions and margin of all the
+      // non flexible children. This will be used in order to either set the
+      // dimensions of the node if none already exist, or to compute the
+      // remaining space left for the flexible children.
+      float mainContentDim = 0;
+  
+      // There are three kind of children, non flexible, flexible and absolute.
+      // We need to know how many there are in order to distribute the space.
+      int flexibleChildrenCount = 0;
+      float totalFlexible = 0;
+      int nonFlexibleChildrenCount = 0;
+      for (int i = startLine; i < node.getChildCount(); ++i) {
         CSSNode child = node.getChildAt(i);
-        if (isFlex(child)) {
-          // At this point we know the final size of the element in the main
-          // dimension
-          setLayoutDimension(child, getDim(mainAxis), flexibleMainDim * getFlex(child) +
-            getPaddingAndBorderAxis(child, mainAxis));
+        float nextContentDim = 0;
   
+        // It only makes sense to consider a child flexible if we have a computed
+        // dimension for the node.
+        if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis))) && isFlex(child)) {
+          flexibleChildrenCount++;
+          totalFlexible = totalFlexible + getFlex(child);
+  
+          // Even if we don't know its exact size yet, we already know the padding,
+          // border and margin. We'll use this partial information to compute the
+          // remaining space.
+          nextContentDim = getPaddingAndBorderAxis(child, mainAxis) +
+            getMarginAxis(child, mainAxis);
+  
+        } else {
           float maxWidth = CSSConstants.UNDEFINED;
           if (mainAxis == CSSFlexDirection.ROW) {
             // do nothing
@@ -474,74 +431,234 @@ public class LayoutEngine {
               getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
           }
   
-          // And we recursively call the layout algorithm for this child
-          layoutNode(child, maxWidth);
+          // This is the main recursive call. We layout non flexible children.
+          if (nextLine == 0) {
+            layoutNode(child, maxWidth);
+          }
+  
+          // Absolute positioned elements do not take part of the layout, so we
+          // don't use them to compute mainContentDim
+          if (getPositionType(child) == CSSPositionType.RELATIVE) {
+            nonFlexibleChildrenCount++;
+            // At this point we know the final size and margin of the element.
+            nextContentDim = getDimWithMargin(child, mainAxis);
+          }
         }
+  
+        // The element we are about to add would make us go to the next line
+        if (isFlexWrap(node) &&
+            !CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis))) &&
+            mainContentDim + nextContentDim > definedMainDim) {
+          nextLine = i + 1;
+          break;
+        }
+        nextLine = 0;
+        mainContentDim = mainContentDim + nextContentDim;
+        endLine = i + 1;
       }
   
-    // We use justifyContent to figure out how to allocate the remaining
-    // space available
-    } else {
-      CSSJustify justifyContent = getJustifyContent(node);
-      if (justifyContent == CSSJustify.FLEX_START) {
-        // Do nothing
-      } else if (justifyContent == CSSJustify.CENTER) {
-        leadingMainDim = remainingMainDim / 2;
-      } else if (justifyContent == CSSJustify.FLEX_END) {
-        leadingMainDim = remainingMainDim;
-      } else if (justifyContent == CSSJustify.SPACE_BETWEEN) {
-        remainingMainDim = Math.max(remainingMainDim, 0);
-        if (flexibleChildrenCount + nonFlexibleChildrenCount - 1 != 0) {
-          betweenMainDim = remainingMainDim /
-            (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
-        } else {
-          betweenMainDim = 0;
-        }
-      } else if (justifyContent == CSSJustify.SPACE_AROUND) {
-        // Space on the edges is half of the space between elements
-        betweenMainDim = remainingMainDim /
-          (flexibleChildrenCount + nonFlexibleChildrenCount);
-        leadingMainDim = betweenMainDim / 2;
-      }
-    }
+      // <Loop B> Layout flexible children and allocate empty space
   
-    // <Loop C> Position elements in the main axis and compute dimensions
+      // In order to position the elements in the main axis, we have two
+      // controls. The space between the beginning and the first element
+      // and the space between each two elements.
+      float leadingMainDim = 0;
+      float betweenMainDim = 0;
   
-    // At this point, all the children have their dimensions set. We need to
-    // find their position. In order to do that, we accumulate data in
-    // variables that are also useful to compute the total dimensions of the
-    // container!
-    float crossDim = 0;
-    float mainDim = leadingMainDim +
-      getPaddingAndBorder(node, getLeading(mainAxis));
-    for (int i = 0; i < node.getChildCount(); ++i) {
-      CSSNode child = node.getChildAt(i);
-  
-      if (getPositionType(child) == CSSPositionType.ABSOLUTE &&
-          isPosDefined(child, getLeading(mainAxis))) {
-        // In case the child is position absolute and has left/top being
-        // defined, we override the position to whatever the user said
-        // (and margin/border).
-        setLayoutPosition(child, getPos(mainAxis), getPosition(child, getLeading(mainAxis)) +
-          getBorder(node, getLeading(mainAxis)) +
-          getMargin(child, getLeading(mainAxis)));
+      // The remaining available space that needs to be allocated
+      float remainingMainDim = 0;
+      if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
+        remainingMainDim = definedMainDim - mainContentDim;
       } else {
-        // If the child is position absolute (without top/left) or relative,
-        // we put it at the current accumulated offset.
-        setLayoutPosition(child, getPos(mainAxis), getLayoutPosition(child, getPos(mainAxis)) + mainDim);
+        remainingMainDim = Math.max(mainContentDim, 0) - mainContentDim;
       }
   
-      // Now that we placed the element, we need to update the variables
-      // We only need to do that for relative elements. Absolute elements
-      // do not take part in that phase.
-      if (getPositionType(child) == CSSPositionType.RELATIVE) {
-        // The main dimension is the sum of all the elements dimension plus
-        // the spacing.
-        mainDim = mainDim + betweenMainDim + getDimWithMargin(child, mainAxis);
-        // The cross dimension is the max of the elements dimension since there
-        // can only be one element in that cross dimension.
-        crossDim = Math.max(crossDim, getDimWithMargin(child, crossAxis));
+      // If there are flexible children in the mix, they are going to fill the
+      // remaining space
+      if (flexibleChildrenCount != 0) {
+        float flexibleMainDim = remainingMainDim / totalFlexible;
+  
+        // The non flexible children can overflow the container, in this case
+        // we should just assume that there is no space available.
+        if (flexibleMainDim < 0) {
+          flexibleMainDim = 0;
+        }
+        // We iterate over the full array and only apply the action on flexible
+        // children. This is faster than actually allocating a new array that
+        // contains only flexible children.
+        for (int i = startLine; i < endLine; ++i) {
+          CSSNode child = node.getChildAt(i);
+          if (isFlex(child)) {
+            // At this point we know the final size of the element in the main
+            // dimension
+            setLayoutDimension(child, getDim(mainAxis), flexibleMainDim * getFlex(child) +
+              getPaddingAndBorderAxis(child, mainAxis));
+  
+            float maxWidth = CSSConstants.UNDEFINED;
+            if (mainAxis == CSSFlexDirection.ROW) {
+              // do nothing
+            } else if (isDimDefined(node, CSSFlexDirection.ROW)) {
+              maxWidth = getLayoutDimension(node, getDim(CSSFlexDirection.ROW)) -
+                getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
+            } else {
+              maxWidth = parentMaxWidth -
+                getMarginAxis(node, CSSFlexDirection.ROW) -
+                getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
+            }
+  
+            // And we recursively call the layout algorithm for this child
+            layoutNode(child, maxWidth);
+          }
+        }
+  
+      // We use justifyContent to figure out how to allocate the remaining
+      // space available
+      } else {
+        CSSJustify justifyContent = getJustifyContent(node);
+        if (justifyContent == CSSJustify.FLEX_START) {
+          // Do nothing
+        } else if (justifyContent == CSSJustify.CENTER) {
+          leadingMainDim = remainingMainDim / 2;
+        } else if (justifyContent == CSSJustify.FLEX_END) {
+          leadingMainDim = remainingMainDim;
+        } else if (justifyContent == CSSJustify.SPACE_BETWEEN) {
+          remainingMainDim = Math.max(remainingMainDim, 0);
+          if (flexibleChildrenCount + nonFlexibleChildrenCount - 1 != 0) {
+            betweenMainDim = remainingMainDim /
+              (flexibleChildrenCount + nonFlexibleChildrenCount - 1);
+          } else {
+            betweenMainDim = 0;
+          }
+        } else if (justifyContent == CSSJustify.SPACE_AROUND) {
+          // Space on the edges is half of the space between elements
+          betweenMainDim = remainingMainDim /
+            (flexibleChildrenCount + nonFlexibleChildrenCount);
+          leadingMainDim = betweenMainDim / 2;
+        }
       }
+  
+      // <Loop C> Position elements in the main axis and compute dimensions
+  
+      // At this point, all the children have their dimensions set. We need to
+      // find their position. In order to do that, we accumulate data in
+      // variables that are also useful to compute the total dimensions of the
+      // container!
+      float crossDim = 0;
+      float mainDim = leadingMainDim +
+        getPaddingAndBorder(node, getLeading(mainAxis));
+  
+      for (int i = startLine; i < endLine; ++i) {
+        CSSNode child = node.getChildAt(i);
+  
+        if (getPositionType(child) == CSSPositionType.ABSOLUTE &&
+            isPosDefined(child, getLeading(mainAxis))) {
+          // In case the child is position absolute and has left/top being
+          // defined, we override the position to whatever the user said
+          // (and margin/border).
+          setLayoutPosition(child, getPos(mainAxis), getPosition(child, getLeading(mainAxis)) +
+            getBorder(node, getLeading(mainAxis)) +
+            getMargin(child, getLeading(mainAxis)));
+        } else {
+          // If the child is position absolute (without top/left) or relative,
+          // we put it at the current accumulated offset.
+          setLayoutPosition(child, getPos(mainAxis), getLayoutPosition(child, getPos(mainAxis)) + mainDim);
+        }
+  
+        // Now that we placed the element, we need to update the variables
+        // We only need to do that for relative elements. Absolute elements
+        // do not take part in that phase.
+        if (getPositionType(child) == CSSPositionType.RELATIVE) {
+          // The main dimension is the sum of all the elements dimension plus
+          // the spacing.
+          mainDim = mainDim + betweenMainDim + getDimWithMargin(child, mainAxis);
+          // The cross dimension is the max of the elements dimension since there
+          // can only be one element in that cross dimension.
+          crossDim = Math.max(crossDim, getDimWithMargin(child, crossAxis));
+        }
+      }
+  
+      float containerMainAxis = getLayoutDimension(node, getDim(mainAxis));
+      // If the user didn't specify a width or height, and it has not been set
+      // by the container, then we set it via the children.
+      if (CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
+        containerMainAxis = Math.max(
+          // We're missing the last padding at this point to get the final
+          // dimension
+          mainDim + getPaddingAndBorder(node, getTrailing(mainAxis)),
+          // We can never assign a width smaller than the padding and borders
+          getPaddingAndBorderAxis(node, mainAxis)
+        );
+      }
+  
+      float containerCrossAxis = getLayoutDimension(node, getDim(crossAxis));
+      if (CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis)))) {
+        containerCrossAxis = Math.max(
+          // For the cross dim, we add both sides at the end because the value
+          // is aggregate via a max function. Intermediate negative values
+          // can mess this computation otherwise
+          crossDim + getPaddingAndBorderAxis(node, crossAxis),
+          getPaddingAndBorderAxis(node, crossAxis)
+        );
+      }
+  
+      // <Loop D> Position elements in the cross axis
+  
+      for (int i = startLine; i < endLine; ++i) {
+        CSSNode child = node.getChildAt(i);
+  
+        if (getPositionType(child) == CSSPositionType.ABSOLUTE &&
+            isPosDefined(child, getLeading(crossAxis))) {
+          // In case the child is absolutely positionned and has a
+          // top/left/bottom/right being set, we override all the previously
+          // computed positions to set it correctly.
+          setLayoutPosition(child, getPos(crossAxis), getPosition(child, getLeading(crossAxis)) +
+            getBorder(node, getLeading(crossAxis)) +
+            getMargin(child, getLeading(crossAxis)));
+  
+        } else {
+          float leadingCrossDim = getPaddingAndBorder(node, getLeading(crossAxis));
+  
+          // For a relative children, we're either using alignItems (parent) or
+          // alignSelf (child) in order to determine the position in the cross axis
+          if (getPositionType(child) == CSSPositionType.RELATIVE) {
+            CSSAlign alignItem = getAlignItem(node, child);
+            if (alignItem == CSSAlign.FLEX_START) {
+              // Do nothing
+            } else if (alignItem == CSSAlign.STRETCH) {
+              // You can only stretch if the dimension has not already been set
+              // previously.
+              if (!isDimDefined(child, crossAxis)) {
+                setLayoutDimension(child, getDim(crossAxis), Math.max(
+                  containerCrossAxis -
+                    getPaddingAndBorderAxis(node, crossAxis) -
+                    getMarginAxis(child, crossAxis),
+                  // You never want to go smaller than padding
+                  getPaddingAndBorderAxis(child, crossAxis)
+                ));
+              }
+            } else {
+              // The remaining space between the parent dimensions+padding and child
+              // dimensions+margin.
+              float remainingCrossDim = containerCrossAxis -
+                getPaddingAndBorderAxis(node, crossAxis) -
+                getDimWithMargin(child, crossAxis);
+  
+              if (alignItem == CSSAlign.CENTER) {
+                leadingCrossDim = leadingCrossDim + remainingCrossDim / 2;
+              } else { // CSSAlign.FLEX_END
+                leadingCrossDim = leadingCrossDim + remainingCrossDim;
+              }
+            }
+          }
+  
+          // And we apply the position
+          setLayoutPosition(child, getPos(crossAxis), getLayoutPosition(child, getPos(crossAxis)) + linesCrossDim + leadingCrossDim);
+        }
+      }
+  
+      linesCrossDim = linesCrossDim + crossDim;
+      linesMainDim = Math.max(linesMainDim, mainDim);
+      startLine = endLine;
     }
   
     // If the user didn't specify a width or height, and it has not been set
@@ -550,7 +667,7 @@ public class LayoutEngine {
       setLayoutDimension(node, getDim(mainAxis), Math.max(
         // We're missing the last padding at this point to get the final
         // dimension
-        mainDim + getPaddingAndBorder(node, getTrailing(mainAxis)),
+        linesMainDim + getPaddingAndBorder(node, getTrailing(mainAxis)),
         // We can never assign a width smaller than the padding and borders
         getPaddingAndBorderAxis(node, mainAxis)
       ));
@@ -561,65 +678,9 @@ public class LayoutEngine {
         // For the cross dim, we add both sides at the end because the value
         // is aggregate via a max function. Intermediate negative values
         // can mess this computation otherwise
-        crossDim + getPaddingAndBorderAxis(node, crossAxis),
+        linesCrossDim + getPaddingAndBorderAxis(node, crossAxis),
         getPaddingAndBorderAxis(node, crossAxis)
       ));
-    }
-  
-  
-    // <Loop D> Position elements in the cross axis
-  
-    for (int i = 0; i < node.getChildCount(); ++i) {
-      CSSNode child = node.getChildAt(i);
-  
-      if (getPositionType(child) == CSSPositionType.ABSOLUTE &&
-          isPosDefined(child, getLeading(crossAxis))) {
-        // In case the child is absolutely positionned and has a
-        // top/left/bottom/right being set, we override all the previously
-        // computed positions to set it correctly.
-        setLayoutPosition(child, getPos(crossAxis), getPosition(child, getLeading(crossAxis)) +
-          getBorder(node, getLeading(crossAxis)) +
-          getMargin(child, getLeading(crossAxis)));
-  
-      } else {
-        float leadingCrossDim = getPaddingAndBorder(node, getLeading(crossAxis));
-  
-        // For a relative children, we're either using alignItems (parent) or
-        // alignSelf (child) in order to determine the position in the cross axis
-        if (getPositionType(child) == CSSPositionType.RELATIVE) {
-          CSSAlign alignItem = getAlignItem(node, child);
-          if (alignItem == CSSAlign.FLEX_START) {
-            // Do nothing
-          } else if (alignItem == CSSAlign.STRETCH) {
-            // You can only stretch if the dimension has not already been set
-            // previously.
-            if (!isDimDefined(child, crossAxis)) {
-              setLayoutDimension(child, getDim(crossAxis), Math.max(
-                getLayoutDimension(node, getDim(crossAxis)) -
-                  getPaddingAndBorderAxis(node, crossAxis) -
-                  getMarginAxis(child, crossAxis),
-                // You never want to go smaller than padding
-                getPaddingAndBorderAxis(child, crossAxis)
-              ));
-            }
-          } else {
-            // The remaining space between the parent dimensions+padding and child
-            // dimensions+margin.
-            float remainingCrossDim = getLayoutDimension(node, getDim(crossAxis)) -
-              getPaddingAndBorderAxis(node, crossAxis) -
-              getDimWithMargin(child, crossAxis);
-  
-            if (alignItem == CSSAlign.CENTER) {
-              leadingCrossDim = leadingCrossDim + remainingCrossDim / 2;
-            } else { // CSSAlign.FLEX_END
-              leadingCrossDim = leadingCrossDim + remainingCrossDim;
-            }
-          }
-        }
-  
-        // And we apply the position
-        setLayoutPosition(child, getPos(crossAxis), getLayoutPosition(child, getPos(crossAxis)) + leadingCrossDim);
-      }
     }
   
     // <Loop E> Calculate dimensions for absolutely positioned elements

@@ -1144,12 +1144,11 @@ describe('Layout', function() {
     );
   });
 
-  xit('should layout flex-wrap', function() {
+  it('should layout flex-wrap', function() {
     testLayout(
       {style: {flexWrap: 'wrap', flexDirection: 'row', width: 100}, children: [
         {style: {width: 40, height: 10}},
         {style: {width: 40, height: 10}},
-        {style: {flex: 1}},
         {style: {width: 40, height: 10}},
       ]},
       {width: 100, height: 20, top: 0, left: 0, children: [

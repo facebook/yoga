@@ -42,6 +42,11 @@ typedef enum {
   CSS_POSITION_ABSOLUTE
 } css_position_type_t;
 
+typedef enum {
+  CSS_NOWRAP = 0,
+  CSS_WRAP
+} css_wrap_type_t;
+
 // Note: left and top are shared between position[2] and position[4], so
 // they have to be before right and bottom.
 typedef enum {
@@ -80,6 +85,7 @@ typedef struct {
   css_align_t align_items;
   css_align_t align_self;
   css_position_type_t position_type;
+  css_wrap_type_t flex_wrap;
   float flex;
   float margin[4];
   float position[4];
