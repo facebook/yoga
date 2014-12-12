@@ -104,7 +104,7 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout node with flex', function() {
+  it('should layout node with just flex', function() {
     testLayout(
       {style: {width: 1000, height: 1000}, children: [
         {style: {width: 100, height: 200}},
@@ -1155,6 +1155,19 @@ describe('Layout', function() {
         {width: 40, height: 10, top: 0, left: 0},
         {width: 40, height: 10, top: 0, left: 40},
         {width: 40, height: 10, top: 10, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout flex wrap with a line bigger than container', function() {
+    testLayout(
+      {style: {height: 100, flexWrap: 'wrap'}, children: [
+        {style: {height: 100}},
+        {style: {height: 200}},
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 100, top: 0, left: 0},
+        {width: 0, height: 200, top: 0, left: 0}
       ]}
     );
   });
