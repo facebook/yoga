@@ -48,7 +48,9 @@ public class LayoutCachingTest {
     markLayoutAppliedForTree(root);
 
     root.calculateLayout();
-    assertTreeHasNewLayout(false, root);
+    assertTrue(root.hasNewLayout());
+    assertTreeHasNewLayout(false, c0);
+    assertTreeHasNewLayout(false, c1);
   }
 
   @Test
@@ -58,11 +60,13 @@ public class LayoutCachingTest {
     CSSNode c1 = new CSSNode();
     CSSNode c0c0 = new CSSNode();
     CSSNode c0c1 = new CSSNode();
+    CSSNode c1c0 = new CSSNode();
     c0c1.setStyleWidth(200);
     c0c1.setStyleHeight(200);
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
+    c0c0.addChildAt(c1c0, 0);
 
     root.calculateLayout();
     markLayoutAppliedForTree(root);
@@ -74,8 +78,10 @@ public class LayoutCachingTest {
     assertTrue(c0.hasNewLayout());
     assertTrue(c0c1.hasNewLayout());
 
-    assertFalse(c0c0.hasNewLayout());
-    assertFalse(c1.hasNewLayout());
+    assertTrue(c0c0.hasNewLayout());
+    assertTrue(c1.hasNewLayout());
+
+    assertFalse(c1c0.hasNewLayout());
   }
 
   @Test
@@ -97,7 +103,7 @@ public class LayoutCachingTest {
     assertTrue(root.hasNewLayout());
     assertTrue(c1.hasNewLayout());
 
-    assertFalse(c0.hasNewLayout());
+    assertTrue(c0.hasNewLayout());
     assertFalse(c0c0.hasNewLayout());
   }
 
@@ -114,13 +120,13 @@ public class LayoutCachingTest {
     root.calculateLayout();
     markLayoutAppliedForTree(root);
 
-    c1.setMargin(CSSNode.SPACING_LEFT, 10);
+    c1.setMargin(Spacing.LEFT, 10);
     root.calculateLayout();
 
     assertTrue(root.hasNewLayout());
     assertTrue(c1.hasNewLayout());
 
-    assertFalse(c0.hasNewLayout());
+    assertTrue(c0.hasNewLayout());
     assertFalse(c0c0.hasNewLayout());
   }
 
@@ -130,9 +136,11 @@ public class LayoutCachingTest {
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
     CSSNode c0c0 = new CSSNode();
+    CSSNode c1c0 = new CSSNode();
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
+    c1.addChildAt(c1c0, 0);
 
     root.calculateLayout();
     markLayoutAppliedForTree(root);
@@ -144,7 +152,8 @@ public class LayoutCachingTest {
     assertTrue(c0.hasNewLayout());
     assertTrue(c0c0.hasNewLayout());
 
-    assertFalse(c1.hasNewLayout());
+    assertTrue(c1.hasNewLayout());
+    assertFalse(c1c0.hasNewLayout());
   }
 
   @Test
@@ -163,7 +172,32 @@ public class LayoutCachingTest {
 
     root.setStyleWidth(200);
     root.calculateLayout();
-    assertTreeHasNewLayout(false, root);
+
+    assertTrue(root.hasNewLayout());
+    assertTreeHasNewLayout(false, c0);
+    assertTreeHasNewLayout(false, c1);
+  }
+
+  @Test
+  public void testInvalidateCacheWhenHeightChangesPosition() {
+    CSSNode root = new CSSNode();
+    CSSNode c0 = new CSSNode();
+    CSSNode c1 = new CSSNode();
+    CSSNode c1c0 = new CSSNode();
+    root.addChildAt(c0, 0);
+    root.addChildAt(c1, 1);
+    c1.addChildAt(c1c0, 0);
+
+    root.calculateLayout();
+    markLayoutAppliedForTree(root);
+
+    c0.setStyleHeight(100);
+    root.calculateLayout();
+
+    assertTrue(root.hasNewLayout());
+    assertTrue(c0.hasNewLayout());
+    assertTrue(c1.hasNewLayout());
+    assertFalse(c1c0.hasNewLayout());
   }
 
   @Test
@@ -192,7 +226,7 @@ public class LayoutCachingTest {
     assertTrue(root.hasNewLayout());
     assertTrue(c1.hasNewLayout());
 
-    assertFalse(c0.hasNewLayout());
+    assertTrue(c0.hasNewLayout());
     assertFalse(c0c0.hasNewLayout());
   }
 }

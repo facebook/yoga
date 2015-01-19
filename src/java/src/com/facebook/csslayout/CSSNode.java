@@ -6,12 +6,13 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
 package com.facebook.csslayout;
 
 import javax.annotation.Nullable;
 
 import java.util.ArrayList;
+
+import com.facebook.infer.annotation.Assertions;
 
 /**
  * A CSS Node. It has a style object you can manipulate at {@link #style}. After calling
@@ -38,44 +39,6 @@ public class CSSNode {
     UP_TO_DATE,
   }
 
-  public static final int SPACING_ALL = 0;
-  public static final int SPACING_VERTICAL = 1;
-  public static final int SPACING_HORIZONTAL = 2;
-  public static final int SPACING_LEFT = 3;
-  public static final int SPACING_RIGHT = 4;
-  public static final int SPACING_TOP = 5;
-  public static final int SPACING_BOTTOM = 6;
-
-  private final float[] mMargin = new float[] {
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN
-  };
-
-  private final float[] mPadding = new float[] {
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN
-  };
-
-  private final float[] mBorder = new float[] {
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN,
-      Float.NaN
-  };
-
   // Only one copy kept around to keep from allocating a bunch of MeasureOutput objects
   // NOT THREAD SAFE! NOT RE-ENTRANT SAFE!
   private static final MeasureOutput MEASURE_OUTPUT = new MeasureOutput();
@@ -90,6 +53,10 @@ public class CSSNode {
     public void measure(CSSNode node, float width, MeasureOutput measureOutput);
   }
 
+  private final float[] mMargin = Spacing.newFullSpacingArray();
+  private final float[] mPadding = Spacing.newFullSpacingArray();
+  private final float[] mBorder = Spacing.newFullSpacingArray();
+
   // VisibleForTesting
   /*package*/ final CSSStyle style = new CSSStyle();
   /*package*/ final CSSLayout layout = new CSSLayout();
@@ -98,18 +65,9 @@ public class CSSNode {
   // 4 is kinda arbitrary, but the default of 10 seems really high for an average View.
   private final ArrayList<CSSNode> mChildren = new ArrayList<CSSNode>(4);
 
-  private CSSNode mParent;
-  private MeasureFunction mMeasureFunction = null;
+  private @Nullable CSSNode mParent;
+  private @Nullable MeasureFunction mMeasureFunction = null;
   private LayoutState mLayoutState = LayoutState.DIRTY;
-  private int mTag;
-
-  public int getTag() {
-    return mTag;
-  }
-
-  public void setTag(int tag) {
-    mTag = tag;
-  }
 
   public int getChildCount() {
     return mChildren.size();
@@ -134,8 +92,15 @@ public class CSSNode {
     dirty();
   }
 
-  public CSSNode getParent() {
+  public @Nullable CSSNode getParent() {
     return mParent;
+  }
+
+  /**
+   * @return the index of the given child, or -1 if the child doesn't exist in this node.
+   */
+  public int indexOf(CSSNode child) {
+    return mChildren.indexOf(child);
   }
 
   public void setMeasureFunction(MeasureFunction measureFunction) {
@@ -155,7 +120,7 @@ public class CSSNode {
     }
     MEASURE_OUTPUT.height = CSSConstants.UNDEFINED;
     MEASURE_OUTPUT.width = CSSConstants.UNDEFINED;
-    mMeasureFunction.measure(this, width, MEASURE_OUTPUT);
+    Assertions.assertNotNull(mMeasureFunction).measure(this, width, MEASURE_OUTPUT);
     return MEASURE_OUTPUT;
   }
 
@@ -302,40 +267,24 @@ public class CSSNode {
   }
 
   public void setMargin(int spacingType, float margin) {
-    setSpacing(mMargin, spacingType, margin, style.margin);
+    setSpacing(mMargin, style.margin, spacingType, margin);
   }
 
   public void setPadding(int spacingType, float padding) {
-    setSpacing(mPadding, spacingType, padding, style.padding);
+    setSpacing(mPadding, style.padding, spacingType, padding);
   }
 
   public void setBorder(int spacingType, float border) {
-    setSpacing(mBorder, spacingType, border, style.border);
+    setSpacing(mBorder, style.border, spacingType, border);
   }
 
-  protected void setSpacing(float[] spacingDef, int spacingType, float spacing, float[] cssStyle) {
+  protected void setSpacing(
+       float[] spacingDef,
+       float[] cssStyle,
+       int spacingType,
+       float spacing) {
     if (!valuesEqual(spacingDef[spacingType], spacing)) {
-      spacingDef[spacingType] = spacing;
-      cssStyle[CSSStyle.SPACING_TOP] =
-          !Float.isNaN(spacingDef[SPACING_TOP]) ? spacingDef[SPACING_TOP]
-              : !Float.isNaN(spacingDef[SPACING_VERTICAL]) ? spacingDef[SPACING_VERTICAL]
-              : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
-              : 0;
-      cssStyle[CSSStyle.SPACING_BOTTOM] =
-          !Float.isNaN(spacingDef[SPACING_BOTTOM]) ? spacingDef[SPACING_BOTTOM]
-              : !Float.isNaN(spacingDef[SPACING_VERTICAL]) ? spacingDef[SPACING_VERTICAL]
-              : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
-              : 0;
-      cssStyle[CSSStyle.SPACING_LEFT] =
-          !Float.isNaN(spacingDef[SPACING_LEFT]) ? spacingDef[SPACING_LEFT]
-              : !Float.isNaN(spacingDef[SPACING_HORIZONTAL]) ? spacingDef[SPACING_HORIZONTAL]
-              : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
-              : 0;
-      cssStyle[CSSStyle.SPACING_RIGHT] =
-          !Float.isNaN(spacingDef[SPACING_RIGHT]) ? spacingDef[SPACING_RIGHT]
-              : !Float.isNaN(spacingDef[SPACING_HORIZONTAL]) ? spacingDef[SPACING_HORIZONTAL]
-              : !Float.isNaN(spacingDef[SPACING_ALL]) ? spacingDef[SPACING_ALL]
-              : 0;
+      Spacing.updateSpacing(spacingDef, cssStyle, spacingType, spacing, 0);
       dirty();
     }
   }

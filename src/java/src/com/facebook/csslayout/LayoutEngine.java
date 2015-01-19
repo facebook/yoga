@@ -131,13 +131,13 @@ public class LayoutEngine {
   private static float getMargin(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.margin[CSSStyle.SPACING_TOP];
+        return node.style.margin[Spacing.TOP];
       case BOTTOM:
-        return node.style.margin[CSSStyle.SPACING_BOTTOM];
+        return node.style.margin[Spacing.BOTTOM];
       case LEFT:
-        return node.style.margin[CSSStyle.SPACING_LEFT];
+        return node.style.margin[Spacing.LEFT];
       case RIGHT:
-        return node.style.margin[CSSStyle.SPACING_RIGHT];
+        return node.style.margin[Spacing.RIGHT];
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
@@ -146,13 +146,13 @@ public class LayoutEngine {
   private static float getPadding(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.padding[CSSStyle.SPACING_TOP];
+        return node.style.padding[Spacing.TOP];
       case BOTTOM:
-        return node.style.padding[CSSStyle.SPACING_BOTTOM];
+        return node.style.padding[Spacing.BOTTOM];
       case LEFT:
-        return node.style.padding[CSSStyle.SPACING_LEFT];
+        return node.style.padding[Spacing.LEFT];
       case RIGHT:
-        return node.style.padding[CSSStyle.SPACING_RIGHT];
+        return node.style.padding[Spacing.RIGHT];
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
@@ -161,13 +161,13 @@ public class LayoutEngine {
   private static float getBorder(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.border[CSSStyle.SPACING_TOP];
+        return node.style.border[Spacing.TOP];
       case BOTTOM:
-        return node.style.border[CSSStyle.SPACING_BOTTOM];
+        return node.style.border[Spacing.BOTTOM];
       case LEFT:
-        return node.style.border[CSSStyle.SPACING_LEFT];
+        return node.style.border[Spacing.LEFT];
       case RIGHT:
-        return node.style.border[CSSStyle.SPACING_RIGHT];
+        return node.style.border[Spacing.RIGHT];
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
@@ -267,12 +267,12 @@ public class LayoutEngine {
       node.lastLayout.parentMaxWidth = parentMaxWidth;
 
       layoutNodeImpl(node, parentMaxWidth);
-      node.markHasNewLayout();
-
       node.lastLayout.copy(node.layout);
     } else {
       node.layout.copy(node.lastLayout);
     }
+
+    node.markHasNewLayout();
   }
 
   private static void layoutNodeImpl(CSSNode node, float parentMaxWidth) {
@@ -384,11 +384,12 @@ public class LayoutEngine {
     // We want to execute the next two loops one per line with flex-wrap
     int startLine = 0;
     int endLine = 0;
-    int nextLine = 0;
+    int nextOffset = 0;
+    int alreadyComputedNextLayout = 0;
     // We aggregate the total dimensions of the container in those two variables
     float linesCrossDim = 0;
     float linesMainDim = 0;
-    while (endLine != node.getChildCount()) {
+    while (endLine < node.getChildCount()) {
       // <Loop A> Layout non flexible children and count children by type
   
       // mainContentDim is accumulation of the dimensions and margin of all the
@@ -432,7 +433,7 @@ public class LayoutEngine {
           }
   
           // This is the main recursive call. We layout non flexible children.
-          if (nextLine == 0) {
+          if (alreadyComputedNextLayout == 0) {
             layoutNode(child, maxWidth);
           }
   
@@ -448,11 +449,14 @@ public class LayoutEngine {
         // The element we are about to add would make us go to the next line
         if (isFlexWrap(node) &&
             !CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis))) &&
-            mainContentDim + nextContentDim > definedMainDim) {
-          nextLine = i + 1;
+            mainContentDim + nextContentDim > definedMainDim &&
+            // If there's only one element, then it's bigger than the content
+            // and needs its own line
+            i != startLine) {
+          alreadyComputedNextLayout = 1;
           break;
         }
-        nextLine = 0;
+        alreadyComputedNextLayout = 0;
         mainContentDim = mainContentDim + nextContentDim;
         endLine = i + 1;
       }
