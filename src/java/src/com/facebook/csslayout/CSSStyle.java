@@ -13,11 +13,6 @@ package com.facebook.csslayout;
  */
 public class CSSStyle {
 
-  public static final int SPACING_TOP = 0;
-  public static final int SPACING_RIGHT = 1;
-  public static final int SPACING_BOTTOM = 2;
-  public static final int SPACING_LEFT = 3;
-
   public CSSFlexDirection flexDirection = CSSFlexDirection.COLUMN;
   public CSSJustify justifyContent = CSSJustify.FLEX_START;
   public CSSAlign alignItems = CSSAlign.STRETCH;
@@ -26,9 +21,9 @@ public class CSSStyle {
   public CSSWrap flexWrap = CSSWrap.NOWRAP;
   public float flex;
 
-  public float[] margin = new float[4];
-  public float[] padding = new float[4];
-  public float[] border = new float[4];
+  public float[] margin = Spacing.newSpacingResultArray();
+  public float[] padding = Spacing.newSpacingResultArray();
+  public float[] border = Spacing.newSpacingResultArray();
 
   public float positionTop = CSSConstants.UNDEFINED;
   public float positionBottom = CSSConstants.UNDEFINED;

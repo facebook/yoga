@@ -59,10 +59,10 @@ function __transpileSingleTestToJava(code) {
         function (str, match1, match2) {
             return 'style.' + match1 + match2[0] + match2.substring(1).toLowerCase();
         })
-    .replace( // style.margin[CSS_TOP] => style.margin[CSSStyle.SPACING_TOP]
+    .replace( // style.margin[CSS_TOP] => style.margin[Spacing.TOP]
         /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
         function (str, match1, match2) {
-          return 'style.' + match1 + '[CSSStyle.SPACING_' + match2 + ']';
+          return 'style.' + match1 + '[Spacing.' + match2 + ']';
         })
     .replace(/get_child\(.*context\,\s([^\)]+)\)/g, 'getChildAt($1)')
     .replace(/init_css_node_children/g, 'addChildren')
