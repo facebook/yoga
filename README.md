@@ -1,7 +1,3 @@
-
-Attention: This project is still **very experimental** and not used in any production application!
-
-
 css-layout
 ==========
 
