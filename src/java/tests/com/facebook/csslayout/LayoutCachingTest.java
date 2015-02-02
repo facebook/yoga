@@ -18,6 +18,13 @@ import static junit.framework.Assert.*;
  */
 public class LayoutCachingTest {
 
+    public CSSNode root;
+    public CSSNode c0;
+    public CSSNode c1;
+    public CSSNode c0c0;
+    public CSSNode c0c1;
+    public CSSNode c1c0;
+
   private void assertTreeHasNewLayout(boolean expectedHasNewLayout, CSSNode root) {
     assertEquals(expectedHasNewLayout, root.hasNewLayout());
 
@@ -35,12 +42,8 @@ public class LayoutCachingTest {
 
   @Test
   public void testCachesFullTree() {
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    root.addChildAt(c0, 0);
-    root.addChildAt(c1, 1);
+    setGeneralCSSNodes();
+    setGeneralChildren();
     c0.addChildAt(c0c0, 0);
 
     root.calculateLayout();
@@ -55,16 +58,10 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesCacheWhenChildAdded() {
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    CSSNode c0c1 = new CSSNode();
-    CSSNode c1c0 = new CSSNode();
+    setGeneralCSSNodes();
     c0c1.setStyleWidth(200);
     c0c1.setStyleHeight(200);
-    root.addChildAt(c0, 0);
-    root.addChildAt(c1, 1);
+    setGeneralChildren();
     c0.addChildAt(c0c0, 0);
     c0c0.addChildAt(c1c0, 0);
 
@@ -86,12 +83,8 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesCacheWhenEnumPropertyChanges() {
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    root.addChildAt(c0, 0);
-    root.addChildAt(c1, 1);
+    setGeneralCSSNodes();
+    setGeneralChildren();
     c0.addChildAt(c0c0, 0);
 
     root.calculateLayout();
@@ -109,12 +102,8 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesCacheWhenFloatPropertyChanges() {
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    root.addChildAt(c0, 0);
-    root.addChildAt(c1, 1);
+    setGeneralCSSNodes();
+    setGeneralChildren();
     c0.addChildAt(c0c0, 0);
 
     root.calculateLayout();
@@ -132,13 +121,8 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesFullTreeWhenParentWidthChanges() {
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    CSSNode c1c0 = new CSSNode();
-    root.addChildAt(c0, 0);
-    root.addChildAt(c1, 1);
+    setGeneralCSSNodes();
+    setGeneralChildren();
     c0.addChildAt(c0c0, 0);
     c1.addChildAt(c1c0, 0);
 
@@ -158,12 +142,8 @@ public class LayoutCachingTest {
 
   @Test
   public void testDoesNotInvalidateCacheWhenPropertyIsTheSame() {
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    root.addChildAt(c0, 0);
-    root.addChildAt(c1, 1);
+    setGeneralCSSNodes();
+    setGeneralChildren();
     c0.addChildAt(c0c0, 0);
     root.setStyleWidth(200);
 
@@ -180,12 +160,8 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidateCacheWhenHeightChangesPosition() {
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c1c0 = new CSSNode();
-    root.addChildAt(c0, 0);
-    root.addChildAt(c1, 1);
+    setGeneralCSSNodes();
+    setGeneralChildren();
     c1.addChildAt(c1c0, 0);
 
     root.calculateLayout();
@@ -202,12 +178,8 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesOnNewMeasureFunction() {
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    root.addChildAt(c0, 0);
-    root.addChildAt(c1, 1);
+    setGeneralCSSNodes();
+    setGeneralChildren();
     c0.addChildAt(c0c0, 0);
 
     root.calculateLayout();
@@ -228,5 +200,19 @@ public class LayoutCachingTest {
 
     assertTrue(c0.hasNewLayout());
     assertFalse(c0c0.hasNewLayout());
+  }
+
+  public void setGeneralCSSNodes(){
+    root = new CSSNode();
+    c0 = new CSSNode();
+    c1 = new CSSNode();
+    c0c0 = new CSSNode();
+    c1c0 = new CSSNode();
+    c1c1 = new CSSNode();
+  }
+
+  public void setGeneralChildren(){
+    root.addChildAt(c0, 0);
+    root.addChildAt(c1, 1);
   }
 }
