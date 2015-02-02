@@ -208,7 +208,7 @@ public class LayoutCachingTest {
     c1 = new CSSNode();
     c0c0 = new CSSNode();
     c1c0 = new CSSNode();
-    c1c1 = new CSSNode();
+    c0c1 = new CSSNode();
   }
 
   public void setGeneralChildren(){
