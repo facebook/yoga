@@ -129,23 +129,6 @@ var layoutTestUtils = (function() {
   }
 
   function computeCSSLayout(rootNode) {
-    function fillNodes(node) {
-      node.layout = {
-        width: undefined,
-        height: undefined,
-        top: 0,
-        left: 0
-      };
-      if (!node.style) {
-        node.style = {};
-      }
-
-      if (!node.children || node.style.measure) {
-        node.children = [];
-      }
-      node.children.forEach(fillNodes);
-    }
-
     function extractNodes(node) {
       var layout = node.layout;
       delete node.layout;
@@ -157,7 +140,6 @@ var layoutTestUtils = (function() {
       return layout;
     }
 
-    fillNodes(rootNode);
     realComputeLayout(rootNode);
     return roundLayout(extractNodes(rootNode));
   }

@@ -9,6 +9,28 @@
 
 var computeLayout = (function() {
 
+  // Ensures that all nodes have layoutm style and children properties. This simplifies
+  // the layout algorithm in that it can assume a uniform structure
+  function prepareNodes(node) {
+    if (!node.layout) {
+      node.layout = {
+        width: undefined,
+        height: undefined,
+        top: 0,
+        left: 0
+      };
+    }
+    if (!node.style) {
+      node.style = {};
+    }
+
+    if (!node.children || node.style.measure) {
+      node.children = [];
+    }
+
+    node.children.forEach(prepareNodes);
+  }
+
   function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -208,7 +230,7 @@ var computeLayout = (function() {
   var CSS_POSITION_RELATIVE = 'relative';
   var CSS_POSITION_ABSOLUTE = 'absolute';
 
-  return function layoutNode(node, parentMaxWidth) {
+  function layoutNode(node, parentMaxWidth) {
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
     var/*css_flex_direction_t*/ crossAxis = mainAxis === CSS_FLEX_DIRECTION_ROW ?
       CSS_FLEX_DIRECTION_COLUMN :
@@ -651,6 +673,11 @@ var computeLayout = (function() {
       }
     }
   };
+
+  return function performLayout(node, parentMaxWidth) {
+    prepareNodes(node);
+    layoutNode(node, parentMaxWidth);
+  }
 })();
 
 if (typeof module === 'object') {
