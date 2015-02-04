@@ -357,11 +357,11 @@ var layoutTestUtils = (function() {
   };
 
   var preDefinedTextSizes = {
-    smallWidth: 34.671875,
+    smallWidth: 34.65625,
     smallHeight: 16,
     bigWidth: 172.421875,
     bigHeight: 32,
-    bigMinWidth: 100.453125
+    bigMinWidth: 100.4375
   };
 
   var textSizes;
