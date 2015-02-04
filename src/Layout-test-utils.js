@@ -358,9 +358,9 @@ var layoutTestUtils = (function() {
 
   var preDefinedTextSizes = {
     smallWidth: 34.671875,
-    smallHeight: 18,
+    smallHeight: 16,
     bigWidth: 172.421875,
-    bigHeight: 36,
+    bigHeight: 32,
     bigMinWidth: 100.453125
   };
 

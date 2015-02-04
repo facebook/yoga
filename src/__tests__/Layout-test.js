@@ -890,8 +890,8 @@ describe('Layout', function() {
           {style: {margin: 20, measure: text(texts.big)}}
         ]}
       ]},
-      {width: 200, height: 58, top: 0, left: 0, children: [
-        {width: 200, height: 58, top: 0, left: 0, children: [
+      {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
+        {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
           {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 20, left: 20}
         ]}
       ]}
@@ -905,8 +905,8 @@ describe('Layout', function() {
           {style: {margin: 20, measure: text(texts.big)}}
         ]}
       ]},
-      {width: 200, height: 76, top: 0, left: 0, children: [
-        {width: 200, height: 76, top: 0, left: 0, children: [
+      {width: 200, height: textSizes.bigHeight + 40, top: 0, left: 0, children: [
+        {width: 200, height: textSizes.bigHeight + 40, top: 0, left: 0, children: [
           {width: 160, height: textSizes.bigHeight, top: 20, left: 20}
         ]}
       ]}
