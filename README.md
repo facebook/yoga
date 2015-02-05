@@ -31,7 +31,7 @@ computeLayout(
 
 To run the tests
 
-- For the JS tests: Open `RunLayoutTests.html` and `RunLayoutRandomTests.html` in Chrome
+- For the JS tests: Open `RunLayoutTests.html` and `RunLayoutRandomTests.html` in Chrome or run `$ npm test`
 - For the C and Java tests: run `make` in your terminal. It will also transpile the JS code
 
 Supported Attributes
