@@ -9,26 +9,23 @@
 
 var computeLayout = (function() {
 
-  // Ensures that all nodes have layoutm style and children properties. This simplifies
+  // Ensures that all nodes have layout, style and children properties. This simplifies
   // the layout algorithm in that it can assume a uniform structure
-  function prepareNodes(node) {
-    if (!node.layout) {
-      node.layout = {
+  function prepareNode(newNode) {
+    if (!newNode.layout) {
+      newNode.layout = {
         width: undefined,
         height: undefined,
         top: 0,
         left: 0
       };
     }
-    if (!node.style) {
-      node.style = {};
+    if (!newNode.style) {
+      newNode.style = {};
     }
-
-    if (!node.children || node.style.measure) {
-      node.children = [];
+    if (!newNode.children || newNode.style.measure) {
+      newNode.children = [];
     }
-
-    node.children.forEach(prepareNodes);
   }
 
   function capitalizeFirst(str) {
@@ -230,11 +227,13 @@ var computeLayout = (function() {
   var CSS_POSITION_RELATIVE = 'relative';
   var CSS_POSITION_ABSOLUTE = 'absolute';
 
-  function layoutNode(node, parentMaxWidth) {
+  return function layoutNode(node, parentMaxWidth) {
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
     var/*css_flex_direction_t*/ crossAxis = mainAxis === CSS_FLEX_DIRECTION_ROW ?
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
+
+    prepareNode(node);
 
     // Handle width and height style attributes
     setDimensionFromStyle(node, mainAxis);
@@ -294,6 +293,7 @@ var computeLayout = (function() {
           getPositionType(child) === CSS_POSITION_RELATIVE &&
           !isUndefined(node.layout[dim[crossAxis]]) &&
           !isDimDefined(child, crossAxis)) {
+        prepareNode(child);
         child.layout[dim[crossAxis]] = fmaxf(
           node.layout[dim[crossAxis]] -
             getPaddingAndBorderAxis(node, crossAxis) -
@@ -310,6 +310,7 @@ var computeLayout = (function() {
               !isDimDefined(child, axis) &&
               isPosDefined(child, leading[axis]) &&
               isPosDefined(child, trailing[axis])) {
+            prepareNode(child);
             child.layout[dim[axis]] = fmaxf(
               node.layout[dim[axis]] -
               getPaddingAndBorderAxis(node, axis) -
@@ -442,6 +443,7 @@ var computeLayout = (function() {
         for (var/*int*/ i = startLine; i < endLine; ++i) {
           var/*css_node_t**/ child = node.children[i];
           if (isFlex(child)) {
+            prepareNode(child);
             // At this point we know the final size of the element in the main
             // dimension
             child.layout[dim[mainAxis]] = flexibleMainDim * getFlex(child) +
@@ -673,11 +675,6 @@ var computeLayout = (function() {
       }
     }
   };
-
-  return function performLayout(node, parentMaxWidth) {
-    prepareNodes(node);
-    layoutNode(node, parentMaxWidth);
-  }
 })();
 
 if (typeof module === 'object') {

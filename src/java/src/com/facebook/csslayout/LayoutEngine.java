@@ -247,6 +247,11 @@ public class LayoutEngine {
     return node.isMeasureDefined();
   }
 
+  private static void prepareNode(CSSNode node) {
+    // no-op, this function is used within JavaScript to ensure
+    // all nodes have the correct structure
+  }
+
   private static float getDimWithMargin(CSSNode node, CSSFlexDirection axis) {
     return getLayoutDimension(node, getDim(axis)) +
         getMargin(node, getLeading(axis)) +
@@ -287,6 +292,8 @@ public class LayoutEngine {
     CSSFlexDirection crossAxis = mainAxis == CSSFlexDirection.ROW ?
       CSSFlexDirection.COLUMN :
       CSSFlexDirection.ROW;
+  
+    prepareNode(node);
   
     // Handle width and height style attributes
     setDimensionFromStyle(node, mainAxis);
@@ -345,6 +352,7 @@ public class LayoutEngine {
           getPositionType(child) == CSSPositionType.RELATIVE &&
           !CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis))) &&
           !isDimDefined(child, crossAxis)) {
+        prepareNode(child);
         setLayoutDimension(child, getDim(crossAxis), Math.max(
           getLayoutDimension(node, getDim(crossAxis)) -
             getPaddingAndBorderAxis(node, crossAxis) -
@@ -361,6 +369,7 @@ public class LayoutEngine {
               !isDimDefined(child, axis) &&
               isPosDefined(child, getLeading(axis)) &&
               isPosDefined(child, getTrailing(axis))) {
+            prepareNode(child);
             setLayoutDimension(child, getDim(axis), Math.max(
               getLayoutDimension(node, getDim(axis)) -
               getPaddingAndBorderAxis(node, axis) -
@@ -493,6 +502,7 @@ public class LayoutEngine {
         for (int i = startLine; i < endLine; ++i) {
           CSSNode child = node.getChildAt(i);
           if (isFlex(child)) {
+            prepareNode(child);
             // At this point we know the final size of the element in the main
             // dimension
             setLayoutDimension(child, getDim(mainAxis), flexibleMainDim * getFlex(child) +
