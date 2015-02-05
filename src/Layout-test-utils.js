@@ -44,47 +44,60 @@ var layoutTestUtils = (function() {
     };
   }
 
+  function renderIframe() {
+    var iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    return iframe;
+  }
+
   var cachedIframe;
   function getIframe() {
     if (cachedIframe) {
       return cachedIframe;
     }
-    var iframe = document.createElement('iframe');
-    document.body.appendChild(iframe);
+
     var doc = iframe.contentDocument;
 
-    var style = document.createElement('style');
-    style.innerText = (function() {/*
-      body, div {
-        box-sizing: border-box;
-        border: 0 solid black;
-        position: relative;
+    if(doc.readyState === 'complete') {
+      var style = document.createElement('style');
+      style.textContent = (function() {/*
+        body, div {
+          box-sizing: border-box;
+          border: 0 solid black;
+          position: relative;
 
-        display: flex;
-        display: -webkit-flex;
-        flex-direction: column;
-        -webkit-flex-direction: column;
-        align-items: stretch;
-        -webkit-align-items: stretch;
-        justify-content: flex-start;
-        -webkit-justify-content: flex-start;
-        flex-shrink: 0;
-        -webkit-flex-shrink: 0;
+          display: flex;
+          display: -webkit-flex;
+          flex-direction: column;
+          -webkit-flex-direction: column;
+          align-items: stretch;
+          -webkit-align-items: stretch;
+          justify-content: flex-start;
+          -webkit-justify-content: flex-start;
+          flex-shrink: 0;
+          -webkit-flex-shrink: 0;
 
-        margin: 0;
-        padding: 0;
-      }
+          margin: 0;
+          padding: 0;
+        }
 
-      hack to ignore three hundred px width of the body {}
-      body > div {
-        align-self: flex-start;
-      }
-    */} + '').slice(15, -4);
-    doc.head.appendChild(style);
-    cachedIframe = iframe;
-    return iframe;
+        hack to ignore three hundred px width of the body {}
+        body > div {
+          align-self: flex-start;
+        }
+      */} + '').slice(15, -4);
+      doc.head.appendChild(style);
+      cachedIframe = iframe;
+      return iframe;
+    } else {
+      setTimeout(getIframe, 0);
+    }
   }
 
+  if (typeof window !== 'undefined') {
+    var iframe = renderIframe();
+    getIframe();
+  }
 
   if (typeof computeLayout === 'function') {
     var realComputeLayout = computeLayout;
