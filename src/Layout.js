@@ -9,6 +9,25 @@
 
 var computeLayout = (function() {
 
+  // Ensures that all nodes have layout, style and children properties. This simplifies
+  // the layout algorithm in that it can assume a uniform structure
+  function prepareNode(newNode) {
+    if (!newNode.layout) {
+      newNode.layout = {
+        width: undefined,
+        height: undefined,
+        top: 0,
+        left: 0
+      };
+    }
+    if (!newNode.style) {
+      newNode.style = {};
+    }
+    if (!newNode.children || newNode.style.measure) {
+      newNode.children = [];
+    }
+  }
+
   function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -214,6 +233,8 @@ var computeLayout = (function() {
       CSS_FLEX_DIRECTION_COLUMN :
       CSS_FLEX_DIRECTION_ROW;
 
+    prepareNode(node);
+
     // Handle width and height style attributes
     setDimensionFromStyle(node, mainAxis);
     setDimensionFromStyle(node, crossAxis);
@@ -272,6 +293,7 @@ var computeLayout = (function() {
           getPositionType(child) === CSS_POSITION_RELATIVE &&
           !isUndefined(node.layout[dim[crossAxis]]) &&
           !isDimDefined(child, crossAxis)) {
+        prepareNode(child);
         child.layout[dim[crossAxis]] = fmaxf(
           node.layout[dim[crossAxis]] -
             getPaddingAndBorderAxis(node, crossAxis) -
@@ -288,6 +310,7 @@ var computeLayout = (function() {
               !isDimDefined(child, axis) &&
               isPosDefined(child, leading[axis]) &&
               isPosDefined(child, trailing[axis])) {
+            prepareNode(child);
             child.layout[dim[axis]] = fmaxf(
               node.layout[dim[axis]] -
               getPaddingAndBorderAxis(node, axis) -
@@ -420,6 +443,7 @@ var computeLayout = (function() {
         for (var/*int*/ i = startLine; i < endLine; ++i) {
           var/*css_node_t**/ child = node.children[i];
           if (isFlex(child)) {
+            prepareNode(child);
             // At this point we know the final size of the element in the main
             // dimension
             child.layout[dim[mainAxis]] = flexibleMainDim * getFlex(child) +

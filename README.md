@@ -13,20 +13,48 @@ Usage
 
 A single function `computeLayout` is exposed and
  - takes a tree of nodes: `{ style: { ... }, children: [ nodes ] }`
- - returns a tree of rectangles: `{ width: ..., height: ..., top: ..., left: ..., children: [ rects ] }`
+ - updates the tree adding layout information: `layout: { width: ..., height: ..., top: ..., left: ... }`
 
 For example,
 
 ```javascript
-computeLayout(
-  {style: {padding: 50}, children: [
+var nodes = {
+  style: {padding: 50}, children: [
     {style: {padding: 10, alignSelf: 'stretch'}}
-  ]}
-);
+  ]
+};
+
+computeLayout(nodes);
+
+JSON.stringify(nodes, null, 2);
+
 // =>
-{width: 120, height: 120, top: 0, left: 0, children: [
-  {width: 20, height: 20, top: 50, left: 50}
-]}
+"{
+  "style": {
+    "padding": 50
+  },
+  "children": [
+    {
+      "style": {
+        "padding": 10,
+        "alignSelf": "stretch"
+      },
+      "layout": {
+        "width": 20,
+        "height": 20,
+        "top": 50,
+        "left": 50
+      },
+      "children": []
+    }
+  ],
+  "layout": {
+    "width": 120,
+    "height": 120,
+    "top": 0,
+    "left": 0
+  }
+}"
 ```
 
 To run the tests
