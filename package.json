@@ -4,7 +4,7 @@
   "description": "Reimplementation of CSS layout using pure JavaScript",
   "main": "src/Layout.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start ./karma.conf.js --single-run"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/facebook/css-layout/issues"
   },
-  "homepage": "https://github.com/facebook/css-layout"
+  "homepage": "https://github.com/facebook/css-layout",
+  "devDependencies": {
+    "jasmine-core": "^2.2.0",
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.5"
+  }
 }
