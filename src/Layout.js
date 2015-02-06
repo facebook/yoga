@@ -189,7 +189,7 @@ var computeLayout = (function() {
     return b;
   }
 
-  var CSS_UNDEFINED = undefined;
+  var CSS_UNDEFINED;
 
   var CSS_FLEX_DIRECTION_ROW = 'row';
   var CSS_FLEX_DIRECTION_COLUMN = 'column';
@@ -283,7 +283,7 @@ var computeLayout = (function() {
         // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
         // left and right or top and bottom).
         for (var/*int*/ ii = 0; ii < 2; ii++) {
-          var/*css_flex_direction_t*/ axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+          var/*css_flex_direction_t*/ axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
           if (!isUndefined(node.layout[dim[axis]]) &&
               !isDimDefined(child, axis) &&
               isPosDefined(child, leading[axis]) &&

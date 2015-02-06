@@ -650,7 +650,7 @@ describe('Layout', function() {
         {width: 347.5, height: 0, top: 0, left: 0},
         {width: 347.5, height: 0, top: 0, left: 352.5}
       ]}
-    )
+    );
   });
 
   it('should layout node with flex and overflow', function() {
@@ -687,14 +687,14 @@ describe('Layout', function() {
         {width: 0, height: 500, top: 0, left: 0},
         {width: 0, height: 0, top: 500, left: 0},
       ]}
-    )
+    );
   });
 
   it('should layout node with borderWidth', function() {
     testLayout(
       {style: {borderWidth: 5}},
       {width: 10, height: 10, top: 0, left: 0}
-    )
+    );
   });
 
   it('should layout node with borderWidth and position: absolute, top', function() {
@@ -705,7 +705,7 @@ describe('Layout', function() {
       {width: 0, height: 1, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 0, left: 0}
       ]}
-    )
+    );
   });
 
   it('should layout node with borderWidth and position: absolute, top. cross axis', function() {
@@ -716,7 +716,7 @@ describe('Layout', function() {
       {width: 2, height: 2, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 1, left: 6}
       ]}
-    )
+    );
   });
 
   it('should correctly take into account min padding for stretch', function() {

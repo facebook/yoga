@@ -119,7 +119,7 @@ var JavaTranspiler = {
     }
     return allTestsInJava.join('\n\n');
   },
-}
+};
 
 if (typeof module !== 'undefined') {
   module.exports = JavaTranspiler;

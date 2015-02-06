@@ -101,6 +101,7 @@ describe('Random layout', function() {
     delete node.style.flex;
     delete node.style.position;
 
+    /*jshint -W083 */
     it('should layout randomly #' + i +'.', function(node) {
       if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
         node = reduceTest(node);

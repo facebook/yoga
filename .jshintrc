@@ -1,0 +1,14 @@
+{
+    "browser": true,
+    "shadow": true,
+    "globals": {
+        "describe": true,
+        "beforeEach": true,
+        "afterEach": true,
+        "spyOn": true,
+        "it": true,
+        "xit": true,
+        "expect": true,
+        "require": true
+    }
+}
