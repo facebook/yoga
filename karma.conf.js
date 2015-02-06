@@ -13,7 +13,8 @@ module.exports = function (config) {
     files: [
       'Layout.js',
       'Layout-test-utils.js',
-      '__tests__/*.js'
+      '__tests__/Layout-test.js',
+      '__tests__/Layout-consts-test.js'
     ],
 
     plugins: [
