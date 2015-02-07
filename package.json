@@ -2,7 +2,7 @@
   "name": "css-layout",
   "version": "0.0.1",
   "description": "Reimplementation of CSS layout using pure JavaScript",
-  "main": "src/Layout.js",
+  "main": "src/main.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start ./karma.conf.js --single-run"
   },

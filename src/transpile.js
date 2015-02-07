@@ -8,7 +8,8 @@
  */
 
 var layoutTestUtils = require('./Layout-test-utils.js');
-var computeLayout = require('./Layout.js');
+var computeLayout = require('./Layout.js').computeLayout;
+var fillNodes = require('./Layout.js').fillNodes;
 var fs = require('fs');
 var JavaTranspiler = require('./JavaTranspiler.js');
 
@@ -30,7 +31,11 @@ global.layoutTestUtils = {
   textSizes: layoutTestUtils.textSizes
 };
 
-global.describe = function(name, cb) { cb(); };
+global.describe = function(name, cb) {
+  if(name == 'Layout') {
+    cb();
+  }
+};
 global.it = function(name, cb) { currentTest = name; cb(); };
 global.xit = function() { /* ignore skipped tests */ };
 

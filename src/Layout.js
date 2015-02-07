@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+
 var computeLayout = (function() {
   function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -24,6 +25,34 @@ var computeLayout = (function() {
     }
 
     return 0;
+  }
+  function fillNodes(node) {
+    node.layout = {
+      width: undefined,
+      height: undefined,
+      top: 0,
+      left: 0
+    };
+    if (!node.style) {
+      node.style = {};
+    }
+
+    if (!node.children || node.style.measure) {
+      node.children = [];
+    }
+    node.children.forEach(fillNodes);
+    return node;
+  }
+
+  function extractNodes(node) {
+    var layout = node.layout;
+    delete node.layout;
+    if (node.children && node.children.length > 0) {
+      layout.children = node.children.map(extractNodes);
+    } else {
+      delete node.children;
+    }
+    return layout;
   }
 
   function getPositiveSpacing(node, type, suffix, location) {
@@ -188,26 +217,7 @@ var computeLayout = (function() {
     return b;
   }
 
-  var CSS_UNDEFINED = undefined;
-
-  var CSS_FLEX_DIRECTION_ROW = 'row';
-  var CSS_FLEX_DIRECTION_COLUMN = 'column';
-
-  var CSS_JUSTIFY_FLEX_START = 'flex-start';
-  var CSS_JUSTIFY_CENTER = 'center';
-  var CSS_JUSTIFY_FLEX_END = 'flex-end';
-  var CSS_JUSTIFY_SPACE_BETWEEN = 'space-between';
-  var CSS_JUSTIFY_SPACE_AROUND = 'space-around';
-
-  var CSS_ALIGN_FLEX_START = 'flex-start';
-  var CSS_ALIGN_CENTER = 'center';
-  var CSS_ALIGN_FLEX_END = 'flex-end';
-  var CSS_ALIGN_STRETCH = 'stretch';
-
-  var CSS_POSITION_RELATIVE = 'relative';
-  var CSS_POSITION_ABSOLUTE = 'absolute';
-
-  return function layoutNode(node, parentMaxWidth) {
+  function layoutNode(node, parentMaxWidth) {
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
     var/*css_flex_direction_t*/ crossAxis = mainAxis === CSS_FLEX_DIRECTION_ROW ?
       CSS_FLEX_DIRECTION_COLUMN :
@@ -649,7 +659,32 @@ var computeLayout = (function() {
         }
       }
     }
-  };
+  }
+
+  var CSS_UNDEFINED = undefined;
+
+  var CSS_FLEX_DIRECTION_ROW = 'row';
+  var CSS_FLEX_DIRECTION_COLUMN = 'column';
+
+  var CSS_JUSTIFY_FLEX_START = 'flex-start';
+  var CSS_JUSTIFY_CENTER = 'center';
+  var CSS_JUSTIFY_FLEX_END = 'flex-end';
+  var CSS_JUSTIFY_SPACE_BETWEEN = 'space-between';
+  var CSS_JUSTIFY_SPACE_AROUND = 'space-around';
+
+  var CSS_ALIGN_FLEX_START = 'flex-start';
+  var CSS_ALIGN_CENTER = 'center';
+  var CSS_ALIGN_FLEX_END = 'flex-end';
+  var CSS_ALIGN_STRETCH = 'stretch';
+
+  var CSS_POSITION_RELATIVE = 'relative';
+  var CSS_POSITION_ABSOLUTE = 'absolute';
+
+  return {
+    computeLayout: layoutNode,
+    fillNodes: fillNodes,
+    extractNodes: extractNodes
+  }
 })();
 
 // UMD (Universal Module Definition)

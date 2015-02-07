@@ -9,9 +9,45 @@
 /* globals layoutTestUtils */
 
 var testLayout = layoutTestUtils.testLayout;
+var testFillNodes = layoutTestUtils.testFillNodes;
+var testExtractNodes = layoutTestUtils.testExtractNodes;
 var text = layoutTestUtils.text;
 var texts = layoutTestUtils.texts;
 var textSizes = layoutTestUtils.textSizes;
+
+describe('Javascript Only', function() {
+  it('should fill root node with layout, style, and children', function() {
+    testFillNodes(
+      {},
+      {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: []}
+    )
+  })
+  it('should fill root and child node with layout, style, and children', function() {
+    testFillNodes(
+      {children: [{}]},
+      {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: [
+        {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: []}
+      ]}
+    )
+  })
+  it('should pull out just the layout object from root', function() {
+    testExtractNodes(
+      {layout: {width: undefined, height: undefined, top: 0, left: 0}},
+      {width: undefined, height: undefined, top: 0, left: 0}
+    )
+  })
+  it('should pull out just the layout object from root and children', function() {
+    testExtractNodes(
+      {layout: {width: undefined, height: undefined, top: 0, left: 0}, children: [
+        {layout: {width: undefined, height: undefined, top: 0, left: 0}}
+      ]},
+      {width: undefined, height: undefined, top: 0, left: 0, children: [
+        {width: undefined, height: undefined, top: 0, left: 0}
+      ]}
+    )
+  })
+
+});
 
 describe('Layout', function() {
   it('should layout a single node with width and height', function() {
