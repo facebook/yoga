@@ -99,8 +99,10 @@ var layoutTestUtils = (function() {
     getIframe();
   }
 
-  if (typeof computeLayout === 'function') {
-    var realComputeLayout = computeLayout;
+  if (typeof computeLayout === 'object') {
+    var fillNodes = computeLayout.fillNodes;
+    var extractNodes = computeLayout.extractNodes;
+    var realComputeLayout = computeLayout.computeLayout;
   }
 
   function roundLayout(layout) {
@@ -142,34 +144,6 @@ var layoutTestUtils = (function() {
   }
 
   function computeCSSLayout(rootNode) {
-    function fillNodes(node) {
-      node.layout = {
-        width: undefined,
-        height: undefined,
-        top: 0,
-        left: 0
-      };
-      if (!node.style) {
-        node.style = {};
-      }
-
-      if (!node.children || node.style.measure) {
-        node.children = [];
-      }
-      node.children.forEach(fillNodes);
-    }
-
-    function extractNodes(node) {
-      var layout = node.layout;
-      delete node.layout;
-      if (node.children.length > 0) {
-        layout.children = node.children.map(extractNodes);
-      } else {
-        delete node.children;
-      }
-      return layout;
-    }
-
     fillNodes(rootNode);
     realComputeLayout(rootNode);
     return roundLayout(extractNodes(rootNode));
@@ -254,6 +228,14 @@ var layoutTestUtils = (function() {
       namedLayout[key] = layout[key];
     }
     return namedLayout;
+  }
+
+  function testFillNodes(node, filledNode) {
+    expect(fillNodes(node)).toEqual(filledNode);
+  }
+
+  function testExtractNodes(node, extractedNode) {
+    expect(extractNodes(node)).toEqual(extractedNode);
   }
 
   function testNamedLayout(name, layoutA, layoutB) {
@@ -400,6 +382,8 @@ var layoutTestUtils = (function() {
       testNamedLayout('expected-dom', expectedLayout, domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
+    testFillNodes: testFillNodes,
+    testExtractNodes: testExtractNodes,
     testRandomLayout: function(node, i) {
       expect({node: node, layout: computeCSSLayout(node)})
         .toEqual({node: node, layout: computeDOMLayout(node)});
