@@ -2,6 +2,7 @@
     "browser": true,
     "shadow": true,
     "globals": {
+        "jasmine": true,
         "describe": true,
         "beforeEach": true,
         "afterEach": true,
@@ -9,6 +10,12 @@
         "it": true,
         "xit": true,
         "expect": true,
-        "require": true
+        "require": true,
+        "global": true,
+        "__dirname": true,
+        "module": true
+    },
+    "rules": {
+        "quotes": "single"
     }
 }
