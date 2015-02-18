@@ -15,7 +15,8 @@
         "__dirname": true,
         "module": true,
         "console": true,
-        "setTimeout": true
+        "setTimeout": true,
+        "define": true
     },
     "rules": {
         "quotes": "single",

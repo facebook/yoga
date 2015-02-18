@@ -336,6 +336,7 @@ static float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
 
 static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
   /** START_GENERATED **/
+
   css_flex_direction_t mainAxis = getFlexDirection(node);
   css_flex_direction_t crossAxis = mainAxis == CSS_FLEX_DIRECTION_ROW ?
     CSS_FLEX_DIRECTION_COLUMN :

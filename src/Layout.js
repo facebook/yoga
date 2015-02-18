@@ -62,6 +62,34 @@ var computeLayout = (function() {
 
     return 0;
   }
+  function fillNodes(node) {
+    node.layout = {
+      width: undefined,
+      height: undefined,
+      top: 0,
+      left: 0
+    };
+    if (!node.style) {
+      node.style = {};
+    }
+
+    if (!node.children || node.style.measure) {
+      node.children = [];
+    }
+    node.children.forEach(fillNodes);
+    return node;
+  }
+
+  function extractNodes(node) {
+    var layout = node.layout;
+    delete node.layout;
+    if (node.children && node.children.length > 0) {
+      layout.children = node.children.map(extractNodes);
+    } else {
+      delete node.children;
+    }
+    return layout;
+  }
 
   function getPositiveSpacing(node, type, suffix, location) {
     var key = type + capitalizeFirst(location) + suffix;
@@ -208,7 +236,8 @@ var computeLayout = (function() {
     return -getPosition(node, trailing[axis]);
   }
 
-  return function layoutNode(node, parentMaxWidth) {
+  function layoutNode(node, parentMaxWidth) {
+
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
     var/*css_flex_direction_t*/ crossAxis = mainAxis === CSS_FLEX_DIRECTION_ROW ?
       CSS_FLEX_DIRECTION_COLUMN :
@@ -651,9 +680,30 @@ var computeLayout = (function() {
         }
       }
     }
+  }
+
+  return {
+    computeLayout: layoutNode,
+    fillNodes: fillNodes,
+    extractNodes: extractNodes
   };
 })();
 
-if (typeof module === 'object') {
-  module.exports = computeLayout;
-}
+// UMD (Universal Module Definition)
+// See https://github.com/umdjs/umd for reference
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    root.returnExports = factory();
+  }
+}(this, function () {
+  return computeLayout;
+}));
