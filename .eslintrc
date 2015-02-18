@@ -13,9 +13,15 @@
         "require": true,
         "global": true,
         "__dirname": true,
-        "module": true
+        "module": true,
+        "console": true,
+        "setTimeout": true
     },
     "rules": {
-        "quotes": "single"
+        "quotes": "single",
+        "strict": 0,
+        "no-console": false,
+        "no-shadow": false,
+        "no-underscore-dangle": false
     }
 }

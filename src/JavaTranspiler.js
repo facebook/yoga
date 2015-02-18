@@ -52,7 +52,7 @@ function __transpileSingleTestToJava(code) {
     .replace( // layout.position[CSS_TOP] => layout.y
         /layout\.position\[CSS_(TOP|LEFT)\]/g,
         function (str, match1) {
-            return 'layout.' + (match1 == 'TOP' ? 'y' : 'x');
+            return 'layout.' + (match1 === 'TOP' ? 'y' : 'x');
         })
     .replace( // style.position[CSS_TOP] => style.positionTop
         /style\.(position)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
@@ -97,7 +97,7 @@ var JavaTranspiler = {
         .replace(/var\/\*([^\/]+)\*\//g, '$1')
         .replace(/ === /g, ' == ')
         .replace(/ !== /g, ' != ')
-        .replace(/\n  /g, '\n')
+        .replace(/\n {2}/g, '\n')
         .replace(/\/[*]!([^*]+)[*]\//g, '$1')
         .replace(/css_node_t\*/g, 'CSSNode'));
   },
@@ -118,7 +118,7 @@ var JavaTranspiler = {
           __transpileSingleTestToJava(allTestsInC[i]);
     }
     return allTestsInJava.join('\n\n');
-  },
+  }
 };
 
 if (typeof module !== 'undefined') {

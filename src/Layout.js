@@ -9,6 +9,42 @@
 
 var computeLayout = (function() {
 
+  var CSS_UNDEFINED;
+
+  var CSS_FLEX_DIRECTION_ROW = 'row';
+  var CSS_FLEX_DIRECTION_COLUMN = 'column';
+
+  // var CSS_JUSTIFY_FLEX_START = 'flex-start';
+  var CSS_JUSTIFY_CENTER = 'center';
+  var CSS_JUSTIFY_FLEX_END = 'flex-end';
+  var CSS_JUSTIFY_SPACE_BETWEEN = 'space-between';
+  var CSS_JUSTIFY_SPACE_AROUND = 'space-around';
+
+  var CSS_ALIGN_FLEX_START = 'flex-start';
+  var CSS_ALIGN_CENTER = 'center';
+  // var CSS_ALIGN_FLEX_END = 'flex-end';
+  var CSS_ALIGN_STRETCH = 'stretch';
+
+  var CSS_POSITION_RELATIVE = 'relative';
+  var CSS_POSITION_ABSOLUTE = 'absolute';
+
+  var leading = {
+    row: 'left',
+    column: 'top'
+  };
+  var trailing = {
+    row: 'right',
+    column: 'bottom'
+  };
+  var pos = {
+    row: 'left',
+    column: 'top'
+  };
+  var dim = {
+    row: 'width',
+    column: 'height'
+  };
+
   function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -138,6 +174,13 @@ var computeLayout = (function() {
     return 0;
   }
 
+  function fmaxf(a, b) {
+    if (a > b) {
+      return a;
+    }
+    return b;
+  }
+
   // When the user specifically sets a value for width or height
   function setDimensionFromStyle(node, axis) {
     // The parent already computed us a width or height. We just skip it
@@ -164,49 +207,6 @@ var computeLayout = (function() {
     }
     return -getPosition(node, trailing[axis]);
   }
-
-  var leading = {
-    row: 'left',
-    column: 'top'
-  };
-  var trailing = {
-    row: 'right',
-    column: 'bottom'
-  };
-  var pos = {
-    row: 'left',
-    column: 'top'
-  };
-  var dim = {
-    row: 'width',
-    column: 'height'
-  };
-
-  function fmaxf(a, b) {
-    if (a > b) {
-      return a;
-    }
-    return b;
-  }
-
-  var CSS_UNDEFINED;
-
-  var CSS_FLEX_DIRECTION_ROW = 'row';
-  var CSS_FLEX_DIRECTION_COLUMN = 'column';
-
-  var CSS_JUSTIFY_FLEX_START = 'flex-start';
-  var CSS_JUSTIFY_CENTER = 'center';
-  var CSS_JUSTIFY_FLEX_END = 'flex-end';
-  var CSS_JUSTIFY_SPACE_BETWEEN = 'space-between';
-  var CSS_JUSTIFY_SPACE_AROUND = 'space-around';
-
-  var CSS_ALIGN_FLEX_START = 'flex-start';
-  var CSS_ALIGN_CENTER = 'center';
-  var CSS_ALIGN_FLEX_END = 'flex-end';
-  var CSS_ALIGN_STRETCH = 'stretch';
-
-  var CSS_POSITION_RELATIVE = 'relative';
-  var CSS_POSITION_ABSOLUTE = 'absolute';
 
   return function layoutNode(node, parentMaxWidth) {
     var/*css_flex_direction_t*/ mainAxis = getFlexDirection(node);
@@ -247,25 +247,30 @@ var computeLayout = (function() {
 
       // Let's not measure the text if we already know both dimensions
       if (isRowUndefined || isColumnUndefined) {
-        var/*css_dim_t*/ measure_dim = node.style.measure(
+        var/*css_dim_t*/ measureDim = node.style.measure(
           /*(c)!node->context,*/
           width
         );
         if (isRowUndefined) {
-          node.layout.width = measure_dim.width +
+          node.layout.width = measureDim.width +
             getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
         }
         if (isColumnUndefined) {
-          node.layout.height = measure_dim.height +
+          node.layout.height = measureDim.height +
             getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
         }
       }
       return;
     }
 
+    var/*int*/ i;
+    var/*int*/ ii;
+    var/*css_node_t**/ child;
+    var/*css_flex_direction_t*/ axis;
+
     // Pre-fill some dimensions straight from the parent
-    for (var/*int*/ i = 0; i < node.children.length; ++i) {
-      var/*css_node_t**/ child = node.children[i];
+    for (i = 0; i < node.children.length; ++i) {
+      child = node.children[i];
       // Pre-fill cross axis dimensions when the child is using stretch before
       // we call the recursive layout pass
       if (getAlignItem(node, child) === CSS_ALIGN_STRETCH &&
@@ -279,11 +284,11 @@ var computeLayout = (function() {
           // You never want to go smaller than padding
           getPaddingAndBorderAxis(child, crossAxis)
         );
-      } else if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
+      } else if (getPositionType(child) === CSS_POSITION_ABSOLUTE) {
         // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
         // left and right or top and bottom).
-        for (var/*int*/ ii = 0; ii < 2; ii++) {
-          var/*css_flex_direction_t*/ axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        for (ii = 0; ii < 2; ii++) {
+          axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
           if (!isUndefined(node.layout[dim[axis]]) &&
               !isDimDefined(child, axis) &&
               isPosDefined(child, leading[axis]) &&
@@ -311,7 +316,7 @@ var computeLayout = (function() {
     // We want to execute the next two loops one per line with flex-wrap
     var/*int*/ startLine = 0;
     var/*int*/ endLine = 0;
-    var/*int*/ nextOffset = 0;
+    // var/*int*/ nextOffset = 0;
     var/*int*/ alreadyComputedNextLayout = 0;
     // We aggregate the total dimensions of the container in those two variables
     var/*float*/ linesCrossDim = 0;
@@ -330,8 +335,10 @@ var computeLayout = (function() {
       var/*int*/ flexibleChildrenCount = 0;
       var/*float*/ totalFlexible = 0;
       var/*int*/ nonFlexibleChildrenCount = 0;
-      for (var/*int*/ i = startLine; i < node.children.length; ++i) {
-        var/*css_node_t**/ child = node.children[i];
+
+      var/*float*/ maxWidth;
+      for (i = startLine; i < node.children.length; ++i) {
+        child = node.children[i];
         var/*float*/ nextContentDim = 0;
 
         // It only makes sense to consider a child flexible if we have a computed
@@ -347,16 +354,16 @@ var computeLayout = (function() {
             getMarginAxis(child, mainAxis);
 
         } else {
-          var/*float*/ maxWidth = CSS_UNDEFINED;
-          if (mainAxis === CSS_FLEX_DIRECTION_ROW) {
-            // do nothing
-          } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
-            maxWidth = node.layout[dim[CSS_FLEX_DIRECTION_ROW]] -
-              getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
-          } else {
+          maxWidth = CSS_UNDEFINED;
+          if (mainAxis !== CSS_FLEX_DIRECTION_ROW) {
             maxWidth = parentMaxWidth -
               getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
               getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+
+            if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+              maxWidth = node.layout[dim[CSS_FLEX_DIRECTION_ROW]] -
+                getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+            }
           }
 
           // This is the main recursive call. We layout non flexible children.
@@ -417,21 +424,19 @@ var computeLayout = (function() {
         // We iterate over the full array and only apply the action on flexible
         // children. This is faster than actually allocating a new array that
         // contains only flexible children.
-        for (var/*int*/ i = startLine; i < endLine; ++i) {
-          var/*css_node_t**/ child = node.children[i];
+        for (i = startLine; i < endLine; ++i) {
+          child = node.children[i];
           if (isFlex(child)) {
             // At this point we know the final size of the element in the main
             // dimension
             child.layout[dim[mainAxis]] = flexibleMainDim * getFlex(child) +
               getPaddingAndBorderAxis(child, mainAxis);
 
-            var/*float*/ maxWidth = CSS_UNDEFINED;
-            if (mainAxis === CSS_FLEX_DIRECTION_ROW) {
-              // do nothing
-            } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+            maxWidth = CSS_UNDEFINED;
+            if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
               maxWidth = node.layout[dim[CSS_FLEX_DIRECTION_ROW]] -
                 getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
-            } else {
+            } else if (mainAxis !== CSS_FLEX_DIRECTION_ROW) {
               maxWidth = parentMaxWidth -
                 getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
                 getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
@@ -446,9 +451,7 @@ var computeLayout = (function() {
       // space available
       } else {
         var/*css_justify_t*/ justifyContent = getJustifyContent(node);
-        if (justifyContent === CSS_JUSTIFY_FLEX_START) {
-          // Do nothing
-        } else if (justifyContent === CSS_JUSTIFY_CENTER) {
+        if (justifyContent === CSS_JUSTIFY_CENTER) {
           leadingMainDim = remainingMainDim / 2;
         } else if (justifyContent === CSS_JUSTIFY_FLEX_END) {
           leadingMainDim = remainingMainDim;
@@ -478,8 +481,8 @@ var computeLayout = (function() {
       var/*float*/ mainDim = leadingMainDim +
         getPaddingAndBorder(node, leading[mainAxis]);
 
-      for (var/*int*/ i = startLine; i < endLine; ++i) {
-        var/*css_node_t**/ child = node.children[i];
+      for (i = startLine; i < endLine; ++i) {
+        child = node.children[i];
 
         if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
             isPosDefined(child, leading[mainAxis])) {
@@ -511,7 +514,7 @@ var computeLayout = (function() {
       var/*float*/ containerMainAxis = node.layout[dim[mainAxis]];
       // If the user didn't specify a width or height, and it has not been set
       // by the container, then we set it via the children.
-      if (isUndefined(node.layout[dim[mainAxis]])) {
+      if (isUndefined(containerMainAxis)) {
         containerMainAxis = fmaxf(
           // We're missing the last padding at this point to get the final
           // dimension
@@ -534,8 +537,8 @@ var computeLayout = (function() {
 
       // <Loop D> Position elements in the cross axis
 
-      for (var/*int*/ i = startLine; i < endLine; ++i) {
-        var/*css_node_t**/ child = node.children[i];
+      for (i = startLine; i < endLine; ++i) {
+        child = node.children[i];
 
         if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
             isPosDefined(child, leading[crossAxis])) {
@@ -553,9 +556,7 @@ var computeLayout = (function() {
           // alignSelf (child) in order to determine the position in the cross axis
           if (getPositionType(child) === CSS_POSITION_RELATIVE) {
             var/*css_align_t*/ alignItem = getAlignItem(node, child);
-            if (alignItem === CSS_ALIGN_FLEX_START) {
-              // Do nothing
-            } else if (alignItem === CSS_ALIGN_STRETCH) {
+            if (alignItem === CSS_ALIGN_STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.
               if (!isDimDefined(child, crossAxis)) {
@@ -567,7 +568,7 @@ var computeLayout = (function() {
                   getPaddingAndBorderAxis(child, crossAxis)
                 );
               }
-            } else {
+            } else if (alignItem !== CSS_ALIGN_FLEX_START) {
               // The remaining space between the parent dimensions+padding and child
               // dimensions+margin.
               var/*float*/ remainingCrossDim = containerCrossAxis -
@@ -616,13 +617,13 @@ var computeLayout = (function() {
 
     // <Loop E> Calculate dimensions for absolutely positioned elements
 
-    for (var/*int*/ i = 0; i < node.children.length; ++i) {
-      var/*css_node_t**/ child = node.children[i];
-      if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
+    for (i = 0; i < node.children.length; ++i) {
+      child = node.children[i];
+      if (getPositionType(child) === CSS_POSITION_ABSOLUTE) {
         // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
         // left and right or top and bottom).
-        for (var/*int*/ ii = 0; ii < 2; ii++) {
-          var/*css_flex_direction_t*/ axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        for (ii = 0; ii < 2; ii++) {
+          axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
           if (!isUndefined(node.layout[dim[axis]]) &&
               !isDimDefined(child, axis) &&
               isPosDefined(child, leading[axis]) &&
@@ -638,8 +639,8 @@ var computeLayout = (function() {
             );
           }
         }
-        for (var/*int*/ ii = 0; ii < 2; ii++) {
-          var/*css_flex_direction_t*/ axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        for (ii = 0; ii < 2; ii++) {
+          axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
           if (isPosDefined(child, trailing[axis]) &&
               !isPosDefined(child, leading[axis])) {
             child.layout[leading[axis]] =
@@ -656,4 +657,3 @@ var computeLayout = (function() {
 if (typeof module === 'object') {
   module.exports = computeLayout;
 }
-

@@ -374,25 +374,30 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
 
     // Let's not measure the text if we already know both dimensions
     if (isRowUndefined || isColumnUndefined) {
-      css_dim_t measure_dim = node->measure(
+      css_dim_t measureDim = node->measure(
         node->context,
         width
       );
       if (isRowUndefined) {
-        node->layout.dimensions[CSS_WIDTH] = measure_dim.dimensions[CSS_WIDTH] +
+        node->layout.dimensions[CSS_WIDTH] = measureDim.dimensions[CSS_WIDTH] +
           getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
       }
       if (isColumnUndefined) {
-        node->layout.dimensions[CSS_HEIGHT] = measure_dim.dimensions[CSS_HEIGHT] +
+        node->layout.dimensions[CSS_HEIGHT] = measureDim.dimensions[CSS_HEIGHT] +
           getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
       }
     }
     return;
   }
 
+  int i;
+  int ii;
+  css_node_t* child;
+  css_flex_direction_t axis;
+
   // Pre-fill some dimensions straight from the parent
-  for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = node->get_child(node->context, i);
+  for (i = 0; i < node->children_count; ++i) {
+    child = node->get_child(node->context, i);
     // Pre-fill cross axis dimensions when the child is using stretch before
     // we call the recursive layout pass
     if (getAlignItem(node, child) == CSS_ALIGN_STRETCH &&
@@ -409,8 +414,8 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     } else if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
       // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
       // left and right or top and bottom).
-      for (int ii = 0; ii < 2; ii++) {
-        css_flex_direction_t axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+      for (ii = 0; ii < 2; ii++) {
+        axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
         if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
             !isDimDefined(child, axis) &&
             isPosDefined(child, leading[axis]) &&
@@ -438,7 +443,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
   // We want to execute the next two loops one per line with flex-wrap
   int startLine = 0;
   int endLine = 0;
-  int nextOffset = 0;
+  // int nextOffset = 0;
   int alreadyComputedNextLayout = 0;
   // We aggregate the total dimensions of the container in those two variables
   float linesCrossDim = 0;
@@ -457,8 +462,10 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     int flexibleChildrenCount = 0;
     float totalFlexible = 0;
     int nonFlexibleChildrenCount = 0;
-    for (int i = startLine; i < node->children_count; ++i) {
-      css_node_t* child = node->get_child(node->context, i);
+
+    float maxWidth;
+    for (i = startLine; i < node->children_count; ++i) {
+      child = node->get_child(node->context, i);
       float nextContentDim = 0;
 
       // It only makes sense to consider a child flexible if we have a computed
@@ -474,16 +481,16 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
           getMarginAxis(child, mainAxis);
 
       } else {
-        float maxWidth = CSS_UNDEFINED;
-        if (mainAxis == CSS_FLEX_DIRECTION_ROW) {
-          // do nothing
-        } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
-          maxWidth = node->layout.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] -
-            getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
-        } else {
+        maxWidth = CSS_UNDEFINED;
+        if (mainAxis != CSS_FLEX_DIRECTION_ROW) {
           maxWidth = parentMaxWidth -
             getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
             getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+
+          if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+            maxWidth = node->layout.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] -
+              getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
+          }
         }
 
         // This is the main recursive call. We layout non flexible children.
@@ -544,21 +551,19 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       // We iterate over the full array and only apply the action on flexible
       // children. This is faster than actually allocating a new array that
       // contains only flexible children.
-      for (int i = startLine; i < endLine; ++i) {
-        css_node_t* child = node->get_child(node->context, i);
+      for (i = startLine; i < endLine; ++i) {
+        child = node->get_child(node->context, i);
         if (isFlex(child)) {
           // At this point we know the final size of the element in the main
           // dimension
           child->layout.dimensions[dim[mainAxis]] = flexibleMainDim * getFlex(child) +
             getPaddingAndBorderAxis(child, mainAxis);
 
-          float maxWidth = CSS_UNDEFINED;
-          if (mainAxis == CSS_FLEX_DIRECTION_ROW) {
-            // do nothing
-          } else if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+          maxWidth = CSS_UNDEFINED;
+          if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
             maxWidth = node->layout.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] -
               getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
-          } else {
+          } else if (mainAxis != CSS_FLEX_DIRECTION_ROW) {
             maxWidth = parentMaxWidth -
               getMarginAxis(node, CSS_FLEX_DIRECTION_ROW) -
               getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_ROW);
@@ -573,9 +578,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     // space available
     } else {
       css_justify_t justifyContent = getJustifyContent(node);
-      if (justifyContent == CSS_JUSTIFY_FLEX_START) {
-        // Do nothing
-      } else if (justifyContent == CSS_JUSTIFY_CENTER) {
+      if (justifyContent == CSS_JUSTIFY_CENTER) {
         leadingMainDim = remainingMainDim / 2;
       } else if (justifyContent == CSS_JUSTIFY_FLEX_END) {
         leadingMainDim = remainingMainDim;
@@ -605,8 +608,8 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     float mainDim = leadingMainDim +
       getPaddingAndBorder(node, leading[mainAxis]);
 
-    for (int i = startLine; i < endLine; ++i) {
-      css_node_t* child = node->get_child(node->context, i);
+    for (i = startLine; i < endLine; ++i) {
+      child = node->get_child(node->context, i);
 
       if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
           isPosDefined(child, leading[mainAxis])) {
@@ -638,7 +641,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     float containerMainAxis = node->layout.dimensions[dim[mainAxis]];
     // If the user didn't specify a width or height, and it has not been set
     // by the container, then we set it via the children.
-    if (isUndefined(node->layout.dimensions[dim[mainAxis]])) {
+    if (isUndefined(containerMainAxis)) {
       containerMainAxis = fmaxf(
         // We're missing the last padding at this point to get the final
         // dimension
@@ -661,8 +664,8 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
 
     // <Loop D> Position elements in the cross axis
 
-    for (int i = startLine; i < endLine; ++i) {
-      css_node_t* child = node->get_child(node->context, i);
+    for (i = startLine; i < endLine; ++i) {
+      child = node->get_child(node->context, i);
 
       if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
           isPosDefined(child, leading[crossAxis])) {
@@ -680,9 +683,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         // alignSelf (child) in order to determine the position in the cross axis
         if (getPositionType(child) == CSS_POSITION_RELATIVE) {
           css_align_t alignItem = getAlignItem(node, child);
-          if (alignItem == CSS_ALIGN_FLEX_START) {
-            // Do nothing
-          } else if (alignItem == CSS_ALIGN_STRETCH) {
+          if (alignItem == CSS_ALIGN_STRETCH) {
             // You can only stretch if the dimension has not already been set
             // previously.
             if (!isDimDefined(child, crossAxis)) {
@@ -694,7 +695,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
                 getPaddingAndBorderAxis(child, crossAxis)
               );
             }
-          } else {
+          } else if (alignItem != CSS_ALIGN_FLEX_START) {
             // The remaining space between the parent dimensions+padding and child
             // dimensions+margin.
             float remainingCrossDim = containerCrossAxis -
@@ -743,13 +744,13 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
 
   // <Loop E> Calculate dimensions for absolutely positioned elements
 
-  for (int i = 0; i < node->children_count; ++i) {
-    css_node_t* child = node->get_child(node->context, i);
+  for (i = 0; i < node->children_count; ++i) {
+    child = node->get_child(node->context, i);
     if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
       // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
       // left and right or top and bottom).
-      for (int ii = 0; ii < 2; ii++) {
-        css_flex_direction_t axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+      for (ii = 0; ii < 2; ii++) {
+        axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
         if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
             !isDimDefined(child, axis) &&
             isPosDefined(child, leading[axis]) &&
@@ -765,8 +766,8 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
           );
         }
       }
-      for (int ii = 0; ii < 2; ii++) {
-        css_flex_direction_t axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+      for (ii = 0; ii < 2; ii++) {
+        axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
         if (isPosDefined(child, trailing[axis]) &&
             !isPosDefined(child, leading[axis])) {
           child->layout.position[leading[axis]] =
