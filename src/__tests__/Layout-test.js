@@ -20,22 +20,22 @@ describe('Javascript Only', function() {
     testFillNodes(
       {},
       {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: []}
-    )
-  })
+    );
+  });
   it('should fill root and child node with layout, style, and children', function() {
     testFillNodes(
       {children: [{}]},
       {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: [
         {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: []}
       ]}
-    )
-  })
+    );
+  });
   it('should pull out just the layout object from root', function() {
     testExtractNodes(
       {layout: {width: undefined, height: undefined, top: 0, left: 0}},
       {width: undefined, height: undefined, top: 0, left: 0}
-    )
-  })
+    );
+  });
   it('should pull out just the layout object from root and children', function() {
     testExtractNodes(
       {layout: {width: undefined, height: undefined, top: 0, left: 0}, children: [
@@ -44,8 +44,8 @@ describe('Javascript Only', function() {
       {width: undefined, height: undefined, top: 0, left: 0, children: [
         {width: undefined, height: undefined, top: 0, left: 0}
       ]}
-    )
-  })
+    );
+  });
 
 });
 
@@ -86,7 +86,7 @@ describe('Layout', function() {
         {width: 500, height: 500, top: 0, left: 0},
         {width: 500, height: 500, top: 500, left: 0, children: [
           {width: 250, height: 250, top: 0, left: 0},
-          {width: 250, height: 250, top: 250, left: 0},
+          {width: 250, height: 250, top: 250, left: 0}
         ]}
       ]}
     );
@@ -253,7 +253,7 @@ describe('Layout', function() {
   it('should layout node with flex override height', function() {
     testLayout(
       {style: {width: 1000, height: 1000}, children: [
-        {style: {width: 100, height: 100, flex: 1}},
+        {style: {width: 100, height: 100, flex: 1}}
       ]},
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 1000, top: 0, left: 0}
@@ -269,7 +269,7 @@ describe('Layout', function() {
       ]},
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 0},
-        {width: 100, height: 100, top: 100, left: 0},
+        {width: 100, height: 100, top: 100, left: 0}
       ]}
     );
   });
@@ -282,7 +282,7 @@ describe('Layout', function() {
       ]},
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 400},
-        {width: 100, height: 100, top: 100, left: 450},
+        {width: 100, height: 100, top: 100, left: 450}
       ]}
     );
   });
@@ -295,7 +295,7 @@ describe('Layout', function() {
       ]},
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 800},
-        {width: 100, height: 100, top: 100, left: 900},
+        {width: 100, height: 100, top: 100, left: 900}
       ]}
     );
   });
@@ -308,7 +308,7 @@ describe('Layout', function() {
       ]},
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 800},
-        {width: 100, height: 100, top: 100, left: 450},
+        {width: 100, height: 100, top: 100, left: 450}
       ]}
     );
   });
@@ -350,7 +350,7 @@ describe('Layout', function() {
     testLayout(
       {style: {height: 100}, children: [
         {style: {height: 100}},
-        {style: {height: 200}},
+        {style: {height: 200}}
       ]},
       {width: 0, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 100, top: 0, left: 0},
@@ -397,7 +397,7 @@ describe('Layout', function() {
   it('should layout flex inside of an empty element', function() {
     testLayout(
       {style: {}, children: [
-        {style: {flex: 1}},
+        {style: {flex: 1}}
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 0, left: 0}
@@ -519,7 +519,7 @@ describe('Layout', function() {
       {style: {width: 500, flexDirection: 'row'}, children: [
         {style: {flex: 1}},
         {style: {position: 'absolute', width: 50}},
-        {style: {flex: 1}},
+        {style: {flex: 1}}
       ]},
       {width: 500, height: 0, top: 0, left: 0, children: [
         {width: 250, height: 0, top: 0, left: 0},
@@ -686,7 +686,7 @@ describe('Layout', function() {
         {width: 347.5, height: 0, top: 0, left: 0},
         {width: 347.5, height: 0, top: 0, left: 352.5}
       ]}
-    )
+    );
   });
 
   it('should layout node with flex and overflow', function() {
@@ -721,16 +721,16 @@ describe('Layout', function() {
       ]},
       {width: 0, height: 500, top: 0, left: 0, children: [
         {width: 0, height: 500, top: 0, left: 0},
-        {width: 0, height: 0, top: 500, left: 0},
+        {width: 0, height: 0, top: 500, left: 0}
       ]}
-    )
+    );
   });
 
   it('should layout node with borderWidth', function() {
     testLayout(
       {style: {borderWidth: 5}},
       {width: 10, height: 10, top: 0, left: 0}
-    )
+    );
   });
 
   it('should layout node with borderWidth and position: absolute, top', function() {
@@ -741,7 +741,7 @@ describe('Layout', function() {
       {width: 0, height: 1, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 0, left: 0}
       ]}
-    )
+    );
   });
 
   it('should layout node with borderWidth and position: absolute, top. cross axis', function() {
@@ -752,7 +752,7 @@ describe('Layout', function() {
       {width: 2, height: 2, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 1, left: 6}
       ]}
-    )
+    );
   });
 
   it('should correctly take into account min padding for stretch', function() {
@@ -968,7 +968,7 @@ describe('Layout', function() {
       ]},
       {width: 100, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 25, top: 0, left: 0},
-        {width: 0, height: 75, top: 25, left: 0},
+        {width: 0, height: 75, top: 25, left: 0}
       ]}
     );
   });
@@ -981,7 +981,7 @@ describe('Layout', function() {
       ]},
       {width: 100, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 0, left: 0},
-        {width: 0, height: 0, top: 0, left: 0},
+        {width: 0, height: 0, top: 0, left: 0}
       ]}
     );
   });
@@ -994,7 +994,7 @@ describe('Layout', function() {
       ]},
       {width: 50, height: 100, top: 0, left: 0, children: [
         {width: 50, height: 100, top: 0, left: 0},
-        {width: 50, height: 0, top: 100, left: 0},
+        {width: 50, height: 0, top: 100, left: 0}
       ]}
     );
   });
@@ -1186,7 +1186,7 @@ describe('Layout', function() {
       {style: {flexWrap: 'wrap', flexDirection: 'row', width: 100}, children: [
         {style: {width: 40, height: 10}},
         {style: {width: 40, height: 10}},
-        {style: {width: 40, height: 10}},
+        {style: {width: 40, height: 10}}
       ]},
       {width: 100, height: 20, top: 0, left: 0, children: [
         {width: 40, height: 10, top: 0, left: 0},
@@ -1200,7 +1200,7 @@ describe('Layout', function() {
     testLayout(
       {style: {height: 100, flexWrap: 'wrap'}, children: [
         {style: {height: 100}},
-        {style: {height: 200}},
+        {style: {height: 200}}
       ]},
       {width: 0, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 100, top: 0, left: 0},
@@ -1245,4 +1245,3 @@ describe('Layout', function() {
   });
 
 });
-

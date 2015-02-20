@@ -4,6 +4,7 @@
   "description": "Reimplementation of CSS layout using pure JavaScript",
   "main": "src/main.js",
   "scripts": {
+    "pretest": "./node_modules/eslint/bin/eslint.js src",
     "test": "./node_modules/karma/bin/karma start ./karma.conf.js --single-run"
   },
   "repository": {
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/facebook/css-layout",
   "devDependencies": {
+    "eslint": "^0.14.1",
     "jasmine-core": "^2.2.0",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.7",

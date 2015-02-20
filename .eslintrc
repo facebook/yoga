@@ -1,0 +1,28 @@
+{
+    "browser": true,
+    "shadow": true,
+    "globals": {
+        "jasmine": true,
+        "describe": true,
+        "beforeEach": true,
+        "afterEach": true,
+        "spyOn": true,
+        "it": true,
+        "xit": true,
+        "expect": true,
+        "require": true,
+        "global": true,
+        "__dirname": true,
+        "module": true,
+        "console": true,
+        "setTimeout": true,
+        "define": true
+    },
+    "rules": {
+        "quotes": "single",
+        "strict": 0,
+        "no-console": false,
+        "no-shadow": false,
+        "no-underscore-dangle": false
+    }
+}

@@ -11,8 +11,6 @@ var testRandomLayout = layoutTestUtils.testRandomLayout;
 var computeLayout = layoutTestUtils.computeLayout;
 var computeDOMLayout = layoutTestUtils.computeDOMLayout;
 var reduceTest = layoutTestUtils.reduceTest;
-var text = layoutTestUtils.text;
-var texts = layoutTestUtils.texts;
 
 describe('Random layout', function() {
 
@@ -39,14 +37,7 @@ describe('Random layout', function() {
       node.style[attribute] = enumValues[Math.floor(rng.nextFloat() * enumValues.length)];
     }
   }
-  function randChildren(node, chance) {
-    while (rng.nextFloat() < chance) {
-      if (!node.children) {
-        node.children = [];
-      }
-      node.children.push(generateRandomNode());
-    }
-  }
+
   function randSpacing(node, chance, type, suffix, min, max) {
     randMinMax(node, chance, type + suffix, min, max);
     randMinMax(node, chance, type + 'Left' + suffix, min, max);
@@ -88,8 +79,27 @@ describe('Random layout', function() {
       delete node.style.position;
     }
 
+    function randChildren(node, chance) {
+      while (rng.nextFloat() < chance) {
+        if (!node.children) {
+          node.children = [];
+        }
+        node.children.push(generateRandomNode());
+      }
+    }
+
     randChildren(node, 0.4);
     return node;
+  }
+
+  function checkRandomLayout(i, node) {
+      it('should layout randomly #' + i + '.', function(node) {
+        if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
+          node = reduceTest(node);
+        }
+
+        testRandomLayout(node, i);
+      }.bind(this, node));
   }
 
   for (var i = 0; i < 100; ++i) {
@@ -101,13 +111,7 @@ describe('Random layout', function() {
     delete node.style.flex;
     delete node.style.position;
 
-    it('should layout randomly #' + i +'.', function(node) {
-      if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
-        node = reduceTest(node);
-      }
-
-      testRandomLayout(node, i);
-    }.bind(this, node));
+    checkRandomLayout.call(this, i, node);
   }
 
 });

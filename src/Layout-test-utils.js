@@ -44,21 +44,22 @@ var layoutTestUtils = (function() {
     };
   }
 
+  var _cachedIframe;
+
   function renderIframe() {
     var iframe = document.createElement('iframe');
     document.body.appendChild(iframe);
     return iframe;
   }
 
-  var cachedIframe;
-  function getIframe() {
-    if (cachedIframe) {
-      return cachedIframe;
+  function getIframe(iframe) {
+    if (_cachedIframe) {
+      return _cachedIframe;
     }
 
     var doc = iframe.contentDocument;
 
-    if(doc.readyState === 'complete') {
+    if (doc.readyState === 'complete') {
       var style = document.createElement('style');
       style.textContent = (function() {/*
         body, div {
@@ -87,7 +88,7 @@ var layoutTestUtils = (function() {
         }
       */} + '').slice(15, -4);
       doc.head.appendChild(style);
-      cachedIframe = iframe;
+      _cachedIframe = iframe;
       return iframe;
     } else {
       setTimeout(getIframe, 0);
@@ -96,7 +97,7 @@ var layoutTestUtils = (function() {
 
   if (typeof window !== 'undefined') {
     var iframe = renderIframe();
-    getIframe();
+    getIframe(iframe);
   }
 
   if (typeof computeLayout === 'object') {
@@ -262,9 +263,12 @@ var layoutTestUtils = (function() {
     var isModified = true;
 
     function rec(node) {
+      var key;
+      var value;
+
       // Style
-      for (var key in node.style) {
-        var value = node.style[key];
+      for (key in node.style) {
+        value = node.style[key];
         delete node.style[key];
         if (isWorking()) {
           node.style[key] = value;
@@ -273,8 +277,8 @@ var layoutTestUtils = (function() {
         }
       }
       // Round values
-      for (var key in node.style) {
-        var value = node.style[key];
+      for (key in node.style) {
+        value = node.style[key];
         if (value > 100) {
           node.style[key] = Math.round(value / 100) * 100;
         } else if (value > 10) {
@@ -292,7 +296,7 @@ var layoutTestUtils = (function() {
       }
       // Children
       for (var i = 0; node.children && i < node.children.length; ++i) {
-        var value = node.children[i];
+        value = node.children[i];
         node.children.splice(i, 1);
         if (isWorking()) {
           if (!node.children) {
@@ -348,7 +352,7 @@ var layoutTestUtils = (function() {
 
   var texts = {
     small: 'small',
-    big: 'loooooooooong with space',
+    big: 'loooooooooong with space'
   };
 
   var preDefinedTextSizes = {
@@ -368,7 +372,7 @@ var layoutTestUtils = (function() {
       smallHeight: measureTextSizes(texts.small, 0).height,
       bigWidth: measureTextSizes(texts.big).width,
       bigHeight: measureTextSizes(texts.big, 0).height,
-      bigMinWidth: measureTextSizes(texts.big, 0).width,
+      bigMinWidth: measureTextSizes(texts.big, 0).width
     };
   }
 
@@ -384,7 +388,7 @@ var layoutTestUtils = (function() {
     },
     testFillNodes: testFillNodes,
     testExtractNodes: testExtractNodes,
-    testRandomLayout: function(node, i) {
+    testRandomLayout: function(node) {
       expect({node: node, layout: computeCSSLayout(node)})
         .toEqual({node: node, layout: computeDOMLayout(node)});
     },

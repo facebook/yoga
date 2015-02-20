@@ -9,7 +9,6 @@
 
 var layoutTestUtils = require('./Layout-test-utils.js');
 var computeLayout = require('./Layout.js').computeLayout;
-var fillNodes = require('./Layout.js').fillNodes;
 var fs = require('fs');
 var JavaTranspiler = require('./JavaTranspiler.js');
 
@@ -32,7 +31,7 @@ global.layoutTestUtils = {
 };
 
 global.describe = function(name, cb) {
-  if(name == 'Layout') {
+  if (name === 'Layout') {
     cb();
   }
 };
@@ -46,6 +45,14 @@ function printLayout(test) {
   var level = 1;
   var res = [];
 
+  function indent(level) {
+    var result = '';
+    for (var i = 0; i < level; ++i) {
+      result += '  ';
+    }
+    return result;
+  }
+
   function add(str) {
     if (str.length > 0) {
       str = indent(level) + str;
@@ -54,18 +61,7 @@ function printLayout(test) {
   }
 
   function isEmpty(obj) {
-    for (var key in obj) {
-      return false;
-    }
-    return true;
-  }
-
-  function indent(level) {
-    var result = '';
-    for (var i = 0; i < level; ++i) {
-      result += '  ';
-    }
-    return result;
+    return !Object.keys(obj).length;
   }
 
   add('{');
@@ -78,24 +74,22 @@ function printLayout(test) {
   if (!isEmpty(test.node.style) || test.node.children && test.node.children.length) {
     add('css_node_t *node_0 = root_node;');
   }
-  function rec_style(node) {
+  function recStyle(node) {
 
     function addStyle(str) {
       add('node_' + (level - 3) + '->style.' + str);
     }
 
-    function addEnum(node, js_key, c_key, dict) {
-      if (js_key in node.style) {
-        addStyle(c_key + ' = ' + dict[node.style[js_key]] + ';');
+    function addEnum(node, jsKey, cKey, dict) {
+      if (jsKey in node.style) {
+        addStyle(cKey + ' = ' + dict[node.style[jsKey]] + ';');
       }
     }
 
-    function addFloat(positive, node, js_key, c_key) {
-      if (js_key in node.style) {
-        if (positive === 'positive' && node.style[js_key] < 0) {
-          // do nothing
-        } else {
-          addStyle(c_key + ' = ' + node.style[js_key] + ';');
+    function addFloat(positive, node, jsKey, cKey) {
+      if (jsKey in node.style) {
+        if (positive !== 'positive' || node.style[jsKey] >= 0) {
+          addStyle(cKey + ' = ' + node.style[jsKey] + ';');
         }
       }
     }
@@ -163,21 +157,21 @@ function printLayout(test) {
     addMeasure(node);
 
     if (node.children) {
-      add('init_css_node_children(node_' + (level - 3) +', ' + node.children.length + ');');
+      add('init_css_node_children(node_' + (level - 3) + ', ' + node.children.length + ');');
       add('{');
       level++;
       add('css_node_t *node_' + (level - 3) + ';');
 
       for (var i = 0; i < node.children.length; ++i) {
         add('node_' + (level - 3) + ' = node_' + (level - 4) + '->get_child(node_' + (level - 4) + '->context, ' + i + ');');
-        rec_style(node.children[i]);
+        recStyle(node.children[i]);
       }
 
       level--;
       add('}');
     }
   }
-  rec_style(test.node);
+  recStyle(test.node);
   level--;
   add('}');
   add('');
@@ -188,7 +182,7 @@ function printLayout(test) {
   level++;
   add('css_node_t *node_0 = root_layout;');
 
-  function rec_layout(node) {
+  function recLayout(node) {
     function addLayout(str) {
       add('node_' + (level - 3) + '->layout.' + str);
     }
@@ -199,21 +193,21 @@ function printLayout(test) {
     addLayout('dimensions[CSS_HEIGHT] = ' + node.height + ';');
 
     if (node.children) {
-      add('init_css_node_children(node_' + (level - 3) +', ' + node.children.length + ');');
+      add('init_css_node_children(node_' + (level - 3) + ', ' + node.children.length + ');');
       add('{');
       level++;
       add('css_node_t *node_' + (level - 3) + ';');
 
       for (var i = 0; i < node.children.length; ++i) {
         add('node_' + (level - 3) + ' = node_' + (level - 4) + '->get_child(node_' + (level - 4) + '->context, ' + i + ');');
-        rec_layout(node.children[i]);
+        recLayout(node.children[i]);
       }
 
       level--;
       add('}');
     }
   }
-  rec_layout(test.expectedLayout);
+  recLayout(test.expectedLayout);
   level--;
   add('}');
   add('');
@@ -242,13 +236,14 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/var\/\*([^\/]+)\*\//g, '$1')
     .replace(/ === /g, ' == ')
     .replace(/ !== /g, ' != ')
-    .replace(/\n  /g, '\n')
+    .replace(/\n {2}/g, '\n')
     .replace(/\/\*\(c\)!([^*]+)\*\//g, '$1')
     .replace(/\/[*]!([^*]+)[*]\//g, '$1')
     .split('\n').slice(1, -1).join('\n');
 }
 
 function makeConstDefs() {
+  /* eslint no-multi-spaces: 3 */
   var lines = [
     '#define SMALL_WIDTH '   + layoutTestUtils.textSizes.smallWidth,
     '#define SMALL_HEIGHT '  + layoutTestUtils.textSizes.smallHeight,

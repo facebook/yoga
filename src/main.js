@@ -20,5 +20,5 @@
       layout.computeLayout(node);
       node = layout.extractNodes(node);
       return node;
-  }
+  };
 }));
