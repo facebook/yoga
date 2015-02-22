@@ -48,6 +48,7 @@ flexDirection | 'column', 'row'
 justifyContent | 'flex-start', 'center', 'flex-end', 'space-between', 'space-around'
 alignItems, alignSelf | 'flex-start', 'center', 'flex-end', 'stretch'
 flex | positive number
+flexWrap | 'wrap', 'nowrap'
 position | 'relative', 'absolute'
 
 - `inherit` value is not implemented because it's a way to disambiguate between multiple colliding rules. This should be done in a pre-processing step, not in the actual layout algorithm.
@@ -62,14 +63,15 @@ Since we are only using flexbox, we can use defaults that are much more sensible
 div, span {
   box-sizing: border-box;
   position: relative;
-  border: 0 solid black;
-  margin: 0;
-  padding: 0;
 
   display: flex;
   flex-direction: column;
   align-items: stretch;
   flex-shrink: 0;
+
+  border: 0 solid black;
+  margin: 0;
+  padding: 0;
 }
 ```
 
