@@ -1,6 +1,6 @@
 {
   "name": "css-layout",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Reimplementation of CSS layout using pure JavaScript",
   "main": "src/main.js",
   "scripts": {
