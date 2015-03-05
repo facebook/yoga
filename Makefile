@@ -18,7 +18,7 @@ c_test: c
 java: transpile_all src/java
 	@if [ ! -f lib/junit4.jar ]; then mkdir lib/; wget -O lib/junit4.jar http://search.maven.org/remotecontent?filepath=junit/junit/4.10/junit-4.10.jar; fi
 	@if [ ! -f lib/jsr305.jar ]; then mkdir lib/; wget -O lib/jsr305.jar http://search.maven.org/remotecontent?filepath=net/sourceforge/findbugs/jsr305/1.3.7/jsr305-1.3.7.jar; fi
-	@if [ ! -f lib/infer-annotations-1.4.jar ]; then mkdir lib/; wget -O lib/infer-annotations-1.4.jar https://github.com/facebook/buck/raw/master/third-party/java/infer-annotations/infer-annotations-1.4.jar; fi
+	@if [ ! -f lib/infer-annotations-1.4.jar ]; then mkdir lib/; wget -O lib/infer-annotations-1.4.jar https://github.com/facebook/buck/raw/027ffe2b230c08cad7b340646c6f801bd6dabc78/third-party/java/infer-annotations/infer-annotations-1.4.jar; fi
 	@javac -cp ./lib/junit4.jar:./lib/jsr305.jar:./lib/infer-annotations-1.4.jar -sourcepath ./src/java/src:./src/java/tests src/java/tests/com/facebook/csslayout/*.java
 
 java_test: java
