@@ -86,24 +86,22 @@ function printLayout(test) {
       }
     }
 
-    function addFloat(positive, node, jsKey, cKey) {
+    function addFloat(node, jsKey, cKey) {
       if (jsKey in node.style) {
-        if (positive !== 'positive' || node.style[jsKey] >= 0) {
-          addStyle(cKey + ' = ' + node.style[jsKey] + ';');
-        }
+        addStyle(cKey + ' = ' + node.style[jsKey] + ';');
       }
     }
 
-    function addSpacing(positive, node, spacing, suffix) {
-      addFloat(positive, node, spacing + suffix, spacing + '[CSS_LEFT]');
-      addFloat(positive, node, spacing + suffix, spacing + '[CSS_TOP]');
-      addFloat(positive, node, spacing + suffix, spacing + '[CSS_RIGHT]');
-      addFloat(positive, node, spacing + suffix, spacing + '[CSS_BOTTOM]');
+    function addSpacing(node, spacing, suffix) {
+      addFloat(node, spacing + suffix, spacing + '[CSS_LEFT]');
+      addFloat(node, spacing + suffix, spacing + '[CSS_TOP]');
+      addFloat(node, spacing + suffix, spacing + '[CSS_RIGHT]');
+      addFloat(node, spacing + suffix, spacing + '[CSS_BOTTOM]');
 
-      addFloat(positive, node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
-      addFloat(positive, node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
-      addFloat(positive, node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
-      addFloat(positive, node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
+      addFloat(node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
+      addFloat(node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
+      addFloat(node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
+      addFloat(node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
     }
 
     function addMeasure(node) {
@@ -144,16 +142,16 @@ function printLayout(test) {
       'nowrap': 'CSS_NOWRAP',
       'wrap': 'CSS_WRAP'
     });
-    addFloat('positive', node, 'flex', 'flex');
-    addFloat('positive', node, 'width', 'dimensions[CSS_WIDTH]');
-    addFloat('positive', node, 'height', 'dimensions[CSS_HEIGHT]');
-    addSpacing('all', node, 'margin', '');
-    addSpacing('positive', node, 'padding', '');
-    addSpacing('positive', node, 'border', 'Width');
-    addFloat('all', node, 'left', 'position[CSS_LEFT]');
-    addFloat('all', node, 'top', 'position[CSS_TOP]');
-    addFloat('all', node, 'right', 'position[CSS_RIGHT]');
-    addFloat('all', node, 'bottom', 'position[CSS_BOTTOM]');
+    addFloat(node, 'flex', 'flex');
+    addFloat(node, 'width', 'dimensions[CSS_WIDTH]');
+    addFloat(node, 'height', 'dimensions[CSS_HEIGHT]');
+    addSpacing(node, 'margin', '');
+    addSpacing(node, 'padding', '');
+    addSpacing(node, 'border', 'Width');
+    addFloat(node, 'left', 'position[CSS_LEFT]');
+    addFloat(node, 'top', 'position[CSS_TOP]');
+    addFloat(node, 'right', 'position[CSS_RIGHT]');
+    addFloat(node, 'bottom', 'position[CSS_BOTTOM]');
     addMeasure(node);
 
     if (node.children) {

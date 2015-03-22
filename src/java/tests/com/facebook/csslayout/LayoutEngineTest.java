@@ -2603,6 +2603,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.width = -31;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3341,6 +3342,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
+        node_1.style.flex = -2.5f;
         node_1 = node_0.getChildAt(1);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
         node_1.style.flex = 0;
