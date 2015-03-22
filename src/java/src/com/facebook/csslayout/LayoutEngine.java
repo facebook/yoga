@@ -116,7 +116,8 @@ public class LayoutEngine {
   }
 
   private static boolean isDimDefined(CSSNode node, CSSFlexDirection axis) {
-    return !CSSConstants.isUndefined(getStyleDimension(node, getDim(axis)));
+    float value = getStyleDimension(node, getDim(axis));
+    return !CSSConstants.isUndefined(value) && value > 0.0;
   }
 
   private static boolean isPosDefined(CSSNode node, PositionIndex position) {
