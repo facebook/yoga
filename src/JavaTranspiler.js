@@ -26,6 +26,7 @@ function __transpileToJavaCommon(code) {
     .replace(/pos\[([^\]]+)\]/g, 'getPos($1)')
     .replace(/dim\[([^\]]+)\]/g, 'getDim($1)')
     .replace(/isUndefined/g, 'CSSConstants.isUndefined')
+    .replace(/\/\*\(java\)!([^*]+)\*\//g, '$1')
 
     // Since Java doesn't store its attributes in arrays, we need to use setters/getters to access
     // the appropriate layout/style fields

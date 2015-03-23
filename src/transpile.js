@@ -237,6 +237,7 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/\n {2}/g, '\n')
     .replace(/\/\*\(c\)!([^*]+)\*\//g, '$1')
     .replace(/\/[*]!([^*]+)[*]\//g, '$1')
+    .replace(/\/\*\(java\)!([^*]+)\*\//g, '')
     .split('\n').slice(1, -1).join('\n');
 }
 

@@ -35,6 +35,7 @@ public class LayoutCachingTest {
 
   @Test
   public void testCachesFullTree() {
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
     CSSNode root = new CSSNode();
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
@@ -43,11 +44,11 @@ public class LayoutCachingTest {
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     assertTreeHasNewLayout(true, root);
     markLayoutAppliedForTree(root);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     assertTrue(root.hasNewLayout());
     assertTreeHasNewLayout(false, c0);
     assertTreeHasNewLayout(false, c1);
@@ -55,6 +56,7 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesCacheWhenChildAdded() {
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
     CSSNode root = new CSSNode();
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
@@ -68,12 +70,12 @@ public class LayoutCachingTest {
     c0.addChildAt(c0c0, 0);
     c0c0.addChildAt(c1c0, 0);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     markLayoutAppliedForTree(root);
 
     c0.addChildAt(c0c1, 1);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     assertTrue(root.hasNewLayout());
     assertTrue(c0.hasNewLayout());
     assertTrue(c0c1.hasNewLayout());
@@ -86,6 +88,7 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesCacheWhenEnumPropertyChanges() {
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
     CSSNode root = new CSSNode();
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
@@ -94,11 +97,11 @@ public class LayoutCachingTest {
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     markLayoutAppliedForTree(root);
 
     c1.setAlignSelf(CSSAlign.CENTER);
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
 
     assertTrue(root.hasNewLayout());
     assertTrue(c1.hasNewLayout());
@@ -109,6 +112,7 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesCacheWhenFloatPropertyChanges() {
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
     CSSNode root = new CSSNode();
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
@@ -117,11 +121,11 @@ public class LayoutCachingTest {
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     markLayoutAppliedForTree(root);
 
     c1.setMargin(Spacing.LEFT, 10);
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
 
     assertTrue(root.hasNewLayout());
     assertTrue(c1.hasNewLayout());
@@ -132,6 +136,7 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesFullTreeWhenParentWidthChanges() {
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
     CSSNode root = new CSSNode();
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
@@ -142,11 +147,11 @@ public class LayoutCachingTest {
     c0.addChildAt(c0c0, 0);
     c1.addChildAt(c1c0, 0);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     markLayoutAppliedForTree(root);
 
     c0.setStyleWidth(200);
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
 
     assertTrue(root.hasNewLayout());
     assertTrue(c0.hasNewLayout());
@@ -158,6 +163,7 @@ public class LayoutCachingTest {
 
   @Test
   public void testDoesNotInvalidateCacheWhenPropertyIsTheSame() {
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
     CSSNode root = new CSSNode();
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
@@ -167,11 +173,11 @@ public class LayoutCachingTest {
     c0.addChildAt(c0c0, 0);
     root.setStyleWidth(200);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     markLayoutAppliedForTree(root);
 
     root.setStyleWidth(200);
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
 
     assertTrue(root.hasNewLayout());
     assertTreeHasNewLayout(false, c0);
@@ -180,6 +186,7 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidateCacheWhenHeightChangesPosition() {
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
     CSSNode root = new CSSNode();
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
@@ -188,11 +195,11 @@ public class LayoutCachingTest {
     root.addChildAt(c1, 1);
     c1.addChildAt(c1c0, 0);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     markLayoutAppliedForTree(root);
 
     c0.setStyleHeight(100);
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
 
     assertTrue(root.hasNewLayout());
     assertTrue(c0.hasNewLayout());
@@ -202,6 +209,7 @@ public class LayoutCachingTest {
 
   @Test
   public void testInvalidatesOnNewMeasureFunction() {
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
     CSSNode root = new CSSNode();
     CSSNode c0 = new CSSNode();
     CSSNode c1 = new CSSNode();
@@ -210,7 +218,7 @@ public class LayoutCachingTest {
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
     markLayoutAppliedForTree(root);
 
     c1.setMeasureFunction(new CSSNode.MeasureFunction() {
@@ -221,7 +229,7 @@ public class LayoutCachingTest {
       }
     });
 
-    root.calculateLayout();
+    root.calculateLayout(layoutContext);
 
     assertTrue(root.hasNewLayout());
     assertTrue(c1.hasNewLayout());

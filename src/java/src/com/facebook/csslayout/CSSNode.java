@@ -39,10 +39,6 @@ public class CSSNode {
     UP_TO_DATE,
   }
 
-  // Only one copy kept around to keep from allocating a bunch of MeasureOutput objects
-  // NOT THREAD SAFE! NOT RE-ENTRANT SAFE!
-  private static final MeasureOutput MEASURE_OUTPUT = new MeasureOutput();
-
   public static interface MeasureFunction {
 
     /**
@@ -114,22 +110,22 @@ public class CSSNode {
     return mMeasureFunction != null;
   }
 
-  /*package*/ MeasureOutput measure(float width) {
+  /*package*/ MeasureOutput measure(MeasureOutput measureOutput, float width) {
     if (!isMeasureDefined()) {
       throw new RuntimeException("Measure function isn't defined!");
     }
-    MEASURE_OUTPUT.height = CSSConstants.UNDEFINED;
-    MEASURE_OUTPUT.width = CSSConstants.UNDEFINED;
-    Assertions.assertNotNull(mMeasureFunction).measure(this, width, MEASURE_OUTPUT);
-    return MEASURE_OUTPUT;
+    measureOutput.height = CSSConstants.UNDEFINED;
+    measureOutput.width = CSSConstants.UNDEFINED;
+    Assertions.assertNotNull(mMeasureFunction).measure(this, width, measureOutput);
+    return measureOutput;
   }
 
   /**
    * Performs the actual layout and saves the results in {@link #layout}
    */
-  public void calculateLayout() {
+  public void calculateLayout(CSSLayoutContext layoutContext) {
     layout.resetResult();
-    LayoutEngine.layoutNode(this, CSSConstants.UNDEFINED);
+    LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED);
   }
 
   /**
