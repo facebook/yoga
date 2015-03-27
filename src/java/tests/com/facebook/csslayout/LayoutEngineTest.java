@@ -50,7 +50,8 @@ public class LayoutEngineTest {
   }
 
   private static void test(String message, CSSNode style, CSSNode expectedLayout) {
-    style.calculateLayout();
+    CSSLayoutContext layoutContext = new CSSLayoutContext();
+    style.calculateLayout(layoutContext);
     assertLayoutsEqual(message, style, expectedLayout);
   }
 

@@ -278,6 +278,7 @@ var computeLayout = (function() {
       if (isRowUndefined || isColumnUndefined) {
         var/*css_dim_t*/ measureDim = node.style.measure(
           /*(c)!node->context,*/
+          /*(java)!layoutContext.measureOutput,*/
           width
         );
         if (isRowUndefined) {
@@ -397,7 +398,7 @@ var computeLayout = (function() {
 
           // This is the main recursive call. We layout non flexible children.
           if (alreadyComputedNextLayout === 0) {
-            layoutNode(child, maxWidth);
+            layoutNode(/*(java)!layoutContext, */child, maxWidth);
           }
 
           // Absolute positioned elements do not take part of the layout, so we
@@ -472,7 +473,7 @@ var computeLayout = (function() {
             }
 
             // And we recursively call the layout algorithm for this child
-            layoutNode(child, maxWidth);
+            layoutNode(/*(java)!layoutContext, */child, maxWidth);
           }
         }
 

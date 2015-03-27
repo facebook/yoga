@@ -261,13 +261,16 @@ public class LayoutEngine {
         !FloatUtil.floatsEqual(node.lastLayout.parentMaxWidth, parentMaxWidth);
   }
 
-  /*package*/ static void layoutNode(CSSNode node, float parentMaxWidth) {
+  /*package*/ static void layoutNode(
+      CSSLayoutContext layoutContext,
+      CSSNode node,
+      float parentMaxWidth) {
     if (needsRelayout(node, parentMaxWidth)) {
       node.lastLayout.requestedWidth = node.layout.width;
       node.lastLayout.requestedHeight = node.layout.height;
       node.lastLayout.parentMaxWidth = parentMaxWidth;
 
-      layoutNodeImpl(node, parentMaxWidth);
+      layoutNodeImpl(layoutContext, node, parentMaxWidth);
       node.lastLayout.copy(node.layout);
     } else {
       node.layout.copy(node.lastLayout);
@@ -276,7 +279,10 @@ public class LayoutEngine {
     node.markHasNewLayout();
   }
 
-  private static void layoutNodeImpl(CSSNode node, float parentMaxWidth) {
+  private static void layoutNodeImpl(
+      CSSLayoutContext layoutContext,
+      CSSNode node,
+      float parentMaxWidth) {
 
     for (int i = 0; i < node.getChildCount(); i++) {
       node.getChildAt(i).layout.resetResult();
@@ -324,7 +330,8 @@ public class LayoutEngine {
       // Let's not measure the text if we already know both dimensions
       if (isRowUndefined || isColumnUndefined) {
         MeasureOutput measureDim = node.measure(
-                    width
+                    layoutContext.measureOutput,
+          width
         );
         if (isRowUndefined) {
           node.layout.width = measureDim.width +
@@ -443,7 +450,7 @@ public class LayoutEngine {
   
           // This is the main recursive call. We layout non flexible children.
           if (alreadyComputedNextLayout == 0) {
-            layoutNode(child, maxWidth);
+            layoutNode(layoutContext, child, maxWidth);
           }
   
           // Absolute positioned elements do not take part of the layout, so we
@@ -518,7 +525,7 @@ public class LayoutEngine {
             }
   
             // And we recursively call the layout algorithm for this child
-            layoutNode(child, maxWidth);
+            layoutNode(layoutContext, child, maxWidth);
           }
         }
   
