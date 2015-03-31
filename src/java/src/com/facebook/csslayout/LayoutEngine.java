@@ -524,8 +524,9 @@ public class LayoutEngine {
         float baseMainDim;
         float boundMainDim;
   
-        // Iterate over every child. If the flex share of remaining space doesn't
-        // meet min/max bounds, remove this child from flex calculations.
+        // Iterate over every child in the axis. If the flex share of remaining
+        // space doesn't meet min/max bounds, remove this child from flex
+        // calculations.
         for (i = startLine; i < endLine; ++i) {
           child = node.getChildAt(i);
           if (isFlex(child)) {
@@ -554,15 +555,9 @@ public class LayoutEngine {
           if (isFlex(child)) {
             // At this point we know the final size of the element in the main
             // dimension
-            baseMainDim = flexibleMainDim * getFlex(child) +
-                getPaddingAndBorderAxis(child, mainAxis);
-            boundMainDim = boundAxis(child, mainAxis, baseMainDim);
-  
-            if (baseMainDim == boundMainDim) {
-              setLayoutDimension(child, getDim(mainAxis), baseMainDim);
-            } else {
-              setLayoutDimension(child, getDim(mainAxis), boundMainDim);
-            }
+            setLayoutDimension(child, getDim(mainAxis), boundAxis(child, mainAxis,
+              flexibleMainDim * getFlex(child) + getPaddingAndBorderAxis(child, mainAxis)
+            ));
   
             maxWidth = CSSConstants.UNDEFINED;
             if (isDimDefined(node, CSSFlexDirection.ROW)) {

@@ -501,15 +501,9 @@ var computeLayout = (function() {
           if (isFlex(child)) {
             // At this point we know the final size of the element in the main
             // dimension
-            baseMainDim = flexibleMainDim * getFlex(child) +
-                getPaddingAndBorderAxis(child, mainAxis);
-            boundMainDim = boundAxis(child, mainAxis, baseMainDim);
-
-            if (baseMainDim === boundMainDim) {
-              child.layout[dim[mainAxis]] = baseMainDim;
-            } else {
-              child.layout[dim[mainAxis]] = boundMainDim;
-            }
+            child.layout[dim[mainAxis]] = boundAxis(child, mainAxis,
+              flexibleMainDim * getFlex(child) + getPaddingAndBorderAxis(child, mainAxis)
+            );
 
             maxWidth = CSS_UNDEFINED;
             if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {

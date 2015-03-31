@@ -579,8 +579,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       float baseMainDim;
       float boundMainDim;
 
-      // Iterate over every child-> If the flex share of remaining space doesn't
-      // meet min/max bounds, remove this child from flex calculations.
+      // Iterate over every child in the axis. If the flex share of remaining
+      // space doesn't meet min/max bounds, remove this child from flex
+      // calculations.
       for (i = startLine; i < endLine; ++i) {
         child = node->get_child(node->context, i);
         if (isFlex(child)) {
@@ -609,15 +610,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         if (isFlex(child)) {
           // At this point we know the final size of the element in the main
           // dimension
-          baseMainDim = flexibleMainDim * getFlex(child) +
-              getPaddingAndBorderAxis(child, mainAxis);
-          boundMainDim = boundAxis(child, mainAxis, baseMainDim);
-
-          if (baseMainDim == boundMainDim) {
-            child->layout.dimensions[dim[mainAxis]] = baseMainDim;
-          } else {
-            child->layout.dimensions[dim[mainAxis]] = boundMainDim;
-          }
+          child->layout.dimensions[dim[mainAxis]] = boundAxis(child, mainAxis,
+            flexibleMainDim * getFlex(child) + getPaddingAndBorderAxis(child, mainAxis)
+          );
 
           maxWidth = CSS_UNDEFINED;
           if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
