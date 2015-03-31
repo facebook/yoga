@@ -102,6 +102,8 @@ typedef struct {
   float padding[4];
   float border[4];
   float dimensions[2];
+  float minDimensions[2];
+  float maxDimensions[2];
 } css_style_t;
 
 typedef struct css_node {

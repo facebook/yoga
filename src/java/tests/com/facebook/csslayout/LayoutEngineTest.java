@@ -4033,5 +4033,864 @@ public class LayoutEngineTest {
 
     test("should layout flex wrap with a line bigger than container", root_node, root_layout);
   }
+
+  @Test
+  public void testCase95()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 100;
+      node_0.style.height = 200;
+      node_0.style.maxWidth = 90;
+      node_0.style.maxHeight = 190;
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 90;
+      node_0.layout.height = 190;
+    }
+
+    test("should use max bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase96()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 100;
+      node_0.style.height = 200;
+      node_0.style.minWidth = 110;
+      node_0.style.minHeight = 210;
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 110;
+      node_0.layout.height = 210;
+    }
+
+    test("should use min bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase97()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 100;
+      node_0.style.height = 200;
+      node_0.style.maxWidth = 90;
+      node_0.style.maxHeight = 190;
+      node_0.style.minWidth = 110;
+      node_0.style.minHeight = 210;
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 110;
+      node_0.layout.height = 210;
+    }
+
+    test("should use min bounds over max bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase98()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 100;
+      node_0.style.height = 200;
+      node_0.style.maxWidth = 80;
+      node_0.style.maxHeight = 180;
+      node_0.style.minWidth = 90;
+      node_0.style.minHeight = 190;
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 90;
+      node_0.layout.height = 190;
+    }
+
+    test("should use min bounds over max bounds and natural width", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase99()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 100;
+      node_0.style.height = 200;
+      node_0.style.minWidth = -10;
+      node_0.style.minHeight = -20;
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 100;
+      node_0.layout.height = 200;
+    }
+
+    test("should ignore negative min bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase100()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 100;
+      node_0.style.height = 200;
+      node_0.style.maxWidth = -10;
+      node_0.style.maxHeight = -20;
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 100;
+      node_0.layout.height = 200;
+    }
+
+    test("should ignore negative max bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase101()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.maxWidth = 30;
+      node_0.style.maxHeight = 10;
+      node_0.style.padding[Spacing.LEFT] = 20;
+      node_0.style.padding[Spacing.TOP] = 15;
+      node_0.style.padding[Spacing.RIGHT] = 20;
+      node_0.style.padding[Spacing.BOTTOM] = 15;
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 40;
+      node_0.layout.height = 30;
+    }
+
+    test("should use padded size over max bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase102()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.minWidth = 50;
+      node_0.style.minHeight = 40;
+      node_0.style.padding[Spacing.LEFT] = 20;
+      node_0.style.padding[Spacing.TOP] = 15;
+      node_0.style.padding[Spacing.RIGHT] = 20;
+      node_0.style.padding[Spacing.BOTTOM] = 15;
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 50;
+      node_0.layout.height = 40;
+    }
+
+    test("should use min size over padded size", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase103()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.width = 300;
+      node_0.style.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = 1;
+        node_1.style.minWidth = 200;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.flex = 1;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 50;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 0;
+        node_1.layout.x = 50;
+        node_1.layout.width = 200;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.y = 0;
+        node_1.layout.x = 250;
+        node_1.layout.width = 50;
+        node_1.layout.height = 200;
+      }
+    }
+
+    test("should override flex direction size with min bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase104()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.width = 300;
+      node_0.style.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = 1;
+        node_1.style.maxWidth = 110;
+        node_1.style.minWidth = 90;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.flex = 1;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 100;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 0;
+        node_1.layout.x = 100;
+        node_1.layout.width = 100;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.y = 0;
+        node_1.layout.x = 200;
+        node_1.layout.width = 100;
+        node_1.layout.height = 200;
+      }
+    }
+
+    test("should not override flex direction size within bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase105()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.width = 300;
+      node_0.style.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = 1;
+        node_1.style.maxWidth = 60;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.flex = 1;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 120;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 0;
+        node_1.layout.x = 120;
+        node_1.layout.width = 60;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.y = 0;
+        node_1.layout.x = 180;
+        node_1.layout.width = 120;
+        node_1.layout.height = 200;
+      }
+    }
+
+    test("should override flex direction size with max bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase106()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 300;
+      node_0.style.height = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1.style.maxWidth = 310;
+        node_1.style.minWidth = 290;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 300;
+        node_1.layout.height = 200;
+      }
+    }
+
+    test("should pre-fill child size within bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase107()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 300;
+      node_0.style.height = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1.style.maxWidth = 290;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 290;
+        node_1.layout.height = 200;
+      }
+    }
+
+    test("should pre-fill child size within max bound", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase108()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 300;
+      node_0.style.height = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1.style.minWidth = 310;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 310;
+        node_1.layout.height = 200;
+      }
+    }
+
+    test("should pre-fill child size within min bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase109()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.maxWidth = 300;
+      node_0.style.maxHeight = 700;
+      node_0.style.minWidth = 100;
+      node_0.style.minHeight = 500;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.width = 200;
+        node_1.style.height = 300;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.width = 200;
+        node_1.style.height = 300;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 600;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 200;
+        node_1.layout.height = 300;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 300;
+        node_1.layout.x = 0;
+        node_1.layout.width = 200;
+        node_1.layout.height = 300;
+      }
+    }
+
+    test("should set parents size based on bounded children", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase110()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.maxWidth = 100;
+      node_0.style.maxHeight = 500;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.width = 200;
+        node_1.style.height = 300;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.width = 200;
+        node_1.style.height = 300;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 100;
+      node_0.layout.height = 500;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 200;
+        node_1.layout.height = 300;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 300;
+        node_1.layout.x = 0;
+        node_1.layout.width = 200;
+        node_1.layout.height = 300;
+      }
+    }
+
+    test("should set parents size based on max bounded children", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase111()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.minWidth = 300;
+      node_0.style.minHeight = 700;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.width = 200;
+        node_1.style.height = 300;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.width = 200;
+        node_1.style.height = 300;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 700;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 200;
+        node_1.layout.height = 300;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 300;
+        node_1.layout.x = 0;
+        node_1.layout.width = 200;
+        node_1.layout.height = 300;
+      }
+    }
+
+    test("should set parents size based on min bounded children", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase112()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.alignItems = CSSAlign.STRETCH;
+      node_0.style.width = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 100;
+        node_1.style.maxWidth = 1100;
+        node_1.style.maxHeight = 110;
+        node_1.style.minWidth = 900;
+        node_1.style.minHeight = 90;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 1000;
+      node_0.layout.height = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 1000;
+        node_1.layout.height = 100;
+      }
+    }
+
+    test("should keep stretched size within bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase113()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.alignItems = CSSAlign.STRETCH;
+      node_0.style.width = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 100;
+        node_1.style.maxWidth = 900;
+        node_1.style.maxHeight = 90;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 1000;
+      node_0.layout.height = 90;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 900;
+        node_1.layout.height = 90;
+      }
+    }
+
+    test("should keep stretched size within max bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase114()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.alignItems = CSSAlign.STRETCH;
+      node_0.style.width = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 100;
+        node_1.style.minWidth = 1100;
+        node_1.style.minHeight = 110;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 1000;
+      node_0.layout.height = 110;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 1100;
+        node_1.layout.height = 110;
+      }
+    }
+
+    test("should keep stretched size within min bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase115()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.width = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 100;
+        node_1.style.minWidth = 100;
+        node_1.style.minHeight = 110;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 1000;
+      node_0.layout.height = 110;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 100;
+        node_1.layout.height = 110;
+      }
+    }
+
+    test("should keep cross axis size within min bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase116()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 1000;
+      node_0.style.height = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.positionType = CSSPositionType.ABSOLUTE;
+        node_1.style.maxWidth = 500;
+        node_1.style.maxHeight = 600;
+        node_1.style.positionLeft = 100;
+        node_1.style.positionTop = 100;
+        node_1.style.positionRight = 100;
+        node_1.style.positionBottom = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 1000;
+      node_0.layout.height = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 100;
+        node_1.layout.x = 100;
+        node_1.layout.width = 500;
+        node_1.layout.height = 600;
+      }
+    }
+
+    test("should layout node with position absolute, top and left and max bounds", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase117()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 1000;
+      node_0.style.height = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.positionType = CSSPositionType.ABSOLUTE;
+        node_1.style.minWidth = 900;
+        node_1.style.minHeight = 1000;
+        node_1.style.positionLeft = 100;
+        node_1.style.positionTop = 100;
+        node_1.style.positionRight = 100;
+        node_1.style.positionBottom = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 1000;
+      node_0.layout.height = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 100;
+        node_1.layout.x = 100;
+        node_1.layout.width = 900;
+        node_1.layout.height = 1000;
+      }
+    }
+
+    test("should layout node with position absolute, top and left and min bounds", root_node, root_layout);
+  }
   /** END_GENERATED **/
 }

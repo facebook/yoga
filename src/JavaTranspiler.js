@@ -50,6 +50,16 @@ function __transpileSingleTestToJava(code) {
         function (str, match1, match2) {
             return match1 + '.' + match2.toLowerCase();
         })
+    .replace( // style.maxDimensions[CSS_WIDTH] => style.maxWidth
+        /(style|layout)\.maxDimensions\[CSS_(WIDTH|HEIGHT)\]/g,
+        function (str, match1, match2) {
+            return match1 + '.max' + match2.substr(0, 1).toUpperCase() + match2.substr(1).toLowerCase();
+        })
+    .replace( // style.minDimensions[CSS_WIDTH] => style.minWidth
+        /(style|layout)\.minDimensions\[CSS_(WIDTH|HEIGHT)\]/g,
+        function (str, match1, match2) {
+            return match1 + '.min' + match2.substr(0, 1).toUpperCase() + match2.substr(1).toLowerCase();
+        })
     .replace( // layout.position[CSS_TOP] => layout.y
         /layout\.position\[CSS_(TOP|LEFT)\]/g,
         function (str, match1) {

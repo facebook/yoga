@@ -32,4 +32,10 @@ public class CSSStyle {
 
   public float width = CSSConstants.UNDEFINED;
   public float height = CSSConstants.UNDEFINED;
+
+  public float minWidth = CSSConstants.UNDEFINED;
+  public float minHeight = CSSConstants.UNDEFINED;
+
+  public float maxWidth = CSSConstants.UNDEFINED;
+  public float maxHeight = CSSConstants.UNDEFINED;
 }
