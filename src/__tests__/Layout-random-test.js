@@ -49,6 +49,10 @@ describe('Random layout', function() {
     var node = {style: {}};
     randMinMax(node, 0.5, 'width', -100, 1000);
     randMinMax(node, 0.5, 'height', -100, 1000);
+    randMinMax(node, 0.5, 'minWidth', -100, 1000);
+    randMinMax(node, 0.5, 'minHeight', -100, 1000);
+    randMinMax(node, 0.5, 'maxWidth', -100, 1000);
+    randMinMax(node, 0.5, 'maxHeight', -100, 1000);
     randMinMax(node, 0.5, 'top', -10, 10);
     randMinMax(node, 0.5, 'left', -10, 10);
     randMinMax(node, 0.5, 'right', -10, 10);

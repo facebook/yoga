@@ -172,6 +172,10 @@ var layoutTestUtils = (function() {
       var div = document.createElement('div');
       transfer(div, node, 'width', 'px');
       transfer(div, node, 'height', 'px');
+      transfer(div, node, 'minWidth', 'px');
+      transfer(div, node, 'minHeight', 'px');
+      transfer(div, node, 'maxWidth', 'px');
+      transfer(div, node, 'maxHeight', 'px');
       transfer(div, node, 'top', 'px');
       transfer(div, node, 'left', 'px');
       transfer(div, node, 'right', 'px');

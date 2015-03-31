@@ -33,6 +33,12 @@ void init_css_node(css_node_t *node) {
   node->style.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
   node->style.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
 
+  node->style.minDimensions[CSS_WIDTH] = CSS_UNDEFINED;
+  node->style.minDimensions[CSS_HEIGHT] = CSS_UNDEFINED;
+
+  node->style.maxDimensions[CSS_WIDTH] = CSS_UNDEFINED;
+  node->style.maxDimensions[CSS_HEIGHT] = CSS_UNDEFINED;
+
   node->style.position[CSS_LEFT] = CSS_UNDEFINED;
   node->style.position[CSS_TOP] = CSS_UNDEFINED;
   node->style.position[CSS_RIGHT] = CSS_UNDEFINED;
@@ -307,6 +313,30 @@ static float getPosition(css_node_t *node, css_position_t position) {
   return 0;
 }
 
+static float boundAxis(css_node_t *node, css_flex_direction_t axis, float value) {
+  float min = CSS_UNDEFINED;
+  float max = CSS_UNDEFINED;
+
+  if (axis == CSS_FLEX_DIRECTION_COLUMN) {
+    min = node->style.minDimensions[CSS_HEIGHT];
+    max = node->style.maxDimensions[CSS_HEIGHT];
+  } else if (axis == CSS_FLEX_DIRECTION_ROW) {
+    min = node->style.minDimensions[CSS_WIDTH];
+    max = node->style.maxDimensions[CSS_WIDTH];
+  }
+
+  float boundValue = value;
+
+  if (!isUndefined(max) && max >= 0.0 && boundValue > max) {
+    boundValue = max;
+  }
+  if (!isUndefined(min) && min >= 0.0 && boundValue < min) {
+    boundValue = min;
+  }
+
+  return boundValue;
+}
+
 // When the user specifically sets a value for width or height
 static void setDimensionFromStyle(css_node_t *node, css_flex_direction_t axis) {
   // The parent already computed us a width or height. We just skip it
@@ -320,7 +350,7 @@ static void setDimensionFromStyle(css_node_t *node, css_flex_direction_t axis) {
 
   // The dimensions can never be smaller than the padding and border
   node->layout.dimensions[dim[axis]] = fmaxf(
-    node->style.dimensions[dim[axis]],
+    boundAxis(node, axis, node->style.dimensions[dim[axis]]),
     getPaddingAndBorderAxis(node, axis)
   );
 }
@@ -408,9 +438,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         !isUndefined(node->layout.dimensions[dim[crossAxis]]) &&
         !isDimDefined(child, crossAxis)) {
       child->layout.dimensions[dim[crossAxis]] = fmaxf(
-        node->layout.dimensions[dim[crossAxis]] -
+        boundAxis(child, crossAxis, node->layout.dimensions[dim[crossAxis]] -
           getPaddingAndBorderAxis(node, crossAxis) -
-          getMarginAxis(child, crossAxis),
+          getMarginAxis(child, crossAxis)),
         // You never want to go smaller than padding
         getPaddingAndBorderAxis(child, crossAxis)
       );
@@ -424,11 +454,11 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
             isPosDefined(child, leading[axis]) &&
             isPosDefined(child, trailing[axis])) {
           child->layout.dimensions[dim[axis]] = fmaxf(
-            node->layout.dimensions[dim[axis]] -
-            getPaddingAndBorderAxis(node, axis) -
-            getMarginAxis(child, axis) -
-            getPosition(child, leading[axis]) -
-            getPosition(child, trailing[axis]),
+            boundAxis(child, axis, node->layout.dimensions[dim[axis]] -
+              getPaddingAndBorderAxis(node, axis) -
+              getMarginAxis(child, axis) -
+              getPosition(child, leading[axis]) -
+              getPosition(child, trailing[axis])),
             // You never want to go smaller than padding
             getPaddingAndBorderAxis(child, axis)
           );
@@ -478,8 +508,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         totalFlexible += getFlex(child);
 
         // Even if we don't know its exact size yet, we already know the padding,
-        // border and margin. We'll use this partial information to compute the
-        // remaining space.
+        // border and margin. We'll use this partial information, which represents
+        // the smallest possible size for the child, to compute the remaining
+        // available space.
         nextContentDim = getPaddingAndBorderAxis(child, mainAxis) +
           getMarginAxis(child, mainAxis);
 
@@ -545,6 +576,26 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     // remaining space
     if (flexibleChildrenCount != 0) {
       float flexibleMainDim = remainingMainDim / totalFlexible;
+      float baseMainDim;
+      float boundMainDim;
+
+      // Iterate over every child in the axis. If the flex share of remaining
+      // space doesn't meet min/max bounds, remove this child from flex
+      // calculations.
+      for (i = startLine; i < endLine; ++i) {
+        child = node->get_child(node->context, i);
+        if (isFlex(child)) {
+          baseMainDim = flexibleMainDim * getFlex(child) +
+              getPaddingAndBorderAxis(child, mainAxis);
+          boundMainDim = boundAxis(child, mainAxis, baseMainDim);
+
+          if (baseMainDim != boundMainDim) {
+            remainingMainDim -= boundMainDim;
+            totalFlexible -= getFlex(child);
+          }
+        }
+      }
+      flexibleMainDim = remainingMainDim / totalFlexible;
 
       // The non flexible children can overflow the container, in this case
       // we should just assume that there is no space available.
@@ -559,8 +610,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         if (isFlex(child)) {
           // At this point we know the final size of the element in the main
           // dimension
-          child->layout.dimensions[dim[mainAxis]] = flexibleMainDim * getFlex(child) +
-            getPaddingAndBorderAxis(child, mainAxis);
+          child->layout.dimensions[dim[mainAxis]] = boundAxis(child, mainAxis,
+            flexibleMainDim * getFlex(child) + getPaddingAndBorderAxis(child, mainAxis)
+          );
 
           maxWidth = CSS_UNDEFINED;
           if (isDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
@@ -637,7 +689,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         mainDim += betweenMainDim + getDimWithMargin(child, mainAxis);
         // The cross dimension is the max of the elements dimension since there
         // can only be one element in that cross dimension.
-        crossDim = fmaxf(crossDim, getDimWithMargin(child, crossAxis));
+        crossDim = fmaxf(crossDim, boundAxis(child, crossAxis, getDimWithMargin(child, crossAxis)));
       }
     }
 
@@ -648,7 +700,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       containerMainAxis = fmaxf(
         // We're missing the last padding at this point to get the final
         // dimension
-        mainDim + getPaddingAndBorder(node, trailing[mainAxis]),
+        boundAxis(node, mainAxis, mainDim + getPaddingAndBorder(node, trailing[mainAxis])),
         // We can never assign a width smaller than the padding and borders
         getPaddingAndBorderAxis(node, mainAxis)
       );
@@ -660,7 +712,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         // For the cross dim, we add both sides at the end because the value
         // is aggregate via a max function. Intermediate negative values
         // can mess this computation otherwise
-        crossDim + getPaddingAndBorderAxis(node, crossAxis),
+        boundAxis(node, crossAxis, crossDim + getPaddingAndBorderAxis(node, crossAxis)),
         getPaddingAndBorderAxis(node, crossAxis)
       );
     }
@@ -691,9 +743,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
             // previously.
             if (!isDimDefined(child, crossAxis)) {
               child->layout.dimensions[dim[crossAxis]] = fmaxf(
-                containerCrossAxis -
+                boundAxis(child, crossAxis, containerCrossAxis -
                   getPaddingAndBorderAxis(node, crossAxis) -
-                  getMarginAxis(child, crossAxis),
+                  getMarginAxis(child, crossAxis)),
                 // You never want to go smaller than padding
                 getPaddingAndBorderAxis(child, crossAxis)
               );
@@ -729,7 +781,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     node->layout.dimensions[dim[mainAxis]] = fmaxf(
       // We're missing the last padding at this point to get the final
       // dimension
-      linesMainDim + getPaddingAndBorder(node, trailing[mainAxis]),
+      boundAxis(node, mainAxis, linesMainDim + getPaddingAndBorder(node, trailing[mainAxis])),
       // We can never assign a width smaller than the padding and borders
       getPaddingAndBorderAxis(node, mainAxis)
     );
@@ -740,7 +792,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       // For the cross dim, we add both sides at the end because the value
       // is aggregate via a max function. Intermediate negative values
       // can mess this computation otherwise
-      linesCrossDim + getPaddingAndBorderAxis(node, crossAxis),
+      boundAxis(node, crossAxis, linesCrossDim + getPaddingAndBorderAxis(node, crossAxis)),
       getPaddingAndBorderAxis(node, crossAxis)
     );
   }
@@ -759,11 +811,12 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
             isPosDefined(child, leading[axis]) &&
             isPosDefined(child, trailing[axis])) {
           child->layout.dimensions[dim[axis]] = fmaxf(
-            node->layout.dimensions[dim[axis]] -
-            getPaddingAndBorderAxis(node, axis) -
-            getMarginAxis(child, axis) -
-            getPosition(child, leading[axis]) -
-            getPosition(child, trailing[axis]),
+            boundAxis(child, axis, node->layout.dimensions[dim[axis]] -
+              getPaddingAndBorderAxis(node, axis) -
+              getMarginAxis(child, axis) -
+              getPosition(child, leading[axis]) -
+              getPosition(child, trailing[axis])
+            ),
             // You never want to go smaller than padding
             getPaddingAndBorderAxis(child, axis)
           );

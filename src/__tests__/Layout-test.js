@@ -1244,4 +1244,243 @@ describe('Layout', function() {
     );
   });
 
+  it('should use max bounds', function() {
+    testLayout(
+      {style: {width: 100, height: 200, maxWidth: 90, maxHeight: 190}},
+      {width: 90, height: 190, top: 0, left: 0}
+    );
+  });
+
+  it('should use min bounds', function() {
+    testLayout(
+      {style: {width: 100, height: 200, minWidth: 110, minHeight: 210}},
+      {width: 110, height: 210, top: 0, left: 0}
+    );
+  });
+
+  it('should use min bounds over max bounds', function() {
+    testLayout(
+      {style: {width: 100, height: 200, minWidth: 110, maxWidth: 90, minHeight: 210, maxHeight: 190}},
+      {width: 110, height: 210, top: 0, left: 0}
+    );
+  });
+
+  it('should use min bounds over max bounds and natural width', function() {
+    testLayout(
+      {style: {width: 100, height: 200, minWidth: 90, maxWidth: 80, minHeight: 190, maxHeight: 180}},
+      {width: 90, height: 190, top: 0, left: 0}
+    );
+  });
+
+  it('should ignore negative min bounds', function() {
+    testLayout(
+      {style: {width: 100, height: 200, minWidth: -10, minHeight: -20}},
+      {width: 100, height: 200, top: 0, left: 0}
+    );
+  });
+
+  it('should ignore negative max bounds', function() {
+    testLayout(
+      {style: {width: 100, height: 200, maxWidth: -10, maxHeight: -20}},
+      {width: 100, height: 200, top: 0, left: 0}
+    );
+  });
+
+  it('should use padded size over max bounds', function() {
+    testLayout(
+      {style: {paddingTop: 15, paddingBottom: 15, paddingLeft: 20, paddingRight: 20, maxWidth: 30, maxHeight: 10}},
+      {width: 40, height: 30, top: 0, left: 0}
+    );
+  });
+
+  it('should use min size over padded size', function() {
+    testLayout(
+      {style: {paddingTop: 15, paddingBottom: 15, paddingLeft: 20, paddingRight: 20, minWidth: 50, minHeight: 40}},
+      {width: 50, height: 40, top: 0, left: 0}
+    );
+  });
+
+  it('should override flex direction size with min bounds', function() {
+    testLayout(
+      {style: {width: 300, height: 200, flexDirection:'row'}, children: [
+        {style: {flex: 1}},
+        {style: {flex: 1, minWidth: 200}},
+        {style: {flex: 1}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 50, height: 200, top: 0, left: 0},
+        {width: 200, height: 200, top: 0, left: 50},
+        {width: 50, height: 200, top: 0, left: 250}
+      ]}
+    );
+  });
+
+  it('should not override flex direction size within bounds', function() {
+    testLayout(
+      {style: {width: 300, height: 200, flexDirection:'row'}, children: [
+        {style: {flex: 1}},
+        {style: {flex: 1, minWidth: 90, maxWidth: 110}},
+        {style: {flex: 1}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 100, height: 200, top: 0, left: 0},
+        {width: 100, height: 200, top: 0, left: 100},
+        {width: 100, height: 200, top: 0, left: 200}
+      ]}
+    );
+  });
+
+  it('should override flex direction size with max bounds', function() {
+    testLayout(
+      {style: {width: 300, height: 200, flexDirection:'row'}, children: [
+        {style: {flex: 1}},
+        {style: {flex: 1, maxWidth: 60}},
+        {style: {flex: 1}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 120, height: 200, top: 0, left: 0},
+        {width: 60, height: 200, top: 0, left: 120},
+        {width: 120, height: 200, top: 0, left: 180}
+      ]}
+    );
+  });
+
+  it('should pre-fill child size within bounds', function() {
+    testLayout(
+      {style: {width: 300, height: 200}, children: [
+        {style: {flex: 1, minWidth: 290, maxWidth: 310}},
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 300, height: 200, top: 0, left: 0},
+      ]}
+    );
+  });
+
+  it('should pre-fill child size within max bound', function() {
+    testLayout(
+      {style: {width: 300, height: 200}, children: [
+        {style: {flex: 1, maxWidth: 290}},
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 290, height: 200, top: 0, left: 0},
+      ]}
+    );
+  });
+
+  it('should pre-fill child size within min bounds', function() {
+    testLayout(
+      {style: {width: 300, height: 200}, children: [
+        {style: {flex: 1, minWidth: 310}},
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 310, height: 200, top: 0, left: 0},
+      ]}
+    );
+  });
+
+  it('should set parents size based on bounded children', function() {
+    testLayout(
+      {style: {minWidth: 100, maxWidth: 300, minHeight: 500, maxHeight: 700}, children: [
+        {style: {width: 200, height: 300}},
+        {style: {width: 200, height: 300}},
+      ]},
+      {width: 200, height: 600, top: 0, left: 0, children: [
+        {width: 200, height: 300, top: 0, left: 0},
+        {width: 200, height: 300, top: 300, left: 0},
+      ]}
+    );
+  });
+
+  it('should set parents size based on max bounded children', function() {
+    testLayout(
+      {style: {maxWidth: 100, maxHeight: 500}, children: [
+        {style: {width: 200, height: 300}},
+        {style: {width: 200, height: 300}},
+      ]},
+      {width: 100, height: 500, top: 0, left: 0, children: [
+        {width: 200, height: 300, top: 0, left: 0},
+        {width: 200, height: 300, top: 300, left: 0},
+      ]}
+    );
+  });
+
+  it('should set parents size based on min bounded children', function() {
+    testLayout(
+      {style: {minWidth: 300, minHeight: 700}, children: [
+        {style: {width: 200, height: 300}},
+        {style: {width: 200, height: 300}},
+      ]},
+      {width: 300, height: 700, top: 0, left: 0, children: [
+        {width: 200, height: 300, top: 0, left: 0},
+        {width: 200, height: 300, top: 300, left: 0},
+      ]}
+    );
+  });
+
+  it('should keep stretched size within bounds', function() {
+    testLayout(
+      {style: {width: 1000, alignItems: 'stretch'}, children: [
+        {style: {height: 100, minHeight: 90, maxHeight: 110, minWidth: 900, maxWidth: 1100}}
+      ]},
+      {width: 1000, height: 100, top: 0, left: 0, children: [
+        {width: 1000, height: 100, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should keep stretched size within max bounds', function() {
+    testLayout(
+      {style: {width: 1000, alignItems: 'stretch'}, children: [
+        {style: {height: 100, maxHeight: 90, maxWidth: 900}}
+      ]},
+      {width: 1000, height: 90, top: 0, left: 0, children: [
+        {width: 900, height: 90, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should keep stretched size within min bounds', function() {
+    testLayout(
+      {style: {width: 1000, alignItems: 'stretch'}, children: [
+        {style: {height: 100, minHeight: 110, minWidth: 1100}}
+      ]},
+      {width: 1000, height: 110, top: 0, left: 0, children: [
+        {width: 1100, height: 110, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should keep cross axis size within min bounds', function() {
+    testLayout(
+      {style: {width: 1000, flexDirection: 'row'}, children: [
+        {style: {height: 100, minHeight: 110, minWidth: 100}}
+      ]},
+      {width: 1000, height: 110, top: 0, left: 0, children: [
+        {width: 100, height: 110, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout node with position absolute, top and left and max bounds', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000}, children: [
+        {style: {position: 'absolute', top: 100, left: 100, bottom: 100, right: 100, maxWidth: 500, maxHeight: 600}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 500, height: 600, top: 100, left: 100},
+      ]}
+    );
+  });
+
+  it('should layout node with position absolute, top and left and min bounds', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000}, children: [
+        {style: {position: 'absolute', top: 100, left: 100, bottom: 100, right: 100, minWidth: 900, minHeight: 1000}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 900, height: 1000, top: 100, left: 100},
+      ]}
+    );
+  });
+
 });

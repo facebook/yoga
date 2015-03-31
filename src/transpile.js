@@ -145,6 +145,10 @@ function printLayout(test) {
     addFloat(node, 'flex', 'flex');
     addFloat(node, 'width', 'dimensions[CSS_WIDTH]');
     addFloat(node, 'height', 'dimensions[CSS_HEIGHT]');
+    addFloat(node, 'maxWidth', 'maxDimensions[CSS_WIDTH]');
+    addFloat(node, 'maxHeight', 'maxDimensions[CSS_HEIGHT]');
+    addFloat(node, 'minWidth', 'minDimensions[CSS_WIDTH]');
+    addFloat(node, 'minHeight', 'minDimensions[CSS_HEIGHT]');
     addSpacing(node, 'margin', '');
     addSpacing(node, 'padding', '');
     addSpacing(node, 'border', 'Width');
@@ -223,6 +227,10 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/\.children\.length/g, '.children_count')
     .replace(/\.width/g, '.dimensions[CSS_WIDTH]')
     .replace(/\.height/g, '.dimensions[CSS_HEIGHT]')
+    .replace(/\.maxWidth/g, '.maxDimensions[CSS_WIDTH]')
+    .replace(/\.maxHeight/g, '.maxDimensions[CSS_HEIGHT]')
+    .replace(/\.minWidth/g, '.minDimensions[CSS_WIDTH]')
+    .replace(/\.minHeight/g, '.minDimensions[CSS_HEIGHT]')
     .replace(/layout\[dim/g, 'layout.dimensions[dim')
     .replace(/layout\[pos/g, 'layout.position[pos')
     .replace(/layout\[leading/g, 'layout.position[leading')

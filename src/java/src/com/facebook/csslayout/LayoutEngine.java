@@ -188,6 +188,30 @@ public class LayoutEngine {
         getLeading(axis)) + getPaddingAndBorder(node, getTrailing(axis));
   }
 
+  private static float boundAxis(CSSNode node, CSSFlexDirection axis, float value) {
+    float min = CSSConstants.UNDEFINED;
+    float max = CSSConstants.UNDEFINED;
+
+    if (axis == CSSFlexDirection.COLUMN) {
+      min = node.style.minHeight;
+      max = node.style.maxHeight;
+    } else if (axis == CSSFlexDirection.ROW) {
+      min = node.style.minWidth;
+      max = node.style.maxWidth;
+    }
+
+    float boundValue = value;
+
+    if (!CSSConstants.isUndefined(max) && max >= 0.0 && boundValue > max) {
+      boundValue = max;
+    }
+    if (!CSSConstants.isUndefined(min) && min >= 0.0 && boundValue < min) {
+      boundValue = min;
+    }
+
+    return boundValue;
+  }
+
   private static void setDimensionFromStyle(CSSNode node, CSSFlexDirection axis) {
     // The parent already computed us a width or height. We just skip it
     if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(axis)))) {
@@ -200,7 +224,7 @@ public class LayoutEngine {
 
     // The dimensions can never be smaller than the padding and border
     float maxLayoutDimension = Math.max(
-        getStyleDimension(node, getDim(axis)),
+        boundAxis(node, axis, getStyleDimension(node, getDim(axis))),
         getPaddingAndBorderAxis(node, axis));
     setLayoutDimension(node, getDim(axis), maxLayoutDimension);
   }
@@ -283,7 +307,6 @@ public class LayoutEngine {
       CSSLayoutContext layoutContext,
       CSSNode node,
       float parentMaxWidth) {
-
     for (int i = 0; i < node.getChildCount(); i++) {
       node.getChildAt(i).layout.resetResult();
     }
@@ -360,9 +383,9 @@ public class LayoutEngine {
           !CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis))) &&
           !isDimDefined(child, crossAxis)) {
         setLayoutDimension(child, getDim(crossAxis), Math.max(
-          getLayoutDimension(node, getDim(crossAxis)) -
+          boundAxis(child, crossAxis, getLayoutDimension(node, getDim(crossAxis)) -
             getPaddingAndBorderAxis(node, crossAxis) -
-            getMarginAxis(child, crossAxis),
+            getMarginAxis(child, crossAxis)),
           // You never want to go smaller than padding
           getPaddingAndBorderAxis(child, crossAxis)
         ));
@@ -376,11 +399,11 @@ public class LayoutEngine {
               isPosDefined(child, getLeading(axis)) &&
               isPosDefined(child, getTrailing(axis))) {
             setLayoutDimension(child, getDim(axis), Math.max(
-              getLayoutDimension(node, getDim(axis)) -
-              getPaddingAndBorderAxis(node, axis) -
-              getMarginAxis(child, axis) -
-              getPosition(child, getLeading(axis)) -
-              getPosition(child, getTrailing(axis)),
+              boundAxis(child, axis, getLayoutDimension(node, getDim(axis)) -
+                getPaddingAndBorderAxis(node, axis) -
+                getMarginAxis(child, axis) -
+                getPosition(child, getLeading(axis)) -
+                getPosition(child, getTrailing(axis))),
               // You never want to go smaller than padding
               getPaddingAndBorderAxis(child, axis)
             ));
@@ -430,8 +453,9 @@ public class LayoutEngine {
           totalFlexible = totalFlexible + getFlex(child);
   
           // Even if we don't know its exact size yet, we already know the padding,
-          // border and margin. We'll use this partial information to compute the
-          // remaining space.
+          // border and margin. We'll use this partial information, which represents
+          // the smallest possible size for the child, to compute the remaining
+          // available space.
           nextContentDim = getPaddingAndBorderAxis(child, mainAxis) +
             getMarginAxis(child, mainAxis);
   
@@ -497,6 +521,26 @@ public class LayoutEngine {
       // remaining space
       if (flexibleChildrenCount != 0) {
         float flexibleMainDim = remainingMainDim / totalFlexible;
+        float baseMainDim;
+        float boundMainDim;
+  
+        // Iterate over every child in the axis. If the flex share of remaining
+        // space doesn't meet min/max bounds, remove this child from flex
+        // calculations.
+        for (i = startLine; i < endLine; ++i) {
+          child = node.getChildAt(i);
+          if (isFlex(child)) {
+            baseMainDim = flexibleMainDim * getFlex(child) +
+                getPaddingAndBorderAxis(child, mainAxis);
+            boundMainDim = boundAxis(child, mainAxis, baseMainDim);
+  
+            if (baseMainDim != boundMainDim) {
+              remainingMainDim -= boundMainDim;
+              totalFlexible -= getFlex(child);
+            }
+          }
+        }
+        flexibleMainDim = remainingMainDim / totalFlexible;
   
         // The non flexible children can overflow the container, in this case
         // we should just assume that there is no space available.
@@ -511,8 +555,9 @@ public class LayoutEngine {
           if (isFlex(child)) {
             // At this point we know the final size of the element in the main
             // dimension
-            setLayoutDimension(child, getDim(mainAxis), flexibleMainDim * getFlex(child) +
-              getPaddingAndBorderAxis(child, mainAxis));
+            setLayoutDimension(child, getDim(mainAxis), boundAxis(child, mainAxis,
+              flexibleMainDim * getFlex(child) + getPaddingAndBorderAxis(child, mainAxis)
+            ));
   
             maxWidth = CSSConstants.UNDEFINED;
             if (isDimDefined(node, CSSFlexDirection.ROW)) {
@@ -589,7 +634,7 @@ public class LayoutEngine {
           mainDim = mainDim + betweenMainDim + getDimWithMargin(child, mainAxis);
           // The cross dimension is the max of the elements dimension since there
           // can only be one element in that cross dimension.
-          crossDim = Math.max(crossDim, getDimWithMargin(child, crossAxis));
+          crossDim = Math.max(crossDim, boundAxis(child, crossAxis, getDimWithMargin(child, crossAxis)));
         }
       }
   
@@ -600,7 +645,7 @@ public class LayoutEngine {
         containerMainAxis = Math.max(
           // We're missing the last padding at this point to get the final
           // dimension
-          mainDim + getPaddingAndBorder(node, getTrailing(mainAxis)),
+          boundAxis(node, mainAxis, mainDim + getPaddingAndBorder(node, getTrailing(mainAxis))),
           // We can never assign a width smaller than the padding and borders
           getPaddingAndBorderAxis(node, mainAxis)
         );
@@ -612,7 +657,7 @@ public class LayoutEngine {
           // For the cross dim, we add both sides at the end because the value
           // is aggregate via a max function. Intermediate negative values
           // can mess this computation otherwise
-          crossDim + getPaddingAndBorderAxis(node, crossAxis),
+          boundAxis(node, crossAxis, crossDim + getPaddingAndBorderAxis(node, crossAxis)),
           getPaddingAndBorderAxis(node, crossAxis)
         );
       }
@@ -643,9 +688,9 @@ public class LayoutEngine {
               // previously.
               if (!isDimDefined(child, crossAxis)) {
                 setLayoutDimension(child, getDim(crossAxis), Math.max(
-                  containerCrossAxis -
+                  boundAxis(child, crossAxis, containerCrossAxis -
                     getPaddingAndBorderAxis(node, crossAxis) -
-                    getMarginAxis(child, crossAxis),
+                    getMarginAxis(child, crossAxis)),
                   // You never want to go smaller than padding
                   getPaddingAndBorderAxis(child, crossAxis)
                 ));
@@ -681,7 +726,7 @@ public class LayoutEngine {
       setLayoutDimension(node, getDim(mainAxis), Math.max(
         // We're missing the last padding at this point to get the final
         // dimension
-        linesMainDim + getPaddingAndBorder(node, getTrailing(mainAxis)),
+        boundAxis(node, mainAxis, linesMainDim + getPaddingAndBorder(node, getTrailing(mainAxis))),
         // We can never assign a width smaller than the padding and borders
         getPaddingAndBorderAxis(node, mainAxis)
       ));
@@ -692,7 +737,7 @@ public class LayoutEngine {
         // For the cross dim, we add both sides at the end because the value
         // is aggregate via a max function. Intermediate negative values
         // can mess this computation otherwise
-        linesCrossDim + getPaddingAndBorderAxis(node, crossAxis),
+        boundAxis(node, crossAxis, linesCrossDim + getPaddingAndBorderAxis(node, crossAxis)),
         getPaddingAndBorderAxis(node, crossAxis)
       ));
     }
@@ -711,11 +756,12 @@ public class LayoutEngine {
               isPosDefined(child, getLeading(axis)) &&
               isPosDefined(child, getTrailing(axis))) {
             setLayoutDimension(child, getDim(axis), Math.max(
-              getLayoutDimension(node, getDim(axis)) -
-              getPaddingAndBorderAxis(node, axis) -
-              getMarginAxis(child, axis) -
-              getPosition(child, getLeading(axis)) -
-              getPosition(child, getTrailing(axis)),
+              boundAxis(child, axis, getLayoutDimension(node, getDim(axis)) -
+                getPaddingAndBorderAxis(node, axis) -
+                getMarginAxis(child, axis) -
+                getPosition(child, getLeading(axis)) -
+                getPosition(child, getTrailing(axis))
+              ),
               // You never want to go smaller than padding
               getPaddingAndBorderAxis(child, axis)
             ));

@@ -3768,6 +3768,819 @@ int main()
 
     test("should layout flex wrap with a line bigger than container", root_node, root_layout);
   }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      node_0->style.maxDimensions[CSS_WIDTH] = 90;
+      node_0->style.maxDimensions[CSS_HEIGHT] = 190;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 90;
+      node_0->layout.dimensions[CSS_HEIGHT] = 190;
+    }
+
+    test("should use max bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      node_0->style.minDimensions[CSS_WIDTH] = 110;
+      node_0->style.minDimensions[CSS_HEIGHT] = 210;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 110;
+      node_0->layout.dimensions[CSS_HEIGHT] = 210;
+    }
+
+    test("should use min bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      node_0->style.maxDimensions[CSS_WIDTH] = 90;
+      node_0->style.maxDimensions[CSS_HEIGHT] = 190;
+      node_0->style.minDimensions[CSS_WIDTH] = 110;
+      node_0->style.minDimensions[CSS_HEIGHT] = 210;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 110;
+      node_0->layout.dimensions[CSS_HEIGHT] = 210;
+    }
+
+    test("should use min bounds over max bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      node_0->style.maxDimensions[CSS_WIDTH] = 80;
+      node_0->style.maxDimensions[CSS_HEIGHT] = 180;
+      node_0->style.minDimensions[CSS_WIDTH] = 90;
+      node_0->style.minDimensions[CSS_HEIGHT] = 190;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 90;
+      node_0->layout.dimensions[CSS_HEIGHT] = 190;
+    }
+
+    test("should use min bounds over max bounds and natural width", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      node_0->style.minDimensions[CSS_WIDTH] = -10;
+      node_0->style.minDimensions[CSS_HEIGHT] = -20;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+    }
+
+    test("should ignore negative min bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      node_0->style.maxDimensions[CSS_WIDTH] = -10;
+      node_0->style.maxDimensions[CSS_HEIGHT] = -20;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+    }
+
+    test("should ignore negative max bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.maxDimensions[CSS_WIDTH] = 30;
+      node_0->style.maxDimensions[CSS_HEIGHT] = 10;
+      node_0->style.padding[CSS_LEFT] = 20;
+      node_0->style.padding[CSS_TOP] = 15;
+      node_0->style.padding[CSS_RIGHT] = 20;
+      node_0->style.padding[CSS_BOTTOM] = 15;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 40;
+      node_0->layout.dimensions[CSS_HEIGHT] = 30;
+    }
+
+    test("should use padded size over max bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.minDimensions[CSS_WIDTH] = 50;
+      node_0->style.minDimensions[CSS_HEIGHT] = 40;
+      node_0->style.padding[CSS_LEFT] = 20;
+      node_0->style.padding[CSS_TOP] = 15;
+      node_0->style.padding[CSS_RIGHT] = 20;
+      node_0->style.padding[CSS_BOTTOM] = 15;
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 50;
+      node_0->layout.dimensions[CSS_HEIGHT] = 40;
+    }
+
+    test("should use min size over padded size", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.minDimensions[CSS_WIDTH] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 50;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 50;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 250;
+        node_1->layout.dimensions[CSS_WIDTH] = 50;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should override flex direction size with min bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 110;
+        node_1->style.minDimensions[CSS_WIDTH] = 90;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 100;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 200;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should not override flex direction size within bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 60;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 120;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 120;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 180;
+        node_1->layout.dimensions[CSS_WIDTH] = 120;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should override flex direction size with max bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 310;
+        node_1->style.minDimensions[CSS_WIDTH] = 290;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 300;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should pre-fill child size within bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 290;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 290;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should pre-fill child size within max bound", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.minDimensions[CSS_WIDTH] = 310;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 310;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should pre-fill child size within min bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.maxDimensions[CSS_WIDTH] = 300;
+      node_0->style.maxDimensions[CSS_HEIGHT] = 700;
+      node_0->style.minDimensions[CSS_WIDTH] = 100;
+      node_0->style.minDimensions[CSS_HEIGHT] = 500;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 300;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 300;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 600;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 300;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 300;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 300;
+      }
+    }
+
+    test("should set parents size based on bounded children", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.maxDimensions[CSS_WIDTH] = 100;
+      node_0->style.maxDimensions[CSS_HEIGHT] = 500;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 300;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 300;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 500;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 300;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 300;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 300;
+      }
+    }
+
+    test("should set parents size based on max bounded children", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.minDimensions[CSS_WIDTH] = 300;
+      node_0->style.minDimensions[CSS_HEIGHT] = 700;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 300;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 300;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 700;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 300;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 300;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 300;
+      }
+    }
+
+    test("should set parents size based on min bounded children", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.maxDimensions[CSS_WIDTH] = 1100;
+        node_1->style.maxDimensions[CSS_HEIGHT] = 110;
+        node_1->style.minDimensions[CSS_WIDTH] = 900;
+        node_1->style.minDimensions[CSS_HEIGHT] = 90;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 1000;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should keep stretched size within bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.maxDimensions[CSS_WIDTH] = 900;
+        node_1->style.maxDimensions[CSS_HEIGHT] = 90;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 90;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 900;
+        node_1->layout.dimensions[CSS_HEIGHT] = 90;
+      }
+    }
+
+    test("should keep stretched size within max bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.minDimensions[CSS_WIDTH] = 1100;
+        node_1->style.minDimensions[CSS_HEIGHT] = 110;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 110;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 1100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 110;
+      }
+    }
+
+    test("should keep stretched size within min bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.minDimensions[CSS_WIDTH] = 100;
+        node_1->style.minDimensions[CSS_HEIGHT] = 110;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 110;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 110;
+      }
+    }
+
+    test("should keep cross axis size within min bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.maxDimensions[CSS_WIDTH] = 500;
+        node_1->style.maxDimensions[CSS_HEIGHT] = 600;
+        node_1->style.position[CSS_LEFT] = 100;
+        node_1->style.position[CSS_TOP] = 100;
+        node_1->style.position[CSS_RIGHT] = 100;
+        node_1->style.position[CSS_BOTTOM] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 100;
+        node_1->layout.dimensions[CSS_WIDTH] = 500;
+        node_1->layout.dimensions[CSS_HEIGHT] = 600;
+      }
+    }
+
+    test("should layout node with position absolute, top and left and max bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.minDimensions[CSS_WIDTH] = 900;
+        node_1->style.minDimensions[CSS_HEIGHT] = 1000;
+        node_1->style.position[CSS_LEFT] = 100;
+        node_1->style.position[CSS_TOP] = 100;
+        node_1->style.position[CSS_RIGHT] = 100;
+        node_1->style.position[CSS_BOTTOM] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 100;
+        node_1->layout.dimensions[CSS_WIDTH] = 900;
+        node_1->layout.dimensions[CSS_HEIGHT] = 1000;
+      }
+    }
+
+    test("should layout node with position absolute, top and left and min bounds", root_node, root_layout);
+  }
   /** END_GENERATED **/
   return tests_finished();
 }
