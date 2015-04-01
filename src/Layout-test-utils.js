@@ -91,7 +91,7 @@ var layoutTestUtils = (function() {
       _cachedIframe = iframe;
       return iframe;
     } else {
-      setTimeout(getIframe, 0);
+      setTimeout(getIframe.bind(null, iframe), 0);
     }
   }
 
