@@ -1302,7 +1302,7 @@ describe('Layout', function() {
 
   it('should override flex direction size with min bounds', function() {
     testLayout(
-      {style: {width: 300, height: 200, flexDirection:'row'}, children: [
+      {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
         {style: {flex: 1}},
         {style: {flex: 1, minWidth: 200}},
         {style: {flex: 1}}
@@ -1332,7 +1332,7 @@ describe('Layout', function() {
 
   it('should override flex direction size with max bounds', function() {
     testLayout(
-      {style: {width: 300, height: 200, flexDirection:'row'}, children: [
+      {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
         {style: {flex: 1}},
         {style: {flex: 1, maxWidth: 60}},
         {style: {flex: 1}}
@@ -1341,6 +1341,36 @@ describe('Layout', function() {
         {width: 120, height: 200, top: 0, left: 0},
         {width: 60, height: 200, top: 0, left: 120},
         {width: 120, height: 200, top: 0, left: 180}
+      ]}
+    );
+  });
+
+  it ('should ignore flex size if fully max bound', function() {
+    testLayout(
+      {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
+        {style: {flex: 1, maxWidth: 60}},
+        {style: {flex: 1, maxWidth: 60}},
+        {style: {flex: 1, maxWidth: 60}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 60, height: 200, top: 0, left: 0},
+        {width: 60, height: 200, top: 0, left: 60},
+        {width: 60, height: 200, top: 0, left: 120}
+      ]}
+    );
+  });
+
+  it ('should ignore flex size if fully min bound', function() {
+    testLayout(
+      {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
+        {style: {flex: 1, minWidth: 120}},
+        {style: {flex: 1, minWidth: 120}},
+        {style: {flex: 1, minWidth: 120}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 120, height: 200, top: 0, left: 0},
+        {width: 120, height: 200, top: 0, left: 120},
+        {width: 120, height: 200, top: 0, left: 240}
       ]}
     );
   });

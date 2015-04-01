@@ -204,13 +204,13 @@ var computeLayout = (function() {
 
   function boundAxis(node, axis, value) {
     var min = {
-      row: node.style['minWidth'],
-      column: node.style['minHeight']
+      row: node.style.minWidth,
+      column: node.style.minHeight
     }[axis];
 
     var max = {
-      row: node.style['maxWidth'],
-      column: node.style['maxHeight']
+      row: node.style.maxWidth,
+      column: node.style.maxHeight
     }[axis];
 
     var boundValue = value;

@@ -4400,6 +4400,116 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.width = 300;
+      node_0.style.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1.style.maxWidth = 60;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = 1;
+        node_1.style.maxWidth = 60;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.flex = 1;
+        node_1.style.maxWidth = 60;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 60;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 0;
+        node_1.layout.x = 60;
+        node_1.layout.width = 60;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.y = 0;
+        node_1.layout.x = 120;
+        node_1.layout.width = 60;
+        node_1.layout.height = 200;
+      }
+    }
+
+    test("should ignore flex size if fully max bound", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase107()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.width = 300;
+      node_0.style.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1.style.minWidth = 120;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = 1;
+        node_1.style.minWidth = 120;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.flex = 1;
+        node_1.style.minWidth = 120;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 200;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 120;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.y = 0;
+        node_1.layout.x = 120;
+        node_1.layout.width = 120;
+        node_1.layout.height = 200;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.y = 0;
+        node_1.layout.x = 240;
+        node_1.layout.width = 120;
+        node_1.layout.height = 200;
+      }
+    }
+
+    test("should ignore flex size if fully min bound", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase108()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
       node_0.style.width = 300;
       node_0.style.height = 200;
       addChildren(node_0, 1);
@@ -4434,7 +4544,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase107()
+  public void testCase109()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4472,7 +4582,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase108()
+  public void testCase110()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4510,7 +4620,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase109()
+  public void testCase111()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4558,7 +4668,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase110()
+  public void testCase112()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4604,7 +4714,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase111()
+  public void testCase113()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4650,7 +4760,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase112()
+  public void testCase114()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4691,7 +4801,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase113()
+  public void testCase115()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4730,7 +4840,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase114()
+  public void testCase116()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4769,7 +4879,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase115()
+  public void testCase117()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4808,7 +4918,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase116()
+  public void testCase118()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4851,7 +4961,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase117()
+  public void testCase119()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
