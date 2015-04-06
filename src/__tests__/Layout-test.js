@@ -1513,4 +1513,33 @@ describe('Layout', function() {
     );
   });
 
+  xit('should layout minHeight with a flex child', function() {
+    testLayout(
+      {style: {minHeight: 800}, children: [
+        {style: {flex: 1}}
+      ]},
+      {width: 0, height: 800, top: 0, left: 0, children: [
+        {width: 0, height: 800, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  xit('should layout node with a nested sibling child with width', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {width: 5}},
+        {style: {}, children: [
+          {style: {}}
+        ]},
+      ]},
+      {width: 5, height: 0, top: 0, left: 0, children: [
+        {width: 5, height: 0, top: 0, left: 0},
+        {width: 5, height: 0, top: 0, left: 0, children: [
+          {width: 5, height: 0, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+
+
 });
