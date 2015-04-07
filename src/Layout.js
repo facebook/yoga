@@ -392,9 +392,9 @@ var computeLayout = (function() {
         child = node.children[i];
         var/*float*/ nextContentDim = 0;
 
-        // It only makes sense to consider a child flexible if we have a computed
-        // dimension for the node.
-        if (!isUndefined(node.layout[dim[mainAxis]]) && isFlex(child)) {
+        // If it's a flexible child, accumulate the size that the child potentially
+        // contributes to the row
+        if (isFlex(child)) {
           flexibleChildrenCount++;
           totalFlexible += getFlex(child);
 
@@ -460,7 +460,7 @@ var computeLayout = (function() {
       if (!isUndefined(node.layout[dim[mainAxis]])) {
         remainingMainDim = definedMainDim - mainContentDim;
       } else {
-        remainingMainDim = fmaxf(mainContentDim, 0) - mainContentDim;
+        remainingMainDim = boundAxis(node, mainAxis, fmaxf(mainContentDim, 0)) - mainContentDim;
       }
 
       // If there are flexible children in the mix, they are going to fill the
