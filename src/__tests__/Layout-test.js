@@ -1513,13 +1513,24 @@ describe('Layout', function() {
     );
   });
 
-  xit('should layout minHeight with a flex child', function() {
+  it('should layout minHeight with a flex child', function() {
     testLayout(
       {style: {minHeight: 800}, children: [
         {style: {flex: 1}}
       ]},
       {width: 0, height: 800, top: 0, left: 0, children: [
         {width: 0, height: 800, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout minHeight without a flex child', function() {
+    testLayout(
+      {style: {minHeight: 800}, children: [
+        {style: {}}
+      ]},
+      {width: 0, height: 800, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
       ]}
     );
   });

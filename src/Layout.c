@@ -501,9 +501,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       child = node->get_child(node->context, i);
       float nextContentDim = 0;
 
-      // It only makes sense to consider a child flexible if we have a computed
-      // dimension for the node->
-      if (!isUndefined(node->layout.dimensions[dim[mainAxis]]) && isFlex(child)) {
+      // If it's a flexible child, accumulate the size that the child potentially
+      // contributes to the row
+      if (isFlex(child)) {
         flexibleChildrenCount++;
         totalFlexible += getFlex(child);
 
@@ -569,7 +569,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     if (!isUndefined(node->layout.dimensions[dim[mainAxis]])) {
       remainingMainDim = definedMainDim - mainContentDim;
     } else {
-      remainingMainDim = fmaxf(mainContentDim, 0) - mainContentDim;
+      remainingMainDim = boundAxis(node, mainAxis, fmaxf(mainContentDim, 0)) - mainContentDim;
     }
 
     // If there are flexible children in the mix, they are going to fill the

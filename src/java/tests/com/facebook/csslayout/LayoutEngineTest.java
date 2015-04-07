@@ -5002,5 +5002,76 @@ public class LayoutEngineTest {
 
     test("should layout node with position absolute, top and left and min bounds", root_node, root_layout);
   }
+
+  @Test
+  public void testCase120()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.minHeight = 800;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 0;
+      node_0.layout.height = 800;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 0;
+        node_1.layout.height = 800;
+      }
+    }
+
+    test("should layout minHeight with a flex child", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase121()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.minHeight = 800;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 0;
+      node_0.layout.height = 800;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 0;
+        node_1.layout.height = 0;
+      }
+    }
+
+    test("should layout minHeight without a flex child", root_node, root_layout);
+  }
   /** END_GENERATED **/
 }

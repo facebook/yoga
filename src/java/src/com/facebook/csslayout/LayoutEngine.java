@@ -446,9 +446,9 @@ public class LayoutEngine {
         child = node.getChildAt(i);
         float nextContentDim = 0;
   
-        // It only makes sense to consider a child flexible if we have a computed
-        // dimension for the node.
-        if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis))) && isFlex(child)) {
+        // If it's a flexible child, accumulate the size that the child potentially
+        // contributes to the row
+        if (isFlex(child)) {
           flexibleChildrenCount++;
           totalFlexible = totalFlexible + getFlex(child);
   
@@ -514,7 +514,7 @@ public class LayoutEngine {
       if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
         remainingMainDim = definedMainDim - mainContentDim;
       } else {
-        remainingMainDim = Math.max(mainContentDim, 0) - mainContentDim;
+        remainingMainDim = boundAxis(node, mainAxis, Math.max(mainContentDim, 0)) - mainContentDim;
       }
   
       // If there are flexible children in the mix, they are going to fill the
