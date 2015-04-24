@@ -1317,7 +1317,7 @@ describe('Layout', function() {
 
   it('should not override flex direction size within bounds', function() {
     testLayout(
-      {style: {width: 300, height: 200, flexDirection:'row'}, children: [
+      {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
         {style: {flex: 1}},
         {style: {flex: 1, minWidth: 90, maxWidth: 110}},
         {style: {flex: 1}}
@@ -1345,7 +1345,7 @@ describe('Layout', function() {
     );
   });
 
-  it ('should ignore flex size if fully max bound', function() {
+  it('should ignore flex size if fully max bound', function() {
     testLayout(
       {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
         {style: {flex: 1, maxWidth: 60}},
@@ -1360,7 +1360,7 @@ describe('Layout', function() {
     );
   });
 
-  it ('should ignore flex size if fully min bound', function() {
+  it('should ignore flex size if fully min bound', function() {
     testLayout(
       {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
         {style: {flex: 1, minWidth: 120}},
@@ -1378,10 +1378,10 @@ describe('Layout', function() {
   it('should pre-fill child size within bounds', function() {
     testLayout(
       {style: {width: 300, height: 200}, children: [
-        {style: {flex: 1, minWidth: 290, maxWidth: 310}},
+        {style: {flex: 1, minWidth: 290, maxWidth: 310}}
       ]},
       {width: 300, height: 200, top: 0, left: 0, children: [
-        {width: 300, height: 200, top: 0, left: 0},
+        {width: 300, height: 200, top: 0, left: 0}
       ]}
     );
   });
@@ -1389,10 +1389,10 @@ describe('Layout', function() {
   it('should pre-fill child size within max bound', function() {
     testLayout(
       {style: {width: 300, height: 200}, children: [
-        {style: {flex: 1, maxWidth: 290}},
+        {style: {flex: 1, maxWidth: 290}}
       ]},
       {width: 300, height: 200, top: 0, left: 0, children: [
-        {width: 290, height: 200, top: 0, left: 0},
+        {width: 290, height: 200, top: 0, left: 0}
       ]}
     );
   });
@@ -1400,10 +1400,10 @@ describe('Layout', function() {
   it('should pre-fill child size within min bounds', function() {
     testLayout(
       {style: {width: 300, height: 200}, children: [
-        {style: {flex: 1, minWidth: 310}},
+        {style: {flex: 1, minWidth: 310}}
       ]},
       {width: 300, height: 200, top: 0, left: 0, children: [
-        {width: 310, height: 200, top: 0, left: 0},
+        {width: 310, height: 200, top: 0, left: 0}
       ]}
     );
   });
@@ -1412,11 +1412,11 @@ describe('Layout', function() {
     testLayout(
       {style: {minWidth: 100, maxWidth: 300, minHeight: 500, maxHeight: 700}, children: [
         {style: {width: 200, height: 300}},
-        {style: {width: 200, height: 300}},
+        {style: {width: 200, height: 300}}
       ]},
       {width: 200, height: 600, top: 0, left: 0, children: [
         {width: 200, height: 300, top: 0, left: 0},
-        {width: 200, height: 300, top: 300, left: 0},
+        {width: 200, height: 300, top: 300, left: 0}
       ]}
     );
   });
@@ -1425,11 +1425,11 @@ describe('Layout', function() {
     testLayout(
       {style: {maxWidth: 100, maxHeight: 500}, children: [
         {style: {width: 200, height: 300}},
-        {style: {width: 200, height: 300}},
+        {style: {width: 200, height: 300}}
       ]},
       {width: 100, height: 500, top: 0, left: 0, children: [
         {width: 200, height: 300, top: 0, left: 0},
-        {width: 200, height: 300, top: 300, left: 0},
+        {width: 200, height: 300, top: 300, left: 0}
       ]}
     );
   });
@@ -1438,11 +1438,11 @@ describe('Layout', function() {
     testLayout(
       {style: {minWidth: 300, minHeight: 700}, children: [
         {style: {width: 200, height: 300}},
-        {style: {width: 200, height: 300}},
+        {style: {width: 200, height: 300}}
       ]},
       {width: 300, height: 700, top: 0, left: 0, children: [
         {width: 200, height: 300, top: 0, left: 0},
-        {width: 200, height: 300, top: 300, left: 0},
+        {width: 200, height: 300, top: 300, left: 0}
       ]}
     );
   });
@@ -1497,7 +1497,7 @@ describe('Layout', function() {
         {style: {position: 'absolute', top: 100, left: 100, bottom: 100, right: 100, maxWidth: 500, maxHeight: 600}}
       ]},
       {width: 1000, height: 1000, top: 0, left: 0, children: [
-        {width: 500, height: 600, top: 100, left: 100},
+        {width: 500, height: 600, top: 100, left: 100}
       ]}
     );
   });
@@ -1508,7 +1508,7 @@ describe('Layout', function() {
         {style: {position: 'absolute', top: 100, left: 100, bottom: 100, right: 100, minWidth: 900, minHeight: 1000}}
       ]},
       {width: 1000, height: 1000, top: 0, left: 0, children: [
-        {width: 900, height: 1000, top: 100, left: 100},
+        {width: 900, height: 1000, top: 100, left: 100}
       ]}
     );
   });
@@ -1541,7 +1541,7 @@ describe('Layout', function() {
         {style: {width: 5}},
         {style: {}, children: [
           {style: {}}
-        ]},
+        ]}
       ]},
       {width: 5, height: 0, top: 0, left: 0, children: [
         {width: 5, height: 0, top: 0, left: 0},
