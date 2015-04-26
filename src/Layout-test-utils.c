@@ -12,10 +12,10 @@
 
   /** START_GENERATED **/
 #define SMALL_WIDTH 34.671875
-#define SMALL_HEIGHT 16
+#define SMALL_HEIGHT 18
 #define BIG_WIDTH 172.421875
-#define BIG_HEIGHT 32
-#define BIG_MIN_WIDTH 100.453125
+#define BIG_HEIGHT 36
+#define BIG_MIN_WIDTH 100.4375
 #define SMALL_TEXT "small"
 #define LONG_TEXT "loooooooooong with space"
   /** END_GENERATED **/
