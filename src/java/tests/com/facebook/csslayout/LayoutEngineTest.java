@@ -2687,7 +2687,7 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 34.671875f;
-      node_0.layout.height = 16;
+      node_0.layout.height = 18;
     }
 
     test("should layout node with just text", root_node, root_layout);
@@ -2710,7 +2710,7 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 10;
-      node_0.layout.height = 16;
+      node_0.layout.height = 18;
     }
 
     test("should layout node with text and width", root_node, root_layout);
@@ -2732,7 +2732,7 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 172.421875f;
-      node_0.layout.height = 16;
+      node_0.layout.height = 18;
     }
 
     test("should layout node with text, padding and margin", root_node, root_layout);
@@ -2818,7 +2818,7 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 500;
-      node_0.layout.height = 16;
+      node_0.layout.height = 18;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2826,7 +2826,7 @@ public class LayoutEngineTest {
         node_1.layout.y = 0;
         node_1.layout.x = 0;
         node_1.layout.width = 500;
-        node_1.layout.height = 16;
+        node_1.layout.height = 18;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -2834,7 +2834,7 @@ public class LayoutEngineTest {
           node_2.layout.y = 0;
           node_2.layout.x = 0;
           node_2.layout.width = 500;
-          node_2.layout.height = 16;
+          node_2.layout.height = 18;
         }
       }
     }
@@ -2871,7 +2871,7 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 130;
-      node_0.layout.height = 32;
+      node_0.layout.height = 36;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2879,7 +2879,7 @@ public class LayoutEngineTest {
         node_1.layout.y = 0;
         node_1.layout.x = 0;
         node_1.layout.width = 130;
-        node_1.layout.height = 32;
+        node_1.layout.height = 36;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -2887,7 +2887,7 @@ public class LayoutEngineTest {
           node_2.layout.y = 0;
           node_2.layout.x = 0;
           node_2.layout.width = 130;
-          node_2.layout.height = 32;
+          node_2.layout.height = 36;
         }
       }
     }
@@ -2925,7 +2925,7 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 200;
-      node_0.layout.height = 32;
+      node_0.layout.height = 36;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2933,7 +2933,7 @@ public class LayoutEngineTest {
         node_1.layout.y = 0;
         node_1.layout.x = 0;
         node_1.layout.width = 200;
-        node_1.layout.height = 32;
+        node_1.layout.height = 36;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -2941,7 +2941,7 @@ public class LayoutEngineTest {
           node_2.layout.y = 0;
           node_2.layout.x = 0;
           node_2.layout.width = 130;
-          node_2.layout.height = 32;
+          node_2.layout.height = 36;
         }
       }
     }
@@ -2973,15 +2973,15 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 100;
-      node_0.layout.height = 32;
+      node_0.layout.height = 36;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.layout.y = 0;
         node_1.layout.x = 0;
-        node_1.layout.width = 100.453125f;
-        node_1.layout.height = 32;
+        node_1.layout.width = 100.4375f;
+        node_1.layout.height = 36;
       }
     }
 
@@ -3025,23 +3025,23 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 100;
-      node_0.layout.height = 72;
+      node_0.layout.height = 76;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.layout.y = 20;
         node_1.layout.x = 20;
-        node_1.layout.width = 100.453125f;
-        node_1.layout.height = 32;
+        node_1.layout.width = 100.4375f;
+        node_1.layout.height = 36;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.layout.y = 0;
           node_2.layout.x = 0;
-          node_2.layout.width = 100.453125f;
-          node_2.layout.height = 32;
+          node_2.layout.width = 100.4375f;
+          node_2.layout.height = 36;
         }
       }
     }
@@ -3162,7 +3162,7 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 200;
-      node_0.layout.height = 56;
+      node_0.layout.height = 58;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3170,7 +3170,7 @@ public class LayoutEngineTest {
         node_1.layout.y = 0;
         node_1.layout.x = 0;
         node_1.layout.width = 200;
-        node_1.layout.height = 56;
+        node_1.layout.height = 58;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -3178,7 +3178,7 @@ public class LayoutEngineTest {
           node_2.layout.y = 20;
           node_2.layout.x = 20;
           node_2.layout.width = 172.421875f;
-          node_2.layout.height = 16;
+          node_2.layout.height = 18;
         }
       }
     }
@@ -3217,7 +3217,7 @@ public class LayoutEngineTest {
       node_0.layout.y = 0;
       node_0.layout.x = 0;
       node_0.layout.width = 200;
-      node_0.layout.height = 72;
+      node_0.layout.height = 76;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3225,7 +3225,7 @@ public class LayoutEngineTest {
         node_1.layout.y = 0;
         node_1.layout.x = 0;
         node_1.layout.width = 200;
-        node_1.layout.height = 72;
+        node_1.layout.height = 76;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -3233,7 +3233,7 @@ public class LayoutEngineTest {
           node_2.layout.y = 20;
           node_2.layout.x = 20;
           node_2.layout.width = 160;
-          node_2.layout.height = 32;
+          node_2.layout.height = 36;
         }
       }
     }
