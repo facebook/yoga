@@ -178,6 +178,10 @@ public class LayoutEngine {
     return getPadding(node, position) + getBorder(node, position);
   }
 
+  private static float getBorderAxis(CSSNode node, CSSFlexDirection axis) {
+    return getBorder(node, getLeading(axis)) + getBorder(node, getTrailing(axis));
+  }
+
   private static float getMarginAxis(CSSNode node, CSSFlexDirection axis) {
     return getMargin(node, getLeading(axis)) + getMargin(node, getTrailing(axis));
   }
@@ -757,7 +761,7 @@ public class LayoutEngine {
               isPosDefined(child, getTrailing(axis))) {
             setLayoutDimension(child, getDim(axis), Math.max(
               boundAxis(child, axis, getLayoutDimension(node, getDim(axis)) -
-                getPaddingAndBorderAxis(node, axis) -
+                getBorderAxis(node, axis) -
                 getMarginAxis(child, axis) -
                 getPosition(child, getLeading(axis)) -
                 getPosition(child, getTrailing(axis))

@@ -244,6 +244,10 @@ static float getPaddingAndBorder(css_node_t *node, int location) {
   return getPadding(node, location) + getBorder(node, location);
 }
 
+static float getBorderAxis(css_node_t *node, css_flex_direction_t axis) {
+  return getBorder(node, leading[axis]) + getBorder(node, trailing[axis]);
+}
+
 static float getMarginAxis(css_node_t *node, css_flex_direction_t axis) {
   return getMargin(node, leading[axis]) + getMargin(node, trailing[axis]);
 }
@@ -812,7 +816,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
             isPosDefined(child, trailing[axis])) {
           child->layout.dimensions[dim[axis]] = fmaxf(
             boundAxis(child, axis, node->layout.dimensions[dim[axis]] -
-              getPaddingAndBorderAxis(node, axis) -
+              getBorderAxis(node, axis) -
               getMarginAxis(child, axis) -
               getPosition(child, leading[axis]) -
               getPosition(child, trailing[axis])

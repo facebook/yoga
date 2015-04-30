@@ -1552,5 +1552,50 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout absolutely positioned node with absolutely positioned padded parent', function() {
+    testLayout(
+      {style: {width: 400, height: 400}, children: [
+        {style: {position: 'absolute', top: 100, left: 100, right: 100, bottom: 100, padding: 10}, children: [
+          {style: {position: 'absolute', top: 10, left: 10, right: 10, bottom: 10}}
+        ]},
+      ]},
+      {width: 400, height: 400, top: 0, left: 0, children: [
+        {width: 200, height: 200, top: 100, left: 100, children: [
+          {width: 180, height: 180, top: 10, left: 10}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout absolutely positioned node with absolutely positioned padded and bordered parent', function() {
+    testLayout(
+      {style: {width: 400, height: 400}, children: [
+        {style: {position: 'absolute', top: 100, left: 100, right: 100, bottom: 100, padding: 10, borderWidth: 1}, children: [
+          {style: {position: 'absolute', top: 10, left: 10, right: 10, bottom: 10}}
+        ]},
+      ]},
+      {width: 400, height: 400, top: 0, left: 0, children: [
+        {width: 200, height: 200, top: 100, left: 100, children: [
+          {width: 178, height: 178, top: 11, left: 11}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout absolutely positioned node with padded flex 1 parent', function() {
+    testLayout(
+      {style: {width: 400, height: 400}, children: [
+        {style: {flex: 1, padding: 10}, children: [
+          {style: {position: 'absolute', top: 10, left: 10, right: 10, bottom: 10}}
+        ]},
+      ]},
+      {width: 400, height: 400, top: 0, left: 0, children: [
+        {width: 400, height: 400, top: 0, left: 0, children: [
+          {width: 380, height: 380, top: 10, left: 10}
+        ]}
+      ]}
+    );
+  });
+
 
 });
