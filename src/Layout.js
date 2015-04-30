@@ -125,6 +125,10 @@ var computeLayout = (function() {
     return getPadding(node, location) + getBorder(node, location);
   }
 
+  function getBorderAxis(node, axis) {
+    return getBorder(node, leading[axis]) + getBorder(node, trailing[axis]);
+  }
+
   function getMarginAxis(node, axis) {
     return getMargin(node, leading[axis]) + getMargin(node, trailing[axis]);
   }
@@ -703,7 +707,7 @@ var computeLayout = (function() {
               isPosDefined(child, trailing[axis])) {
             child.layout[dim[axis]] = fmaxf(
               boundAxis(child, axis, node.layout[dim[axis]] -
-                getPaddingAndBorderAxis(node, axis) -
+                getBorderAxis(node, axis) -
                 getMarginAxis(child, axis) -
                 getPosition(child, leading[axis]) -
                 getPosition(child, trailing[axis])
