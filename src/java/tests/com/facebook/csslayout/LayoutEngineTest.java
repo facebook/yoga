@@ -5009,77 +5009,6 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.minHeight = 800;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
-      }
-    }
-
-    TestCSSNode root_layout = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_layout;
-      node_0.layout.y = 0;
-      node_0.layout.x = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 800;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.layout.y = 0;
-        node_1.layout.x = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 800;
-      }
-    }
-
-    test("should layout minHeight with a flex child", root_node, root_layout);
-  }
-
-  @Test
-  public void testCase121()
-  {
-    TestCSSNode root_node = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_node;
-      node_0.style.minHeight = 800;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-      }
-    }
-
-    TestCSSNode root_layout = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_layout;
-      node_0.layout.y = 0;
-      node_0.layout.x = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 800;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.layout.y = 0;
-        node_1.layout.x = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
-      }
-    }
-
-    test("should layout minHeight without a flex child", root_node, root_layout);
-  }
-
-  @Test
-  public void testCase122()
-  {
-    TestCSSNode root_node = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_node;
       node_0.style.width = 400;
       node_0.style.height = 400;
       addChildren(node_0, 1);
@@ -5139,7 +5068,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase123()
+  public void testCase121()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5204,6 +5133,66 @@ public class LayoutEngineTest {
     }
 
     test("should layout absolutely positioned node with absolutely positioned padded and bordered parent", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase122()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 400;
+      node_0.style.height = 400;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1.style.padding[Spacing.LEFT] = 10;
+        node_1.style.padding[Spacing.TOP] = 10;
+        node_1.style.padding[Spacing.RIGHT] = 10;
+        node_1.style.padding[Spacing.BOTTOM] = 10;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.positionType = CSSPositionType.ABSOLUTE;
+          node_2.style.positionLeft = 10;
+          node_2.style.positionTop = 10;
+          node_2.style.positionRight = 10;
+          node_2.style.positionBottom = 10;
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.y = 0;
+      node_0.layout.x = 0;
+      node_0.layout.width = 400;
+      node_0.layout.height = 400;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.y = 0;
+        node_1.layout.x = 0;
+        node_1.layout.width = 400;
+        node_1.layout.height = 400;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.y = 10;
+          node_2.layout.x = 10;
+          node_2.layout.width = 380;
+          node_2.layout.height = 380;
+        }
+      }
+    }
+
+    test("should layout absolutely positioned node with padded flex 1 parent", root_node, root_layout);
   }
   /** END_GENERATED **/
 }
