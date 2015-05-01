@@ -4692,73 +4692,6 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
-      node_0->style.minDimensions[CSS_HEIGHT] = 800;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->style.flex = 1;
-      }
-    }
-
-    css_node_t *root_layout = new_test_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 800;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->layout.position[CSS_TOP] = 0;
-        node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 0;
-        node_1->layout.dimensions[CSS_HEIGHT] = 800;
-      }
-    }
-
-    test("should layout minHeight with a flex child", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_test_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      node_0->style.minDimensions[CSS_HEIGHT] = 800;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-      }
-    }
-
-    css_node_t *root_layout = new_test_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 0;
-      node_0->layout.dimensions[CSS_HEIGHT] = 800;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->layout.position[CSS_TOP] = 0;
-        node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 0;
-        node_1->layout.dimensions[CSS_HEIGHT] = 0;
-      }
-    }
-
-    test("should layout minHeight without a flex child", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_test_css_node();
-    {
-      css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 400;
       node_0->style.dimensions[CSS_HEIGHT] = 400;
       init_css_node_children(node_0, 1);
@@ -4881,6 +4814,64 @@ int main()
     }
 
     test("should layout absolutely positioned node with absolutely positioned padded and bordered parent", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 400;
+      node_0->style.dimensions[CSS_HEIGHT] = 400;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.padding[CSS_LEFT] = 10;
+        node_1->style.padding[CSS_TOP] = 10;
+        node_1->style.padding[CSS_RIGHT] = 10;
+        node_1->style.padding[CSS_BOTTOM] = 10;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.position_type = CSS_POSITION_ABSOLUTE;
+          node_2->style.position[CSS_LEFT] = 10;
+          node_2->style.position[CSS_TOP] = 10;
+          node_2->style.position[CSS_RIGHT] = 10;
+          node_2->style.position[CSS_BOTTOM] = 10;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 400;
+      node_0->layout.dimensions[CSS_HEIGHT] = 400;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 400;
+        node_1->layout.dimensions[CSS_HEIGHT] = 400;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 10;
+          node_2->layout.position[CSS_LEFT] = 10;
+          node_2->layout.dimensions[CSS_WIDTH] = 380;
+          node_2->layout.dimensions[CSS_HEIGHT] = 380;
+        }
+      }
+    }
+
+    test("should layout absolutely positioned node with padded flex 1 parent", root_node, root_layout);
   }
   /** END_GENERATED **/
   return tests_finished();
