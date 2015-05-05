@@ -5,6 +5,11 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * WARNING: You should not modify this file directly. Instead:
+ * 1) Go to https://github.com/facebook/css-layout
+ * 2) Make a pull request and get it merged
+ * 3) Copy Layout.c and Layout.h to react-native-github
  */
 
 #ifndef __LAYOUT_H
