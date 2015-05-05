@@ -11,9 +11,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 #include "Layout.h"
+
+#ifdef _MSC_VER
+#include <float.h>
+#define isnan _isnan
+__forceinline const float fmaxf(const float a, const float b) {
+  return (a > b) ? a : b;
+}
+#endif
 
 bool isUndefined(float value) {
   return isnan(value);
@@ -55,7 +62,7 @@ void init_css_node(css_node_t *node) {
 }
 
 css_node_t *new_css_node() {
-  css_node_t *node = calloc(1, sizeof(*node));
+  css_node_t *node = (css_node_t *)calloc(1, sizeof(*node));
   init_css_node(node);
   return node;
 }
