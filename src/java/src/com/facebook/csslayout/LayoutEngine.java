@@ -642,19 +642,6 @@ public class LayoutEngine {
         }
       }
   
-      float containerMainAxis = getLayoutDimension(node, getDim(mainAxis));
-      // If the user didn't specify a width or height, and it has not been set
-      // by the container, then we set it via the children.
-      if (CSSConstants.isUndefined(containerMainAxis)) {
-        containerMainAxis = Math.max(
-          // We're missing the last padding at this point to get the final
-          // dimension
-          boundAxis(node, mainAxis, mainDim + getPaddingAndBorder(node, getTrailing(mainAxis))),
-          // We can never assign a width smaller than the padding and borders
-          getPaddingAndBorderAxis(node, mainAxis)
-        );
-      }
-  
       float containerCrossAxis = getLayoutDimension(node, getDim(crossAxis));
       if (CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis)))) {
         containerCrossAxis = Math.max(
