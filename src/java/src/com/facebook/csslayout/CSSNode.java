@@ -125,7 +125,7 @@ public class CSSNode {
    */
   public void calculateLayout(CSSLayoutContext layoutContext) {
     layout.resetResult();
-    LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED);
+    LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED, null);
   }
 
   /**
@@ -328,11 +328,11 @@ public class CSSNode {
   }
 
   public float getLayoutX() {
-    return layout.x;
+    return layout.left;
   }
 
   public float getLayoutY() {
-    return layout.y;
+    return layout.top;
   }
 
   public float getLayoutWidth() {

@@ -8,9 +8,8 @@
  */
 package com.facebook.csslayout;
 
-public enum CSSFlexDirection {
-  COLUMN,
-  COLUMN_REVERSE,
-  ROW,
-  ROW_REVERSE
+public enum CSSDirection {
+  INHERIT,
+  LTR,
+  RTL,
 }

@@ -28,24 +28,34 @@ public class LayoutEngine {
   private static void setLayoutPosition(CSSNode node, PositionIndex position, float value) {
     switch (position) {
       case TOP:
-        node.layout.y = value;
+        node.layout.top = value;
         break;
       case LEFT:
-        node.layout.x = value;
+        node.layout.left = value;
+        break;
+      case RIGHT:
+        node.layout.right = value;
+        break;
+      case BOTTOM:
+        node.layout.bottom = value;
         break;
       default:
-        throw new RuntimeException("Didn't get TOP or LEFT!");
+        throw new RuntimeException("Didn't get TOP, LEFT, RIGHT, or BOTTOM!");
     }
   }
 
   private static float getLayoutPosition(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.layout.y;
+        return node.layout.top;
       case LEFT:
-        return node.layout.x;
+        return node.layout.left;
+      case RIGHT:
+        return node.layout.right;
+      case BOTTOM:
+        return node.layout.bottom;
       default:
-        throw new RuntimeException("Didn't get TOP or LEFT!");
+        throw new RuntimeException("Didn't get TOP, LEFT, RIGHT, or BOTTOM!");
     }
   }
 
@@ -100,19 +110,61 @@ public class LayoutEngine {
   }
 
   private static PositionIndex getLeading(CSSFlexDirection axis) {
-    return axis == CSSFlexDirection.COLUMN ? PositionIndex.TOP : PositionIndex.LEFT;
+    switch (axis) {
+      case COLUMN:
+        return PositionIndex.TOP;
+      case COLUMN_REVERSE:
+        return PositionIndex.BOTTOM;
+      case ROW:
+        return PositionIndex.LEFT;
+      case ROW_REVERSE:
+        return PositionIndex.RIGHT;
+      default:
+        throw new RuntimeException("Didn't get TOP, LEFT, RIGHT, or BOTTOM!");
+    }
   }
 
   private static PositionIndex getTrailing(CSSFlexDirection axis) {
-    return axis == CSSFlexDirection.COLUMN ? PositionIndex.BOTTOM : PositionIndex.RIGHT;
+    switch (axis) {
+      case COLUMN:
+        return PositionIndex.BOTTOM;
+      case COLUMN_REVERSE:
+        return PositionIndex.TOP;
+      case ROW:
+        return PositionIndex.RIGHT;
+      case ROW_REVERSE:
+        return PositionIndex.LEFT;
+      default:
+        throw new RuntimeException("Didn't get COLUMN, COLUMN_REVERSE, ROW, or ROW_REVERSE!");
+    }
   }
 
   private static PositionIndex getPos(CSSFlexDirection axis) {
-    return axis == CSSFlexDirection.COLUMN ? PositionIndex.TOP : PositionIndex.LEFT;
+    switch (axis) {
+      case COLUMN:
+        return PositionIndex.TOP;
+      case COLUMN_REVERSE:
+        return PositionIndex.BOTTOM;
+      case ROW:
+        return PositionIndex.LEFT;
+      case ROW_REVERSE:
+        return PositionIndex.RIGHT;
+      default:
+        throw new RuntimeException("Didn't get COLUMN, COLUMN_REVERSE, ROW, or ROW_REVERSE!");
+    }
   }
 
   private static DimensionIndex getDim(CSSFlexDirection axis) {
-    return axis == CSSFlexDirection.COLUMN ? DimensionIndex.HEIGHT : DimensionIndex.WIDTH;
+    switch (axis) {
+      case COLUMN:
+      case COLUMN_REVERSE:
+        return DimensionIndex.HEIGHT;
+      case ROW:
+      case ROW_REVERSE:
+        return DimensionIndex.WIDTH;
+      default:
+        throw new RuntimeException("Didn't get COLUMN, COLUMN_REVERSE, ROW, or ROW_REVERSE!");
+    }
   }
 
   private static boolean isDimDefined(CSSNode node, CSSFlexDirection axis) {
@@ -196,10 +248,10 @@ public class LayoutEngine {
     float min = CSSConstants.UNDEFINED;
     float max = CSSConstants.UNDEFINED;
 
-    if (axis == CSSFlexDirection.COLUMN) {
+    if (isColumnDirection(axis)) {
       min = node.style.minHeight;
       max = node.style.maxHeight;
-    } else if (axis == CSSFlexDirection.ROW) {
+    } else if (isRowDirection(axis)) {
       min = node.style.minWidth;
       max = node.style.maxWidth;
     }
@@ -233,6 +285,18 @@ public class LayoutEngine {
     setLayoutDimension(node, getDim(axis), maxLayoutDimension);
   }
 
+  private static void setTrailingPosition(
+      CSSNode node,
+      CSSNode child,
+      CSSFlexDirection axis) {
+    setLayoutPosition(
+        child,
+        getTrailing(axis),
+        getLayoutDimension(node, getDim(axis)) -
+            getLayoutDimension(child, getDim(axis)) -
+               getLayoutPosition(child, getPos(axis)));
+  }
+
   private static float getRelativePosition(CSSNode node, CSSFlexDirection axis) {
     float lead = getStylePosition(node, getLeading(axis));
     if (!CSSConstants.isUndefined(lead)) {
@@ -245,8 +309,51 @@ public class LayoutEngine {
     return node.style.flex;
   }
 
+  private static boolean isRowDirection(CSSFlexDirection flexDirection) {
+    return flexDirection == CSSFlexDirection.ROW ||
+           flexDirection == CSSFlexDirection.ROW_REVERSE;
+  }
+
+  private static boolean isColumnDirection(CSSFlexDirection flexDirection) {
+    return flexDirection == CSSFlexDirection.COLUMN ||
+           flexDirection == CSSFlexDirection.COLUMN_REVERSE;
+  }
+
+  private static CSSFlexDirection resolveAxis(
+      CSSFlexDirection axis,
+      CSSDirection direction) {
+    if (direction == CSSDirection.RTL) {
+      if (axis == CSSFlexDirection.ROW) {
+        return CSSFlexDirection.ROW_REVERSE;
+      } else if (axis == CSSFlexDirection.ROW_REVERSE) {
+        return CSSFlexDirection.ROW;
+      }
+    }
+
+    return axis;
+  }
+
+  private static CSSDirection resolveDirection(CSSNode node, CSSDirection parentDirection) {
+    CSSDirection direction = node.style.direction;
+    if (direction == CSSDirection.INHERIT) {
+      direction = (parentDirection == null ? CSSDirection.LTR : parentDirection);
+    }
+
+    return direction;
+  }
+
   private static CSSFlexDirection getFlexDirection(CSSNode node) {
     return node.style.flexDirection;
+  }
+
+  private static CSSFlexDirection getCrossFlexDirection(
+      CSSFlexDirection flexDirection,
+      CSSDirection direction) {
+    if (isColumnDirection(flexDirection)) {
+      return resolveAxis(CSSFlexDirection.ROW, direction);
+    } else {
+      return CSSFlexDirection.COLUMN;
+    }
   }
 
   private static CSSPositionType getPositionType(CSSNode node) {
@@ -292,13 +399,14 @@ public class LayoutEngine {
   /*package*/ static void layoutNode(
       CSSLayoutContext layoutContext,
       CSSNode node,
-      float parentMaxWidth) {
+      float parentMaxWidth,
+      CSSDirection parentDirection) {
     if (needsRelayout(node, parentMaxWidth)) {
       node.lastLayout.requestedWidth = node.layout.width;
       node.lastLayout.requestedHeight = node.layout.height;
       node.lastLayout.parentMaxWidth = parentMaxWidth;
 
-      layoutNodeImpl(layoutContext, node, parentMaxWidth);
+      layoutNodeImpl(layoutContext, node, parentMaxWidth, parentDirection);
       node.lastLayout.copy(node.layout);
     } else {
       node.layout.copy(node.lastLayout);
@@ -310,18 +418,18 @@ public class LayoutEngine {
   private static void layoutNodeImpl(
       CSSLayoutContext layoutContext,
       CSSNode node,
-      float parentMaxWidth) {
+      float parentMaxWidth,
+      CSSDirection parentDirection) {
     for (int i = 0; i < node.getChildCount(); i++) {
       node.getChildAt(i).layout.resetResult();
     }
 
     /** START_GENERATED **/
   
-  
-    CSSFlexDirection mainAxis = getFlexDirection(node);
-    CSSFlexDirection crossAxis = mainAxis == CSSFlexDirection.ROW ?
-      CSSFlexDirection.COLUMN :
-      CSSFlexDirection.ROW;
+    CSSDirection direction = resolveDirection(node, parentDirection);
+    CSSFlexDirection mainAxis = resolveAxis(getFlexDirection(node), direction);
+    CSSFlexDirection crossAxis = getCrossFlexDirection(mainAxis, direction);
+    CSSFlexDirection resolvedRowAxis = resolveAxis(CSSFlexDirection.ROW, direction);
   
     // Handle width and height style attributes
     setDimensionFromStyle(node, mainAxis);
@@ -331,26 +439,30 @@ public class LayoutEngine {
     // delta composed of the margin and left/top/right/bottom
     setLayoutPosition(node, getLeading(mainAxis), getLayoutPosition(node, getLeading(mainAxis)) + getMargin(node, getLeading(mainAxis)) +
       getRelativePosition(node, mainAxis));
+    setLayoutPosition(node, getTrailing(mainAxis), getLayoutPosition(node, getTrailing(mainAxis)) + getMargin(node, getTrailing(mainAxis)) +
+      getRelativePosition(node, mainAxis));
     setLayoutPosition(node, getLeading(crossAxis), getLayoutPosition(node, getLeading(crossAxis)) + getMargin(node, getLeading(crossAxis)) +
+      getRelativePosition(node, crossAxis));
+    setLayoutPosition(node, getTrailing(crossAxis), getLayoutPosition(node, getTrailing(crossAxis)) + getMargin(node, getTrailing(crossAxis)) +
       getRelativePosition(node, crossAxis));
   
     if (isMeasureDefined(node)) {
       float width = CSSConstants.UNDEFINED;
-      if (isDimDefined(node, CSSFlexDirection.ROW)) {
+      if (isDimDefined(node, resolvedRowAxis)) {
         width = node.style.width;
-      } else if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.ROW)))) {
-        width = getLayoutDimension(node, getDim(CSSFlexDirection.ROW));
+      } else if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(resolvedRowAxis)))) {
+        width = getLayoutDimension(node, getDim(resolvedRowAxis));
       } else {
         width = parentMaxWidth -
-          getMarginAxis(node, CSSFlexDirection.ROW);
+          getMarginAxis(node, resolvedRowAxis);
       }
-      width -= getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
+      width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
   
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
       // the element is flexible.
-      boolean isRowUndefined = !isDimDefined(node, CSSFlexDirection.ROW) &&
-        CSSConstants.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.ROW)));
+      boolean isRowUndefined = !isDimDefined(node, resolvedRowAxis) &&
+        CSSConstants.isUndefined(getLayoutDimension(node, getDim(resolvedRowAxis)));
       boolean isColumnUndefined = !isDimDefined(node, CSSFlexDirection.COLUMN) &&
         CSSConstants.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.COLUMN)));
   
@@ -362,7 +474,7 @@ public class LayoutEngine {
         );
         if (isRowUndefined) {
           node.layout.width = measureDim.width +
-            getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
+            getPaddingAndBorderAxis(node, resolvedRowAxis);
         }
         if (isColumnUndefined) {
           node.layout.height = measureDim.height +
@@ -465,20 +577,20 @@ public class LayoutEngine {
   
         } else {
           maxWidth = CSSConstants.UNDEFINED;
-          if (mainAxis != CSSFlexDirection.ROW) {
+          if (!isRowDirection(mainAxis)) {
             maxWidth = parentMaxWidth -
-              getMarginAxis(node, CSSFlexDirection.ROW) -
-              getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
+              getMarginAxis(node, resolvedRowAxis) -
+              getPaddingAndBorderAxis(node, resolvedRowAxis);
   
-            if (isDimDefined(node, CSSFlexDirection.ROW)) {
-              maxWidth = getLayoutDimension(node, getDim(CSSFlexDirection.ROW)) -
-                getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
+            if (isDimDefined(node, resolvedRowAxis)) {
+              maxWidth = getLayoutDimension(node, getDim(resolvedRowAxis)) -
+                getPaddingAndBorderAxis(node, resolvedRowAxis);
             }
           }
   
           // This is the main recursive call. We layout non flexible children.
           if (alreadyComputedNextLayout == 0) {
-            layoutNode(layoutContext, child, maxWidth);
+            layoutNode(layoutContext, child, maxWidth, direction);
           }
   
           // Absolute positioned elements do not take part of the layout, so we
@@ -564,17 +676,17 @@ public class LayoutEngine {
             ));
   
             maxWidth = CSSConstants.UNDEFINED;
-            if (isDimDefined(node, CSSFlexDirection.ROW)) {
-              maxWidth = getLayoutDimension(node, getDim(CSSFlexDirection.ROW)) -
-                getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
-            } else if (mainAxis != CSSFlexDirection.ROW) {
+            if (isDimDefined(node, resolvedRowAxis)) {
+              maxWidth = getLayoutDimension(node, getDim(resolvedRowAxis)) -
+                getPaddingAndBorderAxis(node, resolvedRowAxis);
+            } else if (!isRowDirection(mainAxis)) {
               maxWidth = parentMaxWidth -
-                getMarginAxis(node, CSSFlexDirection.ROW) -
-                getPaddingAndBorderAxis(node, CSSFlexDirection.ROW);
+                getMarginAxis(node, resolvedRowAxis) -
+                getPaddingAndBorderAxis(node, resolvedRowAxis);
             }
   
             // And we recursively call the layout algorithm for this child
-            layoutNode(layoutContext, child, maxWidth);
+            layoutNode(layoutContext, child, maxWidth, direction);
           }
         }
   
@@ -627,6 +739,11 @@ public class LayoutEngine {
           // If the child is position absolute (without top/left) or relative,
           // we put it at the current accumulated offset.
           setLayoutPosition(child, getPos(mainAxis), getLayoutPosition(child, getPos(mainAxis)) + mainDim);
+  
+          // Define the trailing position accordingly.
+          if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
+            setTrailingPosition(node, child, mainAxis);
+          }
         }
   
         // Now that we placed the element, we need to update the variables
@@ -721,6 +838,12 @@ public class LayoutEngine {
         // We can never assign a width smaller than the padding and borders
         getPaddingAndBorderAxis(node, mainAxis)
       ));
+  
+      // Now that the width is defined, we should update the trailing
+      // positions for the children.
+      for (i = 0; i < node.getChildCount(); ++i) {
+        setTrailingPosition(node, node.getChildAt(i), mainAxis);
+      }
     }
   
     if (CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis)))) {

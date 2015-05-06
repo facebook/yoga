@@ -184,6 +184,7 @@ var layoutTestUtils = (function() {
       transferSpacing(div, node, 'padding', '');
       transferSpacing(div, node, 'border', 'Width');
       transfer(div, node, 'flexDirection');
+      transfer(div, node, 'direction');
       transfer(div, node, 'flex');
       transfer(div, node, 'flexWrap');
       transfer(div, node, 'justifyContent');

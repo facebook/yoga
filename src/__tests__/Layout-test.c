@@ -90,6 +90,59 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 500;
+        node_1->style.dimensions[CSS_HEIGHT] = 500;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 250;
+        node_1->style.dimensions[CSS_HEIGHT] = 250;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 125;
+        node_1->style.dimensions[CSS_HEIGHT] = 125;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 500;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 500;
+        node_1->layout.dimensions[CSS_HEIGHT] = 500;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 250;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 250;
+        node_1->layout.dimensions[CSS_HEIGHT] = 250;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 125;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 125;
+        node_1->layout.dimensions[CSS_HEIGHT] = 125;
+      }
+    }
+
+    test("should layout node with children in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
       init_css_node_children(node_0, 2);
@@ -152,6 +205,76 @@ int main()
     }
 
     test("should layout node with nested children", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 500;
+        node_1->style.dimensions[CSS_HEIGHT] = 500;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+        node_1->style.dimensions[CSS_WIDTH] = 500;
+        node_1->style.dimensions[CSS_HEIGHT] = 500;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 250;
+          node_2->style.dimensions[CSS_HEIGHT] = 250;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->style.dimensions[CSS_WIDTH] = 250;
+          node_2->style.dimensions[CSS_HEIGHT] = 250;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 500;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 500;
+        node_1->layout.dimensions[CSS_HEIGHT] = 500;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 500;
+        node_1->layout.dimensions[CSS_HEIGHT] = 500;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 250;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 250;
+          node_2->layout.dimensions[CSS_HEIGHT] = 250;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 250;
+          node_2->layout.dimensions[CSS_HEIGHT] = 250;
+        }
+      }
+    }
+
+    test("should layout node with nested children in reverse", root_node, root_layout);
   }
 
   {
@@ -250,6 +373,121 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      node_0->style.margin[CSS_LEFT] = 10;
+      node_0->style.margin[CSS_TOP] = 10;
+      node_0->style.margin[CSS_RIGHT] = 10;
+      node_0->style.margin[CSS_BOTTOM] = 10;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.margin[CSS_LEFT] = 50;
+        node_1->style.margin[CSS_TOP] = 50;
+        node_1->style.margin[CSS_RIGHT] = 50;
+        node_1->style.margin[CSS_BOTTOM] = 50;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.margin[CSS_LEFT] = 25;
+        node_1->style.margin[CSS_TOP] = 25;
+        node_1->style.margin[CSS_RIGHT] = 25;
+        node_1->style.margin[CSS_BOTTOM] = 25;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.margin[CSS_LEFT] = 10;
+        node_1->style.margin[CSS_TOP] = 10;
+        node_1->style.margin[CSS_RIGHT] = 10;
+        node_1->style.margin[CSS_BOTTOM] = 10;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 10;
+      node_0->layout.position[CSS_LEFT] = 10;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 850;
+        node_1->layout.position[CSS_LEFT] = 50;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 675;
+        node_1->layout.position[CSS_LEFT] = 25;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 540;
+        node_1->layout.position[CSS_LEFT] = 10;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with several children in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW_REVERSE;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 300;
+        node_1->style.dimensions[CSS_HEIGHT] = 150;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 100;
+        node_1->layout.dimensions[CSS_WIDTH] = 300;
+        node_1->layout.dimensions[CSS_HEIGHT] = 150;
+      }
+    }
+
+    test("should layout rtl with reverse correctly", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
@@ -289,6 +527,52 @@ int main()
     }
 
     test("should layout node with row flex direction", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 300;
+        node_1->style.dimensions[CSS_HEIGHT] = 150;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 900;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 600;
+        node_1->layout.dimensions[CSS_WIDTH] = 300;
+        node_1->layout.dimensions[CSS_HEIGHT] = 150;
+      }
+    }
+
+    test("should layout node with row flex direction in rtl", root_node, root_layout);
   }
 
   {
@@ -338,6 +622,50 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 300;
+        node_1->style.dimensions[CSS_HEIGHT] = 150;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 350;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 150;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 300;
+        node_1->layout.dimensions[CSS_HEIGHT] = 150;
+      }
+    }
+
+    test("should layout node based on children main dimensions in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
       init_css_node_children(node_0, 2);
@@ -376,6 +704,51 @@ int main()
     }
 
     test("should layout node with just flex", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 800;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 800;
+      }
+    }
+
+    test("should layout node with just flex in reverse", root_node, root_layout);
   }
 
   {
@@ -450,6 +823,78 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+        node_1->style.flex = 1;
+        node_1->style.dimensions[CSS_WIDTH] = 1000;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+          node_2->style.flex = 1;
+          node_2->style.dimensions[CSS_WIDTH] = 1000;
+          init_css_node_children(node_2, 1);
+          {
+            css_node_t *node_3;
+            node_3 = node_2->get_child(node_2->context, 0);
+            node_3->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+            node_3->style.flex = 1;
+            node_3->style.dimensions[CSS_WIDTH] = 1000;
+          }
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 1000;
+        node_1->layout.dimensions[CSS_HEIGHT] = 1000;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 1000;
+          node_2->layout.dimensions[CSS_HEIGHT] = 1000;
+          init_css_node_children(node_2, 1);
+          {
+            css_node_t *node_3;
+            node_3 = node_2->get_child(node_2->context, 0);
+            node_3->layout.position[CSS_TOP] = 0;
+            node_3->layout.position[CSS_LEFT] = 0;
+            node_3->layout.dimensions[CSS_WIDTH] = 1000;
+            node_3->layout.dimensions[CSS_HEIGHT] = 1000;
+          }
+        }
+      }
+    }
+
+    test("should layout node with flex recursively in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
       node_0->style.margin[CSS_LEFT] = 5;
@@ -494,6 +939,57 @@ int main()
     }
 
     test("should layout node with targeted margin", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      node_0->style.margin[CSS_LEFT] = 5;
+      node_0->style.margin[CSS_TOP] = 10;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.margin[CSS_LEFT] = 15;
+        node_1->style.margin[CSS_TOP] = 50;
+        node_1->style.margin[CSS_BOTTOM] = 20;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.margin[CSS_LEFT] = 30;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 10;
+      node_0->layout.position[CSS_LEFT] = 5;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 880;
+        node_1->layout.position[CSS_LEFT] = 15;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 730;
+        node_1->layout.position[CSS_LEFT] = 30;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with targeted margin in reverse", root_node, root_layout);
   }
 
   {
@@ -545,6 +1041,52 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_START;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 900;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 800;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with justifyContent: flex-start in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
@@ -584,6 +1126,52 @@ int main()
     }
 
     test("should layout node with justifyContent: flex-end", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with justifyContent: flex-end in reverse", root_node, root_layout);
   }
 
   {
@@ -635,6 +1223,52 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 900;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with justifyContent: space-between in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
@@ -680,6 +1314,52 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 700;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 200;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with justifyContent: space-around in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.justify_content = CSS_JUSTIFY_CENTER;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
@@ -719,6 +1399,52 @@ int main()
     }
 
     test("should layout node with justifyContent: center", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 500;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 400;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with justifyContent: center in reverse", root_node, root_layout);
   }
 
   {
@@ -807,6 +1533,52 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.align_items = CSS_ALIGN_FLEX_START;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 900;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 800;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with alignItems: flex-start in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_CENTER;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
@@ -852,6 +1624,52 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.align_items = CSS_ALIGN_CENTER;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 900;
+        node_1->layout.position[CSS_LEFT] = 400;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 800;
+        node_1->layout.position[CSS_LEFT] = 450;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with alignItems: center in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_FLEX_END;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
@@ -891,6 +1709,52 @@ int main()
     }
 
     test("should layout node with alignItems: flex-end", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.align_items = CSS_ALIGN_FLEX_END;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 900;
+        node_1->layout.position[CSS_LEFT] = 800;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 800;
+        node_1->layout.position[CSS_LEFT] = 900;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with alignItems: flex-end in reverse", root_node, root_layout);
   }
 
   {
@@ -943,6 +1807,53 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.align_items = CSS_ALIGN_FLEX_END;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.align_self = CSS_ALIGN_CENTER;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 900;
+        node_1->layout.position[CSS_LEFT] = 800;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 800;
+        node_1->layout.position[CSS_LEFT] = 450;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with alignSelf overrides alignItems in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.align_items = CSS_ALIGN_STRETCH;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
@@ -979,6 +1890,43 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 900;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 1000;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should layout node with alignItem: stretch in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -1005,6 +1953,39 @@ int main()
     }
 
     test("should layout empty node", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout empty node in reverse", root_node, root_layout);
   }
 
   {
@@ -1047,6 +2028,43 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.margin[CSS_LEFT] = 5;
+        node_1->style.margin[CSS_TOP] = 5;
+        node_1->style.margin[CSS_RIGHT] = 5;
+        node_1->style.margin[CSS_BOTTOM] = 5;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 10;
+      node_0->layout.dimensions[CSS_HEIGHT] = 10;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 5;
+        node_1->layout.position[CSS_LEFT] = 5;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout child with margin in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_HEIGHT] = 100;
       init_css_node_children(node_0, 2);
       {
@@ -1082,6 +2100,48 @@ int main()
     }
 
     test("should not shrink children if not enough space", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = -200;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should not shrink children if not enough space in reverse", root_node, root_layout);
   }
 
   {
@@ -1136,6 +2196,42 @@ int main()
     }
 
     test("should layout flex-end taking into account margin", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.margin[CSS_TOP] = 10;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 10;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout flex-end taking into account margin in reverse", root_node, root_layout);
   }
 
   {
@@ -1204,6 +2300,65 @@ int main()
       {
         css_node_t *node_1;
         node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+        node_1->style.align_items = CSS_ALIGN_FLEX_END;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.margin[CSS_LEFT] = 10;
+          node_2->style.margin[CSS_TOP] = 10;
+          node_2->style.margin[CSS_RIGHT] = 10;
+          node_2->style.margin[CSS_BOTTOM] = 10;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 20;
+      node_0->layout.dimensions[CSS_HEIGHT] = 120;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 20;
+        node_1->layout.dimensions[CSS_HEIGHT] = 120;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 110;
+          node_2->layout.position[CSS_LEFT] = 10;
+          node_2->layout.dimensions[CSS_WIDTH] = 0;
+          node_2->layout.dimensions[CSS_HEIGHT] = 0;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 20;
+          node_2->layout.dimensions[CSS_WIDTH] = 0;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should layout alignItems with margin in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.flex = 1;
       }
     }
@@ -1261,6 +2416,41 @@ int main()
     }
 
     test("should layout alignItems stretch and margin", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.align_items = CSS_ALIGN_STRETCH;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.margin[CSS_LEFT] = 10;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 10;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 10;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout alignItems stretch and margin in reverse", root_node, root_layout);
   }
 
   {
@@ -2030,6 +3220,48 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_AROUND;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1 = node_0->get_child(node_0->context, 1);
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout node with space-around and child position absolute in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 700;
       init_css_node_children(node_0, 1);
@@ -2060,6 +3292,43 @@ int main()
     }
 
     test("should layout node with flex and main margin", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 700;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.margin[CSS_RIGHT] = 5;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 700;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 695;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout node with flex and main margin in rtl", root_node, root_layout);
   }
 
   {
@@ -2109,6 +3378,50 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 700;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.padding[CSS_LEFT] = 5;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 700;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 352.5;
+        node_1->layout.dimensions[CSS_WIDTH] = 347.5;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 352.5;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout node with multiple flex and padding in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 700;
       init_css_node_children(node_0, 2);
@@ -2146,6 +3459,50 @@ int main()
     }
 
     test("should layout node with multiple flex and margin", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 700;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.margin[CSS_RIGHT] = 5;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 700;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 352.5;
+        node_1->layout.dimensions[CSS_WIDTH] = 347.5;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 347.5;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout node with multiple flex and margin in rtl", root_node, root_layout);
   }
 
   {
@@ -2223,6 +3580,43 @@ int main()
     }
 
     test("should layout node with flex and position absolute", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 600;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.position_type = CSS_POSITION_ABSOLUTE;
+        node_1->style.flex = 1;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 600;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 600;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout node with flex and position absolute in rtl", root_node, root_layout);
   }
 
   {
@@ -2474,6 +3868,42 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.border[CSS_LEFT] = 1;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.margin[CSS_LEFT] = -8;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 1;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should handle negative margin and min padding correctly in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->measure = measure;
       node_0->context = "small";
     }
@@ -2629,6 +4059,58 @@ int main()
     }
 
     test("should layout node with text and flex", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.direction = CSS_DIRECTION_RTL;
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.dimensions[CSS_WIDTH] = 500;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = 1;
+          node_2->measure = measure;
+          node_2->context = "loooooooooong with space";
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 500;
+      node_0->layout.dimensions[CSS_HEIGHT] = 18;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 500;
+        node_1->layout.dimensions[CSS_HEIGHT] = 18;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 500;
+          node_2->layout.dimensions[CSS_HEIGHT] = 18;
+        }
+      }
+    }
+
+    test("should layout node with text and flex in rtl", root_node, root_layout);
   }
 
   {
@@ -2875,6 +4357,48 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 900;
+        node_1 = node_0->get_child(node_0->context, 1);
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 0;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = -800;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 900;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = -800;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout space-between when remaining space is negative in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
       node_0->style.dimensions[CSS_WIDTH] = 200;
@@ -2905,6 +4429,43 @@ int main()
     }
 
     test("should layout flex-end when remaining space is negative", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.justify_content = CSS_JUSTIFY_FLEX_END;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 900;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 0;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 900;
+        node_1->layout.dimensions[CSS_HEIGHT] = 0;
+      }
+    }
+
+    test("should layout flex-end when remaining space is negative in rtl", root_node, root_layout);
   }
 
   {
@@ -2959,6 +4520,61 @@ int main()
     }
 
     test("should layout text with flexDirection row", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.dimensions[CSS_WIDTH] = 200;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.margin[CSS_LEFT] = 20;
+          node_2->style.margin[CSS_TOP] = 20;
+          node_2->style.margin[CSS_RIGHT] = 20;
+          node_2->style.margin[CSS_BOTTOM] = 20;
+          node_2->measure = measure;
+          node_2->context = "loooooooooong with space";
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 58;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 58;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 20;
+          node_2->layout.position[CSS_LEFT] = 7.578125;
+          node_2->layout.dimensions[CSS_WIDTH] = 172.421875;
+          node_2->layout.dimensions[CSS_HEIGHT] = 18;
+        }
+      }
+    }
+
+    test("should layout text with flexDirection row in rtl", root_node, root_layout);
   }
 
   {
@@ -3102,6 +4718,53 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+      node_0->style.align_self = CSS_ALIGN_FLEX_START;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
+        node_1->style.flex = 2.5;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.align_self = CSS_ALIGN_FLEX_START;
+        node_1->style.flex = 7.5;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 75;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 25;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 0;
+        node_1->layout.dimensions[CSS_HEIGHT] = 75;
+      }
+    }
+
+    test("should layout with arbitrary flex in reverse", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN_REVERSE;
       node_0->style.align_self = CSS_ALIGN_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       node_0->style.dimensions[CSS_HEIGHT] = 100;
@@ -3128,19 +4791,19 @@ int main()
       {
         css_node_t *node_1;
         node_1 = node_0->get_child(node_0->context, 0);
-        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
         node_1 = node_0->get_child(node_0->context, 1);
-        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_TOP] = 100;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 0;
         node_1->layout.dimensions[CSS_HEIGHT] = 0;
       }
     }
 
-    test("should layout with negative flex", root_node, root_layout);
+    test("should layout with negative flex in reverse", root_node, root_layout);
   }
 
   {
@@ -3731,6 +5394,60 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.flex_wrap = CSS_WRAP;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 40;
+        node_1->style.dimensions[CSS_HEIGHT] = 10;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 40;
+        node_1->style.dimensions[CSS_HEIGHT] = 10;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 40;
+        node_1->style.dimensions[CSS_HEIGHT] = 10;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 20;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 60;
+        node_1->layout.dimensions[CSS_WIDTH] = 40;
+        node_1->layout.dimensions[CSS_HEIGHT] = 10;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 20;
+        node_1->layout.dimensions[CSS_WIDTH] = 40;
+        node_1->layout.dimensions[CSS_HEIGHT] = 10;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 10;
+        node_1->layout.position[CSS_LEFT] = 60;
+        node_1->layout.dimensions[CSS_WIDTH] = 40;
+        node_1->layout.dimensions[CSS_HEIGHT] = 10;
+      }
+    }
+
+    test("should layout flex-wrap in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.flex_wrap = CSS_WRAP;
       node_0->style.dimensions[CSS_HEIGHT] = 100;
       init_css_node_children(node_0, 2);
@@ -4008,6 +5725,58 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.minDimensions[CSS_WIDTH] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 250;
+        node_1->layout.dimensions[CSS_WIDTH] = 50;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 50;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 50;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should override flex direction size with min bounds in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 300;
       node_0->style.dimensions[CSS_HEIGHT] = 200;
@@ -4060,6 +5829,59 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 110;
+        node_1->style.minDimensions[CSS_WIDTH] = 90;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 200;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 100;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should not override flex direction size within bounds in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 300;
       node_0->style.dimensions[CSS_HEIGHT] = 200;
@@ -4105,6 +5927,58 @@ int main()
     }
 
     test("should override flex direction size with max bounds", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 60;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 180;
+        node_1->layout.dimensions[CSS_WIDTH] = 120;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 120;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 120;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should override flex direction size with max bounds in rtl", root_node, root_layout);
   }
 
   {
@@ -4164,6 +6038,60 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 60;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 60;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
+        node_1->style.maxDimensions[CSS_WIDTH] = 60;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 240;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 180;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 120;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should ignore flex size if fully max bound in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.dimensions[CSS_WIDTH] = 300;
       node_0->style.dimensions[CSS_HEIGHT] = 200;
@@ -4211,6 +6139,60 @@ int main()
     }
 
     test("should ignore flex size if fully min bound", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 300;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.minDimensions[CSS_WIDTH] = 120;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.minDimensions[CSS_WIDTH] = 120;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = 1;
+        node_1->style.minDimensions[CSS_WIDTH] = 120;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 300;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 180;
+        node_1->layout.dimensions[CSS_WIDTH] = 120;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 60;
+        node_1->layout.dimensions[CSS_WIDTH] = 120;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = -60;
+        node_1->layout.dimensions[CSS_WIDTH] = 120;
+        node_1->layout.dimensions[CSS_HEIGHT] = 200;
+      }
+    }
+
+    test("should ignore flex size if fully min bound in rtl", root_node, root_layout);
   }
 
   {
@@ -4610,6 +6592,44 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1->style.minDimensions[CSS_WIDTH] = 100;
+        node_1->style.minDimensions[CSS_HEIGHT] = 110;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 110;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 900;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 110;
+      }
+    }
+
+    test("should keep cross axis size within min bounds in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 1000;
       node_0->style.dimensions[CSS_HEIGHT] = 1000;
       init_css_node_children(node_0, 1);
@@ -4872,6 +6892,98 @@ int main()
     }
 
     test("should layout absolutely positioned node with padded flex 1 parent", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 50;
+          node_2->style.dimensions[CSS_HEIGHT] = 50;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->style.dimensions[CSS_WIDTH] = 50;
+          node_2->style.dimensions[CSS_HEIGHT] = 50;
+        }
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.direction = CSS_DIRECTION_LTR;
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 50;
+          node_2->style.dimensions[CSS_HEIGHT] = 50;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->style.dimensions[CSS_WIDTH] = 50;
+          node_2->style.dimensions[CSS_HEIGHT] = 50;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 150;
+          node_2->layout.dimensions[CSS_WIDTH] = 50;
+          node_2->layout.dimensions[CSS_HEIGHT] = 50;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 100;
+          node_2->layout.dimensions[CSS_WIDTH] = 50;
+          node_2->layout.dimensions[CSS_HEIGHT] = 50;
+        }
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 50;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 50;
+          node_2->layout.dimensions[CSS_HEIGHT] = 50;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 50;
+          node_2->layout.dimensions[CSS_WIDTH] = 50;
+          node_2->layout.dimensions[CSS_HEIGHT] = 50;
+        }
+      }
+    }
+
+    test("should layout nested nodes with mixed directions", root_node, root_layout);
   }
   /** END_GENERATED **/
   return tests_finished();
