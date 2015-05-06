@@ -122,6 +122,12 @@ function printLayout(test) {
       'space-between': 'CSS_JUSTIFY_SPACE_BETWEEN',
       'space-around': 'CSS_JUSTIFY_SPACE_AROUND'
     });
+    addEnum(node, 'alignContent', 'align_content', {
+      'flex-start': 'CSS_ALIGN_FLEX_START',
+      'center': 'CSS_ALIGN_CENTER',
+      'flex-end': 'CSS_ALIGN_FLEX_END',
+      'stretch': 'CSS_ALIGN_STRETCH'
+    });
     addEnum(node, 'alignItems', 'align_items', {
       'flex-start': 'CSS_ALIGN_FLEX_START',
       'center': 'CSS_ALIGN_CENTER',
@@ -231,11 +237,13 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/\.maxHeight/g, '.maxDimensions[CSS_HEIGHT]')
     .replace(/\.minWidth/g, '.minDimensions[CSS_WIDTH]')
     .replace(/\.minHeight/g, '.minDimensions[CSS_HEIGHT]')
+    .replace(/\.lineIndex/g, '.line_index')
     .replace(/layout\[dim/g, 'layout.dimensions[dim')
     .replace(/layout\[pos/g, 'layout.position[pos')
     .replace(/layout\[leading/g, 'layout.position[leading')
     .replace(/style\[dim/g, 'style.dimensions[dim')
     .replace(/node.children\[i\]/g, 'node->get_child(node->context, i)')
+    .replace(/node.children\[ii\]/g, 'node->get_child(node->context, ii)')
     .replace(/node\./g, 'node->')
     .replace(/child\./g, 'child->')
     .replace(/parent\./g, 'parent->')

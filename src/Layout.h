@@ -82,6 +82,7 @@ typedef struct {
   float last_parent_max_width;
   float last_dimensions[2];
   float last_position[2];
+
 } css_layout_t;
 
 typedef struct {
@@ -91,6 +92,7 @@ typedef struct {
 typedef struct {
   css_flex_direction_t flex_direction;
   css_justify_t justify_content;
+  css_align_t align_content;
   css_align_t align_items;
   css_align_t align_self;
   css_position_type_t position_type;
@@ -119,6 +121,7 @@ typedef struct css_node {
   css_style_t style;
   css_layout_t layout;
   int children_count;
+  int line_index;
 
   css_dim_t (*measure)(void *context, float width);
   void (*print)(void *context);

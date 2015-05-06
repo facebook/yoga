@@ -35,6 +35,7 @@ static bool eq(float a, float b) {
 
 void init_css_node(css_node_t *node) {
   node->style.align_items = CSS_ALIGN_STRETCH;
+  node->style.align_content = CSS_ALIGN_STRETCH;
 
   // Some of the fields default to undefined and not 0
   node->style.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
@@ -271,6 +272,10 @@ static css_justify_t getJustifyContent(css_node_t *node) {
   return node->style.justify_content;
 }
 
+static css_align_t getAlignContent(css_node_t *node) {
+  return node->style.align_content;
+}
+
 static css_align_t getAlignItem(css_node_t *node, css_node_t *child) {
   if (child->style.align_self != CSS_ALIGN_AUTO) {
     return child->style.align_self;
@@ -492,6 +497,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
   // We aggregate the total dimensions of the container in those two variables
   float linesCrossDim = 0;
   float linesMainDim = 0;
+  int linesCount = 0;
   while (endLine < node->children_count) {
     // <Loop A> Layout non flexible children and count children by type
 
@@ -676,6 +682,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
 
     for (i = startLine; i < endLine; ++i) {
       child = node->get_child(node->context, i);
+      child->line_index = linesCount;
 
       if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
           isPosDefined(child, leading[mainAxis])) {
@@ -770,7 +777,110 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
 
     linesCrossDim += crossDim;
     linesMainDim = fmaxf(linesMainDim, mainDim);
+    linesCount += 1;
     startLine = endLine;
+  }
+
+  // <Loop DD>
+  //
+  // PIERRE: More than one line, we need to layout the crossAxis according to
+  // alignContent.
+  //
+  // Note that we could probably remove <Loop D> and handle the one line case
+  // here too, but for the moment this is safer since it won't interfere with
+  // previously working code.
+  //
+  // See specs:
+  // http://www.w3.org/TR/2012/CR-css3-flexbox-20120918/#layout-algorithm
+  // section 9.4
+  //
+  if (linesCount > 1 &&
+      (!isUndefined(node->layout.dimensions[dim[crossAxis]])))
+  {
+    float nodeCrossAxisInnerSize = node->layout.dimensions[dim[crossAxis]] -
+        getPaddingAndBorderAxis(node, crossAxis);
+    float remainingCrossDim = nodeCrossAxisInnerSize - linesCrossDim;
+
+    float crossDimAdd = 0;
+    float currentLead = getPaddingAndBorder(node, leading[crossAxis]);
+
+    css_align_t alignContent = getAlignContent(node);
+    if (alignContent == CSS_ALIGN_FLEX_END) {
+      currentLead += remainingCrossDim;
+    }
+    else if (alignContent == CSS_ALIGN_CENTER) {
+      currentLead += remainingCrossDim / 2;
+    }
+    else if (alignContent == CSS_ALIGN_STRETCH) {
+      if (nodeCrossAxisInnerSize > linesCrossDim) {
+        crossDimAdd = (remainingCrossDim / linesCount);
+      }
+    }
+
+    // find the first node on the first line
+    for (i = 0; i < node->children_count; ) {
+      int startIndex = i;
+      int lineIndex = -1;
+
+      // get the first child on the current line
+      {
+        child = node->get_child(node->context, i);
+        if (getPositionType(child) != CSS_POSITION_RELATIVE) {
+          ++i;
+          continue;
+        }
+        lineIndex = child->line_index;
+      }
+
+      // compute the line's height and find the endIndex
+      float lineHeight = 0;
+      for (ii = startIndex; ii < node->children_count; ++ii) {
+        child = node->get_child(node->context, ii);
+        if (getPositionType(child) != CSS_POSITION_RELATIVE) {
+          continue;
+        }
+        if (child->line_index != lineIndex) {
+          break;
+        }
+        if (!isUndefined(child->layout.dimensions[dim[crossAxis]])) {
+          lineHeight = fmaxf(lineHeight,child->layout.dimensions[dim[crossAxis]] +
+                             getMarginAxis(child,crossAxis));
+        }
+      }
+      int endIndex = ii;
+      lineHeight += crossDimAdd;
+
+      for (ii = startIndex; ii < endIndex; ++ii) {
+        child = node->get_child(node->context, ii);
+        if (getPositionType(child) != CSS_POSITION_RELATIVE) {
+          continue;
+        }
+
+        css_align_t alignItem = getAlignItem(node, child);
+        float crossPosition = child->layout.position[pos[crossAxis]]; // preserve current position if someting goes wrong with alignItem?
+        if (alignItem == CSS_ALIGN_FLEX_START) {
+          crossPosition = currentLead + getMargin(child,leading[crossAxis]);
+        }
+        else if (alignItem == CSS_ALIGN_FLEX_END) {
+          crossPosition = currentLead + lineHeight -
+            getMargin(child,trailing[crossAxis]) -
+            child->layout.dimensions[dim[crossAxis]];
+        }
+        else if (alignItem == CSS_ALIGN_CENTER) {
+          float childHeight = child->layout.dimensions[dim[crossAxis]];
+          crossPosition = currentLead + ((lineHeight - childHeight)/2);
+        }
+        else if (alignItem == CSS_ALIGN_STRETCH) {
+          crossPosition = currentLead + getMargin(child,leading[crossAxis]);
+          // TODO: Correctly set the height of items with undefined (auto)
+          //       crossAxis dimension.
+        }
+        child->layout.position[pos[crossAxis]] = crossPosition;
+      }
+
+      currentLead += lineHeight;
+      i = endIndex;
+    }
   }
 
   // If the user didn't specify a width or height, and it has not been set
