@@ -11,11 +11,11 @@
 #include <stdlib.h>
 
   /** START_GENERATED **/
-#define SMALL_WIDTH 34.671875
+#define SMALL_WIDTH 35
 #define SMALL_HEIGHT 18
-#define BIG_WIDTH 172.421875
-#define BIG_HEIGHT 36
-#define BIG_MIN_WIDTH 100.4375
+#define BIG_WIDTH 172
+#define BIG_HEIGHT 37
+#define BIG_MIN_WIDTH 100
 #define SMALL_TEXT "small"
 #define LONG_TEXT "loooooooooong with space"
   /** END_GENERATED **/
