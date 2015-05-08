@@ -429,6 +429,11 @@ var layoutTestUtils = (function() {
       testNamedLayout('expected-dom', expectedLayout, domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
+    testLayoutAgainstDomOnly: function(node, expectedLayout) {
+      var layout = computeCSSLayout(node);
+      var domLayout = computeDOMLayout(node);
+      testNamedLayout('layout-dom', layout, domLayout);
+    },
     testFillNodes: testFillNodes,
     testExtractNodes: testExtractNodes,
     testRandomLayout: function(node) {

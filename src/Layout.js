@@ -22,7 +22,7 @@ var computeLayout = (function() {
 
   var CSS_ALIGN_FLEX_START = 'flex-start';
   var CSS_ALIGN_CENTER = 'center';
-  // var CSS_ALIGN_FLEX_END = 'flex-end';
+  var CSS_ALIGN_FLEX_END = 'flex-end';
   var CSS_ALIGN_STRETCH = 'stretch';
 
   var CSS_POSITION_RELATIVE = 'relative';
