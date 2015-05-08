@@ -65,6 +65,7 @@ describe('Random layout', function() {
     randEnum(node, 0.5, 'justifyContent', ['flex-start', 'center', 'flex-end', 'space-between', 'space-around']);
     randEnum(node, 0.5, 'alignItems', ['flex-start', 'center', 'flex-end', 'stretch']);
     randEnum(node, 0.5, 'alignSelf', ['flex-start', 'center', 'flex-end', 'stretch']);
+    randEnum(node, 0.5, 'alignContent', ['flex-start', 'center', 'flex-end', 'stretch']);
     randEnum(node, 0.5, 'position', ['relative', 'absolute']);
     randEnum(node, 0.5, 'flexWrap', ['nowrap', 'wrap']);
     //randEnum(node, 0.5, 'measure', [text(texts.small), text(texts.big)]);

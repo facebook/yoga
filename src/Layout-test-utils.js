@@ -201,6 +201,7 @@ var layoutTestUtils = (function() {
       transfer(div, node, 'justifyContent');
       transfer(div, node, 'alignSelf');
       transfer(div, node, 'alignItems');
+      transfer(div, node, 'alignContent');
       transfer(div, node, 'position');
       parent.appendChild(div);
       (node.children || []).forEach(function(child) {
@@ -370,11 +371,13 @@ var layoutTestUtils = (function() {
     div.style.display = 'flex';
     div.style.flexDirection = 'column';
     div.style.alignItems = 'flex-start';
+    div.style.alignContent = 'stretch';
 
     var span = document.createElement('span');
     span.style.display = 'flex';
     span.style.flexDirection = 'column';
     span.style.alignItems = 'flex-start';
+    span.style.alignContent = 'stretch';
     span.innerText = text;
 
     div.appendChild(span);
