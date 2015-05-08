@@ -10,6 +10,18 @@
 
 var layoutTestUtils = (function() {
 
+  //
+  // Sets the test cases precision, by default set to 1.0, aka pixel precision
+  // (assuming the browser does pixel snapping - and that we're ok with being
+  // 'only' pixel perfect).
+  //
+  // Set it to '10' for .1 precision, etc... in theory the browser is doing
+  // 'pixel' snapping so 1.0 should do, the code is left for clarity...
+  //
+  // Set it to undefined to disable and use full precision.
+  //
+  var testMeasurePrecision = 1.0;
+
   if (typeof jasmine !== 'undefined') {
     jasmine.matchersUtil.buildFailureMessage = function () {
       var args = Array.prototype.slice.call(arguments, 0),
@@ -227,11 +239,33 @@ var layoutTestUtils = (function() {
     return layout;
   }
 
+  function inplaceRoundNumbersInObject(aObj) {
+    if (!testMeasurePrecision) // undefined/0, disables rounding
+      return;
+
+    for (var key in aObj) {
+      if (!aObj.hasOwnProperty(key))
+        continue;
+      var val = aObj[key];
+      switch (typeof(val)) {
+      case 'number': {
+        aObj[key] = Math.floor((val*testMeasurePrecision)+0.5)/testMeasurePrecision;
+        break;
+      }
+      case 'object': {
+        inplaceRoundNumbersInObject(val);
+        break;
+      }
+      }
+    }
+  }
+
   function nameLayout(name, layout) {
     var namedLayout = {name: name};
     for (var key in layout) {
       namedLayout[key] = layout[key];
     }
+    inplaceRoundNumbersInObject(namedLayout);
     return namedLayout;
   }
 
@@ -363,7 +397,7 @@ var layoutTestUtils = (function() {
     smallWidth: 34.671875,
     smallHeight: 18,
     bigWidth: 172.421875,
-    bigHeight: 36,
+    bigHeight: 37,
     bigMinWidth: 100.4375
   };
 
@@ -379,6 +413,11 @@ var layoutTestUtils = (function() {
       bigMinWidth: measureTextSizes(texts.big, 0).width
     };
   }
+
+  // round the text sizes so that we dont have to update it for every browser
+  // update, assumes we're ok with pixel precision
+  inplaceRoundNumbersInObject(preDefinedTextSizes);
+  inplaceRoundNumbersInObject(textSizes);
 
   return {
     texts: texts,
