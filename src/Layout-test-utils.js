@@ -265,7 +265,6 @@ var layoutTestUtils = (function() {
     for (var key in layout) {
       namedLayout[key] = layout[key];
     }
-    inplaceRoundNumbersInObject(namedLayout);
     return namedLayout;
   }
 
@@ -426,19 +425,28 @@ var layoutTestUtils = (function() {
     testLayout: function(node, expectedLayout) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
+      inplaceRoundNumbersInObject(layout);
+      inplaceRoundNumbersInObject(domLayout);
+      inplaceRoundNumbersInObject(expectedLayout);
       testNamedLayout('expected-dom', expectedLayout, domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
     testLayoutAgainstDomOnly: function(node, expectedLayout) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
+      inplaceRoundNumbersInObject(layout);
+      inplaceRoundNumbersInObject(domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
     testFillNodes: testFillNodes,
     testExtractNodes: testExtractNodes,
     testRandomLayout: function(node) {
-      expect({node: node, layout: computeCSSLayout(node)})
-        .toEqual({node: node, layout: computeDOMLayout(node)});
+      var layout = computeCSSLayout(node);
+      var domLayout = computeDOMLayout(node);
+      inplaceRoundNumbersInObject(layout);
+      inplaceRoundNumbersInObject(domLayout);
+      expect({node: node, layout: layout})
+        .toEqual({node: node, layout: domLayout});
     },
     testsFinished: function() {
       console.log('tests finished!');
