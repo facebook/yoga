@@ -142,6 +142,14 @@ static void print_css_node_rec(
       printf("alignItems: 'stretch', ");
     }
 
+    if (node->style.align_content == CSS_ALIGN_CENTER) {
+      printf("alignContent: 'center', ");
+    } else if (node->style.align_content == CSS_ALIGN_FLEX_END) {
+      printf("alignContent: 'flex-end', ");
+    } else if (node->style.align_content == CSS_ALIGN_STRETCH) {
+      printf("alignContent: 'stretch', ");
+    }
+
     if (node->style.align_self == CSS_ALIGN_FLEX_START) {
       printf("alignSelf: 'flex-start', ");
     } else if (node->style.align_self == CSS_ALIGN_CENTER) {

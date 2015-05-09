@@ -55,3 +55,9 @@ transpile_all: ./src/transpile.js
 debug:
 	@gcc -std=c99 -ggdb $(FILES) -lm -o $(C_TEST_EXE) && $(LLDB) $(C_TEST_EXE)
 	@rm $(C_TEST_EXE)
+
+ifeq ($(OS),Windows_NT)
+c_test_msvc: c
+	@cl -nologo -Zi -Tpsrc/__tests__/Layout-test.c -Tpsrc/Layout.c -Tpsrc/Layout-test-utils.c -link -incremental:no -out:"$(C_TEST_EXE)" && "$(C_TEST_EXE)"
+	@rm "$(C_TEST_EXE)" ./*.obj ./*.pdb
+endif

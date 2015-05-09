@@ -20,6 +20,8 @@ global.layoutTestUtils = {
   testLayout: function(node, expectedLayout) {
     allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
   },
+  testLayoutAgainstDomOnly: function(node) {
+  },
   testRandomLayout: function(node, i) {
     allTests.push({name: 'Random #' + i, node: node, expectedLayout: computeDOMLayout(node)});
   },
@@ -31,7 +33,8 @@ global.layoutTestUtils = {
 };
 
 global.describe = function(name, cb) {
-  if (name === 'Layout') {
+  if (name === 'Layout' ||
+      name === 'Layout alignContent') {
     cb();
   }
 };

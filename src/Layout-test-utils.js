@@ -253,7 +253,7 @@ var layoutTestUtils = (function() {
 
       var val = obj[key];
       if (typeof val === 'number') {
-        obj[key] = Math.floor((val * testMeasurePrecision) + 0.5) /testMeasurePrecision;
+        obj[key] = Math.floor((val * testMeasurePrecision) + 0.5) / testMeasurePrecision;
       }
       else if (typeof val === 'object') {
         inplaceRoundNumbersInObject(val);
