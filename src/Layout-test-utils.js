@@ -403,6 +403,13 @@ var layoutTestUtils = (function() {
     bigMinWidth: 100.4375
   };
 
+  // Note(prenaux): Clearly not what I would like, but it seems to be the only
+  //                way :( My guess is that since the font on Windows is
+  //                different than on OSX it has a different size.
+  if (typeof navigator !== 'undefined' && navigator.userAgent.indexOf("Windows NT") > -1) {
+    preDefinedTextSizes.bigHeight = 36;
+  }
+
   var textSizes;
   if (typeof require === 'function') {
     textSizes = preDefinedTextSizes;
