@@ -751,18 +751,9 @@ public class LayoutEngine {
         }
       }
   
-      // find the first node on the first line
-      for (i = 0; i < node.getChildCount(); ) {
-        int startIndex = i;
-        int lineIndex = -1;
-  
-        // get the first child on the current line
-        child = node.getChildAt(i);
-        if (getPositionType(child) != CSSPositionType.RELATIVE) {
-          ++i;
-          continue;
-        }
-        lineIndex = child.lineIndex;
+      int endIndex = 0;
+      for (i = 0; i < linesCount; ++i) {
+        int startIndex = endIndex;
   
         // compute the line's height and find the endIndex
         float lineHeight = 0;
@@ -771,7 +762,7 @@ public class LayoutEngine {
           if (getPositionType(child) != CSSPositionType.RELATIVE) {
             continue;
           }
-          if (child.lineIndex != lineIndex) {
+          if (child.lineIndex != i) {
             break;
           }
           if (!CSSConstants.isUndefined(getLayoutDimension(child, getDim(crossAxis)))) {
@@ -781,7 +772,7 @@ public class LayoutEngine {
             );
           }
         }
-        int endIndex = ii;
+        endIndex = ii;
         lineHeight = lineHeight + crossDimLead;
   
         for (ii = startIndex; ii < endIndex; ++ii) {
@@ -806,7 +797,6 @@ public class LayoutEngine {
         }
   
         currentLead = currentLead + lineHeight;
-        i = endIndex;
       }
     }
   

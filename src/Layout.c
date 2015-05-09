@@ -822,18 +822,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       }
     }
 
-    // find the first node on the first line
-    for (i = 0; i < node->children_count; ) {
-      int startIndex = i;
-      int lineIndex = -1;
-
-      // get the first child on the current line
-      child = node->get_child(node->context, i);
-      if (getPositionType(child) != CSS_POSITION_RELATIVE) {
-        ++i;
-        continue;
-      }
-      lineIndex = child->line_index;
+    int endIndex = 0;
+    for (i = 0; i < linesCount; ++i) {
+      int startIndex = endIndex;
 
       // compute the line's height and find the endIndex
       float lineHeight = 0;
@@ -842,7 +833,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         if (getPositionType(child) != CSS_POSITION_RELATIVE) {
           continue;
         }
-        if (child->line_index != lineIndex) {
+        if (child->line_index != i) {
           break;
         }
         if (!isUndefined(child->layout.dimensions[dim[crossAxis]])) {
@@ -852,7 +843,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
           );
         }
       }
-      int endIndex = ii;
+      endIndex = ii;
       lineHeight += crossDimLead;
 
       for (ii = startIndex; ii < endIndex; ++ii) {
@@ -877,7 +868,6 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       }
 
       currentLead += lineHeight;
-      i = endIndex;
     }
   }
 

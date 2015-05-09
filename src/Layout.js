@@ -700,18 +700,9 @@ var computeLayout = (function() {
         }
       }
 
-      // find the first node on the first line
-      for (i = 0; i < node.children.length; ) {
-        var/*int*/ startIndex = i;
-        var/*int*/ lineIndex = -1;
-
-        // get the first child on the current line
-        child = node.children[i];
-        if (getPositionType(child) !== CSS_POSITION_RELATIVE) {
-          ++i;
-          continue;
-        }
-        lineIndex = child.lineIndex;
+      var/*int*/ endIndex = 0;
+      for (i = 0; i < linesCount; ++i) {
+        var/*int*/ startIndex = endIndex;
 
         // compute the line's height and find the endIndex
         var/*float*/ lineHeight = 0;
@@ -720,7 +711,7 @@ var computeLayout = (function() {
           if (getPositionType(child) !== CSS_POSITION_RELATIVE) {
             continue;
           }
-          if (child.lineIndex !== lineIndex) {
+          if (child.lineIndex !== i) {
             break;
           }
           if (!isUndefined(child.layout[dim[crossAxis]])) {
@@ -730,7 +721,7 @@ var computeLayout = (function() {
             );
           }
         }
-        var/*int*/ endIndex = ii;
+        endIndex = ii;
         lineHeight += crossDimLead;
 
         for (ii = startIndex; ii < endIndex; ++ii) {
@@ -755,7 +746,6 @@ var computeLayout = (function() {
         }
 
         currentLead += lineHeight;
-        i = endIndex;
       }
     }
 
