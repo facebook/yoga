@@ -781,10 +781,10 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     startLine = endLine;
   }
 
-  // <Loop DD>
+  // <Loop E>
   //
-  // PIERRE: More than one line, we need to layout the crossAxis according to
-  // alignContent.
+  // Note(prenaux): More than one line, we need to layout the crossAxis
+  // according to alignContent.
   //
   // Note that we could probably remove <Loop D> and handle the one line case
   // here too, but for the moment this is safer since it won't interfere with
@@ -795,25 +795,22 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
   // section 9.4
   //
   if (linesCount > 1 &&
-      (!isUndefined(node->layout.dimensions[dim[crossAxis]])))
-  {
+      !isUndefined(node->layout.dimensions[dim[crossAxis]])) {
     float nodeCrossAxisInnerSize = node->layout.dimensions[dim[crossAxis]] -
         getPaddingAndBorderAxis(node, crossAxis);
     float remainingCrossDim = nodeCrossAxisInnerSize - linesCrossDim;
 
-    float crossDimAdd = 0;
+    float crossDimLead = 0;
     float currentLead = getPaddingAndBorder(node, leading[crossAxis]);
 
     css_align_t alignContent = getAlignContent(node);
     if (alignContent == CSS_ALIGN_FLEX_END) {
       currentLead += remainingCrossDim;
-    }
-    else if (alignContent == CSS_ALIGN_CENTER) {
+    } else if (alignContent == CSS_ALIGN_CENTER) {
       currentLead += remainingCrossDim / 2;
-    }
-    else if (alignContent == CSS_ALIGN_STRETCH) {
+    } else if (alignContent == CSS_ALIGN_STRETCH) {
       if (nodeCrossAxisInnerSize > linesCrossDim) {
-        crossDimAdd = (remainingCrossDim / linesCount);
+        crossDimLead = (remainingCrossDim / linesCount);
       }
     }
 
@@ -823,14 +820,12 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
       int lineIndex = -1;
 
       // get the first child on the current line
-      {
-        child = node->get_child(node->context, i);
-        if (getPositionType(child) != CSS_POSITION_RELATIVE) {
-          ++i;
-          continue;
-        }
-        lineIndex = child->line_index;
+      child = node->get_child(node->context, i);
+      if (getPositionType(child) != CSS_POSITION_RELATIVE) {
+        ++i;
+        continue;
       }
+      lineIndex = child->line_index;
 
       // compute the line's height and find the endIndex
       float lineHeight = 0;
@@ -843,12 +838,14 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
           break;
         }
         if (!isUndefined(child->layout.dimensions[dim[crossAxis]])) {
-          lineHeight = fmaxf(lineHeight,child->layout.dimensions[dim[crossAxis]] +
-                             getMarginAxis(child,crossAxis));
+          lineHeight = fmaxf(
+            lineHeight,
+            child->layout.dimensions[dim[crossAxis]] + getMarginAxis(child, crossAxis)
+          );
         }
       }
       int endIndex = ii;
-      lineHeight += crossDimAdd;
+      lineHeight += crossDimLead;
 
       for (ii = startIndex; ii < endIndex; ++ii) {
         child = node->get_child(node->context, ii);
@@ -857,25 +854,18 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
         }
 
         css_align_t alignItem = getAlignItem(node, child);
-        float crossPosition = child->layout.position[pos[crossAxis]]; // preserve current position if someting goes wrong with alignItem?
         if (alignItem == CSS_ALIGN_FLEX_START) {
-          crossPosition = currentLead + getMargin(child,leading[crossAxis]);
-        }
-        else if (alignItem == CSS_ALIGN_FLEX_END) {
-          crossPosition = currentLead + lineHeight -
-            getMargin(child,trailing[crossAxis]) -
-            child->layout.dimensions[dim[crossAxis]];
-        }
-        else if (alignItem == CSS_ALIGN_CENTER) {
+          child->layout.position[pos[crossAxis]] = currentLead + getMargin(child, leading[crossAxis]);
+        } else if (alignItem == CSS_ALIGN_FLEX_END) {
+          child->layout.position[pos[crossAxis]] = currentLead + lineHeight - getMargin(child,trailing[crossAxis]) - child->layout.dimensions[dim[crossAxis]];
+        } else if (alignItem == CSS_ALIGN_CENTER) {
           float childHeight = child->layout.dimensions[dim[crossAxis]];
-          crossPosition = currentLead + ((lineHeight - childHeight)/2);
+          child->layout.position[pos[crossAxis]] = currentLead + (lineHeight - childHeight) / 2;
+        } else if (alignItem == CSS_ALIGN_STRETCH) {
+          child->layout.position[pos[crossAxis]] = currentLead + getMargin(child, leading[crossAxis]);
+          // TODO(prenaux): Correctly set the height of items with undefined
+          //                (auto) crossAxis dimension.
         }
-        else if (alignItem == CSS_ALIGN_STRETCH) {
-          crossPosition = currentLead + getMargin(child,leading[crossAxis]);
-          // TODO: Correctly set the height of items with undefined (auto)
-          //       crossAxis dimension.
-        }
-        child->layout.position[pos[crossAxis]] = crossPosition;
       }
 
       currentLead += lineHeight;
@@ -905,8 +895,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth) {
     );
   }
 
-  // <Loop E> Calculate dimensions for absolutely positioned elements
-
+  // <Loop F> Calculate dimensions for absolutely positioned elements
   for (i = 0; i < node->children_count; ++i) {
     child = node->get_child(node->context, i);
     if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {

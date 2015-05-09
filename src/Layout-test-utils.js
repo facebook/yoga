@@ -240,23 +240,23 @@ var layoutTestUtils = (function() {
     return layout;
   }
 
-  function inplaceRoundNumbersInObject(aObj) {
-    if (!testMeasurePrecision) // undefined/0, disables rounding
+  function inplaceRoundNumbersInObject(obj) {
+    if (!testMeasurePrecision) {
+      // undefined/0, disables rounding
       return;
+    }
 
-    for (var key in aObj) {
-      if (!aObj.hasOwnProperty(key))
+    for (var key in obj) {
+      if (!obj.hasOwnProperty(key)) {
         continue;
-      var val = aObj[key];
-      switch (typeof(val)) {
-      case 'number': {
-        aObj[key] = Math.floor((val*testMeasurePrecision)+0.5)/testMeasurePrecision;
-        break;
       }
-      case 'object': {
+
+      var val = obj[key];
+      if (typeof val === 'number') {
+        obj[key] = Math.floor((val * testMeasurePrecision) + 0.5) /testMeasurePrecision;
+      }
+      else if (typeof val === 'object') {
         inplaceRoundNumbersInObject(val);
-        break;
-      }
       }
     }
   }

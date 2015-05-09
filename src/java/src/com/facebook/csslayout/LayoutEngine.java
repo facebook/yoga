@@ -718,10 +718,10 @@ public class LayoutEngine {
       startLine = endLine;
     }
   
-    // <Loop DD>
+    // <Loop E>
     //
-    // PIERRE: More than one line, we need to layout the crossAxis according to
-    // alignContent.
+    // Note(prenaux): More than one line, we need to layout the crossAxis
+    // according to alignContent.
     //
     // Note that we could probably remove <Loop D> and handle the one line case
     // here too, but for the moment this is safer since it won't interfere with
@@ -732,25 +732,22 @@ public class LayoutEngine {
     // section 9.4
     //
     if (linesCount > 1 &&
-        (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis)))))
-    {
+        !CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis)))) {
       float nodeCrossAxisInnerSize = getLayoutDimension(node, getDim(crossAxis)) -
           getPaddingAndBorderAxis(node, crossAxis);
       float remainingCrossDim = nodeCrossAxisInnerSize - linesCrossDim;
   
-      float crossDimAdd = 0;
+      float crossDimLead = 0;
       float currentLead = getPaddingAndBorder(node, getLeading(crossAxis));
   
       CSSAlign alignContent = getAlignContent(node);
       if (alignContent == CSSAlign.FLEX_END) {
         currentLead = currentLead + remainingCrossDim;
-      }
-      else if (alignContent == CSSAlign.CENTER) {
+      } else if (alignContent == CSSAlign.CENTER) {
         currentLead = currentLead + remainingCrossDim / 2;
-      }
-      else if (alignContent == CSSAlign.STRETCH) {
+      } else if (alignContent == CSSAlign.STRETCH) {
         if (nodeCrossAxisInnerSize > linesCrossDim) {
-          crossDimAdd = (remainingCrossDim / linesCount);
+          crossDimLead = (remainingCrossDim / linesCount);
         }
       }
   
@@ -760,14 +757,12 @@ public class LayoutEngine {
         int lineIndex = -1;
   
         // get the first child on the current line
-        {
-          child = node.getChildAt(i);
-          if (getPositionType(child) != CSSPositionType.RELATIVE) {
-            ++i;
-            continue;
-          }
-          lineIndex = child.lineIndex;
+        child = node.getChildAt(i);
+        if (getPositionType(child) != CSSPositionType.RELATIVE) {
+          ++i;
+          continue;
         }
+        lineIndex = child.lineIndex;
   
         // compute the line's height and find the endIndex
         float lineHeight = 0;
@@ -780,12 +775,14 @@ public class LayoutEngine {
             break;
           }
           if (!CSSConstants.isUndefined(getLayoutDimension(child, getDim(crossAxis)))) {
-            lineHeight = Math.max(lineHeight,getLayoutDimension(child, getDim(crossAxis)) +
-                               getMarginAxis(child,crossAxis));
+            lineHeight = Math.max(
+              lineHeight,
+              getLayoutDimension(child, getDim(crossAxis)) + getMarginAxis(child, crossAxis)
+            );
           }
         }
         int endIndex = ii;
-        lineHeight = lineHeight + crossDimAdd;
+        lineHeight = lineHeight + crossDimLead;
   
         for (ii = startIndex; ii < endIndex; ++ii) {
           child = node.getChildAt(ii);
@@ -794,25 +791,18 @@ public class LayoutEngine {
           }
   
           CSSAlign alignItem = getAlignItem(node, child);
-          float crossPosition = getLayoutPosition(child, getPos(crossAxis)); // preserve current position if someting goes wrong with alignItem?
           if (alignItem == CSSAlign.FLEX_START) {
-            crossPosition = currentLead + getMargin(child,getLeading(crossAxis));
-          }
-          else if (alignItem == CSSAlign.FLEX_END) {
-            crossPosition = currentLead + lineHeight -
-              getMargin(child,getTrailing(crossAxis)) -
-              getLayoutDimension(child, getDim(crossAxis));
-          }
-          else if (alignItem == CSSAlign.CENTER) {
+            setLayoutPosition(child, getPos(crossAxis), currentLead + getMargin(child, getLeading(crossAxis)));
+          } else if (alignItem == CSSAlign.FLEX_END) {
+            setLayoutPosition(child, getPos(crossAxis), currentLead + lineHeight - getMargin(child,getTrailing(crossAxis)) - getLayoutDimension(child, getDim(crossAxis)));
+          } else if (alignItem == CSSAlign.CENTER) {
             float childHeight = getLayoutDimension(child, getDim(crossAxis));
-            crossPosition = currentLead + ((lineHeight - childHeight)/2);
+            setLayoutPosition(child, getPos(crossAxis), currentLead + (lineHeight - childHeight) / 2);
+          } else if (alignItem == CSSAlign.STRETCH) {
+            setLayoutPosition(child, getPos(crossAxis), currentLead + getMargin(child, getLeading(crossAxis)));
+            // TODO(prenaux): Correctly set the height of items with undefined
+            //                (auto) crossAxis dimension.
           }
-          else if (alignItem == CSSAlign.STRETCH) {
-            crossPosition = currentLead + getMargin(child,getLeading(crossAxis));
-            // TODO: Correctly set the height of items with undefined (auto)
-            //       crossAxis dimension.
-          }
-          setLayoutPosition(child, getPos(crossAxis), crossPosition);
         }
   
         currentLead = currentLead + lineHeight;
@@ -842,8 +832,7 @@ public class LayoutEngine {
       ));
     }
   
-    // <Loop E> Calculate dimensions for absolutely positioned elements
-  
+    // <Loop F> Calculate dimensions for absolutely positioned elements
     for (i = 0; i < node.getChildCount(); ++i) {
       child = node.getChildAt(i);
       if (getPositionType(child) == CSSPositionType.ABSOLUTE) {

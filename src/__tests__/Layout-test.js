@@ -1594,49 +1594,49 @@ describe('Layout alignContent', function() {
   var alignContentData = {
     style: {width: 300, height: 380, flexDirection: 'row', flexWrap: 'wrap'},
     children: [
-      /* 0 */  { style: {width: 50, height: 50, margin: 10} },
-      /* 1 */  { style: {width: 50, height: 50, margin: 10} },
-      /* 2 */  { style: {width: 50, height: 50, margin: 10} },
-      /* 3 */  { style: {width: 50, height: 50, margin: 10} },
-      /* 4 */  { style: {width: 50, height: 100, margin: 10} },
-      /* 5 */  { style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'} },
-      /* 6 */  { style: {width: 50, height: 50, margin: 10} },
-      /* 7 */  { style: {width: 50, height: 100, margin: 10} },
-      /* 8 */  { style: {width: 50, height: 50, margin: 10} },
-      /* 9 */  { style: {width: 50, height: 50, margin: 10} },
-      /* 10 */ { style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start' } },
-      /* 11 */ { style: {width: 50, height: 50, margin: 10} },
-      /* 12 */ { style: {width: 50, height: 50, margin: 10} },
-      /* 13 */ { style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'} },
-      /* 14 */ { style: {width: 50, height: 50, margin: 10} },
+      /* 0 */  {style: {width: 50, height: 50, margin: 10}},
+      /* 1 */  {style: {width: 50, height: 50, margin: 10}},
+      /* 2 */  {style: {width: 50, height: 50, margin: 10}},
+      /* 3 */  {style: {width: 50, height: 50, margin: 10}},
+      /* 4 */  {style: {width: 50, height: 100, margin: 10}},
+      /* 5 */  {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
+      /* 6 */  {style: {width: 50, height: 50, margin: 10}},
+      /* 7 */  {style: {width: 50, height: 100, margin: 10}},
+      /* 8 */  {style: {width: 50, height: 50, margin: 10}},
+      /* 9 */  {style: {width: 50, height: 50, margin: 10}},
+      /* 10 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start' }},
+      /* 11 */ {style: {width: 50, height: 50, margin: 10}},
+      /* 12 */ {style: {width: 50, height: 50, margin: 10}},
+      /* 13 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
+      /* 14 */ {style: {width: 50, height: 50, margin: 10}},
     ],
   };
 
   it('should layout with alignContent: stretch, and alignItems: flex-start', function() {
     testLayout(
       alignContentData,
-      { width:300,height:380,top:0,left:0, children:[
-        {width:50,height:50,top:10,left:10},
-        {width:50,height:50,top:10,left:80},
-        {width:50,height:50,top:10,left:150},
-        {width:50,height:50,top:10,left:220},
-        {width:50,height:100,top:92.5,left:10},
-        {width:50,height:50,top:92.5,left:80},
-        {width:50,height:50,top:92.5,left:150},
-        {width:50,height:100,top:92.5,left:220},
-        {width:50,height:50,top:225,left:10},
-        {width:50,height:50,top:225,left:80},
-        {width:50,height:50,top:225,left:150},
-        {width:50,height:50,top:225,left:220},
-        {width:50,height:50,top:307.5,left:10},
-        {width:50,height:50,top:307.5,left:80},
-        {width:50,height:50,top:307.5,left:150}
+      {width: 300, height: 380, top: 0, left: 0,  children: [
+        {width: 50, height: 50, top: 10, left: 10},
+        {width: 50, height: 50, top: 10, left: 80},
+        {width: 50, height: 50, top: 10, left: 150},
+        {width: 50, height: 50, top: 10, left: 220},
+        {width: 50, height: 100, top: 92.5, left: 10},
+        {width: 50, height: 50, top: 92.5, left: 80},
+        {width: 50, height: 50, top: 92.5, left: 150},
+        {width: 50, height: 100, top: 92.5, left: 220},
+        {width: 50, height: 50, top: 225, left: 10},
+        {width: 50, height: 50, top: 225, left: 80},
+        {width: 50, height: 50, top: 225, left: 150},
+        {width: 50, height: 50, top: 225, left: 220},
+        {width: 50, height: 50, top: 307.5, left: 10},
+        {width: 50, height: 50, top: 307.5, left: 80},
+        {width: 50, height: 50, top: 307.5, left: 150}
       ]}
     );
   });
 
-  function testAlignContent(aAlignContent, aAlignItems) {
-    it('should layout with alignContent: '+aAlignContent+', and alignItems: '+aAlignItems, function() {
+  function testAlignContent(alignContent, alignItems) {
+    it('should layout with alignContent: ' + alignContent + ', and alignItems: ' + alignItems, function() {
       testLayoutAgainstDomOnly(alignContentData);
     });
   }
