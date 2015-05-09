@@ -371,13 +371,13 @@ var layoutTestUtils = (function() {
     div.style.display = 'flex';
     div.style.flexDirection = 'column';
     div.style.alignItems = 'flex-start';
-    div.style.alignContent = 'stretch';
+    div.style.alignContent = 'flex-start';
 
     var span = document.createElement('span');
     span.style.display = 'flex';
     span.style.flexDirection = 'column';
     span.style.alignItems = 'flex-start';
-    span.style.alignContent = 'stretch';
+    span.style.alignContent = 'flex-start';
     span.innerText = text;
 
     div.appendChild(span);

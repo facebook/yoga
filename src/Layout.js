@@ -148,7 +148,7 @@ var computeLayout = (function() {
     if ('alignContent' in node.style) {
       return node.style.alignContent;
     }
-    return 'stretch';
+    return 'flex-start';
   }
 
   function getAlignItem(node, child) {
