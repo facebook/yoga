@@ -13,12 +13,16 @@
 #ifdef _MSC_VER
 #include <float.h>
 #define isnan _isnan
+
+/* define fmaxf & fminf if < VC12 */
+#if _MSC_VER < 1800
 __forceinline const float fmaxf(const float a, const float b) {
   return (a > b) ? a : b;
 }
 __forceinline const float fminf(const float a, const float b) {
   return (a < b) ? a : b;
 }
+#endif
 #endif
 
   /** START_GENERATED **/

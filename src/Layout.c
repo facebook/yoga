@@ -17,9 +17,13 @@
 #ifdef _MSC_VER
 #include <float.h>
 #define isnan _isnan
+
+/* define fmaxf if < VC12 */
+#if _MSC_VER < 1800
 __forceinline const float fmaxf(const float a, const float b) {
   return (a > b) ? a : b;
 }
+#endif
 #endif
 
 bool isUndefined(float value) {
