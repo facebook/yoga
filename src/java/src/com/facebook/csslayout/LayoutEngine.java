@@ -369,7 +369,9 @@ public class LayoutEngine {
             getPaddingAndBorderAxis(node, CSSFlexDirection.COLUMN);
         }
       }
-      return;
+      if (node.getChildCount() == 0) {
+        return;
+      }
     }
   
     int i;
