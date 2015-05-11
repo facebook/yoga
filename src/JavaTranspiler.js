@@ -11,6 +11,8 @@ function __transpileToJavaCommon(code) {
   return code
     .replace(/CSS_UNDEFINED/g, 'CSSConstants.UNDEFINED')
     .replace(/css_flex_direction_t/g, 'CSSFlexDirection')
+    .replace(/css_direction_t/g, 'CSSDirection')
+    .replace(/CSS_DIRECTION_/g, 'CSSDirection.')
     .replace(/CSS_FLEX_DIRECTION_/g, 'CSSFlexDirection.')
     .replace(/css_align_t/g, 'CSSAlign')
     .replace(/CSS_ALIGN_/g, 'CSSAlign.')
@@ -33,7 +35,11 @@ function __transpileToJavaCommon(code) {
     .replace(
         /(\w+)\.layout\[((?:getLeading|getPos)\([^\)]+\))\]\s+=\s+([^;]+);/gm,
         'setLayoutPosition($1, $2, $3);')
+    .replace(
+        /(\w+)\.layout\[((?:getTrailing|getPos)\([^\)]+\))\]\s+=\s+([^;]+);/gm,
+        'setLayoutPosition($1, $2, $3);')
     .replace(/(\w+)\.layout\[((?:getLeading|getPos)\([^\]]+\))\]/g, 'getLayoutPosition($1, $2)')
+    .replace(/(\w+)\.layout\[((?:getTrailing|getPos)\([^\]]+\))\]/g, 'getLayoutPosition($1, $2)')
     .replace(
         /(\w+)\.layout\[(getDim\([^\)]+\))\]\s+=\s+([^;]+);/gm,
         'setLayoutDimension($1, $2, $3);')
@@ -63,7 +69,7 @@ function __transpileSingleTestToJava(code) {
     .replace( // layout.position[CSS_TOP] => layout.y
         /layout\.position\[CSS_(TOP|LEFT)\]/g,
         function (str, match1) {
-            return 'layout.' + (match1 === 'TOP' ? 'y' : 'x');
+            return 'layout.' + (match1 === 'TOP' ? 'top' : 'left');
         })
     .replace( // style.position[CSS_TOP] => style.positionTop
         /style\.(position)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,

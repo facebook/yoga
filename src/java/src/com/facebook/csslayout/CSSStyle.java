@@ -13,6 +13,7 @@ package com.facebook.csslayout;
  */
 public class CSSStyle {
 
+  public CSSDirection direction = CSSDirection.INHERIT;
   public CSSFlexDirection flexDirection = CSSFlexDirection.COLUMN;
   public CSSJustify justifyContent = CSSJustify.FLEX_START;
   public CSSAlign alignItems = CSSAlign.STRETCH;
