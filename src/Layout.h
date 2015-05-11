@@ -71,6 +71,8 @@ typedef enum {
   CSS_TOP,
   CSS_RIGHT,
   CSS_BOTTOM,
+  CSS_START,
+  CSS_END,
   CSS_POSITION_COUNT
 } css_position_t;
 
@@ -106,7 +108,7 @@ typedef struct {
   css_position_type_t position_type;
   css_wrap_type_t flex_wrap;
   float flex;
-  float margin[4];
+  float margin[6];
   float position[4];
   /**
    * You should skip all the rules that contain negative values for the
@@ -118,8 +120,8 @@ typedef struct {
    *   {left: -5 ...}
    *   {left: 0 ...}
    */
-  float padding[4];
-  float border[4];
+  float padding[6];
+  float border[6];
   float dimensions[2];
   float minDimensions[2];
   float maxDimensions[2];

@@ -41,9 +41,17 @@ public class Spacing {
    */
   public static final int HORIZONTAL = 5;
   /**
+   * Spacing type that represents start direction e.g. left in left-to-right, right in right-to-left.
+   */
+  public static final int START = 6;
+  /**
+   * Spacing type that represents end direction e.g. right in left-to-right, left in right-to-left.
+   */
+  public static final int END = 7;
+  /**
    * Spacing type that represents all directions (left, top, right, bottom). E.g. {@code margin}.
    */
-  public static final int ALL = 6;
+  public static final int ALL = 8;
 
   private final float[] mSpacing = newFullSpacingArray();
   private final float[] mDefaultSpacing = newSpacingResultArray();
@@ -114,6 +122,7 @@ public class Spacing {
         CSSConstants.UNDEFINED,
         CSSConstants.UNDEFINED,
         CSSConstants.UNDEFINED,
+        CSSConstants.UNDEFINED,
     };
   }
 
@@ -126,6 +135,11 @@ public class Spacing {
         defaultValue,
         defaultValue,
         defaultValue,
+        defaultValue,
+        defaultValue,
+        defaultValue,
+        CSSConstants.UNDEFINED,
+        CSSConstants.UNDEFINED,
         defaultValue,
     };
   }
@@ -170,6 +184,22 @@ public class Spacing {
                 : !CSSConstants.isUndefined(mSpacing[ALL])
                   ? mSpacing[ALL]
                   : mDefaultSpacing[RIGHT];
+      mSpacingResult[START] =
+          !CSSConstants.isUndefined(mSpacing[START])
+              ? mSpacing[START]
+              : !CSSConstants.isUndefined(mSpacing[HORIZONTAL])
+                ? mSpacing[HORIZONTAL]
+                : !CSSConstants.isUndefined(mSpacing[ALL])
+                  ? mSpacing[ALL]
+                  : mDefaultSpacing[START];
+      mSpacingResult[END] =
+          !CSSConstants.isUndefined(mSpacing[END])
+              ? mSpacing[END]
+              : !CSSConstants.isUndefined(mSpacing[HORIZONTAL])
+                ? mSpacing[HORIZONTAL]
+                : !CSSConstants.isUndefined(mSpacing[ALL])
+                  ? mSpacing[ALL]
+                  : mDefaultSpacing[END];
       mDirty = false;
     }
   }
