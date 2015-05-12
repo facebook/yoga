@@ -6985,6 +6985,85 @@ int main()
 
     test("should layout nested nodes with mixed directions", root_node, root_layout);
   }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.justify_content = CSS_JUSTIFY_SPACE_BETWEEN;
+      node_0->style.flex_wrap = CSS_WRAP;
+      node_0->style.dimensions[CSS_WIDTH] = 320;
+      node_0->style.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 6);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 3);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 4);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 5);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 320;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+      init_css_node_children(node_0, 6);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 110;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 220;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 3);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 4);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 110;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 5);
+        node_1->layout.position[CSS_TOP] = 100;
+        node_1->layout.position[CSS_LEFT] = 220;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should correctly space wrapped nodes", root_node, root_layout);
+  }
   /** END_GENERATED **/
   return tests_finished();
 }

@@ -2185,4 +2185,25 @@ describe('Layout', function() {
       ]}
     );
   });
+  
+  it('should correctly space wrapped nodes', function() {
+    testLayout(
+      {style: {width: 320, height: 200, flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap'}, children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+      ]},
+      {width: 320, height: 200, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 0, left: 0},
+        {width: 100, height: 100, top: 0, left: 110},
+        {width: 100, height: 100, top: 0, left: 220},
+        {width: 100, height: 100, top: 100, left: 0},
+        {width: 100, height: 100, top: 100, left: 110},
+        {width: 100, height: 100, top: 100, left: 220},
+      ]}
+    );
+  });
 });
