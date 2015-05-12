@@ -609,7 +609,7 @@ public class LayoutEngine {
             // If there's only one element, then it's bigger than the content
             // and needs its own line
             i != startLine) {
-          nonFlexibleChildrenCount --;
+          nonFlexibleChildrenCount--;
           alreadyComputedNextLayout = 1;
           break;
         }
