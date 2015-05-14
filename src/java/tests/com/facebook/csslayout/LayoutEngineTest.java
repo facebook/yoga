@@ -7394,5 +7394,86 @@ public class LayoutEngineTest {
 
     test("should layout nested nodes with mixed directions", root_node, root_layout);
   }
+
+  @Test
+  public void testCase167()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.justifyContent = CSSJustify.SPACE_BETWEEN;
+      node_0.style.flexWrap = CSSWrap.WRAP;
+      node_0.style.width = 320;
+      node_0.style.height = 200;
+      addChildren(node_0, 6);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.width = 100;
+        node_1.style.height = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.width = 100;
+        node_1.style.height = 100;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.width = 100;
+        node_1.style.height = 100;
+        node_1 = node_0.getChildAt(3);
+        node_1.style.width = 100;
+        node_1.style.height = 100;
+        node_1 = node_0.getChildAt(4);
+        node_1.style.width = 100;
+        node_1.style.height = 100;
+        node_1 = node_0.getChildAt(5);
+        node_1.style.width = 100;
+        node_1.style.height = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 320;
+      node_0.layout.height = 200;
+      addChildren(node_0, 6);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 0;
+        node_1.layout.width = 100;
+        node_1.layout.height = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.top = 0;
+        node_1.layout.left = 110;
+        node_1.layout.width = 100;
+        node_1.layout.height = 100;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.top = 0;
+        node_1.layout.left = 220;
+        node_1.layout.width = 100;
+        node_1.layout.height = 100;
+        node_1 = node_0.getChildAt(3);
+        node_1.layout.top = 100;
+        node_1.layout.left = 0;
+        node_1.layout.width = 100;
+        node_1.layout.height = 100;
+        node_1 = node_0.getChildAt(4);
+        node_1.layout.top = 100;
+        node_1.layout.left = 110;
+        node_1.layout.width = 100;
+        node_1.layout.height = 100;
+        node_1 = node_0.getChildAt(5);
+        node_1.layout.top = 100;
+        node_1.layout.left = 220;
+        node_1.layout.width = 100;
+        node_1.layout.height = 100;
+      }
+    }
+
+    test("should correctly space wrapped nodes", root_node, root_layout);
+  }
   /** END_GENERATED **/
 }
