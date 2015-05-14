@@ -496,7 +496,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
           getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
       }
     }
-    return;
+    if (node->children_count == 0) {
+      return;
+    }
   }
 
   int i;

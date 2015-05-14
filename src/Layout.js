@@ -392,7 +392,9 @@ var computeLayout = (function() {
             getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
         }
       }
-      return;
+      if (node.children.length === 0) {
+        return;
+      }
     }
 
     var/*int*/ i;
