@@ -342,6 +342,20 @@ public class CSSNode {
   }
 
   /**
+   * Get this node's width, as defined in the style.
+   */
+  public float getStyleWidth() {
+    return style.width;
+  }
+
+  /**
+   * Get this node's height, as defined in the style.
+   */
+  public float getStyleHeight() {
+    return style.height;
+  }
+
+  /**
    * Set a default padding (left/top/right/bottom) for this node.
    */
   public void setDefaultPadding(int spacingType, float padding) {
