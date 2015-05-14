@@ -184,13 +184,13 @@ public class LayoutEngine {
   private static float getMargin(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.margin[Spacing.TOP];
+        return node.style.margin.get(Spacing.TOP);
       case BOTTOM:
-        return node.style.margin[Spacing.BOTTOM];
+        return node.style.margin.get(Spacing.BOTTOM);
       case LEFT:
-        return node.style.margin[Spacing.LEFT];
+        return node.style.margin.get(Spacing.LEFT);
       case RIGHT:
-        return node.style.margin[Spacing.RIGHT];
+        return node.style.margin.get(Spacing.RIGHT);
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
@@ -199,13 +199,13 @@ public class LayoutEngine {
   private static float getPadding(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.padding[Spacing.TOP];
+        return node.style.padding.get(Spacing.TOP);
       case BOTTOM:
-        return node.style.padding[Spacing.BOTTOM];
+        return node.style.padding.get(Spacing.BOTTOM);
       case LEFT:
-        return node.style.padding[Spacing.LEFT];
+        return node.style.padding.get(Spacing.LEFT);
       case RIGHT:
-        return node.style.padding[Spacing.RIGHT];
+        return node.style.padding.get(Spacing.RIGHT);
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
@@ -214,13 +214,13 @@ public class LayoutEngine {
   private static float getBorder(CSSNode node, PositionIndex position) {
     switch (position) {
       case TOP:
-        return node.style.border[Spacing.TOP];
+        return node.style.border.get(Spacing.TOP);
       case BOTTOM:
-        return node.style.border[Spacing.BOTTOM];
+        return node.style.border.get(Spacing.BOTTOM);
       case LEFT:
-        return node.style.border[Spacing.LEFT];
+        return node.style.border.get(Spacing.LEFT);
       case RIGHT:
-        return node.style.border[Spacing.RIGHT];
+        return node.style.border.get(Spacing.RIGHT);
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
