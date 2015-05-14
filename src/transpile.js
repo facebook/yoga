@@ -97,11 +97,15 @@ function printLayout(test) {
       addFloat(node, spacing + suffix, spacing + '[CSS_TOP]');
       addFloat(node, spacing + suffix, spacing + '[CSS_RIGHT]');
       addFloat(node, spacing + suffix, spacing + '[CSS_BOTTOM]');
+      addFloat(node, spacing + suffix, spacing + '[CSS_START]');
+      addFloat(node, spacing + suffix, spacing + '[CSS_END]');
 
       addFloat(node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
       addFloat(node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
       addFloat(node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
       addFloat(node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
+      addFloat(node, spacing + 'Start' + suffix, spacing + '[CSS_START]');
+      addFloat(node, spacing + 'End' + suffix, spacing + '[CSS_END]');
     }
 
     function addMeasure(node) {

@@ -2185,7 +2185,7 @@ describe('Layout', function() {
       ]}
     );
   });
-  
+
   it('should correctly space wrapped nodes', function() {
     testLayout(
       {style: {width: 320, height: 200, flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap'}, children: [
@@ -2203,6 +2203,105 @@ describe('Layout', function() {
         {width: 100, height: 100, top: 100, left: 0},
         {width: 100, height: 100, top: 100, left: 110},
         {width: 100, height: 100, top: 100, left: 220},
+      ]}
+    );
+  });
+
+  it('should give start/end padding precedence over left/right padding', function() {
+    testLayout(
+      {style: {width: 200, paddingLeft: 5, paddingStart: 15, paddingRight: 5, paddingEnd: 15}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 170, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should give start/end margin precedence over left/right margin', function() {
+    testLayout(
+      {style: {width: 200}, children: [
+        {style: {height: 50, marginLeft: 5, marginStart: 15, marginRight: 5, marginEnd: 15}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 170, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should give start/end border precedence over left/right border', function() {
+    testLayout(
+      {style: {width: 200, borderLeftWidth: 5, borderStartWidth: 15, borderRightWidth: 5, borderEndWidth: 15}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 170, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end padding', function() {
+    testLayout(
+      {style: {width: 200, paddingStart: 15, paddingEnd: 5}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end padding in rtl', function() {
+    testLayout(
+      {style: {width: 200, direction: 'rtl', paddingStart: 15, paddingEnd: 5}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 5}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end margin', function() {
+    testLayout(
+      {style: {width: 200}, children: [
+        {style: {height: 50, marginStart: 15, marginEnd: 5}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end margin in rtl', function() {
+    testLayout(
+      {style: {width: 200}, children: [
+        {style: {height: 50, direction: 'rtl', marginStart: 15, marginEnd: 5}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 5}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end border', function() {
+    testLayout(
+      {style: {width: 200, borderStartWidth: 15, borderEndWidth: 5}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end border in rtl', function() {
+    testLayout(
+      {style: {width: 200, direction: 'rtl', borderStartWidth: 15, borderEndWidth: 5}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 5}
       ]}
     );
   });

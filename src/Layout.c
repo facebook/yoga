@@ -54,6 +54,13 @@ void init_css_node(css_node_t *node) {
   node->style.position[CSS_RIGHT] = CSS_UNDEFINED;
   node->style.position[CSS_BOTTOM] = CSS_UNDEFINED;
 
+  node->style.margin[CSS_START] = CSS_UNDEFINED;
+  node->style.margin[CSS_END] = CSS_UNDEFINED;
+  node->style.padding[CSS_START] = CSS_UNDEFINED;
+  node->style.padding[CSS_END] = CSS_UNDEFINED;
+  node->style.border[CSS_START] = CSS_UNDEFINED;
+  node->style.border[CSS_END] = CSS_UNDEFINED;
+
   node->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
   node->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
 
@@ -170,6 +177,8 @@ static void print_css_node_rec(
       print_number_0("marginRight", node->style.margin[CSS_RIGHT]);
       print_number_0("marginTop", node->style.margin[CSS_TOP]);
       print_number_0("marginBottom", node->style.margin[CSS_BOTTOM]);
+      print_number_0("marginStart", node->style.margin[CSS_START]);
+      print_number_0("marginEnd", node->style.margin[CSS_END]);
     }
 
     if (four_equal(node->style.padding)) {
@@ -179,6 +188,8 @@ static void print_css_node_rec(
       print_number_0("paddingRight", node->style.padding[CSS_RIGHT]);
       print_number_0("paddingTop", node->style.padding[CSS_TOP]);
       print_number_0("paddingBottom", node->style.padding[CSS_BOTTOM]);
+      print_number_0("paddingStart", node->style.padding[CSS_START]);
+      print_number_0("paddingEnd", node->style.padding[CSS_END]);
     }
 
     if (four_equal(node->style.border)) {
@@ -188,6 +199,8 @@ static void print_css_node_rec(
       print_number_0("borderRightWidth", node->style.border[CSS_RIGHT]);
       print_number_0("borderTopWidth", node->style.border[CSS_TOP]);
       print_number_0("borderBottomWidth", node->style.border[CSS_BOTTOM]);
+      print_number_0("borderStartWidth", node->style.border[CSS_START]);
+      print_number_0("borderEndWidth", node->style.border[CSS_END]);
     }
 
     print_number_nan("width", node->style.dimensions[CSS_WIDTH]);
@@ -245,39 +258,106 @@ static css_dimension_t dim[4] = {
   /* CSS_FLEX_DIRECTION_ROW_REVERSE = */ CSS_WIDTH
 };
 
-
-static float getMargin(css_node_t *node, int location) {
-  return node->style.margin[location];
+static bool isRowDirection(css_flex_direction_t flex_direction) {
+  return flex_direction == CSS_FLEX_DIRECTION_ROW ||
+         flex_direction == CSS_FLEX_DIRECTION_ROW_REVERSE;
 }
 
-static float getPadding(css_node_t *node, int location) {
-  if (node->style.padding[location] >= 0) {
-    return node->style.padding[location];
+static bool isColumnDirection(css_flex_direction_t flex_direction) {
+  return flex_direction == CSS_FLEX_DIRECTION_COLUMN ||
+         flex_direction == CSS_FLEX_DIRECTION_COLUMN_REVERSE;
+}
+
+static float getLeadingMargin(css_node_t *node, css_flex_direction_t axis) {
+  if (isRowDirection(axis) && !isUndefined(node->style.margin[CSS_START])) {
+    return node->style.margin[CSS_START];
   }
+
+  return node->style.margin[leading[axis]];
+}
+
+static float getTrailingMargin(css_node_t *node, css_flex_direction_t axis) {
+  if (isRowDirection(axis) && !isUndefined(node->style.margin[CSS_END])) {
+    return node->style.margin[CSS_END];
+  }
+
+  return node->style.margin[trailing[axis]];
+}
+
+static float getLeadingPadding(css_node_t *node, css_flex_direction_t axis) {
+  if (isRowDirection(axis) &&
+      !isUndefined(node->style.padding[CSS_START]) &&
+      node->style.padding[CSS_START] >= 0) {
+    return node->style.padding[CSS_START];
+  }
+
+  if (node->style.padding[leading[axis]] >= 0) {
+    return node->style.padding[leading[axis]];
+  }
+
   return 0;
 }
 
-static float getBorder(css_node_t *node, int location) {
-  if (node->style.border[location] >= 0) {
-    return node->style.border[location];
+static float getTrailingPadding(css_node_t *node, css_flex_direction_t axis) {
+  if (isRowDirection(axis) &&
+      !isUndefined(node->style.padding[CSS_END]) &&
+      node->style.padding[CSS_END] >= 0) {
+    return node->style.padding[CSS_END];
   }
+
+  if (node->style.padding[trailing[axis]] >= 0) {
+    return node->style.padding[trailing[axis]];
+  }
+
   return 0;
 }
 
-static float getPaddingAndBorder(css_node_t *node, int location) {
-  return getPadding(node, location) + getBorder(node, location);
+static float getLeadingBorder(css_node_t *node, css_flex_direction_t axis) {
+  if (isRowDirection(axis) &&
+      !isUndefined(node->style.border[CSS_START]) &&
+      node->style.border[CSS_START] >= 0) {
+    return node->style.border[CSS_START];
+  }
+
+  if (node->style.border[leading[axis]] >= 0) {
+    return node->style.border[leading[axis]];
+  }
+
+  return 0;
+}
+
+static float getTrailingBorder(css_node_t *node, css_flex_direction_t axis) {
+  if (isRowDirection(axis) &&
+      !isUndefined(node->style.border[CSS_END]) &&
+      node->style.border[CSS_END] >= 0) {
+    return node->style.border[CSS_END];
+  }
+
+  if (node->style.border[trailing[axis]] >= 0) {
+    return node->style.border[trailing[axis]];
+  }
+
+  return 0;
+}
+
+static float getLeadingPaddingAndBorder(css_node_t *node, css_flex_direction_t axis) {
+  return getLeadingPadding(node, axis) + getLeadingBorder(node, axis);
+}
+
+static float getTrailingPaddingAndBorder(css_node_t *node, css_flex_direction_t axis) {
+  return getTrailingPadding(node, axis) + getTrailingBorder(node, axis);
 }
 
 static float getBorderAxis(css_node_t *node, css_flex_direction_t axis) {
-  return getBorder(node, leading[axis]) + getBorder(node, trailing[axis]);
+  return getLeadingBorder(node, axis) + getTrailingBorder(node, axis);
 }
 
 static float getMarginAxis(css_node_t *node, css_flex_direction_t axis) {
-  return getMargin(node, leading[axis]) + getMargin(node, trailing[axis]);
+  return getLeadingMargin(node, axis) + getTrailingMargin(node, axis);
 }
 
 static float getPaddingAndBorderAxis(css_node_t *node, css_flex_direction_t axis) {
-  return getPaddingAndBorder(node, leading[axis]) + getPaddingAndBorder(node, trailing[axis]);
+  return getLeadingPaddingAndBorder(node, axis) + getTrailingPaddingAndBorder(node, axis);
 }
 
 static css_position_type_t getPositionType(css_node_t *node) {
@@ -293,16 +373,6 @@ static css_align_t getAlignItem(css_node_t *node, css_node_t *child) {
     return child->style.align_self;
   }
   return node->style.align_items;
-}
-
-static bool isRowDirection(css_flex_direction_t flex_direction) {
-  return flex_direction == CSS_FLEX_DIRECTION_ROW ||
-         flex_direction == CSS_FLEX_DIRECTION_ROW_REVERSE;
-}
-
-static bool isColumnDirection(css_flex_direction_t flex_direction) {
-  return flex_direction == CSS_FLEX_DIRECTION_COLUMN ||
-         flex_direction == CSS_FLEX_DIRECTION_COLUMN_REVERSE;
 }
 
 static css_direction_t resolveDirection(css_node_t *node, css_direction_t parentDirection) {
@@ -356,8 +426,8 @@ static bool isFlexWrap(css_node_t *node) {
 
 static float getDimWithMargin(css_node_t *node, css_flex_direction_t axis) {
   return node->layout.dimensions[dim[axis]] +
-    getMargin(node, leading[axis]) +
-    getMargin(node, trailing[axis]);
+    getLeadingMargin(node, axis) +
+    getTrailingMargin(node, axis);
 }
 
 static bool isDimDefined(css_node_t *node, css_flex_direction_t axis) {
@@ -451,13 +521,13 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
 
   // The position is set by the parent, but we need to complete it with a
   // delta composed of the margin and left/top/right/bottom
-  node->layout.position[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
+  node->layout.position[leading[mainAxis]] += getLeadingMargin(node, mainAxis) +
     getRelativePosition(node, mainAxis);
-  node->layout.position[trailing[mainAxis]] += getMargin(node, trailing[mainAxis]) +
+  node->layout.position[trailing[mainAxis]] += getTrailingMargin(node, mainAxis) +
     getRelativePosition(node, mainAxis);
-  node->layout.position[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
+  node->layout.position[leading[crossAxis]] += getLeadingMargin(node, crossAxis) +
     getRelativePosition(node, crossAxis);
-  node->layout.position[trailing[crossAxis]] += getMargin(node, trailing[crossAxis]) +
+  node->layout.position[trailing[crossAxis]] += getTrailingMargin(node, crossAxis) +
     getRelativePosition(node, crossAxis);
 
   if (isMeasureDefined(node)) {
@@ -740,7 +810,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
     // container!
     float crossDim = 0;
     float mainDim = leadingMainDim +
-      getPaddingAndBorder(node, leading[mainAxis]);
+      getLeadingPaddingAndBorder(node, mainAxis);
 
     for (i = startLine; i < endLine; ++i) {
       child = node->get_child(node->context, i);
@@ -751,8 +821,8 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
         // defined, we override the position to whatever the user said
         // (and margin/border).
         child->layout.position[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
-          getBorder(node, leading[mainAxis]) +
-          getMargin(child, leading[mainAxis]);
+          getLeadingBorder(node, mainAxis) +
+          getLeadingMargin(child, mainAxis);
       } else {
         // If the child is position absolute (without top/left) or relative,
         // we put it at the current accumulated offset.
@@ -799,11 +869,11 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
         // top/left/bottom/right being set, we override all the previously
         // computed positions to set it correctly.
         child->layout.position[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
-          getBorder(node, leading[crossAxis]) +
-          getMargin(child, leading[crossAxis]);
+          getLeadingBorder(node, crossAxis) +
+          getLeadingMargin(child, crossAxis);
 
       } else {
-        float leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);
+        float leadingCrossDim = getLeadingPaddingAndBorder(node, crossAxis);
 
         // For a relative children, we're either using alignItems (parent) or
         // alignSelf (child) in order to determine the position in the cross axis
@@ -838,6 +908,11 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
 
         // And we apply the position
         child->layout.position[pos[crossAxis]] += linesCrossDim + leadingCrossDim;
+
+        // Define the trailing position accordingly.
+        if (!isUndefined(node->layout.dimensions[dim[crossAxis]])) {
+          setTrailingPosition(node, child, crossAxis);
+        }
       }
     }
 
@@ -846,22 +921,21 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
     startLine = endLine;
   }
 
+  bool needsMainTrailingPos = false;
+  bool needsCrossTrailingPos = false;
+
   // If the user didn't specify a width or height, and it has not been set
   // by the container, then we set it via the children.
   if (isUndefined(node->layout.dimensions[dim[mainAxis]])) {
     node->layout.dimensions[dim[mainAxis]] = fmaxf(
       // We're missing the last padding at this point to get the final
       // dimension
-      boundAxis(node, mainAxis, linesMainDim + getPaddingAndBorder(node, trailing[mainAxis])),
+      boundAxis(node, mainAxis, linesMainDim + getTrailingPaddingAndBorder(node, mainAxis)),
       // We can never assign a width smaller than the padding and borders
       getPaddingAndBorderAxis(node, mainAxis)
     );
 
-    // Now that the width is defined, we should update the trailing
-    // positions for the children.
-    for (i = 0; i < node->children_count; ++i) {
-      setTrailingPosition(node, node->get_child(node->context, i), mainAxis);
-    }
+    needsMainTrailingPos = true;
   }
 
   if (isUndefined(node->layout.dimensions[dim[crossAxis]])) {
@@ -872,9 +946,27 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
       boundAxis(node, crossAxis, linesCrossDim + getPaddingAndBorderAxis(node, crossAxis)),
       getPaddingAndBorderAxis(node, crossAxis)
     );
+
+    needsCrossTrailingPos = true;
   }
 
-  // <Loop E> Calculate dimensions for absolutely positioned elements
+  // <Loop E> Set trailing position if necessary
+
+  if (needsMainTrailingPos || needsCrossTrailingPos) {
+    for (i = 0; i < node->children_count; ++i) {
+      child = node->get_child(node->context, i);
+
+      if (needsMainTrailingPos) {
+        setTrailingPosition(node, child, mainAxis);
+      }
+
+      if (needsCrossTrailingPos) {
+        setTrailingPosition(node, child, crossAxis);
+      }
+    }
+  }
+
+  // <Loop F> Calculate dimensions for absolutely positioned elements
 
   for (i = 0; i < node->children_count; ++i) {
     child = node->get_child(node->context, i);

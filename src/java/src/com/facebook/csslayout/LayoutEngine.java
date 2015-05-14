@@ -18,6 +18,8 @@ public class LayoutEngine {
     LEFT,
     BOTTOM,
     RIGHT,
+    START,
+    END,
   }
 
   private static enum DimensionIndex {
@@ -191,9 +193,35 @@ public class LayoutEngine {
         return node.style.margin.get(Spacing.LEFT);
       case RIGHT:
         return node.style.margin.get(Spacing.RIGHT);
+      case START:
+        return node.style.margin.get(Spacing.START);
+      case END:
+        return node.style.margin.get(Spacing.END);
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
+  }
+
+  private static float getLeadingMargin(CSSNode node, CSSFlexDirection axis) {
+    if (isRowDirection(axis)) {
+      float leadingMargin = getMargin(node, PositionIndex.START);
+      if (!CSSConstants.isUndefined(leadingMargin)) {
+        return leadingMargin;
+      }
+    }
+
+    return getMargin(node, getLeading(axis));
+  }
+
+  private static float getTrailingMargin(CSSNode node, CSSFlexDirection axis) {
+    if (isRowDirection(axis)) {
+      float trailingMargin = getMargin(node, PositionIndex.END);
+      if (!CSSConstants.isUndefined(trailingMargin)) {
+        return trailingMargin;
+      }
+    }
+
+    return getMargin(node, getTrailing(axis));
   }
 
   private static float getPadding(CSSNode node, PositionIndex position) {
@@ -206,9 +234,35 @@ public class LayoutEngine {
         return node.style.padding.get(Spacing.LEFT);
       case RIGHT:
         return node.style.padding.get(Spacing.RIGHT);
+      case START:
+        return node.style.padding.get(Spacing.START);
+      case END:
+        return node.style.padding.get(Spacing.END);
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
+  }
+
+  private static float getLeadingPadding(CSSNode node, CSSFlexDirection axis) {
+    if (isRowDirection(axis)) {
+      float leadingPadding = getPadding(node, PositionIndex.START);
+      if (!CSSConstants.isUndefined(leadingPadding)) {
+        return leadingPadding;
+      }
+    }
+
+    return getPadding(node, getLeading(axis));
+  }
+
+  private static float getTrailingPadding(CSSNode node, CSSFlexDirection axis) {
+    if (isRowDirection(axis)) {
+      float trailingPadding = getPadding(node, PositionIndex.END);
+      if (!CSSConstants.isUndefined(trailingPadding)) {
+        return trailingPadding;
+      }
+    }
+
+    return getPadding(node, getTrailing(axis));
   }
 
   private static float getBorder(CSSNode node, PositionIndex position) {
@@ -221,27 +275,55 @@ public class LayoutEngine {
         return node.style.border.get(Spacing.LEFT);
       case RIGHT:
         return node.style.border.get(Spacing.RIGHT);
+      case START:
+        return node.style.border.get(Spacing.START);
+      case END:
+        return node.style.border.get(Spacing.END);
       default:
         throw new RuntimeException("Someone added a new cardinal direction...");
     }
   }
 
-  private static float getPaddingAndBorder(CSSNode node, PositionIndex position) {
-    return getPadding(node, position) + getBorder(node, position);
+  private static float getLeadingBorder(CSSNode node, CSSFlexDirection axis) {
+    if (isRowDirection(axis)) {
+      float leadingBorder = getBorder(node, PositionIndex.START);
+      if (!CSSConstants.isUndefined(leadingBorder)) {
+        return leadingBorder;
+      }
+    }
+
+    return getBorder(node, getLeading(axis));
+  }
+
+  private static float getTrailingBorder(CSSNode node, CSSFlexDirection axis) {
+    if (isRowDirection(axis)) {
+      float trailingBorder = getBorder(node, PositionIndex.END);
+      if (!CSSConstants.isUndefined(trailingBorder)) {
+        return trailingBorder;
+      }
+    }
+
+    return getBorder(node, getTrailing(axis));
+  }
+
+  private static float getLeadingPaddingAndBorder(CSSNode node, CSSFlexDirection axis) {
+    return getLeadingPadding(node, axis) + getLeadingBorder(node, axis);
+  }
+
+  private static float getTrailingPaddingAndBorder(CSSNode node, CSSFlexDirection axis) {
+    return getTrailingPadding(node, axis) + getTrailingBorder(node, axis);
   }
 
   private static float getBorderAxis(CSSNode node, CSSFlexDirection axis) {
-    return getBorder(node, getLeading(axis)) + getBorder(node, getTrailing(axis));
+    return getLeadingBorder(node, axis) + getTrailingBorder(node, axis);
   }
 
   private static float getMarginAxis(CSSNode node, CSSFlexDirection axis) {
-    return getMargin(node, getLeading(axis)) + getMargin(node, getTrailing(axis));
+    return getLeadingMargin(node, axis) + getTrailingMargin(node, axis);
   }
 
   private static float getPaddingAndBorderAxis(CSSNode node, CSSFlexDirection axis) {
-    return getPaddingAndBorder(
-        node,
-        getLeading(axis)) + getPaddingAndBorder(node, getTrailing(axis));
+    return getLeadingPaddingAndBorder(node, axis) + getTrailingPaddingAndBorder(node, axis);
   }
 
   private static float boundAxis(CSSNode node, CSSFlexDirection axis, float value) {
@@ -385,8 +467,8 @@ public class LayoutEngine {
 
   private static float getDimWithMargin(CSSNode node, CSSFlexDirection axis) {
     return getLayoutDimension(node, getDim(axis)) +
-        getMargin(node, getLeading(axis)) +
-        getMargin(node, getTrailing(axis));
+        getLeadingMargin(node, axis) +
+        getTrailingMargin(node, axis);
   }
 
   private static boolean needsRelayout(CSSNode node, float parentMaxWidth) {
@@ -437,13 +519,13 @@ public class LayoutEngine {
   
     // The position is set by the parent, but we need to complete it with a
     // delta composed of the margin and left/top/right/bottom
-    setLayoutPosition(node, getLeading(mainAxis), getLayoutPosition(node, getLeading(mainAxis)) + getMargin(node, getLeading(mainAxis)) +
+    setLayoutPosition(node, getLeading(mainAxis), getLayoutPosition(node, getLeading(mainAxis)) + getLeadingMargin(node, mainAxis) +
       getRelativePosition(node, mainAxis));
-    setLayoutPosition(node, getTrailing(mainAxis), getLayoutPosition(node, getTrailing(mainAxis)) + getMargin(node, getTrailing(mainAxis)) +
+    setLayoutPosition(node, getTrailing(mainAxis), getLayoutPosition(node, getTrailing(mainAxis)) + getTrailingMargin(node, mainAxis) +
       getRelativePosition(node, mainAxis));
-    setLayoutPosition(node, getLeading(crossAxis), getLayoutPosition(node, getLeading(crossAxis)) + getMargin(node, getLeading(crossAxis)) +
+    setLayoutPosition(node, getLeading(crossAxis), getLayoutPosition(node, getLeading(crossAxis)) + getLeadingMargin(node, crossAxis) +
       getRelativePosition(node, crossAxis));
-    setLayoutPosition(node, getTrailing(crossAxis), getLayoutPosition(node, getTrailing(crossAxis)) + getMargin(node, getTrailing(crossAxis)) +
+    setLayoutPosition(node, getTrailing(crossAxis), getLayoutPosition(node, getTrailing(crossAxis)) + getTrailingMargin(node, crossAxis) +
       getRelativePosition(node, crossAxis));
   
     if (isMeasureDefined(node)) {
@@ -725,7 +807,7 @@ public class LayoutEngine {
       // container!
       float crossDim = 0;
       float mainDim = leadingMainDim +
-        getPaddingAndBorder(node, getLeading(mainAxis));
+        getLeadingPaddingAndBorder(node, mainAxis);
   
       for (i = startLine; i < endLine; ++i) {
         child = node.getChildAt(i);
@@ -736,8 +818,8 @@ public class LayoutEngine {
           // defined, we override the position to whatever the user said
           // (and margin/border).
           setLayoutPosition(child, getPos(mainAxis), getPosition(child, getLeading(mainAxis)) +
-            getBorder(node, getLeading(mainAxis)) +
-            getMargin(child, getLeading(mainAxis)));
+            getLeadingBorder(node, mainAxis) +
+            getLeadingMargin(child, mainAxis));
         } else {
           // If the child is position absolute (without top/left) or relative,
           // we put it at the current accumulated offset.
@@ -784,11 +866,11 @@ public class LayoutEngine {
           // top/left/bottom/right being set, we override all the previously
           // computed positions to set it correctly.
           setLayoutPosition(child, getPos(crossAxis), getPosition(child, getLeading(crossAxis)) +
-            getBorder(node, getLeading(crossAxis)) +
-            getMargin(child, getLeading(crossAxis)));
+            getLeadingBorder(node, crossAxis) +
+            getLeadingMargin(child, crossAxis));
   
         } else {
-          float leadingCrossDim = getPaddingAndBorder(node, getLeading(crossAxis));
+          float leadingCrossDim = getLeadingPaddingAndBorder(node, crossAxis);
   
           // For a relative children, we're either using alignItems (parent) or
           // alignSelf (child) in order to determine the position in the cross axis
@@ -823,6 +905,11 @@ public class LayoutEngine {
   
           // And we apply the position
           setLayoutPosition(child, getPos(crossAxis), getLayoutPosition(child, getPos(crossAxis)) + linesCrossDim + leadingCrossDim);
+  
+          // Define the trailing position accordingly.
+          if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis)))) {
+            setTrailingPosition(node, child, crossAxis);
+          }
         }
       }
   
@@ -831,22 +918,21 @@ public class LayoutEngine {
       startLine = endLine;
     }
   
+    boolean needsMainTrailingPos = false;
+    boolean needsCrossTrailingPos = false;
+  
     // If the user didn't specify a width or height, and it has not been set
     // by the container, then we set it via the children.
     if (CSSConstants.isUndefined(getLayoutDimension(node, getDim(mainAxis)))) {
       setLayoutDimension(node, getDim(mainAxis), Math.max(
         // We're missing the last padding at this point to get the final
         // dimension
-        boundAxis(node, mainAxis, linesMainDim + getPaddingAndBorder(node, getTrailing(mainAxis))),
+        boundAxis(node, mainAxis, linesMainDim + getTrailingPaddingAndBorder(node, mainAxis)),
         // We can never assign a width smaller than the padding and borders
         getPaddingAndBorderAxis(node, mainAxis)
       ));
   
-      // Now that the width is defined, we should update the trailing
-      // positions for the children.
-      for (i = 0; i < node.getChildCount(); ++i) {
-        setTrailingPosition(node, node.getChildAt(i), mainAxis);
-      }
+      needsMainTrailingPos = true;
     }
   
     if (CSSConstants.isUndefined(getLayoutDimension(node, getDim(crossAxis)))) {
@@ -857,9 +943,27 @@ public class LayoutEngine {
         boundAxis(node, crossAxis, linesCrossDim + getPaddingAndBorderAxis(node, crossAxis)),
         getPaddingAndBorderAxis(node, crossAxis)
       ));
+  
+      needsCrossTrailingPos = true;
     }
   
-    // <Loop E> Calculate dimensions for absolutely positioned elements
+    // <Loop E> Set trailing position if necessary
+  
+    if (needsMainTrailingPos || needsCrossTrailingPos) {
+      for (i = 0; i < node.getChildCount(); ++i) {
+        child = node.getChildAt(i);
+  
+        if (needsMainTrailingPos) {
+          setTrailingPosition(node, child, mainAxis);
+        }
+  
+        if (needsCrossTrailingPos) {
+          setTrailingPosition(node, child, crossAxis);
+        }
+      }
+    }
+  
+    // <Loop F> Calculate dimensions for absolutely positioned elements
   
     for (i = 0; i < node.getChildCount(); ++i) {
       child = node.getChildAt(i);

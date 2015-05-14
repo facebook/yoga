@@ -374,6 +374,8 @@ public class LayoutEngineTest {
       node_0.setMargin(Spacing.TOP, 10);
       node_0.setMargin(Spacing.RIGHT, 10);
       node_0.setMargin(Spacing.BOTTOM, 10);
+      node_0.setMargin(Spacing.START, 10);
+      node_0.setMargin(Spacing.END, 10);
     }
 
     TestCSSNode root_layout = new TestCSSNode();
@@ -400,6 +402,8 @@ public class LayoutEngineTest {
       node_0.setMargin(Spacing.TOP, 10);
       node_0.setMargin(Spacing.RIGHT, 10);
       node_0.setMargin(Spacing.BOTTOM, 10);
+      node_0.setMargin(Spacing.START, 10);
+      node_0.setMargin(Spacing.END, 10);
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -410,6 +414,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 50);
         node_1.setMargin(Spacing.RIGHT, 50);
         node_1.setMargin(Spacing.BOTTOM, 50);
+        node_1.setMargin(Spacing.START, 50);
+        node_1.setMargin(Spacing.END, 50);
         node_1 = node_0.getChildAt(1);
         node_1.style.width = 100;
         node_1.style.height = 100;
@@ -417,6 +423,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 25);
         node_1.setMargin(Spacing.RIGHT, 25);
         node_1.setMargin(Spacing.BOTTOM, 25);
+        node_1.setMargin(Spacing.START, 25);
+        node_1.setMargin(Spacing.END, 25);
         node_1 = node_0.getChildAt(2);
         node_1.style.width = 100;
         node_1.style.height = 100;
@@ -424,6 +432,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
         node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
       }
     }
 
@@ -471,6 +481,8 @@ public class LayoutEngineTest {
       node_0.setMargin(Spacing.TOP, 10);
       node_0.setMargin(Spacing.RIGHT, 10);
       node_0.setMargin(Spacing.BOTTOM, 10);
+      node_0.setMargin(Spacing.START, 10);
+      node_0.setMargin(Spacing.END, 10);
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -481,6 +493,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 50);
         node_1.setMargin(Spacing.RIGHT, 50);
         node_1.setMargin(Spacing.BOTTOM, 50);
+        node_1.setMargin(Spacing.START, 50);
+        node_1.setMargin(Spacing.END, 50);
         node_1 = node_0.getChildAt(1);
         node_1.style.width = 100;
         node_1.style.height = 100;
@@ -488,6 +502,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 25);
         node_1.setMargin(Spacing.RIGHT, 25);
         node_1.setMargin(Spacing.BOTTOM, 25);
+        node_1.setMargin(Spacing.START, 25);
+        node_1.setMargin(Spacing.END, 25);
         node_1 = node_0.getChildAt(2);
         node_1.style.width = 100;
         node_1.style.height = 100;
@@ -495,6 +511,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
         node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
       }
     }
 
@@ -2161,6 +2179,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 5);
         node_1.setMargin(Spacing.RIGHT, 5);
         node_1.setMargin(Spacing.BOTTOM, 5);
+        node_1.setMargin(Spacing.START, 5);
+        node_1.setMargin(Spacing.END, 5);
       }
     }
 
@@ -2200,6 +2220,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 5);
         node_1.setMargin(Spacing.RIGHT, 5);
         node_1.setMargin(Spacing.BOTTOM, 5);
+        node_1.setMargin(Spacing.START, 5);
+        node_1.setMargin(Spacing.END, 5);
       }
     }
 
@@ -2426,6 +2448,8 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.TOP, 10);
           node_2.setMargin(Spacing.RIGHT, 10);
           node_2.setMargin(Spacing.BOTTOM, 10);
+          node_2.setMargin(Spacing.START, 10);
+          node_2.setMargin(Spacing.END, 10);
           node_2 = node_1.getChildAt(1);
           node_2.style.height = 100;
         }
@@ -2487,6 +2511,8 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.TOP, 10);
           node_2.setMargin(Spacing.RIGHT, 10);
           node_2.setMargin(Spacing.BOTTOM, 10);
+          node_2.setMargin(Spacing.START, 10);
+          node_2.setMargin(Spacing.END, 10);
           node_2 = node_1.getChildAt(1);
           node_2.style.height = 100;
         }
@@ -2646,6 +2672,8 @@ public class LayoutEngineTest {
       node_0.setPadding(Spacing.TOP, 5);
       node_0.setPadding(Spacing.RIGHT, 5);
       node_0.setPadding(Spacing.BOTTOM, 5);
+      node_0.setPadding(Spacing.START, 5);
+      node_0.setPadding(Spacing.END, 5);
     }
 
     TestCSSNode root_layout = new TestCSSNode();
@@ -2670,6 +2698,8 @@ public class LayoutEngineTest {
       node_0.setPadding(Spacing.TOP, 5);
       node_0.setPadding(Spacing.RIGHT, 5);
       node_0.setPadding(Spacing.BOTTOM, 5);
+      node_0.setPadding(Spacing.START, 5);
+      node_0.setPadding(Spacing.END, 5);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2708,6 +2738,8 @@ public class LayoutEngineTest {
       node_0.setPadding(Spacing.TOP, 5);
       node_0.setPadding(Spacing.RIGHT, 5);
       node_0.setPadding(Spacing.BOTTOM, 5);
+      node_0.setPadding(Spacing.START, 5);
+      node_0.setPadding(Spacing.END, 5);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2716,6 +2748,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 5);
         node_1.setMargin(Spacing.RIGHT, 5);
         node_1.setMargin(Spacing.BOTTOM, 5);
+        node_1.setMargin(Spacing.START, 5);
+        node_1.setMargin(Spacing.END, 5);
       }
     }
 
@@ -2755,6 +2789,8 @@ public class LayoutEngineTest {
         node_1.setPadding(Spacing.TOP, 10);
         node_1.setPadding(Spacing.RIGHT, 10);
         node_1.setPadding(Spacing.BOTTOM, 10);
+        node_1.setPadding(Spacing.START, 10);
+        node_1.setPadding(Spacing.END, 10);
       }
     }
 
@@ -2789,6 +2825,8 @@ public class LayoutEngineTest {
       node_0.setPadding(Spacing.TOP, 50);
       node_0.setPadding(Spacing.RIGHT, 50);
       node_0.setPadding(Spacing.BOTTOM, 50);
+      node_0.setPadding(Spacing.START, 50);
+      node_0.setPadding(Spacing.END, 50);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2798,6 +2836,8 @@ public class LayoutEngineTest {
         node_1.setPadding(Spacing.TOP, 10);
         node_1.setPadding(Spacing.RIGHT, 10);
         node_1.setPadding(Spacing.BOTTOM, 10);
+        node_1.setPadding(Spacing.START, 10);
+        node_1.setPadding(Spacing.END, 10);
       }
     }
 
@@ -2841,6 +2881,8 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.TOP, 16);
           node_2.setMargin(Spacing.RIGHT, 16);
           node_2.setMargin(Spacing.BOTTOM, 16);
+          node_2.setMargin(Spacing.START, 16);
+          node_2.setMargin(Spacing.END, 16);
         }
       }
     }
@@ -3213,6 +3255,8 @@ public class LayoutEngineTest {
       node_0.setPadding(Spacing.TOP, 5);
       node_0.setPadding(Spacing.RIGHT, 5);
       node_0.setPadding(Spacing.BOTTOM, 5);
+      node_0.setPadding(Spacing.START, 5);
+      node_0.setPadding(Spacing.END, 5);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3296,6 +3340,8 @@ public class LayoutEngineTest {
       node_0.setPadding(Spacing.TOP, 20);
       node_0.setPadding(Spacing.RIGHT, 20);
       node_0.setPadding(Spacing.BOTTOM, 20);
+      node_0.setPadding(Spacing.START, 20);
+      node_0.setPadding(Spacing.END, 20);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3920,6 +3966,8 @@ public class LayoutEngineTest {
       node_0.setBorder(Spacing.TOP, 5);
       node_0.setBorder(Spacing.RIGHT, 5);
       node_0.setBorder(Spacing.BOTTOM, 5);
+      node_0.setBorder(Spacing.START, 5);
+      node_0.setBorder(Spacing.END, 5);
     }
 
     TestCSSNode root_layout = new TestCSSNode();
@@ -3981,6 +4029,8 @@ public class LayoutEngineTest {
       node_0.setBorder(Spacing.TOP, 1);
       node_0.setBorder(Spacing.RIGHT, 1);
       node_0.setBorder(Spacing.BOTTOM, 1);
+      node_0.setBorder(Spacing.START, 1);
+      node_0.setBorder(Spacing.END, 1);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4028,6 +4078,8 @@ public class LayoutEngineTest {
         node_1.setPadding(Spacing.TOP, 20);
         node_1.setPadding(Spacing.RIGHT, 20);
         node_1.setPadding(Spacing.BOTTOM, 20);
+        node_1.setPadding(Spacing.START, 20);
+        node_1.setPadding(Spacing.END, 20);
       }
     }
 
@@ -4546,6 +4598,8 @@ public class LayoutEngineTest {
       node_0.setPadding(Spacing.TOP, 10);
       node_0.setPadding(Spacing.RIGHT, 10);
       node_0.setPadding(Spacing.BOTTOM, 10);
+      node_0.setPadding(Spacing.START, 10);
+      node_0.setPadding(Spacing.END, 10);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4555,6 +4609,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
         node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4779,6 +4835,8 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.TOP, 20);
           node_2.setMargin(Spacing.RIGHT, 20);
           node_2.setMargin(Spacing.BOTTOM, 20);
+          node_2.setMargin(Spacing.START, 20);
+          node_2.setMargin(Spacing.END, 20);
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = "loooooooooong with space";
         }
@@ -4836,6 +4894,8 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.TOP, 20);
           node_2.setMargin(Spacing.RIGHT, 20);
           node_2.setMargin(Spacing.BOTTOM, 20);
+          node_2.setMargin(Spacing.START, 20);
+          node_2.setMargin(Spacing.END, 20);
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = "loooooooooong with space";
         }
@@ -4891,6 +4951,8 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.TOP, 20);
           node_2.setMargin(Spacing.RIGHT, 20);
           node_2.setMargin(Spacing.BOTTOM, 20);
+          node_2.setMargin(Spacing.START, 20);
+          node_2.setMargin(Spacing.END, 20);
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = "loooooooooong with space";
         }
@@ -7126,6 +7188,8 @@ public class LayoutEngineTest {
         node_1.setPadding(Spacing.TOP, 10);
         node_1.setPadding(Spacing.RIGHT, 10);
         node_1.setPadding(Spacing.BOTTOM, 10);
+        node_1.setPadding(Spacing.START, 10);
+        node_1.setPadding(Spacing.END, 10);
         node_1.style.positionLeft = 100;
         node_1.style.positionTop = 100;
         node_1.style.positionRight = 100;
@@ -7190,10 +7254,14 @@ public class LayoutEngineTest {
         node_1.setPadding(Spacing.TOP, 10);
         node_1.setPadding(Spacing.RIGHT, 10);
         node_1.setPadding(Spacing.BOTTOM, 10);
+        node_1.setPadding(Spacing.START, 10);
+        node_1.setPadding(Spacing.END, 10);
         node_1.setBorder(Spacing.LEFT, 1);
         node_1.setBorder(Spacing.TOP, 1);
         node_1.setBorder(Spacing.RIGHT, 1);
         node_1.setBorder(Spacing.BOTTOM, 1);
+        node_1.setBorder(Spacing.START, 1);
+        node_1.setBorder(Spacing.END, 1);
         node_1.style.positionLeft = 100;
         node_1.style.positionTop = 100;
         node_1.style.positionRight = 100;
@@ -7258,6 +7326,8 @@ public class LayoutEngineTest {
         node_1.setPadding(Spacing.TOP, 10);
         node_1.setPadding(Spacing.RIGHT, 10);
         node_1.setPadding(Spacing.BOTTOM, 10);
+        node_1.setPadding(Spacing.START, 10);
+        node_1.setPadding(Spacing.END, 10);
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -7474,6 +7544,357 @@ public class LayoutEngineTest {
     }
 
     test("should correctly space wrapped nodes", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase168()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 200;
+      node_0.setPadding(Spacing.LEFT, 5);
+      node_0.setPadding(Spacing.RIGHT, 5);
+      node_0.setPadding(Spacing.START, 15);
+      node_0.setPadding(Spacing.END, 15);
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 50;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 15;
+        node_1.layout.width = 170;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should give start/end padding precedence over left/right padding", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase169()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 5);
+        node_1.setMargin(Spacing.RIGHT, 5);
+        node_1.setMargin(Spacing.START, 15);
+        node_1.setMargin(Spacing.END, 15);
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 15;
+        node_1.layout.width = 170;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should give start/end margin precedence over left/right margin", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase170()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 200;
+      node_0.setBorder(Spacing.LEFT, 5);
+      node_0.setBorder(Spacing.RIGHT, 5);
+      node_0.setBorder(Spacing.START, 15);
+      node_0.setBorder(Spacing.END, 15);
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 50;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 15;
+        node_1.layout.width = 170;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should give start/end border precedence over left/right border", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase171()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 200;
+      node_0.setPadding(Spacing.START, 15);
+      node_0.setPadding(Spacing.END, 5);
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 50;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 15;
+        node_1.layout.width = 180;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should layout node with correct start/end padding", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase172()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.direction = CSSDirection.RTL;
+      node_0.style.width = 200;
+      node_0.setPadding(Spacing.START, 15);
+      node_0.setPadding(Spacing.END, 5);
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 50;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 5;
+        node_1.layout.width = 180;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should layout node with correct start/end padding in rtl", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase173()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.START, 15);
+        node_1.setMargin(Spacing.END, 5);
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 15;
+        node_1.layout.width = 180;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should layout node with correct start/end margin", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase174()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 200;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.direction = CSSDirection.RTL;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.START, 15);
+        node_1.setMargin(Spacing.END, 5);
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 5;
+        node_1.layout.width = 180;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should layout node with correct start/end margin in rtl", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase175()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.width = 200;
+      node_0.setBorder(Spacing.START, 15);
+      node_0.setBorder(Spacing.END, 5);
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 50;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 15;
+        node_1.layout.width = 180;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should layout node with correct start/end border", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase176()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.direction = CSSDirection.RTL;
+      node_0.style.width = 200;
+      node_0.setBorder(Spacing.START, 15);
+      node_0.setBorder(Spacing.END, 5);
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.height = 50;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 200;
+      node_0.layout.height = 50;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 5;
+        node_1.layout.width = 180;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should layout node with correct start/end border in rtl", root_node, root_layout);
   }
   /** END_GENERATED **/
 }

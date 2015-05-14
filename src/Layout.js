@@ -63,15 +63,19 @@ var computeLayout = (function() {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  function getSpacing(node, type, suffix, location) {
-    var key = type + capitalizeFirst(location) + suffix;
-    if (key in node.style) {
-      return node.style[key];
-    }
+  function getSpacing(node, type, suffix, locations) {
+    for (var i = 0; i < locations.length; ++i) {
+      var location = locations[i];
 
-    key = type + suffix;
-    if (key in node.style) {
-      return node.style[key];
+      var key = type + capitalizeFirst(location) + suffix;
+      if (key in node.style) {
+        return node.style[key];
+      }
+
+      key = type + suffix;
+      if (key in node.style) {
+        return node.style[key];
+      }
     }
 
     return 0;
@@ -111,15 +115,19 @@ var computeLayout = (function() {
     return layout;
   }
 
-  function getPositiveSpacing(node, type, suffix, location) {
-    var key = type + capitalizeFirst(location) + suffix;
-    if (key in node.style && node.style[key] >= 0) {
-      return node.style[key];
-    }
+  function getPositiveSpacing(node, type, suffix, locations) {
+    for (var i = 0; i < locations.length; ++i) {
+      var location = locations[i];
 
-    key = type + suffix;
-    if (key in node.style && node.style[key] >= 0) {
-      return node.style[key];
+      var key = type + capitalizeFirst(location) + suffix;
+      if (key in node.style && node.style[key] >= 0) {
+        return node.style[key];
+      }
+
+      key = type + suffix;
+      if (key in node.style && node.style[key] >= 0) {
+        return node.style[key];
+      }
     }
 
     return 0;
@@ -129,32 +137,89 @@ var computeLayout = (function() {
     return value === undefined;
   }
 
-  function getMargin(node, location) {
-    return getSpacing(node, 'margin', '', location);
+  function isRowDirection(flexDirection) {
+    return flexDirection === CSS_FLEX_DIRECTION_ROW ||
+           flexDirection === CSS_FLEX_DIRECTION_ROW_REVERSE;
   }
 
-  function getPadding(node, location) {
-    return getPositiveSpacing(node, 'padding', '', location);
+  function isColumnDirection(flexDirection) {
+    return flexDirection === CSS_FLEX_DIRECTION_COLUMN ||
+           flexDirection === CSS_FLEX_DIRECTION_COLUMN_REVERSE;
   }
 
-  function getBorder(node, location) {
-    return getPositiveSpacing(node, 'border', 'Width', location);
+  function getLeadingLocations(axis) {
+    var locations = [leading[axis]];
+    if (isRowDirection(axis)) {
+      locations.unshift('start');
+    }
+
+    return locations;
   }
 
-  function getPaddingAndBorder(node, location) {
-    return getPadding(node, location) + getBorder(node, location);
+  function getTrailingLocations(axis) {
+    var locations = [trailing[axis]];
+    if (isRowDirection(axis)) {
+      locations.unshift('end');
+    }
+
+    return locations;
+  }
+
+  function getMargin(node, locations) {
+    return getSpacing(node, 'margin', '', locations);
+  }
+
+  function getLeadingMargin(node, axis) {
+    return getMargin(node, getLeadingLocations(axis));
+  }
+
+  function getTrailingMargin(node, axis) {
+    return getMargin(node, getTrailingLocations(axis));
+  }
+
+  function getPadding(node, locations) {
+    return getPositiveSpacing(node, 'padding', '', locations);
+  }
+
+  function getLeadingPadding(node, axis) {
+    return getPadding(node, getLeadingLocations(axis));
+  }
+
+  function getTrailingPadding(node, axis) {
+    return getPadding(node, getTrailingLocations(axis));
+  }
+
+  function getBorder(node, locations) {
+    return getPositiveSpacing(node, 'border', 'Width', locations);
+  }
+
+  function getLeadingBorder(node, axis) {
+    return getBorder(node, getLeadingLocations(axis));
+  }
+
+  function getTrailingBorder(node, axis) {
+    return getBorder(node, getTrailingLocations(axis));
+  }
+
+  function getLeadingPaddingAndBorder(node, axis) {
+    return getLeadingPadding(node, axis) + getLeadingBorder(node, axis);
+  }
+
+  function getTrailingPaddingAndBorder(node, axis) {
+    return getTrailingPadding(node, axis) + getTrailingBorder(node, axis);
   }
 
   function getBorderAxis(node, axis) {
-    return getBorder(node, leading[axis]) + getBorder(node, trailing[axis]);
+    return getLeadingBorder(node, axis) + getTrailingBorder(node, axis);
   }
 
   function getMarginAxis(node, axis) {
-    return getMargin(node, leading[axis]) + getMargin(node, trailing[axis]);
+    return getLeadingMargin(node, axis) + getTrailingMargin(node, axis);
   }
 
   function getPaddingAndBorderAxis(node, axis) {
-    return getPaddingAndBorder(node, leading[axis]) + getPaddingAndBorder(node, trailing[axis]);
+    return getLeadingPaddingAndBorder(node, axis) +
+        getTrailingPaddingAndBorder(node, axis);
   }
 
   function getJustifyContent(node) {
@@ -172,16 +237,6 @@ var computeLayout = (function() {
       return node.style.alignItems;
     }
     return 'stretch';
-  }
-
-  function isRowDirection(flexDirection) {
-    return flexDirection === CSS_FLEX_DIRECTION_ROW ||
-           flexDirection === CSS_FLEX_DIRECTION_ROW_REVERSE;
-  }
-
-  function isColumnDirection(flexDirection) {
-    return flexDirection === CSS_FLEX_DIRECTION_COLUMN ||
-           flexDirection === CSS_FLEX_DIRECTION_COLUMN_REVERSE;
   }
 
   function resolveAxis(axis, direction) {
@@ -347,13 +402,13 @@ var computeLayout = (function() {
 
     // The position is set by the parent, but we need to complete it with a
     // delta composed of the margin and left/top/right/bottom
-    node.layout[leading[mainAxis]] += getMargin(node, leading[mainAxis]) +
+    node.layout[leading[mainAxis]] += getLeadingMargin(node, mainAxis) +
       getRelativePosition(node, mainAxis);
-    node.layout[trailing[mainAxis]] += getMargin(node, trailing[mainAxis]) +
+    node.layout[trailing[mainAxis]] += getTrailingMargin(node, mainAxis) +
       getRelativePosition(node, mainAxis);
-    node.layout[leading[crossAxis]] += getMargin(node, leading[crossAxis]) +
+    node.layout[leading[crossAxis]] += getLeadingMargin(node, crossAxis) +
       getRelativePosition(node, crossAxis);
-    node.layout[trailing[crossAxis]] += getMargin(node, trailing[crossAxis]) +
+    node.layout[trailing[crossAxis]] += getTrailingMargin(node, crossAxis) +
       getRelativePosition(node, crossAxis);
 
     if (isMeasureDefined(node)) {
@@ -636,7 +691,7 @@ var computeLayout = (function() {
       // container!
       var/*float*/ crossDim = 0;
       var/*float*/ mainDim = leadingMainDim +
-        getPaddingAndBorder(node, leading[mainAxis]);
+        getLeadingPaddingAndBorder(node, mainAxis);
 
       for (i = startLine; i < endLine; ++i) {
         child = node.children[i];
@@ -647,8 +702,8 @@ var computeLayout = (function() {
           // defined, we override the position to whatever the user said
           // (and margin/border).
           child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
-            getBorder(node, leading[mainAxis]) +
-            getMargin(child, leading[mainAxis]);
+            getLeadingBorder(node, mainAxis) +
+            getLeadingMargin(child, mainAxis);
         } else {
           // If the child is position absolute (without top/left) or relative,
           // we put it at the current accumulated offset.
@@ -695,11 +750,11 @@ var computeLayout = (function() {
           // top/left/bottom/right being set, we override all the previously
           // computed positions to set it correctly.
           child.layout[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
-            getBorder(node, leading[crossAxis]) +
-            getMargin(child, leading[crossAxis]);
+            getLeadingBorder(node, crossAxis) +
+            getLeadingMargin(child, crossAxis);
 
         } else {
-          var/*float*/ leadingCrossDim = getPaddingAndBorder(node, leading[crossAxis]);
+          var/*float*/ leadingCrossDim = getLeadingPaddingAndBorder(node, crossAxis);
 
           // For a relative children, we're either using alignItems (parent) or
           // alignSelf (child) in order to determine the position in the cross axis
@@ -734,6 +789,11 @@ var computeLayout = (function() {
 
           // And we apply the position
           child.layout[pos[crossAxis]] += linesCrossDim + leadingCrossDim;
+
+          // Define the trailing position accordingly.
+          if (!isUndefined(node.layout[dim[crossAxis]])) {
+            setTrailingPosition(node, child, crossAxis);
+          }
         }
       }
 
@@ -742,22 +802,21 @@ var computeLayout = (function() {
       startLine = endLine;
     }
 
+    var/*bool*/ needsMainTrailingPos = false;
+    var/*bool*/ needsCrossTrailingPos = false;
+
     // If the user didn't specify a width or height, and it has not been set
     // by the container, then we set it via the children.
     if (isUndefined(node.layout[dim[mainAxis]])) {
       node.layout[dim[mainAxis]] = fmaxf(
         // We're missing the last padding at this point to get the final
         // dimension
-        boundAxis(node, mainAxis, linesMainDim + getPaddingAndBorder(node, trailing[mainAxis])),
+        boundAxis(node, mainAxis, linesMainDim + getTrailingPaddingAndBorder(node, mainAxis)),
         // We can never assign a width smaller than the padding and borders
         getPaddingAndBorderAxis(node, mainAxis)
       );
 
-      // Now that the width is defined, we should update the trailing
-      // positions for the children.
-      for (i = 0; i < node.children.length; ++i) {
-        setTrailingPosition(node, node.children[i], mainAxis);
-      }
+      needsMainTrailingPos = true;
     }
 
     if (isUndefined(node.layout[dim[crossAxis]])) {
@@ -768,9 +827,27 @@ var computeLayout = (function() {
         boundAxis(node, crossAxis, linesCrossDim + getPaddingAndBorderAxis(node, crossAxis)),
         getPaddingAndBorderAxis(node, crossAxis)
       );
+
+      needsCrossTrailingPos = true;
     }
 
-    // <Loop E> Calculate dimensions for absolutely positioned elements
+    // <Loop E> Set trailing position if necessary
+
+    if (needsMainTrailingPos || needsCrossTrailingPos) {
+      for (i = 0; i < node.children.length; ++i) {
+        child = node.children[i];
+
+        if (needsMainTrailingPos) {
+          setTrailingPosition(node, child, mainAxis);
+        }
+
+        if (needsCrossTrailingPos) {
+          setTrailingPosition(node, child, crossAxis);
+        }
+      }
+    }
+
+    // <Loop F> Calculate dimensions for absolutely positioned elements
 
     for (i = 0; i < node.children.length; ++i) {
       child = node.children[i];

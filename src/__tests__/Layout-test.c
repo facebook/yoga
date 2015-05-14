@@ -287,6 +287,8 @@ int main()
       node_0->style.margin[CSS_TOP] = 10;
       node_0->style.margin[CSS_RIGHT] = 10;
       node_0->style.margin[CSS_BOTTOM] = 10;
+      node_0->style.margin[CSS_START] = 10;
+      node_0->style.margin[CSS_END] = 10;
     }
 
     css_node_t *root_layout = new_test_css_node();
@@ -311,6 +313,8 @@ int main()
       node_0->style.margin[CSS_TOP] = 10;
       node_0->style.margin[CSS_RIGHT] = 10;
       node_0->style.margin[CSS_BOTTOM] = 10;
+      node_0->style.margin[CSS_START] = 10;
+      node_0->style.margin[CSS_END] = 10;
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
@@ -321,6 +325,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 50;
         node_1->style.margin[CSS_RIGHT] = 50;
         node_1->style.margin[CSS_BOTTOM] = 50;
+        node_1->style.margin[CSS_START] = 50;
+        node_1->style.margin[CSS_END] = 50;
         node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
@@ -328,6 +334,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 25;
         node_1->style.margin[CSS_RIGHT] = 25;
         node_1->style.margin[CSS_BOTTOM] = 25;
+        node_1->style.margin[CSS_START] = 25;
+        node_1->style.margin[CSS_END] = 25;
         node_1 = node_0->get_child(node_0->context, 2);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
@@ -335,6 +343,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 10;
         node_1->style.margin[CSS_RIGHT] = 10;
         node_1->style.margin[CSS_BOTTOM] = 10;
+        node_1->style.margin[CSS_START] = 10;
+        node_1->style.margin[CSS_END] = 10;
       }
     }
 
@@ -380,6 +390,8 @@ int main()
       node_0->style.margin[CSS_TOP] = 10;
       node_0->style.margin[CSS_RIGHT] = 10;
       node_0->style.margin[CSS_BOTTOM] = 10;
+      node_0->style.margin[CSS_START] = 10;
+      node_0->style.margin[CSS_END] = 10;
       init_css_node_children(node_0, 3);
       {
         css_node_t *node_1;
@@ -390,6 +402,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 50;
         node_1->style.margin[CSS_RIGHT] = 50;
         node_1->style.margin[CSS_BOTTOM] = 50;
+        node_1->style.margin[CSS_START] = 50;
+        node_1->style.margin[CSS_END] = 50;
         node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
@@ -397,6 +411,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 25;
         node_1->style.margin[CSS_RIGHT] = 25;
         node_1->style.margin[CSS_BOTTOM] = 25;
+        node_1->style.margin[CSS_START] = 25;
+        node_1->style.margin[CSS_END] = 25;
         node_1 = node_0->get_child(node_0->context, 2);
         node_1->style.dimensions[CSS_WIDTH] = 100;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
@@ -404,6 +420,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 10;
         node_1->style.margin[CSS_RIGHT] = 10;
         node_1->style.margin[CSS_BOTTOM] = 10;
+        node_1->style.margin[CSS_START] = 10;
+        node_1->style.margin[CSS_END] = 10;
       }
     }
 
@@ -2000,6 +2018,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 5;
         node_1->style.margin[CSS_RIGHT] = 5;
         node_1->style.margin[CSS_BOTTOM] = 5;
+        node_1->style.margin[CSS_START] = 5;
+        node_1->style.margin[CSS_END] = 5;
       }
     }
 
@@ -2037,6 +2057,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 5;
         node_1->style.margin[CSS_RIGHT] = 5;
         node_1->style.margin[CSS_BOTTOM] = 5;
+        node_1->style.margin[CSS_START] = 5;
+        node_1->style.margin[CSS_END] = 5;
       }
     }
 
@@ -2251,6 +2273,8 @@ int main()
           node_2->style.margin[CSS_TOP] = 10;
           node_2->style.margin[CSS_RIGHT] = 10;
           node_2->style.margin[CSS_BOTTOM] = 10;
+          node_2->style.margin[CSS_START] = 10;
+          node_2->style.margin[CSS_END] = 10;
           node_2 = node_1->get_child(node_1->context, 1);
           node_2->style.dimensions[CSS_HEIGHT] = 100;
         }
@@ -2310,6 +2334,8 @@ int main()
           node_2->style.margin[CSS_TOP] = 10;
           node_2->style.margin[CSS_RIGHT] = 10;
           node_2->style.margin[CSS_BOTTOM] = 10;
+          node_2->style.margin[CSS_START] = 10;
+          node_2->style.margin[CSS_END] = 10;
           node_2 = node_1->get_child(node_1->context, 1);
           node_2->style.dimensions[CSS_HEIGHT] = 100;
         }
@@ -2461,6 +2487,8 @@ int main()
       node_0->style.padding[CSS_TOP] = 5;
       node_0->style.padding[CSS_RIGHT] = 5;
       node_0->style.padding[CSS_BOTTOM] = 5;
+      node_0->style.padding[CSS_START] = 5;
+      node_0->style.padding[CSS_END] = 5;
     }
 
     css_node_t *root_layout = new_test_css_node();
@@ -2483,6 +2511,8 @@ int main()
       node_0->style.padding[CSS_TOP] = 5;
       node_0->style.padding[CSS_RIGHT] = 5;
       node_0->style.padding[CSS_BOTTOM] = 5;
+      node_0->style.padding[CSS_START] = 5;
+      node_0->style.padding[CSS_END] = 5;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -2519,6 +2549,8 @@ int main()
       node_0->style.padding[CSS_TOP] = 5;
       node_0->style.padding[CSS_RIGHT] = 5;
       node_0->style.padding[CSS_BOTTOM] = 5;
+      node_0->style.padding[CSS_START] = 5;
+      node_0->style.padding[CSS_END] = 5;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -2527,6 +2559,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 5;
         node_1->style.margin[CSS_RIGHT] = 5;
         node_1->style.margin[CSS_BOTTOM] = 5;
+        node_1->style.margin[CSS_START] = 5;
+        node_1->style.margin[CSS_END] = 5;
       }
     }
 
@@ -2564,6 +2598,8 @@ int main()
         node_1->style.padding[CSS_TOP] = 10;
         node_1->style.padding[CSS_RIGHT] = 10;
         node_1->style.padding[CSS_BOTTOM] = 10;
+        node_1->style.padding[CSS_START] = 10;
+        node_1->style.padding[CSS_END] = 10;
       }
     }
 
@@ -2596,6 +2632,8 @@ int main()
       node_0->style.padding[CSS_TOP] = 50;
       node_0->style.padding[CSS_RIGHT] = 50;
       node_0->style.padding[CSS_BOTTOM] = 50;
+      node_0->style.padding[CSS_START] = 50;
+      node_0->style.padding[CSS_END] = 50;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -2605,6 +2643,8 @@ int main()
         node_1->style.padding[CSS_TOP] = 10;
         node_1->style.padding[CSS_RIGHT] = 10;
         node_1->style.padding[CSS_BOTTOM] = 10;
+        node_1->style.padding[CSS_START] = 10;
+        node_1->style.padding[CSS_END] = 10;
       }
     }
 
@@ -2646,6 +2686,8 @@ int main()
           node_2->style.margin[CSS_TOP] = 16;
           node_2->style.margin[CSS_RIGHT] = 16;
           node_2->style.margin[CSS_BOTTOM] = 16;
+          node_2->style.margin[CSS_START] = 16;
+          node_2->style.margin[CSS_END] = 16;
         }
       }
     }
@@ -2996,6 +3038,8 @@ int main()
       node_0->style.padding[CSS_TOP] = 5;
       node_0->style.padding[CSS_RIGHT] = 5;
       node_0->style.padding[CSS_BOTTOM] = 5;
+      node_0->style.padding[CSS_START] = 5;
+      node_0->style.padding[CSS_END] = 5;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -3075,6 +3119,8 @@ int main()
       node_0->style.padding[CSS_TOP] = 20;
       node_0->style.padding[CSS_RIGHT] = 20;
       node_0->style.padding[CSS_BOTTOM] = 20;
+      node_0->style.padding[CSS_START] = 20;
+      node_0->style.padding[CSS_END] = 20;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -3669,6 +3715,8 @@ int main()
       node_0->style.border[CSS_TOP] = 5;
       node_0->style.border[CSS_RIGHT] = 5;
       node_0->style.border[CSS_BOTTOM] = 5;
+      node_0->style.border[CSS_START] = 5;
+      node_0->style.border[CSS_END] = 5;
     }
 
     css_node_t *root_layout = new_test_css_node();
@@ -3726,6 +3774,8 @@ int main()
       node_0->style.border[CSS_TOP] = 1;
       node_0->style.border[CSS_RIGHT] = 1;
       node_0->style.border[CSS_BOTTOM] = 1;
+      node_0->style.border[CSS_START] = 1;
+      node_0->style.border[CSS_END] = 1;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -3771,6 +3821,8 @@ int main()
         node_1->style.padding[CSS_TOP] = 20;
         node_1->style.padding[CSS_RIGHT] = 20;
         node_1->style.padding[CSS_BOTTOM] = 20;
+        node_1->style.padding[CSS_START] = 20;
+        node_1->style.padding[CSS_END] = 20;
       }
     }
 
@@ -4263,6 +4315,8 @@ int main()
       node_0->style.padding[CSS_TOP] = 10;
       node_0->style.padding[CSS_RIGHT] = 10;
       node_0->style.padding[CSS_BOTTOM] = 10;
+      node_0->style.padding[CSS_START] = 10;
+      node_0->style.padding[CSS_END] = 10;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -4272,6 +4326,8 @@ int main()
         node_1->style.margin[CSS_TOP] = 10;
         node_1->style.margin[CSS_RIGHT] = 10;
         node_1->style.margin[CSS_BOTTOM] = 10;
+        node_1->style.margin[CSS_START] = 10;
+        node_1->style.margin[CSS_END] = 10;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
@@ -4486,6 +4542,8 @@ int main()
           node_2->style.margin[CSS_TOP] = 20;
           node_2->style.margin[CSS_RIGHT] = 20;
           node_2->style.margin[CSS_BOTTOM] = 20;
+          node_2->style.margin[CSS_START] = 20;
+          node_2->style.margin[CSS_END] = 20;
           node_2->measure = measure;
           node_2->context = "loooooooooong with space";
         }
@@ -4541,6 +4599,8 @@ int main()
           node_2->style.margin[CSS_TOP] = 20;
           node_2->style.margin[CSS_RIGHT] = 20;
           node_2->style.margin[CSS_BOTTOM] = 20;
+          node_2->style.margin[CSS_START] = 20;
+          node_2->style.margin[CSS_END] = 20;
           node_2->measure = measure;
           node_2->context = "loooooooooong with space";
         }
@@ -4594,6 +4654,8 @@ int main()
           node_2->style.margin[CSS_TOP] = 20;
           node_2->style.margin[CSS_RIGHT] = 20;
           node_2->style.margin[CSS_BOTTOM] = 20;
+          node_2->style.margin[CSS_START] = 20;
+          node_2->style.margin[CSS_END] = 20;
           node_2->measure = measure;
           node_2->context = "loooooooooong with space";
         }
@@ -6723,6 +6785,8 @@ int main()
         node_1->style.padding[CSS_TOP] = 10;
         node_1->style.padding[CSS_RIGHT] = 10;
         node_1->style.padding[CSS_BOTTOM] = 10;
+        node_1->style.padding[CSS_START] = 10;
+        node_1->style.padding[CSS_END] = 10;
         node_1->style.position[CSS_LEFT] = 100;
         node_1->style.position[CSS_TOP] = 100;
         node_1->style.position[CSS_RIGHT] = 100;
@@ -6785,10 +6849,14 @@ int main()
         node_1->style.padding[CSS_TOP] = 10;
         node_1->style.padding[CSS_RIGHT] = 10;
         node_1->style.padding[CSS_BOTTOM] = 10;
+        node_1->style.padding[CSS_START] = 10;
+        node_1->style.padding[CSS_END] = 10;
         node_1->style.border[CSS_LEFT] = 1;
         node_1->style.border[CSS_TOP] = 1;
         node_1->style.border[CSS_RIGHT] = 1;
         node_1->style.border[CSS_BOTTOM] = 1;
+        node_1->style.border[CSS_START] = 1;
+        node_1->style.border[CSS_END] = 1;
         node_1->style.position[CSS_LEFT] = 100;
         node_1->style.position[CSS_TOP] = 100;
         node_1->style.position[CSS_RIGHT] = 100;
@@ -6851,6 +6919,8 @@ int main()
         node_1->style.padding[CSS_TOP] = 10;
         node_1->style.padding[CSS_RIGHT] = 10;
         node_1->style.padding[CSS_BOTTOM] = 10;
+        node_1->style.padding[CSS_START] = 10;
+        node_1->style.padding[CSS_END] = 10;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
@@ -7063,6 +7133,339 @@ int main()
     }
 
     test("should correctly space wrapped nodes", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      node_0->style.padding[CSS_LEFT] = 5;
+      node_0->style.padding[CSS_RIGHT] = 5;
+      node_0->style.padding[CSS_START] = 15;
+      node_0->style.padding[CSS_END] = 15;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 15;
+        node_1->layout.dimensions[CSS_WIDTH] = 170;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should give start/end padding precedence over left/right padding", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+        node_1->style.margin[CSS_LEFT] = 5;
+        node_1->style.margin[CSS_RIGHT] = 5;
+        node_1->style.margin[CSS_START] = 15;
+        node_1->style.margin[CSS_END] = 15;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 15;
+        node_1->layout.dimensions[CSS_WIDTH] = 170;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should give start/end margin precedence over left/right margin", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      node_0->style.border[CSS_LEFT] = 5;
+      node_0->style.border[CSS_RIGHT] = 5;
+      node_0->style.border[CSS_START] = 15;
+      node_0->style.border[CSS_END] = 15;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 15;
+        node_1->layout.dimensions[CSS_WIDTH] = 170;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should give start/end border precedence over left/right border", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      node_0->style.padding[CSS_START] = 15;
+      node_0->style.padding[CSS_END] = 5;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 15;
+        node_1->layout.dimensions[CSS_WIDTH] = 180;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should layout node with correct start/end padding", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      node_0->style.padding[CSS_START] = 15;
+      node_0->style.padding[CSS_END] = 5;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 5;
+        node_1->layout.dimensions[CSS_WIDTH] = 180;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should layout node with correct start/end padding in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+        node_1->style.margin[CSS_START] = 15;
+        node_1->style.margin[CSS_END] = 5;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 15;
+        node_1->layout.dimensions[CSS_WIDTH] = 180;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should layout node with correct start/end margin", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.direction = CSS_DIRECTION_RTL;
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+        node_1->style.margin[CSS_START] = 15;
+        node_1->style.margin[CSS_END] = 5;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 5;
+        node_1->layout.dimensions[CSS_WIDTH] = 180;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should layout node with correct start/end margin in rtl", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      node_0->style.border[CSS_START] = 15;
+      node_0->style.border[CSS_END] = 5;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 15;
+        node_1->layout.dimensions[CSS_WIDTH] = 180;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should layout node with correct start/end border", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.direction = CSS_DIRECTION_RTL;
+      node_0->style.dimensions[CSS_WIDTH] = 200;
+      node_0->style.border[CSS_START] = 15;
+      node_0->style.border[CSS_END] = 5;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 200;
+      node_0->layout.dimensions[CSS_HEIGHT] = 50;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 5;
+        node_1->layout.dimensions[CSS_WIDTH] = 180;
+        node_1->layout.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    test("should layout node with correct start/end border in rtl", root_node, root_layout);
   }
   /** END_GENERATED **/
   return tests_finished();

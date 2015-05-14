@@ -77,13 +77,13 @@ function __transpileSingleTestToJava(code) {
             return 'style.' + match1 + match2[0] + match2.substring(1).toLowerCase();
         })
     .replace( // style.margin[CSS_TOP] = 12.3 => style.margin[Spacing.TOP].set(12.3)
-        /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]\s+=\s+(-?[\.\d]+)/g,
+        /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT|START|END)\]\s+=\s+(-?[\.\d]+)/g,
         function (str, match1, match2, match3) {
           var propertyCap = match1.charAt(0).toUpperCase() + match1.slice(1);
           return 'set' + propertyCap + '(Spacing.' + match2 + ', ' + match3 + ')';
         })
-    .replace( // style.margin[CSS_TOP] => style.margin.get(Spacing.TOP)
-        /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
+    .replace( // style.margin[CSS_TOP] => style.margin[Spacing.TOP]
+        /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT|START|END)\]/g,
         function (str, match1, match2) {
           return 'style.' + match1 + '.get(Spacing.' + match2 + ')';
         })
