@@ -22,9 +22,9 @@ public class CSSStyle {
   public CSSWrap flexWrap = CSSWrap.NOWRAP;
   public float flex;
 
-  public float[] margin = Spacing.newSpacingResultArray();
-  public float[] padding = Spacing.newSpacingResultArray();
-  public float[] border = Spacing.newSpacingResultArray();
+  public Spacing margin = new Spacing();
+  public Spacing padding = new Spacing();
+  public Spacing border = new Spacing();
 
   public float positionTop = CSSConstants.UNDEFINED;
   public float positionBottom = CSSConstants.UNDEFINED;

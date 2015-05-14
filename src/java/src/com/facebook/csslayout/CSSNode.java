@@ -49,10 +49,6 @@ public class CSSNode {
     public void measure(CSSNode node, float width, MeasureOutput measureOutput);
   }
 
-  private final float[] mMargin = Spacing.newFullSpacingArray();
-  private final float[] mPadding = Spacing.newFullSpacingArray();
-  private final float[] mBorder = Spacing.newFullSpacingArray();
-
   // VisibleForTesting
   /*package*/ final CSSStyle style = new CSSStyle();
   /*package*/ final CSSLayout layout = new CSSLayout();
@@ -263,24 +259,19 @@ public class CSSNode {
   }
 
   public void setMargin(int spacingType, float margin) {
-    setSpacing(mMargin, style.margin, spacingType, margin);
+    if (style.margin.set(spacingType, margin)) {
+      dirty();
+    }
   }
 
   public void setPadding(int spacingType, float padding) {
-    setSpacing(mPadding, style.padding, spacingType, padding);
+    if (style.padding.set(spacingType, padding)) {
+      dirty();
+    }
   }
 
   public void setBorder(int spacingType, float border) {
-    setSpacing(mBorder, style.border, spacingType, border);
-  }
-
-  protected void setSpacing(
-       float[] spacingDef,
-       float[] cssStyle,
-       int spacingType,
-       float spacing) {
-    if (!valuesEqual(spacingDef[spacingType], spacing)) {
-      Spacing.updateSpacing(spacingDef, cssStyle, spacingType, spacing, 0);
+    if (style.border.set(spacingType, border)) {
       dirty();
     }
   }
@@ -341,5 +332,21 @@ public class CSSNode {
 
   public float getLayoutHeight() {
     return layout.height;
+  }
+
+  /**
+   * Get this node's padding, as defined by style + default padding.
+   */
+  public Spacing getStylePadding() {
+    return style.padding;
+  }
+
+  /**
+   * Set a default padding (left/top/right/bottom) for this node.
+   */
+  public void setDefaultPadding(int spacingType, float padding) {
+    if (style.padding.setDefault(spacingType, padding)) {
+      dirty();
+    }
   }
 }
