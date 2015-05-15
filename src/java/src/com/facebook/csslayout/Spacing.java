@@ -8,6 +8,8 @@
  */
 package com.facebook.csslayout;
 
+import javax.annotation.Nullable;
+
 /**
  * Class representing CSS spacing (padding, margin, and borders). This is mostly necessary to
  * properly implement interactions and updates for properties like margin, marginLeft, and
@@ -54,9 +56,7 @@ public class Spacing {
   public static final int ALL = 8;
 
   private final float[] mSpacing = newFullSpacingArray();
-  private final float[] mDefaultSpacing = newSpacingResultArray();
-  private final float[] mSpacingResult = newSpacingResultArray();
-  private boolean mDirty;
+  @Nullable private float[] mDefaultSpacing = null;
 
   /**
    * Set a spacing value.
@@ -70,9 +70,9 @@ public class Spacing {
   public boolean set(int spacingType, float value) {
     if (!FloatUtil.floatsEqual(mSpacing[spacingType], value)) {
       mSpacing[spacingType] = value;
-      mDirty = true;
+      return true;
     }
-    return mDirty;
+    return false;
   }
 
   /**
@@ -84,11 +84,14 @@ public class Spacing {
    * @return
    */
   public boolean setDefault(int spacingType, float value) {
+    if (mDefaultSpacing == null) {
+      mDefaultSpacing = newSpacingResultArray();
+    }
     if (!FloatUtil.floatsEqual(mDefaultSpacing[spacingType], value)) {
       mDefaultSpacing[spacingType] = value;
-      mDirty = true;
+      return true;
     }
-    return mDirty;
+    return false;
   }
 
   /**
@@ -97,8 +100,18 @@ public class Spacing {
    * @param spacingType one of {@link #LEFT}, {@link #TOP}, {@link #RIGHT}, {@link #BOTTOM}
    */
   public float get(int spacingType) {
-    ensureResult();
-    return mSpacingResult[spacingType];
+    int secondType = spacingType == TOP || spacingType == BOTTOM ? VERTICAL : HORIZONTAL;
+    float defaultValue = spacingType == START || spacingType == END ? CSSConstants.UNDEFINED : 0;
+    return
+        !CSSConstants.isUndefined(mSpacing[spacingType])
+            ? mSpacing[spacingType]
+            : !CSSConstants.isUndefined(mSpacing[secondType])
+              ? mSpacing[secondType]
+              : !CSSConstants.isUndefined(mSpacing[ALL])
+                ? mSpacing[ALL]
+                : mDefaultSpacing != null
+                  ? mDefaultSpacing[spacingType]
+                  : defaultValue;
   }
 
   /**
@@ -142,65 +155,5 @@ public class Spacing {
         CSSConstants.UNDEFINED,
         defaultValue,
     };
-  }
-
-  /**
-   * Given the {@param fullSpacing} and the spacingResult from {@link #newSpacingResultArray()} from
-   * a View, update the result array to reflect values that have been set in {@param fullSpacing}
-   * array. {@param defaultValues} specifies the result values that should be used whenever a
-   * spacing property hasn't been set.
-   */
-  private void ensureResult() {
-    if (mDirty) {
-      mSpacingResult[TOP] =
-          !CSSConstants.isUndefined(mSpacing[TOP])
-              ? mSpacing[TOP]
-              : !CSSConstants.isUndefined(mSpacing[VERTICAL])
-                ? mSpacing[VERTICAL]
-                : !CSSConstants.isUndefined(mSpacing[ALL])
-                  ? mSpacing[ALL]
-                  : mDefaultSpacing[TOP];
-      mSpacingResult[BOTTOM] =
-          !CSSConstants.isUndefined(mSpacing[BOTTOM])
-              ? mSpacing[BOTTOM]
-              : !CSSConstants.isUndefined(mSpacing[VERTICAL])
-                ? mSpacing[VERTICAL]
-                : !CSSConstants.isUndefined(mSpacing[ALL])
-                  ? mSpacing[ALL]
-                  : mDefaultSpacing[BOTTOM];
-      mSpacingResult[LEFT] =
-          !CSSConstants.isUndefined(mSpacing[LEFT])
-              ? mSpacing[LEFT]
-              : !CSSConstants.isUndefined(mSpacing[HORIZONTAL])
-                ? mSpacing[HORIZONTAL]
-                : !CSSConstants.isUndefined(mSpacing[ALL])
-                  ? mSpacing[ALL]
-                  : mDefaultSpacing[LEFT];
-      mSpacingResult[RIGHT] =
-          !CSSConstants.isUndefined(mSpacing[RIGHT])
-              ? mSpacing[RIGHT]
-              : !CSSConstants.isUndefined(mSpacing[HORIZONTAL])
-                ? mSpacing[HORIZONTAL]
-                : !CSSConstants.isUndefined(mSpacing[ALL])
-                  ? mSpacing[ALL]
-                  : mDefaultSpacing[RIGHT];
-      mSpacingResult[START] =
-          !CSSConstants.isUndefined(mSpacing[START])
-              ? mSpacing[START]
-              : !CSSConstants.isUndefined(mSpacing[HORIZONTAL])
-                ? mSpacing[HORIZONTAL]
-                : !CSSConstants.isUndefined(mSpacing[ALL])
-                  ? mSpacing[ALL]
-                  : mDefaultSpacing[START];
-      mSpacingResult[END] =
-          !CSSConstants.isUndefined(mSpacing[END])
-              ? mSpacing[END]
-              : !CSSConstants.isUndefined(mSpacing[HORIZONTAL])
-                ? mSpacing[HORIZONTAL]
-                : !CSSConstants.isUndefined(mSpacing[ALL])
-                  ? mSpacing[ALL]
-                  : mDefaultSpacing[END];
-      mDirty = false;
-    }
   }
 }
