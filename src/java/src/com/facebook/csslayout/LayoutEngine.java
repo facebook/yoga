@@ -204,7 +204,7 @@ public class LayoutEngine {
 
   private static float getLeadingMargin(CSSNode node, CSSFlexDirection axis) {
     if (isRowDirection(axis)) {
-      float leadingMargin = getMargin(node, PositionIndex.START);
+      float leadingMargin = node.style.margin.getRaw(Spacing.START);
       if (!CSSConstants.isUndefined(leadingMargin)) {
         return leadingMargin;
       }
@@ -215,7 +215,7 @@ public class LayoutEngine {
 
   private static float getTrailingMargin(CSSNode node, CSSFlexDirection axis) {
     if (isRowDirection(axis)) {
-      float trailingMargin = getMargin(node, PositionIndex.END);
+      float trailingMargin = node.style.margin.getRaw(Spacing.END);
       if (!CSSConstants.isUndefined(trailingMargin)) {
         return trailingMargin;
       }
@@ -245,7 +245,7 @@ public class LayoutEngine {
 
   private static float getLeadingPadding(CSSNode node, CSSFlexDirection axis) {
     if (isRowDirection(axis)) {
-      float leadingPadding = getPadding(node, PositionIndex.START);
+      float leadingPadding = node.style.padding.getRaw(Spacing.START);
       if (!CSSConstants.isUndefined(leadingPadding)) {
         return leadingPadding;
       }
@@ -256,7 +256,7 @@ public class LayoutEngine {
 
   private static float getTrailingPadding(CSSNode node, CSSFlexDirection axis) {
     if (isRowDirection(axis)) {
-      float trailingPadding = getPadding(node, PositionIndex.END);
+      float trailingPadding = node.style.padding.getRaw(Spacing.END);
       if (!CSSConstants.isUndefined(trailingPadding)) {
         return trailingPadding;
       }
@@ -286,7 +286,7 @@ public class LayoutEngine {
 
   private static float getLeadingBorder(CSSNode node, CSSFlexDirection axis) {
     if (isRowDirection(axis)) {
-      float leadingBorder = getBorder(node, PositionIndex.START);
+      float leadingBorder = node.style.border.getRaw(Spacing.START);
       if (!CSSConstants.isUndefined(leadingBorder)) {
         return leadingBorder;
       }
@@ -297,7 +297,7 @@ public class LayoutEngine {
 
   private static float getTrailingBorder(CSSNode node, CSSFlexDirection axis) {
     if (isRowDirection(axis)) {
-      float trailingBorder = getBorder(node, PositionIndex.END);
+      float trailingBorder = node.style.border.getRaw(Spacing.END);
       if (!CSSConstants.isUndefined(trailingBorder)) {
         return trailingBorder;
       }
