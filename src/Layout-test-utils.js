@@ -10,6 +10,18 @@
 
 var layoutTestUtils = (function() {
 
+  //
+  // Sets the test cases precision, by default set to 1.0, aka pixel precision
+  // (assuming the browser does pixel snapping - and that we're ok with being
+  // 'only' pixel perfect).
+  //
+  // Set it to '10' for .1 precision, etc... in theory the browser is doing
+  // 'pixel' snapping so 1.0 should do, the code is left for clarity...
+  //
+  // Set it to undefined to disable and use full precision.
+  //
+  var testMeasurePrecision = 1.0;
+
   if (typeof jasmine !== 'undefined') {
     jasmine.matchersUtil.buildFailureMessage = function () {
       var args = Array.prototype.slice.call(arguments, 0),
@@ -198,6 +210,7 @@ var layoutTestUtils = (function() {
       transfer(div, node, 'justifyContent');
       transfer(div, node, 'alignSelf');
       transfer(div, node, 'alignItems');
+      transfer(div, node, 'alignContent');
       transfer(div, node, 'position');
       parent.appendChild(div);
       (node.children || []).forEach(function(child) {
@@ -234,6 +247,27 @@ var layoutTestUtils = (function() {
     var layout = buildLayout({left: 0, top: 0}, div);
     body.removeChild(div);
     return layout;
+  }
+
+  function inplaceRoundNumbersInObject(obj) {
+    if (!testMeasurePrecision) {
+      // undefined/0, disables rounding
+      return;
+    }
+
+    for (var key in obj) {
+      if (!obj.hasOwnProperty(key)) {
+        continue;
+      }
+
+      var val = obj[key];
+      if (typeof val === 'number') {
+        obj[key] = Math.floor((val * testMeasurePrecision) + 0.5) / testMeasurePrecision;
+      }
+      else if (typeof val === 'object') {
+        inplaceRoundNumbersInObject(val);
+      }
+    }
   }
 
   function nameLayout(name, layout) {
@@ -346,11 +380,13 @@ var layoutTestUtils = (function() {
     div.style.display = 'flex';
     div.style.flexDirection = 'column';
     div.style.alignItems = 'flex-start';
+    div.style.alignContent = 'flex-start';
 
     var span = document.createElement('span');
     span.style.display = 'flex';
     span.style.flexDirection = 'column';
     span.style.alignItems = 'flex-start';
+    span.style.alignContent = 'flex-start';
     span.innerText = text;
 
     div.appendChild(span);
@@ -372,9 +408,16 @@ var layoutTestUtils = (function() {
     smallWidth: 34.671875,
     smallHeight: 18,
     bigWidth: 172.421875,
-    bigHeight: 36,
+    bigHeight: 37,
     bigMinWidth: 100.4375
   };
+
+  // Note(prenaux): Clearly not what I would like, but it seems to be the only
+  //                way :( My guess is that since the font on Windows is
+  //                different than on OSX it has a different size.
+  if (typeof navigator !== 'undefined' && navigator.userAgent.indexOf("Windows NT") > -1) {
+    preDefinedTextSizes.bigHeight = 36;
+  }
 
   var textSizes;
   if (typeof require === 'function') {
@@ -389,6 +432,11 @@ var layoutTestUtils = (function() {
     };
   }
 
+  // round the text sizes so that we dont have to update it for every browser
+  // update, assumes we're ok with pixel precision
+  inplaceRoundNumbersInObject(preDefinedTextSizes);
+  inplaceRoundNumbersInObject(textSizes);
+
   return {
     texts: texts,
     textSizes: textSizes,
@@ -396,14 +444,28 @@ var layoutTestUtils = (function() {
     testLayout: function(node, expectedLayout) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
+      inplaceRoundNumbersInObject(layout);
+      inplaceRoundNumbersInObject(domLayout);
+      inplaceRoundNumbersInObject(expectedLayout);
       testNamedLayout('expected-dom', expectedLayout, domLayout);
+      testNamedLayout('layout-dom', layout, domLayout);
+    },
+    testLayoutAgainstDomOnly: function(node, expectedLayout) {
+      var layout = computeCSSLayout(node);
+      var domLayout = computeDOMLayout(node);
+      inplaceRoundNumbersInObject(layout);
+      inplaceRoundNumbersInObject(domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
     testFillNodes: testFillNodes,
     testExtractNodes: testExtractNodes,
     testRandomLayout: function(node) {
-      expect({node: node, layout: computeCSSLayout(node)})
-        .toEqual({node: node, layout: computeDOMLayout(node)});
+      var layout = computeCSSLayout(node);
+      var domLayout = computeDOMLayout(node);
+      inplaceRoundNumbersInObject(layout);
+      inplaceRoundNumbersInObject(domLayout);
+      expect({node: node, layout: layout})
+        .toEqual({node: node, layout: domLayout});
     },
     testsFinished: function() {
       console.log('tests finished!');

@@ -28,7 +28,7 @@ var computeLayout = (function() {
 
   var CSS_ALIGN_FLEX_START = 'flex-start';
   var CSS_ALIGN_CENTER = 'center';
-  // var CSS_ALIGN_FLEX_END = 'flex-end';
+  var CSS_ALIGN_FLEX_END = 'flex-end';
   var CSS_ALIGN_STRETCH = 'stretch';
 
   var CSS_POSITION_RELATIVE = 'relative';
@@ -225,6 +225,13 @@ var computeLayout = (function() {
   function getJustifyContent(node) {
     if ('justifyContent' in node.style) {
       return node.style.justifyContent;
+    }
+    return 'flex-start';
+  }
+
+  function getAlignContent(node) {
+    if ('alignContent' in node.style) {
+      return node.style.alignContent;
     }
     return 'flex-start';
   }
@@ -510,6 +517,7 @@ var computeLayout = (function() {
     // We aggregate the total dimensions of the container in those two variables
     var/*float*/ linesCrossDim = 0;
     var/*float*/ linesMainDim = 0;
+    var/*int*/ linesCount = 0;
     while (endLine < node.children.length) {
       // <Loop A> Layout non flexible children and count children by type
 
@@ -695,6 +703,7 @@ var computeLayout = (function() {
 
       for (i = startLine; i < endLine; ++i) {
         child = node.children[i];
+        child.lineIndex = linesCount;
 
         if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
             isPosDefined(child, leading[mainAxis])) {
@@ -740,7 +749,6 @@ var computeLayout = (function() {
       }
 
       // <Loop D> Position elements in the cross axis
-
       for (i = startLine; i < endLine; ++i) {
         child = node.children[i];
 
@@ -799,7 +807,90 @@ var computeLayout = (function() {
 
       linesCrossDim += crossDim;
       linesMainDim = fmaxf(linesMainDim, mainDim);
+      linesCount += 1;
       startLine = endLine;
+    }
+
+    // <Loop E>
+    //
+    // Note(prenaux): More than one line, we need to layout the crossAxis
+    // according to alignContent.
+    //
+    // Note that we could probably remove <Loop D> and handle the one line case
+    // here too, but for the moment this is safer since it won't interfere with
+    // previously working code.
+    //
+    // See specs:
+    // http://www.w3.org/TR/2012/CR-css3-flexbox-20120918/#layout-algorithm
+    // section 9.4
+    //
+    if (linesCount > 1 &&
+        !isUndefined(node.layout[dim[crossAxis]])) {
+      var/*float*/ nodeCrossAxisInnerSize = node.layout[dim[crossAxis]] -
+          getPaddingAndBorderAxis(node, crossAxis);
+      var/*float*/ remainingAlignContentDim = nodeCrossAxisInnerSize - linesCrossDim;
+
+      var/*float*/ crossDimLead = 0;
+      var/*float*/ currentLead = getLeadingPaddingAndBorder(node, crossAxis);
+
+      var/*css_align_t*/ alignContent = getAlignContent(node);
+      if (alignContent === CSS_ALIGN_FLEX_END) {
+        currentLead += remainingAlignContentDim;
+      } else if (alignContent === CSS_ALIGN_CENTER) {
+        currentLead += remainingAlignContentDim / 2;
+      } else if (alignContent === CSS_ALIGN_STRETCH) {
+        if (nodeCrossAxisInnerSize > linesCrossDim) {
+          crossDimLead = (remainingAlignContentDim / linesCount);
+        }
+      }
+
+      var/*int*/ endIndex = 0;
+      for (i = 0; i < linesCount; ++i) {
+        var/*int*/ startIndex = endIndex;
+
+        // compute the line's height and find the endIndex
+        var/*float*/ lineHeight = 0;
+        for (ii = startIndex; ii < node.children.length; ++ii) {
+          child = node.children[ii];
+          if (getPositionType(child) !== CSS_POSITION_RELATIVE) {
+            continue;
+          }
+          if (child.lineIndex !== i) {
+            break;
+          }
+          if (!isUndefined(child.layout[dim[crossAxis]])) {
+            lineHeight = fmaxf(
+              lineHeight,
+              child.layout[dim[crossAxis]] + getMarginAxis(child, crossAxis)
+            );
+          }
+        }
+        endIndex = ii;
+        lineHeight += crossDimLead;
+
+        for (ii = startIndex; ii < endIndex; ++ii) {
+          child = node.children[ii];
+          if (getPositionType(child) !== CSS_POSITION_RELATIVE) {
+            continue;
+          }
+
+          var/*css_align_t*/ alignContentAlignItem = getAlignItem(node, child);
+          if (alignContentAlignItem === CSS_ALIGN_FLEX_START) {
+            child.layout[pos[crossAxis]] = currentLead + getLeadingMargin(child, crossAxis);
+          } else if (alignContentAlignItem === CSS_ALIGN_FLEX_END) {
+            child.layout[pos[crossAxis]] = currentLead + lineHeight - getTrailingMargin(child, crossAxis) - child.layout[dim[crossAxis]];
+          } else if (alignContentAlignItem === CSS_ALIGN_CENTER) {
+            var/*float*/ childHeight = child.layout[dim[crossAxis]];
+            child.layout[pos[crossAxis]] = currentLead + (lineHeight - childHeight) / 2;
+          } else if (alignContentAlignItem === CSS_ALIGN_STRETCH) {
+            child.layout[pos[crossAxis]] = currentLead + getLeadingMargin(child, crossAxis);
+            // TODO(prenaux): Correctly set the height of items with undefined
+            //                (auto) crossAxis dimension.
+          }
+        }
+
+        currentLead += lineHeight;
+      }
     }
 
     var/*bool*/ needsMainTrailingPos = false;
@@ -831,8 +922,7 @@ var computeLayout = (function() {
       needsCrossTrailingPos = true;
     }
 
-    // <Loop E> Set trailing position if necessary
-
+    // <Loop F> Set trailing position if necessary
     if (needsMainTrailingPos || needsCrossTrailingPos) {
       for (i = 0; i < node.children.length; ++i) {
         child = node.children[i];
@@ -847,8 +937,7 @@ var computeLayout = (function() {
       }
     }
 
-    // <Loop F> Calculate dimensions for absolutely positioned elements
-
+    // <Loop G> Calculate dimensions for absolutely positioned elements
     for (i = 0; i < node.children.length; ++i) {
       child = node.children[i];
       if (getPositionType(child) === CSS_POSITION_ABSOLUTE) {

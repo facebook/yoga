@@ -10,12 +10,27 @@
 #include "Layout-test-utils.h"
 #include <stdlib.h>
 
+#ifdef _MSC_VER
+#include <float.h>
+#define isnan _isnan
+
+/* define fmaxf & fminf if < VC12 */
+#if _MSC_VER < 1800
+__forceinline const float fmaxf(const float a, const float b) {
+  return (a > b) ? a : b;
+}
+__forceinline const float fminf(const float a, const float b) {
+  return (a < b) ? a : b;
+}
+#endif
+#endif
+
   /** START_GENERATED **/
-#define SMALL_WIDTH 34.671875
+#define SMALL_WIDTH 35
 #define SMALL_HEIGHT 18
-#define BIG_WIDTH 172.421875
-#define BIG_HEIGHT 36
-#define BIG_MIN_WIDTH 100.4375
+#define BIG_WIDTH 172
+#define BIG_HEIGHT 37
+#define BIG_MIN_WIDTH 100
 #define SMALL_TEXT "small"
 #define LONG_TEXT "loooooooooong with space"
   /** END_GENERATED **/
@@ -30,7 +45,8 @@ typedef struct failed_test_t {
 static failed_test_t *failed_test_head = NULL;
 static failed_test_t *failed_test_tail = NULL;
 static void add_failed_test(const char *name, css_node_t *style, css_node_t *expected) {
-  failed_test_t *failed_test = malloc(sizeof(failed_test_t));
+  failed_test_t *failed_test = (failed_test_t *)malloc(sizeof(failed_test_t));
+  failed_test->next = NULL;
   failed_test->name = name;
   failed_test->style = style;
   failed_test->expected = expected;
@@ -65,7 +81,7 @@ static bool are_layout_equal(css_node_t *a, css_node_t *b) {
 }
 
 css_dim_t measure(void *context, float width) {
-  const char *text = context;
+  const char *text = (const char *)context;
   css_dim_t dim;
   if (width != width) {
     width = 1000000;
@@ -87,8 +103,10 @@ css_dim_t measure(void *context, float width) {
   return dim;
 }
 
+static int test_ran_count = 0;
 void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
-  layoutNode(style, CSS_UNDEFINED, -1);
+  ++test_ran_count;
+  layoutNode(style, CSS_UNDEFINED, (css_direction_t)-1);
 
   if (!are_layout_equal(style, expected_layout)) {
     printf("%sF%s", "\x1B[31m", "\x1B[0m");
@@ -109,12 +127,12 @@ int tests_finished() {
     printf("%sFAIL%s %s\n", "\x1B[31m", "\x1B[0m", failed_test->name);
 
     printf("Input:    ");
-    print_css_node(failed_test->style, CSS_PRINT_STYLE | CSS_PRINT_CHILDREN);
+    print_css_node(failed_test->style, (css_print_options_t)(CSS_PRINT_STYLE | CSS_PRINT_CHILDREN));
     printf("Output:   ");
-    print_css_node(failed_test->style, CSS_PRINT_LAYOUT | CSS_PRINT_CHILDREN);
+    print_css_node(failed_test->style, (css_print_options_t)(CSS_PRINT_LAYOUT | CSS_PRINT_CHILDREN));
 
     printf("Expected: ");
-    print_css_node(failed_test->expected, CSS_PRINT_LAYOUT | CSS_PRINT_CHILDREN);
+    print_css_node(failed_test->expected, (css_print_options_t)(CSS_PRINT_LAYOUT | CSS_PRINT_CHILDREN));
 
     free_css_node(failed_test->style);
     free_css_node(failed_test->expected);
@@ -131,7 +149,7 @@ int tests_finished() {
     printf("TESTS FAILED: %d\n", tests_failed);
     return 1;
   } else {
-    printf("ALL TESTS PASSED\n");
+    printf("ALL TESTS PASSED: %d tests ran.\n", test_ran_count);
     return 0;
   }
 }

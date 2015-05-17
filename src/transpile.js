@@ -20,6 +20,8 @@ global.layoutTestUtils = {
   testLayout: function(node, expectedLayout) {
     allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
   },
+  testLayoutAgainstDomOnly: function(node) {
+  },
   testRandomLayout: function(node, i) {
     allTests.push({name: 'Random #' + i, node: node, expectedLayout: computeDOMLayout(node)});
   },
@@ -31,7 +33,8 @@ global.layoutTestUtils = {
 };
 
 global.describe = function(name, cb) {
-  if (name === 'Layout') {
+  if (name === 'Layout' ||
+      name === 'Layout alignContent') {
     cb();
   }
 };
@@ -131,6 +134,12 @@ function printLayout(test) {
       'flex-end': 'CSS_JUSTIFY_FLEX_END',
       'space-between': 'CSS_JUSTIFY_SPACE_BETWEEN',
       'space-around': 'CSS_JUSTIFY_SPACE_AROUND'
+    });
+    addEnum(node, 'alignContent', 'align_content', {
+      'flex-start': 'CSS_ALIGN_FLEX_START',
+      'center': 'CSS_ALIGN_CENTER',
+      'flex-end': 'CSS_ALIGN_FLEX_END',
+      'stretch': 'CSS_ALIGN_STRETCH'
     });
     addEnum(node, 'alignItems', 'align_items', {
       'flex-start': 'CSS_ALIGN_FLEX_START',
@@ -241,12 +250,14 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/\.maxHeight/g, '.maxDimensions[CSS_HEIGHT]')
     .replace(/\.minWidth/g, '.minDimensions[CSS_WIDTH]')
     .replace(/\.minHeight/g, '.minDimensions[CSS_HEIGHT]')
+    .replace(/\.lineIndex/g, '.line_index')
     .replace(/layout\[dim/g, 'layout.dimensions[dim')
     .replace(/layout\[pos/g, 'layout.position[pos')
     .replace(/layout\[leading/g, 'layout.position[leading')
     .replace(/layout\[trailing/g, 'layout.position[trailing')
     .replace(/style\[dim/g, 'style.dimensions[dim')
     .replace(/node.children\[i\]/g, 'node->get_child(node->context, i)')
+    .replace(/node.children\[ii\]/g, 'node->get_child(node->context, ii)')
     .replace(/node\./g, 'node->')
     .replace(/child\./g, 'child->')
     .replace(/parent\./g, 'parent->')

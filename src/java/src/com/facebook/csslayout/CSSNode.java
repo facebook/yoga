@@ -54,6 +54,8 @@ public class CSSNode {
   /*package*/ final CSSLayout layout = new CSSLayout();
   /*package*/ final CachedCSSLayout lastLayout = new CachedCSSLayout();
 
+  public int lineIndex = 0;
+
   // 4 is kinda arbitrary, but the default of 10 seems really high for an average View.
   private final ArrayList<CSSNode> mChildren = new ArrayList<CSSNode>(4);
 

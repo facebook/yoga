@@ -9,6 +9,7 @@
 /* globals layoutTestUtils */
 
 var testLayout = layoutTestUtils.testLayout;
+var testLayoutAgainstDomOnly = layoutTestUtils.testLayoutAgainstDomOnly;
 var testFillNodes = layoutTestUtils.testFillNodes;
 var testExtractNodes = layoutTestUtils.testExtractNodes;
 var text = layoutTestUtils.text;
@@ -1389,7 +1390,7 @@ describe('Layout', function() {
       ]},
       {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
         {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
-          {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 20, left: 7.578125}
+          {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 20, left: 8}
         ]}
       ]}
     );
@@ -2207,6 +2208,7 @@ describe('Layout', function() {
     );
   });
 
+
   it('should give start/end padding precedence over left/right padding', function() {
     testLayout(
       {style: {width: 200, paddingLeft: 5, paddingStart: 15, paddingRight: 5, paddingEnd: 15}, children: [
@@ -2305,4 +2307,93 @@ describe('Layout', function() {
       ]}
     );
   });
+});
+
+describe('Layout alignContent', function() {
+
+  it('should layout with alignContent: stretch, and alignItems: flex-start', function() {
+    testLayout(
+      {style: {width: 300, height: 380, flexDirection: 'row', flexWrap: 'wrap', alignContent: 'stretch', alignItems: 'flex-start'},
+       children: [
+         /* 0 */  {style: {width: 50, height: 50, margin: 10}},
+         /* 1 */  {style: {width: 50, height: 50, margin: 10}},
+         /* 2 */  {style: {width: 50, height: 50, margin: 10}},
+         /* 3 */  {style: {width: 50, height: 50, margin: 10}},
+         /* 4 */  {style: {width: 50, height: 100, margin: 10}},
+         /* 5 */  {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
+         /* 6 */  {style: {width: 50, height: 50, margin: 10}},
+         /* 7 */  {style: {width: 50, height: 100, margin: 10}},
+         /* 8 */  {style: {width: 50, height: 50, margin: 10}},
+         /* 9 */  {style: {width: 50, height: 50, margin: 10}},
+         /* 10 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start' }},
+         /* 11 */ {style: {width: 50, height: 50, margin: 10}},
+         /* 12 */ {style: {width: 50, height: 50, margin: 10}},
+         /* 13 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
+         /* 14 */ {style: {width: 50, height: 50, margin: 10}},
+       ],
+      },
+      {width: 300, height: 380, top: 0, left: 0,  children: [
+        {width: 50, height: 50, top: 10, left: 10},
+        {width: 50, height: 50, top: 10, left: 80},
+        {width: 50, height: 50, top: 10, left: 150},
+        {width: 50, height: 50, top: 10, left: 220},
+        {width: 50, height: 100, top: 92.5, left: 10},
+        {width: 50, height: 50, top: 92.5, left: 80},
+        {width: 50, height: 50, top: 92.5, left: 150},
+        {width: 50, height: 100, top: 92.5, left: 220},
+        {width: 50, height: 50, top: 225, left: 10},
+        {width: 50, height: 50, top: 225, left: 80},
+        {width: 50, height: 50, top: 225, left: 150},
+        {width: 50, height: 50, top: 225, left: 220},
+        {width: 50, height: 50, top: 307.5, left: 10},
+        {width: 50, height: 50, top: 307.5, left: 80},
+        {width: 50, height: 50, top: 307.5, left: 150}
+      ]}
+    );
+  });
+
+
+  function testAlignContent(alignContent, alignItems) {
+    it('should layout with alignContent: ' + alignContent + ', and alignItems: ' + alignItems, function() {
+      testLayoutAgainstDomOnly(
+        {style: {width: 300, height: 380, flexDirection: 'row', flexWrap: 'wrap', alignContent: alignContent, alignItems: alignItems},
+         children: [
+           /* 0 */  {style: {width: 50, height: 50, margin: 10}},
+           /* 1 */  {style: {width: 50, height: 50, margin: 10}},
+           /* 2 */  {style: {width: 50, height: 50, margin: 10}},
+           /* 3 */  {style: {width: 50, height: 50, margin: 10}},
+           /* 4 */  {style: {width: 50, height: 100, margin: 10}},
+           /* 5 */  {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
+           /* 6 */  {style: {width: 50, height: 50, margin: 10}},
+           /* 7 */  {style: {width: 50, height: 100, margin: 10}},
+           /* 8 */  {style: {width: 50, height: 50, margin: 10}},
+           /* 9 */  {style: {width: 50, height: 50, margin: 10}},
+           /* 10 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start' }},
+           /* 11 */ {style: {width: 50, height: 50, margin: 10}},
+           /* 12 */ {style: {width: 50, height: 50, margin: 10}},
+           /* 13 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
+           /* 14 */ {style: {width: 50, height: 50, margin: 10}},
+         ],
+        }
+      );
+    });
+  }
+  testAlignContent('stretch', 'center');
+  testAlignContent('stretch', 'flex-end');
+  testAlignContent('stretch', 'stretch');
+
+  testAlignContent('flex-start', 'flex-start');
+  testAlignContent('flex-start', 'center');
+  testAlignContent('flex-start', 'flex-end');
+  testAlignContent('flex-start', 'stretch');
+
+  testAlignContent('center', 'flex-start');
+  testAlignContent('center', 'center');
+  testAlignContent('center', 'flex-end');
+  testAlignContent('center', 'stretch');
+
+  testAlignContent('flex-end', 'flex-start');
+  testAlignContent('flex-end', 'center');
+  testAlignContent('flex-end', 'flex-end');
+  testAlignContent('flex-end', 'stretch');
 });

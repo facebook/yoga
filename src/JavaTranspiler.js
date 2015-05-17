@@ -115,6 +115,7 @@ var JavaTranspiler = {
         .replace('node.style.measure', 'node.measure')
         .replace(/\.children\.length/g, '.getChildCount()')
         .replace(/node.children\[i\]/g, 'node.getChildAt(i)')
+        .replace(/node.children\[ii\]/g, 'node.getChildAt(ii)')
         .replace(/fmaxf/g, 'Math.max')
         .replace(/\/\*\([^\/]+\*\/\n/g, '') // remove comments for other languages
         .replace(/var\/\*([^\/]+)\*\//g, '$1')

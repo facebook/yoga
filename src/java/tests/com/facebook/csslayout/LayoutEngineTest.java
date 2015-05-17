@@ -4230,7 +4230,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_layout;
       node_0.layout.top = 0;
       node_0.layout.left = 0;
-      node_0.layout.width = 34.671875f;
+      node_0.layout.width = 35;
       node_0.layout.height = 18;
     }
 
@@ -4275,7 +4275,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_layout;
       node_0.layout.top = 0;
       node_0.layout.left = 0;
-      node_0.layout.width = 172.421875f;
+      node_0.layout.width = 172;
       node_0.layout.height = 18;
     }
 
@@ -4469,7 +4469,7 @@ public class LayoutEngineTest {
       node_0.layout.top = 0;
       node_0.layout.left = 0;
       node_0.layout.width = 130;
-      node_0.layout.height = 36;
+      node_0.layout.height = 37;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4477,7 +4477,7 @@ public class LayoutEngineTest {
         node_1.layout.top = 0;
         node_1.layout.left = 0;
         node_1.layout.width = 130;
-        node_1.layout.height = 36;
+        node_1.layout.height = 37;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4485,7 +4485,7 @@ public class LayoutEngineTest {
           node_2.layout.top = 0;
           node_2.layout.left = 0;
           node_2.layout.width = 130;
-          node_2.layout.height = 36;
+          node_2.layout.height = 37;
         }
       }
     }
@@ -4523,7 +4523,7 @@ public class LayoutEngineTest {
       node_0.layout.top = 0;
       node_0.layout.left = 0;
       node_0.layout.width = 200;
-      node_0.layout.height = 36;
+      node_0.layout.height = 37;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4531,7 +4531,7 @@ public class LayoutEngineTest {
         node_1.layout.top = 0;
         node_1.layout.left = 0;
         node_1.layout.width = 200;
-        node_1.layout.height = 36;
+        node_1.layout.height = 37;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4539,7 +4539,7 @@ public class LayoutEngineTest {
           node_2.layout.top = 0;
           node_2.layout.left = 0;
           node_2.layout.width = 130;
-          node_2.layout.height = 36;
+          node_2.layout.height = 37;
         }
       }
     }
@@ -4571,15 +4571,15 @@ public class LayoutEngineTest {
       node_0.layout.top = 0;
       node_0.layout.left = 0;
       node_0.layout.width = 100;
-      node_0.layout.height = 36;
+      node_0.layout.height = 37;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.layout.top = 0;
         node_1.layout.left = 0;
-        node_1.layout.width = 100.4375f;
-        node_1.layout.height = 36;
+        node_1.layout.width = 100;
+        node_1.layout.height = 37;
       }
     }
 
@@ -4627,23 +4627,23 @@ public class LayoutEngineTest {
       node_0.layout.top = 0;
       node_0.layout.left = 0;
       node_0.layout.width = 100;
-      node_0.layout.height = 76;
+      node_0.layout.height = 77;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.layout.top = 20;
         node_1.layout.left = 20;
-        node_1.layout.width = 100.4375f;
-        node_1.layout.height = 36;
+        node_1.layout.width = 100;
+        node_1.layout.height = 37;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.layout.top = 0;
           node_2.layout.left = 0;
-          node_2.layout.width = 100.4375f;
-          node_2.layout.height = 36;
+          node_2.layout.width = 100;
+          node_2.layout.height = 37;
         }
       }
     }
@@ -4864,7 +4864,7 @@ public class LayoutEngineTest {
           node_2 = node_1.getChildAt(0);
           node_2.layout.top = 20;
           node_2.layout.left = 20;
-          node_2.layout.width = 172.421875f;
+          node_2.layout.width = 172;
           node_2.layout.height = 18;
         }
       }
@@ -4922,8 +4922,8 @@ public class LayoutEngineTest {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.layout.top = 20;
-          node_2.layout.left = 7.578125f;
-          node_2.layout.width = 172.421875f;
+          node_2.layout.left = 8;
+          node_2.layout.width = 172;
           node_2.layout.height = 18;
         }
       }
@@ -4965,7 +4965,7 @@ public class LayoutEngineTest {
       node_0.layout.top = 0;
       node_0.layout.left = 0;
       node_0.layout.width = 200;
-      node_0.layout.height = 76;
+      node_0.layout.height = 77;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4973,7 +4973,7 @@ public class LayoutEngineTest {
         node_1.layout.top = 0;
         node_1.layout.left = 0;
         node_1.layout.width = 200;
-        node_1.layout.height = 76;
+        node_1.layout.height = 77;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4981,7 +4981,7 @@ public class LayoutEngineTest {
           node_2.layout.top = 20;
           node_2.layout.left = 20;
           node_2.layout.width = 160;
-          node_2.layout.height = 36;
+          node_2.layout.height = 37;
         }
       }
     }
@@ -7895,6 +7895,253 @@ public class LayoutEngineTest {
     }
 
     test("should layout node with correct start/end border in rtl", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase177()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.alignContent = CSSAlign.STRETCH;
+      node_0.style.alignItems = CSSAlign.FLEX_START;
+      node_0.style.flexWrap = CSSWrap.WRAP;
+      node_0.style.width = 300;
+      node_0.style.height = 380;
+      addChildren(node_0, 15);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(1);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(2);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(3);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(4);
+        node_1.style.width = 50;
+        node_1.style.height = 100;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(5);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(6);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(7);
+        node_1.style.width = 50;
+        node_1.style.height = 100;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(8);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(9);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(10);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(11);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(12);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(13);
+        node_1.style.alignSelf = CSSAlign.FLEX_START;
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+        node_1 = node_0.getChildAt(14);
+        node_1.style.width = 50;
+        node_1.style.height = 50;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1.setMargin(Spacing.RIGHT, 10);
+        node_1.setMargin(Spacing.BOTTOM, 10);
+        node_1.setMargin(Spacing.START, 10);
+        node_1.setMargin(Spacing.END, 10);
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 300;
+      node_0.layout.height = 380;
+      addChildren(node_0, 15);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 10;
+        node_1.layout.left = 10;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.top = 10;
+        node_1.layout.left = 80;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.top = 10;
+        node_1.layout.left = 150;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(3);
+        node_1.layout.top = 10;
+        node_1.layout.left = 220;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(4);
+        node_1.layout.top = 92.5f;
+        node_1.layout.left = 10;
+        node_1.layout.width = 50;
+        node_1.layout.height = 100;
+        node_1 = node_0.getChildAt(5);
+        node_1.layout.top = 92.5f;
+        node_1.layout.left = 80;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(6);
+        node_1.layout.top = 92.5f;
+        node_1.layout.left = 150;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(7);
+        node_1.layout.top = 92.5f;
+        node_1.layout.left = 220;
+        node_1.layout.width = 50;
+        node_1.layout.height = 100;
+        node_1 = node_0.getChildAt(8);
+        node_1.layout.top = 225;
+        node_1.layout.left = 10;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(9);
+        node_1.layout.top = 225;
+        node_1.layout.left = 80;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(10);
+        node_1.layout.top = 225;
+        node_1.layout.left = 150;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(11);
+        node_1.layout.top = 225;
+        node_1.layout.left = 220;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(12);
+        node_1.layout.top = 307.5f;
+        node_1.layout.left = 10;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(13);
+        node_1.layout.top = 307.5f;
+        node_1.layout.left = 80;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+        node_1 = node_0.getChildAt(14);
+        node_1.layout.top = 307.5f;
+        node_1.layout.left = 150;
+        node_1.layout.width = 50;
+        node_1.layout.height = 50;
+      }
+    }
+
+    test("should layout with alignContent: stretch, and alignItems: flex-start", root_node, root_layout);
   }
   /** END_GENERATED **/
 }
