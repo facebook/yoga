@@ -11,6 +11,8 @@ function __transpileToJavaCommon(code) {
   return code
     .replace(/CSS_UNDEFINED/g, 'CSSConstants.UNDEFINED')
     .replace(/css_flex_direction_t/g, 'CSSFlexDirection')
+    .replace(/css_direction_t/g, 'CSSDirection')
+    .replace(/CSS_DIRECTION_/g, 'CSSDirection.')
     .replace(/CSS_FLEX_DIRECTION_/g, 'CSSFlexDirection.')
     .replace(/css_align_t/g, 'CSSAlign')
     .replace(/CSS_ALIGN_/g, 'CSSAlign.')
@@ -33,7 +35,11 @@ function __transpileToJavaCommon(code) {
     .replace(
         /(\w+)\.layout\[((?:getLeading|getPos)\([^\)]+\))\]\s+=\s+([^;]+);/gm,
         'setLayoutPosition($1, $2, $3);')
+    .replace(
+        /(\w+)\.layout\[((?:getTrailing|getPos)\([^\)]+\))\]\s+=\s+([^;]+);/gm,
+        'setLayoutPosition($1, $2, $3);')
     .replace(/(\w+)\.layout\[((?:getLeading|getPos)\([^\]]+\))\]/g, 'getLayoutPosition($1, $2)')
+    .replace(/(\w+)\.layout\[((?:getTrailing|getPos)\([^\]]+\))\]/g, 'getLayoutPosition($1, $2)')
     .replace(
         /(\w+)\.layout\[(getDim\([^\)]+\))\]\s+=\s+([^;]+);/gm,
         'setLayoutDimension($1, $2, $3);')
@@ -63,17 +69,23 @@ function __transpileSingleTestToJava(code) {
     .replace( // layout.position[CSS_TOP] => layout.y
         /layout\.position\[CSS_(TOP|LEFT)\]/g,
         function (str, match1) {
-            return 'layout.' + (match1 === 'TOP' ? 'y' : 'x');
+            return 'layout.' + (match1 === 'TOP' ? 'top' : 'left');
         })
     .replace( // style.position[CSS_TOP] => style.positionTop
         /style\.(position)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
         function (str, match1, match2) {
             return 'style.' + match1 + match2[0] + match2.substring(1).toLowerCase();
         })
+    .replace( // style.margin[CSS_TOP] = 12.3 => style.margin[Spacing.TOP].set(12.3)
+        /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT|START|END)\]\s+=\s+(-?[\.\d]+)/g,
+        function (str, match1, match2, match3) {
+          var propertyCap = match1.charAt(0).toUpperCase() + match1.slice(1);
+          return 'set' + propertyCap + '(Spacing.' + match2 + ', ' + match3 + ')';
+        })
     .replace( // style.margin[CSS_TOP] => style.margin[Spacing.TOP]
-        /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT)\]/g,
+        /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT|START|END)\]/g,
         function (str, match1, match2) {
-          return 'style.' + match1 + '[Spacing.' + match2 + ']';
+          return 'style.' + match1 + '.get(Spacing.' + match2 + ')';
         })
     .replace(/get_child\(.*context\,\s([^\)]+)\)/g, 'getChildAt($1)')
     .replace(/init_css_node_children/g, 'addChildren')

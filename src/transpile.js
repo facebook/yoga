@@ -100,11 +100,15 @@ function printLayout(test) {
       addFloat(node, spacing + suffix, spacing + '[CSS_TOP]');
       addFloat(node, spacing + suffix, spacing + '[CSS_RIGHT]');
       addFloat(node, spacing + suffix, spacing + '[CSS_BOTTOM]');
+      addFloat(node, spacing + suffix, spacing + '[CSS_START]');
+      addFloat(node, spacing + suffix, spacing + '[CSS_END]');
 
       addFloat(node, spacing + 'Left' + suffix, spacing + '[CSS_LEFT]');
       addFloat(node, spacing + 'Top' + suffix, spacing + '[CSS_TOP]');
       addFloat(node, spacing + 'Right' + suffix, spacing + '[CSS_RIGHT]');
       addFloat(node, spacing + 'Bottom' + suffix, spacing + '[CSS_BOTTOM]');
+      addFloat(node, spacing + 'Start' + suffix, spacing + '[CSS_START]');
+      addFloat(node, spacing + 'End' + suffix, spacing + '[CSS_END]');
     }
 
     function addMeasure(node) {
@@ -114,9 +118,15 @@ function printLayout(test) {
       }
     }
 
+    addEnum(node, 'direction', 'direction', {
+      'ltr': 'CSS_DIRECTION_LTR',
+      'rtl': 'CSS_DIRECTION_RTL'
+    });
     addEnum(node, 'flexDirection', 'flex_direction', {
       'row': 'CSS_FLEX_DIRECTION_ROW',
-      'column': 'CSS_FLEX_DIRECTION_COLUMN'
+      'row-reverse': 'CSS_FLEX_DIRECTION_ROW_REVERSE',
+      'column': 'CSS_FLEX_DIRECTION_COLUMN',
+      'column-reverse': 'CSS_FLEX_DIRECTION_COLUMN_REVERSE'
     });
     addEnum(node, 'justifyContent', 'justify_content', {
       'flex-start': 'CSS_JUSTIFY_FLEX_START',
@@ -244,6 +254,7 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/layout\[dim/g, 'layout.dimensions[dim')
     .replace(/layout\[pos/g, 'layout.position[pos')
     .replace(/layout\[leading/g, 'layout.position[leading')
+    .replace(/layout\[trailing/g, 'layout.position[trailing')
     .replace(/style\[dim/g, 'style.dimensions[dim')
     .replace(/node.children\[i\]/g, 'node->get_child(node->context, i)')
     .replace(/node.children\[ii\]/g, 'node->get_child(node->context, ii)')

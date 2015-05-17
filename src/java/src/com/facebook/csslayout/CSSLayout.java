@@ -13,8 +13,10 @@ package com.facebook.csslayout;
  */
 public class CSSLayout {
 
-  public float x;
-  public float y;
+  public float top;
+  public float left;
+  public float right;
+  public float bottom;
   public float width = CSSConstants.UNDEFINED;
   public float height = CSSConstants.UNDEFINED;
 
@@ -22,15 +24,19 @@ public class CSSLayout {
    * This should always get called before calling {@link LayoutEngine#layoutNode(CSSNode, float)}
    */
   public void resetResult() {
-    x = 0;
-    y = 0;
+    left = 0;
+    top = 0;
+    right = 0;
+    bottom = 0;
     width = CSSConstants.UNDEFINED;
     height = CSSConstants.UNDEFINED;
   }
 
   public void copy(CSSLayout layout) {
-    x = layout.x;
-    y = layout.y;
+    left = layout.left;
+    top = layout.top;
+    right = layout.right;
+    bottom = layout.bottom;
     width = layout.width;
     height = layout.height;
   }
@@ -38,8 +44,8 @@ public class CSSLayout {
   @Override
   public String toString() {
     return "layout: {" +
-        "x: " + x + ", " +
-        "y: " + y + ", " +
+        "left: " + left + ", " +
+        "top: " + top + ", " +
         "width: " + width + ", " +
         "height: " + height +
         "}";

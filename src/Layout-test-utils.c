@@ -106,8 +106,7 @@ css_dim_t measure(void *context, float width) {
 static int test_ran_count = 0;
 void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
   ++test_ran_count;
-
-  layoutNode(style, CSS_UNDEFINED);
+  layoutNode(style, CSS_UNDEFINED, (css_direction_t)-1);
 
   if (!are_layout_equal(style, expected_layout)) {
     printf("%sF%s", "\x1B[31m", "\x1B[0m");

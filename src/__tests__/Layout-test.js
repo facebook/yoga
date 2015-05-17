@@ -20,14 +20,14 @@ describe('Javascript Only', function() {
   it('should fill root node with layout, style, and children', function() {
     testFillNodes(
       {},
-      {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: []}
+      {layout: {width: undefined, height: undefined, top: 0, left: 0, right: 0, bottom: 0}, style: {}, children: []}
     );
   });
   it('should fill root and child node with layout, style, and children', function() {
     testFillNodes(
       {children: [{}]},
-      {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: [
-        {layout: {width: undefined, height: undefined, top: 0, left: 0}, style: {}, children: []}
+      {layout: {width: undefined, height: undefined, top: 0, left: 0, right: 0, bottom: 0}, style: {}, children: [
+        {layout: {width: undefined, height: undefined, top: 0, left: 0, right: 0, bottom: 0}, style: {}, children: []}
       ]}
     );
   });
@@ -47,8 +47,8 @@ describe('Javascript Only', function() {
       ]}
     );
   });
-
 });
+
 
 describe('Layout', function() {
   it('should layout a single node with width and height', function() {
@@ -74,6 +74,21 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with children in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse'}, children: [
+        {style: {width: 500, height: 500}},
+        {style: {width: 250, height: 250}},
+        {style: {width: 125, height: 125}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 500, height: 500, top: 500, left: 0},
+        {width: 250, height: 250, top: 250, left: 0},
+        {width: 125, height: 125, top: 125, left: 0}
+      ]}
+    );
+  });
+
   it('should layout node with nested children', function() {
     testLayout(
       {style: {width: 1000, height: 1000}, children: [
@@ -88,6 +103,25 @@ describe('Layout', function() {
         {width: 500, height: 500, top: 500, left: 0, children: [
           {width: 250, height: 250, top: 0, left: 0},
           {width: 250, height: 250, top: 250, left: 0}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout node with nested children in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse'}, children: [
+        {style: {width: 500, height: 500}},
+        {style: {width: 500, height: 500, flexDirection: 'column-reverse'}, children: [
+          {style: {width: 250, height: 250}},
+          {style: {width: 250, height: 250}}
+        ]}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 500, height: 500, top: 500, left: 0},
+        {width: 500, height: 500, top: 0, left: 0, children: [
+          {width: 250, height: 250, top: 250, left: 0},
+          {width: 250, height: 250, top: 0, left: 0}
         ]}
       ]}
     );
@@ -115,6 +149,34 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with several children in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', margin: 10}, children: [
+        {style: {width: 100, height: 100, margin: 50}},
+        {style: {width: 100, height: 100, margin: 25}},
+        {style: {width: 100, height: 100, margin: 10}}
+      ]},
+      {width: 1000, height: 1000, top: 10, left: 10, children: [
+        {width: 100, height: 100, top: 850, left: 50},
+        {width: 100, height: 100, top: 675, left: 25},
+        {width: 100, height: 100, top: 540, left: 10}
+      ]}
+    );
+  });
+
+  it('should layout rtl with reverse correctly', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, direction: 'rtl', flexDirection: 'row-reverse'}, children: [
+        {style: {width: 100, height: 200}},
+        {style: {width: 300, height: 150}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 100, height: 200, top: 0, left: 0},
+        {width: 300, height: 150, top: 0, left: 100}
+      ]}
+    );
+  });
+
   it('should layout node with row flex direction', function() {
     testLayout(
       {style: {width: 1000, height: 1000, flexDirection: 'row'}, children: [
@@ -124,6 +186,19 @@ describe('Layout', function() {
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 200, top: 0, left: 0},
         {width: 300, height: 150, top: 0, left: 100}
+      ]}
+    );
+  });
+
+  it('should layout node with row flex direction in rtl', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {width: 100, height: 200}},
+        {style: {width: 300, height: 150}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 100, height: 200, top: 0, left: 900},
+        {width: 300, height: 150, top: 0, left: 600}
       ]}
     );
   });
@@ -141,6 +216,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node based on children main dimensions in reverse', function() {
+    testLayout(
+      {style: {width: 300, flexDirection: 'column-reverse'}, children: [
+        {style: {width: 100, height: 200}},
+        {style: {width: 300, height: 150}}
+      ]},
+      {width: 300, height: 350, top: 0, left: 0, children: [
+        {width: 100, height: 200, top: 150, left: 0},
+        {width: 300, height: 150, top: 0, left: 0}
+      ]}
+    );
+  });
+
   it('should layout node with just flex', function() {
     testLayout(
       {style: {width: 1000, height: 1000}, children: [
@@ -154,12 +242,44 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with just flex in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse'}, children: [
+        {style: {width: 100, height: 200}},
+        {style: {width: 100, flex: 1}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 100, height: 200, top: 800, left: 0},
+        {width: 100, height: 800, top: 0, left: 0}
+      ]}
+    );
+  });
+
   it('should layout node with flex recursively', function() {
     testLayout(
       {style: {width: 1000, height: 1000}, children: [
         {style: {width: 1000, flex: 1}, children: [
           {style: {width: 1000, flex: 1}, children: [
             {style: {width: 1000, flex: 1}}
+          ]}
+        ]}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 1000, height: 1000, top: 0, left: 0, children: [
+          {width: 1000, height: 1000, top: 0, left: 0, children: [
+            {width: 1000, height: 1000, top: 0, left: 0}
+          ]}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout node with flex recursively in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse'}, children: [
+        {style: {width: 1000, flex: 1, flexDirection: 'column-reverse'}, children: [
+          {style: {width: 1000, flex: 1, flexDirection: 'column-reverse'}, children: [
+            {style: {width: 1000, flex: 1, flexDirection: 'column-reverse'}}
           ]}
         ]}
       ]},
@@ -186,6 +306,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with targeted margin in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', marginTop: 10, marginLeft: 5}, children: [
+        {style: {width: 100, height: 100, marginTop: 50, marginLeft: 15, marginBottom: 20}},
+        {style: {width: 100, height: 100, marginLeft: 30}}
+      ]},
+      {width: 1000, height: 1000, top: 10, left: 5, children: [
+        {width: 100, height: 100, top: 880, left: 15},
+        {width: 100, height: 100, top: 730, left: 30}
+      ]}
+    );
+  });
+
   it('should layout node with justifyContent: flex-start', function() {
     testLayout(
       {style: {width: 1000, height: 1000, justifyContent: 'flex-start'}, children: [
@@ -195,6 +328,19 @@ describe('Layout', function() {
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 0, left: 0},
         {width: 100, height: 100, top: 100, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout node with justifyContent: flex-start in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', justifyContent: 'flex-start'}, children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 900, left: 0},
+        {width: 100, height: 100, top: 800, left: 0}
       ]}
     );
   });
@@ -212,6 +358,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with justifyContent: flex-end in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', justifyContent: 'flex-end'}, children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 100, left: 0},
+        {width: 100, height: 100, top: 0, left: 0}
+      ]}
+    );
+  });
+
   it('should layout node with justifyContent: space-between', function() {
     testLayout(
       {style: {width: 1000, height: 1000, justifyContent: 'space-between'}, children: [
@@ -221,6 +380,19 @@ describe('Layout', function() {
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 0, left: 0},
         {width: 100, height: 100, top: 900, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout node with justifyContent: space-between in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', justifyContent: 'space-between'}, children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 900, left: 0},
+        {width: 100, height: 100, top: 0, left: 0}
       ]}
     );
   });
@@ -238,6 +410,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with justifyContent: space-around in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', justifyContent: 'space-around'}, children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 700, left: 0},
+        {width: 100, height: 100, top: 200, left: 0}
+      ]}
+    );
+  });
+
   it('should layout node with justifyContent: center', function() {
     testLayout(
       {style: {width: 1000, height: 1000, justifyContent: 'center'}, children: [
@@ -247,6 +432,19 @@ describe('Layout', function() {
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 400, left: 0},
         {width: 100, height: 100, top: 500, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout node with justifyContent: center in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', justifyContent: 'center'}, children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 500, left: 0},
+        {width: 100, height: 100, top: 400, left: 0}
       ]}
     );
   });
@@ -275,6 +473,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with alignItems: flex-start in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', alignItems: 'flex-start'}, children: [
+        {style: {width: 200, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 200, height: 100, top: 900, left: 0},
+        {width: 100, height: 100, top: 800, left: 0}
+      ]}
+    );
+  });
+
   it('should layout node with alignItems: center', function() {
     testLayout(
       {style: {width: 1000, height: 1000, alignItems: 'center'}, children: [
@@ -284,6 +495,19 @@ describe('Layout', function() {
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 400},
         {width: 100, height: 100, top: 100, left: 450}
+      ]}
+    );
+  });
+
+  it('should layout node with alignItems: center in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', alignItems: 'center'}, children: [
+        {style: {width: 200, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 200, height: 100, top: 900, left: 400},
+        {width: 100, height: 100, top: 800, left: 450}
       ]}
     );
   });
@@ -301,6 +525,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with alignItems: flex-end in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', alignItems: 'flex-end'}, children: [
+        {style: {width: 200, height: 100}},
+        {style: {width: 100, height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 200, height: 100, top: 900, left: 800},
+        {width: 100, height: 100, top: 800, left: 900}
+      ]}
+    );
+  });
+
   it('should layout node with alignSelf overrides alignItems', function() {
     testLayout(
       {style: {width: 1000, height: 1000, alignItems: 'flex-end'}, children: [
@@ -310,6 +547,19 @@ describe('Layout', function() {
       {width: 1000, height: 1000, top: 0, left: 0, children: [
         {width: 200, height: 100, top: 0, left: 800},
         {width: 100, height: 100, top: 100, left: 450}
+      ]}
+    );
+  });
+
+  it('should layout node with alignSelf overrides alignItems in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', alignItems: 'flex-end'}, children: [
+        {style: {width: 200, height: 100}},
+        {style: {width: 100, height: 100, alignSelf: 'center'}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 200, height: 100, top: 900, left: 800},
+        {width: 100, height: 100, top: 800, left: 450}
       ]}
     );
   });
@@ -325,9 +575,31 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with alignItem: stretch in reverse', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'column-reverse', alignItems: 'stretch'}, children: [
+        {style: {height: 100}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 1000, height: 100, top: 900, left: 0}
+      ]}
+    );
+  });
+
   it('should layout empty node', function() {
     testLayout(
       {style: {}, children: [
+        {style: {}}
+      ]},
+      {width: 0, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout empty node in reverse', function() {
+    testLayout(
+      {style: {flexDirection: 'column-reverse'}, children: [
         {style: {}}
       ]},
       {width: 0, height: 0, top: 0, left: 0, children: [
@@ -347,6 +619,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout child with margin in reverse', function() {
+    testLayout(
+      {style: {flexDirection: 'column-reverse'}, children: [
+        {style: {margin: 5}}
+      ]},
+      {width: 10, height: 10, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 5, left: 5}
+      ]}
+    );
+  });
+
   it('should not shrink children if not enough space', function() {
     testLayout(
       {style: {height: 100}, children: [
@@ -356,6 +639,19 @@ describe('Layout', function() {
       {width: 0, height: 100, top: 0, left: 0, children: [
         {width: 0, height: 100, top: 0, left: 0},
         {width: 0, height: 200, top: 100, left: 0}
+      ]}
+    );
+  });
+
+  it('should not shrink children if not enough space in reverse', function() {
+    testLayout(
+      {style: {height: 100, flexDirection: 'column-reverse'}, children: [
+        {style: {height: 100}},
+        {style: {height: 200}}
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 100, top: 0, left: 0},
+        {width: 0, height: 200, top: -200, left: 0}
       ]}
     );
   });
@@ -378,6 +674,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout flex-end taking into account margin in reverse', function() {
+    testLayout(
+      {style: {height: 100, flexDirection: 'column-reverse', justifyContent: 'flex-end'}, children: [
+        {style: {marginTop: 10}}
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 10, left: 0}
+      ]}
+    );
+  });
+
   it('should layout alignItems with margin', function() {
     testLayout(
       {style: {}, children: [
@@ -390,6 +697,23 @@ describe('Layout', function() {
         {width: 20, height: 120, top: 0, left: 0, children: [
           {width: 0, height: 0, top: 10, left: 10},
           {width: 0, height: 100, top: 20, left: 20}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout alignItems with margin in reverse', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {flexDirection: 'column-reverse', alignItems: 'flex-end'}, children: [
+          {style: {margin: 10}},
+          {style: {height: 100}}
+        ]}
+      ]},
+      {width: 20, height: 120, top: 0, left: 0, children: [
+        {width: 20, height: 120, top: 0, left: 0, children: [
+          {width: 0, height: 0, top: 110, left: 10},
+          {width: 0, height: 100, top: 0, left: 20}
         ]}
       ]}
     );
@@ -409,6 +733,17 @@ describe('Layout', function() {
   it('should layout alignItems stretch and margin', function() {
     testLayout(
       {style: {alignItems: 'stretch'}, children: [
+        {style: {marginLeft: 10}}
+      ]},
+      {width: 10, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 10}
+      ]}
+    );
+  });
+
+  it('should layout alignItems stretch and margin in reverse', function() {
+    testLayout(
+      {style: {flexDirection: 'column-reverse', alignItems: 'stretch'}, children: [
         {style: {marginLeft: 10}}
       ]},
       {width: 10, height: 0, top: 0, left: 0, children: [
@@ -653,6 +988,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with space-around and child position absolute in reverse', function() {
+    testLayout(
+      {style: {height: 200, flexDirection: 'column-reverse', justifyContent: 'space-around'}, children: [
+        {style: {position: 'absolute'}},
+        {style: {}}
+      ]},
+      {width: 0, height: 200, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 100, left: 0},
+        {width: 0, height: 0, top: 100, left: 0}
+      ]}
+    );
+  });
+
   it('should layout node with flex and main margin', function() {
     testLayout(
       {style: {width: 700, flexDirection: 'row'}, children: [
@@ -660,6 +1008,17 @@ describe('Layout', function() {
       ]},
       {width: 700, height: 0, top: 0, left: 0, children: [
         {width: 695, height: 0, top: 0, left: 5}
+      ]}
+    );
+  });
+
+  it('should layout node with flex and main margin in rtl', function() {
+    testLayout(
+      {style: {width: 700, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {marginRight: 5, flex: 1}}
+      ]},
+      {width: 700, height: 0, top: 0, left: 0, children: [
+        {width: 695, height: 0, top: 0, left: 0}
       ]}
     );
   });
@@ -677,6 +1036,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with multiple flex and padding in rtl', function() {
+    testLayout(
+      {style: {width: 700, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {paddingLeft: 5, flex: 1}}
+      ]},
+      {width: 700, height: 0, top: 0, left: 0, children: [
+        {width: 347.5, height: 0, top: 0, left: 352.5},
+        {width: 352.5, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
   it('should layout node with multiple flex and margin', function() {
     testLayout(
       {style: {width: 700, flexDirection: 'row'}, children: [
@@ -686,6 +1058,19 @@ describe('Layout', function() {
       {width: 700, height: 0, top: 0, left: 0, children: [
         {width: 347.5, height: 0, top: 0, left: 0},
         {width: 347.5, height: 0, top: 0, left: 352.5}
+      ]}
+    );
+  });
+
+  it('should layout node with multiple flex and margin in rtl', function() {
+    testLayout(
+      {style: {width: 700, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {marginRight: 5, flex: 1}}
+      ]},
+      {width: 700, height: 0, top: 0, left: 0, children: [
+        {width: 347.5, height: 0, top: 0, left: 352.5},
+        {width: 347.5, height: 0, top: 0, left: 0}
       ]}
     );
   });
@@ -710,6 +1095,17 @@ describe('Layout', function() {
       ]},
       {width: 600, height: 0, top: 0, left: 0, children: [
         {width: 0, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout node with flex and position absolute in rtl', function() {
+    testLayout(
+      {style: {width: 600, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1, position: 'absolute'}}
+      ]},
+      {width: 600, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 600}
       ]}
     );
   });
@@ -789,6 +1185,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should handle negative margin and min padding correctly in rtl', function() {
+    testLayout(
+      {style: {borderLeftWidth: 1, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {marginLeft: -8}}
+      ]},
+      {width: 1, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 1}
+      ]}
+    );
+  });
+
   it('should layout node with just text', function() {
     testLayout(
       {style: {measure: text(texts.small)}},
@@ -829,6 +1236,21 @@ describe('Layout', function() {
     testLayout(
       {style: {}, children: [
         {style: {width: 500, flexDirection: 'row'}, children: [
+          {style: {flex: 1, measure: text(texts.big)}}
+        ]}
+      ]},
+      {width: 500, height: textSizes.smallHeight, top: 0, left: 0, children: [
+        {width: 500, height: textSizes.smallHeight, top: 0, left: 0, children: [
+          {width: 500, height: textSizes.smallHeight, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout node with text and flex in rtl', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {width: 500, direction: 'rtl', flexDirection: 'row'}, children: [
           {style: {flex: 1, measure: text(texts.big)}}
         ]}
       ]},
@@ -909,6 +1331,19 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout space-between when remaining space is negative in reverse', function() {
+    testLayout(
+      {style: {height: 100, flexDirection: 'column-reverse', justifyContent: 'space-between'}, children: [
+        {style: {height: 900}},
+        {style: {}}
+      ]},
+      {width: 0, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 900, top: -800, left: 0},
+        {width: 0, height: 0, top: -800, left: 0}
+      ]}
+    );
+  });
+
   it('should layout flex-end when remaining space is negative', function() {
     testLayout(
       {style: {width: 200, flexDirection: 'row', justifyContent: 'flex-end'}, children: [
@@ -916,6 +1351,17 @@ describe('Layout', function() {
       ]},
       {width: 200, height: 0, top: 0, left: 0, children: [
         {width: 900, height: 0, top: 0, left: -700}
+      ]}
+    );
+  });
+
+  it('should layout flex-end when remaining space is negative in rtl', function() {
+    testLayout(
+      {style: {width: 200, direction: 'rtl', flexDirection: 'row', justifyContent: 'flex-end'}, children: [
+        {style: {width: 900}}
+      ]},
+      {width: 200, height: 0, top: 0, left: 0, children: [
+        {width: 900, height: 0, top: 0, left: 0}
       ]}
     );
   });
@@ -930,6 +1376,21 @@ describe('Layout', function() {
       {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
         {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
           {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 20, left: 20}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout text with flexDirection row in rtl', function() {
+    testLayout(
+      {style: { direction: 'rtl' }, children: [
+        {style: {width: 200, flexDirection: 'row'}, children: [
+          {style: {margin: 20, measure: text(texts.big)}}
+        ]}
+      ]},
+      {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
+        {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
+          {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 20, left: 8}
         ]}
       ]}
     );
@@ -974,15 +1435,28 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout with negative flex', function() {
+  it('should layout with arbitrary flex in reverse', function() {
     testLayout(
-      {style: {width: 100, height: 100, alignSelf: 'flex-start'}, children: [
+      {style: {width: 100, height: 100, flexDirection: 'column-reverse', alignSelf: 'flex-start'}, children: [
+        {style: {flex: 2.5, alignSelf: 'flex-start'}},
+        {style: {flex: 7.5, alignSelf: 'flex-start'}}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 0, height: 25, top: 75, left: 0},
+        {width: 0, height: 75, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should layout with negative flex in reverse', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'column-reverse', alignSelf: 'flex-start'}, children: [
         {style: {flex: -2.5, alignSelf: 'flex-start'}},
         {style: {flex: 0, alignSelf: 'flex-start'}}
       ]},
       {width: 100, height: 100, top: 0, left: 0, children: [
-        {width: 0, height: 0, top: 0, left: 0},
-        {width: 0, height: 0, top: 0, left: 0}
+        {width: 0, height: 0, top: 100, left: 0},
+        {width: 0, height: 0, top: 100, left: 0}
       ]}
     );
   });
@@ -1197,6 +1671,21 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout flex-wrap in rtl', function() {
+    testLayout(
+      {style: {flexWrap: 'wrap', direction: 'rtl', flexDirection: 'row', width: 100}, children: [
+        {style: {width: 40, height: 10}},
+        {style: {width: 40, height: 10}},
+        {style: {width: 40, height: 10}}
+      ]},
+      {width: 100, height: 20, top: 0, left: 0, children: [
+        {width: 40, height: 10, top: 0, left: 60},
+        {width: 40, height: 10, top: 0, left: 20},
+        {width: 40, height: 10, top: 10, left: 60}
+      ]}
+    );
+  });
+
   it('should layout flex wrap with a line bigger than container', function() {
     testLayout(
       {style: {height: 100, flexWrap: 'wrap'}, children: [
@@ -1316,6 +1805,21 @@ describe('Layout', function() {
     );
   });
 
+  it('should override flex direction size with min bounds in rtl', function() {
+    testLayout(
+      {style: {width: 300, height: 200, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {flex: 1, minWidth: 200}},
+        {style: {flex: 1}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 50, height: 200, top: 0, left: 250},
+        {width: 200, height: 200, top: 0, left: 50},
+        {width: 50, height: 200, top: 0, left: 0}
+      ]}
+    );
+  });
+
   it('should not override flex direction size within bounds', function() {
     testLayout(
       {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
@@ -1327,6 +1831,21 @@ describe('Layout', function() {
         {width: 100, height: 200, top: 0, left: 0},
         {width: 100, height: 200, top: 0, left: 100},
         {width: 100, height: 200, top: 0, left: 200}
+      ]}
+    );
+  });
+
+  it('should not override flex direction size within bounds in rtl', function() {
+    testLayout(
+      {style: {width: 300, height: 200, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {flex: 1, minWidth: 90, maxWidth: 110}},
+        {style: {flex: 1}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 100, height: 200, top: 0, left: 200},
+        {width: 100, height: 200, top: 0, left: 100},
+        {width: 100, height: 200, top: 0, left: 0}
       ]}
     );
   });
@@ -1346,6 +1865,21 @@ describe('Layout', function() {
     );
   });
 
+  it('should override flex direction size with max bounds in rtl', function() {
+    testLayout(
+      {style: {width: 300, height: 200, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {flex: 1, maxWidth: 60}},
+        {style: {flex: 1}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 120, height: 200, top: 0, left: 180},
+        {width: 60, height: 200, top: 0, left: 120},
+        {width: 120, height: 200, top: 0, left: 0}
+      ]}
+    );
+  });
+
   it('should ignore flex size if fully max bound', function() {
     testLayout(
       {style: {width: 300, height: 200, flexDirection: 'row'}, children: [
@@ -1356,6 +1890,21 @@ describe('Layout', function() {
       {width: 300, height: 200, top: 0, left: 0, children: [
         {width: 60, height: 200, top: 0, left: 0},
         {width: 60, height: 200, top: 0, left: 60},
+        {width: 60, height: 200, top: 0, left: 120}
+      ]}
+    );
+  });
+
+  it('should ignore flex size if fully max bound in rtl', function() {
+    testLayout(
+      {style: {width: 300, height: 200, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1, maxWidth: 60}},
+        {style: {flex: 1, maxWidth: 60}},
+        {style: {flex: 1, maxWidth: 60}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 60, height: 200, top: 0, left: 240},
+        {width: 60, height: 200, top: 0, left: 180},
         {width: 60, height: 200, top: 0, left: 120}
       ]}
     );
@@ -1372,6 +1921,21 @@ describe('Layout', function() {
         {width: 120, height: 200, top: 0, left: 0},
         {width: 120, height: 200, top: 0, left: 120},
         {width: 120, height: 200, top: 0, left: 240}
+      ]}
+    );
+  });
+
+  it('should ignore flex size if fully min bound in rtl', function() {
+    testLayout(
+      {style: {width: 300, height: 200, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1, minWidth: 120}},
+        {style: {flex: 1, minWidth: 120}},
+        {style: {flex: 1, minWidth: 120}}
+      ]},
+      {width: 300, height: 200, top: 0, left: 0, children: [
+        {width: 120, height: 200, top: 0, left: 180},
+        {width: 120, height: 200, top: 0, left: 60},
+        {width: 120, height: 200, top: 0, left: -60}
       ]}
     );
   });
@@ -1492,6 +2056,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should keep cross axis size within min bounds in rtl', function() {
+    testLayout(
+      {style: {width: 1000, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {height: 100, minHeight: 110, minWidth: 100}}
+      ]},
+      {width: 1000, height: 110, top: 0, left: 0, children: [
+        {width: 100, height: 110, top: 0, left: 900}
+      ]}
+    );
+  });
+
   it('should layout node with position absolute, top and left and max bounds', function() {
     testLayout(
       {style: {width: 1000, height: 1000}, children: [
@@ -1587,6 +2162,151 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout nested nodes with mixed directions', function() {
+    testLayout(
+      {style: {width: 200, height: 200, direction: 'rtl'}, children: [
+        {style: {flexDirection: 'row'}, children: [
+          {style: {width: 50, height: 50}},
+          {style: {width: 50, height: 50}}
+        ]},
+        {style: {direction: 'ltr', flexDirection: 'row'}, children: [
+          {style: {width: 50, height: 50}},
+          {style: {width: 50, height: 50}}
+        ]}
+      ]},
+      {width: 200, height: 200, top: 0, left: 0, children: [
+        {width: 200, height: 50, top: 0, left: 0, children: [
+          {width: 50, height: 50, top: 0, left: 150},
+          {width: 50, height: 50, top: 0, left: 100}
+        ]},
+        {width: 200, height: 50, top: 50, left: 0, children: [
+          {width: 50, height: 50, top: 0, left: 0},
+          {width: 50, height: 50, top: 0, left: 50}
+        ]}
+      ]}
+    );
+  });
+
+  it('should correctly space wrapped nodes', function() {
+    testLayout(
+      {style: {width: 320, height: 200, flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap'}, children: [
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}},
+      ]},
+      {width: 320, height: 200, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 0, left: 0},
+        {width: 100, height: 100, top: 0, left: 110},
+        {width: 100, height: 100, top: 0, left: 220},
+        {width: 100, height: 100, top: 100, left: 0},
+        {width: 100, height: 100, top: 100, left: 110},
+        {width: 100, height: 100, top: 100, left: 220},
+      ]}
+    );
+  });
+
+
+  it('should give start/end padding precedence over left/right padding', function() {
+    testLayout(
+      {style: {width: 200, paddingLeft: 5, paddingStart: 15, paddingRight: 5, paddingEnd: 15}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 170, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should give start/end margin precedence over left/right margin', function() {
+    testLayout(
+      {style: {width: 200}, children: [
+        {style: {height: 50, marginLeft: 5, marginStart: 15, marginRight: 5, marginEnd: 15}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 170, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should give start/end border precedence over left/right border', function() {
+    testLayout(
+      {style: {width: 200, borderLeftWidth: 5, borderStartWidth: 15, borderRightWidth: 5, borderEndWidth: 15}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 170, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end padding', function() {
+    testLayout(
+      {style: {width: 200, paddingStart: 15, paddingEnd: 5}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end padding in rtl', function() {
+    testLayout(
+      {style: {width: 200, direction: 'rtl', paddingStart: 15, paddingEnd: 5}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 5}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end margin', function() {
+    testLayout(
+      {style: {width: 200}, children: [
+        {style: {height: 50, marginStart: 15, marginEnd: 5}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end margin in rtl', function() {
+    testLayout(
+      {style: {width: 200}, children: [
+        {style: {height: 50, direction: 'rtl', marginStart: 15, marginEnd: 5}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 5}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end border', function() {
+    testLayout(
+      {style: {width: 200, borderStartWidth: 15, borderEndWidth: 5}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 15}
+      ]}
+    );
+  });
+
+  it('should layout node with correct start/end border in rtl', function() {
+    testLayout(
+      {style: {width: 200, direction: 'rtl', borderStartWidth: 15, borderEndWidth: 5}, children: [
+        {style: {height: 50}}
+      ]},
+      {width: 200, height: 50, top: 0, left: 0, children: [
+        {width: 180, height: 50, top: 0, left: 5}
+      ]}
+    );
+  });
 });
 
 describe('Layout alignContent', function() {
@@ -1676,5 +2396,4 @@ describe('Layout alignContent', function() {
   testAlignContent('flex-end', 'center');
   testAlignContent('flex-end', 'flex-end');
   testAlignContent('flex-end', 'stretch');
-
 });

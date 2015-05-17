@@ -156,6 +156,10 @@ var layoutTestUtils = (function() {
     return layout;
   }
 
+  function capitalizeFirst(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   function computeCSSLayout(rootNode) {
     fillNodes(rootNode);
     realComputeLayout(rootNode);
@@ -167,8 +171,10 @@ var layoutTestUtils = (function() {
 
     function transfer(div, node, name, ext) {
       if (name in node.style) {
-        div.style['-webkit-' + name] = node.style[name] + (ext || '');
-        div.style[name] = node.style[name] + (ext || '');
+        var value = node.style[name] + (ext || '');
+        div.style['-webkit-' + name] = value;
+        div.style['webkit' + capitalizeFirst(name)] = value;
+        div.style[name] = value;
       }
     }
 
@@ -178,6 +184,8 @@ var layoutTestUtils = (function() {
       transfer(div, node, type + 'Top' + suffix, 'px');
       transfer(div, node, type + 'Bottom' + suffix, 'px');
       transfer(div, node, type + 'Right' + suffix, 'px');
+      transfer(div, node, type + 'Start' + suffix, 'px');
+      transfer(div, node, type + 'End' + suffix, 'px');
     }
 
     function renderNode(parent, node) {
@@ -196,6 +204,7 @@ var layoutTestUtils = (function() {
       transferSpacing(div, node, 'padding', '');
       transferSpacing(div, node, 'border', 'Width');
       transfer(div, node, 'flexDirection');
+      transfer(div, node, 'direction');
       transfer(div, node, 'flex');
       transfer(div, node, 'flexWrap');
       transfer(div, node, 'justifyContent');
