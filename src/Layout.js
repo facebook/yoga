@@ -111,6 +111,7 @@ var computeLayout = (function() {
 
     delete layout.right;
     delete layout.bottom;
+    delete layout.direction;
 
     return layout;
   }
@@ -406,6 +407,9 @@ var computeLayout = (function() {
     // Handle width and height style attributes
     setDimensionFromStyle(node, mainAxis);
     setDimensionFromStyle(node, crossAxis);
+
+    // Set the resolved resolution in the node's layout
+    node.layout.direction = direction;
 
     // The position is set by the parent, but we need to complete it with a
     // delta composed of the margin and left/top/right/bottom

@@ -19,6 +19,7 @@ public class CSSLayout {
   public float bottom;
   public float width = CSSConstants.UNDEFINED;
   public float height = CSSConstants.UNDEFINED;
+  public CSSDirection direction = CSSDirection.LTR;
 
   /**
    * This should always get called before calling {@link LayoutEngine#layoutNode(CSSNode, float)}
@@ -30,6 +31,7 @@ public class CSSLayout {
     bottom = 0;
     width = CSSConstants.UNDEFINED;
     height = CSSConstants.UNDEFINED;
+    direction = CSSDirection.LTR;
   }
 
   public void copy(CSSLayout layout) {
@@ -39,6 +41,7 @@ public class CSSLayout {
     bottom = layout.bottom;
     width = layout.width;
     height = layout.height;
+    direction = layout.direction;
   }
 
   @Override
@@ -48,6 +51,7 @@ public class CSSLayout {
         "top: " + top + ", " +
         "width: " + width + ", " +
         "height: " + height +
+        "direction: " + direction +
         "}";
   }
 }

@@ -536,6 +536,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
   setDimensionFromStyle(node, mainAxis);
   setDimensionFromStyle(node, crossAxis);
 
+  // Set the resolved resolution in the node's layout
+  node->layout.direction = direction;
+
   // The position is set by the parent, but we need to complete it with a
   // delta composed of the margin and left/top/right/bottom
   node->layout.position[leading[mainAxis]] += getLeadingMargin(node, mainAxis) +

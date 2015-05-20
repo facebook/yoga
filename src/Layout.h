@@ -84,6 +84,7 @@ typedef enum {
 typedef struct {
   float position[4];
   float dimensions[2];
+  css_direction_t direction;
 
   // Instead of recomputing the entire layout every single time, we
   // cache some information to break early when nothing changed
