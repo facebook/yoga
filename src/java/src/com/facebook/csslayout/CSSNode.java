@@ -211,6 +211,13 @@ public class CSSNode {
     return o1.equals(o2);
   }
 
+  public void setDirection(CSSDirection direction) {
+    if (!valuesEqual(style.direction, direction)) {
+      style.direction = direction;
+      dirty();
+    }
+  }
+
   public void setFlexDirection(CSSFlexDirection flexDirection) {
     if (!valuesEqual(style.flexDirection, flexDirection)) {
       style.flexDirection = flexDirection;
@@ -334,6 +341,10 @@ public class CSSNode {
 
   public float getLayoutHeight() {
     return layout.height;
+  }
+
+  public CSSDirection getLayoutDirection() {
+    return layout.direction;
   }
 
   /**
