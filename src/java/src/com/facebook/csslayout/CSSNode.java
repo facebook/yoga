@@ -129,7 +129,7 @@ public class CSSNode {
   /**
    * See {@link LayoutState#DIRTY}.
    */
-  /*package*/ boolean isDirty() {
+  protected boolean isDirty() {
     return mLayoutState == LayoutState.DIRTY;
   }
 
