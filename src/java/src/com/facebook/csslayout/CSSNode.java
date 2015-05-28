@@ -369,6 +369,13 @@ public class CSSNode {
   }
 
   /**
+   * Get this node's direction, as defined in the style.
+   */
+  public CSSDirection getStyleDirection() {
+    return style.direction;
+  }
+
+  /**
    * Set a default padding (left/top/right/bottom) for this node.
    */
   public void setDefaultPadding(int spacingType, float padding) {
