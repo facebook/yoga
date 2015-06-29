@@ -68,14 +68,8 @@ var computeLayout = (function() {
       var location = locations[i];
 
       var key = type + capitalizeFirst(location) + suffix;
-      if (key in node.style) {
-        return node.style[key];
-      }
-
-      key = type + suffix;
-      if (key in node.style) {
-        return node.style[key];
-      }
+  
+        return node.style[key] || node.style[type + key + suffix];
     }
 
     return 0;
@@ -121,12 +115,12 @@ var computeLayout = (function() {
       var location = locations[i];
 
       var key = type + capitalizeFirst(location) + suffix;
-      if (key in node.style && node.style[key] >= 0) {
+      if (node.style[key] >= 0) {
         return node.style[key];
       }
 
       key = type + suffix;
-      if (key in node.style && node.style[key] >= 0) {
+      if (node.style[key] >= 0) {
         return node.style[key];
       }
     }
