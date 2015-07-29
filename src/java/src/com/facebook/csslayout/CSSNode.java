@@ -56,18 +56,17 @@ public class CSSNode {
 
   public int lineIndex = 0;
 
-  // 4 is kinda arbitrary, but the default of 10 seems really high for an average View.
-  private final ArrayList<CSSNode> mChildren = new ArrayList<CSSNode>(4);
-
+  private @Nullable ArrayList<CSSNode> mChildren;
   private @Nullable CSSNode mParent;
   private @Nullable MeasureFunction mMeasureFunction = null;
   private LayoutState mLayoutState = LayoutState.DIRTY;
 
   public int getChildCount() {
-    return mChildren.size();
+    return mChildren == null ? 0 : mChildren.size();
   }
 
   public CSSNode getChildAt(int i) {
+    Assertions.assertNotNull(mChildren);
     return mChildren.get(i);
   }
 
@@ -75,15 +74,22 @@ public class CSSNode {
     if (child.mParent != null) {
       throw new IllegalStateException("Child already has a parent, it must be removed first.");
     }
+    if (mChildren == null) {
+      // 4 is kinda arbitrary, but the default of 10 seems really high for an average View.
+      mChildren = new ArrayList<>(4);
+    }
 
     mChildren.add(i, child);
     child.mParent = this;
     dirty();
   }
 
-  public void removeChildAt(int i) {
-    mChildren.remove(i).mParent = null;
+  public CSSNode removeChildAt(int i) {
+    Assertions.assertNotNull(mChildren);
+    CSSNode removed = mChildren.remove(i);
+    removed.mParent = null;
     dirty();
+    return removed;
   }
 
   public @Nullable CSSNode getParent() {
@@ -94,6 +100,7 @@ public class CSSNode {
    * @return the index of the given child, or -1 if the child doesn't exist in this node.
    */
   public int indexOf(CSSNode child) {
+    Assertions.assertNotNull(mChildren);
     return mChildren.indexOf(child);
   }
 
