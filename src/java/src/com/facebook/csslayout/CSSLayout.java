@@ -50,7 +50,7 @@ public class CSSLayout {
         "left: " + left + ", " +
         "top: " + top + ", " +
         "width: " + width + ", " +
-        "height: " + height +
+        "height: " + height + ", " +
         "direction: " + direction +
         "}";
   }
