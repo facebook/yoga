@@ -4192,7 +4192,7 @@ int main()
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
       node_0->layout.dimensions[CSS_WIDTH] = 130;
-      node_0->layout.dimensions[CSS_HEIGHT] = 37;
+      node_0->layout.dimensions[CSS_HEIGHT] = 36;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -4200,7 +4200,7 @@ int main()
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 130;
-        node_1->layout.dimensions[CSS_HEIGHT] = 37;
+        node_1->layout.dimensions[CSS_HEIGHT] = 36;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
@@ -4208,7 +4208,7 @@ int main()
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 130;
-          node_2->layout.dimensions[CSS_HEIGHT] = 37;
+          node_2->layout.dimensions[CSS_HEIGHT] = 36;
         }
       }
     }
@@ -4244,7 +4244,7 @@ int main()
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
       node_0->layout.dimensions[CSS_WIDTH] = 200;
-      node_0->layout.dimensions[CSS_HEIGHT] = 37;
+      node_0->layout.dimensions[CSS_HEIGHT] = 36;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -4252,7 +4252,7 @@ int main()
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
-        node_1->layout.dimensions[CSS_HEIGHT] = 37;
+        node_1->layout.dimensions[CSS_HEIGHT] = 36;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
@@ -4260,7 +4260,7 @@ int main()
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 130;
-          node_2->layout.dimensions[CSS_HEIGHT] = 37;
+          node_2->layout.dimensions[CSS_HEIGHT] = 36;
         }
       }
     }
@@ -4290,7 +4290,7 @@ int main()
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
       node_0->layout.dimensions[CSS_WIDTH] = 100;
-      node_0->layout.dimensions[CSS_HEIGHT] = 37;
+      node_0->layout.dimensions[CSS_HEIGHT] = 36;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -4298,7 +4298,7 @@ int main()
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
-        node_1->layout.dimensions[CSS_HEIGHT] = 37;
+        node_1->layout.dimensions[CSS_HEIGHT] = 36;
       }
     }
 
@@ -4344,7 +4344,7 @@ int main()
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
       node_0->layout.dimensions[CSS_WIDTH] = 100;
-      node_0->layout.dimensions[CSS_HEIGHT] = 77;
+      node_0->layout.dimensions[CSS_HEIGHT] = 76;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -4352,7 +4352,7 @@ int main()
         node_1->layout.position[CSS_TOP] = 20;
         node_1->layout.position[CSS_LEFT] = 20;
         node_1->layout.dimensions[CSS_WIDTH] = 100;
-        node_1->layout.dimensions[CSS_HEIGHT] = 37;
+        node_1->layout.dimensions[CSS_HEIGHT] = 36;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
@@ -4360,7 +4360,7 @@ int main()
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
           node_2->layout.dimensions[CSS_WIDTH] = 100;
-          node_2->layout.dimensions[CSS_HEIGHT] = 37;
+          node_2->layout.dimensions[CSS_HEIGHT] = 36;
         }
       }
     }
@@ -4668,7 +4668,7 @@ int main()
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
       node_0->layout.dimensions[CSS_WIDTH] = 200;
-      node_0->layout.dimensions[CSS_HEIGHT] = 77;
+      node_0->layout.dimensions[CSS_HEIGHT] = 76;
       init_css_node_children(node_0, 1);
       {
         css_node_t *node_1;
@@ -4676,7 +4676,7 @@ int main()
         node_1->layout.position[CSS_TOP] = 0;
         node_1->layout.position[CSS_LEFT] = 0;
         node_1->layout.dimensions[CSS_WIDTH] = 200;
-        node_1->layout.dimensions[CSS_HEIGHT] = 77;
+        node_1->layout.dimensions[CSS_HEIGHT] = 76;
         init_css_node_children(node_1, 1);
         {
           css_node_t *node_2;
@@ -4684,7 +4684,7 @@ int main()
           node_2->layout.position[CSS_TOP] = 20;
           node_2->layout.position[CSS_LEFT] = 20;
           node_2->layout.dimensions[CSS_WIDTH] = 160;
-          node_2->layout.dimensions[CSS_HEIGHT] = 37;
+          node_2->layout.dimensions[CSS_HEIGHT] = 36;
         }
       }
     }

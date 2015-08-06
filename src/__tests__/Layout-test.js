@@ -2307,6 +2307,21 @@ describe('Layout', function() {
       ]}
     );
   });
+
+  xit('should stretch a nested child', function() {
+    testLayout(
+      {children: [
+        {children: [{}]},
+        {style: {width: 40}}
+      ]},
+      {width: 40, height: 0, top: 0, left: 0, children: [
+        {width: 40, height: 0, top: 0, left: 0, children: [
+          {width: 40, height: 0, top: 0, left: 0}
+        ]},
+        {width: 40, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
 });
 
 describe('Layout alignContent', function() {
@@ -2396,21 +2411,4 @@ describe('Layout alignContent', function() {
   testAlignContent('flex-end', 'center');
   testAlignContent('flex-end', 'flex-end');
   testAlignContent('flex-end', 'stretch');
-});
-
-describe('nested flex', function() {
-  it('should stretch a nested child', function() {
-    testLayout(
-      {children: [
-        {children: [{}]},
-        {style: {width: 40}}
-      ]},
-      {width: 40, height: 0, top: 0, left: 0, children: [
-        {width: 40, height: 0, top: 0, left: 0, children: [
-          {width: 40, height: 0, top: 0, left: 0}
-        ]},
-        {width: 40, height: 0, top: 0, left: 0}
-      ]}
-    );
-  });
 });
