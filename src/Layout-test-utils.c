@@ -29,7 +29,7 @@ __forceinline const float fminf(const float a, const float b) {
 #define SMALL_WIDTH 35
 #define SMALL_HEIGHT 18
 #define BIG_WIDTH 172
-#define BIG_HEIGHT 37
+#define BIG_HEIGHT 36
 #define BIG_MIN_WIDTH 100
 #define SMALL_TEXT "small"
 #define LONG_TEXT "loooooooooong with space"
