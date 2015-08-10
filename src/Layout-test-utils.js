@@ -408,7 +408,7 @@ var layoutTestUtils = (function() {
     smallWidth: 34.671875,
     smallHeight: 18,
     bigWidth: 172.421875,
-    bigHeight: 37,
+    bigHeight: 36,
     bigMinWidth: 100.4375
   };
 

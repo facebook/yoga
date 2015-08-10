@@ -17,7 +17,7 @@ public class TestConstants {
   public static final float SMALL_WIDTH = 35f;
   public static final float SMALL_HEIGHT = 18f;
   public static final float BIG_WIDTH = 172f;
-  public static final float BIG_HEIGHT = 37f;
+  public static final float BIG_HEIGHT = 36f;
   public static final float BIG_MIN_WIDTH = 100f;
   public static final String SMALL_TEXT = "small";
   public static final String LONG_TEXT = "loooooooooong with space";
