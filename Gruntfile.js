@@ -6,7 +6,8 @@ module.exports = function(grunt) {
 
     paths: {
       distFolder: 'dist',
-      srcFolder: 'src'
+      srcFolder: 'src',
+      testFolder: 'src/__tests__',
     },
 
     clean: ['<%= paths.distFolder %>'],
@@ -32,14 +33,31 @@ module.exports = function(grunt) {
           '<%= paths.distFolder %>/css-layout.min.js': ['<%= paths.srcFolder %>/Layout.js']
         }
       }
+    },
+
+    karma: {
+      main: {
+        options: {
+          files: [
+            '<%= paths.srcFolder %>/Layout.js',
+            '<%= paths.srcFolder %>/Layout-test-utils.js',
+            '<%= paths.testFolder %>/Layout-test.js',
+            '<%= paths.testFolder %>/Layout-consts-test.js'
+          ],
+          browsers: ['Chrome'],
+          frameworks: ['jasmine'],
+          singleRun: true
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('build', ['clean', 'copy', 'uglify']);
+  grunt.registerTask('build', ['clean', 'karma' ,'copy', 'uglify']);
 
   grunt.registerTask('default', ['build']);
 
