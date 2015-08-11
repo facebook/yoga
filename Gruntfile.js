@@ -21,14 +21,15 @@ module.exports = function(grunt) {
       target: ['<%= paths.srcFolder %>/Layout.js']
     },
 
-    copy: {
+    includereplace: {
+      options: {
+        prefix: '// @@',
+      },
       main: {
-        expand: true,
-        src: ['<%= paths.srcFolder %>/Layout.js'],
-        dest: '<%= paths.distFolder %>',
-        rename: function(dest, src) {
-          return dest + '/css-layout.js';
-        }
+        // Files to perform replacements and includes with
+        src: '<%= paths.srcFolder %>/css-layout.js',
+        // Destination directory to copy files to
+        dest: '<%= paths.distFolder %>/css-layout.js'
       }
     },
 
@@ -39,7 +40,7 @@ module.exports = function(grunt) {
       },
       main: {
         files: {
-          '<%= paths.distFolder %>/css-layout.min.js': ['<%= paths.srcFolder %>/Layout.js']
+          '<%= paths.distFolder %>/css-layout.min.js': ['<%= paths.distFolder %>/css-layout.js']
         }
       }
     },
@@ -61,7 +62,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('build', ['eslint', 'clean', 'karma' ,'copy', 'uglify']);
+  grunt.registerTask('build', ['eslint', 'clean', 'karma' ,'includereplace', 'uglify']);
 
   grunt.registerTask('default', ['build']);
 };

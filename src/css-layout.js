@@ -11,14 +11,15 @@
     module.exports = factory();
   } else {
     // Browser globals (root is window)
-    root.returnExports = factory();
+    root.computeLayout = factory();
   }
 }(this, function () {
-    var layout = require('./Layout.js');
+    // @@include('./Layout.js')
+
     return function(node) {
-      node = layout.fillNodes(node);
-      layout.computeLayout(node);
-      node = layout.extractNodes(node);
+      node = computeLayout.fillNodes(node);
+      computeLayout.computeLayout(node);
+      node = computeLayout.extractNodes(node);
       return node;
   };
 }));
