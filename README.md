@@ -29,8 +29,6 @@ computeLayout(
 ]}
 ```
 
-NOTE: You need to run the JavaScript build, as detailed below, before running this code.
-
 Supported Attributes
 --------------------
 

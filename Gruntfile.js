@@ -26,9 +26,7 @@ module.exports = function(grunt) {
         prefix: '// @@',
       },
       main: {
-        // Files to perform replacements and includes with
         src: '<%= paths.srcFolder %>/css-layout.js',
-        // Destination directory to copy files to
         dest: '<%= paths.distFolder %>/css-layout.js'
       }
     },
