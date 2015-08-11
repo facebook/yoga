@@ -2122,7 +2122,7 @@ describe('Layout', function() {
       {style: {width: 400, height: 400}, children: [
         {style: {position: 'absolute', top: 100, left: 100, right: 100, bottom: 100, padding: 10}, children: [
           {style: {position: 'absolute', top: 10, left: 10, right: 10, bottom: 10}}
-        ]},
+        ]}
       ]},
       {width: 400, height: 400, top: 0, left: 0, children: [
         {width: 200, height: 200, top: 100, left: 100, children: [
@@ -2137,7 +2137,7 @@ describe('Layout', function() {
       {style: {width: 400, height: 400}, children: [
         {style: {position: 'absolute', top: 100, left: 100, right: 100, bottom: 100, padding: 10, borderWidth: 1}, children: [
           {style: {position: 'absolute', top: 10, left: 10, right: 10, bottom: 10}}
-        ]},
+        ]}
       ]},
       {width: 400, height: 400, top: 0, left: 0, children: [
         {width: 200, height: 200, top: 100, left: 100, children: [
@@ -2152,7 +2152,7 @@ describe('Layout', function() {
       {style: {width: 400, height: 400}, children: [
         {style: {flex: 1, padding: 10}, children: [
           {style: {position: 'absolute', top: 10, left: 10, right: 10, bottom: 10}}
-        ]},
+        ]}
       ]},
       {width: 400, height: 400, top: 0, left: 0, children: [
         {width: 400, height: 400, top: 0, left: 0, children: [
@@ -2195,7 +2195,7 @@ describe('Layout', function() {
         {style: {width: 100, height: 100}},
         {style: {width: 100, height: 100}},
         {style: {width: 100, height: 100}},
-        {style: {width: 100, height: 100}},
+        {style: {width: 100, height: 100}}
       ]},
       {width: 320, height: 200, top: 0, left: 0, children: [
         {width: 100, height: 100, top: 0, left: 0},
@@ -2203,7 +2203,7 @@ describe('Layout', function() {
         {width: 100, height: 100, top: 0, left: 220},
         {width: 100, height: 100, top: 100, left: 0},
         {width: 100, height: 100, top: 100, left: 110},
-        {width: 100, height: 100, top: 100, left: 220},
+        {width: 100, height: 100, top: 100, left: 220}
       ]}
     );
   });
@@ -2330,24 +2330,24 @@ describe('Layout alignContent', function() {
     testLayout(
       {style: {width: 300, height: 380, flexDirection: 'row', flexWrap: 'wrap', alignContent: 'stretch', alignItems: 'flex-start'},
        children: [
-         /* 0 */  {style: {width: 50, height: 50, margin: 10}},
-         /* 1 */  {style: {width: 50, height: 50, margin: 10}},
-         /* 2 */  {style: {width: 50, height: 50, margin: 10}},
-         /* 3 */  {style: {width: 50, height: 50, margin: 10}},
-         /* 4 */  {style: {width: 50, height: 100, margin: 10}},
-         /* 5 */  {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
-         /* 6 */  {style: {width: 50, height: 50, margin: 10}},
-         /* 7 */  {style: {width: 50, height: 100, margin: 10}},
-         /* 8 */  {style: {width: 50, height: 50, margin: 10}},
-         /* 9 */  {style: {width: 50, height: 50, margin: 10}},
+         /* 0 */ {style: {width: 50, height: 50, margin: 10}},
+         /* 1 */ {style: {width: 50, height: 50, margin: 10}},
+         /* 2 */ {style: {width: 50, height: 50, margin: 10}},
+         /* 3 */ {style: {width: 50, height: 50, margin: 10}},
+         /* 4 */ {style: {width: 50, height: 100, margin: 10}},
+         /* 5 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
+         /* 6 */ {style: {width: 50, height: 50, margin: 10}},
+         /* 7 */ {style: {width: 50, height: 100, margin: 10}},
+         /* 8 */ {style: {width: 50, height: 50, margin: 10}},
+         /* 9 */ {style: {width: 50, height: 50, margin: 10}},
          /* 10 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start' }},
          /* 11 */ {style: {width: 50, height: 50, margin: 10}},
          /* 12 */ {style: {width: 50, height: 50, margin: 10}},
          /* 13 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
-         /* 14 */ {style: {width: 50, height: 50, margin: 10}},
-       ],
+         /* 14 */ {style: {width: 50, height: 50, margin: 10}}
+       ]
       },
-      {width: 300, height: 380, top: 0, left: 0,  children: [
+      {width: 300, height: 380, top: 0, left: 0, children: [
         {width: 50, height: 50, top: 10, left: 10},
         {width: 50, height: 50, top: 10, left: 80},
         {width: 50, height: 50, top: 10, left: 150},
@@ -2373,22 +2373,22 @@ describe('Layout alignContent', function() {
       testLayoutAgainstDomOnly(
         {style: {width: 300, height: 380, flexDirection: 'row', flexWrap: 'wrap', alignContent: alignContent, alignItems: alignItems},
          children: [
-           /* 0 */  {style: {width: 50, height: 50, margin: 10}},
-           /* 1 */  {style: {width: 50, height: 50, margin: 10}},
-           /* 2 */  {style: {width: 50, height: 50, margin: 10}},
-           /* 3 */  {style: {width: 50, height: 50, margin: 10}},
-           /* 4 */  {style: {width: 50, height: 100, margin: 10}},
-           /* 5 */  {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
-           /* 6 */  {style: {width: 50, height: 50, margin: 10}},
-           /* 7 */  {style: {width: 50, height: 100, margin: 10}},
-           /* 8 */  {style: {width: 50, height: 50, margin: 10}},
-           /* 9 */  {style: {width: 50, height: 50, margin: 10}},
+           /* 0 */ {style: {width: 50, height: 50, margin: 10}},
+           /* 1 */ {style: {width: 50, height: 50, margin: 10}},
+           /* 2 */ {style: {width: 50, height: 50, margin: 10}},
+           /* 3 */ {style: {width: 50, height: 50, margin: 10}},
+           /* 4 */ {style: {width: 50, height: 100, margin: 10}},
+           /* 5 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
+           /* 6 */ {style: {width: 50, height: 50, margin: 10}},
+           /* 7 */ {style: {width: 50, height: 100, margin: 10}},
+           /* 8 */ {style: {width: 50, height: 50, margin: 10}},
+           /* 9 */ {style: {width: 50, height: 50, margin: 10}},
            /* 10 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start' }},
            /* 11 */ {style: {width: 50, height: 50, margin: 10}},
            /* 12 */ {style: {width: 50, height: 50, margin: 10}},
            /* 13 */ {style: {width: 50, height: 50, margin: 10, alignSelf: 'flex-start'}},
-           /* 14 */ {style: {width: 50, height: 50, margin: 10}},
-         ],
+           /* 14 */ {style: {width: 50, height: 50, margin: 10}}
+         ]
         }
       );
     });

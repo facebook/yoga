@@ -19,10 +19,6 @@
         "define": true
     },
     "rules": {
-        "quotes": "single",
-        "strict": 0,
-        "no-console": false,
-        "no-shadow": false,
-        "no-underscore-dangle": false
+        "quotes": [2, "single"]
     }
 }

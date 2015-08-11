@@ -2,6 +2,8 @@
 
 module.exports = function(grunt) {
 
+  require('load-grunt-tasks')(grunt);
+
   grunt.initConfig({
 
     paths: {
@@ -11,6 +13,13 @@ module.exports = function(grunt) {
     },
 
     clean: ['<%= paths.distFolder %>'],
+
+    eslint: {
+      options: {
+        configFile: '.eslintrc'
+      },
+      target: ['<%= paths.srcFolder %>/Layout.js']
+    },
 
     copy: {
       main: {
@@ -52,13 +61,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-karma');
-
-  grunt.registerTask('build', ['clean', 'karma' ,'copy', 'uglify']);
+  grunt.registerTask('build', ['eslint', 'clean', 'karma' ,'copy', 'uglify']);
 
   grunt.registerTask('default', ['build']);
-
 };
