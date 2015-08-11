@@ -29,10 +29,7 @@ computeLayout(
 ]}
 ```
 
-To run the tests
-
-- For the JS tests: Open `RunLayoutTests.html` and `RunLayoutRandomTests.html` in Chrome or run `$ npm test`
-- For the C and Java tests: run `make` in your terminal. It will also transpile the JS code
+NOTE: You need to run the JavaScript build, as detailed below, before running this code.
 
 Supported Attributes
 --------------------
@@ -81,3 +78,15 @@ div, span {
 - Everything is `display: flex` by default. All the behaviors of `block` and `inline-block` can be expressed in term of `flex` but not the opposite.
 - All the flex elements are oriented from top to bottom, left to right and do not shrink. This is how things are laid out using the default CSS settings and what you'd expect.
 - Everything is `position: relative`. This makes `position: absolute` target the direct parent and not some parent which is either `relative` or `absolute`. If you want to position an element relative to something else, you should move it in the DOM instead of relying of CSS. It also makes `top, left, right, bottom` do something when not specifying `position: absolute`.
+
+Development
+-----------
+
+The core logic resides with `Layout.js`, which is transpiled into equivalent C and Java implementations.
+
+To run the tests
+
+- For the JS tests: run `grunt karma`
+- For the C and Java tests: run `make` in your terminal. It will also transpile the JS code. This build is also run via Travis CI.
+
+The JavaScript build process is managed via Grunt. The build performs linting, runs the tests and produce a minified version of the code within a `dist` folder. The build output uses the Universal Module Format (UMD) so that it can be used via AMD / RequireJS, CommonJS or included directly into an HTML page.
