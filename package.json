@@ -19,6 +19,11 @@
   "homepage": "https://github.com/facebook/css-layout",
   "devDependencies": {
     "eslint": "^0.14.1",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-uglify": "^0.9.1",
     "jasmine-core": "^2.2.0",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.7",
