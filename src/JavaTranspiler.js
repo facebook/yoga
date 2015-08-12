@@ -140,8 +140,8 @@ var JavaTranspiler = {
     var allTestsInJava = [];
     for (var i = 0; i < allTestsInC.length; i++) {
       allTestsInJava[i] =
-          "  @Test\n" +
-          "  public void testCase" + i + "()\n" +
+          '  @Test\n' +
+          '  public void testCase' + i + '()\n' +
           __transpileSingleTestToJava(allTestsInC[i]);
     }
     return allTestsInJava.join('\n\n');

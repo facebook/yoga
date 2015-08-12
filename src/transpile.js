@@ -20,7 +20,7 @@ global.layoutTestUtils = {
   testLayout: function(node, expectedLayout) {
     allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
   },
-  testLayoutAgainstDomOnly: function(node) {
+  testLayoutAgainstDomOnly: function() {
   },
   testRandomLayout: function(node, i) {
     allTests.push({name: 'Random #' + i, node: node, expectedLayout: computeDOMLayout(node)});
@@ -272,15 +272,14 @@ function transpileAnnotatedJStoC(jsCode) {
 }
 
 function makeConstDefs() {
-  /* eslint no-multi-spaces: 3 */
   var lines = [
-    '#define SMALL_WIDTH '   + layoutTestUtils.textSizes.smallWidth,
-    '#define SMALL_HEIGHT '  + layoutTestUtils.textSizes.smallHeight,
-    '#define BIG_WIDTH '     + layoutTestUtils.textSizes.bigWidth,
-    '#define BIG_HEIGHT '    + layoutTestUtils.textSizes.bigHeight,
+    '#define SMALL_WIDTH ' + layoutTestUtils.textSizes.smallWidth,
+    '#define SMALL_HEIGHT ' + layoutTestUtils.textSizes.smallHeight,
+    '#define BIG_WIDTH ' + layoutTestUtils.textSizes.bigWidth,
+    '#define BIG_HEIGHT ' + layoutTestUtils.textSizes.bigHeight,
     '#define BIG_MIN_WIDTH ' + layoutTestUtils.textSizes.bigMinWidth,
-    '#define SMALL_TEXT "'   + layoutTestUtils.texts.small + '"',
-    '#define LONG_TEXT "'    + layoutTestUtils.texts.big + '"'
+    '#define SMALL_TEXT "' + layoutTestUtils.texts.small + '"',
+    '#define LONG_TEXT "' + layoutTestUtils.texts.big + '"'
   ];
   return lines.join('\n');
 }

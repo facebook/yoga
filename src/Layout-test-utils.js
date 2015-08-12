@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-/* globals document, computeLayout */
+/* globals document, computeLayout, navigator */
 
 var layoutTestUtils = (function() {
 
@@ -415,7 +415,7 @@ var layoutTestUtils = (function() {
   // Note(prenaux): Clearly not what I would like, but it seems to be the only
   //                way :( My guess is that since the font on Windows is
   //                different than on OSX it has a different size.
-  if (typeof navigator !== 'undefined' && navigator.userAgent.indexOf("Windows NT") > -1) {
+  if (typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Windows NT') > -1) {
     preDefinedTextSizes.bigHeight = 36;
   }
 
@@ -450,7 +450,7 @@ var layoutTestUtils = (function() {
       testNamedLayout('expected-dom', expectedLayout, domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
-    testLayoutAgainstDomOnly: function(node, expectedLayout) {
+    testLayoutAgainstDomOnly: function(node) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
       inplaceRoundNumbersInObject(layout);
