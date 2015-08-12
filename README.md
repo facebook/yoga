@@ -82,9 +82,10 @@ Development
 
 The core logic resides with `Layout.js`, which is transpiled into equivalent C and Java implementations.
 
-To run the tests
+The JavaScript build process is managed via Grunt. The build performs linting, runs the tests against Chrome, transpiles and packages the code (JavaScript and Java) into the `dist` folder. For JavaScript, the build output uses the Universal Module Format (UMD) so that it can be used via AMD / RequireJS, CommonJS or included directly into an HTML page.
 
-- For the JS tests: run `grunt karma`
-- For the C and Java tests: run `make` in your terminal. It will also transpile the JS code. This build is also run via Travis CI.
+While developing you can just run the lint / Chrome-based tests a follows:
 
-The JavaScript build process is managed via Grunt. The build performs linting, runs the tests and produce a minified version of the code within a `dist` folder. The build output uses the Universal Module Format (UMD) so that it can be used via AMD / RequireJS, CommonJS or included directly into an HTML page.
+```
+grunt test-javascript
+```

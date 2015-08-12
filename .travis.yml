@@ -2,9 +2,12 @@ language: node_js
 node_js:
   - "0.12"
 
+sudo: false
+
 before_install:
   - npm install grunt-cli -g
 
-before_script:
-  - sudo apt-get update -q
-  - sudo apt-get install gcc
+addons:
+  apt:
+    packages:
+      - gcc

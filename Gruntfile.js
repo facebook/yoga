@@ -97,20 +97,29 @@ module.exports = function(grunt) {
     }
   });
 
+  // Compiles and runs the Java tests
   grunt.registerTask('test-java', ['shell:javaCompile', 'shell:javaTestExecute', 'clean:javaTest']);
 
+  // Compiles and runs the C tests
   grunt.registerTask('test-c', ['shell:cCompile', 'shell:cTestExecute', 'clean:cTest']);
 
+  // Transpiles the JavaScript to C and Java, running tests
   grunt.registerTask('transpile', ['execute:transpile', 'test-c', 'test-java']);
 
+  // Lints and tests the JavaScritp using Chrome
   grunt.registerTask('test-javascript', ['eslint', 'karma']);
 
+  // Packages the JavaScript as a single UMD module and minifies 
   grunt.registerTask('package-javascript', ['includereplace', 'uglify']);
 
+  // Packages the Java as a JAR
   grunt.registerTask('package-java', ['shell:javaPackage']);
 
+  // Default build, performs the full works!
   grunt.registerTask('build', ['test-javascript', 'transpile', 'clean:dist', 'package-javascript', 'package-java']);
 
+  // The JavaScript unit tests require Chrome (they need a faithful flexbox implementation
+  // to test against), so under CI this step is skipped.
   grunt.registerTask('ci', ['eslint', 'transpile', 'clean:dist', 'package-javascript', 'package-java']);
 
   grunt.registerTask('default', ['build']);
