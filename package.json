@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Reimplementation of CSS layout using pure JavaScript",
   "main": "src/main.js",
+  "scripts": {
+    "test": "grunt ci"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/css-layout.git"
