@@ -6,10 +6,10 @@ module.exports = function(grunt) {
   var isWindows = /^win/.test(process.platform);
 
   require('load-grunt-tasks')(grunt);
-  grunt.loadNpmTasks('grunt-contrib-concat');
 
   // config
   var config = {
+    delimiter: path.delimiter,
     libName: 'css-layout',
     distFolder: 'dist',
     srcFolder: 'src',
@@ -25,20 +25,19 @@ module.exports = function(grunt) {
   }
 
   // C compilation configuration
-  var cTestClean, cTestCompile, cTestExecute;
   if (isWindows) {
     // Windows build, assumes cl is in the path (see https://msdn.microsoft.com/en-us/library/f2ccy3wt.aspx).
     config.cTestOutput = 'c_test.exe';
-    cTestCompile = 'cl -nologo -Zi -Tpsrc/__tests__/Layout-test.c -Tpsrc/Layout.c -Tpsrc/Layout-test-utils.c -link -incremental:no -out:"<%= config.cTestOutput %>"';
-    cTestExecute = '<%= config.cTestOutput %>';
-    cTestClean = ['<%= config.cTestOutput %>','*.obj','*.pdb'];
+    config.cTestCompile = 'cl -nologo -Zi -Tpsrc/__tests__/Layout-test.c -Tpsrc/Layout.c -Tpsrc/Layout-test-utils.c -link -incremental:no -out:"<%= config.cTestOutput %>"';
+    config.cTestExecute = '<%= config.cTestOutput %>';
+    config.cTestClean = ['<%= config.cTestOutput %>','*.obj','*.pdb'];
   }
   else {
     // GCC build (OSX, Linux, ...), assumes gcc is in the path.
     config.cTestOutput = 'c_test';
-    cTestCompile = 'gcc -std=c99 -Werror -Wno-padded src/__tests__/Layout-test.c src/Layout.c src/Layout-test-utils.c -lm -o "./<%= config.cTestOutput %>"';
-    cTestExecute = './<%= config.cTestOutput %>';
-    cTestClean = ['<%= config.cTestOutput %>'];
+    config.cTestCompile = 'gcc -std=c99 -Werror -Wno-padded src/__tests__/Layout-test.c src/Layout.c src/Layout-test-utils.c -lm -o "./<%= config.cTestOutput %>"';
+    config.cTestExecute = './<%= config.cTestOutput %>';
+    config.cTestClean = ['<%= config.cTestOutput %>'];
   }
 
   grunt.initConfig({
@@ -47,7 +46,7 @@ module.exports = function(grunt) {
 
     clean: {
       dist: ['<%= config.distFolder %>'],
-      cTest: cTestClean,
+      cTest: config.cTestClean,
       javaTest: ['**/*.class']
     },
 
@@ -134,25 +133,16 @@ module.exports = function(grunt) {
 
     shell: {
       cCompile: {
-        command: cTestCompile
+        command: config.cTestCompile
       },
       cTestExecute: {
-        command: cTestExecute
+        command: config.cTestExecute
       },
       javaCompile: {
-        command: 'javac -cp <%= config.javaLibFolder %>/junit4.jar' +
-          path.delimiter + '<%= config.javaLibFolder %>/jsr305.jar' +
-          path.delimiter + '<%= config.javaLibFolder %>/infer-annotations-1.4.jar' +
-          ' -sourcepath ./src/java/src' +
-          path.delimiter + './src/java/tests' +
-          ' <%= config.javaSource %>'
+        command: 'javac -cp <%= config.javaLibFolder %>/junit4.jar<%= config.delimiter %><%= config.javaLibFolder %>/jsr305.jar<%= config.delimiter %><%= config.javaLibFolder %>/infer-annotations-1.4.jar' + ' -sourcepath ./src/java/src<%= config.delimiter %>./src/java/tests' + ' <%= config.javaSource %>'
       },
       javaTestExecute: {
-        command: 'java -cp ./src/java/src' +
-          path.delimiter + './src/java/tests' +
-          path.delimiter + '<%= config.javaLibFolder %>/junit4.jar' +
-          path.delimiter + '<%= config.javaLibFolder %>/infer-annotations-1.4.jar' +
-          ' <%= config.javaTestFiles %>'
+        command: 'java -cp ./src/java/src<%= config.delimiter %>./src/java/tests<%= config.delimiter %><%= config.javaLibFolder %>/junit4.jar<%= config.delimiter %><%= config.javaLibFolder %>/infer-annotations-1.4.jar <%= config.javaTestFiles %>'
       },
       javaPackage: {
         command: 'jar cf <%= config.distFolder %>/<%= config.libName %>.jar <%= config.javaSource %>'
