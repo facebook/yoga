@@ -43,7 +43,7 @@ padding, paddingLeft, paddingRight, paddingTop, paddingBottom | positive number
 borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidth | positive number
 flexDirection | 'column', 'row'
 justifyContent | 'flex-start', 'center', 'flex-end', 'space-between', 'space-around'
-alignItems, alignSelf | 'flex-start', 'center', 'flex-end', 'stretch'
+alignItems, alignSelf, alignContent | 'flex-start', 'center', 'flex-end', 'stretch'
 flex | positive number
 flexWrap | 'wrap', 'nowrap'
 position | 'relative', 'absolute'
@@ -65,6 +65,7 @@ div, span {
   flex-direction: column;
   align-items: stretch;
   flex-shrink: 0;
+  align-content: flex-start;
 
   border: 0 solid black;
   margin: 0;
