@@ -1,20 +1,44 @@
 'use strict';
 
 module.exports = function(grunt) {
+  var fs = require('fs');
+  var path = require('path');
+  var isWindows = /^win/.test(process.platform);
 
   require('load-grunt-tasks')(grunt);
 
+  // config
   var config = {
     libName: 'css-layout',
     distFolder: 'dist',
     srcFolder: 'src',
     testFolder: 'src/__tests__',
-    cTestFiles: 'src/__tests__/Layout-test.c src/Layout.c src/Layout-test-utils.c',
-    cTestOutput: 'c_test',
     javaLibFolder: 'src/java/lib',
     javaSource: 'src/java/tests/com/facebook/csslayout/*.java',
     javaTestFiles: 'org.junit.runner.JUnitCore com.facebook.csslayout.LayoutEngineTest com.facebook.csslayout.LayoutCachingTest com.facebook.csslayout.CSSNodeTest'
   };
+
+  // Create the dist folder if it doesn't exist. It is deleted by the 'clean' task.
+  if (!fs.existsSync(config.distFolder)){
+    fs.mkdirSync(config.distFolder);
+  }
+
+  // C compilation configuration
+  var cTestClean, cTestCompile, cTestExecute;
+  if (isWindows) {
+    // Windows build, assumes cl is in the path (see https://msdn.microsoft.com/en-us/library/f2ccy3wt.aspx).
+    config.cTestOutput = 'c_test.exe';
+    cTestCompile = 'cl -nologo -Zi -Tpsrc/__tests__/Layout-test.c -Tpsrc/Layout.c -Tpsrc/Layout-test-utils.c -link -incremental:no -out:"<%= config.cTestOutput %>"';
+    cTestExecute = '<%= config.cTestOutput %>';
+    cTestClean = ['<%= config.cTestOutput %>','*.obj','*.pdb'];
+  }
+  else {
+    // GCC build (OSX, Linux, ...), assumes gcc is in the path.
+    config.cTestOutput = 'c_test';
+    cTestCompile = 'gcc -std=c99 -Werror -Wno-padded src/__tests__/Layout-test.c src/Layout.c src/Layout-test-utils.c -lm -o "./<%= config.cTestOutput %>"';
+    cTestExecute = './<%= config.cTestOutput %>';
+    cTestClean = ['<%= config.cTestOutput %>'];
+  }
 
   grunt.initConfig({
 
@@ -22,7 +46,7 @@ module.exports = function(grunt) {
 
     clean: {
       dist: ['<%= config.distFolder %>'],
-      cTest: ['<%= config.cTestOutput %>'],
+      cTest: cTestClean,
       javaTest: ['**/*.class']
     },
 
@@ -80,16 +104,25 @@ module.exports = function(grunt) {
 
     shell: {
       cCompile: {
-        command: 'gcc -std=c99 -Werror -Wno-padded <%= config.cTestFiles %> -lm -o "./<%= config.cTestOutput %>"'
+        command: cTestCompile
       },
       cTestExecute: {
-        command: './<%= config.cTestOutput %>'
+        command: cTestExecute
       },
       javaCompile: {
-        command: 'javac -cp <%= config.javaLibFolder %>/junit4.jar:<%= config.javaLibFolder %>/jsr305.jar:<%= config.javaLibFolder %>/infer-annotations-1.4.jar -sourcepath ./src/java/src:./src/java/tests <%= config.javaSource %>'
+        command: 'javac -cp <%= config.javaLibFolder %>/junit4.jar' +
+          path.delimiter + '<%= config.javaLibFolder %>/jsr305.jar' +
+          path.delimiter + '<%= config.javaLibFolder %>/infer-annotations-1.4.jar' +
+          ' -sourcepath ./src/java/src' +
+          path.delimiter + './src/java/tests' +
+          ' <%= config.javaSource %>'
       },
       javaTestExecute: {
-        command: 'java -cp ./src/java/src:./src/java/tests:<%= config.javaLibFolder %>/junit4.jar:<%= config.javaLibFolder %>/infer-annotations-1.4.jar <%= config.javaTestFiles %>'
+        command: 'java -cp ./src/java/src' +
+          path.delimiter + './src/java/tests' +
+          path.delimiter + '<%= config.javaLibFolder %>/junit4.jar' +
+          path.delimiter + '<%= config.javaLibFolder %>/infer-annotations-1.4.jar' +
+          ' <%= config.javaTestFiles %>'
       },
       javaPackage: {
         command: 'jar cf <%= config.distFolder %>/<%= config.libName %>.jar <%= config.javaSource %>'
@@ -109,7 +142,7 @@ module.exports = function(grunt) {
   // Lints and tests the JavaScritp using Chrome
   grunt.registerTask('test-javascript', ['eslint', 'karma']);
 
-  // Packages the JavaScript as a single UMD module and minifies 
+  // Packages the JavaScript as a single UMD module and minifies
   grunt.registerTask('package-javascript', ['includereplace', 'uglify']);
 
   // Packages the Java as a JAR
