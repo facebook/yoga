@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Reimplementation of CSS layout using pure JavaScript",
   "main": "src/main.js",
+  "scripts": {
+    "test": "grunt ci"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/facebook/css-layout.git"
@@ -20,8 +23,10 @@
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-eslint": "^17.1.0",
+    "grunt-execute": "^0.2.2",
     "grunt-include-replace": "^3.1.0",
     "grunt-karma": "^0.12.0",
+    "grunt-shell": "^1.1.2",
     "jasmine-core": "^2.2.0",
     "karma": "^0.13.8",
     "karma-chrome-launcher": "^0.1.7",

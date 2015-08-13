@@ -1,8 +1,13 @@
-language: c
-compiler:
-  - clang
-  - gcc
-before_script:
-  - sudo apt-get update -q
-  - sudo apt-get install nodejs
-script: make
+language: node_js
+node_js:
+  - "0.12"
+
+sudo: false
+
+before_install:
+  - npm install grunt-cli -g
+
+addons:
+  apt:
+    packages:
+      - gcc
