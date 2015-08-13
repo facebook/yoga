@@ -19,11 +19,6 @@ module.exports = function(grunt) {
     javaTestFiles: 'org.junit.runner.JUnitCore com.facebook.csslayout.LayoutEngineTest com.facebook.csslayout.LayoutCachingTest com.facebook.csslayout.CSSNodeTest'
   };
 
-  // Create the dist folder if it doesn't exist. It is deleted by the 'clean' task.
-  if (!fs.existsSync(config.distFolder)){
-    fs.mkdirSync(config.distFolder);
-  }
-
   // C compilation configuration
   if (isWindows) {
     // Windows build, assumes cl is in the path (see https://msdn.microsoft.com/en-us/library/f2ccy3wt.aspx).
@@ -41,8 +36,15 @@ module.exports = function(grunt) {
   }
 
   grunt.initConfig({
-
     config: config,
+
+    mkdir: {
+      dist: {
+        options: {
+          create: ['<%= config.distFolder %>']
+        },
+      },
+    },
 
     clean: {
       dist: ['<%= config.distFolder %>'],
@@ -163,13 +165,13 @@ module.exports = function(grunt) {
   grunt.registerTask('test-javascript', ['eslint', 'karma']);
 
   // Packages the JavaScript as a single UMD module and minifies
-  grunt.registerTask('package-javascript', ['includereplace', 'uglify']);
+  grunt.registerTask('package-javascript', ['mkdir:dist', 'includereplace', 'uglify']);
 
   // Packages the Java as a JAR
-  grunt.registerTask('package-java', ['shell:javaPackage']);
+  grunt.registerTask('package-java', ['mkdir:dist', 'shell:javaPackage']);
 
   // Packages the C code as a single header
-  grunt.registerTask('package-c', ['concat']);
+  grunt.registerTask('package-c', ['mkdir:dist', 'concat']);
 
   // Default build, performs the full works!
   grunt.registerTask('build', ['test-javascript', 'transpile', 'clean:dist', 'package-javascript', 'package-java', 'package-c']);
