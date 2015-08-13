@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   var isWindows = /^win/.test(process.platform);
 
   require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-contrib-concat');
 
   // config
   var config = {
@@ -102,6 +103,35 @@ module.exports = function(grunt) {
       }
     },
 
+    concat: {
+      options: {
+        separator: '\n',
+        // Replace all 'use strict' statements in the code with a single one at the top
+        banner: [
+          '/*',
+          ' * #define CSS_LAYOUT_IMPLEMENTATION',
+          ' * before you include this file in *one* C or C++ file to create the implementation.',
+          ' */\n'
+        ].join('\n'),
+        process: function(src, filepath) {
+          if (path.extname(filepath) === '.c') {
+            return [
+              '#ifdef CSS_LAYOUT_IMPLEMENTATION',
+              src,
+              '#endif // CSS_LAYOUT_IMPLEMENTATION'
+            ].join('\n')
+          }
+          else {
+            return src;
+          }
+        },
+      },
+      dist: {
+        src: ['<%= config.srcFolder %>/Layout.h', '<%= config.srcFolder %>/Layout.c'],
+        dest: '<%= config.distFolder %>/css-layout.h',
+      },
+    },
+
     shell: {
       cCompile: {
         command: cTestCompile
@@ -148,12 +178,15 @@ module.exports = function(grunt) {
   // Packages the Java as a JAR
   grunt.registerTask('package-java', ['shell:javaPackage']);
 
+  // Packages the C code as a single header
+  grunt.registerTask('package-c', ['concat']);
+
   // Default build, performs the full works!
-  grunt.registerTask('build', ['test-javascript', 'transpile', 'clean:dist', 'package-javascript', 'package-java']);
+  grunt.registerTask('build', ['test-javascript', 'transpile', 'clean:dist', 'package-javascript', 'package-java', 'package-c']);
 
   // The JavaScript unit tests require Chrome (they need a faithful flexbox implementation
   // to test against), so under CI this step is skipped.
-  grunt.registerTask('ci', ['eslint', 'transpile', 'clean:dist', 'package-javascript', 'package-java']);
+  grunt.registerTask('ci', ['eslint', 'transpile', 'clean:dist', 'package-javascript', 'package-java', 'package-c']);
 
   grunt.registerTask('default', ['build']);
 };
