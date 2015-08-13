@@ -80,40 +80,31 @@ var computeLayout = (function() {
 
     return 0;
   }
+
+  // When transpiled to Java / C the node type has layout, children and style
+  // properties. For the JavaScript version this function adds these properties
+  // if they don't already exist.
   function fillNodes(node) {
-    node.layout = {
-      width: undefined,
-      height: undefined,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0
-    };
+    if (!node.layout) {
+      node.layout = {
+        width: undefined,
+        height: undefined,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      };
+    }
+
     if (!node.style) {
       node.style = {};
     }
 
-    if (!node.children || node.style.measure) {
+    if (!node.children) {
       node.children = [];
     }
     node.children.forEach(fillNodes);
     return node;
-  }
-
-  function extractNodes(node) {
-    var layout = node.layout;
-    delete node.layout;
-    if (node.children && node.children.length > 0) {
-      layout.children = node.children.map(extractNodes);
-    } else {
-      delete node.children;
-    }
-
-    delete layout.right;
-    delete layout.bottom;
-    delete layout.direction;
-
-    return layout;
   }
 
   function getPositiveSpacing(node, type, suffix, locations) {
@@ -981,11 +972,13 @@ var computeLayout = (function() {
 
   return {
     computeLayout: layoutNode,
-    fillNodes: fillNodes,
-    extractNodes: extractNodes
+    fillNodes: fillNodes
   };
 })();
 
+// This module export is only used for the purposes of unit testing this file. When
+// the library is packaged this file is included within css-layout.js which forms 
+// the public API.
 if (typeof exports === 'object') {
   module.exports = computeLayout;
 }

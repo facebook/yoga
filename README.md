@@ -11,22 +11,68 @@ The JavaScript version has been implemented in a way that can be easily transpil
 Usage
 -----
 
-A single function `computeLayout` is exposed and
+A single function `computeLayout` is exposed that
  - takes a tree of nodes: `{ style: { ... }, children: [ nodes ] }`
- - returns a tree of rectangles: `{ width: ..., height: ..., top: ..., left: ..., children: [ rects ] }`
+ - computes the layout and writes it back to the node tree.
 
 For example,
 
 ```javascript
-computeLayout(
-  {style: {padding: 50}, children: [
-    {style: {padding: 10, alignSelf: 'stretch'}}
-  ]}
-);
-// =>
-{width: 120, height: 120, top: 0, left: 0, children: [
-  {width: 20, height: 20, top: 50, left: 50}
-]}
+// create an initial tree of nodes
+var nodeTree = {
+    "style": {
+      "padding": 50
+    },
+    "children": [
+      {
+        "style": {
+          "padding": 10,
+          "alignSelf": "stretch"
+        }
+      }
+    ]
+  };
+
+// compute the layout
+computeLayout(tree);
+
+// the layout information is written back to the node tree, with
+// each node now having a layout property: 
+
+// JSON.stringify(tree, null, 2);
+{
+  "style": {
+    "padding": 50
+  },
+  "children": [
+    {
+      "style": {
+        "padding": 10,
+        "alignSelf": "stretch"
+      },
+      "layout": {
+        "width": 20,
+        "height": 20,
+        "top": 50,
+        "left": 50,
+        "right": 50,
+        "bottom": 50,
+        "direction": "ltr"
+      },
+      "children": [],
+      "lineIndex": 0
+    }
+  ],
+  "layout": {
+    "width": 120,
+    "height": 120,
+    "top": 0,
+    "left": 0,
+    "right": 0,
+    "bottom": 0,
+    "direction": "ltr"
+  }
+}
 ```
 
 Supported Attributes
