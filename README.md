@@ -54,7 +54,7 @@ position | 'relative', 'absolute'
 
 Default values
 --------------
-Since we are only using flexbox, we can use defaults that are much more sensible. This is the configuration to use in order to get the same behavior using the DOM and CSS. You can try those default settings with the [following JSFiddle](http://jsfiddle.net/vjeux/y11txxv9/).
+Since we are only using flexbox, we can use defaults that are much more sensible. This is the configuration to use in order to get the same behavior using the DOM and CSS. You can try those default settings with the [following JSFiddle](http://jsfiddle.net/vjeux/y11txxv9/142/).
 
 ```css
 div, span {
