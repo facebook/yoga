@@ -31,20 +31,10 @@ describe('Javascript Only', function() {
       ]}
     );
   });
-  it('should pull out just the layout object from root', function() {
-    testExtractNodes(
-      {layout: {width: undefined, height: undefined, top: 0, left: 0}},
-      {width: undefined, height: undefined, top: 0, left: 0}
-    );
-  });
-  it('should pull out just the layout object from root and children', function() {
-    testExtractNodes(
-      {layout: {width: undefined, height: undefined, top: 0, left: 0}, children: [
-        {layout: {width: undefined, height: undefined, top: 0, left: 0}}
-      ]},
-      {width: undefined, height: undefined, top: 0, left: 0, children: [
-        {width: undefined, height: undefined, top: 0, left: 0}
-      ]}
+  it('should not replace user-provided layout information', function() {
+    testFillNodes(
+      {layout: {width: 200}},
+      {layout: {width: 200}, style: {}, children: []}
     );
   });
 });

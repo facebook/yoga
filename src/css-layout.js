@@ -20,9 +20,7 @@
     // @@include('./Layout.js')
 
     return function(node) {
-      node = computeLayout.fillNodes(node);
+      computeLayout.fillNodes(node);
       computeLayout.computeLayout(node);
-      node = computeLayout.extractNodes(node);
-      return node;
   };
 }));

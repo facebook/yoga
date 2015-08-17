@@ -114,8 +114,23 @@ var layoutTestUtils = (function() {
 
   if (typeof computeLayout === 'object') {
     var fillNodes = computeLayout.fillNodes;
-    var extractNodes = computeLayout.extractNodes;
     var realComputeLayout = computeLayout.computeLayout;
+  }
+
+  function extractNodes(node) {
+    var layout = node.layout;
+    delete node.layout;
+    if (node.children && node.children.length > 0) {
+      layout.children = node.children.map(extractNodes);
+    } else {
+      delete node.children;
+    }
+
+    delete layout.right;
+    delete layout.bottom;
+    delete layout.direction;
+
+    return layout;
   }
 
   function roundLayout(layout) {
