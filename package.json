@@ -2,7 +2,7 @@
   "name": "css-layout",
   "version": "0.0.2",
   "description": "Reimplementation of CSS layout using pure JavaScript",
-  "main": "src/main.js",
+  "main": "dist/css-layout.js",
   "scripts": {
     "test": "grunt ci"
   },
