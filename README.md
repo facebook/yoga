@@ -34,12 +34,12 @@ var nodeTree = {
   };
 
 // compute the layout
-computeLayout(tree);
+computeLayout(nodeTree);
 
 // the layout information is written back to the node tree, with
 // each node now having a layout property: 
 
-// JSON.stringify(tree, null, 2);
+// JSON.stringify(nodeTree, null, 2);
 {
   "style": {
     "padding": 50
