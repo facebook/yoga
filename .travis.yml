@@ -11,12 +11,4 @@ addons:
   apt:
     packages:
       - gcc
-
-deploy:
-  provider: npm
-  email: ceberhardt@scottlogic.com
-  api_key:
-    secure: "Dk69FV717n91CRMv0UqzqZG6mrd4dSwd2PJDf1Fe0GOVPrVG9pmSTUmsk7JGli7EB57ovPGRhE/lcDGnlE+hEVw5DjZhGUUmZIFGg+FdcVomoiTRUYjRLwRUKEVxYw1TGCjJHm4rEx4qdkghahjf1YRYnivOn7ADhdH5THr7uQE="
-  on:
-    tags: true
-    branch: master
+      
