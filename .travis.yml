@@ -16,7 +16,7 @@ deploy:
   provider: npm
   email: ceberhardt@scottlogic.com
   api_key:
-    secure: Vc9fsS/InXhvF8b3OIK5iTCRRB4ajUP73E5ObLiFYskVTCb5tLbl8rdYElV/uE2LF3Dw3SE9OyAARFPtkbUcmJ3A6YibEx5eKlPjWJZ8P0Pe85ap9XjopZzHzqpu+8kvZIPIQKUyisrD6RCRQdudT2uZKg2jvyvRwjnNVlVye4M=
+    secure: "KTmVyw8YdArB5xWgNbkeZ9JD1jAKh/uMjWJdjjDfTBxKVarFfyP5+899C+qZJ8f7cAfiHZKwNE5nCjfU6uuFjYc7gMFr/ezm1KZc1DXM51V6B9TnIwLxNBr5ZYwcW7H725iYpQMwXX9rC/W4U8mahMKo8m7L0DQGUWEoYuGkKd8="
   on:
     tags: true
     branch: master

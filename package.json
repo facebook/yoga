@@ -4,7 +4,8 @@
   "description": "Reimplementation of CSS layout using pure JavaScript",
   "main": "dist/css-layout.js",
   "scripts": {
-    "test": "grunt ci"
+    "test": "grunt ci",
+    "postversion": "git push --tags upstream HEAD:master"
   },
   "repository": {
     "type": "git",
