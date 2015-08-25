@@ -223,7 +223,7 @@ public class LayoutCachingTest {
 
     c1.setMeasureFunction(new CSSNode.MeasureFunction() {
       @Override
-      public void measure(CSSNode node, float width, MeasureOutput measureOutput) {
+      public void measure(CSSNode node, float width, boolean isExactly, MeasureOutput measureOutput) {
         measureOutput.width = 100;
         measureOutput.height = 20;
       }
