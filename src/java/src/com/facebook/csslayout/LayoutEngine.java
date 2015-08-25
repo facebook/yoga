@@ -563,6 +563,7 @@ public class LayoutEngine {
       if (isRowUndefined || isColumnUndefined) {
         MeasureOutput measureDim = node.measure(
                     layoutContext.measureOutput,
+          !isRowUndefined,
           width
         );
         if (isRowUndefined) {

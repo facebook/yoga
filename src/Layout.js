@@ -438,6 +438,7 @@ var computeLayout = (function() {
         var/*css_dim_t*/ measureDim = node.style.measure(
           /*(c)!node->context,*/
           /*(java)!layoutContext.measureOutput,*/
+          /*(java)!!isRowUndefined,*/
           width
         );
         if (isRowUndefined) {

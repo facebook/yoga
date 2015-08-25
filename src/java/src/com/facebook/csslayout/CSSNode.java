@@ -46,11 +46,11 @@ public class CSSNode {
      *
      * NB: measure is NOT guaranteed to be threadsafe/re-entrant safe!
      */
-    public void measure(CSSNode node, float width, MeasureOutput measureOutput);
+    public void measure(CSSNode node, float width, boolean isExactly, MeasureOutput measureOutput);
   }
 
   // VisibleForTesting
-  /*package*/ final CSSStyle style = new CSSStyle();
+  protected final CSSStyle style = new CSSStyle();
   /*package*/ final CSSLayout layout = new CSSLayout();
   /*package*/ final CachedCSSLayout lastLayout = new CachedCSSLayout();
 
@@ -115,13 +115,13 @@ public class CSSNode {
     return mMeasureFunction != null;
   }
 
-  /*package*/ MeasureOutput measure(MeasureOutput measureOutput, float width) {
+  /*package*/ MeasureOutput measure(MeasureOutput measureOutput, boolean isExactly, float width) {
     if (!isMeasureDefined()) {
       throw new RuntimeException("Measure function isn't defined!");
     }
     measureOutput.height = CSSConstants.UNDEFINED;
     measureOutput.width = CSSConstants.UNDEFINED;
-    Assertions.assertNotNull(mMeasureFunction).measure(this, width, measureOutput);
+    Assertions.assertNotNull(mMeasureFunction).measure(this, width, isExactly, measureOutput);
     return measureOutput;
   }
 
