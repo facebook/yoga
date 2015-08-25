@@ -20,7 +20,7 @@ public class LayoutEngineTest {
       new CSSNode.MeasureFunction() {
 
     @Override
-    public void measure(CSSNode node, float width, MeasureOutput measureOutput) {
+    public void measure(CSSNode node, float width, boolean isExactly, MeasureOutput measureOutput) {
       if (CSSConstants.isUndefined(width)) {
         width = 10000000;
       }
