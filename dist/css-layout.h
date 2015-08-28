@@ -139,7 +139,7 @@ typedef struct css_node {
   int children_count;
   int line_index;
 
-  css_dim_t (*measure)(void *context, float width);
+  css_dim_t (*measure)(void *context, float width, float height);
   void (*print)(void *context);
   struct css_node* (*get_child)(void *context, int i);
   bool (*is_dirty)(void *context);
@@ -703,6 +703,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
   css_flex_direction_t mainAxis = resolveAxis(getFlexDirection(node), direction);
   css_flex_direction_t crossAxis = getCrossFlexDirection(mainAxis, direction);
   css_flex_direction_t resolvedRowAxis = resolveAxis(CSS_FLEX_DIRECTION_ROW, direction);
+  css_flex_direction_t resolvedColumnAxis = resolveAxis(CSS_FLEX_DIRECTION_COLUMN, direction);
 
   // Handle width and height style attributes
   setDimensionFromStyle(node, mainAxis);
@@ -724,30 +725,41 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
 
   if (isMeasureDefined(node)) {
     float width = CSS_UNDEFINED;
+    float height = CSS_UNDEFINED;
+    float parentMaxHeight = parentMaxWidth;
+
     if (isDimDefined(node, resolvedRowAxis)) {
       width = node->style.dimensions[CSS_WIDTH];
+    } if (isDimDefined(node, resolvedColumnAxis)) {
+      height = node->style.dimensions[CSS_HEIGHT];
     } else if (!isUndefined(node->layout.dimensions[dim[resolvedRowAxis]])) {
       width = node->layout.dimensions[dim[resolvedRowAxis]];
+    } else if (!isUndefined(node->layout.dimensions[dim[resolvedColumnAxis]])) {
+      height = node->layout.dimensions[dim[resolvedColumnAxis]];
     } else {
-      width = parentMaxWidth -
+      width = parentMaxWidth - 
         getMarginAxis(node, resolvedRowAxis);
+      height = parentMaxHeight - 
+        getMarginAxis(node, resolvedColumnAxis);
     }
     width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
+    height -= getPaddingAndBorderAxis(node, resolvedColumnAxis);
 
     // We only need to give a dimension for the text if we haven't got any
     // for it computed yet. It can either be from the style attribute or because
     // the element is flexible.
     bool isRowUndefined = !isDimDefined(node, resolvedRowAxis) &&
       isUndefined(node->layout.dimensions[dim[resolvedRowAxis]]);
-    bool isColumnUndefined = !isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
-      isUndefined(node->layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]);
+    bool isColumnUndefined = !isDimDefined(node, resolvedColumnAxis) &&
+      isUndefined(node->layout.dimensions[dim[resolvedColumnAxis]]);
 
-    // Let's not measure the text if we already know both dimensions
+    // Let's not measure the node if we already know both dimensions
     if (isRowUndefined || isColumnUndefined) {
       css_dim_t measureDim = node->measure(
         node->context,
         
-        width
+        width,
+        height
       );
       if (isRowUndefined) {
         node->layout.dimensions[CSS_WIDTH] = measureDim.dimensions[CSS_WIDTH] +
@@ -755,9 +767,10 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
       }
       if (isColumnUndefined) {
         node->layout.dimensions[CSS_HEIGHT] = measureDim.dimensions[CSS_HEIGHT] +
-          getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+          getPaddingAndBorderAxis(node, resolvedColumnAxis);
       }
     }
+
     if (node->children_count == 0) {
       return;
     }

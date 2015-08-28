@@ -80,7 +80,7 @@ static bool are_layout_equal(css_node_t *a, css_node_t *b) {
   return true;
 }
 
-css_dim_t measure(void *context, float width) {
+css_dim_t measure(void *context, float width, float height) {
   const char *text = (const char *)context;
   css_dim_t dim;
   if (width != width) {

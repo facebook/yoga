@@ -135,7 +135,7 @@ typedef struct css_node {
   int children_count;
   int line_index;
 
-  css_dim_t (*measure)(void *context, float width);
+  css_dim_t (*measure)(void *context, float width, float height);
   void (*print)(void *context);
   struct css_node* (*get_child)(void *context, int i);
   bool (*is_dirty)(void *context);

@@ -489,7 +489,7 @@ var layoutTestUtils = (function() {
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest,
     text: function(text) {
-      var fn = function(width) {
+      var fn = function(width, height) {
         if (width === undefined || width !== width) {
           width = Infinity;
         }
