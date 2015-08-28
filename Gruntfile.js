@@ -149,7 +149,12 @@ module.exports = function(grunt) {
       javaPackage: {
         command: 'jar cf <%= config.distFolder %>/<%= config.libName %>.jar <%= config.javaSource %>'
       }
-    }
+    },
+
+    watch: {
+      files: ['src/Layout.js'],
+      tasks: ['ci'],
+    },
   });
 
   // Compiles and runs the Java tests
