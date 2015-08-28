@@ -4,6 +4,7 @@
   "description": "Reimplementation of CSS layout using pure JavaScript",
   "main": "dist/css-layout.js",
   "scripts": {
+    "watch": "grunt watch",
     "test": "grunt ci",
     "postversion": "git push --tags upstream HEAD:master"
   },
@@ -24,6 +25,7 @@
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1",
     "grunt-eslint": "^17.1.0",
     "grunt-execute": "^0.2.2",
     "grunt-include-replace": "^3.1.0",
