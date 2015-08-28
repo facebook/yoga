@@ -82,7 +82,15 @@ static bool are_layout_equal(css_node_t *a, css_node_t *b) {
 
 css_dim_t measure(void *context, float width, float height) {
   const char *text = (const char *)context;
+  const int ratio = atoi(text);
   css_dim_t dim;
+ 
+  if (ratio > 0) {
+    dim.dimensions[CSS_WIDTH] = height ? (ratio*height) : width;
+    dim.dimensions[CSS_HEIGHT] = width ? (width/ratio) : height;
+    return dim;
+  }
+
   if (width != width) {
     width = 1000000;
   }

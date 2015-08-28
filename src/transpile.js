@@ -28,6 +28,7 @@ global.layoutTestUtils = {
   computeLayout: layoutTestUtils.computeLayout,
   reduceTest: reduceTest,
   text: layoutTestUtils.text,
+  box: layoutTestUtils.box,
   texts: layoutTestUtils.texts,
   textSizes: layoutTestUtils.textSizes
 };

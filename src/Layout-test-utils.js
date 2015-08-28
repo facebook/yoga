@@ -513,6 +513,19 @@ var layoutTestUtils = (function() {
       };
       fn.toString = function() { return text; };
       return fn;
+    },
+    box: function(ratio) {
+      var fn = function(width, height) {
+        // Mimics a rigid rectanglular box where the ratio of the 
+        // two sides is the passed in to satisfy:
+        // ratio = width / height;
+        return {
+          width: height ? (ratio*height) : width,
+          height: width ? (width/ratio) : height
+        };
+      };
+      fn.toString = function() { return ratio; };
+      return fn;
     }
   };
 })();
