@@ -12,6 +12,11 @@
     "type": "git",
     "url": "https://github.com/facebook/css-layout.git"
   },
+  "keywords": [
+    "css",
+    "flexbox",
+    "layout"
+  ],
   "author": "",
   "license": "BSD",
   "bugs": {

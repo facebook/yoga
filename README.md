@@ -3,6 +3,8 @@ css-layout [![Build Status](https://travis-ci.org/facebook/css-layout.svg?branch
 
 This project implements a subset of CSS including flexbox and the box model using pure JavaScript, then transpiled to C and Java. The goal is to have a small standalone library to layout elements. It doesn't rely on the DOM at all.
 
+The Java, C and JavaScript version of the code is available via [npm](https://www.npmjs.com/package/css-layout) or directly from the `dist` folder of this repo. The JavaScript version is also available via [cdnjs](https://cdnjs.com/libraries/css-layout).
+
 In order to make sure that the code is correct, it is developed in JavaScript using TDD where each commit adds a unit test and the associated code to make it work. All the unit tests are tested against Chrome's implementation of CSS.
 
 The JavaScript version has been implemented in a way that can be easily transpiled to C and Java via regexes. The layout function doesn't do any allocation nor uses any of the dynamic aspect of JavaScript. The tests are also transpiled to make sure that the implementations are correct everywhere.

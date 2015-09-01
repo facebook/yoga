@@ -170,20 +170,23 @@ module.exports = function(grunt) {
   grunt.registerTask('test-javascript', ['eslint', 'karma']);
 
   // Packages the JavaScript as a single UMD module and minifies
-  grunt.registerTask('package-javascript', ['mkdir:dist', 'includereplace', 'uglify']);
+  grunt.registerTask('package-javascript', ['includereplace', 'uglify']);
 
   // Packages the Java as a JAR
-  grunt.registerTask('package-java', ['mkdir:dist', 'shell:javaPackage']);
+  grunt.registerTask('package-java', ['shell:javaPackage']);
 
   // Packages the C code as a single header
-  grunt.registerTask('package-c', ['mkdir:dist', 'concat']);
+  grunt.registerTask('package-c', ['concat']);
+
+  // package all languages
+  grunt.registerTask('package-all', ['package-javascript', 'package-java', 'package-c']);
 
   // Default build, performs the full works!
-  grunt.registerTask('build', ['test-javascript', 'transpile', 'clean:dist', 'package-javascript', 'package-java', 'package-c']);
+  grunt.registerTask('build', ['test-javascript', 'transpile', 'clean:dist', 'mkdir:dist', 'package-all']);
 
   // The JavaScript unit tests require Chrome (they need a faithful flexbox implementation
   // to test against), so under CI this step is skipped.
-  grunt.registerTask('ci', ['eslint', 'transpile', 'clean:dist', 'package-javascript', 'package-java', 'package-c']);
+  grunt.registerTask('ci', ['eslint', 'transpile', 'clean:dist', 'mkdir:dist', 'package-all']);
 
   grunt.registerTask('default', ['build']);
 };
