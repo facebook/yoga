@@ -12,6 +12,7 @@ function __transpileToJavaCommon(code) {
     .replace(/CSS_UNDEFINED/g, 'CSSConstants.UNDEFINED')
     .replace(/CSS_JUSTIFY_/g, 'CSSJustify.')
     .replace(/CSS_ALIGN_/g, 'CSSAlign.')
+    .replace(/CSS_POSITION_/g, 'CSSPositionType.')
     .replace(/css_flex_direction_t/g, 'CSSFlexDirection')
     .replace(/css_direction_t/g, 'CSSDirection')
     .replace(/css_align_t/g, 'CSSAlign')
@@ -25,6 +26,9 @@ function __transpileToJavaCommon(code) {
     .replace(/layout\[pos/g, 'layout.position[pos')
     .replace(/layout\[leading/g, 'layout.position[leading')
     .replace(/layout\[trailing/g, 'layout.position[trailing')
+    .replace(/getPositionType\((.+?)\)/g, '$1.style.positionType')
+    .replace(/getJustifyContent\((.+?)\)/g, '$1.style.justifyContent')
+    .replace(/getAlignContent\((.+?)\)/g, '$1.style.alignContent')
     .replace(/\/\*\(c\)!([^*]+)\*\//g, '')
     .replace(/var\/\*\(java\)!([^*]+)\*\//g, '$1')
     .replace(/\/\*\(java\)!([^*]+)\*\//g, '$1')
@@ -35,7 +39,6 @@ function __transpileSingleTestToJava(code) {
     .replace(/CSS_DIRECTION_/g, 'CSSDirection.')
     .replace(/CSS_FLEX_DIRECTION_/g, 'CSSFlexDirection.')
     .replace(/CSS_WRAP/g, 'CSSWrap.WRAP')
-    .replace(/CSS_POSITION_/g, 'CSSPositionType.')
     .replace(/new_test_css_node/g, 'new TestCSSNode')
     .replace( // style.position[CSS_TOP] => style.position[CSSLayout.POSITION_TOP]
         /(style|layout)\.position\[CSS_(LEFT|TOP|RIGHT|BOTTOM)\]/g,

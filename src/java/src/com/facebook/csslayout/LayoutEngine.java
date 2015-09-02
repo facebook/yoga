@@ -269,10 +269,6 @@ public class LayoutEngine {
     }
   }
 
-  private static int getPositionType(CSSNode node) {
-    return node.style.positionType.ordinal();
-  }
-
   private static CSSAlign getAlignItem(CSSNode node, CSSNode child) {
     if (child.style.alignSelf != CSSAlign.AUTO) {
       return child.style.alignSelf;
@@ -280,20 +276,12 @@ public class LayoutEngine {
     return node.style.alignItems;
   }
 
-  private static CSSAlign getAlignContent(CSSNode node) {
-    return node.style.alignContent;
-  }
-
-  private static CSSJustify getJustifyContent(CSSNode node) {
-    return node.style.justifyContent;
-  }
-
   private static boolean isFlexWrap(CSSNode node) {
     return node.style.flexWrap == CSSWrap.WRAP;
   }
 
   private static boolean isFlex(CSSNode node) {
-    return getPositionType(node) == CSS_POSITION_RELATIVE && node.style.flex > 0;
+    return node.style.positionType == CSSPositionType.RELATIVE && node.style.flex > 0;
   }
 
   private static boolean isMeasureDefined(CSSNode node) {
@@ -370,23 +358,29 @@ public class LayoutEngine {
     node.layout.position[trailing[crossAxis]] += getTrailingMargin(node, crossAxis) +
       getRelativePosition(node, crossAxis);
   
+    // Inline immutable values from the target node to avoid excessive method
+    // invocations during the layout calculation.
+    int childCount = node.getChildCount();
+    float paddingAndBorderAxisResolvedRow = getPaddingAndBorderAxis(node, resolvedRowAxis);
+  
     if (isMeasureDefined(node)) {
+      boolean isResolvedRowDimDefined = !isUndefined(node.layout.dimensions[dim[resolvedRowAxis]]);
+  
       float width = CSSConstants.UNDEFINED;
       if (isDimDefined(node, resolvedRowAxis)) {
         width = node.style.dimensions[DIMENSION_WIDTH];
-      } else if (!isUndefined(node.layout.dimensions[dim[resolvedRowAxis]])) {
+      } else if (isResolvedRowDimDefined) {
         width = node.layout.dimensions[dim[resolvedRowAxis]];
       } else {
         width = parentMaxWidth -
           getMarginAxis(node, resolvedRowAxis);
       }
-      width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
+      width -= paddingAndBorderAxisResolvedRow;
   
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
       // the element is flexible.
-      boolean isRowUndefined = !isDimDefined(node, resolvedRowAxis) &&
-        isUndefined(node.layout.dimensions[dim[resolvedRowAxis]]);
+      boolean isRowUndefined = !isDimDefined(node, resolvedRowAxis) && !isResolvedRowDimDefined;
       boolean isColumnUndefined = !isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
         isUndefined(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]);
   
@@ -399,17 +393,28 @@ public class LayoutEngine {
         );
         if (isRowUndefined) {
           node.layout.dimensions[DIMENSION_WIDTH] = measureDim.width +
-            getPaddingAndBorderAxis(node, resolvedRowAxis);
+            paddingAndBorderAxisResolvedRow;
         }
         if (isColumnUndefined) {
           node.layout.dimensions[DIMENSION_HEIGHT] = measureDim.height +
             getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
         }
       }
-      if (node.getChildCount() == 0) {
+      if (childCount == 0) {
         return;
       }
     }
+  
+    boolean isNodeFlexWrap = isFlexWrap(node);
+  
+    float leadingPaddingAndBorderMain = getLeadingPaddingAndBorder(node, mainAxis);
+    float leadingPaddingAndBorderCross = getLeadingPaddingAndBorder(node, crossAxis);
+    float paddingAndBorderAxisMain = getPaddingAndBorderAxis(node, mainAxis);
+    float paddingAndBorderAxisCross = getPaddingAndBorderAxis(node, crossAxis);
+  
+    boolean isMainDimDefined = !isUndefined(node.layout.dimensions[dim[mainAxis]]);
+    boolean isCrossDimDefined = !isUndefined(node.layout.dimensions[dim[crossAxis]]);
+    boolean isMainRowDirection = isRowDirection(mainAxis);
   
     int i;
     int ii;
@@ -417,22 +422,21 @@ public class LayoutEngine {
     int axis;
   
     // Pre-fill some dimensions straight from the parent
-    for (i = 0; i < node.getChildCount(); ++i) {
+    for (i = 0; i < childCount; ++i) {
       child = node.getChildAt(i);
       // Pre-fill cross axis dimensions when the child is using stretch before
       // we call the recursive layout pass
       if (getAlignItem(node, child) == CSSAlign.STRETCH &&
-          getPositionType(child) == CSS_POSITION_RELATIVE &&
-          !isUndefined(node.layout.dimensions[dim[crossAxis]]) &&
+          child.style.positionType == CSSPositionType.RELATIVE &&
+          isCrossDimDefined &&
           !isDimDefined(child, crossAxis)) {
         child.layout.dimensions[dim[crossAxis]] = Math.max(
           boundAxis(child, crossAxis, node.layout.dimensions[dim[crossAxis]] -
-            getPaddingAndBorderAxis(node, crossAxis) -
-            getMarginAxis(child, crossAxis)),
+            paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
           // You never want to go smaller than padding
           getPaddingAndBorderAxis(child, crossAxis)
         );
-      } else if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
+      } else if (child.style.positionType == CSSPositionType.ABSOLUTE) {
         // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
         // left and right or top and bottom).
         for (ii = 0; ii < 2; ii++) {
@@ -456,9 +460,8 @@ public class LayoutEngine {
     }
   
     float definedMainDim = CSSConstants.UNDEFINED;
-    if (!isUndefined(node.layout.dimensions[dim[mainAxis]])) {
-      definedMainDim = node.layout.dimensions[dim[mainAxis]] -
-          getPaddingAndBorderAxis(node, mainAxis);
+    if (isMainDimDefined) {
+      definedMainDim = node.layout.dimensions[dim[mainAxis]] - paddingAndBorderAxisMain;
     }
   
     // We want to execute the next two loops one per line with flex-wrap
@@ -470,7 +473,7 @@ public class LayoutEngine {
     float linesCrossDim = 0;
     float linesMainDim = 0;
     int linesCount = 0;
-    while (endLine < node.getChildCount()) {
+    while (endLine < childCount) {
       // <Loop A> Layout non flexible children and count children by type
   
       // mainContentDim is accumulation of the dimensions and margin of all the
@@ -486,15 +489,15 @@ public class LayoutEngine {
       int nonFlexibleChildrenCount = 0;
   
       float maxWidth;
-      for (i = startLine; i < node.getChildCount(); ++i) {
+      for (i = startLine; i < childCount; ++i) {
         child = node.getChildAt(i);
         float nextContentDim = 0;
   
         // It only makes sense to consider a child flexible if we have a computed
         // dimension for the node.
-        if (!isUndefined(node.layout.dimensions[dim[mainAxis]]) && isFlex(child)) {
+        if (isMainDimDefined && isFlex(child)) {
           flexibleChildrenCount++;
-          totalFlexible += getFlex(child);
+          totalFlexible += child.style.flex;
   
           // Even if we don't know its exact size yet, we already know the padding,
           // border and margin. We'll use this partial information, which represents
@@ -505,14 +508,14 @@ public class LayoutEngine {
   
         } else {
           maxWidth = CSSConstants.UNDEFINED;
-          if (!isRowDirection(mainAxis)) {
-            maxWidth = parentMaxWidth -
-              getMarginAxis(node, resolvedRowAxis) -
-              getPaddingAndBorderAxis(node, resolvedRowAxis);
-  
+          if (!isMainRowDirection) {
             if (isDimDefined(node, resolvedRowAxis)) {
               maxWidth = node.layout.dimensions[dim[resolvedRowAxis]] -
-                getPaddingAndBorderAxis(node, resolvedRowAxis);
+                paddingAndBorderAxisResolvedRow;
+            } else {
+              maxWidth = parentMaxWidth -
+                getMarginAxis(node, resolvedRowAxis) -
+                paddingAndBorderAxisResolvedRow;
             }
           }
   
@@ -523,7 +526,7 @@ public class LayoutEngine {
   
           // Absolute positioned elements do not take part of the layout, so we
           // don't use them to compute mainContentDim
-          if (getPositionType(child) == CSS_POSITION_RELATIVE) {
+          if (child.style.positionType == CSSPositionType.RELATIVE) {
             nonFlexibleChildrenCount++;
             // At this point we know the final size and margin of the element.
             nextContentDim = getDimWithMargin(child, mainAxis);
@@ -531,8 +534,8 @@ public class LayoutEngine {
         }
   
         // The element we are about to add would make us go to the next line
-        if (isFlexWrap(node) &&
-            !isUndefined(node.layout.dimensions[dim[mainAxis]]) &&
+        if (isNodeFlexWrap &&
+            isMainDimDefined &&
             mainContentDim + nextContentDim > definedMainDim &&
             // If there's only one element, then it's bigger than the content
             // and needs its own line
@@ -556,7 +559,7 @@ public class LayoutEngine {
   
       // The remaining available space that needs to be allocated
       float remainingMainDim = 0;
-      if (!isUndefined(node.layout.dimensions[dim[mainAxis]])) {
+      if (isMainDimDefined) {
         remainingMainDim = definedMainDim - mainContentDim;
       } else {
         remainingMainDim = Math.max(mainContentDim, 0) - mainContentDim;
@@ -575,13 +578,13 @@ public class LayoutEngine {
         for (i = startLine; i < endLine; ++i) {
           child = node.getChildAt(i);
           if (isFlex(child)) {
-            baseMainDim = flexibleMainDim * getFlex(child) +
+            baseMainDim = flexibleMainDim * child.style.flex +
                 getPaddingAndBorderAxis(child, mainAxis);
             boundMainDim = boundAxis(child, mainAxis, baseMainDim);
   
             if (baseMainDim != boundMainDim) {
               remainingMainDim -= boundMainDim;
-              totalFlexible -= getFlex(child);
+              totalFlexible -= child.style.flex;
             }
           }
         }
@@ -601,17 +604,17 @@ public class LayoutEngine {
             // At this point we know the final size of the element in the main
             // dimension
             child.layout.dimensions[dim[mainAxis]] = boundAxis(child, mainAxis,
-              flexibleMainDim * getFlex(child) + getPaddingAndBorderAxis(child, mainAxis)
+              flexibleMainDim * child.style.flex + getPaddingAndBorderAxis(child, mainAxis)
             );
   
             maxWidth = CSSConstants.UNDEFINED;
             if (isDimDefined(node, resolvedRowAxis)) {
               maxWidth = node.layout.dimensions[dim[resolvedRowAxis]] -
-                getPaddingAndBorderAxis(node, resolvedRowAxis);
-            } else if (!isRowDirection(mainAxis)) {
+                paddingAndBorderAxisResolvedRow;
+            } else if (!isMainRowDirection) {
               maxWidth = parentMaxWidth -
                 getMarginAxis(node, resolvedRowAxis) -
-                getPaddingAndBorderAxis(node, resolvedRowAxis);
+                paddingAndBorderAxisResolvedRow;
             }
   
             // And we recursively call the layout algorithm for this child
@@ -622,7 +625,7 @@ public class LayoutEngine {
       // We use justifyContent to figure out how to allocate the remaining
       // space available
       } else {
-        CSSJustify justifyContent = getJustifyContent(node);
+        CSSJustify justifyContent = node.style.justifyContent;
         if (justifyContent == CSSJustify.CENTER) {
           leadingMainDim = remainingMainDim / 2;
         } else if (justifyContent == CSSJustify.FLEX_END) {
@@ -650,14 +653,13 @@ public class LayoutEngine {
       // variables that are also useful to compute the total dimensions of the
       // container!
       float crossDim = 0;
-      float mainDim = leadingMainDim +
-        getLeadingPaddingAndBorder(node, mainAxis);
+      float mainDim = leadingMainDim + leadingPaddingAndBorderMain;
   
       for (i = startLine; i < endLine; ++i) {
         child = node.getChildAt(i);
         child.lineIndex = linesCount;
   
-        if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
+        if (child.style.positionType == CSSPositionType.ABSOLUTE &&
             isPosDefined(child, leading[mainAxis])) {
           // In case the child is position absolute and has left/top being
           // defined, we override the position to whatever the user said
@@ -671,7 +673,7 @@ public class LayoutEngine {
           child.layout.position[pos[mainAxis]] += mainDim;
   
           // Define the trailing position accordingly.
-          if (!isUndefined(node.layout.dimensions[dim[mainAxis]])) {
+          if (isMainDimDefined) {
             setTrailingPosition(node, child, mainAxis);
           }
         }
@@ -679,7 +681,7 @@ public class LayoutEngine {
         // Now that we placed the element, we need to update the variables
         // We only need to do that for relative elements. Absolute elements
         // do not take part in that phase.
-        if (getPositionType(child) == CSS_POSITION_RELATIVE) {
+        if (child.style.positionType == CSSPositionType.RELATIVE) {
           // The main dimension is the sum of all the elements dimension plus
           // the spacing.
           mainDim += betweenMainDim + getDimWithMargin(child, mainAxis);
@@ -690,13 +692,13 @@ public class LayoutEngine {
       }
   
       float containerCrossAxis = node.layout.dimensions[dim[crossAxis]];
-      if (isUndefined(node.layout.dimensions[dim[crossAxis]])) {
+      if (!isCrossDimDefined) {
         containerCrossAxis = Math.max(
           // For the cross dim, we add both sides at the end because the value
           // is aggregate via a max function. Intermediate negative values
           // can mess this computation otherwise
-          boundAxis(node, crossAxis, crossDim + getPaddingAndBorderAxis(node, crossAxis)),
-          getPaddingAndBorderAxis(node, crossAxis)
+          boundAxis(node, crossAxis, crossDim + paddingAndBorderAxisCross),
+          paddingAndBorderAxisCross
         );
       }
   
@@ -704,7 +706,7 @@ public class LayoutEngine {
       for (i = startLine; i < endLine; ++i) {
         child = node.getChildAt(i);
   
-        if (getPositionType(child) == CSS_POSITION_ABSOLUTE &&
+        if (child.style.positionType == CSSPositionType.ABSOLUTE &&
             isPosDefined(child, leading[crossAxis])) {
           // In case the child is absolutely positionned and has a
           // top/left/bottom/right being set, we override all the previously
@@ -714,11 +716,11 @@ public class LayoutEngine {
             getLeadingMargin(child, crossAxis);
   
         } else {
-          float leadingCrossDim = getLeadingPaddingAndBorder(node, crossAxis);
+          float leadingCrossDim = leadingPaddingAndBorderCross;
   
           // For a relative children, we're either using alignItems (parent) or
           // alignSelf (child) in order to determine the position in the cross axis
-          if (getPositionType(child) == CSS_POSITION_RELATIVE) {
+          if (child.style.positionType == CSSPositionType.RELATIVE) {
             CSSAlign alignItem = getAlignItem(node, child);
             if (alignItem == CSSAlign.STRETCH) {
               // You can only stretch if the dimension has not already been set
@@ -726,8 +728,7 @@ public class LayoutEngine {
               if (!isDimDefined(child, crossAxis)) {
                 child.layout.dimensions[dim[crossAxis]] = Math.max(
                   boundAxis(child, crossAxis, containerCrossAxis -
-                    getPaddingAndBorderAxis(node, crossAxis) -
-                    getMarginAxis(child, crossAxis)),
+                    paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
                   // You never want to go smaller than padding
                   getPaddingAndBorderAxis(child, crossAxis)
                 );
@@ -736,8 +737,7 @@ public class LayoutEngine {
               // The remaining space between the parent dimensions+padding and child
               // dimensions+margin.
               float remainingCrossDim = containerCrossAxis -
-                getPaddingAndBorderAxis(node, crossAxis) -
-                getDimWithMargin(child, crossAxis);
+                paddingAndBorderAxisCross - getDimWithMargin(child, crossAxis);
   
               if (alignItem == CSSAlign.CENTER) {
                 leadingCrossDim += remainingCrossDim / 2;
@@ -751,7 +751,7 @@ public class LayoutEngine {
           child.layout.position[pos[crossAxis]] += linesCrossDim + leadingCrossDim;
   
           // Define the trailing position accordingly.
-          if (!isUndefined(node.layout.dimensions[dim[crossAxis]])) {
+          if (isCrossDimDefined) {
             setTrailingPosition(node, child, crossAxis);
           }
         }
@@ -776,16 +776,15 @@ public class LayoutEngine {
     // http://www.w3.org/TR/2012/CR-css3-flexbox-20120918/#layout-algorithm
     // section 9.4
     //
-    if (linesCount > 1 &&
-        !isUndefined(node.layout.dimensions[dim[crossAxis]])) {
+    if (linesCount > 1 && isCrossDimDefined) {
       float nodeCrossAxisInnerSize = node.layout.dimensions[dim[crossAxis]] -
-          getPaddingAndBorderAxis(node, crossAxis);
+          paddingAndBorderAxisCross;
       float remainingAlignContentDim = nodeCrossAxisInnerSize - linesCrossDim;
   
       float crossDimLead = 0;
-      float currentLead = getLeadingPaddingAndBorder(node, crossAxis);
+      float currentLead = leadingPaddingAndBorderCross;
   
-      CSSAlign alignContent = getAlignContent(node);
+      CSSAlign alignContent = node.style.alignContent;
       if (alignContent == CSSAlign.FLEX_END) {
         currentLead += remainingAlignContentDim;
       } else if (alignContent == CSSAlign.CENTER) {
@@ -802,9 +801,9 @@ public class LayoutEngine {
   
         // compute the line's height and find the endIndex
         float lineHeight = 0;
-        for (ii = startIndex; ii < node.getChildCount(); ++ii) {
+        for (ii = startIndex; ii < childCount; ++ii) {
           child = node.getChildAt(ii);
-          if (getPositionType(child) != CSS_POSITION_RELATIVE) {
+          if (child.style.positionType != CSSPositionType.RELATIVE) {
             continue;
           }
           if (child.lineIndex != i) {
@@ -822,7 +821,7 @@ public class LayoutEngine {
   
         for (ii = startIndex; ii < endIndex; ++ii) {
           child = node.getChildAt(ii);
-          if (getPositionType(child) != CSS_POSITION_RELATIVE) {
+          if (child.style.positionType != CSSPositionType.RELATIVE) {
             continue;
           }
   
@@ -850,25 +849,25 @@ public class LayoutEngine {
   
     // If the user didn't specify a width or height, and it has not been set
     // by the container, then we set it via the children.
-    if (isUndefined(node.layout.dimensions[dim[mainAxis]])) {
+    if (!isMainDimDefined) {
       node.layout.dimensions[dim[mainAxis]] = Math.max(
         // We're missing the last padding at this point to get the final
         // dimension
         boundAxis(node, mainAxis, linesMainDim + getTrailingPaddingAndBorder(node, mainAxis)),
         // We can never assign a width smaller than the padding and borders
-        getPaddingAndBorderAxis(node, mainAxis)
+        paddingAndBorderAxisMain
       );
   
       needsMainTrailingPos = true;
     }
   
-    if (isUndefined(node.layout.dimensions[dim[crossAxis]])) {
+    if (!isCrossDimDefined) {
       node.layout.dimensions[dim[crossAxis]] = Math.max(
         // For the cross dim, we add both sides at the end because the value
         // is aggregate via a max function. Intermediate negative values
         // can mess this computation otherwise
-        boundAxis(node, crossAxis, linesCrossDim + getPaddingAndBorderAxis(node, crossAxis)),
-        getPaddingAndBorderAxis(node, crossAxis)
+        boundAxis(node, crossAxis, linesCrossDim + paddingAndBorderAxisCross),
+        paddingAndBorderAxisCross
       );
   
       needsCrossTrailingPos = true;
@@ -876,7 +875,7 @@ public class LayoutEngine {
   
     // <Loop F> Set trailing position if necessary
     if (needsMainTrailingPos || needsCrossTrailingPos) {
-      for (i = 0; i < node.getChildCount(); ++i) {
+      for (i = 0; i < childCount; ++i) {
         child = node.getChildAt(i);
   
         if (needsMainTrailingPos) {
@@ -890,9 +889,9 @@ public class LayoutEngine {
     }
   
     // <Loop G> Calculate dimensions for absolutely positioned elements
-    for (i = 0; i < node.getChildCount(); ++i) {
+    for (i = 0; i < childCount; ++i) {
       child = node.getChildAt(i);
-      if (getPositionType(child) == CSS_POSITION_ABSOLUTE) {
+      if (child.style.positionType == CSSPositionType.ABSOLUTE) {
         // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
         // left and right or top and bottom).
         for (ii = 0; ii < 2; ii++) {
