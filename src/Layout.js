@@ -391,9 +391,9 @@ var computeLayout = (function() {
 
   function layoutNode(node, parentMaxWidth, /*css_direction_t*/parentDirection) {
     var/*css_direction_t*/ direction = resolveDirection(node, parentDirection);
-    var/*css_flex_direction_t*/ mainAxis = resolveAxis(getFlexDirection(node), direction);
-    var/*css_flex_direction_t*/ crossAxis = getCrossFlexDirection(mainAxis, direction);
-    var/*css_flex_direction_t*/ resolvedRowAxis = resolveAxis(CSS_FLEX_DIRECTION_ROW, direction);
+    var/*(c)!css_flex_direction_t*//*(java)!int*/ mainAxis = resolveAxis(getFlexDirection(node), direction);
+    var/*(c)!css_flex_direction_t*//*(java)!int*/ crossAxis = getCrossFlexDirection(mainAxis, direction);
+    var/*(c)!css_flex_direction_t*//*(java)!int*/ resolvedRowAxis = resolveAxis(CSS_FLEX_DIRECTION_ROW, direction);
 
     // Handle width and height style attributes
     setDimensionFromStyle(node, mainAxis);
@@ -457,7 +457,7 @@ var computeLayout = (function() {
     var/*int*/ i;
     var/*int*/ ii;
     var/*css_node_t**/ child;
-    var/*css_flex_direction_t*/ axis;
+    var/*(c)!css_flex_direction_t*//*(java)!int*/ axis;
 
     // Pre-fill some dimensions straight from the parent
     for (i = 0; i < node.children.length; ++i) {
