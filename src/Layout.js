@@ -472,6 +472,9 @@ var computeLayout = (function() {
     var/*css_node_t**/ child;
     var/*(c)!css_flex_direction_t*//*(java)!int*/ axis;
 
+    var/*css_node_t**/ firstAbsoluteChild = null;
+    var/*css_node_t**/ currentAbsoluteChild = null;
+
     var/*float*/ definedMainDim = CSS_UNDEFINED;
     if (isMainDimDefined) {
       definedMainDim = node.layout[dim[mainAxis]] - paddingAndBorderAxisMain;
@@ -505,6 +508,8 @@ var computeLayout = (function() {
       for (i = startLine; i < childCount; ++i) {
         child = node.children[i];
 
+        child.nextAbsoluteChild = null;
+
         // Pre-fill cross axis dimensions when the child is using stretch before
         // we call the recursive layout pass
         if (getAlignItem(node, child) === CSS_ALIGN_STRETCH &&
@@ -518,6 +523,16 @@ var computeLayout = (function() {
             getPaddingAndBorderAxis(child, crossAxis)
           );
         } else if (getPositionType(child) === CSS_POSITION_ABSOLUTE) {
+          // Store a private linked list of absolutely positioned children
+          // so that we can efficiently traverse them later.
+          if (firstAbsoluteChild === null) {
+            firstAbsoluteChild = child;
+          }
+          if (currentAbsoluteChild !== null) {
+            currentAbsoluteChild.nextAbsoluteChild = child;
+          }
+          currentAbsoluteChild = child;
+
           // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
           // left and right or top and bottom).
           for (ii = 0; ii < 2; ii++) {
@@ -943,40 +958,40 @@ var computeLayout = (function() {
     }
 
     // <Loop G> Calculate dimensions for absolutely positioned elements
-    for (i = 0; i < childCount; ++i) {
-      child = node.children[i];
-      if (getPositionType(child) === CSS_POSITION_ABSOLUTE) {
-        // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
-        // left and right or top and bottom).
-        for (ii = 0; ii < 2; ii++) {
-          axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-          if (!isUndefined(node.layout[dim[axis]]) &&
-              !isDimDefined(child, axis) &&
-              isPosDefined(child, leading[axis]) &&
-              isPosDefined(child, trailing[axis])) {
-            child.layout[dim[axis]] = fmaxf(
-              boundAxis(child, axis, node.layout[dim[axis]] -
-                getBorderAxis(node, axis) -
-                getMarginAxis(child, axis) -
-                getPosition(child, leading[axis]) -
-                getPosition(child, trailing[axis])
-              ),
-              // You never want to go smaller than padding
-              getPaddingAndBorderAxis(child, axis)
-            );
-          }
+    currentAbsoluteChild = firstAbsoluteChild;
+    while (currentAbsoluteChild !== null) {
+      // Pre-fill dimensions when using absolute position and both offsets for
+      // the axis are defined (either both left and right or top and bottom).
+      for (ii = 0; ii < 2; ii++) {
+        axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+        if (!isUndefined(node.layout[dim[axis]]) &&
+            !isDimDefined(currentAbsoluteChild, axis) &&
+            isPosDefined(currentAbsoluteChild, leading[axis]) &&
+            isPosDefined(currentAbsoluteChild, trailing[axis])) {
+          currentAbsoluteChild.layout[dim[axis]] = fmaxf(
+            boundAxis(currentAbsoluteChild, axis, node.layout[dim[axis]] -
+              getBorderAxis(node, axis) -
+              getMarginAxis(currentAbsoluteChild, axis) -
+              getPosition(currentAbsoluteChild, leading[axis]) -
+              getPosition(currentAbsoluteChild, trailing[axis])
+            ),
+            // You never want to go smaller than padding
+            getPaddingAndBorderAxis(currentAbsoluteChild, axis)
+          );
         }
-        for (ii = 0; ii < 2; ii++) {
-          axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-          if (isPosDefined(child, trailing[axis]) &&
-              !isPosDefined(child, leading[axis])) {
-            child.layout[leading[axis]] =
-              node.layout[dim[axis]] -
-              child.layout[dim[axis]] -
-              getPosition(child, trailing[axis]);
-          }
+
+        if (isPosDefined(currentAbsoluteChild, trailing[axis]) &&
+            !isPosDefined(currentAbsoluteChild, leading[axis])) {
+          currentAbsoluteChild.layout[leading[axis]] =
+            node.layout[dim[axis]] -
+            currentAbsoluteChild.layout[dim[axis]] -
+            getPosition(currentAbsoluteChild, trailing[axis]);
         }
       }
+
+      child = currentAbsoluteChild;
+      currentAbsoluteChild = currentAbsoluteChild.nextAbsoluteChild;
+      child.nextAbsoluteChild = null;
     }
   }
 

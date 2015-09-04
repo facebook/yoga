@@ -129,18 +129,21 @@ typedef struct {
   float maxDimensions[2];
 } css_style_t;
 
-typedef struct css_node {
+typedef struct css_node css_node_t;
+struct css_node {
   css_style_t style;
   css_layout_t layout;
   int children_count;
   int line_index;
+
+  css_node_t* next_absolute_child;
 
   css_dim_t (*measure)(void *context, float width);
   void (*print)(void *context);
   struct css_node* (*get_child)(void *context, int i);
   bool (*is_dirty)(void *context);
   void *context;
-} css_node_t;
+};
 
 
 // Lifecycle of nodes and children

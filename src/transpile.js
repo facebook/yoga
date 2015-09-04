@@ -243,6 +243,7 @@ function printLayout(test) {
 function transpileAnnotatedJStoC(jsCode) {
   return jsCode
     .replace('node.style.measure', 'node.measure')
+    .replace(/null/g, 'NULL')
     .replace(/\.children\.length/g, '.children_count')
     .replace(/\.width/g, '.dimensions[CSS_WIDTH]')
     .replace(/\.height/g, '.dimensions[CSS_HEIGHT]')
@@ -251,6 +252,7 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/\.minWidth/g, '.minDimensions[CSS_WIDTH]')
     .replace(/\.minHeight/g, '.minDimensions[CSS_HEIGHT]')
     .replace(/\.lineIndex/g, '.line_index')
+    .replace(/\.nextAbsoluteChild/g, '.next_absolute_child')
     .replace(/layout\[dim/g, 'layout.dimensions[dim')
     .replace(/layout\[pos/g, 'layout.position[pos')
     .replace(/layout\[leading/g, 'layout.position[leading')
@@ -261,6 +263,7 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/node\./g, 'node->')
     .replace(/child\./g, 'child->')
     .replace(/parent\./g, 'parent->')
+    .replace(/currentAbsoluteChild\./g, 'currentAbsoluteChild->')
     .replace(/getPositionType\((.+?)\)/g, '$1->style.position_type')
     .replace(/getJustifyContent\((.+?)\)/g, '$1->style.justify_content')
     .replace(/getAlignContent\((.+?)\)/g, '$1->style.align_content')
