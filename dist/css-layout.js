@@ -413,7 +413,6 @@ var computeLayout = (function() {
     var/*css_flex_direction_t*/ mainAxis = resolveAxis(getFlexDirection(node), direction);
     var/*css_flex_direction_t*/ crossAxis = getCrossFlexDirection(mainAxis, direction);
     var/*css_flex_direction_t*/ resolvedRowAxis = resolveAxis(CSS_FLEX_DIRECTION_ROW, direction);
-    var/*css_flex_direction_t*/ resolvedColumnAxis = resolveAxis(CSS_FLEX_DIRECTION_COLUMN, direction);
 
     // Handle width and height style attributes
     setDimensionFromStyle(node, mainAxis);
@@ -435,41 +434,30 @@ var computeLayout = (function() {
 
     if (isMeasureDefined(node)) {
       var/*float*/ width = CSS_UNDEFINED;
-      var/*float*/ height = CSS_UNDEFINED;
-      var/*float*/ parentMaxHeight = parentMaxWidth;
-
       if (isDimDefined(node, resolvedRowAxis)) {
         width = node.style.width;
-      } if (isDimDefined(node, resolvedColumnAxis)) {
-        height = node.style.height;
       } else if (!isUndefined(node.layout[dim[resolvedRowAxis]])) {
         width = node.layout[dim[resolvedRowAxis]];
-      } else if (!isUndefined(node.layout[dim[resolvedColumnAxis]])) {
-        height = node.layout[dim[resolvedColumnAxis]];
       } else {
-        width = parentMaxWidth - 
+        width = parentMaxWidth -
           getMarginAxis(node, resolvedRowAxis);
-        height = parentMaxHeight - 
-          getMarginAxis(node, resolvedColumnAxis);
       }
       width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
-      height -= getPaddingAndBorderAxis(node, resolvedColumnAxis);
 
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
       // the element is flexible.
       var/*bool*/ isRowUndefined = !isDimDefined(node, resolvedRowAxis) &&
         isUndefined(node.layout[dim[resolvedRowAxis]]);
-      var/*bool*/ isColumnUndefined = !isDimDefined(node, resolvedColumnAxis) &&
-        isUndefined(node.layout[dim[resolvedColumnAxis]]);
+      var/*bool*/ isColumnUndefined = !isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
+        isUndefined(node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]]);
 
-      // Let's not measure the node if we already know both dimensions
+      // Let's not measure the text if we already know both dimensions
       if (isRowUndefined || isColumnUndefined) {
         var/*css_dim_t*/ measureDim = node.style.measure(
           /*(c)!node->context,*/
           /*(java)!layoutContext.measureOutput,*/
-          width,
-          height
+          width
         );
         if (isRowUndefined) {
           node.layout.width = measureDim.width +
@@ -477,10 +465,9 @@ var computeLayout = (function() {
         }
         if (isColumnUndefined) {
           node.layout.height = measureDim.height +
-            getPaddingAndBorderAxis(node, resolvedColumnAxis);
+            getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
         }
       }
-
       if (node.children.length === 0) {
         return;
       }
