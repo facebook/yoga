@@ -528,7 +528,7 @@ static float getRelativePosition(css_node_t *node, css_flex_direction_t axis) {
   return -getPosition(node, trailing[axis]);
 }
 
-static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction_t parentDirection) {
+static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentMaxHeight, css_direction_t parentDirection) {
   /** START_GENERATED **/
   css_direction_t direction = resolveDirection(node, parentDirection);
   css_flex_direction_t mainAxis = resolveAxis(getFlexDirection(node), direction);
@@ -557,24 +557,32 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
   if (isMeasureDefined(node)) {
     float width = CSS_UNDEFINED;
     float height = CSS_UNDEFINED;
-    float parentMaxHeight = parentMaxWidth;
 
     if (isDimDefined(node, resolvedRowAxis)) {
       width = node->style.dimensions[CSS_WIDTH];
-    } if (isDimDefined(node, resolvedColumnAxis)) {
-      height = node->style.dimensions[CSS_HEIGHT];
     } else if (!isUndefined(node->layout.dimensions[dim[resolvedRowAxis]])) {
       width = node->layout.dimensions[dim[resolvedRowAxis]];
-    } else if (!isUndefined(node->layout.dimensions[dim[resolvedColumnAxis]])) {
-      height = node->layout.dimensions[dim[resolvedColumnAxis]];
-    } else {
+    } else if (!isUndefined(parentMaxWidth)) {
       width = parentMaxWidth - 
         getMarginAxis(node, resolvedRowAxis);
+    }
+
+    if (!isUndefined(width)) {
+      width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
+    }
+
+    if (isDimDefined(node, resolvedColumnAxis)) {
+      height = node->style.dimensions[CSS_HEIGHT];
+    } else if (!isUndefined(node->layout.dimensions[dim[resolvedColumnAxis]])) {
+      height = node->layout.dimensions[dim[resolvedColumnAxis]];
+    } else if (!isUndefined(parentMaxHeight)) {
       height = parentMaxHeight - 
         getMarginAxis(node, resolvedColumnAxis);
     }
-    width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
-    height -= getPaddingAndBorderAxis(node, resolvedColumnAxis);
+
+    if (!isUndefined(height)) {
+      height -= getPaddingAndBorderAxis(node, resolvedColumnAxis);
+    }
 
     // We only need to give a dimension for the text if we haven't got any
     // for it computed yet. It can either be from the style attribute or because
@@ -682,6 +690,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
     int nonFlexibleChildrenCount = 0;
 
     float maxWidth;
+    float maxHeight;
     for (i = startLine; i < node->children_count; ++i) {
       child = node->get_child(node->context, i);
       float nextContentDim = 0;
@@ -701,20 +710,28 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
 
       } else {
         maxWidth = CSS_UNDEFINED;
-        if (!isRowDirection(mainAxis)) {
+        if (isDimDefined(node, resolvedRowAxis)) {
+          maxWidth = node->layout.dimensions[dim[resolvedRowAxis]] -
+            getPaddingAndBorderAxis(node, resolvedRowAxis);
+        } else if (!isRowDirection(mainAxis) && !isUndefined(parentMaxWidth)) {
           maxWidth = parentMaxWidth -
             getMarginAxis(node, resolvedRowAxis) -
             getPaddingAndBorderAxis(node, resolvedRowAxis);
+        }
 
-          if (isDimDefined(node, resolvedRowAxis)) {
-            maxWidth = node->layout.dimensions[dim[resolvedRowAxis]] -
-              getPaddingAndBorderAxis(node, resolvedRowAxis);
-          }
+        maxHeight = CSS_UNDEFINED;
+        if (isDimDefined(node, resolvedColumnAxis)) {
+          maxHeight = node->layout.dimensions[dim[resolvedColumnAxis]] -
+            getPaddingAndBorderAxis(node, resolvedColumnAxis);
+        } else if (!isRowDirection(crossAxis) && !isUndefined(parentMaxHeight)) {
+          maxHeight = parentMaxHeight -
+            getMarginAxis(node, resolvedColumnAxis) -
+            getPaddingAndBorderAxis(node, resolvedColumnAxis);
         }
 
         // This is the main recursive call. We layout non flexible children.
         if (alreadyComputedNextLayout == 0) {
-          layoutNode(child, maxWidth, direction);
+          layoutNode(child, maxWidth, maxHeight, direction);
         }
 
         // Absolute positioned elements do not take part of the layout, so we
@@ -804,14 +821,24 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
           if (isDimDefined(node, resolvedRowAxis)) {
             maxWidth = node->layout.dimensions[dim[resolvedRowAxis]] -
               getPaddingAndBorderAxis(node, resolvedRowAxis);
-          } else if (!isRowDirection(mainAxis)) {
+          } else if (!isRowDirection(mainAxis) && !isUndefined(parentMaxWidth)) {
             maxWidth = parentMaxWidth -
               getMarginAxis(node, resolvedRowAxis) -
               getPaddingAndBorderAxis(node, resolvedRowAxis);
           }
 
+          maxHeight = CSS_UNDEFINED;
+          if (isDimDefined(node, resolvedColumnAxis)) {
+            maxHeight = node->layout.dimensions[dim[resolvedColumnAxis]] -
+              getPaddingAndBorderAxis(node, resolvedColumnAxis);
+          } else if (!isRowDirection(crossAxis) && !isUndefined(parentMaxHeight)) {
+            maxHeight = parentMaxHeight -
+              getMarginAxis(node, resolvedColumnAxis) -
+              getPaddingAndBorderAxis(node, resolvedColumnAxis);
+          }
+          
           // And we recursively call the layout algorithm for this child
-          layoutNode(child, maxWidth, direction);
+          layoutNode(child, maxWidth, maxHeight, direction);
         }
       }
 
@@ -1124,7 +1151,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
   /** END_GENERATED **/
 }
 
-void layoutNode(css_node_t *node, float parentMaxWidth, css_direction_t parentDirection) {
+void layoutNode(css_node_t *node, float parentMaxWidth, float parentMaxHeight, css_direction_t parentDirection) {
   css_layout_t *layout = &node->layout;
   css_direction_t direction = node->style.direction;
   layout->should_update = true;
@@ -1133,7 +1160,8 @@ void layoutNode(css_node_t *node, float parentMaxWidth, css_direction_t parentDi
     !node->is_dirty(node->context) &&
     eq(layout->last_requested_dimensions[CSS_WIDTH], layout->dimensions[CSS_WIDTH]) &&
     eq(layout->last_requested_dimensions[CSS_HEIGHT], layout->dimensions[CSS_HEIGHT]) &&
-    eq(layout->last_parent_max_width, parentMaxWidth);
+    eq(layout->last_parent_max_width, parentMaxWidth) &&
+    eq(layout->last_parent_max_height, parentMaxHeight) &&
     eq(layout->last_direction, direction);
 
   if (skipLayout) {
@@ -1145,9 +1173,10 @@ void layoutNode(css_node_t *node, float parentMaxWidth, css_direction_t parentDi
     layout->last_requested_dimensions[CSS_WIDTH] = layout->dimensions[CSS_WIDTH];
     layout->last_requested_dimensions[CSS_HEIGHT] = layout->dimensions[CSS_HEIGHT];
     layout->last_parent_max_width = parentMaxWidth;
+    layout->last_parent_max_height = parentMaxHeight;
     layout->last_direction = direction;
 
-    layoutNodeImpl(node, parentMaxWidth, parentDirection);
+    layoutNodeImpl(node, parentMaxWidth, parentMaxHeight, parentDirection);
 
     layout->last_dimensions[CSS_WIDTH] = layout->dimensions[CSS_WIDTH];
     layout->last_dimensions[CSS_HEIGHT] = layout->dimensions[CSS_HEIGHT];

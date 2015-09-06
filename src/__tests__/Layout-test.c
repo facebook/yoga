@@ -4121,228 +4121,6 @@ int main()
       {
         css_node_t *node_1;
         node_1 = node_0->get_child(node_0->context, 0);
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node_1->style.dimensions[CSS_WIDTH] = 500;
-        init_css_node_children(node_1, 1);
-        {
-          css_node_t *node_2;
-          node_2 = node_1->get_child(node_1->context, 0);
-          node_2->style.flex = 1;
-          node_2->measure = measure;
-          node_2->context = "2";
-        }
-      }
-    }
-
-    css_node_t *root_layout = new_test_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 500;
-      node_0->layout.dimensions[CSS_HEIGHT] = 250;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->layout.position[CSS_TOP] = 0;
-        node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 500;
-        node_1->layout.dimensions[CSS_HEIGHT] = 250;
-        init_css_node_children(node_1, 1);
-        {
-          css_node_t *node_2;
-          node_2 = node_1->get_child(node_1->context, 0);
-          node_2->layout.position[CSS_TOP] = 0;
-          node_2->layout.position[CSS_LEFT] = 0;
-          node_2->layout.dimensions[CSS_WIDTH] = 500;
-          node_2->layout.dimensions[CSS_HEIGHT] = 250;
-        }
-      }
-    }
-
-    test("should layout node with width-bound box and flex", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_test_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node_1->style.dimensions[CSS_WIDTH] = 1000;
-        init_css_node_children(node_1, 2);
-        {
-          css_node_t *node_2;
-          node_2 = node_1->get_child(node_1->context, 0);
-          node_2->style.flex = 1;
-          node_2->measure = measure;
-          node_2->context = "2";
-          node_2 = node_1->get_child(node_1->context, 1);
-          node_2->style.flex = 1;
-          node_2->measure = measure;
-          node_2->context = "2";
-        }
-      }
-    }
-
-    css_node_t *root_layout = new_test_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 1000;
-      node_0->layout.dimensions[CSS_HEIGHT] = 250;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->layout.position[CSS_TOP] = 0;
-        node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 1000;
-        node_1->layout.dimensions[CSS_HEIGHT] = 250;
-        init_css_node_children(node_1, 2);
-        {
-          css_node_t *node_2;
-          node_2 = node_1->get_child(node_1->context, 0);
-          node_2->layout.position[CSS_TOP] = 0;
-          node_2->layout.position[CSS_LEFT] = 0;
-          node_2->layout.dimensions[CSS_WIDTH] = 500;
-          node_2->layout.dimensions[CSS_HEIGHT] = 250;
-          node_2 = node_1->get_child(node_1->context, 1);
-          node_2->layout.position[CSS_TOP] = 0;
-          node_2->layout.position[CSS_LEFT] = 500;
-          node_2->layout.dimensions[CSS_WIDTH] = 500;
-          node_2->layout.dimensions[CSS_HEIGHT] = 250;
-        }
-      }
-    }
-
-    test("should layout node with multiple width-bound box and flex", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_test_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node_1->style.dimensions[CSS_HEIGHT] = 250;
-        init_css_node_children(node_1, 1);
-        {
-          css_node_t *node_2;
-          node_2 = node_1->get_child(node_1->context, 0);
-          node_2->style.flex = 1;
-          node_2->measure = measure;
-          node_2->context = "2";
-        }
-      }
-    }
-
-    css_node_t *root_layout = new_test_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 500;
-      node_0->layout.dimensions[CSS_HEIGHT] = 250;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->layout.position[CSS_TOP] = 0;
-        node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 500;
-        node_1->layout.dimensions[CSS_HEIGHT] = 250;
-        init_css_node_children(node_1, 1);
-        {
-          css_node_t *node_2;
-          node_2 = node_1->get_child(node_1->context, 0);
-          node_2->layout.position[CSS_TOP] = 0;
-          node_2->layout.position[CSS_LEFT] = 0;
-          node_2->layout.dimensions[CSS_WIDTH] = 500;
-          node_2->layout.dimensions[CSS_HEIGHT] = 250;
-        }
-      }
-    }
-
-    test("should layout node with height-bound box and flex", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_test_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
-        node_1->style.dimensions[CSS_HEIGHT] = 250;
-        init_css_node_children(node_1, 2);
-        {
-          css_node_t *node_2;
-          node_2 = node_1->get_child(node_1->context, 0);
-          node_2->style.flex = 1;
-          node_2->measure = measure;
-          node_2->context = "2";
-          node_2 = node_1->get_child(node_1->context, 1);
-          node_2->style.flex = 1;
-          node_2->measure = measure;
-          node_2->context = "2";
-        }
-      }
-    }
-
-    css_node_t *root_layout = new_test_css_node();
-    {
-      css_node_t *node_0 = root_layout;
-      node_0->layout.position[CSS_TOP] = 0;
-      node_0->layout.position[CSS_LEFT] = 0;
-      node_0->layout.dimensions[CSS_WIDTH] = 1000;
-      node_0->layout.dimensions[CSS_HEIGHT] = 250;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
-        node_1->layout.position[CSS_TOP] = 0;
-        node_1->layout.position[CSS_LEFT] = 0;
-        node_1->layout.dimensions[CSS_WIDTH] = 1000;
-        node_1->layout.dimensions[CSS_HEIGHT] = 250;
-        init_css_node_children(node_1, 2);
-        {
-          css_node_t *node_2;
-          node_2 = node_1->get_child(node_1->context, 0);
-          node_2->layout.position[CSS_TOP] = 0;
-          node_2->layout.position[CSS_LEFT] = 0;
-          node_2->layout.dimensions[CSS_WIDTH] = 500;
-          node_2->layout.dimensions[CSS_HEIGHT] = 250;
-          node_2 = node_1->get_child(node_1->context, 1);
-          node_2->layout.position[CSS_TOP] = 0;
-          node_2->layout.position[CSS_LEFT] = 500;
-          node_2->layout.dimensions[CSS_WIDTH] = 500;
-          node_2->layout.dimensions[CSS_HEIGHT] = 250;
-        }
-      }
-    }
-
-    test("should layout node with multiple height-bound box and flex", root_node, root_layout);
-  }
-
-  {
-    css_node_t *root_node = new_test_css_node();
-    {
-      css_node_t *node_0 = root_node;
-      init_css_node_children(node_0, 1);
-      {
-        css_node_t *node_1;
-        node_1 = node_0->get_child(node_0->context, 0);
         node_1->style.direction = CSS_DIRECTION_RTL;
         node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
         node_1->style.dimensions[CSS_WIDTH] = 500;
@@ -4588,6 +4366,228 @@ int main()
     }
 
     test("should layout node with text bounded by grand-parent", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.dimensions[CSS_WIDTH] = 500;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = 1;
+          node_2->measure = measure;
+          node_2->context = "2";
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 500;
+      node_0->layout.dimensions[CSS_HEIGHT] = 250;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 500;
+        node_1->layout.dimensions[CSS_HEIGHT] = 250;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 500;
+          node_2->layout.dimensions[CSS_HEIGHT] = 250;
+        }
+      }
+    }
+
+    test("should layout node with width-bound box and flex", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.dimensions[CSS_WIDTH] = 1000;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = 1;
+          node_2->measure = measure;
+          node_2->context = "2";
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->style.flex = 1;
+          node_2->measure = measure;
+          node_2->context = "2";
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 250;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 1000;
+        node_1->layout.dimensions[CSS_HEIGHT] = 250;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 500;
+          node_2->layout.dimensions[CSS_HEIGHT] = 250;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 500;
+          node_2->layout.dimensions[CSS_WIDTH] = 500;
+          node_2->layout.dimensions[CSS_HEIGHT] = 250;
+        }
+      }
+    }
+
+    test("should layout node with multiple width-bound box and flex", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.dimensions[CSS_HEIGHT] = 250;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = 1;
+          node_2->measure = measure;
+          node_2->context = "2";
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 500;
+      node_0->layout.dimensions[CSS_HEIGHT] = 250;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 500;
+        node_1->layout.dimensions[CSS_HEIGHT] = 250;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 500;
+          node_2->layout.dimensions[CSS_HEIGHT] = 250;
+        }
+      }
+    }
+
+    test("should layout node with height-bound box and flex", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.dimensions[CSS_HEIGHT] = 250;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = 1;
+          node_2->measure = measure;
+          node_2->context = "2";
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->style.flex = 1;
+          node_2->measure = measure;
+          node_2->context = "2";
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 250;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 1000;
+        node_1->layout.dimensions[CSS_HEIGHT] = 250;
+        init_css_node_children(node_1, 2);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 500;
+          node_2->layout.dimensions[CSS_HEIGHT] = 250;
+          node_2 = node_1->get_child(node_1->context, 1);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 500;
+          node_2->layout.dimensions[CSS_WIDTH] = 500;
+          node_2->layout.dimensions[CSS_HEIGHT] = 250;
+        }
+      }
+    }
+
+    test("should layout node with multiple height-bound box and flex", root_node, root_layout);
   }
 
   {

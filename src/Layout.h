@@ -91,6 +91,7 @@ typedef struct {
   bool should_update;
   float last_requested_dimensions[2];
   float last_parent_max_width;
+  float last_parent_max_height;
   float last_dimensions[2];
   float last_position[2];
   css_direction_t last_direction;
@@ -157,7 +158,7 @@ typedef enum {
 void print_css_node(css_node_t *node, css_print_options_t options);
 
 // Function that computes the layout!
-void layoutNode(css_node_t *node, float maxWidth, css_direction_t parentDirection);
+void layoutNode(css_node_t *node, float maxWidth, float maxHeight, css_direction_t parentDirection);
 bool isUndefined(float value);
 
 #endif

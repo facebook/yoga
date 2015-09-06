@@ -4396,236 +4396,6 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flexDirection = CSSFlexDirection.ROW;
-        node_1.style.width = 500;
-        addChildren(node_1, 1);
-        {
-          TestCSSNode node_2;
-          node_2 = node_1.getChildAt(0);
-          node_2.style.flex = 1;
-          node_2.setMeasureFunction(sTestMeasureFunction);
-          node_2.context = "2";
-        }
-      }
-    }
-
-    TestCSSNode root_layout = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 500;
-      node_0.layout.height = 250;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 250;
-        addChildren(node_1, 1);
-        {
-          TestCSSNode node_2;
-          node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 500;
-          node_2.layout.height = 250;
-        }
-      }
-    }
-
-    test("should layout node with width-bound box and flex", root_node, root_layout);
-  }
-
-  @Test
-  public void testCase100()
-  {
-    TestCSSNode root_node = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_node;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.style.flexDirection = CSSFlexDirection.ROW;
-        node_1.style.width = 1000;
-        addChildren(node_1, 2);
-        {
-          TestCSSNode node_2;
-          node_2 = node_1.getChildAt(0);
-          node_2.style.flex = 1;
-          node_2.setMeasureFunction(sTestMeasureFunction);
-          node_2.context = "2";
-          node_2 = node_1.getChildAt(1);
-          node_2.style.flex = 1;
-          node_2.measure = measure;
-          node_2.context = "2";
-        }
-      }
-    }
-
-    TestCSSNode root_layout = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 250;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 1000;
-        node_1.layout.height = 250;
-        addChildren(node_1, 2);
-        {
-          TestCSSNode node_2;
-          node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 500;
-          node_2.layout.height = 250;
-          node_2 = node_1.getChildAt(1);
-          node_2.layout.top = 0;
-          node_2.layout.left = 500;
-          node_2.layout.width = 500;
-          node_2.layout.height = 250;
-        }
-      }
-    }
-
-    test("should layout node with multiple width-bound box and flex", root_node, root_layout);
-  }
-
-  @Test
-  public void testCase101()
-  {
-    TestCSSNode root_node = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_node;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.style.flexDirection = CSSFlexDirection.ROW;
-        node_1.style.height = 250;
-        addChildren(node_1, 1);
-        {
-          TestCSSNode node_2;
-          node_2 = node_1.getChildAt(0);
-          node_2.style.flex = 1;
-          node_2.setMeasureFunction(sTestMeasureFunction);
-          node_2.context = "2";
-        }
-      }
-    }
-
-    TestCSSNode root_layout = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 500;
-      node_0.layout.height = 250;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 250;
-        addChildren(node_1, 1);
-        {
-          TestCSSNode node_2;
-          node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 500;
-          node_2.layout.height = 250;
-        }
-      }
-    }
-
-    test("should layout node with height-bound box and flex", root_node, root_layout);
-  }
-
-  @Test
-  public void testCase102()
-  {
-    TestCSSNode root_node = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_node;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.style.flexDirection = CSSFlexDirection.ROW;
-        node_1.style.height = 250;
-        addChildren(node_1, 2);
-        {
-          TestCSSNode node_2;
-          node_2 = node_1.getChildAt(0);
-          node_2.style.flex = 1;
-          node_2.setMeasureFunction(sTestMeasureFunction);
-          node_2.context = "2";
-          node_2 = node_1.getChildAt(1);
-          node_2.style.flex = 1;
-          node_2.measure = measure;
-          node_2.context = "2";
-        }
-      }
-    }
-
-    TestCSSNode root_layout = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 250;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 1000;
-        node_1.layout.height = 250;
-        addChildren(node_1, 2);
-        {
-          TestCSSNode node_2;
-          node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 500;
-          node_2.layout.height = 250;
-          node_2 = node_1.getChildAt(1);
-          node_2.layout.top = 0;
-          node_2.layout.left = 500;
-          node_2.layout.width = 500;
-          node_2.layout.height = 250;
-        }
-      }
-    }
-
-    test("should layout node with multiple height-bound box and flex", root_node, root_layout);
-  }
-
-  @Test
-  public void testCase103()
-  {
-    TestCSSNode root_node = new TestCSSNode();
-    {
-      TestCSSNode node_0 = root_node;
-      addChildren(node_0, 1);
-      {
-        TestCSSNode node_1;
-        node_1 = node_0.getChildAt(0);
         node_1.style.direction = CSSDirection.RTL;
         node_1.style.flexDirection = CSSFlexDirection.ROW;
         node_1.style.width = 500;
@@ -4671,7 +4441,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase104()
+  public void testCase100()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4724,7 +4494,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase105()
+  public void testCase101()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4778,7 +4548,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase106()
+  public void testCase102()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4817,7 +4587,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase107()
+  public void testCase103()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4879,6 +4649,236 @@ public class LayoutEngineTest {
     }
 
     test("should layout node with text bounded by grand-parent", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase104()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flexDirection = CSSFlexDirection.ROW;
+        node_1.style.width = 500;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.flex = 1;
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "2";
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 500;
+      node_0.layout.height = 250;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 0;
+        node_1.layout.width = 500;
+        node_1.layout.height = 250;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.top = 0;
+          node_2.layout.left = 0;
+          node_2.layout.width = 500;
+          node_2.layout.height = 250;
+        }
+      }
+    }
+
+    test("should layout node with width-bound box and flex", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase105()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flexDirection = CSSFlexDirection.ROW;
+        node_1.style.width = 1000;
+        addChildren(node_1, 2);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.flex = 1;
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "2";
+          node_2 = node_1.getChildAt(1);
+          node_2.style.flex = 1;
+          node_2.measure = measure;
+          node_2.context = "2";
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 1000;
+      node_0.layout.height = 250;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 0;
+        node_1.layout.width = 1000;
+        node_1.layout.height = 250;
+        addChildren(node_1, 2);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.top = 0;
+          node_2.layout.left = 0;
+          node_2.layout.width = 500;
+          node_2.layout.height = 250;
+          node_2 = node_1.getChildAt(1);
+          node_2.layout.top = 0;
+          node_2.layout.left = 500;
+          node_2.layout.width = 500;
+          node_2.layout.height = 250;
+        }
+      }
+    }
+
+    test("should layout node with multiple width-bound box and flex", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase106()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flexDirection = CSSFlexDirection.ROW;
+        node_1.style.height = 250;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.flex = 1;
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "2";
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 500;
+      node_0.layout.height = 250;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 0;
+        node_1.layout.width = 500;
+        node_1.layout.height = 250;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.top = 0;
+          node_2.layout.left = 0;
+          node_2.layout.width = 500;
+          node_2.layout.height = 250;
+        }
+      }
+    }
+
+    test("should layout node with height-bound box and flex", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase107()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flexDirection = CSSFlexDirection.ROW;
+        node_1.style.height = 250;
+        addChildren(node_1, 2);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.flex = 1;
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "2";
+          node_2 = node_1.getChildAt(1);
+          node_2.style.flex = 1;
+          node_2.measure = measure;
+          node_2.context = "2";
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.top = 0;
+      node_0.layout.left = 0;
+      node_0.layout.width = 1000;
+      node_0.layout.height = 250;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.top = 0;
+        node_1.layout.left = 0;
+        node_1.layout.width = 1000;
+        node_1.layout.height = 250;
+        addChildren(node_1, 2);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.top = 0;
+          node_2.layout.left = 0;
+          node_2.layout.width = 500;
+          node_2.layout.height = 250;
+          node_2 = node_1.getChildAt(1);
+          node_2.layout.top = 0;
+          node_2.layout.left = 500;
+          node_2.layout.width = 500;
+          node_2.layout.height = 250;
+        }
+      }
+    }
+
+    test("should layout node with multiple height-bound box and flex", root_node, root_layout);
   }
 
   @Test

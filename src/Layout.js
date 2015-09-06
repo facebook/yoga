@@ -389,7 +389,7 @@ var computeLayout = (function() {
     return -getPosition(node, trailing[axis]);
   }
 
-  function layoutNode(node, parentMaxWidth, /*css_direction_t*/parentDirection) {
+  function layoutNode(node, parentMaxWidth, parentMaxHeight, /*css_direction_t*/parentDirection) {
     var/*css_direction_t*/ direction = resolveDirection(node, parentDirection);
     var/*css_flex_direction_t*/ mainAxis = resolveAxis(getFlexDirection(node), direction);
     var/*css_flex_direction_t*/ crossAxis = getCrossFlexDirection(mainAxis, direction);
@@ -417,24 +417,32 @@ var computeLayout = (function() {
     if (isMeasureDefined(node)) {
       var/*float*/ width = CSS_UNDEFINED;
       var/*float*/ height = CSS_UNDEFINED;
-      var/*float*/ parentMaxHeight = parentMaxWidth;
 
       if (isDimDefined(node, resolvedRowAxis)) {
         width = node.style.width;
-      } if (isDimDefined(node, resolvedColumnAxis)) {
-        height = node.style.height;
       } else if (!isUndefined(node.layout[dim[resolvedRowAxis]])) {
         width = node.layout[dim[resolvedRowAxis]];
-      } else if (!isUndefined(node.layout[dim[resolvedColumnAxis]])) {
-        height = node.layout[dim[resolvedColumnAxis]];
-      } else {
+      } else if (!isUndefined(parentMaxWidth)) {
         width = parentMaxWidth - 
           getMarginAxis(node, resolvedRowAxis);
+      }
+
+      if (!isUndefined(width)) {
+        width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
+      }
+
+      if (isDimDefined(node, resolvedColumnAxis)) {
+        height = node.style.height;
+      } else if (!isUndefined(node.layout[dim[resolvedColumnAxis]])) {
+        height = node.layout[dim[resolvedColumnAxis]];
+      } else if (!isUndefined(parentMaxHeight)) {
         height = parentMaxHeight - 
           getMarginAxis(node, resolvedColumnAxis);
       }
-      width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
-      height -= getPaddingAndBorderAxis(node, resolvedColumnAxis);
+
+      if (!isUndefined(height)) {
+        height -= getPaddingAndBorderAxis(node, resolvedColumnAxis);
+      }
 
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
@@ -542,6 +550,7 @@ var computeLayout = (function() {
       var/*int*/ nonFlexibleChildrenCount = 0;
 
       var/*float*/ maxWidth;
+      var/*float*/ maxHeight;
       for (i = startLine; i < node.children.length; ++i) {
         child = node.children[i];
         var/*float*/ nextContentDim = 0;
@@ -561,20 +570,28 @@ var computeLayout = (function() {
 
         } else {
           maxWidth = CSS_UNDEFINED;
-          if (!isRowDirection(mainAxis)) {
+          if (isDimDefined(node, resolvedRowAxis)) {
+            maxWidth = node.layout[dim[resolvedRowAxis]] -
+              getPaddingAndBorderAxis(node, resolvedRowAxis);
+          } else if (!isRowDirection(mainAxis) && !isUndefined(parentMaxWidth)) {
             maxWidth = parentMaxWidth -
               getMarginAxis(node, resolvedRowAxis) -
               getPaddingAndBorderAxis(node, resolvedRowAxis);
+          }
 
-            if (isDimDefined(node, resolvedRowAxis)) {
-              maxWidth = node.layout[dim[resolvedRowAxis]] -
-                getPaddingAndBorderAxis(node, resolvedRowAxis);
-            }
+          maxHeight = CSS_UNDEFINED;
+          if (isDimDefined(node, resolvedColumnAxis)) {
+            maxHeight = node.layout[dim[resolvedColumnAxis]] -
+              getPaddingAndBorderAxis(node, resolvedColumnAxis);
+          } else if (!isRowDirection(crossAxis) && !isUndefined(parentMaxHeight)) {
+            maxHeight = parentMaxHeight -
+              getMarginAxis(node, resolvedColumnAxis) -
+              getPaddingAndBorderAxis(node, resolvedColumnAxis);
           }
 
           // This is the main recursive call. We layout non flexible children.
           if (alreadyComputedNextLayout === 0) {
-            layoutNode(/*(java)!layoutContext, */child, maxWidth, direction);
+            layoutNode(/*(java)!layoutContext, */child, maxWidth, maxHeight, direction);
           }
 
           // Absolute positioned elements do not take part of the layout, so we
@@ -664,14 +681,24 @@ var computeLayout = (function() {
             if (isDimDefined(node, resolvedRowAxis)) {
               maxWidth = node.layout[dim[resolvedRowAxis]] -
                 getPaddingAndBorderAxis(node, resolvedRowAxis);
-            } else if (!isRowDirection(mainAxis)) {
+            } else if (!isRowDirection(mainAxis) && !isUndefined(parentMaxWidth)) {
               maxWidth = parentMaxWidth -
                 getMarginAxis(node, resolvedRowAxis) -
                 getPaddingAndBorderAxis(node, resolvedRowAxis);
             }
 
+            maxHeight = CSS_UNDEFINED;
+            if (isDimDefined(node, resolvedColumnAxis)) {
+              maxHeight = node.layout[dim[resolvedColumnAxis]] -
+                getPaddingAndBorderAxis(node, resolvedColumnAxis);
+            } else if (!isRowDirection(crossAxis) && !isUndefined(parentMaxHeight)) {
+              maxHeight = parentMaxHeight -
+                getMarginAxis(node, resolvedColumnAxis) -
+                getPaddingAndBorderAxis(node, resolvedColumnAxis);
+            }
+            
             // And we recursively call the layout algorithm for this child
-            layoutNode(/*(java)!layoutContext, */child, maxWidth, direction);
+            layoutNode(/*(java)!layoutContext, */child, maxWidth, maxHeight, direction);
           }
         }
 
