@@ -504,11 +504,15 @@ var computeLayout = (function() {
       var/*float*/ totalFlexible = 0;
       var/*int*/ nonFlexibleChildrenCount = 0;
 
+      var/*css_node_t**/ firstFlexChild = null;
+      var/*css_node_t**/ currentFlexChild = null;
+
       var/*float*/ maxWidth;
       for (i = startLine; i < childCount; ++i) {
         child = node.children[i];
 
         child.nextAbsoluteChild = null;
+        child.nextFlexChild = null;
 
         // Pre-fill cross axis dimensions when the child is using stretch before
         // we call the recursive layout pass
@@ -561,6 +565,16 @@ var computeLayout = (function() {
         if (isMainDimDefined && isFlex(child)) {
           flexibleChildrenCount++;
           totalFlexible += child.style.flex;
+
+          // Store a private linked list of flexible children so that we can
+          // efficiently traverse them later.
+          if (firstFlexChild === null) {
+            firstFlexChild = child;
+          }
+          if (currentFlexChild !== null) {
+            currentFlexChild.nextFlexChild = child;
+          }
+          currentFlexChild = child;
 
           // Even if we don't know its exact size yet, we already know the padding,
           // border and margin. We'll use this partial information, which represents
@@ -635,21 +649,20 @@ var computeLayout = (function() {
         var/*float*/ baseMainDim;
         var/*float*/ boundMainDim;
 
-        // Iterate over every child in the axis. If the flex share of remaining
-        // space doesn't meet min/max bounds, remove this child from flex
-        // calculations.
-        for (i = startLine; i < endLine; ++i) {
-          child = node.children[i];
-          if (isFlex(child)) {
-            baseMainDim = flexibleMainDim * child.style.flex +
-                getPaddingAndBorderAxis(child, mainAxis);
-            boundMainDim = boundAxis(child, mainAxis, baseMainDim);
+        // If the flex share of remaining space doesn't meet min/max bounds,
+        // remove this child from flex calculations.
+        currentFlexChild = firstFlexChild;
+        while (currentFlexChild !== null) {
+          baseMainDim = flexibleMainDim * currentFlexChild.style.flex +
+              getPaddingAndBorderAxis(currentFlexChild, mainAxis);
+          boundMainDim = boundAxis(currentFlexChild, mainAxis, baseMainDim);
 
-            if (baseMainDim !== boundMainDim) {
-              remainingMainDim -= boundMainDim;
-              totalFlexible -= child.style.flex;
-            }
+          if (baseMainDim !== boundMainDim) {
+            remainingMainDim -= boundMainDim;
+            totalFlexible -= currentFlexChild.style.flex;
           }
+
+          currentFlexChild = currentFlexChild.nextFlexChild;
         }
         flexibleMainDim = remainingMainDim / totalFlexible;
 
@@ -658,31 +671,32 @@ var computeLayout = (function() {
         if (flexibleMainDim < 0) {
           flexibleMainDim = 0;
         }
-        // We iterate over the full array and only apply the action on flexible
-        // children. This is faster than actually allocating a new array that
-        // contains only flexible children.
-        for (i = startLine; i < endLine; ++i) {
-          child = node.children[i];
-          if (isFlex(child)) {
-            // At this point we know the final size of the element in the main
-            // dimension
-            child.layout[dim[mainAxis]] = boundAxis(child, mainAxis,
-              flexibleMainDim * child.style.flex + getPaddingAndBorderAxis(child, mainAxis)
-            );
 
-            maxWidth = CSS_UNDEFINED;
-            if (isDimDefined(node, resolvedRowAxis)) {
-              maxWidth = node.layout[dim[resolvedRowAxis]] -
-                paddingAndBorderAxisResolvedRow;
-            } else if (!isMainRowDirection) {
-              maxWidth = parentMaxWidth -
-                getMarginAxis(node, resolvedRowAxis) -
-                paddingAndBorderAxisResolvedRow;
-            }
+        currentFlexChild = firstFlexChild;
+        while (currentFlexChild !== null) {
+          // At this point we know the final size of the element in the main
+          // dimension
+          currentFlexChild.layout[dim[mainAxis]] = boundAxis(currentFlexChild, mainAxis,
+            flexibleMainDim * currentFlexChild.style.flex +
+                getPaddingAndBorderAxis(currentFlexChild, mainAxis)
+          );
 
-            // And we recursively call the layout algorithm for this child
-            layoutNode(/*(java)!layoutContext, */child, maxWidth, direction);
+          maxWidth = CSS_UNDEFINED;
+          if (isDimDefined(node, resolvedRowAxis)) {
+            maxWidth = node.layout[dim[resolvedRowAxis]] -
+              paddingAndBorderAxisResolvedRow;
+          } else if (!isMainRowDirection) {
+            maxWidth = parentMaxWidth -
+              getMarginAxis(node, resolvedRowAxis) -
+              paddingAndBorderAxisResolvedRow;
           }
+
+          // And we recursively call the layout algorithm for this child
+          layoutNode(/*(java)!layoutContext, */currentFlexChild, maxWidth, direction);
+
+          child = currentFlexChild;
+          currentFlexChild = currentFlexChild.nextFlexChild;
+          child.nextFlexChild = null;
         }
 
       // We use justifyContent to figure out how to allocate the remaining

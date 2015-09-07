@@ -64,6 +64,7 @@ public class CSSNode {
   public int lineIndex = 0;
 
   CSSNode nextAbsoluteChild;
+  CSSNode nextFlexChild;
 
   private @Nullable ArrayList<CSSNode> mChildren;
   private @Nullable CSSNode mParent;

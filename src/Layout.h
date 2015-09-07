@@ -137,6 +137,7 @@ struct css_node {
   int line_index;
 
   css_node_t* next_absolute_child;
+  css_node_t* next_flex_child;
 
   css_dim_t (*measure)(void *context, float width);
   void (*print)(void *context);
