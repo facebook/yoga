@@ -702,18 +702,18 @@ public class LayoutEngine {
           if (isMainDimDefined) {
             setTrailingPosition(node, child, mainAxis);
           }
-        }
   
-        // Now that we placed the element, we need to update the variables
-        // We only need to do that for relative elements. Absolute elements
-        // do not take part in that phase.
-        if (child.style.positionType == CSSPositionType.RELATIVE) {
-          // The main dimension is the sum of all the elements dimension plus
-          // the spacing.
-          mainDim += betweenMainDim + getDimWithMargin(child, mainAxis);
-          // The cross dimension is the max of the elements dimension since there
-          // can only be one element in that cross dimension.
-          crossDim = Math.max(crossDim, boundAxis(child, crossAxis, getDimWithMargin(child, crossAxis)));
+          // Now that we placed the element, we need to update the variables
+          // We only need to do that for relative elements. Absolute elements
+          // do not take part in that phase.
+          if (child.style.positionType == CSSPositionType.RELATIVE) {
+            // The main dimension is the sum of all the elements dimension plus
+            // the spacing.
+            mainDim += betweenMainDim + getDimWithMargin(child, mainAxis);
+            // The cross dimension is the max of the elements dimension since there
+            // can only be one element in that cross dimension.
+            crossDim = Math.max(crossDim, boundAxis(child, crossAxis, getDimWithMargin(child, crossAxis)));
+          }
         }
       }
   
@@ -927,6 +927,7 @@ public class LayoutEngine {
       // the axis are defined (either both left and right or top and bottom).
       for (ii = 0; ii < 2; ii++) {
         axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+  
         if (!isUndefined(node.layout.dimensions[dim[axis]]) &&
             !isDimDefined(currentAbsoluteChild, axis) &&
             isPosDefined(currentAbsoluteChild, leading[axis]) &&
