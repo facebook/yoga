@@ -11,6 +11,13 @@ package com.facebook.csslayout;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static com.facebook.csslayout.CSSLayout.POSITION_LEFT;
+import static com.facebook.csslayout.CSSLayout.POSITION_TOP;
+import static com.facebook.csslayout.CSSLayout.POSITION_RIGHT;
+import static com.facebook.csslayout.CSSLayout.POSITION_BOTTOM;
+import static com.facebook.csslayout.CSSLayout.DIMENSION_WIDTH;
+import static com.facebook.csslayout.CSSLayout.DIMENSION_HEIGHT;
+
 /**
  * Tests for {@link LayoutEngine}
  */
@@ -69,10 +76,10 @@ public class LayoutEngineTest {
 
   private static boolean areLayoutsEqual(CSSNode a, CSSNode b) {
     boolean doNodesHaveSameLayout =
-        areFloatsEqual(a.layout.left, b.layout.left) &&
-        areFloatsEqual(a.layout.top, b.layout.top) &&
-        areFloatsEqual(a.layout.width, b.layout.width) &&
-        areFloatsEqual(a.layout.height, b.layout.height);
+        areFloatsEqual(a.layout.position[POSITION_LEFT], b.layout.position[POSITION_LEFT]) &&
+        areFloatsEqual(a.layout.position[POSITION_TOP], b.layout.position[POSITION_TOP]) &&
+        areFloatsEqual(a.layout.dimensions[DIMENSION_WIDTH], b.layout.dimensions[DIMENSION_WIDTH]) &&
+        areFloatsEqual(a.layout.dimensions[DIMENSION_HEIGHT], b.layout.dimensions[DIMENSION_HEIGHT]);
     if (!doNodesHaveSameLayout) {
       return false;
     }
@@ -95,17 +102,17 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
     }
 
     test("should layout a single node with width and height", root_node, root_layout);
@@ -117,48 +124,48 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 500;
-        node_1.style.height = 500;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 250;
-        node_1.style.height = 250;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 250;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 250;
         node_1 = node_0.getChildAt(2);
-        node_1.style.width = 125;
-        node_1.style.height = 125;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 125;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 125;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 500;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 500;
-        node_1.layout.left = 0;
-        node_1.layout.width = 250;
-        node_1.layout.height = 250;
+        node_1.layout.position[POSITION_TOP] = 500;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 250;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 250;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 750;
-        node_1.layout.left = 0;
-        node_1.layout.width = 125;
-        node_1.layout.height = 125;
+        node_1.layout.position[POSITION_TOP] = 750;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 125;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 125;
       }
     }
 
@@ -172,48 +179,48 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 500;
-        node_1.style.height = 500;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 250;
-        node_1.style.height = 250;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 250;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 250;
         node_1 = node_0.getChildAt(2);
-        node_1.style.width = 125;
-        node_1.style.height = 125;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 125;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 125;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 500;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 500;
+        node_1.layout.position[POSITION_TOP] = 500;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 250;
-        node_1.layout.left = 0;
-        node_1.layout.width = 250;
-        node_1.layout.height = 250;
+        node_1.layout.position[POSITION_TOP] = 250;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 250;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 250;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 125;
-        node_1.layout.left = 0;
-        node_1.layout.width = 125;
-        node_1.layout.height = 125;
+        node_1.layout.position[POSITION_TOP] = 125;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 125;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 125;
       }
     }
 
@@ -226,26 +233,26 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 500;
-        node_1.style.height = 500;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 500;
-        node_1.style.height = 500;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 500;
         addChildren(node_1, 2);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.width = 250;
-          node_2.style.height = 250;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 250;
           node_2 = node_1.getChildAt(1);
-          node_2.style.width = 250;
-          node_2.style.height = 250;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 250;
         }
       }
     }
@@ -253,36 +260,36 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 500;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 500;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 500;
+        node_1.layout.position[POSITION_TOP] = 500;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 500;
         addChildren(node_1, 2);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 250;
-          node_2.layout.height = 250;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 250;
           node_2 = node_1.getChildAt(1);
-          node_2.layout.top = 250;
-          node_2.layout.left = 0;
-          node_2.layout.width = 250;
-          node_2.layout.height = 250;
+          node_2.layout.position[POSITION_TOP] = 250;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 250;
         }
       }
     }
@@ -297,27 +304,27 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 500;
-        node_1.style.height = 500;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
         node_1.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-        node_1.style.width = 500;
-        node_1.style.height = 500;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 500;
         addChildren(node_1, 2);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.width = 250;
-          node_2.style.height = 250;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 250;
           node_2 = node_1.getChildAt(1);
-          node_2.style.width = 250;
-          node_2.style.height = 250;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 250;
         }
       }
     }
@@ -325,36 +332,36 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 500;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 500;
+        node_1.layout.position[POSITION_TOP] = 500;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 500;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 500;
         addChildren(node_1, 2);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 250;
-          node_2.layout.left = 0;
-          node_2.layout.width = 250;
-          node_2.layout.height = 250;
+          node_2.layout.position[POSITION_TOP] = 250;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 250;
           node_2 = node_1.getChildAt(1);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 250;
-          node_2.layout.height = 250;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 250;
         }
       }
     }
@@ -368,8 +375,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       node_0.setMargin(Spacing.LEFT, 10);
       node_0.setMargin(Spacing.TOP, 10);
       node_0.setMargin(Spacing.RIGHT, 10);
@@ -381,10 +388,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 10;
-      node_0.layout.left = 10;
-      node_0.layout.width = 100;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 10;
+      node_0.layout.position[POSITION_LEFT] = 10;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
     }
 
     test("should layout node with margin", root_node, root_layout);
@@ -396,8 +403,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       node_0.setMargin(Spacing.LEFT, 10);
       node_0.setMargin(Spacing.TOP, 10);
       node_0.setMargin(Spacing.RIGHT, 10);
@@ -408,8 +415,8 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 50);
         node_1.setMargin(Spacing.TOP, 50);
         node_1.setMargin(Spacing.RIGHT, 50);
@@ -417,8 +424,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 50);
         node_1.setMargin(Spacing.END, 50);
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 25);
         node_1.setMargin(Spacing.TOP, 25);
         node_1.setMargin(Spacing.RIGHT, 25);
@@ -426,8 +433,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 25);
         node_1.setMargin(Spacing.END, 25);
         node_1 = node_0.getChildAt(2);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -440,28 +447,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 10;
-      node_0.layout.left = 10;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 10;
+      node_0.layout.position[POSITION_LEFT] = 10;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 50;
-        node_1.layout.left = 50;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 50;
+        node_1.layout.position[POSITION_LEFT] = 50;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 225;
-        node_1.layout.left = 25;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 225;
+        node_1.layout.position[POSITION_LEFT] = 25;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 360;
-        node_1.layout.left = 10;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 360;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -475,8 +482,8 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       node_0.setMargin(Spacing.LEFT, 10);
       node_0.setMargin(Spacing.TOP, 10);
       node_0.setMargin(Spacing.RIGHT, 10);
@@ -487,8 +494,8 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 50);
         node_1.setMargin(Spacing.TOP, 50);
         node_1.setMargin(Spacing.RIGHT, 50);
@@ -496,8 +503,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 50);
         node_1.setMargin(Spacing.END, 50);
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 25);
         node_1.setMargin(Spacing.TOP, 25);
         node_1.setMargin(Spacing.RIGHT, 25);
@@ -505,8 +512,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 25);
         node_1.setMargin(Spacing.END, 25);
         node_1 = node_0.getChildAt(2);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -519,28 +526,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 10;
-      node_0.layout.left = 10;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 10;
+      node_0.layout.position[POSITION_LEFT] = 10;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 850;
-        node_1.layout.left = 50;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 850;
+        node_1.layout.position[POSITION_LEFT] = 50;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 675;
-        node_1.layout.left = 25;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 675;
+        node_1.layout.position[POSITION_LEFT] = 25;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 540;
-        node_1.layout.left = 10;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 540;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -555,40 +562,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW_REVERSE;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 300;
-        node_1.style.height = 150;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 100;
-        node_1.layout.width = 300;
-        node_1.layout.height = 150;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
@@ -602,40 +609,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 300;
-        node_1.style.height = 150;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 100;
-        node_1.layout.width = 300;
-        node_1.layout.height = 150;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
@@ -650,40 +657,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 300;
-        node_1.style.height = 150;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 900;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 900;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 600;
-        node_1.layout.width = 300;
-        node_1.layout.height = 150;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 600;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
@@ -696,39 +703,39 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 300;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 300;
-        node_1.style.height = 150;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 350;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 350;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 200;
-        node_1.layout.left = 0;
-        node_1.layout.width = 300;
-        node_1.layout.height = 150;
+        node_1.layout.position[POSITION_TOP] = 200;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
@@ -742,39 +749,39 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-      node_0.style.width = 300;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 300;
-        node_1.style.height = 150;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 350;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 350;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 150;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 150;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 300;
-        node_1.layout.height = 150;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 150;
       }
     }
 
@@ -787,40 +794,40 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
         node_1.style.flex = 1;
-        node_1.style.width = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 200;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 800;
+        node_1.layout.position[POSITION_TOP] = 200;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 800;
       }
     }
 
@@ -834,40 +841,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
         node_1.style.flex = 1;
-        node_1.style.width = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 800;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 800;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 800;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 800;
       }
     }
 
@@ -880,26 +887,26 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.flex = 1;
-        node_1.style.width = 1000;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 1000;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.style.flex = 1;
-          node_2.style.width = 1000;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 1000;
           addChildren(node_2, 1);
           {
             TestCSSNode node_3;
             node_3 = node_2.getChildAt(0);
             node_3.style.flex = 1;
-            node_3.style.width = 1000;
+            node_3.style.dimensions[DIMENSION_WIDTH] = 1000;
           }
         }
       }
@@ -908,34 +915,34 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 1000;
-        node_1.layout.height = 1000;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 1000;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 1000;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 1000;
-          node_2.layout.height = 1000;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 1000;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 1000;
           addChildren(node_2, 1);
           {
             TestCSSNode node_3;
             node_3 = node_2.getChildAt(0);
-            node_3.layout.top = 0;
-            node_3.layout.left = 0;
-            node_3.layout.width = 1000;
-            node_3.layout.height = 1000;
+            node_3.layout.position[POSITION_TOP] = 0;
+            node_3.layout.position[POSITION_LEFT] = 0;
+            node_3.layout.dimensions[DIMENSION_WIDTH] = 1000;
+            node_3.layout.dimensions[DIMENSION_HEIGHT] = 1000;
           }
         }
       }
@@ -951,29 +958,29 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
         node_1.style.flex = 1;
-        node_1.style.width = 1000;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 1000;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
           node_2.style.flex = 1;
-          node_2.style.width = 1000;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 1000;
           addChildren(node_2, 1);
           {
             TestCSSNode node_3;
             node_3 = node_2.getChildAt(0);
             node_3.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
             node_3.style.flex = 1;
-            node_3.style.width = 1000;
+            node_3.style.dimensions[DIMENSION_WIDTH] = 1000;
           }
         }
       }
@@ -982,34 +989,34 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 1000;
-        node_1.layout.height = 1000;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 1000;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 1000;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 1000;
-          node_2.layout.height = 1000;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 1000;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 1000;
           addChildren(node_2, 1);
           {
             TestCSSNode node_3;
             node_3 = node_2.getChildAt(0);
-            node_3.layout.top = 0;
-            node_3.layout.left = 0;
-            node_3.layout.width = 1000;
-            node_3.layout.height = 1000;
+            node_3.layout.position[POSITION_TOP] = 0;
+            node_3.layout.position[POSITION_LEFT] = 0;
+            node_3.layout.dimensions[DIMENSION_WIDTH] = 1000;
+            node_3.layout.dimensions[DIMENSION_HEIGHT] = 1000;
           }
         }
       }
@@ -1024,22 +1031,22 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       node_0.setMargin(Spacing.LEFT, 5);
       node_0.setMargin(Spacing.TOP, 10);
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 15);
         node_1.setMargin(Spacing.TOP, 50);
         node_1.setMargin(Spacing.BOTTOM, 20);
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 30);
       }
     }
@@ -1047,23 +1054,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 10;
-      node_0.layout.left = 5;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 10;
+      node_0.layout.position[POSITION_LEFT] = 5;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 50;
-        node_1.layout.left = 15;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 50;
+        node_1.layout.position[POSITION_LEFT] = 15;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 170;
-        node_1.layout.left = 30;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 170;
+        node_1.layout.position[POSITION_LEFT] = 30;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1077,22 +1084,22 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       node_0.setMargin(Spacing.LEFT, 5);
       node_0.setMargin(Spacing.TOP, 10);
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 15);
         node_1.setMargin(Spacing.TOP, 50);
         node_1.setMargin(Spacing.BOTTOM, 20);
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 30);
       }
     }
@@ -1100,23 +1107,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 10;
-      node_0.layout.left = 5;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 10;
+      node_0.layout.position[POSITION_LEFT] = 5;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 880;
-        node_1.layout.left = 15;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 880;
+        node_1.layout.position[POSITION_LEFT] = 15;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 730;
-        node_1.layout.left = 30;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 730;
+        node_1.layout.position[POSITION_LEFT] = 30;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1130,40 +1137,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.FLEX_START;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1178,40 +1185,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.justifyContent = CSSJustify.FLEX_START;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 900;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 800;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 800;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1225,40 +1232,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.FLEX_END;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 800;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 800;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 900;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1273,40 +1280,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.justifyContent = CSSJustify.FLEX_END;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1320,40 +1327,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.SPACE_BETWEEN;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 900;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1368,40 +1375,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.justifyContent = CSSJustify.SPACE_BETWEEN;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 900;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1415,40 +1422,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.SPACE_AROUND;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 200;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 200;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 700;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 700;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1463,40 +1470,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.justifyContent = CSSJustify.SPACE_AROUND;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 700;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 700;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 200;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 200;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1510,40 +1517,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.CENTER;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 400;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 400;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 500;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 500;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1558,40 +1565,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.justifyContent = CSSJustify.CENTER;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 500;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 500;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 400;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 400;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1604,33 +1611,33 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.flex = 1;
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 1000;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       }
     }
 
@@ -1644,40 +1651,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignItems = CSSAlign.FLEX_START;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1692,40 +1699,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.alignItems = CSSAlign.FLEX_START;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 900;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 800;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 800;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1739,40 +1746,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignItems = CSSAlign.CENTER;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 400;
-        node_1.layout.width = 200;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 400;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 450;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 450;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1787,40 +1794,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.alignItems = CSSAlign.CENTER;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 900;
-        node_1.layout.left = 400;
-        node_1.layout.width = 200;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 400;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 800;
-        node_1.layout.left = 450;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 800;
+        node_1.layout.position[POSITION_LEFT] = 450;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1834,40 +1841,40 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignItems = CSSAlign.FLEX_END;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 800;
-        node_1.layout.width = 200;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 800;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 900;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 900;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1882,40 +1889,40 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.alignItems = CSSAlign.FLEX_END;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 900;
-        node_1.layout.left = 800;
-        node_1.layout.width = 200;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 800;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 800;
-        node_1.layout.left = 900;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 800;
+        node_1.layout.position[POSITION_LEFT] = 900;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1929,41 +1936,41 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignItems = CSSAlign.FLEX_END;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
         node_1.style.alignSelf = CSSAlign.CENTER;
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 800;
-        node_1.layout.width = 200;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 800;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 450;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 450;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -1978,41 +1985,41 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.alignItems = CSSAlign.FLEX_END;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
         node_1.style.alignSelf = CSSAlign.CENTER;
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 900;
-        node_1.layout.left = 800;
-        node_1.layout.width = 200;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 800;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 800;
-        node_1.layout.left = 450;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 800;
+        node_1.layout.position[POSITION_LEFT] = 450;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -2026,31 +2033,31 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignItems = CSSAlign.STRETCH;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 1000;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 1000;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -2065,31 +2072,31 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.alignItems = CSSAlign.STRETCH;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 900;
-        node_1.layout.left = 0;
-        node_1.layout.width = 1000;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 1000;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -2112,18 +2119,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2147,18 +2154,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2187,18 +2194,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 10;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 10;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 5;
-        node_1.layout.left = 5;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 5;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2228,18 +2235,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 10;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 10;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 5;
-        node_1.layout.left = 5;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 5;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2252,37 +2259,37 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -2296,37 +2303,37 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = -200;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = -200;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -2345,10 +2352,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
     }
 
     test("should layout for center", root_node, root_layout);
@@ -2361,7 +2368,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.FLEX_END;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2373,18 +2380,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2399,7 +2406,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.justifyContent = CSSJustify.FLEX_END;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -2411,18 +2418,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 10;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2451,7 +2458,7 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.START, 10);
           node_2.setMargin(Spacing.END, 10);
           node_2 = node_1.getChildAt(1);
-          node_2.style.height = 100;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
         }
       }
     }
@@ -2459,31 +2466,31 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 20;
-      node_0.layout.height = 120;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 20;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 120;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 20;
-        node_1.layout.height = 120;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 20;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 120;
         addChildren(node_1, 2);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 10;
-          node_2.layout.left = 10;
-          node_2.layout.width = 0;
-          node_2.layout.height = 0;
+          node_2.layout.position[POSITION_TOP] = 10;
+          node_2.layout.position[POSITION_LEFT] = 10;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 0;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 0;
           node_2 = node_1.getChildAt(1);
-          node_2.layout.top = 20;
-          node_2.layout.left = 20;
-          node_2.layout.width = 0;
-          node_2.layout.height = 100;
+          node_2.layout.position[POSITION_TOP] = 20;
+          node_2.layout.position[POSITION_LEFT] = 20;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 0;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
         }
       }
     }
@@ -2514,7 +2521,7 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.START, 10);
           node_2.setMargin(Spacing.END, 10);
           node_2 = node_1.getChildAt(1);
-          node_2.style.height = 100;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
         }
       }
     }
@@ -2522,31 +2529,31 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 20;
-      node_0.layout.height = 120;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 20;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 120;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 20;
-        node_1.layout.height = 120;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 20;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 120;
         addChildren(node_1, 2);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 110;
-          node_2.layout.left = 10;
-          node_2.layout.width = 0;
-          node_2.layout.height = 0;
+          node_2.layout.position[POSITION_TOP] = 110;
+          node_2.layout.position[POSITION_LEFT] = 10;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 0;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 0;
           node_2 = node_1.getChildAt(1);
-          node_2.layout.top = 0;
-          node_2.layout.left = 20;
-          node_2.layout.width = 0;
-          node_2.layout.height = 100;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 20;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 0;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
         }
       }
     }
@@ -2571,18 +2578,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2607,18 +2614,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 10;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2644,18 +2651,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 10;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2679,10 +2686,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 10;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 10;
     }
 
     test("should layout node with padding", root_node, root_layout);
@@ -2710,18 +2717,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 10;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 10;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 5;
-        node_1.layout.left = 5;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 5;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2756,18 +2763,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 20;
-      node_0.layout.height = 20;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 20;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 20;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 10;
-        node_1.layout.left = 10;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2797,18 +2804,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 20;
-      node_0.layout.height = 20;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 20;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 20;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 20;
-        node_1.layout.height = 20;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 20;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 20;
       }
     }
 
@@ -2844,18 +2851,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 120;
-      node_0.layout.height = 120;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 120;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 120;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 50;
-        node_1.layout.left = 50;
-        node_1.layout.width = 20;
-        node_1.layout.height = 20;
+        node_1.layout.position[POSITION_TOP] = 50;
+        node_1.layout.position[POSITION_LEFT] = 50;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 20;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 20;
       }
     }
 
@@ -2890,26 +2897,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 32;
-      node_0.layout.height = 32;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 32;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 32;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 32;
-        node_1.layout.height = 32;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 32;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 32;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 16;
-          node_2.layout.left = 16;
-          node_2.layout.width = 0;
-          node_2.layout.height = 0;
+          node_2.layout.position[POSITION_TOP] = 16;
+          node_2.layout.position[POSITION_LEFT] = 16;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 0;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 0;
         }
       }
     }
@@ -2923,17 +2930,17 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.positionLeft = 5;
-      node_0.style.positionTop = 5;
+      node_0.style.position[POSITION_LEFT] = 5;
+      node_0.style.position[POSITION_TOP] = 5;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 5;
-      node_0.layout.left = 5;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 5;
+      node_0.layout.position[POSITION_LEFT] = 5;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
     }
 
     test("should layout node with top and left", root_node, root_layout);
@@ -2946,7 +2953,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.SPACE_AROUND;
-      node_0.style.height = 10;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 10;
       node_0.setPadding(Spacing.TOP, 5);
       addChildren(node_0, 1);
       {
@@ -2958,18 +2965,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 10;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 10;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 7.5f;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 7.5f;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -2982,16 +2989,16 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.positionBottom = 5;
+      node_0.style.position[POSITION_BOTTOM] = 5;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = -5;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = -5;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
     }
 
     test("should layout node with bottom", root_node, root_layout);
@@ -3003,17 +3010,17 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.positionTop = 10;
-      node_0.style.positionBottom = 5;
+      node_0.style.position[POSITION_TOP] = 10;
+      node_0.style.position[POSITION_BOTTOM] = 5;
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 10;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 10;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
     }
 
     test("should layout node with both top and bottom", root_node, root_layout);
@@ -3026,7 +3033,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 500;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 500;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -3034,7 +3041,7 @@ public class LayoutEngineTest {
         node_1.style.flex = 1;
         node_1 = node_0.getChildAt(1);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.width = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
         node_1 = node_0.getChildAt(2);
         node_1.style.flex = 1;
       }
@@ -3043,28 +3050,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 500;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 500;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 250;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 250;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 250;
-        node_1.layout.width = 50;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 250;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 250;
-        node_1.layout.width = 250;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 250;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 250;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3089,18 +3096,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3126,18 +3133,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 12;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 12;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3150,17 +3157,17 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.height = 5;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 5;
       node_0.setPadding(Spacing.BOTTOM, 20);
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 20;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 20;
     }
 
     test("should work with height smaller than paddingBottom", root_node, root_layout);
@@ -3172,17 +3179,17 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 5;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 5;
       node_0.setPadding(Spacing.LEFT, 20);
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 20;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 20;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
     }
 
     test("should work with width smaller than paddingLeft", root_node, root_layout);
@@ -3202,43 +3209,43 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.width = 400;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 400;
         }
         node_1 = node_0.getChildAt(1);
         node_1.style.alignSelf = CSSAlign.STRETCH;
-        node_1.style.width = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 400;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 400;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 400;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 400;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 400;
-          node_2.layout.height = 0;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 400;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 0;
         }
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3268,18 +3275,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 10;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 10;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 5;
-        node_1.layout.left = 5;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 5;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3296,34 +3303,34 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionLeft = 10;
-        node_1.style.positionTop = 10;
+        node_1.style.position[POSITION_LEFT] = 10;
+        node_1.style.position[POSITION_TOP] = 10;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 10;
-        node_1.layout.left = 10;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3347,25 +3354,25 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionLeft = 5;
+        node_1.style.position[POSITION_LEFT] = 5;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 40;
-      node_0.layout.height = 40;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 40;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 40;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 20;
-        node_1.layout.left = 5;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 20;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3384,25 +3391,25 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
         node_1.setMargin(Spacing.TOP, 5);
-        node_1.style.positionTop = 5;
+        node_1.style.position[POSITION_TOP] = 5;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 10;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3421,25 +3428,25 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
         node_1.setMargin(Spacing.LEFT, 5);
-        node_1.style.positionLeft = 5;
+        node_1.style.position[POSITION_LEFT] = 5;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 10;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3453,7 +3460,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.SPACE_AROUND;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -3466,23 +3473,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3497,7 +3504,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.justifyContent = CSSJustify.SPACE_AROUND;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -3510,23 +3517,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3540,7 +3547,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 700;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 700;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3553,18 +3560,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 700;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 700;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 5;
-        node_1.layout.width = 695;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 695;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3579,7 +3586,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 700;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 700;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3592,18 +3599,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 700;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 700;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 695;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 695;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3617,7 +3624,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 700;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 700;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -3632,23 +3639,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 700;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 700;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 347.5f;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 347.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 347.5f;
-        node_1.layout.width = 352.5f;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 347.5f;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 352.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3663,7 +3670,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 700;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 700;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -3678,23 +3685,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 700;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 700;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 352.5f;
-        node_1.layout.width = 347.5f;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 352.5f;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 347.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 352.5f;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 352.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3708,7 +3715,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 700;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 700;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -3723,23 +3730,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 700;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 700;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 347.5f;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 347.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 352.5f;
-        node_1.layout.width = 347.5f;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 352.5f;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 347.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3754,7 +3761,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 700;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 700;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -3769,23 +3776,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 700;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 700;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 352.5f;
-        node_1.layout.width = 347.5f;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 352.5f;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 347.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 347.5f;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 347.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3798,12 +3805,12 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.height = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 300;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 600;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 600;
         node_1 = node_0.getChildAt(1);
         node_1.style.flex = 1;
       }
@@ -3812,23 +3819,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 300;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 300;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 600;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 600;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 600;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 600;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3842,7 +3849,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 600;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 600;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3855,18 +3862,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 600;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 600;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3881,7 +3888,7 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 600;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 600;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -3894,18 +3901,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 600;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 600;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 600;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 600;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3918,7 +3925,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.height = 500;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 500;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -3933,23 +3940,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 500;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 500;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 500;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 500;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 500;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 500;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -3973,10 +3980,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 10;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 10;
     }
 
     test("should layout node with borderWidth", root_node, root_layout);
@@ -3994,25 +4001,25 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionTop = -1;
+        node_1.style.position[POSITION_TOP] = -1;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 1;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4036,25 +4043,25 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionLeft = 5;
+        node_1.style.position[POSITION_LEFT] = 5;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 2;
-      node_0.layout.height = 2;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 2;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 2;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 1;
-        node_1.layout.left = 6;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 1;
+        node_1.layout.position[POSITION_LEFT] = 6;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4067,7 +4074,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 50;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4086,18 +4093,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 50;
-      node_0.layout.height = 40;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 50;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 40;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 20;
-        node_1.layout.width = 40;
-        node_1.layout.height = 40;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 20;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 40;
       }
     }
 
@@ -4110,7 +4117,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = -31;
+      node_0.style.dimensions[DIMENSION_WIDTH] = -31;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4122,18 +4129,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 5;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 5;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 5;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 5;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4159,18 +4166,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4197,18 +4204,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 1;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 1;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4228,10 +4235,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 35;
-      node_0.layout.height = 18;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 35;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 18;
     }
 
     test("should layout node with just text", root_node, root_layout);
@@ -4243,7 +4250,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 10;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 10;
       node_0.setMeasureFunction(sTestMeasureFunction);
       node_0.context = "small";
     }
@@ -4251,10 +4258,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 10;
-      node_0.layout.height = 18;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 18;
     }
 
     test("should layout node with text and width", root_node, root_layout);
@@ -4273,10 +4280,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 172;
-      node_0.layout.height = 18;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 172;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 18;
     }
 
     test("should layout node with text, padding and margin", root_node, root_layout);
@@ -4288,7 +4295,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 300;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4306,26 +4313,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 300;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 300;
-          node_2.layout.height = 0;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 300;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 0;
         }
       }
     }
@@ -4344,7 +4351,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.flexDirection = CSSFlexDirection.ROW;
-        node_1.style.width = 500;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 500;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4359,26 +4366,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 500;
-      node_0.layout.height = 18;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 500;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 18;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 18;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 18;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 500;
-          node_2.layout.height = 18;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 500;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
         }
       }
     }
@@ -4398,7 +4405,7 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.style.direction = CSSDirection.RTL;
         node_1.style.flexDirection = CSSFlexDirection.ROW;
-        node_1.style.width = 500;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 500;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4413,26 +4420,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 500;
-      node_0.layout.height = 18;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 500;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 18;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 500;
-        node_1.layout.height = 18;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 18;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 500;
-          node_2.layout.height = 18;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 500;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
         }
       }
     }
@@ -4446,7 +4453,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 130;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 130;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4466,26 +4473,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 130;
-      node_0.layout.height = 36;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 130;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 36;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 130;
-        node_1.layout.height = 36;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 130;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 36;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 130;
-          node_2.layout.height = 36;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 130;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 36;
         }
       }
     }
@@ -4499,7 +4506,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4510,7 +4517,7 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.width = 130;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 130;
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = "loooooooooong with space";
         }
@@ -4520,26 +4527,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 36;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 36;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 36;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 36;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 130;
-          node_2.layout.height = 36;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 130;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 36;
         }
       }
     }
@@ -4554,7 +4561,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignSelf = CSSAlign.FLEX_START;
-      node_0.style.width = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -4568,18 +4575,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 36;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 36;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 36;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 36;
       }
     }
 
@@ -4593,7 +4600,7 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignSelf = CSSAlign.FLEX_START;
-      node_0.style.width = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
       node_0.setPadding(Spacing.LEFT, 10);
       node_0.setPadding(Spacing.TOP, 10);
       node_0.setPadding(Spacing.RIGHT, 10);
@@ -4624,26 +4631,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 76;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 76;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 20;
-        node_1.layout.left = 20;
-        node_1.layout.width = 100;
-        node_1.layout.height = 36;
+        node_1.layout.position[POSITION_TOP] = 20;
+        node_1.layout.position[POSITION_LEFT] = 20;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 36;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 100;
-          node_2.layout.height = 36;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 36;
         }
       }
     }
@@ -4658,12 +4665,12 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.justifyContent = CSSJustify.SPACE_BETWEEN;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 900;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 900;
         node_1 = node_0.getChildAt(1);
       }
     }
@@ -4671,23 +4678,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 900;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 900;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 900;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 900;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4702,12 +4709,12 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.justifyContent = CSSJustify.SPACE_BETWEEN;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 900;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 900;
         node_1 = node_0.getChildAt(1);
       }
     }
@@ -4715,23 +4722,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = -800;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 900;
+        node_1.layout.position[POSITION_TOP] = -800;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 900;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = -800;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = -800;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4746,30 +4753,30 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
       node_0.style.justifyContent = CSSJustify.FLEX_END;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 900;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 900;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = -700;
-        node_1.layout.width = 900;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = -700;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 900;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4785,30 +4792,30 @@ public class LayoutEngineTest {
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
       node_0.style.justifyContent = CSSJustify.FLEX_END;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 900;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 900;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 900;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 900;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -4826,7 +4833,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.flexDirection = CSSFlexDirection.ROW;
-        node_1.style.width = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4846,26 +4853,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 58;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 58;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 58;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 58;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 20;
-          node_2.layout.left = 20;
-          node_2.layout.width = 172;
-          node_2.layout.height = 18;
+          node_2.layout.position[POSITION_TOP] = 20;
+          node_2.layout.position[POSITION_LEFT] = 20;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 172;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
         }
       }
     }
@@ -4885,7 +4892,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.flexDirection = CSSFlexDirection.ROW;
-        node_1.style.width = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4905,26 +4912,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 58;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 58;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 58;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 58;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 20;
-          node_2.layout.left = 8;
-          node_2.layout.width = 172;
-          node_2.layout.height = 18;
+          node_2.layout.position[POSITION_TOP] = 20;
+          node_2.layout.position[POSITION_LEFT] = 8;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 172;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
         }
       }
     }
@@ -4942,7 +4949,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -4962,26 +4969,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 76;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 76;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 76;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 76;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 20;
-          node_2.layout.left = 20;
-          node_2.layout.width = 160;
-          node_2.layout.height = 36;
+          node_2.layout.position[POSITION_TOP] = 20;
+          node_2.layout.position[POSITION_LEFT] = 20;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 160;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 36;
         }
       }
     }
@@ -4995,35 +5002,35 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionLeft = 0;
-        node_1.style.positionTop = 0;
-        node_1.style.positionRight = 0;
-        node_1.style.positionBottom = 0;
+        node_1.style.position[POSITION_LEFT] = 0;
+        node_1.style.position[POSITION_TOP] = 0;
+        node_1.style.position[POSITION_RIGHT] = 0;
+        node_1.style.position[POSITION_BOTTOM] = 0;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -5037,8 +5044,8 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignSelf = CSSAlign.FLEX_START;
-      node_0.style.width = 100;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -5054,23 +5061,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 25;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 25;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 25;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 75;
+        node_1.layout.position[POSITION_TOP] = 25;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 75;
       }
     }
 
@@ -5085,8 +5092,8 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.alignSelf = CSSAlign.FLEX_START;
-      node_0.style.width = 100;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -5102,23 +5109,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 75;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 25;
+        node_1.layout.position[POSITION_TOP] = 75;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 25;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 75;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 75;
       }
     }
 
@@ -5133,8 +5140,8 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
       node_0.style.alignSelf = CSSAlign.FLEX_START;
-      node_0.style.width = 100;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -5150,23 +5157,23 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5183,35 +5190,35 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 50;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionLeft = 0;
-        node_1.style.positionRight = 0;
+        node_1.style.position[POSITION_LEFT] = 0;
+        node_1.style.position[POSITION_RIGHT] = 0;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 50;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 50;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 50;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 50;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5224,32 +5231,32 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionTop = 0;
-        node_1.style.positionBottom = 20;
+        node_1.style.position[POSITION_TOP] = 0;
+        node_1.style.position[POSITION_BOTTOM] = 20;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 80;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 80;
       }
     }
 
@@ -5262,24 +5269,24 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.justifyContent = CSSJustify.CENTER;
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionLeft = 0;
-        node_1.style.positionTop = 0;
-        node_1.style.positionRight = 0;
-        node_1.style.positionBottom = 0;
+        node_1.style.position[POSITION_LEFT] = 0;
+        node_1.style.position[POSITION_TOP] = 0;
+        node_1.style.position[POSITION_RIGHT] = 0;
+        node_1.style.position[POSITION_BOTTOM] = 0;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.width = 100;
-          node_2.style.height = 100;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
         }
       }
     }
@@ -5287,26 +5294,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 50;
-          node_2.layout.left = 0;
-          node_2.layout.width = 100;
-          node_2.layout.height = 100;
+          node_2.layout.position[POSITION_TOP] = 50;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
         }
       }
     }
@@ -5320,31 +5327,31 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionBottom = 0;
+        node_1.style.position[POSITION_BOTTOM] = 0;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5357,31 +5364,31 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.positionRight = 0;
+        node_1.style.position[POSITION_RIGHT] = 0;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 100;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5394,32 +5401,32 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.height = 10;
-        node_1.style.positionBottom = 0;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
+        node_1.style.position[POSITION_BOTTOM] = 0;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 90;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 10;
+        node_1.layout.position[POSITION_TOP] = 90;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
       }
     }
 
@@ -5432,32 +5439,32 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.width = 10;
-        node_1.style.positionRight = 0;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 10;
+        node_1.style.position[POSITION_RIGHT] = 0;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 90;
-        node_1.layout.width = 10;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 90;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 10;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5475,26 +5482,26 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.height = 10;
-        node_1.style.positionBottom = 0;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
+        node_1.style.position[POSITION_BOTTOM] = 0;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = -10;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 10;
+        node_1.layout.position[POSITION_TOP] = -10;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
       }
     }
 
@@ -5512,26 +5519,26 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.width = 10;
-        node_1.style.positionRight = 0;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 10;
+        node_1.style.position[POSITION_RIGHT] = 0;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = -10;
-        node_1.layout.width = 10;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = -10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 10;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5556,18 +5563,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 1;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 1;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 1;
       }
     }
 
@@ -5592,18 +5599,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = -3;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = -3;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5628,18 +5635,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 20;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 20;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 20;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 20;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5664,18 +5671,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 5;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 5;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
       }
     }
 
@@ -5688,12 +5695,12 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 800;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 800;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.positionLeft = 5;
+        node_1.style.position[POSITION_LEFT] = 5;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
@@ -5705,26 +5712,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 800;
-      node_0.layout.height = 0;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 800;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 0;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 5;
-        node_1.layout.width = 800;
-        node_1.layout.height = 0;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 800;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 800;
-          node_2.layout.height = 0;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 800;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 0;
         }
       }
     }
@@ -5740,47 +5747,47 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
       node_0.style.flexWrap = CSSWrap.WRAP;
-      node_0.style.width = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 40;
-        node_1.style.height = 10;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 40;
-        node_1.style.height = 10;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
         node_1 = node_0.getChildAt(2);
-        node_1.style.width = 40;
-        node_1.style.height = 10;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 20;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 20;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 40;
-        node_1.layout.height = 10;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 40;
-        node_1.layout.width = 40;
-        node_1.layout.height = 10;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 40;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 10;
-        node_1.layout.left = 0;
-        node_1.layout.width = 40;
-        node_1.layout.height = 10;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
       }
     }
 
@@ -5796,47 +5803,47 @@ public class LayoutEngineTest {
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
       node_0.style.flexWrap = CSSWrap.WRAP;
-      node_0.style.width = 100;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 40;
-        node_1.style.height = 10;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 40;
-        node_1.style.height = 10;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
         node_1 = node_0.getChildAt(2);
-        node_1.style.width = 40;
-        node_1.style.height = 10;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 20;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 20;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 60;
-        node_1.layout.width = 40;
-        node_1.layout.height = 10;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 60;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 20;
-        node_1.layout.width = 40;
-        node_1.layout.height = 10;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 20;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 10;
-        node_1.layout.left = 60;
-        node_1.layout.width = 40;
-        node_1.layout.height = 10;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 60;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
       }
     }
 
@@ -5850,37 +5857,37 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexWrap = CSSWrap.WRAP;
-      node_0.style.height = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.height = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 0;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 0;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 0;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -5893,8 +5900,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       node_0.style.maxWidth = 90;
       node_0.style.maxHeight = 190;
     }
@@ -5902,10 +5909,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 90;
-      node_0.layout.height = 190;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 90;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 190;
     }
 
     test("should use max bounds", root_node, root_layout);
@@ -5917,8 +5924,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       node_0.style.minWidth = 110;
       node_0.style.minHeight = 210;
     }
@@ -5926,10 +5933,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 110;
-      node_0.layout.height = 210;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 110;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 210;
     }
 
     test("should use min bounds", root_node, root_layout);
@@ -5941,8 +5948,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       node_0.style.maxWidth = 90;
       node_0.style.maxHeight = 190;
       node_0.style.minWidth = 110;
@@ -5952,10 +5959,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 110;
-      node_0.layout.height = 210;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 110;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 210;
     }
 
     test("should use min bounds over max bounds", root_node, root_layout);
@@ -5967,8 +5974,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       node_0.style.maxWidth = 80;
       node_0.style.maxHeight = 180;
       node_0.style.minWidth = 90;
@@ -5978,10 +5985,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 90;
-      node_0.layout.height = 190;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 90;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 190;
     }
 
     test("should use min bounds over max bounds and natural width", root_node, root_layout);
@@ -5993,8 +6000,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       node_0.style.minWidth = -10;
       node_0.style.minHeight = -20;
     }
@@ -6002,10 +6009,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
     }
 
     test("should ignore negative min bounds", root_node, root_layout);
@@ -6017,8 +6024,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 100;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       node_0.style.maxWidth = -10;
       node_0.style.maxHeight = -20;
     }
@@ -6026,10 +6033,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
     }
 
     test("should ignore negative max bounds", root_node, root_layout);
@@ -6052,10 +6059,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 40;
-      node_0.layout.height = 30;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 40;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 30;
     }
 
     test("should use padded size over max bounds", root_node, root_layout);
@@ -6078,10 +6085,10 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 50;
-      node_0.layout.height = 40;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 50;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 40;
     }
 
     test("should use min size over padded size", root_node, root_layout);
@@ -6094,8 +6101,8 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6112,28 +6119,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 50;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 50;
-        node_1.layout.width = 200;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 50;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 250;
-        node_1.layout.width = 50;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 250;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6148,8 +6155,8 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6166,28 +6173,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 250;
-        node_1.layout.width = 50;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 250;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 50;
-        node_1.layout.width = 200;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 50;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 50;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6201,8 +6208,8 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6220,28 +6227,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 100;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 200;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 200;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6256,8 +6263,8 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6275,28 +6282,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 200;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 200;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 100;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6310,8 +6317,8 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6328,28 +6335,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 120;
-        node_1.layout.width = 60;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 120;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 180;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 180;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6364,8 +6371,8 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6382,28 +6389,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 180;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 180;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 120;
-        node_1.layout.width = 60;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 120;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6417,8 +6424,8 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6437,28 +6444,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 60;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 60;
-        node_1.layout.width = 60;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 60;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 120;
-        node_1.layout.width = 60;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 120;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6473,8 +6480,8 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6493,28 +6500,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 240;
-        node_1.layout.width = 60;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 240;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 180;
-        node_1.layout.width = 60;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 180;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 120;
-        node_1.layout.width = 60;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 120;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6528,8 +6535,8 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6548,28 +6555,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 120;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 120;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 240;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 240;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6584,8 +6591,8 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
@@ -6604,28 +6611,28 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 3);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 180;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 180;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 60;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 60;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = -60;
-        node_1.layout.width = 120;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = -60;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 120;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6638,8 +6645,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -6653,18 +6660,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 300;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 300;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6677,8 +6684,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -6691,18 +6698,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 290;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 290;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6715,8 +6722,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 300;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -6729,18 +6736,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 310;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 310;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
       }
     }
 
@@ -6761,34 +6768,34 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 300;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 300;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 200;
-        node_1.style.height = 300;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 300;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 600;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 600;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 300;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 300;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 300;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 300;
+        node_1.layout.position[POSITION_TOP] = 300;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 300;
       }
     }
 
@@ -6807,34 +6814,34 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 300;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 300;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 200;
-        node_1.style.height = 300;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 300;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 100;
-      node_0.layout.height = 500;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 500;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 300;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 300;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 300;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 300;
+        node_1.layout.position[POSITION_TOP] = 300;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 300;
       }
     }
 
@@ -6853,34 +6860,34 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 200;
-        node_1.style.height = 300;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 300;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 200;
-        node_1.style.height = 300;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 300;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 700;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 700;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 300;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 300;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 300;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 300;
+        node_1.layout.position[POSITION_TOP] = 300;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 300;
       }
     }
 
@@ -6894,12 +6901,12 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignItems = CSSAlign.STRETCH;
-      node_0.style.width = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.style.maxWidth = 1100;
         node_1.style.maxHeight = 110;
         node_1.style.minWidth = 900;
@@ -6910,18 +6917,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 100;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 1000;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 1000;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -6935,12 +6942,12 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignItems = CSSAlign.STRETCH;
-      node_0.style.width = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.style.maxWidth = 900;
         node_1.style.maxHeight = 90;
       }
@@ -6949,18 +6956,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 90;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 90;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 900;
-        node_1.layout.height = 90;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 900;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 90;
       }
     }
 
@@ -6974,12 +6981,12 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.alignItems = CSSAlign.STRETCH;
-      node_0.style.width = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.style.minWidth = 1100;
         node_1.style.minHeight = 110;
       }
@@ -6988,18 +6995,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 110;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 110;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 1100;
-        node_1.layout.height = 110;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 1100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 110;
       }
     }
 
@@ -7013,12 +7020,12 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.style.minWidth = 100;
         node_1.style.minHeight = 110;
       }
@@ -7027,18 +7034,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 110;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 110;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 110;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 110;
       }
     }
 
@@ -7053,12 +7060,12 @@ public class LayoutEngineTest {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
       node_0.style.flexDirection = CSSFlexDirection.ROW;
-      node_0.style.width = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.style.minWidth = 100;
         node_1.style.minHeight = 110;
       }
@@ -7067,18 +7074,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 110;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 110;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 900;
-        node_1.layout.width = 100;
-        node_1.layout.height = 110;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 900;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 110;
       }
     }
 
@@ -7091,8 +7098,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -7100,28 +7107,28 @@ public class LayoutEngineTest {
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
         node_1.style.maxWidth = 500;
         node_1.style.maxHeight = 600;
-        node_1.style.positionLeft = 100;
-        node_1.style.positionTop = 100;
-        node_1.style.positionRight = 100;
-        node_1.style.positionBottom = 100;
+        node_1.style.position[POSITION_LEFT] = 100;
+        node_1.style.position[POSITION_TOP] = 100;
+        node_1.style.position[POSITION_RIGHT] = 100;
+        node_1.style.position[POSITION_BOTTOM] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 100;
-        node_1.layout.width = 500;
-        node_1.layout.height = 600;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 500;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 600;
       }
     }
 
@@ -7134,8 +7141,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 1000;
-      node_0.style.height = 1000;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -7143,28 +7150,28 @@ public class LayoutEngineTest {
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
         node_1.style.minWidth = 900;
         node_1.style.minHeight = 1000;
-        node_1.style.positionLeft = 100;
-        node_1.style.positionTop = 100;
-        node_1.style.positionRight = 100;
-        node_1.style.positionBottom = 100;
+        node_1.style.position[POSITION_LEFT] = 100;
+        node_1.style.position[POSITION_TOP] = 100;
+        node_1.style.position[POSITION_RIGHT] = 100;
+        node_1.style.position[POSITION_BOTTOM] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 1000;
-      node_0.layout.height = 1000;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 100;
-        node_1.layout.width = 900;
-        node_1.layout.height = 1000;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 900;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 1000;
       }
     }
 
@@ -7177,8 +7184,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 400;
-      node_0.style.height = 400;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 400;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 400;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -7190,19 +7197,19 @@ public class LayoutEngineTest {
         node_1.setPadding(Spacing.BOTTOM, 10);
         node_1.setPadding(Spacing.START, 10);
         node_1.setPadding(Spacing.END, 10);
-        node_1.style.positionLeft = 100;
-        node_1.style.positionTop = 100;
-        node_1.style.positionRight = 100;
-        node_1.style.positionBottom = 100;
+        node_1.style.position[POSITION_LEFT] = 100;
+        node_1.style.position[POSITION_TOP] = 100;
+        node_1.style.position[POSITION_RIGHT] = 100;
+        node_1.style.position[POSITION_BOTTOM] = 100;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.style.positionType = CSSPositionType.ABSOLUTE;
-          node_2.style.positionLeft = 10;
-          node_2.style.positionTop = 10;
-          node_2.style.positionRight = 10;
-          node_2.style.positionBottom = 10;
+          node_2.style.position[POSITION_LEFT] = 10;
+          node_2.style.position[POSITION_TOP] = 10;
+          node_2.style.position[POSITION_RIGHT] = 10;
+          node_2.style.position[POSITION_BOTTOM] = 10;
         }
       }
     }
@@ -7210,26 +7217,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 400;
-      node_0.layout.height = 400;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 400;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 400;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 100;
-        node_1.layout.width = 200;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 10;
-          node_2.layout.left = 10;
-          node_2.layout.width = 180;
-          node_2.layout.height = 180;
+          node_2.layout.position[POSITION_TOP] = 10;
+          node_2.layout.position[POSITION_LEFT] = 10;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 180;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 180;
         }
       }
     }
@@ -7243,8 +7250,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 400;
-      node_0.style.height = 400;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 400;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 400;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -7262,19 +7269,19 @@ public class LayoutEngineTest {
         node_1.setBorder(Spacing.BOTTOM, 1);
         node_1.setBorder(Spacing.START, 1);
         node_1.setBorder(Spacing.END, 1);
-        node_1.style.positionLeft = 100;
-        node_1.style.positionTop = 100;
-        node_1.style.positionRight = 100;
-        node_1.style.positionBottom = 100;
+        node_1.style.position[POSITION_LEFT] = 100;
+        node_1.style.position[POSITION_TOP] = 100;
+        node_1.style.position[POSITION_RIGHT] = 100;
+        node_1.style.position[POSITION_BOTTOM] = 100;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.style.positionType = CSSPositionType.ABSOLUTE;
-          node_2.style.positionLeft = 10;
-          node_2.style.positionTop = 10;
-          node_2.style.positionRight = 10;
-          node_2.style.positionBottom = 10;
+          node_2.style.position[POSITION_LEFT] = 10;
+          node_2.style.position[POSITION_TOP] = 10;
+          node_2.style.position[POSITION_RIGHT] = 10;
+          node_2.style.position[POSITION_BOTTOM] = 10;
         }
       }
     }
@@ -7282,26 +7289,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 400;
-      node_0.layout.height = 400;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 400;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 400;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 100;
-        node_1.layout.left = 100;
-        node_1.layout.width = 200;
-        node_1.layout.height = 200;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 11;
-          node_2.layout.left = 11;
-          node_2.layout.width = 178;
-          node_2.layout.height = 178;
+          node_2.layout.position[POSITION_TOP] = 11;
+          node_2.layout.position[POSITION_LEFT] = 11;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 178;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 178;
         }
       }
     }
@@ -7315,8 +7322,8 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 400;
-      node_0.style.height = 400;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 400;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 400;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
@@ -7333,10 +7340,10 @@ public class LayoutEngineTest {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.style.positionType = CSSPositionType.ABSOLUTE;
-          node_2.style.positionLeft = 10;
-          node_2.style.positionTop = 10;
-          node_2.style.positionRight = 10;
-          node_2.style.positionBottom = 10;
+          node_2.style.position[POSITION_LEFT] = 10;
+          node_2.style.position[POSITION_TOP] = 10;
+          node_2.style.position[POSITION_RIGHT] = 10;
+          node_2.style.position[POSITION_BOTTOM] = 10;
         }
       }
     }
@@ -7344,26 +7351,26 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 400;
-      node_0.layout.height = 400;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 400;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 400;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 400;
-        node_1.layout.height = 400;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 400;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 400;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 10;
-          node_2.layout.left = 10;
-          node_2.layout.width = 380;
-          node_2.layout.height = 380;
+          node_2.layout.position[POSITION_TOP] = 10;
+          node_2.layout.position[POSITION_LEFT] = 10;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 380;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 380;
         }
       }
     }
@@ -7378,8 +7385,8 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
-      node_0.style.width = 200;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
@@ -7389,11 +7396,11 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.width = 50;
-          node_2.style.height = 50;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 50;
           node_2 = node_1.getChildAt(1);
-          node_2.style.width = 50;
-          node_2.style.height = 50;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 50;
         }
         node_1 = node_0.getChildAt(1);
         node_1.style.direction = CSSDirection.LTR;
@@ -7402,11 +7409,11 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.width = 50;
-          node_2.style.height = 50;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 50;
           node_2 = node_1.getChildAt(1);
-          node_2.style.width = 50;
-          node_2.style.height = 50;
+          node_2.style.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 50;
         }
       }
     }
@@ -7414,50 +7421,50 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 2);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         addChildren(node_1, 2);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 150;
-          node_2.layout.width = 50;
-          node_2.layout.height = 50;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 150;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 50;
           node_2 = node_1.getChildAt(1);
-          node_2.layout.top = 0;
-          node_2.layout.left = 100;
-          node_2.layout.width = 50;
-          node_2.layout.height = 50;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 100;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 50;
         }
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 50;
-        node_1.layout.left = 0;
-        node_1.layout.width = 200;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 50;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         addChildren(node_1, 2);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.layout.top = 0;
-          node_2.layout.left = 0;
-          node_2.layout.width = 50;
-          node_2.layout.height = 50;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 50;
           node_2 = node_1.getChildAt(1);
-          node_2.layout.top = 0;
-          node_2.layout.left = 50;
-          node_2.layout.width = 50;
-          node_2.layout.height = 50;
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 50;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 50;
         }
       }
     }
@@ -7474,72 +7481,72 @@ public class LayoutEngineTest {
       node_0.style.flexDirection = CSSFlexDirection.ROW;
       node_0.style.justifyContent = CSSJustify.SPACE_BETWEEN;
       node_0.style.flexWrap = CSSWrap.WRAP;
-      node_0.style.width = 320;
-      node_0.style.height = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 320;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 6);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(2);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(3);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(4);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(5);
-        node_1.style.width = 100;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 320;
-      node_0.layout.height = 200;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 320;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
       addChildren(node_0, 6);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 0;
-        node_1.layout.left = 110;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 110;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 0;
-        node_1.layout.left = 220;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 220;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(3);
-        node_1.layout.top = 100;
-        node_1.layout.left = 0;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(4);
-        node_1.layout.top = 100;
-        node_1.layout.left = 110;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 110;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(5);
-        node_1.layout.top = 100;
-        node_1.layout.left = 220;
-        node_1.layout.width = 100;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 100;
+        node_1.layout.position[POSITION_LEFT] = 220;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
       }
     }
 
@@ -7552,7 +7559,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       node_0.setPadding(Spacing.LEFT, 5);
       node_0.setPadding(Spacing.RIGHT, 5);
       node_0.setPadding(Spacing.START, 15);
@@ -7561,25 +7568,25 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 15;
-        node_1.layout.width = 170;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 15;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 170;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7592,12 +7599,12 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 5);
         node_1.setMargin(Spacing.RIGHT, 5);
         node_1.setMargin(Spacing.START, 15);
@@ -7608,18 +7615,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 15;
-        node_1.layout.width = 170;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 15;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 170;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7632,7 +7639,7 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       node_0.setBorder(Spacing.LEFT, 5);
       node_0.setBorder(Spacing.RIGHT, 5);
       node_0.setBorder(Spacing.START, 15);
@@ -7641,25 +7648,25 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 15;
-        node_1.layout.width = 170;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 15;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 170;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7672,32 +7679,32 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       node_0.setPadding(Spacing.START, 15);
       node_0.setPadding(Spacing.END, 5);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 15;
-        node_1.layout.width = 180;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 15;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 180;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7711,32 +7718,32 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       node_0.setPadding(Spacing.START, 15);
       node_0.setPadding(Spacing.END, 5);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 5;
-        node_1.layout.width = 180;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 180;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7749,12 +7756,12 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.START, 15);
         node_1.setMargin(Spacing.END, 5);
       }
@@ -7763,18 +7770,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 15;
-        node_1.layout.width = 180;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 15;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 180;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7787,13 +7794,13 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.direction = CSSDirection.RTL;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.START, 15);
         node_1.setMargin(Spacing.END, 5);
       }
@@ -7802,18 +7809,18 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 5;
-        node_1.layout.width = 180;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 180;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7826,32 +7833,32 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       node_0.setBorder(Spacing.START, 15);
       node_0.setBorder(Spacing.END, 5);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 15;
-        node_1.layout.width = 180;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 15;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 180;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7865,32 +7872,32 @@ public class LayoutEngineTest {
     {
       TestCSSNode node_0 = root_node;
       node_0.style.direction = CSSDirection.RTL;
-      node_0.style.width = 200;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 200;
       node_0.setBorder(Spacing.START, 15);
       node_0.setBorder(Spacing.END, 5);
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 200;
-      node_0.layout.height = 50;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 50;
       addChildren(node_0, 1);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 0;
-        node_1.layout.left = 5;
-        node_1.layout.width = 180;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 5;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 180;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 
@@ -7907,14 +7914,14 @@ public class LayoutEngineTest {
       node_0.style.alignContent = CSSAlign.STRETCH;
       node_0.style.alignItems = CSSAlign.FLEX_START;
       node_0.style.flexWrap = CSSWrap.WRAP;
-      node_0.style.width = 300;
-      node_0.style.height = 380;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 380;
       addChildren(node_0, 15);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7922,8 +7929,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(1);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7931,8 +7938,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(2);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7940,8 +7947,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(3);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7949,8 +7956,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(4);
-        node_1.style.width = 50;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7959,8 +7966,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(5);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7968,8 +7975,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(6);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7977,8 +7984,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(7);
-        node_1.style.width = 50;
-        node_1.style.height = 100;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7986,8 +7993,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(8);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -7995,8 +8002,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(9);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -8005,8 +8012,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(10);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -8014,8 +8021,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(11);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -8023,8 +8030,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(12);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -8033,8 +8040,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(13);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -8042,8 +8049,8 @@ public class LayoutEngineTest {
         node_1.setMargin(Spacing.START, 10);
         node_1.setMargin(Spacing.END, 10);
         node_1 = node_0.getChildAt(14);
-        node_1.style.width = 50;
-        node_1.style.height = 50;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
         node_1.setMargin(Spacing.LEFT, 10);
         node_1.setMargin(Spacing.TOP, 10);
         node_1.setMargin(Spacing.RIGHT, 10);
@@ -8056,88 +8063,88 @@ public class LayoutEngineTest {
     TestCSSNode root_layout = new TestCSSNode();
     {
       TestCSSNode node_0 = root_layout;
-      node_0.layout.top = 0;
-      node_0.layout.left = 0;
-      node_0.layout.width = 300;
-      node_0.layout.height = 380;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 300;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 380;
       addChildren(node_0, 15);
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.layout.top = 10;
-        node_1.layout.left = 10;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(1);
-        node_1.layout.top = 10;
-        node_1.layout.left = 80;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 80;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(2);
-        node_1.layout.top = 10;
-        node_1.layout.left = 150;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 150;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(3);
-        node_1.layout.top = 10;
-        node_1.layout.left = 220;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 220;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(4);
-        node_1.layout.top = 92.5f;
-        node_1.layout.left = 10;
-        node_1.layout.width = 50;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 92.5f;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(5);
-        node_1.layout.top = 92.5f;
-        node_1.layout.left = 80;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 92.5f;
+        node_1.layout.position[POSITION_LEFT] = 80;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(6);
-        node_1.layout.top = 92.5f;
-        node_1.layout.left = 150;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 92.5f;
+        node_1.layout.position[POSITION_LEFT] = 150;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(7);
-        node_1.layout.top = 92.5f;
-        node_1.layout.left = 220;
-        node_1.layout.width = 50;
-        node_1.layout.height = 100;
+        node_1.layout.position[POSITION_TOP] = 92.5f;
+        node_1.layout.position[POSITION_LEFT] = 220;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(8);
-        node_1.layout.top = 225;
-        node_1.layout.left = 10;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 225;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(9);
-        node_1.layout.top = 225;
-        node_1.layout.left = 80;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 225;
+        node_1.layout.position[POSITION_LEFT] = 80;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(10);
-        node_1.layout.top = 225;
-        node_1.layout.left = 150;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 225;
+        node_1.layout.position[POSITION_LEFT] = 150;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(11);
-        node_1.layout.top = 225;
-        node_1.layout.left = 220;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 225;
+        node_1.layout.position[POSITION_LEFT] = 220;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(12);
-        node_1.layout.top = 307.5f;
-        node_1.layout.left = 10;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 307.5f;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(13);
-        node_1.layout.top = 307.5f;
-        node_1.layout.left = 80;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 307.5f;
+        node_1.layout.position[POSITION_LEFT] = 80;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
         node_1 = node_0.getChildAt(14);
-        node_1.layout.top = 307.5f;
-        node_1.layout.left = 150;
-        node_1.layout.width = 50;
-        node_1.layout.height = 50;
+        node_1.layout.position[POSITION_TOP] = 307.5f;
+        node_1.layout.position[POSITION_LEFT] = 150;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 50;
       }
     }
 

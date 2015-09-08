@@ -27,13 +27,17 @@ public class CSSStyle {
   public Spacing padding = new Spacing();
   public Spacing border = new Spacing();
 
-  public float positionTop = CSSConstants.UNDEFINED;
-  public float positionBottom = CSSConstants.UNDEFINED;
-  public float positionLeft = CSSConstants.UNDEFINED;
-  public float positionRight = CSSConstants.UNDEFINED;
+  public float[] position = {
+      CSSConstants.UNDEFINED,
+      CSSConstants.UNDEFINED,
+      CSSConstants.UNDEFINED,
+      CSSConstants.UNDEFINED,
+  };
 
-  public float width = CSSConstants.UNDEFINED;
-  public float height = CSSConstants.UNDEFINED;
+  public float[] dimensions = {
+      CSSConstants.UNDEFINED,
+      CSSConstants.UNDEFINED,
+  };
 
   public float minWidth = CSSConstants.UNDEFINED;
   public float minHeight = CSSConstants.UNDEFINED;
