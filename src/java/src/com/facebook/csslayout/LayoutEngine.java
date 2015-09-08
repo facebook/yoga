@@ -520,6 +520,7 @@ public class LayoutEngine {
     CSSFlexDirection mainAxis = resolveAxis(getFlexDirection(node), direction);
     CSSFlexDirection crossAxis = getCrossFlexDirection(mainAxis, direction);
     CSSFlexDirection resolvedRowAxis = resolveAxis(CSSFlexDirection.ROW, direction);
+    CSSFlexDirection resolvedColumnAxis = resolveAxis(CSSFlexDirection.COLUMN, direction);
   
     // Handle width and height style attributes
     setDimensionFromStyle(node, mainAxis);
@@ -541,29 +542,48 @@ public class LayoutEngine {
   
     if (isMeasureDefined(node)) {
       float width = CSSConstants.UNDEFINED;
+      float height = CSSConstants.UNDEFINED;
+  
       if (isDimDefined(node, resolvedRowAxis)) {
         width = node.style.width;
       } else if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(resolvedRowAxis)))) {
         width = getLayoutDimension(node, getDim(resolvedRowAxis));
-      } else {
-        width = parentMaxWidth -
+      } else if (!CSSConstants.isUndefined(parentMaxWidth)) {
+        width = parentMaxWidth - 
           getMarginAxis(node, resolvedRowAxis);
       }
-      width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
+  
+      if (!CSSConstants.isUndefined(width)) {
+        width -= getPaddingAndBorderAxis(node, resolvedRowAxis);
+      }
+  
+      if (isDimDefined(node, resolvedColumnAxis)) {
+        height = node.style.height;
+      } else if (!CSSConstants.isUndefined(getLayoutDimension(node, getDim(resolvedColumnAxis)))) {
+        height = getLayoutDimension(node, getDim(resolvedColumnAxis));
+      } else if (!CSSConstants.isUndefined(parentMaxHeight)) {
+        height = parentMaxHeight - 
+          getMarginAxis(node, resolvedColumnAxis);
+      }
+  
+      if (!CSSConstants.isUndefined(height)) {
+        height -= getPaddingAndBorderAxis(node, resolvedColumnAxis);
+      }
   
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
       // the element is flexible.
       boolean isRowUndefined = !isDimDefined(node, resolvedRowAxis) &&
         CSSConstants.isUndefined(getLayoutDimension(node, getDim(resolvedRowAxis)));
-      boolean isColumnUndefined = !isDimDefined(node, CSSFlexDirection.COLUMN) &&
-        CSSConstants.isUndefined(getLayoutDimension(node, getDim(CSSFlexDirection.COLUMN)));
+      boolean isColumnUndefined = !isDimDefined(node, resolvedColumnAxis) &&
+        CSSConstants.isUndefined(getLayoutDimension(node, getDim(resolvedColumnAxis)));
   
-      // Let's not measure the text if we already know both dimensions
+      // Let's not measure the node if we already know both dimensions
       if (isRowUndefined || isColumnUndefined) {
         MeasureOutput measureDim = node.measure(
                     layoutContext.measureOutput,
-          width
+          width,
+          height
         );
         if (isRowUndefined) {
           node.layout.width = measureDim.width +
@@ -571,9 +591,10 @@ public class LayoutEngine {
         }
         if (isColumnUndefined) {
           node.layout.height = measureDim.height +
-            getPaddingAndBorderAxis(node, CSSFlexDirection.COLUMN);
+            getPaddingAndBorderAxis(node, resolvedColumnAxis);
         }
       }
+  
       if (node.getChildCount() == 0) {
         return;
       }
@@ -654,6 +675,7 @@ public class LayoutEngine {
       int nonFlexibleChildrenCount = 0;
   
       float maxWidth;
+      float maxHeight;
       for (i = startLine; i < node.getChildCount(); ++i) {
         child = node.getChildAt(i);
         float nextContentDim = 0;
@@ -673,20 +695,28 @@ public class LayoutEngine {
   
         } else {
           maxWidth = CSSConstants.UNDEFINED;
-          if (!isRowDirection(mainAxis)) {
+          if (isDimDefined(node, resolvedRowAxis)) {
+            maxWidth = getLayoutDimension(node, getDim(resolvedRowAxis)) -
+              getPaddingAndBorderAxis(node, resolvedRowAxis);
+          } else if (!isRowDirection(mainAxis) && !CSSConstants.isUndefined(parentMaxWidth)) {
             maxWidth = parentMaxWidth -
               getMarginAxis(node, resolvedRowAxis) -
               getPaddingAndBorderAxis(node, resolvedRowAxis);
+          }
   
-            if (isDimDefined(node, resolvedRowAxis)) {
-              maxWidth = getLayoutDimension(node, getDim(resolvedRowAxis)) -
-                getPaddingAndBorderAxis(node, resolvedRowAxis);
-            }
+          maxHeight = CSSConstants.UNDEFINED;
+          if (isDimDefined(node, resolvedColumnAxis)) {
+            maxHeight = getLayoutDimension(node, getDim(resolvedColumnAxis)) -
+              getPaddingAndBorderAxis(node, resolvedColumnAxis);
+          } else if (!isRowDirection(crossAxis) && !CSSConstants.isUndefined(parentMaxHeight)) {
+            maxHeight = parentMaxHeight -
+              getMarginAxis(node, resolvedColumnAxis) -
+              getPaddingAndBorderAxis(node, resolvedColumnAxis);
           }
   
           // This is the main recursive call. We layout non flexible children.
           if (alreadyComputedNextLayout == 0) {
-            layoutNode(layoutContext, child, maxWidth, direction);
+            layoutNode(layoutContext, child, maxWidth, maxHeight, direction);
           }
   
           // Absolute positioned elements do not take part of the layout, so we
@@ -776,14 +806,24 @@ public class LayoutEngine {
             if (isDimDefined(node, resolvedRowAxis)) {
               maxWidth = getLayoutDimension(node, getDim(resolvedRowAxis)) -
                 getPaddingAndBorderAxis(node, resolvedRowAxis);
-            } else if (!isRowDirection(mainAxis)) {
+            } else if (!isRowDirection(mainAxis) && !CSSConstants.isUndefined(parentMaxWidth)) {
               maxWidth = parentMaxWidth -
                 getMarginAxis(node, resolvedRowAxis) -
                 getPaddingAndBorderAxis(node, resolvedRowAxis);
             }
   
+            maxHeight = CSSConstants.UNDEFINED;
+            if (isDimDefined(node, resolvedColumnAxis)) {
+              maxHeight = getLayoutDimension(node, getDim(resolvedColumnAxis)) -
+                getPaddingAndBorderAxis(node, resolvedColumnAxis);
+            } else if (!isRowDirection(crossAxis) && !CSSConstants.isUndefined(parentMaxHeight)) {
+              maxHeight = parentMaxHeight -
+                getMarginAxis(node, resolvedColumnAxis) -
+                getPaddingAndBorderAxis(node, resolvedColumnAxis);
+            }
+            
             // And we recursively call the layout algorithm for this child
-            layoutNode(layoutContext, child, maxWidth, direction);
+            layoutNode(layoutContext, child, maxWidth, maxHeight, direction);
           }
         }
   

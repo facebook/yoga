@@ -13,6 +13,8 @@ var testLayoutAgainstDomOnly = layoutTestUtils.testLayoutAgainstDomOnly;
 var testFillNodes = layoutTestUtils.testFillNodes;
 var testExtractNodes = layoutTestUtils.testExtractNodes;
 var text = layoutTestUtils.text;
+var box = layoutTestUtils.box;
+console.log(box);
 var texts = layoutTestUtils.texts;
 var textSizes = layoutTestUtils.textSizes;
 
@@ -1308,7 +1310,70 @@ describe('Layout', function() {
     );
   });
 
-  it('should layout space-between when remaining space is negative', function() {
+  it('should layout node with width-bound box and flex', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {width: 500, flexDirection: 'row'}, children: [
+          {style: {flex: 1, measure: box(2)}}
+        ]}
+      ]},
+      {width: 500, height: 250, top: 0, left: 0, children: [
+        {width: 500, height: 250, top: 0, left: 0, children: [
+          {width: 500, height: 250, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout node with multiple width-bound box and flex', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {width: 1000, flexDirection: 'row'}, children: [
+          {style: {flex: 1, measure: box(2)}},
+          {style: {flex: 1, measure: box(2)}}
+        ]}
+      ]},
+      {width: 1000, height: 250, top: 0, left: 0, children: [
+        {width: 1000, height: 250, top: 0, left: 0, children: [
+          {width: 500, height: 250, top: 0, left: 0},
+          {width: 500, height: 250, top: 0, left: 500}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout node with height-bound box and flex', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {height: 250, flexDirection: 'row'}, children: [
+          {style: {flex: 1, measure: box(2)}}
+        ]}
+      ]},
+      {width: 500, height: 250, top: 0, left: 0, children: [
+        {width: 500, height: 250, top: 0, left: 0, children: [
+          {width: 500, height: 250, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout node with multiple height-bound box and flex', function() {
+    testLayout(
+      {style: {}, children: [
+        {style: {height: 250, flexDirection: 'row'}, children: [
+          {style: {flex: 1, measure: box(2)}},
+          {style: {flex: 1, measure: box(2)}}
+        ]}
+      ]},
+      {width: 1000, height: 250, top: 0, left: 0, children: [
+        {width: 1000, height: 250, top: 0, left: 0, children: [
+          {width: 500, height: 250, top: 0, left: 0},
+          {width: 500, height: 250, top: 0, left: 500}
+        ]}
+      ]}
+    );
+  });
+    it('should layout space-between when remaining space is negative', function() {
     testLayout(
       {style: {height: 100, justifyContent: 'space-between'}, children: [
         {style: {height: 900}},

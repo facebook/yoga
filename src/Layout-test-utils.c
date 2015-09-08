@@ -80,9 +80,17 @@ static bool are_layout_equal(css_node_t *a, css_node_t *b) {
   return true;
 }
 
-css_dim_t measure(void *context, float width) {
+css_dim_t measure(void *context, float width, float height) {
   const char *text = (const char *)context;
+  const int ratio = atoi(text);
   css_dim_t dim;
+ 
+  if (ratio > 0) {
+    dim.dimensions[CSS_WIDTH] = height ? (ratio*height) : width;
+    dim.dimensions[CSS_HEIGHT] = width ? (width/ratio) : height;
+    return dim;
+  }
+
   if (width != width) {
     width = 1000000;
   }
@@ -106,7 +114,7 @@ css_dim_t measure(void *context, float width) {
 static int test_ran_count = 0;
 void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
   ++test_ran_count;
-  layoutNode(style, CSS_UNDEFINED, (css_direction_t)-1);
+  layoutNode(style, CSS_UNDEFINED, CSS_UNDEFINED, (css_direction_t)-1);
 
   if (!are_layout_equal(style, expected_layout)) {
     printf("%sF%s", "\x1B[31m", "\x1B[0m");
