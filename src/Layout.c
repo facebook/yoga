@@ -833,7 +833,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
 
     // We use justifyContent to figure out how to allocate the remaining
     // space available
-    } else {
+    } else if (node->style.justify_content != CSS_JUSTIFY_FLEX_START) {
       css_justify_t justifyContent = node->style.justify_content;
       if (justifyContent == CSS_JUSTIFY_CENTER) {
         leadingMainDim = remainingMainDim / 2;

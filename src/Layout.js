@@ -20,7 +20,7 @@ var computeLayout = (function() {
   var CSS_FLEX_DIRECTION_COLUMN = 'column';
   var CSS_FLEX_DIRECTION_COLUMN_REVERSE = 'column-reverse';
 
-  // var CSS_JUSTIFY_FLEX_START = 'flex-start';
+  var CSS_JUSTIFY_FLEX_START = 'flex-start';
   var CSS_JUSTIFY_CENTER = 'center';
   var CSS_JUSTIFY_FLEX_END = 'flex-end';
   var CSS_JUSTIFY_SPACE_BETWEEN = 'space-between';
@@ -701,7 +701,7 @@ var computeLayout = (function() {
 
       // We use justifyContent to figure out how to allocate the remaining
       // space available
-      } else {
+      } else if (getJustifyContent(node) !== CSS_JUSTIFY_FLEX_START) {
         var/*css_justify_t*/ justifyContent = getJustifyContent(node);
         if (justifyContent === CSS_JUSTIFY_CENTER) {
           leadingMainDim = remainingMainDim / 2;

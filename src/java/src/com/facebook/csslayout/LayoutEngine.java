@@ -650,7 +650,7 @@ public class LayoutEngine {
   
       // We use justifyContent to figure out how to allocate the remaining
       // space available
-      } else {
+      } else if (node.style.justifyContent != CSSJustify.FLEX_START) {
         CSSJustify justifyContent = node.style.justifyContent;
         if (justifyContent == CSSJustify.CENTER) {
           leadingMainDim = remainingMainDim / 2;
