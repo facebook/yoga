@@ -472,44 +472,6 @@ var computeLayout = (function() {
     var/*css_node_t**/ child;
     var/*(c)!css_flex_direction_t*//*(java)!int*/ axis;
 
-    // Pre-fill some dimensions straight from the parent
-    for (i = 0; i < childCount; ++i) {
-      child = node.children[i];
-      // Pre-fill cross axis dimensions when the child is using stretch before
-      // we call the recursive layout pass
-      if (getAlignItem(node, child) === CSS_ALIGN_STRETCH &&
-          getPositionType(child) === CSS_POSITION_RELATIVE &&
-          isCrossDimDefined &&
-          !isDimDefined(child, crossAxis)) {
-        child.layout[dim[crossAxis]] = fmaxf(
-          boundAxis(child, crossAxis, node.layout[dim[crossAxis]] -
-            paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
-          // You never want to go smaller than padding
-          getPaddingAndBorderAxis(child, crossAxis)
-        );
-      } else if (getPositionType(child) === CSS_POSITION_ABSOLUTE) {
-        // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
-        // left and right or top and bottom).
-        for (ii = 0; ii < 2; ii++) {
-          axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-          if (!isUndefined(node.layout[dim[axis]]) &&
-              !isDimDefined(child, axis) &&
-              isPosDefined(child, leading[axis]) &&
-              isPosDefined(child, trailing[axis])) {
-            child.layout[dim[axis]] = fmaxf(
-              boundAxis(child, axis, node.layout[dim[axis]] -
-                getPaddingAndBorderAxis(node, axis) -
-                getMarginAxis(child, axis) -
-                getPosition(child, leading[axis]) -
-                getPosition(child, trailing[axis])),
-              // You never want to go smaller than padding
-              getPaddingAndBorderAxis(child, axis)
-            );
-          }
-        }
-      }
-    }
-
     var/*float*/ definedMainDim = CSS_UNDEFINED;
     if (isMainDimDefined) {
       definedMainDim = node.layout[dim[mainAxis]] - paddingAndBorderAxisMain;
@@ -542,6 +504,41 @@ var computeLayout = (function() {
       var/*float*/ maxWidth;
       for (i = startLine; i < childCount; ++i) {
         child = node.children[i];
+
+        // Pre-fill cross axis dimensions when the child is using stretch before
+        // we call the recursive layout pass
+        if (getAlignItem(node, child) === CSS_ALIGN_STRETCH &&
+            getPositionType(child) === CSS_POSITION_RELATIVE &&
+            isCrossDimDefined &&
+            !isDimDefined(child, crossAxis)) {
+          child.layout[dim[crossAxis]] = fmaxf(
+            boundAxis(child, crossAxis, node.layout[dim[crossAxis]] -
+              paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
+            // You never want to go smaller than padding
+            getPaddingAndBorderAxis(child, crossAxis)
+          );
+        } else if (getPositionType(child) === CSS_POSITION_ABSOLUTE) {
+          // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
+          // left and right or top and bottom).
+          for (ii = 0; ii < 2; ii++) {
+            axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+            if (!isUndefined(node.layout[dim[axis]]) &&
+                !isDimDefined(child, axis) &&
+                isPosDefined(child, leading[axis]) &&
+                isPosDefined(child, trailing[axis])) {
+              child.layout[dim[axis]] = fmaxf(
+                boundAxis(child, axis, node.layout[dim[axis]] -
+                  getPaddingAndBorderAxis(node, axis) -
+                  getMarginAxis(child, axis) -
+                  getPosition(child, leading[axis]) -
+                  getPosition(child, trailing[axis])),
+                // You never want to go smaller than padding
+                getPaddingAndBorderAxis(child, axis)
+              );
+            }
+          }
+        }
+
         var/*float*/ nextContentDim = 0;
 
         // It only makes sense to consider a child flexible if we have a computed

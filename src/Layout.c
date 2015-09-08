@@ -604,44 +604,6 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
   css_node_t* child;
   css_flex_direction_t axis;
 
-  // Pre-fill some dimensions straight from the parent
-  for (i = 0; i < childCount; ++i) {
-    child = node->get_child(node->context, i);
-    // Pre-fill cross axis dimensions when the child is using stretch before
-    // we call the recursive layout pass
-    if (getAlignItem(node, child) == CSS_ALIGN_STRETCH &&
-        child->style.position_type == CSS_POSITION_RELATIVE &&
-        isCrossDimDefined &&
-        !isDimDefined(child, crossAxis)) {
-      child->layout.dimensions[dim[crossAxis]] = fmaxf(
-        boundAxis(child, crossAxis, node->layout.dimensions[dim[crossAxis]] -
-          paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
-        // You never want to go smaller than padding
-        getPaddingAndBorderAxis(child, crossAxis)
-      );
-    } else if (child->style.position_type == CSS_POSITION_ABSOLUTE) {
-      // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
-      // left and right or top and bottom).
-      for (ii = 0; ii < 2; ii++) {
-        axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-        if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
-            !isDimDefined(child, axis) &&
-            isPosDefined(child, leading[axis]) &&
-            isPosDefined(child, trailing[axis])) {
-          child->layout.dimensions[dim[axis]] = fmaxf(
-            boundAxis(child, axis, node->layout.dimensions[dim[axis]] -
-              getPaddingAndBorderAxis(node, axis) -
-              getMarginAxis(child, axis) -
-              getPosition(child, leading[axis]) -
-              getPosition(child, trailing[axis])),
-            // You never want to go smaller than padding
-            getPaddingAndBorderAxis(child, axis)
-          );
-        }
-      }
-    }
-  }
-
   float definedMainDim = CSS_UNDEFINED;
   if (isMainDimDefined) {
     definedMainDim = node->layout.dimensions[dim[mainAxis]] - paddingAndBorderAxisMain;
@@ -674,6 +636,41 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
     float maxWidth;
     for (i = startLine; i < childCount; ++i) {
       child = node->get_child(node->context, i);
+
+      // Pre-fill cross axis dimensions when the child is using stretch before
+      // we call the recursive layout pass
+      if (getAlignItem(node, child) == CSS_ALIGN_STRETCH &&
+          child->style.position_type == CSS_POSITION_RELATIVE &&
+          isCrossDimDefined &&
+          !isDimDefined(child, crossAxis)) {
+        child->layout.dimensions[dim[crossAxis]] = fmaxf(
+          boundAxis(child, crossAxis, node->layout.dimensions[dim[crossAxis]] -
+            paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
+          // You never want to go smaller than padding
+          getPaddingAndBorderAxis(child, crossAxis)
+        );
+      } else if (child->style.position_type == CSS_POSITION_ABSOLUTE) {
+        // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
+        // left and right or top and bottom).
+        for (ii = 0; ii < 2; ii++) {
+          axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+          if (!isUndefined(node->layout.dimensions[dim[axis]]) &&
+              !isDimDefined(child, axis) &&
+              isPosDefined(child, leading[axis]) &&
+              isPosDefined(child, trailing[axis])) {
+            child->layout.dimensions[dim[axis]] = fmaxf(
+              boundAxis(child, axis, node->layout.dimensions[dim[axis]] -
+                getPaddingAndBorderAxis(node, axis) -
+                getMarginAxis(child, axis) -
+                getPosition(child, leading[axis]) -
+                getPosition(child, trailing[axis])),
+              // You never want to go smaller than padding
+              getPaddingAndBorderAxis(child, axis)
+            );
+          }
+        }
+      }
+
       float nextContentDim = 0;
 
       // It only makes sense to consider a child flexible if we have a computed

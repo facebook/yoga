@@ -421,44 +421,6 @@ public class LayoutEngine {
     CSSNode child;
     int axis;
   
-    // Pre-fill some dimensions straight from the parent
-    for (i = 0; i < childCount; ++i) {
-      child = node.getChildAt(i);
-      // Pre-fill cross axis dimensions when the child is using stretch before
-      // we call the recursive layout pass
-      if (getAlignItem(node, child) == CSSAlign.STRETCH &&
-          child.style.positionType == CSSPositionType.RELATIVE &&
-          isCrossDimDefined &&
-          !isDimDefined(child, crossAxis)) {
-        child.layout.dimensions[dim[crossAxis]] = Math.max(
-          boundAxis(child, crossAxis, node.layout.dimensions[dim[crossAxis]] -
-            paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
-          // You never want to go smaller than padding
-          getPaddingAndBorderAxis(child, crossAxis)
-        );
-      } else if (child.style.positionType == CSSPositionType.ABSOLUTE) {
-        // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
-        // left and right or top and bottom).
-        for (ii = 0; ii < 2; ii++) {
-          axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-          if (!isUndefined(node.layout.dimensions[dim[axis]]) &&
-              !isDimDefined(child, axis) &&
-              isPosDefined(child, leading[axis]) &&
-              isPosDefined(child, trailing[axis])) {
-            child.layout.dimensions[dim[axis]] = Math.max(
-              boundAxis(child, axis, node.layout.dimensions[dim[axis]] -
-                getPaddingAndBorderAxis(node, axis) -
-                getMarginAxis(child, axis) -
-                getPosition(child, leading[axis]) -
-                getPosition(child, trailing[axis])),
-              // You never want to go smaller than padding
-              getPaddingAndBorderAxis(child, axis)
-            );
-          }
-        }
-      }
-    }
-  
     float definedMainDim = CSSConstants.UNDEFINED;
     if (isMainDimDefined) {
       definedMainDim = node.layout.dimensions[dim[mainAxis]] - paddingAndBorderAxisMain;
@@ -491,6 +453,41 @@ public class LayoutEngine {
       float maxWidth;
       for (i = startLine; i < childCount; ++i) {
         child = node.getChildAt(i);
+  
+        // Pre-fill cross axis dimensions when the child is using stretch before
+        // we call the recursive layout pass
+        if (getAlignItem(node, child) == CSSAlign.STRETCH &&
+            child.style.positionType == CSSPositionType.RELATIVE &&
+            isCrossDimDefined &&
+            !isDimDefined(child, crossAxis)) {
+          child.layout.dimensions[dim[crossAxis]] = Math.max(
+            boundAxis(child, crossAxis, node.layout.dimensions[dim[crossAxis]] -
+              paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
+            // You never want to go smaller than padding
+            getPaddingAndBorderAxis(child, crossAxis)
+          );
+        } else if (child.style.positionType == CSSPositionType.ABSOLUTE) {
+          // Pre-fill dimensions when using absolute position and both offsets for the axis are defined (either both
+          // left and right or top and bottom).
+          for (ii = 0; ii < 2; ii++) {
+            axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
+            if (!isUndefined(node.layout.dimensions[dim[axis]]) &&
+                !isDimDefined(child, axis) &&
+                isPosDefined(child, leading[axis]) &&
+                isPosDefined(child, trailing[axis])) {
+              child.layout.dimensions[dim[axis]] = Math.max(
+                boundAxis(child, axis, node.layout.dimensions[dim[axis]] -
+                  getPaddingAndBorderAxis(node, axis) -
+                  getMarginAxis(child, axis) -
+                  getPosition(child, leading[axis]) -
+                  getPosition(child, trailing[axis])),
+                // You never want to go smaller than padding
+                getPaddingAndBorderAxis(child, axis)
+              );
+            }
+          }
+        }
+  
         float nextContentDim = 0;
   
         // It only makes sense to consider a child flexible if we have a computed
