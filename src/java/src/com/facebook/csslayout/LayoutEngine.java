@@ -858,7 +858,10 @@ public class LayoutEngine {
         paddingAndBorderAxisMain
       );
   
-      needsMainTrailingPos = true;
+      if (mainAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
+          mainAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+        needsMainTrailingPos = true;
+      }
     }
   
     if (!isCrossDimDefined) {
@@ -870,7 +873,10 @@ public class LayoutEngine {
         paddingAndBorderAxisCross
       );
   
-      needsCrossTrailingPos = true;
+      if (crossAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
+          crossAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+        needsCrossTrailingPos = true;
+      }
     }
   
     // <Loop F> Set trailing position if necessary
