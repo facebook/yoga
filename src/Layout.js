@@ -458,6 +458,8 @@ var computeLayout = (function() {
 
     var/*bool*/ isNodeFlexWrap = isFlexWrap(node);
 
+    var/*css_justify_t*/ justifyContent = getJustifyContent(node);
+
     var/*float*/ leadingPaddingAndBorderMain = getLeadingPaddingAndBorder(node, mainAxis);
     var/*float*/ leadingPaddingAndBorderCross = getLeadingPaddingAndBorder(node, crossAxis);
     var/*float*/ paddingAndBorderAxisMain = getPaddingAndBorderAxis(node, mainAxis);
@@ -504,19 +506,41 @@ var computeLayout = (function() {
       var/*float*/ totalFlexible = 0;
       var/*int*/ nonFlexibleChildrenCount = 0;
 
+      // Use the line loop to position children in the main axis for as long
+      // as they are using a simple stacking behaviour. Children that are
+      // immediately stacked in the initial loop will not be touched again
+      // in <Loop C>.
+      var/*bool*/ isSimpleStackMain =
+          (isMainDimDefined && justifyContent == CSS_JUSTIFY_FLEX_START) ||
+          (!isMainDimDefined && justifyContent != CSS_JUSTIFY_CENTER);
+      var/*int*/ firstComplexMain = (isSimpleStackMain ? childCount : startLine);
+
+      // Use the initial line loop to position children in the cross axis for
+      // as long as they are relatively positioned with alignment STRETCH or
+      // FLEX_START. Children that are immediately stacked in the initial loop
+      // will not be touched again in <Loop D>.
+      var/*bool*/ isSimpleStackCross = true;
+      var/*int*/ firstComplexCross = childCount;
+
       var/*css_node_t**/ firstFlexChild = null;
       var/*css_node_t**/ currentFlexChild = null;
+
+      var/*float*/ mainDim = leadingPaddingAndBorderMain;
+      var/*float*/ crossDim = 0;
 
       var/*float*/ maxWidth;
       for (i = startLine; i < childCount; ++i) {
         child = node.children[i];
+        child.lineIndex = linesCount;
 
         child.nextAbsoluteChild = null;
         child.nextFlexChild = null;
 
+        var/*css_align_t*/ alignItem = getAlignItem(node, child);
+
         // Pre-fill cross axis dimensions when the child is using stretch before
         // we call the recursive layout pass
-        if (getAlignItem(node, child) === CSS_ALIGN_STRETCH &&
+        if (alignItem === CSS_ALIGN_STRETCH &&
             getPositionType(child) === CSS_POSITION_RELATIVE &&
             isCrossDimDefined &&
             !isDimDefined(child, crossAxis)) {
@@ -621,6 +645,44 @@ var computeLayout = (function() {
           alreadyComputedNextLayout = 1;
           break;
         }
+
+        // Disable simple stacking in the main axis for the current line as
+        // we found a non-trivial child. The remaining children will be laid out
+        // in <Loop C>.
+        if (isSimpleStackMain &&
+            (getPositionType(child) != CSS_POSITION_RELATIVE || isFlex(child))) {
+          isSimpleStackMain = false;
+          firstComplexMain = i;
+        }
+
+        // Disable simple stacking in the cross axis for the current line as
+        // we found a non-trivial child. The remaining children will be laid out
+        // in <Loop D>.
+        if (isSimpleStackCross &&
+            (getPositionType(child) != CSS_POSITION_RELATIVE ||
+                (alignItem !== CSS_ALIGN_STRETCH && alignItem != CSS_ALIGN_FLEX_START) ||
+                isUndefined(child.layout[dim[crossAxis]]))) {
+          isSimpleStackCross = false;
+          firstComplexCross = i;
+        }
+
+        if (isSimpleStackMain) {
+          child.layout[pos[mainAxis]] += mainDim;
+          if (isMainDimDefined) {
+            setTrailingPosition(node, child, mainAxis);
+          }
+
+          mainDim += getDimWithMargin(child, mainAxis);
+          crossDim = fmaxf(crossDim, boundAxis(child, crossAxis, getDimWithMargin(child, crossAxis)));
+        }
+
+        if (isSimpleStackCross) {
+          child.layout[pos[crossAxis]] += linesCrossDim + leadingPaddingAndBorderCross;
+          if (isCrossDimDefined) {
+            setTrailingPosition(node, child, crossAxis);
+          }
+        }
+
         alreadyComputedNextLayout = 0;
         mainContentDim += nextContentDim;
         endLine = i + 1;
@@ -701,8 +763,7 @@ var computeLayout = (function() {
 
       // We use justifyContent to figure out how to allocate the remaining
       // space available
-      } else if (getJustifyContent(node) !== CSS_JUSTIFY_FLEX_START) {
-        var/*css_justify_t*/ justifyContent = getJustifyContent(node);
+      } else if (justifyContent !== CSS_JUSTIFY_FLEX_START) {
         if (justifyContent === CSS_JUSTIFY_CENTER) {
           leadingMainDim = remainingMainDim / 2;
         } else if (justifyContent === CSS_JUSTIFY_FLEX_END) {
@@ -729,12 +790,10 @@ var computeLayout = (function() {
       // find their position. In order to do that, we accumulate data in
       // variables that are also useful to compute the total dimensions of the
       // container!
-      var/*float*/ crossDim = 0;
-      var/*float*/ mainDim = leadingMainDim + leadingPaddingAndBorderMain;
+      mainDim += leadingMainDim;
 
-      for (i = startLine; i < endLine; ++i) {
+      for (i = firstComplexMain; i < endLine; ++i) {
         child = node.children[i];
-        child.lineIndex = linesCount;
 
         if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
             isPosDefined(child, leading[mainAxis])) {
@@ -780,7 +839,7 @@ var computeLayout = (function() {
       }
 
       // <Loop D> Position elements in the cross axis
-      for (i = startLine; i < endLine; ++i) {
+      for (i = firstComplexCross; i < endLine; ++i) {
         child = node.children[i];
 
         if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
