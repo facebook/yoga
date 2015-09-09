@@ -329,7 +329,7 @@ public class LayoutEngine {
       CSSNode node,
       float parentMaxWidth,
       CSSDirection parentDirection) {
-    for (int i = 0; i < node.getChildCount(); i++) {
+    for (int i = 0, childCount = node.getChildCount(); i < childCount; i++) {
       node.getChildAt(i).layout.resetResult();
     }
 
