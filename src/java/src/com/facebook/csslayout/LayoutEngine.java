@@ -751,7 +751,7 @@ public class LayoutEngine {
             if (alignItem == CSSAlign.STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.
-              if (!isDimDefined(child, crossAxis)) {
+              if (isUndefined(child.layout.dimensions[dim[crossAxis]])) {
                 child.layout.dimensions[dim[crossAxis]] = Math.max(
                   boundAxis(child, crossAxis, containerCrossAxis -
                     paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),

@@ -802,7 +802,7 @@ var computeLayout = (function() {
             if (alignItem === CSS_ALIGN_STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.
-              if (!isDimDefined(child, crossAxis)) {
+              if (isUndefined(child.layout[dim[crossAxis]])) {
                 child.layout[dim[crossAxis]] = fmaxf(
                   boundAxis(child, crossAxis, containerCrossAxis -
                     paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
