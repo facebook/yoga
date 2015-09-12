@@ -63,8 +63,8 @@ public class CSSNode {
 
   public int lineIndex = 0;
 
-  CSSNode nextAbsoluteChild;
-  CSSNode nextFlexChild;
+  /*package*/ CSSNode nextAbsoluteChild;
+  /*package*/ CSSNode nextFlexChild;
 
   private @Nullable ArrayList<CSSNode> mChildren;
   private @Nullable CSSNode mParent;
