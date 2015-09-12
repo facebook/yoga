@@ -125,6 +125,18 @@ public class Spacing {
     return mSpacing[spacingType];
   }
 
+  /**
+   * Try to get start value and fallback to given type if not defined. This is used privately
+   * by the layout engine as a more efficient way to fetch direction-aware values by
+   * avoid extra method invocations.
+   */
+  float getWithFallback(int spacingType, int fallbackType) {
+    return
+        !CSSConstants.isUndefined(mSpacing[spacingType])
+            ? mSpacing[spacingType]
+            : get(fallbackType);
+  }
+
   private static float[] newFullSpacingArray() {
     return new float[] {
         CSSConstants.UNDEFINED,
