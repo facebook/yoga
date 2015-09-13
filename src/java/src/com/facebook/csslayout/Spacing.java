@@ -55,8 +55,22 @@ public class Spacing {
    */
   public static final int ALL = 8;
 
+  private static final int[] sFlagsMap = {
+    1, /*LEFT*/
+    2, /*TOP*/
+    4, /*RIGHT*/
+    8, /*BOTTOM*/
+    16, /*VERTICAL*/
+    32, /*HORIZONTAL*/
+    64, /*START*/
+    128, /*END*/
+    256, /*ALL*/
+  };
+
   private final float[] mSpacing = newFullSpacingArray();
   @Nullable private float[] mDefaultSpacing = null;
+  private int mValueFlags = 0;
+  private boolean mHasAliasesSet;
 
   /**
    * Set a spacing value.
@@ -70,6 +84,18 @@ public class Spacing {
   public boolean set(int spacingType, float value) {
     if (!FloatUtil.floatsEqual(mSpacing[spacingType], value)) {
       mSpacing[spacingType] = value;
+
+      if (CSSConstants.isUndefined(value)) {
+        mValueFlags &= ~sFlagsMap[spacingType];
+      } else {
+        mValueFlags |= sFlagsMap[spacingType];
+      }
+
+      mHasAliasesSet =
+          (mValueFlags & sFlagsMap[ALL]) != 0 ||
+          (mValueFlags & sFlagsMap[VERTICAL]) != 0 ||
+          (mValueFlags & sFlagsMap[HORIZONTAL]) != 0;
+
       return true;
     }
     return false;
@@ -100,18 +126,28 @@ public class Spacing {
    * @param spacingType one of {@link #LEFT}, {@link #TOP}, {@link #RIGHT}, {@link #BOTTOM}
    */
   public float get(int spacingType) {
-    int secondType = spacingType == TOP || spacingType == BOTTOM ? VERTICAL : HORIZONTAL;
-    float defaultValue = spacingType == START || spacingType == END ? CSSConstants.UNDEFINED : 0;
-    return
-        !CSSConstants.isUndefined(mSpacing[spacingType])
-            ? mSpacing[spacingType]
-            : !CSSConstants.isUndefined(mSpacing[secondType])
-              ? mSpacing[secondType]
-              : !CSSConstants.isUndefined(mSpacing[ALL])
-                ? mSpacing[ALL]
-                : mDefaultSpacing != null
-                  ? mDefaultSpacing[spacingType]
-                  : defaultValue;
+    float defaultValue = (mDefaultSpacing != null)
+        ? mDefaultSpacing[spacingType]
+        : (spacingType == START || spacingType == END ? CSSConstants.UNDEFINED : 0);
+
+    if (mValueFlags == 0) {
+      return defaultValue;
+    }
+
+    if ((mValueFlags & sFlagsMap[spacingType]) != 0) {
+      return mSpacing[spacingType];
+    }
+
+    if (mHasAliasesSet) {
+      int secondType = spacingType == TOP || spacingType == BOTTOM ? VERTICAL : HORIZONTAL;
+      if ((mValueFlags & sFlagsMap[secondType]) != 0) {
+        return mSpacing[secondType];
+      } else if ((mValueFlags & sFlagsMap[ALL]) != 0) {
+        return mSpacing[ALL];
+      }
+    }
+
+    return defaultValue;
   }
 
   /**
@@ -132,7 +168,7 @@ public class Spacing {
    */
   float getWithFallback(int spacingType, int fallbackType) {
     return
-        !CSSConstants.isUndefined(mSpacing[spacingType])
+        (mValueFlags & sFlagsMap[spacingType]) != 0
             ? mSpacing[spacingType]
             : get(fallbackType);
   }
