@@ -14,17 +14,17 @@ import java.util.Arrays;
  * Where the output of {@link LayoutEngine#layoutNode(CSSNode, float)} will go in the CSSNode.
  */
 public class CSSLayout {
-  static final int POSITION_LEFT = 0;
-  static final int POSITION_TOP = 1;
-  static final int POSITION_RIGHT = 2;
-  static final int POSITION_BOTTOM = 3;
+  public static final int POSITION_LEFT = 0;
+  public static final int POSITION_TOP = 1;
+  public static final int POSITION_RIGHT = 2;
+  public static final int POSITION_BOTTOM = 3;
 
-  static final int DIMENSION_WIDTH = 0;
-  static final int DIMENSION_HEIGHT = 1;
+  public static final int DIMENSION_WIDTH = 0;
+  public static final int DIMENSION_HEIGHT = 1;
 
-  float[] position = new float[4];
-  float[] dimensions = new float[2];
-  CSSDirection direction = CSSDirection.LTR;
+  public float[] position = new float[4];
+  public float[] dimensions = new float[2];
+  public CSSDirection direction = CSSDirection.LTR;
 
   /**
    * This should always get called before calling {@link LayoutEngine#layoutNode(CSSNode, float)}
