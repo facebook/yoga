@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/facebook/css-layout/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/facebook/css-layout</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2015 Facebook</copyright>
+    <tags>flexbox flex-box css layout css-layout facebook</tags>
+  </metadata>
+</package>

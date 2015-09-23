@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.CSSLayout", "Facebook.CSSLayout\Facebook.CSSLayout.csproj", "{D534FB4B-A7D4-4A29-96D3-F39A91A259BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.CSSLayout.Tests", "Facebook.CSSLayout.Tests\Facebook.CSSLayout.Tests.csproj", "{E687C8FD-0A0D-450F-853D-EC301BE1C038}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29A6932B-FDDC-4E8A-8895-7FD64CC47B7F}"
+	ProjectSection(SolutionItems) = preProject
+		..\CSharpTranspiler.js = ..\CSharpTranspiler.js
+		..\JavaTranspiler.js = ..\JavaTranspiler.js
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D534FB4B-A7D4-4A29-96D3-F39A91A259BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D534FB4B-A7D4-4A29-96D3-F39A91A259BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D534FB4B-A7D4-4A29-96D3-F39A91A259BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D534FB4B-A7D4-4A29-96D3-F39A91A259BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E687C8FD-0A0D-450F-853D-EC301BE1C038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E687C8FD-0A0D-450F-853D-EC301BE1C038}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E687C8FD-0A0D-450F-853D-EC301BE1C038}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E687C8FD-0A0D-450F-853D-EC301BE1C038}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

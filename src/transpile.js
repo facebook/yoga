@@ -11,6 +11,7 @@ var layoutTestUtils = require('./Layout-test-utils.js');
 var computeLayout = require('./Layout.js').computeLayout;
 var fs = require('fs');
 var JavaTranspiler = require('./JavaTranspiler.js');
+var CSharpTranspiler = require('./CSharpTranspiler.js');
 
 var currentTest = '';
 var allTests = [];
@@ -310,3 +311,6 @@ generateFile(__dirname + '/Layout.c', transpileAnnotatedJStoC(computeLayout.toSt
 generateFile(__dirname + '/java/src/com/facebook/csslayout/LayoutEngine.java', JavaTranspiler.transpileLayoutEngine(computeLayout.toString()));
 generateFile(__dirname + '/java/tests/com/facebook/csslayout/TestConstants.java', JavaTranspiler.transpileCConstDefs(makeConstDefs()));
 generateFile(__dirname + '/java/tests/com/facebook/csslayout/LayoutEngineTest.java', JavaTranspiler.transpileCTestsArray(allTestsInC));
+generateFile(__dirname + '/csharp/Facebook.CSSLayout/LayoutEngine.cs', CSharpTranspiler.transpileLayoutEngine(computeLayout.toString()));
+generateFile(__dirname + '/csharp/Facebook.CSSLayout.Tests/TestConstants.cs', CSharpTranspiler.transpileCConstDefs(makeConstDefs()));
+generateFile(__dirname + '/csharp/Facebook.CSSLayout.Tests/LayoutEngineTest.cs', CSharpTranspiler.transpileCTestsArray(allTestsInC));
