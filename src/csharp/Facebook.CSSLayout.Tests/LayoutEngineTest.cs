@@ -7908,6 +7908,80 @@ public class LayoutEngineTest
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 500;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = 1;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 50;
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 500;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 250;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 250;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 250;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 250;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 50;
+        }
+      }
+    }
+
+    test("should layout two children vertically", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase178()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
       node_0.style.alignContent = CSSAlign.Stretch;
       node_0.style.alignItems = CSSAlign.FlexStart;
       node_0.style.flexWrap = CSSWrap.Wrap;

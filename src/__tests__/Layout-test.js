@@ -2298,6 +2298,27 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout two children vertically', function() {
+    testLayout(
+      {style: {flexDirection: 'row', width: 500}, children: [
+        {style: {flex: 1}, children: [
+          {style: {height: 100}}
+        ]},
+        {style: {flex: 1}, children: [
+          {style: {height: 50}}
+        ]},
+      ]},
+      {width: 500, height: 100, top: 0, left: 0, children: [
+        {width: 250, height: 100, top: 0, left: 0, children: [
+          {width: 250, height: 100, top: 0, left: 0}
+        ]},
+        {width: 250, height: 100, top: 0, left: 250, children: [
+          {width: 250, height: 50, top: 0, left: 0}
+        ]},
+      ]}
+    );
+  });
+
   xit('should stretch a nested child', function() {
     testLayout(
       {children: [
