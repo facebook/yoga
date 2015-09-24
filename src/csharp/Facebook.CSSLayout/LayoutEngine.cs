@@ -716,7 +716,7 @@ namespace Facebook.CSSLayout
               if (alignItem == CSSAlign.Stretch) {
                 // You can only stretch if the dimension has not already been set
                 // previously.
-                if (float.IsNaN(child.layout.dimensions[dim[crossAxis]])) {
+                if (!(!float.IsNaN(child.style.dimensions[dim[crossAxis]]) && child.style.dimensions[dim[crossAxis]] > 0.0)) {
                   child.layout.dimensions[dim[crossAxis]] = Math.Max(
                     boundAxis(child, crossAxis, containerCrossAxis -
                       paddingAndBorderAxisCross - (child.style.margin.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + child.style.margin.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]))),

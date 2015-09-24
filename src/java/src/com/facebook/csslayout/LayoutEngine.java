@@ -696,7 +696,7 @@ public class LayoutEngine {
             if (alignItem == CSSAlign.STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.
-              if (Float.isNaN(child.layout.dimensions[dim[crossAxis]])) {
+              if (!(!Float.isNaN(child.style.dimensions[dim[crossAxis]]) && child.style.dimensions[dim[crossAxis]] > 0.0)) {
                 child.layout.dimensions[dim[crossAxis]] = Math.max(
                   boundAxis(child, crossAxis, containerCrossAxis -
                     paddingAndBorderAxisCross - (child.style.margin.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + child.style.margin.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]))),

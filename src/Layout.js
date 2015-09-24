@@ -861,7 +861,7 @@ var computeLayout = (function() {
             if (alignItem === CSS_ALIGN_STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.
-              if (isUndefined(child.layout[dim[crossAxis]])) {
+              if (!isDimDefined(child, crossAxis)) {
                 child.layout[dim[crossAxis]] = fmaxf(
                   boundAxis(child, crossAxis, containerCrossAxis -
                     paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
@@ -1076,7 +1076,7 @@ var computeLayout = (function() {
 })();
 
 // This module export is only used for the purposes of unit testing this file. When
-// the library is packaged this file is included within css-layout.js which forms 
+// the library is packaged this file is included within css-layout.js which forms
 // the public API.
 if (typeof exports === 'object') {
   module.exports = computeLayout;

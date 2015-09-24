@@ -7473,6 +7473,78 @@ int main()
     {
       css_node_t *node_0 = root_node;
       node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 500;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_HEIGHT] = 50;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 500;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 250;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 250;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 250;
+        node_1->layout.dimensions[CSS_WIDTH] = 250;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 250;
+          node_2->layout.dimensions[CSS_HEIGHT] = 50;
+        }
+      }
+    }
+
+    test("should layout two children vertically", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.align_content = CSS_ALIGN_STRETCH;
       node_0->style.align_items = CSS_ALIGN_FLEX_START;
       node_0->style.flex_wrap = CSS_WRAP;
