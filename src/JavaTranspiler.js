@@ -30,7 +30,7 @@ function __transpileToJavaCommon(code) {
     .replace(/getJustifyContent\((.+?)\)/g, '$1.style.justifyContent')
     .replace(/getAlignContent\((.+?)\)/g, '$1.style.alignContent')
     .replace(/isPosDefined\((.+?),\s*(.+?)\)/g, '!isUndefined\($1.style.position[$2]\)')
-    .replace(/isDimDefined\((.+?),\s*(.+?)\)/g, '\(!isUndefined\($1.style.dimensions[dim[$2]]\) && $1.style.dimensions[dim[$2]] > 0.0\)')
+    .replace(/isDimDefined\((.+?),\s*(.+?)\)/g, '\(!isUndefined\($1.style.dimensions[dim[$2]]\) && $1.style.dimensions[dim[$2]] >= 0.0\)')
     .replace(/getPosition\((.+?),\s*(.+?)\)/g, '\(isUndefined\($1.style.position[$2]\) ?  0 : $1.style.position[$2]\)')
     .replace(/setTrailingPosition\((.+?),\s*(.+?),\s*(.+?)\)/g, '$2.layout.position[trailing[$3]] = $1.layout.dimensions[dim[$3]] - $2.layout.dimensions[dim[$3]] - $2.layout.position[pos[$3]]')
     .replace(/isFlex\((.+?)\)/g, '\($1.style.positionType == CSSPositionType.RELATIVE && $1.style.flex > 0\)')
