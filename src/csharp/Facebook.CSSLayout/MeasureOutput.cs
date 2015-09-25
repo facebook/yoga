@@ -23,7 +23,14 @@ namespace Facebook.CSSLayout
         public readonly float Width;
         public readonly float Height;
 
-        internal float width => Width;
-        internal float height => Height;
+        internal float width
+        {
+            get { return Width; }
+        }
+
+        internal float height
+        {
+            get { return Height; }
+        }
     }
 }

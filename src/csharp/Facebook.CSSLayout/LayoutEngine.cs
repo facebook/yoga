@@ -9,7 +9,6 @@
 
 using System;
 using boolean = System.Boolean;
-using static Facebook.CSSLayout.CSSLayout;
 
 namespace Facebook.CSSLayout
 {
@@ -20,6 +19,13 @@ namespace Facebook.CSSLayout
 
     static class LayoutEngine
     {
+        const int POSITION_LEFT = CSSLayout.POSITION_LEFT;
+        const int POSITION_TOP = CSSLayout.POSITION_TOP;
+        const int POSITION_RIGHT = CSSLayout.POSITION_RIGHT;
+        const int POSITION_BOTTOM = CSSLayout.POSITION_BOTTOM;
+        const int DIMENSION_WIDTH = CSSLayout.DIMENSION_WIDTH;
+        const int DIMENSION_HEIGHT = CSSLayout.DIMENSION_HEIGHT;
+
         const int CSS_FLEX_DIRECTION_COLUMN =
             (int)CSSFlexDirection.Column;
         const int CSS_FLEX_DIRECTION_COLUMN_REVERSE =
