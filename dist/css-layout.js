@@ -1095,7 +1095,7 @@ var computeLayout = (function() {
 })();
 
 // This module export is only used for the purposes of unit testing this file. When
-// the library is packaged this file is included within css-layout.js which forms 
+// the library is packaged this file is included within css-layout.js which forms
 // the public API.
 if (typeof exports === 'object') {
   module.exports = computeLayout;

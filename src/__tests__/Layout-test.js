@@ -2298,6 +2298,17 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with a 0 width', function() {
+    testLayout(
+      {style: {width: 200}, children: [
+        {style: {width: 0}}
+      ]},
+      {width: 200, height: 0, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
   xit('should stretch a nested child', function() {
     testLayout(
       {children: [
