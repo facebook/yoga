@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static Facebook.CSSLayout.CSSLayout;
 
 namespace Facebook.CSSLayout
 {
@@ -27,6 +26,13 @@ namespace Facebook.CSSLayout
 
     public class CSSNode
     {
+        const int POSITION_LEFT = CSSLayout.POSITION_LEFT;
+        const int POSITION_TOP = CSSLayout.POSITION_TOP;
+        const int POSITION_RIGHT = CSSLayout.POSITION_RIGHT;
+        const int POSITION_BOTTOM = CSSLayout.POSITION_BOTTOM;
+        const int DIMENSION_WIDTH = CSSLayout.DIMENSION_WIDTH;
+        const int DIMENSION_HEIGHT = CSSLayout.DIMENSION_HEIGHT;
+
         enum LayoutState
         {
             /**
@@ -61,14 +67,20 @@ namespace Facebook.CSSLayout
         [Nullable] MeasureFunction mMeasureFunction = null;
         LayoutState mLayoutState = LayoutState.DIRTY;
 
-        public int ChildCount 
-            => mChildren.Count;
+        public int ChildCount
+        {
+            get { return mChildren.Count; }
+        }
 
-        public CSSNode this[int i] 
-            => mChildren[i];
+        public CSSNode this[int i]
+        {
+            get { return mChildren[i]; }
+        }
 
-        public IEnumerable<CSSNode> Children 
-            => mChildren;
+        public IEnumerable<CSSNode> Children
+        {
+            get { return mChildren; }
+        }
 
         public void AddChild(CSSNode child)
         {
@@ -123,8 +135,10 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public bool IsMeasureDefined 
-            => mMeasureFunction != null;
+        public bool IsMeasureDefined
+        {
+            get { return mMeasureFunction != null; }
+        }
 
         internal MeasureOutput measure(MeasureOutput measureOutput, float width)
         {
@@ -151,15 +165,19 @@ namespace Facebook.CSSLayout
          * See {@link LayoutState#DIRTY}.
          */
 
-        public bool IsDirty 
-            => mLayoutState == LayoutState.DIRTY;
+        public bool IsDirty
+        {
+            get { return mLayoutState == LayoutState.DIRTY; }
+        }
 
         /**
          * See {@link LayoutState#HAS_NEW_LAYOUT}.
          */
 
-        public bool HasNewLayout 
-            => mLayoutState == LayoutState.HAS_NEW_LAYOUT;
+        public bool HasNewLayout
+        {
+            get { return mLayoutState == LayoutState.HAS_NEW_LAYOUT; }
+        }
 
         internal protected void dirty()
         {
@@ -395,11 +413,30 @@ namespace Facebook.CSSLayout
             set { updateFloatValue(ref style.maxHeight, value); }
         }
 
-        public float LayoutX => layout.position[POSITION_LEFT];
-        public float LayoutY => layout.position[POSITION_TOP];
-        public float LayoutWidth => layout.dimensions[DIMENSION_WIDTH];
-        public float LayoutHeight => layout.dimensions[DIMENSION_HEIGHT];
-        public CSSDirection LayoutDirection => layout.direction;
+        public float LayoutX
+        {
+            get { return layout.position[POSITION_LEFT]; }
+        }
+
+        public float LayoutY
+        {
+            get { return layout.position[POSITION_TOP]; }
+        }
+
+        public float LayoutWidth
+        {
+            get { return layout.dimensions[DIMENSION_WIDTH]; }
+        }
+
+        public float LayoutHeight
+        {
+            get { return layout.dimensions[DIMENSION_HEIGHT]; }
+        }
+
+        public CSSDirection LayoutDirection
+        {
+            get { return layout.direction; }
+        }
 
         /**
          * Set a default padding (left/top/right/bottom) for this node.
