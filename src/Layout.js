@@ -1124,12 +1124,23 @@ var computeLayout = (function() {
   }
   
   function layoutNode(node, parentMaxWidth, parentDirection) {
-    if (node.isDirty ||
-        !node.lastLayout || 
-         node.lastLayout.requestedHeight !== node.layout.height ||
-         node.lastLayout.requestedWidth !== node.layout.width ||
-         node.lastLayout.parentMaxWidth !== parentMaxWidth) {
-           
+    node.shouldUpdate = true;
+    
+    var direction = node.style.direction || CSS_DIRECTION_LTR;
+    var skipLayout = 
+      !node.isDirty &&
+      node.lastLayout &&
+      node.lastLayout.requestedHeight === node.layout.height &&
+      node.lastLayout.requestedWidth === node.layout.width &&
+      node.lastLayout.parentMaxWidth === parentMaxWidth &&
+      node.lastLayout.direction === direction;
+      
+    if (skipLayout) {
+      node.layout.width = node.lastLayout.width;
+      node.layout.height = node.lastLayout.height;
+      node.layout.top = node.lastLayout.top;
+      node.layout.left = node.lastLayout.left;
+    } else {
       if (!node.lastLayout) {
         node.lastLayout = {};
       }
@@ -1137,6 +1148,7 @@ var computeLayout = (function() {
       node.lastLayout.requestedWidth = node.layout.width;
       node.lastLayout.requestedHeight = node.layout.height;
       node.lastLayout.parentMaxWidth = parentMaxWidth;
+      node.lastLayout.direction = direction;
       
       // Reset child layouts
       node.children.forEach(function(child) {
@@ -1144,24 +1156,15 @@ var computeLayout = (function() {
         child.layout.height = undefined;
         child.layout.top = 0;
         child.layout.left = 0;
-        child.layout.bottom = 0;
-        child.layout.right = 0;
       });
       
       layoutNodeImpl(node, parentMaxWidth, parentDirection);
       
-      for (var key in node.layout) {
-        node.lastLayout[key] = node.layout[key];
-      }
-      
-      node.isDirty = false;
-    } else {
-      for (var key in node.layout) {
-        node.layout[key] = node.lastLayout[key];
-      }
+      node.lastLayout.width = node.layout.width;
+      node.lastLayout.height = node.layout.height;
+      node.lastLayout.top = node.layout.top;
+      node.lastLayout.left = node.layout.left;
     }
-    
-    node.shouldUpdate = true;
   }
 
   return {
