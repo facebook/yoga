@@ -385,7 +385,7 @@ var computeLayout = (function() {
     return -getPosition(node, trailing[axis]);
   }
 
-  function layoutNode(node, parentMaxWidth, /*css_direction_t*/parentDirection) {
+  function layoutNodeImpl(node, parentMaxWidth, /*css_direction_t*/parentDirection) {
     var/*css_direction_t*/ direction = resolveDirection(node, parentDirection);
     var/*(c)!css_flex_direction_t*//*(java)!int*/ mainAxis = resolveAxis(getFlexDirection(node), direction);
     var/*(c)!css_flex_direction_t*//*(java)!int*/ crossAxis = getCrossFlexDirection(mainAxis, direction);
@@ -1068,8 +1068,32 @@ var computeLayout = (function() {
       child.nextAbsoluteChild = null;
     }
   }
+  
+  function layoutNode(node, parentMaxWidth, parentDirection) {
+    if (!node.lastLayout ||
+         node.lastLayout.requestedHeight !== node.layout.height ||
+         node.lastLayout.requestedWidth !== node.layout.width ||
+         node.lastLayout.parentMaxWidth !== parentMaxWidth) {
+      
+      if (!node.lastLayout)
+        node.lastLayout = {};
+      
+      node.lastLayout.requestedWidth = node.layout.width;
+      node.lastLayout.requestedHeight = node.layout.height;
+      node.lastLayout.parentMaxWidth = parentMaxWidth;
+    
+      layoutNodeImpl(node, parentMaxWidth, parentDirection);
+      
+      for (var key in node.layout)
+        node.lastLayout[key] = node.layout[key];
+    } else {
+      for (var key in node.layout)
+        node.layout[key] = node.lastLayout[key];
+    }
+  }
 
   return {
+    layoutNodeImpl: layoutNodeImpl,
     computeLayout: layoutNode,
     fillNodes: fillNodes
   };
