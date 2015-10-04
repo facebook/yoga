@@ -357,11 +357,11 @@ var computeLayout = (function() {
   }
 
   function isDimDefined(node, axis) {
-    return !isUndefined(node.style[dim[axis]]) && node.style[dim[axis]] >= 0;
+    return node.style[dim[axis]] != null && node.style[dim[axis]] >= 0;
   }
 
   function isPosDefined(node, pos) {
-    return !isUndefined(node.style[pos]);
+    return node.style[pos] != null;
   }
 
   function isMeasureDefined(node) {
@@ -391,10 +391,10 @@ var computeLayout = (function() {
     }[axis];
 
     var boundValue = value;
-    if (!isUndefined(max) && max >= 0 && boundValue > max) {
+    if (max != null && max >= 0 && boundValue > max) {
       boundValue = max;
     }
-    if (!isUndefined(min) && min >= 0 && boundValue < min) {
+    if (min != null && min >= 0 && boundValue < min) {
       boundValue = min;
     }
     return boundValue;
@@ -410,7 +410,7 @@ var computeLayout = (function() {
   // When the user specifically sets a value for width or height
   function setDimensionFromStyle(node, axis) {
     // The parent already computed us a width or height. We just skip it
-    if (!isUndefined(node.layout[dim[axis]])) {
+    if (node.layout[dim[axis]] != null) {
       return;
     }
     // We only run if there's a width or height defined
