@@ -1128,9 +1128,10 @@ var computeLayout = (function() {
          node.lastLayout.requestedHeight !== node.layout.height ||
          node.lastLayout.requestedWidth !== node.layout.width ||
          node.lastLayout.parentMaxWidth !== parentMaxWidth) {
-      
-      if (!node.lastLayout)
+           
+      if (!node.lastLayout) {
         node.lastLayout = {};
+      }
       
       node.lastLayout.requestedWidth = node.layout.width;
       node.lastLayout.requestedHeight = node.layout.height;
@@ -1138,11 +1139,13 @@ var computeLayout = (function() {
     
       layoutNodeImpl(node, parentMaxWidth, parentDirection);
       
-      for (var key in node.layout)
+      for (var key in node.layout) {
         node.lastLayout[key] = node.layout[key];
+      }
     } else {
-      for (var key in node.layout)
+      for (var key in node.layout) {
         node.layout[key] = node.lastLayout[key];
+      }
     }
   }
 
