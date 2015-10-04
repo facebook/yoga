@@ -59,28 +59,6 @@ var computeLayout = (function() {
     'column-reverse': 'height'
   };
 
-  function capitalizeFirst(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
-  function getSpacing(node, type, suffix, locations) {
-    for (var i = 0; i < locations.length; ++i) {
-      var location = locations[i];
-
-      var key = type + capitalizeFirst(location) + suffix;
-      if (key in node.style) {
-        return node.style[key];
-      }
-
-      key = type + suffix;
-      if (key in node.style) {
-        return node.style[key];
-      }
-    }
-
-    return 0;
-  }
-
   // When transpiled to Java / C the node type has layout, children and style
   // properties. For the JavaScript version this function adds these properties
   // if they don't already exist.
@@ -107,24 +85,6 @@ var computeLayout = (function() {
     return node;
   }
 
-  function getPositiveSpacing(node, type, suffix, locations) {
-    for (var i = 0; i < locations.length; ++i) {
-      var location = locations[i];
-
-      var key = type + capitalizeFirst(location) + suffix;
-      if (key in node.style && node.style[key] >= 0) {
-        return node.style[key];
-      }
-
-      key = type + suffix;
-      if (key in node.style && node.style[key] >= 0) {
-        return node.style[key];
-      }
-    }
-
-    return 0;
-  }
-
   function isUndefined(value) {
     return value === undefined;
   }
@@ -139,60 +99,154 @@ var computeLayout = (function() {
            flexDirection === CSS_FLEX_DIRECTION_COLUMN_REVERSE;
   }
 
-  function getLeadingLocations(axis) {
-    var locations = [leading[axis]];
-    if (isRowDirection(axis)) {
-      locations.unshift('start');
-    }
-
-    return locations;
-  }
-
-  function getTrailingLocations(axis) {
-    var locations = [trailing[axis]];
-    if (isRowDirection(axis)) {
-      locations.unshift('end');
-    }
-
-    return locations;
-  }
-
-  function getMargin(node, locations) {
-    return getSpacing(node, 'margin', '', locations);
-  }
-
   function getLeadingMargin(node, axis) {
-    return getMargin(node, getLeadingLocations(axis));
+    if (node.style.marginStart != null && isRowDirection(axis)) {
+      return node.style.marginStart;
+    }
+
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.marginLeft;   break;
+      case 'row-reverse':    value = node.style.marginRight;  break;
+      case 'column':         value = node.style.marginTop;    break;
+      case 'column-reverse': value = node.style.marginBottom; break;
+    }
+
+    if (value != null) {
+      return value;
+    }
+
+    if (node.style.margin != null) {
+      return node.style.margin;
+    }
+
+    return 0;
   }
 
   function getTrailingMargin(node, axis) {
-    return getMargin(node, getTrailingLocations(axis));
-  }
+    if (node.style.marginEnd != null && isRowDirection(axis)) {
+      return node.style.marginEnd;
+    }
 
-  function getPadding(node, locations) {
-    return getPositiveSpacing(node, 'padding', '', locations);
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.marginRight;  break;
+      case 'row-reverse':    value = node.style.marginLeft;   break;
+      case 'column':         value = node.style.marginBottom; break;
+      case 'column-reverse': value = node.style.marginTop;    break;
+    }
+
+    if (value != null) {
+      return value;
+    }
+
+    if (node.style.margin != null) {
+      return node.style.margin;
+    }
+
+    return 0;
   }
 
   function getLeadingPadding(node, axis) {
-    return getPadding(node, getLeadingLocations(axis));
+    if (node.style.paddingStart != null && node.style.paddingStart >= 0
+        && isRowDirection(axis)) {
+      return node.style.paddingStart;
+    }
+
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.paddingLeft;   break;
+      case 'row-reverse':    value = node.style.paddingRight;  break;
+      case 'column':         value = node.style.paddingTop;    break;
+      case 'column-reverse': value = node.style.paddingBottom; break;
+    }
+
+    if (value != null && value >= 0) {
+      return value;
+    }
+
+    if (node.style.padding != null && node.style.padding >= 0) {
+      return node.style.padding;
+    }
+
+    return 0;
   }
 
   function getTrailingPadding(node, axis) {
-    return getPadding(node, getTrailingLocations(axis));
-  }
+    if (node.style.paddingEnd != null && node.style.paddingEnd >= 0
+        && isRowDirection(axis)) {
+      return node.style.paddingEnd;
+    }
 
-  function getBorder(node, locations) {
-    return getPositiveSpacing(node, 'border', 'Width', locations);
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.paddingRight;  break;
+      case 'row-reverse':    value = node.style.paddingLeft;   break;
+      case 'column':         value = node.style.paddingBottom; break;
+      case 'column-reverse': value = node.style.paddingTop;    break;
+    }
+
+    if (value != null && value >= 0) {
+      return value;
+    }
+
+    if (node.style.padding != null && node.style.padding >= 0) {
+      return node.style.padding;
+    }
+
+    return 0;
   }
 
   function getLeadingBorder(node, axis) {
-    return getBorder(node, getLeadingLocations(axis));
+    if (node.style.borderStartWidth != null && node.style.borderStartWidth >= 0
+        && isRowDirection(axis)) {
+      return node.style.borderStartWidth;
+    }
+
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.borderLeftWidth;   break;
+      case 'row-reverse':    value = node.style.borderRightWidth;  break;
+      case 'column':         value = node.style.borderTopWidth;    break;
+      case 'column-reverse': value = node.style.borderBottomWidth; break;
+    }
+
+    if (value != null && value >= 0) {
+      return value;
+    }
+
+    if (node.style.borderWidth != null && node.style.borderWidth >= 0) {
+      return node.style.borderWidth;
+    }
+
+    return 0;
   }
 
   function getTrailingBorder(node, axis) {
-    return getBorder(node, getTrailingLocations(axis));
-  }
+    if (node.style.borderEndWidth != null && node.style.borderEndWidth >= 0 
+        && isRowDirection(axis)) {
+      return node.style.borderEndWidth;
+    }
 
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.borderRightWidth;  break;
+      case 'row-reverse':    value = node.style.borderLeftWidth;   break;
+      case 'column':         value = node.style.borderBottomWidth; break;
+      case 'column-reverse': value = node.style.borderTopWidth;    break;
+    }
+
+    if (value != null && value >= 0) {
+      return value;
+    }
+
+    if (node.style.borderWidth != null && node.style.borderWidth >= 0) {
+      return node.style.borderWidth;
+    }
+
+    return 0;
+  }
+  
   function getLeadingPaddingAndBorder(node, axis) {
     return getLeadingPadding(node, axis) + getLeadingBorder(node, axis);
   }
