@@ -1160,6 +1160,8 @@ var computeLayout = (function() {
         node.layout[key] = node.lastLayout[key];
       }
     }
+    
+    node.shouldUpdate = true;
   }
 
   return {
