@@ -269,24 +269,24 @@ var computeLayout = (function() {
   }
 
   function getJustifyContent(node) {
-    if ('justifyContent' in node.style) {
+    if (node.style.justifyContent) {
       return node.style.justifyContent;
     }
     return 'flex-start';
   }
 
   function getAlignContent(node) {
-    if ('alignContent' in node.style) {
+    if (node.style.alignContent) {
       return node.style.alignContent;
     }
     return 'flex-start';
   }
 
   function getAlignItem(node, child) {
-    if ('alignSelf' in child.style) {
+    if (child.style.alignSelf) {
       return child.style.alignSelf;
     }
-    if ('alignItems' in node.style) {
+    if (node.style.alignItems) {
       return node.style.alignItems;
     }
     return 'stretch';
@@ -306,7 +306,7 @@ var computeLayout = (function() {
 
   function resolveDirection(node, parentDirection) {
     var direction;
-    if ('direction' in node.style) {
+    if (node.style.direction) {
       direction = node.style.direction;
     } else {
       direction = CSS_DIRECTION_INHERIT;
@@ -320,7 +320,7 @@ var computeLayout = (function() {
   }
 
   function getFlexDirection(node) {
-    if ('flexDirection' in node.style) {
+    if (node.style.flexDirection) {
       return node.style.flexDirection;
     }
     return CSS_FLEX_DIRECTION_COLUMN;
@@ -335,7 +335,7 @@ var computeLayout = (function() {
   }
 
   function getPositionType(node) {
-    if ('position' in node.style) {
+    if (node.style.position) {
       return node.style.position;
     }
     return 'relative';
@@ -365,11 +365,11 @@ var computeLayout = (function() {
   }
 
   function isMeasureDefined(node) {
-    return 'measure' in node.style;
+    return node.style.measure != null;
   }
 
   function getPosition(node, pos) {
-    if (pos in node.style) {
+    if (node.style[pos] != null) {
       return node.style[pos];
     }
     return 0;
@@ -433,7 +433,7 @@ var computeLayout = (function() {
   // If both left and right are defined, then use left. Otherwise return
   // +left or -right depending on which is defined.
   function getRelativePosition(node, axis) {
-    if (leading[axis] in node.style) {
+    if (node.style[leading[axis]] != null) {
       return getPosition(node, leading[axis]);
     }
     return -getPosition(node, trailing[axis]);
