@@ -63,7 +63,7 @@ var computeLayout = (function() {
   // properties. For the JavaScript version this function adds these properties
   // if they don't already exist.
   function fillNodes(node) {
-    if (!node.layout) {
+    if (!node.layout || node.isDirty) {
       node.layout = {
         width: undefined,
         height: undefined,
@@ -1124,7 +1124,8 @@ var computeLayout = (function() {
   }
   
   function layoutNode(node, parentMaxWidth, parentDirection) {
-    if (!node.lastLayout ||
+    if (node.isDirty ||
+        !node.lastLayout || 
          node.lastLayout.requestedHeight !== node.layout.height ||
          node.lastLayout.requestedWidth !== node.layout.width ||
          node.lastLayout.parentMaxWidth !== parentMaxWidth) {
@@ -1136,12 +1137,24 @@ var computeLayout = (function() {
       node.lastLayout.requestedWidth = node.layout.width;
       node.lastLayout.requestedHeight = node.layout.height;
       node.lastLayout.parentMaxWidth = parentMaxWidth;
-    
+      
+      // Reset child layouts
+      node.children.forEach(function(child) {
+        child.layout.width = undefined;
+        child.layout.height = undefined;
+        child.layout.top = 0;
+        child.layout.left = 0;
+        child.layout.bottom = 0;
+        child.layout.right = 0;
+      });
+      
       layoutNodeImpl(node, parentMaxWidth, parentDirection);
       
       for (var key in node.layout) {
         node.lastLayout[key] = node.layout[key];
       }
+      
+      node.isDirty = false;
     } else {
       for (var key in node.layout) {
         node.layout[key] = node.lastLayout[key];
