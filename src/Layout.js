@@ -63,7 +63,7 @@ var computeLayout = (function() {
   // properties. For the JavaScript version this function adds these properties
   // if they don't already exist.
   function fillNodes(node) {
-    if (!node.layout) {
+    if (!node.layout || node.isDirty) {
       node.layout = {
         width: undefined,
         height: undefined,
@@ -439,7 +439,7 @@ var computeLayout = (function() {
     return -getPosition(node, trailing[axis]);
   }
 
-  function layoutNode(node, parentMaxWidth, /*css_direction_t*/parentDirection) {
+  function layoutNodeImpl(node, parentMaxWidth, /*css_direction_t*/parentDirection) {
     var/*css_direction_t*/ direction = resolveDirection(node, parentDirection);
     var/*(c)!css_flex_direction_t*//*(java)!int*/ mainAxis = resolveAxis(getFlexDirection(node), direction);
     var/*(c)!css_flex_direction_t*//*(java)!int*/ crossAxis = getCrossFlexDirection(mainAxis, direction);
@@ -1122,8 +1122,53 @@ var computeLayout = (function() {
       child.nextAbsoluteChild = null;
     }
   }
+  
+  function layoutNode(node, parentMaxWidth, parentDirection) {
+    node.shouldUpdate = true;
+    
+    var direction = node.style.direction || CSS_DIRECTION_LTR;
+    var skipLayout = 
+      !node.isDirty &&
+      node.lastLayout &&
+      node.lastLayout.requestedHeight === node.layout.height &&
+      node.lastLayout.requestedWidth === node.layout.width &&
+      node.lastLayout.parentMaxWidth === parentMaxWidth &&
+      node.lastLayout.direction === direction;
+      
+    if (skipLayout) {
+      node.layout.width = node.lastLayout.width;
+      node.layout.height = node.lastLayout.height;
+      node.layout.top = node.lastLayout.top;
+      node.layout.left = node.lastLayout.left;
+    } else {
+      if (!node.lastLayout) {
+        node.lastLayout = {};
+      }
+      
+      node.lastLayout.requestedWidth = node.layout.width;
+      node.lastLayout.requestedHeight = node.layout.height;
+      node.lastLayout.parentMaxWidth = parentMaxWidth;
+      node.lastLayout.direction = direction;
+      
+      // Reset child layouts
+      node.children.forEach(function(child) {
+        child.layout.width = undefined;
+        child.layout.height = undefined;
+        child.layout.top = 0;
+        child.layout.left = 0;
+      });
+      
+      layoutNodeImpl(node, parentMaxWidth, parentDirection);
+      
+      node.lastLayout.width = node.layout.width;
+      node.lastLayout.height = node.layout.height;
+      node.lastLayout.top = node.layout.top;
+      node.lastLayout.left = node.layout.left;
+    }
+  }
 
   return {
+    layoutNodeImpl: layoutNodeImpl,
     computeLayout: layoutNode,
     fillNodes: fillNodes
   };

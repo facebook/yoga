@@ -8,7 +8,7 @@
  */
 
 var layoutTestUtils = require('./Layout-test-utils.js');
-var computeLayout = require('./Layout.js').computeLayout;
+var computeLayout = require('./Layout.js').layoutNodeImpl;
 var fs = require('fs');
 var JavaTranspiler = require('./JavaTranspiler.js');
 var CSharpTranspiler = require('./CSharpTranspiler.js');
