@@ -17,10 +17,10 @@
     root.computeLayout = factory();
   }
 }(this, function () {
-    // @@include('./Layout.js')
+  // @@include('./Layout.js')
 
-    return function(node) {
-      computeLayout.fillNodes(node);
-      computeLayout.computeLayout(node);
-    };
-  }));
+  return function(node) {
+    computeLayout.fillNodes(node);
+    computeLayout.computeLayout(node);
+  };
+}));

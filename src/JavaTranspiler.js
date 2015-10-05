@@ -63,23 +63,23 @@ function __transpileSingleTestToJava(code) {
     .replace( // style.position[CSS_TOP] => style.position[CSSLayout.POSITION_TOP]
         /(style|layout)\.position\[CSS_(LEFT|TOP|RIGHT|BOTTOM)\]/g,
         function (str, match1, match2) {
-            return match1 + '.position[POSITION_' + match2 + ']';
-          })
+          return match1 + '.position[POSITION_' + match2 + ']';
+        })
     .replace( // style.dimensions[CSS_WIDTH] => style.dimensions[CSSLayout.DIMENSION_WIDTH]
         /(style|layout)\.dimensions\[CSS_(WIDTH|HEIGHT)\]/g,
         function (str, match1, match2) {
-            return match1 + '.dimensions[DIMENSION_' + match2 + ']';
-          })
+          return match1 + '.dimensions[DIMENSION_' + match2 + ']';
+        })
     .replace( // style.maxDimensions[CSS_WIDTH] => style.maxWidth
         /(style|layout)\.maxDimensions\[CSS_(WIDTH|HEIGHT)\]/g,
         function (str, match1, match2) {
-            return match1 + '.max' + match2.substr(0, 1).toUpperCase() + match2.substr(1).toLowerCase();
-          })
+          return match1 + '.max' + match2.substr(0, 1).toUpperCase() + match2.substr(1).toLowerCase();
+        })
     .replace( // style.minDimensions[CSS_WIDTH] => style.minWidth
         /(style|layout)\.minDimensions\[CSS_(WIDTH|HEIGHT)\]/g,
         function (str, match1, match2) {
-            return match1 + '.min' + match2.substr(0, 1).toUpperCase() + match2.substr(1).toLowerCase();
-          })
+          return match1 + '.min' + match2.substr(0, 1).toUpperCase() + match2.substr(1).toLowerCase();
+        })
     .replace( // style.margin[CSS_TOP] = 12.3 => style.margin[Spacing.TOP].set(12.3)
         /style\.(margin|border|padding)\[CSS_(TOP|BOTTOM|LEFT|RIGHT|START|END)\]\s+=\s+(-?[\.\d]+)/g,
         function (str, match1, match2, match3) {
@@ -99,8 +99,8 @@ function __transpileSingleTestToJava(code) {
     .replace( // style.flex_direction => style.flexDirection
         /style\.([^_\[\]\s]+)_(\w)(\w+)/g,
         function (str, match1, match2, match3) {
-            return 'style.' + match1 + match2.toUpperCase() + match3;
-          })
+          return 'style.' + match1 + match2.toUpperCase() + match3;
+        })
     .replace(/(\w+)\.measure\s+=\s+.+/, '$1.setMeasureFunction(sTestMeasureFunction);');
 }
 
