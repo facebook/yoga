@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var fs = require('fs');
   var path = require('path');
   var isWindows = (/^win/).test(process.platform);
 
@@ -56,7 +55,7 @@ module.exports = function(grunt) {
       options: {
         configFile: '.eslintrc'
       },
-      target: ['<%= config.srcFolder %>/*.js']
+      target: ['<%= config.srcFolder %>/**/*.js', './Gruntfile.js']
     },
 
     includereplace: {

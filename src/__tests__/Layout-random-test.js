@@ -98,7 +98,7 @@ describe('Random layout', function() {
   }
 
   function checkRandomLayout(i, node) {
-      it('should layout randomly #' + i + '.', function(node) {
+    it('should layout randomly #' + i + '.', function(node) {
         if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
           node = reduceTest(node);
         }
