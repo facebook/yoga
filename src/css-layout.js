@@ -22,5 +22,5 @@
     return function(node) {
       computeLayout.fillNodes(node);
       computeLayout.computeLayout(node);
-  };
-}));
+    };
+  }));
