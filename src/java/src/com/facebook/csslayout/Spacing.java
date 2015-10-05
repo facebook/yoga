@@ -10,6 +10,8 @@ package com.facebook.csslayout;
 
 import javax.annotation.Nullable;
 
+import java.util.Arrays;
+
 /**
  * Class representing CSS spacing (padding, margin, and borders). This is mostly necessary to
  * properly implement interactions and updates for properties like margin, marginLeft, and
@@ -159,6 +161,17 @@ public class Spacing {
    */
   public float getRaw(int spacingType) {
     return mSpacing[spacingType];
+  }
+
+  /**
+   * Resets the spacing instance to its default state. This method is meant to be used when
+   * recycling {@link Spacing} instances.
+   */
+  void reset() {
+    Arrays.fill(mSpacing, CSSConstants.UNDEFINED);
+    mDefaultSpacing = null;
+    mHasAliasesSet = false;
+    mValueFlags = 0;
   }
 
   /**
