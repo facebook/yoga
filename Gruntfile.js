@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
   var fs = require('fs');
   var path = require('path');
-  var isWindows = /^win/.test(process.platform);
+  var isWindows = (/^win/).test(process.platform);
 
   require('load-grunt-tasks')(grunt);
 
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     config.cTestOutput = 'c_test.exe';
     config.cTestCompile = 'cl -nologo -Zi -Tpsrc/__tests__/Layout-test.c -Tpsrc/Layout.c -Tpsrc/Layout-test-utils.c -link -incremental:no -out:"<%= config.cTestOutput %>"';
     config.cTestExecute = '<%= config.cTestOutput %>';
-    config.cTestClean = ['<%= config.cTestOutput %>','*.obj','*.pdb'];
+    config.cTestClean = ['<%= config.cTestOutput %>', '*.obj', '*.pdb'];
   }
   else {
     // GCC build (OSX, Linux, ...), assumes gcc is in the path.
@@ -42,8 +42,8 @@ module.exports = function(grunt) {
       dist: {
         options: {
           create: ['<%= config.distFolder %>']
-        },
-      },
+        }
+      }
     },
 
     clean: {
@@ -56,12 +56,12 @@ module.exports = function(grunt) {
       options: {
         configFile: '.eslintrc'
       },
-      target: ['<%= config.srcFolder %>/Layout.js']
+      target: ['<%= config.srcFolder %>/*.js']
     },
 
     includereplace: {
       options: {
-        prefix: '// @@',
+        prefix: '// @@'
       },
       main: {
         src: '<%= config.srcFolder %>/<%= config.libName %>.js',
@@ -125,12 +125,12 @@ module.exports = function(grunt) {
           else {
             return src;
           }
-        },
+        }
       },
       dist: {
         src: ['<%= config.srcFolder %>/Layout.h', '<%= config.srcFolder %>/Layout.c'],
-        dest: '<%= config.distFolder %>/css-layout.h',
-      },
+        dest: '<%= config.distFolder %>/css-layout.h'
+      }
     },
 
     shell: {
@@ -153,8 +153,8 @@ module.exports = function(grunt) {
 
     watch: {
       files: ['src/Layout.js'],
-      tasks: ['ci'],
-    },
+      tasks: ['ci']
+    }
   });
 
   // Compiles and runs the Java tests
