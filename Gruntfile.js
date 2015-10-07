@@ -25,8 +25,7 @@ module.exports = function(grunt) {
     config.cTestCompile = 'cl -nologo -Zi -Tpsrc/__tests__/Layout-test.c -Tpsrc/Layout.c -Tpsrc/Layout-test-utils.c -link -incremental:no -out:"<%= config.cTestOutput %>"';
     config.cTestExecute = '<%= config.cTestOutput %>';
     config.cTestClean = ['<%= config.cTestOutput %>', '*.obj', '*.pdb'];
-  }
-  else {
+  } else {
     // GCC build (OSX, Linux, ...), assumes gcc is in the path.
     config.cTestOutput = 'c_test';
     config.cTestCompile = 'gcc -std=c99 -Werror -Wno-padded src/__tests__/Layout-test.c src/Layout.c src/Layout-test-utils.c -lm -o "./<%= config.cTestOutput %>"';
@@ -119,9 +118,8 @@ module.exports = function(grunt) {
               '#ifdef CSS_LAYOUT_IMPLEMENTATION',
               src,
               '#endif // CSS_LAYOUT_IMPLEMENTATION'
-            ].join('\n')
-          }
-          else {
+            ].join('\n');
+          } else {
             return src;
           }
         }

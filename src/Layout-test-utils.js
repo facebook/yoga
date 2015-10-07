@@ -23,13 +23,13 @@ var layoutTestUtils = (function() {
   var testMeasurePrecision = 1.0;
 
   if (typeof jasmine !== 'undefined') {
-    jasmine.matchersUtil.buildFailureMessage = function () {
-      var args = Array.prototype.slice.call(arguments, 0),
-        matcherName = args[0],
-        isNot = args[1],
-        actual = args[2],
-        expected = args.slice(3),
-        englishyPredicate = matcherName.replace(/[A-Z]/g, function(s) { return ' ' + s.toLowerCase(); });
+    jasmine.matchersUtil.buildFailureMessage = function() {
+      var args = Array.prototype.slice.call(arguments, 0);
+      var matcherName = args[0];
+      var isNot = args[1];
+      var actual = args[2];
+      var expected = args.slice(3);
+      var englishyPredicate = matcherName.replace(/[A-Z]/g, function(s) { return ' ' + s.toLowerCase(); });
 
       var pp = function(node) {
         return jasmine.pp(node)
@@ -278,8 +278,7 @@ var layoutTestUtils = (function() {
       var val = obj[key];
       if (typeof val === 'number') {
         obj[key] = Math.floor((val * testMeasurePrecision) + 0.5) / testMeasurePrecision;
-      }
-      else if (typeof val === 'object') {
+      } else if (typeof val === 'object') {
         inplaceRoundNumbersInObject(val);
       }
     }
@@ -386,7 +385,7 @@ var layoutTestUtils = (function() {
     document.body.appendChild(iframeText);
 
     var body = iframeText.contentDocument.body;
-    if (width === undefined || width !== width) {
+    if (width === undefined || isNaN(width)) {
       width = Infinity;
     }
 
@@ -490,7 +489,7 @@ var layoutTestUtils = (function() {
     reduceTest: reduceTest,
     text: function(text) {
       var fn = function(width) {
-        if (width === undefined || width !== width) {
+        if (width === undefined || isNaN(width)) {
           width = Infinity;
         }
 
