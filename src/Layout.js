@@ -112,7 +112,7 @@ var computeLayout = (function() {
       case 'column-reverse': value = node.style.marginBottom; break;
     }
 
-    if (value !== null && typeof value !== 'undefined') {
+    if (typeof value !== 'undefined') {
       return value;
     }
 
@@ -136,7 +136,7 @@ var computeLayout = (function() {
       case 'column-reverse': value = node.style.marginTop;    break;
     }
 
-    if (value !== null && typeof value !== 'undefined') {
+    if (value != null) {
       return value;
     }
 
@@ -161,7 +161,7 @@ var computeLayout = (function() {
       case 'column-reverse': value = node.style.paddingBottom; break;
     }
 
-    if (value !== null && value >= 0) {
+    if (value != null && value >= 0) {
       return value;
     }
 
@@ -186,7 +186,7 @@ var computeLayout = (function() {
       case 'column-reverse': value = node.style.paddingTop;    break;
     }
 
-    if (value !== null && value >= 0) {
+    if (value != null && value >= 0) {
       return value;
     }
 
@@ -211,7 +211,7 @@ var computeLayout = (function() {
       case 'column-reverse': value = node.style.borderBottomWidth; break;
     }
 
-    if (value !== null && value >= 0) {
+    if (value != null && value >= 0) {
       return value;
     }
 
@@ -236,7 +236,7 @@ var computeLayout = (function() {
       case 'column-reverse': value = node.style.borderTopWidth;    break;
     }
 
-    if (value !== null && value >= 0) {
+    if (value != null && value >= 0) {
       return value;
     }
 
