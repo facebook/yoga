@@ -1,6 +1,5 @@
 {
-    "browser": true,
-    "shadow": true,
+    "extends": "./node_modules/fbjs-scripts/eslint/.eslintrc",
     "globals": {
         "jasmine": true,
         "describe": true,
@@ -17,8 +16,5 @@
         "console": true,
         "setTimeout": true,
         "define": true
-    },
-    "rules": {
-        "quotes": [2, "single"]
     }
 }

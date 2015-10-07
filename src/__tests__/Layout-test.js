@@ -11,7 +11,6 @@
 var testLayout = layoutTestUtils.testLayout;
 var testLayoutAgainstDomOnly = layoutTestUtils.testLayoutAgainstDomOnly;
 var testFillNodes = layoutTestUtils.testFillNodes;
-var testExtractNodes = layoutTestUtils.testExtractNodes;
 var text = layoutTestUtils.text;
 var texts = layoutTestUtils.texts;
 var textSizes = layoutTestUtils.textSizes;

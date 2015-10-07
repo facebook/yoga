@@ -100,7 +100,7 @@ var computeLayout = (function() {
   }
 
   function getLeadingMargin(node, axis) {
-    if (node.style.marginStart != null && isRowDirection(axis)) {
+    if (node.style.marginStart !== undefined && isRowDirection(axis)) {
       return node.style.marginStart;
     }
 
@@ -112,11 +112,11 @@ var computeLayout = (function() {
       case 'column-reverse': value = node.style.marginBottom; break;
     }
 
-    if (value != null) {
+    if (value !== undefined) {
       return value;
     }
 
-    if (node.style.margin != null) {
+    if (node.style.margin !== undefined) {
       return node.style.margin;
     }
 
@@ -124,7 +124,7 @@ var computeLayout = (function() {
   }
 
   function getTrailingMargin(node, axis) {
-    if (node.style.marginEnd != null && isRowDirection(axis)) {
+    if (node.style.marginEnd !== undefined && isRowDirection(axis)) {
       return node.style.marginEnd;
     }
 
@@ -140,7 +140,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (node.style.margin != null) {
+    if (node.style.margin !== undefined) {
       return node.style.margin;
     }
 
@@ -148,7 +148,7 @@ var computeLayout = (function() {
   }
 
   function getLeadingPadding(node, axis) {
-    if (node.style.paddingStart != null && node.style.paddingStart >= 0
+    if (node.style.paddingStart !== undefined && node.style.paddingStart >= 0
         && isRowDirection(axis)) {
       return node.style.paddingStart;
     }
@@ -165,7 +165,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (node.style.padding != null && node.style.padding >= 0) {
+    if (node.style.padding !== undefined && node.style.padding >= 0) {
       return node.style.padding;
     }
 
@@ -173,7 +173,7 @@ var computeLayout = (function() {
   }
 
   function getTrailingPadding(node, axis) {
-    if (node.style.paddingEnd != null && node.style.paddingEnd >= 0
+    if (node.style.paddingEnd !== undefined && node.style.paddingEnd >= 0
         && isRowDirection(axis)) {
       return node.style.paddingEnd;
     }
@@ -190,7 +190,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (node.style.padding != null && node.style.padding >= 0) {
+    if (node.style.padding !== undefined && node.style.padding >= 0) {
       return node.style.padding;
     }
 
@@ -198,7 +198,7 @@ var computeLayout = (function() {
   }
 
   function getLeadingBorder(node, axis) {
-    if (node.style.borderStartWidth != null && node.style.borderStartWidth >= 0
+    if (node.style.borderStartWidth !== undefined && node.style.borderStartWidth >= 0
         && isRowDirection(axis)) {
       return node.style.borderStartWidth;
     }
@@ -215,7 +215,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (node.style.borderWidth != null && node.style.borderWidth >= 0) {
+    if (node.style.borderWidth !== undefined && node.style.borderWidth >= 0) {
       return node.style.borderWidth;
     }
 
@@ -223,7 +223,7 @@ var computeLayout = (function() {
   }
 
   function getTrailingBorder(node, axis) {
-    if (node.style.borderEndWidth != null && node.style.borderEndWidth >= 0 
+    if (node.style.borderEndWidth !== undefined && node.style.borderEndWidth >= 0
         && isRowDirection(axis)) {
       return node.style.borderEndWidth;
     }
@@ -240,13 +240,13 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (node.style.borderWidth != null && node.style.borderWidth >= 0) {
+    if (node.style.borderWidth !== undefined && node.style.borderWidth >= 0) {
       return node.style.borderWidth;
     }
 
     return 0;
   }
-  
+
   function getLeadingPaddingAndBorder(node, axis) {
     return getLeadingPadding(node, axis) + getLeadingBorder(node, axis);
   }
@@ -357,19 +357,19 @@ var computeLayout = (function() {
   }
 
   function isDimDefined(node, axis) {
-    return node.style[dim[axis]] != null && node.style[dim[axis]] >= 0;
+    return node.style[dim[axis]] !== undefined && node.style[dim[axis]] >= 0;
   }
 
   function isPosDefined(node, pos) {
-    return node.style[pos] != null;
+    return node.style[pos] !== undefined;
   }
 
   function isMeasureDefined(node) {
-    return node.style.measure != null;
+    return node.style.measure !== undefined;
   }
 
   function getPosition(node, pos) {
-    if (node.style[pos] != null) {
+    if (node.style[pos] !== undefined) {
       return node.style[pos];
     }
     return 0;
@@ -391,10 +391,10 @@ var computeLayout = (function() {
     }[axis];
 
     var boundValue = value;
-    if (max != null && max >= 0 && boundValue > max) {
+    if (max !== undefined && max >= 0 && boundValue > max) {
       boundValue = max;
     }
-    if (min != null && min >= 0 && boundValue < min) {
+    if (min !== undefined && min >= 0 && boundValue < min) {
       boundValue = min;
     }
     return boundValue;
@@ -410,7 +410,7 @@ var computeLayout = (function() {
   // When the user specifically sets a value for width or height
   function setDimensionFromStyle(node, axis) {
     // The parent already computed us a width or height. We just skip it
-    if (node.layout[dim[axis]] != null) {
+    if (node.layout[dim[axis]] !== undefined) {
       return;
     }
     // We only run if there's a width or height defined
@@ -433,7 +433,7 @@ var computeLayout = (function() {
   // If both left and right are defined, then use left. Otherwise return
   // +left or -right depending on which is defined.
   function getRelativePosition(node, axis) {
-    if (node.style[leading[axis]] != null) {
+    if (node.style[leading[axis]] !== undefined) {
       return getPosition(node, leading[axis]);
     }
     return -getPosition(node, trailing[axis]);
@@ -565,8 +565,8 @@ var computeLayout = (function() {
       // immediately stacked in the initial loop will not be touched again
       // in <Loop C>.
       var/*bool*/ isSimpleStackMain =
-          (isMainDimDefined && justifyContent == CSS_JUSTIFY_FLEX_START) ||
-          (!isMainDimDefined && justifyContent != CSS_JUSTIFY_CENTER);
+          (isMainDimDefined && justifyContent === CSS_JUSTIFY_FLEX_START) ||
+          (!isMainDimDefined && justifyContent !== CSS_JUSTIFY_CENTER);
       var/*int*/ firstComplexMain = (isSimpleStackMain ? childCount : startLine);
 
       // Use the initial line loop to position children in the cross axis for
@@ -704,7 +704,7 @@ var computeLayout = (function() {
         // we found a non-trivial child. The remaining children will be laid out
         // in <Loop C>.
         if (isSimpleStackMain &&
-            (getPositionType(child) != CSS_POSITION_RELATIVE || isFlex(child))) {
+            (getPositionType(child) !== CSS_POSITION_RELATIVE || isFlex(child))) {
           isSimpleStackMain = false;
           firstComplexMain = i;
         }
@@ -713,8 +713,8 @@ var computeLayout = (function() {
         // we found a non-trivial child. The remaining children will be laid out
         // in <Loop D>.
         if (isSimpleStackCross &&
-            (getPositionType(child) != CSS_POSITION_RELATIVE ||
-                (alignItem !== CSS_ALIGN_STRETCH && alignItem != CSS_ALIGN_FLEX_START) ||
+            (getPositionType(child) !== CSS_POSITION_RELATIVE ||
+                (alignItem !== CSS_ALIGN_STRETCH && alignItem !== CSS_ALIGN_FLEX_START) ||
                 isUndefined(child.layout[dim[crossAxis]]))) {
           isSimpleStackCross = false;
           firstComplexCross = i;
@@ -911,7 +911,10 @@ var computeLayout = (function() {
           // For a relative children, we're either using alignItems (parent) or
           // alignSelf (child) in order to determine the position in the cross axis
           if (getPositionType(child) === CSS_POSITION_RELATIVE) {
+            /*eslint-disable */
+            // This variable is intentionally re-defined as the code is transpiled to a block scope language
             var/*css_align_t*/ alignItem = getAlignItem(node, child);
+            /*eslint-enable */
             if (alignItem === CSS_ALIGN_STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.
@@ -1048,8 +1051,8 @@ var computeLayout = (function() {
         paddingAndBorderAxisMain
       );
 
-      if (mainAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
-          mainAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+      if (mainAxis === CSS_FLEX_DIRECTION_ROW_REVERSE ||
+          mainAxis === CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
         needsMainTrailingPos = true;
       }
     }
@@ -1063,8 +1066,8 @@ var computeLayout = (function() {
         paddingAndBorderAxisCross
       );
 
-      if (crossAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
-          crossAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+      if (crossAxis === CSS_FLEX_DIRECTION_ROW_REVERSE ||
+          crossAxis === CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
         needsCrossTrailingPos = true;
       }
     }
@@ -1122,19 +1125,19 @@ var computeLayout = (function() {
       child.nextAbsoluteChild = null;
     }
   }
-  
+
   function layoutNode(node, parentMaxWidth, parentDirection) {
     node.shouldUpdate = true;
-    
+
     var direction = node.style.direction || CSS_DIRECTION_LTR;
-    var skipLayout = 
+    var skipLayout =
       !node.isDirty &&
       node.lastLayout &&
       node.lastLayout.requestedHeight === node.layout.height &&
       node.lastLayout.requestedWidth === node.layout.width &&
       node.lastLayout.parentMaxWidth === parentMaxWidth &&
       node.lastLayout.direction === direction;
-      
+
     if (skipLayout) {
       node.layout.width = node.lastLayout.width;
       node.layout.height = node.lastLayout.height;
@@ -1144,12 +1147,12 @@ var computeLayout = (function() {
       if (!node.lastLayout) {
         node.lastLayout = {};
       }
-      
+
       node.lastLayout.requestedWidth = node.layout.width;
       node.lastLayout.requestedHeight = node.layout.height;
       node.lastLayout.parentMaxWidth = parentMaxWidth;
       node.lastLayout.direction = direction;
-      
+
       // Reset child layouts
       node.children.forEach(function(child) {
         child.layout.width = undefined;
@@ -1157,9 +1160,9 @@ var computeLayout = (function() {
         child.layout.top = 0;
         child.layout.left = 0;
       });
-      
+
       layoutNodeImpl(node, parentMaxWidth, parentDirection);
-      
+
       node.lastLayout.width = node.layout.width;
       node.lastLayout.height = node.layout.height;
       node.lastLayout.top = node.layout.top;

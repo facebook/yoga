@@ -98,13 +98,13 @@ describe('Random layout', function() {
   }
 
   function checkRandomLayout(i, node) {
-      it('should layout randomly #' + i + '.', function(node) {
-        if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
-          node = reduceTest(node);
-        }
+    it('should layout randomly #' + i + '.', function(node) {
+      if (JSON.stringify(computeLayout(node)) !== JSON.stringify(computeDOMLayout(node))) {
+        node = reduceTest(node);
+      }
 
-        testRandomLayout(node, i);
-      }.bind(this, node));
+      testRandomLayout(node, i);
+    }.bind(this, node));
   }
 
   for (var i = 0; i < 100; ++i) {

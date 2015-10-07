@@ -692,7 +692,10 @@ public class LayoutEngine {
           // For a relative children, we're either using alignItems (parent) or
           // alignSelf (child) in order to determine the position in the cross axis
           if (child.style.positionType == CSSPositionType.RELATIVE) {
+            /*eslint-disable */
+            // This variable is intentionally re-defined as the code is transpiled to a block scope language
             CSSAlign alignItem = getAlignItem(node, child);
+            /*eslint-enable */
             if (alignItem == CSSAlign.STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.

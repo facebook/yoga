@@ -3,7 +3,7 @@
 //
 // This file uses the following specific UMD implementation:
 // https://github.com/umdjs/umd/blob/master/returnExports.js
-(function (root, factory) {
+(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define([], factory);
@@ -16,11 +16,14 @@
     // Browser globals (root is window)
     root.computeLayout = factory();
   }
-}(this, function () {
-    // @@include('./Layout.js')
+}(this, function() {
+  // @@include('./Layout.js')
 
-    return function(node) {
-      computeLayout.fillNodes(node);
-      computeLayout.computeLayout(node);
+  return function(node) {
+    /*eslint-disable */
+    // disabling ESLint because this code relies on the above include
+    computeLayout.fillNodes(node);
+    computeLayout.computeLayout(node);
+    /*eslint-enable */
   };
 }));
