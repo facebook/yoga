@@ -100,7 +100,7 @@ var computeLayout = (function() {
   }
 
   function getLeadingMargin(node, axis) {
-    if (typeof node.style.marginStart !== 'undefined' && isRowDirection(axis)) {
+    if (node.style.marginStart !== undefined && isRowDirection(axis)) {
       return node.style.marginStart;
     }
 
@@ -112,11 +112,11 @@ var computeLayout = (function() {
       case 'column-reverse': value = node.style.marginBottom; break;
     }
 
-    if (typeof value !== 'undefined') {
+    if (value !== undefined) {
       return value;
     }
 
-    if (typeof node.style.margin !== 'undefined') {
+    if (node.style.margin !== undefined) {
       return node.style.margin;
     }
 
@@ -124,7 +124,7 @@ var computeLayout = (function() {
   }
 
   function getTrailingMargin(node, axis) {
-    if (typeof node.style.marginEnd !== 'undefined' && isRowDirection(axis)) {
+    if (node.style.marginEnd !== undefined && isRowDirection(axis)) {
       return node.style.marginEnd;
     }
 
@@ -140,7 +140,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (typeof node.style.margin !== 'undefined') {
+    if (node.style.margin !== undefined) {
       return node.style.margin;
     }
 
@@ -148,7 +148,7 @@ var computeLayout = (function() {
   }
 
   function getLeadingPadding(node, axis) {
-    if (typeof node.style.paddingStart !== 'undefined' && node.style.paddingStart >= 0
+    if (node.style.paddingStart !== undefined && node.style.paddingStart >= 0
         && isRowDirection(axis)) {
       return node.style.paddingStart;
     }
@@ -165,7 +165,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (typeof node.style.padding !== 'undefined' && node.style.padding >= 0) {
+    if (node.style.padding !== undefined && node.style.padding >= 0) {
       return node.style.padding;
     }
 
@@ -173,7 +173,7 @@ var computeLayout = (function() {
   }
 
   function getTrailingPadding(node, axis) {
-    if (typeof node.style.paddingEnd !== 'undefined' && node.style.paddingEnd >= 0
+    if (node.style.paddingEnd !== undefined && node.style.paddingEnd >= 0
         && isRowDirection(axis)) {
       return node.style.paddingEnd;
     }
@@ -190,7 +190,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (typeof node.style.padding !== 'undefined' && node.style.padding >= 0) {
+    if (node.style.padding !== undefined && node.style.padding >= 0) {
       return node.style.padding;
     }
 
@@ -198,7 +198,7 @@ var computeLayout = (function() {
   }
 
   function getLeadingBorder(node, axis) {
-    if (typeof node.style.borderStartWidth !== 'undefined' && node.style.borderStartWidth >= 0
+    if (node.style.borderStartWidth !== undefined && node.style.borderStartWidth >= 0
         && isRowDirection(axis)) {
       return node.style.borderStartWidth;
     }
@@ -215,7 +215,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (typeof node.style.borderWidth !== 'undefined' && node.style.borderWidth >= 0) {
+    if (node.style.borderWidth !== undefined && node.style.borderWidth >= 0) {
       return node.style.borderWidth;
     }
 
@@ -223,7 +223,7 @@ var computeLayout = (function() {
   }
 
   function getTrailingBorder(node, axis) {
-    if (typeof node.style.borderEndWidth !== 'undefined' && node.style.borderEndWidth >= 0
+    if (node.style.borderEndWidth !== undefined && node.style.borderEndWidth >= 0
         && isRowDirection(axis)) {
       return node.style.borderEndWidth;
     }
@@ -240,7 +240,7 @@ var computeLayout = (function() {
       return value;
     }
 
-    if (typeof node.style.borderWidth !== undefined && node.style.borderWidth >= 0) {
+    if (node.style.borderWidth !== undefined && node.style.borderWidth >= 0) {
       return node.style.borderWidth;
     }
 
@@ -357,19 +357,19 @@ var computeLayout = (function() {
   }
 
   function isDimDefined(node, axis) {
-    return typeof node.style[dim[axis]] !== 'undefined' && node.style[dim[axis]] >= 0;
+    return node.style[dim[axis]] !== undefined && node.style[dim[axis]] >= 0;
   }
 
   function isPosDefined(node, pos) {
-    return typeof node.style[pos] !== 'undefined';
+    return node.style[pos] !== undefined;
   }
 
   function isMeasureDefined(node) {
-    return typeof node.style.measure !== 'undefined';
+    return node.style.measure !== undefined;
   }
 
   function getPosition(node, pos) {
-    if (typeof node.style[pos] !== 'undefined') {
+    if (node.style[pos] !== undefined) {
       return node.style[pos];
     }
     return 0;
@@ -391,10 +391,10 @@ var computeLayout = (function() {
     }[axis];
 
     var boundValue = value;
-    if (max !== null && max >= 0 && boundValue > max) {
+    if (max !== undefined && max >= 0 && boundValue > max) {
       boundValue = max;
     }
-    if (min !== null && min >= 0 && boundValue < min) {
+    if (min !== undefined && min >= 0 && boundValue < min) {
       boundValue = min;
     }
     return boundValue;
@@ -410,7 +410,7 @@ var computeLayout = (function() {
   // When the user specifically sets a value for width or height
   function setDimensionFromStyle(node, axis) {
     // The parent already computed us a width or height. We just skip it
-    if (typeof node.layout[dim[axis]] !== 'undefined') {
+    if (node.layout[dim[axis]] !== undefined) {
       return;
     }
     // We only run if there's a width or height defined
@@ -433,7 +433,7 @@ var computeLayout = (function() {
   // If both left and right are defined, then use left. Otherwise return
   // +left or -right depending on which is defined.
   function getRelativePosition(node, axis) {
-    if (typeof node.style[leading[axis]] !== 'undefined') {
+    if (node.style[leading[axis]] !== undefined) {
       return getPosition(node, leading[axis]);
     }
     return -getPosition(node, trailing[axis]);
