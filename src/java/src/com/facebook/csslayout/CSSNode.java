@@ -393,4 +393,19 @@ public class CSSNode {
       dirty();
     }
   }
+
+  /**
+   * Resets this instance to its default state. This method is meant to be used when
+   * recycling {@link CSSNode} instances.
+   */
+  public void reset() {
+    if (mParent != null || (mChildren != null && mChildren.size() > 0)) {
+      throw new IllegalStateException("You should not reset an attached CSSNode");
+    }
+
+    style.reset();
+    layout.resetResult();
+    lineIndex = 0;
+    mLayoutState = LayoutState.DIRTY;
+  }
 }
