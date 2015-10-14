@@ -380,7 +380,7 @@ namespace Facebook.CSSLayout
         public float Width
         {
             get { return style.dimensions[DIMENSION_WIDTH]; }
-            set { updateFloatValue(ref style.dimensions[DIMENSION_HEIGHT], value); }
+            set { updateFloatValue(ref style.dimensions[DIMENSION_WIDTH], value); }
         }
 
         public float Height
