@@ -2401,6 +2401,64 @@ describe('Layout', function() {
       ]}
     );
   });
+
+  // https://github.com/facebook/css-layout/issues/127
+  it('should layout content of an item which is stretched late', function() {
+    testLayout(
+      {style: {flexDirection: 'row', alignItems: 'stretch', width: 150}, children: [
+          {style: {flexDirection: 'row', marginTop: 10, marginLeft: 10}, children: [
+              {style: {flexDirection: 'row'}, children: [
+                  {style: {alignSelf: 'center'}}
+              ]}
+          ]},
+          {style: { height: 150}}
+      ]},
+      {width: 150, height: 150, top: 0, left: 0, children: [
+        {width: 0, height: 140, top: 10, left: 10, children: [
+          {width: 0, height: 140, top: 0, left: 0, children: [
+            {width: 0, height: 0, top: 70, left: 0}
+          ]}
+        ]},
+        {width: 0, height: 150, top: 0, left: 10}
+      ]}
+    );
+  });
+
+  it('should layout items whose positioning is determined by sibling tree branches', function() {
+    testLayout(
+      {style: {}, children: [
+          {style: {}, children: [
+            {style: {width: 200, height: 200}}
+          ]},
+          {style: {marginTop: 10, marginLeft: 10}, children: [
+            {style: {}}
+          ]}
+      ]},
+      {width: 200, height: 210, top: 0, left: 0, children: [
+        {width: 200, height: 200, top: 0, left: 0, children: [
+          {width: 200, height: 200, top: 0, left: 0}
+        ]},
+        {width: 190, height: 0, top: 210, left: 10, children: [
+          {width: 190, height: 0, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+
+  it('should layout child whose cross axis is undefined and whose alignSelf is stretch', function() {
+    testLayout(
+      {style: {flexDirection: 'row'}, children: [
+          {style: {marginTop: 10, marginLeft: 10, alignSelf: 'flex-start'}},
+          {style: {width: 1, alignSelf: 'stretch'}},
+          {style: {height: 150}}
+      ]},
+      {width: 11, height: 150, top: 0, left: 0, children: [
+        {width: 0, height: 0, top: 10, left: 10},
+        {width: 1, height: 150, top: 0, left: 10},
+        {width: 0, height: 150, top: 0, left: 11}
+      ]}
+    );
+  });
 });
 
 describe('Layout alignContent', function() {

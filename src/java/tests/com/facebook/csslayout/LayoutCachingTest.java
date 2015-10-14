@@ -83,7 +83,7 @@ public class LayoutCachingTest {
     assertTrue(c0c0.hasNewLayout());
     assertTrue(c1.hasNewLayout());
 
-    assertFalse(c1c0.hasNewLayout());
+    assertTrue(c1c0.hasNewLayout());
   }
 
   @Test
@@ -131,7 +131,7 @@ public class LayoutCachingTest {
     assertTrue(c1.hasNewLayout());
 
     assertTrue(c0.hasNewLayout());
-    assertFalse(c0c0.hasNewLayout());
+    assertTrue(c0c0.hasNewLayout());
   }
 
   @Test
@@ -158,7 +158,7 @@ public class LayoutCachingTest {
     assertTrue(c0c0.hasNewLayout());
 
     assertTrue(c1.hasNewLayout());
-    assertFalse(c1c0.hasNewLayout());
+    assertTrue(c1c0.hasNewLayout());
   }
 
   @Test
@@ -235,6 +235,6 @@ public class LayoutCachingTest {
     assertTrue(c1.hasNewLayout());
 
     assertTrue(c0.hasNewLayout());
-    assertFalse(c0c0.hasNewLayout());
+    assertTrue(c0c0.hasNewLayout());
   }
 }
