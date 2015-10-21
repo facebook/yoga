@@ -228,11 +228,25 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's flex direction, as defined by style.
+   */
+  public CSSFlexDirection getFlexDirection() {
+    return style.flexDirection;
+  }
+
   public void setFlexDirection(CSSFlexDirection flexDirection) {
     if (style.flexDirection != flexDirection) {
       style.flexDirection = flexDirection;
       dirty();
     }
+  }
+
+  /**
+   * Get this node's justify content, as defined by style.
+   */
+  public CSSJustify getJustifyContent() {
+    return style.justifyContent;
   }
 
   public void setJustifyContent(CSSJustify justifyContent) {
@@ -242,6 +256,13 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's align items, as defined by style.
+   */
+  public CSSAlign getAlignItems() {
+    return style.alignItems;
+  }
+
   public void setAlignItems(CSSAlign alignItems) {
     if (style.alignItems != alignItems) {
       style.alignItems = alignItems;
@@ -249,11 +270,25 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's align items, as defined by style.
+   */
+  public CSSAlign getAlignSelf() {
+    return style.alignSelf;
+  }
+
   public void setAlignSelf(CSSAlign alignSelf) {
     if (style.alignSelf != alignSelf) {
       style.alignSelf = alignSelf;
       dirty();
     }
+  }
+
+  /**
+   * Get this node's position type, as defined by style.
+   */
+  public CSSPositionType getPositionType() {
+    return style.positionType;
   }
 
   public void setPositionType(CSSPositionType positionType) {
@@ -270,11 +305,25 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's flex, as defined by style.
+   */
+  public float getFlex() {
+    return style.flex;
+  }
+
   public void setFlex(float flex) {
     if (!valuesEqual(style.flex, flex)) {
       style.flex = flex;
       dirty();
     }
+  }
+
+  /**
+   * Get this node's margin, as defined by style + default margin.
+   */
+  public Spacing getMargin() {
+    return style.margin;
   }
 
   public void setMargin(int spacingType, float margin) {
@@ -289,10 +338,24 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's border, as defined by style.
+   */
+  public Spacing getBorder() {
+    return style.border;
+  }
+
   public void setBorder(int spacingType, float border) {
     if (style.border.set(spacingType, border)) {
       dirty();
     }
+  }
+
+  /**
+   * Get this node's position top, as defined by style.
+   */
+  public float getPositionTop() {
+    return style.position[POSITION_TOP];
   }
 
   public void setPositionTop(float positionTop) {
@@ -302,6 +365,13 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's position bottom, as defined by style.
+   */
+  public float getPositionBottom() {
+    return style.position[POSITION_BOTTOM];
+  }
+
   public void setPositionBottom(float positionBottom) {
     if (!valuesEqual(style.position[POSITION_BOTTOM], positionBottom)) {
       style.position[POSITION_BOTTOM] = positionBottom;
@@ -309,11 +379,25 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's position left, as defined by style.
+   */
+  public float getPositionLeft() {
+    return style.position[POSITION_LEFT];
+  }
+
   public void setPositionLeft(float positionLeft) {
     if (!valuesEqual(style.position[POSITION_LEFT], positionLeft)) {
       style.position[POSITION_LEFT] = positionLeft;
       dirty();
     }
+  }
+
+  /**
+   * Get this node's position right, as defined by style.
+   */
+  public float getPositionRight() {
+    return style.position[POSITION_RIGHT];
   }
 
   public void setPositionRight(float positionRight) {
