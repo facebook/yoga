@@ -221,6 +221,13 @@ public class CSSNode {
     return FloatUtil.floatsEqual(f1, f2);
   }
 
+  /**
+   * Get this node's direction, as defined in the style.
+   */
+  public CSSDirection getStyleDirection() {
+    return style.direction;
+  }
+
   public void setDirection(CSSDirection direction) {
     if (style.direction != direction) {
       style.direction = direction;
@@ -332,6 +339,13 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's padding, as defined by style + default padding.
+   */
+  public Spacing getPadding() {
+    return style.padding;
+  }
+
   public void setPadding(int spacingType, float padding) {
     if (style.padding.set(spacingType, padding)) {
       dirty();
@@ -407,11 +421,25 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's width, as defined in the style.
+   */
+  public float getStyleWidth() {
+    return style.dimensions[DIMENSION_WIDTH];
+  }
+
   public void setStyleWidth(float width) {
     if (!valuesEqual(style.dimensions[DIMENSION_WIDTH], width)) {
       style.dimensions[DIMENSION_WIDTH] = width;
       dirty();
     }
+  }
+
+  /**
+   * Get this node's height, as defined in the style.
+   */
+  public float getStyleHeight() {
+    return style.dimensions[DIMENSION_HEIGHT];
   }
 
   public void setStyleHeight(float height) {
@@ -439,34 +467,6 @@ public class CSSNode {
 
   public CSSDirection getLayoutDirection() {
     return layout.direction;
-  }
-
-  /**
-   * Get this node's padding, as defined by style + default padding.
-   */
-  public Spacing getStylePadding() {
-    return style.padding;
-  }
-
-  /**
-   * Get this node's width, as defined in the style.
-   */
-  public float getStyleWidth() {
-    return style.dimensions[DIMENSION_WIDTH];
-  }
-
-  /**
-   * Get this node's height, as defined in the style.
-   */
-  public float getStyleHeight() {
-    return style.dimensions[DIMENSION_HEIGHT];
-  }
-
-  /**
-   * Get this node's direction, as defined in the style.
-   */
-  public CSSDirection getStyleDirection() {
-    return style.direction;
   }
 
   /**
