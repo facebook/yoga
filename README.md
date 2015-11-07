@@ -126,6 +126,13 @@ div, span {
 - All the flex elements are oriented from top to bottom, left to right and do not shrink. This is how things are laid out using the default CSS settings and what you'd expect.
 - Everything is `position: relative`. This makes `position: absolute` target the direct parent and not some parent which is either `relative` or `absolute`. If you want to position an element relative to something else, you should move it in the DOM instead of relying of CSS. It also makes `top, left, right, bottom` do something when not specifying `position: absolute`.
 
+Native Usage Notes
+------------------
+
+The C equivalent of `computeLayout` is [`layoutNode`](dist/css-layout.h#L1378).
+
+In order for layout to properly layout reflowable text, the `measure` function must be set on the `css_node` structure. The property can be found in [`css-layout.h`](dist/css-layout.h#L146). This function must take a void pointer to a `context` that will affect the size of the node and the `width` as computed by the layout engine, and must return a `css_dim_t` structure defining the actual needed size of the node. For the most part, the `context` field can be the text inside the node. No C implementation of this function is provided in provided - it depends on your use of css-layout. However an implementation of the function in JavaScript can be used for reference in the [test utilities](src/Layout-test-utils.js#L383).
+
 Development
 -----------
 
