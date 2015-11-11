@@ -7,7 +7,7 @@ The Java, C and JavaScript version of the code is available via [npm](https://ww
 
 In order to make sure that the code is correct, it is developed in JavaScript using TDD where each commit adds a unit test and the associated code to make it work. All the unit tests are tested against Chrome's implementation of CSS.
 
-The JavaScript version has been implemented in a way that can be easily transpiled to C and Java via regexes. The layout function doesn't do any allocation nor uses any of the dynamic aspect of JavaScript. The tests are also transpiled to make sure that the implementations are correct everywhere.
+The JavaScript version has been implemented in a way that can be easily transpiled to C and Java via regexes. The layout function doesn't do any allocation nor uses any of the dynamic aspects of JavaScript. The tests are also transpiled to make sure that the implementations are correct everywhere.
 
 
 Usage
