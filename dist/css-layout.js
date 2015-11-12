@@ -3,7 +3,7 @@
 //
 // This file uses the following specific UMD implementation:
 // https://github.com/umdjs/umd/blob/master/returnExports.js
-(function (root, factory) {
+(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define([], factory);
@@ -16,8 +16,8 @@
     // Browser globals (root is window)
     root.computeLayout = factory();
   }
-}(this, function () {
-    /**
+}(this, function() {
+  /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
  *
@@ -78,33 +78,11 @@ var computeLayout = (function() {
     'column-reverse': 'height'
   };
 
-  function capitalizeFirst(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
-  function getSpacing(node, type, suffix, locations) {
-    for (var i = 0; i < locations.length; ++i) {
-      var location = locations[i];
-
-      var key = type + capitalizeFirst(location) + suffix;
-      if (key in node.style) {
-        return node.style[key];
-      }
-
-      key = type + suffix;
-      if (key in node.style) {
-        return node.style[key];
-      }
-    }
-
-    return 0;
-  }
-
   // When transpiled to Java / C the node type has layout, children and style
   // properties. For the JavaScript version this function adds these properties
   // if they don't already exist.
   function fillNodes(node) {
-    if (!node.layout) {
+    if (!node.layout || node.isDirty) {
       node.layout = {
         width: undefined,
         height: undefined,
@@ -126,24 +104,6 @@ var computeLayout = (function() {
     return node;
   }
 
-  function getPositiveSpacing(node, type, suffix, locations) {
-    for (var i = 0; i < locations.length; ++i) {
-      var location = locations[i];
-
-      var key = type + capitalizeFirst(location) + suffix;
-      if (key in node.style && node.style[key] >= 0) {
-        return node.style[key];
-      }
-
-      key = type + suffix;
-      if (key in node.style && node.style[key] >= 0) {
-        return node.style[key];
-      }
-    }
-
-    return 0;
-  }
-
   function isUndefined(value) {
     return value === undefined;
   }
@@ -158,58 +118,152 @@ var computeLayout = (function() {
            flexDirection === CSS_FLEX_DIRECTION_COLUMN_REVERSE;
   }
 
-  function getLeadingLocations(axis) {
-    var locations = [leading[axis]];
-    if (isRowDirection(axis)) {
-      locations.unshift('start');
-    }
-
-    return locations;
-  }
-
-  function getTrailingLocations(axis) {
-    var locations = [trailing[axis]];
-    if (isRowDirection(axis)) {
-      locations.unshift('end');
-    }
-
-    return locations;
-  }
-
-  function getMargin(node, locations) {
-    return getSpacing(node, 'margin', '', locations);
-  }
-
   function getLeadingMargin(node, axis) {
-    return getMargin(node, getLeadingLocations(axis));
+    if (node.style.marginStart !== undefined && isRowDirection(axis)) {
+      return node.style.marginStart;
+    }
+
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.marginLeft;   break;
+      case 'row-reverse':    value = node.style.marginRight;  break;
+      case 'column':         value = node.style.marginTop;    break;
+      case 'column-reverse': value = node.style.marginBottom; break;
+    }
+
+    if (value !== undefined) {
+      return value;
+    }
+
+    if (node.style.margin !== undefined) {
+      return node.style.margin;
+    }
+
+    return 0;
   }
 
   function getTrailingMargin(node, axis) {
-    return getMargin(node, getTrailingLocations(axis));
-  }
+    if (node.style.marginEnd !== undefined && isRowDirection(axis)) {
+      return node.style.marginEnd;
+    }
 
-  function getPadding(node, locations) {
-    return getPositiveSpacing(node, 'padding', '', locations);
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.marginRight;  break;
+      case 'row-reverse':    value = node.style.marginLeft;   break;
+      case 'column':         value = node.style.marginBottom; break;
+      case 'column-reverse': value = node.style.marginTop;    break;
+    }
+
+    if (value != null) {
+      return value;
+    }
+
+    if (node.style.margin !== undefined) {
+      return node.style.margin;
+    }
+
+    return 0;
   }
 
   function getLeadingPadding(node, axis) {
-    return getPadding(node, getLeadingLocations(axis));
+    if (node.style.paddingStart !== undefined && node.style.paddingStart >= 0
+        && isRowDirection(axis)) {
+      return node.style.paddingStart;
+    }
+
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.paddingLeft;   break;
+      case 'row-reverse':    value = node.style.paddingRight;  break;
+      case 'column':         value = node.style.paddingTop;    break;
+      case 'column-reverse': value = node.style.paddingBottom; break;
+    }
+
+    if (value != null && value >= 0) {
+      return value;
+    }
+
+    if (node.style.padding !== undefined && node.style.padding >= 0) {
+      return node.style.padding;
+    }
+
+    return 0;
   }
 
   function getTrailingPadding(node, axis) {
-    return getPadding(node, getTrailingLocations(axis));
-  }
+    if (node.style.paddingEnd !== undefined && node.style.paddingEnd >= 0
+        && isRowDirection(axis)) {
+      return node.style.paddingEnd;
+    }
 
-  function getBorder(node, locations) {
-    return getPositiveSpacing(node, 'border', 'Width', locations);
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.paddingRight;  break;
+      case 'row-reverse':    value = node.style.paddingLeft;   break;
+      case 'column':         value = node.style.paddingBottom; break;
+      case 'column-reverse': value = node.style.paddingTop;    break;
+    }
+
+    if (value != null && value >= 0) {
+      return value;
+    }
+
+    if (node.style.padding !== undefined && node.style.padding >= 0) {
+      return node.style.padding;
+    }
+
+    return 0;
   }
 
   function getLeadingBorder(node, axis) {
-    return getBorder(node, getLeadingLocations(axis));
+    if (node.style.borderStartWidth !== undefined && node.style.borderStartWidth >= 0
+        && isRowDirection(axis)) {
+      return node.style.borderStartWidth;
+    }
+
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.borderLeftWidth;   break;
+      case 'row-reverse':    value = node.style.borderRightWidth;  break;
+      case 'column':         value = node.style.borderTopWidth;    break;
+      case 'column-reverse': value = node.style.borderBottomWidth; break;
+    }
+
+    if (value != null && value >= 0) {
+      return value;
+    }
+
+    if (node.style.borderWidth !== undefined && node.style.borderWidth >= 0) {
+      return node.style.borderWidth;
+    }
+
+    return 0;
   }
 
   function getTrailingBorder(node, axis) {
-    return getBorder(node, getTrailingLocations(axis));
+    if (node.style.borderEndWidth !== undefined && node.style.borderEndWidth >= 0
+        && isRowDirection(axis)) {
+      return node.style.borderEndWidth;
+    }
+
+    var value = null;
+    switch (axis) {
+      case 'row':            value = node.style.borderRightWidth;  break;
+      case 'row-reverse':    value = node.style.borderLeftWidth;   break;
+      case 'column':         value = node.style.borderBottomWidth; break;
+      case 'column-reverse': value = node.style.borderTopWidth;    break;
+    }
+
+    if (value != null && value >= 0) {
+      return value;
+    }
+
+    if (node.style.borderWidth !== undefined && node.style.borderWidth >= 0) {
+      return node.style.borderWidth;
+    }
+
+    return 0;
   }
 
   function getLeadingPaddingAndBorder(node, axis) {
@@ -234,24 +288,24 @@ var computeLayout = (function() {
   }
 
   function getJustifyContent(node) {
-    if ('justifyContent' in node.style) {
+    if (node.style.justifyContent) {
       return node.style.justifyContent;
     }
     return 'flex-start';
   }
 
   function getAlignContent(node) {
-    if ('alignContent' in node.style) {
+    if (node.style.alignContent) {
       return node.style.alignContent;
     }
     return 'flex-start';
   }
 
   function getAlignItem(node, child) {
-    if ('alignSelf' in child.style) {
+    if (child.style.alignSelf) {
       return child.style.alignSelf;
     }
-    if ('alignItems' in node.style) {
+    if (node.style.alignItems) {
       return node.style.alignItems;
     }
     return 'stretch';
@@ -271,7 +325,7 @@ var computeLayout = (function() {
 
   function resolveDirection(node, parentDirection) {
     var direction;
-    if ('direction' in node.style) {
+    if (node.style.direction) {
       direction = node.style.direction;
     } else {
       direction = CSS_DIRECTION_INHERIT;
@@ -285,7 +339,7 @@ var computeLayout = (function() {
   }
 
   function getFlexDirection(node) {
-    if ('flexDirection' in node.style) {
+    if (node.style.flexDirection) {
       return node.style.flexDirection;
     }
     return CSS_FLEX_DIRECTION_COLUMN;
@@ -300,7 +354,7 @@ var computeLayout = (function() {
   }
 
   function getPositionType(node) {
-    if ('position' in node.style) {
+    if (node.style.position) {
       return node.style.position;
     }
     return 'relative';
@@ -322,19 +376,19 @@ var computeLayout = (function() {
   }
 
   function isDimDefined(node, axis) {
-    return !isUndefined(node.style[dim[axis]]) && node.style[dim[axis]] >= 0;
+    return node.style[dim[axis]] !== undefined && node.style[dim[axis]] >= 0;
   }
 
   function isPosDefined(node, pos) {
-    return !isUndefined(node.style[pos]);
+    return node.style[pos] !== undefined;
   }
 
   function isMeasureDefined(node) {
-    return 'measure' in node.style;
+    return node.style.measure !== undefined;
   }
 
   function getPosition(node, pos) {
-    if (pos in node.style) {
+    if (node.style[pos] !== undefined) {
       return node.style[pos];
     }
     return 0;
@@ -356,10 +410,10 @@ var computeLayout = (function() {
     }[axis];
 
     var boundValue = value;
-    if (!isUndefined(max) && max >= 0 && boundValue > max) {
+    if (max !== undefined && max >= 0 && boundValue > max) {
       boundValue = max;
     }
-    if (!isUndefined(min) && min >= 0 && boundValue < min) {
+    if (min !== undefined && min >= 0 && boundValue < min) {
       boundValue = min;
     }
     return boundValue;
@@ -375,7 +429,7 @@ var computeLayout = (function() {
   // When the user specifically sets a value for width or height
   function setDimensionFromStyle(node, axis) {
     // The parent already computed us a width or height. We just skip it
-    if (!isUndefined(node.layout[dim[axis]])) {
+    if (node.layout[dim[axis]] !== undefined) {
       return;
     }
     // We only run if there's a width or height defined
@@ -398,13 +452,13 @@ var computeLayout = (function() {
   // If both left and right are defined, then use left. Otherwise return
   // +left or -right depending on which is defined.
   function getRelativePosition(node, axis) {
-    if (leading[axis] in node.style) {
+    if (node.style[leading[axis]] !== undefined) {
       return getPosition(node, leading[axis]);
     }
     return -getPosition(node, trailing[axis]);
   }
 
-  function layoutNode(node, parentMaxWidth, /*css_direction_t*/parentDirection) {
+  function layoutNodeImpl(node, parentMaxWidth, /*css_direction_t*/parentDirection) {
     var/*css_direction_t*/ direction = resolveDirection(node, parentDirection);
     var/*(c)!css_flex_direction_t*//*(java)!int*/ mainAxis = resolveAxis(getFlexDirection(node), direction);
     var/*(c)!css_flex_direction_t*//*(java)!int*/ crossAxis = getCrossFlexDirection(mainAxis, direction);
@@ -530,8 +584,8 @@ var computeLayout = (function() {
       // immediately stacked in the initial loop will not be touched again
       // in <Loop C>.
       var/*bool*/ isSimpleStackMain =
-          (isMainDimDefined && justifyContent == CSS_JUSTIFY_FLEX_START) ||
-          (!isMainDimDefined && justifyContent != CSS_JUSTIFY_CENTER);
+          (isMainDimDefined && justifyContent === CSS_JUSTIFY_FLEX_START) ||
+          (!isMainDimDefined && justifyContent !== CSS_JUSTIFY_CENTER);
       var/*int*/ firstComplexMain = (isSimpleStackMain ? childCount : startLine);
 
       // Use the initial line loop to position children in the cross axis for
@@ -669,7 +723,7 @@ var computeLayout = (function() {
         // we found a non-trivial child. The remaining children will be laid out
         // in <Loop C>.
         if (isSimpleStackMain &&
-            (getPositionType(child) != CSS_POSITION_RELATIVE || isFlex(child))) {
+            (getPositionType(child) !== CSS_POSITION_RELATIVE || isFlex(child))) {
           isSimpleStackMain = false;
           firstComplexMain = i;
         }
@@ -678,8 +732,8 @@ var computeLayout = (function() {
         // we found a non-trivial child. The remaining children will be laid out
         // in <Loop D>.
         if (isSimpleStackCross &&
-            (getPositionType(child) != CSS_POSITION_RELATIVE ||
-                (alignItem !== CSS_ALIGN_STRETCH && alignItem != CSS_ALIGN_FLEX_START) ||
+            (getPositionType(child) !== CSS_POSITION_RELATIVE ||
+                (alignItem !== CSS_ALIGN_STRETCH && alignItem !== CSS_ALIGN_FLEX_START) ||
                 isUndefined(child.layout[dim[crossAxis]]))) {
           isSimpleStackCross = false;
           firstComplexCross = i;
@@ -876,7 +930,10 @@ var computeLayout = (function() {
           // For a relative children, we're either using alignItems (parent) or
           // alignSelf (child) in order to determine the position in the cross axis
           if (getPositionType(child) === CSS_POSITION_RELATIVE) {
+            /*eslint-disable */
+            // This variable is intentionally re-defined as the code is transpiled to a block scope language
             var/*css_align_t*/ alignItem = getAlignItem(node, child);
+            /*eslint-enable */
             if (alignItem === CSS_ALIGN_STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.
@@ -1013,8 +1070,8 @@ var computeLayout = (function() {
         paddingAndBorderAxisMain
       );
 
-      if (mainAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
-          mainAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+      if (mainAxis === CSS_FLEX_DIRECTION_ROW_REVERSE ||
+          mainAxis === CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
         needsMainTrailingPos = true;
       }
     }
@@ -1028,8 +1085,8 @@ var computeLayout = (function() {
         paddingAndBorderAxisCross
       );
 
-      if (crossAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
-          crossAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+      if (crossAxis === CSS_FLEX_DIRECTION_ROW_REVERSE ||
+          crossAxis === CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
         needsCrossTrailingPos = true;
       }
     }
@@ -1088,7 +1145,52 @@ var computeLayout = (function() {
     }
   }
 
+  function layoutNode(node, parentMaxWidth, parentDirection) {
+    node.shouldUpdate = true;
+
+    var direction = node.style.direction || CSS_DIRECTION_LTR;
+    var skipLayout =
+      !node.isDirty &&
+      node.lastLayout &&
+      node.lastLayout.requestedHeight === node.layout.height &&
+      node.lastLayout.requestedWidth === node.layout.width &&
+      node.lastLayout.parentMaxWidth === parentMaxWidth &&
+      node.lastLayout.direction === direction;
+
+    if (skipLayout) {
+      node.layout.width = node.lastLayout.width;
+      node.layout.height = node.lastLayout.height;
+      node.layout.top = node.lastLayout.top;
+      node.layout.left = node.lastLayout.left;
+    } else {
+      if (!node.lastLayout) {
+        node.lastLayout = {};
+      }
+
+      node.lastLayout.requestedWidth = node.layout.width;
+      node.lastLayout.requestedHeight = node.layout.height;
+      node.lastLayout.parentMaxWidth = parentMaxWidth;
+      node.lastLayout.direction = direction;
+
+      // Reset child layouts
+      node.children.forEach(function(child) {
+        child.layout.width = undefined;
+        child.layout.height = undefined;
+        child.layout.top = 0;
+        child.layout.left = 0;
+      });
+
+      layoutNodeImpl(node, parentMaxWidth, parentDirection);
+
+      node.lastLayout.width = node.layout.width;
+      node.lastLayout.height = node.layout.height;
+      node.lastLayout.top = node.layout.top;
+      node.lastLayout.left = node.layout.left;
+    }
+  }
+
   return {
+    layoutNodeImpl: layoutNodeImpl,
     computeLayout: layoutNode,
     fillNodes: fillNodes
   };
@@ -1102,8 +1204,11 @@ if (typeof exports === 'object') {
 }
 
 
-    return function(node) {
-      computeLayout.fillNodes(node);
-      computeLayout.computeLayout(node);
+  return function(node) {
+    /*eslint-disable */
+    // disabling ESLint because this code relies on the above include
+    computeLayout.fillNodes(node);
+    computeLayout.computeLayout(node);
+    /*eslint-enable */
   };
 }));

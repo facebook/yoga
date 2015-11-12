@@ -1162,7 +1162,10 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, css_direction
         // For a relative children, we're either using alignItems (parent) or
         // alignSelf (child) in order to determine the position in the cross axis
         if (child->style.position_type == CSS_POSITION_RELATIVE) {
+          /*eslint-disable */
+          // This variable is intentionally re-defined as the code is transpiled to a block scope language
           css_align_t alignItem = getAlignItem(node, child);
+          /*eslint-enable */
           if (alignItem == CSS_ALIGN_STRETCH) {
             // You can only stretch if the dimension has not already been set
             // previously.
