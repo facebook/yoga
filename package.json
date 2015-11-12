@@ -5,8 +5,7 @@
   "main": "dist/css-layout.js",
   "scripts": {
     "watch": "grunt watch",
-    "test": "grunt ci",
-    "postversion": "git push --tags upstream HEAD:master"
+    "test": "grunt ci"
   },
   "repository": {
     "type": "git",
