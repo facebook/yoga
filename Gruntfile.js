@@ -45,7 +45,7 @@ module.exports = function(grunt) {
     },
 
     clean: {
-      dist: ['<%= config.distFolder %>'],
+      dist: ['<%= config.distFolder %>/css-layout.*'],
       cTest: config.cTestClean,
       javaTest: ['**/*.class']
     },
