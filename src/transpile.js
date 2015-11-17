@@ -26,11 +26,15 @@ global.layoutTestUtils = {
   testRandomLayout: function(node, i) {
     allTests.push({name: 'Random #' + i, node: node, expectedLayout: computeDOMLayout(node)});
   },
+  testLayoutAgainstExpectedOnly: function(node, expectedLayout) {
+    allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
+  },
   computeLayout: layoutTestUtils.computeLayout,
   reduceTest: reduceTest,
   text: layoutTestUtils.text,
   texts: layoutTestUtils.texts,
-  textSizes: layoutTestUtils.textSizes
+  textSizes: layoutTestUtils.textSizes,
+  measureWithRatio2: layoutTestUtils.measureWithRatio2
 };
 
 global.describe = function(name, cb) {
@@ -114,6 +118,9 @@ function printLayout(test) {
 
     function addMeasure(node) {
       if ('measure' in node.style) {
+        if (node.children && node.children.length) {
+          throw new Error('Using custom measure function is supported only for leaf nodes.');
+        }
         add('node_' + (level - 3) + '->measure = measure;');
         add('node_' + (level - 3) + '->context = "' + node.style.measure.toString() + '";');
       }
@@ -289,7 +296,8 @@ function makeConstDefs() {
     '#define BIG_HEIGHT ' + layoutTestUtils.textSizes.bigHeight,
     '#define BIG_MIN_WIDTH ' + layoutTestUtils.textSizes.bigMinWidth,
     '#define SMALL_TEXT "' + layoutTestUtils.texts.small + '"',
-    '#define LONG_TEXT "' + layoutTestUtils.texts.big + '"'
+    '#define LONG_TEXT "' + layoutTestUtils.texts.big + '"',
+    '#define MEASURE_WITH_RATIO_2 "' + layoutTestUtils.measureWithRatio2() + '"'
   ];
   return lines.join('\n');
 }

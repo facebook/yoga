@@ -16,7 +16,7 @@ import static com.facebook.csslayout.CSSLayout.POSITION_RIGHT;
 import static com.facebook.csslayout.CSSLayout.POSITION_TOP;
 
 /**
- * Calculates layouts based on CSS style. See {@link #layoutNode(CSSNode, float)}.
+ * Calculates layouts based on CSS style. See {@link #layoutNode(CSSNode, float, float)}.
  */
 public class LayoutEngine {
 
@@ -106,7 +106,7 @@ public class LayoutEngine {
       return;
     }
     // We only run if there's a width or height defined
-    if (Float.isNaN(node.style.dimensions[dim[axis]]) || 
+    if (Float.isNaN(node.style.dimensions[dim[axis]]) ||
         node.style.dimensions[dim[axis]] <= 0.0) {
       return;
     }
@@ -180,7 +180,7 @@ public class LayoutEngine {
     return node.isMeasureDefined();
   }
 
-  static boolean needsRelayout(CSSNode node, float parentMaxWidth) {
+  static boolean needsRelayout(CSSNode node, float parentMaxWidth, float parentMaxHeight) {
     return node.isDirty() ||
         !FloatUtil.floatsEqual(
             node.lastLayout.requestedHeight,
@@ -188,20 +188,23 @@ public class LayoutEngine {
         !FloatUtil.floatsEqual(
             node.lastLayout.requestedWidth,
             node.layout.dimensions[DIMENSION_WIDTH]) ||
-        !FloatUtil.floatsEqual(node.lastLayout.parentMaxWidth, parentMaxWidth);
+        !FloatUtil.floatsEqual(node.lastLayout.parentMaxWidth, parentMaxWidth) ||
+        !FloatUtil.floatsEqual(node.lastLayout.parentMaxHeight, parentMaxHeight);
   }
 
   /*package*/ static void layoutNode(
       CSSLayoutContext layoutContext,
       CSSNode node,
       float parentMaxWidth,
+      float parentMaxHeight,
       CSSDirection parentDirection) {
-    if (needsRelayout(node, parentMaxWidth)) {
+    if (needsRelayout(node, parentMaxWidth, parentMaxHeight)) {
       node.lastLayout.requestedWidth = node.layout.dimensions[DIMENSION_WIDTH];
       node.lastLayout.requestedHeight = node.layout.dimensions[DIMENSION_HEIGHT];
       node.lastLayout.parentMaxWidth = parentMaxWidth;
+      node.lastLayout.parentMaxHeight = parentMaxHeight;
 
-      layoutNodeImpl(layoutContext, node, parentMaxWidth, parentDirection);
+      layoutNodeImpl(layoutContext, node, parentMaxWidth, parentMaxHeight, parentDirection);
       node.lastLayout.copy(node.layout);
     } else {
       node.layout.copy(node.lastLayout);
@@ -214,6 +217,7 @@ public class LayoutEngine {
       CSSLayoutContext layoutContext,
       CSSNode node,
       float parentMaxWidth,
+      float parentMaxHeight,
       CSSDirection parentDirection) {
     for (int i = 0, childCount = node.getChildCount(); i < childCount; i++) {
       node.getChildAt(i).layout.resetResult();
@@ -248,6 +252,7 @@ public class LayoutEngine {
     // invocations during the layout calculation.
     int childCount = node.getChildCount();
     float paddingAndBorderAxisResolvedRow = ((node.style.padding.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.border.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis])) + (node.style.padding.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]) + node.style.border.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis])));
+    float paddingAndBorderAxisColumn = ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
   
     if (isMeasureDefined(node)) {
       boolean isResolvedRowDimDefined = !Float.isNaN(node.layout.dimensions[dim[resolvedRowAxis]]);
@@ -263,6 +268,17 @@ public class LayoutEngine {
       }
       width -= paddingAndBorderAxisResolvedRow;
   
+      float height = CSSConstants.UNDEFINED;
+      if ((!Float.isNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+        height = node.style.dimensions[DIMENSION_HEIGHT];
+      } else if (!Float.isNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]])) {
+        height = node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]];
+      } else {
+        height = parentMaxHeight -
+          (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+      }
+      height -= ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
+  
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
       // the element is flexible.
@@ -275,7 +291,8 @@ public class LayoutEngine {
         MeasureOutput measureDim = node.measure(
           
           layoutContext.measureOutput,
-          width
+          width,
+          height
         );
         if (isRowUndefined) {
           node.layout.dimensions[DIMENSION_WIDTH] = measureDim.width +
@@ -283,7 +300,7 @@ public class LayoutEngine {
         }
         if (isColumnUndefined) {
           node.layout.dimensions[DIMENSION_HEIGHT] = measureDim.height +
-            ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
+            paddingAndBorderAxisColumn;
         }
       }
       if (childCount == 0) {
@@ -364,6 +381,7 @@ public class LayoutEngine {
       float crossDim = 0;
   
       float maxWidth;
+      float maxHeight;
       for (i = startLine; i < childCount; ++i) {
         child = node.getChildAt(i);
         child.lineIndex = linesCount;
@@ -444,6 +462,8 @@ public class LayoutEngine {
   
         } else {
           maxWidth = CSSConstants.UNDEFINED;
+          maxHeight = CSSConstants.UNDEFINED;
+  
           if (!isMainRowDirection) {
             if ((!Float.isNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
               maxWidth = node.layout.dimensions[dim[resolvedRowAxis]] -
@@ -453,11 +473,20 @@ public class LayoutEngine {
                 (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis])) -
                 paddingAndBorderAxisResolvedRow;
             }
+          } else {
+            if ((!Float.isNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+              maxHeight = node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] -
+                  paddingAndBorderAxisColumn;
+            } else {
+              maxHeight = parentMaxHeight -
+                (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])) -
+                paddingAndBorderAxisColumn;
+            }
           }
   
           // This is the main recursive call. We layout non flexible children.
           if (alreadyComputedNextLayout == 0) {
-            layoutNode(layoutContext, child, maxWidth, direction);
+            layoutNode(layoutContext, child, maxWidth, maxHeight, direction);
           }
   
           // Absolute positioned elements do not take part of the layout, so we
@@ -587,9 +616,18 @@ public class LayoutEngine {
               (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis])) -
               paddingAndBorderAxisResolvedRow;
           }
+          maxHeight = CSSConstants.UNDEFINED;
+          if ((!Float.isNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+            maxHeight = node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] -
+              paddingAndBorderAxisColumn;
+          } else if (isMainRowDirection) {
+            maxHeight = parentMaxHeight -
+              (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])) -
+              paddingAndBorderAxisColumn;
+          }
   
           // And we recursively call the layout algorithm for this child
-          layoutNode(layoutContext, currentFlexChild, maxWidth, direction);
+          layoutNode(layoutContext, currentFlexChild, maxWidth, maxHeight, direction);
   
           child = currentFlexChild;
           currentFlexChild = currentFlexChild.nextFlexChild;

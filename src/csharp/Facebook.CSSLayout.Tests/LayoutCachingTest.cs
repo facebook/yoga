@@ -54,7 +54,7 @@ namespace Facebook.CSSLayout.Tests
             markLayoutAppliedForTree(root);
 
             root.calculateLayout();
-            Assert.True(root.HasNewLayout);
+            Assert.IsTrue(root.HasNewLayout);
             assertTreeHasNewLayout(false, c0);
             assertTreeHasNewLayout(false, c1);
         }
@@ -81,14 +81,14 @@ namespace Facebook.CSSLayout.Tests
             c0.addChildAt(c0c1, 1);
 
             root.calculateLayout();
-            Assert.True(root.HasNewLayout);
-            Assert.True(c0.HasNewLayout);
-            Assert.True(c0c1.HasNewLayout);
+            Assert.IsTrue(root.HasNewLayout);
+            Assert.IsTrue(c0.HasNewLayout);
+            Assert.IsTrue(c0c1.HasNewLayout);
 
-            Assert.True(c0c0.HasNewLayout);
-            Assert.True(c1.HasNewLayout);
+            Assert.IsTrue(c0c0.HasNewLayout);
+            Assert.IsTrue(c1.HasNewLayout);
 
-            Assert.False(c1c0.HasNewLayout);
+            Assert.IsFalse(c1c0.HasNewLayout);
         }
 
         [Test]
@@ -108,11 +108,11 @@ namespace Facebook.CSSLayout.Tests
             c1.AlignSelf = CSSAlign.Center;
             root.calculateLayout();
 
-            Assert.True(root.HasNewLayout);
-            Assert.True(c1.HasNewLayout);
+            Assert.IsTrue(root.HasNewLayout);
+            Assert.IsTrue(c1.HasNewLayout);
 
-            Assert.True(c0.HasNewLayout);
-            Assert.False(c0c0.HasNewLayout);
+            Assert.IsTrue(c0.HasNewLayout);
+            Assert.IsFalse(c0c0.HasNewLayout);
         }
 
         [Test]
@@ -132,11 +132,11 @@ namespace Facebook.CSSLayout.Tests
             c1.SetMargin(CSSSpacingType.Left, 10);
             root.calculateLayout();
 
-            Assert.True(root.HasNewLayout);
-            Assert.True(c1.HasNewLayout);
+            Assert.IsTrue(root.HasNewLayout);
+            Assert.IsTrue(c1.HasNewLayout);
 
-            Assert.True(c0.HasNewLayout);
-            Assert.False(c0c0.HasNewLayout);
+            Assert.IsTrue(c0.HasNewLayout);
+            Assert.IsFalse(c0c0.HasNewLayout);
         }
 
         [Test]
@@ -158,12 +158,12 @@ namespace Facebook.CSSLayout.Tests
             c0.Height = 200;
             root.calculateLayout();
 
-            Assert.True(root.HasNewLayout);
-            Assert.True(c0.HasNewLayout);
-            Assert.True(c0c0.HasNewLayout);
+            Assert.IsTrue(root.HasNewLayout);
+            Assert.IsTrue(c0.HasNewLayout);
+            Assert.IsTrue(c0c0.HasNewLayout);
 
-            Assert.True(c1.HasNewLayout);
-            Assert.False(c1c0.HasNewLayout);
+            Assert.IsTrue(c1.HasNewLayout);
+            Assert.IsFalse(c1c0.HasNewLayout);
         }
 
         [Test]
@@ -184,7 +184,7 @@ namespace Facebook.CSSLayout.Tests
             root.Width = 200;
             root.calculateLayout();
 
-            Assert.True(root.HasNewLayout);
+            Assert.IsTrue(root.HasNewLayout);
             assertTreeHasNewLayout(false, c0);
             assertTreeHasNewLayout(false, c1);
         }
@@ -206,10 +206,10 @@ namespace Facebook.CSSLayout.Tests
             c0.Height = 100;
             root.calculateLayout();
 
-            Assert.True(root.HasNewLayout);
-            Assert.True(c0.HasNewLayout);
-            Assert.True(c1.HasNewLayout);
-            Assert.False(c1c0.HasNewLayout);
+            Assert.IsTrue(root.HasNewLayout);
+            Assert.IsTrue(c0.HasNewLayout);
+            Assert.IsTrue(c1.HasNewLayout);
+            Assert.IsFalse(c1c0.HasNewLayout);
         }
 
         [Test]
@@ -226,15 +226,15 @@ namespace Facebook.CSSLayout.Tests
             root.calculateLayout();
             markLayoutAppliedForTree(root);
 
-            c1.setMeasureFunction((node, width) => new MeasureOutput(100, 20));
+            c1.setMeasureFunction((node, width, height) => new MeasureOutput(100, 20));
 
             root.calculateLayout();
 
-            Assert.True(root.HasNewLayout);
-            Assert.True(c1.HasNewLayout);
+            Assert.IsTrue(root.HasNewLayout);
+            Assert.IsTrue(c1.HasNewLayout);
 
-            Assert.True(c0.HasNewLayout);
-            Assert.False(c0c0.HasNewLayout);
+            Assert.IsTrue(c0.HasNewLayout);
+            Assert.IsFalse(c0c0.HasNewLayout);
         }
     }
 }

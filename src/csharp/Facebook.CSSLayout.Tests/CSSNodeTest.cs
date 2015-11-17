@@ -24,7 +24,7 @@ namespace Facebook.CSSLayout.Tests
             CSSNode parent = new CSSNode();
             CSSNode child = new CSSNode();
 
-            Assert.Null(child.getParent());
+            Assert.IsNull(child.getParent());
             Assert.AreEqual(0, parent.getChildCount());
 
             parent.addChildAt(child, 0);
@@ -35,7 +35,7 @@ namespace Facebook.CSSLayout.Tests
 
             parent.removeChildAt(0);
 
-            Assert.Null(child.getParent());
+            Assert.IsNull(child.getParent());
             Assert.AreEqual(0, parent.getChildCount());
         }
 

@@ -18,4 +18,5 @@ public class CachedCSSLayout extends CSSLayout {
   public float requestedWidth = CSSConstants.UNDEFINED;
   public float requestedHeight = CSSConstants.UNDEFINED;
   public float parentMaxWidth = CSSConstants.UNDEFINED;
+  public float parentMaxHeight = CSSConstants.UNDEFINED;
 }

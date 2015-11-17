@@ -53,7 +53,7 @@ public class CSSNode {
      *
      * NB: measure is NOT guaranteed to be threadsafe/re-entrant safe!
      */
-    public void measure(CSSNode node, float width, MeasureOutput measureOutput);
+    public void measure(CSSNode node, float width, float height, MeasureOutput measureOutput);
   }
 
   // VisibleForTesting
@@ -125,13 +125,13 @@ public class CSSNode {
     return mMeasureFunction != null;
   }
 
-  /*package*/ MeasureOutput measure(MeasureOutput measureOutput, float width) {
+  /*package*/ MeasureOutput measure(MeasureOutput measureOutput, float width, float height) {
     if (!isMeasureDefined()) {
       throw new RuntimeException("Measure function isn't defined!");
     }
     measureOutput.height = CSSConstants.UNDEFINED;
     measureOutput.width = CSSConstants.UNDEFINED;
-    Assertions.assertNotNull(mMeasureFunction).measure(this, width, measureOutput);
+    Assertions.assertNotNull(mMeasureFunction).measure(this, width, height, measureOutput);
     return measureOutput;
   }
 
@@ -140,7 +140,7 @@ public class CSSNode {
    */
   public void calculateLayout(CSSLayoutContext layoutContext) {
     layout.resetResult();
-    LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED, null);
+    LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED, CSSConstants.UNDEFINED, null);
   }
 
   /**

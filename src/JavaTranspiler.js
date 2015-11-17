@@ -101,7 +101,7 @@ function __transpileSingleTestToJava(code) {
         function(str, match1, match2, match3) {
           return 'style.' + match1 + match2.toUpperCase() + match3;
         })
-    .replace(/(\w+)\.measure\s+=\s+.+/, '$1.setMeasureFunction(sTestMeasureFunction);');
+    .replace(/(\w+)\.measure\s+=\s+.+/g, '$1.setMeasureFunction(sTestMeasureFunction);');
 }
 
 function indent(code) {
