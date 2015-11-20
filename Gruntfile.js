@@ -145,6 +145,12 @@ module.exports = function(grunt) {
       },
       javaPackage: {
         command: 'jar cf <%= config.distFolder %>/<%= config.libName %>.jar <%= config.javaSource %>'
+      },
+      csharpCompile: {
+        command: 'xbuild /verbosity:m /nologo src/csharp/Facebook.CSSLayout.sln /p:Configuration=Release /t:"Facebook_CSSLayout:Rebuild;Facebook_CSSLayout_Tests:Rebuild"'
+      },
+      csharpTestExecute: {
+        command: 'nunit-console -nologo src/csharp/Facebook.CSSLayout.Tests/bin/Release/Facebook.CSSLayout.Tests.dll'   
       }
     },
 
@@ -157,11 +163,14 @@ module.exports = function(grunt) {
   // Compiles and runs the Java tests
   grunt.registerTask('test-java', ['shell:javaCompile', 'shell:javaTestExecute', 'clean:javaTest']);
 
+  // Compiles and runs the CSharp tests
+  grunt.registerTask('test-csharp', ['shell:csharpCompile', 'shell:csharpTestExecute']);
+
   // Compiles and runs the C tests
   grunt.registerTask('test-c', ['shell:cCompile', 'shell:cTestExecute', 'clean:cTest']);
 
   // Transpiles the JavaScript to C and Java, running tests
-  grunt.registerTask('transpile', ['execute:transpile', 'test-c', 'test-java']);
+  grunt.registerTask('transpile', ['execute:transpile', 'test-c', 'test-java', 'test-csharp']);
 
   // Lints and tests the JavaScritp using Chrome
   grunt.registerTask('test-javascript', ['eslint', 'karma']);
