@@ -184,7 +184,7 @@ module.exports = function(grunt) {
   // Packages the C code as a single header
   grunt.registerTask('package-c', ['concat']);
 
-  // package all languages
+  // Packages all languages
   grunt.registerTask('package-all', ['package-javascript', 'package-java', 'package-c']);
 
   // Default build, performs the full works!
