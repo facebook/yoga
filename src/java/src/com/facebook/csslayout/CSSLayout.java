@@ -11,7 +11,7 @@ package com.facebook.csslayout;
 import java.util.Arrays;
 
 /**
- * Where the output of {@link LayoutEngine#layoutNode(CSSNode, float)} will go in the CSSNode.
+ * Where the output of {@link LayoutEngine#layoutNode(CSSLayoutContext, CSSNode, float, CSSDirection)} will go in the CSSNode.
  */
 public class CSSLayout {
   public static final int POSITION_LEFT = 0;
@@ -27,7 +27,7 @@ public class CSSLayout {
   public CSSDirection direction = CSSDirection.LTR;
 
   /**
-   * This should always get called before calling {@link LayoutEngine#layoutNode(CSSNode, float)}
+   * This should always get called before calling {@link LayoutEngine#layoutNode(CSSLayoutContext, CSSNode, float, CSSDirection)}
    */
   public void resetResult() {
     Arrays.fill(position, 0);
