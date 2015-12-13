@@ -16,7 +16,7 @@ import static com.facebook.csslayout.CSSLayout.POSITION_RIGHT;
 import static com.facebook.csslayout.CSSLayout.POSITION_TOP;
 
 /**
- * Calculates layouts based on CSS style. See {@link #layoutNode(CSSNode, float)}.
+ * Calculates layouts based on CSS style. See {@link #layoutNode(CSSLayoutContext, CSSNode, float, CSSDirection)}.
  */
 public class LayoutEngine {
 
