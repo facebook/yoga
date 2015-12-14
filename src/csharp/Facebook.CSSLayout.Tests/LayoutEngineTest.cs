@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Facebook.CSSLayout.Tests
 {
-        
+
 /**
  * Tests for {@link LayoutEngine}
  */
@@ -24,27 +24,35 @@ public class LayoutEngineTest
     const int POSITION_BOTTOM = CSSLayout.POSITION_BOTTOM;
     const int DIMENSION_HEIGHT = CSSLayout.DIMENSION_HEIGHT;
     const int DIMENSION_WIDTH = CSSLayout.DIMENSION_WIDTH;
-    
-    static readonly MeasureFunction sTestMeasureFunction = (node, width) =>
-    {
-        if (CSSConstants.IsUndefined(width)) {
-            width = 10000000;
-        }
 
+    static readonly MeasureFunction sTestMeasureFunction = (node, width, height) =>
+    {
         TestCSSNode testNode = (TestCSSNode) node;
-        if (testNode.context.Equals(TestConstants.SMALL_TEXT))
-        {
+        if (testNode.context.Equals(TestConstants.SMALL_TEXT)) {
+            if (CSSConstants.IsUndefined(width)) {
+                width = 10000000;
+            }
             return new MeasureOutput(
                 Math.Min(width, TestConstants.SMALL_WIDTH),
                 TestConstants.SMALL_HEIGHT);
-        } else if (testNode.context.Equals(TestConstants.LONG_TEXT))
-        {
+        } else if (testNode.context.Equals(TestConstants.LONG_TEXT)) {
+            if (CSSConstants.IsUndefined(width)) {
+                width = 10000000;
+            }
             return new MeasureOutput(width >= TestConstants.BIG_WIDTH
                 ? TestConstants.BIG_WIDTH
                 : Math.Max(TestConstants.BIG_MIN_WIDTH, width),
                 width >= TestConstants.BIG_WIDTH
                     ? TestConstants.SMALL_HEIGHT
                     : TestConstants.BIG_HEIGHT);
+        } else if (testNode.context.Equals(TestConstants.MEASURE_WITH_RATIO_2)) {
+            if (width > 0) {
+                return new MeasureOutput(width, width * 2);
+            } else if (height > 0) {
+                return new MeasureOutput(height * 2, height);
+            } else {
+              return new MeasureOutput(99999, 99999);
+            }
         } else {
             throw new Exception("Got unknown test: " + testNode.context);
         }
@@ -71,8 +79,8 @@ public class LayoutEngineTest
     }
 
     private static void assertLayoutsEqual(String message, CSSNode actual, CSSNode expected) {
-        Assert.True(
-            areLayoutsEqual(actual, expected), 
+        Assert.IsTrue(
+            areLayoutsEqual(actual, expected),
             message + "\nActual:\n" + actual.ToString() + "\nExpected:\n" + expected.ToString()
             );
 }
@@ -4253,6 +4261,168 @@ public class LayoutEngineTest
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.setMeasureFunction(sTestMeasureFunction);
+      node_0.context = "measureWithRatio2";
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 200;
+    }
+
+    test("should layout node with fixed width and custom measure function", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase96()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      node_0.setMeasureFunction(sTestMeasureFunction);
+      node_0.context = "measureWithRatio2";
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+    }
+
+    test("should layout node with fixed height and custom measure function", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase97()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      node_0.setMeasureFunction(sTestMeasureFunction);
+      node_0.context = "measureWithRatio2";
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+    }
+
+    test("should layout node with fixed height and fixed width, ignoring custom measure function", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase98()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.setMeasureFunction(sTestMeasureFunction);
+      node_0.context = "measureWithRatio2";
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 99999;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 99999;
+    }
+
+    test("should layout node with no fixed dimension and custom measure function", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase99()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Column;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 320;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.setMeasureFunction(sTestMeasureFunction);
+        node_1.context = "measureWithRatio2";
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flexDirection = CSSFlexDirection.Row;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 2);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "measureWithRatio2";
+          node_2 = node_1.getChildAt(1);
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "measureWithRatio2";
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 320;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 740;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 320;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 640;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 640;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 320;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 2);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 200;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+          node_2 = node_1.getChildAt(1);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 200;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 200;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should layout node with nested stacks and custom measure function", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase100()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
       node_0.style.dimensions[DIMENSION_WIDTH] = 10;
       node_0.setMeasureFunction(sTestMeasureFunction);
       node_0.context = "small";
@@ -4271,7 +4441,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase96()
+    public void TestCase101()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4293,7 +4463,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase97()
+    public void TestCase102()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4344,7 +4514,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase98()
+    public void TestCase103()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4397,7 +4567,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase99()
+    public void TestCase104()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4451,7 +4621,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase100()
+    public void TestCase105()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4504,7 +4674,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase101()
+    public void TestCase106()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4558,7 +4728,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase102()
+    public void TestCase107()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4597,7 +4767,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase103()
+    public void TestCase108()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4662,7 +4832,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase104()
+    public void TestCase109()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4705,7 +4875,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase105()
+    public void TestCase110()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4749,7 +4919,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase106()
+    public void TestCase111()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4787,7 +4957,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase107()
+    public void TestCase112()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4826,7 +4996,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase108()
+    public void TestCase113()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4884,7 +5054,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase109()
+    public void TestCase114()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -4943,7 +5113,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase110()
+    public void TestCase115()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5000,7 +5170,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase111()
+    public void TestCase116()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5041,7 +5211,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase112()
+    public void TestCase117()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5088,7 +5258,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase113()
+    public void TestCase118()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5136,7 +5306,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase114()
+    public void TestCase119()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5184,7 +5354,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase115()
+    public void TestCase120()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5229,7 +5399,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase116()
+    public void TestCase121()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5267,7 +5437,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase117()
+    public void TestCase122()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5325,7 +5495,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase118()
+    public void TestCase123()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5362,7 +5532,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase119()
+    public void TestCase124()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5399,7 +5569,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase120()
+    public void TestCase125()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5437,7 +5607,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase121()
+    public void TestCase126()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5475,7 +5645,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase122()
+    public void TestCase127()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5512,7 +5682,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase123()
+    public void TestCase128()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5549,7 +5719,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase124()
+    public void TestCase129()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5585,7 +5755,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase125()
+    public void TestCase130()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5621,7 +5791,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase126()
+    public void TestCase131()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5657,7 +5827,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase127()
+    public void TestCase132()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5693,7 +5863,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase128()
+    public void TestCase133()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5743,7 +5913,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase129()
+    public void TestCase134()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5798,7 +5968,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase130()
+    public void TestCase135()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5854,7 +6024,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase131()
+    public void TestCase136()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5898,7 +6068,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase132()
+    public void TestCase137()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5922,7 +6092,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase133()
+    public void TestCase138()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5946,7 +6116,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase134()
+    public void TestCase139()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5972,7 +6142,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase135()
+    public void TestCase140()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -5998,7 +6168,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase136()
+    public void TestCase141()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6022,7 +6192,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase137()
+    public void TestCase142()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6046,7 +6216,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase138()
+    public void TestCase143()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6072,7 +6242,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase139()
+    public void TestCase144()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6098,7 +6268,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase140()
+    public void TestCase145()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6151,7 +6321,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase141()
+    public void TestCase146()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6205,7 +6375,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase142()
+    public void TestCase147()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6259,7 +6429,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase143()
+    public void TestCase148()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6314,7 +6484,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase144()
+    public void TestCase149()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6367,7 +6537,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase145()
+    public void TestCase150()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6421,7 +6591,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase146()
+    public void TestCase151()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6476,7 +6646,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase147()
+    public void TestCase152()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6532,7 +6702,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase148()
+    public void TestCase153()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6587,7 +6757,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase149()
+    public void TestCase154()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6643,7 +6813,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase150()
+    public void TestCase155()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6682,7 +6852,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase151()
+    public void TestCase156()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6720,7 +6890,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase152()
+    public void TestCase157()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6758,7 +6928,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase153()
+    public void TestCase158()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6806,7 +6976,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase154()
+    public void TestCase159()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6852,7 +7022,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase155()
+    public void TestCase160()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6898,7 +7068,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase156()
+    public void TestCase161()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6939,7 +7109,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase157()
+    public void TestCase162()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -6978,7 +7148,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase158()
+    public void TestCase163()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7017,7 +7187,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase159()
+    public void TestCase164()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7056,7 +7226,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase160()
+    public void TestCase165()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7096,7 +7266,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase161()
+    public void TestCase166()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7139,7 +7309,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase162()
+    public void TestCase167()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7182,7 +7352,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase163()
+    public void TestCase168()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7248,7 +7418,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase164()
+    public void TestCase169()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7320,7 +7490,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase165()
+    public void TestCase170()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7382,7 +7552,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase166()
+    public void TestCase171()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7476,7 +7646,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase167()
+    public void TestCase172()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7557,7 +7727,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase168()
+    public void TestCase173()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7597,7 +7767,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase169()
+    public void TestCase174()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7637,7 +7807,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase170()
+    public void TestCase175()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7677,7 +7847,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase171()
+    public void TestCase176()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7715,7 +7885,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase172()
+    public void TestCase177()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7754,7 +7924,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase173()
+    public void TestCase178()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7792,7 +7962,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase174()
+    public void TestCase179()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7831,7 +8001,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase175()
+    public void TestCase180()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7869,7 +8039,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase176()
+    public void TestCase181()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7908,7 +8078,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase177()
+    public void TestCase182()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7944,7 +8114,7 @@ public class LayoutEngineTest
   }
 
     [Test]
-    public void TestCase178()
+    public void TestCase183()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8193,4 +8363,3 @@ public class LayoutEngineTest
 }
 
 }
-

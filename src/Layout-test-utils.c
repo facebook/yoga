@@ -33,6 +33,7 @@ __forceinline const float fminf(const float a, const float b) {
 #define BIG_MIN_WIDTH 100
 #define SMALL_TEXT "small"
 #define LONG_TEXT "loooooooooong with space"
+#define MEASURE_WITH_RATIO_2 "measureWithRatio2"
   /** END_GENERATED **/
 
 typedef struct failed_test_t {
@@ -80,20 +81,37 @@ static bool are_layout_equal(css_node_t *a, css_node_t *b) {
   return true;
 }
 
-css_dim_t measure(void *context, float width) {
+css_dim_t measure(void *context, float width, float height) {
   const char *text = (const char *)context;
   css_dim_t dim;
-  if (width != width) {
-    width = 1000000;
-  }
   if (strcmp(text, SMALL_TEXT) == 0) {
+    if (width != width) {
+      width = 1000000;
+    }
     dim.dimensions[CSS_WIDTH] = fminf(SMALL_WIDTH, width);
     dim.dimensions[CSS_HEIGHT] = SMALL_HEIGHT;
     return dim;
   }
   if (strcmp(text, LONG_TEXT) == 0) {
+    if (width != width) {
+      width = 1000000;
+    }
     dim.dimensions[CSS_WIDTH] = width >= BIG_WIDTH ? BIG_WIDTH : fmaxf(BIG_MIN_WIDTH, width);
     dim.dimensions[CSS_HEIGHT] = width >= BIG_WIDTH ? SMALL_HEIGHT : BIG_HEIGHT;
+    return dim;
+  }
+
+  if (strcmp(text, MEASURE_WITH_RATIO_2) == 0) {
+    if (width > 0) {
+      dim.dimensions[CSS_WIDTH] = width;
+      dim.dimensions[CSS_HEIGHT] = width * 2;
+    } else if (height > 0) {
+      dim.dimensions[CSS_WIDTH] = height * 2;
+      dim.dimensions[CSS_HEIGHT] = height;
+    } else {
+      dim.dimensions[CSS_WIDTH] = 99999;
+      dim.dimensions[CSS_HEIGHT] = 99999;
+    }
     return dim;
   }
 
@@ -106,7 +124,7 @@ css_dim_t measure(void *context, float width) {
 static int test_ran_count = 0;
 void test(const char *name, css_node_t *style, css_node_t *expected_layout) {
   ++test_ran_count;
-  layoutNode(style, CSS_UNDEFINED, (css_direction_t)-1);
+  layoutNode(style, CSS_UNDEFINED, CSS_UNDEFINED, (css_direction_t)-1);
 
   if (!are_layout_equal(style, expected_layout)) {
     printf("%sF%s", "\x1B[31m", "\x1B[0m");

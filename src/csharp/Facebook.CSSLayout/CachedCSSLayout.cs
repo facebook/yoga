@@ -20,5 +20,6 @@ namespace Facebook.CSSLayout
         public float requestedWidth = CSSConstants.Undefined;
         public float requestedHeight = CSSConstants.Undefined;
         public float parentMaxWidth = CSSConstants.Undefined;
+        public float parentMaxHeight = CSSConstants.Undefined;
     }
 }

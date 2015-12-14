@@ -21,5 +21,6 @@ public class TestConstants {
   public static final float BIG_MIN_WIDTH = 100f;
   public static final String SMALL_TEXT = "small";
   public static final String LONG_TEXT = "loooooooooong with space";
+  public static final String MEASURE_WITH_RATIO_2 = "measureWithRatio2";
   /** END_GENERATED **/
 }

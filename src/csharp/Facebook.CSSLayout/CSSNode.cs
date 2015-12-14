@@ -17,7 +17,7 @@ namespace Facebook.CSSLayout
      * Should measure the given node and put the result in the given MeasureOutput.
      */
 
-    public delegate MeasureOutput MeasureFunction(CSSNode node, float width);
+    public delegate MeasureOutput MeasureFunction(CSSNode node, float width, float height);
 
     /**
      * A CSS Node. It has a style object you can manipulate at {@link #style}. After calling
@@ -140,13 +140,13 @@ namespace Facebook.CSSLayout
             get { return mMeasureFunction != null; }
         }
 
-        internal MeasureOutput measure(MeasureOutput measureOutput, float width)
+        internal MeasureOutput measure(MeasureOutput measureOutput, float width, float height)
         {
             if (!IsMeasureDefined)
             {
                 throw new Exception("Measure function isn't defined!");
             }
-            return Assertions.assertNotNull(mMeasureFunction)(this, width);
+            return Assertions.assertNotNull(mMeasureFunction)(this, width, height);
         }
 
         /**
@@ -156,7 +156,7 @@ namespace Facebook.CSSLayout
         public void CalculateLayout()
         {
             layout.resetResult();
-            LayoutEngine.layoutNode(DummyLayoutContext, this, CSSConstants.Undefined, null);
+            LayoutEngine.layoutNode(DummyLayoutContext, this, CSSConstants.Undefined, CSSConstants.Undefined, null);
         }
 
         static readonly CSSLayoutContext DummyLayoutContext = new CSSLayoutContext();
@@ -469,10 +469,10 @@ namespace Facebook.CSSLayout
     {
         /*
             Explicitly mark this node as dirty.
-            
+
             Calling this function is required when the measure function points to the same instance,
             but changes its behavior.
-            
+
             For all other property changes, the node is automatically marked dirty.
         */
 

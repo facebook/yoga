@@ -471,6 +471,12 @@ var layoutTestUtils = (function() {
       inplaceRoundNumbersInObject(domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
+    testLayoutAgainstExpectedOnly: function(node, expectedLayout) {
+      var layout = computeCSSLayout(node);
+      inplaceRoundNumbersInObject(layout);
+      inplaceRoundNumbersInObject(expectedLayout);
+      testNamedLayout('expected-dom', expectedLayout, layout);
+    },
     testFillNodes: testFillNodes,
     testExtractNodes: testExtractNodes,
     testRandomLayout: function(node) {
@@ -488,7 +494,7 @@ var layoutTestUtils = (function() {
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest,
     text: function(text) {
-      var fn = function(width) {
+      var fn = function(width, height) {
         if (width === undefined || isNaN(width)) {
           width = Infinity;
         }
@@ -510,7 +516,27 @@ var layoutTestUtils = (function() {
           return res;
         }
       };
+      // Name of the function is used in DOM tests as a text in the measured node
+      // and as a way to tell different measure functions apart in transpiled tests
       fn.toString = function() { return text; };
+      return fn;
+    },
+    measureWithRatio2: function() {
+      var fn = function(width, height) {
+        if (width > 0) {
+          height = width * 2;
+        } else if (height > 0) {
+          width = height * 2;
+        } else {
+          // This should be Infinity, but it would be pain to transpile,
+          // so let's just go with big numbers.
+          height = 99999;
+          width = 99999;
+        }
+        return {width: width, height: height};
+      };
+      // This is necessary for transpiled tests, see previous comment
+      fn.toString = function() { return 'measureWithRatio2'; };
       return fn;
     }
   };

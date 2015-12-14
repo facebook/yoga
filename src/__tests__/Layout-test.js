@@ -10,10 +10,12 @@
 
 var testLayout = layoutTestUtils.testLayout;
 var testLayoutAgainstDomOnly = layoutTestUtils.testLayoutAgainstDomOnly;
+var testLayoutAgainstExpectedOnly = layoutTestUtils.testLayoutAgainstExpectedOnly;
 var testFillNodes = layoutTestUtils.testFillNodes;
 var text = layoutTestUtils.text;
 var texts = layoutTestUtils.texts;
 var textSizes = layoutTestUtils.textSizes;
+var measureWithRatio2 = layoutTestUtils.measureWithRatio2();
 
 describe('Javascript Only', function() {
   it('should fill root node with layout, style, and children', function() {
@@ -1189,6 +1191,65 @@ describe('Layout', function() {
     testLayout(
       {style: {measure: text(texts.small)}},
       {width: textSizes.smallWidth, height: textSizes.smallHeight, top: 0, left: 0}
+    );
+  });
+
+  it('should layout node with fixed width and custom measure function', function() {
+    testLayoutAgainstExpectedOnly(
+      {style: {
+        measure: measureWithRatio2,
+        width: 100
+      }},
+      {width: 100, height: 200, top: 0, left: 0}
+    );
+  });
+
+  it('should layout node with fixed height and custom measure function', function() {
+    testLayoutAgainstExpectedOnly(
+      {style: {
+        measure: measureWithRatio2,
+        height: 100
+      }},
+      {width: 200, height: 100, top: 0, left: 0}
+    );
+  });
+
+  it('should layout node with fixed height and fixed width, ignoring custom measure function', function() {
+    testLayoutAgainstExpectedOnly(
+      {style: {
+        measure: measureWithRatio2,
+        width: 100,
+        height: 100
+      }},
+      {width: 100, height: 100, top: 0, left: 0}
+    );
+  });
+
+  it('should layout node with no fixed dimension and custom measure function', function() {
+    testLayoutAgainstExpectedOnly(
+      {style: {
+        measure: measureWithRatio2,
+      }},
+      {width: 99999, height: 99999, top: 0, left: 0}
+    );
+  });
+
+  it('should layout node with nested stacks and custom measure function', function() {
+    testLayoutAgainstExpectedOnly(
+      {style: {width: 320, flexDirection: 'column'}, children: [
+        {style: {measure: measureWithRatio2}},
+        {style: {height: 100, flexDirection: 'row'}, children: [
+          {style: {measure: measureWithRatio2}},
+          {style: {measure: measureWithRatio2}}
+        ]},
+      ]},
+      {width: 320, height: 740, top: 0, left: 0, children: [
+        {width: 320, height: 640, top: 0, left: 0},
+        {width: 320, height: 100, top: 640, left: 0, children: [
+          {width: 200, height: 100, top: 0, left: 0},
+          {width: 200, height: 100, top: 0, left: 200}
+        ]},
+      ]}
     );
   });
 
