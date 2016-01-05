@@ -11,7 +11,7 @@ namespace Facebook.CSSLayout
 {
     public static class CSSConstants 
     {
-        public static readonly float Undefined = float.NaN;
+        public const float Undefined = float.NaN;
 
         public static bool IsUndefined(float value) 
         {
