@@ -179,7 +179,7 @@ namespace Facebook.CSSLayout
             get { return mLayoutState == LayoutState.HAS_NEW_LAYOUT; }
         }
 
-        internal protected void dirty()
+        internal protected virtual void dirty()
         {
             if (mLayoutState == LayoutState.DIRTY)
             {
