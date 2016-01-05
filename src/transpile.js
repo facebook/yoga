@@ -34,7 +34,8 @@ global.layoutTestUtils = {
   text: layoutTestUtils.text,
   texts: layoutTestUtils.texts,
   textSizes: layoutTestUtils.textSizes,
-  measureWithRatio2: layoutTestUtils.measureWithRatio2
+  measureWithRatio2: layoutTestUtils.measureWithRatio2,
+  measureWithMatchParent: layoutTestUtils.measureWithMatchParent
 };
 
 global.describe = function(name, cb) {
@@ -297,7 +298,8 @@ function makeConstDefs() {
     '#define BIG_MIN_WIDTH ' + layoutTestUtils.textSizes.bigMinWidth,
     '#define SMALL_TEXT "' + layoutTestUtils.texts.small + '"',
     '#define LONG_TEXT "' + layoutTestUtils.texts.big + '"',
-    '#define MEASURE_WITH_RATIO_2 "' + layoutTestUtils.measureWithRatio2() + '"'
+    '#define MEASURE_WITH_RATIO_2 "' + layoutTestUtils.measureWithRatio2() + '"',
+    '#define MEASURE_WITH_MATCH_PARENT "' + layoutTestUtils.measureWithMatchParent() + '"'
   ];
   return lines.join('\n');
 }

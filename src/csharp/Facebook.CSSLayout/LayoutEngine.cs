@@ -279,7 +279,7 @@ namespace Facebook.CSSLayout
       float paddingAndBorderAxisColumn = ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
     
       if (isMeasureDefined(node)) {
-        boolean isResolvedRowDimDefined = !float.IsNaN(node.layout.dimensions[dim[resolvedRowAxis]]);
+        boolean isResolvedRowDimDefined = (!float.IsNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0);
     
         float width = CSSConstants.Undefined;
         if ((!float.IsNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
@@ -295,7 +295,7 @@ namespace Facebook.CSSLayout
         float height = CSSConstants.Undefined;
         if ((!float.IsNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
           height = node.style.dimensions[DIMENSION_HEIGHT];
-        } else if (!float.IsNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]])) {
+        } else if ((!float.IsNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
           height = node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]];
         } else {
           height = parentMaxHeight -
@@ -341,8 +341,8 @@ namespace Facebook.CSSLayout
       float paddingAndBorderAxisMain = ((node.style.padding.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis]) + node.style.border.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis])) + (node.style.padding.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]) + node.style.border.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis])));
       float paddingAndBorderAxisCross = ((node.style.padding.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + node.style.border.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis])) + (node.style.padding.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]) + node.style.border.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis])));
     
-      boolean isMainDimDefined = !float.IsNaN(node.layout.dimensions[dim[mainAxis]]);
-      boolean isCrossDimDefined = !float.IsNaN(node.layout.dimensions[dim[crossAxis]]);
+      boolean isMainDimDefined = (!float.IsNaN(node.layout.dimensions[dim[mainAxis]]) && node.layout.dimensions[dim[mainAxis]] >= 0.0);
+      boolean isCrossDimDefined = (!float.IsNaN(node.layout.dimensions[dim[crossAxis]]) && node.layout.dimensions[dim[crossAxis]] >= 0.0);
       boolean isMainRowDirection = (mainAxis == CSS_FLEX_DIRECTION_ROW || mainAxis == CSS_FLEX_DIRECTION_ROW_REVERSE);
     
       int i;
@@ -442,7 +442,7 @@ namespace Facebook.CSSLayout
             // left and right or top and bottom).
             for (ii = 0; ii < 2; ii++) {
               axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-              if (!float.IsNaN(node.layout.dimensions[dim[axis]]) &&
+              if ((!float.IsNaN(node.layout.dimensions[dim[axis]]) && node.layout.dimensions[dim[axis]] >= 0.0) &&
                   !(!float.IsNaN(child.style.dimensions[dim[axis]]) && child.style.dimensions[dim[axis]] >= 0.0) &&
                   !float.IsNaN(child.style.position[leading[axis]]) &&
                   !float.IsNaN(child.style.position[trailing[axis]])) {
@@ -489,7 +489,7 @@ namespace Facebook.CSSLayout
             maxHeight = CSSConstants.Undefined;
     
             if (!isMainRowDirection) {
-              if ((!float.IsNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
+              if ((!float.IsNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
                 maxWidth = node.layout.dimensions[dim[resolvedRowAxis]] -
                   paddingAndBorderAxisResolvedRow;
               } else {
@@ -498,7 +498,7 @@ namespace Facebook.CSSLayout
                   paddingAndBorderAxisResolvedRow;
               }
             } else {
-              if ((!float.IsNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+              if ((!float.IsNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
                 maxHeight = node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] -
                     paddingAndBorderAxisColumn;
               } else {
@@ -549,7 +549,7 @@ namespace Facebook.CSSLayout
           if (isSimpleStackCross &&
               (child.style.positionType != CSSPositionType.Relative ||
                   (alignItem != CSSAlign.Stretch && alignItem != CSSAlign.FlexStart) ||
-                  float.IsNaN(child.layout.dimensions[dim[crossAxis]]))) {
+                  !(!float.IsNaN(child.layout.dimensions[dim[crossAxis]]) && child.layout.dimensions[dim[crossAxis]] >= 0.0))) {
             isSimpleStackCross = false;
             firstComplexCross = i;
           }
@@ -632,7 +632,7 @@ namespace Facebook.CSSLayout
             );
     
             maxWidth = CSSConstants.Undefined;
-            if ((!float.IsNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
+            if ((!float.IsNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
               maxWidth = node.layout.dimensions[dim[resolvedRowAxis]] -
                 paddingAndBorderAxisResolvedRow;
             } else if (!isMainRowDirection) {
@@ -641,7 +641,7 @@ namespace Facebook.CSSLayout
                 paddingAndBorderAxisResolvedRow;
             }
             maxHeight = CSSConstants.Undefined;
-            if ((!float.IsNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+            if ((!float.IsNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
               maxHeight = node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] -
                 paddingAndBorderAxisColumn;
             } else if (isMainRowDirection) {
@@ -761,7 +761,7 @@ namespace Facebook.CSSLayout
               if (alignItem == CSSAlign.Stretch) {
                 // You can only stretch if the dimension has not already been set
                 // previously.
-                if (float.IsNaN(child.layout.dimensions[dim[crossAxis]])) {
+                if (!(!float.IsNaN(child.layout.dimensions[dim[crossAxis]]) && child.layout.dimensions[dim[crossAxis]] >= 0.0)) {
                   child.layout.dimensions[dim[crossAxis]] = Math.Max(
                     boundAxis(child, crossAxis, containerCrossAxis -
                       paddingAndBorderAxisCross - (child.style.margin.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + child.style.margin.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]))),
@@ -845,7 +845,7 @@ namespace Facebook.CSSLayout
             if (child.lineIndex != i) {
               break;
             }
-            if (!float.IsNaN(child.layout.dimensions[dim[crossAxis]])) {
+            if ((!float.IsNaN(child.layout.dimensions[dim[crossAxis]]) && child.layout.dimensions[dim[crossAxis]] >= 0.0)) {
               lineHeight = Math.Max(
                 lineHeight,
                 child.layout.dimensions[dim[crossAxis]] + (child.style.margin.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + child.style.margin.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]))
@@ -938,7 +938,7 @@ namespace Facebook.CSSLayout
         for (ii = 0; ii < 2; ii++) {
           axis = (ii != 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
     
-          if (!float.IsNaN(node.layout.dimensions[dim[axis]]) &&
+          if ((!float.IsNaN(node.layout.dimensions[dim[axis]]) && node.layout.dimensions[dim[axis]] >= 0.0) &&
               !(!float.IsNaN(currentAbsoluteChild.style.dimensions[dim[axis]]) && currentAbsoluteChild.style.dimensions[dim[axis]] >= 0.0) &&
               !float.IsNaN(currentAbsoluteChild.style.position[leading[axis]]) &&
               !float.IsNaN(currentAbsoluteChild.style.position[trailing[axis]])) {

@@ -16,6 +16,7 @@ var text = layoutTestUtils.text;
 var texts = layoutTestUtils.texts;
 var textSizes = layoutTestUtils.textSizes;
 var measureWithRatio2 = layoutTestUtils.measureWithRatio2();
+var measureWithMatchParent = layoutTestUtils.measureWithMatchParent();
 
 describe('Javascript Only', function() {
   it('should fill root node with layout, style, and children', function() {
@@ -2380,6 +2381,23 @@ describe('Layout', function() {
           {width: 40, height: 0, top: 0, left: 0}
         ]},
         {width: 40, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should correctly progagate size contraints from flexible parents', function() {
+    testLayoutAgainstExpectedOnly(
+      {style:{flexDirection: 'row', alignItems: 'flex-start', width: 100, height: 10}, children: [
+        {style: {width: 50, height: 10}},
+        {style:{flexDirection: 'column', alignItems: 'flex-start', flex: 1, height: 10}, children: [
+          {style: {measure: measureWithMatchParent, flex: 1, height: 10}}
+        ]}
+      ]},
+      {width: 100, height: 10, top: 0, left: 0, children: [
+        {width: 50, height: 10, top: 0, left: 0},
+        {width: 50, height: 10, top: 0, left:50, children: [
+          {width: 50, height: 10, top: 0, left: 0}
+        ]},
       ]}
     );
   });

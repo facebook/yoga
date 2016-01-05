@@ -34,6 +34,7 @@ __forceinline const float fminf(const float a, const float b) {
 #define SMALL_TEXT "small"
 #define LONG_TEXT "loooooooooong with space"
 #define MEASURE_WITH_RATIO_2 "measureWithRatio2"
+#define MEASURE_WITH_MATCH_PARENT "measureWithMatchParent"
   /** END_GENERATED **/
 
 typedef struct failed_test_t {
@@ -112,6 +113,12 @@ css_dim_t measure(void *context, float width, float height) {
       dim.dimensions[CSS_WIDTH] = 99999;
       dim.dimensions[CSS_HEIGHT] = 99999;
     }
+    return dim;
+  }
+
+  if (strcmp(text, MEASURE_WITH_MATCH_PARENT) == 0) {
+    dim.dimensions[CSS_WIDTH] = width;
+    dim.dimensions[CSS_HEIGHT] = height;
     return dim;
   }
 

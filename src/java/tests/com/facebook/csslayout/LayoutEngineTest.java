@@ -54,6 +54,9 @@ public class LayoutEngineTest {
           measureOutput.width = 99999;
           measureOutput.height = 99999;
         }
+      } else if (testNode.context.equals(TestConstants.MEASURE_WITH_MATCH_PARENT)) {
+        measureOutput.width = width;
+        measureOutput.height = height;
       } else {
         throw new RuntimeException("Got unknown test: " + testNode.context);
       }
@@ -8117,6 +8120,74 @@ public class LayoutEngineTest {
 
   @Test
   public void testCase183()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.alignItems = CSSAlign.FLEX_START;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 10;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flexDirection = CSSFlexDirection.COLUMN;
+        node_1.style.alignItems = CSSAlign.FLEX_START;
+        node_1.style.flex = 1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.flex = 1;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 10;
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "measureWithMatchParent";
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 10;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 50;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 10;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 50;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 10;
+        }
+      }
+    }
+
+    test("should correctly progagate size contraints from flexible parents", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase184()
   {
     TestCSSNode root_node = new TestCSSNode();
     {

@@ -22,5 +22,6 @@ public class TestConstants {
   public static final String SMALL_TEXT = "small";
   public static final String LONG_TEXT = "loooooooooong with space";
   public static final String MEASURE_WITH_RATIO_2 = "measureWithRatio2";
+  public static final String MEASURE_WITH_MATCH_PARENT = "measureWithMatchParent";
   /** END_GENERATED **/
 }
