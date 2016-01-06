@@ -226,7 +226,7 @@ namespace Facebook.CSSLayout.Tests
             root.calculateLayout();
             markLayoutAppliedForTree(root);
 
-            c1.setMeasureFunction((node, width, height) => new MeasureOutput(100, 20));
+            c1.setMeasureFunction((node, width, widthMode, height, heightMode) => new MeasureOutput(100, 20));
 
             root.calculateLayout();
 

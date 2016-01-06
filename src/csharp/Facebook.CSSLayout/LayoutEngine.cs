@@ -282,6 +282,7 @@ namespace Facebook.CSSLayout
         boolean isResolvedRowDimDefined = (!float.IsNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0);
     
         float width = CSSConstants.Undefined;
+        CSSMeasureMode widthMode = CSSMeasureMode.Exactly;
         if ((!float.IsNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
           width = node.style.dimensions[DIMENSION_WIDTH];
         } else if (isResolvedRowDimDefined) {
@@ -289,10 +290,12 @@ namespace Facebook.CSSLayout
         } else {
           width = parentMaxWidth -
             (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+          widthMode = CSSMeasureMode.AtMost;
         }
         width -= paddingAndBorderAxisResolvedRow;
     
         float height = CSSConstants.Undefined;
+        CSSMeasureMode heightMode = CSSMeasureMode.Exactly;
         if ((!float.IsNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
           height = node.style.dimensions[DIMENSION_HEIGHT];
         } else if ((!float.IsNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
@@ -300,6 +303,7 @@ namespace Facebook.CSSLayout
         } else {
           height = parentMaxHeight -
             (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+          heightMode = CSSMeasureMode.AtMost;
         }
         height -= ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
     
@@ -316,7 +320,9 @@ namespace Facebook.CSSLayout
             
             layoutContext.measureOutput,
             width,
-            height
+            float.IsNaN(width) ? CSSMeasureMode.Undefined : widthMode,
+            height,
+            float.IsNaN(height) ? CSSMeasureMode.Undefined : heightMode
           );
           if (isRowUndefined) {
             node.layout.dimensions[DIMENSION_WIDTH] = measureDim.width +

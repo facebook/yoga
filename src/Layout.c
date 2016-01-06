@@ -557,6 +557,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
     bool isResolvedRowDimDefined = isLayoutDimDefined(node, resolvedRowAxis);
 
     float width = CSS_UNDEFINED;
+    css_measure_mode_t widthMode = CSS_MEASURE_MODE_EXACTLY;
     if (isStyleDimDefined(node, resolvedRowAxis)) {
       width = node->style.dimensions[CSS_WIDTH];
     } else if (isResolvedRowDimDefined) {
@@ -564,10 +565,12 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
     } else {
       width = parentMaxWidth -
         getMarginAxis(node, resolvedRowAxis);
+      widthMode = CSS_MEASURE_MODE_AT_MOST;
     }
     width -= paddingAndBorderAxisResolvedRow;
 
     float height = CSS_UNDEFINED;
+    css_measure_mode_t heightMode = CSS_MEASURE_MODE_EXACTLY;
     if (isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
       height = node->style.dimensions[CSS_HEIGHT];
     } else if (isLayoutDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
@@ -575,6 +578,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
     } else {
       height = parentMaxHeight -
         getMarginAxis(node, resolvedRowAxis);
+      heightMode = CSS_MEASURE_MODE_AT_MOST;
     }
     height -= getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
 
@@ -591,7 +595,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
         node->context,
         
         width,
-        height
+        isUndefined(width) ? CSS_MEASURE_MODE_UNDEFINED : widthMode,
+        height,
+        isUndefined(height) ? CSS_MEASURE_MODE_UNDEFINED : heightMode
       );
       if (isRowUndefined) {
         node->layout.dimensions[CSS_WIDTH] = measureDim.dimensions[CSS_WIDTH] +

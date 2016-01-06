@@ -11,12 +11,14 @@ function __transpileToCSharpCommon(code) {
   return code
     .replace(/CSS_UNDEFINED/g, 'CSSConstants.UNDEFINED')
     .replace(/CSS_JUSTIFY_/g, 'CSSJustify.')
+    .replace(/CSS_MEASURE_MODE_/g, 'CSSMeasureMode.')
     .replace(/CSS_ALIGN_/g, 'CSSAlign.')
     .replace(/CSS_POSITION_/g, 'CSSPositionType.')
     .replace(/css_flex_direction_t/g, 'CSSFlexDirection')
     .replace(/css_direction_t/g, 'CSSDirection')
     .replace(/css_align_t/g, 'CSSAlign')
     .replace(/css_justify_t/g, 'CSSJustify')
+    .replace(/css_measure_mode_t/g, 'CSSMeasureMode')
     .replace(/css_dim_t/g, 'MeasureOutput')
     .replace(/bool/g, 'boolean')
     .replace(/style\[dim/g, 'style.dimensions[dim')
@@ -56,7 +58,7 @@ function __transpileToCSharpCommon(code) {
 
     // additional case conversions
 
-    .replace(/(CSSConstants|CSSWrap|CSSJustify|CSSAlign|CSSPositionType)\.([_A-Z]+)/g,
+    .replace(/(CSSConstants|CSSWrap|CSSJustify|CSSMeasureMode|CSSAlign|CSSPositionType)\.([_A-Z]+)/g,
         function(str, match1, match2) {
           return match1 + '.' + constantToPascalCase(match2);
         });

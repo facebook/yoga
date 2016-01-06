@@ -258,6 +258,7 @@ public class LayoutEngine {
       boolean isResolvedRowDimDefined = (!Float.isNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0);
   
       float width = CSSConstants.UNDEFINED;
+      CSSMeasureMode widthMode = CSSMeasureMode.EXACTLY;
       if ((!Float.isNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
         width = node.style.dimensions[DIMENSION_WIDTH];
       } else if (isResolvedRowDimDefined) {
@@ -265,10 +266,12 @@ public class LayoutEngine {
       } else {
         width = parentMaxWidth -
           (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+        widthMode = CSSMeasureMode.AT_MOST;
       }
       width -= paddingAndBorderAxisResolvedRow;
   
       float height = CSSConstants.UNDEFINED;
+      CSSMeasureMode heightMode = CSSMeasureMode.EXACTLY;
       if ((!Float.isNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
         height = node.style.dimensions[DIMENSION_HEIGHT];
       } else if ((!Float.isNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
@@ -276,6 +279,7 @@ public class LayoutEngine {
       } else {
         height = parentMaxHeight -
           (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+        heightMode = CSSMeasureMode.AT_MOST;
       }
       height -= ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
   
@@ -292,7 +296,9 @@ public class LayoutEngine {
           
           layoutContext.measureOutput,
           width,
-          height
+          Float.isNaN(width) ? CSSMeasureMode.UNDEFINED : widthMode,
+          height,
+          Float.isNaN(height) ? CSSMeasureMode.UNDEFINED : heightMode
         );
         if (isRowUndefined) {
           node.layout.dimensions[DIMENSION_WIDTH] = measureDim.width +

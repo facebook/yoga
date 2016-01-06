@@ -17,7 +17,7 @@ namespace Facebook.CSSLayout
      * Should measure the given node and put the result in the given MeasureOutput.
      */
 
-    public delegate MeasureOutput MeasureFunction(CSSNode node, float width, float height);
+    public delegate MeasureOutput MeasureFunction(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode);
 
     /**
      * A CSS Node. It has a style object you can manipulate at {@link #style}. After calling
@@ -140,13 +140,13 @@ namespace Facebook.CSSLayout
             get { return mMeasureFunction != null; }
         }
 
-        internal MeasureOutput measure(MeasureOutput measureOutput, float width, float height)
+        internal MeasureOutput measure(MeasureOutput measureOutput, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             if (!IsMeasureDefined)
             {
                 throw new Exception("Measure function isn't defined!");
             }
-            return Assertions.assertNotNull(mMeasureFunction)(this, width, height);
+            return Assertions.assertNotNull(mMeasureFunction)(this, width, widthMode, height, heightMode);
         }
 
         /**
