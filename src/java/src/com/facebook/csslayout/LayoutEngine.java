@@ -258,26 +258,40 @@ public class LayoutEngine {
       boolean isResolvedRowDimDefined = (!Float.isNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0);
   
       float width = CSSConstants.UNDEFINED;
+      CSSMeasureMode widthMode = CSSMeasureMode.UNDEFINED;
       if ((!Float.isNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
         width = node.style.dimensions[DIMENSION_WIDTH];
+        widthMode = CSSMeasureMode.EXACTLY;
       } else if (isResolvedRowDimDefined) {
         width = node.layout.dimensions[dim[resolvedRowAxis]];
+        widthMode = CSSMeasureMode.EXACTLY;
       } else {
         width = parentMaxWidth -
           (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+        widthMode = CSSMeasureMode.AT_MOST;
       }
       width -= paddingAndBorderAxisResolvedRow;
+      if (Float.isNaN(width)) {
+        widthMode = CSSMeasureMode.UNDEFINED;
+      }
   
       float height = CSSConstants.UNDEFINED;
+      CSSMeasureMode heightMode = CSSMeasureMode.UNDEFINED;
       if ((!Float.isNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
         height = node.style.dimensions[DIMENSION_HEIGHT];
+        heightMode = CSSMeasureMode.EXACTLY;
       } else if ((!Float.isNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
         height = node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]];
+        heightMode = CSSMeasureMode.EXACTLY;
       } else {
         height = parentMaxHeight -
           (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+        heightMode = CSSMeasureMode.AT_MOST;
       }
       height -= ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
+      if (Float.isNaN(height)) {
+        heightMode = CSSMeasureMode.UNDEFINED;
+      }
   
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
@@ -292,7 +306,9 @@ public class LayoutEngine {
           
           layoutContext.measureOutput,
           width,
-          height
+          widthMode,
+          height,
+          heightMode
         );
         if (isRowUndefined) {
           node.layout.dimensions[DIMENSION_WIDTH] = measureDim.width +

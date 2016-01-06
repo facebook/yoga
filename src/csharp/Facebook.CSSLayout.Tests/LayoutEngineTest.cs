@@ -25,11 +25,11 @@ public class LayoutEngineTest
     const int DIMENSION_HEIGHT = CSSLayout.DIMENSION_HEIGHT;
     const int DIMENSION_WIDTH = CSSLayout.DIMENSION_WIDTH;
 
-    static readonly MeasureFunction sTestMeasureFunction = (node, width, height) =>
+    static readonly MeasureFunction sTestMeasureFunction = (node, width, widthMode, height, heightMode) =>
     {
         TestCSSNode testNode = (TestCSSNode) node;
         if (testNode.context.Equals(TestConstants.SMALL_TEXT)) {
-            if (CSSConstants.IsUndefined(width)) {
+            if (widthMode == CSSMeasureMode.Undefined) {
                 width = 10000000;
             }
             return new MeasureOutput(
@@ -46,14 +46,20 @@ public class LayoutEngineTest
                     ? TestConstants.SMALL_HEIGHT
                     : TestConstants.BIG_HEIGHT);
         } else if (testNode.context.Equals(TestConstants.MEASURE_WITH_RATIO_2)) {
-            if (width > 0) {
+            if (widthMode != CSSMeasureMode.Undefined) {
                 return new MeasureOutput(width, width * 2);
-            } else if (height > 0) {
+            } else if (heightMode != CSSMeasureMode.Undefined) {
                 return new MeasureOutput(height * 2, height);
             } else {
               return new MeasureOutput(99999, 99999);
             }
         } else if (testNode.context.Equals(TestConstants.MEASURE_WITH_MATCH_PARENT)) {
+            if (widthMode == CSSMeasureMode.Undefined) {
+              width = 99999;
+            }
+            if (heightMode == CSSMeasureMode.Undefined) {
+              height = 99999;
+            }
             return new MeasureOutput(width, height);
         } else {
             throw new Exception("Got unknown test: " + testNode.context);

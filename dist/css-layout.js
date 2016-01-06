@@ -53,6 +53,10 @@ var computeLayout = (function() {
   var CSS_POSITION_RELATIVE = 'relative';
   var CSS_POSITION_ABSOLUTE = 'absolute';
 
+  var CSS_MEASURE_MODE_UNDEFINED = 'undefined';
+  var CSS_MEASURE_MODE_EXACTLY = 'exactly';
+  var CSS_MEASURE_MODE_AT_MOST = 'at-most';
+
   var leading = {
     'row': 'left',
     'row-reverse': 'right',
@@ -110,7 +114,7 @@ var computeLayout = (function() {
   }
 
   function isUndefined(value) {
-    return value === undefined;
+    return value === undefined || isNaN(value);
   }
 
   function isRowDirection(flexDirection) {
@@ -501,26 +505,40 @@ var computeLayout = (function() {
       var/*bool*/ isResolvedRowDimDefined = isLayoutDimDefined(node, resolvedRowAxis);
 
       var/*float*/ width = CSS_UNDEFINED;
+      var/*css_measure_mode_t*/ widthMode = CSS_MEASURE_MODE_UNDEFINED;
       if (isStyleDimDefined(node, resolvedRowAxis)) {
         width = node.style.width;
+        widthMode = CSS_MEASURE_MODE_EXACTLY;
       } else if (isResolvedRowDimDefined) {
         width = node.layout[dim[resolvedRowAxis]];
+        widthMode = CSS_MEASURE_MODE_EXACTLY;
       } else {
         width = parentMaxWidth -
           getMarginAxis(node, resolvedRowAxis);
+        widthMode = CSS_MEASURE_MODE_AT_MOST;
       }
       width -= paddingAndBorderAxisResolvedRow;
+      if (isUndefined(width)) {
+        widthMode = CSS_MEASURE_MODE_UNDEFINED;
+      }
 
       var/*float*/ height = CSS_UNDEFINED;
+      var/*css_measure_mode_t*/ heightMode = CSS_MEASURE_MODE_UNDEFINED;
       if (isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
         height = node.style.height;
+        heightMode = CSS_MEASURE_MODE_EXACTLY;
       } else if (isLayoutDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
         height = node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]];
+        heightMode = CSS_MEASURE_MODE_EXACTLY;
       } else {
         height = parentMaxHeight -
           getMarginAxis(node, resolvedRowAxis);
+        heightMode = CSS_MEASURE_MODE_AT_MOST;
       }
       height -= getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+      if (isUndefined(height)) {
+        heightMode = CSS_MEASURE_MODE_UNDEFINED;
+      }
 
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
@@ -535,7 +553,9 @@ var computeLayout = (function() {
           /*(c)!node->context,*/
           /*(java)!layoutContext.measureOutput,*/
           width,
-          height
+          widthMode,
+          height,
+          heightMode
         );
         if (isRowUndefined) {
           node.layout.width = measureDim.width +

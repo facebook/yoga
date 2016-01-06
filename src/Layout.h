@@ -77,6 +77,12 @@ typedef enum {
 } css_position_t;
 
 typedef enum {
+  CSS_MEASURE_MODE_UNDEFINED = 0,
+  CSS_MEASURE_MODE_EXACTLY,
+  CSS_MEASURE_MODE_AT_MOST
+} css_measure_mode_t;
+
+typedef enum {
   CSS_WIDTH = 0,
   CSS_HEIGHT
 } css_dimension_t;
@@ -140,7 +146,7 @@ struct css_node {
   css_node_t *next_absolute_child;
   css_node_t *next_flex_child;
 
-  css_dim_t (*measure)(void *context, float width, float height);
+  css_dim_t (*measure)(void *context, float width, css_measure_mode_t widthMode, float height, css_measure_mode_t heightMode);
   void (*print)(void *context);
   struct css_node* (*get_child)(void *context, int i);
   bool (*is_dirty)(void *context);

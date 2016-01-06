@@ -45,6 +45,7 @@
     <Compile Include="CSSDirection.cs" />
     <Compile Include="CSSFlexDirection.cs" />
     <Compile Include="CSSJustify.cs" />
+    <Compile Include="CSSMeasureMode.cs" />
     <Compile Include="CSSLayout.cs" />
     <Compile Include="CSSLayoutContext.cs" />
     <Compile Include="CSSNode.cs" />
