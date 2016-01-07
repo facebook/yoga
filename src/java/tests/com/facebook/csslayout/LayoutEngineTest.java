@@ -27,16 +27,16 @@ public class LayoutEngineTest {
       new CSSNode.MeasureFunction() {
 
     @Override
-    public void measure(CSSNode node, float width, float height, MeasureOutput measureOutput) {
+    public void measure(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput) {
       TestCSSNode testNode = (TestCSSNode) node;
       if (testNode.context.equals(TestConstants.SMALL_TEXT)) {
-        if (CSSConstants.isUndefined(width)) {
+        if (widthMode == CSSMeasureMode.UNDEFINED) {
           width = 10000000;
         }
         measureOutput.width = Math.min(width, TestConstants.SMALL_WIDTH);
         measureOutput.height = TestConstants.SMALL_HEIGHT;
       } else if (testNode.context.equals(TestConstants.LONG_TEXT)) {
-        if (CSSConstants.isUndefined(width)) {
+        if (widthMode == CSSMeasureMode.UNDEFINED) {
           width = 10000000;
         }
         measureOutput.width = width >= TestConstants.BIG_WIDTH ?
@@ -44,10 +44,10 @@ public class LayoutEngineTest {
         measureOutput.height = width >= TestConstants.BIG_WIDTH ?
             TestConstants.SMALL_HEIGHT : TestConstants.BIG_HEIGHT;
       } else if (testNode.context.equals(TestConstants.MEASURE_WITH_RATIO_2)) {
-        if (width > 0) {
+        if (widthMode != CSSMeasureMode.UNDEFINED) {
           measureOutput.width = width;
           measureOutput.height = width * 2;
-        } else if (height > 0) {
+        } else if (heightMode != CSSMeasureMode.UNDEFINED) {
           measureOutput.width = height * 2;
           measureOutput.height = height;
         } else {
@@ -55,6 +55,12 @@ public class LayoutEngineTest {
           measureOutput.height = 99999;
         }
       } else if (testNode.context.equals(TestConstants.MEASURE_WITH_MATCH_PARENT)) {
+        if (widthMode == CSSMeasureMode.UNDEFINED) {
+          width = 99999;
+        }
+        if (heightMode == CSSMeasureMode.UNDEFINED) {
+          height = 99999;
+        }
         measureOutput.width = width;
         measureOutput.height = height;
       } else {

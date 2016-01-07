@@ -170,6 +170,11 @@ function printLayout(test) {
       'nowrap': 'CSS_NOWRAP',
       'wrap': 'CSS_WRAP'
     });
+    addEnum(node, 'measureMode', 'measure_mode', {
+      'undefined': 'CSS_MEASURE_MODE_UNDEFINED',
+      'exactly': 'CSS_MEASURE_MODE_EXACTLY',
+      'at-most': 'CSS_MEASURE_MODE_AT_MOST'
+    });
     addFloat(node, 'flex', 'flex');
     addFloat(node, 'width', 'dimensions[CSS_WIDTH]');
     addFloat(node, 'height', 'dimensions[CSS_HEIGHT]');

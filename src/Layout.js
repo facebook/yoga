@@ -34,6 +34,10 @@ var computeLayout = (function() {
   var CSS_POSITION_RELATIVE = 'relative';
   var CSS_POSITION_ABSOLUTE = 'absolute';
 
+  var CSS_MEASURE_MODE_UNDEFINED = 'undefined';
+  var CSS_MEASURE_MODE_EXACTLY = 'exactly';
+  var CSS_MEASURE_MODE_AT_MOST = 'at-most';
+
   var leading = {
     'row': 'left',
     'row-reverse': 'right',
@@ -482,6 +486,7 @@ var computeLayout = (function() {
       var/*bool*/ isResolvedRowDimDefined = isLayoutDimDefined(node, resolvedRowAxis);
 
       var/*float*/ width = CSS_UNDEFINED;
+      var/*css_measure_mode_t*/ widthMode = CSS_MEASURE_MODE_EXACTLY;
       if (isStyleDimDefined(node, resolvedRowAxis)) {
         width = node.style.width;
       } else if (isResolvedRowDimDefined) {
@@ -489,10 +494,12 @@ var computeLayout = (function() {
       } else {
         width = parentMaxWidth -
           getMarginAxis(node, resolvedRowAxis);
+        widthMode = CSS_MEASURE_MODE_AT_MOST;
       }
       width -= paddingAndBorderAxisResolvedRow;
 
       var/*float*/ height = CSS_UNDEFINED;
+      var/*css_measure_mode_t*/ heightMode = CSS_MEASURE_MODE_EXACTLY;
       if (isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
         height = node.style.height;
       } else if (isLayoutDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
@@ -500,6 +507,7 @@ var computeLayout = (function() {
       } else {
         height = parentMaxHeight -
           getMarginAxis(node, resolvedRowAxis);
+        heightMode = CSS_MEASURE_MODE_AT_MOST;
       }
       height -= getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
 
@@ -516,7 +524,9 @@ var computeLayout = (function() {
           /*(c)!node->context,*/
           /*(java)!layoutContext.measureOutput,*/
           width,
-          height
+          isUndefined(width) ? CSS_MEASURE_MODE_UNDEFINED : widthMode,
+          height,
+          isUndefined(height) ? CSS_MEASURE_MODE_UNDEFINED : heightMode
         );
         if (isRowUndefined) {
           node.layout.width = measureDim.width +

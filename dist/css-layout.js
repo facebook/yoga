@@ -53,6 +53,10 @@ var computeLayout = (function() {
   var CSS_POSITION_RELATIVE = 'relative';
   var CSS_POSITION_ABSOLUTE = 'absolute';
 
+  var CSS_MEASURE_MODE_UNDEFINED = 'undefined';
+  var CSS_MEASURE_MODE_EXACTLY = 'exactly';
+  var CSS_MEASURE_MODE_AT_MOST = 'at-most';
+
   var leading = {
     'row': 'left',
     'row-reverse': 'right',
@@ -380,8 +384,12 @@ var computeLayout = (function() {
     return node.layout[dim[axis]] + getMarginAxis(node, axis);
   }
 
-  function isDimDefined(node, axis) {
+  function isStyleDimDefined(node, axis) {
     return node.style[dim[axis]] !== undefined && node.style[dim[axis]] >= 0;
+  }
+
+  function isLayoutDimDefined(node, axis) {
+    return node.layout[dim[axis]] !== undefined && node.layout[dim[axis]] >= 0;
   }
 
   function isPosDefined(node, pos) {
@@ -434,11 +442,11 @@ var computeLayout = (function() {
   // When the user specifically sets a value for width or height
   function setDimensionFromStyle(node, axis) {
     // The parent already computed us a width or height. We just skip it
-    if (node.layout[dim[axis]] !== undefined) {
+    if (isLayoutDimDefined(node, axis)) {
       return;
     }
     // We only run if there's a width or height defined
-    if (!isDimDefined(node, axis)) {
+    if (!isStyleDimDefined(node, axis)) {
       return;
     }
 
@@ -494,35 +502,39 @@ var computeLayout = (function() {
     var/*float*/ paddingAndBorderAxisColumn = getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
 
     if (isMeasureDefined(node)) {
-      var/*bool*/ isResolvedRowDimDefined = !isUndefined(node.layout[dim[resolvedRowAxis]]);
+      var/*bool*/ isResolvedRowDimDefined = isLayoutDimDefined(node, resolvedRowAxis);
 
       var/*float*/ width = CSS_UNDEFINED;
-      if (isDimDefined(node, resolvedRowAxis)) {
+      var/*css_measure_mode_t*/ widthMode = CSS_MEASURE_MODE_EXACTLY;
+      if (isStyleDimDefined(node, resolvedRowAxis)) {
         width = node.style.width;
       } else if (isResolvedRowDimDefined) {
         width = node.layout[dim[resolvedRowAxis]];
       } else {
         width = parentMaxWidth -
           getMarginAxis(node, resolvedRowAxis);
+        widthMode = CSS_MEASURE_MODE_AT_MOST;
       }
       width -= paddingAndBorderAxisResolvedRow;
 
       var/*float*/ height = CSS_UNDEFINED;
-      if (isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
+      var/*css_measure_mode_t*/ heightMode = CSS_MEASURE_MODE_EXACTLY;
+      if (isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
         height = node.style.height;
-      } else if (!isUndefined(node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]])) {
+      } else if (isLayoutDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
         height = node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]];
       } else {
         height = parentMaxHeight -
           getMarginAxis(node, resolvedRowAxis);
+        heightMode = CSS_MEASURE_MODE_AT_MOST;
       }
       height -= getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
 
       // We only need to give a dimension for the text if we haven't got any
       // for it computed yet. It can either be from the style attribute or because
       // the element is flexible.
-      var/*bool*/ isRowUndefined = !isDimDefined(node, resolvedRowAxis) && !isResolvedRowDimDefined;
-      var/*bool*/ isColumnUndefined = !isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
+      var/*bool*/ isRowUndefined = !isStyleDimDefined(node, resolvedRowAxis) && !isResolvedRowDimDefined;
+      var/*bool*/ isColumnUndefined = !isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
         isUndefined(node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]]);
 
       // Let's not measure the text if we already know both dimensions
@@ -531,7 +543,9 @@ var computeLayout = (function() {
           /*(c)!node->context,*/
           /*(java)!layoutContext.measureOutput,*/
           width,
-          height
+          isUndefined(width) ? CSS_MEASURE_MODE_UNDEFINED : widthMode,
+          height,
+          isUndefined(height) ? CSS_MEASURE_MODE_UNDEFINED : heightMode
         );
         if (isRowUndefined) {
           node.layout.width = measureDim.width +
@@ -556,8 +570,8 @@ var computeLayout = (function() {
     var/*float*/ paddingAndBorderAxisMain = getPaddingAndBorderAxis(node, mainAxis);
     var/*float*/ paddingAndBorderAxisCross = getPaddingAndBorderAxis(node, crossAxis);
 
-    var/*bool*/ isMainDimDefined = !isUndefined(node.layout[dim[mainAxis]]);
-    var/*bool*/ isCrossDimDefined = !isUndefined(node.layout[dim[crossAxis]]);
+    var/*bool*/ isMainDimDefined = isLayoutDimDefined(node, mainAxis);
+    var/*bool*/ isCrossDimDefined = isLayoutDimDefined(node, crossAxis);
     var/*bool*/ isMainRowDirection = isRowDirection(mainAxis);
 
     var/*int*/ i;
@@ -635,7 +649,7 @@ var computeLayout = (function() {
         if (alignItem === CSS_ALIGN_STRETCH &&
             getPositionType(child) === CSS_POSITION_RELATIVE &&
             isCrossDimDefined &&
-            !isDimDefined(child, crossAxis)) {
+            !isStyleDimDefined(child, crossAxis)) {
           child.layout[dim[crossAxis]] = fmaxf(
             boundAxis(child, crossAxis, node.layout[dim[crossAxis]] -
               paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
@@ -657,8 +671,8 @@ var computeLayout = (function() {
           // left and right or top and bottom).
           for (ii = 0; ii < 2; ii++) {
             axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
-            if (!isUndefined(node.layout[dim[axis]]) &&
-                !isDimDefined(child, axis) &&
+            if (isLayoutDimDefined(node, axis) &&
+                !isStyleDimDefined(child, axis) &&
                 isPosDefined(child, leading[axis]) &&
                 isPosDefined(child, trailing[axis])) {
               child.layout[dim[axis]] = fmaxf(
@@ -704,7 +718,7 @@ var computeLayout = (function() {
           maxHeight = CSS_UNDEFINED;
 
           if (!isMainRowDirection) {
-            if (isDimDefined(node, resolvedRowAxis)) {
+            if (isLayoutDimDefined(node, resolvedRowAxis)) {
               maxWidth = node.layout[dim[resolvedRowAxis]] -
                 paddingAndBorderAxisResolvedRow;
             } else {
@@ -713,7 +727,7 @@ var computeLayout = (function() {
                 paddingAndBorderAxisResolvedRow;
             }
           } else {
-            if (isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
+            if (isLayoutDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
               maxHeight = node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]] -
                   paddingAndBorderAxisColumn;
             } else {
@@ -764,7 +778,7 @@ var computeLayout = (function() {
         if (isSimpleStackCross &&
             (getPositionType(child) !== CSS_POSITION_RELATIVE ||
                 (alignItem !== CSS_ALIGN_STRETCH && alignItem !== CSS_ALIGN_FLEX_START) ||
-                isUndefined(child.layout[dim[crossAxis]]))) {
+                !isLayoutDimDefined(child, crossAxis))) {
           isSimpleStackCross = false;
           firstComplexCross = i;
         }
@@ -847,7 +861,7 @@ var computeLayout = (function() {
           );
 
           maxWidth = CSS_UNDEFINED;
-          if (isDimDefined(node, resolvedRowAxis)) {
+          if (isLayoutDimDefined(node, resolvedRowAxis)) {
             maxWidth = node.layout[dim[resolvedRowAxis]] -
               paddingAndBorderAxisResolvedRow;
           } else if (!isMainRowDirection) {
@@ -856,7 +870,7 @@ var computeLayout = (function() {
               paddingAndBorderAxisResolvedRow;
           }
           maxHeight = CSS_UNDEFINED;
-          if (isDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
+          if (isLayoutDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
             maxHeight = node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]] -
               paddingAndBorderAxisColumn;
           } else if (isMainRowDirection) {
@@ -976,7 +990,7 @@ var computeLayout = (function() {
             if (alignItem === CSS_ALIGN_STRETCH) {
               // You can only stretch if the dimension has not already been set
               // previously.
-              if (isUndefined(child.layout[dim[crossAxis]])) {
+              if (!isLayoutDimDefined(child, crossAxis)) {
                 child.layout[dim[crossAxis]] = fmaxf(
                   boundAxis(child, crossAxis, containerCrossAxis -
                     paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
@@ -1060,7 +1074,7 @@ var computeLayout = (function() {
           if (child.lineIndex !== i) {
             break;
           }
-          if (!isUndefined(child.layout[dim[crossAxis]])) {
+          if (isLayoutDimDefined(child, crossAxis)) {
             lineHeight = fmaxf(
               lineHeight,
               child.layout[dim[crossAxis]] + getMarginAxis(child, crossAxis)
@@ -1153,8 +1167,8 @@ var computeLayout = (function() {
       for (ii = 0; ii < 2; ii++) {
         axis = (ii !== 0) ? CSS_FLEX_DIRECTION_ROW : CSS_FLEX_DIRECTION_COLUMN;
 
-        if (!isUndefined(node.layout[dim[axis]]) &&
-            !isDimDefined(currentAbsoluteChild, axis) &&
+        if (isLayoutDimDefined(node, axis) &&
+            !isStyleDimDefined(currentAbsoluteChild, axis) &&
             isPosDefined(currentAbsoluteChild, leading[axis]) &&
             isPosDefined(currentAbsoluteChild, trailing[axis])) {
           currentAbsoluteChild.layout[dim[axis]] = fmaxf(
