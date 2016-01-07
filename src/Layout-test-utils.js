@@ -538,6 +538,14 @@ var layoutTestUtils = (function() {
       // This is necessary for transpiled tests, see previous comment
       fn.toString = function() { return 'measureWithRatio2'; };
       return fn;
+    },
+    measureWithMatchParent: function() {
+      var fn = function(width, height) {
+        return {width: width, height: height};
+      };
+      // This is necessary for transpiled tests, see previous comment
+      fn.toString = function() { return 'measureWithMatchParent'; };
+      return fn;
     }
   };
 })();

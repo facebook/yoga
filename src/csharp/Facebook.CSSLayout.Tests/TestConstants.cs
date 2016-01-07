@@ -24,6 +24,7 @@ namespace Facebook.CSSLayout.Tests
     public static readonly string SMALL_TEXT = "small";
     public static readonly string LONG_TEXT = "loooooooooong with space";
     public static readonly string MEASURE_WITH_RATIO_2 = "measureWithRatio2";
+    public static readonly string MEASURE_WITH_MATCH_PARENT = "measureWithMatchParent";
   /** END_GENERATED **/
     }
 }
