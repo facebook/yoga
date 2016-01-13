@@ -1,7 +1,7 @@
 css-layout [![Build Status](https://travis-ci.org/facebook/css-layout.svg?branch=master)](https://travis-ci.org/facebook/css-layout)
 ==========
 
-This project implements a subset of CSS including flexbox and the box model using pure JavaScript, then transpiled to C and Java. The goal is to have a small standalone library to layout elements. It doesn't rely on the DOM at all.
+This project implements a subset of CSS including flexbox and the box model using pure JavaScript, then transpiled to C, Java and C#. The goal is to have a small standalone library to layout elements. It doesn't rely on the DOM at all.
 
 The Java, C and JavaScript version of the code is available via [npm](https://www.npmjs.com/package/css-layout) or directly from the `dist` folder of this repo. The JavaScript version is also available via [cdnjs](https://cdnjs.com/libraries/css-layout).
 
