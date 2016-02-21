@@ -8190,6 +8190,208 @@ public class LayoutEngineTest
     {
       TestCSSNode node_0 = root_node;
       node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.alignItems = CSSAlign.Stretch;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 150;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flexDirection = CSSFlexDirection.Row;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.flexDirection = CSSFlexDirection.Row;
+          addChildren(node_2, 1);
+          {
+            TestCSSNode node_3;
+            node_3 = node_2.getChildAt(0);
+            node_3.style.alignSelf = CSSAlign.Center;
+          }
+        }
+        node_1 = node_0.getChildAt(1);
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 150;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 150;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 150;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 140;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 0;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 140;
+          addChildren(node_2, 1);
+          {
+            TestCSSNode node_3;
+            node_3 = node_2.getChildAt(0);
+            node_3.layout.position[POSITION_TOP] = 70;
+            node_3.layout.position[POSITION_LEFT] = 0;
+            node_3.layout.dimensions[DIMENSION_WIDTH] = 0;
+            node_3.layout.dimensions[DIMENSION_HEIGHT] = 0;
+          }
+        }
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 150;
+      }
+    }
+
+    test("should layout content of an item which is stretched late", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase185()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 200;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 200;
+        }
+        node_1 = node_0.getChildAt(1);
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 200;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 210;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 200;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 200;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 200;
+        }
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 210;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 190;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 190;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 0;
+        }
+      }
+    }
+
+    test("should layout items whose positioning is determined by sibling tree branches", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase186()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.alignSelf = CSSAlign.FlexStart;
+        node_1.setMargin(Spacing.LEFT, 10);
+        node_1.setMargin(Spacing.TOP, 10);
+        node_1 = node_0.getChildAt(1);
+        node_1.style.alignSelf = CSSAlign.Stretch;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 1;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 150;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 11;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 150;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 10;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 0;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 10;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 1;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 150;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 11;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 0;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 150;
+      }
+    }
+
+    test("should layout child whose cross axis is undefined and whose alignSelf is stretch", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase187()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
       node_0.style.alignContent = CSSAlign.Stretch;
       node_0.style.alignItems = CSSAlign.FlexStart;
       node_0.style.flexWrap = CSSWrap.Wrap;
