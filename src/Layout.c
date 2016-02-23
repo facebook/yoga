@@ -679,8 +679,8 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
     float mainDim = leadingPaddingAndBorderMain;
     float crossDim = 0;
 
-    float maxWidth;
-    float maxHeight;
+    float maxWidth = CSS_UNDEFINED;
+    float maxHeight = CSS_UNDEFINED;
     for (i = startLine; i < childCount; ++i) {
       child = node->get_child(node->context, i);
       child->line_index = linesCount;
@@ -824,7 +824,7 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
       if (isSimpleStackCross &&
           (child->style.position_type != CSS_POSITION_RELATIVE ||
               (alignItem != CSS_ALIGN_STRETCH && alignItem != CSS_ALIGN_FLEX_START) ||
-              !isLayoutDimDefined(child, crossAxis))) {
+              (alignItem == CSS_ALIGN_STRETCH && !isCrossDimDefined))) {
         isSimpleStackCross = false;
         firstComplexCross = i;
       }
@@ -1034,15 +1034,31 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
           css_align_t alignItem = getAlignItem(node, child);
           /*eslint-enable */
           if (alignItem == CSS_ALIGN_STRETCH) {
-            // You can only stretch if the dimension has not already been set
+            // You can only stretch if the dimension has not already been defined
             // previously.
-            if (!isLayoutDimDefined(child, crossAxis)) {
+            if (!isStyleDimDefined(child, crossAxis)) {
+              float dimCrossAxis = child->layout.dimensions[dim[crossAxis]];
               child->layout.dimensions[dim[crossAxis]] = fmaxf(
                 boundAxis(child, crossAxis, containerCrossAxis -
                   paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
                 // You never want to go smaller than padding
                 getPaddingAndBorderAxis(child, crossAxis)
               );
+
+              // If the size has changed, and this child has children we need to re-layout this child
+              if (dimCrossAxis != child->layout.dimensions[dim[crossAxis]] && child->children_count > 0) {
+                // Reset child margins before re-layout as they are added back in layoutNode and would be doubled
+                child->layout.position[leading[mainAxis]] -= getLeadingMargin(child, mainAxis) +
+                  getRelativePosition(child, mainAxis);
+                child->layout.position[trailing[mainAxis]] -= getTrailingMargin(child, mainAxis) +
+                  getRelativePosition(child, mainAxis);
+                child->layout.position[leading[crossAxis]] -= getLeadingMargin(child, crossAxis) +
+                  getRelativePosition(child, crossAxis);
+                child->layout.position[trailing[crossAxis]] -= getTrailingMargin(child, crossAxis) +
+                  getRelativePosition(child, crossAxis);
+
+                layoutNode(child, maxWidth, maxHeight, direction);
+              }
             }
           } else if (alignItem != CSS_ALIGN_FLEX_START) {
             // The remaining space between the parent dimensions+padding and child
