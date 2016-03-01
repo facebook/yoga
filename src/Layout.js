@@ -604,8 +604,8 @@ var computeLayout = (function() {
       var/*float*/ mainDim = leadingPaddingAndBorderMain;
       var/*float*/ crossDim = 0;
 
-      var/*float*/ maxWidth;
-      var/*float*/ maxHeight;
+      var/*float*/ maxWidth = CSS_UNDEFINED;
+      var/*float*/ maxHeight = CSS_UNDEFINED;
       for (i = startLine; i < childCount; ++i) {
         child = node.children[i];
         child.lineIndex = linesCount;
@@ -749,7 +749,7 @@ var computeLayout = (function() {
         if (isSimpleStackCross &&
             (getPositionType(child) !== CSS_POSITION_RELATIVE ||
                 (alignItem !== CSS_ALIGN_STRETCH && alignItem !== CSS_ALIGN_FLEX_START) ||
-                !isLayoutDimDefined(child, crossAxis))) {
+                (alignItem == CSS_ALIGN_STRETCH && !isCrossDimDefined))) {
           isSimpleStackCross = false;
           firstComplexCross = i;
         }
@@ -959,15 +959,31 @@ var computeLayout = (function() {
             var/*css_align_t*/ alignItem = getAlignItem(node, child);
             /*eslint-enable */
             if (alignItem === CSS_ALIGN_STRETCH) {
-              // You can only stretch if the dimension has not already been set
+              // You can only stretch if the dimension has not already been defined
               // previously.
-              if (!isLayoutDimDefined(child, crossAxis)) {
+              if (!isStyleDimDefined(child, crossAxis)) {
+                var/*float*/ dimCrossAxis = child.layout[dim[crossAxis]];
                 child.layout[dim[crossAxis]] = fmaxf(
                   boundAxis(child, crossAxis, containerCrossAxis -
                     paddingAndBorderAxisCross - getMarginAxis(child, crossAxis)),
                   // You never want to go smaller than padding
                   getPaddingAndBorderAxis(child, crossAxis)
                 );
+
+                // If the size has changed, and this child has children we need to re-layout this child
+                if (dimCrossAxis != child.layout[dim[crossAxis]] && child.children.length > 0) {
+                  // Reset child margins before re-layout as they are added back in layoutNode and would be doubled
+                  child.layout[leading[mainAxis]] -= getLeadingMargin(child, mainAxis) +
+                    getRelativePosition(child, mainAxis);
+                  child.layout[trailing[mainAxis]] -= getTrailingMargin(child, mainAxis) +
+                    getRelativePosition(child, mainAxis);
+                  child.layout[leading[crossAxis]] -= getLeadingMargin(child, crossAxis) +
+                    getRelativePosition(child, crossAxis);
+                  child.layout[trailing[crossAxis]] -= getTrailingMargin(child, crossAxis) +
+                    getRelativePosition(child, crossAxis);
+
+                  layoutNode(/*(java)!layoutContext, */child, maxWidth, maxHeight, direction);
+                }
               }
             } else if (alignItem !== CSS_ALIGN_FLEX_START) {
               // The remaining space between the parent dimensions+padding and child

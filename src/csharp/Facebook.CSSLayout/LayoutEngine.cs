@@ -404,8 +404,8 @@ namespace Facebook.CSSLayout
         float mainDim = leadingPaddingAndBorderMain;
         float crossDim = 0;
     
-        float maxWidth;
-        float maxHeight;
+        float maxWidth = CSSConstants.Undefined;
+        float maxHeight = CSSConstants.Undefined;
         for (i = startLine; i < childCount; ++i) {
           child = node.getChildAt(i);
           child.lineIndex = linesCount;
@@ -549,7 +549,7 @@ namespace Facebook.CSSLayout
           if (isSimpleStackCross &&
               (child.style.positionType != CSSPositionType.Relative ||
                   (alignItem != CSSAlign.Stretch && alignItem != CSSAlign.FlexStart) ||
-                  !(!float.IsNaN(child.layout.dimensions[dim[crossAxis]]) && child.layout.dimensions[dim[crossAxis]] >= 0.0))) {
+                  (alignItem == CSSAlign.Stretch && !isCrossDimDefined))) {
             isSimpleStackCross = false;
             firstComplexCross = i;
           }
@@ -759,15 +759,31 @@ namespace Facebook.CSSLayout
               CSSAlign alignItem = getAlignItem(node, child);
               /*eslint-enable */
               if (alignItem == CSSAlign.Stretch) {
-                // You can only stretch if the dimension has not already been set
+                // You can only stretch if the dimension has not already been defined
                 // previously.
-                if (!(!float.IsNaN(child.layout.dimensions[dim[crossAxis]]) && child.layout.dimensions[dim[crossAxis]] >= 0.0)) {
+                if (!(!float.IsNaN(child.style.dimensions[dim[crossAxis]]) && child.style.dimensions[dim[crossAxis]] >= 0.0)) {
+                  float dimCrossAxis = child.layout.dimensions[dim[crossAxis]];
                   child.layout.dimensions[dim[crossAxis]] = Math.Max(
                     boundAxis(child, crossAxis, containerCrossAxis -
                       paddingAndBorderAxisCross - (child.style.margin.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + child.style.margin.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]))),
                     // You never want to go smaller than padding
                     ((child.style.padding.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + child.style.border.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis])) + (child.style.padding.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]) + child.style.border.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis])))
                   );
+    
+                  // If the size has changed, and this child has children we need to re-layout this child
+                  if (dimCrossAxis != child.layout.dimensions[dim[crossAxis]] && child.getChildCount() > 0) {
+                    // Reset child margins before re-layout as they are added back in layoutNode and would be doubled
+                    child.layout.position[leading[mainAxis]] -= child.style.margin.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis]) +
+                      getRelativePosition(child, mainAxis);
+                    child.layout.position[trailing[mainAxis]] -= child.style.margin.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]) +
+                      getRelativePosition(child, mainAxis);
+                    child.layout.position[leading[crossAxis]] -= child.style.margin.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) +
+                      getRelativePosition(child, crossAxis);
+                    child.layout.position[trailing[crossAxis]] -= child.style.margin.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]) +
+                      getRelativePosition(child, crossAxis);
+    
+                    layoutNode(layoutContext, child, maxWidth, maxHeight, direction);
+                  }
                 }
               } else if (alignItem != CSSAlign.FlexStart) {
                 // The remaining space between the parent dimensions+padding and child

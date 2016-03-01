@@ -88,7 +88,7 @@ namespace Facebook.CSSLayout.Tests
             Assert.IsTrue(c0c0.HasNewLayout);
             Assert.IsTrue(c1.HasNewLayout);
 
-            Assert.IsFalse(c1c0.HasNewLayout);
+            Assert.IsTrue(c1c0.HasNewLayout);
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace Facebook.CSSLayout.Tests
             Assert.IsTrue(c1.HasNewLayout);
 
             Assert.IsTrue(c0.HasNewLayout);
-            Assert.IsFalse(c0c0.HasNewLayout);
+            Assert.IsTrue(c0c0.HasNewLayout);
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace Facebook.CSSLayout.Tests
             root.calculateLayout();
             markLayoutAppliedForTree(root);
 
-            c0.Height = 200;
+            c0.Width = 200;
             root.calculateLayout();
 
             Assert.IsTrue(root.HasNewLayout);
@@ -163,7 +163,7 @@ namespace Facebook.CSSLayout.Tests
             Assert.IsTrue(c0c0.HasNewLayout);
 
             Assert.IsTrue(c1.HasNewLayout);
-            Assert.IsFalse(c1c0.HasNewLayout);
+            Assert.IsTrue(c1c0.HasNewLayout);
         }
 
         [Test]
@@ -234,7 +234,7 @@ namespace Facebook.CSSLayout.Tests
             Assert.IsTrue(c1.HasNewLayout);
 
             Assert.IsTrue(c0.HasNewLayout);
-            Assert.IsFalse(c0c0.HasNewLayout);
+            Assert.IsTrue(c0c0.HasNewLayout);
         }
     }
 }
