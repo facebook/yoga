@@ -92,7 +92,7 @@ function __transpileSingleTestToJava(code) {
         function(str, match1, match2) {
           return 'style.' + match1 + '.get(Spacing.' + match2 + ')';
         })
-    .replace(/get_child\(.*context\,\s([^\)]+)\)/g, 'getChildAt($1)')
+    .replace(/get_child\(.*context\.\s([^\)]+)\)/g, 'getChildAt($1)')
     .replace(/init_css_node_children/g, 'addChildren')
     .replace(/css_node_t(\s)\*/g, 'TestCSSNode$1')
     .replace(/\->/g, '.')
