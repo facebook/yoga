@@ -155,8 +155,13 @@ namespace Facebook.CSSLayout
 
         public void CalculateLayout()
         {
+            CalculateLayout(null);
+        }
+
+        public void CalculateLayout(CSSDirection? direction)
+        {
             layout.resetResult();
-            LayoutEngine.layoutNode(DummyLayoutContext, this, CSSConstants.Undefined, CSSConstants.Undefined, null);
+            LayoutEngine.layoutNode(DummyLayoutContext, this, CSSConstants.Undefined, CSSConstants.Undefined, direction);
         }
 
         static readonly CSSLayoutContext DummyLayoutContext = new CSSLayoutContext();

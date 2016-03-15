@@ -139,8 +139,15 @@ public class CSSNode {
    * Performs the actual layout and saves the results in {@link #layout}
    */
   public void calculateLayout(CSSLayoutContext layoutContext) {
+    calculateLayout(layoutContext, null);
+  }
+
+  /**
+   * Performs the actual layout and saves the results in {@link #layout}
+   */
+  public void calculateLayout(CSSLayoutContext layoutContext, CSSDirection direction) {
     layout.resetResult();
-    LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED, CSSConstants.UNDEFINED, null);
+    LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED, CSSConstants.UNDEFINED, direction);
   }
 
   /**
