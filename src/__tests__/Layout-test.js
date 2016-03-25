@@ -41,7 +41,6 @@ describe('Javascript Only', function() {
   });
 });
 
-
 describe('Layout', function() {
   it('should layout a single node with width and height', function() {
     testLayout({
@@ -2456,6 +2455,31 @@ describe('Layout', function() {
         {width: 0, height: 0, top: 10, left: 10},
         {width: 1, height: 150, top: 0, left: 10},
         {width: 0, height: 150, top: 0, left: 11}
+      ]}
+    );
+  });
+
+  it('should center items correctly inside a stretched layout', function() {
+    testLayout(
+      {style: {flexDirection: 'row'}, children: [
+        {style: {}, children: [
+          {style: {width: 100, height: 100}}
+        ]},
+        {style: {width: 100}, children: [
+          {style: {flexDirection: 'column', alignItems: 'center'}, children: [
+            {style: {width: 50, height: 50}},
+          ]},
+        ]},
+      ]},
+      {width: 200, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 0, left: 0, children: [
+          {width: 100, height: 100, top: 0, left: 0}
+        ]},
+        {width: 100, height: 100, top: 0, left: 100,  children: [
+          {width: 100, height: 50, top: 0, left: 0, children: [
+            {width: 50, height: 50, top: 0, left: 25}
+          ]},
+        ]},
       ]}
     );
   });
