@@ -141,8 +141,8 @@ struct css_node {
   int children_count;
   int line_index;
 
-  css_node_t* next_absolute_child;
-  css_node_t* next_flex_child;
+  css_node_t *next_absolute_child;
+  css_node_t *next_flex_child;
 
   css_dim_t (*measure)(void *context, float width, float height);
   void (*print)(void *context);
@@ -150,7 +150,6 @@ struct css_node {
   bool (*is_dirty)(void *context);
   void *context;
 };
-
 
 // Lifecycle of nodes and children
 css_node_t *new_css_node(void);
@@ -165,9 +164,13 @@ typedef enum {
 } css_print_options_t;
 void print_css_node(css_node_t *node, css_print_options_t options);
 
+bool isUndefined(float value);
+
 // Function that computes the layout!
 void layoutNode(css_node_t *node, float maxWidth, float maxHeight, css_direction_t parentDirection);
-bool isUndefined(float value);
+
+// Reset the calculated layout values for a given node. You should call this before `layoutNode`.
+void resetNodeLayout(css_node_t *node);
 
 #endif
 
@@ -1460,6 +1463,10 @@ void layoutNode(css_node_t *node, float parentMaxWidth, float parentMaxHeight, c
     layout->last_parent_max_height = parentMaxHeight;
     layout->last_direction = direction;
 
+    for (int i = 0, childCount = node->children_count; i < childCount; i++) {
+      resetNodeLayout(node->get_child(node->context, i));
+    }
+
     layoutNodeImpl(node, parentMaxWidth, parentMaxHeight, parentDirection);
 
     layout->last_dimensions[CSS_WIDTH] = layout->dimensions[CSS_WIDTH];
@@ -1467,6 +1474,13 @@ void layoutNode(css_node_t *node, float parentMaxWidth, float parentMaxHeight, c
     layout->last_position[CSS_TOP] = layout->position[CSS_TOP];
     layout->last_position[CSS_LEFT] = layout->position[CSS_LEFT];
   }
+}
+
+void resetNodeLayout(css_node_t *node) {
+  node->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
+  node->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
+  node->layout.position[CSS_LEFT] = 0;
+  node->layout.position[CSS_TOP] = 0;
 }
 
 #endif // CSS_LAYOUT_IMPLEMENTATION

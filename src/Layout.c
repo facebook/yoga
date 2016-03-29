@@ -1286,6 +1286,10 @@ void layoutNode(css_node_t *node, float parentMaxWidth, float parentMaxHeight, c
     layout->last_parent_max_height = parentMaxHeight;
     layout->last_direction = direction;
 
+    for (int i = 0, childCount = node->children_count; i < childCount; i++) {
+      resetNodeLayout(node->get_child(node->context, i));
+    }
+
     layoutNodeImpl(node, parentMaxWidth, parentMaxHeight, parentDirection);
 
     layout->last_dimensions[CSS_WIDTH] = layout->dimensions[CSS_WIDTH];
@@ -1293,4 +1297,11 @@ void layoutNode(css_node_t *node, float parentMaxWidth, float parentMaxHeight, c
     layout->last_position[CSS_TOP] = layout->position[CSS_TOP];
     layout->last_position[CSS_LEFT] = layout->position[CSS_LEFT];
   }
+}
+
+void resetNodeLayout(css_node_t *node) {
+  node->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
+  node->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
+  node->layout.position[CSS_LEFT] = 0;
+  node->layout.position[CSS_TOP] = 0;
 }

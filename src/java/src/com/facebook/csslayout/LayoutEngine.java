@@ -204,6 +204,10 @@ public class LayoutEngine {
       node.lastLayout.parentMaxWidth = parentMaxWidth;
       node.lastLayout.parentMaxHeight = parentMaxHeight;
 
+      for (int i = 0, childCount = node.getChildCount(); i < childCount; i++) {
+        node.getChildAt(i).layout.resetResult();
+      }
+
       layoutNodeImpl(layoutContext, node, parentMaxWidth, parentMaxHeight, parentDirection);
       node.lastLayout.copy(node.layout);
     } else {
@@ -219,10 +223,6 @@ public class LayoutEngine {
       float parentMaxWidth,
       float parentMaxHeight,
       CSSDirection parentDirection) {
-    for (int i = 0, childCount = node.getChildCount(); i < childCount; i++) {
-      node.getChildAt(i).layout.resetResult();
-    }
-
     /** START_GENERATED **/
   
     CSSDirection direction = resolveDirection(node, parentDirection);
