@@ -1270,8 +1270,8 @@ void layoutNode(css_node_t *node, float parentMaxWidth, float parentMaxHeight, c
     !node->is_dirty(node->context) &&
     eq(layout->last_requested_dimensions[CSS_WIDTH], layout->dimensions[CSS_WIDTH]) &&
     eq(layout->last_requested_dimensions[CSS_HEIGHT], layout->dimensions[CSS_HEIGHT]) &&
-    eq(layout->last_parent_max_width, parentMaxWidth);
-    eq(layout->last_parent_max_height, parentMaxHeight);
+    eq(layout->last_parent_max_width, parentMaxWidth) &&
+    eq(layout->last_parent_max_height, parentMaxHeight) &&
     eq(layout->last_direction, direction);
 
   if (skipLayout) {
