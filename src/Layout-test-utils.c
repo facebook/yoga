@@ -82,11 +82,11 @@ static bool are_layout_equal(css_node_t *a, css_node_t *b) {
   return true;
 }
 
-css_dim_t measure(void *context, float width, float height) {
+css_dim_t measure(void *context, float width, css_measure_mode_t widthMode, float height, css_measure_mode_t heightMode) {
   const char *text = (const char *)context;
   css_dim_t dim;
   if (strcmp(text, SMALL_TEXT) == 0) {
-    if (width != width) {
+    if (widthMode == CSS_MEASURE_MODE_UNDEFINED) {
       width = 1000000;
     }
     dim.dimensions[CSS_WIDTH] = fminf(SMALL_WIDTH, width);
@@ -94,7 +94,7 @@ css_dim_t measure(void *context, float width, float height) {
     return dim;
   }
   if (strcmp(text, LONG_TEXT) == 0) {
-    if (width != width) {
+    if (widthMode == CSS_MEASURE_MODE_UNDEFINED) {
       width = 1000000;
     }
     dim.dimensions[CSS_WIDTH] = width >= BIG_WIDTH ? BIG_WIDTH : fmaxf(BIG_MIN_WIDTH, width);
@@ -103,10 +103,10 @@ css_dim_t measure(void *context, float width, float height) {
   }
 
   if (strcmp(text, MEASURE_WITH_RATIO_2) == 0) {
-    if (width > 0) {
+    if (widthMode != CSS_MEASURE_MODE_UNDEFINED) {
       dim.dimensions[CSS_WIDTH] = width;
       dim.dimensions[CSS_HEIGHT] = width * 2;
-    } else if (height > 0) {
+    } else if (heightMode != CSS_MEASURE_MODE_UNDEFINED) {
       dim.dimensions[CSS_WIDTH] = height * 2;
       dim.dimensions[CSS_HEIGHT] = height;
     } else {
@@ -117,6 +117,12 @@ css_dim_t measure(void *context, float width, float height) {
   }
 
   if (strcmp(text, MEASURE_WITH_MATCH_PARENT) == 0) {
+    if (widthMode == CSS_MEASURE_MODE_UNDEFINED) {
+      width = 99999;
+    }
+    if (heightMode == CSS_MEASURE_MODE_UNDEFINED) {
+      height = 99999;
+    }
     dim.dimensions[CSS_WIDTH] = width;
     dim.dimensions[CSS_HEIGHT] = height;
     return dim;

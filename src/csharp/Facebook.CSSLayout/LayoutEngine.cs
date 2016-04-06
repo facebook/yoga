@@ -282,26 +282,40 @@ namespace Facebook.CSSLayout
         boolean isResolvedRowDimDefined = (!float.IsNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0);
     
         float width = CSSConstants.Undefined;
+        CSSMeasureMode widthMode = CSSMeasureMode.Undefined;
         if ((!float.IsNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0)) {
           width = node.style.dimensions[DIMENSION_WIDTH];
+          widthMode = CSSMeasureMode.Exactly;
         } else if (isResolvedRowDimDefined) {
           width = node.layout.dimensions[dim[resolvedRowAxis]];
+          widthMode = CSSMeasureMode.Exactly;
         } else {
           width = parentMaxWidth -
             (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+          widthMode = CSSMeasureMode.AtMost;
         }
         width -= paddingAndBorderAxisResolvedRow;
+        if (float.IsNaN(width)) {
+          widthMode = CSSMeasureMode.Undefined;
+        }
     
         float height = CSSConstants.Undefined;
+        CSSMeasureMode heightMode = CSSMeasureMode.Undefined;
         if ((!float.IsNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
           height = node.style.dimensions[DIMENSION_HEIGHT];
+          heightMode = CSSMeasureMode.Exactly;
         } else if ((!float.IsNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
           height = node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]];
+          heightMode = CSSMeasureMode.Exactly;
         } else {
           height = parentMaxHeight -
             (node.style.margin.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.margin.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]));
+          heightMode = CSSMeasureMode.AtMost;
         }
         height -= ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
+        if (float.IsNaN(height)) {
+          heightMode = CSSMeasureMode.Undefined;
+        }
     
         // We only need to give a dimension for the text if we haven't got any
         // for it computed yet. It can either be from the style attribute or because
@@ -316,7 +330,9 @@ namespace Facebook.CSSLayout
             
             layoutContext.measureOutput,
             width,
-            height
+            widthMode,
+            height,
+            heightMode
           );
           if (isRowUndefined) {
             node.layout.dimensions[DIMENSION_WIDTH] = measureDim.width +

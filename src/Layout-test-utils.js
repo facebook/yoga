@@ -494,8 +494,8 @@ var layoutTestUtils = (function() {
     computeDOMLayout: computeDOMLayout,
     reduceTest: reduceTest,
     text: function(text) {
-      var fn = function(width, height) {
-        if (width === undefined || isNaN(width)) {
+      var fn = function(width, widthMode, height, heightMode) {
+        if (widthMode === 'undefined') {
           width = Infinity;
         }
 
@@ -522,10 +522,10 @@ var layoutTestUtils = (function() {
       return fn;
     },
     measureWithRatio2: function() {
-      var fn = function(width, height) {
-        if (width > 0) {
+      var fn = function(width, widthMode, height, heightMode) {
+        if (widthMode !== 'undefined') {
           height = width * 2;
-        } else if (height > 0) {
+        } else if (heightMode !== 'undefined') {
           width = height * 2;
         } else {
           // This should be Infinity, but it would be pain to transpile,
@@ -540,7 +540,13 @@ var layoutTestUtils = (function() {
       return fn;
     },
     measureWithMatchParent: function() {
-      var fn = function(width, height) {
+      var fn = function(width, widthMode, height, heightMode) {
+        if (widthMode === 'undefined') {
+          width = 99999;
+        }
+        if (heightMode === 'undefined') {
+          height = 99999;
+        }
         return {width: width, height: height};
       };
       // This is necessary for transpiled tests, see previous comment

@@ -557,26 +557,40 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
     bool isResolvedRowDimDefined = isLayoutDimDefined(node, resolvedRowAxis);
 
     float width = CSS_UNDEFINED;
+    css_measure_mode_t widthMode = CSS_MEASURE_MODE_UNDEFINED;
     if (isStyleDimDefined(node, resolvedRowAxis)) {
       width = node->style.dimensions[CSS_WIDTH];
+      widthMode = CSS_MEASURE_MODE_EXACTLY;
     } else if (isResolvedRowDimDefined) {
       width = node->layout.dimensions[dim[resolvedRowAxis]];
+      widthMode = CSS_MEASURE_MODE_EXACTLY;
     } else {
       width = parentMaxWidth -
         getMarginAxis(node, resolvedRowAxis);
+      widthMode = CSS_MEASURE_MODE_AT_MOST;
     }
     width -= paddingAndBorderAxisResolvedRow;
+    if (isUndefined(width)) {
+      widthMode = CSS_MEASURE_MODE_UNDEFINED;
+    }
 
     float height = CSS_UNDEFINED;
+    css_measure_mode_t heightMode = CSS_MEASURE_MODE_UNDEFINED;
     if (isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
       height = node->style.dimensions[CSS_HEIGHT];
+      heightMode = CSS_MEASURE_MODE_EXACTLY;
     } else if (isLayoutDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
       height = node->layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]];
+      heightMode = CSS_MEASURE_MODE_EXACTLY;
     } else {
       height = parentMaxHeight -
         getMarginAxis(node, resolvedRowAxis);
+      heightMode = CSS_MEASURE_MODE_AT_MOST;
     }
     height -= getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+    if (isUndefined(height)) {
+      heightMode = CSS_MEASURE_MODE_UNDEFINED;
+    }
 
     // We only need to give a dimension for the text if we haven't got any
     // for it computed yet. It can either be from the style attribute or because
@@ -591,7 +605,9 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
         node->context,
         
         width,
-        height
+        widthMode,
+        height,
+        heightMode
       );
       if (isRowUndefined) {
         node->layout.dimensions[CSS_WIDTH] = measureDim.dimensions[CSS_WIDTH] +
