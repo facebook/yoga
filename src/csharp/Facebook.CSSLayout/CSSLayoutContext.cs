@@ -22,5 +22,6 @@ namespace Facebook.CSSLayout
     {
         /*package*/
         public MeasureOutput measureOutput = new MeasureOutput();
+        public int currentGenerationCount;
     }
 }

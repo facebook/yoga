@@ -36,7 +36,7 @@ public class LayoutEngineTest
                 Math.Min(width, TestConstants.SMALL_WIDTH),
                 TestConstants.SMALL_HEIGHT);
         } else if (testNode.context.Equals(TestConstants.LONG_TEXT)) {
-            if (CSSConstants.IsUndefined(width)) {
+            if (widthMode == CSSMeasureMode.Undefined) {
                 width = 10000000;
             }
             return new MeasureOutput(width >= TestConstants.BIG_WIDTH
@@ -55,10 +55,10 @@ public class LayoutEngineTest
             }
         } else if (testNode.context.Equals(TestConstants.MEASURE_WITH_MATCH_PARENT)) {
             if (widthMode == CSSMeasureMode.Undefined) {
-              width = 99999;
+                width = 99999;
             }
             if (heightMode == CSSMeasureMode.Undefined) {
-              height = 99999;
+                height = 99999;
             }
             return new MeasureOutput(width, height);
         } else {
@@ -4371,6 +4371,7 @@ public class LayoutEngineTest
         node_1.context = "measureWithRatio2";
         node_1 = node_0.getChildAt(1);
         node_1.style.flexDirection = CSSFlexDirection.Row;
+        node_1.style.overflow = CSSOverflow.Hidden;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 2);
         {
@@ -4822,7 +4823,7 @@ public class LayoutEngineTest
         node_1 = node_0.getChildAt(0);
         node_1.layout.position[POSITION_TOP] = 20;
         node_1.layout.position[POSITION_LEFT] = 20;
-        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
         node_1.layout.dimensions[DIMENSION_HEIGHT] = 36;
         addChildren(node_1, 1);
         {
@@ -8388,7 +8389,7 @@ public class LayoutEngineTest
       }
     }
 
-    test("should layout child whose cross axis is undefined and whose alignSelf is stretch", root_node, root_layout);
+    test("should layout child whose cross axis is null and whose alignSelf is stretch", root_node, root_layout);
   }
 
     [Test]
@@ -8483,6 +8484,1081 @@ public class LayoutEngineTest
 
     [Test]
     public void TestCase188()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 25;
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 25;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 25;
+        }
+      }
+    }
+
+    test("should not shrink column node when there is space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase189()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 200;
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 200;
+        }
+      }
+    }
+
+    test("should shrink column node when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase190()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 25;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 30;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 15;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 25;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 25;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 30;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 30;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 55;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 15;
+      }
+    }
+
+    test("should not shrink column node with siblings when there is space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase191()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 25;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 80;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 15;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 25;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 25;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 60;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 80;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 85;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 15;
+      }
+    }
+
+    test("should shrink column node with siblings when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase192()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 30;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 40;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 22.5f;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 22.5f;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 40;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 62.5f;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 37.5f;
+      }
+    }
+
+    test("should shrink column nodes proportional to their main size when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase193()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 25;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 25;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should not shrink visible row node when there is space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase194()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 200;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 200;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should shrink visible row node when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase195()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 30;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 25;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 30;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 30;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 55;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    test("should not shrink visible row node with siblings when there is space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase196()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 80;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 25;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 80;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 85;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink visible row node with siblings when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase197()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 30;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 22.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 22.5f;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 62.5f;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 37.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink visible row nodes when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase198()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.overflow = CSSOverflow.Hidden;
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 25;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 25;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should not shrink hidden row node when there is space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase199()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.overflow = CSSOverflow.Hidden;
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 200;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 200;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should shrink hidden row node when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase200()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.overflow = CSSOverflow.Hidden;
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 30;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 25;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 30;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 30;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 55;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    test("should not shrink hidden row node with siblings when there is space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase201()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.overflow = CSSOverflow.Hidden;
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.dimensions[DIMENSION_WIDTH] = 80;
+          node_2.style.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 25;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 60;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 80;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 85;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink hidden row node with siblings when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase202()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.overflow = CSSOverflow.Hidden;
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 30;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(2);
+        node_1.style.overflow = CSSOverflow.Hidden;
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 50;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 100;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 22.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 22.5f;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 40;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 62.5f;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 37.5f;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink hidden row nodes proportional to their main size when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase203()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 213;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flexDirection = CSSFlexDirection.Row;
+        node_1.style.alignItems = CSSAlign.FlexStart;
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "loooooooooong with space";
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 213;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 25;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 172;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 172;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 197;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    test("should not shrink text node with siblings when there is space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase204()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 140;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flexDirection = CSSFlexDirection.Row;
+        node_1.style.alignItems = CSSAlign.FlexStart;
+        node_1.style.flex = -1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.style.flex = -1;
+          node_2.setMeasureFunction(sTestMeasureFunction);
+          node_2.context = "loooooooooong with space";
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.style.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 140;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      addChildren(node_0, 3);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 25;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 25;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+        addChildren(node_1, 1);
+        {
+          TestCSSNode node_2;
+          node_2 = node_1.getChildAt(0);
+          node_2.layout.position[POSITION_TOP] = 0;
+          node_2.layout.position[POSITION_LEFT] = 0;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
+          node_2.layout.dimensions[DIMENSION_HEIGHT] = 36;
+        }
+        node_1 = node_0.getChildAt(2);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 125;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 15;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink text node with siblings when there is not any space left over", root_node, root_layout);
+  }
+
+    [Test]
+    public void TestCase205()
   {
     TestCSSNode root_node = new TestCSSNode();
     {

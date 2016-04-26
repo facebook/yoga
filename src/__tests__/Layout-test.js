@@ -1238,7 +1238,7 @@ describe('Layout', function() {
     testLayoutAgainstExpectedOnly(
       {style: {width: 320, flexDirection: 'column'}, children: [
         {style: {measure: measureWithRatio2}},
-        {style: {height: 100, flexDirection: 'row'}, children: [
+        {style: {height: 100, flexDirection: 'row', overflow: 'hidden'}, children: [
           {style: {measure: measureWithRatio2}},
           {style: {measure: measureWithRatio2}}
         ]},
@@ -1354,14 +1354,16 @@ describe('Layout', function() {
   });
 
   it('should layout node with text bounded by grand-parent', function() {
-    testLayout(
+    testLayoutAgainstExpectedOnly(
       {style: {width: 100, padding: 10, alignSelf: 'flex-start'}, children: [
         {style: {margin: 10, alignSelf: 'flex-start'}, children: [
           {style: {measure: text(texts.big)}}
         ]}
       ]},
       {width: 100, height: 40 + textSizes.bigHeight, top: 0, left: 0, children: [
-        {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 20, left: 20, children: [
+        // In the flexbox engine implementation, min width of text is not supported so we max
+        // out at the amount of available space (60)
+        {width: Math.min(60, textSizes.bigMinWidth), height: textSizes.bigHeight, top: 20, left: 20, children: [
           {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
         ]}
       ]}
@@ -2480,6 +2482,307 @@ describe('Layout', function() {
             {width: 50, height: 50, top: 0, left: 25}
           ]},
         ]},
+      ]}
+    );
+  });
+});
+
+describe('Layout flex:-1', function() {
+  // Tests for items with flex:-1 in a container with flexDirection:column
+  
+  it('should not shrink column node when there is space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100}, children: [
+        {style: {width: 100, flex: -1}, children: [
+          {style: {width: 100, height: 25}}
+        ]}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 25, top: 0, left: 0, children: [
+          {width: 100, height: 25, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+  
+  it('should shrink column node when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100}, children: [
+        {style: {width: 100, flex: -1}, children: [
+          {style: {width: 100, height: 200}}
+        ]}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 0, left: 0, children: [
+          {width: 100, height: 200, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+  
+  it('should not shrink column node with siblings when there is space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100}, children: [
+        {style: {width: 100, height: 25}},
+        {style: {width: 100, flex: -1}, children: [
+          {style: {width: 100, height: 30}}
+        ]},
+        {style: {width: 100, height: 15}},
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 25, top: 0, left: 0},
+        {width: 100, height: 30, top: 25, left: 0, children: [
+          {width: 100, height: 30, top: 0, left: 0}
+        ]},
+        {width: 100, height: 15, top: 55, left: 0},
+      ]}
+    );
+  });
+  
+  it('should shrink column node with siblings when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100}, children: [
+        {style: {width: 100, height: 25}},
+        {style: {width: 100, flex: -1}, children: [
+          {style: {width: 100, height: 80}}
+        ]},
+        {style: {width: 100, height: 15}},
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 25, top: 0, left: 0},
+        {width: 100, height: 60, top: 25, left: 0, children: [
+          {width: 100, height: 80, top: 0, left: 0}
+        ]},
+        {width: 100, height: 15, top: 85, left: 0},
+      ]}
+    );
+  });
+  
+  it('should shrink column nodes proportional to their main size when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100}, children: [
+        {style: {width: 100, height: 30, flex: -1}},
+        {style: {width: 100, height: 40}},
+        {style: {width: 100, height: 50, flex: -1}}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 22.5, top: 0, left: 0},
+        {width: 100, height: 40, top: 22.5, left: 0},
+        {width: 100, height: 37.5, top: 62.5, left: 0}
+      ]}
+    );
+  });
+  
+  // Tests for items with flex:-1 and overflow:visible in a container with flexDirection:row
+  
+  it('should not shrink visible row node when there is space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {height: 100, flex: -1}, children: [
+          {style: {width: 25, height: 100}}
+        ]}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 25, height: 100, top: 0, left: 0, children: [
+          {width: 25, height: 100, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+  
+  it('should shrink visible row node when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {height: 100, flex: -1}, children: [
+          {style: {width: 200, height: 100}}
+        ]}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        // width would be 100 if we implemented https://www.w3.org/TR/css-flexbox-1/#min-size-auto and min-width didn't default to 0
+        {width: 100, height: 100, top: 0, left: 0, children: [
+          {width: 200, height: 100, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+  
+  it('should not shrink visible row node with siblings when there is space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {width: 25, height: 100}},
+        {style: {height: 100, flex: -1}, children: [
+          {style: {width: 30, height: 100}}
+        ]},
+        {style: {width: 15, height: 100}},
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 25, height: 100, top: 0, left: 0},
+        {width: 30, height: 100, top: 0, left: 25, children: [
+          {width: 30, height: 100, top: 0, left: 0}
+        ]},
+        {width: 15, height: 100, top: 0, left: 55},
+      ]}
+    );
+  });
+  
+  it('should shrink visible row node with siblings when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {width: 25, height: 100}},
+        {style: {height: 100, flex: -1}, children: [
+          {style: {width: 80, height: 100}}
+        ]},
+        {style: {width: 15, height: 100}},
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 25, height: 100, top: 0, left: 0},
+        // width would be 80 if we implemented https://www.w3.org/TR/css-flexbox-1/#min-size-auto and min-width didn't default to 0
+        {width: 60, height: 100, top: 0, left: 25, children: [
+          {width: 80, height: 100, top: 0, left: 0}
+        ]},
+        {width: 15, height: 100, top: 0, left: 85},
+      ]}
+    );
+  });
+  
+  it('should shrink visible row nodes when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {width: 30, height: 100, flex: -1}},
+        {style: {width: 40, height: 100}},
+        {style: {width: 50, height: 100, flex: -1}}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        // width would be 30 if we implemented https://www.w3.org/TR/css-flexbox-1/#min-size-auto and min-width didn't default to 0
+        {width: 22.5, height: 100, top: 0, left: 0},
+        {width: 40, height: 100, top: 0, left: 22.5},
+        // width would be 50 if we implemented https://www.w3.org/TR/css-flexbox-1/#min-size-auto and min-width didn't default to 0
+        {width: 37.5, height: 100, top: 0, left: 62.5}
+      ]}
+    );
+  });
+  
+  // Tests for items with flex:-1 and overflow:hidden in a container with flexDirection:row
+  
+  it('should not shrink hidden row node when there is space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {height: 100, flex: -1, overflow: 'hidden'}, children: [
+          {style: {width: 25, height: 100}}
+        ]}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 25, height: 100, top: 0, left: 0, children: [
+          {width: 25, height: 100, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+
+  it('should shrink hidden row node when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {height: 100, flex: -1, overflow: 'hidden'}, children: [
+          {style: {width: 200, height: 100}}
+        ]}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 100, top: 0, left: 0, children: [
+          {width: 200, height: 100, top: 0, left: 0}
+        ]}
+      ]}
+    );
+  });
+  
+  it('should not shrink hidden row node with siblings when there is space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {width: 25, height: 100}},
+        {style: {height: 100, flex: -1, overflow: 'hidden'}, children: [
+          {style: {width: 30, height: 100}}
+        ]},
+        {style: {width: 15, height: 100}},
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 25, height: 100, top: 0, left: 0},
+        {width: 30, height: 100, top: 0, left: 25, children: [
+          {width: 30, height: 100, top: 0, left: 0}
+        ]},
+        {width: 15, height: 100, top: 0, left: 55},
+      ]}
+    );
+  });
+  
+  it('should shrink hidden row node with siblings when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {width: 25, height: 100}},
+        {style: {height: 100, flex: -1, overflow: 'hidden'}, children: [
+          {style: {width: 80, height: 100}}
+        ]},
+        {style: {width: 15, height: 100}},
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 25, height: 100, top: 0, left: 0},
+        {width: 60, height: 100, top: 0, left: 25, children: [
+          {width: 80, height: 100, top: 0, left: 0}
+        ]},
+        {width: 15, height: 100, top: 0, left: 85},
+      ]}
+    );
+  });
+  
+  it('should shrink hidden row nodes proportional to their main size when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
+        {style: {width: 30, height: 100, flex: -1, overflow: 'hidden'}},
+        {style: {width: 40, height: 100}},
+        {style: {width: 50, height: 100, flex: -1, overflow: 'hidden'}}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 22.5, height: 100, top: 0, left: 0},
+        {width: 40, height: 100, top: 0, left: 22.5},
+        {width: 37.5, height: 100, top: 0, left: 62.5}
+      ]}
+    );
+  });
+  
+  // Tests for items with flex:-1 containing a text node
+  
+  it('should not shrink text node with siblings when there is space left over', function() {
+    testLayoutAgainstExpectedOnly(
+      {style: {width: 213, height: 100, flexDirection: 'row'}, children: [
+        {style: {width: 25, height: 100}},
+        {style: {height: 100, flex: -1, flexDirection: 'row', alignItems: 'flex-start'}, children: [
+          {style: {measure: text(texts.big)}}
+        ]},
+        {style: {width: 15, height: 100}},
+      ]},
+      {width: 213, height: 100, top: 0, left: 0, children: [
+        {width: 25, height: 100, top: 0, left: 0},
+        {width: textSizes.bigWidth, height: 100, top: 0, left: 25, children: [
+          {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 0, left: 0}
+        ]},
+        {width: 15, height: 100, top: 0, left: 25 + textSizes.bigWidth},
+      ]}
+    );
+  });
+  
+  it('should shrink text node with siblings when there is not any space left over', function() {
+    testLayout(
+      {style: {width: 140, height: 100, flexDirection: 'row'}, children: [
+        {style: {width: 25, height: 100}},
+        {style: {height: 100, flex: -1, flexDirection: 'row', alignItems: 'flex-start'}, children: [
+          {style: {flex: -1, measure: text(texts.big)}}
+        ]},
+        {style: {width: 15, height: 100}},
+      ]},
+      {width: 140, height: 100, top: 0, left: 0, children: [
+        {width: 25, height: 100, top: 0, left: 0},
+        {width: textSizes.bigMinWidth, height: 100, top: 0, left: 25, children: [
+          {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
+        ]},
+        {width: 15, height: 100, top: 0, left: 25 + textSizes.bigMinWidth},
       ]}
     );
   });

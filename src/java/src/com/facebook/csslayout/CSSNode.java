@@ -63,9 +63,8 @@ public class CSSNode {
 
   public int lineIndex = 0;
 
-  /*package*/ CSSNode nextAbsoluteChild;
-  /*package*/ CSSNode nextFlexChild;
-
+  /*package*/ CSSNode nextChild;
+  
   private @Nullable ArrayList<CSSNode> mChildren;
   private @Nullable CSSNode mParent;
   private @Nullable MeasureFunction mMeasureFunction = null;
@@ -139,7 +138,6 @@ public class CSSNode {
    * Performs the actual layout and saves the results in {@link #layout}
    */
   public void calculateLayout(CSSLayoutContext layoutContext) {
-    layout.resetResult();
     LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED, CSSConstants.UNDEFINED, null);
   }
 

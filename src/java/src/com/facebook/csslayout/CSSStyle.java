@@ -23,6 +23,7 @@ public class CSSStyle {
   public CSSAlign alignSelf;
   public CSSPositionType positionType;
   public CSSWrap flexWrap;
+  public CSSOverflow overflow;
   public float flex;
 
   public Spacing margin = new Spacing();
@@ -51,6 +52,7 @@ public class CSSStyle {
     alignSelf = CSSAlign.AUTO;
     positionType = CSSPositionType.RELATIVE;
     flexWrap = CSSWrap.NOWRAP;
+    overflow = CSSOverflow.VISIBLE;
     flex = 0f;
 
     margin.reset();;

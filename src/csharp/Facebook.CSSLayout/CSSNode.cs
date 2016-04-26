@@ -58,8 +58,7 @@ namespace Facebook.CSSLayout
         internal readonly CachedCSSLayout lastLayout = new CachedCSSLayout();
 
         internal int lineIndex = 0;
-        internal /*package*/ CSSNode nextAbsoluteChild;
-        internal /*package*/ CSSNode nextFlexChild;
+        internal /*package*/ CSSNode nextChild;
 
         // 4 is kinda arbitrary, but the default of 10 seems really high for an average View.
         readonly List<CSSNode> mChildren = new List<CSSNode>(4);
@@ -155,7 +154,6 @@ namespace Facebook.CSSLayout
 
         public void CalculateLayout()
         {
-            layout.resetResult();
             LayoutEngine.layoutNode(DummyLayoutContext, this, CSSConstants.Undefined, CSSConstants.Undefined, null);
         }
 

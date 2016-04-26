@@ -18,5 +18,10 @@ namespace Facebook.CSSLayout
             Debug.Assert(v != null);
             return v;
         }
+        
+        public static void assertCondition(bool condition, string explanation)
+        {
+            Debug.Assert(condition, explanation);
+        }
     }
 }
