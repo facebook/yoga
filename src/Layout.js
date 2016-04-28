@@ -381,6 +381,15 @@ var computeLayout = (function() {
     return node.style.measure !== undefined;
   }
 
+  function resetChildrenLayout(node) {
+    node.children.forEach(function(child) {
+      child.layout.width = undefined;
+      child.layout.height = undefined;
+      child.layout.top = 0;
+      child.layout.left = 0;
+    });
+  }
+
   function getPosition(node, pos) {
     if (node.style[pos] !== undefined) {
       return node.style[pos];
@@ -478,11 +487,11 @@ var computeLayout = (function() {
 
     // Inline immutable values from the target node to avoid excessive method
     // invocations during the layout calculation.
-    var/*int*/ childCount = node.children.length;
     var/*float*/ paddingAndBorderAxisResolvedRow = getPaddingAndBorderAxis(node, resolvedRowAxis);
     var/*float*/ paddingAndBorderAxisColumn = getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+    var/*bool*/ hasMeasureFunction = isMeasureDefined(node);
 
-    if (isMeasureDefined(node)) {
+    if (hasMeasureFunction) {
       var/*bool*/ isResolvedRowDimDefined = isLayoutDimDefined(node, resolvedRowAxis);
 
       var/*float*/ width = CSS_UNDEFINED;
@@ -547,10 +556,16 @@ var computeLayout = (function() {
             paddingAndBorderAxisColumn;
         }
       }
-      if (childCount === 0) {
-        return;
-      }
     }
+
+    // The number of children might change during the measure() call.
+    // We can now safely operate on them getting the final count
+    // and resetting their layout.
+    var/*int*/ childCount = node.children.length;
+    if (childCount === 0 && hasMeasureFunction) {
+      return;
+    }
+    resetChildrenLayout(node);
 
     var/*bool*/ isNodeFlexWrap = isFlexWrap(node);
 
@@ -1233,14 +1248,6 @@ var computeLayout = (function() {
       node.lastLayout.parentMaxWidth = parentMaxWidth;
       node.lastLayout.parentMaxHeight = parentMaxHeight;
       node.lastLayout.direction = direction;
-
-      // Reset child layouts
-      node.children.forEach(function(child) {
-        child.layout.width = undefined;
-        child.layout.height = undefined;
-        child.layout.top = 0;
-        child.layout.left = 0;
-      });
 
       layoutNodeImpl(node, parentMaxWidth, parentMaxHeight, parentDirection);
 

@@ -457,6 +457,12 @@ static bool isMeasureDefined(css_node_t *node) {
   return node->measure;
 }
 
+static void resetChildrenLayout(css_node_t *node) {
+  for (int i = 0, childCount = node->children_count; i < childCount; i++) {
+    resetNodeLayout(node->get_child(node->context, i));
+  }
+}
+
 static float getPosition(css_node_t *node, css_position_t position) {
   float result = node->style.position[position];
   if (!isUndefined(result)) {
@@ -549,11 +555,11 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
 
   // Inline immutable values from the target node to avoid excessive method
   // invocations during the layout calculation.
-  int childCount = node->children_count;
   float paddingAndBorderAxisResolvedRow = getPaddingAndBorderAxis(node, resolvedRowAxis);
   float paddingAndBorderAxisColumn = getPaddingAndBorderAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+  bool hasMeasureFunction = isMeasureDefined(node);
 
-  if (isMeasureDefined(node)) {
+  if (hasMeasureFunction) {
     bool isResolvedRowDimDefined = isLayoutDimDefined(node, resolvedRowAxis);
 
     float width = CSS_UNDEFINED;
@@ -618,10 +624,16 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
           paddingAndBorderAxisColumn;
       }
     }
-    if (childCount == 0) {
-      return;
-    }
   }
+
+  // The number of children might change during the measure() call.
+  // We can now safely operate on them getting the final count
+  // and resetting their layout.
+  int childCount = node->children_count;
+  if (childCount == 0 && hasMeasureFunction) {
+    return;
+  }
+  resetChildrenLayout(node);
 
   bool isNodeFlexWrap = isFlexWrap(node);
 
@@ -1301,10 +1313,6 @@ void layoutNode(css_node_t *node, float parentMaxWidth, float parentMaxHeight, c
     layout->last_parent_max_width = parentMaxWidth;
     layout->last_parent_max_height = parentMaxHeight;
     layout->last_direction = direction;
-
-    for (int i = 0, childCount = node->children_count; i < childCount; i++) {
-      resetNodeLayout(node->get_child(node->context, i));
-    }
 
     layoutNodeImpl(node, parentMaxWidth, parentMaxHeight, parentDirection);
 

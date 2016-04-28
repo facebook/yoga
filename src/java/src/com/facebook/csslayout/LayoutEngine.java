@@ -180,6 +180,12 @@ public class LayoutEngine {
     return node.isMeasureDefined();
   }
 
+  private static void resetChildrenLayout(CSSNode node) {
+    for (int i = 0, childCount = node.getChildCount(); i < childCount; i++) {
+      node.getChildAt(i).layout.resetResult();
+    }
+  }
+
   static boolean needsRelayout(CSSNode node, float parentMaxWidth, float parentMaxHeight) {
     return node.isDirty() ||
         !FloatUtil.floatsEqual(
@@ -203,10 +209,6 @@ public class LayoutEngine {
       node.lastLayout.requestedHeight = node.layout.dimensions[DIMENSION_HEIGHT];
       node.lastLayout.parentMaxWidth = parentMaxWidth;
       node.lastLayout.parentMaxHeight = parentMaxHeight;
-
-      for (int i = 0, childCount = node.getChildCount(); i < childCount; i++) {
-        node.getChildAt(i).layout.resetResult();
-      }
 
       layoutNodeImpl(layoutContext, node, parentMaxWidth, parentMaxHeight, parentDirection);
       node.lastLayout.copy(node.layout);
@@ -250,11 +252,11 @@ public class LayoutEngine {
   
     // Inline immutable values from the target node to avoid excessive method
     // invocations during the layout calculation.
-    int childCount = node.getChildCount();
     float paddingAndBorderAxisResolvedRow = ((node.style.padding.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.border.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis])) + (node.style.padding.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]) + node.style.border.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis])));
     float paddingAndBorderAxisColumn = ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
+    boolean hasMeasureFunction = isMeasureDefined(node);
   
-    if (isMeasureDefined(node)) {
+    if (hasMeasureFunction) {
       boolean isResolvedRowDimDefined = (!Float.isNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0);
   
       float width = CSSConstants.UNDEFINED;
@@ -319,10 +321,16 @@ public class LayoutEngine {
             paddingAndBorderAxisColumn;
         }
       }
-      if (childCount == 0) {
-        return;
-      }
     }
+  
+    // The number of children might change during the measure() call.
+    // We can now safely operate on them getting the final count
+    // and resetting their layout.
+    int childCount = node.getChildCount();
+    if (childCount == 0 && hasMeasureFunction) {
+      return;
+    }
+    resetChildrenLayout(node);
   
     boolean isNodeFlexWrap = (node.style.flexWrap == CSSWrap.WRAP);
   
