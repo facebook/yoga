@@ -123,6 +123,9 @@ function printLayout(test) {
           throw new Error('Using custom measure function is supported only for leaf nodes.');
         }
         add('node_' + (level - 3) + '->measure = measure;');
+        if (node.style.isMeasureForced) {
+          add('node_' + (level - 3) + '->is_measure_forced = true;');
+        }
         add('node_' + (level - 3) + '->context = "' + node.style.measure.toString() + '";');
       }
     }

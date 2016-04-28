@@ -111,6 +111,7 @@ function __transpileSingleTestToCSharp(code) {
         function(str, match1, match2, match3) {
           return 'style.' + match1 + match2.toUpperCase() + match3;
         })
+    .replace(/(\w+)\.is_measure_forced\s+=\s+.+/g, '$1.setMeasureForced(true);')
     .replace(/(\w+)\.measure\s+=\s+.+/g, '$1.setMeasureFunction(sTestMeasureFunction);')
 
     // additional case conversions

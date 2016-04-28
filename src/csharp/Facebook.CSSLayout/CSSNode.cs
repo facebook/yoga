@@ -140,6 +140,8 @@ namespace Facebook.CSSLayout
             get { return mMeasureFunction != null; }
         }
 
+        public bool IsMeasureForced { get; set; }
+
         internal MeasureOutput measure(MeasureOutput measureOutput, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             if (!IsMeasureDefined)
@@ -512,6 +514,11 @@ namespace Facebook.CSSLayout
         public static void setMeasureFunction(this CSSNode node, MeasureFunction measureFunction)
         {
             node.MeasureFunction = measureFunction;
+        }
+
+        public static void setMeasureForced(this CSSNode node, bool measureForced)
+        {
+            node.IsMeasureForced = measureForced;
         }
 
         public static void calculateLayout(this CSSNode node)

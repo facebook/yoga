@@ -381,6 +381,10 @@ var computeLayout = (function() {
     return node.style.measure !== undefined;
   }
 
+  function isMeasureForced(node) {
+    return node.style.isMeasureForced;
+  }
+
   function getPosition(node, pos) {
     if (node.style[pos] !== undefined) {
       return node.style[pos];
@@ -527,9 +531,10 @@ var computeLayout = (function() {
       var/*bool*/ isRowUndefined = !isStyleDimDefined(node, resolvedRowAxis) && !isResolvedRowDimDefined;
       var/*bool*/ isColumnUndefined = !isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
         isUndefined(node.layout[dim[CSS_FLEX_DIRECTION_COLUMN]]);
+      var/*bool*/ alwaysMeasure = isMeasureForced(node);
 
-      // Let's not measure the text if we already know both dimensions
-      if (isRowUndefined || isColumnUndefined) {
+      // Let's not measure the text if we already know both dimensions, unless we are forced to.
+      if (isRowUndefined || isColumnUndefined || alwaysMeasure) {
         var/*css_dim_t*/ measureDim = node.style.measure(
           /*(c)!node->context,*/
           /*(java)!layoutContext.measureOutput,*/
@@ -538,11 +543,11 @@ var computeLayout = (function() {
           height,
           heightMode
         );
-        if (isRowUndefined) {
+        if (isRowUndefined || alwaysMeasure) {
           node.layout.width = measureDim.width +
             paddingAndBorderAxisResolvedRow;
         }
-        if (isColumnUndefined) {
+        if (isColumnUndefined || alwaysMeasure) {
           node.layout.height = measureDim.height +
             paddingAndBorderAxisColumn;
         }
