@@ -457,6 +457,10 @@ static bool isMeasureDefined(css_node_t *node) {
   return node->measure;
 }
 
+static bool isMeasureForced(css_node_t *node) {
+  return node->is_measure_forced;
+}
+
 static float getPosition(css_node_t *node, css_position_t position) {
   float result = node->style.position[position];
   if (!isUndefined(result)) {
@@ -598,9 +602,10 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
     bool isRowUndefined = !isStyleDimDefined(node, resolvedRowAxis) && !isResolvedRowDimDefined;
     bool isColumnUndefined = !isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN) &&
       isUndefined(node->layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]);
+    bool alwaysMeasure = isMeasureForced(node);
 
-    // Let's not measure the text if we already know both dimensions
-    if (isRowUndefined || isColumnUndefined) {
+    // Let's not measure the text if we already know both dimensions, unless we are forced to.
+    if (isRowUndefined || isColumnUndefined || alwaysMeasure) {
       css_dim_t measureDim = node->measure(
         node->context,
         
@@ -609,11 +614,11 @@ static void layoutNodeImpl(css_node_t *node, float parentMaxWidth, float parentM
         height,
         heightMode
       );
-      if (isRowUndefined) {
+      if (isRowUndefined || alwaysMeasure) {
         node->layout.dimensions[CSS_WIDTH] = measureDim.dimensions[CSS_WIDTH] +
           paddingAndBorderAxisResolvedRow;
       }
-      if (isColumnUndefined) {
+      if (isColumnUndefined || alwaysMeasure) {
         node->layout.dimensions[CSS_HEIGHT] = measureDim.dimensions[CSS_HEIGHT] +
           paddingAndBorderAxisColumn;
       }

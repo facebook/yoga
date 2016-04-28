@@ -180,6 +180,10 @@ public class LayoutEngine {
     return node.isMeasureDefined();
   }
 
+  private static boolean isMeasureForced(CSSNode node) {
+    return node.isMeasureForced();
+  }
+
   static boolean needsRelayout(CSSNode node, float parentMaxWidth, float parentMaxHeight) {
     return node.isDirty() ||
         !FloatUtil.floatsEqual(
@@ -299,9 +303,10 @@ public class LayoutEngine {
       boolean isRowUndefined = !(!Float.isNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0) && !isResolvedRowDimDefined;
       boolean isColumnUndefined = !(!Float.isNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0) &&
         Float.isNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]);
+      boolean alwaysMeasure = isMeasureForced(node);
   
-      // Let's not measure the text if we already know both dimensions
-      if (isRowUndefined || isColumnUndefined) {
+      // Let's not measure the text if we already know both dimensions, unless we are forced to.
+      if (isRowUndefined || isColumnUndefined || alwaysMeasure) {
         MeasureOutput measureDim = node.measure(
           
           layoutContext.measureOutput,
@@ -310,11 +315,11 @@ public class LayoutEngine {
           height,
           heightMode
         );
-        if (isRowUndefined) {
+        if (isRowUndefined || alwaysMeasure) {
           node.layout.dimensions[DIMENSION_WIDTH] = measureDim.width +
             paddingAndBorderAxisResolvedRow;
         }
-        if (isColumnUndefined) {
+        if (isColumnUndefined || alwaysMeasure) {
           node.layout.dimensions[DIMENSION_HEIGHT] = measureDim.height +
             paddingAndBorderAxisColumn;
         }

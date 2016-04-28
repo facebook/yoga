@@ -4040,6 +4040,29 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      node_0->measure = measure;
+      node_0->is_measure_forced = true;
+      node_0->context = "measureWithRatio2";
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 200;
+    }
+
+    test("should layout node with fixed height and fixed width, use custom measure function if forced flag true", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->measure = measure;
       node_0->context = "measureWithRatio2";
     }

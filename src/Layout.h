@@ -142,6 +142,7 @@ struct css_node {
   css_layout_t layout;
   int children_count;
   int line_index;
+  bool is_measure_forced;
 
   css_node_t *next_absolute_child;
   css_node_t *next_flex_child;

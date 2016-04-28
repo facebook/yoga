@@ -1225,6 +1225,18 @@ describe('Layout', function() {
     );
   });
 
+  it('should layout node with fixed height and fixed width, use custom measure function if forced flag true', function() {
+    testLayoutAgainstExpectedOnly(
+      {style: {
+        measure: measureWithRatio2,
+        width: 100,
+        height: 100,
+        isMeasureForced: true
+      }},
+      {width: 100, height: 200, top: 0, left: 0}
+    );
+  });
+
   it('should layout node with no fixed dimension and custom measure function', function() {
     testLayoutAgainstExpectedOnly(
       {style: {

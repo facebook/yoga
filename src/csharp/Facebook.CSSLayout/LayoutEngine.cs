@@ -205,6 +205,10 @@ namespace Facebook.CSSLayout
             return node.IsMeasureDefined;
         }
 
+        static boolean isMeasureForced(CSSNode node) {
+            return node.IsMeasureForced;
+        }
+
         static boolean needsRelayout(CSSNode node, float parentMaxWidth, float parentMaxHeight)
         {
             return node.isDirty() ||
@@ -323,9 +327,10 @@ namespace Facebook.CSSLayout
         boolean isRowUndefined = !(!float.IsNaN(node.style.dimensions[dim[resolvedRowAxis]]) && node.style.dimensions[dim[resolvedRowAxis]] >= 0.0) && !isResolvedRowDimDefined;
         boolean isColumnUndefined = !(!float.IsNaN(node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]) && node.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0) &&
           float.IsNaN(node.layout.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]]);
+        boolean alwaysMeasure = isMeasureForced(node);
     
-        // Let's not measure the text if we already know both dimensions
-        if (isRowUndefined || isColumnUndefined) {
+        // Let's not measure the text if we already know both dimensions, unless we are forced to.
+        if (isRowUndefined || isColumnUndefined || alwaysMeasure) {
           MeasureOutput measureDim = node.measure(
             
             layoutContext.measureOutput,
@@ -334,11 +339,11 @@ namespace Facebook.CSSLayout
             height,
             heightMode
           );
-          if (isRowUndefined) {
+          if (isRowUndefined || alwaysMeasure) {
             node.layout.dimensions[DIMENSION_WIDTH] = measureDim.width +
               paddingAndBorderAxisResolvedRow;
           }
-          if (isColumnUndefined) {
+          if (isColumnUndefined || alwaysMeasure) {
             node.layout.dimensions[DIMENSION_HEIGHT] = measureDim.height +
               paddingAndBorderAxisColumn;
           }

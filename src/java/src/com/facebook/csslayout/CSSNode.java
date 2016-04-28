@@ -69,6 +69,7 @@ public class CSSNode {
   private @Nullable ArrayList<CSSNode> mChildren;
   private @Nullable CSSNode mParent;
   private @Nullable MeasureFunction mMeasureFunction = null;
+  private boolean mIsMeasureForced = false;
   private LayoutState mLayoutState = LayoutState.DIRTY;
 
   public int getChildCount() {
@@ -123,6 +124,20 @@ public class CSSNode {
 
   public boolean isMeasureDefined() {
     return mMeasureFunction != null;
+  }
+
+  /**
+   * @return whether the measure function should be unconditionally called or not, assuming it was set.
+   */
+  public boolean isMeasureForced() {
+    return mIsMeasureForced;
+  }
+
+  /**
+   * Whether the set measure function should be unconditionally called.
+   */
+  public void setMeasureForced(boolean isMeasureForced) {
+    mIsMeasureForced = isMeasureForced;
   }
 
   /*package*/ MeasureOutput measure(MeasureOutput measureOutput, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode) {
