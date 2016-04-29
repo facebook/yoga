@@ -7369,6 +7369,97 @@ public class LayoutEngineTest {
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.justifyContent = CSSJustify.CENTER;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 1000;
+        node_1.style.maxWidth = 600;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
+      addChildren(node_0, 1);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 200;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 600;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 1000;
+      }
+    }
+
+    test("should center flexible item with max size", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase169()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.ROW;
+      node_0.style.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.style.dimensions[DIMENSION_HEIGHT] = 1000;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.style.flex = 1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 1000;
+        node_1 = node_0.getChildAt(1);
+        node_1.style.flex = 1;
+        node_1.style.dimensions[DIMENSION_WIDTH] = 100;
+        node_1.style.dimensions[DIMENSION_HEIGHT] = 1000;
+        node_1.style.maxWidth = 200;
+      }
+    }
+
+    TestCSSNode root_layout = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_layout;
+      node_0.layout.position[POSITION_TOP] = 0;
+      node_0.layout.position[POSITION_LEFT] = 0;
+      node_0.layout.dimensions[DIMENSION_WIDTH] = 1000;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 1000;
+      addChildren(node_0, 2);
+      {
+        TestCSSNode node_1;
+        node_1 = node_0.getChildAt(0);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 0;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 800;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 1000;
+        node_1 = node_0.getChildAt(1);
+        node_1.layout.position[POSITION_TOP] = 0;
+        node_1.layout.position[POSITION_LEFT] = 800;
+        node_1.layout.dimensions[DIMENSION_WIDTH] = 200;
+        node_1.layout.dimensions[DIMENSION_HEIGHT] = 1000;
+      }
+    }
+
+    test("should correctly size flexible items with flex basis and a max width", root_node, root_layout);
+  }
+
+  @Test
+  public void testCase170()
+  {
+    TestCSSNode root_node = new TestCSSNode();
+    {
+      TestCSSNode node_0 = root_node;
       node_0.style.dimensions[DIMENSION_WIDTH] = 400;
       node_0.style.dimensions[DIMENSION_HEIGHT] = 400;
       addChildren(node_0, 1);
@@ -7430,7 +7521,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase169()
+  public void testCase171()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7502,7 +7593,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase170()
+  public void testCase172()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7564,7 +7655,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase171()
+  public void testCase173()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7658,7 +7749,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase172()
+  public void testCase174()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7739,7 +7830,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase173()
+  public void testCase175()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7779,7 +7870,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase174()
+  public void testCase176()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7819,7 +7910,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase175()
+  public void testCase177()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7859,7 +7950,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase176()
+  public void testCase178()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7897,7 +7988,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase177()
+  public void testCase179()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7936,7 +8027,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase178()
+  public void testCase180()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -7974,7 +8065,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase179()
+  public void testCase181()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8013,7 +8104,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase180()
+  public void testCase182()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8051,7 +8142,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase181()
+  public void testCase183()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8090,7 +8181,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase182()
+  public void testCase184()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8126,7 +8217,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase183()
+  public void testCase185()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8194,7 +8285,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase184()
+  public void testCase186()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8271,7 +8362,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase185()
+  public void testCase187()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8343,7 +8434,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase186()
+  public void testCase188()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8396,7 +8487,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase187()
+  public void testCase189()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8486,7 +8577,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase188()
+  public void testCase190()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8540,7 +8631,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase189()
+  public void testCase191()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8594,7 +8685,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase190()
+  public void testCase192()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8664,7 +8755,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase191()
+  public void testCase193()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8734,7 +8825,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase192()
+  public void testCase194()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8790,7 +8881,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase193()
+  public void testCase195()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8845,7 +8936,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase194()
+  public void testCase196()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8900,7 +8991,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase195()
+  public void testCase197()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -8971,7 +9062,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase196()
+  public void testCase198()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9042,7 +9133,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase197()
+  public void testCase199()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9099,7 +9190,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase198()
+  public void testCase200()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9155,7 +9246,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase199()
+  public void testCase201()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9211,7 +9302,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase200()
+  public void testCase202()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9283,7 +9374,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase201()
+  public void testCase203()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9355,7 +9446,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase202()
+  public void testCase204()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9414,7 +9505,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase203()
+  public void testCase205()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9487,7 +9578,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase204()
+  public void testCase206()
   {
     TestCSSNode root_node = new TestCSSNode();
     {
@@ -9561,7 +9652,7 @@ public class LayoutEngineTest {
   }
 
   @Test
-  public void testCase205()
+  public void testCase207()
   {
     TestCSSNode root_node = new TestCSSNode();
     {

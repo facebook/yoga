@@ -916,7 +916,8 @@ var computeLayout = (function() {
         remainingFreeSpace = -sizeConsumedOnCurrentLine;
       }
       
-      var/*float*/ remainingFreeSpaceAfterFlex = remainingFreeSpace;
+      var/*float*/ originalRemainingFreeSpace = remainingFreeSpace;
+      var/*float*/ deltaFreeSpace = 0;
 
       if (!canSkipFlex) {
         var/*float*/ childFlexBasis;
@@ -939,7 +940,6 @@ var computeLayout = (function() {
         // concerns because we know exactly how many passes it'll do.
               
         // First pass: detect the flex items whose min/max constraints trigger
-        var/*float*/ deltaFreeSpace = 0;
         var/*float*/ deltaFlexShrinkScaledFactors = 0;
         var/*float*/ deltaFlexGrowFactors = 0;
         currentRelativeChild = firstRelativeChild;
@@ -958,7 +958,7 @@ var computeLayout = (function() {
                 // By excluding this item's size and flex factor from remaining, this item's
                 // min/max constraints should also trigger in the second pass resulting in the
                 // item's size calculation being identical in the first and second passes.
-                deltaFreeSpace -= boundMainSize;
+                deltaFreeSpace -= boundMainSize - childFlexBasis;
                 deltaFlexShrinkScaledFactors -= flexShrinkScaledFactor;
               }
             }
@@ -974,7 +974,7 @@ var computeLayout = (function() {
                 // By excluding this item's size and flex factor from remaining, this item's
                 // min/max constraints should also trigger in the second pass resulting in the
                 // item's size calculation being identical in the first and second passes.
-                deltaFreeSpace -= boundMainSize;
+                deltaFreeSpace -= boundMainSize - childFlexBasis;
                 deltaFlexGrowFactors -= flexGrowFactor;
               }
             }
@@ -986,9 +986,9 @@ var computeLayout = (function() {
         totalFlexShrinkScaledFactors += deltaFlexShrinkScaledFactors;
         totalFlexGrowFactors += deltaFlexGrowFactors;
         remainingFreeSpace += deltaFreeSpace;
-        remainingFreeSpaceAfterFlex = remainingFreeSpace;
         
         // Second pass: resolve the sizes of the flexible items
+        deltaFreeSpace = 0;
         currentRelativeChild = firstRelativeChild;
         while (currentRelativeChild !== undefined) {
           childFlexBasis = currentRelativeChild.layout.flexBasis;
@@ -1012,7 +1012,7 @@ var computeLayout = (function() {
             }
           }
           
-          remainingFreeSpaceAfterFlex -= updatedMainSize - childFlexBasis;
+          deltaFreeSpace -= updatedMainSize - childFlexBasis;
           
           if (isMainAxisRow) {
             childWidth = updatedMainSize + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_ROW);
@@ -1048,7 +1048,7 @@ var computeLayout = (function() {
         }
       }
       
-      remainingFreeSpace = remainingFreeSpaceAfterFlex;
+      remainingFreeSpace = originalRemainingFreeSpace + deltaFreeSpace;
 
       // STEP 6: MAIN-AXIS JUSTIFICATION & CROSS-AXIS SIZE DETERMINATION
 

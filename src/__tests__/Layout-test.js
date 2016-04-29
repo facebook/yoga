@@ -2151,6 +2151,30 @@ describe('Layout', function() {
       ]}
     );
   });
+  
+  it('should center flexible item with max size', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'row', justifyContent: 'center'}, children: [
+        {style: {flex: 1, maxWidth: 600, height: 1000}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 600, height: 1000, top: 0, left: 200}
+      ]}
+    );
+  });
+  
+  it('should correctly size flexible items with flex basis and a max width', function() {
+    testLayout(
+      {style: {width: 1000, height: 1000, flexDirection: 'row'}, children: [
+        {style: {flex: 1, width: 100, height: 1000}},
+        {style: {flex: 1, width: 100, maxWidth: 200, height: 1000}}
+      ]},
+      {width: 1000, height: 1000, top: 0, left: 0, children: [
+        {width: 800, height: 1000, top: 0, left: 0},
+        {width: 200, height: 1000, top: 0, left: 800}
+      ]}
+    );
+  });
 
   xit('should layout node with a nested sibling child with width', function() {
     testLayout(

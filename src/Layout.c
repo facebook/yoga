@@ -966,7 +966,8 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
       remainingFreeSpace = -sizeConsumedOnCurrentLine;
     }
     
-    float remainingFreeSpaceAfterFlex = remainingFreeSpace;
+    float originalRemainingFreeSpace = remainingFreeSpace;
+    float deltaFreeSpace = 0;
 
     if (!canSkipFlex) {
       float childFlexBasis;
@@ -989,7 +990,6 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
       // concerns because we know exactly how many passes it'll do.
             
       // First pass: detect the flex items whose min/max constraints trigger
-      float deltaFreeSpace = 0;
       float deltaFlexShrinkScaledFactors = 0;
       float deltaFlexGrowFactors = 0;
       currentRelativeChild = firstRelativeChild;
@@ -1008,7 +1008,7 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
               // By excluding this item's size and flex factor from remaining, this item's
               // min/max constraints should also trigger in the second pass resulting in the
               // item's size calculation being identical in the first and second passes.
-              deltaFreeSpace -= boundMainSize;
+              deltaFreeSpace -= boundMainSize - childFlexBasis;
               deltaFlexShrinkScaledFactors -= flexShrinkScaledFactor;
             }
           }
@@ -1024,7 +1024,7 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
               // By excluding this item's size and flex factor from remaining, this item's
               // min/max constraints should also trigger in the second pass resulting in the
               // item's size calculation being identical in the first and second passes.
-              deltaFreeSpace -= boundMainSize;
+              deltaFreeSpace -= boundMainSize - childFlexBasis;
               deltaFlexGrowFactors -= flexGrowFactor;
             }
           }
@@ -1036,9 +1036,9 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
       totalFlexShrinkScaledFactors += deltaFlexShrinkScaledFactors;
       totalFlexGrowFactors += deltaFlexGrowFactors;
       remainingFreeSpace += deltaFreeSpace;
-      remainingFreeSpaceAfterFlex = remainingFreeSpace;
       
       // Second pass: resolve the sizes of the flexible items
+      deltaFreeSpace = 0;
       currentRelativeChild = firstRelativeChild;
       while (currentRelativeChild != NULL) {
         childFlexBasis = currentRelativeChild->layout.flex_basis;
@@ -1062,7 +1062,7 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
           }
         }
         
-        remainingFreeSpaceAfterFlex -= updatedMainSize - childFlexBasis;
+        deltaFreeSpace -= updatedMainSize - childFlexBasis;
         
         if (isMainAxisRow) {
           childWidth = updatedMainSize + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_ROW);
@@ -1098,7 +1098,7 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
       }
     }
     
-    remainingFreeSpace = remainingFreeSpaceAfterFlex;
+    remainingFreeSpace = originalRemainingFreeSpace + deltaFreeSpace;
 
     // STEP 6: MAIN-AXIS JUSTIFICATION & CROSS-AXIS SIZE DETERMINATION
 
