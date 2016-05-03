@@ -205,6 +205,15 @@ namespace Facebook.CSSLayout
             return node.IsMeasureDefined;
         }
 
+        static void resetChildrenLayout(CSSNode node)
+        {
+            var childCount_ = node.getChildCount();
+            for (int i_ = 0; i_ < childCount_; i_++)
+            {
+                node.getChildAt(i_).layout.resetResult();
+            }
+        }
+
         static boolean needsRelayout(CSSNode node, float parentMaxWidth, float parentMaxHeight)
         {
             return node.isDirty() ||
@@ -240,13 +249,6 @@ namespace Facebook.CSSLayout
 
         static void layoutNodeImpl(CSSLayoutContext layoutContext, CSSNode node, float parentMaxWidth, float parentMaxHeight, CSSDirection? parentDirection)
         {
-            var childCount_ = node.getChildCount();
-            for (int i_ = 0; i_ < childCount_; i_++)
-            {
-                node.getChildAt(i_).layout.resetResult();
-            }
-
-
             /** START_GENERATED **/
     
       CSSDirection direction = resolveDirection(node, parentDirection);
@@ -274,11 +276,11 @@ namespace Facebook.CSSLayout
     
       // Inline immutable values from the target node to avoid excessive method
       // invocations during the layout calculation.
-      int childCount = node.getChildCount();
       float paddingAndBorderAxisResolvedRow = ((node.style.padding.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis]) + node.style.border.getWithFallback(leadingSpacing[resolvedRowAxis], leading[resolvedRowAxis])) + (node.style.padding.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis]) + node.style.border.getWithFallback(trailingSpacing[resolvedRowAxis], trailing[resolvedRowAxis])));
       float paddingAndBorderAxisColumn = ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
+      boolean hasMeasureFunction = isMeasureDefined(node);
     
-      if (isMeasureDefined(node)) {
+      if (hasMeasureFunction) {
         boolean isResolvedRowDimDefined = (!float.IsNaN(node.layout.dimensions[dim[resolvedRowAxis]]) && node.layout.dimensions[dim[resolvedRowAxis]] >= 0.0);
     
         float width = CSSConstants.Undefined;
@@ -343,10 +345,16 @@ namespace Facebook.CSSLayout
               paddingAndBorderAxisColumn;
           }
         }
-        if (childCount == 0) {
-          return;
-        }
       }
+    
+      // The number of children might change during the measure() call.
+      // We can now safely operate on them getting the final count
+      // and resetting their layout.
+      int childCount = node.getChildCount();
+      if (childCount == 0 && hasMeasureFunction) {
+        return;
+      }
+      resetChildrenLayout(node);
     
       boolean isNodeFlexWrap = (node.style.flexWrap == CSSWrap.Wrap);
     
