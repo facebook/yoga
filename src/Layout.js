@@ -1431,6 +1431,38 @@ var computeLayout = (function() {
     }
   }
   
+  function canUseCachedMeasurement(availableWidth, availableHeight,
+    marginRow, marginColumn,
+    widthMeasureMode, heightMeasureMode,
+    cachedLayout) {
+
+    // Is it an exact match?
+    if (cachedLayout.availableWidth === availableWidth &&
+        cachedLayout.availableHeight === availableHeight &&
+        cachedLayout.widthMeasureMode === widthMeasureMode &&
+        cachedLayout.heightMeasureMode === heightMeasureMode) {
+      return true;
+    }
+    
+    // If the width is an exact match, try a fuzzy match on the height.
+    if (cachedLayout.availableWidth === availableWidth &&
+        cachedLayout.widthMeasureMode === widthMeasureMode &&
+        heightMeasureMode === CSS_MEASURE_MODE_EXACTLY &&
+        availableHeight - marginColumn === cachedLayout.computedHeight) {
+      return true;
+    }
+    
+    // If the height is an exact match, try a fuzzy match on the width.
+    if (cachedLayout.availableHeight === availableHeight &&
+        cachedLayout.heightMeasureMode === heightMeasureMode &&
+        widthMeasureMode === CSS_MEASURE_MODE_EXACTLY &&
+        availableWidth - marginRow === cachedLayout.computedWidth) {
+      return true;
+    }
+
+    return false;
+  }
+  
   //
   // This is a wrapper around the layoutNodeImpl function. It determines
   // whether the layout request is redundant and can be skipped.
@@ -1456,7 +1488,9 @@ var computeLayout = (function() {
         layout.cachedLayout.heightMeasureMode = undefined;
       }
     }
-
+    
+    var i;
+    var len;
     var cachedResults;
     
     // Determine whether the results are already cached. We maintain a separate
@@ -1464,7 +1498,28 @@ var computeLayout = (function() {
     // and dimensions for nodes in the subtree. The algorithm assumes that each node
     // gets layed out a maximum of one time per tree layout, but multiple measurements
     // may be required to resolve all of the flex dimensions.
-    if (performLayout) {
+    // We handle nodes with measure functions specially here because they are the most
+    // expensive to measure, so it's worth avoiding redundant measurements if at all possible.
+    if (isMeasureDefined(node)) {
+      var marginAxisRow = getMarginAxis(node, CSS_FLEX_DIRECTION_ROW);
+      var marginAxisColumn = getMarginAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+      
+      // First, try to use the layout cache.
+      if (layout.cachedLayout &&
+          canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+            widthMeasureMode, heightMeasureMode, layout.cachedLayout)) {
+        cachedResults = layout.cachedLayout;
+      } else if (layout.cachedMeasurements) {
+        // Try to use the measurement cache.
+        for (i = 0, len = layout.cachedMeasurements.length; i < len; i++) {
+          if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+              widthMeasureMode, heightMeasureMode, layout.cachedMeasurements[i])) {
+            cachedResults = layout.cachedMeasurements[i];
+            break;
+          }
+        }
+      }
+    } else if (performLayout) {
       if (layout.cachedLayout &&
           layout.cachedLayout.availableWidth === availableWidth &&
           layout.cachedLayout.availableHeight === availableHeight &&
@@ -1473,7 +1528,7 @@ var computeLayout = (function() {
         cachedResults = layout.cachedLayout;
       }
     } else if (layout.cachedMeasurements) {
-      for (var i = 0, len = layout.cachedMeasurements.length; i < len; i++) {
+      for (i = 0, len = layout.cachedMeasurements.length; i < len; i++) {
         if (layout.cachedMeasurements[i].availableWidth === availableWidth &&
             layout.cachedMeasurements[i].availableHeight === availableHeight &&
             layout.cachedMeasurements[i].widthMeasureMode === widthMeasureMode &&
@@ -1553,7 +1608,8 @@ var computeLayout = (function() {
   return {
     layoutNodeImpl: layoutNodeImpl,
     computeLayout: layoutNode,
-    fillNodes: fillNodes
+    fillNodes: fillNodes,
+    canUseCachedMeasurement: canUseCachedMeasurement
   };
 })();
 

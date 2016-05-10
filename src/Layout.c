@@ -1516,6 +1516,37 @@ static const char* getModeName(css_measure_mode_t mode, bool performLayout) {
   return performLayout? kLayoutModeNames[mode] : kMeasureModeNames[mode];
 }
 
+static bool canUseCachedMeasurement(float availableWidth, float availableHeight,
+  float marginRow, float marginColumn,
+  css_measure_mode_t widthMeasureMode, css_measure_mode_t heightMeasureMode,
+  css_cached_measurement_t cachedLayout) {
+
+  // Is it an exact match?
+  if (eq(cachedLayout.available_width, availableWidth) &&
+      eq(cachedLayout.available_height, availableHeight) &&
+      cachedLayout.width_measure_mode == widthMeasureMode &&
+      cachedLayout.height_measure_mode == heightMeasureMode) {
+    return true;
+  }
+  
+  // If the width is an exact match, try a fuzzy match on the height.
+  if (cachedLayout.width_measure_mode == widthMeasureMode &&
+      eq(cachedLayout.available_width, availableWidth) &&
+      heightMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
+      eq(availableHeight - marginColumn, cachedLayout.computed_height)) {
+    return true;
+  }
+  
+  // If the height is an exact match, try a fuzzy match on the width.
+  if (cachedLayout.height_measure_mode == heightMeasureMode &&
+      eq(cachedLayout.available_height, availableHeight) &&
+      widthMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
+      eq(availableWidth - marginRow, cachedLayout.computed_width)) {
+    return true;
+  }
+
+  return false;
+}
 
 //
 // This is a wrapper around the layoutNodeImpl function. It determines
@@ -1548,7 +1579,27 @@ bool layoutNodeInternal(css_node_t* node, float availableWidth, float availableH
   // and dimensions for nodes in the subtree. The algorithm assumes that each node
   // gets layed out a maximum of one time per tree layout, but multiple measurements
   // may be required to resolve all of the flex dimensions.
-  if (performLayout) {
+  // We handle nodes with measure functions specially here because they are the most
+  // expensive to measure, so it's worth avoiding redundant measurements if at all possible.
+  if (isMeasureDefined(node)) {
+    float marginAxisRow = getMarginAxis(node, CSS_FLEX_DIRECTION_ROW);
+    float marginAxisColumn = getMarginAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+    
+    // First, try to use the layout cache.
+    if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+        widthMeasureMode, heightMeasureMode, layout->cached_layout)) {
+      cachedResults = &layout->cached_layout;
+    } else {
+      // Try to use the measurement cache.
+      for (int i = 0; i < layout->next_cached_measurements_index; i++) {
+        if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+            widthMeasureMode, heightMeasureMode, layout->cached_measurements[i])) {
+          cachedResults = &layout->cached_measurements[i];
+          break;
+        }
+      }
+    }
+  } else if (performLayout) {
     if (eq(layout->cached_layout.available_width, availableWidth) &&
         eq(layout->cached_layout.available_height, availableHeight) &&
         layout->cached_layout.width_measure_mode == widthMeasureMode &&

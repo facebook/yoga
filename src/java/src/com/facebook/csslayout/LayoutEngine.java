@@ -250,6 +250,37 @@ public class LayoutEngine {
     }
   }
   
+  /*package*/ static boolean canUseCachedMeasurement(float availableWidth, float availableHeight,
+      float marginRow, float marginColumn,
+      CSSMeasureMode widthMeasureMode, CSSMeasureMode heightMeasureMode,
+      CSSCachedMeasurement cachedLayout) {
+    // Is it an exact match?
+    if (FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth) &&
+        FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight) &&
+        cachedLayout.widthMeasureMode == widthMeasureMode &&
+        cachedLayout.heightMeasureMode == heightMeasureMode) {
+      return true;
+    }
+      
+    // If the width is an exact match, try a fuzzy match on the height.
+    if (FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth) &&
+        cachedLayout.widthMeasureMode == widthMeasureMode &&
+        heightMeasureMode == CSSMeasureMode.EXACTLY &&
+        FloatUtil.floatsEqual(availableHeight - marginColumn, cachedLayout.computedHeight)) {
+      return true;
+    }
+    
+    // If the height is an exact match, try a fuzzy match on the width.
+    if (FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight) &&
+        cachedLayout.heightMeasureMode == heightMeasureMode &&
+        widthMeasureMode == CSSMeasureMode.EXACTLY &&
+        FloatUtil.floatsEqual(availableWidth - marginRow, cachedLayout.computedWidth)) {
+      return true;
+    }
+    
+    return false;
+  }
+  
   //
   // This is a wrapper around the layoutNodeImpl function. It determines
   // whether the layout request is redundant and can be skipped.
@@ -287,7 +318,31 @@ public class LayoutEngine {
     // and dimensions for nodes in the subtree. The algorithm assumes that each node
     // gets layed out a maximum of one time per tree layout, but multiple measurements
     // may be required to resolve all of the flex dimensions.
-    if (performLayout) {
+    // We handle nodes with measure functions specially here because they are the most
+    // expensive to measure, so it's worth avoiding redundant measurements if at all possible.
+    if (isMeasureDefined(node)) {
+      float marginAxisRow =
+        node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) +
+        node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]);
+      float marginAxisColumn =
+        node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) +
+        node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]); 
+      
+      // First, try to use the layout cache.
+      if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+          widthMeasureMode, heightMeasureMode, layout.cachedLayout)) {
+        cachedResults = layout.cachedLayout;
+      } else {
+        // Try to use the measurement cache.
+        for (int i = 0; i < layout.nextCachedMeasurementsIndex; i++) {
+          if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+              widthMeasureMode, heightMeasureMode, layout.cachedMeasurements[i])) {
+            cachedResults = layout.cachedMeasurements[i];
+            break;
+          }
+        }
+      }
+    } else if (performLayout) {
       if (FloatUtil.floatsEqual(layout.cachedLayout.availableWidth, availableWidth) &&
           FloatUtil.floatsEqual(layout.cachedLayout.availableHeight, availableHeight) &&
           layout.cachedLayout.widthMeasureMode == widthMeasureMode &&

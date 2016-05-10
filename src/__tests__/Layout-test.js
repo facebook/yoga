@@ -12,6 +12,7 @@ var testLayout = layoutTestUtils.testLayout;
 var testLayoutAgainstDomOnly = layoutTestUtils.testLayoutAgainstDomOnly;
 var testLayoutAgainstExpectedOnly = layoutTestUtils.testLayoutAgainstExpectedOnly;
 var testFillNodes = layoutTestUtils.testFillNodes;
+var testCanUseCachedMeasurement = layoutTestUtils.testCanUseCachedMeasurement;
 var text = layoutTestUtils.text;
 var texts = layoutTestUtils.texts;
 var textSizes = layoutTestUtils.textSizes;
@@ -38,6 +39,152 @@ describe('Javascript Only', function() {
       {layout: {width: 200}},
       {layout: {width: 200}, style: {}, children: []}
     );
+  });  
+  it('should only invoke measure function one time in simple layout', function() {
+    var measureInvocations = 0;
+    function measure(width, widthMode, height, heightMode) {
+      measureInvocations++;
+      return { width: 25, height: 25 };
+    }
+    
+    testLayoutAgainstExpectedOnly(
+      {style: {width: 100, height: 100}, children: [
+        {style: {measure: measure}}
+      ]},
+      {width: 100, height: 100, top: 0, left: 0, children: [
+        {width: 100, height: 25, top: 0, left: 0}
+      ]}
+    );
+    
+    expect(measureInvocations).toEqual(1);
+  });
+});
+
+describe('JavaScript Only: canUseCachedTextMeasurement', function() {
+  var measureModes = ['undefined', 'exactly', 'at-most'];
+  
+  var assertCanReuse = testCanUseCachedMeasurement.bind(null, true);
+  var assertCannotReuse = testCanUseCachedMeasurement.bind(null, false);
+  
+  it('should not reuse when width mode is "exactly" and available width != measurement', function() {
+    measureModes.forEach(function(widthMeasureMode) {
+      measureModes.forEach(function(heightMeasureMode) {
+        var computedWidth = 100;
+        var computedHeight = 200;
+        var availableWidth = widthMeasureMode === 'undefined' ? undefined : computedWidth;
+        var availableHeight = heightMeasureMode === 'undefined' ? undefined : computedHeight;
+        
+        var cacheEntry = {
+          availableWidth: availableWidth, widthMeasureMode: widthMeasureMode, computedWidth: computedWidth,
+          availableHeight: availableHeight, heightMeasureMode: heightMeasureMode, computedHeight: computedHeight
+        };
+        
+        assertCannotReuse(
+          {
+            availableWidth: computedWidth - 1, widthMeasureMode: 'exactly',
+            availableHeight: availableHeight, heightMeasureMode: heightMeasureMode
+          },
+          cacheEntry
+        );
+        
+        assertCannotReuse(
+          {
+            availableWidth: computedWidth + 1, widthMeasureMode: 'exactly',
+            availableHeight: availableHeight, heightMeasureMode: heightMeasureMode
+          },
+          cacheEntry
+        );
+      });
+    });
+  });
+  
+  it('should not reuse when height mode is "exactly" and available height != measurement', function() {
+    measureModes.forEach(function(widthMeasureMode) {
+      measureModes.forEach(function(heightMeasureMode) {
+        var computedWidth = 100;
+        var computedHeight = 200;
+        var availableWidth = widthMeasureMode === 'undefined' ? undefined : computedWidth;
+        var availableHeight = heightMeasureMode === 'undefined' ? undefined : computedHeight;
+        
+        var cacheEntry = {
+          availableWidth: availableWidth, widthMeasureMode: widthMeasureMode, computedWidth: computedWidth,
+          availableHeight: availableHeight, heightMeasureMode: heightMeasureMode, computedHeight: computedHeight
+        };
+        
+        assertCannotReuse(
+          {
+            availableWidth: availableWidth, widthMeasureMode: widthMeasureMode,
+            availableHeight: computedHeight - 1, heightMeasureMode: 'exactly'
+          },
+          cacheEntry
+        );
+        
+        assertCannotReuse(
+          {
+            availableWidth: availableWidth, widthMeasureMode: widthMeasureMode,
+            availableHeight: computedHeight + 1, heightMeasureMode: 'exactly'
+          },
+          cacheEntry
+        );
+      });
+    });
+  });
+  
+  it('should reuse exact matches', function() {
+    measureModes.forEach(function(widthMeasureMode) {
+      measureModes.forEach(function(heightMeasureMode) {
+        var availableWidth = widthMeasureMode === 'undefined' ? undefined : 100;
+        var availableHeight = heightMeasureMode === 'undefined' ? undefined : 200;
+        assertCanReuse(
+          {
+            availableWidth: availableWidth, widthMeasureMode: widthMeasureMode,
+            availableHeight: availableHeight, heightMeasureMode: heightMeasureMode
+          },
+          {
+            availableWidth: availableWidth, widthMeasureMode: widthMeasureMode, computedWidth: 1,
+            availableHeight: availableHeight, heightMeasureMode: heightMeasureMode, computedHeight: 2
+          }
+        );
+      });
+    });
+  });
+  
+  it('should reuse cache entry with unconstrained width when width mode is "exactly" and available width == measurement', function() {
+    measureModes.forEach(function(heightMeasureMode) {
+      var computedWidth = 100;
+      var computedHeight = 200;
+      var availableHeight = heightMeasureMode === 'undefined' ? undefined : computedHeight;
+      
+      assertCanReuse(
+        {
+          availableWidth: computedWidth, widthMeasureMode: 'exactly',
+          availableHeight: availableHeight, heightMeasureMode: heightMeasureMode
+        },
+        {
+          availableWidth: undefined, widthMeasureMode: 'undefined', computedWidth: computedWidth,
+          availableHeight: availableHeight, heightMeasureMode: heightMeasureMode, computedHeight: computedHeight
+        }
+      );
+    });
+  });
+    
+  it('should reuse cache entry with unconstrained height when height mode is "exactly" and height == measurement', function() {
+    measureModes.forEach(function(widthMeasureMode) {
+      var computedWidth = 100;
+      var computedHeight = 200;
+      var availableWidth = widthMeasureMode === 'undefined' ? undefined : computedWidth;
+        
+      assertCanReuse(
+        {
+          availableWidth: availableWidth, widthMeasureMode: widthMeasureMode,
+          availableHeight: computedHeight, heightMeasureMode: 'exactly'
+        },
+        {
+          availableWidth: availableWidth, widthMeasureMode: widthMeasureMode, computedWidth: computedWidth,
+          availableHeight: undefined, heightMeasureMode: 'undefined', computedHeight: computedHeight
+        }
+      );
+    });
   });
 });
 

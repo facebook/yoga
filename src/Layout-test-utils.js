@@ -116,6 +116,7 @@ var layoutTestUtils = (function() {
   if (typeof computeLayout === 'object') {
     var fillNodes = computeLayout.fillNodes;
     var realComputeLayout = computeLayout.computeLayout;
+    var canUseCachedMeasurement = computeLayout.canUseCachedMeasurement;
   }
 
   function extractNodes(node) {
@@ -324,6 +325,22 @@ var layoutTestUtils = (function() {
   function testExtractNodes(node, extractedNode) {
     expect(extractNodes(node)).toEqual(extractedNode);
   }
+  
+  function testCanUseCachedMeasurement(canReuse, spec, cacheEntry) {
+    var availableWidth = spec.availableWidth;
+    var availableHeight = spec.availableHeight;
+    var widthMeasureMode = spec.widthMeasureMode;
+    var heightMeasureMode = spec.heightMeasureMode;
+    
+    expect(
+      canUseCachedMeasurement(
+        availableWidth, availableHeight,
+        0, 0,
+        widthMeasureMode, heightMeasureMode,
+        cacheEntry
+      )
+    ).toEqual(canReuse);
+  }
 
   function testNamedLayout(name, layoutA, layoutB) {
     expect(nameLayout(name, layoutA))
@@ -504,6 +521,7 @@ var layoutTestUtils = (function() {
     },
     testFillNodes: testFillNodes,
     testExtractNodes: testExtractNodes,
+    testCanUseCachedMeasurement: testCanUseCachedMeasurement,
     testRandomLayout: function(node) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);
