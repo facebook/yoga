@@ -562,9 +562,9 @@ namespace Facebook.CSSLayout
           // Don't bother sizing the text if both dimensions are already defined.
           node.layout.measuredDimensions[DIMENSION_WIDTH] = boundAxis(node, CSS_FLEX_DIRECTION_ROW, availableWidth - marginAxisRow);
           node.layout.measuredDimensions[DIMENSION_HEIGHT] = boundAxis(node, CSS_FLEX_DIRECTION_COLUMN, availableHeight - marginAxisColumn);
-        } else if (innerWidth <= 0) {
+        } else if (innerWidth <= 0 || innerHeight <= 0) {
     
-          // Don't bother sizing the text if there's no horizontal space.
+          // Don't bother sizing the text if there's no horizontal or vertical space.
           node.layout.measuredDimensions[DIMENSION_WIDTH] = boundAxis(node, CSS_FLEX_DIRECTION_ROW, 0);
           node.layout.measuredDimensions[DIMENSION_HEIGHT] = boundAxis(node, CSS_FLEX_DIRECTION_COLUMN, 0);
         } else {

@@ -678,9 +678,9 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
       // Don't bother sizing the text if both dimensions are already defined.
       node->layout.measured_dimensions[CSS_WIDTH] = boundAxis(node, CSS_FLEX_DIRECTION_ROW, availableWidth - marginAxisRow);
       node->layout.measured_dimensions[CSS_HEIGHT] = boundAxis(node, CSS_FLEX_DIRECTION_COLUMN, availableHeight - marginAxisColumn);
-    } else if (innerWidth <= 0) {
+    } else if (innerWidth <= 0 || innerHeight <= 0) {
 
-      // Don't bother sizing the text if there's no horizontal space.
+      // Don't bother sizing the text if there's no horizontal or vertical space.
       node->layout.measured_dimensions[CSS_WIDTH] = boundAxis(node, CSS_FLEX_DIRECTION_ROW, 0);
       node->layout.measured_dimensions[CSS_HEIGHT] = boundAxis(node, CSS_FLEX_DIRECTION_COLUMN, 0);
     } else {
