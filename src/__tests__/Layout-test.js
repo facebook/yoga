@@ -9,6 +9,7 @@
 /* globals layoutTestUtils */
 
 var testLayout = layoutTestUtils.testLayout;
+var testLayoutTwoPasses = layoutTestUtils.testLayoutTwoPasses;
 var testLayoutAgainstDomOnly = layoutTestUtils.testLayoutAgainstDomOnly;
 var testLayoutAgainstExpectedOnly = layoutTestUtils.testLayoutAgainstExpectedOnly;
 var testFillNodes = layoutTestUtils.testFillNodes;
@@ -1176,6 +1177,19 @@ describe('Layout', function() {
 
   it('should layout node with multiple flex and padding in rtl', function() {
     testLayout(
+      {style: {width: 700, direction: 'rtl', flexDirection: 'row'}, children: [
+        {style: {flex: 1}},
+        {style: {paddingLeft: 5, flex: 1}}
+      ]},
+      {width: 700, height: 0, top: 0, left: 0, children: [
+        {width: 347.5, height: 0, top: 0, left: 352.5},
+        {width: 352.5, height: 0, top: 0, left: 0}
+      ]}
+    );
+  });
+
+  it('should persist layout of rtl node in subsequent renders', function() {
+    testLayoutTwoPasses(
       {style: {width: 700, direction: 'rtl', flexDirection: 'row'}, children: [
         {style: {flex: 1}},
         {style: {paddingLeft: 5, flex: 1}}

@@ -1728,3 +1728,11 @@ void layoutNode(css_node_t* node, float availableWidth, float availableHeight, c
     }
   }
 }
+
+void resetNodeLayout(css_node_t *node) {
+  node->layout.dimensions[CSS_WIDTH] = CSS_UNDEFINED;
+  node->layout.dimensions[CSS_HEIGHT] = CSS_UNDEFINED;
+  node->layout.position[CSS_LEFT] = 0;
+  node->layout.position[CSS_TOP] = 0;
+  node->layout.position[CSS_RIGHT] = 0;
+}

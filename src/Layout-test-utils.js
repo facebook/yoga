@@ -506,6 +506,17 @@ var layoutTestUtils = (function() {
       testNamedLayout('expected-dom', expectedLayout, domLayout);
       testNamedLayout('layout-dom', layout, domLayout);
     },
+    testLayoutTwoPasses: function(node, expectedLayout) {
+      var layout = computeCSSLayout(node);
+      node.isDirty = true;
+      layout = computeCSSLayout(node);
+      var domLayout = computeDOMLayout(node);
+      inplaceRoundNumbersInObject(layout);
+      inplaceRoundNumbersInObject(domLayout);
+      inplaceRoundNumbersInObject(expectedLayout);
+      testNamedLayout('expected-dom', expectedLayout, domLayout);
+      testNamedLayout('layout-dom', layout, domLayout);
+    },
     testLayoutAgainstDomOnly: function(node) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);

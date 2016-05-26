@@ -21,6 +21,9 @@ global.layoutTestUtils = {
   testLayout: function(node, expectedLayout) {
     allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout});
   },
+  testLayoutTwoPasses: function(node, expectedLayout) {
+    allTests.push({name: currentTest, node: node, expectedLayout: expectedLayout, twoPasses: true});
+  },
   testLayoutAgainstDomOnly: function() {
   },
   testRandomLayout: function(node, i) {
@@ -249,6 +252,10 @@ function printLayout(test) {
   level--;
   add('}');
   add('');
+  
+  if (test.twoPasses) {
+    add('layoutNode(root_node, CSS_UNDEFINED, CSS_UNDEFINED, CSS_DIRECTION_LTR);');
+  }
 
   // Do the test
   add('test("' + test.name.replace(/"/g, '\\"') + '", root_node, root_layout);');

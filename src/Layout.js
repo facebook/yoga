@@ -1597,6 +1597,15 @@ var computeLayout = (function() {
       availableHeight = node.style.height + getMarginAxis(node, CSS_FLEX_DIRECTION_COLUMN);
     }
 
+    // Reset child layouts
+    node.children.forEach(function(child) {
+      child.layout.width = undefined;
+      child.layout.height = undefined;
+      child.layout.top = 0;
+      child.layout.left = 0;
+      child.layout.right = 0;
+    });
+
     var widthMeasureMode = isUndefined(availableWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_EXACTLY;
     var heightMeasureMode = isUndefined(availableHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_EXACTLY;
 
