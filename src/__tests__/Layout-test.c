@@ -4070,6 +4070,7 @@ int main()
         node_1->context = "measureWithRatio2";
         node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.overflow = CSS_OVERFLOW_HIDDEN;
         node_1->style.dimensions[CSS_HEIGHT] = 100;
         init_css_node_children(node_1, 2);
         {
@@ -4503,7 +4504,7 @@ int main()
         node_1 = node_0->get_child(node_0->context, 0);
         node_1->layout.position[CSS_TOP] = 20;
         node_1->layout.position[CSS_LEFT] = 20;
-        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
         node_1->layout.dimensions[CSS_HEIGHT] = 36;
         init_css_node_children(node_1, 1);
         {
@@ -6926,6 +6927,93 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.justify_content = CSS_JUSTIFY_CENTER;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.dimensions[CSS_HEIGHT] = 1000;
+        node_1->style.maxDimensions[CSS_WIDTH] = 600;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 200;
+        node_1->layout.dimensions[CSS_WIDTH] = 600;
+        node_1->layout.dimensions[CSS_HEIGHT] = 1000;
+      }
+    }
+
+    test("should center flexible item with max size", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 1000;
+      node_0->style.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = 1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 1000;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = 1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 1000;
+        node_1->style.maxDimensions[CSS_WIDTH] = 200;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 1000;
+      node_0->layout.dimensions[CSS_HEIGHT] = 1000;
+      init_css_node_children(node_0, 2);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 800;
+        node_1->layout.dimensions[CSS_HEIGHT] = 1000;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 800;
+        node_1->layout.dimensions[CSS_WIDTH] = 200;
+        node_1->layout.dimensions[CSS_HEIGHT] = 1000;
+      }
+    }
+
+    test("should correctly size flexible items with flex basis and a max width", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
       node_0->style.dimensions[CSS_WIDTH] = 400;
       node_0->style.dimensions[CSS_HEIGHT] = 400;
       init_css_node_children(node_0, 1);
@@ -8002,6 +8090,1047 @@ int main()
     }
 
     test("should center items correctly inside a stretched layout", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 100;
+          node_2->style.dimensions[CSS_HEIGHT] = 25;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 25;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 100;
+          node_2->layout.dimensions[CSS_HEIGHT] = 25;
+        }
+      }
+    }
+
+    test("should not shrink column node when there is space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 100;
+          node_2->style.dimensions[CSS_HEIGHT] = 200;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 100;
+          node_2->layout.dimensions[CSS_HEIGHT] = 200;
+        }
+      }
+    }
+
+    test("should shrink column node when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 25;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 100;
+          node_2->style.dimensions[CSS_HEIGHT] = 30;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 15;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 25;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 25;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 30;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 100;
+          node_2->layout.dimensions[CSS_HEIGHT] = 30;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 55;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 15;
+      }
+    }
+
+    test("should not shrink column node with siblings when there is space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 25;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 100;
+          node_2->style.dimensions[CSS_HEIGHT] = 80;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 15;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 25;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 25;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 60;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 100;
+          node_2->layout.dimensions[CSS_HEIGHT] = 80;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 85;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 15;
+      }
+    }
+
+    test("should shrink column node with siblings when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 30;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 40;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 100;
+        node_1->style.dimensions[CSS_HEIGHT] = 50;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 22.5;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 22.5;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 40;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 62.5;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 37.5;
+      }
+    }
+
+    test("should shrink column nodes proportional to their main size when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 25;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 25;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 25;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should not shrink visible row node when there is space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 200;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 200;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should shrink visible row node when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 25;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 30;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 15;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 25;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 25;
+        node_1->layout.dimensions[CSS_WIDTH] = 30;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 30;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 55;
+        node_1->layout.dimensions[CSS_WIDTH] = 15;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should not shrink visible row node with siblings when there is space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 25;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 80;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 15;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 25;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 25;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 80;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 85;
+        node_1->layout.dimensions[CSS_WIDTH] = 15;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink visible row node with siblings when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 30;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 40;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 50;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 22.5;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 22.5;
+        node_1->layout.dimensions[CSS_WIDTH] = 40;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 62.5;
+        node_1->layout.dimensions[CSS_WIDTH] = 37.5;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink visible row nodes when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.overflow = CSS_OVERFLOW_HIDDEN;
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 25;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 25;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 25;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should not shrink hidden row node when there is space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.overflow = CSS_OVERFLOW_HIDDEN;
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 200;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 1);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 200;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+      }
+    }
+
+    test("should shrink hidden row node when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 25;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.overflow = CSS_OVERFLOW_HIDDEN;
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 30;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 15;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 25;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 25;
+        node_1->layout.dimensions[CSS_WIDTH] = 30;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 30;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 55;
+        node_1->layout.dimensions[CSS_WIDTH] = 15;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should not shrink hidden row node with siblings when there is space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 25;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.overflow = CSS_OVERFLOW_HIDDEN;
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.dimensions[CSS_WIDTH] = 80;
+          node_2->style.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 15;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 25;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 25;
+        node_1->layout.dimensions[CSS_WIDTH] = 60;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 80;
+          node_2->layout.dimensions[CSS_HEIGHT] = 100;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 85;
+        node_1->layout.dimensions[CSS_WIDTH] = 15;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink hidden row node with siblings when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 100;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.overflow = CSS_OVERFLOW_HIDDEN;
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 30;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.dimensions[CSS_WIDTH] = 40;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.overflow = CSS_OVERFLOW_HIDDEN;
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_WIDTH] = 50;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 100;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 22.5;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 22.5;
+        node_1->layout.dimensions[CSS_WIDTH] = 40;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 62.5;
+        node_1->layout.dimensions[CSS_WIDTH] = 37.5;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink hidden row nodes proportional to their main size when there is not any space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 213;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 25;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.align_items = CSS_ALIGN_FLEX_START;
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->measure = measure;
+          node_2->context = "loooooooooong with space";
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 15;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 213;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 25;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 25;
+        node_1->layout.dimensions[CSS_WIDTH] = 172;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 172;
+          node_2->layout.dimensions[CSS_HEIGHT] = 18;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 197;
+        node_1->layout.dimensions[CSS_WIDTH] = 15;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should not shrink text node with siblings when there is space left over", root_node, root_layout);
+  }
+
+  {
+    css_node_t *root_node = new_test_css_node();
+    {
+      css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+      node_0->style.dimensions[CSS_WIDTH] = 140;
+      node_0->style.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->style.dimensions[CSS_WIDTH] = 25;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
+        node_1->style.align_items = CSS_ALIGN_FLEX_START;
+        node_1->style.flex = -1;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->style.flex = -1;
+          node_2->measure = measure;
+          node_2->context = "loooooooooong with space";
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->style.dimensions[CSS_WIDTH] = 15;
+        node_1->style.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    css_node_t *root_layout = new_test_css_node();
+    {
+      css_node_t *node_0 = root_layout;
+      node_0->layout.position[CSS_TOP] = 0;
+      node_0->layout.position[CSS_LEFT] = 0;
+      node_0->layout.dimensions[CSS_WIDTH] = 140;
+      node_0->layout.dimensions[CSS_HEIGHT] = 100;
+      init_css_node_children(node_0, 3);
+      {
+        css_node_t *node_1;
+        node_1 = node_0->get_child(node_0->context, 0);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 0;
+        node_1->layout.dimensions[CSS_WIDTH] = 25;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        node_1 = node_0->get_child(node_0->context, 1);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 25;
+        node_1->layout.dimensions[CSS_WIDTH] = 100;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+        init_css_node_children(node_1, 1);
+        {
+          css_node_t *node_2;
+          node_2 = node_1->get_child(node_1->context, 0);
+          node_2->layout.position[CSS_TOP] = 0;
+          node_2->layout.position[CSS_LEFT] = 0;
+          node_2->layout.dimensions[CSS_WIDTH] = 100;
+          node_2->layout.dimensions[CSS_HEIGHT] = 36;
+        }
+        node_1 = node_0->get_child(node_0->context, 2);
+        node_1->layout.position[CSS_TOP] = 0;
+        node_1->layout.position[CSS_LEFT] = 125;
+        node_1->layout.dimensions[CSS_WIDTH] = 15;
+        node_1->layout.dimensions[CSS_HEIGHT] = 100;
+      }
+    }
+
+    test("should shrink text node with siblings when there is not any space left over", root_node, root_layout);
   }
 
   {

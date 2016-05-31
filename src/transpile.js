@@ -39,8 +39,7 @@ global.layoutTestUtils = {
 };
 
 global.describe = function(name, cb) {
-  if (name === 'Layout' ||
-      name === 'Layout alignContent') {
+  if (name.toLowerCase().indexOf('javascript only') === -1) {
     cb();
   }
 };
@@ -175,6 +174,10 @@ function printLayout(test) {
       'exactly': 'CSS_MEASURE_MODE_EXACTLY',
       'at-most': 'CSS_MEASURE_MODE_AT_MOST'
     });
+    addEnum(node, 'overflow', 'overflow', {
+      'visible': 'CSS_OVERFLOW_VISIBLE',
+      'hidden': 'CSS_OVERFLOW_HIDDEN'
+    });
     addFloat(node, 'flex', 'flex');
     addFloat(node, 'width', 'dimensions[CSS_WIDTH]');
     addFloat(node, 'height', 'dimensions[CSS_HEIGHT]');
@@ -256,8 +259,13 @@ function printLayout(test) {
 
 function transpileAnnotatedJStoC(jsCode) {
   return jsCode
+    .replace(/'abs-layout'/g, '"abs-layout"')
+    .replace(/'abs-measure'/g, '"abs-measure"')
+    .replace(/'flex'/g, '"flex"')
+    .replace(/'measure'/g, '"measure"')
+    .replace(/'stretch'/g, '"stretch"')
     .replace('node.style.measure', 'node.measure')
-    .replace(/null/g, 'NULL')
+    .replace(/undefined/g, 'NULL')
     .replace(/\.children\.length/g, '.children_count')
     .replace(/\.width/g, '.dimensions[CSS_WIDTH]')
     .replace(/\.height/g, '.dimensions[CSS_HEIGHT]')
@@ -266,23 +274,30 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/\.minWidth/g, '.minDimensions[CSS_WIDTH]')
     .replace(/\.minHeight/g, '.minDimensions[CSS_HEIGHT]')
     .replace(/\.lineIndex/g, '.line_index')
-    .replace(/\.nextAbsoluteChild/g, '.next_absolute_child')
-    .replace(/\.nextFlexChild/g, '.next_flex_child')
-    .replace(/layout\[dim/g, 'layout.dimensions[dim')
+    .replace(/\.nextChild/g, '.next_child')
+    .replace(/\.flexBasis/g, '.flex_basis')
     .replace(/layout\[pos/g, 'layout.position[pos')
     .replace(/layout\[leading/g, 'layout.position[leading')
     .replace(/layout\[trailing/g, 'layout.position[trailing')
+    .replace(/layout\[measuredDim/g, 'layout.measured_dimensions[dim')
+    .replace(/layout\.measuredWidth/g, 'layout.measured_dimensions[CSS_WIDTH]')
+    .replace(/layout\.measuredHeight/g, 'layout.measured_dimensions[CSS_HEIGHT]')
     .replace(/style\[dim/g, 'style.dimensions[dim')
+    .replace(/style\[CSS_LEFT/g, 'style.position[CSS_LEFT')
+    .replace(/style\[CSS_TOP/g, 'style.position[CSS_TOP')
+    .replace(/style\[CSS_RIGHT/g, 'style.position[CSS_RIGHT')
+    .replace(/style\[CSS_BOTTOM/g, 'style.position[CSS_BOTTOM')
     .replace(/node.children\[i\]/g, 'node->get_child(node->context, i)')
-    .replace(/node.children\[ii\]/g, 'node->get_child(node->context, ii)')
+    .replace(/node.children\[j\]/g, 'node->get_child(node->context, j)')
     .replace(/node\./g, 'node->')
     .replace(/child\./g, 'child->')
-    .replace(/parent\./g, 'parent->')
     .replace(/currentAbsoluteChild\./g, 'currentAbsoluteChild->')
-    .replace(/currentFlexChild\./g, 'currentFlexChild->')
+    .replace(/currentRelativeChild\./g, 'currentRelativeChild->')
     .replace(/getPositionType\((.+?)\)/g, '$1->style.position_type')
     .replace(/getJustifyContent\((.+?)\)/g, '$1->style.justify_content')
     .replace(/getAlignContent\((.+?)\)/g, '$1->style.align_content')
+    .replace(/assert\((.+?),\s*'(.+?)'\);/g, 'assert($1); // $2')
+    .replace(/getOverflow\((.+?)\)/g, '$1->style.overflow')
     .replace(/var\/\*\(c\)!([^*]+)\*\//g, '$1')
     .replace(/var\/\*([^\/]+)\*\//g, '$1')
     .replace(/ === /g, ' == ')
@@ -290,8 +305,7 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/\n {2}/g, '\n')
     .replace(/\/\*\(c\)!([^*]+)\*\//g, '$1')
     .replace(/\/[*]!([^*]+)[*]\//g, '$1')
-    .replace(/\/\*\(java\)!([^*]+)\*\//g, '')
-    .split('\n').slice(1, -1).join('\n');
+    .replace(/\/\*\(java\)!([^*]+)\*\//g, '');
 }
 
 function makeConstDefs() {
@@ -318,14 +332,18 @@ function generateFile(fileName, generatedContent) {
   fs.writeFileSync(fileName, content);
 }
 
+// Extract the function body by trimming the first ('function layoutNode(...) {') and
+// last ('}') lines. Also, start the function body with a blank line so that regexes
+// that use \n to match the start of a line will match the actual first line.
+var computeLayoutCode = [''].concat(computeLayout.toString().split('\n').slice(1, -1)).join('\n');
 
 var allTestsInC = allTests.map(printLayout);
 generateFile(__dirname + '/__tests__/Layout-test.c', allTestsInC.join('\n\n'));
 generateFile(__dirname + '/Layout-test-utils.c', makeConstDefs());
-generateFile(__dirname + '/Layout.c', transpileAnnotatedJStoC(computeLayout.toString()));
-generateFile(__dirname + '/java/src/com/facebook/csslayout/LayoutEngine.java', JavaTranspiler.transpileLayoutEngine(computeLayout.toString()));
+generateFile(__dirname + '/Layout.c', transpileAnnotatedJStoC(computeLayoutCode));
+generateFile(__dirname + '/java/src/com/facebook/csslayout/LayoutEngine.java', JavaTranspiler.transpileLayoutEngine(computeLayoutCode));
 generateFile(__dirname + '/java/tests/com/facebook/csslayout/TestConstants.java', JavaTranspiler.transpileCConstDefs(makeConstDefs()));
 generateFile(__dirname + '/java/tests/com/facebook/csslayout/LayoutEngineTest.java', JavaTranspiler.transpileCTestsArray(allTestsInC));
-generateFile(__dirname + '/csharp/Facebook.CSSLayout/LayoutEngine.cs', CSharpTranspiler.transpileLayoutEngine(computeLayout.toString()));
+generateFile(__dirname + '/csharp/Facebook.CSSLayout/LayoutEngine.cs', CSharpTranspiler.transpileLayoutEngine(computeLayoutCode));
 generateFile(__dirname + '/csharp/Facebook.CSSLayout.Tests/TestConstants.cs', CSharpTranspiler.transpileCConstDefs(makeConstDefs()));
 generateFile(__dirname + '/csharp/Facebook.CSSLayout.Tests/LayoutEngineTest.cs', CSharpTranspiler.transpileCTestsArray(allTestsInC));

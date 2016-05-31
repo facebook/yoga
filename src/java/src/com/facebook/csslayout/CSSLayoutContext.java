@@ -17,4 +17,5 @@ package com.facebook.csslayout;
  */
 public class CSSLayoutContext {
   /*package*/ final MeasureOutput measureOutput = new MeasureOutput();
+  int currentGenerationCount;
 }

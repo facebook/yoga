@@ -9,10 +9,9 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSMeasureMode
+    public enum CSSOverflow
     {
-        Undefined,
-        Exactly,
-        AtMost,
+        Visible,
+        Hidden
     }
 }

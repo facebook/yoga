@@ -92,6 +92,7 @@ var layoutTestUtils = (function() {
 
           margin: 0;
           padding: 0;
+          min-width: 0;
         }
 
         hack to ignore three hundred px width of the body {}
@@ -115,20 +116,28 @@ var layoutTestUtils = (function() {
   if (typeof computeLayout === 'object') {
     var fillNodes = computeLayout.fillNodes;
     var realComputeLayout = computeLayout.computeLayout;
+    var canUseCachedMeasurement = computeLayout.canUseCachedMeasurement;
   }
 
   function extractNodes(node) {
-    var layout = node.layout;
-    delete node.layout;
+    var keysToCopy = [
+      'width',
+      'height',
+      'left',
+      'top'
+    ];
+    var layout = {};
+    keysToCopy.forEach(function(key) {
+      layout[key] = node.layout[key];
+    });
+    
     if (node.children && node.children.length > 0) {
       layout.children = node.children.map(extractNodes);
     } else {
       delete node.children;
     }
-
-    delete layout.right;
-    delete layout.bottom;
-    delete layout.direction;
+    
+    delete node.layout;
 
     return layout;
   }
@@ -183,13 +192,17 @@ var layoutTestUtils = (function() {
 
   function computeDOMLayout(node) {
     var body = getIframe().contentDocument.body;
-
+    
+    function setStyle(div, name, value) {
+      div.style['-webkit-' + name] = value;
+      div.style['webkit' + capitalizeFirst(name)] = value;
+      div.style[name] = value;
+    }
+    
     function transfer(div, node, name, ext) {
       if (name in node.style) {
         var value = node.style[name] + (ext || '');
-        div.style['-webkit-' + name] = value;
-        div.style['webkit' + capitalizeFirst(name)] = value;
-        div.style[name] = value;
+        setStyle(div, name, value);
       }
     }
 
@@ -202,7 +215,19 @@ var layoutTestUtils = (function() {
       transfer(div, node, type + 'Start' + suffix, 'px');
       transfer(div, node, type + 'End' + suffix, 'px');
     }
-
+    
+    function transferFlex(div, node) {
+      if ('flex' in node.style) {
+        var flex = node.style.flex;
+        var resolvedFlex = (
+          flex < 0 ? '0 1 auto' :
+          flex > 0 ? (flex + ' 0 0') :
+          '0 0 auto'
+        );
+        setStyle(div, 'flex', resolvedFlex);
+      }
+    }
+    
     function renderNode(parent, node) {
       var div = document.createElement('div');
       transfer(div, node, 'width', 'px');
@@ -220,13 +245,14 @@ var layoutTestUtils = (function() {
       transferSpacing(div, node, 'border', 'Width');
       transfer(div, node, 'flexDirection');
       transfer(div, node, 'direction');
-      transfer(div, node, 'flex');
+      transferFlex(div, node);
       transfer(div, node, 'flexWrap');
       transfer(div, node, 'justifyContent');
       transfer(div, node, 'alignSelf');
       transfer(div, node, 'alignItems');
       transfer(div, node, 'alignContent');
       transfer(div, node, 'position');
+      transfer(div, node, 'overflow');
       parent.appendChild(div);
       (node.children || []).forEach(function(child) {
         renderNode(div, child);
@@ -298,6 +324,22 @@ var layoutTestUtils = (function() {
 
   function testExtractNodes(node, extractedNode) {
     expect(extractNodes(node)).toEqual(extractedNode);
+  }
+  
+  function testCanUseCachedMeasurement(canReuse, spec, cacheEntry) {
+    var availableWidth = spec.availableWidth;
+    var availableHeight = spec.availableHeight;
+    var widthMeasureMode = spec.widthMeasureMode;
+    var heightMeasureMode = spec.heightMeasureMode;
+    
+    expect(
+      canUseCachedMeasurement(
+        availableWidth, availableHeight,
+        0, 0,
+        widthMeasureMode, heightMeasureMode,
+        cacheEntry
+      )
+    ).toEqual(canReuse);
   }
 
   function testNamedLayout(name, layoutA, layoutB) {
@@ -479,6 +521,7 @@ var layoutTestUtils = (function() {
     },
     testFillNodes: testFillNodes,
     testExtractNodes: testExtractNodes,
+    testCanUseCachedMeasurement: testCanUseCachedMeasurement,
     testRandomLayout: function(node) {
       var layout = computeCSSLayout(node);
       var domLayout = computeDOMLayout(node);

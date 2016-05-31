@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
  *
@@ -6,13 +6,9 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
+package com.facebook.csslayout;
 
-namespace Facebook.CSSLayout
-{
-    public enum CSSMeasureMode
-    {
-        Undefined,
-        Exactly,
-        AtMost,
-    }
+public enum CSSOverflow {
+  VISIBLE,
+  HIDDEN,
 }

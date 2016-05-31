@@ -92,10 +92,19 @@ borderWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderBottomWidt
 flexDirection | 'column', 'row'
 justifyContent | 'flex-start', 'center', 'flex-end', 'space-between', 'space-around'
 alignItems, alignSelf | 'flex-start', 'center', 'flex-end', 'stretch'
-flex | positive number
+flex | number
 flexWrap | 'wrap', 'nowrap'
 position | 'relative', 'absolute'
+overflow | 'visible', 'hidden'
 
+- Rather than allowing arbitrary combinations of `flex-grow`, `flex-shrink`, and `flex-basis` the implementation only supports a few common combinations expressed as a single number using the `flex` attribute:
+
+  css-layout `flex` value | W3C `flex` short-hand equivalent
+  ---|---
+  n (where n > 0) | n 0 0
+  0 | 0 0 auto
+  -1 | 0 1 auto
+  
 - `inherit` value is not implemented because it's a way to disambiguate between multiple colliding rules. This should be done in a pre-processing step, not in the actual layout algorithm.
 
 
@@ -118,6 +127,7 @@ div, span {
   border: 0 solid black;
   margin: 0;
   padding: 0;
+  min-width: 0;
 }
 ```
 

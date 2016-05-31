@@ -41,14 +41,16 @@
     <Compile Include="Assertions.cs" />
     <Compile Include="CachedCSSLayout.cs" />
     <Compile Include="CSSAlign.cs" />
+    <Compile Include="CSSCachedMeasurement.cs" />
     <Compile Include="CSSConstants.cs" />
     <Compile Include="CSSDirection.cs" />
     <Compile Include="CSSFlexDirection.cs" />
     <Compile Include="CSSJustify.cs" />
-    <Compile Include="CSSMeasureMode.cs" />
     <Compile Include="CSSLayout.cs" />
     <Compile Include="CSSLayoutContext.cs" />
+    <Compile Include="CSSMeasureMode.cs" />
     <Compile Include="CSSNode.cs" />
+    <Compile Include="CSSOverflow.cs" />
     <Compile Include="CSSPositionType.cs" />
     <Compile Include="CSSStyle.cs" />
     <Compile Include="CSSWrap.cs" />

@@ -9,10 +9,14 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSMeasureMode
+    sealed class CSSCachedMeasurement
     {
-        Undefined,
-        Exactly,
-        AtMost,
+        public float availableWidth;
+        public float availableHeight;
+        public CSSMeasureMode? widthMeasureMode = null;
+        public CSSMeasureMode? heightMeasureMode = null;
+
+        public float computedWidth;
+        public float computedHeight;
     }
 }
