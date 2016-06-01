@@ -317,6 +317,12 @@ namespace Facebook.CSSLayout
             get { return style.flex; }
             set { updateFloatValue(ref style.flex, value); }
         }
+        
+        public CSSOverflow Overflow
+        {
+            get { return style.overflow; }
+            set { updateDiscreteValue(ref style.overflow, value); }
+        }
 
         public void SetMargin(CSSSpacingType spacingType, float margin)
         {

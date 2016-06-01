@@ -447,6 +447,62 @@ public class CSSNode {
     }
   }
 
+  /**
+   * Get this node's max width, as defined in the style
+   */
+  public float getStyleMaxWidth() {
+    return style.maxWidth;
+  }
+
+  public void setStyleMaxWidth(float maxWidth) {
+    if (!valuesEqual(style.maxWidth, maxWidth)) {
+      style.maxWidth = maxWidth;
+      dirty();
+    }
+  }
+
+  /**
+   * Get this node's min width, as defined in the style
+   */
+  public float getStyleMinWidth() {
+    return style.minWidth;
+  }
+
+  public void setStyleMinWidth(float minWidth) {
+    if (!valuesEqual(style.minWidth, minWidth)) {
+      style.minWidth = minWidth;
+      dirty();
+    }
+  }
+
+  /**
+   * Get this node's max height, as defined in the style
+   */
+  public float getStyleMaxHeight() {
+    return style.maxHeight;
+  }
+
+  public void setStyleMaxHeight(float maxHeight) {
+    if (!valuesEqual(style.maxHeight, maxHeight)) {
+      style.maxHeight = maxHeight;
+      dirty();
+    }
+  }
+
+  /**
+   * Get this node's min height, as defined in the style
+   */
+  public float getStyleMinHeight() {
+    return style.minHeight;
+  }
+
+  public void setStyleMinHeight(float minHeight) {
+    if (!valuesEqual(style.minHeight, minHeight)) {
+      style.minHeight = minHeight;
+      dirty();
+    }
+  }
+
   public float getLayoutX() {
     return layout.position[POSITION_LEFT];
   }
@@ -472,6 +528,20 @@ public class CSSNode {
    */
   public void setDefaultPadding(int spacingType, float padding) {
     if (style.padding.setDefault(spacingType, padding)) {
+      dirty();
+    }
+  }
+
+  /**
+   * Get this node's overflow property, as defined in the style
+   */
+  public CSSOverflow getOverflow() {
+    return style.overflow;
+  }
+
+  public void setOverflow(CSSOverflow overflow) {
+    if (style.overflow != overflow) {
+      style.overflow = overflow;
       dirty();
     }
   }
