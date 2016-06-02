@@ -743,6 +743,25 @@ namespace Facebook.CSSLayout
               }
             }
     
+            // If child has no defined size in the cross axis and is set to stretch, set the cross
+            // axis to be measured exactly with the available inner width
+            if (!isMainAxisRow &&
+                !float.IsNaN(availableInnerWidth) &&
+                !(child.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0) &&
+                widthMeasureMode == CSSMeasureMode.Exactly &&
+                getAlignItem(node, child) == CSSAlign.Stretch) {
+              childWidth = availableInnerWidth;
+              childWidthMeasureMode = CSSMeasureMode.Exactly;
+            }
+            if (isMainAxisRow &&
+                !float.IsNaN(availableInnerHeight) &&
+                !(child.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0) &&
+                heightMeasureMode == CSSMeasureMode.Exactly &&
+                getAlignItem(node, child) == CSSAlign.Stretch) {
+              childHeight = availableInnerHeight;
+              childHeightMeasureMode = CSSMeasureMode.Exactly;
+            }
+    
             // Measure the child
             layoutNodeInternal(layoutContext, child, childWidth, childHeight, direction, childWidthMeasureMode, childHeightMeasureMode, false, "measure");
     
@@ -952,7 +971,13 @@ namespace Facebook.CSSLayout
               childWidth = updatedMainSize + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
               childWidthMeasureMode = CSSMeasureMode.Exactly;
     
-              if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+              if (!float.IsNaN(availableInnerCrossDim) &&
+                  !(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0) &&
+                  heightMeasureMode == CSSMeasureMode.Exactly &&
+                  getAlignItem(node, currentRelativeChild) == CSSAlign.Stretch) {
+                childHeight = availableInnerCrossDim;
+                childHeightMeasureMode = CSSMeasureMode.Exactly;
+              } else if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
                 childHeight = availableInnerCrossDim;
                 childHeightMeasureMode = float.IsNaN(childHeight) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
               } else {
@@ -963,7 +988,13 @@ namespace Facebook.CSSLayout
               childHeight = updatedMainSize + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
               childHeightMeasureMode = CSSMeasureMode.Exactly;
     
-              if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
+              if (!float.IsNaN(availableInnerCrossDim) &&
+                  !(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0) &&
+                  widthMeasureMode == CSSMeasureMode.Exactly &&
+                  getAlignItem(node, currentRelativeChild) == CSSAlign.Stretch) {
+                childWidth = availableInnerCrossDim;
+                childWidthMeasureMode = CSSMeasureMode.Exactly;
+              } else if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
                 childWidth = availableInnerCrossDim;
                 childWidthMeasureMode = float.IsNaN(childWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
               } else {
