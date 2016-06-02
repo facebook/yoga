@@ -1601,7 +1601,7 @@ var computeLayout = (function() {
     return (needToVisitNode || cachedResults === undefined);
   }
 
-  function layoutNode(node, availableWidth, availableHeight, parentDirection) {
+  function layoutNode(node, width, widthMeasureMode, height, heightMeasureMode, parentDirection) {
     // Increment the generation count. This will force the recursive routine to visit
     // all dirty nodes at least once. Subsequent visits will be skipped if the input
     // parameters don't change.
@@ -1609,17 +1609,16 @@ var computeLayout = (function() {
 
     // If the caller didn't specify a height/width, use the dimensions
     // specified in the style.
-    if (isUndefined(availableWidth) && isStyleDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
-      availableWidth = node.style.width + getMarginAxis(node, CSS_FLEX_DIRECTION_ROW);
+    if (widthMeasureMode == CSS_MEASURE_MODE_UNDEFINED && isStyleDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+      width = node.style.width + getMarginAxis(node, CSS_FLEX_DIRECTION_ROW);
+      widthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
     }
-    if (isUndefined(availableHeight) && isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
-      availableHeight = node.style.height + getMarginAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+    if (heightMeasureMode == CSS_MEASURE_MODE_UNDEFINED && isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
+      height = node.style.height + getMarginAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+      heightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
     }
 
-    var widthMeasureMode = isUndefined(availableWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_EXACTLY;
-    var heightMeasureMode = isUndefined(availableHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_EXACTLY;
-
-    if (layoutNodeInternal(node, availableWidth, availableHeight, parentDirection, widthMeasureMode, heightMeasureMode, true, 'initial')) {
+    if (layoutNodeInternal(node, width, height, parentDirection, widthMeasureMode, heightMeasureMode, true, 'initial')) {
       setPosition(node, node.layout.direction);
     }
   }

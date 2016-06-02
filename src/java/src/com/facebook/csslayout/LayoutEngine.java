@@ -223,8 +223,10 @@ public class LayoutEngine {
   /*package*/ static void layoutNode(
       CSSLayoutContext layoutContext,
       CSSNode node,
-      float availableWidth,
-      float availableHeight,
+      float width,
+      CSSMeasureMode widthMeasureMode,
+      float height,
+      CSSMeasureMode heightMeasureMode,
       CSSDirection parentDirection) {
     // Increment the generation count. This will force the recursive routine to visit
     // all dirty nodes at least once. Subsequent visits will be skipped if the input
@@ -233,19 +235,18 @@ public class LayoutEngine {
 
     // If the caller didn't specify a height/width, use the dimensions
     // specified in the style.
-    if (Float.isNaN(availableWidth) && node.style.dimensions[DIMENSION_WIDTH] >= 0.0) {
+    if (widthMeasureMode == CSSMeasureMode.UNDEFINED && node.style.dimensions[DIMENSION_WIDTH] >= 0.0) {
       float marginAxisRow = (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
-      availableWidth = node.style.dimensions[DIMENSION_WIDTH] + marginAxisRow;
+      width = node.style.dimensions[DIMENSION_WIDTH] + marginAxisRow;
+      widthMeasureMode = CSSMeasureMode.EXACTLY;
     }
-    if (Float.isNaN(availableHeight) && node.style.dimensions[DIMENSION_HEIGHT] >= 0.0) {
+    if (heightMeasureMode == CSSMeasureMode.UNDEFINED && node.style.dimensions[DIMENSION_HEIGHT] >= 0.0) {
       float marginAxisColumn = (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
-      availableHeight = node.style.dimensions[DIMENSION_HEIGHT] + marginAxisColumn;
+      height = node.style.dimensions[DIMENSION_HEIGHT] + marginAxisColumn;
+      heightMeasureMode = CSSMeasureMode.EXACTLY;
     }
 
-    CSSMeasureMode widthMeasureMode = Float.isNaN(availableWidth) ? CSSMeasureMode.UNDEFINED : CSSMeasureMode.EXACTLY;
-    CSSMeasureMode heightMeasureMode = Float.isNaN(availableHeight) ? CSSMeasureMode.UNDEFINED : CSSMeasureMode.EXACTLY;
-
-    if (layoutNodeInternal(layoutContext, node, availableWidth, availableHeight, parentDirection, widthMeasureMode, heightMeasureMode, true, "initial")) {
+    if (layoutNodeInternal(layoutContext, node, width, height, parentDirection, widthMeasureMode, heightMeasureMode, true, "initial")) {
       setPosition(node, node.layout.direction);
     }
   }
