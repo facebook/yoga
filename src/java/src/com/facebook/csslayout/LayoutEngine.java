@@ -250,32 +250,78 @@ public class LayoutEngine {
     }
   }
 
-  /*package*/ static boolean canUseCachedMeasurement(float availableWidth, float availableHeight,
-      float marginRow, float marginColumn,
-      CSSMeasureMode widthMeasureMode, CSSMeasureMode heightMeasureMode,
+  /*package*/ static boolean canUseCachedMeasurement(
+      boolean isTextNode,
+      float availableWidth,
+      float availableHeight,
+      float marginRow,
+      float marginColumn,
+      CSSMeasureMode widthMeasureMode,
+      CSSMeasureMode heightMeasureMode,
       CSSCachedMeasurement cachedLayout) {
-    // Is it an exact match?
-    if (FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth) &&
-        FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight) &&
-        cachedLayout.widthMeasureMode == widthMeasureMode &&
-        cachedLayout.heightMeasureMode == heightMeasureMode) {
+
+    boolean isHeightSame =
+      (cachedLayout.heightMeasureMode == CSSMeasureMode.UNDEFINED && heightMeasureMode == CSSMeasureMode.UNDEFINED) ||
+        (cachedLayout.heightMeasureMode == heightMeasureMode && FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight));
+
+    boolean isWidthSame =
+      (cachedLayout.widthMeasureMode == CSSMeasureMode.UNDEFINED && widthMeasureMode == CSSMeasureMode.UNDEFINED) ||
+        (cachedLayout.widthMeasureMode == widthMeasureMode && FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth));
+
+    if (isHeightSame && isWidthSame) {
       return true;
     }
 
-    // If the width is an exact match, try a fuzzy match on the height.
-    if (FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth) &&
-        cachedLayout.widthMeasureMode == widthMeasureMode &&
-        heightMeasureMode == CSSMeasureMode.EXACTLY &&
-        FloatUtil.floatsEqual(availableHeight - marginColumn, cachedLayout.computedHeight)) {
+    boolean isHeightValid =
+      (cachedLayout.heightMeasureMode == CSSMeasureMode.UNDEFINED && heightMeasureMode == CSSMeasureMode.AT_MOST && cachedLayout.computedHeight <= (availableHeight - marginColumn)) ||
+        (heightMeasureMode == CSSMeasureMode.EXACTLY && FloatUtil.floatsEqual(cachedLayout.computedHeight, availableHeight - marginColumn));
+
+    if (isWidthSame && isHeightValid) {
       return true;
     }
 
-    // If the height is an exact match, try a fuzzy match on the width.
-    if (FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight) &&
-        cachedLayout.heightMeasureMode == heightMeasureMode &&
-        widthMeasureMode == CSSMeasureMode.EXACTLY &&
-        FloatUtil.floatsEqual(availableWidth - marginRow, cachedLayout.computedWidth)) {
+    boolean isWidthValid =
+      (cachedLayout.widthMeasureMode == CSSMeasureMode.UNDEFINED && widthMeasureMode == CSSMeasureMode.AT_MOST && cachedLayout.computedWidth <= (availableWidth - marginRow)) ||
+        (widthMeasureMode == CSSMeasureMode.EXACTLY && FloatUtil.floatsEqual(cachedLayout.computedWidth, availableWidth - marginRow));
+
+    if (isHeightSame && isWidthValid) {
       return true;
+    }
+
+    if (isHeightValid && isWidthValid) {
+      return true;
+    }
+
+    // We know this to be text so we can apply some more specialized heuristics.
+    if (isTextNode) {
+      if (isWidthSame) {
+        if (heightMeasureMode == CSSMeasureMode.UNDEFINED) {
+          // Width is the same and height is not restricted. Re-use cahced value.
+          return true;
+        }
+
+        if (heightMeasureMode == CSSMeasureMode.AT_MOST &&
+            cachedLayout.computedHeight < (availableHeight - marginColumn)) {
+          // Width is the same and height restriction is greater than the cached height. Re-use cached value.
+          return true;
+        }
+
+        // Width is the same but height restriction imposes smaller height than previously measured.
+        // Update the cached value to respect the new height restriction.
+        cachedLayout.computedHeight = availableHeight - marginColumn;
+        return true;
+      }
+
+      if (cachedLayout.widthMeasureMode == CSSMeasureMode.UNDEFINED) {
+        if (widthMeasureMode == CSSMeasureMode.UNDEFINED ||
+             (widthMeasureMode == CSSMeasureMode.AT_MOST &&
+              cachedLayout.computedWidth <= (availableWidth - marginRow))) {
+          // Previsouly this text was measured with no width restriction, if width is now restricted
+          // but to a larger value than the previsouly measured width we can re-use the measurement
+          // as we know it will fit.
+          return true;
+        }
+      }
     }
 
     return false;
@@ -329,13 +375,13 @@ public class LayoutEngine {
         node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]);
 
       // First, try to use the layout cache.
-      if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+      if (canUseCachedMeasurement(node.isTextNode(), availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
           widthMeasureMode, heightMeasureMode, layout.cachedLayout)) {
         cachedResults = layout.cachedLayout;
       } else {
         // Try to use the measurement cache.
         for (int i = 0; i < layout.nextCachedMeasurementsIndex; i++) {
-          if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+          if (canUseCachedMeasurement(node.isTextNode(), availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
               widthMeasureMode, heightMeasureMode, layout.cachedMeasurements[i])) {
             cachedResults = layout.cachedMeasurements[i];
             break;

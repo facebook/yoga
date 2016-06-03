@@ -69,6 +69,7 @@ public class CSSNode {
   private @Nullable CSSNode mParent;
   private @Nullable MeasureFunction mMeasureFunction = null;
   private LayoutState mLayoutState = LayoutState.DIRTY;
+  private boolean mIsTextNode = false;
 
   public int getChildCount() {
     return mChildren == null ? 0 : mChildren.size();
@@ -122,6 +123,14 @@ public class CSSNode {
 
   public boolean isMeasureDefined() {
     return mMeasureFunction != null;
+  }
+
+  public void setIsTextNode(boolean isTextNode) {
+    mIsTextNode = isTextNode;
+  }
+
+  public boolean isTextNode() {
+    return mIsTextNode;
   }
 
   /*package*/ MeasureOutput measure(MeasureOutput measureOutput, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode) {

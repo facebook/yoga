@@ -282,39 +282,82 @@ namespace Facebook.CSSLayout
             }
         }
 
-        internal static boolean canUseCachedMeasurement(float availableWidth, float availableHeight,
-            float marginRow, float marginColumn,
-            CSSMeasureMode widthMeasureMode, CSSMeasureMode heightMeasureMode,
+        internal static boolean canUseCachedMeasurement(
+            boolean isTextNode,
+            float availableWidth,
+            float availableHeight,
+            float marginRow,
+            float marginColumn,
+            CSSMeasureMode widthMeasureMode,
+            CSSMeasureMode heightMeasureMode,
             CSSCachedMeasurement cachedLayout)
         {
-            // Is it an exact match?
-            if (FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth) &&
-                FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight) &&
-                cachedLayout.widthMeasureMode == widthMeasureMode &&
-                cachedLayout.heightMeasureMode == heightMeasureMode)
-            {
+
+          boolean isHeightSame =
+            (cachedLayout.heightMeasureMode == CSSMeasureMode.Undefined && heightMeasureMode == CSSMeasureMode.Undefined) ||
+              (cachedLayout.heightMeasureMode == heightMeasureMode && FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight));
+
+          boolean isWidthSame =
+            (cachedLayout.widthMeasureMode == CSSMeasureMode.Undefined && widthMeasureMode == CSSMeasureMode.Undefined) ||
+              (cachedLayout.widthMeasureMode == widthMeasureMode && FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth));
+
+          if (isHeightSame && isWidthSame) {
+            return true;
+          }
+
+          boolean isHeightValid =
+            (cachedLayout.heightMeasureMode == CSSMeasureMode.Undefined && heightMeasureMode == CSSMeasureMode.AtMost && cachedLayout.computedHeight <= (availableHeight - marginColumn)) ||
+              (heightMeasureMode == CSSMeasureMode.Exactly && FloatUtil.floatsEqual(cachedLayout.computedHeight, availableHeight - marginColumn));
+
+          if (isWidthSame && isHeightValid) {
+            return true;
+          }
+
+          boolean isWidthValid =
+            (cachedLayout.widthMeasureMode == CSSMeasureMode.Undefined && widthMeasureMode == CSSMeasureMode.AtMost && cachedLayout.computedWidth <= (availableWidth - marginRow)) ||
+              (widthMeasureMode == CSSMeasureMode.Exactly && FloatUtil.floatsEqual(cachedLayout.computedWidth, availableWidth - marginRow));
+
+          if (isHeightSame && isWidthValid) {
+            return true;
+          }
+
+          if (isHeightValid && isWidthValid) {
+            return true;
+          }
+
+          // We know this to be text so we can apply some more specialized heuristics.
+          if (isTextNode) {
+            if (isWidthSame) {
+              if (heightMeasureMode == CSSMeasureMode.Undefined) {
+                // Width is the same and height is not restricted. Re-use cahced value.
                 return true;
+              }
+
+              if (heightMeasureMode == CSSMeasureMode.AtMost &&
+                  cachedLayout.computedHeight < (availableHeight - marginColumn)) {
+                // Width is the same and height restriction is greater than the cached height. Re-use cached value.
+                return true;
+              }
+
+              // Width is the same but height restriction imposes smaller height than previously measured.
+              // Update the cached value to respect the new height restriction.
+              cachedLayout.computedHeight = availableHeight - marginColumn;
+              return true;
             }
 
-            // If the width is an exact match, try a fuzzy match on the height.
-            if (FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth) &&
-                cachedLayout.widthMeasureMode == widthMeasureMode &&
-                heightMeasureMode == CSSMeasureMode.Exactly &&
-                FloatUtil.floatsEqual(availableHeight - marginColumn, cachedLayout.computedHeight))
-            {
+            if (cachedLayout.widthMeasureMode == CSSMeasureMode.Undefined) {
+              if (widthMeasureMode == CSSMeasureMode.Undefined ||
+                   (widthMeasureMode == CSSMeasureMode.AtMost &&
+                    cachedLayout.computedWidth <= (availableWidth - marginRow))) {
+                // Previsouly this text was measured with no width restriction, if width is now restricted
+                // but to a larger value than the previsouly measured width we can re-use the measurement
+                // as we know it will fit.
                 return true;
+              }
             }
+          }
 
-            // If the height is an exact match, try a fuzzy match on the width.
-            if (FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight) &&
-                cachedLayout.heightMeasureMode == heightMeasureMode &&
-                widthMeasureMode == CSSMeasureMode.Exactly &&
-                FloatUtil.floatsEqual(availableWidth - marginRow, cachedLayout.computedWidth))
-            {
-                return true;
-            }
-
-            return false;
+          return false;
         }
 
         //
@@ -359,7 +402,7 @@ namespace Facebook.CSSLayout
                     node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]);
 
                 // First, try to use the layout cache.
-                if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+                if (canUseCachedMeasurement(node.IsTextNode, availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
                     widthMeasureMode, heightMeasureMode, layout.cachedLayout))
                 {
                     cachedResults = layout.cachedLayout;
@@ -369,7 +412,7 @@ namespace Facebook.CSSLayout
                     // Try to use the measurement cache.
                     for (int i = 0; i < layout.nextCachedMeasurementsIndex; i++)
                     {
-                        if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+                        if (canUseCachedMeasurement(node.IsTextNode, availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
                             widthMeasureMode, heightMeasureMode, layout.cachedMeasurements[i]))
                         {
                             cachedResults = layout.cachedMeasurements[i];

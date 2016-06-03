@@ -176,6 +176,7 @@ struct css_node {
   void (*print)(void *context);
   struct css_node* (*get_child)(void *context, int i);
   bool (*is_dirty)(void *context);
+  bool (*is_text_node)(void *context);
   void *context;
 };
 
