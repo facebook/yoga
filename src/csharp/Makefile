@@ -35,4 +35,3 @@ build-release: build
 .PHONY: build
 build:
 	${MSB} ${NAME}.sln /p:Configuration=${conf} /t:"Facebook_CSSLayout:Rebuild;Facebook_CSSLayout_Tests:Rebuild"
-

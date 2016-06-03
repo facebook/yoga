@@ -43,7 +43,7 @@ public class LayoutCachingTest {
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
-    
+
     root.calculateLayout(layoutContext);
     assertTreeHasNewLayout(true, root);
     markLayoutAppliedForTree(root);

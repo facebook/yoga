@@ -9,11 +9,11 @@
 
 namespace Facebook.CSSLayout
 {
-    public static class CSSConstants 
+    public static class CSSConstants
     {
         public const float Undefined = float.NaN;
 
-        public static bool IsUndefined(float value) 
+        public static bool IsUndefined(float value)
         {
             return float.IsNaN(value);
         }
