@@ -156,7 +156,7 @@ namespace Facebook.CSSLayout
 
             return boundValue;
         }
-        
+
         private static float boundAxis(CSSNode node, int axis, float value)
         {
             float paddingAndBorderAxis =
@@ -178,12 +178,12 @@ namespace Facebook.CSSLayout
             float trailingPos = node.style.position[trailing[axis]];
             return float.IsNaN(trailingPos) ? 0 : -trailingPos;
         }
-        
+
         private static void setPosition(CSSNode node, CSSDirection direction)
         {
             int mainAxis = resolveAxis(getFlexDirection(node), direction);
             int crossAxis = getCrossFlexDirection(mainAxis, direction);
-            
+
             node.layout.position[leading[mainAxis]] = node.style.margin.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis]) +
                 getRelativePosition(node, mainAxis);
             node.layout.position[trailing[mainAxis]] = node.style.margin.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]) +
@@ -272,7 +272,7 @@ namespace Facebook.CSSLayout
                 float marginAxisColumn = (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
                 availableHeight = node.style.dimensions[DIMENSION_HEIGHT] + marginAxisColumn;
             }
-            
+
             CSSMeasureMode widthMeasureMode = float.IsNaN(availableWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.Exactly;
             CSSMeasureMode heightMeasureMode = float.IsNaN(availableHeight) ? CSSMeasureMode.Undefined : CSSMeasureMode.Exactly;
 
@@ -281,7 +281,7 @@ namespace Facebook.CSSLayout
                 setPosition(node, node.layout.direction);
             }
         }
-        
+
         internal static boolean canUseCachedMeasurement(float availableWidth, float availableHeight,
             float marginRow, float marginColumn,
             CSSMeasureMode widthMeasureMode, CSSMeasureMode heightMeasureMode,
@@ -295,7 +295,7 @@ namespace Facebook.CSSLayout
             {
                 return true;
             }
-            
+
             // If the width is an exact match, try a fuzzy match on the height.
             if (FloatUtil.floatsEqual(cachedLayout.availableWidth, availableWidth) &&
                 cachedLayout.widthMeasureMode == widthMeasureMode &&
@@ -304,7 +304,7 @@ namespace Facebook.CSSLayout
             {
                 return true;
             }
-            
+
             // If the height is an exact match, try a fuzzy match on the width.
             if (FloatUtil.floatsEqual(cachedLayout.availableHeight, availableHeight) &&
                 cachedLayout.heightMeasureMode == heightMeasureMode &&
@@ -316,7 +316,7 @@ namespace Facebook.CSSLayout
 
             return false;
         }
-        
+
         //
         // This is a wrapper around the layoutNodeImpl function. It determines
         // whether the layout request is redundant and can be skipped.
@@ -356,8 +356,8 @@ namespace Facebook.CSSLayout
                     node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]);
                 float marginAxisColumn =
                     node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) +
-                    node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]); 
-              
+                    node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]);
+
                 // First, try to use the layout cache.
                 if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
                     widthMeasureMode, heightMeasureMode, layout.cachedLayout))
@@ -460,7 +460,7 @@ namespace Facebook.CSSLayout
             layout.generationCount = layoutContext.currentGenerationCount;
             return (needToVisitNode || cachedResults == null);
         }
-        
+
         //
         // This is the main routine that implements a subset of the flexbox layout algorithm
         // described in the W3C CSS documentation: https://www.w3.org/TR/css3-flexbox/.
@@ -497,8 +497,8 @@ namespace Facebook.CSSLayout
         //
         // Deviations from standard:
         //  * Section 4.5 of the spec indicates that all flex items have a default minimum
-        //    main size. For text blocks, for example, this is the width of the widest word. 
-        //    Calculating the minimum width is expensive, so we forego it and assume a default 
+        //    main size. For text blocks, for example, this is the width of the widest word.
+        //    Calculating the minimum width is expensive, so we forego it and assume a default
         //    minimum main size of 0.
         //  * Min/Max sizes in the main axis are not honored when resolving flexible lengths.
         //  * The spec indicates that the default value for 'flexDirection' is 'row', but
@@ -532,7 +532,7 @@ namespace Facebook.CSSLayout
         //      - CSS_MEASURE_MODE_UNDEFINED: max content
         //      - CSS_MEASURE_MODE_EXACTLY: fill available
         //      - CSS_MEASURE_MODE_AT_MOST: fit content
-        //    
+        //
         //    When calling layoutNodeImpl and layoutNodeInternal, if the caller passes an available size of
         //    undefined then it must also pass a measure mode of CSS_MEASURE_MODE_UNDEFINED in that dimension.
         //
@@ -542,7 +542,7 @@ namespace Facebook.CSSLayout
     
       Assertions.assertCondition(float.IsNaN(availableWidth) ? widthMeasureMode == CSSMeasureMode.Undefined : true, "availableWidth is indefinite so widthMeasureMode must be CSSMeasureMode.Undefined");
       Assertions.assertCondition(float.IsNaN(availableHeight) ? heightMeasureMode == CSSMeasureMode.Undefined : true, "availableHeight is indefinite so heightMeasureMode must be CSSMeasureMode.Undefined");
-      
+    
       float paddingAndBorderAxisRow = ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW])));
       float paddingAndBorderAxisColumn = ((node.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (node.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + node.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN])));
       float marginAxisRow = (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
@@ -556,7 +556,7 @@ namespace Facebook.CSSLayout
       if (isMeasureDefined(node)) {
         float innerWidth = availableWidth - marginAxisRow - paddingAndBorderAxisRow;
         float innerHeight = availableHeight - marginAxisColumn - paddingAndBorderAxisColumn;
-        
+    
         if (widthMeasureMode == CSSMeasureMode.Exactly && heightMeasureMode == CSSMeasureMode.Exactly) {
     
           // Don't bother sizing the text if both dimensions are already defined.
@@ -588,7 +588,7 @@ namespace Facebook.CSSLayout
               measureDim.height + paddingAndBorderAxisColumn :
               availableHeight - marginAxisColumn);
         }
-        
+    
         return;
       }
     
@@ -618,7 +618,7 @@ namespace Facebook.CSSLayout
           node.layout.measuredDimensions[DIMENSION_HEIGHT] = boundAxis(node, CSS_FLEX_DIRECTION_COLUMN, 0);
           return;
         }
-        
+    
         if (widthMeasureMode == CSSMeasureMode.AtMost && availableWidth <= 0) {
           node.layout.measuredDimensions[DIMENSION_WIDTH] = boundAxis(node, CSS_FLEX_DIRECTION_ROW, 0);
           node.layout.measuredDimensions[DIMENSION_HEIGHT] = boundAxis(node, CSS_FLEX_DIRECTION_COLUMN, float.IsNaN(availableHeight) ? 0 : (availableHeight - marginAxisColumn));
@@ -630,7 +630,7 @@ namespace Facebook.CSSLayout
           node.layout.measuredDimensions[DIMENSION_HEIGHT] = boundAxis(node, CSS_FLEX_DIRECTION_COLUMN, 0);
           return;
         }
-        
+    
         // If we're being asked to use an exact width/height, there's no need to measure the children.
         if (widthMeasureMode == CSSMeasureMode.Exactly && heightMeasureMode == CSSMeasureMode.Exactly) {
           node.layout.measuredDimensions[DIMENSION_WIDTH] = boundAxis(node, CSS_FLEX_DIRECTION_ROW, availableWidth - marginAxisRow);
@@ -654,7 +654,7 @@ namespace Facebook.CSSLayout
       float leadingPaddingAndBorderCross = (node.style.padding.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + node.style.border.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]));
       float paddingAndBorderAxisMain = ((node.style.padding.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis]) + node.style.border.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis])) + (node.style.padding.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]) + node.style.border.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis])));
       float paddingAndBorderAxisCross = ((node.style.padding.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + node.style.border.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis])) + (node.style.padding.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis]) + node.style.border.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis])));
-      
+    
       CSSMeasureMode measureModeMainDim = isMainAxisRow ? widthMeasureMode : heightMeasureMode;
       CSSMeasureMode measureModeCrossDim = isMainAxisRow ? heightMeasureMode : widthMeasureMode;
     
@@ -679,7 +679,7 @@ namespace Facebook.CSSLayout
           CSSDirection childDirection = resolveDirection(child, direction);
           setPosition(child, childDirection);
         }
-          
+    
         // Absolute-positioned children don't participate in flex layout. Add them
         // to a list that we can process later.
         if (child.style.positionType == CSSPositionType.Absolute) {
@@ -695,27 +695,27 @@ namespace Facebook.CSSLayout
           currentAbsoluteChild = child;
           child.nextChild = null;
         } else {
-          
+    
           if (isMainAxisRow && (child.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
-            
+    
             // The width is definite, so use that as the flex basis.
             child.layout.flexBasis = Math.Max(child.style.dimensions[DIMENSION_WIDTH], ((child.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + child.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW])) + (child.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]) + child.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]))));
           } else if (!isMainAxisRow && (child.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
-            
+    
             // The height is definite, so use that as the flex basis.
             child.layout.flexBasis = Math.Max(child.style.dimensions[DIMENSION_HEIGHT], ((child.style.padding.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + child.style.border.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN])) + (child.style.padding.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]) + child.style.border.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]))));
           } else if (!isFlexBasisAuto(child) && !float.IsNaN(availableInnerMainDim)) {
-            
+    
             // If the basis isn't 'auto', it is assumed to be zero.
             child.layout.flexBasis = Math.Max(0, ((child.style.padding.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis]) + child.style.border.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis])) + (child.style.padding.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]) + child.style.border.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]))));
           } else {
-          
+    
             // Compute the flex basis and hypothetical main size (i.e. the clamped flex basis).
             childWidth = CSSConstants.Undefined;
             childHeight = CSSConstants.Undefined;
             childWidthMeasureMode = CSSMeasureMode.Undefined;
             childHeightMeasureMode = CSSMeasureMode.Undefined;
-            
+    
             if ((child.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
               childWidth = child.style.dimensions[DIMENSION_WIDTH] + (child.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + child.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
               childWidthMeasureMode = CSSMeasureMode.Exactly;
@@ -724,7 +724,7 @@ namespace Facebook.CSSLayout
               childHeight = child.style.dimensions[DIMENSION_HEIGHT] + (child.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + child.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
               childHeightMeasureMode = CSSMeasureMode.Exactly;
             }
-            
+    
             // According to the spec, if the main size is not definite and the
             // child's inline axis is parallel to the main axis (i.e. it's
             // horizontal), the child should be sized using "UNDEFINED" in
@@ -745,21 +745,21 @@ namespace Facebook.CSSLayout
     
             // Measure the child
             layoutNodeInternal(layoutContext, child, childWidth, childHeight, direction, childWidthMeasureMode, childHeightMeasureMode, false, "measure");
-            
+    
             child.layout.flexBasis = Math.Max(isMainAxisRow ? child.layout.measuredDimensions[DIMENSION_WIDTH] : child.layout.measuredDimensions[DIMENSION_HEIGHT], ((child.style.padding.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis]) + child.style.border.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis])) + (child.style.padding.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]) + child.style.border.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]))));
           }
         }
       }
     
       // STEP 4: COLLECT FLEX ITEMS INTO FLEX LINES
-      
+    
       // Indexes of children that represent the first and last items in the line.
       int startOfLineIndex = 0;
       int endOfLineIndex = 0;
-      
+    
       // Number of lines.
       int lineCount = 0;
-      
+    
       // Accumulated cross dimensions of all lines so far.
       float totalLineCrossDim = 0;
     
@@ -767,7 +767,7 @@ namespace Facebook.CSSLayout
       float maxLineMainDim = 0;
     
       while (endOfLineIndex < childCount) {
-        
+    
         // Number of items on the currently line. May be different than the difference
         // between start and end indicates because we skip over absolute-positioned items.
         int itemsOnLine = 0;
@@ -794,7 +794,7 @@ namespace Facebook.CSSLayout
     
           if (child.style.positionType != CSSPositionType.Absolute) {
             float outerFlexBasis = child.layout.flexBasis + (child.style.margin.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis]) + child.style.margin.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]));
-            
+    
             // If this is a multi-line flow and this item pushes us over the available size, we've
             // hit the end of the current line. Break out of the loop and lay out the current line.
             if (sizeConsumedOnCurrentLine + outerFlexBasis > availableInnerMainDim && isNodeFlexWrap && itemsOnLine > 0) {
@@ -806,7 +806,7 @@ namespace Facebook.CSSLayout
     
             if ((child.style.positionType == CSSPositionType.Relative && child.style.flex != 0)) {
               totalFlexGrowFactors += getFlexGrowFactor(child);
-              
+    
               // Unlike the grow factor, the shrink factor is scaled relative to the child
               // dimension.
               totalFlexShrinkScaledFactors += getFlexShrinkFactor(child) * child.layout.flexBasis;
@@ -822,11 +822,11 @@ namespace Facebook.CSSLayout
             currentRelativeChild = child;
             child.nextChild = null;
           }
-          
+    
           i++;
           endOfLineIndex++;
         }
-        
+    
         // If we don't need to measure the cross axis, we can skip the entire flex step.
         boolean canSkipFlex = !performLayout && measureModeCrossDim == CSSMeasureMode.Exactly;
     
@@ -849,7 +849,7 @@ namespace Facebook.CSSLayout
           // its content. Consequently, remainingFreeSpace is 0 - sizeConsumedOnCurrentLine.
           remainingFreeSpace = -sizeConsumedOnCurrentLine;
         }
-        
+    
         float originalRemainingFreeSpace = remainingFreeSpace;
         float deltaFreeSpace = 0;
     
@@ -859,20 +859,20 @@ namespace Facebook.CSSLayout
           float flexGrowFactor;
           float baseMainSize;
           float boundMainSize;
-          
+    
           // Do two passes over the flex items to figure out how to distribute the remaining space.
           // The first pass finds the items whose min/max constraints trigger, freezes them at those
           // sizes, and excludes those sizes from the remaining space. The second pass sets the size
           // of each flexible item. It distributes the remaining space amongst the items whose min/max
           // constraints didn't trigger in pass 1. For the other items, it sets their sizes by forcing
-          // their min/max constraints to trigger again. 
+          // their min/max constraints to trigger again.
           //
           // This two pass approach for resolving min/max constraints deviates from the spec. The
           // spec (https://www.w3.org/TR/css-flexbox-1/#resolve-flexible-lengths) describes a process
           // that needs to be repeated a variable number of times. The algorithm implemented here
           // won't handle all cases but it was simpler to implement and it mitigates performance
           // concerns because we know exactly how many passes it'll do.
-                
+    
           // First pass: detect the flex items whose min/max constraints trigger
           float deltaFlexShrinkScaledFactors = 0;
           float deltaFlexGrowFactors = 0;
@@ -882,7 +882,7 @@ namespace Facebook.CSSLayout
     
             if (remainingFreeSpace < 0) {
               flexShrinkScaledFactor = getFlexShrinkFactor(currentRelativeChild) * childFlexBasis;
-              
+    
               // Is this child able to shrink?
               if (flexShrinkScaledFactor != 0) {
                 baseMainSize = childFlexBasis +
@@ -913,14 +913,14 @@ namespace Facebook.CSSLayout
                 }
               }
             }
-            
+    
             currentRelativeChild = currentRelativeChild.nextChild;
           }
-          
+    
           totalFlexShrinkScaledFactors += deltaFlexShrinkScaledFactors;
           totalFlexGrowFactors += deltaFlexGrowFactors;
           remainingFreeSpace += deltaFreeSpace;
-          
+    
           // Second pass: resolve the sizes of the flexible items
           deltaFreeSpace = 0;
           currentRelativeChild = firstRelativeChild;
@@ -930,7 +930,7 @@ namespace Facebook.CSSLayout
     
             if (remainingFreeSpace < 0) {
               flexShrinkScaledFactor = getFlexShrinkFactor(currentRelativeChild) * childFlexBasis;
-              
+    
               // Is this child able to shrink?
               if (flexShrinkScaledFactor != 0) {
                 updatedMainSize = boundAxis(currentRelativeChild, mainAxis, childFlexBasis +
@@ -945,13 +945,13 @@ namespace Facebook.CSSLayout
                   remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor);
               }
             }
-            
+    
             deltaFreeSpace -= updatedMainSize - childFlexBasis;
-            
+    
             if (isMainAxisRow) {
               childWidth = updatedMainSize + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
               childWidthMeasureMode = CSSMeasureMode.Exactly;
-              
+    
               if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
                 childHeight = availableInnerCrossDim;
                 childHeightMeasureMode = float.IsNaN(childHeight) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
@@ -962,7 +962,7 @@ namespace Facebook.CSSLayout
             } else {
               childHeight = updatedMainSize + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
               childHeightMeasureMode = CSSMeasureMode.Exactly;
-              
+    
               if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
                 childWidth = availableInnerCrossDim;
                 childWidthMeasureMode = float.IsNaN(childWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
@@ -971,7 +971,7 @@ namespace Facebook.CSSLayout
                 childWidthMeasureMode = CSSMeasureMode.Exactly;
               }
             }
-            
+    
             boolean requiresStretchLayout = !(currentRelativeChild.style.dimensions[dim[crossAxis]] >= 0.0) &&
               getAlignItem(node, currentRelativeChild) == CSSAlign.Stretch;
     
@@ -981,7 +981,7 @@ namespace Facebook.CSSLayout
             currentRelativeChild = currentRelativeChild.nextChild;
           }
         }
-        
+    
         remainingFreeSpace = originalRemainingFreeSpace + deltaFreeSpace;
     
         // STEP 6: MAIN-AXIS JUSTIFICATION & CROSS-AXIS SIZE DETERMINATION
@@ -1040,7 +1040,7 @@ namespace Facebook.CSSLayout
               // we put it at the current accumulated offset.
               child.layout.position[pos[mainAxis]] += mainDim;
             }
-            
+    
             // Now that we placed the element, we need to update the variables.
             // We need to do that only for relative elements. Absolute elements
             // do not take part in that phase.
@@ -1054,7 +1054,7 @@ namespace Facebook.CSSLayout
                 // The main dimension is the sum of all the elements dimension plus
                 // the spacing.
                 mainDim += betweenMainDim + (child.layout.measuredDimensions[dim[mainAxis]] + child.style.margin.getWithFallback(leadingSpacing[mainAxis], leading[mainAxis]) + child.style.margin.getWithFallback(trailingSpacing[mainAxis], trailing[mainAxis]));
-                
+    
                 // The cross dimension is the max of the elements dimension since there
                 // can only be one element in that cross dimension.
                 crossDim = Math.Max(crossDim, (child.layout.measuredDimensions[dim[crossAxis]] + child.style.margin.getWithFallback(leadingSpacing[crossAxis], leading[crossAxis]) + child.style.margin.getWithFallback(trailingSpacing[crossAxis], trailing[crossAxis])));
@@ -1064,12 +1064,12 @@ namespace Facebook.CSSLayout
         }
     
         mainDim += trailingPaddingAndBorderMain;
-        
+    
         float containerCrossAxis = availableInnerCrossDim;
         if (measureModeCrossDim == CSSMeasureMode.Undefined || measureModeCrossDim == CSSMeasureMode.AtMost) {
           // Compute the cross axis from the max cross dimension of the children.
           containerCrossAxis = boundAxis(node, crossAxis, crossDim + paddingAndBorderAxisCross) - paddingAndBorderAxisCross;
-          
+    
           if (measureModeCrossDim == CSSMeasureMode.AtMost) {
             containerCrossAxis = Math.Min(containerCrossAxis, availableInnerCrossDim);
           }
@@ -1106,14 +1106,14 @@ namespace Facebook.CSSLayout
               // For a relative children, we're either using alignItems (parent) or
               // alignSelf (child) in order to determine the position in the cross axis
               CSSAlign alignItem = getAlignItem(node, child);
-              
+    
               // If the child uses align stretch, we need to lay it out one more time, this time
               // forcing the cross-axis size to be the computed cross size for the current line.
               if (alignItem == CSSAlign.Stretch) {
                 childWidth = child.layout.measuredDimensions[DIMENSION_WIDTH] + (child.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + child.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
                 childHeight = child.layout.measuredDimensions[DIMENSION_HEIGHT] + (child.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + child.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
                 boolean isCrossSizeDefinite = false;
-                
+    
                 if (isMainAxisRow) {
                   isCrossSizeDefinite = (child.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0);
                   childHeight = crossDim;
@@ -1121,7 +1121,7 @@ namespace Facebook.CSSLayout
                   isCrossSizeDefinite = (child.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0);
                   childWidth = crossDim;
                 }
-                
+    
                 // If the child defines a definite size for its cross axis, there's no need to stretch.
                 if (!isCrossSizeDefinite) {
                   childWidthMeasureMode = float.IsNaN(childWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.Exactly;
@@ -1248,7 +1248,7 @@ namespace Facebook.CSSLayout
             boundAxisWithinMinAndMax(node, crossAxis, totalLineCrossDim + paddingAndBorderAxisCross)),
           paddingAndBorderAxisCross);
       }
-      
+    
       // STEP 10: SETTING TRAILING POSITIONS FOR CHILDREN
       if (performLayout) {
         boolean needsMainTrailingPos = false;
@@ -1279,7 +1279,7 @@ namespace Facebook.CSSLayout
           }
         }
       }
-      
+    
       // STEP 11: SIZING AND POSITIONING ABSOLUTE CHILDREN
       currentAbsoluteChild = firstAbsoluteChild;
       while (currentAbsoluteChild != null) {
@@ -1301,7 +1301,7 @@ namespace Facebook.CSSLayout
               childWidth = boundAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW, childWidth);
             }
           }
-          
+    
           if ((currentAbsoluteChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
             childHeight = currentAbsoluteChild.style.dimensions[DIMENSION_HEIGHT] + (currentAbsoluteChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + currentAbsoluteChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
           } else {
@@ -1318,7 +1318,7 @@ namespace Facebook.CSSLayout
           if (float.IsNaN(childWidth) || float.IsNaN(childHeight)) {
             childWidthMeasureMode = float.IsNaN(childWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.Exactly;
             childHeightMeasureMode = float.IsNaN(childHeight) ? CSSMeasureMode.Undefined : CSSMeasureMode.Exactly;
-            
+    
             // According to the spec, if the main size is not definite and the
             // child's inline axis is parallel to the main axis (i.e. it's
             // horizontal), the child should be sized using "UNDEFINED" in
@@ -1341,9 +1341,9 @@ namespace Facebook.CSSLayout
             childWidth = currentAbsoluteChild.layout.measuredDimensions[DIMENSION_WIDTH] + (currentAbsoluteChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + currentAbsoluteChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
             childHeight = currentAbsoluteChild.layout.measuredDimensions[DIMENSION_HEIGHT] + (currentAbsoluteChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + currentAbsoluteChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
           }
-          
+    
           layoutNodeInternal(layoutContext, currentAbsoluteChild, childWidth, childHeight, direction, CSSMeasureMode.Exactly, CSSMeasureMode.Exactly, true, "abs-layout");
-        
+    
           if (!float.IsNaN(currentAbsoluteChild.style.position[trailing[CSS_FLEX_DIRECTION_ROW]]) &&
               !!float.IsNaN(currentAbsoluteChild.style.position[leading[CSS_FLEX_DIRECTION_ROW]])) {
             currentAbsoluteChild.layout.position[leading[CSS_FLEX_DIRECTION_ROW]] =
@@ -1351,7 +1351,7 @@ namespace Facebook.CSSLayout
               currentAbsoluteChild.layout.measuredDimensions[dim[CSS_FLEX_DIRECTION_ROW]] -
               (float.IsNaN(currentAbsoluteChild.style.position[trailing[CSS_FLEX_DIRECTION_ROW]]) ?  0 : currentAbsoluteChild.style.position[trailing[CSS_FLEX_DIRECTION_ROW]]);
           }
-          
+    
           if (!float.IsNaN(currentAbsoluteChild.style.position[trailing[CSS_FLEX_DIRECTION_COLUMN]]) &&
               !!float.IsNaN(currentAbsoluteChild.style.position[leading[CSS_FLEX_DIRECTION_COLUMN]])) {
             currentAbsoluteChild.layout.position[leading[CSS_FLEX_DIRECTION_COLUMN]] =

@@ -39,7 +39,7 @@ var nodeTree = {
 computeLayout(nodeTree);
 
 // the layout information is written back to the node tree, with
-// each node now having a layout property: 
+// each node now having a layout property:
 
 // JSON.stringify(nodeTree, null, 2);
 {
@@ -104,7 +104,7 @@ overflow | 'visible', 'hidden'
   n (where n > 0) | n 0 0
   0 | 0 0 auto
   -1 | 0 1 auto
-  
+
 - `inherit` value is not implemented because it's a way to disambiguate between multiple colliding rules. This should be done in a pre-processing step, not in the actual layout algorithm.
 
 

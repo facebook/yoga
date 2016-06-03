@@ -64,7 +64,7 @@ public class CSSNode {
   public int lineIndex = 0;
 
   /*package*/ CSSNode nextChild;
-  
+
   private @Nullable ArrayList<CSSNode> mChildren;
   private @Nullable CSSNode mParent;
   private @Nullable MeasureFunction mMeasureFunction = null;

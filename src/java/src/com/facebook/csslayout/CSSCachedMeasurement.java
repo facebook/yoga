@@ -13,7 +13,7 @@ public class CSSCachedMeasurement {
   public float availableHeight;
   public CSSMeasureMode widthMeasureMode = null;
   public CSSMeasureMode heightMeasureMode = null;
-  
+
   public float computedWidth;
   public float computedHeight;
 }

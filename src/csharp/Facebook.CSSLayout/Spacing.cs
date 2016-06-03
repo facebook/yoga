@@ -137,7 +137,7 @@ namespace Facebook.CSSLayout
 
         internal float get(int spacingType)
         {
-            float defaultValue = 
+            float defaultValue =
                 (mDefaultSpacing != null)
                 ? mDefaultSpacing[spacingType]
                 : (spacingType == START || spacingType == END ? CSSConstants.Undefined : 0);

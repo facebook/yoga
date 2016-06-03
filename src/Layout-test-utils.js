@@ -130,13 +130,13 @@ var layoutTestUtils = (function() {
     keysToCopy.forEach(function(key) {
       layout[key] = node.layout[key];
     });
-    
+
     if (node.children && node.children.length > 0) {
       layout.children = node.children.map(extractNodes);
     } else {
       delete node.children;
     }
-    
+
     delete node.layout;
 
     return layout;
@@ -192,13 +192,13 @@ var layoutTestUtils = (function() {
 
   function computeDOMLayout(node) {
     var body = getIframe().contentDocument.body;
-    
+
     function setStyle(div, name, value) {
       div.style['-webkit-' + name] = value;
       div.style['webkit' + capitalizeFirst(name)] = value;
       div.style[name] = value;
     }
-    
+
     function transfer(div, node, name, ext) {
       if (name in node.style) {
         var value = node.style[name] + (ext || '');
@@ -215,7 +215,7 @@ var layoutTestUtils = (function() {
       transfer(div, node, type + 'Start' + suffix, 'px');
       transfer(div, node, type + 'End' + suffix, 'px');
     }
-    
+
     function transferFlex(div, node) {
       if ('flex' in node.style) {
         var flex = node.style.flex;
@@ -227,7 +227,7 @@ var layoutTestUtils = (function() {
         setStyle(div, 'flex', resolvedFlex);
       }
     }
-    
+
     function renderNode(parent, node) {
       var div = document.createElement('div');
       transfer(div, node, 'width', 'px');
@@ -325,13 +325,13 @@ var layoutTestUtils = (function() {
   function testExtractNodes(node, extractedNode) {
     expect(extractNodes(node)).toEqual(extractedNode);
   }
-  
+
   function testCanUseCachedMeasurement(canReuse, spec, cacheEntry) {
     var availableWidth = spec.availableWidth;
     var availableHeight = spec.availableHeight;
     var widthMeasureMode = spec.widthMeasureMode;
     var heightMeasureMode = spec.heightMeasureMode;
-    
+
     expect(
       canUseCachedMeasurement(
         availableWidth, availableHeight,

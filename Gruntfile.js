@@ -150,7 +150,7 @@ module.exports = function(grunt) {
         command: 'xbuild /verbosity:m /nologo src/csharp/Facebook.CSSLayout.sln /p:Configuration=Release /t:"Facebook_CSSLayout:Rebuild;Facebook_CSSLayout_Tests:Rebuild"'
       },
       csharpTestExecute: {
-        command: 'nunit-console -nologo src/csharp/Facebook.CSSLayout.Tests/bin/Release/Facebook.CSSLayout.Tests.dll'   
+        command: 'nunit-console -nologo src/csharp/Facebook.CSSLayout.Tests/bin/Release/Facebook.CSSLayout.Tests.dll'
       }
     },
 

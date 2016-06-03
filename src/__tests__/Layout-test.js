@@ -39,14 +39,14 @@ describe('Javascript Only', function() {
       {layout: {width: 200}},
       {layout: {width: 200}, style: {}, children: []}
     );
-  });  
+  });
   it('should only invoke measure function one time in simple layout', function() {
     var measureInvocations = 0;
     function measure(width, widthMode, height, heightMode) {
       measureInvocations++;
       return { width: 25, height: 25 };
     }
-    
+
     testLayoutAgainstExpectedOnly(
       {style: {width: 100, height: 100}, children: [
         {style: {measure: measure}}
@@ -55,17 +55,17 @@ describe('Javascript Only', function() {
         {width: 100, height: 25, top: 0, left: 0}
       ]}
     );
-    
+
     expect(measureInvocations).toEqual(1);
   });
 });
 
 describe('JavaScript Only: canUseCachedTextMeasurement', function() {
   var measureModes = ['undefined', 'exactly', 'at-most'];
-  
+
   var assertCanReuse = testCanUseCachedMeasurement.bind(null, true);
   var assertCannotReuse = testCanUseCachedMeasurement.bind(null, false);
-  
+
   it('should not reuse when width mode is "exactly" and available width != measurement', function() {
     measureModes.forEach(function(widthMeasureMode) {
       measureModes.forEach(function(heightMeasureMode) {
@@ -73,12 +73,12 @@ describe('JavaScript Only: canUseCachedTextMeasurement', function() {
         var computedHeight = 200;
         var availableWidth = widthMeasureMode === 'undefined' ? undefined : computedWidth;
         var availableHeight = heightMeasureMode === 'undefined' ? undefined : computedHeight;
-        
+
         var cacheEntry = {
           availableWidth: availableWidth, widthMeasureMode: widthMeasureMode, computedWidth: computedWidth,
           availableHeight: availableHeight, heightMeasureMode: heightMeasureMode, computedHeight: computedHeight
         };
-        
+
         assertCannotReuse(
           {
             availableWidth: computedWidth - 1, widthMeasureMode: 'exactly',
@@ -86,7 +86,7 @@ describe('JavaScript Only: canUseCachedTextMeasurement', function() {
           },
           cacheEntry
         );
-        
+
         assertCannotReuse(
           {
             availableWidth: computedWidth + 1, widthMeasureMode: 'exactly',
@@ -97,7 +97,7 @@ describe('JavaScript Only: canUseCachedTextMeasurement', function() {
       });
     });
   });
-  
+
   it('should not reuse when height mode is "exactly" and available height != measurement', function() {
     measureModes.forEach(function(widthMeasureMode) {
       measureModes.forEach(function(heightMeasureMode) {
@@ -105,12 +105,12 @@ describe('JavaScript Only: canUseCachedTextMeasurement', function() {
         var computedHeight = 200;
         var availableWidth = widthMeasureMode === 'undefined' ? undefined : computedWidth;
         var availableHeight = heightMeasureMode === 'undefined' ? undefined : computedHeight;
-        
+
         var cacheEntry = {
           availableWidth: availableWidth, widthMeasureMode: widthMeasureMode, computedWidth: computedWidth,
           availableHeight: availableHeight, heightMeasureMode: heightMeasureMode, computedHeight: computedHeight
         };
-        
+
         assertCannotReuse(
           {
             availableWidth: availableWidth, widthMeasureMode: widthMeasureMode,
@@ -118,7 +118,7 @@ describe('JavaScript Only: canUseCachedTextMeasurement', function() {
           },
           cacheEntry
         );
-        
+
         assertCannotReuse(
           {
             availableWidth: availableWidth, widthMeasureMode: widthMeasureMode,
@@ -129,7 +129,7 @@ describe('JavaScript Only: canUseCachedTextMeasurement', function() {
       });
     });
   });
-  
+
   it('should reuse exact matches', function() {
     measureModes.forEach(function(widthMeasureMode) {
       measureModes.forEach(function(heightMeasureMode) {
@@ -148,13 +148,13 @@ describe('JavaScript Only: canUseCachedTextMeasurement', function() {
       });
     });
   });
-  
+
   it('should reuse cache entry with unconstrained width when width mode is "exactly" and available width == measurement', function() {
     measureModes.forEach(function(heightMeasureMode) {
       var computedWidth = 100;
       var computedHeight = 200;
       var availableHeight = heightMeasureMode === 'undefined' ? undefined : computedHeight;
-      
+
       assertCanReuse(
         {
           availableWidth: computedWidth, widthMeasureMode: 'exactly',
@@ -167,13 +167,13 @@ describe('JavaScript Only: canUseCachedTextMeasurement', function() {
       );
     });
   });
-    
+
   it('should reuse cache entry with unconstrained height when height mode is "exactly" and height == measurement', function() {
     measureModes.forEach(function(widthMeasureMode) {
       var computedWidth = 100;
       var computedHeight = 200;
       var availableWidth = widthMeasureMode === 'undefined' ? undefined : computedWidth;
-        
+
       assertCanReuse(
         {
           availableWidth: availableWidth, widthMeasureMode: widthMeasureMode,
@@ -2298,7 +2298,7 @@ describe('Layout', function() {
       ]}
     );
   });
-  
+
   it('should center flexible item with max size', function() {
     testLayout(
       {style: {width: 1000, height: 1000, flexDirection: 'row', justifyContent: 'center'}, children: [
@@ -2309,7 +2309,7 @@ describe('Layout', function() {
       ]}
     );
   });
-  
+
   it('should correctly size flexible items with flex basis and a max width', function() {
     testLayout(
       {style: {width: 1000, height: 1000, flexDirection: 'row'}, children: [
@@ -2660,7 +2660,7 @@ describe('Layout', function() {
 
 describe('Layout flex:-1', function() {
   // Tests for items with flex:-1 in a container with flexDirection:column
-  
+
   it('should not shrink column node when there is space left over', function() {
     testLayout(
       {style: {width: 100, height: 100}, children: [
@@ -2675,7 +2675,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink column node when there is not any space left over', function() {
     testLayout(
       {style: {width: 100, height: 100}, children: [
@@ -2690,7 +2690,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should not shrink column node with siblings when there is space left over', function() {
     testLayout(
       {style: {width: 100, height: 100}, children: [
@@ -2709,7 +2709,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink column node with siblings when there is not any space left over', function() {
     testLayout(
       {style: {width: 100, height: 100}, children: [
@@ -2728,7 +2728,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink column nodes proportional to their main size when there is not any space left over', function() {
     testLayout(
       {style: {width: 100, height: 100}, children: [
@@ -2743,9 +2743,9 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   // Tests for items with flex:-1 and overflow:visible in a container with flexDirection:row
-  
+
   it('should not shrink visible row node when there is space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2760,7 +2760,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink visible row node when there is not any space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2776,7 +2776,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should not shrink visible row node with siblings when there is space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2795,7 +2795,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink visible row node with siblings when there is not any space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2815,7 +2815,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink visible row nodes when there is not any space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2832,9 +2832,9 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   // Tests for items with flex:-1 and overflow:hidden in a container with flexDirection:row
-  
+
   it('should not shrink hidden row node when there is space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2864,7 +2864,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should not shrink hidden row node with siblings when there is space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2883,7 +2883,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink hidden row node with siblings when there is not any space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2902,7 +2902,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink hidden row nodes proportional to their main size when there is not any space left over', function() {
     testLayout(
       {style: {width: 100, height: 100, flexDirection: 'row'}, children: [
@@ -2917,9 +2917,9 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   // Tests for items with flex:-1 containing a text node
-  
+
   it('should not shrink text node with siblings when there is space left over', function() {
     testLayoutAgainstExpectedOnly(
       {style: {width: 213, height: 100, flexDirection: 'row'}, children: [
@@ -2938,7 +2938,7 @@ describe('Layout flex:-1', function() {
       ]}
     );
   });
-  
+
   it('should shrink text node with siblings when there is not any space left over', function() {
     testLayout(
       {style: {width: 140, height: 100, flexDirection: 'row'}, children: [
