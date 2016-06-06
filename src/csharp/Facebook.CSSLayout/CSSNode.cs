@@ -154,7 +154,12 @@ namespace Facebook.CSSLayout
 
         public void CalculateLayout()
         {
-            LayoutEngine.layoutNode(DummyLayoutContext, this, CSSConstants.Undefined, CSSConstants.Undefined, null);
+            CalculateLayout(CSSMeasureMode.Undefined, CSSMeasureMode.Undefined);
+        }
+
+        public void CalculateLayout(CSSMeasureMode widthMeasureMode, CSSMeasureMode heightMeasureMode)
+        {
+            LayoutEngine.layoutNode(DummyLayoutContext, this, style.dimensions[DIMENSION_WIDTH], widthMeasureMode, style.dimensions[DIMENSION_HEIGHT], heightMeasureMode, null);
         }
 
         static readonly CSSLayoutContext DummyLayoutContext = new CSSLayoutContext();

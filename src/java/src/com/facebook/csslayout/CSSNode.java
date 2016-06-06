@@ -138,7 +138,14 @@ public class CSSNode {
    * Performs the actual layout and saves the results in {@link #layout}
    */
   public void calculateLayout(CSSLayoutContext layoutContext) {
-    LayoutEngine.layoutNode(layoutContext, this, CSSConstants.UNDEFINED, CSSConstants.UNDEFINED, null);
+    calculateLayout(layoutContext, CSSMeasureMode.UNDEFINED, CSSMeasureMode.UNDEFINED);
+  }
+
+  /**
+   * Performs the actual layout and saves the results in {@link #layout}
+   */
+  public void calculateLayout(CSSLayoutContext layoutContext, CSSMeasureMode widthMeasureMode, CSSMeasureMode heightMeasureMode) {
+    LayoutEngine.layoutNode(layoutContext, this, style.dimensions[DIMENSION_WIDTH], widthMeasureMode, style.dimensions[DIMENSION_HEIGHT], heightMeasureMode, null);
   }
 
   /**
