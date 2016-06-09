@@ -809,6 +809,25 @@ var computeLayout = (function() {
             }
           }
 
+          // If child has no defined size in the cross axis and is set to stretch, set the cross
+          // axis to be measured exactly with the available inner width
+          if (!isMainAxisRow &&
+              !isUndefined(availableInnerWidth) &&
+              !isStyleDimDefined(child, CSS_FLEX_DIRECTION_ROW) &&
+              widthMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
+              getAlignItem(node, child) == CSS_ALIGN_STRETCH) {
+            childWidth = availableInnerWidth;
+            childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+          }
+          if (isMainAxisRow &&
+              !isUndefined(availableInnerHeight) &&
+              !isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN) &&
+              heightMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
+              getAlignItem(node, child) == CSS_ALIGN_STRETCH) {
+            childHeight = availableInnerHeight;
+            childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+          }
+
           // Measure the child
           layoutNodeInternal(child, childWidth, childHeight, direction, childWidthMeasureMode, childHeightMeasureMode, false, 'measure');
 
@@ -1018,7 +1037,13 @@ var computeLayout = (function() {
             childWidth = updatedMainSize + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_ROW);
             childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
 
-            if (!isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_COLUMN)) {
+            if (!isUndefined(availableInnerCrossDim) &&
+                !isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_COLUMN) &&
+                heightMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
+                getAlignItem(node, currentRelativeChild) == CSS_ALIGN_STRETCH) {
+              childHeight = availableInnerCrossDim;
+              childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+            } else if (!isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_COLUMN)) {
               childHeight = availableInnerCrossDim;
               childHeightMeasureMode = isUndefined(childHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
             } else {
@@ -1029,7 +1054,13 @@ var computeLayout = (function() {
             childHeight = updatedMainSize + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_COLUMN);
             childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
 
-            if (!isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_ROW)) {
+            if (!isUndefined(availableInnerCrossDim) &&
+                !isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_ROW) &&
+                widthMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
+                getAlignItem(node, currentRelativeChild) == CSS_ALIGN_STRETCH) {
+              childWidth = availableInnerCrossDim;
+              childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+            } else if (!isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_ROW)) {
               childWidth = availableInnerCrossDim;
               childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
             } else {

@@ -699,6 +699,25 @@ public class LayoutEngine {
             }
           }
   
+          // If child has no defined size in the cross axis and is set to stretch, set the cross
+          // axis to be measured exactly with the available inner width
+          if (!isMainAxisRow &&
+              !Float.isNaN(availableInnerWidth) &&
+              !(child.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0) &&
+              widthMeasureMode == CSSMeasureMode.EXACTLY &&
+              getAlignItem(node, child) == CSSAlign.STRETCH) {
+            childWidth = availableInnerWidth;
+            childWidthMeasureMode = CSSMeasureMode.EXACTLY;
+          }
+          if (isMainAxisRow &&
+              !Float.isNaN(availableInnerHeight) &&
+              !(child.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0) &&
+              heightMeasureMode == CSSMeasureMode.EXACTLY &&
+              getAlignItem(node, child) == CSSAlign.STRETCH) {
+            childHeight = availableInnerHeight;
+            childHeightMeasureMode = CSSMeasureMode.EXACTLY;
+          }
+  
           // Measure the child
           layoutNodeInternal(layoutContext, child, childWidth, childHeight, direction, childWidthMeasureMode, childHeightMeasureMode, false, "measure");
   
@@ -908,7 +927,13 @@ public class LayoutEngine {
             childWidth = updatedMainSize + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
             childWidthMeasureMode = CSSMeasureMode.EXACTLY;
   
-            if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+            if (!Float.isNaN(availableInnerCrossDim) &&
+                !(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0) &&
+                heightMeasureMode == CSSMeasureMode.EXACTLY &&
+                getAlignItem(node, currentRelativeChild) == CSSAlign.STRETCH) {
+              childHeight = availableInnerCrossDim;
+              childHeightMeasureMode = CSSMeasureMode.EXACTLY;
+            } else if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
               childHeight = availableInnerCrossDim;
               childHeightMeasureMode = Float.isNaN(childHeight) ? CSSMeasureMode.UNDEFINED : CSSMeasureMode.AT_MOST;
             } else {
@@ -919,7 +944,13 @@ public class LayoutEngine {
             childHeight = updatedMainSize + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
             childHeightMeasureMode = CSSMeasureMode.EXACTLY;
   
-            if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
+            if (!Float.isNaN(availableInnerCrossDim) &&
+                !(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0) &&
+                widthMeasureMode == CSSMeasureMode.EXACTLY &&
+                getAlignItem(node, currentRelativeChild) == CSSAlign.STRETCH) {
+              childWidth = availableInnerCrossDim;
+              childWidthMeasureMode = CSSMeasureMode.EXACTLY;
+            } else if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
               childWidth = availableInnerCrossDim;
               childWidthMeasureMode = Float.isNaN(childWidth) ? CSSMeasureMode.UNDEFINED : CSSMeasureMode.AT_MOST;
             } else {
