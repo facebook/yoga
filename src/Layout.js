@@ -1462,33 +1462,78 @@ var computeLayout = (function() {
     }
   }
 
-  function canUseCachedMeasurement(availableWidth, availableHeight,
-    marginRow, marginColumn,
-    widthMeasureMode, heightMeasureMode,
-    cachedLayout) {
+  function canUseCachedMeasurement(
+      isTextNode,
+      availableWidth,
+      availableHeight,
+      marginRow,
+      marginColumn,
+      widthMeasureMode,
+      heightMeasureMode,
+      cachedLayout) {
 
-    // Is it an exact match?
-    if (cachedLayout.availableWidth === availableWidth &&
-        cachedLayout.availableHeight === availableHeight &&
-        cachedLayout.widthMeasureMode === widthMeasureMode &&
-        cachedLayout.heightMeasureMode === heightMeasureMode) {
+    var isHeightSame =
+      (cachedLayout.heightMeasureMode == CSS_MEASURE_MODE_UNDEFINED && heightMeasureMode == CSS_MEASURE_MODE_UNDEFINED) ||
+        (cachedLayout.heightMeasureMode == heightMeasureMode && cachedLayout.availableHeight == availableHeight);
+
+    var isWidthSame =
+      (cachedLayout.widthMeasureMode == CSS_MEASURE_MODE_UNDEFINED && widthMeasureMode == CSS_MEASURE_MODE_UNDEFINED) ||
+        (cachedLayout.widthMeasureMode == widthMeasureMode && cachedLayout.availableWidth == availableWidth);
+
+    if (isHeightSame && isWidthSame) {
       return true;
     }
 
-    // If the width is an exact match, try a fuzzy match on the height.
-    if (cachedLayout.availableWidth === availableWidth &&
-        cachedLayout.widthMeasureMode === widthMeasureMode &&
-        heightMeasureMode === CSS_MEASURE_MODE_EXACTLY &&
-        availableHeight - marginColumn === cachedLayout.computedHeight) {
+    var isHeightValid =
+      (cachedLayout.heightMeasureMode == CSS_MEASURE_MODE_UNDEFINED && heightMeasureMode == CSS_MEASURE_MODE_AT_MOST && cachedLayout.computedHeight <= (availableHeight - marginColumn)) ||
+        (heightMeasureMode == CSS_MEASURE_MODE_EXACTLY && cachedLayout.computedHeight == (availableHeight - marginColumn));
+
+    if (isWidthSame && isHeightValid) {
       return true;
     }
 
-    // If the height is an exact match, try a fuzzy match on the width.
-    if (cachedLayout.availableHeight === availableHeight &&
-        cachedLayout.heightMeasureMode === heightMeasureMode &&
-        widthMeasureMode === CSS_MEASURE_MODE_EXACTLY &&
-        availableWidth - marginRow === cachedLayout.computedWidth) {
+    var isWidthValid =
+      (cachedLayout.widthMeasureMode == CSS_MEASURE_MODE_UNDEFINED && widthMeasureMode == CSS_MEASURE_MODE_AT_MOST && cachedLayout.computedWidth <= (availableWidth - marginRow)) ||
+        (widthMeasureMode == CSS_MEASURE_MODE_EXACTLY && cachedLayout.computedWidth == (availableWidth - marginRow));
+
+    if (isHeightSame && isWidthValid) {
       return true;
+    }
+
+    if (isHeightValid && isWidthValid) {
+      return true;
+    }
+
+    // We know this to be text so we can apply some more specialized heuristics.
+    if (isTextNode) {
+      if (isWidthSame) {
+        if (heightMeasureMode == CSS_MEASURE_MODE_UNDEFINED) {
+          // Width is the same and height is not restricted. Re-use cahced value.
+          return true;
+        }
+
+        if (heightMeasureMode == CSS_MEASURE_MODE_AT_MOST &&
+            cachedLayout.computedHeight < (availableHeight - marginColumn)) {
+          // Width is the same and height restriction is greater than the cached height. Re-use cached value.
+          return true;
+        }
+
+        // Width is the same but height restriction imposes smaller height than previously measured.
+        // Update the cached value to respect the new height restriction.
+        cachedLayout.computedHeight = availableHeight - marginColumn;
+        return true;
+      }
+
+      if (cachedLayout.widthMeasureMode == CSS_MEASURE_MODE_UNDEFINED) {
+        if (widthMeasureMode == CSS_MEASURE_MODE_UNDEFINED ||
+             (widthMeasureMode == CSS_MEASURE_MODE_AT_MOST &&
+              cachedLayout.computedWidth <= (availableWidth - marginRow))) {
+          // Previsouly this text was measured with no width restriction, if width is now restricted
+          // but to a larger value than the previsouly measured width we can re-use the measurement
+          // as we know it will fit.
+          return true;
+        }
+      }
     }
 
     return false;
@@ -1537,13 +1582,13 @@ var computeLayout = (function() {
 
       // First, try to use the layout cache.
       if (layout.cachedLayout &&
-          canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+          canUseCachedMeasurement(node.isTextNode, availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
             widthMeasureMode, heightMeasureMode, layout.cachedLayout)) {
         cachedResults = layout.cachedLayout;
       } else if (layout.cachedMeasurements) {
         // Try to use the measurement cache.
         for (i = 0, len = layout.cachedMeasurements.length; i < len; i++) {
-          if (canUseCachedMeasurement(availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
+          if (canUseCachedMeasurement(node.isTextNode, availableWidth, availableHeight, marginAxisRow, marginAxisColumn,
               widthMeasureMode, heightMeasureMode, layout.cachedMeasurements[i])) {
             cachedResults = layout.cachedMeasurements[i];
             break;

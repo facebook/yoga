@@ -65,6 +65,7 @@ namespace Facebook.CSSLayout
         [Nullable] CSSNode mParent;
         [Nullable] MeasureFunction mMeasureFunction = null;
         LayoutState mLayoutState = LayoutState.DIRTY;
+        bool mIsTextNode = false;
 
         public int ChildCount
         {
@@ -132,6 +133,12 @@ namespace Facebook.CSSLayout
                     dirty();
                 }
             }
+        }
+
+        public bool IsTextNode
+        {
+            get { return mIsTextNode; }
+            set { mIsTextNode = value; }
         }
 
         public bool IsMeasureDefined
@@ -516,6 +523,11 @@ namespace Facebook.CSSLayout
         public static void setMeasureFunction(this CSSNode node, MeasureFunction measureFunction)
         {
             node.MeasureFunction = measureFunction;
+        }
+
+        public static void setIsTextNode(this CSSNode node, bool isTextNode)
+        {
+            node.IsTextNode = isTextNode;
         }
 
         public static void calculateLayout(this CSSNode node)
