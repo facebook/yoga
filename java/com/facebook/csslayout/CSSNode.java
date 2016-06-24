@@ -24,7 +24,7 @@ import static com.facebook.csslayout.CSSLayout.POSITION_TOP;
 
 /**
  * A CSS Node. It has a style object you can manipulate at {@link #style}. After calling
- * {@link #calculateLayout()}, {@link #layout} will be filled with the results of the layout.
+ * {@link #calculateLayout(CSSLayoutContext)}, {@link #layout} will be filled with the results of the layout.
  */
 public class CSSNode {
 
@@ -71,6 +71,11 @@ public class CSSNode {
   private @Nullable MeasureFunction mMeasureFunction = null;
   private LayoutState mLayoutState = LayoutState.DIRTY;
   private boolean mIsTextNode = false;
+
+  public static final Iterable<CSSNode> NO_CSS_NODES = new ArrayList<CSSNode>(0);
+  public Iterable<CSSNode> getChildrenIterable() {
+    return mChildren == null ? NO_CSS_NODES : mChildren;
+  }
 
   public int getChildCount() {
     return mChildren == null ? 0 : mChildren.size();
