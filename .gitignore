@@ -5,3 +5,4 @@ a.out
 /lib/
 /node_modules/
 npm-debug.log
+TestResult.xml

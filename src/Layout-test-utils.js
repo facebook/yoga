@@ -548,15 +548,14 @@ var layoutTestUtils = (function() {
         if (text === texts.small) {
           return {
             width: Math.min(textSizes.smallWidth, width),
-            height: textSizes.smallHeight
+            height: textSizes.smallWidth > width ? textSizes.bigHeight : textSizes.smallHeight
           };
         }
         if (text === texts.big) {
-          var res = {
-            width: width >= textSizes.bigWidth ? textSizes.bigWidth : Math.max(textSizes.bigMinWidth, width),
-            height: width >= textSizes.bigWidth ? textSizes.smallHeight : textSizes.bigHeight
+          return {
+            width: Math.min(textSizes.bigWidth, width),
+            height: textSizes.bigWidth > width ? textSizes.bigHeight : textSizes.smallHeight
           };
-          return res;
         }
       };
       // Name of the function is used in DOM tests as a text in the measured node
@@ -566,9 +565,13 @@ var layoutTestUtils = (function() {
     },
     measureWithRatio2: function() {
       var fn = function(width, widthMode, height, heightMode) {
-        if (widthMode !== 'undefined') {
+        if (widthMode === 'exactly') {
           height = width * 2;
-        } else if (heightMode !== 'undefined') {
+        } else if (heightMode === 'exactly') {
+          width = height * 2;
+        } else if (widthMode === 'at-most') {
+          height = width * 2;
+        } else if (heightMode === 'at-most') {
           width = height * 2;
         } else {
           // This should be Infinity, but it would be pain to transpile,
