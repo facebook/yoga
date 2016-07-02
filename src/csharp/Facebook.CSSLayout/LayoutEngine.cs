@@ -260,21 +260,30 @@ namespace Facebook.CSSLayout
             // parameters don't change.
             layoutContext.currentGenerationCount++;
 
-            // If the caller didn't specify a height/width, use the dimensions
-            // specified in the style.
-            if (float.IsNaN(availableWidth) && node.style.dimensions[DIMENSION_WIDTH] >= 0.0)
-            {
-                float marginAxisRow = (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
-                availableWidth = node.style.dimensions[DIMENSION_WIDTH] + marginAxisRow;
-            }
-            if (float.IsNaN(availableHeight) && node.style.dimensions[DIMENSION_HEIGHT] >= 0.0)
-            {
-                float marginAxisColumn = (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
-                availableHeight = node.style.dimensions[DIMENSION_HEIGHT] + marginAxisColumn;
+            CSSMeasureMode widthMeasureMode = CSSMeasureMode.Undefined;
+            CSSMeasureMode heightMeasureMode = CSSMeasureMode.Undefined;
+
+            if (!float.IsNaN(availableWidth)) {
+              widthMeasureMode = CSSMeasureMode.Exactly;
+            } else if (node.style.dimensions[DIMENSION_WIDTH] >= 0.0) {
+              float marginAxisRow = (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
+              availableWidth = node.style.dimensions[DIMENSION_WIDTH] + marginAxisRow;
+              widthMeasureMode = CSSMeasureMode.Exactly;
+            } else if (node.style.maxWidth >= 0.0) {
+              availableWidth = node.style.maxWidth;
+              widthMeasureMode = CSSMeasureMode.AtMost;
             }
 
-            CSSMeasureMode widthMeasureMode = float.IsNaN(availableWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.Exactly;
-            CSSMeasureMode heightMeasureMode = float.IsNaN(availableHeight) ? CSSMeasureMode.Undefined : CSSMeasureMode.Exactly;
+            if (!float.IsNaN(availableHeight)) {
+              heightMeasureMode = CSSMeasureMode.Exactly;
+            } else if (node.style.dimensions[DIMENSION_HEIGHT] >= 0.0) {
+              float marginAxisColumn = (node.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + node.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
+              availableHeight = node.style.dimensions[DIMENSION_HEIGHT] + marginAxisColumn;
+              heightMeasureMode = CSSMeasureMode.Exactly;
+            } else if (node.style.maxHeight >= 0.0) {
+              availableHeight = node.style.maxHeight;
+              heightMeasureMode = CSSMeasureMode.AtMost;
+            }
 
             if (layoutNodeInternal(layoutContext, node, availableWidth, availableHeight, parentDirection, widthMeasureMode, heightMeasureMode, true, "initial"))
             {
