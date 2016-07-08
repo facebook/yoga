@@ -1403,7 +1403,7 @@ describe('Layout', function() {
   it('should layout node with text and width', function() {
     testLayout(
       {style: {measure: text(texts.small), width: 10}},
-      {width: 10, height: textSizes.smallHeight, top: 0, left: 0}
+      {width: 10, height: textSizes.bigHeight, top: 0, left: 0}
     );
   });
 
@@ -1508,10 +1508,8 @@ describe('Layout', function() {
         ]}
       ]},
       {width: 100, height: 40 + textSizes.bigHeight, top: 0, left: 0, children: [
-        // In the flexbox engine implementation, min width of text is not supported so we max
-        // out at the amount of available space (60)
-        {width: Math.min(60, textSizes.bigMinWidth), height: textSizes.bigHeight, top: 20, left: 20, children: [
-          {width: textSizes.bigMinWidth, height: textSizes.bigHeight, top: 0, left: 0}
+        {width: 60, height: textSizes.bigHeight, top: 20, left: 20, children: [
+          {width: 60, height: textSizes.bigHeight, top: 0, left: 0}
         ]}
       ]}
     );
@@ -1569,12 +1567,12 @@ describe('Layout', function() {
     testLayout(
       {style: {}, children: [
         {style: {width: 200, flexDirection: 'row'}, children: [
-          {style: {margin: 20, measure: text(texts.big)}}
+          {style: {margin: 20, measure: text(texts.small)}}
         ]}
       ]},
       {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
         {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
-          {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 20, left: 20}
+          {width: textSizes.smallWidth, height: textSizes.smallHeight, top: 20, left: 20}
         ]}
       ]}
     );
@@ -1584,12 +1582,12 @@ describe('Layout', function() {
     testLayout(
       {style: { direction: 'rtl' }, children: [
         {style: {width: 200, flexDirection: 'row'}, children: [
-          {style: {margin: 20, measure: text(texts.big)}}
+          {style: {margin: 20, measure: text(texts.small)}}
         ]}
       ]},
       {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
         {width: 200, height: textSizes.smallHeight + 40, top: 0, left: 0, children: [
-          {width: textSizes.bigWidth, height: textSizes.smallHeight, top: 20, left: 8}
+          {width: textSizes.smallWidth, height: textSizes.smallHeight, top: 20, left: 200 - 20 - textSizes.smallWidth}
         ]}
       ]}
     );
