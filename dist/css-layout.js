@@ -1683,17 +1683,28 @@ var computeLayout = (function() {
     // parameters don't change.
     gCurrentGenerationCount++;
 
-    // If the caller didn't specify a height/width, use the dimensions
-    // specified in the style.
-    if (isUndefined(availableWidth) && isStyleDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
+    var widthMeasureMode = CSS_MEASURE_MODE_UNDEFINED;
+    var heightMeasureMode = CSS_MEASURE_MODE_UNDEFINED;
+
+    if (!isUndefined(availableWidth)) {
+      widthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+    } else if (isStyleDimDefined(node, CSS_FLEX_DIRECTION_ROW)) {
       availableWidth = node.style.width + getMarginAxis(node, CSS_FLEX_DIRECTION_ROW);
-    }
-    if (isUndefined(availableHeight) && isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
-      availableHeight = node.style.height + getMarginAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+      widthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+    } else if (node.style.maxWidth >= 0.0) {
+      availableWidth = node.style.maxWidth;
+      widthMeasureMode = CSS_MEASURE_MODE_AT_MOST;
     }
 
-    var widthMeasureMode = isUndefined(availableWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_EXACTLY;
-    var heightMeasureMode = isUndefined(availableHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_EXACTLY;
+    if (!isUndefined(availableHeight)) {
+      heightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+    } else if (isStyleDimDefined(node, CSS_FLEX_DIRECTION_COLUMN)) {
+      availableHeight = node.style.height + getMarginAxis(node, CSS_FLEX_DIRECTION_COLUMN);
+      heightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+    } else if (node.style.maxHeight >= 0.0) {
+      availableHeight = node.style.maxHeight;
+      heightMeasureMode = CSS_MEASURE_MODE_AT_MOST;
+    }
 
     if (layoutNodeInternal(node, availableWidth, availableHeight, parentDirection, widthMeasureMode, heightMeasureMode, true, 'initial')) {
       setPosition(node, node.layout.direction);
