@@ -776,7 +776,7 @@ namespace Facebook.CSSLayout
                 childWidth = availableInnerMainDim;
                 childWidthMeasureMode = CSSMeasureMode.AtMost;
               }
-            } else if (node.style.overflow == CSSOverflow.Hidden) {
+            } else {
               if (heightMeasureMode == CSSMeasureMode.Undefined || float.IsNaN(availableInnerMainDim)) {
                 childHeight = CSSConstants.Undefined;
                 childHeightMeasureMode = CSSMeasureMode.Undefined;
@@ -788,20 +788,20 @@ namespace Facebook.CSSLayout
     
             // Cross axis
             if (isMainAxisRow) {
-              if (node.style.overflow == CSSOverflow.Hidden) {
-                if (!float.IsNaN(availableInnerCrossDim) &&
-                    !(child.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0) &&
-                    heightMeasureMode == CSSMeasureMode.Exactly &&
-                    getAlignItem(node, child) == CSSAlign.Stretch) {
-                  childHeight = availableInnerCrossDim;
-                  childHeightMeasureMode = CSSMeasureMode.Exactly;
-                } else if (!(child.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+              if (!float.IsNaN(availableInnerCrossDim) &&
+                  !(child.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0) &&
+                  heightMeasureMode == CSSMeasureMode.Exactly &&
+                  getAlignItem(node, child) == CSSAlign.Stretch) {
+                childHeight = availableInnerCrossDim;
+                childHeightMeasureMode = CSSMeasureMode.Exactly;
+              } else if (!(child.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
+                if (node.style.overflow == CSSOverflow.Hidden) {
                   childHeight = availableInnerCrossDim;
                   childHeightMeasureMode = float.IsNaN(childHeight) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
-                } else {
-                  childHeight = child.style.dimensions[DIMENSION_HEIGHT] + (child.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + child.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
-                  childHeightMeasureMode = CSSMeasureMode.Exactly;
                 }
+              } else {
+                childHeight = child.style.dimensions[DIMENSION_HEIGHT] + (child.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + child.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
+                childHeightMeasureMode = CSSMeasureMode.Exactly;
               }
             } else {
               if (!float.IsNaN(availableInnerCrossDim) &&
@@ -811,8 +811,10 @@ namespace Facebook.CSSLayout
                 childWidth = availableInnerCrossDim;
                 childWidthMeasureMode = CSSMeasureMode.Exactly;
               } else if (!(child.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
-                childWidth = availableInnerCrossDim;
-                childWidthMeasureMode = float.IsNaN(childWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
+                if (node.style.overflow == CSSOverflow.Hidden) {
+                  childWidth = availableInnerCrossDim;
+                  childWidthMeasureMode = float.IsNaN(childWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
+                }
               } else {
                 childWidth = child.style.dimensions[DIMENSION_WIDTH] + (child.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + child.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
                 childWidthMeasureMode = CSSMeasureMode.Exactly;
@@ -1024,6 +1026,11 @@ namespace Facebook.CSSLayout
     
             deltaFreeSpace -= updatedMainSize - childFlexBasis;
     
+            childWidth = CSSConstants.Undefined;
+            childHeight = CSSConstants.Undefined;
+            childWidthMeasureMode = CSSMeasureMode.Undefined;
+            childHeightMeasureMode = CSSMeasureMode.Undefined;
+    
             if (isMainAxisRow) {
               childWidth = updatedMainSize + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
               childWidthMeasureMode = CSSMeasureMode.Exactly;
@@ -1035,8 +1042,10 @@ namespace Facebook.CSSLayout
                 childHeight = availableInnerCrossDim;
                 childHeightMeasureMode = CSSMeasureMode.Exactly;
               } else if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] >= 0.0)) {
-                childHeight = availableInnerCrossDim;
-                childHeightMeasureMode = float.IsNaN(childHeight) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
+                if (node.style.overflow == CSSOverflow.Hidden) {
+                  childHeight = availableInnerCrossDim;
+                  childHeightMeasureMode = float.IsNaN(childHeight) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
+                }
               } else {
                 childHeight = currentRelativeChild.style.dimensions[DIMENSION_HEIGHT] + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_COLUMN], leading[CSS_FLEX_DIRECTION_COLUMN]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_COLUMN], trailing[CSS_FLEX_DIRECTION_COLUMN]));
                 childHeightMeasureMode = CSSMeasureMode.Exactly;
@@ -1052,8 +1061,10 @@ namespace Facebook.CSSLayout
                 childWidth = availableInnerCrossDim;
                 childWidthMeasureMode = CSSMeasureMode.Exactly;
               } else if (!(currentRelativeChild.style.dimensions[dim[CSS_FLEX_DIRECTION_ROW]] >= 0.0)) {
-                childWidth = availableInnerCrossDim;
-                childWidthMeasureMode = float.IsNaN(childWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
+                if (node.style.overflow == CSSOverflow.Hidden) {
+                  childWidth = availableInnerCrossDim;
+                  childWidthMeasureMode = float.IsNaN(childWidth) ? CSSMeasureMode.Undefined : CSSMeasureMode.AtMost;
+                }
               } else {
                 childWidth = currentRelativeChild.style.dimensions[DIMENSION_WIDTH] + (currentRelativeChild.style.margin.getWithFallback(leadingSpacing[CSS_FLEX_DIRECTION_ROW], leading[CSS_FLEX_DIRECTION_ROW]) + currentRelativeChild.style.margin.getWithFallback(trailingSpacing[CSS_FLEX_DIRECTION_ROW], trailing[CSS_FLEX_DIRECTION_ROW]));
                 childWidthMeasureMode = CSSMeasureMode.Exactly;

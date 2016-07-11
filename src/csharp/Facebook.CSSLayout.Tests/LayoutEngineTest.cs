@@ -4755,6 +4755,7 @@ public class LayoutEngineTest
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
       node_0.style.alignSelf = CSSAlign.FlexStart;
       node_0.style.dimensions[DIMENSION_WIDTH] = 100;
       addChildren(node_0, 1);
@@ -4794,6 +4795,7 @@ public class LayoutEngineTest
     TestCSSNode root_node = new TestCSSNode();
     {
       TestCSSNode node_0 = root_node;
+      node_0.style.flexDirection = CSSFlexDirection.Row;
       node_0.style.alignSelf = CSSAlign.FlexStart;
       node_0.style.dimensions[DIMENSION_WIDTH] = 100;
       node_0.setPadding(Spacing.LEFT, 10);
@@ -8245,6 +8247,7 @@ public class LayoutEngineTest
         node_1 = node_0.getChildAt(1);
         node_1.style.flexDirection = CSSFlexDirection.Column;
         node_1.style.alignItems = CSSAlign.FlexStart;
+        node_1.style.overflow = CSSOverflow.Hidden;
         node_1.style.flex = 1;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
         addChildren(node_1, 1);

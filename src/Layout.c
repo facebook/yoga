@@ -840,7 +840,7 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
             childWidth = availableInnerMainDim;
             childWidthMeasureMode = CSS_MEASURE_MODE_AT_MOST;
           }
-        } else if (node->style.overflow == CSS_OVERFLOW_HIDDEN) {
+        } else {
           if (heightMeasureMode == CSS_MEASURE_MODE_UNDEFINED || isUndefined(availableInnerMainDim)) {
             childHeight = CSS_UNDEFINED;
             childHeightMeasureMode = CSS_MEASURE_MODE_UNDEFINED;
@@ -852,20 +852,20 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
 
         // Cross axis
         if (isMainAxisRow) {
-          if (node->style.overflow == CSS_OVERFLOW_HIDDEN) {
-            if (!isUndefined(availableInnerCrossDim) &&
-                !isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN) &&
-                heightMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
-                getAlignItem(node, child) == CSS_ALIGN_STRETCH) {
-              childHeight = availableInnerCrossDim;
-              childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
-            } else if (!isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN)) {
+          if (!isUndefined(availableInnerCrossDim) &&
+              !isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN) &&
+              heightMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
+              getAlignItem(node, child) == CSS_ALIGN_STRETCH) {
+            childHeight = availableInnerCrossDim;
+            childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+          } else if (!isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN)) {
+            if (node->style.overflow == CSS_OVERFLOW_HIDDEN) {
               childHeight = availableInnerCrossDim;
               childHeightMeasureMode = isUndefined(childHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
-            } else {
-              childHeight = child->style.dimensions[CSS_HEIGHT] + getMarginAxis(child, CSS_FLEX_DIRECTION_COLUMN);
-              childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
             }
+          } else {
+            childHeight = child->style.dimensions[CSS_HEIGHT] + getMarginAxis(child, CSS_FLEX_DIRECTION_COLUMN);
+            childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
           }
         } else {
           if (!isUndefined(availableInnerCrossDim) &&
@@ -875,8 +875,10 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
             childWidth = availableInnerCrossDim;
             childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
           } else if (!isStyleDimDefined(child, CSS_FLEX_DIRECTION_ROW)) {
-            childWidth = availableInnerCrossDim;
-            childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+            if (node->style.overflow == CSS_OVERFLOW_HIDDEN) {
+              childWidth = availableInnerCrossDim;
+              childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+            }
           } else {
             childWidth = child->style.dimensions[CSS_WIDTH] + getMarginAxis(child, CSS_FLEX_DIRECTION_ROW);
             childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
@@ -1088,6 +1090,11 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
 
         deltaFreeSpace -= updatedMainSize - childFlexBasis;
 
+        childWidth = CSS_UNDEFINED;
+        childHeight = CSS_UNDEFINED;
+        childWidthMeasureMode = CSS_MEASURE_MODE_UNDEFINED;
+        childHeightMeasureMode = CSS_MEASURE_MODE_UNDEFINED;
+
         if (isMainAxisRow) {
           childWidth = updatedMainSize + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_ROW);
           childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
@@ -1099,8 +1106,10 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
             childHeight = availableInnerCrossDim;
             childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
           } else if (!isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_COLUMN)) {
-            childHeight = availableInnerCrossDim;
-            childHeightMeasureMode = isUndefined(childHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+            if (node->style.overflow == CSS_OVERFLOW_HIDDEN) {
+              childHeight = availableInnerCrossDim;
+              childHeightMeasureMode = isUndefined(childHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+            }
           } else {
             childHeight = currentRelativeChild->style.dimensions[CSS_HEIGHT] + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_COLUMN);
             childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
@@ -1116,8 +1125,10 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
             childWidth = availableInnerCrossDim;
             childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
           } else if (!isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_ROW)) {
-            childWidth = availableInnerCrossDim;
-            childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+            if (node->style.overflow == CSS_OVERFLOW_HIDDEN) {
+              childWidth = availableInnerCrossDim;
+              childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+            }
           } else {
             childWidth = currentRelativeChild->style.dimensions[CSS_WIDTH] + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_ROW);
             childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
