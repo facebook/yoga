@@ -809,7 +809,7 @@ var computeLayout = (function() {
               childWidth = availableInnerMainDim;
               childWidthMeasureMode = CSS_MEASURE_MODE_AT_MOST;
             }
-          } else if (getOverflow(node) === CSS_OVERFLOW_HIDDEN) {
+          } else {
             if (heightMeasureMode == CSS_MEASURE_MODE_UNDEFINED || isUndefined(availableInnerMainDim)) {
               childHeight = CSS_UNDEFINED;
               childHeightMeasureMode = CSS_MEASURE_MODE_UNDEFINED;
@@ -821,20 +821,20 @@ var computeLayout = (function() {
 
           // Cross axis
           if (isMainAxisRow) {
-            if (getOverflow(node) === CSS_OVERFLOW_HIDDEN) {
-              if (!isUndefined(availableInnerCrossDim) &&
-                  !isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN) &&
-                  heightMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
-                  getAlignItem(node, child) == CSS_ALIGN_STRETCH) {
-                childHeight = availableInnerCrossDim;
-                childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
-              } else if (!isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN)) {
+            if (!isUndefined(availableInnerCrossDim) &&
+                !isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN) &&
+                heightMeasureMode == CSS_MEASURE_MODE_EXACTLY &&
+                getAlignItem(node, child) == CSS_ALIGN_STRETCH) {
+              childHeight = availableInnerCrossDim;
+              childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
+            } else if (!isStyleDimDefined(child, CSS_FLEX_DIRECTION_COLUMN)) {
+              if (getOverflow(node) === CSS_OVERFLOW_HIDDEN) {
                 childHeight = availableInnerCrossDim;
                 childHeightMeasureMode = isUndefined(childHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
-              } else {
-                childHeight = child.style.height + getMarginAxis(child, CSS_FLEX_DIRECTION_COLUMN);
-                childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
               }
+            } else {
+              childHeight = child.style.height + getMarginAxis(child, CSS_FLEX_DIRECTION_COLUMN);
+              childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
             }
           } else {
             if (!isUndefined(availableInnerCrossDim) &&
@@ -844,8 +844,10 @@ var computeLayout = (function() {
               childWidth = availableInnerCrossDim;
               childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
             } else if (!isStyleDimDefined(child, CSS_FLEX_DIRECTION_ROW)) {
-              childWidth = availableInnerCrossDim;
-              childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+              if (getOverflow(node) === CSS_OVERFLOW_HIDDEN) {
+                childWidth = availableInnerCrossDim;
+                childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+              }
             } else {
               childWidth = child.style.width + getMarginAxis(child, CSS_FLEX_DIRECTION_ROW);
               childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
@@ -1057,6 +1059,11 @@ var computeLayout = (function() {
 
           deltaFreeSpace -= updatedMainSize - childFlexBasis;
 
+          childWidth = CSS_UNDEFINED;
+          childHeight = CSS_UNDEFINED;
+          childWidthMeasureMode = CSS_MEASURE_MODE_UNDEFINED;
+          childHeightMeasureMode = CSS_MEASURE_MODE_UNDEFINED;
+
           if (isMainAxisRow) {
             childWidth = updatedMainSize + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_ROW);
             childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
@@ -1068,8 +1075,10 @@ var computeLayout = (function() {
               childHeight = availableInnerCrossDim;
               childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
             } else if (!isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_COLUMN)) {
-              childHeight = availableInnerCrossDim;
-              childHeightMeasureMode = isUndefined(childHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+              if (getOverflow(node) === CSS_OVERFLOW_HIDDEN) {
+                childHeight = availableInnerCrossDim;
+                childHeightMeasureMode = isUndefined(childHeight) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+              }
             } else {
               childHeight = currentRelativeChild.style.height + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_COLUMN);
               childHeightMeasureMode = CSS_MEASURE_MODE_EXACTLY;
@@ -1085,8 +1094,10 @@ var computeLayout = (function() {
               childWidth = availableInnerCrossDim;
               childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;
             } else if (!isStyleDimDefined(currentRelativeChild, CSS_FLEX_DIRECTION_ROW)) {
-              childWidth = availableInnerCrossDim;
-              childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+              if (getOverflow(node) === CSS_OVERFLOW_HIDDEN) {
+                childWidth = availableInnerCrossDim;
+                childWidthMeasureMode = isUndefined(childWidth) ? CSS_MEASURE_MODE_UNDEFINED : CSS_MEASURE_MODE_AT_MOST;
+              }
             } else {
               childWidth = currentRelativeChild.style.width + getMarginAxis(currentRelativeChild, CSS_FLEX_DIRECTION_ROW);
               childWidthMeasureMode = CSS_MEASURE_MODE_EXACTLY;

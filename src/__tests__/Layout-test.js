@@ -1491,7 +1491,7 @@ describe('Layout', function() {
 
   it('should layout node with text bounded by parent', function() {
     testLayout(
-      {style: {width: 100, alignSelf: 'flex-start'}, children: [
+      {style: {width: 100, alignSelf: 'flex-start', flexDirection: 'row'}, children: [
         {style: {measure: text(texts.big), alignSelf: 'flex-start'}}
       ]},
       {width: 100, height: textSizes.bigHeight, top: 0, left: 0, children: [
@@ -1502,7 +1502,7 @@ describe('Layout', function() {
 
   it('should layout node with text bounded by grand-parent', function() {
     testLayoutAgainstExpectedOnly(
-      {style: {width: 100, padding: 10, alignSelf: 'flex-start'}, children: [
+      {style: {width: 100, padding: 10, alignSelf: 'flex-start', flexDirection: 'row'}, children: [
         {style: {margin: 10, alignSelf: 'flex-start'}, children: [
           {style: {measure: text(texts.big)}}
         ]}
@@ -2559,7 +2559,7 @@ describe('Layout', function() {
     testLayoutAgainstExpectedOnly(
       {style:{flexDirection: 'row', alignItems: 'flex-start', width: 100, height: 10}, children: [
         {style: {width: 50, height: 10}},
-        {style:{flexDirection: 'column', alignItems: 'flex-start', flex: 1, height: 10}, children: [
+        {style:{flexDirection: 'column', alignItems: 'flex-start', flex: 1, height: 10, overflow: 'hidden'}, children: [
           {style: {measure: measureWithMatchParent, flex: 1, height: 10}}
         ]}
       ]},

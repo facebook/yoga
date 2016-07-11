@@ -4425,6 +4425,7 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.align_self = CSS_ALIGN_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       init_css_node_children(node_0, 1);
@@ -4462,6 +4463,7 @@ int main()
     css_node_t *root_node = new_test_css_node();
     {
       css_node_t *node_0 = root_node;
+      node_0->style.flex_direction = CSS_FLEX_DIRECTION_ROW;
       node_0->style.align_self = CSS_ALIGN_FLEX_START;
       node_0->style.dimensions[CSS_WIDTH] = 100;
       node_0->style.padding[CSS_LEFT] = 10;
@@ -7759,6 +7761,7 @@ int main()
         node_1 = node_0->get_child(node_0->context, 1);
         node_1->style.flex_direction = CSS_FLEX_DIRECTION_COLUMN;
         node_1->style.align_items = CSS_ALIGN_FLEX_START;
+        node_1->style.overflow = CSS_OVERFLOW_HIDDEN;
         node_1->style.flex = 1;
         node_1->style.dimensions[CSS_HEIGHT] = 10;
         init_css_node_children(node_1, 1);
