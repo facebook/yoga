@@ -52,7 +52,7 @@ public class CSSStyle {
     alignSelf = CSSAlign.AUTO;
     positionType = CSSPositionType.RELATIVE;
     flexWrap = CSSWrap.NOWRAP;
-    overflow = CSSOverflow.VISIBLE;
+    overflow = CSSOverflow.HIDDEN;
     flex = 0f;
 
     margin.reset();;

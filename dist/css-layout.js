@@ -427,7 +427,7 @@ var computeLayout = (function() {
     if (node.style.overflow) {
       return node.style.overflow;
     }
-    return CSS_OVERFLOW_VISIBLE;
+    return CSS_OVERFLOW_HIDDEN;
   }
 
   function isFlex(node) {

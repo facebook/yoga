@@ -22,7 +22,7 @@ namespace Facebook.CSSLayout
         public CSSAlign alignSelf = CSSAlign.Auto;
         public CSSPositionType positionType = CSSPositionType.Relative;
         public CSSWrap flexWrap = CSSWrap.NoWrap;
-        public CSSOverflow overflow = CSSOverflow.Visible;
+        public CSSOverflow overflow = CSSOverflow.Hidden;
         public float flex;
 
         public Spacing margin = new Spacing();
