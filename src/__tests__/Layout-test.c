@@ -4140,7 +4140,7 @@ int main()
       node_0->layout.position[CSS_TOP] = 0;
       node_0->layout.position[CSS_LEFT] = 0;
       node_0->layout.dimensions[CSS_WIDTH] = 10;
-      node_0->layout.dimensions[CSS_HEIGHT] = 36;
+      node_0->layout.dimensions[CSS_HEIGHT] = 18;
     }
 
     test("should layout node with text and width", root_node, root_layout);
@@ -4512,7 +4512,7 @@ int main()
           node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 0;
           node_2->layout.position[CSS_LEFT] = 0;
-          node_2->layout.dimensions[CSS_WIDTH] = 60;
+          node_2->layout.dimensions[CSS_WIDTH] = 100;
           node_2->layout.dimensions[CSS_HEIGHT] = 36;
         }
       }
@@ -4698,7 +4698,7 @@ int main()
           node_2->style.margin[CSS_START] = 20;
           node_2->style.margin[CSS_END] = 20;
           node_2->measure = measure;
-          node_2->context = "small";
+          node_2->context = "loooooooooong with space";
         }
       }
     }
@@ -4724,7 +4724,7 @@ int main()
           node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 20;
           node_2->layout.position[CSS_LEFT] = 20;
-          node_2->layout.dimensions[CSS_WIDTH] = 35;
+          node_2->layout.dimensions[CSS_WIDTH] = 172;
           node_2->layout.dimensions[CSS_HEIGHT] = 18;
         }
       }
@@ -4755,7 +4755,7 @@ int main()
           node_2->style.margin[CSS_START] = 20;
           node_2->style.margin[CSS_END] = 20;
           node_2->measure = measure;
-          node_2->context = "small";
+          node_2->context = "loooooooooong with space";
         }
       }
     }
@@ -4780,8 +4780,8 @@ int main()
           css_node_t *node_2;
           node_2 = node_1->get_child(node_1->context, 0);
           node_2->layout.position[CSS_TOP] = 20;
-          node_2->layout.position[CSS_LEFT] = 145;
-          node_2->layout.dimensions[CSS_WIDTH] = 35;
+          node_2->layout.position[CSS_LEFT] = 8;
+          node_2->layout.dimensions[CSS_WIDTH] = 172;
           node_2->layout.dimensions[CSS_HEIGHT] = 18;
         }
       }

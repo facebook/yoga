@@ -32,36 +32,23 @@ public class LayoutEngineTest
             if (widthMode == CSSMeasureMode.Undefined) {
                 width = 10000000;
             }
-
-            float textHeight = TestConstants.SMALL_HEIGHT;
-            if (TestConstants.SMALL_WIDTH > width) {
-              textHeight = TestConstants.BIG_HEIGHT;
-            }
-
             return new MeasureOutput(
                 Math.Min(width, TestConstants.SMALL_WIDTH),
-                textHeight);
+                TestConstants.SMALL_HEIGHT);
         } else if (testNode.context.Equals(TestConstants.LONG_TEXT)) {
             if (widthMode == CSSMeasureMode.Undefined) {
                 width = 10000000;
             }
-
-            float textHeight = TestConstants.SMALL_HEIGHT;
-            if (TestConstants.BIG_WIDTH > width) {
-              textHeight = TestConstants.BIG_HEIGHT;
-            }
-
-            return new MeasureOutput(
-                Math.Min(width, TestConstants.BIG_WIDTH),
-                textHeight);
+            return new MeasureOutput(width >= TestConstants.BIG_WIDTH
+                ? TestConstants.BIG_WIDTH
+                : Math.Max(TestConstants.BIG_MIN_WIDTH, width),
+                width >= TestConstants.BIG_WIDTH
+                    ? TestConstants.SMALL_HEIGHT
+                    : TestConstants.BIG_HEIGHT);
         } else if (testNode.context.Equals(TestConstants.MEASURE_WITH_RATIO_2)) {
-            if (widthMode == CSSMeasureMode.Exactly) {
+            if (widthMode != CSSMeasureMode.Undefined) {
                 return new MeasureOutput(width, width * 2);
-            } else if (heightMode == CSSMeasureMode.Exactly) {
-                return new MeasureOutput(height * 2, height);
-            } else if (widthMode == CSSMeasureMode.AtMost) {
-                return new MeasureOutput(width, width * 2);
-            } else if (heightMode == CSSMeasureMode.AtMost) {
+            } else if (heightMode != CSSMeasureMode.Undefined) {
                 return new MeasureOutput(height * 2, height);
             } else {
               return new MeasureOutput(99999, 99999);
@@ -4456,7 +4443,7 @@ public class LayoutEngineTest
       node_0.layout.position[POSITION_TOP] = 0;
       node_0.layout.position[POSITION_LEFT] = 0;
       node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
-      node_0.layout.dimensions[DIMENSION_HEIGHT] = 36;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 18;
     }
 
     test("should layout node with text and width", root_node, root_layout);
@@ -4844,7 +4831,7 @@ public class LayoutEngineTest
           node_2 = node_1.getChildAt(0);
           node_2.layout.position[POSITION_TOP] = 0;
           node_2.layout.position[POSITION_LEFT] = 0;
-          node_2.layout.dimensions[DIMENSION_WIDTH] = 60;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
           node_2.layout.dimensions[DIMENSION_HEIGHT] = 36;
         }
       }
@@ -5040,7 +5027,7 @@ public class LayoutEngineTest
           node_2.setMargin(Spacing.START, 20);
           node_2.setMargin(Spacing.END, 20);
           node_2.setMeasureFunction(sTestMeasureFunction);
-          node_2.context = "small";
+          node_2.context = "loooooooooong with space";
         }
       }
     }
@@ -5066,7 +5053,7 @@ public class LayoutEngineTest
           node_2 = node_1.getChildAt(0);
           node_2.layout.position[POSITION_TOP] = 20;
           node_2.layout.position[POSITION_LEFT] = 20;
-          node_2.layout.dimensions[DIMENSION_WIDTH] = 35;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 172;
           node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
         }
       }
@@ -5099,7 +5086,7 @@ public class LayoutEngineTest
           node_2.setMargin(Spacing.START, 20);
           node_2.setMargin(Spacing.END, 20);
           node_2.setMeasureFunction(sTestMeasureFunction);
-          node_2.context = "small";
+          node_2.context = "loooooooooong with space";
         }
       }
     }
@@ -5124,8 +5111,8 @@ public class LayoutEngineTest
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.layout.position[POSITION_TOP] = 20;
-          node_2.layout.position[POSITION_LEFT] = 145;
-          node_2.layout.dimensions[DIMENSION_WIDTH] = 35;
+          node_2.layout.position[POSITION_LEFT] = 8;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 172;
           node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
         }
       }

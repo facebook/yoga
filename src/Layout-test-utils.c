@@ -90,29 +90,23 @@ css_dim_t measure(void *context, float width, css_measure_mode_t widthMode, floa
       width = 1000000;
     }
     dim.dimensions[CSS_WIDTH] = fminf(SMALL_WIDTH, width);
-    dim.dimensions[CSS_HEIGHT] = SMALL_WIDTH > width ? BIG_HEIGHT : SMALL_HEIGHT;
+    dim.dimensions[CSS_HEIGHT] = SMALL_HEIGHT;
     return dim;
   }
   if (strcmp(text, LONG_TEXT) == 0) {
     if (widthMode == CSS_MEASURE_MODE_UNDEFINED) {
       width = 1000000;
     }
-    dim.dimensions[CSS_WIDTH] = fminf(BIG_WIDTH, width);
-    dim.dimensions[CSS_HEIGHT] = BIG_WIDTH > width ? BIG_HEIGHT : SMALL_HEIGHT;
+    dim.dimensions[CSS_WIDTH] = width >= BIG_WIDTH ? BIG_WIDTH : fmaxf(BIG_MIN_WIDTH, width);
+    dim.dimensions[CSS_HEIGHT] = width >= BIG_WIDTH ? SMALL_HEIGHT : BIG_HEIGHT;
     return dim;
   }
 
   if (strcmp(text, MEASURE_WITH_RATIO_2) == 0) {
-    if (widthMode == CSS_MEASURE_MODE_EXACTLY) {
+    if (widthMode != CSS_MEASURE_MODE_UNDEFINED) {
       dim.dimensions[CSS_WIDTH] = width;
       dim.dimensions[CSS_HEIGHT] = width * 2;
-    } else if (heightMode == CSS_MEASURE_MODE_EXACTLY) {
-      dim.dimensions[CSS_WIDTH] = height * 2;
-      dim.dimensions[CSS_HEIGHT] = height;
-    } else if (widthMode == CSS_MEASURE_MODE_AT_MOST) {
-      dim.dimensions[CSS_WIDTH] = width;
-      dim.dimensions[CSS_HEIGHT] = width * 2;
-    } else if (heightMode == CSS_MEASURE_MODE_AT_MOST) {
+    } else if (heightMode != CSS_MEASURE_MODE_UNDEFINED) {
       dim.dimensions[CSS_WIDTH] = height * 2;
       dim.dimensions[CSS_HEIGHT] = height;
     } else {
