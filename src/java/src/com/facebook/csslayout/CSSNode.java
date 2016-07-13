@@ -373,58 +373,15 @@ public class CSSNode {
   }
 
   /**
-   * Get this node's position top, as defined by style.
+   * Get this node's position, as defined by style.
    */
-  public float getPositionTop() {
-    return style.position[POSITION_TOP];
+  public Spacing getPosition() {
+    return style.position;
   }
 
-  public void setPositionTop(float positionTop) {
-    if (!valuesEqual(style.position[POSITION_TOP], positionTop)) {
-      style.position[POSITION_TOP] = positionTop;
-      dirty();
-    }
-  }
-
-  /**
-   * Get this node's position bottom, as defined by style.
-   */
-  public float getPositionBottom() {
-    return style.position[POSITION_BOTTOM];
-  }
-
-  public void setPositionBottom(float positionBottom) {
-    if (!valuesEqual(style.position[POSITION_BOTTOM], positionBottom)) {
-      style.position[POSITION_BOTTOM] = positionBottom;
-      dirty();
-    }
-  }
-
-  /**
-   * Get this node's position left, as defined by style.
-   */
-  public float getPositionLeft() {
-    return style.position[POSITION_LEFT];
-  }
-
-  public void setPositionLeft(float positionLeft) {
-    if (!valuesEqual(style.position[POSITION_LEFT], positionLeft)) {
-      style.position[POSITION_LEFT] = positionLeft;
-      dirty();
-    }
-  }
-
-  /**
-   * Get this node's position right, as defined by style.
-   */
-  public float getPositionRight() {
-    return style.position[POSITION_RIGHT];
-  }
-
-  public void setPositionRight(float positionRight) {
-    if (!valuesEqual(style.position[POSITION_RIGHT], positionRight)) {
-      style.position[POSITION_RIGHT] = positionRight;
-      dirty();
+  public void setPosition(int spacingType, float position) {
+    if (style.position.set(spacingType, position)) {
+         dirty();
     }
   }
 

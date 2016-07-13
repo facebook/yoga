@@ -145,7 +145,7 @@ typedef struct {
   css_overflow_t overflow;
   float flex;
   float margin[6];
-  float position[4];
+  float position[6];
   /**
    * You should skip all the rules that contain negative values for the
    * following attributes. For example:

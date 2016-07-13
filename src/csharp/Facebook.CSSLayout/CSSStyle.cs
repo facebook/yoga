@@ -28,13 +28,7 @@ namespace Facebook.CSSLayout
         public Spacing margin = new Spacing();
         public Spacing padding = new Spacing();
         public Spacing border = new Spacing();
-
-        public float[] position = {
-            CSSConstants.Undefined,
-            CSSConstants.Undefined,
-            CSSConstants.Undefined,
-            CSSConstants.Undefined
-        };
+        public Spacing border = new Spacing();
 
         public float[] dimensions = {
             CSSConstants.Undefined,

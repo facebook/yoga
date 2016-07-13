@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="src/csharp/Facebook.CSSLayout.Tests/bin/Release/Facebook.CSSLayout.Tests.dll" total="0" failures="0" not-run="0" date="2016-07-08" time="16:05:12">
-  <environment nunit-version="2.4.8.0" clr-version="4.0.30319.17020" os-version="Unix 15.5.0.0" platform="Unix" cwd="/Volumes/Source/css-layout" machine-name="emilsj-pro" user="emilsj" user-domain="emilsj-pro" />
+<test-results name="src/csharp/Facebook.CSSLayout.Tests/bin/Release/Facebook.CSSLayout.Tests.dll" total="0" failures="0" not-run="0" date="2016-07-13" time="10:24:50">
+  <environment nunit-version="2.4.8.0" clr-version="4.0.30319.42000" os-version="Unix 15.4.0.0" platform="Unix" cwd="/Users/mengjuew/git/css-layout" machine-name="mengjuew-mbp" user="mengjuew" user-domain="mengjuew-mbp" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite name="src/csharp/Facebook.CSSLayout.Tests/bin/Release/Facebook.CSSLayout.Tests.dll" success="True" time="0.001" asserts="0">
+  <test-suite name="src/csharp/Facebook.CSSLayout.Tests/bin/Release/Facebook.CSSLayout.Tests.dll" success="True" time="0.000" asserts="0">
     <results />
   </test-suite>
 </test-results>

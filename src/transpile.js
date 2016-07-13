@@ -287,6 +287,8 @@ function transpileAnnotatedJStoC(jsCode) {
     .replace(/style\[CSS_TOP/g, 'style.position[CSS_TOP')
     .replace(/style\[CSS_RIGHT/g, 'style.position[CSS_RIGHT')
     .replace(/style\[CSS_BOTTOM/g, 'style.position[CSS_BOTTOM')
+    .replace(/style\[CSS_START/g, 'style.position[CSS_START')
+    .replace(/style\[CSS_END/g, 'style.position[CSS_END')
     .replace(/node.children\[i\]/g, 'node->get_child(node->context, i)')
     .replace(/node.children\[j\]/g, 'node->get_child(node->context, j)')
     .replace(/node\./g, 'node->')

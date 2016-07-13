@@ -324,7 +324,7 @@ namespace Facebook.CSSLayout
             get { return style.flex; }
             set { updateFloatValue(ref style.flex, value); }
         }
-        
+
         public CSSOverflow Overflow
         {
             get { return style.overflow; }
@@ -364,28 +364,15 @@ namespace Facebook.CSSLayout
             return style.border.getRaw((int)spacingType);
         }
 
-        public float PositionTop
+        public void SetPosition(CSSSpacingType spacingType, float position)
         {
-            get { return style.position[POSITION_TOP]; }
-            set { updateFloatValue(ref style.position[POSITION_TOP], value); }
+            if (style.position.set((int)spacingType, position                                            ))
+                dirty();
         }
 
-        public float PositionBottom
+        public float GetPosition(CSSSpacingType spacingType)
         {
-            get { return style.position[POSITION_BOTTOM]; }
-            set { updateFloatValue(ref style.position[POSITION_BOTTOM], value); }
-        }
-
-        public float PositionLeft
-        {
-            get { return style.position[POSITION_LEFT]; }
-            set { updateFloatValue(ref style.position[POSITION_LEFT], value); }
-        }
-
-        public float PositionRight
-        {
-            get { return style.position[POSITION_RIGHT]; }
-            set { updateFloatValue(ref style.position[POSITION_RIGHT], value); }
+            return style.position.getRaw((int)spacingType);
         }
 
         public float Width

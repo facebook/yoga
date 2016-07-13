@@ -149,7 +149,7 @@ typedef struct {
   css_overflow_t overflow;
   float flex;
   float margin[6];
-  float position[4];
+  float position[6];
   /**
    * You should skip all the rules that contain negative values for the
    * following attributes. For example:
@@ -277,6 +277,8 @@ void init_css_node(css_node_t* node) {
   node->style.position[CSS_TOP] = CSS_UNDEFINED;
   node->style.position[CSS_RIGHT] = CSS_UNDEFINED;
   node->style.position[CSS_BOTTOM] = CSS_UNDEFINED;
+  node->style.position[CSS_START] = CSS_UNDEFINED;
+  node->style.position[CSS_END] = CSS_UNDEFINED;
 
   node->style.margin[CSS_START] = CSS_UNDEFINED;
   node->style.margin[CSS_END] = CSS_UNDEFINED;
@@ -706,20 +708,38 @@ static bool isLayoutDimDefined(css_node_t* node, css_flex_direction_t axis) {
   return !isUndefined(value) && value >= 0.0;
 }
 
-static bool isPosDefined(css_node_t* node, css_position_t position) {
-  return !isUndefined(node->style.position[position]);
+static bool isLeadingPosDefined(css_node_t* node, css_flex_direction_t axis) {
+  return (isRowDirection(axis) && !isUndefined(node->style.position[CSS_START]))
+    || !isUndefined(node->style.position[leading[axis]]);
 }
+
+static bool isTrailingPosDefined(css_node_t* node, css_flex_direction_t axis) {
+  return (isRowDirection(axis) && !isUndefined(node->style.position[CSS_END]))
+    || !isUndefined(node->style.position[trailing[axis]]);
+ }
 
 static bool isMeasureDefined(css_node_t* node) {
   return node->measure;
 }
 
-static float getPosition(css_node_t* node, css_position_t position) {
-  float result = node->style.position[position];
-  if (!isUndefined(result)) {
-    return result;
+static float getLeadingPosition(css_node_t* node, css_flex_direction_t axis) {
+  if (isRowDirection(axis) && !isUndefined(node->style.position[CSS_START])) {
+    return node->style.position[CSS_START];
+  }
+  if (!isUndefined(node->style.position[leading[axis]])) {
+    return node->style.position[leading[axis]];
   }
   return 0;
+}
+
+static float getTrailingPosition(css_node_t* node, css_flex_direction_t axis) {
+  if (isRowDirection(axis) && !isUndefined(node->style.position[CSS_END])) {
+    return node->style.position[CSS_END];
+  }
+  if (!isUndefined(node->style.position[trailing[axis]])) {
+    return node->style.position[trailing[axis]];
+   }
+   return 0;
 }
 
 static float boundAxisWithinMinAndMax(css_node_t* node, css_flex_direction_t axis, float value) {
@@ -753,20 +773,18 @@ static float boundAxis(css_node_t* node, css_flex_direction_t axis, float value)
 }
 
 static void setTrailingPosition(css_node_t* node, css_node_t* child, css_flex_direction_t axis) {
-  float size = child->style.position_type == CSS_POSITION_ABSOLUTE ?
-    0 :
-    child->layout.measured_dimensions[dim[axis]];
+  float size = child->layout.measured_dimensions[dim[axis]];
   child->layout.position[trailing[axis]] = node->layout.measured_dimensions[dim[axis]] - size - child->layout.position[pos[axis]];
 }
 
 // If both left and right are defined, then use left. Otherwise return
 // +left or -right depending on which is defined.
 static float getRelativePosition(css_node_t* node, css_flex_direction_t axis) {
-  float lead = node->style.position[leading[axis]];
+  float lead = getLeadingPosition(node, axis);
   if (!isUndefined(lead)) {
     return lead;
   }
-  return -getPosition(node, trailing[axis]);
+  return -getTrailingPosition(node, axis);
 }
 
 static void setPosition(css_node_t* node, css_direction_t direction) {
@@ -1383,12 +1401,12 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
       child = node->get_child(node->context, i);
 
       if (child->style.position_type == CSS_POSITION_ABSOLUTE &&
-          isPosDefined(child, leading[mainAxis])) {
+          isLeadingPosDefined(child, mainAxis)) {
         if (performLayout) {
           // In case the child is position absolute and has left/top being
           // defined, we override the position to whatever the user said
           // (and margin/border).
-          child->layout.position[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
+          child->layout.position[pos[mainAxis]] = getLeadingPosition(child, mainAxis) +
             getLeadingBorder(node, mainAxis) +
             getLeadingMargin(child, mainAxis);
         }
@@ -1450,8 +1468,8 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
         if (child->style.position_type == CSS_POSITION_ABSOLUTE) {
           // If the child is absolutely positioned and has a top/left/bottom/right
           // set, override all the previously computed positions to set it correctly.
-          if (isPosDefined(child, leading[crossAxis])) {
-            child->layout.position[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
+          if (isLeadingPosDefined(child, crossAxis)) {
+            child->layout.position[pos[crossAxis]] = getLeadingPosition(child, crossAxis) +
               getLeadingBorder(node, crossAxis) +
               getLeadingMargin(child, crossAxis);
           } else {
@@ -1607,38 +1625,7 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
       paddingAndBorderAxisCross);
   }
 
-  // STEP 10: SETTING TRAILING POSITIONS FOR CHILDREN
-  if (performLayout) {
-    bool needsMainTrailingPos = false;
-    bool needsCrossTrailingPos = false;
-
-    if (mainAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
-        mainAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
-      needsMainTrailingPos = true;
-    }
-
-    if (crossAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
-        crossAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
-      needsCrossTrailingPos = true;
-    }
-
-    // Set trailing position if necessary.
-    if (needsMainTrailingPos || needsCrossTrailingPos) {
-      for (i = 0; i < childCount; ++i) {
-        child = node->get_child(node->context, i);
-
-        if (needsMainTrailingPos) {
-          setTrailingPosition(node, child, mainAxis);
-        }
-
-        if (needsCrossTrailingPos) {
-          setTrailingPosition(node, child, crossAxis);
-        }
-      }
-    }
-  }
-
-  // STEP 11: SIZING AND POSITIONING ABSOLUTE CHILDREN
+  // STEP 10: SIZING AND POSITIONING ABSOLUTE CHILDREN
   currentAbsoluteChild = firstAbsoluteChild;
   while (currentAbsoluteChild != NULL) {
     // Now that we know the bounds of the container, perform layout again on the
@@ -1652,10 +1639,10 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
         childWidth = currentAbsoluteChild->style.dimensions[CSS_WIDTH] + getMarginAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW);
       } else {
         // If the child doesn't have a specified width, compute the width based on the left/right offsets if they're defined.
-        if (isPosDefined(currentAbsoluteChild, CSS_LEFT) && isPosDefined(currentAbsoluteChild, CSS_RIGHT)) {
+        if (isLeadingPosDefined(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW) && isTrailingPosDefined(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW)) {
           childWidth = node->layout.measured_dimensions[CSS_WIDTH] -
             (getLeadingBorder(node, CSS_FLEX_DIRECTION_ROW) + getTrailingBorder(node, CSS_FLEX_DIRECTION_ROW)) -
-            (currentAbsoluteChild->style.position[CSS_LEFT] + currentAbsoluteChild->style.position[CSS_RIGHT]);
+            (getLeadingPosition(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW) + getTrailingPosition(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW));
           childWidth = boundAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW, childWidth);
         }
       }
@@ -1664,10 +1651,10 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
         childHeight = currentAbsoluteChild->style.dimensions[CSS_HEIGHT] + getMarginAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN);
       } else {
         // If the child doesn't have a specified height, compute the height based on the top/bottom offsets if they're defined.
-        if (isPosDefined(currentAbsoluteChild, CSS_TOP) && isPosDefined(currentAbsoluteChild, CSS_BOTTOM)) {
+        if (isLeadingPosDefined(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN) && isTrailingPosDefined(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN)) {
           childHeight = node->layout.measured_dimensions[CSS_HEIGHT] -
             (getLeadingBorder(node, CSS_FLEX_DIRECTION_COLUMN) + getTrailingBorder(node, CSS_FLEX_DIRECTION_COLUMN)) -
-            (currentAbsoluteChild->style.position[CSS_TOP] + currentAbsoluteChild->style.position[CSS_BOTTOM]);
+            (getLeadingPosition(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN) + getTrailingPosition(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN));
           childHeight = boundAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN, childHeight);
         }
       }
@@ -1702,24 +1689,55 @@ static void layoutNodeImpl(css_node_t* node, float availableWidth, float availab
 
       layoutNodeInternal(currentAbsoluteChild, childWidth, childHeight, direction, CSS_MEASURE_MODE_EXACTLY, CSS_MEASURE_MODE_EXACTLY, true, "abs-layout");
 
-      if (isPosDefined(currentAbsoluteChild, trailing[CSS_FLEX_DIRECTION_ROW]) &&
-          !isPosDefined(currentAbsoluteChild, leading[CSS_FLEX_DIRECTION_ROW])) {
-        currentAbsoluteChild->layout.position[leading[CSS_FLEX_DIRECTION_ROW]] =
-          node->layout.measured_dimensions[dim[CSS_FLEX_DIRECTION_ROW]] -
-          currentAbsoluteChild->layout.measured_dimensions[dim[CSS_FLEX_DIRECTION_ROW]] -
-          getPosition(currentAbsoluteChild, trailing[CSS_FLEX_DIRECTION_ROW]);
+      if (isTrailingPosDefined(currentAbsoluteChild, mainAxis) &&
+          !isLeadingPosDefined(currentAbsoluteChild, mainAxis)) {
+        currentAbsoluteChild->layout.position[leading[mainAxis]] =
+          node->layout.measured_dimensions[dim[mainAxis]] -
+          currentAbsoluteChild->layout.measured_dimensions[dim[mainAxis]] -
+          getTrailingPosition(currentAbsoluteChild, mainAxis);
       }
 
-      if (isPosDefined(currentAbsoluteChild, trailing[CSS_FLEX_DIRECTION_COLUMN]) &&
-          !isPosDefined(currentAbsoluteChild, leading[CSS_FLEX_DIRECTION_COLUMN])) {
-        currentAbsoluteChild->layout.position[leading[CSS_FLEX_DIRECTION_COLUMN]] =
-          node->layout.measured_dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] -
-          currentAbsoluteChild->layout.measured_dimensions[dim[CSS_FLEX_DIRECTION_COLUMN]] -
-          getPosition(currentAbsoluteChild, trailing[CSS_FLEX_DIRECTION_COLUMN]);
+      if (isTrailingPosDefined(currentAbsoluteChild, crossAxis) &&
+          !isLeadingPosDefined(currentAbsoluteChild, crossAxis)) {
+        currentAbsoluteChild->layout.position[leading[crossAxis]] =
+          node->layout.measured_dimensions[dim[crossAxis]] -
+          currentAbsoluteChild->layout.measured_dimensions[dim[crossAxis]] -
+          getTrailingPosition(currentAbsoluteChild, crossAxis);
       }
     }
 
     currentAbsoluteChild = currentAbsoluteChild->next_child;
+  }
+
+  // STEP 11: SETTING TRAILING POSITIONS FOR CHILDREN
+  if (performLayout) {
+    bool needsMainTrailingPos = false;
+    bool needsCrossTrailingPos = false;
+
+    if (mainAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
+        mainAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+      needsMainTrailingPos = true;
+    }
+
+    if (crossAxis == CSS_FLEX_DIRECTION_ROW_REVERSE ||
+        crossAxis == CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+      needsCrossTrailingPos = true;
+    }
+
+    // Set trailing position if necessary.
+    if (needsMainTrailingPos || needsCrossTrailingPos) {
+      for (i = 0; i < childCount; ++i) {
+        child = node->get_child(node->context, i);
+
+        if (needsMainTrailingPos) {
+          setTrailingPosition(node, child, mainAxis);
+        }
+
+        if (needsCrossTrailingPos) {
+          setTrailingPosition(node, child, crossAxis);
+        }
+      }
+    }
   }
   /** END_GENERATED **/
 }

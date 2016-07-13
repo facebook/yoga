@@ -19,6 +19,8 @@ var computeLayout = (function() {
   var CSS_TOP = 'top';
   var CSS_RIGHT = 'right';
   var CSS_BOTTOM = 'bottom';
+  var CSS_START = 'start';
+  var CSS_END = 'end';
 
   var CSS_DIRECTION_INHERIT = 'inherit';
   var CSS_DIRECTION_LTR = 'ltr';
@@ -434,17 +436,36 @@ var computeLayout = (function() {
     return node.layout[measuredDim[axis]] !== undefined && node.layout[measuredDim[axis]] >= 0;
   }
 
-  function isPosDefined(node, pos) {
-    return node.style[pos] !== undefined;
+  function isLeadingPosDefined(node, axis) {
+    return (isRowDirection(axis) && !isUndefined(node.style[CSS_START]))
+     || !isUndefined(node.style[leading[axis]]);
+  }
+
+  function isTrailingPosDefined(node, axis) {
+    return (isRowDirection(axis) && !isUndefined(node.style[CSS_END]))
+     || !isUndefined(node.style[trailing[axis]]);
   }
 
   function isMeasureDefined(node) {
     return node.style.measure !== undefined;
   }
 
-  function getPosition(node, pos) {
-    if (node.style[pos] !== undefined) {
-      return node.style[pos];
+  function getLeadingPosition(node, axis) {
+    if (!isUndefined(node.style[CSS_START]) && isRowDirection(axis)) {
+      return node.style[CSS_START];
+    }
+    if (!isUndefined(node.style[leading[axis]])) {
+      return node.style[leading[axis]];
+    }
+    return 0;
+  }
+
+  function getTrailingPosition(node, axis) {
+    if (!isUndefined(node.style[CSS_END])  && isRowDirection(axis)) {
+      return node.style[CSS_END];
+    }
+    if (!isUndefined(node.style[trailing[axis]])) {
+      return node.style[trailing[axis]];
     }
     return 0;
   }
@@ -495,9 +516,7 @@ var computeLayout = (function() {
   }
 
   function setTrailingPosition(node, child, axis) {
-    var size = (getPositionType(child) === CSS_POSITION_ABSOLUTE) ?
-      0 :
-      child.layout[measuredDim[axis]];
+    var size = child.layout[measuredDim[axis]];
     child.layout[trailing[axis]] = node.layout[measuredDim[axis]] - size - child.layout[pos[axis]];
   }
 
@@ -505,9 +524,9 @@ var computeLayout = (function() {
   // +left or -right depending on which is defined.
   function getRelativePosition(node, axis) {
     if (node.style[leading[axis]] !== undefined) {
-      return getPosition(node, leading[axis]);
+      return getLeadingPosition(node, axis);
     }
-    return -getPosition(node, trailing[axis]);
+    return -getTrailingPosition(node, axis);
   }
 
   function setPosition(node, direction) {
@@ -1127,12 +1146,12 @@ var computeLayout = (function() {
         child = node.children[i];
 
         if (getPositionType(child) === CSS_POSITION_ABSOLUTE &&
-            isPosDefined(child, leading[mainAxis])) {
+            isLeadingPosDefined(child, mainAxis)) {
           if (performLayout) {
             // In case the child is position absolute and has left/top being
             // defined, we override the position to whatever the user said
             // (and margin/border).
-            child.layout[pos[mainAxis]] = getPosition(child, leading[mainAxis]) +
+            child.layout[pos[mainAxis]] = getLeadingPosition(child, mainAxis) +
               getLeadingBorder(node, mainAxis) +
               getLeadingMargin(child, mainAxis);
           }
@@ -1194,8 +1213,8 @@ var computeLayout = (function() {
           if (getPositionType(child) === CSS_POSITION_ABSOLUTE) {
             // If the child is absolutely positioned and has a top/left/bottom/right
             // set, override all the previously computed positions to set it correctly.
-            if (isPosDefined(child, leading[crossAxis])) {
-              child.layout[pos[crossAxis]] = getPosition(child, leading[crossAxis]) +
+            if (isLeadingPosDefined(child, crossAxis)) {
+              child.layout[pos[crossAxis]] = getLeadingPosition(child, crossAxis) +
                 getLeadingBorder(node, crossAxis) +
                 getLeadingMargin(child, crossAxis);
             } else {
@@ -1351,38 +1370,7 @@ var computeLayout = (function() {
         paddingAndBorderAxisCross);
     }
 
-    // STEP 10: SETTING TRAILING POSITIONS FOR CHILDREN
-    if (performLayout) {
-      var/*bool*/ needsMainTrailingPos = false;
-      var/*bool*/ needsCrossTrailingPos = false;
-
-      if (mainAxis === CSS_FLEX_DIRECTION_ROW_REVERSE ||
-          mainAxis === CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
-        needsMainTrailingPos = true;
-      }
-
-      if (crossAxis === CSS_FLEX_DIRECTION_ROW_REVERSE ||
-          crossAxis === CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
-        needsCrossTrailingPos = true;
-      }
-
-      // Set trailing position if necessary.
-      if (needsMainTrailingPos || needsCrossTrailingPos) {
-        for (i = 0; i < childCount; ++i) {
-          child = node.children[i];
-
-          if (needsMainTrailingPos) {
-            setTrailingPosition(node, child, mainAxis);
-          }
-
-          if (needsCrossTrailingPos) {
-            setTrailingPosition(node, child, crossAxis);
-          }
-        }
-      }
-    }
-
-    // STEP 11: SIZING AND POSITIONING ABSOLUTE CHILDREN
+    // STEP 10: SIZING AND POSITIONING ABSOLUTE CHILDREN
     currentAbsoluteChild = firstAbsoluteChild;
     while (currentAbsoluteChild !== undefined) {
       // Now that we know the bounds of the container, perform layout again on the
@@ -1396,10 +1384,10 @@ var computeLayout = (function() {
           childWidth = currentAbsoluteChild.style.width + getMarginAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW);
         } else {
           // If the child doesn't have a specified width, compute the width based on the left/right offsets if they're defined.
-          if (isPosDefined(currentAbsoluteChild, CSS_LEFT) && isPosDefined(currentAbsoluteChild, CSS_RIGHT)) {
+          if (isLeadingPosDefined(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW) && isTrailingPosDefined(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW)) {
             childWidth = node.layout.measuredWidth -
               (getLeadingBorder(node, CSS_FLEX_DIRECTION_ROW) + getTrailingBorder(node, CSS_FLEX_DIRECTION_ROW)) -
-              (currentAbsoluteChild.style[CSS_LEFT] + currentAbsoluteChild.style[CSS_RIGHT]);
+              (getLeadingPosition(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW) + getTrailingPosition(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW));
             childWidth = boundAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_ROW, childWidth);
           }
         }
@@ -1408,10 +1396,10 @@ var computeLayout = (function() {
           childHeight = currentAbsoluteChild.style.height + getMarginAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN);
         } else {
           // If the child doesn't have a specified height, compute the height based on the top/bottom offsets if they're defined.
-          if (isPosDefined(currentAbsoluteChild, CSS_TOP) && isPosDefined(currentAbsoluteChild, CSS_BOTTOM)) {
+          if (isLeadingPosDefined(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN) && isTrailingPosDefined(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN)) {
             childHeight = node.layout.measuredHeight -
               (getLeadingBorder(node, CSS_FLEX_DIRECTION_COLUMN) + getTrailingBorder(node, CSS_FLEX_DIRECTION_COLUMN)) -
-              (currentAbsoluteChild.style[CSS_TOP] + currentAbsoluteChild.style[CSS_BOTTOM]);
+              (getLeadingPosition(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN) + getTrailingPosition(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN));
             childHeight = boundAxis(currentAbsoluteChild, CSS_FLEX_DIRECTION_COLUMN, childHeight);
           }
         }
@@ -1446,24 +1434,55 @@ var computeLayout = (function() {
 
         layoutNodeInternal(currentAbsoluteChild, childWidth, childHeight, direction, CSS_MEASURE_MODE_EXACTLY, CSS_MEASURE_MODE_EXACTLY, true, 'abs-layout');
 
-        if (isPosDefined(currentAbsoluteChild, trailing[CSS_FLEX_DIRECTION_ROW]) &&
-            !isPosDefined(currentAbsoluteChild, leading[CSS_FLEX_DIRECTION_ROW])) {
-          currentAbsoluteChild.layout[leading[CSS_FLEX_DIRECTION_ROW]] =
-            node.layout[measuredDim[CSS_FLEX_DIRECTION_ROW]] -
-            currentAbsoluteChild.layout[measuredDim[CSS_FLEX_DIRECTION_ROW]] -
-            getPosition(currentAbsoluteChild, trailing[CSS_FLEX_DIRECTION_ROW]);
+        if (isTrailingPosDefined(currentAbsoluteChild, mainAxis) &&
+            !isLeadingPosDefined(currentAbsoluteChild, mainAxis)) {
+          currentAbsoluteChild.layout[leading[mainAxis]] =
+            node.layout[measuredDim[mainAxis]] -
+            currentAbsoluteChild.layout[measuredDim[mainAxis]] -
+            getTrailingPosition(currentAbsoluteChild, mainAxis);
         }
 
-        if (isPosDefined(currentAbsoluteChild, trailing[CSS_FLEX_DIRECTION_COLUMN]) &&
-            !isPosDefined(currentAbsoluteChild, leading[CSS_FLEX_DIRECTION_COLUMN])) {
-          currentAbsoluteChild.layout[leading[CSS_FLEX_DIRECTION_COLUMN]] =
-            node.layout[measuredDim[CSS_FLEX_DIRECTION_COLUMN]] -
-            currentAbsoluteChild.layout[measuredDim[CSS_FLEX_DIRECTION_COLUMN]] -
-            getPosition(currentAbsoluteChild, trailing[CSS_FLEX_DIRECTION_COLUMN]);
+        if (isTrailingPosDefined(currentAbsoluteChild, crossAxis) &&
+            !isLeadingPosDefined(currentAbsoluteChild, crossAxis)) {
+          currentAbsoluteChild.layout[leading[crossAxis]] =
+            node.layout[measuredDim[crossAxis]] -
+            currentAbsoluteChild.layout[measuredDim[crossAxis]] -
+            getTrailingPosition(currentAbsoluteChild, crossAxis);
         }
       }
 
       currentAbsoluteChild = currentAbsoluteChild.nextChild;
+    }
+
+    // STEP 11: SETTING TRAILING POSITIONS FOR CHILDREN
+    if (performLayout) {
+      var/*bool*/ needsMainTrailingPos = false;
+      var/*bool*/ needsCrossTrailingPos = false;
+
+      if (mainAxis === CSS_FLEX_DIRECTION_ROW_REVERSE ||
+          mainAxis === CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+        needsMainTrailingPos = true;
+      }
+
+      if (crossAxis === CSS_FLEX_DIRECTION_ROW_REVERSE ||
+          crossAxis === CSS_FLEX_DIRECTION_COLUMN_REVERSE) {
+        needsCrossTrailingPos = true;
+      }
+
+      // Set trailing position if necessary.
+      if (needsMainTrailingPos || needsCrossTrailingPos) {
+        for (i = 0; i < childCount; ++i) {
+          child = node.children[i];
+
+          if (needsMainTrailingPos) {
+            setTrailingPosition(node, child, mainAxis);
+          }
+
+          if (needsCrossTrailingPos) {
+            setTrailingPosition(node, child, crossAxis);
+          }
+        }
+      }
     }
   }
 
