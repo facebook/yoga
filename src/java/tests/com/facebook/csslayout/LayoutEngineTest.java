@@ -34,24 +34,20 @@ public class LayoutEngineTest {
           width = 10000000;
         }
         measureOutput.width = Math.min(width, TestConstants.SMALL_WIDTH);
-        measureOutput.height = TestConstants.SMALL_WIDTH > width ? TestConstants.BIG_HEIGHT : TestConstants.SMALL_HEIGHT;
+        measureOutput.height = TestConstants.SMALL_HEIGHT;
       } else if (testNode.context.equals(TestConstants.LONG_TEXT)) {
         if (widthMode == CSSMeasureMode.UNDEFINED) {
           width = 10000000;
         }
-        measureOutput.width = Math.min(width, TestConstants.BIG_WIDTH);
-        measureOutput.height = TestConstants.BIG_WIDTH > width ? TestConstants.BIG_HEIGHT : TestConstants.SMALL_HEIGHT;
+        measureOutput.width = width >= TestConstants.BIG_WIDTH ?
+            TestConstants.BIG_WIDTH : Math.max(TestConstants.BIG_MIN_WIDTH, width);
+        measureOutput.height = width >= TestConstants.BIG_WIDTH ?
+            TestConstants.SMALL_HEIGHT : TestConstants.BIG_HEIGHT;
       } else if (testNode.context.equals(TestConstants.MEASURE_WITH_RATIO_2)) {
-        if (widthMode == CSSMeasureMode.EXACTLY) {
+        if (widthMode != CSSMeasureMode.UNDEFINED) {
           measureOutput.width = width;
           measureOutput.height = width * 2;
-        } else if (heightMode == CSSMeasureMode.EXACTLY) {
-          measureOutput.width = height * 2;
-          measureOutput.height = height;
-        } else if (widthMode == CSSMeasureMode.AT_MOST) {
-          measureOutput.width = width;
-          measureOutput.height = width * 2;
-        } else if (heightMode == CSSMeasureMode.AT_MOST) {
+        } else if (heightMode != CSSMeasureMode.UNDEFINED) {
           measureOutput.width = height * 2;
           measureOutput.height = height;
         } else {
@@ -4450,7 +4446,7 @@ public class LayoutEngineTest {
       node_0.layout.position[POSITION_TOP] = 0;
       node_0.layout.position[POSITION_LEFT] = 0;
       node_0.layout.dimensions[DIMENSION_WIDTH] = 10;
-      node_0.layout.dimensions[DIMENSION_HEIGHT] = 36;
+      node_0.layout.dimensions[DIMENSION_HEIGHT] = 18;
     }
 
     test("should layout node with text and width", root_node, root_layout);
@@ -4838,7 +4834,7 @@ public class LayoutEngineTest {
           node_2 = node_1.getChildAt(0);
           node_2.layout.position[POSITION_TOP] = 0;
           node_2.layout.position[POSITION_LEFT] = 0;
-          node_2.layout.dimensions[DIMENSION_WIDTH] = 60;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 100;
           node_2.layout.dimensions[DIMENSION_HEIGHT] = 36;
         }
       }
@@ -5034,7 +5030,7 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.START, 20);
           node_2.setMargin(Spacing.END, 20);
           node_2.setMeasureFunction(sTestMeasureFunction);
-          node_2.context = "small";
+          node_2.context = "loooooooooong with space";
         }
       }
     }
@@ -5060,7 +5056,7 @@ public class LayoutEngineTest {
           node_2 = node_1.getChildAt(0);
           node_2.layout.position[POSITION_TOP] = 20;
           node_2.layout.position[POSITION_LEFT] = 20;
-          node_2.layout.dimensions[DIMENSION_WIDTH] = 35;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 172;
           node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
         }
       }
@@ -5093,7 +5089,7 @@ public class LayoutEngineTest {
           node_2.setMargin(Spacing.START, 20);
           node_2.setMargin(Spacing.END, 20);
           node_2.setMeasureFunction(sTestMeasureFunction);
-          node_2.context = "small";
+          node_2.context = "loooooooooong with space";
         }
       }
     }
@@ -5118,8 +5114,8 @@ public class LayoutEngineTest {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.layout.position[POSITION_TOP] = 20;
-          node_2.layout.position[POSITION_LEFT] = 145;
-          node_2.layout.dimensions[DIMENSION_WIDTH] = 35;
+          node_2.layout.position[POSITION_LEFT] = 8;
+          node_2.layout.dimensions[DIMENSION_WIDTH] = 172;
           node_2.layout.dimensions[DIMENSION_HEIGHT] = 18;
         }
       }
