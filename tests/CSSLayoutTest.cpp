@@ -2759,25 +2759,6 @@ TEST(CSSLayoutTest, test_layout_node_with_height_padding_space_around) {
   ASSERT_TRUE(test(root_node, root_layout));
 }
 
-TEST(CSSLayoutTest, test_layout_node_with_bottom) {
-  CSSNode *root_node = new_test_css_node();
-  {
-    CSSNode *node_0 = root_node;
-    node_0->style.position[CSSPositionBottom] = 5;
-  }
-
-  CSSNode *root_layout = new_test_css_node();
-  {
-    CSSNode *node_0 = root_layout;
-    node_0->layout.position[CSSPositionTop] = -5;
-    node_0->layout.position[CSSPositionLeft] = 0;
-    node_0->layout.dimensions[CSSDimensionWidth] = 0;
-    node_0->layout.dimensions[CSSDimensionHeight] = 0;
-  }
-
-  ASSERT_TRUE(test(root_node, root_layout));
-}
-
 TEST(CSSLayoutTest, test_layout_node_with_top_and_bottom) {
   CSSNode *root_node = new_test_css_node();
   {
