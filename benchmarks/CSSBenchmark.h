@@ -10,9 +10,10 @@
 #ifndef __CSS_BENCHMARK_H
 #define __CSS_BENCHMARK_H
 
-#include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <time.h>
 
 #define NUM_REPETITIONS 100000
 
@@ -28,7 +29,7 @@ int main(int argc, char const *argv[]) { \
 
 #define CSS_BENCHMARK(NAME, BLOCK) \
 __start = clock(); \
-for (int __i = 0; __i < NUM_REPETITIONS; __i++) { BLOCK } \
+for (uint32_t __i = 0; __i < NUM_REPETITIONS; __i++) { BLOCK } \
 __end = clock(); \
 __printBenchmarkResult(NAME, __start, __end);
 

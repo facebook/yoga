@@ -18,7 +18,7 @@ CSS_BENCHMARKS({
     CSSNodeStyleSetWidth(root, 100);
     CSSNodeStyleSetHeight(root, 100);
 
-    for (int i = 0; i < 3; i++) {
+    for (uint32_t i = 0; i < 3; i++) {
       CSSNodeRef child = CSSNodeNew();
       CSSNodeStyleSetHeight(child, 20);
       CSSNodeStyleSetFlex(child, 1);
