@@ -7,8 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#ifndef __CSS_BENCHMARK_H
-#define __CSS_BENCHMARK_H
+#pragma once
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -40,5 +39,3 @@ void __printBenchmarkResult(char *name, clock_t start, clock_t end) {
   printf("%lf ms", mean);
   printf("\n");
 }
-
-#endif
