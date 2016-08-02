@@ -10,4 +10,6 @@ See CSSLayout/CSSLayout.h for a look at the public API being exposed.
 
 Building
 --------
-CSSLayout builds with buck (buckbuild.com). To build run `buck build //:CSSLayout` and run `buck test //:CSSLayout` to run the test suite.
+CSSLayout builds with buck (buckbuild.com). To build run `buck build //:CSSLayout` and run `buck test //:CSSLayout` to run the test suite. For java the equivalent is `buck build //:CSSLayout_java` and `buck test //:CSSLayout_java`.
+
+To run benchmarks run `buck run //:CSSLayout:benchmark`. There are currently no benchmarks for the java version.
