@@ -39,11 +39,17 @@ static void _jniPrint(void *context) {
   JNIEnv *env = NULL;
   CSS_ASSERT((*jvm)->GetEnv(jvm, (void**) &env, JNI_VERSION) == JNI_OK, "Must have valid jni env");
 
-  jclass cssNodeClass = (*env)->FindClass(env, "com/facebook/csslayout/CSSNodeJNI");
-  CSS_ASSERT(cssNodeClass, "Could not find CSSNode class");
+  static jclass cssNodeClass = NULL;
+  if (!cssNodeClass) {
+    cssNodeClass = (*env)->FindClass(env, "com/facebook/csslayout/CSSNodeJNI");
+    CSS_ASSERT(cssNodeClass, "Could not find CSSNode class");
+  }
 
-  jmethodID toStringID = (*env)->GetMethodID(env, cssNodeClass, "toString", "()Ljava/lang/String");
-  CSS_ASSERT(toStringID, "Could not find toString method");
+  static jmethodID toStringID = NULL;
+  if (!toStringID) {
+    toStringID = (*env)->GetMethodID(env, cssNodeClass, "toString", "()Ljava/lang/String");
+    CSS_ASSERT(toStringID, "Could not find toString method");
+  }
 
   jstring javaString = (jstring) (*env)->CallObjectMethod(env, context, toStringID);
   const char *nativeString = (*env)->GetStringUTFChars(env, javaString, 0);
@@ -56,11 +62,17 @@ static CSSSize _jniMeasureFunc(void *context, float width, CSSMeasureMode widthM
   JNIEnv *env = NULL;
   CSS_ASSERT((*jvm)->GetEnv(jvm, (void**) &env, JNI_VERSION) == JNI_OK, "Must have valid jni env");
 
-  jclass cssNodeClass = (*env)->FindClass(env, "com/facebook/csslayout/CSSNodeJNI");
-  CSS_ASSERT(cssNodeClass, "Could not find CSSNode class");
+  static jclass cssNodeClass = NULL;
+  if (!cssNodeClass) {
+    cssNodeClass = (*env)->FindClass(env, "com/facebook/csslayout/CSSNodeJNI");
+    CSS_ASSERT(cssNodeClass, "Could not find CSSNode class");
+  }
 
-  jmethodID measureID = (*env)->GetMethodID(env, cssNodeClass, "measure", "(FIFI)J");
-  CSS_ASSERT(measureID, "Could not find measure method");
+  static jmethodID measureID = NULL;
+  if (!measureID) {
+    measureID = (*env)->GetMethodID(env, cssNodeClass, "measure", "(FIFI)J");
+    CSS_ASSERT(measureID, "Could not find measure method");
+  }
 
   jlong measureResult = (*env)->CallLongMethod(env, context, measureID, width, widthMode, height, heightMode);
   CSSSize size = {
