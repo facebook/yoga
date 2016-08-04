@@ -33,6 +33,19 @@ cxx_library(
   visibility = ['PUBLIC'],
 )
 
+cxx_library(
+  name = 'CSSLayout_jni',
+  soname = 'libcsslayout.so',
+  srcs = glob(['java/jni/*.c']),
+  exported_headers = subdir_glob([('', 'java/jni/*.h')]),
+  header_namespace = '',
+  compiler_flags = COMPILER_FLAGS,
+  deps = [
+    ':CSSLayout'
+  ],
+  visibility = ['PUBLIC'],
+)
+
 cxx_binary(
   name = 'benchmark',
   srcs = glob(['benchmarks/*.c']),
@@ -72,13 +85,16 @@ cxx_test(
 
 java_library(
   name = 'CSSLayout_java',
-  srcs = glob(['java/**/*.java']),
+  srcs = glob(['java/com/facebook/csslayout/*.java']),
   tests=[':CSSLayout_java_tests'],
   source = '1.7',
   target = '1.7',
   deps = [
+    ':CSSLayout_jni',
     INFER_ANNOTATIONS_TARGET,
     JSR_305_TARGET,
+    PROGRUARD_ANNOTATIONS_TARGET,
+    SOLOADER_TARGET,
   ],
   visibility = ['PUBLIC'],
 )

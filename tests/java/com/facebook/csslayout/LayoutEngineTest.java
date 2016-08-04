@@ -24,11 +24,11 @@ import static com.facebook.csslayout.CSSLayout.DIMENSION_HEIGHT;
  */
 public class LayoutEngineTest {
 
-  private static final CSSNode.MeasureFunction sTestMeasureFunction =
+  private static final CSSNodeAPI.MeasureFunction sTestMeasureFunction =
       new CSSNode.MeasureFunction() {
 
     @Override
-    public void measure(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput) {
+    public void measure(CSSNodeAPI node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput) {
       TestCSSNode testNode = (TestCSSNode) node;
       if (testNode.context.equals(TestConstants.SMALL_TEXT)) {
         if (widthMode == CSSMeasureMode.UNDEFINED) {

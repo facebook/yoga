@@ -222,9 +222,9 @@ public class LayoutCachingTest {
     root.calculateLayout(layoutContext);
     markLayoutAppliedForTree(root);
 
-    c1.setMeasureFunction(new CSSNode.MeasureFunction() {
+    c1.setMeasureFunction(new CSSNodeAPI.MeasureFunction() {
       @Override
-      public void measure(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput) {
+      public void measure(CSSNodeAPI node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput) {
         measureOutput.width = 100;
         measureOutput.height = 20;
       }
