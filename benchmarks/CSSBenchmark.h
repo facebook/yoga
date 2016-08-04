@@ -16,24 +16,24 @@
 
 #define NUM_REPETITIONS 100000
 
-#define CSS_BENCHMARKS(BLOCK) \
-int main(int argc, char const *argv[]) { \
-  clock_t __start; \
-  clock_t __end; \
-  { \
-    BLOCK \
-  } \
-  return 0; \
-}
+#define CSS_BENCHMARKS(BLOCK)                                                                      \
+  int main(int argc, char const *argv[]) {                                                         \
+    clock_t __start;                                                                               \
+    clock_t __end;                                                                                 \
+    { BLOCK }                                                                                      \
+    return 0;                                                                                      \
+  }
 
-#define CSS_BENCHMARK(NAME, BLOCK) \
-__start = clock(); \
-for (uint32_t __i = 0; __i < NUM_REPETITIONS; __i++) { BLOCK } \
-__end = clock(); \
-__printBenchmarkResult(NAME, __start, __end);
+#define CSS_BENCHMARK(NAME, BLOCK)                                                                 \
+  __start = clock();                                                                               \
+  for (uint32_t __i = 0; __i < NUM_REPETITIONS; __i++) {                                           \
+    BLOCK                                                                                          \
+  }                                                                                                \
+  __end = clock();                                                                                 \
+  __printBenchmarkResult(NAME, __start, __end);
 
 void __printBenchmarkResult(char *name, clock_t start, clock_t end) {
-  float total = (end - start) / (double) CLOCKS_PER_SEC * 1000;
+  float total = (end - start) / (double)CLOCKS_PER_SEC * 1000;
   float mean = total / NUM_REPETITIONS;
   printf("%s: ", name);
   printf("%lf ms", mean);
