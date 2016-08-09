@@ -170,6 +170,8 @@ CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionLeft);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionTop);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionRight);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionBottom);
+CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionStart);
+CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionEnd);
 
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, Width);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, MinWidth);
