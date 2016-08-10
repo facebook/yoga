@@ -1,15 +1,22 @@
-language:
-  - c
-  - java
+# Copyright (c) 2014-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
 
+os: osx
+osx_image: xcode7.3
+language: cpp
 compiler: clang
 
-install:
-  - git clone https://github.com/facebook/buck.git /home/ubuntu/buck
-  - cd /home/ubuntu/buck && ant
-  - buck --version
+before_install:
+  - brew update
+  - brew tap facebook/fb
+  - brew install buck
+  - brew outdated xctool || brew upgrade xctool
 
 script:
   - buck test //:CSSLayout
   - buck test //:CSSLayout_java
-  - buck run  //:CSSLayout:benchmark
+  - buck run  //:benchmark
