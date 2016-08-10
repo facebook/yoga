@@ -8,13 +8,7 @@
 include_defs('//CSSLAYOUT_DEFS')
 
 android_prebuilt_aar(
-    name = 'soloader',
-    aar = ':soloader-binary-aar',
-    visibility = [CSSLAYOUT_ROOT],
-)
-
-remote_file(
-    name = 'soloader-binary-aar',
-    url = 'mvn:com.facebook.soloader:soloader:aar:0.1.0',
-    sha1 = '918573465c94c6bc9bad48ef259f1e0cd6543c1b',
+  name = 'soloader',
+  aar = 'soloader-0.1.0.aar',
+  visibility = [CSSLAYOUT_ROOT],
 )
