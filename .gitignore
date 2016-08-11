@@ -5,3 +5,4 @@
 /.buckconfig.local
 /.buckd
 /lib/gtest/googletest-*/
+/gentest/test.html

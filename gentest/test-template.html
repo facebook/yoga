@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>test page</title>
+    <script src="gentest.js"></script>
+
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: Helvetica;
+        font-size: 14px;
+        font-weight: 100;
+      }
+
+      div, span {
+        box-sizing: border-box;
+        position: relative;
+        border: 0 solid black;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+
+      %s
+
+      <div id='default'></div>
+    </div>
+  </body>
+</html>
