@@ -20,3 +20,5 @@ script:
   - buck test //:CSSLayout
   - buck test //:CSSLayout_java
   - buck run  //:benchmark
+  - git checkout HEAD^
+  - buck run  //:benchmark
