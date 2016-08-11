@@ -12,6 +12,7 @@ BASE_COMPILER_FLAGS = [
   '-fexceptions',
   '-Wall',
   '-Werror',
+  '-O3',
 ]
 
 GMOCK_OVERRIDE_FLAGS = [
