@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <time.h>
 
-#define NUM_REPETITIONS 100000
+#define NUM_REPETITIONS 100
 
 #define CSS_BENCHMARKS(BLOCK)                                                                      \
   int main(int argc, char const *argv[]) {                                                         \
