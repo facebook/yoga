@@ -140,6 +140,7 @@ CSS_NODE_JNI_STYLE_PROP(jint, CSSFlexDirection, FlexDirection);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSJustify, JustifyContent);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSAlign, AlignItems);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSAlign, AlignSelf);
+CSS_NODE_JNI_STYLE_PROP(jint, CSSAlign, AlignContent);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSPositionType, PositionType);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSWrapType, FlexWrap);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSOverflow, Overflow);
