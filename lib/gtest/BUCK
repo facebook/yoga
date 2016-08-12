@@ -5,9 +5,10 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-import os
-import urllib2
-import zipfile
+with allow_unsafe_import():
+    import os
+    import urllib2
+    import zipfile
 
 include_defs('//CSSLAYOUT_DEFS')
 
