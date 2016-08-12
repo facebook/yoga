@@ -29,6 +29,7 @@ cxx_library(
   tests=[':CSSLayout_tests'],
   exported_headers = subdir_glob([('', 'CSSLayout/*.h')]),
   header_namespace = '',
+  force_static = True,
   compiler_flags = COMPILER_FLAGS,
   deps = [],
   visibility = ['PUBLIC'],
