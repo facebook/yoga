@@ -691,7 +691,7 @@ TEST(CSSLayoutTest, test_layout_node_with_flex) {
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 200;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
     }
   }
@@ -736,7 +736,7 @@ TEST(CSSLayoutTest, test_layout_node_with_flex_in_revese) {
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 200;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
     }
   }
@@ -777,19 +777,19 @@ TEST(CSSLayoutTest, test_layout_node_with_flex_recursively) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 1000;
       init_css_node_children(node_1, 1);
       {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
-        node_2->style.flex = 1;
+        CSSNodeStyleSetFlex(node_2, 1);
         node_2->style.dimensions[CSSDimensionWidth] = 1000;
         init_css_node_children(node_2, 1);
         {
           CSSNode *node_3;
           node_3 = CSSNodeGetChild(node_2, 0);
-          node_3->style.flex = 1;
+          CSSNodeStyleSetFlex(node_3, 1);
           node_3->style.dimensions[CSSDimensionWidth] = 1000;
         }
       }
@@ -847,21 +847,21 @@ TEST(CSSLayoutTest, test_layout_node_with_flex_recursively_in_reverse) {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.flexDirection = CSSFlexDirectionColumnReverse;
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 1000;
       init_css_node_children(node_1, 1);
       {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->style.flexDirection = CSSFlexDirectionColumnReverse;
-        node_2->style.flex = 1;
+        CSSNodeStyleSetFlex(node_2, 1);
         node_2->style.dimensions[CSSDimensionWidth] = 1000;
         init_css_node_children(node_2, 1);
         {
           CSSNode *node_3;
           node_3 = CSSNodeGetChild(node_2, 0);
           node_3->style.flexDirection = CSSFlexDirectionColumnReverse;
-          node_3->style.flex = 1;
+          CSSNodeStyleSetFlex(node_3, 1);
           node_3->style.dimensions[CSSDimensionWidth] = 1000;
         }
       }
@@ -1473,7 +1473,7 @@ TEST(CSSLayoutTest, test_layout_node_flex_with_override_height) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 100;
     }
@@ -2375,7 +2375,7 @@ TEST(CSSLayoutTest, test_layout_flex_inside_empty_node) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -2808,12 +2808,12 @@ TEST(CSSLayoutTest, test_layout_node_with_absolute_position) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.positionType = CSSPositionTypeAbsolute;
       node_1->style.dimensions[CSSDimensionWidth] = 50;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -3296,7 +3296,7 @@ TEST(CSSLayoutTest, test_layout_node_with_flex_and_main_margin) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.margin[CSSPositionLeft] = 5;
     }
   }
@@ -3333,7 +3333,7 @@ TEST(CSSLayoutTest, test_layout_node_with_flex_and_main_margin_rtl) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.margin[CSSPositionRight] = 5;
     }
   }
@@ -3369,9 +3369,9 @@ TEST(CSSLayoutTest, test_layout_node_with_multiple_flex_and_padding) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.padding[CSSPositionRight] = 5;
     }
   }
@@ -3413,9 +3413,9 @@ TEST(CSSLayoutTest, test_layout_node_with_multiple_flex_and_padding_rtl) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.padding[CSSPositionLeft] = 5;
     }
   }
@@ -3456,9 +3456,9 @@ TEST(CSSLayoutTest, test_layout_node_with_multiple_flex_and_margin) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.margin[CSSPositionLeft] = 5;
     }
   }
@@ -3500,9 +3500,9 @@ TEST(CSSLayoutTest, test_layout_node_with_multiple_flex_and_margin_rtl) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.margin[CSSPositionRight] = 5;
     }
   }
@@ -3544,7 +3544,7 @@ TEST(CSSLayoutTest, test_layout_node_with_flex_and_overflow) {
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.dimensions[CSSDimensionHeight] = 600;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -3585,7 +3585,7 @@ TEST(CSSLayoutTest, test_layout_absolute_node_with_flex) {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.positionType = CSSPositionTypeAbsolute;
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -3622,7 +3622,7 @@ TEST(CSSLayoutTest, test_layout_absolute_node_with_flex_rtl) {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.positionType = CSSPositionTypeAbsolute;
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -3656,10 +3656,10 @@ TEST(CSSLayoutTest, test_layout_absolute_node_with_double_flex) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.positionType = CSSPositionTypeAbsolute;
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -4211,7 +4211,7 @@ TEST(CSSLayoutTest, test_should_layout_node_with_text_and_flex) {
       {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
-        node_2->style.flex = 1;
+        CSSNodeStyleSetFlex(node_2, 1);
         node_2->measure = measure;
         node_2->context = (char *) LONG_TEXT;
       }
@@ -4263,7 +4263,7 @@ TEST(CSSLayoutTest, test_should_layout_node_text_and_flex_rtl) {
       {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
-        node_2->style.flex = 1;
+        CSSNodeStyleSetFlex(node_2, 1);
         node_2->measure = measure;
         node_2->context = (char *) LONG_TEXT;
       }
@@ -4878,10 +4878,10 @@ TEST(CSSLayoutTest, test_should_layout_with_arbitrary_flex) {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.alignSelf = CSSAlignFlexStart;
-      node_1->style.flex = 2.5;
+      CSSNodeStyleSetFlex(node_1, 2.5);
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.alignSelf = CSSAlignFlexStart;
-      node_1->style.flex = 7.5;
+      CSSNodeStyleSetFlex(node_1, 7.5);
     }
   }
 
@@ -4924,10 +4924,10 @@ TEST(CSSLayoutTest, test_should_layout_with_arbitrary_flex_in_reverse) {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.alignSelf = CSSAlignFlexStart;
-      node_1->style.flex = 2.5;
+      CSSNodeStyleSetFlex(node_1, 2.5);
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.alignSelf = CSSAlignFlexStart;
-      node_1->style.flex = 7.5;
+      CSSNodeStyleSetFlex(node_1, 7.5);
     }
   }
 
@@ -4970,10 +4970,10 @@ TEST(CSSLayoutTest, test_should_layout_with_negative_flex_in_reverse) {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.alignSelf = CSSAlignFlexStart;
-      node_1->style.flex = -2.5;
+      CSSNodeStyleSetFlex(node_1, -2.5);
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.alignSelf = CSSAlignFlexStart;
-      node_1->style.flex = 0;
+      CSSNodeStyleSetFlex(node_1, 0);
     }
   }
 
@@ -5874,12 +5874,12 @@ TEST(CSSLayoutTest, test_should_layout_node_min_bounds_and_flex) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 200;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -5926,12 +5926,12 @@ TEST(CSSLayoutTest, test_should_layout_node_min_bounds_and_flex_rtl) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 200;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -5977,13 +5977,13 @@ TEST(CSSLayoutTest, test_should_layout_node_with_flex_size_within_bounds) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 110;
       node_1->style.minDimensions[CSSDimensionWidth] = 90;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -6030,13 +6030,13 @@ TEST(CSSLayoutTest, test_should_layout_node_with_flex_size_within_bounds_rtl) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 110;
       node_1->style.minDimensions[CSSDimensionWidth] = 90;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -6082,12 +6082,12 @@ TEST(CSSLayoutTest, test_should_layout_node_max_bounds_and_flex) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 60;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -6134,12 +6134,12 @@ TEST(CSSLayoutTest, test_should_layout_node_max_bounds_and_flex_rtl) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 60;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
     }
   }
 
@@ -6185,13 +6185,13 @@ TEST(CSSLayoutTest, test_should_layout_node_all_children_max_bounds_and_flex) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 60;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 60;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 60;
     }
   }
@@ -6239,13 +6239,13 @@ TEST(CSSLayoutTest, test_should_layout_node_all_children_max_bounds_and_flex_rtl
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 60;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 60;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 60;
     }
   }
@@ -6292,13 +6292,13 @@ TEST(CSSLayoutTest, test_should_layout_node_all_children_min_bounds_and_flex) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 120;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 120;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 120;
     }
   }
@@ -6346,13 +6346,13 @@ TEST(CSSLayoutTest, test_should_layout_node_all_children_min_bounds_and_flex_rtl
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 120;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 120;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 120;
     }
   }
@@ -6398,7 +6398,7 @@ TEST(CSSLayoutTest, test_should_prefill_child_size_within_bounds) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 310;
       node_1->style.minDimensions[CSSDimensionWidth] = 290;
     }
@@ -6435,7 +6435,7 @@ TEST(CSSLayoutTest, test_should_prefill_child_size_within_max_bounds) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.maxDimensions[CSSDimensionWidth] = 290;
     }
   }
@@ -6471,7 +6471,7 @@ TEST(CSSLayoutTest, test_should_prefill_child_size_within_min_bounds) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.minDimensions[CSSDimensionWidth] = 310;
     }
   }
@@ -6913,7 +6913,7 @@ TEST(CSSLayoutTest, test_should_center_flex_item_with_max_size) {
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionHeight] = 1000;
       node_1->style.maxDimensions[CSSDimensionWidth] = 600;
     }
@@ -6951,11 +6951,11 @@ TEST(CSSLayoutTest, test_should_correctly_size_flex_items_with_flexBasis_and_max
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 1000;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 1000;
       node_1->style.maxDimensions[CSSDimensionWidth] = 200;
@@ -7132,7 +7132,7 @@ TEST(CSSLayoutTest, test_should_layout_absolute_node_with_parent_with_padding_an
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.padding[CSSPositionLeft] = 10;
       node_1->style.padding[CSSPositionTop] = 10;
       node_1->style.padding[CSSPositionRight] = 10;
@@ -7737,13 +7737,13 @@ TEST(CSSLayoutTest, test_should_propagate_size_contraints_from_flex_parent) {
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.flexDirection = CSSFlexDirectionColumn;
       node_1->style.alignItems = CSSAlignFlexStart;
-      node_1->style.flex = 1;
+      CSSNodeStyleSetFlex(node_1, 1);
       node_1->style.dimensions[CSSDimensionHeight] = 10;
       init_css_node_children(node_1, 1);
       {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
-        node_2->style.flex = 1;
+        CSSNodeStyleSetFlex(node_2, 1);
         node_2->style.dimensions[CSSDimensionHeight] = 10;
         node_2->measure = measure;
         node_2->context = (char *) MEASURE_WITH_MATCH_PARENT;
@@ -8076,7 +8076,7 @@ TEST(CSSLayoutTest, test_should_not_shrink_column_node_when_there_is_space_left_
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8128,7 +8128,7 @@ TEST(CSSLayoutTest, test_should_shrink_column_node_when_there_is_no_space_left_o
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8184,7 +8184,7 @@ TEST(CSSLayoutTest,
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 25;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8252,7 +8252,7 @@ TEST(CSSLayoutTest, test_should_shrink_column_node_with_siblings_when_there_is_n
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 25;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8319,14 +8319,14 @@ TEST(
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 30;
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 40;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 100;
       node_1->style.dimensions[CSSDimensionHeight] = 50;
     }
@@ -8374,7 +8374,7 @@ TEST(CSSLayoutTest, test_should_not_shrink_visible_row_node_when_there_is_space_
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8427,7 +8427,7 @@ TEST(CSSLayoutTest, test_should_shrink_visible_row_node_when_there_is_no_space_l
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8484,7 +8484,7 @@ TEST(CSSLayoutTest,
       node_1->style.dimensions[CSSDimensionWidth] = 25;
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8554,7 +8554,7 @@ TEST(CSSLayoutTest,
       node_1->style.dimensions[CSSDimensionWidth] = 25;
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       node_1 = CSSNodeGetChild(node_0, 1);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8620,14 +8620,14 @@ TEST(CSSLayoutTest, test_should_shrink_visible_row_nodes_when_there_is_no_space_
     {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 30;
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.dimensions[CSSDimensionWidth] = 40;
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       node_1 = CSSNodeGetChild(node_0, 2);
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 50;
       node_1->style.dimensions[CSSDimensionHeight] = 100;
     }
@@ -8676,7 +8676,7 @@ TEST(CSSLayoutTest, test_should_not_shrink_hidden_row_node_when_there_is_space_l
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.overflow = CSSOverflowHidden;
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8730,7 +8730,7 @@ TEST(CSSLayoutTest, test_should_shrink_hidden_row_node_when_there_is_no_space_le
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.overflow = CSSOverflowHidden;
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8788,7 +8788,7 @@ TEST(CSSLayoutTest,
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.overflow = CSSOverflowHidden;
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8859,7 +8859,7 @@ TEST(CSSLayoutTest,
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.overflow = CSSOverflowHidden;
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -8927,7 +8927,7 @@ TEST(CSSLayoutTest,
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.overflow = CSSOverflowHidden;
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 30;
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       node_1 = CSSNodeGetChild(node_0, 1);
@@ -8935,7 +8935,7 @@ TEST(CSSLayoutTest,
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       node_1 = CSSNodeGetChild(node_0, 2);
       node_1->style.overflow = CSSOverflowHidden;
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionWidth] = 50;
       node_1->style.dimensions[CSSDimensionHeight] = 100;
     }
@@ -8988,7 +8988,7 @@ TEST(CSSLayoutTest, test_should_not_shrink_text_node_with_siblings_when_there_is
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.flexDirection = CSSFlexDirectionRow;
       node_1->style.alignItems = CSSAlignFlexStart;
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
@@ -9059,13 +9059,13 @@ TEST(CSSLayoutTest, test_should_shrink_text_node_with_siblings_when_there_is_no_
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.flexDirection = CSSFlexDirectionRow;
       node_1->style.alignItems = CSSAlignFlexStart;
-      node_1->style.flex = -1;
+      CSSNodeStyleSetFlex(node_1, -1);
       node_1->style.dimensions[CSSDimensionHeight] = 100;
       init_css_node_children(node_1, 1);
       {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
-        node_2->style.flex = -1;
+        CSSNodeStyleSetFlex(node_2, -1);
         node_2->measure = measure;
         node_2->context = (char *) LONG_TEXT;
       }

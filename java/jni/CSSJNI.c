@@ -145,6 +145,9 @@ CSS_NODE_JNI_STYLE_PROP(jint, CSSPositionType, PositionType);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSWrapType, FlexWrap);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSOverflow, Overflow);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, Flex);
+CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexGrow);
+CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexShrink);
+CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexBasis);
 
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, MarginLeft);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, MarginTop);

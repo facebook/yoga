@@ -108,10 +108,14 @@ function setupTestTree(node, nodeName, parentName, index) {
               overflowValue(node.style[style]) + ');');
           break;
         case 'flex-grow':
-          lines.push('CSSNodeStyleSetFlex(' + nodeName + ', ' + node.style[style] + ');');
+          lines.push('CSSNodeStyleSetFlexGrow(' + nodeName + ', ' + node.style[style] + ');');
           break;
         case 'flex-shrink':
-          lines.push('CSSNodeStyleSetFlex(' + nodeName + ', ' + -node.style[style] + ');');
+          lines.push('CSSNodeStyleSetFlexShrink(' + nodeName + ', ' + node.style[style] + ');');
+          break;
+        case 'flex-basis':
+          lines.push('CSSNodeStyleSetFlexBasis(' + nodeName + ', ' +
+              pixelValue(node.style[style]) + ');');
           break;
         case 'left':
           lines.push('CSSNodeStyleSetPositionLeft(' + nodeName + ', ' +
@@ -328,6 +332,7 @@ function getCSSLayoutStyle(node) {
     'overflow',
     'flex-grow',
     'flex-shrink',
+    'flex-basis',
     'left',
     'top',
     'right',
