@@ -3939,7 +3939,7 @@ TEST(CSSLayoutTest, test_layout_node_with_just_text) {
   {
     CSSNode *node_0 = root_node;
     node_0->measure = measure;
-    node_0->context = (char *)SMALL_TEXT;
+    node_0->context = (char *) SMALL_TEXT;
   }
 
   CSSNode *root_layout = new_test_css_node();
@@ -3960,7 +3960,7 @@ TEST(CSSLayoutTest, test_layout_node_with_fixed_width_and_custom_measure) {
     CSSNode *node_0 = root_node;
     node_0->style.dimensions[CSSDimensionWidth] = 100;
     node_0->measure = measure;
-    node_0->context = (char *)MEASURE_WITH_RATIO_2;
+    node_0->context = (char *) MEASURE_WITH_RATIO_2;
   }
 
   CSSNode *root_layout = new_test_css_node();
@@ -3981,7 +3981,7 @@ TEST(CSSLayoutTest, test_layout_node_with_fixed_height_and_custom_measure) {
     CSSNode *node_0 = root_node;
     node_0->style.dimensions[CSSDimensionHeight] = 100;
     node_0->measure = measure;
-    node_0->context = (char *)MEASURE_WITH_RATIO_2;
+    node_0->context = (char *) MEASURE_WITH_RATIO_2;
   }
 
   CSSNode *root_layout = new_test_css_node();
@@ -4003,7 +4003,7 @@ TEST(CSSLayoutTest, test_should_skip_measure_if_fixed_height_and_width) {
     node_0->style.dimensions[CSSDimensionWidth] = 100;
     node_0->style.dimensions[CSSDimensionHeight] = 100;
     node_0->measure = measure;
-    node_0->context = (char *)MEASURE_WITH_RATIO_2;
+    node_0->context = (char *) MEASURE_WITH_RATIO_2;
   }
 
   CSSNode *root_layout = new_test_css_node();
@@ -4023,7 +4023,7 @@ TEST(CSSLayoutTest, test_should_layout_node_with_measure) {
   {
     CSSNode *node_0 = root_node;
     node_0->measure = measure;
-    node_0->context = (char *)MEASURE_WITH_RATIO_2;
+    node_0->context = (char *) MEASURE_WITH_RATIO_2;
   }
 
   CSSNode *root_layout = new_test_css_node();
@@ -4049,7 +4049,7 @@ TEST(CSSLayoutTest, test_should_layout_nested_stacks_with_measure) {
       CSSNode *node_1;
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->measure = measure;
-      node_1->context = (char *)MEASURE_WITH_RATIO_2;
+      node_1->context = (char *) MEASURE_WITH_RATIO_2;
       node_1 = CSSNodeGetChild(node_0, 1);
       node_1->style.flexDirection = CSSFlexDirectionRow;
       node_1->style.overflow = CSSOverflowHidden;
@@ -4059,10 +4059,10 @@ TEST(CSSLayoutTest, test_should_layout_nested_stacks_with_measure) {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->measure = measure;
-        node_2->context = (char *)MEASURE_WITH_RATIO_2;
+        node_2->context = (char *) MEASURE_WITH_RATIO_2;
         node_2 = CSSNodeGetChild(node_1, 1);
         node_2->measure = measure;
-        node_2->context = (char *)MEASURE_WITH_RATIO_2;
+        node_2->context = (char *) MEASURE_WITH_RATIO_2;
       }
     }
   }
@@ -4113,7 +4113,7 @@ TEST(CSSLayoutTest, test_should_layout_text_node_with_width) {
     CSSNode *node_0 = root_node;
     node_0->style.dimensions[CSSDimensionWidth] = 10;
     node_0->measure = measure;
-    node_0->context = (char *)SMALL_TEXT;
+    node_0->context = (char *) SMALL_TEXT;
   }
 
   CSSNode *root_layout = new_test_css_node();
@@ -4133,7 +4133,7 @@ TEST(CSSLayoutTest, test_should_layout_text_node_with_padding_and_margin) {
   {
     CSSNode *node_0 = root_node;
     node_0->measure = measure;
-    node_0->context = (char *)LONG_TEXT;
+    node_0->context = (char *) LONG_TEXT;
   }
 
   CSSNode *root_layout = new_test_css_node();
@@ -4213,7 +4213,7 @@ TEST(CSSLayoutTest, test_should_layout_node_with_text_and_flex) {
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->style.flex = 1;
         node_2->measure = measure;
-        node_2->context = (char *)LONG_TEXT;
+        node_2->context = (char *) LONG_TEXT;
       }
     }
   }
@@ -4265,7 +4265,7 @@ TEST(CSSLayoutTest, test_should_layout_node_text_and_flex_rtl) {
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->style.flex = 1;
         node_2->measure = measure;
-        node_2->context = (char *)LONG_TEXT;
+        node_2->context = (char *) LONG_TEXT;
       }
     }
   }
@@ -4316,7 +4316,7 @@ TEST(CSSLayoutTest, test_should_layout_node_text_and_stretch) {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->measure = measure;
-        node_2->context = (char *)LONG_TEXT;
+        node_2->context = (char *) LONG_TEXT;
       }
     }
   }
@@ -4368,7 +4368,7 @@ TEST(CSSLayoutTest, test_should_layout_node_text_and_stretch_and_width) {
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->style.dimensions[CSSDimensionWidth] = 130;
         node_2->measure = measure;
-        node_2->context = (char *)LONG_TEXT;
+        node_2->context = (char *) LONG_TEXT;
       }
     }
   }
@@ -4415,7 +4415,7 @@ TEST(CSSLayoutTest, test_should_layout_node_text_bounded_by_parent) {
       node_1 = CSSNodeGetChild(node_0, 0);
       node_1->style.alignSelf = CSSAlignFlexStart;
       node_1->measure = measure;
-      node_1->context = (char *)LONG_TEXT;
+      node_1->context = (char *) LONG_TEXT;
     }
   }
 
@@ -4468,7 +4468,7 @@ TEST(CSSLayoutTest, test_should_layout_node_text_bounded_by_grand_parent) {
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->measure = measure;
-        node_2->context = (char *)LONG_TEXT;
+        node_2->context = (char *) LONG_TEXT;
       }
     }
   }
@@ -4680,7 +4680,7 @@ TEST(CSSLayoutTest, test_should_layout_text_direction_row) {
         node_2->style.margin[CSSPositionStart] = 20;
         node_2->style.margin[CSSPositionEnd] = 20;
         node_2->measure = measure;
-        node_2->context = (char *)SMALL_TEXT;
+        node_2->context = (char *) SMALL_TEXT;
       }
     }
   }
@@ -4737,7 +4737,7 @@ TEST(CSSLayoutTest, test_should_layout_text_direction_row_rtl) {
         node_2->style.margin[CSSPositionStart] = 20;
         node_2->style.margin[CSSPositionEnd] = 20;
         node_2->measure = measure;
-        node_2->context = (char *)SMALL_TEXT;
+        node_2->context = (char *) SMALL_TEXT;
       }
     }
   }
@@ -4792,7 +4792,7 @@ TEST(CSSLayoutTest, test_should_layout_text_with_margin) {
         node_2->style.margin[CSSPositionStart] = 20;
         node_2->style.margin[CSSPositionEnd] = 20;
         node_2->measure = measure;
-        node_2->context = (char *)LONG_TEXT;
+        node_2->context = (char *) LONG_TEXT;
       }
     }
   }
@@ -5315,8 +5315,8 @@ TEST(CSSLayoutTest, test_should_layout_absolute_node_top_with_right_width_and_no
   ASSERT_TRUE(test(root_node, root_layout));
 }
 
-TEST(
-    CSSLayoutTest, test_should_layout_absolute_node_left_with_right_width_and_no_parent_dimension) {
+TEST(CSSLayoutTest,
+     test_should_layout_absolute_node_left_with_right_width_and_no_parent_dimension) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -5352,7 +5352,7 @@ TEST(
 }
 
 TEST(CSSLayoutTest,
-    test_should_layout_node_with_border_bottom__insidejustifyContent_space_between_container) {
+     test_should_layout_node_with_border_bottom__insidejustifyContent_space_between_container) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -5387,7 +5387,7 @@ TEST(CSSLayoutTest,
 }
 
 TEST(CSSLayoutTest,
-    test_should_layout_node_with_negative_margin_top_inside_justifyContent_center_container) {
+     test_should_layout_node_with_negative_margin_top_inside_justifyContent_center_container) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -5421,8 +5421,8 @@ TEST(CSSLayoutTest,
   ASSERT_TRUE(test(root_node, root_layout));
 }
 
-TEST(
-    CSSLayoutTest, test_should_layout_node_with_margin_top_inside_justifyContent_center_container) {
+TEST(CSSLayoutTest,
+     test_should_layout_node_with_margin_top_inside_justifyContent_center_container) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -7746,7 +7746,7 @@ TEST(CSSLayoutTest, test_should_propagate_size_contraints_from_flex_parent) {
         node_2->style.flex = 1;
         node_2->style.dimensions[CSSDimensionHeight] = 10;
         node_2->measure = measure;
-        node_2->context = (char *)MEASURE_WITH_MATCH_PARENT;
+        node_2->context = (char *) MEASURE_WITH_MATCH_PARENT;
       }
     }
   }
@@ -8170,8 +8170,8 @@ TEST(CSSLayoutTest, test_should_shrink_column_node_when_there_is_no_space_left_o
   ASSERT_TRUE(test(root_node, root_layout));
 }
 
-TEST(
-    CSSLayoutTest, test_should_not_shrink_column_node_with_siblings_when_there_is_space_left_over) {
+TEST(CSSLayoutTest,
+     test_should_not_shrink_column_node_with_siblings_when_there_is_space_left_over) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -8307,7 +8307,8 @@ TEST(CSSLayoutTest, test_should_shrink_column_node_with_siblings_when_there_is_n
   ASSERT_TRUE(test(root_node, root_layout));
 }
 
-TEST(CSSLayoutTest,
+TEST(
+    CSSLayoutTest,
     test_should_shrink_column_nodes_proporional_to_their_main_size_when_there_is_no_space_left_over) {
   CSSNode *root_node = new_test_css_node();
   {
@@ -8469,7 +8470,7 @@ TEST(CSSLayoutTest, test_should_shrink_visible_row_node_when_there_is_no_space_l
 }
 
 TEST(CSSLayoutTest,
-    test_should_not_shrink_visible_row_node_with_siblings_when_there_is_space_left_over) {
+     test_should_not_shrink_visible_row_node_with_siblings_when_there_is_space_left_over) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -8539,7 +8540,7 @@ TEST(CSSLayoutTest,
 }
 
 TEST(CSSLayoutTest,
-    test_should_shrink_visible_row_node_with_siblings_when_there_is_no_space_left_over) {
+     test_should_shrink_visible_row_node_with_siblings_when_there_is_no_space_left_over) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -8772,7 +8773,7 @@ TEST(CSSLayoutTest, test_should_shrink_hidden_row_node_when_there_is_no_space_le
 }
 
 TEST(CSSLayoutTest,
-    test_should_not_shrink_hidden_row_node_with_siblings_when_there_is_space_left_over) {
+     test_should_not_shrink_hidden_row_node_with_siblings_when_there_is_space_left_over) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -8843,7 +8844,7 @@ TEST(CSSLayoutTest,
 }
 
 TEST(CSSLayoutTest,
-    test_should_shrink_hidden_row_node_with_siblings_when_there_is_no_space_left_over) {
+     test_should_shrink_hidden_row_node_with_siblings_when_there_is_no_space_left_over) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -8914,7 +8915,7 @@ TEST(CSSLayoutTest,
 }
 
 TEST(CSSLayoutTest,
-    test_should_shrink_hidden_row_nodes_propertional_to_main_size_when_there_is_no_space_left_over) {
+     test_should_shrink_hidden_row_nodes_propertional_to_main_size_when_there_is_no_space_left_over) {
   CSSNode *root_node = new_test_css_node();
   {
     CSSNode *node_0 = root_node;
@@ -8994,7 +8995,7 @@ TEST(CSSLayoutTest, test_should_not_shrink_text_node_with_siblings_when_there_is
         CSSNode *node_2;
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->measure = measure;
-        node_2->context = (char *)LONG_TEXT;
+        node_2->context = (char *) LONG_TEXT;
       }
       node_1 = CSSNodeGetChild(node_0, 2);
       node_1->style.dimensions[CSSDimensionWidth] = 15;
@@ -9066,7 +9067,7 @@ TEST(CSSLayoutTest, test_should_shrink_text_node_with_siblings_when_there_is_no_
         node_2 = CSSNodeGetChild(node_1, 0);
         node_2->style.flex = -1;
         node_2->measure = measure;
-        node_2->context = (char *)LONG_TEXT;
+        node_2->context = (char *) LONG_TEXT;
       }
       node_1 = CSSNodeGetChild(node_0, 2);
       node_1->style.dimensions[CSSDimensionWidth] = 15;
