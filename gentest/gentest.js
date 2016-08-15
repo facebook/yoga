@@ -8,10 +8,10 @@
  */
 
 window.onload = function() {
- printTest("INSERT_NAME_HERE", calculateTree(document.body.children[0]));
+ printTest(calculateTree(document.body.children[0]));
 }
 
-function printTest(testName, layoutTree) {
+function printTest(layoutTree) {
   var lines = [
     '/**',
     ' * Copyright (c) 2014-present, Facebook, Inc.',
@@ -26,22 +26,25 @@ function printTest(testName, layoutTree) {
     '#include <CSSLayoutTestUtils/CSSLayoutTestUtils.h>',
     '#include <gtest/gtest.h>',
     '',
-    'TEST(CSSLayoutTest, ' + testName + ') {',
   ];
 
-  lines.push('  ' + setupTestTree(layoutTree[0], 'root', null).reduce(function(curr, prev) {
-    return curr + '\n  ' + prev;
-  }));
+  for (var i = 0; i < layoutTree.length - 1; i++) {
+    lines.push('TEST(CSSLayoutTest, INSERT_NAME_HERE) {');
 
-  lines.push('  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);');
-  lines.push('');
+    lines.push('  ' + setupTestTree(layoutTree[i], 'root', null).reduce(function(curr, prev) {
+      return curr + '\n  ' + prev;
+    }));
 
-  lines.push('  ' + assertTestTree(layoutTree[0], 'root', null).reduce(function(curr, prev) {
-    return curr + '\n  ' + prev;
-  }));
+    lines.push('  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);');
+    lines.push('');
 
-  lines.push('}');
-  lines.push('');
+    lines.push('  ' + assertTestTree(layoutTree[i], 'root', null).reduce(function(curr, prev) {
+      return curr + '\n  ' + prev;
+    }));
+
+    lines.push('}');
+    lines.push('');
+  }
 
   printLines(lines);
 }

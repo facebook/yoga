@@ -111,7 +111,7 @@ Instead of manually writing a test which ensures parity with web implementations
 </div>
 ```
 
-Once saving and exiting the editor window the script will open a browser window. From here open the developer console and you should see that the web page has output a test file. Copy this into a file and save it in the `tests` folder. Re-run `buck test //:CSSLayout` to validate the behavior.
+Once saving and exiting the editor window the script will open a browser window. From here open the developer console and you should see that the web page has output a test file. Copy this into a file and save it in the `tests` folder. Re-run `buck test //:CSSLayout` to validate the behavior. One test case will be generated for every root `div` in the input html.
 
 ### Benchmarks
 Benchmarks are located in `benchmarks/CSSBenchmark.c` and can be run with `buck run //:benchmark`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed.
