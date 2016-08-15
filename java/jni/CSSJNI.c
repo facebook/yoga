@@ -27,6 +27,19 @@
         CSSNodeStyleSet##name((CSSNodeRef) nativePointer, (type) value);                         \
       })
 
+#define CSS_NODE_JNI_STYLE_EDGE_PROP(javatype, type, name)                                         \
+  CSS_NODE_JNI(                                                                                    \
+      javatype,                                                                                    \
+      CSSNodeStyleGet##name(JNIEnv *env, jobject instance, jint nativePointer, jint edge) {        \
+        return (javatype) CSSNodeStyleGet##name((CSSNodeRef) nativePointer, (CSSEdge) edge);       \
+      })                                                                                           \
+                                                                                                   \
+  CSS_NODE_JNI(void,                                                                               \
+               CSSNodeStyleSet##name(                                                              \
+                   JNIEnv *env, jobject instance, jint nativePointer, jint edge, javatype value) { \
+                 CSSNodeStyleSet##name((CSSNodeRef) nativePointer, (CSSEdge) edge, (type) value);  \
+               })
+
 #define CSS_NODE_JNI_LAYOUT_PROP(javatype, type, name)                                     \
   CSS_NODE_JNI(javatype,                                                                   \
                CSSNodeLayoutGet##name(JNIEnv *env, jobject instance, jint nativePointer) { \
@@ -174,33 +187,10 @@ CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexGrow);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexShrink);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexBasis);
 
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, MarginLeft);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, MarginTop);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, MarginRight);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, MarginBottom);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, MarginStart);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, MarginEnd);
-
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PaddingLeft);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PaddingTop);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PaddingRight);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PaddingBottom);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PaddingStart);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PaddingEnd);
-
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, BorderLeft);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, BorderTop);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, BorderRight);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, BorderBottom);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, BorderStart);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, BorderEnd);
-
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionLeft);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionTop);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionRight);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionBottom);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionStart);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, PositionEnd);
+CSS_NODE_JNI_STYLE_EDGE_PROP(jfloat, float, Position);
+CSS_NODE_JNI_STYLE_EDGE_PROP(jfloat, float, Margin);
+CSS_NODE_JNI_STYLE_EDGE_PROP(jfloat, float, Padding);
+CSS_NODE_JNI_STYLE_EDGE_PROP(jfloat, float, Border);
 
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, Width);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, MinWidth);
