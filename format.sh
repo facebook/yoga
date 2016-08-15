@@ -27,4 +27,4 @@ clang-format \
     SpaceAfterCStyleCast: true, \
     UseTab: Never, \
   }" "$@" \
-  -i ./**/*.{h,c,cpp}
+  -i $(dirname $0)/**/*.{h,c,cpp}
