@@ -7,3 +7,9 @@ PROGRUARD_ANNOTATIONS_TARGET = '//java/com/facebook/proguard/annotations:annotat
 SOLOADER_TARGET = '//lib/soloader:soloader'
 GTEST_TARGET = '//lib/gtest:gtest'
 GTEST_DL_URL = 'https://github.com/google/googletest/archive/release-1.7.0.zip'
+
+class allow_unsafe_import:
+    def __enter__(self):
+        pass
+    def __exit__(self, type, value, traceback):
+        pass
