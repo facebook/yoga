@@ -46,8 +46,12 @@ static bool are_layout_equal(CSSNode *a, CSSNode *b) {
   return true;
 }
 
-CSSSize measure(void *context, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode) {
-  const char *text = (const char *)context;
+CSSSize measure(void *context,
+                float width,
+                CSSMeasureMode widthMode,
+                float height,
+                CSSMeasureMode heightMode) {
+  const char *text = (const char *) context;
   CSSSize result;
   if (strcmp(text, SMALL_TEXT) == 0) {
     if (widthMode == CSSMeasureModeUndefined) {
@@ -105,7 +109,7 @@ CSSSize measure(void *context, float width, CSSMeasureMode widthMode, float heig
 }
 
 bool test(CSSNode *style, CSSNode *expected_layout) {
-  CSSNodeCalculateLayout(style, CSSUndefined, CSSUndefined, (CSSDirection)-1);
+  CSSNodeCalculateLayout(style, CSSUndefined, CSSUndefined, (CSSDirection) -1);
   return are_layout_equal(style, expected_layout);
 }
 

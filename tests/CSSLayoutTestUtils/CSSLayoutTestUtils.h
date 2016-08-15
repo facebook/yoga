@@ -10,16 +10,16 @@
 #ifndef __CSS_LAYOUT_TEST_UTILS_H
 #define __CSS_LAYOUT_TEST_UTILS_H
 
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 
 #ifndef __cplusplus
 #include <stdbool.h>
 #endif
 
-#include <CSSLayout/CSSMacros.h>
 #include <CSSLayout/CSSLayout-internal.h>
+#include <CSSLayout/CSSMacros.h>
 #include <CSSLayout/CSSNodeList.h>
 
 #define SMALL_WIDTH 35
@@ -34,7 +34,11 @@
 CSS_EXTERN_C_BEGIN
 
 bool test(CSSNode *style, CSSNode *expected_layout);
-CSSSize measure(void *context, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode);
+CSSSize measure(void *context,
+                float width,
+                CSSMeasureMode widthMode,
+                float height,
+                CSSMeasureMode heightMode);
 void init_css_node_children(CSSNode *node, int childCount);
 CSSNode *new_test_css_node(void);
 
