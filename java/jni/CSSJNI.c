@@ -15,35 +15,37 @@
 #define CSS_NODE_JNI(type, func) \
   JNIEXPORT type JNICALL Java_com_facebook_csslayout_CSSNodeJNI_jni_1##func
 
-#define CSS_NODE_JNI_STYLE_PROP(javatype, type, name)                                            \
-  CSS_NODE_JNI(javatype,                                                                         \
-               CSSNodeStyleGet##name(JNIEnv *env, jobject instance, jint nativePointer) {        \
-                 return (javatype) CSSNodeStyleGet##name((CSSNodeRef) nativePointer);            \
-               })                                                                                \
-                                                                                                 \
-  CSS_NODE_JNI(                                                                                  \
-      void,                                                                                      \
-      CSSNodeStyleSet##name(JNIEnv *env, jobject instance, jint nativePointer, javatype value) { \
-        CSSNodeStyleSet##name((CSSNodeRef) nativePointer, (type) value);                         \
+#define CSS_NODE_JNI_STYLE_PROP(javatype, type, name)                                             \
+  CSS_NODE_JNI(javatype,                                                                          \
+               CSSNodeStyleGet##name(JNIEnv *env, jobject instance, jlong nativePointer) {        \
+                 return (javatype) CSSNodeStyleGet##name((CSSNodeRef)(intptr_t) nativePointer);   \
+               })                                                                                 \
+                                                                                                  \
+  CSS_NODE_JNI(                                                                                   \
+      void,                                                                                       \
+      CSSNodeStyleSet##name(JNIEnv *env, jobject instance, jlong nativePointer, javatype value) { \
+        CSSNodeStyleSet##name((CSSNodeRef)(intptr_t) nativePointer, (type) value);                \
       })
 
 #define CSS_NODE_JNI_STYLE_EDGE_PROP(javatype, type, name)                                         \
   CSS_NODE_JNI(                                                                                    \
       javatype,                                                                                    \
-      CSSNodeStyleGet##name(JNIEnv *env, jobject instance, jint nativePointer, jint edge) {        \
-        return (javatype) CSSNodeStyleGet##name((CSSNodeRef) nativePointer, (CSSEdge) edge);       \
+      CSSNodeStyleGet##name(JNIEnv *env, jobject instance, jlong nativePointer, jint edge) {       \
+        return (javatype) CSSNodeStyleGet##name((CSSNodeRef)(intptr_t) nativePointer,              \
+                                                (CSSEdge) edge);                                   \
       })                                                                                           \
                                                                                                    \
-  CSS_NODE_JNI(void,                                                                               \
-               CSSNodeStyleSet##name(                                                              \
-                   JNIEnv *env, jobject instance, jint nativePointer, jint edge, javatype value) { \
-                 CSSNodeStyleSet##name((CSSNodeRef) nativePointer, (CSSEdge) edge, (type) value);  \
-               })
+  CSS_NODE_JNI(                                                                                    \
+      void,                                                                                        \
+      CSSNodeStyleSet##name(                                                                       \
+          JNIEnv *env, jobject instance, jlong nativePointer, jint edge, javatype value) {         \
+        CSSNodeStyleSet##name((CSSNodeRef)(intptr_t) nativePointer, (CSSEdge) edge, (type) value); \
+      })
 
-#define CSS_NODE_JNI_LAYOUT_PROP(javatype, type, name)                                     \
-  CSS_NODE_JNI(javatype,                                                                   \
-               CSSNodeLayoutGet##name(JNIEnv *env, jobject instance, jint nativePointer) { \
-                 return (javatype) CSSNodeLayoutGet##name((CSSNodeRef) nativePointer);     \
+#define CSS_NODE_JNI_LAYOUT_PROP(javatype, type, name)                                           \
+  CSS_NODE_JNI(javatype,                                                                         \
+               CSSNodeLayoutGet##name(JNIEnv *env, jobject instance, jlong nativePointer) {      \
+                 return (javatype) CSSNodeLayoutGet##name((CSSNodeRef)(intptr_t) nativePointer); \
                })
 
 static JavaVM *jvm = NULL;
@@ -105,72 +107,75 @@ static CSSSize _jniMeasureFunc(void *context,
   return size;
 }
 
-CSS_NODE_JNI(jint, CSSNodeNew(JNIEnv *env, jobject thiz) {
+CSS_NODE_JNI(jlong, CSSNodeNew(JNIEnv *env, jobject thiz) {
   CSSNodeRef node = CSSNodeNew();
   CSSNodeSetContext(node, (*env)->NewGlobalRef(env, thiz));
   CSSNodeSetPrintFunc(node, _jniPrint);
-  return (jint) node;
+  return (jlong)(intptr_t) node;
 })
 
-CSS_NODE_JNI(void, CSSNodeFree(JNIEnv *env, jobject thiz, jint nativePointer) {
-  (*env)->DeleteGlobalRef(env, (jobject) CSSNodeGetContext((CSSNodeRef) nativePointer));
-  CSSNodeFree((CSSNodeRef) nativePointer);
+CSS_NODE_JNI(void, CSSNodeFree(JNIEnv *env, jobject thiz, jlong nativePointer) {
+  (*env)->DeleteGlobalRef(env, (jobject) CSSNodeGetContext((CSSNodeRef)(intptr_t) nativePointer));
+  CSSNodeFree((CSSNodeRef)(intptr_t) nativePointer);
 })
 
 CSS_NODE_JNI(void,
              CSSNodeInsertChild(JNIEnv *env,
                                 jobject thiz,
-                                jint nativePointer,
-                                jint childPointer,
+                                jlong nativePointer,
+                                jlong childPointer,
                                 jint index) {
-               CSSNodeInsertChild((CSSNodeRef) nativePointer, (CSSNodeRef) childPointer, index);
+               CSSNodeInsertChild((CSSNodeRef)(intptr_t) nativePointer,
+                                  (CSSNodeRef)(intptr_t) childPointer,
+                                  index);
              })
 
-CSS_NODE_JNI(void,
-             CSSNodeRemoveChild(JNIEnv *env, jobject thiz, jint nativePointer, jint childPointer) {
-               CSSNodeRemoveChild((CSSNodeRef) nativePointer, (CSSNodeRef) childPointer);
-             })
+CSS_NODE_JNI(
+    void,
+    CSSNodeRemoveChild(JNIEnv *env, jobject thiz, jlong nativePointer, jlong childPointer) {
+      CSSNodeRemoveChild((CSSNodeRef)(intptr_t) nativePointer, (CSSNodeRef)(intptr_t) childPointer);
+    })
 
-CSS_NODE_JNI(void, CSSNodeCalculateLayout(JNIEnv *env, jobject thiz, jint nativePointer) {
-  CSSNodeCalculateLayout((CSSNodeRef) nativePointer,
+CSS_NODE_JNI(void, CSSNodeCalculateLayout(JNIEnv *env, jobject thiz, jlong nativePointer) {
+  CSSNodeCalculateLayout((CSSNodeRef)(intptr_t) nativePointer,
                          NAN,
                          NAN,
-                         CSSNodeStyleGetDirection(((CSSNodeRef) nativePointer)));
+                         CSSNodeStyleGetDirection(((CSSNodeRef)(intptr_t) nativePointer)));
 })
 
-CSS_NODE_JNI(void, CSSNodeMarkDirty(JNIEnv *env, jobject thiz, jint nativePointer) {
-  CSSNodeMarkDirty((CSSNodeRef) nativePointer);
+CSS_NODE_JNI(void, CSSNodeMarkDirty(JNIEnv *env, jobject thiz, jlong nativePointer) {
+  CSSNodeMarkDirty((CSSNodeRef)(intptr_t) nativePointer);
 })
 
-CSS_NODE_JNI(jboolean, CSSNodeIsDirty(JNIEnv *env, jobject instance, jint nativePointer) {
-  return (jboolean) CSSNodeIsDirty((CSSNodeRef) nativePointer);
+CSS_NODE_JNI(jboolean, CSSNodeIsDirty(JNIEnv *env, jobject instance, jlong nativePointer) {
+  return (jboolean) CSSNodeIsDirty((CSSNodeRef)(intptr_t) nativePointer);
 })
 
 CSS_NODE_JNI(void,
              CSSNodeSetHasMeasureFunc(JNIEnv *env,
                                       jobject thiz,
-                                      jint nativePointer,
+                                      jlong nativePointer,
                                       jboolean hasMeasureFunc) {
-               CSSNodeSetMeasureFunc((CSSNodeRef) nativePointer,
+               CSSNodeSetMeasureFunc((CSSNodeRef)(intptr_t) nativePointer,
                                      hasMeasureFunc ? _jniMeasureFunc : NULL);
              })
 
 CSS_NODE_JNI(
     void,
-    CSSNodeSetIsTextNode(JNIEnv *env, jobject instance, jint nativePointer, jboolean isTextNode) {
-      CSSNodeSetIsTextnode((CSSNodeRef) nativePointer, isTextNode);
+    CSSNodeSetIsTextNode(JNIEnv *env, jobject instance, jlong nativePointer, jboolean isTextNode) {
+      CSSNodeSetIsTextnode((CSSNodeRef)(intptr_t) nativePointer, isTextNode);
     })
 
-CSS_NODE_JNI(jboolean, CSSNodeGetIsTextNode(JNIEnv *env, jobject instance, jint nativePointer) {
-  return (jboolean) CSSNodeGetIsTextnode((CSSNodeRef) nativePointer);
+CSS_NODE_JNI(jboolean, CSSNodeGetIsTextNode(JNIEnv *env, jobject instance, jlong nativePointer) {
+  return (jboolean) CSSNodeGetIsTextnode((CSSNodeRef)(intptr_t) nativePointer);
 })
 
-CSS_NODE_JNI(jboolean, CSSNodeHasNewLayout(JNIEnv *env, jobject instance, jint nativePointer) {
-  return (jboolean) CSSNodeGetHasNewLayout((CSSNodeRef) nativePointer);
+CSS_NODE_JNI(jboolean, CSSNodeHasNewLayout(JNIEnv *env, jobject instance, jlong nativePointer) {
+  return (jboolean) CSSNodeGetHasNewLayout((CSSNodeRef)(intptr_t) nativePointer);
 })
 
-CSS_NODE_JNI(void, CSSNodeMarkLayoutSeen(JNIEnv *env, jobject instance, jint nativePointer) {
-  CSSNodeSetHasNewLayout((CSSNodeRef) nativePointer, false);
+CSS_NODE_JNI(void, CSSNodeMarkLayoutSeen(JNIEnv *env, jobject instance, jlong nativePointer) {
+  CSSNodeSetHasNewLayout((CSSNodeRef)(intptr_t) nativePointer, false);
 })
 
 CSS_NODE_JNI_STYLE_PROP(jint, CSSDirection, Direction);
