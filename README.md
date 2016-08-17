@@ -96,7 +96,7 @@ root.getLayoutHeight();
 ```
 
 ## Contributing
-To contribute to CSSLayout you need to first install [buck](https://buckbuild.com) which is the build system used by CSSLayout. CSSLayout is implemented in C with language bindings for Java. When making changes to `CSSLayout/CSSLayout.h` please ensure to update `java/jni/CSSJNI.h` and `java/com/facebook/csslayout/CSSNode.java` to reflect the API change.
+To contribute to CSSLayout you need to first install [buck](https://buckbuild.com) which is the build system used by CSSLayout. CSSLayout is implemented in C with language bindings for Java. When making changes to `CSSLayout/CSSLayout.h` please ensure to update `java/jni/CSSJNI.h` and `java/com/facebook/csslayout/CSSNode.java` to reflect the API change. Before submitting any code please run `format.sh` to ensure the code matches the project's code style.
 
 Before making any larger changes to CSSLayout please open an issue with a RFC so the changes can be discussed first. Generally we are very open to changes and improvements that will benefit the community.
 
