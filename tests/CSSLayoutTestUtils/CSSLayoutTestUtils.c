@@ -33,8 +33,8 @@ static bool eq(float a, float b) {
 static bool are_layout_equal(CSSNode *a, CSSNode *b) {
   if (!eq(a->layout.dimensions[CSSDimensionWidth], b->layout.dimensions[CSSDimensionWidth]) ||
       !eq(a->layout.dimensions[CSSDimensionHeight], b->layout.dimensions[CSSDimensionHeight]) ||
-      !eq(a->layout.position[CSSPositionTop], b->layout.position[CSSPositionTop]) ||
-      !eq(a->layout.position[CSSPositionLeft], b->layout.position[CSSPositionLeft]) ||
+      !eq(a->layout.position[CSSEdgeTop], b->layout.position[CSSEdgeTop]) ||
+      !eq(a->layout.position[CSSEdgeLeft], b->layout.position[CSSEdgeLeft]) ||
       !eq(CSSNodeChildCount(a), CSSNodeChildCount(b))) {
     return false;
   }
