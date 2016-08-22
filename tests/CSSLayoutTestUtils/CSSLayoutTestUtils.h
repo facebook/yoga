@@ -33,14 +33,14 @@
 
 CSS_EXTERN_C_BEGIN
 
-bool test(CSSNode *style, CSSNode *expected_layout);
+bool test(const CSSNodeRef style, const CSSNodeRef expected_layout);
 CSSSize measure(void *context,
-                float width,
+                float availableWidth,
                 CSSMeasureMode widthMode,
-                float height,
+                float availableHeight,
                 CSSMeasureMode heightMode);
-void init_css_node_children(CSSNode *node, int childCount);
-CSSNode *new_test_css_node(void);
+void init_css_node_children(const CSSNodeRef node, const uint32_t childCount);
+CSSNodeRef new_test_css_node();
 
 CSS_EXTERN_C_END
 

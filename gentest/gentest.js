@@ -89,7 +89,7 @@ function assertTestTree(node, nodeName, parentName) {
 
 function setupTestTree(node, nodeName, parentName, index) {
   var lines = [
-    'CSSNodeRef ' + nodeName + ' = CSSNodeNew();',
+    'const CSSNodeRef ' + nodeName + ' = CSSNodeNew();',
   ];
 
   for (var style in node.style) {

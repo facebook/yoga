@@ -14,12 +14,12 @@
 
 // Measure functions can be quite slow, for example when measuring text.
 // Simulate this by sleeping for 1 millisecond.
-static CSSSize _measure(void *context,
-                        float width,
-                        CSSMeasureMode widthMode,
-                        float height,
-                        CSSMeasureMode heightMode) {
-  struct timespec sleeptime = {0, 1000000};
+static CSSSize _measure(const void *context,
+                        const float width,
+                        const CSSMeasureMode widthMode,
+                        const float height,
+                        const CSSMeasureMode heightMode) {
+  const struct timespec sleeptime = {0, 1000000};
   nanosleep(&sleeptime, NULL);
   return (CSSSize){
       .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
@@ -30,12 +30,12 @@ static CSSSize _measure(void *context,
 CSS_BENCHMARKS({
 
   CSS_BENCHMARK("Stack with flex", {
-    CSSNodeRef root = CSSNodeNew();
+    const CSSNodeRef root = CSSNodeNew();
     CSSNodeStyleSetWidth(root, 100);
     CSSNodeStyleSetHeight(root, 100);
 
     for (uint32_t i = 0; i < 10; i++) {
-      CSSNodeRef child = CSSNodeNew();
+      const CSSNodeRef child = CSSNodeNew();
       CSSNodeSetMeasureFunc(child, _measure);
       CSSNodeStyleSetFlex(child, 1);
       CSSNodeInsertChild(root, child, 0);
@@ -45,10 +45,10 @@ CSS_BENCHMARKS({
   });
 
   CSS_BENCHMARK("Align stretch in undefined axis", {
-    CSSNodeRef root = CSSNodeNew();
+    const CSSNodeRef root = CSSNodeNew();
 
     for (uint32_t i = 0; i < 10; i++) {
-      CSSNodeRef child = CSSNodeNew();
+      const CSSNodeRef child = CSSNodeNew();
       CSSNodeStyleSetHeight(child, 20);
       CSSNodeSetMeasureFunc(child, _measure);
       CSSNodeInsertChild(root, child, 0);
@@ -58,16 +58,16 @@ CSS_BENCHMARKS({
   });
 
   CSS_BENCHMARK("Nested flex", {
-    CSSNodeRef root = CSSNodeNew();
+    const CSSNodeRef root = CSSNodeNew();
 
     for (uint32_t i = 0; i < 10; i++) {
-      CSSNodeRef child = CSSNodeNew();
+      const CSSNodeRef child = CSSNodeNew();
       CSSNodeSetMeasureFunc(child, _measure);
       CSSNodeStyleSetFlex(child, 1);
       CSSNodeInsertChild(root, child, 0);
 
       for (uint32_t ii = 0; ii < 10; ii++) {
-        CSSNodeRef grandChild = CSSNodeNew();
+        const CSSNodeRef grandChild = CSSNodeNew();
         CSSNodeSetMeasureFunc(grandChild, _measure);
         CSSNodeStyleSetFlex(grandChild, 1);
         CSSNodeInsertChild(child, grandChild, 0);

@@ -22,19 +22,19 @@
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, flex_basis) {
-  CSSNodeRef root = CSSNodeNew();
+  const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
   CSSNodeStyleSetWidth(root, 300);
   CSSNodeStyleSetHeight(root, 100);
 
-  CSSNodeRef root_child0 = CSSNodeNew();
+  const CSSNodeRef root_child0 = CSSNodeNew();
   CSSNodeStyleSetFlexGrow(root_child0, 1);
   CSSNodeStyleSetFlexBasis(root_child0, 100);
   CSSNodeStyleSetWidth(root_child0, 200);
   CSSNodeStyleSetHeight(root_child0, 100);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeRef root_child1 = CSSNodeNew();
+  const CSSNodeRef root_child1 = CSSNodeNew();
   CSSNodeStyleSetFlexGrow(root_child1, 1);
   CSSNodeStyleSetWidth(root_child1, 100);
   CSSNodeStyleSetHeight(root_child1, 100);

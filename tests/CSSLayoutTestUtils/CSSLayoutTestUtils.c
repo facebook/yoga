@@ -26,11 +26,11 @@ __forceinline const float fminf(const float a, const float b) {
 #endif
 #endif
 
-static bool eq(float a, float b) {
+static bool eq(const float a, const float b) {
   return fabs(a - b) < 0.0001;
 }
 
-static bool are_layout_equal(CSSNode *a, CSSNode *b) {
+static bool are_layout_equal(const CSSNodeRef a, const CSSNodeRef b) {
   if (!eq(a->layout.dimensions[CSSDimensionWidth], b->layout.dimensions[CSSDimensionWidth]) ||
       !eq(a->layout.dimensions[CSSDimensionHeight], b->layout.dimensions[CSSDimensionHeight]) ||
       !eq(a->layout.position[CSSEdgeTop], b->layout.position[CSSEdgeTop]) ||
@@ -38,7 +38,7 @@ static bool are_layout_equal(CSSNode *a, CSSNode *b) {
       !eq(CSSNodeChildCount(a), CSSNodeChildCount(b))) {
     return false;
   }
-  for (int i = 0; i < CSSNodeChildCount(a); ++i) {
+  for (uint32_t i = 0; i < CSSNodeChildCount(a); ++i) {
     if (!are_layout_equal(CSSNodeGetChild(a, i), CSSNodeGetChild(b, i))) {
       return false;
     }
@@ -47,12 +47,14 @@ static bool are_layout_equal(CSSNode *a, CSSNode *b) {
 }
 
 CSSSize measure(void *context,
-                float width,
+                float availableWidth,
                 CSSMeasureMode widthMode,
-                float height,
+                float availableHeight,
                 CSSMeasureMode heightMode) {
   const char *text = (const char *) context;
   CSSSize result;
+  float width = availableWidth;
+  float height = availableHeight;
   if (strcmp(text, SMALL_TEXT) == 0) {
     if (widthMode == CSSMeasureModeUndefined) {
       width = 1000000;
@@ -108,18 +110,18 @@ CSSSize measure(void *context,
   return result;
 }
 
-bool test(CSSNode *style, CSSNode *expected_layout) {
+bool test(const CSSNodeRef style, const CSSNodeRef expected_layout) {
   CSSNodeCalculateLayout(style, CSSUndefined, CSSUndefined, (CSSDirection) -1);
   return are_layout_equal(style, expected_layout);
 }
 
-CSSNode *new_test_css_node(void) {
-  CSSNode *node = CSSNodeNew();
+CSSNodeRef new_test_css_node() {
+  CSSNodeRef node = CSSNodeNew();
   return node;
 }
 
-void init_css_node_children(CSSNode *node, int childCount) {
-  for (int i = 0; i < childCount; ++i) {
+void init_css_node_children(const CSSNodeRef node, const uint32_t childCount) {
+  for (uint32_t i = 0; i < childCount; ++i) {
     CSSNodeInsertChild(node, new_test_css_node(), 0);
   }
 }

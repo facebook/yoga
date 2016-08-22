@@ -100,15 +100,14 @@ static CSSSize _jniMeasureFunc(void *context,
 
   jlong measureResult =
       (*env)->CallLongMethod(env, context, measureID, width, widthMode, height, heightMode);
-  CSSSize size = {
+
+  return (CSSSize){
       .width = (int32_t)(measureResult >> 32), .height = (int32_t) measureResult,
   };
-
-  return size;
 }
 
 CSS_NODE_JNI(jlong, CSSNodeNew(JNIEnv *env, jobject thiz) {
-  CSSNodeRef node = CSSNodeNew();
+  const CSSNodeRef node = CSSNodeNew();
   CSSNodeSetContext(node, (*env)->NewGlobalRef(env, thiz));
   CSSNodeSetPrintFunc(node, _jniPrint);
   return (jlong)(intptr_t) node;
