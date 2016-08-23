@@ -828,7 +828,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
       }
     }
@@ -875,7 +875,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 200;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
       }
     }
@@ -918,19 +918,19 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 1000;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.flex = 1;
+          node_2.setFlex(1);
           node_2.style.dimensions[DIMENSION_WIDTH] = 1000;
           addChildren(node_2, 1);
           {
             TestCSSNode node_3;
             node_3 = node_2.getChildAt(0);
-            node_3.style.flex = 1;
+            node_3.setFlex(1);
             node_3.style.dimensions[DIMENSION_WIDTH] = 1000;
           }
         }
@@ -990,21 +990,21 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 1000;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
           node_2.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-          node_2.style.flex = 1;
+          node_2.setFlex(1);
           node_2.style.dimensions[DIMENSION_WIDTH] = 1000;
           addChildren(node_2, 1);
           {
             TestCSSNode node_3;
             node_3 = node_2.getChildAt(0);
             node_3.style.flexDirection = CSSFlexDirection.COLUMN_REVERSE;
-            node_3.style.flex = 1;
+            node_3.setFlex(1);
             node_3.style.dimensions[DIMENSION_WIDTH] = 1000;
           }
         }
@@ -1642,7 +1642,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
@@ -2596,7 +2596,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -3063,12 +3063,12 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
         node_1.style.dimensions[DIMENSION_WIDTH] = 50;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -3577,7 +3577,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.setMargin(Spacing.LEFT, 5);
       }
     }
@@ -3616,7 +3616,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.setMargin(Spacing.RIGHT, 5);
       }
     }
@@ -3654,9 +3654,9 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.setPadding(Spacing.RIGHT, 5);
       }
     }
@@ -3700,9 +3700,9 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.setPadding(Spacing.LEFT, 5);
       }
     }
@@ -3745,9 +3745,9 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.setMargin(Spacing.LEFT, 5);
       }
     }
@@ -3791,9 +3791,9 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.setMargin(Spacing.RIGHT, 5);
       }
     }
@@ -3837,7 +3837,7 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(0);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 600;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -3880,7 +3880,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -3919,7 +3919,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -3955,10 +3955,10 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
         node_1.style.positionType = CSSPositionType.ABSOLUTE;
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -4544,7 +4544,7 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.flex = 1;
+          node_2.setFlex(1);
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = TestConstants.LONG_TEXT;
         }
@@ -4598,7 +4598,7 @@ public class LayoutEngineTest {
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.flex = 1;
+          node_2.setFlex(1);
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = TestConstants.LONG_TEXT;
         }
@@ -5239,10 +5239,10 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.flex = 2.5f;
+        node_1.setFlex(2.5f);
         node_1 = node_0.getChildAt(1);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.flex = 7.5f;
+        node_1.setFlex(7.5f);
       }
     }
 
@@ -5287,10 +5287,10 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.flex = 2.5f;
+        node_1.setFlex(2.5f);
         node_1 = node_0.getChildAt(1);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.flex = 7.5f;
+        node_1.setFlex(7.5f);
       }
     }
 
@@ -5335,10 +5335,10 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.flex = -2.5f;
+        node_1.setFlex(-2.5f);
         node_1 = node_0.getChildAt(1);
         node_1.style.alignSelf = CSSAlign.FLEX_START;
-        node_1.style.flex = 0;
+        node_1.setFlex(0);
       }
     }
 
@@ -6295,12 +6295,12 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -6349,12 +6349,12 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 200;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -6402,13 +6402,13 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 110;
         node_1.style.minWidth = 90;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -6457,13 +6457,13 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 110;
         node_1.style.minWidth = 90;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -6511,12 +6511,12 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 60;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -6565,12 +6565,12 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 60;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
       }
     }
 
@@ -6618,13 +6618,13 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 60;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 60;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 60;
       }
     }
@@ -6674,13 +6674,13 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 60;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 60;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 60;
       }
     }
@@ -6729,13 +6729,13 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 120;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 120;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 120;
       }
     }
@@ -6785,13 +6785,13 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 120;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 120;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 120;
       }
     }
@@ -6839,7 +6839,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 310;
         node_1.style.minWidth = 290;
       }
@@ -6878,7 +6878,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.maxWidth = 290;
       }
     }
@@ -6916,7 +6916,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.minWidth = 310;
       }
     }
@@ -7380,7 +7380,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 1000;
         node_1.style.maxWidth = 600;
       }
@@ -7420,11 +7420,11 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 1000;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 1000;
         node_1.style.maxWidth = 200;
@@ -7607,7 +7607,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.setPadding(Spacing.LEFT, 10);
         node_1.setPadding(Spacing.TOP, 10);
         node_1.setPadding(Spacing.RIGHT, 10);
@@ -8238,13 +8238,13 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(1);
         node_1.style.flexDirection = CSSFlexDirection.COLUMN;
         node_1.style.alignItems = CSSAlign.FLEX_START;
-        node_1.style.flex = 1;
+        node_1.setFlex(1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 10;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.flex = 1;
+          node_2.setFlex(1);
           node_2.style.dimensions[DIMENSION_HEIGHT] = 10;
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = TestConstants.MEASURE_WITH_MATCH_PARENT;
@@ -8591,7 +8591,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         addChildren(node_1, 1);
         {
@@ -8645,7 +8645,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         addChildren(node_1, 1);
         {
@@ -8702,7 +8702,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 25;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         addChildren(node_1, 1);
         {
@@ -8772,7 +8772,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 25;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         addChildren(node_1, 1);
         {
@@ -8839,14 +8839,14 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 30;
         node_1 = node_0.getChildAt(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 40;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 100;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 50;
       }
@@ -8896,7 +8896,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -8951,7 +8951,7 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -9009,7 +9009,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_WIDTH] = 25;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -9080,7 +9080,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_WIDTH] = 25;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -9148,14 +9148,14 @@ public class LayoutEngineTest {
       {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 30;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 40;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(2);
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 50;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
@@ -9206,7 +9206,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.overflow = CSSOverflow.HIDDEN;
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -9262,7 +9262,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.overflow = CSSOverflow.HIDDEN;
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -9321,7 +9321,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
         node_1.style.overflow = CSSOverflow.HIDDEN;
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -9393,7 +9393,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
         node_1.style.overflow = CSSOverflow.HIDDEN;
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -9462,7 +9462,7 @@ public class LayoutEngineTest {
         TestCSSNode node_1;
         node_1 = node_0.getChildAt(0);
         node_1.style.overflow = CSSOverflow.HIDDEN;
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 30;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(1);
@@ -9470,7 +9470,7 @@ public class LayoutEngineTest {
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         node_1 = node_0.getChildAt(2);
         node_1.style.overflow = CSSOverflow.HIDDEN;
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_WIDTH] = 50;
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
       }
@@ -9525,7 +9525,7 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(1);
         node_1.style.flexDirection = CSSFlexDirection.ROW;
         node_1.style.alignItems = CSSAlign.FLEX_START;
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
@@ -9598,13 +9598,13 @@ public class LayoutEngineTest {
         node_1 = node_0.getChildAt(1);
         node_1.style.flexDirection = CSSFlexDirection.ROW;
         node_1.style.alignItems = CSSAlign.FLEX_START;
-        node_1.style.flex = -1;
+        node_1.setFlex(-1);
         node_1.style.dimensions[DIMENSION_HEIGHT] = 100;
         addChildren(node_1, 1);
         {
           TestCSSNode node_2;
           node_2 = node_1.getChildAt(0);
-          node_2.style.flex = -1;
+          node_2.setFlex(-1);
           node_2.setMeasureFunction(sTestMeasureFunction);
           node_2.context = TestConstants.LONG_TEXT;
         }
