@@ -121,7 +121,7 @@ function setupTestTree(node, nodeName, parentName, index) {
               alignValue(node.style[style]) + ');');
           break;
         case 'position':
-          lines.push('CSSNodeSetPositionType(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPositionType(' + nodeName + ', ' +
               positionValue(node.style[style]) + ');');
           break;
         case 'flex-wrap':
@@ -142,67 +142,67 @@ function setupTestTree(node, nodeName, parentName, index) {
               pixelValue(node.style[style]) + ');');
           break;
         case 'left':
-          lines.push('CSSNodeStyleSetPositionLeft(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeLeft, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'top':
-          lines.push('CSSNodeStyleSetPositionTop(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeTop, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'right':
-          lines.push('CSSNodeStyleSetPositionRight(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeRight, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'bottom':
-          lines.push('CSSNodeStyleSetPositionBottom(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeBottom, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'margin-left':
-          lines.push('CSSNodeStyleSetMarginLeft(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeLeft, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'margin-top':
-          lines.push('CSSNodeStyleSetMarginTop(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeTop, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'margin-right':
-          lines.push('CSSNodeStyleSetMarginRight(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeRight, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'margin-bottom':
-          lines.push('CSSNodeStyleSetMarginBottom(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeBottom, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'padding-left':
-          lines.push('CSSNodeStyleSetPaddingLeft(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeLeft, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'padding-top':
-          lines.push('CSSNodeStyleSetPaddingTop(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeTop, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'padding-right':
-          lines.push('CSSNodeStyleSetPaddingRight(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeRight, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'padding-bottom':
-          lines.push('CSSNodeStyleSetPaddingBottom(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeBottom, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'border-left-width':
-          lines.push('CSSNodeStyleSetBorderLeft(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeLeft, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'border-top-width':
-          lines.push('CSSNodeStyleSetBorderTop(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeTop, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'border-right-width':
-          lines.push('CSSNodeStyleSetBorderRight(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeRight, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'border-bottom-width':
-          lines.push('CSSNodeStyleSetBorderBottom(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeBottom, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'width':
