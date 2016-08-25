@@ -109,7 +109,7 @@ function setupTestTree(node, nodeName, parentName, index) {
     if (node.style[style] !== getDefaultStyleValue(style)) {
       switch (style) {
         case 'direction':
-          lines.push('CSSNodeSetDirection(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetDirection(' + nodeName + ', ' +
               directionValue(node.style[style]) + ');');
           break;
         case 'flex-direction':
@@ -137,10 +137,10 @@ function setupTestTree(node, nodeName, parentName, index) {
               positionValue(node.style[style]) + ');');
           break;
         case 'flex-wrap':
-          lines.push('CSSNodeSetFlexWrap(' + nodeName + ', ' + wrapValue(node.style[style]) + ');');
+          lines.push('CSSNodeStyleSetFlexWrap(' + nodeName + ', ' + wrapValue(node.style[style]) + ');');
           break;
         case 'overflow':
-          lines.push('CSSNodeSetOverflow(' + nodeName + ', ' +
+          lines.push('CSSNodeStyleSetOverflow(' + nodeName + ', ' +
               overflowValue(node.style[style]) + ');');
           break;
         case 'flex-grow':
