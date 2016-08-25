@@ -325,6 +325,9 @@ function pixelValue(value) {
 }
 
 function getDefaultStyleValue(style) {
+  if (style == 'position') {
+    return 'relative';
+  }
   var node = document.getElementById('default');
   return getComputedStyle(node, null).getPropertyValue(style);
 }
