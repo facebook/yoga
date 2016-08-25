@@ -93,8 +93,20 @@ function setupTestTree(node, nodeName, parentName, index) {
   ];
 
   for (var style in node.style) {
+
+    // Skip position info for root as it messes up tests
+    if (node.declaredStyle[style] === "" &&
+        (style == 'position' ||
+         style == 'left' ||
+         style == 'top' ||
+         style == 'right' ||
+         style == 'bottom' ||
+         style == 'width' ||
+         style == 'height')) {
+      continue;
+    }
+
     if (node.style[style] !== getDefaultStyleValue(style)) {
-      var TODO = '';
       switch (style) {
         case 'direction':
           lines.push('CSSNodeSetDirection(' + nodeName + ', ' +
@@ -337,6 +349,7 @@ function calculateTree(root) {
       height: child.offsetHeight,
       children: calculateTree(child),
       style: getCSSLayoutStyle(child),
+      declaredStyle: child.style,
     });
   }
 
