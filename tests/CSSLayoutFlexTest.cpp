@@ -162,35 +162,3 @@ TEST(CSSLayoutTest, flex_basis_flex_shrink_row) {
   ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child1));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child1));
 }
-
-TEST(CSSLayoutTest, flex_basis_flex_grow_undefined_main) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetWidth(root, 100);
-
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetFlexBasis(root_child0, 100);
-  CSSNodeStyleSetWidth(root_child0, 100);
-  CSSNodeInsertChild(root, root_child0, 0);
-
-  const CSSNodeRef root_child1 = CSSNodeNew();
-  CSSNodeStyleSetFlexBasis(root_child1, 50);
-  CSSNodeStyleSetWidth(root_child1, 100);
-  CSSNodeInsertChild(root, root_child1, 1);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
-
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
-  ASSERT_EQ(150, CSSNodeLayoutGetHeight(root));
-
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
-
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child1));
-  ASSERT_EQ(100, CSSNodeLayoutGetTop(root_child1));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child1));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child1));
-}
