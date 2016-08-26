@@ -50,7 +50,7 @@ function printTest(rootNode, layoutTree) {
   }));
 
   for (var i = 0; i < layoutTree.length - 1; i++) {
-    lines.push('TEST(CSSLayoutTest, INSERT_NAME_HERE) {');
+    lines.push('TEST(CSSLayoutTest, ' + layoutTree[i].name + ') {');
 
     lines.push('  ' + setupTestTree(layoutTree[i], 'root', null).reduce(function(curr, prev) {
       return curr + '\n  ' + prev;
@@ -346,6 +346,7 @@ function calculateTree(root) {
   for (var i = 0; i < root.children.length; i++) {
     var child = root.children[i];
     rootLayout.push({
+      name: child.id !== '' ? child.id : 'INSERT_NAME_HERE',
       left: child.offsetLeft,
       top: child.offsetTop,
       width: child.offsetWidth,
