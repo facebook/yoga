@@ -22,6 +22,11 @@
  * <div id="absolute_layout_width_height_left_top_right_bottom" style="width: 100px; height: 100px;">
  * <div style="width:10px; height: 10px; position: absolute; left: 10px; top: 10px; right: 10px; bottom: 10px;"></div>
  * </div>
+ * <div id="do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent" style="height: 50px; width: 50px; overflow: hidden; flex-direction: row;">
+ * <div style="position: absolute; left: 0; top: 0;">
+ * <div style="width: 100px; height: 100px;"></div>
+ * </div>
+ * </div>
  *
  */
 
@@ -33,7 +38,7 @@ TEST(CSSLayoutTest, absolute_layout_width_height_left_top) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
-
+  
   const CSSNodeRef root_child0 = CSSNodeNew();
   CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
   CSSNodeStyleSetPosition(root_child0, CSSEdgeLeft, 10);
@@ -47,7 +52,7 @@ TEST(CSSLayoutTest, absolute_layout_width_height_left_top) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
-
+  
   ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
@@ -58,7 +63,7 @@ TEST(CSSLayoutTest, absolute_layout_width_height_right_bottom) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
-
+  
   const CSSNodeRef root_child0 = CSSNodeNew();
   CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
   CSSNodeStyleSetPosition(root_child0, CSSEdgeRight, 10);
@@ -72,7 +77,7 @@ TEST(CSSLayoutTest, absolute_layout_width_height_right_bottom) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
-
+  
   ASSERT_EQ(80, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(80, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
@@ -83,7 +88,7 @@ TEST(CSSLayoutTest, absolute_layout_left_top_right_bottom) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
-
+  
   const CSSNodeRef root_child0 = CSSNodeNew();
   CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
   CSSNodeStyleSetPosition(root_child0, CSSEdgeLeft, 10);
@@ -97,7 +102,7 @@ TEST(CSSLayoutTest, absolute_layout_left_top_right_bottom) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
-
+  
   ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(80, CSSNodeLayoutGetWidth(root_child0));
@@ -108,7 +113,7 @@ TEST(CSSLayoutTest, absolute_layout_width_height_left_top_right_bottom) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
-
+  
   const CSSNodeRef root_child0 = CSSNodeNew();
   CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
   CSSNodeStyleSetPosition(root_child0, CSSEdgeLeft, 10);
@@ -124,9 +129,42 @@ TEST(CSSLayoutTest, absolute_layout_width_height_left_top_right_bottom) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
-
+  
   ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+}
+
+TEST(CSSLayoutTest, do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
+  CSSNodeStyleSetOverflow(root, CSSOverflowHidden);
+  CSSNodeStyleSetWidth(root, 50);
+  CSSNodeStyleSetHeight(root, 50);
+  
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
+  CSSNodeInsertChild(root, root_child0, 0);
+  
+  const CSSNodeRef root_child0_child0 = CSSNodeNew();
+  CSSNodeStyleSetWidth(root_child0_child0, 100);
+  CSSNodeStyleSetHeight(root_child0_child0, 100);
+  CSSNodeInsertChild(root_child0, root_child0_child0, 0);
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root));
+  
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
+  
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0_child0));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0_child0));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0_child0));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0_child0));
 }
