@@ -37,7 +37,7 @@ cxx_library(
 
 cxx_library(
   name = 'CSSLayout_jni',
-  soname = 'libcsslayout.so',
+  soname = 'libcsslayout.$(ext)',
   srcs = glob(['java/jni/*.c']),
   exported_headers = subdir_glob([('', 'java/jni/*.h')]),
   header_namespace = '',
