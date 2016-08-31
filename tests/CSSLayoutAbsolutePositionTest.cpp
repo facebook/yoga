@@ -25,8 +25,7 @@
  *
  */
 
-#include <CSSLayout/CSSLayout-internal.h>
-#include <CSSLayoutTestUtils/CSSLayoutTestUtils.h>
+#include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, absolute_layout_width_height_left_top) {

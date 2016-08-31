@@ -63,8 +63,7 @@
  *
  */
 
-#include <CSSLayout/CSSLayout-internal.h>
-#include <CSSLayoutTestUtils/CSSLayoutTestUtils.h>
+#include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, justify_content_row_flex_start) {

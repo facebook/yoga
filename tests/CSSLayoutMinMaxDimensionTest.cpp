@@ -27,8 +27,7 @@
  *
  */
 
-#include <CSSLayout/CSSLayout-internal.h>
-#include <CSSLayoutTestUtils/CSSLayoutTestUtils.h>
+#include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, max_width) {

@@ -25,8 +25,7 @@
  *
  */
 
-#include <CSSLayout/CSSLayout-internal.h>
-#include <CSSLayoutTestUtils/CSSLayoutTestUtils.h>
+#include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, align_self_center) {

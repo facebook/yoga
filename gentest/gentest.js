@@ -41,8 +41,7 @@ function printTest(rootNode, layoutTree) {
   lines.push('');
 
   lines.push([
-    '#include <CSSLayout/CSSLayout-internal.h>',
-    '#include <CSSLayoutTestUtils/CSSLayoutTestUtils.h>',
+    '#include <CSSLayout/CSSLayout.h>',
     '#include <gtest/gtest.h>',
     '',
   ].reduce(function(curr, prev) {

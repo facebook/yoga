@@ -43,8 +43,7 @@
  *
  */
 
-#include <CSSLayout/CSSLayout-internal.h>
-#include <CSSLayoutTestUtils/CSSLayoutTestUtils.h>
+#include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, flex_direction_column_no_height) {

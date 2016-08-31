@@ -30,8 +30,7 @@
 // of their children in that dimension.
 // See diagram under flex-wrap header https://www.w3.org/TR/css-flexbox-1/
 
-#include <CSSLayout/CSSLayout-internal.h>
-#include <CSSLayoutTestUtils/CSSLayoutTestUtils.h>
+#include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, wrap_column) {
