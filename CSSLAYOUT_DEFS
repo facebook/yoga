@@ -13,3 +13,6 @@ class allow_unsafe_import:
         pass
     def __exit__(self, type, value, traceback):
         pass
+
+def css_layout_dep(name):
+  return '//' + name

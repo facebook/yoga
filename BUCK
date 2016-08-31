@@ -21,6 +21,7 @@ GMOCK_OVERRIDE_FLAGS = [
 ]
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c11']
+JNI_COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c++11']
 TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ['-std=c++11']
 
 cxx_library(
@@ -38,12 +39,12 @@ cxx_library(
 cxx_library(
   name = 'CSSLayout_jni',
   soname = 'libcsslayout.$(ext)',
-  srcs = glob(['java/jni/*.c']),
-  exported_headers = subdir_glob([('', 'java/jni/*.h')]),
+  srcs = glob(['java/jni/*.cpp']),
   header_namespace = '',
-  compiler_flags = COMPILER_FLAGS,
+  compiler_flags = JNI_COMPILER_FLAGS,
   deps = [
-    ':CSSLayout'
+    ':CSSLayout',
+    css_layout_dep('lib/fb:fbjni'),
   ],
   visibility = ['PUBLIC'],
 )
