@@ -346,8 +346,8 @@ function calculateTree(root) {
     var child = root.children[i];
     rootLayout.push({
       name: child.id !== '' ? child.id : 'INSERT_NAME_HERE',
-      left: child.offsetLeft,
-      top: child.offsetTop,
+      left: child.offsetLeft + child.parentNode.clientLeft,
+      top: child.offsetTop + child.parentNode.clientTop,
       width: child.offsetWidth,
       height: child.offsetHeight,
       children: calculateTree(child),
