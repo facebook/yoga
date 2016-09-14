@@ -36,17 +36,17 @@ function printTest(rootNode, layoutTree) {
   }).map(function(line) {
     var result;
     if (line.indexOf('</div') == 0) {
-      result = ' * ' + '  '.repeat(indentation - 1) + line;
+      result = '  '.repeat(indentation - 1) + line;
     } else {
-      result = ' * ' + '  '.repeat(indentation) + line;
+      result = '  '.repeat(indentation) + line;
     }
 
     indentation += (line.match(/<div/g) || []).length;
     indentation -= (line.match(/<\/div/g) || []).length;
     return result;
   }).reduce(function(curr, prev) {
-    if (prev.indexOf(' * <div') == 0) {
-      prev = ' * \n' + prev;
+    if (prev.indexOf('<div') == 0) {
+      prev = '\n' + prev;
     }
     return curr + '\n' + prev;
   }));
