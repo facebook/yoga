@@ -27,18 +27,40 @@
         flex-shrink: 0;
       }
 
-      #container > * {
+      body > * {
         position: absolute;
+      }
+
+      #ltr-container > * {
+        position: absolute;
+        direction: ltr;
+      }
+
+      #rtl-container > * {
+        position: absolute;
+        direction: rtl;
       }
     </style>
   </head>
 
   <body>
-    <div id='container'>
+    <div id='ltr-container'>
 
       %s
 
       <div id='default'></div>
+    </div>
+    <div id='rtl-container'>
+
+      %s
+
+      <div id='default'></div>
+    </div>
+
+    <div>
+
+      %s
+
     </div>
   </body>
 </html>

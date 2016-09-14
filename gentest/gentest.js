@@ -8,10 +8,10 @@
  */
 
 window.onload = function() {
- printTest(document.body.children[0], calculateTree(document.body.children[0]));
+ printTest(document.body.children[0], document.body.children[1], document.body.children[2]);
 }
 
-function printTest(rootNode, layoutTree) {
+function printTest(LTRContainer, RTLContainer, genericContainer) {
   var lines = [
     '/**',
     ' * Copyright (c) 2014-present, Facebook, Inc.',
@@ -29,7 +29,7 @@ function printTest(rootNode, layoutTree) {
   lines.push(' *');
 
   var indentation = 0;
-  lines.push(rootNode.innerHTML.split('\n').map(function(line) {
+  lines.push(genericContainer.innerHTML.split('\n').map(function(line) {
     return line.trim();
   }).filter(function(line) {
     return line.length > 0 && line !== '<div id="default"></div>';
@@ -62,17 +62,29 @@ function printTest(rootNode, layoutTree) {
     return curr + '\n' + prev;
   }));
 
-  for (var i = 0; i < layoutTree.length - 1; i++) {
-    lines.push('TEST(CSSLayoutTest, ' + layoutTree[i].name + ') {');
+  var LTRLayoutTree = calculateTree(LTRContainer);
+  var RTLLayoutTree = calculateTree(RTLContainer);
+  var genericLayoutTree = calculateTree(genericContainer);
 
-    lines.push('  ' + setupTestTree(layoutTree[i], 'root', null).reduce(function(curr, prev) {
+  for (var i = 0; i < genericLayoutTree.length; i++) {
+    lines.push('TEST(CSSLayoutTest, ' + genericLayoutTree[i].name + ') {');
+
+    lines.push('  ' + setupTestTree(LTRLayoutTree[i], genericLayoutTree[i], 'root', null).reduce(function(curr, prev) {
       return curr + '\n  ' + prev;
     }));
 
     lines.push('  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);');
     lines.push('');
 
-    lines.push('  ' + assertTestTree(layoutTree[i], 'root', null).reduce(function(curr, prev) {
+    lines.push('  ' + assertTestTree(LTRLayoutTree[i], 'root', null).reduce(function(curr, prev) {
+      return curr + '\n  ' + prev;
+    }));
+    lines.push('');
+
+    lines.push('  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);');
+    lines.push('');
+
+    lines.push('  ' + assertTestTree(RTLLayoutTree[i], 'root', null).reduce(function(curr, prev) {
       return curr + '\n  ' + prev;
     }));
 
@@ -100,7 +112,7 @@ function assertTestTree(node, nodeName, parentName) {
   return lines;
 }
 
-function setupTestTree(node, nodeName, parentName, index) {
+function setupTestTree(node, genericNode, nodeName, parentName, index) {
   var lines = [
     'const CSSNodeRef ' + nodeName + ' = CSSNodeNew();',
   ];
@@ -167,64 +179,104 @@ function setupTestTree(node, nodeName, parentName, index) {
               pixelValue(node.style[style]) + ');');
           break;
         case 'left':
-          lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeLeft, ' +
-              pixelValue(node.style[style]) + ');');
+          if (genericNode.rawStyle.indexOf('start:') >= 0) {
+            lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeStart, ' +
+                pixelValue(node.style[style]) + ');');
+          } else {
+            lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeLeft, ' +
+                pixelValue(node.style[style]) + ');');
+          }
           break;
         case 'top':
           lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeTop, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'right':
-          lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeRight, ' +
-              pixelValue(node.style[style]) + ');');
+          if (genericNode.rawStyle.indexOf('end:') >= 0) {
+            lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeEnd, ' +
+                pixelValue(node.style[style]) + ');');
+          } else {
+            lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeRight, ' +
+                pixelValue(node.style[style]) + ');');
+          }
           break;
         case 'bottom':
           lines.push('CSSNodeStyleSetPosition(' + nodeName + ', CSSEdgeBottom, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'margin-left':
-          lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeLeft, ' +
-              pixelValue(node.style[style]) + ');');
+          if (genericNode.rawStyle.indexOf('margin-start:') >= 0) {
+            lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeStart, ' +
+                pixelValue(node.style[style]) + ');');
+          } else {
+            lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeLeft, ' +
+                pixelValue(node.style[style]) + ');');
+          }
           break;
         case 'margin-top':
           lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeTop, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'margin-right':
-          lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeRight, ' +
-              pixelValue(node.style[style]) + ');');
+          if (genericNode.rawStyle.indexOf('margin-end:') >= 0) {
+            lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeEnd, ' +
+                pixelValue(node.style[style]) + ');');
+          } else {
+            lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeRight, ' +
+                pixelValue(node.style[style]) + ');');
+          }
           break;
         case 'margin-bottom':
           lines.push('CSSNodeStyleSetMargin(' + nodeName + ', CSSEdgeBottom, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'padding-left':
-          lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeLeft, ' +
-              pixelValue(node.style[style]) + ');');
+          if (genericNode.rawStyle.indexOf('padding-start:') >= 0) {
+            lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeStart, ' +
+                pixelValue(node.style[style]) + ');');
+          } else {
+            lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeLeft, ' +
+                pixelValue(node.style[style]) + ');');
+          }
           break;
         case 'padding-top':
           lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeTop, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'padding-right':
-          lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeRight, ' +
-              pixelValue(node.style[style]) + ');');
+          if (genericNode.rawStyle.indexOf('padding-end:') >= 0) {
+            lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeEnd, ' +
+                pixelValue(node.style[style]) + ');');
+          } else {
+            lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeRight, ' +
+                pixelValue(node.style[style]) + ');');
+          }
           break;
         case 'padding-bottom':
           lines.push('CSSNodeStyleSetPadding(' + nodeName + ', CSSEdgeBottom, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'border-left-width':
-          lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeLeft, ' +
-              pixelValue(node.style[style]) + ');');
+          if (genericNode.rawStyle.indexOf('border-start-width:') >= 0) {
+            lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeStart, ' +
+                pixelValue(node.style[style]) + ');');
+          } else {
+            lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeLeft, ' +
+                pixelValue(node.style[style]) + ');');
+          }
           break;
         case 'border-top-width':
           lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeTop, ' +
               pixelValue(node.style[style]) + ');');
           break;
         case 'border-right-width':
-          lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeRight, ' +
-              pixelValue(node.style[style]) + ');');
+          if (genericNode.rawStyle.indexOf('border-end-width:') >= 0) {
+            lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeEnd, ' +
+                pixelValue(node.style[style]) + ');');
+          } else {
+            lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeRight, ' +
+                pixelValue(node.style[style]) + ');');
+          }
           break;
         case 'border-bottom-width':
           lines.push('CSSNodeStyleSetBorder(' + nodeName + ', CSSEdgeBottom, ' +
@@ -265,7 +317,13 @@ function setupTestTree(node, nodeName, parentName, index) {
   for (var i = 0; i < node.children.length; i++) {
     lines.push('');
     var childName = nodeName + '_child' + i;
-    lines = lines.concat(setupTestTree(node.children[i], childName, nodeName, i));
+    lines = lines.concat(
+        setupTestTree(
+            node.children[i],
+            genericNode.children[i],
+            childName,
+            nodeName,
+            i));
   }
 
   return lines;
@@ -367,6 +425,7 @@ function calculateTree(root) {
       children: calculateTree(child),
       style: getCSSLayoutStyle(child),
       declaredStyle: child.style,
+      rawStyle: child.getAttribute('style'),
     });
   }
 
@@ -409,8 +468,8 @@ function getCSSLayoutStyle(node) {
     'height',
     'min-height',
     'max-height',
-  ].reduce(function(prev, curr) {
-    prev[curr] = getComputedStyle(node, null).getPropertyValue(curr);
-    return prev;
+  ].reduce(function(map, key) {
+    map[key] = getComputedStyle(node, null).getPropertyValue(key);
+    return map;
   }, {});
 }

@@ -25,7 +25,7 @@
   <div style="height: 10px;"></div>
 </div>
 
-<div id="padding_center_child" style="width: 100px; height: 100px; padding-left: 10px; padding-top: 10; padding-right: 20px; padding-bottom: 20px; align-items: center; justify-content: center;">
+<div id="padding_center_child" style="width: 100px; height: 100px; padding-start: 10px; padding-top: 10; padding-end: 20px; padding-bottom: 20px; align-items: center; justify-content: center;">
   <div style="height: 10px; width: 10px;"></div>
 </div>
  *
@@ -46,6 +46,13 @@ TEST(CSSLayoutTest, padding_no_size) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
   ASSERT_EQ(20, CSSNodeLayoutGetWidth(root));
   ASSERT_EQ(20, CSSNodeLayoutGetHeight(root));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(20, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(20, CSSNodeLayoutGetHeight(root));
 }
 
 TEST(CSSLayoutTest, padding_container_match_child) {
@@ -60,6 +67,18 @@ TEST(CSSLayoutTest, padding_container_match_child) {
   CSSNodeStyleSetHeight(root_child0, 10);
   CSSNodeInsertChild(root, root_child0, 0);
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(30, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(30, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -96,6 +115,18 @@ TEST(CSSLayoutTest, padding_flex_child) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(80, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(80, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(80, CSSNodeLayoutGetHeight(root_child0));
 }
 
 TEST(CSSLayoutTest, padding_stretch_child) {
@@ -121,14 +152,26 @@ TEST(CSSLayoutTest, padding_stretch_child) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(80, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(80, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 }
 
 TEST(CSSLayoutTest, padding_center_child) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetJustifyContent(root, CSSJustifyCenter);
   CSSNodeStyleSetAlignItems(root, CSSAlignCenter);
-  CSSNodeStyleSetPadding(root, CSSEdgeLeft, 10);
-  CSSNodeStyleSetPadding(root, CSSEdgeRight, 20);
+  CSSNodeStyleSetPadding(root, CSSEdgeStart, 10);
+  CSSNodeStyleSetPadding(root, CSSEdgeEnd, 20);
   CSSNodeStyleSetPadding(root, CSSEdgeBottom, 20);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
@@ -146,6 +189,18 @@ TEST(CSSLayoutTest, padding_center_child) {
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
 
   ASSERT_EQ(40, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(35, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(50, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(35, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
