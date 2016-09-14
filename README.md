@@ -35,10 +35,6 @@ div, span {
 - All the flex elements are oriented from top to bottom, left to right and do not shrink. This is how things are laid out using the default CSS settings and what you'd expect.
 - Everything is `position: relative`. This makes `position: absolute` target the direct parent and not some parent which is either `relative` or `absolute`. If you want to position an element relative to something else, you should move it in the DOM instead of relying of CSS. It also makes `top, left, right, bottom` do something when not specifying `position: absolute`.
 
-
-### Flex
-CSSLayout currently only supports a simplified flex model. CSSLayout does not support `flex-grow`, `flex-shrink`, or `flex-basis`. Instead CSSLayout only supports `flex` which takes a negative value for shrinking and a positive value for growing. Flex basis is defaulted to `0` when a non-zero `flex` value is provided and is otherwise set to `auto`. These limitations were made for sake of simplicity and we plan on supporting the full range of flex properties in the future.
-
 ### Size units
 CSSLayout currently only supports pixel sizes. The reason being that we have not seen the need for any other units. We would like to support percentage units sometime in the future.
 
