@@ -92,13 +92,13 @@ namespace Facebook.CSSLayout
 
         float StyleMinHeight { get; set; }
 
-        float LayoutX { get; set; }
+        float LayoutX { get; }
 
-        float LayoutY { get; set; }
+        float LayoutY { get; }
 
-        float LayoutWidth { get; set; }
+        float LayoutWidth { get; }
 
-        float LayoutHeight { get; set; }
+        float LayoutHeight { get; }
 
         CSSDirection LayoutDirection { get; }
 
