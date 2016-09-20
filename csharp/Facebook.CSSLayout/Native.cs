@@ -125,10 +125,10 @@ namespace Facebook.CSSLayout
         public static extern CSSPositionType CSSNodeStyleGetPositionType(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetFlexWrap(IntPtr node, CSSWrapType flexWrap);
+        public static extern void CSSNodeStyleSetFlexWrap(IntPtr node, CSSWrap flexWrap);
 
         [DllImport(DllName)]
-        public static extern CSSWrapType CSSNodeStyleGetFlexWrap(IntPtr node);
+        public static extern CSSWrap CSSNodeStyleGetFlexWrap(IntPtr node);
 
         [DllImport(DllName)]
         public static extern void CSSNodeStyleSetOverflow(IntPtr node, CSSOverflow flexWrap);

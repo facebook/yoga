@@ -1,6 +1,6 @@
 ﻿namespace Facebook.CSSLayout
 {
-    public enum CSSWrapType
+    public enum CSSWrap
     {
         NoWrap,
         Wrap,

@@ -304,12 +304,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.Direction;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (Style.Direction != value)
+                {
+                    Style.Direction = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -391,7 +395,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSWrapType Wrap
+        public CSSWrap Wrap
         {
             get
             {
