@@ -30,9 +30,6 @@
     <ClInclude Include="..\..\CSSLayout\CSSNodeList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CSSLayout-win.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

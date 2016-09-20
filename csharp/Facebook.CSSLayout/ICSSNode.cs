@@ -54,7 +54,7 @@ namespace Facebook.CSSLayout
 
         CSSPositionType PositionType { get; set; }
 
-        CSSWrapType Wrap { get; set; }
+        CSSWrap Wrap { get; set; }
 
         float Flex { get; set; }
 

@@ -231,7 +231,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSWrapType Wrap
+        public CSSWrap Wrap
         {
             get
             {

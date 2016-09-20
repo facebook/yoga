@@ -12,18 +12,18 @@ namespace Facebook.CSSLayout
              * Some property of this node or its children has changes and the current values in
              * {@link #layout} are not valid.
              */
-            DIRTY,
+            Dirty,
 
             /**
              * This node has a new layout relative to the last time {@link #markLayoutSeen()} was called.
              */
-            HAS_NEW_LAYOUT,
+            HasNewLayout,
 
             /**
              * {@link #layout} is valid for the node's properties and this layout has been marked as
              * having been seen.
              */
-            UP_TO_DATE,
+            UpToDate,
         }
 
         public CSSStyle Style { get; } = new CSSStyle();
@@ -35,7 +35,7 @@ namespace Facebook.CSSLayout
         private List<CSSNode> _children;
         private CSSNode _parent;
         private MeasureFunction _measureFunction = null;
-        private LayoutState _layoutState = LayoutState.DIRTY;
+        private LayoutState _layoutState = LayoutState.Dirty;
 
         public MeasureOutput Measure(MeasureOutput measureOutput, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
@@ -72,12 +72,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.AlignContent;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (Style.AlignContent != value)
+                {
+                    Style.AlignContent = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -85,12 +89,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.AlignItems;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (Style.AlignItems != value)
+                {
+                    Style.AlignItems = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -98,12 +106,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.AlignSelf;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (Style.AlignSelf != value)
+                {
+                    Style.AlignSelf = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -121,12 +133,38 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                if (Style.FlexGrow > 0)
+                {
+                    return Style.FlexGrow;
+                }
+                else if (Style.FlexShrink > 0)
+                {
+                    return -Style.FlexShrink;
+                }
+
+                return 0;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (CSSConstants.IsUndefined(value) || value == 0)
+                {
+                    FlexGrow = 0;
+                    FlexShrink = 0;
+                    FlexBasis = CSSConstants.UNDEFINED;
+                }
+                else if (value > 0)
+                {
+                    FlexGrow = value;
+                    FlexShrink = 0;
+                    FlexBasis = 0;
+                }
+                else
+                {
+                    FlexGrow = 0;
+                    FlexShrink = -value;
+                    FlexBasis = CSSConstants.UNDEFINED;
+                }
             }
         }
 
@@ -134,12 +172,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.FlexBasis;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.FlexBasis, value))
+                {
+                    Style.FlexBasis = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -147,12 +189,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.FlexDirection;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (Style.FlexDirection != value)
+                {
+                    Style.FlexDirection = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -160,12 +206,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.FlexGrow;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.FlexGrow, value))
+                {
+                    Style.FlexGrow = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -173,12 +223,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.FlexShrink;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.FlexShrink, value))
+                {
+                    Style.FlexShrink = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -186,20 +240,20 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                return _layoutState == LayoutState.HAS_NEW_LAYOUT;
+                return _layoutState == LayoutState.HasNewLayout;
             }
         }
 
         public void MarkHasNewLayout()
         {
-            _layoutState = LayoutState.HAS_NEW_LAYOUT;
+            _layoutState = LayoutState.HasNewLayout;
         }
 
         public bool IsDirty
         {
             get
             {
-                return _layoutState == LayoutState.DIRTY;
+                return _layoutState == LayoutState.Dirty;
             }
         }
 
@@ -217,12 +271,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.JustifyContent;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (Style.JustifyContent != value)
+                {
+                    Style.JustifyContent = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -291,12 +349,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.PositionType;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (Style.PositionType != value)
+                {
+                    Style.PositionType = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -321,12 +383,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.Dimensions[CSSLayout.DIMENSION_HEIGHT];
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.Dimensions[CSSLayout.DIMENSION_HEIGHT], value))
+                {
+                    Style.Dimensions[CSSLayout.DIMENSION_HEIGHT] = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -334,12 +400,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.MaxHeight;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.MaxHeight, value))
+                {
+                    Style.MaxHeight = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -347,12 +417,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.MaxWidth;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.MaxWidth, value))
+                {
+                    Style.MaxWidth = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -360,12 +434,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.MinHeight;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.MinHeight, value))
+                {
+                    Style.MinHeight = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -373,12 +451,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.MinWidth;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.MinWidth, value))
+                {
+                    Style.MinWidth = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -386,12 +468,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.Dimensions[CSSLayout.DIMENSION_WIDTH];
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (!ValuesEqual(Style.Dimensions[CSSLayout.DIMENSION_WIDTH], value))
+                {
+                    Style.Dimensions[CSSLayout.DIMENSION_WIDTH] = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -399,12 +485,16 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return Style.FlexWrap;
             }
 
             set
             {
-                throw new NotImplementedException();
+                if (Style.FlexWrap != value)
+                {
+                    Style.FlexWrap = value;
+                    MarkDirty();
+                }
             }
         }
 
@@ -415,22 +505,22 @@ namespace Facebook.CSSLayout
 
         public Spacing GetBorder()
         {
-            throw new NotImplementedException();
+            return Style.Border;
         }
 
         public Spacing GetMargin()
         {
-            throw new NotImplementedException();
+            return Style.Margin;
         }
 
         public Spacing GetPadding()
         {
-            throw new NotImplementedException();
+            return Style.Padding;
         }
 
         public Spacing GetPosition()
         {
-            throw new NotImplementedException();
+            return Style.Position;
         }
 
         int ICSSNode.IndexOf(ICSSNode node)
@@ -478,16 +568,16 @@ namespace Facebook.CSSLayout
 
         public void MarkDirty()
         {
-            if (_layoutState == LayoutState.DIRTY)
+            if (_layoutState == LayoutState.Dirty)
             {
                 return;
             }
-            else if (_layoutState == LayoutState.HAS_NEW_LAYOUT)
+            else if (_layoutState == LayoutState.HasNewLayout)
             {
                 throw new InvalidOperationException(@"Previous layout was ignored! MarkLayoutSeen() never called");
             }
 
-            _layoutState = LayoutState.DIRTY;
+            _layoutState = LayoutState.Dirty;
             _parent?.MarkDirty();
         }
 
@@ -498,7 +588,7 @@ namespace Facebook.CSSLayout
                 throw new InvalidOperationException(@"Expected node to have a new layout to be seen!");
             }
 
-            _layoutState = LayoutState.UP_TO_DATE;
+            _layoutState = LayoutState.UpToDate;
         }
 
         public void RemoveAt(int index)
@@ -551,12 +641,18 @@ namespace Facebook.CSSLayout
 
         public void SetBorder(CSSEdge edge, float border)
         {
-            throw new NotImplementedException();
+            if (Style.Border.Set((int)edge, border))
+            {
+                MarkDirty();
+            }
         }
 
         public void SetMargin(CSSEdge edge, float margin)
         {
-            throw new NotImplementedException();
+            if (Style.Margin.Set((int)edge, margin))
+            {
+                MarkDirty();
+            }
         }
 
         public void SetMeasureFunction(MeasureFunction measureFunction)
@@ -570,12 +666,18 @@ namespace Facebook.CSSLayout
 
         public void SetPadding(CSSEdge edge, float padding)
         {
-            throw new NotImplementedException();
+            if (Style.Padding.Set((int)edge, padding))
+            {
+                MarkDirty();
+            }
         }
 
         public void SetPosition(CSSEdge edge, float position)
         {
-            throw new NotImplementedException();
+            if (Style.Position.Set((int)edge, position))
+            {
+                MarkDirty();
+            }
         }
 
         public bool ValuesEqual(float f1, float f2)
