@@ -16,7 +16,7 @@ namespace Facebook.CSSLayout
 
         bool IsTextNode { get; set; }
 
-        bool HasNewLayout { get; set; }
+        bool HasNewLayout { get; }
 
         void MarkLayoutSeen();
 

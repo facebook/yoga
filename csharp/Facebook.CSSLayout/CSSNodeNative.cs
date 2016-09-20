@@ -14,11 +14,13 @@ namespace Facebook.CSSLayout
         private List<CSSNodeNative> _children;
         private MeasureFunction _measureFunction;
         private CSSMeasureFunc _measureFunc;
+        private CSSPrintFunc _printFunc;
         private object _data;
 
         public CSSNodeNative()
         {
             _measureFunc = MeasureInternal;
+            _printFunc = PrintInternal;
         }
 
         private void CheckDisposed()
@@ -51,6 +53,7 @@ namespace Facebook.CSSLayout
             _context = (IntPtr)GCHandle.Alloc(this);
             Native.CSSNodeSetContext(_cssNode, _context);
             _children = new List<CSSNodeNative>(4);
+            Native.CSSNodeSetPrintFunc(_cssNode, _printFunc);
         }
 
         public void Reset()
@@ -99,12 +102,12 @@ namespace Facebook.CSSLayout
                 CheckDisposed();
                 return Native.CSSNodeGetHasNewLayout(_cssNode);
             }
+        }
 
-            set
-            {
-                CheckDisposed();
-                Native.CSSNodeSetHasNewLayout(_cssNode, value);
-            }
+        public void MarkHasNewLayout()
+        {
+            CheckDisposed();
+            Native.CSSNodeSetHasNewLayout(_cssNode, true);
         }
 
         public ICSSNode Parent
@@ -653,7 +656,7 @@ namespace Facebook.CSSLayout
             return ((long)output.Width) << 32 | ((long)output.Height);
         }
 
-        internal CSSSize MeasureInternal(
+        private CSSSize MeasureInternal(
             IntPtr context,
             float width,
             CSSMeasureMode widthMode,
@@ -665,6 +668,11 @@ namespace Facebook.CSSLayout
             var measuredHeight = 0xFFFFFFFF & measureResult;
 
             return new CSSSize { width = measuredWidth, height = measuredHeight };
+        }
+
+        private void PrintInternal(IntPtr context)
+        {
+            System.Diagnostics.Debug.WriteLine(ToString());
         }
     }
 }

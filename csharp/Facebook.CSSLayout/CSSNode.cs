@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Facebook.CSSLayout
 {
@@ -24,6 +25,28 @@ namespace Facebook.CSSLayout
             UP_TO_DATE,
         }
 
+        public CSSStyle Style { get; } = new CSSStyle();
+        public CSSLayout Layout { get; } = new CSSLayout();
+        public CachedCSSLayout LastLayout { get; } = new CachedCSSLayout();
+        public int LineIndex { get; set; } = 0;
+        public CSSNode NextChild { get; set; }
+
+        private List<CSSNode> _children;
+        private CSSNode _parent;
+        private MeasureFunction _measureFunction = null;
+        private LayoutState _layoutState = LayoutState.DIRTY;
+
+        public MeasureOutput Measure(MeasureOutput measureOutput, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        {
+            if (!IsMeasureDefined)
+            {
+                throw new InvalidOperationException(@"Measure function isn't defined!");
+            }
+
+            _measureFunction(this, width, widthMode, height, heightMode, measureOutput);
+            return measureOutput;
+        }
+
         ICSSNode ICSSNode.this[int index]
         {
             get
@@ -36,7 +59,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                if (_children == null)
+                {
+                    throw new InvalidOperationException(@"Children not yet initialized.");
+                }
+                return _children[index];
             }
         }
 
@@ -83,22 +110,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return _children == null ? 0 : _children.Count;
             }
         }
 
-        public object Data
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public object Data { get; set; }
 
         public float Flex
         {
@@ -169,20 +185,20 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return _layoutState == LayoutState.HAS_NEW_LAYOUT;
             }
+        }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+        public void MarkHasNewLayout()
+        {
+            _layoutState = LayoutState.HAS_NEW_LAYOUT;
         }
 
         public bool IsDirty
         {
             get
             {
-                throw new NotImplementedException();
+                return _layoutState == LayoutState.DIRTY;
             }
         }
 
@@ -190,22 +206,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return _measureFunction != null;
             }
         }
 
-        public bool IsTextNode
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public bool IsTextNode { get; set; }
 
         public CSSJustify JustifyContent
         {
@@ -277,7 +282,7 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                throw new NotImplementedException();
+                return _parent;
             }
         }
 
@@ -423,34 +428,85 @@ namespace Facebook.CSSLayout
             throw new NotImplementedException();
         }
 
-        public int IndexOf(ICSSNode node)
+        int ICSSNode.IndexOf(ICSSNode node)
         {
-            throw new NotImplementedException();
+            return IndexOf((CSSNode)node);
+        }
+
+        public int IndexOf(CSSNode node)
+        {
+            if (_children == null)
+            {
+                throw new InvalidOperationException(@"Children not yet initialized.");
+            }
+
+            return _children.IndexOf(node);
         }
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            Reset();
         }
 
-        public void Insert(int index, ICSSNode node)
+        public void Insert(int index, CSSNode node)
         {
-            throw new NotImplementedException();
+            if (node._parent != null)
+            {
+                throw new InvalidOperationException(@"Child already has a parent, it must be removed first.");
+            }
+
+            if (_children == null)
+            {
+                // 4 is kinda arbitrary, but the default of 10 seems really high for an average View.
+                _children = new List<CSSNode>(4);
+            }
+
+            _children.Insert(index, node);
+            node._parent = this;
+            MarkDirty();
+        }
+
+        void ICSSNode.Insert(int index, ICSSNode node)
+        {
+            Insert(index, (CSSNode)node);
         }
 
         public void MarkDirty()
         {
-            throw new NotImplementedException();
+            if (_layoutState == LayoutState.DIRTY)
+            {
+                return;
+            }
+            else if (_layoutState == LayoutState.HAS_NEW_LAYOUT)
+            {
+                throw new InvalidOperationException(@"Previous layout was ignored! MarkLayoutSeen() never called");
+            }
+
+            _layoutState = LayoutState.DIRTY;
+            _parent?.MarkDirty();
         }
 
         public void MarkLayoutSeen()
         {
-            throw new NotImplementedException();
+            if (!HasNewLayout)
+            {
+                throw new InvalidOperationException(@"Expected node to have a new layout to be seen!");
+            }
+
+            _layoutState = LayoutState.UP_TO_DATE;
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            if (_children == null)
+            {
+                throw new InvalidOperationException(@"Children not yet initialized.");
+            }
+
+            var removed = _children[index];
+            _children.RemoveAt(index);
+            removed._parent = null;
+            MarkDirty();
         }
 
         public void Reset()
@@ -470,7 +526,11 @@ namespace Facebook.CSSLayout
 
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
-            throw new NotImplementedException();
+            if (_measureFunction != measureFunction)
+            {
+                _measureFunction = measureFunction;
+                MarkDirty();
+            };
         }
 
         public void SetPadding(CSSEdge edge, float padding)
