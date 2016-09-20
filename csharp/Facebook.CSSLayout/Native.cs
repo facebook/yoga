@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Facebook.CSSLayout
 {
-    public static class Native
+    internal static class Native
     {
         private const string DllName = "CSSLayout.dll";
 

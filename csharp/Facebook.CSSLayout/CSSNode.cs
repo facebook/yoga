@@ -576,7 +576,7 @@ namespace Facebook.CSSLayout
 
         public bool ValuesEqual(float f1, float f2)
         {
-            throw new NotImplementedException();
+            return Math.Abs(f1 - f1) < float.Epsilon;
         }
     }
 }
