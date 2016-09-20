@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Facebook.CSSLayout
 {
@@ -507,6 +508,36 @@ namespace Facebook.CSSLayout
             _children.RemoveAt(index);
             removed._parent = null;
             MarkDirty();
+        }
+
+        public void IndentString(StringBuilder result, int level)
+        {
+            // Spaces and tabs are dropped by IntelliJ logcat integration, so rely on __ instead.
+            var indentation = new StringBuilder();
+            for (int i = 0; i < level; ++i)
+            {
+                indentation.Append("__");
+            }
+
+            result.Append(indentation);
+            result.Append(Layout.ToString());
+
+            if (Count == 0) { return; }
+
+            result.Append(", children: [\n");
+            for (int i = 0; i < Count; i++)
+            {
+                this[i].IndentString(result, level + 1);
+                result.Append("\n");
+            }
+            result.Append(indentation + "]");
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            IndentString(sb, 0);
+            return sb.ToString();
         }
 
         public void Reset()
