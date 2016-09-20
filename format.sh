@@ -6,7 +6,7 @@ clang-format \
     AlignOperands: true, \
     AllowAllParametersOfDeclarationOnNextLine: false, \
     AllowShortBlocksOnASingleLine: false, \
-    AllowShortCaseLabelsOnASingleLine: true, \
+    AllowShortCaseLabelsOnASingleLine: false, \
     AllowShortFunctionsOnASingleLine: false, \
     AllowShortIfStatementsOnASingleLine: false, \
     AllowShortLoopsOnASingleLine: false, \
