@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace Facebook.CSSLayout
 {
-    public class CSSNode : IDisposable, ICSSNode
+    public class CSSNode : IDisposable
     {
         private bool _isDisposed;
         private IntPtr _cssNode;
@@ -110,7 +110,7 @@ namespace Facebook.CSSLayout
             Native.CSSNodeSetHasNewLayout(_cssNode, true);
         }
 
-        public ICSSNode Parent
+        public CSSNode Parent
         {
             get
             {
@@ -554,14 +554,6 @@ namespace Facebook.CSSLayout
             }
         }
 
-        ICSSNode ICSSNode.this[int index]
-        {
-            get
-            {
-                return this[index];
-            }
-        }
-
         public CSSNode this[int index]
         {
             get
@@ -614,16 +606,6 @@ namespace Facebook.CSSLayout
             return _children.IndexOf(node);
         }
 
-        void ICSSNode.Insert(int index, ICSSNode node)
-        {
-            Insert(index, (CSSNode)node);
-        }
-
-        int ICSSNode.IndexOf(ICSSNode node)
-        {
-            return IndexOf((CSSNode)node);
-        }
-
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
             CheckDisposed();
@@ -637,7 +619,7 @@ namespace Facebook.CSSLayout
             Native.CSSNodeCalculateLayout(_cssNode, CSSConstants.Undefined, CSSConstants.Undefined, Native.CSSNodeStyleGetDirection(_cssNode));
         }
 
-        public long Measure(ICSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        public long Measure(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
         {
             if (_measureFunction == null)
             {
