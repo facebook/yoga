@@ -18,15 +18,15 @@
         public Spacing Margin { get; } = new Spacing();
         public Spacing Padding { get; } = new Spacing();
         public Spacing Border { get; } = new Spacing();
-        public Spacing Position { get; } = new Spacing(CSSConstants.UNDEFINED);
+        public Spacing Position { get; } = new Spacing(CSSConstants.Undefined);
 
         public float[] Dimensions { get; } = new float[2];
 
-        public float MinWidth { get; set; } = CSSConstants.UNDEFINED;
-        public float MinHeight { get; set; } = CSSConstants.UNDEFINED;
+        public float MinWidth { get; set; } = CSSConstants.Undefined;
+        public float MinHeight { get; set; } = CSSConstants.Undefined;
 
-        public float MaxWidth { get; set; } = CSSConstants.UNDEFINED;
-        public float MaxHeight { get; set; } = CSSConstants.UNDEFINED;
+        public float MaxWidth { get; set; } = CSSConstants.Undefined;
+        public float MaxHeight { get; set; } = CSSConstants.Undefined;
 
         public CSSStyle()
         {
@@ -46,20 +46,20 @@
             Overflow = CSSOverflow.Visible;
             FlexGrow = 0;
             FlexShrink = 0;
-            FlexBasis = CSSConstants.UNDEFINED;
+            FlexBasis = CSSConstants.Undefined;
 
             Margin.Reset();
             Padding.Reset();
             Border.Reset();
             Position.Reset();
 
-            for (var i = 0; i < 2; i++) { Dimensions[i] = CSSConstants.UNDEFINED; }
+            for (var i = 0; i < 2; i++) { Dimensions[i] = CSSConstants.Undefined; }
 
-            MinWidth = CSSConstants.UNDEFINED;
-            MinHeight = CSSConstants.UNDEFINED;
+            MinWidth = CSSConstants.Undefined;
+            MinHeight = CSSConstants.Undefined;
 
-            MaxWidth = CSSConstants.UNDEFINED;
-            MaxHeight = CSSConstants.UNDEFINED;
+            MaxWidth = CSSConstants.Undefined;
+            MaxHeight = CSSConstants.Undefined;
         }
     }
 }

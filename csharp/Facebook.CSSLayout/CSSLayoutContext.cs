@@ -2,7 +2,7 @@
 {
     public class CSSLayoutContext
     {
-        public MeasureOutput MeasureOutput { get; } = new MeasureOutput();
-        int CurrentGenerationCount { get; set; }
+        public MeasureOutput measureOutput { get; } = new MeasureOutput();
+        public int CurrentGenerationCount { get; set; }
     }
 }

@@ -1,51 +1,557 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Runtime.InteropServices;
 
 namespace Facebook.CSSLayout
 {
-    public class CSSNode : ICSSNode
+    public class CSSNode : IDisposable, ICSSNode
     {
-        private enum LayoutState
+        private bool _isDisposed;
+        private IntPtr _cssNode;
+        private IntPtr _context;
+
+        private CSSNode _parent;
+        private List<CSSNode> _children;
+        private MeasureFunction _measureFunction;
+        private CSSMeasureFunc _measureFunc;
+        private CSSPrintFunc _printFunc;
+        private object _data;
+
+        public CSSNode()
         {
-            /**
-             * Some property of this node or its children has changes and the current values in
-             * {@link #layout} are not valid.
-             */
-            Dirty,
-
-            /**
-             * This node has a new layout relative to the last time {@link #markLayoutSeen()} was called.
-             */
-            HasNewLayout,
-
-            /**
-             * {@link #layout} is valid for the node's properties and this layout has been marked as
-             * having been seen.
-             */
-            UpToDate,
+            _measureFunc = MeasureInternal;
+            _printFunc = PrintInternal;
         }
 
-        public CSSStyle Style { get; } = new CSSStyle();
-        public CSSLayout Layout { get; } = new CSSLayout();
-        public CachedCSSLayout LastLayout { get; } = new CachedCSSLayout();
-        public int LineIndex { get; set; } = 0;
-        public CSSNode NextChild { get; set; }
-
-        private List<CSSNode> _children;
-        private CSSNode _parent;
-        private MeasureFunction _measureFunction = null;
-        private LayoutState _layoutState = LayoutState.Dirty;
-
-        public MeasureOutput Measure(MeasureOutput measureOutput, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        private void CheckDisposed()
         {
-            if (!IsMeasureDefined)
+            if (_isDisposed)
             {
-                throw new InvalidOperationException(@"Measure function isn't defined!");
+                throw new ObjectDisposedException("CSSNode");
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed && disposing)
+            {
+                _isDisposed = true;
+                Native.CSSNodeFree(_cssNode);
+                GCHandle.FromIntPtr(_context).Free();
+            }
+        }
+
+        public void Initialize()
+        {
+            _cssNode = Native.CSSNodeNew();
+            _context = (IntPtr)GCHandle.Alloc(this);
+            Native.CSSNodeSetContext(_cssNode, _context);
+            _children = new List<CSSNode>(4);
+            Native.CSSNodeSetPrintFunc(_cssNode, _printFunc);
+        }
+
+        public void Reset()
+        {
+            Native.CSSNodeFree(_cssNode);
+            GCHandle.FromIntPtr(_context).Free();
+            _children = null;
+            _parent = null;
+            _measureFunction = null;
+        }
+
+        public bool IsDirty
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeIsDirty(_cssNode);
+            }
+        }
+
+        public void MarkDirty()
+        {
+            CheckDisposed();
+            Native.CSSNodeMarkDirty(_cssNode);
+        }
+
+        public bool IsTextNode
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeGetIsTextnode(_cssNode);
             }
 
-            _measureFunction(this, width, widthMode, height, heightMode, measureOutput);
-            return measureOutput;
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeSetIsTextnode(_cssNode, value);
+            }
+        }
+
+        public bool HasNewLayout
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeGetHasNewLayout(_cssNode);
+            }
+        }
+
+        public void MarkHasNewLayout()
+        {
+            CheckDisposed();
+            Native.CSSNodeSetHasNewLayout(_cssNode, true);
+        }
+
+        public ICSSNode Parent
+        {
+            get
+            {
+                CheckDisposed();
+                return _parent;
+            }
+        }
+
+        public bool IsMeasureDefined
+        {
+            get
+            {
+                return _measureFunction != null;
+            }
+        }
+
+        public CSSDirection StyleDirection
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetDirection(_cssNode);
+            }
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetDirection(_cssNode, value);
+            }
+        }
+
+        public CSSFlexDirection FlexDirection
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetFlexDirection(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetFlexDirection(_cssNode, value);
+            }
+        }
+
+        public CSSJustify JustifyContent
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetJustifyContent(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetJustifyContent(_cssNode, value);
+            }
+        }
+
+        public CSSAlign AlignItems
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetAlignItems(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetAlignItems(_cssNode, value);
+            }
+        }
+
+        public CSSAlign AlignSelf
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetAlignSelf(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetAlignSelf(_cssNode, value);
+            }
+        }
+
+        public CSSAlign AlignContent
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetAlignContent(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetAlignContent(_cssNode, value);
+            }
+        }
+
+        public CSSPositionType PositionType
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetPositionType(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetPositionType(_cssNode, value);
+            }
+        }
+
+        public CSSWrap Wrap
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetFlexWrap(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetFlexWrap(_cssNode, value);
+            }
+        }
+
+        public float Flex
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetFlex(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetFlex(_cssNode, value);
+            }
+        }
+
+        public float FlexGrow
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetFlexGrow(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetFlexGrow(_cssNode, value);
+            }
+        }
+
+        public float FlexShrink
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetFlexShrink(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetFlexShrink(_cssNode, value);
+            }
+        }
+
+        public float FlexBasis
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetFlexBasis(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetFlexBasis(_cssNode, value);
+            }
+        }
+
+        public Spacing GetMargin()
+        {
+            CheckDisposed();
+
+            var margin = new Spacing();
+            margin.Set(Spacing.Left, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Left));
+            margin.Set(Spacing.Top, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Top));
+            margin.Set(Spacing.Right, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Right));
+            margin.Set(Spacing.Bottom, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Bottom));
+            margin.Set(Spacing.Start, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Start));
+            margin.Set(Spacing.End, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.End));
+
+            return margin;
+        }
+
+        public void SetMargin(CSSEdge edge, float value)
+        {
+            CheckDisposed();
+            Native.CSSNodeStyleSetMargin(_cssNode, edge, value);
+        }
+
+        public Spacing GetPadding()
+        {
+            CheckDisposed();
+
+            var padding = new Spacing();
+            padding.Set(Spacing.Left, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Left));
+            padding.Set(Spacing.Top, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Top));
+            padding.Set(Spacing.Right, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Right));
+            padding.Set(Spacing.Bottom, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Bottom));
+            padding.Set(Spacing.Start, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Start));
+            padding.Set(Spacing.End, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.End));
+
+            return padding;
+        }
+
+        public void SetPadding(CSSEdge edge, float padding)
+        {
+            CheckDisposed();
+            Native.CSSNodeStyleSetPadding(_cssNode, edge, padding);
+        }
+
+        public Spacing GetBorder()
+        {
+            CheckDisposed();
+
+            var border = new Spacing();
+            border.Set(Spacing.Left, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Left));
+            border.Set(Spacing.Top, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Top));
+            border.Set(Spacing.Right, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Right));
+            border.Set(Spacing.Bottom, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Bottom));
+            border.Set(Spacing.Start, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Start));
+            border.Set(Spacing.End, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.End));
+
+            return border;
+        }
+
+        public void SetBorder(CSSEdge edge, float border)
+        {
+            CheckDisposed();
+            Native.CSSNodeStyleSetBorder(_cssNode, edge, border);
+        }
+
+        public Spacing GetPosition()
+        {
+            CheckDisposed();
+
+            var position = new Spacing();
+            position.Set(Spacing.Left, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Left));
+            position.Set(Spacing.Top, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Top));
+            position.Set(Spacing.Right, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Right));
+            position.Set(Spacing.Bottom, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Bottom));
+            position.Set(Spacing.Start, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Start));
+            position.Set(Spacing.End, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.End));
+
+            return position;
+        }
+
+        public void SetPosition(CSSEdge edge, float position)
+        {
+            CheckDisposed();
+        }
+
+        public float StyleWidth
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetWidth(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetWidth(_cssNode, value);
+            }
+        }
+
+        public float StyleHeight
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetHeight(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetHeight(_cssNode, value);
+            }
+        }
+
+        public float StyleMaxWidth
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetMaxWidth(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetMaxWidth(_cssNode, value);
+            }
+        }
+
+        public float StyleMaxHeight
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetMaxHeight(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetMaxHeight(_cssNode, value);
+            }
+        }
+
+        public float StyleMinWidth
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetMinWidth(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetMinWidth(_cssNode, value);
+            }
+        }
+
+        public float StyleMinHeight
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetMinHeight(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetMinHeight(_cssNode, value);
+            }
+        }
+
+        public float LayoutX
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeLayoutGetLeft(_cssNode);
+            }
+        }
+
+        public float LayoutY
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeLayoutGetTop(_cssNode);
+            }
+        }
+
+        public float LayoutWidth
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeLayoutGetWidth(_cssNode);
+            }
+        }
+
+        public float LayoutHeight
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeLayoutGetHeight(_cssNode);
+            }
+        }
+
+        public CSSDirection LayoutDirection
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeLayoutGetDirection(_cssNode);
+            }
+        }
+
+        public CSSOverflow Overflow
+        {
+            get
+            {
+                CheckDisposed();
+                return Native.CSSNodeStyleGetOverflow(_cssNode);
+            }
+
+            set
+            {
+                CheckDisposed();
+                Native.CSSNodeStyleSetOverflow(_cssNode, value);
+            }
+        }
+
+        public object Data
+        {
+            get
+            {
+                CheckDisposed();
+                return _data;
+            }
+
+            set
+            {
+                CheckDisposed();
+                _data = value;
+            }
         }
 
         ICSSNode ICSSNode.this[int index]
@@ -60,62 +566,8 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                if (_children == null)
-                {
-                    throw new InvalidOperationException(@"Children not yet initialized.");
-                }
+                CheckDisposed();
                 return _children[index];
-            }
-        }
-
-        public CSSAlign AlignContent
-        {
-            get
-            {
-                return Style.AlignContent;
-            }
-
-            set
-            {
-                if (Style.AlignContent != value)
-                {
-                    Style.AlignContent = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public CSSAlign AlignItems
-        {
-            get
-            {
-                return Style.AlignItems;
-            }
-
-            set
-            {
-                if (Style.AlignItems != value)
-                {
-                    Style.AlignItems = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public CSSAlign AlignSelf
-        {
-            get
-            {
-                return Style.AlignSelf;
-            }
-
-            set
-            {
-                if (Style.AlignSelf != value)
-                {
-                    Style.AlignSelf = value;
-                    MarkDirty();
-                }
             }
         }
 
@@ -123,442 +575,43 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                return _children == null ? 0 : _children.Count;
+                CheckDisposed();
+                return _children.Count;
             }
         }
 
-        public object Data { get; set; }
-
-        public float Flex
+        public void MarkLayoutSeen()
         {
-            get
-            {
-                if (Style.FlexGrow > 0)
-                {
-                    return Style.FlexGrow;
-                }
-                else if (Style.FlexShrink > 0)
-                {
-                    return -Style.FlexShrink;
-                }
-
-                return 0;
-            }
-
-            set
-            {
-                if (CSSConstants.IsUndefined(value) || value == 0)
-                {
-                    FlexGrow = 0;
-                    FlexShrink = 0;
-                    FlexBasis = CSSConstants.UNDEFINED;
-                }
-                else if (value > 0)
-                {
-                    FlexGrow = value;
-                    FlexShrink = 0;
-                    FlexBasis = 0;
-                }
-                else
-                {
-                    FlexGrow = 0;
-                    FlexShrink = -value;
-                    FlexBasis = CSSConstants.UNDEFINED;
-                }
-            }
+            CheckDisposed();
+            Native.CSSNodeSetHasNewLayout(_cssNode, false);
         }
 
-        public float FlexBasis
+        public bool ValuesEqual(float f1, float f2)
         {
-            get
-            {
-                return Style.FlexBasis;
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.FlexBasis, value))
-                {
-                    Style.FlexBasis = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public CSSFlexDirection FlexDirection
-        {
-            get
-            {
-                return Style.FlexDirection;
-            }
-
-            set
-            {
-                if (Style.FlexDirection != value)
-                {
-                    Style.FlexDirection = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public float FlexGrow
-        {
-            get
-            {
-                return Style.FlexGrow;
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.FlexGrow, value))
-                {
-                    Style.FlexGrow = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public float FlexShrink
-        {
-            get
-            {
-                return Style.FlexShrink;
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.FlexShrink, value))
-                {
-                    Style.FlexShrink = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public bool HasNewLayout
-        {
-            get
-            {
-                return _layoutState == LayoutState.HasNewLayout;
-            }
-        }
-
-        public void MarkHasNewLayout()
-        {
-            _layoutState = LayoutState.HasNewLayout;
-        }
-
-        public bool IsDirty
-        {
-            get
-            {
-                return _layoutState == LayoutState.Dirty;
-            }
-        }
-
-        public bool IsMeasureDefined
-        {
-            get
-            {
-                return _measureFunction != null;
-            }
-        }
-
-        public bool IsTextNode { get; set; }
-
-        public CSSJustify JustifyContent
-        {
-            get
-            {
-                return Style.JustifyContent;
-            }
-
-            set
-            {
-                if (Style.JustifyContent != value)
-                {
-                    Style.JustifyContent = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public CSSDirection LayoutDirection
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public float LayoutHeight
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public float LayoutWidth
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public float LayoutX
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public float LayoutY
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public CSSOverflow Overflow
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public ICSSNode Parent
-        {
-            get
-            {
-                return _parent;
-            }
-        }
-
-        public CSSPositionType PositionType
-        {
-            get
-            {
-                return Style.PositionType;
-            }
-
-            set
-            {
-                if (Style.PositionType != value)
-                {
-                    Style.PositionType = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public CSSDirection StyleDirection
-        {
-            get
-            {
-                return Style.Direction;
-            }
-
-            set
-            {
-                if (Style.Direction != value)
-                {
-                    Style.Direction = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public float StyleHeight
-        {
-            get
-            {
-                return Style.Dimensions[CSSLayout.DIMENSION_HEIGHT];
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.Dimensions[CSSLayout.DIMENSION_HEIGHT], value))
-                {
-                    Style.Dimensions[CSSLayout.DIMENSION_HEIGHT] = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public float StyleMaxHeight
-        {
-            get
-            {
-                return Style.MaxHeight;
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.MaxHeight, value))
-                {
-                    Style.MaxHeight = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public float StyleMaxWidth
-        {
-            get
-            {
-                return Style.MaxWidth;
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.MaxWidth, value))
-                {
-                    Style.MaxWidth = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public float StyleMinHeight
-        {
-            get
-            {
-                return Style.MinHeight;
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.MinHeight, value))
-                {
-                    Style.MinHeight = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public float StyleMinWidth
-        {
-            get
-            {
-                return Style.MinWidth;
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.MinWidth, value))
-                {
-                    Style.MinWidth = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public float StyleWidth
-        {
-            get
-            {
-                return Style.Dimensions[CSSLayout.DIMENSION_WIDTH];
-            }
-
-            set
-            {
-                if (!ValuesEqual(Style.Dimensions[CSSLayout.DIMENSION_WIDTH], value))
-                {
-                    Style.Dimensions[CSSLayout.DIMENSION_WIDTH] = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public CSSWrap Wrap
-        {
-            get
-            {
-                return Style.FlexWrap;
-            }
-
-            set
-            {
-                if (Style.FlexWrap != value)
-                {
-                    Style.FlexWrap = value;
-                    MarkDirty();
-                }
-            }
-        }
-
-        public void CalculateLayout(CSSLayoutContext layoutContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Spacing GetBorder()
-        {
-            return Style.Border;
-        }
-
-        public Spacing GetMargin()
-        {
-            return Style.Margin;
-        }
-
-        public Spacing GetPadding()
-        {
-            return Style.Padding;
-        }
-
-        public Spacing GetPosition()
-        {
-            return Style.Position;
-        }
-
-        int ICSSNode.IndexOf(ICSSNode node)
-        {
-            return IndexOf((CSSNode)node);
-        }
-
-        public int IndexOf(CSSNode node)
-        {
-            if (_children == null)
-            {
-                throw new InvalidOperationException(@"Children not yet initialized.");
-            }
-
-            return _children.IndexOf(node);
-        }
-
-        public void Initialize()
-        {
-            Reset();
+            return Math.Abs(f1 - f1) < float.Epsilon;
         }
 
         public void Insert(int index, CSSNode node)
         {
-            if (node._parent != null)
-            {
-                throw new InvalidOperationException(@"Child already has a parent, it must be removed first.");
-            }
-
-            if (_children == null)
-            {
-                // 4 is kinda arbitrary, but the default of 10 seems really high for an average View.
-                _children = new List<CSSNode>(4);
-            }
-
+            CheckDisposed();
             _children.Insert(index, node);
             node._parent = this;
-            MarkDirty();
+            Native.CSSNodeInsertChild(_cssNode, node._cssNode, (uint)index);
+        }
+
+        public void RemoveAt(int index)
+        {
+            CheckDisposed();
+            var child = _children[index];
+            child._parent = null;
+            _children.RemoveAt(index);
+            Native.CSSNodeRemoveChild(_cssNode, child._cssNode);
+        }
+
+        public int IndexOf(CSSNode node)
+        {
+            CheckDisposed();
+            return _children.IndexOf(node);
         }
 
         void ICSSNode.Insert(int index, ICSSNode node)
@@ -566,123 +619,60 @@ namespace Facebook.CSSLayout
             Insert(index, (CSSNode)node);
         }
 
-        public void MarkDirty()
+        int ICSSNode.IndexOf(ICSSNode node)
         {
-            if (_layoutState == LayoutState.Dirty)
-            {
-                return;
-            }
-            else if (_layoutState == LayoutState.HasNewLayout)
-            {
-                throw new InvalidOperationException(@"Previous layout was ignored! MarkLayoutSeen() never called");
-            }
-
-            _layoutState = LayoutState.Dirty;
-            _parent?.MarkDirty();
-        }
-
-        public void MarkLayoutSeen()
-        {
-            if (!HasNewLayout)
-            {
-                throw new InvalidOperationException(@"Expected node to have a new layout to be seen!");
-            }
-
-            _layoutState = LayoutState.UpToDate;
-        }
-
-        public void RemoveAt(int index)
-        {
-            if (_children == null)
-            {
-                throw new InvalidOperationException(@"Children not yet initialized.");
-            }
-
-            var removed = _children[index];
-            _children.RemoveAt(index);
-            removed._parent = null;
-            MarkDirty();
-        }
-
-        public void IndentString(StringBuilder result, int level)
-        {
-            // Spaces and tabs are dropped by IntelliJ logcat integration, so rely on __ instead.
-            var indentation = new StringBuilder();
-            for (int i = 0; i < level; ++i)
-            {
-                indentation.Append("__");
-            }
-
-            result.Append(indentation);
-            result.Append(Layout.ToString());
-
-            if (Count == 0) { return; }
-
-            result.Append(", children: [\n");
-            for (int i = 0; i < Count; i++)
-            {
-                this[i].IndentString(result, level + 1);
-                result.Append("\n");
-            }
-            result.Append(indentation + "]");
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            IndentString(sb, 0);
-            return sb.ToString();
-        }
-
-        public void Reset()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetBorder(CSSEdge edge, float border)
-        {
-            if (Style.Border.Set((int)edge, border))
-            {
-                MarkDirty();
-            }
-        }
-
-        public void SetMargin(CSSEdge edge, float margin)
-        {
-            if (Style.Margin.Set((int)edge, margin))
-            {
-                MarkDirty();
-            }
+            return IndexOf((CSSNode)node);
         }
 
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
-            if (_measureFunction != measureFunction)
-            {
-                _measureFunction = measureFunction;
-                MarkDirty();
-            };
+            CheckDisposed();
+            _measureFunction = measureFunction;
+            Native.CSSNodeSetMeasureFunc(_cssNode, measureFunction != null ? _measureFunc : null);
         }
 
-        public void SetPadding(CSSEdge edge, float padding)
+        public void CalculateLayout(CSSLayoutContext layoutContext)
         {
-            if (Style.Padding.Set((int)edge, padding))
+            CheckDisposed();
+            Native.CSSNodeCalculateLayout(_cssNode, CSSConstants.Undefined, CSSConstants.Undefined, Native.CSSNodeStyleGetDirection(_cssNode));
+        }
+
+        public long Measure(ICSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
+        {
+            if (_measureFunction == null)
             {
-                MarkDirty();
+                throw new InvalidOperationException(@"Measure function is not defined.");
             }
+
+            var output = new MeasureOutput();
+
+            _measureFunction(this,
+                width,
+                widthMode,
+                height,
+                heightMode,
+                output);
+
+            return ((long)output.Width) << 32 | ((long)output.Height);
         }
 
-        public void SetPosition(CSSEdge edge, float position)
+        private CSSSize MeasureInternal(
+            IntPtr context,
+            float width,
+            CSSMeasureMode widthMode,
+            float height,
+            CSSMeasureMode heightMode)
         {
-            if (Style.Position.Set((int)edge, position))
-            {
-                MarkDirty();
-            }
+            var measureResult = Measure(this, width, widthMode, height, heightMode);
+            var measuredWidth = 0xFFFFFFFF & (measureResult >> 32);
+            var measuredHeight = 0xFFFFFFFF & measureResult;
+
+            return new CSSSize { width = measuredWidth, height = measuredHeight };
         }
 
-        public bool ValuesEqual(float f1, float f2)
+        private void PrintInternal(IntPtr context)
         {
-            return Math.Abs(f1 - f1) < float.Epsilon;
+            System.Diagnostics.Debug.WriteLine(ToString());
         }
     }
 }
