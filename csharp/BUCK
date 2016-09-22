@@ -11,26 +11,3 @@ csharp_library(
   framework_ver = 'net45',
   srcs = glob(['**/*.cs']),
 )
-
-COMPILER_FLAGS = [
-  '/ZW:nostdlib',
-  '/Zc:wchar_t',
-  '/D "UNICODE"',
-  '/D "_UNICODE"',
-  '/D "_WINDLL"',
-]
-
-cxx_library(
-  name = 'CSSLayout',
-  srcs = glob(['CSSLayout/*.c', '../../CSSLayout/*.c']),
-  headers = [
-    'CSSLayout/stdafx.h',
-    'CSSLayout/targetver.h',
-  ],
-  exported_headers = glob([('../../CSSLayout/*.h')]),
-  header_namespace = '',
-  force_static = True,
-  compiler_flags = COMPILER_FLAGS,
-  deps = [],
-  visibility = ['PUBLIC'],
-)

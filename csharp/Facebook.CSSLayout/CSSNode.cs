@@ -1,10 +1,20 @@
-﻿using System;
+﻿/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Facebook.CSSLayout
 {
-    public class CSSNode : IDisposable
+    public class CSSNode : IDisposable, IEnumerable<CSSNode>
     {
         private bool _isDisposed;
         private IntPtr _cssNode;
@@ -74,7 +84,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public void MarkDirty()
+        public virtual void MarkDirty()
         {
             CheckDisposed();
             Native.CSSNodeMarkDirty(_cssNode);
@@ -580,7 +590,12 @@ namespace Facebook.CSSLayout
 
         public bool ValuesEqual(float f1, float f2)
         {
-            return Math.Abs(f1 - f1) < float.Epsilon;
+            if (float.IsNaN(f1) || float.IsNaN(f2))
+            {
+                return float.IsNaN(f1) && float.IsNaN(f2);
+            }
+
+            return Math.Abs(f2 - f1) < float.Epsilon;
         }
 
         public void Insert(int index, CSSNode node)
@@ -655,6 +670,16 @@ namespace Facebook.CSSLayout
         private void PrintInternal(IntPtr context)
         {
             System.Diagnostics.Debug.WriteLine(ToString());
+        }
+
+        public IEnumerator<CSSNode> GetEnumerator()
+        {
+            return ((IEnumerable<CSSNode>)_children).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<CSSNode>)_children).GetEnumerator();
         }
     }
 }

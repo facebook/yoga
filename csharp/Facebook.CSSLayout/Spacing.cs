@@ -1,4 +1,13 @@
-﻿using System;
+﻿/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+using System;
 
 namespace Facebook.CSSLayout
 {
@@ -54,7 +63,7 @@ namespace Facebook.CSSLayout
         /// </summary>
         public const int All = 8;
 
-        private static readonly int[] sFlagsMap = new[]
+        private static readonly int[] _flagsMap = new[]
         {
             1, /*LEFT*/
             2, /*TOP*/
@@ -91,7 +100,7 @@ namespace Facebook.CSSLayout
                 return defaultValue;
             }
 
-            if ((_valueFlags & sFlagsMap[spacingType]) != 0)
+            if ((_valueFlags & _flagsMap[spacingType]) != 0)
             {
                 return _spacing[spacingType];
             }
@@ -99,11 +108,11 @@ namespace Facebook.CSSLayout
             if (_hasAliasesSet)
             {
                 var secondType = spacingType == Top || spacingType == Bottom ? Vertical : Horizontal;
-                if ((_valueFlags & sFlagsMap[secondType]) != 0)
+                if ((_valueFlags & _flagsMap[secondType]) != 0)
                 {
                     return _spacing[secondType];
                 }
-                else if ((_valueFlags & sFlagsMap[All]) != 0)
+                else if ((_valueFlags & _flagsMap[All]) != 0)
                 {
                     return _spacing[All];
                 }
@@ -125,17 +134,17 @@ namespace Facebook.CSSLayout
 
                 if (CSSConstants.IsUndefined(value))
                 {
-                    _valueFlags &= ~sFlagsMap[spacingType];
+                    _valueFlags &= ~_flagsMap[spacingType];
                 }
                 else
                 {
-                    _valueFlags |= ~sFlagsMap[spacingType];
+                    _valueFlags |= ~_flagsMap[spacingType];
                 }
 
                 _hasAliasesSet =
-                    (_valueFlags & sFlagsMap[All]) != 0 ||
-                    (_valueFlags & sFlagsMap[Vertical]) != 0 ||
-                    (_valueFlags & sFlagsMap[Horizontal]) != 0;
+                    (_valueFlags & _flagsMap[All]) != 0 ||
+                    (_valueFlags & _flagsMap[Vertical]) != 0 ||
+                    (_valueFlags & _flagsMap[Horizontal]) != 0;
 
                 return true;
             }
