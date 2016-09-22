@@ -6,3 +6,6 @@
 /.buckd
 /lib/gtest/googletest-*/
 /gentest/test.html
+
+# Visual studio code
+.vscode
