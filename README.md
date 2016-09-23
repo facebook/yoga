@@ -47,7 +47,7 @@ We think supporting RTL locales is very important. Therefor CSSLayout supports n
 ### C
 The full API can be found in `CSSLayout/CSSLayout.h`.
 
-```html
+```c
 CSSNodeRef root = CSSNodeNew();
 CSSNodeStyleSetWidth(root, 100);
 CSSNodeStyleSetHeight(root, 100);
