@@ -1,0 +1,9 @@
+//
+//  Config.xcconfig
+//  TemplateKit
+//
+//  Created by Matias Cudich on 9/25/16.
+//  Copyright © 2016 Matias Cudich. All rights reserved.
+//
+
+MODULEMAP_FILE[sdk=*] = $(SRCROOT)/CSSLayout/module.modulemap
