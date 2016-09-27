@@ -129,6 +129,7 @@ TEST(CSSLayoutTest, margin_top) {
 TEST(CSSLayoutTest, margin_end) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
+  CSSNodeStyleSetJustifyContent(root, CSSJustifyFlexEnd);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -143,7 +144,7 @@ TEST(CSSLayoutTest, margin_end) {
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(80, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
@@ -155,7 +156,7 @@ TEST(CSSLayoutTest, margin_end) {
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
 
-  ASSERT_EQ(90, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
@@ -163,6 +164,7 @@ TEST(CSSLayoutTest, margin_end) {
 
 TEST(CSSLayoutTest, margin_bottom) {
   const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetJustifyContent(root, CSSJustifyFlexEnd);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -178,7 +180,7 @@ TEST(CSSLayoutTest, margin_bottom) {
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(80, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
@@ -190,7 +192,7 @@ TEST(CSSLayoutTest, margin_bottom) {
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(80, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 }

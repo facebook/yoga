@@ -49,6 +49,7 @@
 
 TEST(CSSLayoutTest, align_content_flex_start) {
   const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetAlignContent(root, CSSAlignFlexStart);
   CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
@@ -144,6 +145,7 @@ TEST(CSSLayoutTest, align_content_flex_start) {
 
 TEST(CSSLayoutTest, align_content_flex_end) {
   const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetAlignContent(root, CSSAlignFlexEnd);
   CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);

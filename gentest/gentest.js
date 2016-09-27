@@ -69,7 +69,12 @@ function printTest(LTRContainer, RTLContainer, genericContainer) {
   for (var i = 0; i < genericLayoutTree.length; i++) {
     lines.push('TEST(CSSLayoutTest, ' + genericLayoutTree[i].name + ') {');
 
-    lines.push('  ' + setupTestTree(LTRLayoutTree[i], genericLayoutTree[i], 'root', null).reduce(function(curr, prev) {
+    lines.push('  ' + setupTestTree(
+        undefined,
+        LTRLayoutTree[i],
+        genericLayoutTree[i],
+        'root',
+        null).reduce(function(curr, prev) {
       return curr + '\n  ' + prev;
     }));
 
@@ -112,7 +117,7 @@ function assertTestTree(node, nodeName, parentName) {
   return lines;
 }
 
-function setupTestTree(node, genericNode, nodeName, parentName, index) {
+function setupTestTree(parent, node, genericNode, nodeName, parentName, index) {
   var lines = [
     'const CSSNodeRef ' + nodeName + ' = CSSNodeNew();',
   ];
@@ -154,15 +159,18 @@ function setupTestTree(node, genericNode, nodeName, parentName, index) {
               alignValue(node.style[style]) + ');');
           break;
         case 'align-self':
-          lines.push('CSSNodeStyleSetAlignSelf(' + nodeName + ', ' +
-              alignValue(node.style[style]) + ');');
+          if (!parent || node.style[style] !== parent.style['align-items']) {
+            lines.push('CSSNodeStyleSetAlignSelf(' + nodeName + ', ' +
+                alignValue(node.style[style]) + ');');
+          }
           break;
         case 'position':
           lines.push('CSSNodeStyleSetPositionType(' + nodeName + ', ' +
               positionValue(node.style[style]) + ');');
           break;
         case 'flex-wrap':
-          lines.push('CSSNodeStyleSetFlexWrap(' + nodeName + ', ' + wrapValue(node.style[style]) + ');');
+          lines.push('CSSNodeStyleSetFlexWrap(' + nodeName + ', ' +
+              wrapValue(node.style[style]) + ');');
           break;
         case 'overflow':
           lines.push('CSSNodeStyleSetOverflow(' + nodeName + ', ' +
@@ -319,6 +327,7 @@ function setupTestTree(node, genericNode, nodeName, parentName, index) {
     var childName = nodeName + '_child' + i;
     lines = lines.concat(
         setupTestTree(
+            node,
             node.children[i],
             genericNode.children[i],
             childName,
