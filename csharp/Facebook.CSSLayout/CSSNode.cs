@@ -628,7 +628,7 @@ namespace Facebook.CSSLayout
             Native.CSSNodeSetMeasureFunc(_cssNode, measureFunction != null ? _measureFunc : null);
         }
 
-        public void CalculateLayout(CSSLayoutContext layoutContext)
+        public void CalculateLayout()
         {
             CheckDisposed();
             Native.CSSNodeCalculateLayout(_cssNode, CSSConstants.Undefined, CSSConstants.Undefined, Native.CSSNodeStyleGetDirection(_cssNode));
