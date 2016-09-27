@@ -117,7 +117,7 @@ root.LayoutHeight;
 ```
 
 ## Contributing
-To contribute to CSSLayout you need to first install [buck](https://buckbuild.com) which is the build system used by CSSLayout. CSSLayout is implemented in C with language bindings for Java. When making changes to `CSSLayout/CSSLayout.h` please ensure to update `java/jni/CSSJNI.h`, `java/com/facebook/csslayout/CSSNode.java` and `csharp/Facebook.CSSLayout/CSSNode.cs` to reflect the API change. Before submitting any code please run `format.sh` to ensure the code matches the project's code style.
+To contribute to CSSLayout you need to first install [buck](https://buckbuild.com) which is the build system used by CSSLayout. CSSLayout is implemented in C with language bindings for Java and .NET. When making changes to `CSSLayout/CSSLayout.h` please ensure to update `java/jni/CSSJNI.h`, `java/com/facebook/csslayout/CSSNode.java` and `csharp/Facebook.CSSLayout/CSSNode.cs` to reflect the API change. Before submitting any code please run `format.sh` to ensure the code matches the project's code style.
 
 Before making any larger changes to CSSLayout please open an issue with a RFC so the changes can be discussed first. Generally we are very open to changes and improvements that will benefit the community.
 
