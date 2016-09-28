@@ -77,7 +77,8 @@ root.setStyleWidth(100);
 root.setStyleHeight(100);
 
 for (int i = 0; i < 10; i++) {
-  CSSNodeRef child = CSSNodeNew();
+  CSSNode child = new CSSNode();
+  child.init();
   child.setStyleHeight(10);
   root.addChildAt(child, 0);
 }
@@ -91,8 +92,32 @@ root.getLayoutWidth();
 root.getLayoutHeight();
 ```
 
+### .NET
+The full API can be found in `csharp/Facebook.CSSLayout/CSSNode.cs`.
+
+```csharp
+var root = new CSSNode();
+root.Initialize();
+root.StyleWidth = 100;
+root.StyleHeight = 100;
+
+for (var i = 0; i < 10; i++)
+{
+  var child = new CSSNode();
+  child.Initialize();
+  child.StyleHeight = 10;
+  root.Insert(0, child);
+}
+
+// Get for resulting layout
+root.LayoutX;
+root.LayoutY;
+root.LayoutWidth;
+root.LayoutHeight;
+```
+
 ## Contributing
-To contribute to CSSLayout you need to first install [buck](https://buckbuild.com) which is the build system used by CSSLayout. CSSLayout is implemented in C with language bindings for Java. When making changes to `CSSLayout/CSSLayout.h` please ensure to update `java/jni/CSSJNI.h` and `java/com/facebook/csslayout/CSSNode.java` to reflect the API change. Before submitting any code please run `format.sh` to ensure the code matches the project's code style.
+To contribute to CSSLayout you need to first install [buck](https://buckbuild.com) which is the build system used by CSSLayout. CSSLayout is implemented in C with language bindings for Java and .NET. When making changes to `CSSLayout/CSSLayout.h` please ensure to update `java/jni/CSSJNI.h`, `java/com/facebook/csslayout/CSSNode.java` and `csharp/Facebook.CSSLayout/CSSNode.cs` to reflect the API change. Before submitting any code please run `format.sh` to ensure the code matches the project's code style.
 
 Before making any larger changes to CSSLayout please open an issue with a RFC so the changes can be discussed first. Generally we are very open to changes and improvements that will benefit the community.
 
