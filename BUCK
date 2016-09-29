@@ -28,6 +28,7 @@ cxx_library(
   name = 'CSSLayout',
   srcs = glob(['CSSLayout/*.c']),
   tests=[':CSSLayout_tests'],
+  xcode_public_headers_symlinks = True,
   exported_headers = subdir_glob([('', 'CSSLayout/*.h')]),
   header_namespace = '',
   force_static = True,
@@ -64,6 +65,7 @@ cxx_binary(
 cxx_library(
   name = 'CSSLayoutTestUtils',
   srcs = glob(['tests/CSSLayoutTestUtils/*.c']),
+  xcode_public_headers_symlinks = True,
   exported_headers = subdir_glob([('tests', 'CSSLayoutTestUtils/*.h')]),
   header_namespace = '',
   compiler_flags = COMPILER_FLAGS,
