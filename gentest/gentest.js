@@ -93,6 +93,7 @@ function printTest(LTRContainer, RTLContainer, genericContainer) {
       return curr + '\n  ' + prev;
     }));
 
+    lines.push('\n  CSSNodeFreeRecursive(root);')
     lines.push('}');
     lines.push('');
   }

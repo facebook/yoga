@@ -135,6 +135,8 @@ TEST(CSSLayoutTest, justify_content_row_flex_start) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_row_flex_end) {
@@ -198,6 +200,8 @@ TEST(CSSLayoutTest, justify_content_row_flex_end) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_row_center) {
@@ -261,6 +265,8 @@ TEST(CSSLayoutTest, justify_content_row_center) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_row_space_between) {
@@ -324,6 +330,8 @@ TEST(CSSLayoutTest, justify_content_row_space_between) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_row_space_around) {
@@ -387,6 +395,8 @@ TEST(CSSLayoutTest, justify_content_row_space_around) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_column_flex_start) {
@@ -447,6 +457,8 @@ TEST(CSSLayoutTest, justify_content_column_flex_start) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_column_flex_end) {
@@ -509,6 +521,8 @@ TEST(CSSLayoutTest, justify_content_column_flex_end) {
   ASSERT_EQ(92, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_column_center) {
@@ -571,6 +585,8 @@ TEST(CSSLayoutTest, justify_content_column_center) {
   ASSERT_EQ(56, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_column_space_between) {
@@ -633,6 +649,8 @@ TEST(CSSLayoutTest, justify_content_column_space_between) {
   ASSERT_EQ(92, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, justify_content_column_space_around) {
@@ -695,4 +713,6 @@ TEST(CSSLayoutTest, justify_content_column_space_around) {
   ASSERT_EQ(80, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(102, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
 }

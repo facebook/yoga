@@ -48,6 +48,8 @@ TEST(CSSLayoutTest, measure_once_single_flexible_child) {
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
 
   ASSERT_EQ(1, measureCount);
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, dont_remeasure_text_node_height_change) {
@@ -77,4 +79,6 @@ TEST(CSSLayoutTest, dont_remeasure_text_node_height_change) {
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
 
   ASSERT_EQ(1, measureCount);
+
+  CSSNodeFreeRecursive(root);
 }

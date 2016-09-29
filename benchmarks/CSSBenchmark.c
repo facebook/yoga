@@ -42,6 +42,7 @@ CSS_BENCHMARKS({
     }
 
     CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+    CSSNodeFreeRecursive(root);
   });
 
   CSS_BENCHMARK("Align stretch in undefined axis", {
@@ -55,6 +56,7 @@ CSS_BENCHMARKS({
     }
 
     CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+    CSSNodeFreeRecursive(root);
   });
 
   CSS_BENCHMARK("Nested flex", {
@@ -75,6 +77,7 @@ CSS_BENCHMARKS({
     }
 
     CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+    CSSNodeFreeRecursive(root);
   });
 
 });

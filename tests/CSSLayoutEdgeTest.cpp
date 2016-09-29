@@ -30,6 +30,8 @@ TEST(CSSLayoutTest, start_overrides) {
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
   ASSERT_EQ(20, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetRight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, end_overrides) {
@@ -52,6 +54,8 @@ TEST(CSSLayoutTest, end_overrides) {
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
   ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(20, CSSNodeLayoutGetRight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, horizontal_overridden) {
@@ -69,6 +73,8 @@ TEST(CSSLayoutTest, horizontal_overridden) {
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
   ASSERT_EQ(20, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetRight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, vertical_overridden) {
@@ -86,6 +92,8 @@ TEST(CSSLayoutTest, vertical_overridden) {
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
   ASSERT_EQ(20, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetBottom(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, horizontal_overrides_all) {
@@ -105,6 +113,8 @@ TEST(CSSLayoutTest, horizontal_overrides_all) {
   ASSERT_EQ(20, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetRight(root_child0));
   ASSERT_EQ(20, CSSNodeLayoutGetBottom(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, vertical_overrides_all) {
@@ -124,6 +134,8 @@ TEST(CSSLayoutTest, vertical_overrides_all) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(20, CSSNodeLayoutGetRight(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetBottom(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, all_overridden) {
@@ -146,4 +158,6 @@ TEST(CSSLayoutTest, all_overridden) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetRight(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetBottom(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }

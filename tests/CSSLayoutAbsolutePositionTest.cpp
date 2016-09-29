@@ -72,6 +72,8 @@ TEST(CSSLayoutTest, absolute_layout_width_height_start_top) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, absolute_layout_width_height_end_bottom) {
@@ -109,6 +111,8 @@ TEST(CSSLayoutTest, absolute_layout_width_height_end_bottom) {
   ASSERT_EQ(80, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, absolute_layout_start_top_end_bottom) {
@@ -146,6 +150,8 @@ TEST(CSSLayoutTest, absolute_layout_start_top_end_bottom) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(80, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(80, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, absolute_layout_width_height_start_top_end_bottom) {
@@ -185,6 +191,8 @@ TEST(CSSLayoutTest, absolute_layout_width_height_start_top_end_bottom) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent) {
@@ -235,4 +243,6 @@ TEST(CSSLayoutTest, do_not_clamp_height_of_absolute_node_to_height_of_its_overfl
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0_child0));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0_child0));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0_child0));
+
+  CSSNodeFreeRecursive(root);
 }

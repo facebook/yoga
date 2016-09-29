@@ -141,6 +141,8 @@ TEST(CSSLayoutTest, align_content_flex_start) {
   ASSERT_EQ(40, CSSNodeLayoutGetTop(root_child4));
   ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child4));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child4));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, align_content_flex_end) {
@@ -237,6 +239,8 @@ TEST(CSSLayoutTest, align_content_flex_end) {
   ASSERT_EQ(40, CSSNodeLayoutGetTop(root_child4));
   ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child4));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child4));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, align_content_center) {
@@ -333,6 +337,8 @@ TEST(CSSLayoutTest, align_content_center) {
   ASSERT_EQ(40, CSSNodeLayoutGetTop(root_child4));
   ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child4));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child4));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, align_content_stretch) {
@@ -424,4 +430,6 @@ TEST(CSSLayoutTest, align_content_stretch) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child4));
   ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child4));
   ASSERT_EQ(0, CSSNodeLayoutGetHeight(root_child4));
+
+  CSSNodeFreeRecursive(root);
 }

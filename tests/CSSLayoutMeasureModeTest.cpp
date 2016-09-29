@@ -63,6 +63,9 @@ TEST(CSSLayoutTest, exactly_measure_stretched_child_column) {
 
   ASSERT_EQ(100, constraintList.constraints[0].width);
   ASSERT_EQ(CSSMeasureModeExactly, constraintList.constraints[0].widthMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, exactly_measure_stretched_child_row) {
@@ -87,6 +90,9 @@ TEST(CSSLayoutTest, exactly_measure_stretched_child_row) {
 
   ASSERT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(CSSMeasureModeExactly, constraintList.constraints[0].heightMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, at_most_main_axis_column) {
@@ -110,6 +116,9 @@ TEST(CSSLayoutTest, at_most_main_axis_column) {
 
   ASSERT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].heightMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, at_most_cross_axis_column) {
@@ -134,6 +143,9 @@ TEST(CSSLayoutTest, at_most_cross_axis_column) {
 
   ASSERT_EQ(100, constraintList.constraints[0].width);
   ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].widthMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, at_most_main_axis_row) {
@@ -158,6 +170,9 @@ TEST(CSSLayoutTest, at_most_main_axis_row) {
 
   ASSERT_EQ(100, constraintList.constraints[0].width);
   ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].widthMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, at_most_cross_axis_row) {
@@ -183,6 +198,9 @@ TEST(CSSLayoutTest, at_most_cross_axis_row) {
 
   ASSERT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].heightMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, flex_child) {
@@ -209,6 +227,9 @@ TEST(CSSLayoutTest, flex_child) {
 
   ASSERT_EQ(100, constraintList.constraints[1].height);
   ASSERT_EQ(CSSMeasureModeExactly, constraintList.constraints[1].heightMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, flex_child_with_flex_basis) {
@@ -233,6 +254,9 @@ TEST(CSSLayoutTest, flex_child_with_flex_basis) {
 
   ASSERT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(CSSMeasureModeExactly, constraintList.constraints[0].heightMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, overflow_scroll_column) {
@@ -261,6 +285,9 @@ TEST(CSSLayoutTest, overflow_scroll_column) {
 
   ASSERT_TRUE(CSSValueIsUndefined(constraintList.constraints[0].height));
   ASSERT_EQ(CSSMeasureModeUndefined, constraintList.constraints[0].heightMode);
+
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, overflow_scroll_row) {
@@ -290,5 +317,7 @@ TEST(CSSLayoutTest, overflow_scroll_row) {
 
   ASSERT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].heightMode);
-}
 
+  free(constraintList.constraints);
+  CSSNodeFreeRecursive(root);
+}

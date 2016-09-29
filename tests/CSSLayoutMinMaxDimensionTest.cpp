@@ -65,6 +65,8 @@ TEST(CSSLayoutTest, max_width) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, max_height) {
@@ -100,6 +102,8 @@ TEST(CSSLayoutTest, max_height) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, min_height) {
@@ -148,6 +152,8 @@ TEST(CSSLayoutTest, min_height) {
   ASSERT_EQ(80, CSSNodeLayoutGetTop(root_child1));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child1));
   ASSERT_EQ(20, CSSNodeLayoutGetHeight(root_child1));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, min_width) {
@@ -197,4 +203,6 @@ TEST(CSSLayoutTest, min_width) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child1));
   ASSERT_EQ(20, CSSNodeLayoutGetWidth(root_child1));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child1));
+
+  CSSNodeFreeRecursive(root);
 }

@@ -39,6 +39,8 @@ TEST(CSSLayoutTest, dirty_propagation) {
   EXPECT_FALSE(CSSNodeIsDirty(root_child0));
   EXPECT_FALSE(CSSNodeIsDirty(root_child1));
   EXPECT_FALSE(CSSNodeIsDirty(root));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, dirty_propagation_only_if_prop_changed) {
@@ -64,4 +66,6 @@ TEST(CSSLayoutTest, dirty_propagation_only_if_prop_changed) {
   EXPECT_FALSE(CSSNodeIsDirty(root_child0));
   EXPECT_FALSE(CSSNodeIsDirty(root_child1));
   EXPECT_FALSE(CSSNodeIsDirty(root));
+
+  CSSNodeFreeRecursive(root);
 }

@@ -53,6 +53,8 @@ TEST(CSSLayoutTest, padding_no_size) {
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
   ASSERT_EQ(20, CSSNodeLayoutGetWidth(root));
   ASSERT_EQ(20, CSSNodeLayoutGetHeight(root));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, padding_container_match_child) {
@@ -89,6 +91,8 @@ TEST(CSSLayoutTest, padding_container_match_child) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, padding_flex_child) {
@@ -127,6 +131,8 @@ TEST(CSSLayoutTest, padding_flex_child) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(80, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, padding_stretch_child) {
@@ -164,6 +170,8 @@ TEST(CSSLayoutTest, padding_stretch_child) {
   ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(80, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, padding_center_child) {
@@ -204,4 +212,6 @@ TEST(CSSLayoutTest, padding_center_child) {
   ASSERT_EQ(35, CSSNodeLayoutGetTop(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
 }
