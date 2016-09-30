@@ -89,7 +89,6 @@ namespace Facebook.CSSLayout
 
         [DllImport(DllName)]
         [return: MarshalAs(UnmanagedType.I1)]
-
         public static extern bool CSSNodeGetHasNewLayout(IntPtr node);
 
         #endregion
