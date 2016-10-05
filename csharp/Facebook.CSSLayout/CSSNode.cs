@@ -54,6 +54,9 @@ namespace Facebook.CSSLayout
                 _isDisposed = true;
                 Native.CSSNodeFree(_cssNode);
                 GCHandle.FromIntPtr(_context).Free();
+                _children = null;
+                _parent = null;
+                _measureFunction = null;
             }
         }
 
@@ -68,11 +71,7 @@ namespace Facebook.CSSLayout
 
         public void Reset()
         {
-            Native.CSSNodeFree(_cssNode);
-            GCHandle.FromIntPtr(_context).Free();
-            _children = null;
-            _parent = null;
-            _measureFunction = null;
+            Dispose(true);
         }
 
         public bool IsDirty

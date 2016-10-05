@@ -47,12 +47,14 @@ namespace Facebook.CSSLayout
         public static extern void CSSNodeMarkDirty(IntPtr node);
 
         [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool CSSNodeIsDirty(IntPtr node);
 
         [DllImport(DllName)]
         public static extern void CSSNodePrint(IntPtr node, CSSPrintOptions options);
 
         [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool CSSValueIsUndefined(float value);
 
         #region CSS_NODE_PROPERTY
@@ -76,15 +78,17 @@ namespace Facebook.CSSLayout
         public static extern CSSPrintFunc CSSNodeGePrintFunc(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeSetIsTextnode(IntPtr node, bool isTextNode);
+        public static extern void CSSNodeSetIsTextnode(IntPtr node, [MarshalAs(UnmanagedType.I1)] bool isTextNode);
 
         [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool CSSNodeGetIsTextnode(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeSetHasNewLayout(IntPtr node, bool hasNewLayout);
+        public static extern void CSSNodeSetHasNewLayout(IntPtr node, [MarshalAs(UnmanagedType.I1)] bool hasNewLayout);
 
         [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool CSSNodeGetHasNewLayout(IntPtr node);
 
         #endregion
