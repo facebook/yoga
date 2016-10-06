@@ -14,7 +14,11 @@ namespace Facebook.CSSLayout
 {
     internal static class Native
     {
-        private const string DllName = "CSSLayout.dll";
+#if UNITY_IOS && !UNITY_EDITOR
+        private const string DllName = "__Internal";
+#else
+        private const string DllName = "CSSLayout";
+#endif
 
         [DllImport(DllName)]
         public static extern IntPtr CSSNodeNew();
