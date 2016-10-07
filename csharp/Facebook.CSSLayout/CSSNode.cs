@@ -93,6 +93,7 @@ namespace Facebook.CSSLayout
                 throw new InvalidOperationException("Allready initialized node");
             }
 
+            CSSAssert.Initialize();
             _cssNode = Native.CSSNodeNew();
             _children = new List<CSSNode>(4);
             Native.CSSNodeSetPrintFunc(_cssNode, _printFunc);

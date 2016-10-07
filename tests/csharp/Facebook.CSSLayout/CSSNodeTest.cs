@@ -43,6 +43,21 @@ namespace Facebook.CSSLayout
 
         [Test]
         [ExpectedException("System.InvalidOperationException")]
+        public void TestCannotAddChildToMultipleParents()
+        {
+            CSSNode parent1 = new CSSNode();
+            parent1.Initialize();
+            CSSNode parent2 = new CSSNode();
+            parent2.Initialize();
+            CSSNode child = new CSSNode();
+            child.Initialize();
+
+            parent1.Insert(0, child);
+            parent2.Insert(0, child);
+        }
+
+        [Test]
+        [ExpectedException("System.InvalidOperationException")]
         public void TestAlreadyInitialize()
         {
             CSSNode node = new CSSNode();

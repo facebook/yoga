@@ -21,6 +21,9 @@ namespace Facebook.CSSLayout
 #endif
 
         [DllImport(DllName)]
+        public static extern void CSSAssertSetFailFunc(CSSAssert.FailFunc func);
+
+        [DllImport(DllName)]
         public static extern IntPtr CSSNodeNew();
 
         [DllImport(DllName)]
