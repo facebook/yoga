@@ -19,7 +19,7 @@ namespace Facebook.CSSLayout
         private bool _isDisposed;
         private IntPtr _cssNode;
 
-        private CSSNode _parent;
+        private WeakReference _parent;
         private List<CSSNode> _children;
         private MeasureFunction _measureFunction;
         private CSSMeasureFunc _measureFunc;
@@ -155,7 +155,7 @@ namespace Facebook.CSSLayout
             get
             {
                 AssertNativeInstance();
-                return _parent;
+                return _parent != null ? _parent.Target as CSSNode : null;
             }
         }
 
@@ -632,7 +632,7 @@ namespace Facebook.CSSLayout
         {
             AssertNativeInstance();
             _children.Insert(index, node);
-            node._parent = this;
+            node._parent = new WeakReference(this);
             Native.CSSNodeInsertChild(_cssNode, node._cssNode, (uint)index);
         }
 
