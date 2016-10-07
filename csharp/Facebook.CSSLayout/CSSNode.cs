@@ -18,7 +18,6 @@ namespace Facebook.CSSLayout
     {
         private bool _isDisposed;
         private IntPtr _cssNode;
-        private IntPtr _context;
 
         private CSSNode _parent;
         private List<CSSNode> _children;
@@ -83,9 +82,7 @@ namespace Facebook.CSSLayout
             if (_cssNode != IntPtr.Zero)
             {
                 Native.CSSNodeFree(_cssNode);
-                GCHandle.FromIntPtr(_context).Free();
                 _cssNode = IntPtr.Zero;
-                _context = IntPtr.Zero;
             }
         }
 
@@ -97,8 +94,6 @@ namespace Facebook.CSSLayout
             }
 
             _cssNode = Native.CSSNodeNew();
-            _context = (IntPtr)GCHandle.Alloc(this);
-            Native.CSSNodeSetContext(_cssNode, _context);
             _children = new List<CSSNode>(4);
             Native.CSSNodeSetPrintFunc(_cssNode, _printFunc);
         }
