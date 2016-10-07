@@ -8,6 +8,7 @@
  */
 
 using NUnit.Framework;
+using System;
 
 /**
  * Tests for {@link CSSNode}.
@@ -87,16 +88,53 @@ namespace Facebook.CSSLayout
         [Test]
         public void TestDispose()
         {
+            ForceGC();
+            Assert.AreEqual(0, CSSNode.GetInstanceCount());
             CSSNode node = new CSSNode();
+            Assert.AreEqual(0, CSSNode.GetInstanceCount());
             node.Initialize();
+            Assert.AreEqual(1, CSSNode.GetInstanceCount());
             node.Dispose();
+            Assert.AreEqual(0, CSSNode.GetInstanceCount());
+        }
+
+        [Test]
+        public void TestDisposeWithUsing()
+        {
+            ForceGC();
+            Assert.AreEqual(0, CSSNode.GetInstanceCount());
+            using (CSSNode node = new CSSNode())
+            {
+                Assert.AreEqual(0, CSSNode.GetInstanceCount());
+                node.Initialize();
+                Assert.AreEqual(1, CSSNode.GetInstanceCount());
+            }
+            Assert.AreEqual(0, CSSNode.GetInstanceCount());
         }
 
         [Test]
         public void TestDestructor()
         {
+            ForceGC();
+            Assert.AreEqual(0, CSSNode.GetInstanceCount());
+            TestDestructorFunc();
+            ForceGC();
+            Assert.AreEqual(0, CSSNode.GetInstanceCount());
+        }
+
+        private void TestDestructorFunc()
+        {
             CSSNode node = new CSSNode();
+            Assert.AreEqual(0, CSSNode.GetInstanceCount());
             node.Initialize();
+            Assert.AreEqual(1, CSSNode.GetInstanceCount());
+            node = null;
+        }
+
+        private void ForceGC()
+        {
+            GC.Collect(GC.MaxGeneration);
+            GC.WaitForPendingFinalizers();
         }
     }
 }

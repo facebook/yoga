@@ -30,6 +30,9 @@ namespace Facebook.CSSLayout
         public static extern void CSSNodeFree(IntPtr cssNode);
 
         [DllImport(DllName)]
+        public static extern int CSSNodeGetInstanceCount();
+
+        [DllImport(DllName)]
         public static extern void CSSNodeInsertChild(IntPtr node, IntPtr child, uint index);
 
         [DllImport(DllName)]

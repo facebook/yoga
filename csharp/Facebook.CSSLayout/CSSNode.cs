@@ -711,5 +711,10 @@ namespace Facebook.CSSLayout
         {
             return ((IEnumerable<CSSNode>)_children).GetEnumerator();
         }
+
+        public static int GetInstanceCount()
+        {
+            return Native.CSSNodeGetInstanceCount();
+        }
     }
 }
