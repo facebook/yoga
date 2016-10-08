@@ -35,8 +35,8 @@ cxx_library(
     '-Wno-unused-parameter',
     '-std=c++11',
   ],
-  deps = [
+  deps = JNI_DEPS + [
     ':ndklog',
   ],
-  visibility = [CSSLAYOUT_ROOT],
+  visibility = ['PUBLIC'],
 )

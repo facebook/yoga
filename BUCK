@@ -43,9 +43,8 @@ cxx_library(
   srcs = glob(['java/jni/*.cpp']),
   header_namespace = '',
   compiler_flags = JNI_COMPILER_FLAGS,
-  deps = [
+  deps = JNI_DEPS + [
     ':CSSLayout',
-    css_layout_dep('lib/fb:fbjni'),
   ],
   visibility = ['PUBLIC'],
 )
