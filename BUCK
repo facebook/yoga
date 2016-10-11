@@ -49,18 +49,6 @@ cxx_library(
   visibility = ['PUBLIC'],
 )
 
-cxx_binary(
-  name = 'benchmark',
-  srcs = glob(['benchmarks/*.c']),
-  headers = subdir_glob([('', 'benchmarks/*.h')]),
-  header_namespace = '',
-  compiler_flags = COMPILER_FLAGS,
-  deps = [
-    ':CSSLayout',
-  ],
-  visibility = ['PUBLIC'],
-)
-
 cxx_test(
   name = 'CSSLayout_tests',
   contacts = ['emilsj@fb.com'],

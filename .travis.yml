@@ -19,6 +19,6 @@ before_install:
 script:
   - buck test //:CSSLayout
   - buck test //:CSSLayout_java
-  - buck run  //:benchmark
+  - buck run  //benchmark:benchmark
   - git checkout HEAD^
-  - buck run  //:benchmark
+  - buck run  //benchmark:benchmark

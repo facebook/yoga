@@ -9,6 +9,9 @@ GTEST_TARGET = '//lib/gtest:gtest'
 GTEST_DL_URL = 'https://github.com/google/googletest/archive/release-1.7.0.zip'
 JNI_DEPS = ['//lib/fb:fbjni']
 
+def csslayout_dep(dep):
+  return '//' + dep
+
 class allow_unsafe_import:
     def __enter__(self):
         pass
