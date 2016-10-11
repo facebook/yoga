@@ -61,19 +61,6 @@ cxx_binary(
   visibility = ['PUBLIC'],
 )
 
-cxx_library(
-  name = 'CSSLayoutTestUtils',
-  srcs = glob(['tests/CSSLayoutTestUtils/*.c']),
-  xcode_public_headers_symlinks = True,
-  exported_headers = subdir_glob([('tests', 'CSSLayoutTestUtils/*.h')]),
-  header_namespace = '',
-  compiler_flags = COMPILER_FLAGS,
-  deps = [
-    ':CSSLayout',
-  ],
-  visibility = ['PUBLIC'],
-)
-
 cxx_test(
   name = 'CSSLayout_tests',
   contacts = ['emilsj@fb.com'],
@@ -81,7 +68,6 @@ cxx_test(
   compiler_flags = TEST_COMPILER_FLAGS,
   deps = [
     ':CSSLayout',
-    ':CSSLayoutTestUtils',
     GTEST_TARGET,
   ],
   visibility = ['PUBLIC'],
