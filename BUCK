@@ -21,7 +21,6 @@ GMOCK_OVERRIDE_FLAGS = [
 ]
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c11']
-JNI_COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c++11']
 TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ['-std=c++11']
 
 cxx_library(
@@ -36,18 +35,6 @@ cxx_library(
   visibility = ['PUBLIC'],
 )
 
-cxx_library(
-  name = 'CSSLayout_jni',
-  soname = 'libcsslayout.$(ext)',
-  srcs = glob(['java/jni/*.cpp']),
-  header_namespace = '',
-  compiler_flags = JNI_COMPILER_FLAGS,
-  deps = JNI_DEPS + [
-    ':CSSLayout',
-  ],
-  visibility = ['PUBLIC'],
-)
-
 cxx_test(
   name = 'CSSLayout_tests',
   contacts = ['emilsj@fb.com'],
@@ -56,22 +43,6 @@ cxx_test(
   deps = [
     ':CSSLayout',
     GTEST_TARGET,
-  ],
-  visibility = ['PUBLIC'],
-)
-
-java_library(
-  name = 'CSSLayout_java',
-  srcs = glob(['java/com/facebook/csslayout/*.java']),
-  tests=[':CSSLayout_java_tests'],
-  source = '1.7',
-  target = '1.7',
-  deps = [
-    ':CSSLayout_jni',
-    INFER_ANNOTATIONS_TARGET,
-    JSR_305_TARGET,
-    PROGRUARD_ANNOTATIONS_TARGET,
-    SOLOADER_TARGET,
   ],
   visibility = ['PUBLIC'],
 )
