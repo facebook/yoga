@@ -1,0 +1,18 @@
+# Copyright (c) 2014-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+
+include_defs('//CSSLAYOUT_DEFS')
+
+apple_library(
+  name = 'CSSLayout',
+  srcs = glob(['*.m']),
+  exported_headers = glob(['*.h']),
+  deps = [
+    csslayout_dep(':CSSLayout'),
+  ],
+  visibility = ['PUBLIC'],
+)
