@@ -75,12 +75,3 @@ java_library(
   ],
   visibility = ['PUBLIC'],
 )
-
-java_test(
-  name = 'CSSLayout_java_tests',
-  srcs = glob(['tests/java/**/*.java']),
-  deps = [
-    ':CSSLayout_java',
-    JUNIT_TARGET,
-  ],
-)
