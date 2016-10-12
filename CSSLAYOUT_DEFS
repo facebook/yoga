@@ -9,6 +9,11 @@ GTEST_TARGET = '//lib/gtest:gtest'
 GTEST_DL_URL = 'https://github.com/google/googletest/archive/release-1.7.0.zip'
 JNI_DEPS = ['//lib/fb:fbjni']
 
+CXX_LIBRARY_WHITELIST = [
+  '//lib/fb:fbjni',
+  '//java:jni',
+]
+
 def csslayout_dep(dep):
   return '//' + dep
 

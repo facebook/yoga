@@ -43,3 +43,14 @@ java_library(
   ],
   visibility = ['PUBLIC'],
 )
+
+java_test(
+  name = 'tests',
+  srcs = glob(['tests/**/*.java']),
+  deps = [
+    ':java',
+    JUNIT_TARGET,
+  ],
+  use_cxx_libraries = True,
+  cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
+)
