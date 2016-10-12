@@ -428,6 +428,7 @@ namespace Facebook.CSSLayout
         public void SetPosition(CSSEdge edge, float position)
         {
             AssertNativeInstance();
+            Native.CSSNodeStyleSetPosition(_cssNode, edge, position);
         }
 
         public float StyleWidth
