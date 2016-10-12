@@ -168,7 +168,7 @@ CSS_NODE_JNI_LAYOUT_PROP(jint, CSSDirection, Direction);
 
 jint JNI_OnLoad(JavaVM *vm, void *) {
   return initialize(vm, [] {
-    registerNatives("com/facebook/csslayout/CSSNodeJNI",
+    registerNatives("com/facebook/csslayout/CSSNode",
                     {
                         CSSMakeNativeMethod(jni_CSSNodeNew),
                         CSSMakeNativeMethod(jni_CSSNodeFree),
