@@ -19,7 +19,6 @@ prebuilt_cxx_library(
 cxx_library(
   name = 'fbjni',
   srcs = glob(['**/*.cpp']),
-  xcode_public_headers_symlinks = True,
   exported_headers = subdir_glob([('include', '**/*.h')]),
   header_namespace = '',
   compiler_flags = [
