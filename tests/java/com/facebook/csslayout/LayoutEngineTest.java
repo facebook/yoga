@@ -23,7 +23,7 @@ import static com.facebook.csslayout.CSSLayout.DIMENSION_HEIGHT;
 public class LayoutEngineTest {
 
   private static final CSSNodeAPI.MeasureFunction sTestMeasureFunction =
-      new CSSNode.MeasureFunction() {
+      new CSSNodeDEPRECATED.MeasureFunction() {
 
     @Override
     public void measure(CSSNodeAPI node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode, MeasureOutput measureOutput) {
@@ -72,7 +72,7 @@ public class LayoutEngineTest {
     }
   };
 
-  private static class TestCSSNode extends CSSNode {
+  private static class TestCSSNode extends CSSNodeDEPRECATED {
 
     public String context = null;
 
@@ -81,7 +81,7 @@ public class LayoutEngineTest {
     }
   }
 
-  private static void test(String message, CSSNode style, CSSNode expectedLayout) {
+  private static void test(String message, CSSNodeDEPRECATED style, CSSNodeDEPRECATED expectedLayout) {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
     style.calculateLayout(layoutContext);
     assertLayoutsEqual(message, style, expectedLayout);
@@ -93,13 +93,13 @@ public class LayoutEngineTest {
     }
   }
 
-  private static void assertLayoutsEqual(String message, CSSNode actual, CSSNode expected) {
+  private static void assertLayoutsEqual(String message, CSSNodeDEPRECATED actual, CSSNodeDEPRECATED expected) {
     Assert.assertTrue(
         message + "\nActual:\n" + actual.toString() + "\nExpected:\n" + expected.toString(),
         areLayoutsEqual(actual, expected));
   }
 
-  private static boolean areLayoutsEqual(CSSNode a, CSSNode b) {
+  private static boolean areLayoutsEqual(CSSNodeDEPRECATED a, CSSNodeDEPRECATED b) {
     boolean doNodesHaveSameLayout =
         areFloatsEqual(a.layout.position[POSITION_LEFT], b.layout.position[POSITION_LEFT]) &&
         areFloatsEqual(a.layout.position[POSITION_TOP], b.layout.position[POSITION_TOP]) &&

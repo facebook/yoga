@@ -15,14 +15,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 /**
- * Tests for {@link CSSNode}.
+ * Tests for {@link CSSNodeDEPRECATED}.
  */
 public class CSSNodeTest {
 
   @Test
   public void testAddChildGetParent() {
-    CSSNode parent = new CSSNode();
-    CSSNode child = new CSSNode();
+    CSSNodeDEPRECATED parent = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED child = new CSSNodeDEPRECATED();
 
     assertNull(child.getParent());
     assertEquals(0, parent.getChildCount());
@@ -41,9 +41,9 @@ public class CSSNodeTest {
 
   @Test(expected = IllegalStateException.class)
   public void testCannotAddChildToMultipleParents() {
-    CSSNode parent1 = new CSSNode();
-    CSSNode parent2 = new CSSNode();
-    CSSNode child = new CSSNode();
+    CSSNodeDEPRECATED parent1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED parent2 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED child = new CSSNodeDEPRECATED();
 
     parent1.addChildAt(child, 0);
     parent2.addChildAt(child, 0);

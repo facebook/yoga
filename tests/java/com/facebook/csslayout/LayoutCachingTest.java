@@ -14,12 +14,12 @@ import org.junit.Test;
 import static junit.framework.Assert.*;
 
 /**
- * Tests for {@link LayoutEngine} and {@link CSSNode} to make sure layouts are only generated when
+ * Tests for {@link LayoutEngine} and {@link CSSNodeDEPRECATED} to make sure layouts are only generated when
  * needed.
  */
 public class LayoutCachingTest {
 
-  private void assertTreeHasNewLayout(boolean expectedHasNewLayout, CSSNode root) {
+  private void assertTreeHasNewLayout(boolean expectedHasNewLayout, CSSNodeDEPRECATED root) {
     assertEquals(expectedHasNewLayout, root.hasNewLayout());
 
     for (int i = 0; i < root.getChildCount(); i++) {
@@ -27,7 +27,7 @@ public class LayoutCachingTest {
     }
   }
 
-  private void markLayoutAppliedForTree(CSSNode root) {
+  private void markLayoutAppliedForTree(CSSNodeDEPRECATED root) {
     root.markLayoutSeen();
     for (int i = 0; i < root.getChildCount(); i++) {
       markLayoutAppliedForTree(root.getChildAt(i));
@@ -37,10 +37,10 @@ public class LayoutCachingTest {
   @Test
   public void testCachesFullTree() {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
+    CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0c0 = new CSSNodeDEPRECATED();
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
@@ -58,12 +58,12 @@ public class LayoutCachingTest {
   @Test
   public void testInvalidatesCacheWhenChildAdded() {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    CSSNode c0c1 = new CSSNode();
-    CSSNode c1c0 = new CSSNode();
+    CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1c0 = new CSSNodeDEPRECATED();
     c0c1.setStyleWidth(200);
     c0c1.setStyleHeight(200);
     root.addChildAt(c0, 0);
@@ -90,10 +90,10 @@ public class LayoutCachingTest {
   @Test
   public void testInvalidatesCacheWhenEnumPropertyChanges() {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
+    CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0c0 = new CSSNodeDEPRECATED();
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
@@ -114,10 +114,10 @@ public class LayoutCachingTest {
   @Test
   public void testInvalidatesCacheWhenFloatPropertyChanges() {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
+    CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0c0 = new CSSNodeDEPRECATED();
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
@@ -138,11 +138,11 @@ public class LayoutCachingTest {
   @Test
   public void testInvalidatesFullTreeWhenParentWidthChanges() {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
-    CSSNode c1c0 = new CSSNode();
+    CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1c0 = new CSSNodeDEPRECATED();
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
@@ -165,10 +165,10 @@ public class LayoutCachingTest {
   @Test
   public void testDoesNotInvalidateCacheWhenPropertyIsTheSame() {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
+    CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0c0 = new CSSNodeDEPRECATED();
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);
@@ -188,10 +188,10 @@ public class LayoutCachingTest {
   @Test
   public void testInvalidateCacheWhenHeightChangesPosition() {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c1c0 = new CSSNode();
+    CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1c0 = new CSSNodeDEPRECATED();
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c1.addChildAt(c1c0, 0);
@@ -211,10 +211,10 @@ public class LayoutCachingTest {
   @Test
   public void testInvalidatesOnNewMeasureFunction() {
     CSSLayoutContext layoutContext = new CSSLayoutContext();
-    CSSNode root = new CSSNode();
-    CSSNode c0 = new CSSNode();
-    CSSNode c1 = new CSSNode();
-    CSSNode c0c0 = new CSSNode();
+    CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c1 = new CSSNodeDEPRECATED();
+    CSSNodeDEPRECATED c0c0 = new CSSNodeDEPRECATED();
     root.addChildAt(c0, 0);
     root.addChildAt(c1, 1);
     c0.addChildAt(c0c0, 0);

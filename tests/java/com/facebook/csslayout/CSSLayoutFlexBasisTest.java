@@ -17,19 +17,19 @@ public class CSSLayoutFlexBasisTest {
 
   @Test
   public void testFlexBasis() {
-    final CSSNode root = new CSSNode();
+    final CSSNodeDEPRECATED root = new CSSNodeDEPRECATED();
     root.setFlexDirection(CSSFlexDirection.ROW);
     root.setStyleWidth(300);
     root.setStyleHeight(100);
 
-    final CSSNode root_child0 = new CSSNode();
+    final CSSNodeDEPRECATED root_child0 = new CSSNodeDEPRECATED();
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(100);
     root_child0.setStyleWidth(200);
     root_child0.setStyleHeight(100);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child1 = new CSSNode();
+    final CSSNodeDEPRECATED root_child1 = new CSSNodeDEPRECATED();
     root_child1.setFlexGrow(1);
     root_child1.setStyleWidth(100);
     root_child1.setStyleHeight(100);
