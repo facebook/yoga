@@ -26,7 +26,7 @@ TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ['-std=c++11'
 cxx_library(
   name = 'CSSLayout',
   srcs = glob(['CSSLayout/*.c']),
-  tests=[':CSSLayout_tests'],
+  tests=[':tests'],
   exported_headers = subdir_glob([('', 'CSSLayout/*.h')]),
   header_namespace = '',
   force_static = True,
@@ -36,7 +36,7 @@ cxx_library(
 )
 
 cxx_test(
-  name = 'CSSLayout_tests',
+  name = 'tests',
   contacts = ['emilsj@fb.com'],
   srcs = glob(['tests/*.cpp']),
   compiler_flags = TEST_COMPILER_FLAGS,
