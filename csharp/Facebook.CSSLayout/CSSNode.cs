@@ -30,6 +30,7 @@ namespace Facebook.CSSLayout
         {
             _measureFunc = MeasureInternal;
             _printFunc = PrintInternal;
+            Reinitialize();
         }
 
         private void AssertNativeInstance()
@@ -72,8 +73,27 @@ namespace Facebook.CSSLayout
 
         private void FreeManaged()
         {
-            _children = null;
-            _parent = null;
+            if (_children != null)
+            {
+                for (int i = 0; i < _children.Count; ++i)
+                {
+                    var child = _children[i];
+                    child.AssertNativeInstance();
+                    child._parent = null;
+                    Native.CSSNodeRemoveChild(_cssNode, child._cssNode);
+                }
+                _children = null;
+            }
+
+            if (_parent != null)
+            {
+                var parent = _parent.Target as CSSNode;
+                parent.AssertNativeInstance();
+                parent._children.Remove(this);
+                Native.CSSNodeRemoveChild(parent._cssNode, _cssNode);
+                _parent = null;
+            }
+
             _measureFunction = null;
         }
 
@@ -86,7 +106,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public void Initialize()
+        public void Reinitialize()
         {
             if (_cssNode != IntPtr.Zero)
             {
@@ -99,9 +119,13 @@ namespace Facebook.CSSLayout
             Native.CSSNodeSetPrintFunc(_cssNode, _printFunc);
         }
 
-        public void Reset()
+        public void Free()
         {
             AssertNativeInstance();
+            if (_parent != null || (_children != null && _children.Count > 0))
+            {
+                throw new InvalidOperationException("You should not free an attached CSSNode");
+            }
             FreeManaged();
             FreeUnmanaged();
         }

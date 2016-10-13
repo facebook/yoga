@@ -77,7 +77,6 @@ root.setStyleHeight(100);
 
 for (int i = 0; i < 10; i++) {
   CSSNode child = new CSSNode();
-  child.init();
   child.setStyleHeight(10);
   root.addChildAt(child, 0);
 }
@@ -116,14 +115,12 @@ The full API can be found in `csharp/Facebook.CSSLayout/CSSNode.cs`.
 
 ```csharp
 var root = new CSSNode();
-root.Initialize();
 root.StyleWidth = 100;
 root.StyleHeight = 100;
 
 for (var i = 0; i < 10; i++)
 {
   var child = new CSSNode();
-  child.Initialize();
   child.StyleHeight = 10;
   root.Insert(0, child);
 }
