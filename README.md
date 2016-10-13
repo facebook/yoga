@@ -72,7 +72,6 @@ The full API can be found in `java/com/facebook/csslayout/CSSNode.java`.
 
 ```java
 CSSNode root = new CSSNode();
-root.init();
 root.setStyleWidth(100);
 root.setStyleHeight(100);
 
@@ -90,6 +89,26 @@ root.getLayoutX();
 root.getLayoutY();
 root.getLayoutWidth();
 root.getLayoutHeight();
+```
+
+### UIKit
+The full API can be found in `uikit/CSSLayout/UIView+CSSLayout.h`.
+
+```objective-c
+UIView *root = [UIView new];
+[root css_setUsesFlexbox:YES];
+[root css_setWidth:100];
+[root css_setHeight:100];
+
+for (NSUInteger i = 0; i < 10; i++) {
+  UIView *child = [UIView new];
+  [child css_setUsesFlexbox:YES];
+  [child css_setHeight:10];
+  [root addSubview:child];
+}
+
+// Resulting layout will be set on the UIView hierarchy frames.
+[root css_applyLayout];
 ```
 
 ### .NET
@@ -117,7 +136,7 @@ root.LayoutHeight;
 ```
 
 ## Contributing
-To contribute to CSSLayout you need to first install [buck](https://buckbuild.com) which is the build system used by CSSLayout. CSSLayout is implemented in C with language bindings for Java and .NET. When making changes to `CSSLayout/CSSLayout.h` please ensure to update `java/jni/CSSJNI.h`, `java/com/facebook/csslayout/CSSNode.java` and `csharp/Facebook.CSSLayout/CSSNode.cs` to reflect the API change. Before submitting any code please run `format.sh` to ensure the code matches the project's code style.
+To contribute to CSSLayout you need to first install [buck](https://buckbuild.com) which is the build system used by CSSLayout. CSSLayout is implemented in C with language bindings for Java, Objective-C, and .NET. When making changes to `CSSLayout/CSSLayout.h` please ensure to update `java/jni/CSSJNI.h`, `java/com/facebook/csslayout/CSSNode.java`, `uikit/CSSLayout/UIView+CSSLayout.m`, and `csharp/Facebook.CSSLayout/CSSNode.cs` to reflect the API change. Before submitting any code please run `format.sh` to ensure the code matches the project's code style.
 
 Before making any larger changes to CSSLayout please open an issue with a RFC so the changes can be discussed first. Generally we are very open to changes and improvements that will benefit the community.
 
@@ -135,4 +154,4 @@ Instead of manually writing a test which ensures parity with web implementations
 Once saving and exiting the editor window the script will open a browser window. From here open the developer console and you should see that the web page has output a test file. Copy this into a file and save it in the `tests` folder. Re-run `buck test //:CSSLayout` to validate the behavior. One test case will be generated for every root `div` in the input html.
 
 ### Benchmarks
-Benchmarks are located in `benchmarks/CSSBenchmark.c` and can be run with `buck run //:benchmark`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed.
+Benchmarks are located in `benchmarks/CSSBenchmark.c` and can be run with `buck run //benchmarks:benchmarks`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed.
