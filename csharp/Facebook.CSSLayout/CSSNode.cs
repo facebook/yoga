@@ -22,14 +22,10 @@ namespace Facebook.CSSLayout
         private WeakReference _parent;
         private List<CSSNode> _children;
         private MeasureFunction _measureFunction;
-        private CSSMeasureFunc _measureFunc;
-        private CSSPrintFunc _printFunc;
         private object _data;
 
         public CSSNode()
         {
-            _measureFunc = MeasureInternal;
-            _printFunc = PrintInternal;
             Reinitialize();
         }
 
@@ -116,7 +112,7 @@ namespace Facebook.CSSLayout
             CSSAssert.Initialize();
             _cssNode = Native.CSSNodeNew();
             _children = new List<CSSNode>(4);
-            Native.CSSNodeSetPrintFunc(_cssNode, _printFunc);
+            Native.CSSNodeSetPrintFunc(_cssNode, PrintInternal);
         }
 
         public void Free()
@@ -681,32 +677,13 @@ namespace Facebook.CSSLayout
         {
             AssertNativeInstance();
             _measureFunction = measureFunction;
-            Native.CSSNodeSetMeasureFunc(_cssNode, measureFunction != null ? _measureFunc : null);
+            Native.CSSNodeSetMeasureFunc(_cssNode, measureFunction != null ? MeasureInternal : (CSSMeasureFunc)null);
         }
 
         public void CalculateLayout()
         {
             AssertNativeInstance();
             Native.CSSNodeCalculateLayout(_cssNode, CSSConstants.Undefined, CSSConstants.Undefined, Native.CSSNodeStyleGetDirection(_cssNode));
-        }
-
-        public long Measure(CSSNode node, float width, CSSMeasureMode widthMode, float height, CSSMeasureMode heightMode)
-        {
-            if (_measureFunction == null)
-            {
-                throw new InvalidOperationException(@"Measure function is not defined.");
-            }
-
-            var output = new MeasureOutput();
-
-            _measureFunction(this,
-                width,
-                widthMode,
-                height,
-                heightMode,
-                output);
-
-            return ((long)output.Width) << 32 | ((long)output.Height);
         }
 
         private CSSSize MeasureInternal(
@@ -716,11 +693,15 @@ namespace Facebook.CSSLayout
             float height,
             CSSMeasureMode heightMode)
         {
-            var measureResult = Measure(this, width, widthMode, height, heightMode);
-            var measuredWidth = 0xFFFFFFFF & (measureResult >> 32);
-            var measuredHeight = 0xFFFFFFFF & measureResult;
+            if (_measureFunction == null)
+            {
+                throw new InvalidOperationException("Measure function is not defined.");
+            }
 
-            return new CSSSize { width = measuredWidth, height = measuredHeight };
+            var measureResult = new MeasureOutput();
+            _measureFunction(this, width, widthMode, height, heightMode, measureResult);
+
+            return new CSSSize { width = measureResult.Width, height = measureResult.Height };
         }
 
         private void PrintInternal(IntPtr context)

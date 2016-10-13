@@ -241,6 +241,19 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(0, parent.IndexOf(child1));
         }
 
+        [Test]
+        public void TestMeasureFunc()
+        {
+            CSSNode node = new CSSNode();
+            node.SetMeasureFunction((_, width, widthMode, height, heightMode, measureResult) => {
+                measureResult.Width = 100;
+                measureResult.Height = 150;
+            });
+            node.CalculateLayout();
+            Assert.AreEqual(100, (int)node.LayoutWidth);
+            Assert.AreEqual(150, (int)node.LayoutHeight);
+        }
+
         private void ForceGC()
         {
             GC.Collect(GC.MaxGeneration);
