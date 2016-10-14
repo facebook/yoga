@@ -11,25 +11,6 @@
 
 #import <objc/runtime.h>
 
-static CSSSize _measure(
-  void *context,
-  float width,
-  CSSMeasureMode widthMode,
-  float height,
-  CSSMeasureMode heightMode)
-{
-  UIView *view = (__bridge UIView*) context;
-  CGSize sizeThatFits = [view sizeThatFits:(CGSize) {
-    .width = widthMode == CSSMeasureModeUndefined ? CGFLOAT_MAX : width,
-    .height = heightMode == CSSMeasureModeUndefined ? CGFLOAT_MAX : height,
-  }];
-
-  return (CSSSize) {
-    .width = widthMode == CSSMeasureModeExactly ? width : sizeThatFits.width,
-    .height = heightMode == CSSMeasureModeExactly ? height : sizeThatFits.height,
-  };
-}
-
 static void _attachNodesRecursive(UIView *view);
 static void _updateFrameRecursive(UIView *view);
 
@@ -221,6 +202,37 @@ static void _updateFrameRecursive(UIView *view);
     CSSNodeStyleGetDirection(node));
 
   _updateFrameRecursive(self);
+}
+
+#pragma mark - Private
+
+static CSSSize _measure(
+  void *context,
+  float width,
+  CSSMeasureMode widthMode,
+  float height,
+  CSSMeasureMode heightMode)
+{
+  const BOOL useExactWidth = (widthMode == CSSMeasureModeExactly);
+  const BOOL useExactHeight = (heightMode == CSSMeasureModeExactly);
+
+  if (useExactHeight && useExactWidth) {
+      return (CSSSize) {
+          .width = width,
+          .height = height,
+      };
+  }
+
+  UIView *view = (__bridge UIView*) context;
+  const CGSize sizeThatFits = [view sizeThatFits:(CGSize) {
+    .width = widthMode == CSSMeasureModeUndefined ? CGFLOAT_MAX : width,
+    .height = heightMode == CSSMeasureModeUndefined ? CGFLOAT_MAX : height,
+  }];
+
+  return (CSSSize) {
+    .width = useExactWidth ? width : sizeThatFits.width,
+    .height = useExactHeight ? height : sizeThatFits.height,
+  };
 }
 
 @end
