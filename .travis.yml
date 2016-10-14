@@ -19,6 +19,7 @@ before_install:
 script:
   - buck test //:CSSLayout
   - buck test //java:java
+  - buck test //uikit/CSSLayout:CSSLayout
   - buck run  //benchmark:benchmark
   - git checkout HEAD^
   - buck run  //benchmark:benchmark
