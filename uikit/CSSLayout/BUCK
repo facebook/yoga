@@ -9,10 +9,29 @@ include_defs('//CSSLAYOUT_DEFS')
 
 apple_library(
   name = 'CSSLayout',
+  tests = [':CSSLayoutTests'],
   srcs = glob(['*.m']),
   exported_headers = glob(['*.h']),
+  frameworks = [
+    '$SDKROOT/System/Library/Frameworks/Foundation.framework',
+    '$SDKROOT/System/Library/Frameworks/UIKit.framework',
+  ],
   deps = [
     csslayout_dep(':CSSLayout'),
+  ],
+  visibility = ['PUBLIC'],
+)
+
+apple_test(
+  name = 'CSSLayoutTests',
+  info_plist = 'Tests/Info.plist',
+  srcs = glob(['Tests/**/*.m']),
+  frameworks = [
+    '$SDKROOT/System/Library/Frameworks/CoreGraphics.framework',
+    '$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework',
+  ],
+  deps = [
+    ':CSSLayout',
   ],
   visibility = ['PUBLIC'],
 )
