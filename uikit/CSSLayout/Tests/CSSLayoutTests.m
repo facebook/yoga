@@ -16,11 +16,24 @@
 
 @implementation CSSLayoutTests
 
-- (void)testSmoke
+- (void)testHiddenViewsAreNotMeasured
 {
+  const CGSize firstSize = CGSizeMake(100, 100);
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
   [view css_setUsesFlexbox:YES];
-  XCTAssertTrue([view css_usesFlexbox]);
+  [view css_setWidth:firstSize.width];
+  [view css_setHeight:firstSize.height];
+
+  [view css_applyLayout];
+  XCTAssertTrue(CGSizeEqualToSize(firstSize, view.frame.size));
+
+  const CGSize newSize = CGSizeMake(200, 200);
+  [view css_setWidth:newSize.width];
+  [view css_setHeight:newSize.height];
+  view.hidden = YES;
+
+  [view css_applyLayout];
+  XCTAssertFalse(CGSizeEqualToSize(newSize, view.frame.size));
 }
 
 @end

@@ -226,6 +226,10 @@ static void _updateFrameRecursive(UIView *view);
 @end
 
 static void _attachNodesRecursive(UIView *view) {
+  if (view.isHidden) {
+    return;
+  }
+
   CSSNodeRef node = [view cssNode];
   const BOOL usesFlexbox = [view css_usesFlexbox];
   const BOOL isLeaf = !usesFlexbox || view.subviews.count == 0;
@@ -258,6 +262,10 @@ static void _attachNodesRecursive(UIView *view) {
 }
 
 static void _updateFrameRecursive(UIView *view) {
+  if (view.isHidden) {
+    return;
+  }
+
   CSSNodeRef node = [view cssNode];
   const BOOL usesFlexbox = [view css_usesFlexbox];
   const BOOL isLeaf = !usesFlexbox || view.subviews.count == 0;
