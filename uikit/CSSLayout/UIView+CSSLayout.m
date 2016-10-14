@@ -30,7 +30,6 @@ static void _updateFrameRecursive(UIView *view);
 
 - (void)dealloc
 {
-  [super dealloc];
   CSSNodeFree(_cnode);
 }
 @end

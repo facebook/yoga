@@ -16,6 +16,36 @@
 
 @implementation CSSLayoutTests
 
+- (void)testNodesAreDeallocedWithSingleView
+{
+  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  [view css_setFlex:1];
+  XCTAssertEqual(1, CSSNodeGetInstanceCount());
+  view = nil;
+
+  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+}
+
+- (void)testNodesAreDeallocedCascade
+{
+  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  [view css_setFlex:1];
+
+  for (int i=0; i<10; i++) {
+    UIView *subview = [[UIView alloc] initWithFrame:CGRectZero];
+    [subview css_setFlex:1];
+    [view addSubview:subview];
+  }
+  XCTAssertEqual(11, CSSNodeGetInstanceCount());
+  view = nil;
+
+  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+}
+
 - (void)testHiddenViewsAreNotMeasured
 {
   const CGSize firstSize = CGSizeMake(100, 100);
