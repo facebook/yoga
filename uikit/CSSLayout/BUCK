@@ -9,33 +9,34 @@ include_defs('//CSSLAYOUT_DEFS')
 
 UIKIT_CSSLAYOUT_COMPILER_FLAGS = ['-fobjc-arc']
 
-apple_library(
-  name = 'CSSLayout',
-  compiler_flags = UIKIT_CSSLAYOUT_COMPILER_FLAGS,
-  tests = [':CSSLayoutTests'],
-  srcs = glob(['*.m']),
-  exported_headers = glob(['*.h']),
-  frameworks = [
-    '$SDKROOT/System/Library/Frameworks/Foundation.framework',
-    '$SDKROOT/System/Library/Frameworks/UIKit.framework',
-  ],
-  deps = [
-    csslayout_dep(':CSSLayout'),
-  ],
-  visibility = ['PUBLIC'],
-)
+if THIS_IS_FBOBJC:
+  apple_library(
+    name = 'CSSLayout',
+    compiler_flags = UIKIT_CSSLAYOUT_COMPILER_FLAGS,
+    tests = [':CSSLayoutTests'],
+    srcs = glob(['*.m']),
+    exported_headers = glob(['*.h']),
+    frameworks = [
+      '$SDKROOT/System/Library/Frameworks/Foundation.framework',
+      '$SDKROOT/System/Library/Frameworks/UIKit.framework',
+    ],
+    deps = [
+      csslayout_dep(':CSSLayout'),
+    ],
+    visibility = ['PUBLIC'],
+   )
 
-apple_test(
-  name = 'CSSLayoutTests',
-  compiler_flags = UIKIT_CSSLAYOUT_COMPILER_FLAGS,
-  info_plist = 'Tests/Info.plist',
-  srcs = glob(['Tests/**/*.m']),
-  frameworks = [
-    '$SDKROOT/System/Library/Frameworks/CoreGraphics.framework',
-    '$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework',
-  ],
-  deps = [
-    ':CSSLayout',
-  ],
-  visibility = ['PUBLIC'],
-)
+  apple_test(
+    name = 'CSSLayoutTests',
+    compiler_flags = UIKIT_CSSLAYOUT_COMPILER_FLAGS,
+    info_plist = 'Tests/Info.plist',
+    srcs = glob(['Tests/**/*.m']),
+    frameworks = [
+      '$SDKROOT/System/Library/Frameworks/CoreGraphics.framework',
+      '$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework',
+    ],
+    deps = [
+      ':CSSLayout',
+    ],
+    visibility = ['PUBLIC'],
+  )
