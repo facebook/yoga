@@ -479,7 +479,7 @@ function getCSSLayoutStyle(node) {
     'min-height',
     'max-height',
   ].reduce(function(map, key) {
-    map[key] = getComputedStyle(node, null).getPropertyValue(key);
+    map[key] = node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
     return map;
   }, {});
 }
