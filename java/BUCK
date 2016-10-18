@@ -51,6 +51,9 @@ java_test(
     ':java',
     JUNIT_TARGET,
   ],
+  vm_args = [
+    '-Duses_native_libraries',
+  ],
   use_cxx_libraries = True,
   cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
 )
