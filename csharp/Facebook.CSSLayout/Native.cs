@@ -21,6 +21,9 @@ namespace Facebook.CSSLayout
 #endif
 
         [DllImport(DllName)]
+        public static extern void CSSInteropSetLogger(CSSLogger.Func func);
+
+        [DllImport(DllName)]
         public static extern void CSSAssertSetFailFunc(CSSAssert.FailFunc func);
 
         [DllImport(DllName)]
@@ -80,12 +83,6 @@ namespace Facebook.CSSLayout
 
         [DllImport(DllName)]
         public static extern CSSMeasureFunc CSSNodeGetMeasureFunc(IntPtr node);
-
-        [DllImport(DllName)]
-        public static extern void CSSNodeSetPrintFunc(IntPtr node, CSSPrintFunc printFunc);
-
-        [DllImport(DllName)]
-        public static extern CSSPrintFunc CSSNodeGePrintFunc(IntPtr node);
 
         [DllImport(DllName)]
         public static extern void CSSNodeSetIsTextnode(IntPtr node, [MarshalAs(UnmanagedType.I1)] bool isTextNode);

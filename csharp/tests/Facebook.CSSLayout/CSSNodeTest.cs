@@ -178,6 +178,24 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(150, (int)node.LayoutHeight);
         }
 
+        [Test]
+        public void TestPrint()
+        {
+            CSSNode parent = new CSSNode();
+            parent.StyleWidth = 100;
+            parent.StyleHeight = 120;
+            CSSNode child0 = new CSSNode();
+            child0.StyleWidth = 30;
+            child0.StyleHeight = 40;
+            CSSNode child1 = new CSSNode();
+            child1.StyleWidth = 35;
+            child1.StyleHeight = 45;
+            parent.Insert(0, child0);
+            parent.Insert(0, child1);
+            parent.CalculateLayout();
+            Assert.AreEqual(parent.Print(), "{layout: {width: 100, height: 120, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 100, height: 120, children: [\n  {layout: {width: 35, height: 45, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 35, height: 45, },\n  {layout: {width: 30, height: 40, top: 45, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 30, height: 40, },\n]},\n");
+        }
+
         private void ForceGC()
         {
             GC.Collect(GC.MaxGeneration);

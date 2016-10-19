@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -7,9 +7,14 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-using System;
+#pragma once
 
-namespace Facebook.CSSLayout
-{
-    public delegate void CSSPrintFunc(IntPtr context);
-}
+#include <CSSLayout/CSSLayout.h>
+
+CSS_EXTERN_C_BEGIN
+
+typedef void (*CSSInteropLoggerFunc)(const char *message);
+
+WIN_EXPORT void CSSInteropSetLogger(CSSInteropLoggerFunc managedFunc);
+
+CSS_EXTERN_C_END

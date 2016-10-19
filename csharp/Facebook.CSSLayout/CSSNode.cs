@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Facebook.CSSLayout
 {
@@ -110,9 +111,9 @@ namespace Facebook.CSSLayout
             }
 
             CSSAssert.Initialize();
+            CSSLogger.Initialize();
             _cssNode = Native.CSSNodeNew();
             _children = new List<CSSNode>(4);
-            Native.CSSNodeSetPrintFunc(_cssNode, PrintInternal);
         }
 
         public void Free()
@@ -704,9 +705,14 @@ namespace Facebook.CSSLayout
             return new CSSSize { width = measureResult.Width, height = measureResult.Height };
         }
 
-        private void PrintInternal(IntPtr context)
+        public string Print(CSSPrintOptions options = CSSPrintOptions.Layout|CSSPrintOptions.Style|CSSPrintOptions.Children)
         {
-            System.Diagnostics.Debug.WriteLine(ToString());
+            AssertNativeInstance();
+            StringBuilder sb = new StringBuilder();
+            CSSLogger.Logger = (message) => {sb.Append(message);};
+            Native.CSSNodePrint(_cssNode, options);
+            CSSLogger.Logger = null;
+            return sb.ToString();
         }
 
         public IEnumerator<CSSNode> GetEnumerator()

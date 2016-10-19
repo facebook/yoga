@@ -16,14 +16,16 @@ namespace Facebook.CSSLayout
         public delegate void FailFunc(string message);
 
         private static bool _assertInitialized;
+        private static FailFunc _failFunc;
 
         public static void Initialize()
         {
             if (!_assertInitialized)
             {
-                Native.CSSAssertSetFailFunc((message) => {
+                _failFunc = (message) => {
                     throw new InvalidOperationException(message);
-                });
+                };
+                Native.CSSAssertSetFailFunc(_failFunc);
                 _assertInitialized = true;
             }
         }
