@@ -2,6 +2,7 @@
 
 clang-format \
   -style="{ \
+    AlignAfterOpenBracket: Align, \
     AlignEscapedNewlinesLeft: true, \
     AlignOperands: true, \
     AllowAllParametersOfDeclarationOnNextLine: false, \
@@ -20,8 +21,9 @@ clang-format \
     KeepEmptyLinesAtTheStartOfBlocks: false, \
     Language: Cpp, \
     PenaltyBreakBeforeFirstCallParameter: 100, \
-    PenaltyBreakString: 100, \
+    PenaltyBreakString: 1000, \
     PenaltyExcessCharacter: 100, \
+    PenaltyReturnTypeOnItsOwnLine: 100, \
     PointerAlignment: Right, \
     SortIncludes: true, \
     SpaceAfterCStyleCast: true, \
