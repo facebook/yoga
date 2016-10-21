@@ -8,9 +8,11 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Facebook.CSSLayout
 {
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate CSSSize CSSMeasureFunc(
         IntPtr context, 
         float width,

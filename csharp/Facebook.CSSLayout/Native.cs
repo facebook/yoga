@@ -21,10 +21,12 @@ namespace Facebook.CSSLayout
 #endif
 
         [DllImport(DllName)]
-        public static extern void CSSInteropSetLogger(CSSLogger.Func func);
+        public static extern void CSSInteropSetLogger(
+            [MarshalAs(UnmanagedType.FunctionPtr)] CSSLogger.Func func);
 
         [DllImport(DllName)]
-        public static extern void CSSAssertSetFailFunc(CSSAssert.FailFunc func);
+        public static extern void CSSAssertSetFailFunc(
+            [MarshalAs(UnmanagedType.FunctionPtr)] CSSAssert.FailFunc func);
 
         [DllImport(DllName)]
         public static extern IntPtr CSSNodeNew();
@@ -79,9 +81,12 @@ namespace Facebook.CSSLayout
         public static extern IntPtr CSSNodeGetContext(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeSetMeasureFunc(IntPtr node, CSSMeasureFunc measureFunc);
+        public static extern void CSSNodeSetMeasureFunc(
+            IntPtr node,
+            [MarshalAs(UnmanagedType.FunctionPtr)] CSSMeasureFunc measureFunc);
 
         [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.FunctionPtr)]
         public static extern CSSMeasureFunc CSSNodeGetMeasureFunc(IntPtr node);
 
         [DllImport(DllName)]
