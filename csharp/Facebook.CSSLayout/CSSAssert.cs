@@ -8,11 +8,13 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Facebook.CSSLayout
 {
     internal static class CSSAssert
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void FailFunc(string message);
 
         private static bool _assertInitialized;

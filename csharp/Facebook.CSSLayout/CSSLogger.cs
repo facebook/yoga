@@ -8,11 +8,13 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace Facebook.CSSLayout
 {
     internal static class CSSLogger
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void Func(string message);
 
         private static bool _initialized;
