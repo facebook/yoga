@@ -40,11 +40,6 @@
  *
  */
 
-// These tests were modified after generation due to both safari and chrome not abiding
-// by the specification. The undefined dimension of a parent should be defined by the total size
-// of their children in that dimension.
-// See diagram under flex-wrap header https://www.w3.org/TR/css-flexbox-1/
-
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
