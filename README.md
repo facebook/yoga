@@ -140,7 +140,7 @@ Before making any larger changes to CSSLayout please open an issue with a RFC so
 ### Testing
 For any changes you make you should ensure that all the tests are passing. In case you make any fixes or additions to the library please also add at least one test to ensure we don't break anything in the future. Tests are located in `tests/CSSLayoutTest.cpp`. Run the tests by executing `buck test //:CSSLayout`.
 
-Instead of manually writing a test which ensures parity with web implementations of flexbox you can run `gentest/gentest.sh` to generated a test for you. After running `gentest/gentest.sh` a editor window should pop open (make sure you have `$EDITOR` env variable exported). Here you can write html which you want to verify in CSSLayout, such as the following.
+Instead of manually writing a test which ensures parity with web implementations of flexbox you can run `gentest/gentest.rb` to generated a test for you. You can write html which you want to verify in CSSLayout, in `gentest/fixtures` folder, such as the following.
 
 ```html
 <div style="width: 100px; height: 100px; align-items: center;">
@@ -148,7 +148,9 @@ Instead of manually writing a test which ensures parity with web implementations
 </div>
 ```
 
-Once saving and exiting the editor window the script will open a browser window. From here open the developer console and you should see that the web page has output a test file. Copy this into a file and save it in the `tests` folder. Re-run `buck test //:CSSLayout` to validate the behavior. One test case will be generated for every root `div` in the input html.
+Run `gentest/gentest.rb` to generate test code and re-run `buck test //:CSSLayout` to validate the behavior. One test case will be generated for every root `div` in the input html.
+
+You may need to install the latest watir-webdriver gem (`gem install watir-webdriver`) and [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) to run `gentest/gentest.rb` Ruby script.
 
 ### Benchmarks
 Benchmarks are located in `benchmarks/CSSBenchmark.c` and can be run with `buck run //benchmarks:benchmarks`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed.
