@@ -15,7 +15,7 @@ using namespace facebook::jni;
 using namespace std;
 
 static void _jniPrint(void *context) {
-  const auto obj = wrap_alias(reinterpret_cast<jobject>(context));
+  auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(context)));
   cout << obj->toString() << endl;
 }
 
@@ -24,7 +24,7 @@ static CSSSize _jniMeasureFunc(void *context,
                                CSSMeasureMode widthMode,
                                float height,
                                CSSMeasureMode heightMode) {
-  const auto obj = wrap_alias(reinterpret_cast<jobject>(context));
+  auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(context)));
   static auto measureFunc =
       obj->getClass()->getMethod<jlong(jfloat, jint, jfloat, jint)>("measure");
   const auto measureResult = measureFunc(obj, width, widthMode, height, heightMode);
@@ -34,6 +34,7 @@ static CSSSize _jniMeasureFunc(void *context,
 
   const float measuredWidth = static_cast<float>(0xFFFFFFFF & (measureResult >> 32));
   const float measuredHeight = static_cast<float>(0xFFFFFFFF & measureResult);
+
   return CSSSize{measuredWidth, measuredHeight};
 }
 
@@ -47,15 +48,14 @@ jint jni_CSSNodeGetInstanceCount(alias_ref<jclass> clazz) {
 
 jlong jni_CSSNodeNew(alias_ref<jobject> thiz) {
   const CSSNodeRef node = CSSNodeNew();
-  auto globalThiz = make_global(thiz);
-  CSSNodeSetContext(node, globalThiz.release());
+  CSSNodeSetContext(node, Environment::current()->NewWeakGlobalRef(thiz.get()));
   CSSNodeSetPrintFunc(node, _jniPrint);
   return reinterpret_cast<jlong>(node);
 }
 
 void jni_CSSNodeFree(alias_ref<jobject> thiz, jlong nativePointer) {
-  const auto globalContext =
-      adopt_global(reinterpret_cast<jobject>(CSSNodeGetContext(_jlong2CSSNodeRef(nativePointer))));
+  Environment::current()->DeleteWeakGlobalRef(
+      reinterpret_cast<jweak>(CSSNodeGetContext(_jlong2CSSNodeRef(nativePointer))));
   CSSNodeFree(_jlong2CSSNodeRef(nativePointer));
 }
 
