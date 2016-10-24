@@ -145,7 +145,10 @@ CSS_NODE_JNI_STYLE_PROP(jint, CSSAlign, AlignContent);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSPositionType, PositionType);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSWrapType, FlexWrap);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSOverflow, Overflow);
-CSS_NODE_JNI_STYLE_PROP(jfloat, float, Flex);
+
+void jni_CSSNodeStyleSetFlex(alias_ref<jobject>, jlong nativePointer, jfloat value) {
+  CSSNodeStyleSetFlex(_jlong2CSSNodeRef(nativePointer), static_cast<float>(value));
+}
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexGrow);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexShrink);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, FlexBasis);
@@ -204,7 +207,6 @@ jint JNI_OnLoad(JavaVM *vm, void *) {
                         CSSMakeNativeMethod(jni_CSSNodeStyleSetFlexWrap),
                         CSSMakeNativeMethod(jni_CSSNodeStyleGetOverflow),
                         CSSMakeNativeMethod(jni_CSSNodeStyleSetOverflow),
-                        CSSMakeNativeMethod(jni_CSSNodeStyleGetFlex),
                         CSSMakeNativeMethod(jni_CSSNodeStyleSetFlex),
                         CSSMakeNativeMethod(jni_CSSNodeStyleGetFlexGrow),
                         CSSMakeNativeMethod(jni_CSSNodeStyleSetFlexGrow),

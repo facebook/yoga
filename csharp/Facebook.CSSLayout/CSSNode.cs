@@ -310,12 +310,6 @@ namespace Facebook.CSSLayout
 
         public float Flex
         {
-            get
-            {
-                AssertNativeInstance();
-                return Native.CSSNodeStyleGetFlex(_cssNode);
-            }
-
             set
             {
                 AssertNativeInstance();

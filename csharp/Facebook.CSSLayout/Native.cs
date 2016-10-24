@@ -165,9 +165,6 @@ namespace Facebook.CSSLayout
         public static extern void CSSNodeStyleSetFlex(IntPtr node, float flex);
 
         [DllImport(DllName)]
-        public static extern float CSSNodeStyleGetFlex(IntPtr node);
-
-        [DllImport(DllName)]
         public static extern void CSSNodeStyleSetFlexGrow(IntPtr node, float flexGrow);
 
         [DllImport(DllName)]
