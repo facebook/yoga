@@ -17,7 +17,6 @@ namespace Facebook.CSSLayout
 {
     public class CSSNode : IDisposable, IEnumerable<CSSNode>
     {
-        private bool _isDisposed;
         private IntPtr _cssNode;
 
         private WeakReference _parent;
@@ -27,118 +26,38 @@ namespace Facebook.CSSLayout
 
         public CSSNode()
         {
-            Reinitialize();
-        }
+            CSSAssert.Initialize();
+            CSSLogger.Initialize();
+            _children = new List<CSSNode>(4);
 
-        private void AssertNativeInstance()
-        {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException("CSSNode");
-            }
-
+            _cssNode = Native.CSSNodeNew();
             if (_cssNode == IntPtr.Zero)
             {
-                throw new InvalidOperationException("Null native pointer");
+                throw new InvalidOperationException("Failed to allocate native memory");
             }
+
         }
 
         ~CSSNode()
         {
-            Dispose(false);
+            Native.CSSNodeFree(_cssNode);
         }
 
-        public void Dispose()
+        public void Reset()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    FreeManaged();
-                }
-
-                FreeUnmanaged();
-                _isDisposed = true;
-            }
-        }
-
-        private void FreeManaged()
-        {
-            if (_children != null)
-            {
-                for (int i = 0; i < _children.Count; ++i)
-                {
-                    var child = _children[i];
-                    child.AssertNativeInstance();
-                    child._parent = null;
-                    Native.CSSNodeRemoveChild(_cssNode, child._cssNode);
-                }
-                _children = null;
-            }
-
-            if (_parent != null)
-            {
-                var parent = _parent.Target as CSSNode;
-                parent.AssertNativeInstance();
-                parent._children.Remove(this);
-                Native.CSSNodeRemoveChild(parent._cssNode, _cssNode);
-                _parent = null;
-            }
-
-            _measureFunction = null;
-        }
-
-        private void FreeUnmanaged()
-        {
-            if (_cssNode != IntPtr.Zero)
-            {
-                Native.CSSNodeFree(_cssNode);
-                _cssNode = IntPtr.Zero;
-            }
-        }
-
-        public void Reinitialize()
-        {
-            if (_cssNode != IntPtr.Zero)
-            {
-                throw new InvalidOperationException("Allready initialized node");
-            }
-
-            CSSAssert.Initialize();
-            CSSLogger.Initialize();
-            _cssNode = Native.CSSNodeNew();
-            _children = new List<CSSNode>(4);
-        }
-
-        public void Free()
-        {
-            AssertNativeInstance();
-            if (_parent != null || (_children != null && _children.Count > 0))
-            {
-                throw new InvalidOperationException("You should not free an attached CSSNode");
-            }
-            FreeManaged();
-            FreeUnmanaged();
+            Native.CSSNodeReset(_cssNode);
         }
 
         public bool IsDirty
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeIsDirty(_cssNode);
             }
         }
 
         public virtual void MarkDirty()
         {
-            AssertNativeInstance();
             Native.CSSNodeMarkDirty(_cssNode);
         }
 
@@ -146,13 +65,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeGetIsTextnode(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeSetIsTextnode(_cssNode, value);
             }
         }
@@ -161,14 +78,12 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeGetHasNewLayout(_cssNode);
             }
         }
 
         public void MarkHasNewLayout()
         {
-            AssertNativeInstance();
             Native.CSSNodeSetHasNewLayout(_cssNode, true);
         }
 
@@ -176,7 +91,6 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return _parent != null ? _parent.Target as CSSNode : null;
             }
         }
@@ -193,12 +107,10 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetDirection(_cssNode);
             }
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetDirection(_cssNode, value);
             }
         }
@@ -207,13 +119,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetFlexDirection(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetFlexDirection(_cssNode, value);
             }
         }
@@ -222,13 +132,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetJustifyContent(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetJustifyContent(_cssNode, value);
             }
         }
@@ -237,13 +145,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetAlignItems(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetAlignItems(_cssNode, value);
             }
         }
@@ -252,13 +158,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetAlignSelf(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetAlignSelf(_cssNode, value);
             }
         }
@@ -267,13 +171,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetAlignContent(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetAlignContent(_cssNode, value);
             }
         }
@@ -282,13 +184,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetPositionType(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetPositionType(_cssNode, value);
             }
         }
@@ -297,13 +197,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetFlexWrap(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetFlexWrap(_cssNode, value);
             }
         }
@@ -312,7 +210,6 @@ namespace Facebook.CSSLayout
         {
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetFlex(_cssNode, value);
             }
         }
@@ -321,13 +218,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetFlexGrow(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetFlexGrow(_cssNode, value);
             }
         }
@@ -336,13 +231,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetFlexShrink(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetFlexShrink(_cssNode, value);
             }
         }
@@ -351,20 +244,17 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetFlexBasis(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetFlexBasis(_cssNode, value);
             }
         }
 
         public Spacing GetMargin()
         {
-            AssertNativeInstance();
 
             var margin = new Spacing();
             margin.Set(Spacing.Left, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Left));
@@ -379,13 +269,11 @@ namespace Facebook.CSSLayout
 
         public void SetMargin(CSSEdge edge, float value)
         {
-            AssertNativeInstance();
             Native.CSSNodeStyleSetMargin(_cssNode, edge, value);
         }
 
         public Spacing GetPadding()
         {
-            AssertNativeInstance();
 
             var padding = new Spacing();
             padding.Set(Spacing.Left, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Left));
@@ -400,13 +288,11 @@ namespace Facebook.CSSLayout
 
         public void SetPadding(CSSEdge edge, float padding)
         {
-            AssertNativeInstance();
             Native.CSSNodeStyleSetPadding(_cssNode, edge, padding);
         }
 
         public Spacing GetBorder()
         {
-            AssertNativeInstance();
 
             var border = new Spacing();
             border.Set(Spacing.Left, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Left));
@@ -421,13 +307,11 @@ namespace Facebook.CSSLayout
 
         public void SetBorder(CSSEdge edge, float border)
         {
-            AssertNativeInstance();
             Native.CSSNodeStyleSetBorder(_cssNode, edge, border);
         }
 
         public Spacing GetPosition()
         {
-            AssertNativeInstance();
 
             var position = new Spacing();
             position.Set(Spacing.Left, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Left));
@@ -442,7 +326,6 @@ namespace Facebook.CSSLayout
 
         public void SetPosition(CSSEdge edge, float position)
         {
-            AssertNativeInstance();
             Native.CSSNodeStyleSetPosition(_cssNode, edge, position);
         }
 
@@ -450,13 +333,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetWidth(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetWidth(_cssNode, value);
             }
         }
@@ -465,13 +346,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetHeight(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetHeight(_cssNode, value);
             }
         }
@@ -480,13 +359,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetMaxWidth(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetMaxWidth(_cssNode, value);
             }
         }
@@ -495,13 +372,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetMaxHeight(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetMaxHeight(_cssNode, value);
             }
         }
@@ -510,13 +385,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetMinWidth(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetMinWidth(_cssNode, value);
             }
         }
@@ -525,13 +398,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetMinHeight(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetMinHeight(_cssNode, value);
             }
         }
@@ -540,7 +411,6 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeLayoutGetLeft(_cssNode);
             }
         }
@@ -549,7 +419,6 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeLayoutGetTop(_cssNode);
             }
         }
@@ -558,7 +427,6 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeLayoutGetWidth(_cssNode);
             }
         }
@@ -567,7 +435,6 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeLayoutGetHeight(_cssNode);
             }
         }
@@ -576,7 +443,6 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeLayoutGetDirection(_cssNode);
             }
         }
@@ -585,13 +451,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return Native.CSSNodeStyleGetOverflow(_cssNode);
             }
 
             set
             {
-                AssertNativeInstance();
                 Native.CSSNodeStyleSetOverflow(_cssNode, value);
             }
         }
@@ -600,13 +464,11 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return _data;
             }
 
             set
             {
-                AssertNativeInstance();
                 _data = value;
             }
         }
@@ -615,7 +477,6 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return _children[index];
             }
         }
@@ -624,14 +485,12 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                AssertNativeInstance();
                 return _children.Count;
             }
         }
 
         public void MarkLayoutSeen()
         {
-            AssertNativeInstance();
             Native.CSSNodeSetHasNewLayout(_cssNode, false);
         }
 
@@ -647,7 +506,6 @@ namespace Facebook.CSSLayout
 
         public void Insert(int index, CSSNode node)
         {
-            AssertNativeInstance();
             _children.Insert(index, node);
             node._parent = new WeakReference(this);
             Native.CSSNodeInsertChild(_cssNode, node._cssNode, (uint)index);
@@ -655,7 +513,6 @@ namespace Facebook.CSSLayout
 
         public void RemoveAt(int index)
         {
-            AssertNativeInstance();
             var child = _children[index];
             child._parent = null;
             _children.RemoveAt(index);
@@ -664,20 +521,17 @@ namespace Facebook.CSSLayout
 
         public int IndexOf(CSSNode node)
         {
-            AssertNativeInstance();
             return _children.IndexOf(node);
         }
 
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
-            AssertNativeInstance();
             _measureFunction = measureFunction;
             Native.CSSNodeSetMeasureFunc(_cssNode, measureFunction != null ? MeasureInternal : (CSSMeasureFunc)null);
         }
 
         public void CalculateLayout()
         {
-            AssertNativeInstance();
             Native.CSSNodeCalculateLayout(_cssNode, CSSConstants.Undefined, CSSConstants.Undefined, Native.CSSNodeStyleGetDirection(_cssNode));
         }
 
@@ -701,7 +555,6 @@ namespace Facebook.CSSLayout
 
         public string Print(CSSPrintOptions options = CSSPrintOptions.Layout|CSSPrintOptions.Style|CSSPrintOptions.Children)
         {
-            AssertNativeInstance();
             StringBuilder sb = new StringBuilder();
             CSSLogger.Logger = (message) => {sb.Append(message);};
             Native.CSSNodePrint(_cssNode, options);

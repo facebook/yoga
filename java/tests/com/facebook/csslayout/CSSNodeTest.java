@@ -23,23 +23,6 @@ public class CSSNodeTest {
   }
 
   @Test
-  public void testFree() {
-    final int refCount = CSSNode.jni_CSSNodeGetInstanceCount();
-    final CSSNode node = new CSSNode();
-    node.free();
-    assertEquals(refCount, CSSNode.jni_CSSNodeGetInstanceCount());
-  }
-
-  @Test
-  public void testReinit() {
-    final int refCount = CSSNode.jni_CSSNodeGetInstanceCount();
-    final CSSNode node = new CSSNode();
-    node.free();
-    node.reinit();
-    assertEquals(refCount + 1, CSSNode.jni_CSSNodeGetInstanceCount());
-  }
-
-  @Test
   public void testMeasure() {
     final CSSNode node = new CSSNode();
     node.setMeasureFunction(new CSSNodeAPI.MeasureFunction() {

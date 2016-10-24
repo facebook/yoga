@@ -59,6 +59,14 @@ void jni_CSSNodeFree(alias_ref<jobject> thiz, jlong nativePointer) {
   CSSNodeFree(_jlong2CSSNodeRef(nativePointer));
 }
 
+void jni_CSSNodeReset(alias_ref<jobject> thiz, jlong nativePointer) {
+  const CSSNodeRef node = _jlong2CSSNodeRef(nativePointer);
+  void *context = CSSNodeGetContext(node);
+  CSSNodeReset(node);
+  CSSNodeSetContext(node, context);
+  CSSNodeSetPrintFunc(node, _jniPrint);
+}
+
 void jni_CSSNodeInsertChild(alias_ref<jobject>,
                             jlong nativePointer,
                             jlong childPointer,
@@ -179,6 +187,7 @@ jint JNI_OnLoad(JavaVM *vm, void *) {
                     {
                         CSSMakeNativeMethod(jni_CSSNodeNew),
                         CSSMakeNativeMethod(jni_CSSNodeFree),
+                        CSSMakeNativeMethod(jni_CSSNodeReset),
                         CSSMakeNativeMethod(jni_CSSNodeInsertChild),
                         CSSMakeNativeMethod(jni_CSSNodeRemoveChild),
                         CSSMakeNativeMethod(jni_CSSNodeSetIsTextNode),
