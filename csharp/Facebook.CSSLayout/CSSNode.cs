@@ -253,18 +253,9 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public Spacing GetMargin()
+        public float GetMargin(CSSEdge edge)
         {
-
-            var margin = new Spacing();
-            margin.Set(Spacing.Left, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Left));
-            margin.Set(Spacing.Top, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Top));
-            margin.Set(Spacing.Right, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Right));
-            margin.Set(Spacing.Bottom, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Bottom));
-            margin.Set(Spacing.Start, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.Start));
-            margin.Set(Spacing.End, Native.CSSNodeStyleGetMargin(_cssNode, CSSEdge.End));
-
-            return margin;
+            return Native.CSSNodeStyleGetMargin(_cssNode, edge);
         }
 
         public void SetMargin(CSSEdge edge, float value)
@@ -272,18 +263,9 @@ namespace Facebook.CSSLayout
             Native.CSSNodeStyleSetMargin(_cssNode, edge, value);
         }
 
-        public Spacing GetPadding()
+        public float GetPadding(CSSEdge edge)
         {
-
-            var padding = new Spacing();
-            padding.Set(Spacing.Left, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Left));
-            padding.Set(Spacing.Top, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Top));
-            padding.Set(Spacing.Right, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Right));
-            padding.Set(Spacing.Bottom, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Bottom));
-            padding.Set(Spacing.Start, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.Start));
-            padding.Set(Spacing.End, Native.CSSNodeStyleGetPadding(_cssNode, CSSEdge.End));
-
-            return padding;
+            return Native.CSSNodeStyleGetPadding(_cssNode, edge);
         }
 
         public void SetPadding(CSSEdge edge, float padding)
@@ -291,18 +273,9 @@ namespace Facebook.CSSLayout
             Native.CSSNodeStyleSetPadding(_cssNode, edge, padding);
         }
 
-        public Spacing GetBorder()
+        public float GetBorder(CSSEdge edge)
         {
-
-            var border = new Spacing();
-            border.Set(Spacing.Left, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Left));
-            border.Set(Spacing.Top, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Top));
-            border.Set(Spacing.Right, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Right));
-            border.Set(Spacing.Bottom, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Bottom));
-            border.Set(Spacing.Start, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.Start));
-            border.Set(Spacing.End, Native.CSSNodeStyleGetBorder(_cssNode, CSSEdge.End));
-
-            return border;
+            return Native.CSSNodeStyleGetBorder(_cssNode, edge);
         }
 
         public void SetBorder(CSSEdge edge, float border)
@@ -310,18 +283,9 @@ namespace Facebook.CSSLayout
             Native.CSSNodeStyleSetBorder(_cssNode, edge, border);
         }
 
-        public Spacing GetPosition()
+        public float GetPosition(CSSEdge edge)
         {
-
-            var position = new Spacing();
-            position.Set(Spacing.Left, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Left));
-            position.Set(Spacing.Top, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Top));
-            position.Set(Spacing.Right, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Right));
-            position.Set(Spacing.Bottom, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Bottom));
-            position.Set(Spacing.Start, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.Start));
-            position.Set(Spacing.End, Native.CSSNodeStyleGetPosition(_cssNode, CSSEdge.End));
-
-            return position;
+            return Native.CSSNodeStyleGetPosition(_cssNode, edge);
         }
 
         public void SetPosition(CSSEdge edge, float position)
