@@ -10,17 +10,12 @@
 #include "CSSBenchmark.h"
 
 #include <CSSLayout/CSSLayout.h>
-#include <time.h>
 
-// Measure functions can be quite slow, for example when measuring text.
-// Simulate this by sleeping for 1 millisecond.
 static CSSSize _measure(void *context,
                         float width,
                         CSSMeasureMode widthMode,
                         float height,
                         CSSMeasureMode heightMode) {
-  const struct timespec sleeptime = {0, 1000000};
-  nanosleep(&sleeptime, NULL);
   return (CSSSize){
       .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
       .height = heightMode == CSSMeasureModeUndefined ? 10 : width,
