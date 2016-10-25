@@ -486,7 +486,7 @@ namespace Facebook.CSSLayout
         {
             while (_children.Count > 0)
             {
-                RemoveAt(0);
+                RemoveAt(_children.Count-1);
             }
         }
 
