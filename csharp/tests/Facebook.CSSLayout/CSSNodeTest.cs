@@ -52,117 +52,50 @@ namespace Facebook.CSSLayout
         }
 
         [Test]
-        [ExpectedException("System.InvalidOperationException")]
-        public void TestAlreadyInitialize()
+        public void TestReset()
         {
-            CSSNode node = new CSSNode();
-            node.Reinitialize();
-        }
-
-        [Test]
-        [ExpectedException("System.InvalidOperationException")]
-        public void TestNullNativePointer()
-        {
-            CSSNode node = new CSSNode();
-            node.Free();
-            node.CalculateLayout();
-        }
-
-        [Test]
-        [ExpectedException("System.InvalidOperationException")]
-        public void TestDoubleFree()
-        {
-            CSSNode node = new CSSNode();
-            node.Free();
-            node.Free();
-        }
-
-        [Test]
-        public void TestReinitialize()
-        {
-            CSSNode node = new CSSNode();
-            node.Free();
-            node.Reinitialize();
-        }
-
-        [Test]
-        [ExpectedException("System.ObjectDisposedException")]
-        public void TestDisposed()
-        {
-            CSSNode node = new CSSNode();
-            node.Dispose();
-            node.CalculateLayout();
-        }
-
-        [Test]
-        public void TestFree()
-        {
-            CSSNode node = new CSSNode();
-            node.Free();
-        }
-
-        [Test]
-        public void TestDispose()
-        {
-            ForceGC();
             int instanceCount = CSSNode.GetInstanceCount();
             CSSNode node = new CSSNode();
             Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
-            node.Dispose();
-            Assert.AreEqual(instanceCount, CSSNode.GetInstanceCount());
-        }
-
-        [Test]
-        public void TestDisposeWithUsing()
-        {
-            ForceGC();
-            int instanceCount = CSSNode.GetInstanceCount();
-            using (CSSNode node = new CSSNode())
-            {
-                Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
-            }
-            Assert.AreEqual(instanceCount, CSSNode.GetInstanceCount());
+            node.Reset();
+            Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
         }
 
         [Test]
         [ExpectedException("System.InvalidOperationException")]
-        public void TestFreeParent()
+        public void TestResetParent()
         {
             CSSNode parent = new CSSNode();
             CSSNode child = new CSSNode();
             parent.Insert(0, child);
-            parent.Free();
+            parent.Reset();
         }
 
         [Test]
         [ExpectedException("System.InvalidOperationException")]
-        public void TestFreeChild()
+        public void TestResetChild()
         {
             CSSNode parent = new CSSNode();
             CSSNode child = new CSSNode();
             parent.Insert(0, child);
-            child.Free();
+            child.Reset();
         }
 
         [Test]
-        public void TestDisposeChild()
+        public void TestClear()
         {
-            ForceGC();
             int instanceCount = CSSNode.GetInstanceCount();
             CSSNode parent = new CSSNode();
-            CSSNode child0 = new CSSNode();
-            CSSNode child1 = new CSSNode();
-            Assert.AreEqual(instanceCount + 3, CSSNode.GetInstanceCount());
-            Assert.AreEqual(0, parent.Count);
-            parent.Insert(0, child1);
-            Assert.AreEqual(0, parent.IndexOf(child1));
-            parent.Insert(0, child0);
-            Assert.AreEqual(0, parent.IndexOf(child0));
-            Assert.AreEqual(1, parent.IndexOf(child1));
-            child0.Dispose();
+            Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
+            CSSNode child = new CSSNode();
             Assert.AreEqual(instanceCount + 2, CSSNode.GetInstanceCount());
+            parent.Insert(0, child);
             Assert.AreEqual(1, parent.Count);
-            Assert.AreEqual(0, parent.IndexOf(child1));
+            Assert.AreEqual(parent, child.Parent);
+            parent.Clear();
+            Assert.AreEqual(0, parent.Count);
+            Assert.IsNull(child.Parent);
+            Assert.AreEqual(instanceCount + 2, CSSNode.GetInstanceCount());
         }
 
         [Test]
@@ -257,26 +190,48 @@ namespace Facebook.CSSLayout
         }
 
         [Test]
-        public void TestDisposeParent()
+        public void TestParentDestructor()
         {
             ForceGC();
             int instanceCount = CSSNode.GetInstanceCount();
-            CSSNode parent = new CSSNode();
+            CSSNode child = new CSSNode();
             Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
-            TestDisposeParentForGC(parent, instanceCount + 1);
+
+            TestParentDestructorForGC(child, instanceCount + 1);
             ForceGC();
-            Assert.AreEqual(instanceCount + 2, CSSNode.GetInstanceCount());
-            parent.Dispose();
-            ForceGC();
-            Assert.AreEqual(instanceCount, CSSNode.GetInstanceCount());
+
+            Assert.IsNull(child.Parent);
+            Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
         }
 
-        private void TestDisposeParentForGC(CSSNode parent, int instanceCount)
+        private void TestParentDestructorForGC(CSSNode child, int instanceCount)
+        {
+            CSSNode parent = new CSSNode();
+            Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
+            parent.Insert(0, child);
+        }
+
+        [Test]
+        public void TestClearWithChildDestructor()
+        {
+            ForceGC();
+            int instanceCount = CSSNode.GetInstanceCount();
+            CSSNode node = new CSSNode();
+            Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
+            TestClearWithChildDestructorForGC(node, instanceCount + 1);
+            ForceGC();
+            Assert.AreEqual(instanceCount + 2, CSSNode.GetInstanceCount());
+            node.Clear();
+            Assert.AreEqual(0, node.Count);
+            ForceGC();
+            Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
+        }
+
+        private void TestClearWithChildDestructorForGC(CSSNode parent, int instanceCount)
         {
             CSSNode child = new CSSNode();
             Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
             parent.Insert(0, child);
-            child = null;
         }
 #endif
     }

@@ -15,7 +15,7 @@ using System.Text;
 
 namespace Facebook.CSSLayout
 {
-    public class CSSNode : IDisposable, IEnumerable<CSSNode>
+    public class CSSNode : IEnumerable<CSSNode>
     {
         private IntPtr _cssNode;
 
@@ -35,7 +35,6 @@ namespace Facebook.CSSLayout
             {
                 throw new InvalidOperationException("Failed to allocate native memory");
             }
-
         }
 
         ~CSSNode()
@@ -481,6 +480,14 @@ namespace Facebook.CSSLayout
             child._parent = null;
             _children.RemoveAt(index);
             Native.CSSNodeRemoveChild(_cssNode, child._cssNode);
+        }
+
+        public void Clear()
+        {
+            while (_children.Count > 0)
+            {
+                RemoveAt(0);
+            }
         }
 
         public int IndexOf(CSSNode node)
