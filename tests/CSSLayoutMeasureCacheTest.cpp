@@ -10,16 +10,31 @@
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
-static CSSSize _measure(void *context,
+static CSSSize _measureMax(void *context,
                         float width,
                         CSSMeasureMode widthMode,
                         float height,
                         CSSMeasureMode heightMode) {
+
   int *measureCount = (int *)context;
   *measureCount = *measureCount + 1;
   return CSSSize {
       .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
-      .height = heightMode == CSSMeasureModeUndefined ? 10 : width,
+      .height = heightMode == CSSMeasureModeUndefined ? 10 : height,
+  };
+}
+
+static CSSSize _measureMin(void *context,
+                        float width,
+                        CSSMeasureMode widthMode,
+                        float height,
+                        CSSMeasureMode heightMode) {
+
+  int *measureCount = (int *)context;
+  *measureCount = *measureCount + 1;
+  return CSSSize {
+      .width = widthMode == CSSMeasureModeUndefined || (widthMode == CSSMeasureModeAtMost && width > 10) ? 10 : width,
+      .height = heightMode == CSSMeasureModeUndefined || (heightMode == CSSMeasureModeAtMost && height > 10) ? 10 : height,
   };
 }
 
@@ -31,19 +46,11 @@ TEST(CSSLayoutTest, measure_once_single_flexible_child) {
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 50);
-  CSSNodeInsertChild(root, root_child0, 0);
-
-  const CSSNodeRef root_child1 = CSSNodeNew();
   int measureCount = 0;
-  CSSNodeSetContext(root_child1, &measureCount);
-  CSSNodeSetMeasureFunc(root_child1, _measure);
-  CSSNodeStyleSetFlexGrow(root_child1, 1);
-  CSSNodeInsertChild(root, root_child1, 1);
-
-  const CSSNodeRef root_child2 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child2, 50);
-  CSSNodeInsertChild(root, root_child2, 2);
+  CSSNodeSetContext(root_child0, &measureCount);
+  CSSNodeSetMeasureFunc(root_child0, _measureMax);
+  CSSNodeStyleSetFlexGrow(root_child0, 1);
+  CSSNodeInsertChild(root, root_child0, 0);
 
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
 
@@ -52,31 +59,92 @@ TEST(CSSLayoutTest, measure_once_single_flexible_child) {
   CSSNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, dont_remeasure_text_node_height_change) {
+TEST(CSSLayoutTest, remeasure_text_node_height_change) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 50);
-  CSSNodeStyleSetHeight(root_child0, 20);
+  CSSNodeSetIsTextnode(root_child0, true);
+  CSSNodeStyleSetFlexGrow(root_child0, 1);
+  int measureCount = 0;
+  CSSNodeSetContext(root_child0, &measureCount);
+  CSSNodeSetMeasureFunc(root_child0, _measureMax);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  const CSSNodeRef root_child1 = CSSNodeNew();
+  CSSNodeCalculateLayout(root, 100, 10, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 20, CSSDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+
+  CSSNodeFreeRecursive(root);
+}
+
+TEST(CSSLayoutTest, remeasure_with_same_exact_width_larger_than_needed_height) {
+  const CSSNodeRef root = CSSNodeNew();
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
   int measureCount = 0;
-  CSSNodeSetContext(root_child1, &measureCount);
-  CSSNodeSetMeasureFunc(root_child1, _measure);
-  CSSNodeSetIsTextnode(root_child1, true);
-  CSSNodeStyleSetFlexGrow(root_child1, 1);
-  CSSNodeInsertChild(root, root_child1, 1);
+  CSSNodeSetContext(root_child0, &measureCount);
+  CSSNodeSetMeasureFunc(root_child0, _measureMin);
+  CSSNodeInsertChild(root, root_child0, 0);
 
-  const CSSNodeRef root_child2 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child2, 50);
-  CSSNodeStyleSetHeight(root_child2, 20);
-  CSSNodeInsertChild(root, root_child2, 2);
+  CSSNodeCalculateLayout(root, 100, 100, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 50, CSSDirectionLTR);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  ASSERT_EQ(1, measureCount);
+
+  CSSNodeFreeRecursive(root);
+}
+
+TEST(CSSLayoutTest, remeasure_with_same_atmost_width_larger_than_needed_height) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  int measureCount = 0;
+  CSSNodeSetContext(root_child0, &measureCount);
+  CSSNodeSetMeasureFunc(root_child0, _measureMin);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  CSSNodeCalculateLayout(root, 100, 100, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 50, CSSDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+
+  CSSNodeFreeRecursive(root);
+}
+
+TEST(CSSLayoutTest, remeasure_with_computed_width_larger_than_needed_height) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  int measureCount = 0;
+  CSSNodeSetContext(root_child0, &measureCount);
+  CSSNodeSetMeasureFunc(root_child0, _measureMin);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  CSSNodeCalculateLayout(root, 100, 100, CSSDirectionLTR);
+  CSSNodeStyleSetAlignItems(root, CSSAlignStretch);
+  CSSNodeCalculateLayout(root, 10, 50, CSSDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+
+  CSSNodeFreeRecursive(root);
+}
+
+TEST(CSSLayoutTest, remeasure_with_atmost_computed_width_undefined_height) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  int measureCount = 0;
+  CSSNodeSetContext(root_child0, &measureCount);
+  CSSNodeSetMeasureFunc(root_child0, _measureMin);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  CSSNodeCalculateLayout(root, 100, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 10, CSSUndefined, CSSDirectionLTR);
 
   ASSERT_EQ(1, measureCount);
 
