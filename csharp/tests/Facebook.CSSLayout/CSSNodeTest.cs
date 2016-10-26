@@ -40,6 +40,56 @@ namespace Facebook.CSSLayout
         }
 
         [Test]
+        public void TestChildren()
+        {
+            CSSNode parent = new CSSNode();
+            foreach (CSSNode node in parent) {
+            }
+
+            CSSNode child0 = new CSSNode();
+            Assert.AreEqual(-1, parent.IndexOf(child0));
+            parent.Insert(0, child0);
+            foreach (CSSNode node in parent) {
+                Assert.AreEqual(0, parent.IndexOf(node));
+            }
+
+            CSSNode child1 = new CSSNode();
+            parent.Insert(1, child1);
+            int index = 0;
+            foreach (CSSNode node in parent) {
+                Assert.AreEqual(index++, parent.IndexOf(node));
+            }
+
+            parent.RemoveAt(0);
+            Assert.AreEqual(-1, parent.IndexOf(child0));
+            Assert.AreEqual(0, parent.IndexOf(child1));
+
+            parent.Clear();
+            Assert.AreEqual(0, parent.Count);
+
+            parent.Clear();
+            Assert.AreEqual(0, parent.Count);
+        }
+
+        [Test]
+        [ExpectedException("System.NullReferenceException")]
+        public void TestRemoveAtFromEmpty()
+        {
+            CSSNode parent = new CSSNode();
+            parent.RemoveAt(0);
+        }
+
+        [Test]
+        [ExpectedException("System.ArgumentOutOfRangeException")]
+        public void TestRemoveAtOutOfRange()
+        {
+            CSSNode parent = new CSSNode();
+            CSSNode child = new CSSNode();
+            parent.Insert(0, child);
+            parent.RemoveAt(1);
+        }
+
+        [Test]
         [ExpectedException("System.InvalidOperationException")]
         public void TestCannotAddChildToMultipleParents()
         {
@@ -232,6 +282,31 @@ namespace Facebook.CSSLayout
             CSSNode child = new CSSNode();
             Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
             parent.Insert(0, child);
+        }
+
+        [Test]
+        public void TestMeasureFuncWithDestructor()
+        {
+            ForceGC();
+            int instanceCount = CSSNode.GetInstanceCount();
+            CSSNode parent = new CSSNode();
+            Assert.AreEqual(instanceCount + 1, CSSNode.GetInstanceCount());
+            TestMeasureFuncWithDestructorForGC(parent);
+            ForceGC();
+            Assert.AreEqual(instanceCount + 2, CSSNode.GetInstanceCount());
+            parent.CalculateLayout();
+            Assert.AreEqual(120, (int)parent.LayoutWidth);
+            Assert.AreEqual(130, (int)parent.LayoutHeight);
+        }
+
+        private void TestMeasureFuncWithDestructorForGC(CSSNode parent)
+        {
+            CSSNode child = new CSSNode();
+            parent.Insert(0, child);
+            child.SetMeasureFunction((_, width, widthMode, height, heightMode, measureResult) => {
+                measureResult.Width = 120;
+                measureResult.Height = 130;
+            });
         }
 #endif
     }

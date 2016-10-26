@@ -18,17 +18,17 @@ namespace Facebook.CSSLayout
     public class CSSNode : IEnumerable<CSSNode>
     {
         private IntPtr _cssNode;
-
         private WeakReference _parent;
         private List<CSSNode> _children;
         private MeasureFunction _measureFunction;
+        private CSSMeasureFunc _cssMeasureFunc;
+        private MeasureOutput _measureOutput;
         private object _data;
 
         public CSSNode()
         {
             CSSAssert.Initialize();
             CSSLogger.Initialize();
-            _children = new List<CSSNode>(4);
 
             _cssNode = Native.CSSNodeNew();
             if (_cssNode == IntPtr.Zero)
@@ -108,6 +108,7 @@ namespace Facebook.CSSLayout
             {
                 return Native.CSSNodeStyleGetDirection(_cssNode);
             }
+
             set
             {
                 Native.CSSNodeStyleSetDirection(_cssNode, value);
@@ -448,7 +449,7 @@ namespace Facebook.CSSLayout
         {
             get
             {
-                return _children.Count;
+                return _children != null ? _children.Count : 0;
             }
         }
 
@@ -469,6 +470,10 @@ namespace Facebook.CSSLayout
 
         public void Insert(int index, CSSNode node)
         {
+            if (_children == null)
+            {
+                _children = new List<CSSNode>(4);
+            }
             _children.Insert(index, node);
             node._parent = new WeakReference(this);
             Native.CSSNodeInsertChild(_cssNode, node._cssNode, (uint)index);
@@ -484,26 +489,43 @@ namespace Facebook.CSSLayout
 
         public void Clear()
         {
-            while (_children.Count > 0)
+            if (_children != null)
             {
-                RemoveAt(_children.Count-1);
+                while (_children.Count > 0)
+                {
+                    RemoveAt(_children.Count-1);
+                }
             }
         }
 
         public int IndexOf(CSSNode node)
         {
-            return _children.IndexOf(node);
+            return _children != null ? _children.IndexOf(node) : -1;
         }
 
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
             _measureFunction = measureFunction;
-            Native.CSSNodeSetMeasureFunc(_cssNode, measureFunction != null ? MeasureInternal : (CSSMeasureFunc)null);
+            if (measureFunction != null)
+            {
+                _cssMeasureFunc = MeasureInternal;
+                _measureOutput = new MeasureOutput();
+            }
+            else
+            {
+                _cssMeasureFunc = null;
+                _measureOutput = null;
+            }
+            Native.CSSNodeSetMeasureFunc(_cssNode, _cssMeasureFunc);
         }
 
         public void CalculateLayout()
         {
-            Native.CSSNodeCalculateLayout(_cssNode, CSSConstants.Undefined, CSSConstants.Undefined, Native.CSSNodeStyleGetDirection(_cssNode));
+            Native.CSSNodeCalculateLayout(
+                _cssNode,
+                CSSConstants.Undefined,
+                CSSConstants.Undefined,
+                Native.CSSNodeStyleGetDirection(_cssNode));
         }
 
         private CSSSize MeasureInternal(
@@ -518,13 +540,13 @@ namespace Facebook.CSSLayout
                 throw new InvalidOperationException("Measure function is not defined.");
             }
 
-            var measureResult = new MeasureOutput();
-            _measureFunction(this, width, widthMode, height, heightMode, measureResult);
+            _measureFunction(this, width, widthMode, height, heightMode, _measureOutput);
 
-            return new CSSSize { width = measureResult.Width, height = measureResult.Height };
+            return new CSSSize { width = _measureOutput.Width, height = _measureOutput.Height };
         }
 
-        public string Print(CSSPrintOptions options = CSSPrintOptions.Layout|CSSPrintOptions.Style|CSSPrintOptions.Children)
+        public string Print(CSSPrintOptions options =
+            CSSPrintOptions.Layout|CSSPrintOptions.Style|CSSPrintOptions.Children)
         {
             StringBuilder sb = new StringBuilder();
             CSSLogger.Logger = (message) => {sb.Append(message);};
@@ -535,12 +557,14 @@ namespace Facebook.CSSLayout
 
         public IEnumerator<CSSNode> GetEnumerator()
         {
-            return ((IEnumerable<CSSNode>)_children).GetEnumerator();
+            return _children != null ? ((IEnumerable<CSSNode>)_children).GetEnumerator() :
+                System.Linq.Enumerable.Empty<CSSNode>().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<CSSNode>)_children).GetEnumerator();
+            return _children != null ? ((IEnumerable<CSSNode>)_children).GetEnumerator() :
+                System.Linq.Enumerable.Empty<CSSNode>().GetEnumerator();
         }
 
         public static int GetInstanceCount()
