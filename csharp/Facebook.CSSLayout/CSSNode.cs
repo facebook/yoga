@@ -44,6 +44,9 @@ namespace Facebook.CSSLayout
 
         public void Reset()
         {
+            _measureFunction = null;
+            _data = null;
+
             Native.CSSNodeReset(_cssNode);
         }
 
