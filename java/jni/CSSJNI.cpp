@@ -14,6 +14,31 @@
 using namespace facebook::jni;
 using namespace std;
 
+static void _jniTransferLayoutDirection(CSSNodeRef node, alias_ref<jobject> javaNode) {
+  static auto layoutDirectionField = javaNode->getClass()->getField<jint>("mLayoutDirection");
+  javaNode->setFieldValue(layoutDirectionField, static_cast<jint>(CSSNodeLayoutGetDirection(node)));
+}
+
+static void _jniTransferLayoutOutputsRecursive(CSSNodeRef root) {
+  auto javaNode = adopt_local(
+      Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(root))));
+
+  static auto widthField = javaNode->getClass()->getField<jfloat>("mWidth");
+  static auto heightField = javaNode->getClass()->getField<jfloat>("mHeight");
+  static auto leftField = javaNode->getClass()->getField<jfloat>("mLeft");
+  static auto topField = javaNode->getClass()->getField<jfloat>("mTop");
+
+  javaNode->setFieldValue(widthField, CSSNodeLayoutGetWidth(root));
+  javaNode->setFieldValue(heightField, CSSNodeLayoutGetHeight(root));
+  javaNode->setFieldValue(leftField, CSSNodeLayoutGetLeft(root));
+  javaNode->setFieldValue(topField, CSSNodeLayoutGetTop(root));
+  _jniTransferLayoutDirection(root, javaNode);
+
+  for (uint32_t i = 0; i < CSSNodeChildCount(root); i++) {
+    _jniTransferLayoutOutputsRecursive(CSSNodeGetChild(root, i));
+  }
+}
+
 static void _jniPrint(CSSNodeRef node) {
   auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
   cout << obj->toString() << endl;
@@ -25,8 +50,11 @@ static CSSSize _jniMeasureFunc(CSSNodeRef node,
                                float height,
                                CSSMeasureMode heightMode) {
   auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
+
   static auto measureFunc =
       obj->getClass()->getMethod<jlong(jfloat, jint, jfloat, jint)>("measure");
+
+  _jniTransferLayoutDirection(node, obj);
   const auto measureResult = measureFunc(obj, width, widthMode, height, heightMode);
 
   static_assert(sizeof(measureResult) == 8,
@@ -79,10 +107,12 @@ void jni_CSSNodeRemoveChild(alias_ref<jobject>, jlong nativePointer, jlong child
 }
 
 void jni_CSSNodeCalculateLayout(alias_ref<jobject>, jlong nativePointer) {
-  CSSNodeCalculateLayout(_jlong2CSSNodeRef(nativePointer),
+  const CSSNodeRef root = _jlong2CSSNodeRef(nativePointer);
+  CSSNodeCalculateLayout(root,
                          CSSUndefined,
                          CSSUndefined,
                          CSSNodeStyleGetDirection(_jlong2CSSNodeRef(nativePointer)));
+  _jniTransferLayoutOutputsRecursive(root);
 }
 
 void jni_CSSNodeMarkDirty(alias_ref<jobject>, jlong nativePointer) {
@@ -139,11 +169,6 @@ void jni_CSSNodeMarkLayoutSeen(alias_ref<jobject>, jlong nativePointer) {
                           static_cast<type>(value));                                       \
   }
 
-#define CSS_NODE_JNI_LAYOUT_PROP(javatype, type, name)                           \
-  javatype jni_CSSNodeLayoutGet##name(alias_ref<jobject>, jlong nativePointer) { \
-    return (javatype) CSSNodeLayoutGet##name(_jlong2CSSNodeRef(nativePointer));  \
-  }
-
 CSS_NODE_JNI_STYLE_PROP(jint, CSSDirection, Direction);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSFlexDirection, FlexDirection);
 CSS_NODE_JNI_STYLE_PROP(jint, CSSJustify, JustifyContent);
@@ -172,12 +197,6 @@ CSS_NODE_JNI_STYLE_PROP(jfloat, float, MaxWidth);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, Height);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, MinHeight);
 CSS_NODE_JNI_STYLE_PROP(jfloat, float, MaxHeight);
-
-CSS_NODE_JNI_LAYOUT_PROP(jfloat, float, Width);
-CSS_NODE_JNI_LAYOUT_PROP(jfloat, float, Height);
-CSS_NODE_JNI_LAYOUT_PROP(jfloat, float, Left);
-CSS_NODE_JNI_LAYOUT_PROP(jfloat, float, Top);
-CSS_NODE_JNI_LAYOUT_PROP(jint, CSSDirection, Direction);
 
 #define CSSMakeNativeMethod(name) makeNativeMethod(#name, name)
 
@@ -243,12 +262,6 @@ jint JNI_OnLoad(JavaVM *vm, void *) {
                         CSSMakeNativeMethod(jni_CSSNodeStyleSetMaxWidth),
                         CSSMakeNativeMethod(jni_CSSNodeStyleGetMaxHeight),
                         CSSMakeNativeMethod(jni_CSSNodeStyleSetMaxHeight),
-
-                        CSSMakeNativeMethod(jni_CSSNodeLayoutGetLeft),
-                        CSSMakeNativeMethod(jni_CSSNodeLayoutGetTop),
-                        CSSMakeNativeMethod(jni_CSSNodeLayoutGetWidth),
-                        CSSMakeNativeMethod(jni_CSSNodeLayoutGetHeight),
-                        CSSMakeNativeMethod(jni_CSSNodeLayoutGetDirection),
 
                         CSSMakeNativeMethod(jni_CSSNodeGetInstanceCount),
                     });
