@@ -11,9 +11,6 @@
 
 #import <objc/runtime.h>
 
-static void _attachNodesRecursive(UIView *view);
-static void _updateFrameRecursive(UIView *view);
-
 @interface CSSNodeBridge : NSObject
 @property (nonatomic, assign) CSSNodeRef cnode;
 @end
@@ -234,8 +231,6 @@ static CSSSize _measure(
   };
 }
 
-@end
-
 static void _attachNodesRecursive(UIView *view) {
   CSSNodeRef node = [view cssNode];
   const BOOL usesFlexbox = [view css_usesFlexbox];
@@ -290,3 +285,5 @@ static void _updateFrameRecursive(UIView *view) {
     }
   }
 }
+
+@end
