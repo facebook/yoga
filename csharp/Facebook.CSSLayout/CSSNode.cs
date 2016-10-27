@@ -543,9 +543,8 @@ namespace Facebook.CSSLayout
                 throw new InvalidOperationException("Measure function is not defined.");
             }
 
-            _measureFunction(this, width, widthMode, height, heightMode, _measureOutput);
-
-            return new CSSSize { width = _measureOutput.Width, height = _measureOutput.Height };
+            long output = _measureFunction(this, width, widthMode, height, heightMode);
+            return new CSSSize { width = MeasureOutput.GetWidth(output), height = MeasureOutput.GetHeight(output) };
         }
 
         public string Print(CSSPrintOptions options =

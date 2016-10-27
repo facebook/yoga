@@ -26,15 +26,13 @@ public class CSSNodeTest {
   public void testMeasure() {
     final CSSNode node = new CSSNode();
     node.setMeasureFunction(new CSSNodeAPI.MeasureFunction() {
-        public void measure(
+        public long measure(
             CSSNodeAPI node,
             float width,
             CSSMeasureMode widthMode,
             float height,
-            CSSMeasureMode heightMode,
-            MeasureOutput measureOutput) {
-          measureOutput.width = 100;
-          measureOutput.height = 100;
+            CSSMeasureMode heightMode) {
+          return MeasureOutput.make(100, 100);
         }
     });
     node.calculateLayout(null);

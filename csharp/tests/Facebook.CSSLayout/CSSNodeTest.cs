@@ -23,18 +23,18 @@ namespace Facebook.CSSLayout
         {
             CSSNode parent = new CSSNode();
             CSSNode child = new CSSNode();
-    
+
             Assert.IsNull(child.Parent);
             Assert.AreEqual(0, parent.Count);
-    
+
             parent.Insert(0, child);
-    
+
             Assert.AreEqual(1, parent.Count);
             Assert.AreEqual(child, parent[0]);
             Assert.AreEqual(parent, child.Parent);
-    
+
             parent.RemoveAt(0);
-    
+
             Assert.IsNull(child.Parent);
             Assert.AreEqual(0, parent.Count);
         }
@@ -152,9 +152,8 @@ namespace Facebook.CSSLayout
         public void TestMeasureFunc()
         {
             CSSNode node = new CSSNode();
-            node.SetMeasureFunction((_, width, widthMode, height, heightMode, measureResult) => {
-                measureResult.Width = 100;
-                measureResult.Height = 150;
+            node.SetMeasureFunction((_, width, widthMode, height, heightMode) => {
+                return MeasureOutput.Make(100, 150);
             });
             node.CalculateLayout();
             Assert.AreEqual(100, (int)node.LayoutWidth);

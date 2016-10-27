@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -11,7 +11,19 @@ namespace Facebook.CSSLayout
 {
     public class MeasureOutput
     {
-        public float Width { get; set; }
-        public float Height { get; set; }
+        public static long Make(int width, int height)
+        {
+          return ((long) width) << 32 | ((long) height);
+        }
+
+        public static int GetWidth(long measureOutput)
+        {
+          return (int) (0xFFFFFFFF & (measureOutput >> 32));
+        }
+
+        public static int GetHeight(long measureOutput)
+        {
+          return (int) (0xFFFFFFFF & measureOutput);
+        }
     }
 }
