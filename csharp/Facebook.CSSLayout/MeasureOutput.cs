@@ -13,7 +13,7 @@ namespace Facebook.CSSLayout
     {
         public static long Make(int width, int height)
         {
-          return ((long) width) << 32 | ((long) height);
+          return (long)(((ulong) width) << 32 | ((ulong) height));
         }
 
         public static int GetWidth(long measureOutput)

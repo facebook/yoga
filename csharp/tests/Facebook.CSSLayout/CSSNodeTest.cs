@@ -44,6 +44,7 @@ namespace Facebook.CSSLayout
         {
             CSSNode parent = new CSSNode();
             foreach (CSSNode node in parent) {
+                Assert.Fail(node.ToString());
             }
 
             CSSNode child0 = new CSSNode();
@@ -302,9 +303,8 @@ namespace Facebook.CSSLayout
         {
             CSSNode child = new CSSNode();
             parent.Insert(0, child);
-            child.SetMeasureFunction((_, width, widthMode, height, heightMode, measureResult) => {
-                measureResult.Width = 120;
-                measureResult.Height = 130;
+            child.SetMeasureFunction((_, width, widthMode, height, heightMode) => {
+                return MeasureOutput.Make(120, 130);
             });
         }
 #endif

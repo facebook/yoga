@@ -22,7 +22,6 @@ namespace Facebook.CSSLayout
         private List<CSSNode> _children;
         private MeasureFunction _measureFunction;
         private CSSMeasureFunc _cssMeasureFunc;
-        private MeasureOutput _measureOutput;
         private object _data;
 
         public CSSNode()
@@ -509,16 +508,7 @@ namespace Facebook.CSSLayout
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
             _measureFunction = measureFunction;
-            if (measureFunction != null)
-            {
-                _cssMeasureFunc = MeasureInternal;
-                _measureOutput = new MeasureOutput();
-            }
-            else
-            {
-                _cssMeasureFunc = null;
-                _measureOutput = null;
-            }
+            _cssMeasureFunc = measureFunction != null ? MeasureInternal : (CSSMeasureFunc)null;
             Native.CSSNodeSetMeasureFunc(_cssNode, _cssMeasureFunc);
         }
 
