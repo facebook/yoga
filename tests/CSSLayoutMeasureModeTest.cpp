@@ -22,12 +22,12 @@ struct _MeasureConstraintList {
   struct _MeasureConstraint *constraints;
 };
 
-static CSSSize _measure(void *context,
+static CSSSize _measure(CSSNodeRef node,
                         float width,
                         CSSMeasureMode widthMode,
                         float height,
                         CSSMeasureMode heightMode) {
-  struct _MeasureConstraintList *constraintList = (struct _MeasureConstraintList *)context;
+  struct _MeasureConstraintList *constraintList = (struct _MeasureConstraintList *)CSSNodeGetContext(node);
   struct _MeasureConstraint *constraints = constraintList->constraints;
   uint32_t currentIndex = constraintList->length;
   (&constraints[currentIndex])->width = width;

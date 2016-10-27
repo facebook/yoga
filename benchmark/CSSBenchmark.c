@@ -11,7 +11,7 @@
 
 #include <CSSLayout/CSSLayout.h>
 
-static CSSSize _measure(void *context,
+static CSSSize _measure(CSSNodeRef node
                         float width,
                         CSSMeasureMode widthMode,
                         float height,

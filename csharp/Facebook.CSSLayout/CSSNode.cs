@@ -532,7 +532,7 @@ namespace Facebook.CSSLayout
         }
 
         private CSSSize MeasureInternal(
-            IntPtr context,
+            IntPtr node,
             float width,
             CSSMeasureMode widthMode,
             float height,

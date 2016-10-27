@@ -14,17 +14,17 @@
 using namespace facebook::jni;
 using namespace std;
 
-static void _jniPrint(void *context) {
-  auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(context)));
+static void _jniPrint(CSSNodeRef node) {
+  auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
   cout << obj->toString() << endl;
 }
 
-static CSSSize _jniMeasureFunc(void *context,
+static CSSSize _jniMeasureFunc(CSSNodeRef node,
                                float width,
                                CSSMeasureMode widthMode,
                                float height,
                                CSSMeasureMode heightMode) {
-  auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(context)));
+  auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
   static auto measureFunc =
       obj->getClass()->getMethod<jlong(jfloat, jint, jfloat, jint)>("measure");
   const auto measureResult = measureFunc(obj, width, widthMode, height, heightMode);

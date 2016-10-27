@@ -10,13 +10,13 @@
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
-static CSSSize _measureMax(void *context,
+static CSSSize _measureMax(CSSNodeRef node,
                         float width,
                         CSSMeasureMode widthMode,
                         float height,
                         CSSMeasureMode heightMode) {
 
-  int *measureCount = (int *)context;
+  int *measureCount = (int *)CSSNodeGetContext(node);
   *measureCount = *measureCount + 1;
   return CSSSize {
       .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
@@ -24,13 +24,13 @@ static CSSSize _measureMax(void *context,
   };
 }
 
-static CSSSize _measureMin(void *context,
+static CSSSize _measureMin(CSSNodeRef node,
                         float width,
                         CSSMeasureMode widthMode,
                         float height,
                         CSSMeasureMode heightMode) {
 
-  int *measureCount = (int *)context;
+  int *measureCount = (int *)CSSNodeGetContext(node);
   *measureCount = *measureCount + 1;
   return CSSSize {
       .width = widthMode == CSSMeasureModeUndefined || (widthMode == CSSMeasureModeAtMost && width > 10) ? 10 : width,

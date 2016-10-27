@@ -10,12 +10,12 @@
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
-static CSSSize _measure(void *context,
+static CSSSize _measure(CSSNodeRef node,
                         float width,
                         CSSMeasureMode widthMode,
                         float height,
                         CSSMeasureMode heightMode) {
-  int *measureCount = (int *)context;
+  int *measureCount = (int *)CSSNodeGetContext(node);
   *measureCount = *measureCount + 1;
   return CSSSize {
       .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
