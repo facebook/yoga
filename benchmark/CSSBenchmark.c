@@ -75,4 +75,45 @@ CSS_BENCHMARKS({
     CSSNodeFreeRecursive(root);
   });
 
+  CSS_BENCHMARK("Huge nested layout", {
+    const CSSNodeRef root = CSSNodeNew();
+
+    for (uint32_t i = 0; i < 10; i++) {
+      const CSSNodeRef child = CSSNodeNew();
+      CSSNodeStyleSetFlexGrow(child, 1);
+      CSSNodeStyleSetWidth(child, 10);
+      CSSNodeStyleSetHeight(child, 10);
+      CSSNodeInsertChild(root, child, 0);
+
+      for (uint32_t ii = 0; ii < 10; ii++) {
+        const CSSNodeRef grandChild = CSSNodeNew();
+        CSSNodeStyleSetFlexDirection(grandChild, CSSFlexDirectionRow);
+        CSSNodeStyleSetFlexGrow(grandChild, 1);
+        CSSNodeStyleSetWidth(grandChild, 10);
+        CSSNodeStyleSetHeight(grandChild, 10);
+        CSSNodeInsertChild(child, grandChild, 0);
+
+        for (uint32_t iii = 0; iii < 10; iii++) {
+          const CSSNodeRef grandGrandChild = CSSNodeNew();
+          CSSNodeStyleSetFlexGrow(grandGrandChild, 1);
+          CSSNodeStyleSetWidth(grandGrandChild, 10);
+          CSSNodeStyleSetHeight(grandGrandChild, 10);
+          CSSNodeInsertChild(grandChild, grandGrandChild, 0);
+
+          for (uint32_t iii = 0; iii < 10; iii++) {
+            const CSSNodeRef grandGrandGrandChild = CSSNodeNew();
+            CSSNodeStyleSetFlexDirection(grandGrandGrandChild, CSSFlexDirectionRow);
+            CSSNodeStyleSetFlexGrow(grandGrandGrandChild, 1);
+            CSSNodeStyleSetWidth(grandGrandGrandChild, 10);
+            CSSNodeStyleSetHeight(grandGrandGrandChild, 10);
+            CSSNodeInsertChild(grandGrandChild, grandGrandGrandChild, 0);
+          }
+        }
+      }
+    }
+
+    CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+    CSSNodeFreeRecursive(root);
+  });
+
 });
