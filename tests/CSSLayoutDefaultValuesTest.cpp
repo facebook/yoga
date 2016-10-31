@@ -13,6 +13,9 @@
 TEST(CSSLayoutTest, assert_default_values) {
   const CSSNodeRef root = CSSNodeNew();
 
+  ASSERT_EQ(0, CSSNodeChildCount(root));
+  ASSERT_EQ(NULL, CSSNodeGetChild(root, 1));
+
   ASSERT_EQ(CSSDirectionInherit, CSSNodeStyleGetDirection(root));
   ASSERT_EQ(CSSFlexDirectionColumn, CSSNodeStyleGetFlexDirection(root));
   ASSERT_EQ(CSSJustifyFlexStart, CSSNodeStyleGetJustifyContent(root));
