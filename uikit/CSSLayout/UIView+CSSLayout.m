@@ -250,7 +250,7 @@ static void _attachNodesRecursive(UIView *view) {
     // Add any children which were added since the last call to css_applyLayout
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
       CSSNodeRef childNode = [view.subviews[i] cssNode];
-      if (CSSNodeGetChild(node, i) != childNode) {
+      if (CSSNodeChildCount(node) < i + 1 || CSSNodeGetChild(node, i) != childNode) {
         CSSNodeInsertChild(node, childNode, i);
       }
       _attachNodesRecursive(view.subviews[i]);
