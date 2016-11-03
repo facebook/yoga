@@ -89,6 +89,7 @@ typedef struct CSSNode {
   CSSNodeRef parent;
   CSSNodeListRef children;
   bool isDirty;
+  bool isVisible;
 
   struct CSSNode *nextChild;
 
@@ -198,6 +199,7 @@ void CSSNodeInit(const CSSNodeRef node) {
   node->children = NULL;
   node->hasNewLayout = true;
   node->isDirty = false;
+  node->isVisible = true;
 
   node->style.flex = CSSUndefined;
   node->style.flexGrow = CSSUndefined;
@@ -285,6 +287,14 @@ void CSSNodeMarkDirty(const CSSNodeRef node) {
 
 bool CSSNodeIsDirty(const CSSNodeRef node) {
   return node->isDirty;
+}
+
+void CSSNodeHide(const CSSNodeRef node) {
+  node->isVisible = false;
+}
+
+void CSSNodeShow(const CSSNodeRef node) {
+  node->isVisible = true;;
 }
 
 inline float CSSNodeStyleGetFlexGrow(CSSNodeRef node) {
@@ -1190,6 +1200,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
                            const CSSMeasureMode widthMeasureMode,
                            const CSSMeasureMode heightMeasureMode,
                            const bool performLayout) {
+  
   CSS_ASSERT(CSSValueIsUndefined(availableWidth) ? widthMeasureMode == CSSMeasureModeUndefined
                                                  : true,
              "availableWidth is indefinite so widthMeasureMode must be "

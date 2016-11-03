@@ -157,6 +157,9 @@ WIN_EXPORT void CSSNodeCalculateLayout(const CSSNodeRef node,
 WIN_EXPORT void CSSNodeMarkDirty(const CSSNodeRef node);
 WIN_EXPORT bool CSSNodeIsDirty(const CSSNodeRef node);
 
+WIN_EXPORT void CSSNodeHide(const CSSNodeRef node);
+WIN_EXPORT void CSSNodeShow(const CSSNodeRef node);
+
 WIN_EXPORT void CSSNodePrint(const CSSNodeRef node, const CSSPrintOptions options);
 
 WIN_EXPORT bool CSSValueIsUndefined(const float value);
