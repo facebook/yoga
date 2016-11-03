@@ -45,7 +45,10 @@
 // Get the resolved direction of this node. This won't be CSSDirectionInherit
 - (CSSDirection)css_resolvedDirection;
 
-// Perform a layout calculation and update the frames of the views in the hierarchy with th results
+//! @abstract Perform a layout calculation and update the frames of the views in the hierarchy with th results
 - (void)css_applyLayout;
+
+//! @abstract Compute the size of a layout with a constrained size.
+- (CGSize)css_sizeThatFits:(CGSize)constrainedSize;
 
 @end

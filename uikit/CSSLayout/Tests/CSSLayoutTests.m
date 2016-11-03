@@ -58,4 +58,24 @@
   XCTAssertFalse([view css_usesFlexbox]);
 }
 
+- (void)testSizeThatFitsAsserts
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  XCTAssertThrows([view css_sizeThatFits:CGSizeZero]);
+
+  dispatch_sync(dispatch_queue_create("com.facebook.CSSLayout.testing", DISPATCH_QUEUE_SERIAL), ^(void){
+    XCTAssertThrows([view css_sizeThatFits:CGSizeZero]);
+  });
+}
+
+- (void)testSizeThatFitsSmoke
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  [view css_setUsesFlexbox:YES];
+
+  const CGSize constrainedSize = CGSizeMake(50, 50);
+  const CGSize actualSize = [view css_sizeThatFits:constrainedSize];
+  XCTAssertTrue(CGSizeEqualToSize(constrainedSize, actualSize), @"Actual Size: %@", NSStringFromCGSize(actualSize));
+}
+
 @end
