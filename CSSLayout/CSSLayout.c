@@ -297,6 +297,10 @@ void CSSNodeShow(const CSSNodeRef node) {
   node->isVisible = true;;
 }
 
+WIN_EXPORT bool CSSNodeIsVisible(const CSSNodeRef node) {
+  return node->isVisible;
+}
+
 inline float CSSNodeStyleGetFlexGrow(CSSNodeRef node) {
   if (!CSSValueIsUndefined(node->style.flexGrow)) {
     return node->style.flexGrow;
