@@ -209,10 +209,7 @@ static CSSSize _measure(
   float height,
   CSSMeasureMode heightMode)
 {
-  const BOOL useExactWidth = (widthMode == CSSMeasureModeExactly);
-  const BOOL useExactHeight = (heightMode == CSSMeasureModeExactly);
-
-  if (useExactHeight && useExactWidth) {
+  if ((widthMode == CSSMeasureModeExactly) && (heightMode == CSSMeasureModeExactly)) {
       return (CSSSize) {
           .width = width,
           .height = height,
@@ -226,8 +223,8 @@ static CSSSize _measure(
   }];
 
   return (CSSSize) {
-    .width = useExactWidth ? width : sizeThatFits.width,
-    .height = useExactHeight ? height : sizeThatFits.height,
+    .width = sizeThatFits.width,
+    .height = sizeThatFits.height,
   };
 }
 
