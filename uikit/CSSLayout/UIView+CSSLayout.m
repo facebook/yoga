@@ -12,7 +12,7 @@
 #import <objc/runtime.h>
 
 @interface CSSNodeBridge : NSObject
-@property (nonatomic, assign) CSSNodeRef cnode;
+@property (nonatomic, assign, readonly) CSSNodeRef cnode;
 @end
 
 @implementation CSSNodeBridge
