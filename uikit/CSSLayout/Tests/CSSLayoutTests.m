@@ -46,4 +46,16 @@
   XCTAssertEqual(0, CSSNodeGetInstanceCount());
 }
 
+- (void)testUsesFlexbox
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  XCTAssertFalse([view css_usesFlexbox]);
+
+  [view css_setUsesFlexbox:YES];
+  XCTAssertTrue([view css_usesFlexbox]);
+
+  [view css_setUsesFlexbox:NO];
+  XCTAssertFalse([view css_usesFlexbox]);
+}
+
 @end

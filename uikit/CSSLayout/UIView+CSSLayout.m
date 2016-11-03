@@ -56,11 +56,8 @@
 
 - (BOOL)css_usesFlexbox
 {
-  if (objc_getAssociatedObject(self, @selector(css_usesFlexbox))) {
-    return YES;
-  } else {
-    return NO;
-  }
+  NSNumber *usesFlexbox = objc_getAssociatedObject(self, @selector(css_usesFlexbox));
+  return [usesFlexbox boolValue];
 }
 
 - (void)css_setDirection:(CSSDirection)direction
