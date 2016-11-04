@@ -23,9 +23,7 @@
 - (void)css_setAlignSelf:(CSSAlign)alignSelf;
 - (void)css_setPositionType:(CSSPositionType)positionType;
 - (void)css_setFlexWrap:(CSSWrapType)flexWrap;
-- (void)css_setOverflow:(CSSOverflow)overflow;
 
-- (void)css_setFlex:(CGFloat)flex;
 - (void)css_setFlexGrow:(CGFloat)flexGrow;
 - (void)css_setFlexShrink:(CGFloat)flexShrink;
 - (void)css_setFlexBasis:(CGFloat)flexBasis;

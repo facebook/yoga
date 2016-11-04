@@ -100,16 +100,6 @@
   CSSNodeStyleSetFlexWrap([self cssNode], flexWrap);
 }
 
-- (void)css_setOverflow:(CSSOverflow)overflow
-{
-  CSSNodeStyleSetOverflow([self cssNode], overflow);
-}
-
-- (void)css_setFlex:(CGFloat)flex
-{
-  CSSNodeStyleSetFlex([self cssNode], flex);
-}
-
 - (void)css_setFlexGrow:(CGFloat)flexGrow
 {
   CSSNodeStyleSetFlexGrow([self cssNode], flexGrow);
