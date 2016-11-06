@@ -12,7 +12,7 @@
 #import <objc/runtime.h>
 
 @interface CSSNodeBridge : NSObject
-@property (nonatomic, assign) CSSNodeRef cnode;
+@property (nonatomic, assign, readonly) CSSNodeRef cnode;
 @end
 
 @implementation CSSNodeBridge
@@ -56,11 +56,8 @@
 
 - (BOOL)css_usesFlexbox
 {
-  if (objc_getAssociatedObject(self, @selector(css_usesFlexbox))) {
-    return YES;
-  } else {
-    return NO;
-  }
+  NSNumber *usesFlexbox = objc_getAssociatedObject(self, @selector(css_usesFlexbox));
+  return [usesFlexbox boolValue];
 }
 
 - (void)css_setDirection:(CSSDirection)direction
@@ -101,16 +98,6 @@
 - (void)css_setFlexWrap:(CSSWrapType)flexWrap
 {
   CSSNodeStyleSetFlexWrap([self cssNode], flexWrap);
-}
-
-- (void)css_setOverflow:(CSSOverflow)overflow
-{
-  CSSNodeStyleSetOverflow([self cssNode], overflow);
-}
-
-- (void)css_setFlex:(CGFloat)flex
-{
-  CSSNodeStyleSetFlex([self cssNode], flex);
 }
 
 - (void)css_setFlexGrow:(CGFloat)flexGrow
@@ -183,20 +170,29 @@
   return CSSNodeLayoutGetDirection([self cssNode]);
 }
 
-- (void)css_applyLayout
+- (CGSize)css_sizeThatFits:(CGSize)constrainedSize
 {
-  NSAssert([NSThread isMainThread], @"Method called using a thread other than main!");
-  NSAssert([self css_usesFlexbox], @"css_applyLayout must be called on a node using css styling!");
+  NSAssert([NSThread isMainThread], @"CSS Layout calculation must be done on main.");
+  NSAssert([self css_usesFlexbox], @"CSS Layout is not enabled for this view.");
 
   _attachNodesRecursive(self);
 
-  CSSNodeRef node = [self cssNode];
+  const CSSNodeRef node = [self cssNode];
   CSSNodeCalculateLayout(
-    [self cssNode],
-    CSSNodeStyleGetWidth(node),
-    CSSNodeStyleGetHeight(node),
+    node,
+    constrainedSize.width,
+    constrainedSize.height,
     CSSNodeStyleGetDirection(node));
 
+  return (CGSize) {
+    .width = CSSNodeLayoutGetWidth(node),
+    .height = CSSNodeLayoutGetHeight(node),
+  };
+}
+
+- (void)css_applyLayout
+{
+  [self css_sizeThatFits:self.bounds.size];
   _updateFrameRecursive(self);
 }
 
@@ -209,10 +205,7 @@ static CSSSize _measure(
   float height,
   CSSMeasureMode heightMode)
 {
-  const BOOL useExactWidth = (widthMode == CSSMeasureModeExactly);
-  const BOOL useExactHeight = (heightMode == CSSMeasureModeExactly);
-
-  if (useExactHeight && useExactWidth) {
+  if ((widthMode == CSSMeasureModeExactly) && (heightMode == CSSMeasureModeExactly)) {
       return (CSSSize) {
           .width = width,
           .height = height,
@@ -226,8 +219,8 @@ static CSSSize _measure(
   }];
 
   return (CSSSize) {
-    .width = useExactWidth ? width : sizeThatFits.width,
-    .height = useExactHeight ? height : sizeThatFits.height,
+    .width = sizeThatFits.width,
+    .height = sizeThatFits.height,
   };
 }
 

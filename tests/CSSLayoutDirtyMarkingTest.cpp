@@ -69,3 +69,25 @@ TEST(CSSLayoutTest, dirty_propagation_only_if_prop_changed) {
 
   CSSNodeFreeRecursive(root);
 }
+
+TEST(CSSLayoutTest, dirty_node_only_if_children_are_actually_removed) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetWidth(root, 50);
+  CSSNodeStyleSetHeight(root, 50);
+
+  const CSSNodeRef child0 = CSSNodeNew();
+  CSSNodeStyleSetWidth(child0, 50);
+  CSSNodeStyleSetHeight(child0, 25);
+  CSSNodeInsertChild(root, child0, 0);
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  CSSNodeRemoveChild(root, CSSNodeNew());
+  EXPECT_FALSE(CSSNodeIsDirty(root));
+
+  CSSNodeRemoveChild(root, child0);
+  EXPECT_TRUE(CSSNodeIsDirty(root));
+
+  CSSNodeFreeRecursive(root);
+}

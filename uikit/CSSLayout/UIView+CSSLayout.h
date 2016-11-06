@@ -23,9 +23,7 @@
 - (void)css_setAlignSelf:(CSSAlign)alignSelf;
 - (void)css_setPositionType:(CSSPositionType)positionType;
 - (void)css_setFlexWrap:(CSSWrapType)flexWrap;
-- (void)css_setOverflow:(CSSOverflow)overflow;
 
-- (void)css_setFlex:(CGFloat)flex;
 - (void)css_setFlexGrow:(CGFloat)flexGrow;
 - (void)css_setFlexShrink:(CGFloat)flexShrink;
 - (void)css_setFlexBasis:(CGFloat)flexBasis;
@@ -45,7 +43,10 @@
 // Get the resolved direction of this node. This won't be CSSDirectionInherit
 - (CSSDirection)css_resolvedDirection;
 
-// Perform a layout calculation and update the frames of the views in the hierarchy with th results
+//! @abstract Perform a layout calculation and update the frames of the views in the hierarchy with th results
 - (void)css_applyLayout;
+
+//! @abstract Compute the size of a layout with a constrained size.
+- (CGSize)css_sizeThatFits:(CGSize)constrainedSize;
 
 @end
