@@ -277,22 +277,43 @@ static void _attachNodesRecursive(UIView *view) {
   }
 }
 
+static CGFloat _roundPixelValue(CGFloat value)
+{
+  static CGFloat scale;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^(){
+    scale = [UIScreen mainScreen].scale;
+  });
+
+  return round(value * scale) / scale;
+}
+
 static void _updateFrameRecursive(UIView *view) {
+  NSAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
   CSSNodeRef node = [view cssNode];
-  const BOOL usesFlexbox = [view css_usesFlexbox];
-  const BOOL isLeaf = !usesFlexbox || view.subviews.count == 0;
+
+  const CGPoint topLeft = {
+    CSSNodeLayoutGetLeft(node),
+    CSSNodeLayoutGetTop(node),
+  };
+
+  const CGPoint bottomRight = {
+    topLeft.x + CSSNodeLayoutGetWidth(node),
+    topLeft.y + CSSNodeLayoutGetHeight(node),
+  };
 
   view.frame = (CGRect) {
     .origin = {
-      .x = CSSNodeLayoutGetLeft(node),
-      .y = CSSNodeLayoutGetTop(node),
+      .x = _roundPixelValue(topLeft.x),
+      .y = _roundPixelValue(topLeft.y),
     },
     .size = {
-      .width = CSSNodeLayoutGetWidth(node),
-      .height = CSSNodeLayoutGetHeight(node),
+      .width = _roundPixelValue(bottomRight.x) - _roundPixelValue(topLeft.x),
+      .height = _roundPixelValue(bottomRight.y) - _roundPixelValue(topLeft.y),
     },
   };
 
+  const BOOL isLeaf = ![view css_usesFlexbox] || view.subviews.count == 0;
   if (!isLeaf) {
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
       _updateFrameRecursive(view.subviews[i]);
