@@ -51,8 +51,8 @@ static CSSSize _jniMeasureFunc(CSSNodeRef node,
                                CSSMeasureMode heightMode) {
   auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
 
-  static auto measureFunc =
-      obj->getClass()->getMethod<jlong(jfloat, jint, jfloat, jint)>("measure");
+  static auto measureFunc = findClassLocal("com/facebook/csslayout/CSSNode")
+      ->getMethod<jlong(jfloat, jint, jfloat, jint)>("measure");
 
   _jniTransferLayoutDirection(node, obj);
   const auto measureResult = measureFunc(obj, width, widthMode, height, heightMode);
