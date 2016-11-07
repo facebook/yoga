@@ -130,11 +130,6 @@
   CSSNodeStyleSetPadding([self cssNode], edge, padding);
 }
 
-- (void)css_setBorder:(CGFloat)border forEdge:(CSSEdge)edge
-{
-  CSSNodeStyleSetBorder([self cssNode], edge, border);
-}
-
 - (void)css_setWidth:(CGFloat)width
 {
   CSSNodeStyleSetWidth([self cssNode], width);

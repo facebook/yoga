@@ -31,7 +31,6 @@
 - (void)css_setPosition:(CGFloat)position forEdge:(CSSEdge)edge;
 - (void)css_setMargin:(CGFloat)margin forEdge:(CSSEdge)edge;
 - (void)css_setPadding:(CGFloat)padding forEdge:(CSSEdge)edge;
-- (void)css_setBorder:(CGFloat)border forEdge:(CSSEdge)edge;
 
 - (void)css_setWidth:(CGFloat)width;
 - (void)css_setHeight:(CGFloat)height;
