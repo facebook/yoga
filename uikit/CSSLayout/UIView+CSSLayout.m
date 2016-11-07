@@ -205,6 +205,7 @@ static CSSSize _measure(
   float height,
   CSSMeasureMode heightMode)
 {
+  // sizeThatFits: can be expensive. If we can avoid it, lets do it.
   if ((widthMode == CSSMeasureModeExactly) && (heightMode == CSSMeasureModeExactly)) {
       return (CSSSize) {
           .width = width,
@@ -212,16 +213,36 @@ static CSSSize _measure(
       };
   }
 
+  const CGFloat constrainedWidth = (widthMode == CSSMeasureModeUndefined) ? CGFLOAT_MAX : width;
+  const CGFloat constrainedHeight = (heightMode == CSSMeasureModeUndefined) ? CGFLOAT_MAX: height;
+
   UIView *view = (__bridge UIView*) CSSNodeGetContext(node);
   const CGSize sizeThatFits = [view sizeThatFits:(CGSize) {
-    .width = widthMode == CSSMeasureModeUndefined ? CGFLOAT_MAX : width,
-    .height = heightMode == CSSMeasureModeUndefined ? CGFLOAT_MAX : height,
+    .width = constrainedWidth,
+    .height = constrainedHeight,
   }];
 
   return (CSSSize) {
-    .width = sizeThatFits.width,
-    .height = sizeThatFits.height,
+    .width = _sanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
+    .height = _sanitizeMeasurement(constrainedHeight, sizeThatFits.height, heightMode),
   };
+}
+
+static CGFloat _sanitizeMeasurement(
+  CGFloat constrainedSize,
+  CGFloat measuredSize,
+  CSSMeasureMode measureMode)
+{
+  CGFloat result;
+  if (measureMode == CSSMeasureModeExactly) {
+    result = constrainedSize;
+  } else if (measureMode == CSSMeasureModeAtMost) {
+    result = MIN(constrainedSize, measuredSize);
+  } else {
+    result = measuredSize;
+  }
+
+  return result;
 }
 
 static void _attachNodesRecursive(UIView *view) {
