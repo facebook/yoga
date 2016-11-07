@@ -10,6 +10,7 @@
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
+#if GTEST_HAS_DEATH_TEST
 static CSSSize _measure(CSSNodeRef node,
                         float width,
                         CSSMeasureMode widthMode,
@@ -36,3 +37,4 @@ TEST(CSSLayoutTest, cannot_add_measure_func_to_non_leaf_node) {
 
   ASSERT_DEATH(CSSNodeSetMeasureFunc(root, _measure), "Cannot set measure function.*");
 }
+#endif
