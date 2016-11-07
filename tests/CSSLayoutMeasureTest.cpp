@@ -15,30 +15,24 @@ static CSSSize _measure(CSSNodeRef node,
                         CSSMeasureMode widthMode,
                         float height,
                         CSSMeasureMode heightMode) {
-  int *measureCount = (int *)CSSNodeGetContext(node);
-  *measureCount = *measureCount + 1;
   return CSSSize {
-      .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
-      .height = heightMode == CSSMeasureModeUndefined ? 10 : width,
+      .width = 0,
+      .height = 0,
   };
 }
 
-TEST(CSSLayoutTest, ignore_measure_on_non_leaf_node) {
+TEST(CSSLayoutTest, cannot_add_child_to_node_with_measure_func) {
   const CSSNodeRef root = CSSNodeNew();
-  int measureCount = 0;
-  CSSNodeSetContext(root, &measureCount);
   CSSNodeSetMeasureFunc(root, _measure);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  int childMeasureCount = 0;
-  CSSNodeSetContext(root_child0, &childMeasureCount);
-  CSSNodeSetMeasureFunc(root_child0, _measure);
+  ASSERT_DEATH(CSSNodeInsertChild(root, root_child0, 0), "Cannot add child.*");
+}
+
+TEST(CSSLayoutTest, cannot_add_measure_func_to_non_leaf_node) {
+  const CSSNodeRef root = CSSNodeNew();
+  const CSSNodeRef root_child0 = CSSNodeNew();
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
-
-  ASSERT_EQ(0, measureCount);
-  ASSERT_EQ(1, childMeasureCount);
-
-  CSSNodeFreeRecursive(root);
+  ASSERT_DEATH(CSSNodeSetMeasureFunc(root, _measure), "Cannot set measure function.*");
 }
