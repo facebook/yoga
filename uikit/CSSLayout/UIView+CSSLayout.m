@@ -200,14 +200,6 @@ static CSSSize _measure(
   float height,
   CSSMeasureMode heightMode)
 {
-  // sizeThatFits: can be expensive. If we can avoid it, lets do it.
-  if ((widthMode == CSSMeasureModeExactly) && (heightMode == CSSMeasureModeExactly)) {
-      return (CSSSize) {
-          .width = width,
-          .height = height,
-      };
-  }
-
   const CGFloat constrainedWidth = (widthMode == CSSMeasureModeUndefined) ? CGFLOAT_MAX : width;
   const CGFloat constrainedHeight = (heightMode == CSSMeasureModeUndefined) ? CGFLOAT_MAX: height;
 
