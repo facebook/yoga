@@ -62,19 +62,6 @@ namespace Facebook.CSSLayout
             Native.CSSNodeMarkDirty(_cssNode);
         }
 
-        public bool IsTextNode
-        {
-            get
-            {
-                return Native.CSSNodeGetIsTextnode(_cssNode);
-            }
-
-            set
-            {
-                Native.CSSNodeSetIsTextnode(_cssNode, value);
-            }
-        }
-
         public bool HasNewLayout
         {
             get

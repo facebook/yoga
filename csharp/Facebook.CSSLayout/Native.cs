@@ -93,13 +93,6 @@ namespace Facebook.CSSLayout
         public static extern CSSMeasureFunc CSSNodeGetMeasureFunc(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeSetIsTextnode(IntPtr node, [MarshalAs(UnmanagedType.I1)] bool isTextNode);
-
-        [DllImport(DllName)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool CSSNodeGetIsTextnode(IntPtr node);
-
-        [DllImport(DllName)]
         public static extern void CSSNodeSetHasNewLayout(IntPtr node, [MarshalAs(UnmanagedType.I1)] bool hasNewLayout);
 
         [DllImport(DllName)]

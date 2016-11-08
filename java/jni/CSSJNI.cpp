@@ -129,14 +129,6 @@ void jni_CSSNodeSetHasMeasureFunc(alias_ref<jobject>,
   CSSNodeSetMeasureFunc(_jlong2CSSNodeRef(nativePointer), hasMeasureFunc ? _jniMeasureFunc : NULL);
 }
 
-void jni_CSSNodeSetIsTextNode(alias_ref<jobject>, jlong nativePointer, jboolean isTextNode) {
-  CSSNodeSetIsTextnode(_jlong2CSSNodeRef(nativePointer), isTextNode);
-}
-
-jboolean jni_CSSNodeGetIsTextNode(alias_ref<jobject>, jlong nativePointer) {
-  return (jboolean) CSSNodeGetIsTextnode(_jlong2CSSNodeRef(nativePointer));
-}
-
 jboolean jni_CSSNodeHasNewLayout(alias_ref<jobject>, jlong nativePointer) {
   return (jboolean) CSSNodeGetHasNewLayout(_jlong2CSSNodeRef(nativePointer));
 }
@@ -209,8 +201,6 @@ jint JNI_OnLoad(JavaVM *vm, void *) {
                         CSSMakeNativeMethod(jni_CSSNodeReset),
                         CSSMakeNativeMethod(jni_CSSNodeInsertChild),
                         CSSMakeNativeMethod(jni_CSSNodeRemoveChild),
-                        CSSMakeNativeMethod(jni_CSSNodeSetIsTextNode),
-                        CSSMakeNativeMethod(jni_CSSNodeGetIsTextNode),
                         CSSMakeNativeMethod(jni_CSSNodeCalculateLayout),
                         CSSMakeNativeMethod(jni_CSSNodeHasNewLayout),
                         CSSMakeNativeMethod(jni_CSSNodeMarkDirty),

@@ -59,26 +59,6 @@ TEST(CSSLayoutTest, measure_once_single_flexible_child) {
   CSSNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, remeasure_text_node_height_change) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
-
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeSetIsTextnode(root_child0, true);
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  int measureCount = 0;
-  CSSNodeSetContext(root_child0, &measureCount);
-  CSSNodeSetMeasureFunc(root_child0, _measureMax);
-  CSSNodeInsertChild(root, root_child0, 0);
-
-  CSSNodeCalculateLayout(root, 100, 10, CSSDirectionLTR);
-  CSSNodeCalculateLayout(root, 100, 20, CSSDirectionLTR);
-
-  ASSERT_EQ(1, measureCount);
-
-  CSSNodeFreeRecursive(root);
-}
-
 TEST(CSSLayoutTest, remeasure_with_same_exact_width_larger_than_needed_height) {
   const CSSNodeRef root = CSSNodeNew();
 
