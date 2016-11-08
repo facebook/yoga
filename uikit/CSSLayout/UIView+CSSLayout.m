@@ -276,7 +276,7 @@ static CGFloat _roundPixelValue(CGFloat value)
 }
 
 static void _updateFrameRecursive(UIView *view) {
-  NSAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
+  NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
   CSSNodeRef node = [view cssNode];
 
   const CGPoint topLeft = {
