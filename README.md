@@ -152,5 +152,8 @@ Run `gentest/gentest.rb` to generate test code and re-run `buck test //:CSSLayou
 
 You may need to install the latest watir-webdriver gem (`gem install watir-webdriver`) and [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) to run `gentest/gentest.rb` Ruby script.
 
+#### .NET
+.NET testing is not integrated in buck yet, you might need to set up .NET testing environment. We have a script which to launch C# test on macOS, `csharp/tests/Facebook.CSSLayout/test_macos.sh`.
+
 ### Benchmarks
 Benchmarks are located in `benchmarks/CSSBenchmark.c` and can be run with `buck run //benchmarks:benchmarks`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed.
