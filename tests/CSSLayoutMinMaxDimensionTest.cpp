@@ -41,6 +41,12 @@
   <div style="width: 50px; height: 50px;"></div>
   <div style="width: 50px; height: 50px;"></div>
 </div>
+
+<div id="flex_grow_within_max_width" style="width: 200px; height: 100px;">
+  <div style="flex-direction: row; max-width: 100px;">
+    <div style="height: 20px; flex-grow: 1;"></div>
+  </div>
+</div>
  *
  */
 
@@ -360,6 +366,57 @@ TEST(CSSLayoutTest, justify_content_overflow_min_max) {
   ASSERT_EQ(80, CSSNodeLayoutGetTop(root_child2));
   ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
+}
+
+TEST(CSSLayoutTest, flex_grow_within_max_width) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetWidth(root, 200);
+  CSSNodeStyleSetHeight(root, 100);
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  CSSNodeStyleSetFlexDirection(root_child0, CSSFlexDirectionRow);
+  CSSNodeStyleSetMaxWidth(root_child0, 100);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  const CSSNodeRef root_child0_child0 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child0_child0, 1);
+  CSSNodeStyleSetHeight(root_child0_child0, 20);
+  CSSNodeInsertChild(root_child0, root_child0_child0, 0);
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(200, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(20, CSSNodeLayoutGetHeight(root_child0));
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0_child0));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0_child0));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0_child0));
+  ASSERT_EQ(20, CSSNodeLayoutGetHeight(root_child0_child0));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(200, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(100, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(20, CSSNodeLayoutGetHeight(root_child0));
+
+  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0_child0));
+  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0_child0));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0_child0));
+  ASSERT_EQ(20, CSSNodeLayoutGetHeight(root_child0_child0));
 
   CSSNodeFreeRecursive(root);
 }
