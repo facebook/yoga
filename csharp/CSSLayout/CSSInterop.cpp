@@ -11,15 +11,12 @@
 
 static CSSInteropLoggerFunc gManagedFunc;
 
-static int unmanagedLogger(const char *format, ...) {
+static int unmanagedLogger(CSSLogLevel level, const char *format, va_list args) {
   int result = 0;
   if (gManagedFunc) {
-    va_list args;
-    va_start(args, format);
     char buffer[256];
     result = vsnprintf(buffer, sizeof(buffer), format, args);
-    (*gManagedFunc)(buffer);
-    va_end(args);
+    (*gManagedFunc)(level, buffer);
   }
   return result;
 }
