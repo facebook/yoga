@@ -27,7 +27,7 @@
 </div>
 
 <div id="do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent" style="height: 50px; width: 50px; overflow: hidden; flex-direction: row;">
-  <div style="position: absolute; start: 0; top: 0;">
+  <div style="position: absolute; start: 0px; top: 0px;">
     <div style="width: 100px; height: 100px;"></div>
   </div>
 </div>
@@ -213,6 +213,8 @@ public class CSSLayoutAbsolutePositionTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setPositionType(CSSPositionType.ABSOLUTE);
+    root_child0.setPosition(Spacing.START, 0);
+    root_child0.setPosition(Spacing.TOP, 0);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child0_child0 = new CSSNode();

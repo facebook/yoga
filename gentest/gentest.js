@@ -159,10 +159,10 @@ function checkDefaultValues() {
     {style:'overflow', value:'visible'},
     {style:'flex-grow', value:'0'},
     {style:'flex-shrink', value:'0'},
-    {style:'left', value:'0px'},
-    {style:'top', value:'0px'},
-    {style:'right', value:'0px'},
-    {style:'bottom', value:'0px'},
+    {style:'left', value:'undefined'},
+    {style:'top', value:'undefined'},
+    {style:'right', value:'undefined'},
+    {style:'bottom', value:'undefined'},
   ].forEach(function(item) {
     assert(item.value === getDefaultStyleValue(item.style),
         item.style + ' should be ' + item.value);
@@ -414,6 +414,15 @@ function pixelValue(e, value) {
 function getDefaultStyleValue(style) {
   if (style == 'position') {
     return 'relative';
+  }
+  switch (style) {
+    case 'left':
+    case 'top':
+    case 'right':
+    case 'bottom':
+    case 'start':
+    case 'end':
+      return 'undefined';
   }
   var node = document.getElementById('default');
   return getComputedStyle(node, null).getPropertyValue(style);

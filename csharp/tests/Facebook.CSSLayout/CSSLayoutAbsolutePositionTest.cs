@@ -27,7 +27,7 @@
 </div>
 
 <div id="do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent" style="height: 50px; width: 50px; overflow: hidden; flex-direction: row;">
-  <div style="position: absolute; start: 0; top: 0;">
+  <div style="position: absolute; start: 0px; top: 0px;">
     <div style="width: 100px; height: 100px;"></div>
   </div>
 </div>
@@ -219,6 +219,8 @@ namespace Facebook.CSSLayout
 
             CSSNode root_child0 = new CSSNode();
             root_child0.PositionType = CSSPositionType.Absolute;
+            root_child0.SetPosition(CSSEdge.Start, 0);
+            root_child0.SetPosition(CSSEdge.Top, 0);
             root.Insert(0, root_child0);
 
             CSSNode root_child0_child0 = new CSSNode();
