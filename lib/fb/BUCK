@@ -1,0 +1,41 @@
+# Copyright (c) 2014-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+
+include_defs('//CSSLAYOUT_DEFS')
+
+prebuilt_cxx_library(
+  name = 'ndklog',
+  header_only = True,
+  exported_platform_linker_flags = [
+    ('android.*', ['-llog']),
+  ],
+  visibility = [CSSLAYOUT_ROOT],
+)
+
+cxx_library(
+  name = 'fbjni',
+  srcs = glob(['**/*.cpp']),
+  exported_headers = subdir_glob([('include', '**/*.h')]),
+  header_namespace = '',
+  compiler_flags = [
+    '-DLOG_TAG=\"libfb\"',
+    '-DDISABLE_CPUCAP',
+    '-DDISABLE_XPLAT',
+    '-DHAVE_POSIX_CLOCKS',
+    '-fno-omit-frame-pointer',
+    '-fexceptions',
+    '-frtti',
+    '-Wall',
+    '-Werror',
+    '-Wno-unused-parameter',
+    '-std=c++11',
+  ],
+  deps = JNI_DEPS + [
+    ':ndklog',
+  ],
+  visibility = ['PUBLIC'],
+)

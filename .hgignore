@@ -1,0 +1,11 @@
+.DS_STORE
+
+/buck-cache/
+/buck-out/
+/.buckconfig.local
+/.buckd
+/lib/gtest/googletest-*/
+/gentest/test.html
+
+# Visual studio code
+.vscode

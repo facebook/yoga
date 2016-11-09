@@ -1,0 +1,24 @@
+
+CSSLAYOUT_ROOT = '//...'
+INFER_ANNOTATIONS_TARGET = '//lib/infer-annotations:infer-annotations'
+JSR_305_TARGET = '//lib/jsr-305:jsr-305'
+JUNIT_TARGET = '//lib/junit:junit'
+PROGRUARD_ANNOTATIONS_TARGET = '//java/com/facebook/proguard/annotations:annotations'
+SOLOADER_TARGET = '//lib/soloader:soloader'
+GTEST_TARGET = '//lib/gtest:gtest'
+GTEST_DL_URL = 'https://github.com/google/googletest/archive/release-1.7.0.zip'
+JNI_DEPS = ['//lib/fb:fbjni']
+
+CXX_LIBRARY_WHITELIST = [
+  '//lib/fb:fbjni',
+  '//java:jni',
+]
+
+def csslayout_dep(dep):
+  return '//' + dep
+
+class allow_unsafe_import:
+    def __enter__(self):
+        pass
+    def __exit__(self, type, value, traceback):
+        pass

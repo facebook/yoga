@@ -1,0 +1,43 @@
+# Copyright (c) 2014-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+
+include_defs('//CSSLAYOUT_DEFS')
+
+with allow_unsafe_import():
+    import os
+    import urllib2
+    import zipfile
+
+# Download gtest dep if it does not exists in path
+current_dir = os.path.dirname(os.path.realpath(__file__))
+gtest_folder = 'googletest-release-1.7.0'
+if GTEST_DL_URL != None and not os.path.isdir(current_dir + gtest_folder):
+    gtest = urllib2.urlopen('https://github.com/google/googletest/archive/release-1.7.0.zip').read()
+    with open("gtest.zip", 'w') as f:
+        f.write(gtest)
+    with zipfile.ZipFile('gtest.zip',"r") as zip:
+        zip.extractall(os.path.dirname(os.path.realpath(__file__)))
+    os.remove('gtest.zip')
+
+COMPILER_FLAGS = [
+  '-std=c++11',
+  '-Wno-missing-prototypes',
+]
+
+cxx_library(
+  name = 'gtest',
+  srcs = glob([gtest_folder + '/src/*.cc']),
+  exported_headers = subdir_glob([
+    (gtest_folder + '/include', '**/*.h'),
+    (gtest_folder, 'src/*.h'),
+    (gtest_folder, 'src/*.cc'),
+  ]),
+  header_namespace = '',
+  compiler_flags = COMPILER_FLAGS,
+  deps = [],
+  visibility = [CSSLAYOUT_ROOT],
+)

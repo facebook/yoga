@@ -1,8 +1,25 @@
-language: c
-compiler:
-  - clang
-  - gcc
-before_script:
-  - sudo apt-get update -q
-  - sudo apt-get install nodejs
-script: make
+# Copyright (c) 2014-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+
+os: osx
+osx_image: xcode7.3
+language: cpp
+compiler: clang
+
+before_install:
+  - brew update
+  - brew tap facebook/fb
+  - brew install buck
+  - brew outdated xctool || brew upgrade xctool
+
+script:
+  - buck test //:CSSLayout
+  - buck test //java:java
+  - buck test //uikit/CSSLayout:CSSLayout
+  - buck run  //benchmark:benchmark
+  - git checkout HEAD^
+  - buck run  //benchmark:benchmark

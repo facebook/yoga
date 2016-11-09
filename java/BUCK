@@ -1,0 +1,56 @@
+# Copyright (c) 2014-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
+
+include_defs('//CSSLAYOUT_DEFS')
+
+cxx_library(
+  name = 'jni',
+  soname = 'libcsslayout.$(ext)',
+  srcs = glob(['jni/*.cpp']),
+  header_namespace = '',
+  compiler_flags = [
+    '-fno-omit-frame-pointer',
+    '-fexceptions',
+    '-Wall',
+    '-Werror',
+    '-O3',
+    '-std=c++11',
+  ],
+  deps = JNI_DEPS + [
+    csslayout_dep(':CSSLayout'),
+  ],
+  visibility = ['PUBLIC'],
+)
+
+java_library(
+  name = 'java',
+  srcs = glob(['com/facebook/csslayout/*.java']),
+  tests=[
+    csslayout_dep('/java:tests'),
+  ],
+  source = '1.7',
+  target = '1.7',
+  deps = [
+    ':jni',
+    INFER_ANNOTATIONS_TARGET,
+    JSR_305_TARGET,
+    PROGRUARD_ANNOTATIONS_TARGET,
+    SOLOADER_TARGET,
+  ],
+  visibility = ['PUBLIC'],
+)
+
+java_test(
+  name = 'tests',
+  srcs = glob(['tests/**/*.java']),
+  deps = [
+    ':java',
+    JUNIT_TARGET,
+  ],
+  use_cxx_libraries = True,
+  cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
+)
