@@ -7,7 +7,9 @@ PROGRUARD_ANNOTATIONS_TARGET = '//java/com/facebook/proguard/annotations:annotat
 SOLOADER_TARGET = '//lib/soloader:soloader'
 GTEST_TARGET = '//lib/gtest:gtest'
 GTEST_DL_URL = 'https://github.com/google/googletest/archive/release-1.7.0.zip'
-JNI_DEPS = ['//lib/fb:fbjni']
+
+JNI_TARGET = '//lib/jni:jni'
+FBJNI_TARGET = '//lib/fb:fbjni'
 
 CXX_LIBRARY_WHITELIST = [
   '//lib/fb:fbjni',

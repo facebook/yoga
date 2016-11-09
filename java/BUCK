@@ -20,7 +20,9 @@ cxx_library(
     '-O3',
     '-std=c++11',
   ],
-  deps = JNI_DEPS + [
+  deps = [
+    FBJNI_TARGET,
+    JNI_TARGET,
     csslayout_dep(':CSSLayout'),
   ],
   visibility = ['PUBLIC'],
@@ -30,7 +32,7 @@ java_library(
   name = 'java',
   srcs = glob(['com/facebook/csslayout/*.java']),
   tests=[
-    csslayout_dep('/java:tests'),
+    csslayout_dep('java:tests'),
   ],
   source = '1.7',
   target = '1.7',
@@ -47,10 +49,11 @@ java_library(
 java_test(
   name = 'tests',
   srcs = glob(['tests/**/*.java']),
+  use_cxx_libraries = True,
+  cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
   deps = [
     ':java',
     JUNIT_TARGET,
   ],
-  use_cxx_libraries = True,
-  cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
+  visibility = ['PUBLIC'],
 )

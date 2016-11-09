@@ -34,8 +34,9 @@ cxx_library(
     '-Wno-unused-parameter',
     '-std=c++11',
   ],
-  deps = JNI_DEPS + [
+  deps = [
     ':ndklog',
+    JNI_TARGET,
   ],
   visibility = ['PUBLIC'],
 )
