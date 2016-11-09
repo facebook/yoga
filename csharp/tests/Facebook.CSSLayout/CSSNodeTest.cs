@@ -162,6 +162,30 @@ namespace Facebook.CSSLayout
         }
 
         [Test]
+        [ExpectedException("System.InvalidOperationException")]
+        public void TestChildWithMeasureFunc()
+        {
+            CSSNode node = new CSSNode();
+            node.SetMeasureFunction((_, width, widthMode, height, heightMode) => {
+                return MeasureOutput.Make(100, 150);
+            });
+            CSSNode child = new CSSNode();
+            node.Insert(0, child);
+        }
+
+        [Test]
+        [ExpectedException("System.InvalidOperationException")]
+        public void TestMeasureFuncWithChild()
+        {
+            CSSNode node = new CSSNode();
+            CSSNode child = new CSSNode();
+            node.Insert(0, child);
+            node.SetMeasureFunction((_, width, widthMode, height, heightMode) => {
+                return MeasureOutput.Make(100, 150);
+            });
+        }
+
+        [Test]
         public void TestPrint()
         {
             CSSNode parent = new CSSNode();
