@@ -28,13 +28,25 @@ TEST(CSSLayoutTest, cannot_add_child_to_node_with_measure_func) {
 
   const CSSNodeRef root_child0 = CSSNodeNew();
   ASSERT_DEATH(CSSNodeInsertChild(root, root_child0, 0), "Cannot add child.*");
+  CSSNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, cannot_add_measure_func_to_non_leaf_node) {
+TEST(CSSLayoutTest, cannot_add_nonnull_measure_func_to_non_leaf_node) {
   const CSSNodeRef root = CSSNodeNew();
   const CSSNodeRef root_child0 = CSSNodeNew();
   CSSNodeInsertChild(root, root_child0, 0);
 
   ASSERT_DEATH(CSSNodeSetMeasureFunc(root, _measure), "Cannot set measure function.*");
+  CSSNodeFreeRecursive(root);
 }
+
+TEST(CSSLayoutTest, can_nullify_measure_func_on_any_node) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeInsertChild(root, CSSNodeNew(), 0);
+
+  CSSNodeSetMeasureFunc(root, NULL);
+  ASSERT_TRUE(CSSNodeGetMeasureFunc(root) == NULL);
+  CSSNodeFreeRecursive(root);
+}
+
 #endif
