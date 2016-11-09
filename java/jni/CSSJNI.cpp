@@ -40,8 +40,7 @@ static void _jniTransferLayoutOutputsRecursive(CSSNodeRef root) {
 }
 
 static void _jniPrint(CSSNodeRef node) {
-  auto obj = adopt_local(
-      Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
+  auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
   cout << obj->toString() << endl;
 }
 
@@ -50,11 +49,10 @@ static CSSSize _jniMeasureFunc(CSSNodeRef node,
                                CSSMeasureMode widthMode,
                                float height,
                                CSSMeasureMode heightMode) {
-  auto obj = adopt_local(
-      Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
+  auto obj = adopt_local(Environment::current()->NewLocalRef(reinterpret_cast<jweak>(CSSNodeGetContext(node))));
 
   static auto measureFunc = findClassLocal("com/facebook/csslayout/CSSNode")
-                                ->getMethod<jlong(jfloat, jint, jfloat, jint)>("measure");
+      ->getMethod<jlong(jfloat, jint, jfloat, jint)>("measure");
 
   _jniTransferLayoutDirection(node, obj);
   const auto measureResult = measureFunc(obj, width, widthMode, height, heightMode);
