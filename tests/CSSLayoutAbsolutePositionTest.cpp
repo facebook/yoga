@@ -31,6 +31,11 @@
     <div style="width: 100px; height: 100px;"></div>
   </div>
 </div>
+
+<div id="absolute_layout_within_border" style="height:100px; width:100px; border-width: 10px; margin: 10px; padding: 10px;">
+  <div style="position: absolute; width: 50px; height: 50px; left: 0px; top: 0px;"></div>
+  <div style="position: absolute; width: 50px; height: 50px; right: 0px; bottom: 0px;"></div>
+</div>
  *
  */
 
@@ -245,6 +250,75 @@ TEST(CSSLayoutTest, do_not_clamp_height_of_absolute_node_to_height_of_its_overfl
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0_child0));
   ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0_child0));
   ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0_child0));
+
+  CSSNodeFreeRecursive(root);
+}
+
+TEST(CSSLayoutTest, absolute_layout_within_border) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetMargin(root, CSSEdgeLeft, 10);
+  CSSNodeStyleSetMargin(root, CSSEdgeTop, 10);
+  CSSNodeStyleSetMargin(root, CSSEdgeRight, 10);
+  CSSNodeStyleSetMargin(root, CSSEdgeBottom, 10);
+  CSSNodeStyleSetPadding(root, CSSEdgeLeft, 10);
+  CSSNodeStyleSetPadding(root, CSSEdgeTop, 10);
+  CSSNodeStyleSetPadding(root, CSSEdgeRight, 10);
+  CSSNodeStyleSetPadding(root, CSSEdgeBottom, 10);
+  CSSNodeStyleSetBorder(root, CSSEdgeLeft, 10);
+  CSSNodeStyleSetBorder(root, CSSEdgeTop, 10);
+  CSSNodeStyleSetBorder(root, CSSEdgeRight, 10);
+  CSSNodeStyleSetBorder(root, CSSEdgeBottom, 10);
+  CSSNodeStyleSetWidth(root, 100);
+  CSSNodeStyleSetHeight(root, 100);
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, CSSEdgeLeft, 0);
+  CSSNodeStyleSetPosition(root_child0, CSSEdgeTop, 0);
+  CSSNodeStyleSetWidth(root_child0, 50);
+  CSSNodeStyleSetHeight(root_child0, 50);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  const CSSNodeRef root_child1 = CSSNodeNew();
+  CSSNodeStyleSetPositionType(root_child1, CSSPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child1, CSSEdgeRight, 0);
+  CSSNodeStyleSetPosition(root_child1, CSSEdgeBottom, 0);
+  CSSNodeStyleSetWidth(root_child1, 50);
+  CSSNodeStyleSetHeight(root_child1, 50);
+  CSSNodeInsertChild(root, root_child1, 1);
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_EQ(10, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(10, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+
+  ASSERT_EQ(40, CSSNodeLayoutGetLeft(root_child1));
+  ASSERT_EQ(40, CSSNodeLayoutGetTop(root_child1));
+  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child1));
+  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child1));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_EQ(10, CSSNodeLayoutGetLeft(root));
+  ASSERT_EQ(10, CSSNodeLayoutGetTop(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root));
+  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(10, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+
+  ASSERT_EQ(40, CSSNodeLayoutGetLeft(root_child1));
+  ASSERT_EQ(40, CSSNodeLayoutGetTop(root_child1));
+  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child1));
+  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child1));
 
   CSSNodeFreeRecursive(root);
 }
