@@ -25,10 +25,6 @@ namespace Facebook.CSSLayout
             [MarshalAs(UnmanagedType.FunctionPtr)] CSSLogger.Func func);
 
         [DllImport(DllName)]
-        public static extern void CSSAssertSetFailFunc(
-            [MarshalAs(UnmanagedType.FunctionPtr)] CSSAssert.FailFunc func);
-
-        [DllImport(DllName)]
         public static extern IntPtr CSSNodeNew();
 
         [DllImport(DllName)]

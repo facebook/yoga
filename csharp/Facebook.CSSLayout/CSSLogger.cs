@@ -31,6 +31,11 @@ namespace Facebook.CSSLayout
                     {
                         Logger(level, message);
                     }
+
+                    if (level == CSSLogLevel.Error)
+                    {
+                        throw new InvalidOperationException(message);
+                    }
                 };
                 Native.CSSInteropSetLogger(_managedLogger);
                 _initialized = true;

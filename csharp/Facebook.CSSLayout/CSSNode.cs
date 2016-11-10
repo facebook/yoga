@@ -26,7 +26,6 @@ namespace Facebook.CSSLayout
 
         public CSSNode()
         {
-            CSSAssert.Initialize();
             CSSLogger.Initialize();
 
             _cssNode = Native.CSSNodeNew();

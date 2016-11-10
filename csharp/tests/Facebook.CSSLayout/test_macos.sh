@@ -27,6 +27,6 @@ if [ -d $NUNIT \
 fi
 
 cd "$( dirname "$0" )"
-clang -g -DCSS_ASSERT_FAIL_ENABLED -Wall -Wextra -dynamiclib -o libCSSLayout.dylib -I../../.. ../../../CSSLayout/*.c ../../CSSLayout/CSSInterop.cpp
+clang -g -Wall -Wextra -dynamiclib -o libCSSLayout.dylib -I../../.. ../../../CSSLayout/*.c ../../CSSLayout/CSSInterop.cpp
 mcs -debug -t:library -r:$NUNIT/nunit.framework.dll -out:CSSLayoutTest.dll *.cs ../../../csharp/Facebook.CSSLayout/*cs
 MONO_PATH=$NUNIT mono64 --debug $NUNIT/nunit-console.exe CSSLayoutTest.dll
