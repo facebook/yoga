@@ -59,7 +59,6 @@ CSS_BENCHMARKS({
 
     for (uint32_t i = 0; i < 10; i++) {
       const CSSNodeRef child = CSSNodeNew();
-      CSSNodeSetMeasureFunc(child, _measure);
       CSSNodeStyleSetFlex(child, 1);
       CSSNodeInsertChild(root, child, 0);
 
