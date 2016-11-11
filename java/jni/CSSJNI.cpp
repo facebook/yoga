@@ -68,8 +68,41 @@ static CSSSize _jniMeasureFunc(CSSNodeRef node,
   return CSSSize{measuredWidth, measuredHeight};
 }
 
+static global_ref<jobject> *jLogger;
+static int _jniLog(CSSLogLevel level, const char *format, va_list args) {
+  char buffer[256];
+  int result = vsnprintf(buffer, sizeof(buffer), format, args);
+
+  static auto logFunc =
+      findClassLocal("com/facebook/csslayout/CSSLogger")->getMethod<void(jint, jstring)>("log");
+  logFunc(jLogger->get(), static_cast<jint>(level), Environment::current()->NewStringUTF(buffer));
+
+  return result;
+}
+
 static inline CSSNodeRef _jlong2CSSNodeRef(jlong addr) {
   return reinterpret_cast<CSSNodeRef>(static_cast<intptr_t>(addr));
+}
+
+void jni_CSSLayoutSetLogger(alias_ref<jclass> clazz, alias_ref<jobject> logger) {
+  if (jLogger) {
+    jLogger->releaseAlias();
+    delete jLogger;
+  }
+
+  if (logger) {
+    jLogger = new global_ref<jobject>(make_global(logger));
+    CSSLayoutSetLogger(_jniLog);
+  } else {
+    jLogger = NULL;
+    CSSLayoutSetLogger(NULL);
+  }
+}
+
+void jni_CSSLog(alias_ref<jclass> clazz, jint level, jstring message) {
+  const char *nMessage = Environment::current()->GetStringUTFChars(message, 0);
+  CSSLog(static_cast<CSSLogLevel>(level), "%s", nMessage);
+  Environment::current()->ReleaseStringUTFChars(message, nMessage);
 }
 
 jint jni_CSSNodeGetInstanceCount(alias_ref<jclass> clazz) {
@@ -256,6 +289,8 @@ jint JNI_OnLoad(JavaVM *vm, void *) {
                         CSSMakeNativeMethod(jni_CSSNodeStyleSetMaxHeight),
 
                         CSSMakeNativeMethod(jni_CSSNodeGetInstanceCount),
+                        CSSMakeNativeMethod(jni_CSSLayoutSetLogger),
+                        CSSMakeNativeMethod(jni_CSSLog),
                     });
   });
 }
