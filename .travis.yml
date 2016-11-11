@@ -19,7 +19,7 @@ before_install:
 script:
   - buck test //:CSSLayout
   - buck test //java:java
-  - buck test //uikit/CSSLayout:CSSLayout --config cxx.default_platform=iphonesimulator-x86_64
+  - buck test //CSSLayoutKit:CSSLayoutKit --config cxx.default_platform=iphonesimulator-x86_64
   - buck run  //benchmark:benchmark
   - git checkout HEAD^
   - buck run  //benchmark:benchmark

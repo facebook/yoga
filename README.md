@@ -91,7 +91,7 @@ root.getLayoutHeight();
 ```
 
 ### UIKit
-The full API can be found in `uikit/CSSLayout/UIView+CSSLayout.h`.
+The full API can be found in `CSSLayoutKit/UIView+CSSLayout.h`.
 
 ```objective-c
 UIView *root = [UIView new];
