@@ -7,7 +7,25 @@
 
 include_defs('//CSSLAYOUT_DEFS')
 
-UIKIT_CSSLAYOUT_COMPILER_FLAGS = ['-fobjc-arc']
+UIKIT_CSSLAYOUT_COMPILER_FLAGS = [
+  '-fobjc-arc',
+  '-Wconditional-uninitialized',
+  '-Wdangling-else',
+  '-Wdeprecated-declarations',
+  '-Wimplicit-retain-self',
+  '-Wincomplete-implementation',
+  '-Wobjc-method-access',
+  '-Wobjc-missing-super-calls',
+  '-Wmismatched-return-types',
+  '-Wreturn-type',
+  '-Wno-global-constructors',
+  '-Wno-shadow',
+  '-Wunused-const-variable',
+  '-Wunused-function',
+  '-Wunused-property-ivar',
+  '-Wunused-result',
+  '-Wunused-value',
+]
 
 apple_library(
   name = 'CSSLayoutKit',
