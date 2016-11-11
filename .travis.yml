@@ -15,11 +15,13 @@ before_install:
   - brew tap facebook/fb
   - brew install buck
   - brew outdated xctool || brew upgrade xctool
+  - brew install mono
 
 script:
   - buck test //:CSSLayout
   - buck test //java:java
   - buck test //CSSLayoutKit:CSSLayoutKit --config cxx.default_platform=iphonesimulator-x86_64
+  - sh csharp/tests/Facebook.CSSLayout/test_macos.sh
   - buck run  //benchmark:benchmark
   - git checkout HEAD^
   - buck run  //benchmark:benchmark
