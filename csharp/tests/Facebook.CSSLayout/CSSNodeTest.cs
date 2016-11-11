@@ -157,8 +157,20 @@ namespace Facebook.CSSLayout
                 return MeasureOutput.Make(100, 150);
             });
             node.CalculateLayout();
-            Assert.AreEqual(100, (int)node.LayoutWidth);
-            Assert.AreEqual(150, (int)node.LayoutHeight);
+            Assert.AreEqual(100, node.LayoutWidth);
+            Assert.AreEqual(150, node.LayoutHeight);
+        }
+
+        [Test]
+        public void TestMeasureFuncWithFloat()
+        {
+            CSSNode node = new CSSNode();
+            node.SetMeasureFunction((_, width, widthMode, height, heightMode) => {
+                return MeasureOutput.Make(123.4f, 81.7f);
+            });
+            node.CalculateLayout();
+            Assert.AreEqual(123, node.LayoutWidth);
+            Assert.AreEqual(81, node.LayoutHeight);
         }
 
         [Test]

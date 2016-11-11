@@ -11,19 +11,24 @@ namespace Facebook.CSSLayout
 {
     public class MeasureOutput
     {
+        public static long Make(double width, double height)
+        {
+            return Make((int) width, (int) height);
+        }
+
         public static long Make(int width, int height)
         {
-          return (long)(((ulong) width) << 32 | ((ulong) height));
+            return (long)(((ulong) width) << 32 | ((ulong) height));
         }
 
         public static int GetWidth(long measureOutput)
         {
-          return (int) (0xFFFFFFFF & (measureOutput >> 32));
+            return (int) (0xFFFFFFFF & (measureOutput >> 32));
         }
 
         public static int GetHeight(long measureOutput)
         {
-          return (int) (0xFFFFFFFF & measureOutput);
+            return (int) (0xFFFFFFFF & measureOutput);
         }
     }
 }

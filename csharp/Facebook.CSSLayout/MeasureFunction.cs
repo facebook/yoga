@@ -9,10 +9,10 @@
 
 namespace Facebook.CSSLayout
 {
-  public delegate long MeasureFunction(
-      CSSNode node,
-      float width,
-      CSSMeasureMode widthMode,
-      float height,
-      CSSMeasureMode heightMode);
+    public delegate long MeasureFunction(
+        CSSNode node,
+        float width,
+        CSSMeasureMode widthMode,
+        float height,
+        CSSMeasureMode heightMode);
 }
