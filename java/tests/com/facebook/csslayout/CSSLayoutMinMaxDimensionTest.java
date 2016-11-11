@@ -47,6 +47,12 @@
     <div style="height: 20px; flex-grow: 1;"></div>
   </div>
 </div>
+
+<div id="flex_grow_within_constrained_max_width" style="width: 200px; height: 100px;">
+  <div style="flex-direction: row; max-width: 300px;">
+    <div style="height: 20px; flex-grow: 1;"></div>
+  </div>
+</div>
  *
  */
 
@@ -430,6 +436,58 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(0, root_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0, root_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(20, root_child0_child0.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
+  public void test_flex_grow_within_constrained_max_width() {
+    final CSSNode root = new CSSNode();
+    root.setStyleWidth(200);
+    root.setStyleHeight(100);
+
+    final CSSNode root_child0 = new CSSNode();
+    root_child0.setFlexDirection(CSSFlexDirection.ROW);
+    root_child0.setStyleMaxWidth(300);
+    root.addChildAt(root_child0, 0);
+
+    final CSSNode root_child0_child0 = new CSSNode();
+    root_child0_child0.setFlexGrow(1);
+    root_child0_child0.setStyleHeight(20);
+    root_child0.addChildAt(root_child0_child0, 0);
+    root.setDirection(CSSDirection.LTR);
+    root.calculateLayout(null);
+
+    assertEquals(0, root.getLayoutX(), 0.0f);
+    assertEquals(0, root.getLayoutY(), 0.0f);
+    assertEquals(200, root.getLayoutWidth(), 0.0f);
+    assertEquals(100, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0, root_child0.getLayoutY(), 0.0f);
+    assertEquals(200, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(20, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(200, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(20, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    root.setDirection(CSSDirection.RTL);
+    root.calculateLayout(null);
+
+    assertEquals(0, root.getLayoutX(), 0.0f);
+    assertEquals(0, root.getLayoutY(), 0.0f);
+    assertEquals(200, root.getLayoutWidth(), 0.0f);
+    assertEquals(100, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0, root_child0.getLayoutY(), 0.0f);
+    assertEquals(200, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(20, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(200, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(20, root_child0_child0.getLayoutHeight(), 0.0f);
   }
 

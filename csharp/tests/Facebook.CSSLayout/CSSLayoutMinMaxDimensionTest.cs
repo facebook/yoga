@@ -47,6 +47,12 @@
     <div style="height: 20px; flex-grow: 1;"></div>
   </div>
 </div>
+
+<div id="flex_grow_within_constrained_max_width" style="width: 200px; height: 100px;">
+  <div style="flex-direction: row; max-width: 300px;">
+    <div style="height: 20px; flex-grow: 1;"></div>
+  </div>
+</div>
  *
  */
 
@@ -439,6 +445,59 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(0, root_child0_child0.LayoutX);
             Assert.AreEqual(0, root_child0_child0.LayoutY);
             Assert.AreEqual(100, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(20, root_child0_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_flex_grow_within_constrained_max_width()
+        {
+            CSSNode root = new CSSNode();
+            root.StyleWidth = 200;
+            root.StyleHeight = 100;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.FlexDirection = CSSFlexDirection.Row;
+            root_child0.StyleMaxWidth = 300;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.FlexGrow = 1;
+            root_child0_child0.StyleHeight = 20;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LeftToRight;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0, root.LayoutX);
+            Assert.AreEqual(0, root.LayoutY);
+            Assert.AreEqual(200, root.LayoutWidth);
+            Assert.AreEqual(100, root.LayoutHeight);
+
+            Assert.AreEqual(0, root_child0.LayoutX);
+            Assert.AreEqual(0, root_child0.LayoutY);
+            Assert.AreEqual(200, root_child0.LayoutWidth);
+            Assert.AreEqual(20, root_child0.LayoutHeight);
+
+            Assert.AreEqual(0, root_child0_child0.LayoutX);
+            Assert.AreEqual(0, root_child0_child0.LayoutY);
+            Assert.AreEqual(200, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(20, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RightToLeft;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0, root.LayoutX);
+            Assert.AreEqual(0, root.LayoutY);
+            Assert.AreEqual(200, root.LayoutWidth);
+            Assert.AreEqual(100, root.LayoutHeight);
+
+            Assert.AreEqual(0, root_child0.LayoutX);
+            Assert.AreEqual(0, root_child0.LayoutY);
+            Assert.AreEqual(200, root_child0.LayoutWidth);
+            Assert.AreEqual(20, root_child0.LayoutHeight);
+
+            Assert.AreEqual(0, root_child0_child0.LayoutX);
+            Assert.AreEqual(0, root_child0_child0.LayoutY);
+            Assert.AreEqual(200, root_child0_child0.LayoutWidth);
             Assert.AreEqual(20, root_child0_child0.LayoutHeight);
         }
 
