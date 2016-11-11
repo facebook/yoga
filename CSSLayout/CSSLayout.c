@@ -294,7 +294,7 @@ void CSSNodeHide(const CSSNodeRef node) {
 }
 
 void CSSNodeShow(const CSSNodeRef node) {
-  node->isVisible = true;;
+  node->isVisible = true;
 }
 
 WIN_EXPORT bool CSSNodeIsVisible(const CSSNodeRef node) {
@@ -1363,6 +1363,9 @@ static void layoutNodeImpl(const CSSNodeRef node,
   // STEP 3: DETERMINE FLEX BASIS FOR EACH ITEM
   for (uint32_t i = 0; i < childCount; i++) {
     const CSSNodeRef child = CSSNodeListGet(node->children, i);
+    if (NULL != child && false == CSSNodeIsVisible(child)) {
+      continue;
+    }
 
     if (performLayout) {
       // Set the initial position (relative to the parent).
@@ -1432,6 +1435,10 @@ static void layoutNodeImpl(const CSSNodeRef node,
     // Add items to the current line until it's full or we run out of items.
     for (uint32_t i = startOfLineIndex; i < childCount; i++, endOfLineIndex++) {
       const CSSNodeRef child = CSSNodeListGet(node->children, i);
+      if (NULL != child && false == CSSNodeIsVisible(child)) {
+        continue;
+      }
+
       child->lineIndex = lineCount;
 
       if (child->style.positionType != CSSPositionTypeAbsolute) {
@@ -1745,6 +1752,9 @@ static void layoutNodeImpl(const CSSNodeRef node,
 
     for (uint32_t i = startOfLineIndex; i < endOfLineIndex; i++) {
       const CSSNodeRef child = CSSNodeListGet(node->children, i);
+      if (NULL != child && false == CSSNodeIsVisible(child)) {
+        continue;
+      }
 
       if (child->style.positionType == CSSPositionTypeAbsolute &&
           isLeadingPosDefined(child, mainAxis)) {
@@ -1816,6 +1826,9 @@ static void layoutNodeImpl(const CSSNodeRef node,
     if (performLayout) {
       for (uint32_t i = startOfLineIndex; i < endOfLineIndex; i++) {
         const CSSNodeRef child = CSSNodeListGet(node->children, i);
+        if (NULL != child && false == CSSNodeIsVisible(child)) {
+          continue;
+        }
 
         if (child->style.positionType == CSSPositionTypeAbsolute) {
           // If the child is absolutely positioned and has a
@@ -1931,6 +1944,9 @@ static void layoutNodeImpl(const CSSNodeRef node,
       float lineHeight = 0;
       for (ii = startIndex; ii < childCount; ii++) {
         const CSSNodeRef child = CSSNodeListGet(node->children, ii);
+        if (NULL != child && false == CSSNodeIsVisible(child)) {
+          continue;
+        }
 
         if (child->style.positionType == CSSPositionTypeRelative) {
           if (child->lineIndex != i) {
@@ -1950,6 +1966,9 @@ static void layoutNodeImpl(const CSSNodeRef node,
       if (performLayout) {
         for (ii = startIndex; ii < endIndex; ii++) {
           const CSSNodeRef child = CSSNodeListGet(node->children, ii);
+          if (NULL != child && false == CSSNodeIsVisible(child)) {
+            continue;
+          }
 
           if (child->style.positionType == CSSPositionTypeRelative) {
             switch (getAlignItem(node, child)) {
@@ -2039,6 +2058,9 @@ static void layoutNodeImpl(const CSSNodeRef node,
     if (needsMainTrailingPos || needsCrossTrailingPos) {
       for (uint32_t i = 0; i < childCount; i++) {
         const CSSNodeRef child = CSSNodeListGet(node->children, i);
+        if (NULL != child && false == CSSNodeIsVisible(child)) {
+          continue;
+        }
 
         if (needsMainTrailingPos) {
           setTrailingPosition(node, child, mainAxis);

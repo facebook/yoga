@@ -160,6 +160,7 @@ WIN_EXPORT bool CSSNodeIsDirty(const CSSNodeRef node);
 WIN_EXPORT void CSSNodeHide(const CSSNodeRef node);
 WIN_EXPORT void CSSNodeShow(const CSSNodeRef node);
 WIN_EXPORT bool CSSNodeIsVisible(const CSSNodeRef node);
+  
 
 WIN_EXPORT void CSSNodePrint(const CSSNodeRef node, const CSSPrintOptions options);
 
