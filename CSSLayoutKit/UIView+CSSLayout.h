@@ -12,8 +12,10 @@
 
 @interface UIView (CSSLayout)
 
-- (void)css_setUsesFlexbox:(BOOL)enabled;
-- (BOOL)css_usesFlexbox;
+/**
+ The property that decides during layout/sizing whether or not css_* properties should be applied. Defaults to NO.
+ */
+@property (nonatomic, readwrite, assign, setter=css_setUsesFlexbox:) BOOL css_usesFlexbox;
 
 - (void)css_setDirection:(CSSDirection)direction;
 - (void)css_setFlexDirection:(CSSFlexDirection)flexDirection;
@@ -39,13 +41,19 @@
 - (void)css_setMaxWidth:(CGFloat)maxWidth;
 - (void)css_setMaxHeight:(CGFloat)maxHeight;
 
-// Get the resolved direction of this node. This won't be CSSDirectionInherit
+/**
+ Get the resolved direction of this node. This won't be CSSDirectionInherit
+ */
 - (CSSDirection)css_resolvedDirection;
 
-//! @abstract Perform a layout calculation and update the frames of the views in the hierarchy with th results
+/**
+ Perform a layout calculation and update the frames of the views in the hierarchy with th results
+ */
 - (void)css_applyLayout;
 
-//! @abstract Compute the size of a layout with a constrained size.
+/**
+ Compute the size of a layout with a constrained size.
+ */
 - (CGSize)css_sizeThatFits:(CGSize)constrainedSize;
 
 @end
