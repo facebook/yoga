@@ -550,5 +550,17 @@ namespace Facebook.CSSLayout
         {
             return Native.CSSNodeGetInstanceCount();
         }
+
+        public static void setExperimentalFeatureEnabled(
+            CSSExperimentalFeature feature,
+            bool enabled)
+        {
+            return Native.CSSLayoutSetExperimentalFeatureEnabled(feature, enabled);
+        }
+
+        public static bool isExperimentalFeatureEnabled(CSSExperimentalFeature feature)
+        {
+            return Native.CSSLayoutIsExperimentalFeatureEnabled(feature);
+        }
     }
 }
