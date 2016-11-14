@@ -85,7 +85,7 @@
   CSSNodeStyleSetPositionType([self cssNode], positionType);
 }
 
-- (void)css_setFlexWrap:(CSSWrapType)flexWrap
+- (void)css_setFlexWrap:(CSSWrap)flexWrap
 {
   CSSNodeStyleSetFlexWrap([self cssNode], flexWrap);
 }

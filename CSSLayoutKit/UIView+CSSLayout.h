@@ -24,7 +24,7 @@
 - (void)css_setAlignItems:(CSSAlign)alignItems;
 - (void)css_setAlignSelf:(CSSAlign)alignSelf;
 - (void)css_setPositionType:(CSSPositionType)positionType;
-- (void)css_setFlexWrap:(CSSWrapType)flexWrap;
+- (void)css_setFlexWrap:(CSSWrap)flexWrap;
 
 - (void)css_setFlexGrow:(CGFloat)flexGrow;
 - (void)css_setFlexShrink:(CGFloat)flexShrink;

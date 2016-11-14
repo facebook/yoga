@@ -23,7 +23,7 @@ TEST(CSSLayoutTest, assert_default_values) {
   ASSERT_EQ(CSSAlignStretch, CSSNodeStyleGetAlignItems(root));
   ASSERT_EQ(CSSAlignAuto, CSSNodeStyleGetAlignSelf(root));
   ASSERT_EQ(CSSPositionTypeRelative, CSSNodeStyleGetPositionType(root));
-  ASSERT_EQ(CSSWrapTypeNoWrap, CSSNodeStyleGetFlexWrap(root));
+  ASSERT_EQ(CSSWrapNoWrap, CSSNodeStyleGetFlexWrap(root));
   ASSERT_EQ(CSSOverflowVisible, CSSNodeStyleGetOverflow(root));
   ASSERT_EQ(0, CSSNodeStyleGetFlexGrow(root));
   ASSERT_EQ(0, CSSNodeStyleGetFlexShrink(root));

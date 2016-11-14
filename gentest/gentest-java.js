@@ -93,8 +93,8 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   CSSUndefined:{value:'CSSConstants.UNDEFINED'},
 
-  CSSWrapTypeNoWrap:{value:'CSSWrap.NO_WRAP'},
-  CSSWrapTypeWrap:{value:'CSSWrap.WRAP'},
+  CSSWrapNoWrap:{value:'CSSWrap.NO_WRAP'},
+  CSSWrapWrap:{value:'CSSWrap.WRAP'},
 
   CSSNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.setDirection(' + dir + ');');

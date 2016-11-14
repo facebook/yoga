@@ -100,8 +100,8 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
   CSSUndefined:{value:'CSSConstants.Undefined'},
 
-  CSSWrapTypeNoWrap:{value:'CSSWrap.NoWrap'},
-  CSSWrapTypeWrap:{value:'CSSWrap.Wrap'},
+  CSSWrapNoWrap:{value:'CSSWrap.NoWrap'},
+  CSSWrapWrap:{value:'CSSWrap.Wrap'},
 
   CSSNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.StyleDirection = ' + dir + ';');

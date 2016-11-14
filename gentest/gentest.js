@@ -354,8 +354,8 @@ function overflowValue(e, value) {
 
 function wrapValue(e, value) {
   switch (value) {
-    case 'wrap': return e.CSSWrapTypeWrap;
-    case 'nowrap': return e.CSSWrapTypeNoWrap;
+    case 'wrap': return e.CSSWrapWrap;
+    case 'nowrap': return e.CSSWrapNoWrap;
   }
 }
 

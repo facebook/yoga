@@ -84,8 +84,8 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   CSSPositionTypeAbsolute:{value:'CSSPositionTypeAbsolute'},
   CSSPositionTypeRelative:{value:'CSSPositionTypeRelative'},
 
-  CSSWrapTypeNoWrap:{value:'CSSWrapTypeNoWrap'},
-  CSSWrapTypeWrap:{value:'CSSWrapTypeWrap'},
+  CSSWrapNoWrap:{value:'CSSWrapNoWrap'},
+  CSSWrapWrap:{value:'CSSWrapWrap'},
 
   CSSUndefined:{value:'CSSUndefined'},
 

@@ -49,7 +49,7 @@
 
 TEST(CSSLayoutTest, align_content_flex_start) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
+  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -147,7 +147,7 @@ TEST(CSSLayoutTest, align_content_flex_start) {
 TEST(CSSLayoutTest, align_content_flex_end) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetAlignContent(root, CSSAlignFlexEnd);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
+  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -245,7 +245,7 @@ TEST(CSSLayoutTest, align_content_flex_end) {
 TEST(CSSLayoutTest, align_content_center) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetAlignContent(root, CSSAlignCenter);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
+  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -343,7 +343,7 @@ TEST(CSSLayoutTest, align_content_center) {
 TEST(CSSLayoutTest, align_content_stretch) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetAlignContent(root, CSSAlignStretch);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
+  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 

@@ -45,7 +45,7 @@
 
 TEST(CSSLayoutTest, wrap_column) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
+  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -127,7 +127,7 @@ TEST(CSSLayoutTest, wrap_column) {
 TEST(CSSLayoutTest, wrap_row) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
+  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -210,7 +210,7 @@ TEST(CSSLayoutTest, wrap_row_align_items_flex_end) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
   CSSNodeStyleSetAlignItems(root, CSSAlignFlexEnd);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
+  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -293,7 +293,7 @@ TEST(CSSLayoutTest, wrap_row_align_items_center) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
   CSSNodeStyleSetAlignItems(root, CSSAlignCenter);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapTypeWrap);
+  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
