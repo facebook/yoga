@@ -162,7 +162,7 @@
   NSAssert([NSThread isMainThread], @"CSS Layout calculation must be done on main.");
   NSAssert([self css_usesFlexbox], @"CSS Layout is not enabled for this view.");
 
-  CLKAttachNodesFromViewHierachy(self);
+  CSSAttachNodesFromViewHierachy(self);
 
   const CSSNodeRef node = [self cssNode];
   CSSNodeCalculateLayout(
@@ -180,7 +180,7 @@
 - (void)css_applyLayout
 {
   [self css_sizeThatFits:self.bounds.size];
-  CLKApplyLayoutToViewHierarchy(self);
+  CSSApplyLayoutToViewHierarchy(self);
 }
 
 #pragma mark - Private
@@ -197,7 +197,7 @@
   return node.cnode;
 }
 
-static CSSSize CLKMeasureView(
+static CSSSize CSSMeasureView(
   CSSNodeRef node,
   float width,
   CSSMeasureMode widthMode,
@@ -214,12 +214,12 @@ static CSSSize CLKMeasureView(
   }];
 
   return (CSSSize) {
-    .width = CLKSanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
-    .height = CLKSanitizeMeasurement(constrainedHeight, sizeThatFits.height, heightMode),
+    .width = CSSSanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
+    .height = CSSSanitizeMeasurement(constrainedHeight, sizeThatFits.height, heightMode),
   };
 }
 
-static CGFloat CLKSanitizeMeasurement(
+static CGFloat CSSSanitizeMeasurement(
   CGFloat constrainedSize,
   CGFloat measuredSize,
   CSSMeasureMode measureMode)
@@ -236,14 +236,14 @@ static CGFloat CLKSanitizeMeasurement(
   return result;
 }
 
-static void CLKAttachNodesFromViewHierachy(UIView *view) {
+static void CSSAttachNodesFromViewHierachy(UIView *view) {
   CSSNodeRef node = [view cssNode];
   const BOOL usesFlexbox = [view css_usesFlexbox];
   const BOOL isLeaf = !usesFlexbox || view.subviews.count == 0;
 
   // Only leaf nodes should have a measure function
   if (isLeaf) {
-    CSSNodeSetMeasureFunc(node, CLKMeasureView);
+    CSSNodeSetMeasureFunc(node, CSSMeasureView);
 
     // Clear any children
     while (CSSNodeChildCount(node) > 0) {
@@ -258,7 +258,7 @@ static void CLKAttachNodesFromViewHierachy(UIView *view) {
       if (CSSNodeChildCount(node) < i + 1 || CSSNodeGetChild(node, i) != childNode) {
         CSSNodeInsertChild(node, childNode, i);
       }
-      CLKAttachNodesFromViewHierachy(view.subviews[i]);
+      CSSAttachNodesFromViewHierachy(view.subviews[i]);
     }
 
     // Remove any children which were removed since the last call to css_applyLayout
@@ -268,7 +268,7 @@ static void CLKAttachNodesFromViewHierachy(UIView *view) {
   }
 }
 
-static CGFloat CLKRoundPixelValue(CGFloat value)
+static CGFloat CSSRoundPixelValue(CGFloat value)
 {
   static CGFloat scale;
   static dispatch_once_t onceToken;
@@ -279,7 +279,7 @@ static CGFloat CLKRoundPixelValue(CGFloat value)
   return round(value * scale) / scale;
 }
 
-static void CLKApplyLayoutToViewHierarchy(UIView *view) {
+static void CSSApplyLayoutToViewHierarchy(UIView *view) {
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
   CSSNodeRef node = [view cssNode];
 
@@ -295,19 +295,19 @@ static void CLKApplyLayoutToViewHierarchy(UIView *view) {
 
   view.frame = (CGRect) {
     .origin = {
-      .x = CLKRoundPixelValue(topLeft.x),
-      .y = CLKRoundPixelValue(topLeft.y),
+      .x = CSSRoundPixelValue(topLeft.x),
+      .y = CSSRoundPixelValue(topLeft.y),
     },
     .size = {
-      .width = CLKRoundPixelValue(bottomRight.x) - CLKRoundPixelValue(topLeft.x),
-      .height = CLKRoundPixelValue(bottomRight.y) - CLKRoundPixelValue(topLeft.y),
+      .width = CSSRoundPixelValue(bottomRight.x) - CSSRoundPixelValue(topLeft.x),
+      .height = CSSRoundPixelValue(bottomRight.y) - CSSRoundPixelValue(topLeft.y),
     },
   };
 
   const BOOL isLeaf = ![view css_usesFlexbox] || view.subviews.count == 0;
   if (!isLeaf) {
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
-      CLKApplyLayoutToViewHierarchy(view.subviews[i]);
+      CSSApplyLayoutToViewHierarchy(view.subviews[i]);
     }
   }
 }
