@@ -48,7 +48,7 @@ namespace Facebook.CSSLayout
             root_child0.StyleWidth = 10;
             root_child0.StyleHeight = 10;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LeftToRight;
+            root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0, root.LayoutX);
@@ -61,7 +61,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10, root_child0.LayoutWidth);
             Assert.AreEqual(10, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RightToLeft;
+            root.StyleDirection = CSSDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0, root.LayoutX);
@@ -87,7 +87,7 @@ namespace Facebook.CSSLayout
             root_child0.StyleWidth = 10;
             root_child0.StyleHeight = 10;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LeftToRight;
+            root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0, root.LayoutX);
@@ -100,7 +100,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10, root_child0.LayoutWidth);
             Assert.AreEqual(10, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RightToLeft;
+            root.StyleDirection = CSSDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0, root.LayoutX);
@@ -126,7 +126,7 @@ namespace Facebook.CSSLayout
             root_child0.StyleWidth = 10;
             root_child0.StyleHeight = 10;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LeftToRight;
+            root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0, root.LayoutX);
@@ -139,7 +139,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10, root_child0.LayoutWidth);
             Assert.AreEqual(10, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RightToLeft;
+            root.StyleDirection = CSSDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0, root.LayoutX);
@@ -166,7 +166,7 @@ namespace Facebook.CSSLayout
             root_child0.StyleWidth = 10;
             root_child0.StyleHeight = 10;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LeftToRight;
+            root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0, root.LayoutX);
@@ -179,7 +179,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10, root_child0.LayoutWidth);
             Assert.AreEqual(10, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RightToLeft;
+            root.StyleDirection = CSSDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0, root.LayoutX);

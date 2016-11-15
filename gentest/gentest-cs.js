@@ -71,8 +71,8 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   CSSAlignStretch:{value:'CSSAlign.Stretch'},
 
   CSSDirectionInherit:{value:'CSSDirection.Inherit'},
-  CSSDirectionLTR:{value:'CSSDirection.LeftToRight'},
-  CSSDirectionRTL:{value:'CSSDirection.RightToLeft'},
+  CSSDirectionLTR:{value:'CSSDirection.LTR'},
+  CSSDirectionRTL:{value:'CSSDirection.RTL'},
 
   CSSEdgeBottom:{value:'CSSEdge.Bottom'},
   CSSEdgeEnd:{value:'CSSEdge.End'},
