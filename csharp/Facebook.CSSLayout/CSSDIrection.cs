@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -12,7 +12,11 @@ namespace Facebook.CSSLayout
     public enum CSSDirection
     {
         Inherit,
-        LeftToRight,
-        RightToLeft
+        LTR,
+        RTL,
+        [System.Obsolete("Use LTR instead")]
+        LeftToRight = LTR,
+        [System.Obsolete("Use RTL instead")]
+        RightToLeft = RTL,
     }
 }

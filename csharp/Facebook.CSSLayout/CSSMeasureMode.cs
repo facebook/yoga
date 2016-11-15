@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -14,6 +14,5 @@ namespace Facebook.CSSLayout
         Undefined,
         Exactly,
         AtMost,
-        Count,
     }
 }
