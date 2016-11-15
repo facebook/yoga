@@ -30,7 +30,7 @@
 
 - (void)testNodesAreDeallocedCascade
 {
-  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+  const int32_t instanceCount = CSSNodeGetInstanceCount();
 
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
   [view css_setFlexBasis:1];
@@ -40,10 +40,10 @@
     [subview css_setFlexBasis:1];
     [view addSubview:subview];
   }
-  XCTAssertEqual(11, CSSNodeGetInstanceCount());
+  XCTAssertEqual(instanceCount + 11, CSSNodeGetInstanceCount());
   view = nil;
 
-  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+  XCTAssertEqual(instanceCount, CSSNodeGetInstanceCount());
 }
 
 - (void)testUsesFlexbox
