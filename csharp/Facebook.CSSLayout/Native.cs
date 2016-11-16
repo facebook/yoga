@@ -37,6 +37,9 @@ namespace Facebook.CSSLayout
         public static extern void CSSNodeReset(IntPtr cssNode);
 
         [DllImport(DllName)]
+        public static extern int CSSNodeGetInstanceCount();
+
+        [DllImport(DllName)]
         public static extern void CSSLayoutSetExperimentalFeatureEnabled(
             CSSExperimentalFeature feature,
             bool enabled);

@@ -555,7 +555,7 @@ namespace Facebook.CSSLayout
             CSSExperimentalFeature feature,
             bool enabled)
         {
-            return Native.CSSLayoutSetExperimentalFeatureEnabled(feature, enabled);
+            Native.CSSLayoutSetExperimentalFeatureEnabled(feature, enabled);
         }
 
         public static bool isExperimentalFeatureEnabled(CSSExperimentalFeature feature)
