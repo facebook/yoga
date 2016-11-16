@@ -83,11 +83,14 @@ TEST(CSSLayoutTest, dirty_node_only_if_children_are_actually_removed) {
 
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
 
-  CSSNodeRemoveChild(root, CSSNodeNew());
+  const CSSNodeRef child1 = CSSNodeNew();
+  CSSNodeRemoveChild(root, child1);
   EXPECT_FALSE(CSSNodeIsDirty(root));
+  CSSNodeFree(child1);
 
   CSSNodeRemoveChild(root, child0);
   EXPECT_TRUE(CSSNodeIsDirty(root));
+  CSSNodeFree(child0);
 
   CSSNodeFreeRecursive(root);
 }

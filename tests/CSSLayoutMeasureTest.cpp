@@ -43,6 +43,8 @@ TEST(CSSLayoutTest, dont_measure_single_grow_shrink_child) {
   CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
 
   ASSERT_EQ(0, measureCount);
+
+  CSSNodeFreeRecursive(root);
 }
 
 #if GTEST_HAS_DEATH_TEST
@@ -52,6 +54,7 @@ TEST(CSSLayoutTest, cannot_add_child_to_node_with_measure_func) {
 
   const CSSNodeRef root_child0 = CSSNodeNew();
   ASSERT_DEATH(CSSNodeInsertChild(root, root_child0, 0), "Cannot add child.*");
+  CSSNodeFree(root_child0);
   CSSNodeFreeRecursive(root);
 }
 
