@@ -10,6 +10,8 @@
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
+extern int32_t gNodeInstanceCount;
+
 static int testMallocCount;
 static int testCallocCount;
 static int testReallocCount;
@@ -36,6 +38,7 @@ static void testFree(void *ptr) {
 }
 
 TEST(CSSLayoutTest, memory_func_default) {
+  gNodeInstanceCount = 0; // Reset CSSNode instance count for memory func test
   CSSLayoutSetMemoryFuncs(NULL, NULL, NULL, NULL);
   const CSSNodeRef root = CSSNodeNew();
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -44,6 +47,7 @@ TEST(CSSLayoutTest, memory_func_default) {
 }
 
 TEST(CSSLayoutTest, memory_func_test_funcs) {
+  gNodeInstanceCount = 0; // Reset CSSNode instance count for memory func test
   CSSLayoutSetMemoryFuncs(&testMalloc, &testCalloc, &testRealloc, &testFree);
   const CSSNodeRef root = CSSNodeNew();
   for (int i = 0; i < 10; i++) {
@@ -60,12 +64,14 @@ TEST(CSSLayoutTest, memory_func_test_funcs) {
 
 #if GTEST_HAS_DEATH_TEST
 TEST(CSSLayoutTest, memory_func_assert_zero_nodes) {
+  gNodeInstanceCount = 0; // Reset CSSNode instance count for memory func test
   const CSSNodeRef root = CSSNodeNew();
   ASSERT_DEATH(CSSLayoutSetMemoryFuncs(&testMalloc, &testCalloc, &testRealloc, &testFree), "Cannot set memory functions: all node must be freed first");
   CSSNodeFreeRecursive(root);
 }
 
 TEST(CSSLayoutTest, memory_func_assert_all_non_null) {
+  gNodeInstanceCount = 0; // Reset CSSNode instance count for memory func test
   ASSERT_DEATH(CSSLayoutSetMemoryFuncs(NULL, &testCalloc, &testRealloc, &testFree), "Cannot set memory functions: functions must be all NULL or Non-NULL");
 }
 #endif
