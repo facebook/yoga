@@ -15,7 +15,7 @@ using System.Text;
 
 namespace Facebook.CSSLayout
 {
-    public class CSSNode : IEnumerable<CSSNode>
+    public partial class CSSNode : IEnumerable<CSSNode>
     {
         private IntPtr _cssNode;
         private WeakReference _parent;
