@@ -90,6 +90,11 @@ namespace Facebook.CSSLayout
             }
         }
 
+        public void CopyStyle(CSSNode srcNode)
+        {
+            Native.CSSNodeCopyStyle(_cssNode, srcNode._cssNode);
+        }
+
         public CSSDirection StyleDirection
         {
             get

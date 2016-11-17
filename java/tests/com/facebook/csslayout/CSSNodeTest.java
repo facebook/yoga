@@ -12,6 +12,7 @@ package com.facebook.csslayout;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CSSNodeTest {
 
@@ -70,5 +71,17 @@ public class CSSNodeTest {
     CSSNode.jni_CSSLog(CSSLogLevel.VERBOSE.intValue(), "Flexbox");
     assertEquals(CSSLogLevel.VERBOSE, mLogLevel);
     assertEquals("Flexbox", mLogMessage);
+  }
+
+  @Test
+  public void testCopyStyle() {
+    final CSSNode node0 = new CSSNode();
+    assertTrue(CSSConstants.isUndefined(node0.getStyleMaxHeight()));
+
+    final CSSNode node1 = new CSSNode();
+    node1.setStyleMaxHeight(100);
+
+    node0.copyStyle(node1);
+    assertEquals(100, (int) node0.getStyleMaxHeight());
   }
 }

@@ -215,13 +215,26 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(parent.Print(), "{layout: {width: 100, height: 120, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 100, height: 120, children: [\n  {layout: {width: 35, height: 45, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 35, height: 45, },\n  {layout: {width: 30, height: 40, top: 45, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 30, height: 40, },\n]},\n");
         }
 
+        [Test]
+        public void TestCopyStyle()
+        {
+            CSSNode node0 = new CSSNode();
+            Assert.IsTrue(CSSConstants.IsUndefined(node0.StyleMaxHeight));
+
+            CSSNode node1 = new CSSNode();
+            node1.StyleMaxHeight = 100;
+
+            node0.CopyStyle(node1);
+            Assert.AreEqual(100, node0.StyleMaxHeight);
+        }
+
+#if !UNITY_EDITOR
         private void ForceGC()
         {
             GC.Collect(GC.MaxGeneration);
             GC.WaitForPendingFinalizers();
         }
 
-#if !UNITY_EDITOR
         [Test]
         public void TestDestructor()
         {

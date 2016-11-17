@@ -80,6 +80,9 @@ namespace Facebook.CSSLayout
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool CSSValueIsUndefined(float value);
 
+        [DllImport(DllName)]
+        public static extern void CSSNodeCopyStyle(IntPtr dstNode, IntPtr srcNode);
+
         #region CSS_NODE_PROPERTY
 
         [DllImport(DllName)]
