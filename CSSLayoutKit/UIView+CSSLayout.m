@@ -157,30 +157,19 @@
   return CSSNodeLayoutGetDirection([self cssNode]);
 }
 
-- (CGSize)css_sizeThatFits:(CGSize)constrainedSize
-{
-  NSAssert([NSThread isMainThread], @"CSS Layout calculation must be done on main.");
-  NSAssert([self css_usesFlexbox], @"CSS Layout is not enabled for this view.");
-
-  CSSAttachNodesFromViewHierachy(self);
-
-  const CSSNodeRef node = [self cssNode];
-  CSSNodeCalculateLayout(
-    node,
-    constrainedSize.width,
-    constrainedSize.height,
-    CSSNodeStyleGetDirection(node));
-
-  return (CGSize) {
-    .width = CSSNodeLayoutGetWidth(node),
-    .height = CSSNodeLayoutGetHeight(node),
-  };
-}
-
 - (void)css_applyLayout
 {
-  [self css_sizeThatFits:self.bounds.size];
+  [self calculateLayoutWithSize:self.bounds.size];
   CSSApplyLayoutToViewHierarchy(self);
+}
+
+- (CGSize)css_intrinsicSize
+{
+  const CGSize constrainedSize = {
+      .width = CSSUndefined,
+      .height = CSSUndefined,
+  };
+  return [self calculateLayoutWithSize:constrainedSize];
 }
 
 #pragma mark - Private
@@ -195,6 +184,26 @@
   }
 
   return node.cnode;
+}
+
+- (CGSize)calculateLayoutWithSize:(CGSize)size
+{
+  NSAssert([NSThread isMainThread], @"CSS Layout calculation must be done on main.");
+  NSAssert([self css_usesFlexbox], @"CSS Layout is not enabled for this view.");
+
+  CSSAttachNodesFromViewHierachy(self);
+
+  const CSSNodeRef node = [self cssNode];
+  CSSNodeCalculateLayout(
+    node,
+    size.width,
+    size.height,
+    CSSNodeStyleGetDirection(node));
+
+  return (CGSize) {
+    .width = CSSNodeLayoutGetWidth(node),
+    .height = CSSNodeLayoutGetHeight(node),
+  };
 }
 
 static CSSSize CSSMeasureView(

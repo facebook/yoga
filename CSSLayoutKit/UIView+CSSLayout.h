@@ -52,8 +52,8 @@
 - (void)css_applyLayout;
 
 /**
- Compute the size of a layout with a constrained size.
+ Returns the size of the view if no constraints were given. This could equivalent to calling [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
  */
-- (CGSize)css_sizeThatFits:(CGSize)constrainedSize;
+- (CGSize)css_intrinsicSize;
 
 @end

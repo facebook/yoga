@@ -11,10 +11,10 @@
 
 #import "UIView+CSSLayout.h"
 
-@interface CSSLayoutTests : XCTestCase
+@interface CSSLayoutKitTests : XCTestCase
 @end
 
-@implementation CSSLayoutTests
+@implementation CSSLayoutKitTests
 
 #ifndef TRAVIS_CI
 
@@ -65,21 +65,35 @@
 - (void)testSizeThatFitsAsserts
 {
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-  XCTAssertThrows([view css_sizeThatFits:CGSizeZero]);
-
   dispatch_sync(dispatch_queue_create("com.facebook.CSSLayout.testing", DISPATCH_QUEUE_SERIAL), ^(void){
-    XCTAssertThrows([view css_sizeThatFits:CGSizeZero]);
+    XCTAssertThrows([view css_intrinsicSize]);
   });
 }
 
 - (void)testSizeThatFitsSmoke
 {
-  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-  [view css_setUsesFlexbox:YES];
+  UIView *container = [[UIView alloc] initWithFrame:CGRectZero];
+  [container css_setUsesFlexbox:YES];
+  [container css_setFlexDirection:CSSFlexDirectionRow];
+  [container css_setAlignItems:CSSAlignFlexStart];
 
-  const CGSize constrainedSize = CGSizeMake(50, 50);
-  const CGSize actualSize = [view css_sizeThatFits:constrainedSize];
-  XCTAssertTrue(CGSizeEqualToSize(constrainedSize, actualSize), @"Actual Size: %@", NSStringFromCGSize(actualSize));
+  UILabel *longTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  longTextLabel.text = @"This is a very very very very very very very very long piece of text.";
+  longTextLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+  longTextLabel.numberOfLines = 1;
+  [longTextLabel css_setUsesFlexbox:YES];
+  [longTextLabel css_setFlexShrink:1];
+  [container addSubview:longTextLabel];
+
+  UIView *textBadgeView = [[UIView alloc] initWithFrame:CGRectZero];
+  [textBadgeView css_setUsesFlexbox:YES];
+  [textBadgeView css_setMargin:3.0 forEdge:CSSEdgeLeft];
+  [textBadgeView css_setWidth:10];
+  [textBadgeView css_setHeight:10];
+  [container addSubview:textBadgeView];
+
+  const CGSize containerSize = [container css_intrinsicSize];
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(514,21), containerSize), @"Size is actually %@", NSStringFromCGSize(containerSize));
 }
 
 - (void)testFrameAndOriginPlacement
