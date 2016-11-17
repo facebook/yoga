@@ -39,7 +39,22 @@
   return [usesFlexbox boolValue];
 }
 
+- (BOOL)css_includeInLayout
+{
+  NSNumber *includeInLayout = objc_getAssociatedObject(self, @selector(css_includeInLayout));
+  return (includeInLayout != nil) ? [includeInLayout boolValue] : YES;
+}
+
 #pragma mark - Setters
+
+- (void)css_setIncludeInLayout:(BOOL)includeInLayout
+{
+  objc_setAssociatedObject(
+    self,
+    @selector(css_includeInLayout),
+    @(includeInLayout),
+    OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (void)css_setUsesFlexbox:(BOOL)enabled
 {
@@ -261,17 +276,24 @@ static void CSSAttachNodesFromViewHierachy(UIView *view) {
   } else {
     CSSNodeSetMeasureFunc(node, NULL);
 
+    NSUInteger numSubviewsInLayout = 0;
     // Add any children which were added since the last call to css_applyLayout
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
-      CSSNodeRef childNode = [view.subviews[i] cssNode];
+      UIView *const subview = view.subviews[i];
+      if (![subview css_includeInLayout]) {
+        continue;
+      }
+      numSubviewsInLayout++;
+
+      CSSNodeRef childNode = [subview cssNode];
       if (CSSNodeChildCount(node) < i + 1 || CSSNodeGetChild(node, i) != childNode) {
         CSSNodeInsertChild(node, childNode, i);
       }
-      CSSAttachNodesFromViewHierachy(view.subviews[i]);
+      CSSAttachNodesFromViewHierachy(subview);
     }
 
     // Remove any children which were removed since the last call to css_applyLayout
-    while (view.subviews.count < CSSNodeChildCount(node)) {
+    while (numSubviewsInLayout < CSSNodeChildCount(node)) {
       CSSNodeRemoveChild(node, CSSNodeGetChild(node, CSSNodeChildCount(node) - 1));
     }
   }
@@ -290,8 +312,11 @@ static CGFloat CSSRoundPixelValue(CGFloat value)
 
 static void CSSApplyLayoutToViewHierarchy(UIView *view) {
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
-  CSSNodeRef node = [view cssNode];
+  if (![view css_includeInLayout]) {
+     return;
+  }
 
+  CSSNodeRef node = [view cssNode];
   const CGPoint topLeft = {
     CSSNodeLayoutGetLeft(node),
     CSSNodeLayoutGetTop(node),

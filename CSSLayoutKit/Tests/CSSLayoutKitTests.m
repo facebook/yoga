@@ -125,4 +125,78 @@
   XCTAssertEqual(containerSize.width, totalWidth, @"The container's width is %.6f, the subviews take up %.6f", containerSize.width, totalWidth);
 }
 
+- (void)testThatWeRespectIncludeInLayoutFlag
+{
+  const CGSize containerSize = CGSizeMake(300, 50);
+
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, containerSize.width, containerSize.height)];
+  [container css_setUsesFlexbox:YES];
+  [container css_setFlexDirection:CSSFlexDirectionRow];
+
+  UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview1 css_setUsesFlexbox:YES];
+  [subview1 css_setFlexGrow:1];
+  [container addSubview:subview1];
+
+  UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview2 css_setUsesFlexbox:YES];
+  [subview2 css_setFlexGrow:1];
+  [container addSubview:subview2];
+
+  UIView *subview3 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview3 css_setUsesFlexbox:YES];
+  [subview3 css_setFlexGrow:1];
+  [container addSubview:subview3];
+
+  [container css_applyLayout];
+
+  for (UIView *view in container.subviews) {
+    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
+  }
+
+  [subview3 css_setIncludeInLayout:NO];
+  [container css_applyLayout];
+
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview1.bounds.size));
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview2.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview2.bounds.size));
+
+  // We don't set the frame to zero, so, it should be set to what it was previously at.
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), subview3.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview3.bounds.size));
+}
+
+- (void)testThatViewNotIncludedInFirstLayoutPassAreIncludedInSecond
+{
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+  [container css_setUsesFlexbox:YES];
+  [container css_setFlexDirection:CSSFlexDirectionRow];
+
+  UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview1 css_setUsesFlexbox:YES];
+  [subview1 css_setFlexGrow:1];
+  [container addSubview:subview1];
+
+  UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview2 css_setUsesFlexbox:YES];
+  [subview2 css_setFlexGrow:1];
+  [container addSubview:subview2];
+
+  UIView *subview3 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview3 css_setUsesFlexbox:YES];
+  [subview3 css_setFlexGrow:1];
+  [subview3 css_setIncludeInLayout:NO];
+  [container addSubview:subview3];
+
+  [container css_applyLayout];
+
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview1.bounds.size));
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview2.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview2.bounds.size));
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeZero, subview3.bounds.size), @"Actual size %@", NSStringFromCGSize(subview3.bounds.size));
+
+  [subview3 css_setIncludeInLayout:YES];
+  [container css_applyLayout];
+  for (UIView *view in container.subviews) {
+    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
+  }
+}
+
 @end

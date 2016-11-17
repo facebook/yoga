@@ -13,6 +13,11 @@
 @interface UIView (CSSLayout)
 
 /**
+  The property that decides if we should include this view when calculating layout. Defaults to YES.
+ */
+@property (nonatomic, readwrite, assign, setter=css_setIncludeInLayout:) BOOL css_includeInLayout;
+
+/**
  The property that decides during layout/sizing whether or not css_* properties should be applied. Defaults to NO.
  */
 @property (nonatomic, readwrite, assign, setter=css_setUsesFlexbox:) BOOL css_usesFlexbox;
