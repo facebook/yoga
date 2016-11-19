@@ -1643,6 +1643,8 @@ static void layoutNodeImpl(const CSSNodeRef node,
       float deltaFlexShrinkScaledFactors = 0;
       float deltaFlexGrowFactors = 0;
       float strippedValuesDueToRounding = 0;
+      int numberOfRelevantRoundingChildren = 0;
+
       currentRelativeChild = firstRelativeChild;
       while (currentRelativeChild != NULL) {
         childFlexBasis = currentRelativeChild->layout.computedFlexBasis;
@@ -1676,6 +1678,8 @@ static void layoutNodeImpl(const CSSNodeRef node,
             baseMainSize =
                 childFlexBasis + roundToPixelGrid(remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor, &strippedValuesDueToRounding);
             boundMainSize = boundAxis(currentRelativeChild, mainAxis, baseMainSize);
+            
+            numberOfRelevantRoundingChildren++;
             if (baseMainSize != boundMainSize) {
               // By excluding this item's size and flex factor from remaining,
               // this item's
@@ -1699,6 +1703,11 @@ static void layoutNodeImpl(const CSSNodeRef node,
       // Second pass: resolve the sizes of the flexible items
       deltaFreeSpace = 0;
       currentRelativeChild = firstRelativeChild;
+
+      //if rounding feature is enabled, we distribute the remaining space over the children
+      //we need to figure out if we should start with the first or second child
+      int roundingDistributionChildIndex = (int)(numberOfRelevantRoundingChildren - floorf(strippedValuesDueToRounding)) % 2;
+
       while (currentRelativeChild != NULL) {
         childFlexBasis = currentRelativeChild->layout.computedFlexBasis;
         float updatedMainSize = childFlexBasis;
@@ -1724,7 +1733,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
           flexGrowFactor = CSSNodeStyleGetFlexGrow(currentRelativeChild);
 
           float valueToAddFromRounding = 0;
-          if (CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeatureRounding) && strippedValuesDueToRounding >= 0.5)
+          if (CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeatureRounding) && strippedValuesDueToRounding >= 0.5 && roundingDistributionChildIndex++ % 2 == 0)
           {
             valueToAddFromRounding = fminf(1, strippedValuesDueToRounding--);
           }
