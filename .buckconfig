@@ -1,0 +1,2 @@
+[cxx]
+  gtest_dep = //lib/gtest:gtest

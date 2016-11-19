@@ -1,14 +1,30 @@
-language: node_js
-node_js:
-  - "0.12"
+# Copyright (c) 2014-present, Facebook, Inc.
+# All rights reserved.
+#
+# This source code is licensed under the BSD-style license found in the
+# LICENSE file in the root directory of this source tree. An additional grant
+# of patent rights can be found in the PATENTS file in the same directory.
 
-sudo: false
+os: osx
+osx_image: xcode7.3
+language: cpp
+compiler: clang
 
 before_install:
-  - npm install grunt-cli -g
+  - brew update
+  - brew tap facebook/fb
+  - brew install buck
+  - brew cask install java
+  - brew outdated xctool || brew upgrade xctool
+  - brew install mono
+  - export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+  - export PATH=$JAVA_HOME/bin:$PATH
 
-addons:
-  apt:
-    packages:
-      - gcc
-      
+script:
+  - buck test //:CSSLayout
+  - buck test //java:java
+  - buck test //CSSLayoutKit:CSSLayoutKit --config cxx.default_platform=iphonesimulator-x86_64 --config cxx.cflags=-DTRAVIS_CI
+  - sh csharp/tests/Facebook.CSSLayout/test_macos.sh
+  - buck run //benchmark:benchmark
+  - git checkout HEAD^
+  - buck run //benchmark:benchmark
