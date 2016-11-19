@@ -931,6 +931,17 @@ static void constrainMaxSizeForMode(const float maxSize, CSSMeasureMode *mode, f
   }
 }
 
+static float roundToPixelGrid(const float value, float * remaining){
+  if (CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeatureRounding)){
+    float returning = floorf(value);
+    if (remaining != NULL){
+      (*remaining) += value - returning;
+    }
+    return returning;
+  }
+  return value;
+}
+
 static void setPosition(const CSSNodeRef node, const CSSDirection direction) {
   const CSSFlexDirection mainAxis = resolveAxis(node->style.flexDirection, direction);
   const CSSFlexDirection crossAxis = getCrossFlexDirection(mainAxis, direction);
@@ -1631,6 +1642,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
       // First pass: detect the flex items whose min/max constraints trigger
       float deltaFlexShrinkScaledFactors = 0;
       float deltaFlexGrowFactors = 0;
+      float strippedValuesDueToRounding = 0;
       currentRelativeChild = firstRelativeChild;
       while (currentRelativeChild != NULL) {
         childFlexBasis = currentRelativeChild->layout.computedFlexBasis;
@@ -1643,7 +1655,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
           if (flexShrinkScaledFactor != 0) {
             baseMainSize =
                 childFlexBasis +
-                remainingFreeSpace / totalFlexShrinkScaledFactors * flexShrinkScaledFactor;
+                roundToPixelGrid(remainingFreeSpace / totalFlexShrinkScaledFactors * flexShrinkScaledFactor, &strippedValuesDueToRounding);
             boundMainSize = boundAxis(currentRelativeChild, mainAxis, baseMainSize);
             if (baseMainSize != boundMainSize) {
               // By excluding this item's size and flex factor from remaining,
@@ -1662,7 +1674,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
           // Is this child able to grow?
           if (flexGrowFactor != 0) {
             baseMainSize =
-                childFlexBasis + remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor;
+                childFlexBasis + roundToPixelGrid(remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor, &strippedValuesDueToRounding);
             boundMainSize = boundAxis(currentRelativeChild, mainAxis, baseMainSize);
             if (baseMainSize != boundMainSize) {
               // By excluding this item's size and flex factor from remaining,
@@ -1703,7 +1715,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
             } else {
               childSize =
                   childFlexBasis +
-                  (remainingFreeSpace / totalFlexShrinkScaledFactors) * flexShrinkScaledFactor;
+                  roundToPixelGrid((remainingFreeSpace / totalFlexShrinkScaledFactors) * flexShrinkScaledFactor, NULL);
             }
 
             updatedMainSize = boundAxis(currentRelativeChild, mainAxis, childSize);
@@ -1711,13 +1723,19 @@ static void layoutNodeImpl(const CSSNodeRef node,
         } else if (remainingFreeSpace > 0) {
           flexGrowFactor = CSSNodeStyleGetFlexGrow(currentRelativeChild);
 
+          float valueToAddFromRounding = 0;
+          if (CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeatureRounding) && strippedValuesDueToRounding >= 0.5)
+          {
+            valueToAddFromRounding = fminf(1, strippedValuesDueToRounding--);
+          }
+
           // Is this child able to grow?
           if (flexGrowFactor != 0) {
             updatedMainSize =
                 boundAxis(currentRelativeChild,
                           mainAxis,
-                          childFlexBasis +
-                              remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor);
+                          childFlexBasis + valueToAddFromRounding +
+                          roundToPixelGrid(remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor, NULL));
           }
         }
 
@@ -2534,7 +2552,7 @@ void CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeature feature, bool
   experimentalFeatures[feature] = enabled;
 }
 
-bool CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeature feature) {
+inline bool CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeature feature) {
   return experimentalFeatures[feature];
 }
 
