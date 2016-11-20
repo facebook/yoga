@@ -54,7 +54,7 @@ protected:
 
 };
 
-TEST_F(CSSLayoutFeatureRoundingTest, pixel_rounding_flex_basis_flex_grow_row_width_of_100, Setup, Teardown) {
+TEST_F(CSSLayoutFeatureRoundingTest, pixel_rounding_flex_basis_flex_grow_row_width_of_100) {
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
   CSSNodeStyleSetWidth(root, 100);
