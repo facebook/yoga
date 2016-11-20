@@ -1706,7 +1706,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
 
       //if rounding feature is enabled, we distribute the remaining space over the children
       //we need to figure out if we should start with the first or second child
-      int roundingDistributionChildIndex = (int)(numberOfRelevantRoundingChildren - floorf(strippedValuesDueToRounding)) % 2;
+      int roundingDistributionChildIndex = (numberOfRelevantRoundingChildren - (int)strippedValuesDueToRounding) % 2;
 
       while (currentRelativeChild != NULL) {
         childFlexBasis = currentRelativeChild->layout.computedFlexBasis;

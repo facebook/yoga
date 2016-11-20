@@ -38,7 +38,6 @@
  *
  */
 
-#include <stdafx.h>
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
