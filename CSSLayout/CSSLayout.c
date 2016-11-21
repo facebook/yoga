@@ -931,17 +931,6 @@ static void constrainMaxSizeForMode(const float maxSize, CSSMeasureMode *mode, f
   }
 }
 
-static float roundToPixelGrid(const float value, float * remaining){
-  if (CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeatureRounding)){
-    float returning = floorf(value);
-    if (remaining != NULL){
-      (*remaining) += value - returning;
-    }
-    return returning;
-  }
-  return value;
-}
-
 static void setPosition(const CSSNodeRef node, const CSSDirection direction) {
   const CSSFlexDirection mainAxis = resolveAxis(node->style.flexDirection, direction);
   const CSSFlexDirection crossAxis = getCrossFlexDirection(mainAxis, direction);
@@ -1642,9 +1631,6 @@ static void layoutNodeImpl(const CSSNodeRef node,
       // First pass: detect the flex items whose min/max constraints trigger
       float deltaFlexShrinkScaledFactors = 0;
       float deltaFlexGrowFactors = 0;
-      float strippedValuesDueToRounding = 0;
-      int numberOfRelevantRoundingChildren = 0;
-
       currentRelativeChild = firstRelativeChild;
       while (currentRelativeChild != NULL) {
         childFlexBasis = currentRelativeChild->layout.computedFlexBasis;
@@ -1657,7 +1643,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
           if (flexShrinkScaledFactor != 0) {
             baseMainSize =
                 childFlexBasis +
-                roundToPixelGrid(remainingFreeSpace / totalFlexShrinkScaledFactors * flexShrinkScaledFactor, &strippedValuesDueToRounding);
+                remainingFreeSpace / totalFlexShrinkScaledFactors * flexShrinkScaledFactor;
             boundMainSize = boundAxis(currentRelativeChild, mainAxis, baseMainSize);
             if (baseMainSize != boundMainSize) {
               // By excluding this item's size and flex factor from remaining,
@@ -1676,10 +1662,8 @@ static void layoutNodeImpl(const CSSNodeRef node,
           // Is this child able to grow?
           if (flexGrowFactor != 0) {
             baseMainSize =
-                childFlexBasis + roundToPixelGrid(remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor, &strippedValuesDueToRounding);
+                childFlexBasis + remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor;
             boundMainSize = boundAxis(currentRelativeChild, mainAxis, baseMainSize);
-            
-            numberOfRelevantRoundingChildren++;
             if (baseMainSize != boundMainSize) {
               // By excluding this item's size and flex factor from remaining,
               // this item's
@@ -1703,11 +1687,6 @@ static void layoutNodeImpl(const CSSNodeRef node,
       // Second pass: resolve the sizes of the flexible items
       deltaFreeSpace = 0;
       currentRelativeChild = firstRelativeChild;
-
-      //if rounding feature is enabled, we distribute the remaining space over the children
-      //we need to figure out if we should start with the first or second child
-      int roundingDistributionChildIndex = (numberOfRelevantRoundingChildren - (int)strippedValuesDueToRounding) % 2;
-
       while (currentRelativeChild != NULL) {
         childFlexBasis = currentRelativeChild->layout.computedFlexBasis;
         float updatedMainSize = childFlexBasis;
@@ -1724,7 +1703,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
             } else {
               childSize =
                   childFlexBasis +
-                  roundToPixelGrid((remainingFreeSpace / totalFlexShrinkScaledFactors) * flexShrinkScaledFactor, NULL);
+                  (remainingFreeSpace / totalFlexShrinkScaledFactors) * flexShrinkScaledFactor;
             }
 
             updatedMainSize = boundAxis(currentRelativeChild, mainAxis, childSize);
@@ -1732,19 +1711,13 @@ static void layoutNodeImpl(const CSSNodeRef node,
         } else if (remainingFreeSpace > 0) {
           flexGrowFactor = CSSNodeStyleGetFlexGrow(currentRelativeChild);
 
-          float valueToAddFromRounding = 0;
-          if (CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeatureRounding) && strippedValuesDueToRounding >= 0.5 && roundingDistributionChildIndex++ % 2 == 0)
-          {
-            valueToAddFromRounding = fminf(1, strippedValuesDueToRounding--);
-          }
-
           // Is this child able to grow?
           if (flexGrowFactor != 0) {
             updatedMainSize =
                 boundAxis(currentRelativeChild,
                           mainAxis,
-                          childFlexBasis + valueToAddFromRounding +
-                          roundToPixelGrid(remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor, NULL));
+                          childFlexBasis +
+                              remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor);
           }
         }
 
@@ -2489,6 +2462,21 @@ bool layoutNodeInternal(const CSSNodeRef node,
   return (needToVisitNode || cachedResults == NULL);
 }
 
+
+  
+  const float fractialLeft = node->layout.position[CSSEdgeLeft] - floorf(node->layout.position[CSSEdgeLeft]);
+  const float fractialTop = node->layout.position[CSSEdgeTop] - floorf(node->layout.position[CSSEdgeTop]);
+  node->layout.dimensions[CSSDimensionWidth] = roundf(fractialLeft + node->layout.dimensions[CSSDimensionWidth]) - roundf(fractialLeft);
+  node->layout.dimensions[CSSDimensionHeight] = roundf(fractialTop + node->layout.dimensions[CSSDimensionHeight]) - roundf(fractialTop);
+
+  node->layout.position[CSSEdgeLeft] = roundf(node->layout.position[CSSEdgeLeft]);
+  node->layout.position[CSSEdgeTop] = roundf(node->layout.position[CSSEdgeTop]);
+
+  const uint32_t childCount = CSSNodeListCount(node->children);
+  for (uint32_t i = 0; i < childCount; i++) {
+  }
+}
+
 void CSSNodeCalculateLayout(const CSSNodeRef node,
                             const float availableWidth,
                             const float availableHeight,
@@ -2537,6 +2525,9 @@ void CSSNodeCalculateLayout(const CSSNodeRef node,
                          "initia"
                          "l")) {
     setPosition(node, node->layout.direction);
+
+    if (CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeatureRounding)){
+    }
 
     if (gPrintTree) {
       CSSNodePrint(node, CSSPrintOptionsLayout | CSSPrintOptionsChildren | CSSPrintOptionsStyle);
