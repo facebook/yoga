@@ -165,6 +165,11 @@
   CSSNodeStyleSetMaxHeight([self cssNode], maxHeight);
 }
 
+- (void)css_setAspectRatio:(CGFloat)aspectRatio
+{
+  CSSNodeStyleSetAspectRatio([self cssNode], aspectRatio);
+}
+
 #pragma mark - Layout and Sizing
 
 - (CSSDirection)css_resolvedDirection

@@ -46,6 +46,9 @@
 - (void)css_setMaxWidth:(CGFloat)maxWidth;
 - (void)css_setMaxHeight:(CGFloat)maxHeight;
 
+// Yoga specific properties, not compatible with flexbox specification
+- (void)css_setAspectRatio:(CGFloat)aspectRatio;
+
 /**
  Get the resolved direction of this node. This won't be CSSDirectionInherit
  */

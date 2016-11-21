@@ -364,6 +364,19 @@ namespace Facebook.CSSLayout
             }
         }
 
+        public float StyleAspectRatio
+        {
+            get
+            {
+                return Native.CSSNodeStyleGetAspectRatio(_cssNode);
+            }
+
+            set
+            {
+                Native.CSSNodeStyleSetAspectRatio(_cssNode, value);
+            }
+        }
+
         public float LayoutX
         {
             get
