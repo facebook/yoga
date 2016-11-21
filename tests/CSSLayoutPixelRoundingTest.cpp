@@ -54,6 +54,7 @@
  *
  */
 
+#include "stdafx.h"
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
@@ -794,6 +795,62 @@ TEST_F(CSSLayoutFeatureRoundingTest, rounding_feature_total_fractial_nested) {
   ASSERT_FLOAT_EQ(89, CSSNodeLayoutGetTop(root_child2));
   ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
+}
+
+
+static CSSSize _measureFloor(CSSNodeRef node,
+  float width,
+  CSSMeasureMode widthMode,
+  float height,
+  CSSMeasureMode heightMode) {
+
+  return CSSSize{
+    width = 10.2,
+    height = 10.2,
+  };
+}
+
+static CSSSize _measureCeil(CSSNodeRef node,
+  float width,
+  CSSMeasureMode widthMode,
+  float height,
+  CSSMeasureMode heightMode) {
+
+  return CSSSize{
+    width = 10.5,
+    height = 10.5,
+  };
+}
+
+
+TEST_F(CSSLayoutFeatureRoundingTest, rounding_feature_with_custom_measure_func_floor) {
+  const CSSNodeRef root = CSSNodeNew();
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  CSSNodeSetMeasureFunc(root_child0, _measureFloor);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
+}
+
+TEST_F(CSSLayoutFeatureRoundingTest, rounding_feature_with_custom_measure_func_ceil) {
+  const CSSNodeRef root = CSSNodeNew();
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  CSSNodeSetMeasureFunc(root_child0, _measureCeil);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_FLOAT_EQ(11, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(11, CSSNodeLayoutGetHeight(root_child0));
 
   CSSNodeFreeRecursive(root);
 }
