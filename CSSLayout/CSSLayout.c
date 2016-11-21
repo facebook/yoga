@@ -2549,7 +2549,7 @@ void CSSLog(CSSLogLevel level, const char *format, ...) {
   va_end(args);
 }
 
-static bool experimentalFeatures[CSSExperimentalFeatureCount + 1];
+static bool experimentalFeatures[CSSExperimentalFeatureCount];
 
 void CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeature feature, bool enabled) {
   experimentalFeatures[feature] = enabled;
