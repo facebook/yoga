@@ -612,3 +612,172 @@ TEST_F(CSSLayoutFeatureRoundingTest, flex_basis_overrides_main_size_4) {
 
   CSSNodeFreeRecursive(root);
 }
+
+TEST_F(CSSLayoutFeatureRoundingTest, rounding_feature_total_fractial) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetWidth(root, 87.4f);
+  CSSNodeStyleSetHeight(root, 113.4f);
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child0, 0.7f);
+  CSSNodeStyleSetFlexBasis(root_child0, 50.3f);
+  CSSNodeStyleSetHeight(root_child0, 20.3f);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  const CSSNodeRef root_child1 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child1, 1.6f);
+  CSSNodeStyleSetHeight(root_child1, 10);
+  CSSNodeInsertChild(root, root_child1, 1);
+
+  const CSSNodeRef root_child2 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child2, 1.1f);
+  CSSNodeStyleSetHeight(root_child2, 10.7f);
+  CSSNodeInsertChild(root, root_child2, 2);
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(113, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(59, CSSNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(59, CSSNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child2));
+  ASSERT_FLOAT_EQ(89, CSSNodeLayoutGetTop(root_child2));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child2));
+  ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(113, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(59, CSSNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(59, CSSNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child2));
+  ASSERT_FLOAT_EQ(89, CSSNodeLayoutGetTop(root_child2));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child2));
+  ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
+}
+
+
+TEST_F(CSSLayoutFeatureRoundingTest, rounding_feature_total_fractial_nested) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetWidth(root, 87.4f);
+  CSSNodeStyleSetHeight(root, 113.4f);
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child0, 0.7f);
+  CSSNodeStyleSetFlexBasis(root_child0, 50.3f);
+  CSSNodeStyleSetHeight(root_child0, 20.3f);
+  CSSNodeInsertChild(root, root_child0, 0);
+
+  const CSSNodeRef root_child0_child0 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child0_child0, 1.2f);
+  CSSNodeStyleSetFlexBasis(root_child0_child0, 0.3f);
+  CSSNodeStyleSetPosition(root_child0_child0, CSSEdgeBottom, 13.3f);
+  CSSNodeStyleSetHeight(root_child0_child0, 9.9f);
+  CSSNodeInsertChild(root_child0, root_child0_child0, 0);
+
+  const CSSNodeRef root_child0_child1 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child0_child1, 4.2f);
+  CSSNodeStyleSetFlexBasis(root_child0_child1, 0.3f);
+  CSSNodeStyleSetPosition(root_child0_child1, CSSEdgeTop, 13.3f);
+  CSSNodeStyleSetHeight(root_child0_child1, 1.1f);
+  CSSNodeInsertChild(root_child0, root_child0_child1, 1);
+
+  const CSSNodeRef root_child1 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child1, 1.6f);
+  CSSNodeStyleSetHeight(root_child1, 10);
+  CSSNodeInsertChild(root, root_child1, 1);
+
+  const CSSNodeRef root_child2 = CSSNodeNew();
+  CSSNodeStyleSetFlexGrow(root_child2, 1.1f);
+  CSSNodeStyleSetHeight(root_child2, 10.7f);
+  CSSNodeInsertChild(root, root_child2, 2);
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(113, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(59, CSSNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0_child0));
+  ASSERT_FLOAT_EQ(-13, CSSNodeLayoutGetTop(root_child0_child0));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child0_child0));
+  ASSERT_FLOAT_EQ(13, CSSNodeLayoutGetHeight(root_child0_child0));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0_child1));
+  ASSERT_FLOAT_EQ(27, CSSNodeLayoutGetTop(root_child0_child1));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child0_child1));
+  ASSERT_FLOAT_EQ(45, CSSNodeLayoutGetHeight(root_child0_child1));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(59, CSSNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child2));
+  ASSERT_FLOAT_EQ(89, CSSNodeLayoutGetTop(root_child2));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child2));
+  ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(113, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(59, CSSNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0_child0));
+  ASSERT_FLOAT_EQ(-13, CSSNodeLayoutGetTop(root_child0_child0));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child0_child0));
+  ASSERT_FLOAT_EQ(13, CSSNodeLayoutGetHeight(root_child0_child0));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0_child1));
+  ASSERT_FLOAT_EQ(27, CSSNodeLayoutGetTop(root_child0_child1));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child0_child1));
+  ASSERT_FLOAT_EQ(45, CSSNodeLayoutGetHeight(root_child0_child1));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(59, CSSNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child2));
+  ASSERT_FLOAT_EQ(89, CSSNodeLayoutGetTop(root_child2));
+  ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child2));
+  ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
+
+  CSSNodeFreeRecursive(root);
+}
