@@ -2463,7 +2463,7 @@ bool layoutNodeInternal(const CSSNodeRef node,
 }
 
 
-void roundToPixelGrid(const CSSNodeRef node){
+static void roundToPixelGrid(const CSSNodeRef node){
   
   const float fractialLeft = node->layout.position[CSSEdgeLeft] - floorf(node->layout.position[CSSEdgeLeft]);
   const float fractialTop = node->layout.position[CSSEdgeTop] - floorf(node->layout.position[CSSEdgeTop]);
