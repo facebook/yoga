@@ -2463,6 +2463,7 @@ bool layoutNodeInternal(const CSSNodeRef node,
 }
 
 
+void roundToPixelGrid(const CSSNodeRef node){
   
   const float fractialLeft = node->layout.position[CSSEdgeLeft] - floorf(node->layout.position[CSSEdgeLeft]);
   const float fractialTop = node->layout.position[CSSEdgeTop] - floorf(node->layout.position[CSSEdgeTop]);
@@ -2474,6 +2475,7 @@ bool layoutNodeInternal(const CSSNodeRef node,
 
   const uint32_t childCount = CSSNodeListCount(node->children);
   for (uint32_t i = 0; i < childCount; i++) {
+    roundToPixelGrid(CSSNodeGetChild(node, i));
   }
 }
 
@@ -2527,6 +2529,7 @@ void CSSNodeCalculateLayout(const CSSNodeRef node,
     setPosition(node, node->layout.direction);
 
     if (CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeatureRounding)){
+      roundToPixelGrid(node);
     }
 
     if (gPrintTree) {
