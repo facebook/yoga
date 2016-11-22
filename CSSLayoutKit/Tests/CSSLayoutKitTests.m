@@ -164,6 +164,35 @@
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), subview3.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview3.bounds.size));
 }
 
+- (void)testThatNumberOfChildrenIsCorrectWhenWeIgnoreSubviews
+{
+  UIView *container = [[UIView alloc] initWithFrame:CGRectZero];
+  [container css_setUsesFlexbox:YES];
+  [container css_setFlexDirection:CSSFlexDirectionRow];
+
+  UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview1 css_setUsesFlexbox:YES];
+  [subview1 css_setIncludeInLayout:NO];
+  [container addSubview:subview1];
+
+  UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview2 css_setUsesFlexbox:YES];
+  [subview2 css_setIncludeInLayout:NO];
+  [container addSubview:subview2];
+
+  UIView *subview3 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview3 css_setUsesFlexbox:YES];
+  [subview3 css_setIncludeInLayout:YES];
+  [container addSubview:subview3];
+
+  [container css_applyLayout];
+  XCTAssertEqual(1, [container css_numberOfChildren]);
+
+  [subview2 css_setIncludeInLayout:YES];
+  [container css_applyLayout];
+  XCTAssertEqual(2, [container css_numberOfChildren]);
+}
+
 - (void)testThatViewNotIncludedInFirstLayoutPassAreIncludedInSecond
 {
   UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];

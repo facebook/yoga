@@ -64,4 +64,9 @@
  */
 - (CGSize)css_intrinsicSize;
 
+/**
+ Returns the number of children that are using Flexbox.
+ */
+- (NSUInteger)css_numberOfChildren;
+
 @end

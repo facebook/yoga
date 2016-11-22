@@ -45,6 +45,11 @@
   return (includeInLayout != nil) ? [includeInLayout boolValue] : YES;
 }
 
+- (NSUInteger)css_numberOfChildren
+{
+  return CSSNodeChildCount([self cssNode]);
+}
+
 #pragma mark - Setters
 
 - (void)css_setIncludeInLayout:(BOOL)includeInLayout
@@ -281,24 +286,24 @@ static void CSSAttachNodesFromViewHierachy(UIView *view) {
   } else {
     CSSNodeSetMeasureFunc(node, NULL);
 
-    NSUInteger numSubviewsInLayout = 0;
+    NSUInteger subviewIndex = 0;
     // Add any children which were added since the last call to css_applyLayout
-    for (NSUInteger i = 0; i < view.subviews.count; i++) {
-      UIView *const subview = view.subviews[i];
+    for (UIView *subview in view.subviews) {
       if (![subview css_includeInLayout]) {
         continue;
       }
-      numSubviewsInLayout++;
 
       CSSNodeRef childNode = [subview cssNode];
-      if (CSSNodeChildCount(node) < i + 1 || CSSNodeGetChild(node, i) != childNode) {
-        CSSNodeInsertChild(node, childNode, i);
+      if (CSSNodeGetChild(node, subviewIndex) != childNode) {
+        CSSNodeInsertChild(node, childNode, subviewIndex);
       }
+
       CSSAttachNodesFromViewHierachy(subview);
+      subviewIndex++;
     }
 
     // Remove any children which were removed since the last call to css_applyLayout
-    while (numSubviewsInLayout < CSSNodeChildCount(node)) {
+    while (subviewIndex < CSSNodeChildCount(node)) {
       CSSNodeRemoveChild(node, CSSNodeGetChild(node, CSSNodeChildCount(node) - 1));
     }
   }
