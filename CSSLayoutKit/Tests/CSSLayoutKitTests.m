@@ -125,6 +125,46 @@
   XCTAssertEqual(containerSize.width, totalWidth, @"The container's width is %.6f, the subviews take up %.6f", containerSize.width, totalWidth);
 }
 
+- (void)testThatLayoutIsCorrectWhenWeSwapViewOrder
+{
+  const CGSize containerSize = CGSizeMake(300, 50);
+
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, containerSize.width, containerSize.height)];
+  [container css_setUsesFlexbox:YES];
+  [container css_setFlexDirection:CSSFlexDirectionRow];
+
+  UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview1 css_setUsesFlexbox:YES];
+  [subview1 css_setFlexGrow:1];
+  [container addSubview:subview1];
+
+  UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview2 css_setUsesFlexbox:YES];
+  [subview2 css_setFlexGrow:1];
+  [container addSubview:subview2];
+
+  UIView *subview3 = [[UIView alloc] initWithFrame:CGRectZero];
+  [subview3 css_setUsesFlexbox:YES];
+  [subview3 css_setFlexGrow:1];
+  [container addSubview:subview3];
+
+  [container css_applyLayout];
+
+  XCTAssertTrue(CGRectEqualToRect(subview1.frame, CGRectMake(0, 0, 100, 50)));
+  XCTAssertTrue(CGRectEqualToRect(subview2.frame, CGRectMake(100, 0, 100, 50)), @"It's actually %@", NSStringFromCGRect(subview2.frame));
+  XCTAssertTrue(CGRectEqualToRect(subview3.frame, CGRectMake(200, 0, 100, 50)));
+
+  [container exchangeSubviewAtIndex:2 withSubviewAtIndex:0];
+  [subview2 css_setIncludeInLayout:NO];
+  [container css_applyLayout];
+
+  XCTAssertTrue(CGRectEqualToRect(subview3.frame, CGRectMake(0, 0, 150, 50)));
+  XCTAssertTrue(CGRectEqualToRect(subview1.frame, CGRectMake(150, 0, 150, 50)));
+
+  // this frame shouldn't have been modified since last time.
+  XCTAssertTrue(CGRectEqualToRect(subview2.frame, CGRectMake(100, 0, 100, 50)));
+}
+
 - (void)testThatWeRespectIncludeInLayoutFlag
 {
   const CGSize containerSize = CGSizeMake(300, 50);

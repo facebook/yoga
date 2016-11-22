@@ -272,40 +272,54 @@ static CGFloat CSSSanitizeMeasurement(
 
 static void CSSAttachNodesFromViewHierachy(UIView *view) {
   CSSNodeRef node = [view cssNode];
-  const BOOL usesFlexbox = [view css_usesFlexbox];
-  const BOOL isLeaf = !usesFlexbox || view.subviews.count == 0;
 
   // Only leaf nodes should have a measure function
-  if (isLeaf) {
+  if (![view css_usesFlexbox] || view.subviews.count == 0) {
     CSSNodeSetMeasureFunc(node, CSSMeasureView);
-
-    // Clear any children
-    while (CSSNodeChildCount(node) > 0) {
-      CSSNodeRemoveChild(node, CSSNodeGetChild(node, 0));
-    }
+    CSSRemoveAllChildren(node);
   } else {
     CSSNodeSetMeasureFunc(node, NULL);
 
-    NSUInteger subviewIndex = 0;
-    // Add any children which were added since the last call to css_applyLayout
+    // Create a list of all the subviews that we are going to use for layout.
+    NSMutableArray<UIView *> *subviewsToInclude = [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
     for (UIView *subview in view.subviews) {
-      if (![subview css_includeInLayout]) {
-        continue;
+      if ([subview css_includeInLayout]) {
+        [subviewsToInclude addObject:subview];
       }
-
-      CSSNodeRef childNode = [subview cssNode];
-      if (CSSNodeGetChild(node, subviewIndex) != childNode) {
-        CSSNodeInsertChild(node, childNode, subviewIndex);
-      }
-
-      CSSAttachNodesFromViewHierachy(subview);
-      subviewIndex++;
     }
 
-    // Remove any children which were removed since the last call to css_applyLayout
-    while (subviewIndex < CSSNodeChildCount(node)) {
-      CSSNodeRemoveChild(node, CSSNodeGetChild(node, CSSNodeChildCount(node) - 1));
+    BOOL shouldReconstructChildList = NO;
+    if (CSSNodeChildCount(node) != subviewsToInclude.count) {
+      shouldReconstructChildList = YES;
+    } else {
+      for (int i = 0; i < subviewsToInclude.count; i++) {
+        if (CSSNodeGetChild(node, i) != [subviewsToInclude[i] cssNode]) {
+          shouldReconstructChildList = YES;
+          break;
+        }
+      }
     }
+
+    if (shouldReconstructChildList) {
+      CSSRemoveAllChildren(node);
+
+      for (int i = 0 ; i < subviewsToInclude.count; i++) {
+        UIView *const subview = subviewsToInclude[i];
+        CSSNodeInsertChild(node, [subview cssNode], i);
+        CSSAttachNodesFromViewHierachy(subview);
+      }
+    }
+  }
+}
+
+static void CSSRemoveAllChildren(const CSSNodeRef node)
+{
+  if (node == NULL) {
+      return;
+  }
+
+  while (CSSNodeChildCount(node) > 0) {
+    CSSNodeRemoveChild(node, CSSNodeGetChild(node, CSSNodeChildCount(node) - 1));
   }
 }
 
