@@ -11,5 +11,6 @@ namespace Facebook.CSSLayout
 {
     public enum CSSExperimentalFeature
     {
+        Rounding,
     }
 }

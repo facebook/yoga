@@ -77,7 +77,9 @@ ENUMS = {
         'Debug',
         'Verbose',
     ],
-    'CSSExperimentalFeature': [],
+    'CSSExperimentalFeature': [
+        'Rounding',
+    ],
     'CSSPrintOptions': [
         ('Layout', 1),
         ('Style', 2),
