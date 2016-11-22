@@ -47,7 +47,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   AssertEQ:{value:function(v0, v1) {
-    this.push('ASSERT_EQ(' + v0 + ', ' + v1 + ');');
+    this.push('ASSERT_FLOAT_EQ(' + v0 + 'f, ' + v1 + ');');
   }},
 
   CSSAlignAuto:{value:'CSSAlignAuto'},
@@ -134,7 +134,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexBasis(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetFlexBasis(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetFlexDirection:{value:function(nodeName, value) {
@@ -142,19 +142,19 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexGrow(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetFlexGrow(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexShrink(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetFlexShrink(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetFlexWrap:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexWrap(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetFlexWrap(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetHeight(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetHeight(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetJustifyContent:{value:function(nodeName, value) {
@@ -162,23 +162,23 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetMargin(' + nodeName + ', ' + edge + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMargin(' + nodeName + ', ' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMaxHeight(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMaxHeight(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMaxWidth(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMaxWidth(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMinHeight(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMinHeight(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMinWidth(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMinWidth(' + nodeName + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetOverflow:{value:function(nodeName, value) {
@@ -186,11 +186,11 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetPadding(' + nodeName + ', ' + edge + ', ' + value + ');');
+    this.push('CSSNodeStyleSetPadding(' + nodeName + ', ' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetPosition(' + nodeName + ', ' + edge + ', ' + value + ');');
+    this.push('CSSNodeStyleSetPosition(' + nodeName + ', ' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetPositionType:{value:function(nodeName, value) {
@@ -198,6 +198,6 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetWidth(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetWidth(' + nodeName + ', ' + value + 'f);');
   }},
 });
