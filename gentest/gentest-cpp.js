@@ -7,6 +7,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+function toFloatString(n) {
+  return n + (Number(n) == n && n % 1 !== 0 ? 'f' : '');
+}
+
 var CPPEmitter = function() {
   Emitter.call(this, 'cpp', '  ');
 };
@@ -47,7 +51,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   AssertEQ:{value:function(v0, v1) {
-    this.push('ASSERT_EQ(' + v0 + ', ' + v1 + ');');
+    this.push('ASSERT_FLOAT_EQ(' + toFloatString(v0) + ', ' + v1 + ');');
   }},
 
   CSSAlignAuto:{value:'CSSAlignAuto'},
@@ -134,7 +138,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexBasis(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetFlexBasis(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetFlexDirection:{value:function(nodeName, value) {
@@ -142,11 +146,11 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexGrow(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetFlexGrow(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexShrink(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetFlexShrink(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetFlexWrap:{value:function(nodeName, value) {
@@ -154,7 +158,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetHeight(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetHeight(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetJustifyContent:{value:function(nodeName, value) {
@@ -162,23 +166,23 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetMargin(' + nodeName + ', ' + edge + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMargin(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMaxHeight(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMaxHeight(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMaxWidth(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMaxWidth(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMinHeight(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMinHeight(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMinWidth(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetMinWidth(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetOverflow:{value:function(nodeName, value) {
@@ -186,11 +190,11 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetPadding(' + nodeName + ', ' + edge + ', ' + value + ');');
+    this.push('CSSNodeStyleSetPadding(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetPosition(' + nodeName + ', ' + edge + ', ' + value + ');');
+    this.push('CSSNodeStyleSetPosition(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetPositionType:{value:function(nodeName, value) {
@@ -198,6 +202,6 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetWidth(' + nodeName + ', ' + value + ');');
+    this.push('CSSNodeStyleSetWidth(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 });

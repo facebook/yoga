@@ -35,7 +35,7 @@ TEST(CSSLayoutTest, copy_style_modified) {
   CSSNodeCopyStyle(node0, node1);
   ASSERT_TRUE(CSSNodeIsDirty(node0));
   ASSERT_EQ(CSSFlexDirectionRow, CSSNodeStyleGetFlexDirection(node0));
-  ASSERT_EQ(10, CSSNodeStyleGetMaxHeight(node0));
+  ASSERT_FLOAT_EQ(10, CSSNodeStyleGetMaxHeight(node0));
 
   CSSNodeFree(node0);
   CSSNodeFree(node1);
