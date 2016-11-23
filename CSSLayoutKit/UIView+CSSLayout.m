@@ -16,6 +16,12 @@
 @end
 
 @implementation CSSNodeBridge
+
++ (void)initialize
+{
+  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, true);
+}
+
 - (instancetype)init
 {
   if ([super init]) {

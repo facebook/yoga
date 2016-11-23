@@ -10,7 +10,19 @@
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
-TEST(CSSLayoutTest, dont_cache_computed_flex_basis_between_layouts) {
+class CSSLayoutRelayoutTest : public ::testing::Test {
+
+protected:
+  virtual void SetUp() {
+    CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, true);
+  }
+
+  virtual void TearDown() {
+    CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, false);
+  }
+};
+
+TEST_F(CSSLayoutRelayoutTest, dont_cache_computed_flex_basis_between_layouts) {
   const CSSNodeRef root = CSSNodeNew();
 
   const CSSNodeRef root_child0 = CSSNodeNew();

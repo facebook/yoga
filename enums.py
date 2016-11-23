@@ -79,6 +79,8 @@ ENUMS = {
     ],
     'CSSExperimentalFeature': [
         'Rounding',
+        # Mimic web flex-basis behavior.
+        'WebFlexBasis',
     ],
     'CSSPrintOptions': [
         ('Layout', 1),
