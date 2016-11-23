@@ -31,18 +31,32 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
     this.pushIndent();
   }},
 
-  emitTestPrologue:{value:function(name) {
+  emitTestPrologue:{value:function(name, experiments) {
     this.push('[Test]');
     this.push('public void Test_' + name + '()');
     this.push('{');
     this.pushIndent();
+
+    if (experiments.length > 0) {
+      for (var i in experiments) {
+        this.push('CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.' + experiments[i] +', true);');
+      }
+      this.push('');
+    }
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
     this.push('CSSNode ' + nodeName + ' = new CSSNode();');
   }},
 
-  emitTestEpilogue:{value:function() {
+  emitTestEpilogue:{value:function(experiments) {
+    if (experiments.length > 0) {
+      this.push('');
+      for (var i in experiments) {
+        this.push('CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.' + experiments[i] +', false);');
+      }
+    }
+
     this.popIndent();
     this.push([
       '}',
@@ -61,7 +75,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   AssertEQ:{value:function(v0, v1) {
-    this.push('Assert.AreEqual(' + v0 + ', ' + v1 + ');');
+    this.push('Assert.AreEqual(' + v0 + 'f, ' + v1 + ');');
   }},
 
   CSSAlignAuto:{value:'CSSAlign.Auto'},
@@ -141,7 +155,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetBorder(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.SetBorder(' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetDirection:{value:function(nodeName, value) {
@@ -149,7 +163,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexBasis = ' + value + ';');
+    this.push(nodeName + '.FlexBasis = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetFlexDirection:{value:function(nodeName, value) {
@@ -157,11 +171,11 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexGrow = ' + value + ';');
+    this.push(nodeName + '.FlexGrow = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexShrink = ' + value + ';');
+    this.push(nodeName + '.FlexShrink = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetFlexWrap:{value:function(nodeName, value) {
@@ -169,7 +183,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleHeight = ' + value + ';');
+    this.push(nodeName + '.StyleHeight = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetJustifyContent:{value:function(nodeName, value) {
@@ -177,23 +191,23 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetMargin(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.SetMargin(' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleMaxHeight = ' + value + ';');
+    this.push(nodeName + '.StyleMaxHeight = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleMaxWidth = ' + value + ';');
+    this.push(nodeName + '.StyleMaxWidth = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleMinHeight = ' + value + ';');
+    this.push(nodeName + '.StyleMinHeight = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleMinWidth = ' + value + ';');
+    this.push(nodeName + '.StyleMinWidth = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetOverflow:{value:function(nodeName, value) {
@@ -201,11 +215,11 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPadding(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.SetPadding(' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPosition(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.SetPosition(' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetPositionType:{value:function(nodeName, value) {
@@ -213,6 +227,6 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleWidth = ' + value + ';');
+    this.push(nodeName + '.StyleWidth = ' + value + 'f;');
   }},
 });

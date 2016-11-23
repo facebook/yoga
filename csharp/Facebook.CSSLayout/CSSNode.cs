@@ -569,14 +569,14 @@ namespace Facebook.CSSLayout
             return Native.CSSNodeGetInstanceCount();
         }
 
-        public static void setExperimentalFeatureEnabled(
+        public static void SetExperimentalFeatureEnabled(
             CSSExperimentalFeature feature,
             bool enabled)
         {
             Native.CSSLayoutSetExperimentalFeatureEnabled(feature, enabled);
         }
 
-        public static bool isExperimentalFeatureEnabled(CSSExperimentalFeature feature)
+        public static bool IsExperimentalFeatureEnabled(CSSExperimentalFeature feature)
         {
             return Native.CSSLayoutIsExperimentalFeatureEnabled(feature);
         }

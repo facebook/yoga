@@ -1,10 +1,17 @@
 #!/usr/bin/env ruby
+
 require 'watir-webdriver'
 require 'fileutils'
+
 caps = Selenium::WebDriver::Remote::Capabilities.chrome(
-  "loggingPrefs"=>{"browser"=>"ALL", "performance"=>"ALL"})
+  "loggingPrefs"=>{
+    "browser"=>"ALL",
+    "performance"=>"ALL"
+  }
+)
 browser = Watir::Browser.new(:chrome, :desired_capabilities => caps)
 Dir.chdir(File.dirname($0))
+
 Dir['fixtures/*.html'].each do |file|
   fixture = File.read(file)
   name = File.basename(file, '.*')
@@ -22,7 +29,7 @@ Dir['fixtures/*.html'].each do |file|
 
   template = File.open('test-template.html').read
   f = File.open('test.html', 'w')
-  f.write sprintf(template, ltr_fixture, rtl_fixture, fixture)
+  f.write sprintf(template, name, ltr_fixture, rtl_fixture, fixture)
   f.close
   FileUtils.copy('test.html', "#{name}.html") if $DEBUG
 

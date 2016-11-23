@@ -10,19 +10,9 @@
 #include <CSSLayout/CSSLayout.h>
 #include <gtest/gtest.h>
 
-class CSSLayoutRelayoutTest : public ::testing::Test {
+TEST(CSSLayoutTest, dont_cache_computed_flex_basis_between_layouts) {
+  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, true);
 
-protected:
-  virtual void SetUp() {
-    CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, true);
-  }
-
-  virtual void TearDown() {
-    CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, false);
-  }
-};
-
-TEST_F(CSSLayoutRelayoutTest, dont_cache_computed_flex_basis_between_layouts) {
   const CSSNodeRef root = CSSNodeNew();
 
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -36,4 +26,6 @@ TEST_F(CSSLayoutRelayoutTest, dont_cache_computed_flex_basis_between_layouts) {
   ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetHeight(root_child0));
 
   CSSNodeFreeRecursive(root);
+
+  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, false);
 }

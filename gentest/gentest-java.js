@@ -11,6 +11,18 @@ var JavaEmitter = function() {
   Emitter.call(this, 'java', '  ');
 };
 
+function toJavaUpper(symbol) {
+  var out = '';
+  for (var i = 0; i < symbol.length; i++) {
+    var c = symbol[i];
+    if (c == c.toUpperCase() && i != 0 && symbol[i - 1] != symbol[i - 1].toUpperCase()) {
+      out += '_';
+    }
+    out += c.toUpperCase();
+  }
+  return out;
+}
+
 JavaEmitter.prototype = Object.create(Emitter.prototype, {
   constructor:{value:JavaEmitter},
 
@@ -27,17 +39,31 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     this.pushIndent();
   }},
 
-  emitTestPrologue:{value:function(name) {
+  emitTestPrologue:{value:function(name, experiments) {
     this.push('@Test');
     this.push('public void test_' + name + '() {');
     this.pushIndent();
+
+    if (experiments.length > 0) {
+      for (var i in experiments) {
+        this.push('CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
+      }
+      this.push('');
+    }
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
     this.push('final CSSNode ' + nodeName + ' = new CSSNode();');
   }},
 
-  emitTestEpilogue:{value:function() {
+  emitTestEpilogue:{value:function(experiments) {
+    if (experiments.length > 0) {
+      this.push('');
+      for (var i in experiments) {
+        this.push('CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.' + toJavaUpper(experiments[i]) +', false);');
+      }
+    }
+
     this.popIndent();
     this.push([
       '}',
@@ -54,7 +80,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   AssertEQ:{value:function(v0, v1) {
-    this.push('assertEquals(' + v0 + ', ' + v1 + ', 0.0f);');
+    this.push('assertEquals(' + v0 + 'f, ' + v1 + ', 0.0f);');
   }},
 
   CSSAlignAuto:{value:'CSSAlign.AUTO'},
@@ -134,7 +160,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setBorder(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.setBorder(' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetDirection:{value:function(nodeName, value) {
@@ -142,7 +168,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexBasis(' + value + ');');
+    this.push(nodeName + '.setFlexBasis(' + value + 'f);');
   }},
 
   CSSNodeStyleSetFlexDirection:{value:function(nodeName, value) {
@@ -150,11 +176,11 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexGrow(' + value + ');');
+    this.push(nodeName + '.setFlexGrow(' + value + 'f);');
   }},
 
   CSSNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexShrink(' + value + ');');
+    this.push(nodeName + '.setFlexShrink(' + value + 'f);');
   }},
 
   CSSNodeStyleSetFlexWrap:{value:function(nodeName, value) {
@@ -162,7 +188,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setStyleHeight(' + value + ');');
+    this.push(nodeName + '.setStyleHeight(' + value + 'f);');
   }},
 
   CSSNodeStyleSetJustifyContent:{value:function(nodeName, value) {
@@ -170,23 +196,23 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setMargin(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.setMargin(' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setStyleMaxHeight(' + value + ');');
+    this.push(nodeName + '.setStyleMaxHeight(' + value + 'f);');
   }},
 
   CSSNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setStyleMaxWidth(' + value + ');');
+    this.push(nodeName + '.setStyleMaxWidth(' + value + 'f);');
   }},
 
   CSSNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setStyleMinHeight(' + value + ');');
+    this.push(nodeName + '.setStyleMinHeight(' + value + 'f);');
   }},
 
   CSSNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setStyleMinWidth(' + value + ');');
+    this.push(nodeName + '.setStyleMinWidth(' + value + 'f);');
   }},
 
   CSSNodeStyleSetOverflow:{value:function(nodeName, value) {
@@ -198,7 +224,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setPosition(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.setPosition(' + edge + ', ' + value + 'f);');
   }},
 
   CSSNodeStyleSetPositionType:{value:function(nodeName, value) {
@@ -206,6 +232,6 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setStyleWidth(' + value + ');');
+    this.push(nodeName + '.setStyleWidth(' + value + 'f);');
   }},
 });

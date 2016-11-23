@@ -26,20 +26,35 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     ]);
   }},
 
-  emitTestPrologue:{value:function(name) {
+  emitTestPrologue:{value:function(name, experiments) {
     this.push('TEST(CSSLayoutTest, ' + name + ') {');
     this.pushIndent();
+
+    if (experiments.length > 0) {
+      for (var i in experiments) {
+        this.push('CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeature' + experiments[i] +', true);');
+      }
+      this.push('');
+    }
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
     this.push('const CSSNodeRef ' + nodeName + ' = CSSNodeNew();');
   }},
 
-  emitTestEpilogue:{value:function() {
+  emitTestEpilogue:{value:function(experiments) {
     this.push([
       '',
       'CSSNodeFreeRecursive(root);',
     ]);
+
+    if (experiments.length > 0) {
+      this.push('');
+      for (var i in experiments) {
+        this.push('CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeature' + experiments[i] +', false);');
+      }
+    }
+
     this.popIndent();
     this.push([
       '}',
@@ -130,7 +145,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetBorder(' + nodeName + ', ' + edge + ', ' + value + ');');
+    this.push('CSSNodeStyleSetBorder(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetDirection:{value:function(nodeName, value) {
