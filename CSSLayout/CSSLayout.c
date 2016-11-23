@@ -2153,7 +2153,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
     const bool needsMainTrailingPos =
         mainAxis == CSSFlexDirectionRowReverse || mainAxis == CSSFlexDirectionColumnReverse;
     const bool needsCrossTrailingPos =
-        CSSFlexDirectionRowReverse || crossAxis == CSSFlexDirectionColumnReverse;
+        crossAxis == CSSFlexDirectionRowReverse || crossAxis == CSSFlexDirectionColumnReverse;
 
     // Set trailing position if necessary.
     if (needsMainTrailingPos || needsCrossTrailingPos) {
