@@ -1591,10 +1591,10 @@ static void layoutNodeImpl(const CSSNodeRef node,
       child->lineIndex = lineCount;
 
       if (child->style.positionType != CSSPositionTypeAbsolute) {
-        const float marginAxis = getPaddingAndBorderAxis(child, mainAxis) + getMarginAxis(child, mainAxis);
-        const float minimumSize = child->style.minDimensions[isMainAxisRow ? CSSDimensionWidth : CSSDimensionHeight] + marginAxis;
+        const float marginAndPaddingAndBorderAxis = getPaddingAndBorderAxis(child, mainAxis) + getMarginAxis(child, mainAxis);
+        const float minimumSize = child->style.minDimensions[isMainAxisRow ? CSSDimensionWidth : CSSDimensionHeight] + marginAndPaddingAndBorderAxis;
         const float outerFlexBasis =
-            child->layout.computedFlexBasis + marginAxis;
+            child->layout.computedFlexBasis + marginAndPaddingAndBorderAxis;
 
         // If this is a multi-line flow and this item pushes us over the
         // available size, we've
