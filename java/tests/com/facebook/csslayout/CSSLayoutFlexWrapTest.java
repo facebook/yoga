@@ -358,36 +358,56 @@ public class CSSLayoutFlexWrapTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setFlexBasis(40f);
-    root_child0.setStyleMinWidth(50f);
+    root_child0.setFlexBasis(34f);
+    root_child0.setMargin(Spacing.LEFT, 1f);
+    root_child0.setMargin(Spacing.RIGHT, 1f);
+    root_child0.setPadding(Spacing.LEFT, 1);
+    root_child0.setPadding(Spacing.RIGHT, 1);
+    root_child0.setStyleMinWidth(39f);
     root_child0.setStyleHeight(20f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexGrow(1f);
-    root_child1.setFlexBasis(40f);
-    root_child1.setStyleMinWidth(50f);
+    root_child1.setFlexBasis(34f);
+    root_child1.setMargin(Spacing.LEFT, 1f);
+    root_child1.setMargin(Spacing.RIGHT, 1f);
+    root_child1.setPadding(Spacing.LEFT, 1);
+    root_child1.setPadding(Spacing.RIGHT, 1);
+    root_child1.setStyleMinWidth(39f);
     root_child1.setStyleHeight(20f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
     root_child2.setFlexGrow(1f);
-    root_child2.setFlexBasis(40f);
-    root_child2.setStyleMinWidth(50f);
+    root_child2.setFlexBasis(34f);
+    root_child2.setMargin(Spacing.LEFT, 1f);
+    root_child2.setMargin(Spacing.RIGHT, 1f);
+    root_child2.setPadding(Spacing.LEFT, 1);
+    root_child2.setPadding(Spacing.RIGHT, 1);
+    root_child2.setStyleMinWidth(39f);
     root_child2.setStyleHeight(20f);
     root.addChildAt(root_child2, 2);
 
     final CSSNode root_child3 = new CSSNode();
     root_child3.setFlexGrow(1f);
-    root_child3.setFlexBasis(40f);
-    root_child3.setStyleMinWidth(50f);
+    root_child3.setFlexBasis(34f);
+    root_child3.setMargin(Spacing.LEFT, 1f);
+    root_child3.setMargin(Spacing.RIGHT, 1f);
+    root_child3.setPadding(Spacing.LEFT, 1);
+    root_child3.setPadding(Spacing.RIGHT, 1);
+    root_child3.setStyleMinWidth(39f);
     root_child3.setStyleHeight(20f);
     root.addChildAt(root_child3, 3);
 
     final CSSNode root_child4 = new CSSNode();
     root_child4.setFlexGrow(1f);
-    root_child4.setFlexBasis(40f);
-    root_child4.setStyleMinWidth(50f);
+    root_child4.setFlexBasis(34f);
+    root_child4.setMargin(Spacing.LEFT, 1f);
+    root_child4.setMargin(Spacing.RIGHT, 1f);
+    root_child4.setPadding(Spacing.LEFT, 1);
+    root_child4.setPadding(Spacing.RIGHT, 1);
+    root_child4.setStyleMinWidth(39f);
     root_child4.setStyleHeight(20f);
     root.addChildAt(root_child4, 4);
     root.setDirection(CSSDirection.LTR);
@@ -398,29 +418,29 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(80f, root.getLayoutWidth(), 0.0f);
     assertEquals(100f, root.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child1.getLayoutX(), 0.0f);
     assertEquals(20f, root_child1.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child1.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child2.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child2.getLayoutX(), 0.0f);
     assertEquals(40f, root_child2.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child2.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child2.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child3.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child3.getLayoutX(), 0.0f);
     assertEquals(60f, root_child3.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child3.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child3.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child3.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child4.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child4.getLayoutX(), 0.0f);
     assertEquals(80f, root_child4.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child4.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child4.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
@@ -431,29 +451,29 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(80f, root.getLayoutWidth(), 0.0f);
     assertEquals(100f, root.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child1.getLayoutX(), 0.0f);
     assertEquals(20f, root_child1.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child1.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child2.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child2.getLayoutX(), 0.0f);
     assertEquals(40f, root_child2.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child2.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child2.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child3.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child3.getLayoutX(), 0.0f);
     assertEquals(60f, root_child3.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child3.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child3.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child3.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child4.getLayoutX(), 0.0f);
+    assertEquals(1f, root_child4.getLayoutX(), 0.0f);
     assertEquals(80f, root_child4.getLayoutY(), 0.0f);
-    assertEquals(80f, root_child4.getLayoutWidth(), 0.0f);
+    assertEquals(78f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child4.getLayoutHeight(), 0.0f);
   }
 

@@ -364,36 +364,56 @@ namespace Facebook.CSSLayout
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 40f;
-            root_child0.StyleMinWidth = 50f;
+            root_child0.FlexBasis = 34f;
+            root_child0.SetMargin(CSSEdge.Left, 1f);
+            root_child0.SetMargin(CSSEdge.Right, 1f);
+            root_child0.SetPadding(CSSEdge.Left, 1f);
+            root_child0.SetPadding(CSSEdge.Right, 1f);
+            root_child0.StyleMinWidth = 39f;
             root_child0.StyleHeight = 20f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.FlexGrow = 1f;
-            root_child1.FlexBasis = 40f;
-            root_child1.StyleMinWidth = 50f;
+            root_child1.FlexBasis = 34f;
+            root_child1.SetMargin(CSSEdge.Left, 1f);
+            root_child1.SetMargin(CSSEdge.Right, 1f);
+            root_child1.SetPadding(CSSEdge.Left, 1f);
+            root_child1.SetPadding(CSSEdge.Right, 1f);
+            root_child1.StyleMinWidth = 39f;
             root_child1.StyleHeight = 20f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1f;
-            root_child2.FlexBasis = 40f;
-            root_child2.StyleMinWidth = 50f;
+            root_child2.FlexBasis = 34f;
+            root_child2.SetMargin(CSSEdge.Left, 1f);
+            root_child2.SetMargin(CSSEdge.Right, 1f);
+            root_child2.SetPadding(CSSEdge.Left, 1f);
+            root_child2.SetPadding(CSSEdge.Right, 1f);
+            root_child2.StyleMinWidth = 39f;
             root_child2.StyleHeight = 20f;
             root.Insert(2, root_child2);
 
             CSSNode root_child3 = new CSSNode();
             root_child3.FlexGrow = 1f;
-            root_child3.FlexBasis = 40f;
-            root_child3.StyleMinWidth = 50f;
+            root_child3.FlexBasis = 34f;
+            root_child3.SetMargin(CSSEdge.Left, 1f);
+            root_child3.SetMargin(CSSEdge.Right, 1f);
+            root_child3.SetPadding(CSSEdge.Left, 1f);
+            root_child3.SetPadding(CSSEdge.Right, 1f);
+            root_child3.StyleMinWidth = 39f;
             root_child3.StyleHeight = 20f;
             root.Insert(3, root_child3);
 
             CSSNode root_child4 = new CSSNode();
             root_child4.FlexGrow = 1f;
-            root_child4.FlexBasis = 40f;
-            root_child4.StyleMinWidth = 50f;
+            root_child4.FlexBasis = 34f;
+            root_child4.SetMargin(CSSEdge.Left, 1f);
+            root_child4.SetMargin(CSSEdge.Right, 1f);
+            root_child4.SetPadding(CSSEdge.Left, 1f);
+            root_child4.SetPadding(CSSEdge.Right, 1f);
+            root_child4.StyleMinWidth = 39f;
             root_child4.StyleHeight = 20f;
             root.Insert(4, root_child4);
             root.StyleDirection = CSSDirection.LTR;
@@ -404,29 +424,29 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(80f, root.LayoutWidth);
             Assert.AreEqual(100f, root.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(1f, root_child0.LayoutX);
             Assert.AreEqual(0f, root_child0.LayoutY);
-            Assert.AreEqual(80f, root_child0.LayoutWidth);
+            Assert.AreEqual(78f, root_child0.LayoutWidth);
             Assert.AreEqual(20f, root_child0.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child1.LayoutX);
+            Assert.AreEqual(1f, root_child1.LayoutX);
             Assert.AreEqual(20f, root_child1.LayoutY);
-            Assert.AreEqual(80f, root_child1.LayoutWidth);
+            Assert.AreEqual(78f, root_child1.LayoutWidth);
             Assert.AreEqual(20f, root_child1.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child2.LayoutX);
+            Assert.AreEqual(1f, root_child2.LayoutX);
             Assert.AreEqual(40f, root_child2.LayoutY);
-            Assert.AreEqual(80f, root_child2.LayoutWidth);
+            Assert.AreEqual(78f, root_child2.LayoutWidth);
             Assert.AreEqual(20f, root_child2.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child3.LayoutX);
+            Assert.AreEqual(1f, root_child3.LayoutX);
             Assert.AreEqual(60f, root_child3.LayoutY);
-            Assert.AreEqual(80f, root_child3.LayoutWidth);
+            Assert.AreEqual(78f, root_child3.LayoutWidth);
             Assert.AreEqual(20f, root_child3.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child4.LayoutX);
+            Assert.AreEqual(1f, root_child4.LayoutX);
             Assert.AreEqual(80f, root_child4.LayoutY);
-            Assert.AreEqual(80f, root_child4.LayoutWidth);
+            Assert.AreEqual(78f, root_child4.LayoutWidth);
             Assert.AreEqual(20f, root_child4.LayoutHeight);
 
             root.StyleDirection = CSSDirection.RTL;
@@ -437,29 +457,29 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(80f, root.LayoutWidth);
             Assert.AreEqual(100f, root.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(1f, root_child0.LayoutX);
             Assert.AreEqual(0f, root_child0.LayoutY);
-            Assert.AreEqual(80f, root_child0.LayoutWidth);
+            Assert.AreEqual(78f, root_child0.LayoutWidth);
             Assert.AreEqual(20f, root_child0.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child1.LayoutX);
+            Assert.AreEqual(1f, root_child1.LayoutX);
             Assert.AreEqual(20f, root_child1.LayoutY);
-            Assert.AreEqual(80f, root_child1.LayoutWidth);
+            Assert.AreEqual(78f, root_child1.LayoutWidth);
             Assert.AreEqual(20f, root_child1.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child2.LayoutX);
+            Assert.AreEqual(1f, root_child2.LayoutX);
             Assert.AreEqual(40f, root_child2.LayoutY);
-            Assert.AreEqual(80f, root_child2.LayoutWidth);
+            Assert.AreEqual(78f, root_child2.LayoutWidth);
             Assert.AreEqual(20f, root_child2.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child3.LayoutX);
+            Assert.AreEqual(1f, root_child3.LayoutX);
             Assert.AreEqual(60f, root_child3.LayoutY);
-            Assert.AreEqual(80f, root_child3.LayoutWidth);
+            Assert.AreEqual(78f, root_child3.LayoutWidth);
             Assert.AreEqual(20f, root_child3.LayoutHeight);
 
-            Assert.AreEqual(0f, root_child4.LayoutX);
+            Assert.AreEqual(1f, root_child4.LayoutX);
             Assert.AreEqual(80f, root_child4.LayoutY);
-            Assert.AreEqual(80f, root_child4.LayoutWidth);
+            Assert.AreEqual(78f, root_child4.LayoutWidth);
             Assert.AreEqual(20f, root_child4.LayoutHeight);
         }
 
