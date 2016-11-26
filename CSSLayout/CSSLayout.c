@@ -1591,6 +1591,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
       child->lineIndex = lineCount;
 
       if (child->style.positionType != CSSPositionTypeAbsolute) {
+        const float minimumSize = child->style.minDimensions[isMainAxisRow ? CSSDimensionWidth : CSSDimensionHeight];
         const float outerFlexBasis =
             child->layout.computedFlexBasis + getMarginAxis(child, mainAxis);
 
@@ -1598,7 +1599,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
         // available size, we've
         // hit the end of the current line. Break out of the loop and lay out
         // the current line.
-        if (sizeConsumedOnCurrentLine + outerFlexBasis > availableInnerMainDim && isNodeFlexWrap &&
+        if (sizeConsumedOnCurrentLine + fmaxf(outerFlexBasis, minimumSize) > availableInnerMainDim && isNodeFlexWrap &&
             itemsOnLine > 0) {
           break;
         }
