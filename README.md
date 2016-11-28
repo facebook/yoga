@@ -1,5 +1,8 @@
 # CSSLayout [![Build Status](https://travis-ci.org/facebook/css-layout.svg?branch=master)](https://travis-ci.org/facebook/css-layout)
 
+## NOTICE
+A lot is changing this week in the API regarding naming. We suggest you hold off updating to the latest version of the code until this notice is gone. Expect it to take about a week.
+
 ## Goals
 CSSLayout is a cross-platform implementation of flexbox. The goal of CSSLayout is allow native developers to have the same expressive layout system as developers developing for the modern web are used to. CSSLayout allows developers for web, android, iOS, and windows to use the same layout primitives across platforms. This saves time, increases collaboration between platform teams, and makes it easier for developers to work on multiple platforms.
 
