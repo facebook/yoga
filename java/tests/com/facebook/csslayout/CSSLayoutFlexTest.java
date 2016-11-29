@@ -19,8 +19,8 @@ public class CSSLayoutFlexTest {
   @Test
   public void test_flex_basis_flex_grow_column() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
@@ -71,8 +71,8 @@ public class CSSLayoutFlexTest {
   public void test_flex_basis_flex_grow_row() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
@@ -122,8 +122,8 @@ public class CSSLayoutFlexTest {
   @Test
   public void test_flex_basis_flex_shrink_column() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexShrink(1f);
@@ -174,8 +174,8 @@ public class CSSLayoutFlexTest {
   public void test_flex_basis_flex_shrink_row() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexShrink(1f);
@@ -225,22 +225,22 @@ public class CSSLayoutFlexTest {
   @Test
   public void test_flex_shrink_to_zero() {
     final CSSNode root = new CSSNode();
-    root.setStyleHeight(75f);
+    root.setHeight(75f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(50f);
-    root_child0.setStyleHeight(50f);
+    root_child0.setWidth(50f);
+    root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexShrink(1f);
-    root_child1.setStyleWidth(50f);
-    root_child1.setStyleHeight(50f);
+    root_child1.setWidth(50f);
+    root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleWidth(50f);
-    root_child2.setStyleHeight(50f);
+    root_child2.setWidth(50f);
+    root_child2.setHeight(50f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -292,23 +292,23 @@ public class CSSLayoutFlexTest {
   @Test
   public void test_flex_basis_overrides_main_size() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasis(50f);
-    root_child0.setStyleHeight(20f);
+    root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexGrow(1f);
-    root_child1.setStyleHeight(10f);
+    root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
     root_child2.setFlexGrow(1f);
-    root_child2.setStyleHeight(10f);
+    root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -360,8 +360,8 @@ public class CSSLayoutFlexTest {
   @Test
   public void test_flex_grow_shrink_at_most() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root.addChildAt(root_child0, 0);

@@ -22,12 +22,12 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.SetMargin(CSSEdge.Start, 10f);
-            root_child0.StyleWidth = 10f;
+            root_child0.Width = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -60,12 +60,12 @@ namespace Facebook.CSSLayout
         public void Test_margin_top()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.SetMargin(CSSEdge.Top, 10f);
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -100,12 +100,12 @@ namespace Facebook.CSSLayout
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
             root.JustifyContent = CSSJustify.FlexEnd;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.SetMargin(CSSEdge.End, 10f);
-            root_child0.StyleWidth = 10f;
+            root_child0.Width = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -139,12 +139,12 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.JustifyContent = CSSJustify.FlexEnd;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.SetMargin(CSSEdge.Bottom, 10f);
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -178,8 +178,8 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
@@ -216,8 +216,8 @@ namespace Facebook.CSSLayout
         public void Test_margin_and_flex_column()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
@@ -255,8 +255,8 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
@@ -293,8 +293,8 @@ namespace Facebook.CSSLayout
         public void Test_margin_and_stretch_column()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
@@ -332,8 +332,8 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
@@ -383,8 +383,8 @@ namespace Facebook.CSSLayout
         public void Test_margin_with_sibling_column()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;

@@ -49,8 +49,8 @@ public class CSSLayoutPaddingTest {
     root.setPadding(Spacing.BOTTOM, 10);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setWidth(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -86,12 +86,12 @@ public class CSSLayoutPaddingTest {
     root.setPadding(Spacing.TOP, 10);
     root.setPadding(Spacing.RIGHT, 10);
     root.setPadding(Spacing.BOTTOM, 10);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -127,11 +127,11 @@ public class CSSLayoutPaddingTest {
     root.setPadding(Spacing.TOP, 10);
     root.setPadding(Spacing.RIGHT, 10);
     root.setPadding(Spacing.BOTTOM, 10);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -168,12 +168,12 @@ public class CSSLayoutPaddingTest {
     root.setPadding(Spacing.START, 10);
     root.setPadding(Spacing.END, 20);
     root.setPadding(Spacing.BOTTOM, 20);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setWidth(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);

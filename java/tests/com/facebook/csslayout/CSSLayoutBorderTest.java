@@ -49,8 +49,8 @@ public class CSSLayoutBorderTest {
     root.setBorder(Spacing.BOTTOM, 10f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setWidth(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -86,12 +86,12 @@ public class CSSLayoutBorderTest {
     root.setBorder(Spacing.TOP, 10f);
     root.setBorder(Spacing.RIGHT, 10f);
     root.setBorder(Spacing.BOTTOM, 10f);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -127,11 +127,11 @@ public class CSSLayoutBorderTest {
     root.setBorder(Spacing.TOP, 10f);
     root.setBorder(Spacing.RIGHT, 10f);
     root.setBorder(Spacing.BOTTOM, 10f);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -168,12 +168,12 @@ public class CSSLayoutBorderTest {
     root.setBorder(Spacing.START, 10f);
     root.setBorder(Spacing.END, 20f);
     root.setBorder(Spacing.BOTTOM, 20f);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setWidth(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);

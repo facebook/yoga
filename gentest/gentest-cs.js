@@ -183,7 +183,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleHeight = ' + value + 'f;');
+    this.push(nodeName + '.Height = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetJustifyContent:{value:function(nodeName, value) {
@@ -195,19 +195,19 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleMaxHeight = ' + value + 'f;');
+    this.push(nodeName + '.MaxHeight = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleMaxWidth = ' + value + 'f;');
+    this.push(nodeName + '.MaxWidth = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleMinHeight = ' + value + 'f;');
+    this.push(nodeName + '.MinHeight = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleMinWidth = ' + value + 'f;');
+    this.push(nodeName + '.MinWidth = ' + value + 'f;');
   }},
 
   CSSNodeStyleSetOverflow:{value:function(nodeName, value) {
@@ -227,6 +227,6 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   CSSNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleWidth = ' + value + 'f;');
+    this.push(nodeName + '.Width = ' + value + 'f;');
   }},
 });

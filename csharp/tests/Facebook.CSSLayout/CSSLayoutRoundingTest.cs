@@ -24,8 +24,8 @@ namespace Facebook.CSSLayout
 
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
@@ -94,8 +94,8 @@ namespace Facebook.CSSLayout
 
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 113f;
-            root.StyleHeight = 100f;
+            root.Width = 113f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
@@ -192,8 +192,8 @@ namespace Facebook.CSSLayout
 
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 101f;
-            root.StyleHeight = 100f;
+            root.Width = 101f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexShrink = 1f;
@@ -262,23 +262,23 @@ namespace Facebook.CSSLayout
             CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 113f;
+            root.Width = 100f;
+            root.Height = 113f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
             root_child0.FlexBasis = 50f;
-            root_child0.StyleHeight = 20f;
+            root_child0.Height = 20f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.FlexGrow = 1f;
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1f;
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -335,23 +335,23 @@ namespace Facebook.CSSLayout
             CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.StyleWidth = 87.4f;
-            root.StyleHeight = 113.4f;
+            root.Width = 87.4f;
+            root.Height = 113.4f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 0.7f;
             root_child0.FlexBasis = 50.3f;
-            root_child0.StyleHeight = 20.3f;
+            root_child0.Height = 20.3f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.FlexGrow = 1.6f;
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1.1f;
-            root_child2.StyleHeight = 10.7f;
+            root_child2.Height = 10.7f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -408,37 +408,37 @@ namespace Facebook.CSSLayout
             CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.StyleWidth = 87.4f;
-            root.StyleHeight = 113.4f;
+            root.Width = 87.4f;
+            root.Height = 113.4f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 0.7f;
             root_child0.FlexBasis = 50.3f;
-            root_child0.StyleHeight = 20.3f;
+            root_child0.Height = 20.3f;
             root.Insert(0, root_child0);
 
             CSSNode root_child0_child0 = new CSSNode();
             root_child0_child0.FlexGrow = 1f;
             root_child0_child0.FlexBasis = 0.3f;
             root_child0_child0.SetPosition(CSSEdge.Bottom, 13.3f);
-            root_child0_child0.StyleHeight = 9.9f;
+            root_child0_child0.Height = 9.9f;
             root_child0.Insert(0, root_child0_child0);
 
             CSSNode root_child0_child1 = new CSSNode();
             root_child0_child1.FlexGrow = 4f;
             root_child0_child1.FlexBasis = 0.3f;
             root_child0_child1.SetPosition(CSSEdge.Top, 13.3f);
-            root_child0_child1.StyleHeight = 1.1f;
+            root_child0_child1.Height = 1.1f;
             root_child0.Insert(1, root_child0_child1);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.FlexGrow = 1.6f;
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1.1f;
-            root_child2.StyleHeight = 10.7f;
+            root_child2.Height = 10.7f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -515,23 +515,23 @@ namespace Facebook.CSSLayout
             CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 113.4f;
+            root.Width = 100f;
+            root.Height = 113.4f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
             root_child0.FlexBasis = 50f;
-            root_child0.StyleHeight = 20f;
+            root_child0.Height = 20f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.FlexGrow = 1f;
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1f;
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -588,23 +588,23 @@ namespace Facebook.CSSLayout
             CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 113.6f;
+            root.Width = 100f;
+            root.Height = 113.6f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
             root_child0.FlexBasis = 50f;
-            root_child0.StyleHeight = 20f;
+            root_child0.Height = 20f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.FlexGrow = 1f;
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1f;
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -662,23 +662,23 @@ namespace Facebook.CSSLayout
 
             CSSNode root = new CSSNode();
             root.SetPosition(CSSEdge.Top, 0.3f);
-            root.StyleWidth = 100f;
-            root.StyleHeight = 113.4f;
+            root.Width = 100f;
+            root.Height = 113.4f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
             root_child0.FlexBasis = 50f;
-            root_child0.StyleHeight = 20f;
+            root_child0.Height = 20f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.FlexGrow = 1f;
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1f;
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -736,23 +736,23 @@ namespace Facebook.CSSLayout
 
             CSSNode root = new CSSNode();
             root.SetPosition(CSSEdge.Top, 0.7f);
-            root.StyleWidth = 100f;
-            root.StyleHeight = 113.4f;
+            root.Width = 100f;
+            root.Height = 113.4f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
             root_child0.FlexBasis = 50f;
-            root_child0.StyleHeight = 20f;
+            root_child0.Height = 20f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.FlexGrow = 1f;
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1f;
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();

@@ -31,12 +31,13 @@ namespace Facebook.CSSLayout
             Spacing margin = null,
             Spacing padding = null,
             Spacing border = null,
-            float? styleWidth = null,
-            float? styleHeight = null,
-            float? styleMaxWidth = null,
-            float? styleMaxHeight = null,
-            float? styleMinWidth = null,
-            float? styleMinHeight = null)
+            float? width = null,
+            float? height = null,
+            float? maxWidth = null,
+            float? maxHeight = null,
+            float? minWidth = null,
+            float? minHeight = null,
+            float? aspectRatio = null)
         {
             CSSNode node = new CSSNode();
 
@@ -197,38 +198,42 @@ namespace Facebook.CSSLayout
                 }
             }
 
-            if (styleWidth.HasValue)
+            if (width.HasValue)
             {
-                node.StyleWidth = styleWidth.Value;
+                node.Width = width.Value;
             }
 
-            if (styleHeight.HasValue)
+            if (height.HasValue)
             {
-                node.StyleHeight = styleHeight.Value;
+                node.Height = height.Value;
             }
 
-            if (styleMinWidth.HasValue)
+            if (minWidth.HasValue)
             {
-                node.StyleMinWidth = styleMinWidth.Value;
+                node.MinWidth = minWidth.Value;
             }
 
-            if (styleMinHeight.HasValue)
+            if (minHeight.HasValue)
             {
-                node.StyleMinHeight = styleMinHeight.Value;
+                node.MinHeight = minHeight.Value;
             }
 
-            if (styleMaxWidth.HasValue)
+            if (maxWidth.HasValue)
             {
-                node.StyleMaxWidth = styleMaxWidth.Value;
+                node.MaxWidth = maxWidth.Value;
             }
 
-            if (styleMaxHeight.HasValue)
+            if (maxHeight.HasValue)
             {
-                node.StyleMaxHeight = styleMaxHeight.Value;
+                node.MaxHeight = maxHeight.Value;
+            }
+
+            if (aspectRatio.HasValue)
+            {
+                node.AspectRatio = aspectRatio.Value;
             }
 
             return node;
         }
     }
 }
-

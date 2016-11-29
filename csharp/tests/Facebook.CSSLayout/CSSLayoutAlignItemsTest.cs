@@ -21,11 +21,11 @@ namespace Facebook.CSSLayout
         public void Test_align_items_stretch()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -59,12 +59,12 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.AlignItems = CSSAlign.Center;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleHeight = 10f;
+            root_child0.Width = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -98,12 +98,12 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.AlignItems = CSSAlign.FlexStart;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleHeight = 10f;
+            root_child0.Width = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -137,12 +137,12 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.AlignItems = CSSAlign.FlexEnd;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleHeight = 10f;
+            root_child0.Width = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();

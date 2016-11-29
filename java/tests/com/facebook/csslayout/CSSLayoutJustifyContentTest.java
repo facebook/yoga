@@ -20,19 +20,19 @@ public class CSSLayoutJustifyContentTest {
   public void test_justify_content_row_flex_start() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleWidth(10f);
+    root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleWidth(10f);
+    root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -86,19 +86,19 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
     root.setJustifyContent(CSSJustify.FLEX_END);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleWidth(10f);
+    root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleWidth(10f);
+    root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -152,19 +152,19 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
     root.setJustifyContent(CSSJustify.CENTER);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleWidth(10f);
+    root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleWidth(10f);
+    root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -218,19 +218,19 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
     root.setJustifyContent(CSSJustify.SPACE_BETWEEN);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleWidth(10f);
+    root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleWidth(10f);
+    root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -284,19 +284,19 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
     root.setJustifyContent(CSSJustify.SPACE_AROUND);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleWidth(10f);
+    root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleWidth(10f);
+    root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -348,18 +348,18 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_column_flex_start() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleHeight(10f);
+    root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -412,19 +412,19 @@ public class CSSLayoutJustifyContentTest {
   public void test_justify_content_column_flex_end() {
     final CSSNode root = new CSSNode();
     root.setJustifyContent(CSSJustify.FLEX_END);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleHeight(10f);
+    root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleHeight(10f);
+    root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -477,19 +477,19 @@ public class CSSLayoutJustifyContentTest {
   public void test_justify_content_column_center() {
     final CSSNode root = new CSSNode();
     root.setJustifyContent(CSSJustify.CENTER);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleHeight(10f);
+    root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleHeight(10f);
+    root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -542,19 +542,19 @@ public class CSSLayoutJustifyContentTest {
   public void test_justify_content_column_space_between() {
     final CSSNode root = new CSSNode();
     root.setJustifyContent(CSSJustify.SPACE_BETWEEN);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleHeight(10f);
+    root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleHeight(10f);
+    root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -607,19 +607,19 @@ public class CSSLayoutJustifyContentTest {
   public void test_justify_content_column_space_around() {
     final CSSNode root = new CSSNode();
     root.setJustifyContent(CSSJustify.SPACE_AROUND);
-    root.setStyleWidth(102f);
-    root.setStyleHeight(102f);
+    root.setWidth(102f);
+    root.setHeight(102f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleHeight(10f);
+    root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleHeight(10f);
+    root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);

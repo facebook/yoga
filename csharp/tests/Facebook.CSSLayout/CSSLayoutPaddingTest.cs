@@ -52,8 +52,8 @@ namespace Facebook.CSSLayout
             root.SetPadding(CSSEdge.Bottom, 10f);
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleHeight = 10f;
+            root_child0.Width = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -90,12 +90,12 @@ namespace Facebook.CSSLayout
             root.SetPadding(CSSEdge.Top, 10f);
             root.SetPadding(CSSEdge.Right, 10f);
             root.SetPadding(CSSEdge.Bottom, 10f);
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
-            root_child0.StyleWidth = 10f;
+            root_child0.Width = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -132,11 +132,11 @@ namespace Facebook.CSSLayout
             root.SetPadding(CSSEdge.Top, 10f);
             root.SetPadding(CSSEdge.Right, 10f);
             root.SetPadding(CSSEdge.Bottom, 10f);
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -174,12 +174,12 @@ namespace Facebook.CSSLayout
             root.SetPadding(CSSEdge.Start, 10f);
             root.SetPadding(CSSEdge.End, 20f);
             root.SetPadding(CSSEdge.Bottom, 20f);
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleHeight = 10f;
+            root_child0.Width = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();

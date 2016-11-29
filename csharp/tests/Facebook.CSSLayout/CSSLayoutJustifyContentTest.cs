@@ -22,19 +22,19 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
+            root_child0.Width = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleWidth = 10f;
+            root_child1.Width = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleWidth = 10f;
+            root_child2.Width = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -89,19 +89,19 @@ namespace Facebook.CSSLayout
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
             root.JustifyContent = CSSJustify.FlexEnd;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
+            root_child0.Width = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleWidth = 10f;
+            root_child1.Width = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleWidth = 10f;
+            root_child2.Width = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -156,19 +156,19 @@ namespace Facebook.CSSLayout
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
             root.JustifyContent = CSSJustify.Center;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
+            root_child0.Width = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleWidth = 10f;
+            root_child1.Width = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleWidth = 10f;
+            root_child2.Width = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -223,19 +223,19 @@ namespace Facebook.CSSLayout
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
             root.JustifyContent = CSSJustify.SpaceBetween;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
+            root_child0.Width = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleWidth = 10f;
+            root_child1.Width = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleWidth = 10f;
+            root_child2.Width = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -290,19 +290,19 @@ namespace Facebook.CSSLayout
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
             root.JustifyContent = CSSJustify.SpaceAround;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
+            root_child0.Width = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleWidth = 10f;
+            root_child1.Width = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleWidth = 10f;
+            root_child2.Width = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -355,18 +355,18 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_column_flex_start()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -420,19 +420,19 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.JustifyContent = CSSJustify.FlexEnd;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -486,19 +486,19 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.JustifyContent = CSSJustify.Center;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -552,19 +552,19 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.JustifyContent = CSSJustify.SpaceBetween;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -618,19 +618,19 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.JustifyContent = CSSJustify.SpaceAround;
-            root.StyleWidth = 102f;
-            root.StyleHeight = 102f;
+            root.Width = 102f;
+            root.Height = 102f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleHeight = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleHeight = 10f;
+            root_child1.Height = 10f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleHeight = 10f;
+            root_child2.Height = 10f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();

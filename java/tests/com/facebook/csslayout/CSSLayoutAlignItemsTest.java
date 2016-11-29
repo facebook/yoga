@@ -19,11 +19,11 @@ public class CSSLayoutAlignItemsTest {
   @Test
   public void test_align_items_stretch() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -56,12 +56,12 @@ public class CSSLayoutAlignItemsTest {
   public void test_align_items_center() {
     final CSSNode root = new CSSNode();
     root.setAlignItems(CSSAlign.CENTER);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setWidth(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -94,12 +94,12 @@ public class CSSLayoutAlignItemsTest {
   public void test_align_items_flex_start() {
     final CSSNode root = new CSSNode();
     root.setAlignItems(CSSAlign.FLEX_START);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setWidth(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -132,12 +132,12 @@ public class CSSLayoutAlignItemsTest {
   public void test_align_items_flex_end() {
     final CSSNode root = new CSSNode();
     root.setAlignItems(CSSAlign.FLEX_END);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setWidth(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);

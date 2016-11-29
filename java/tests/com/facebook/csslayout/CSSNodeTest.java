@@ -76,12 +76,12 @@ public class CSSNodeTest {
   @Test
   public void testCopyStyle() {
     final CSSNode node0 = new CSSNode();
-    assertTrue(CSSConstants.isUndefined(node0.getStyleMaxHeight()));
+    assertTrue(CSSConstants.isUndefined(node0.getMaxHeight()));
 
     final CSSNode node1 = new CSSNode();
-    node1.setStyleMaxHeight(100);
+    node1.setMaxHeight(100);
 
     node0.copyStyle(node1);
-    assertEquals(100, (int) node0.getStyleMaxHeight());
+    assertEquals(100, (int) node0.getMaxHeight());
   }
 }

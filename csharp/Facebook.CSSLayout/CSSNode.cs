@@ -286,7 +286,7 @@ namespace Facebook.CSSLayout
             Native.CSSNodeStyleSetPosition(_cssNode, edge, position);
         }
 
-        public float StyleWidth
+        public float Width
         {
             get
             {
@@ -299,7 +299,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public float StyleHeight
+        public float Height
         {
             get
             {
@@ -312,7 +312,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public float StyleMaxWidth
+        public float MaxWidth
         {
             get
             {
@@ -325,7 +325,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public float StyleMaxHeight
+        public float MaxHeight
         {
             get
             {
@@ -338,7 +338,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public float StyleMinWidth
+        public float MinWidth
         {
             get
             {
@@ -351,7 +351,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public float StyleMinHeight
+        public float MinHeight
         {
             get
             {
@@ -364,7 +364,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public float StyleAspectRatio
+        public float AspectRatio
         {
             get
             {

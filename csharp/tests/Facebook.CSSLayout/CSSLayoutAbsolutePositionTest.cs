@@ -21,15 +21,15 @@ namespace Facebook.CSSLayout
         public void Test_absolute_layout_width_height_start_top()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.PositionType = CSSPositionType.Absolute;
             root_child0.SetPosition(CSSEdge.Start, 10f);
             root_child0.SetPosition(CSSEdge.Top, 10f);
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleHeight = 10f;
+            root_child0.Width = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -62,15 +62,15 @@ namespace Facebook.CSSLayout
         public void Test_absolute_layout_width_height_end_bottom()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.PositionType = CSSPositionType.Absolute;
             root_child0.SetPosition(CSSEdge.End, 10f);
             root_child0.SetPosition(CSSEdge.Bottom, 10f);
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleHeight = 10f;
+            root_child0.Width = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -103,8 +103,8 @@ namespace Facebook.CSSLayout
         public void Test_absolute_layout_start_top_end_bottom()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.PositionType = CSSPositionType.Absolute;
@@ -144,8 +144,8 @@ namespace Facebook.CSSLayout
         public void Test_absolute_layout_width_height_start_top_end_bottom()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.PositionType = CSSPositionType.Absolute;
@@ -153,8 +153,8 @@ namespace Facebook.CSSLayout
             root_child0.SetPosition(CSSEdge.Top, 10f);
             root_child0.SetPosition(CSSEdge.End, 10f);
             root_child0.SetPosition(CSSEdge.Bottom, 10f);
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleHeight = 10f;
+            root_child0.Width = 10f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -189,8 +189,8 @@ namespace Facebook.CSSLayout
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
             root.Overflow = CSSOverflow.Hidden;
-            root.StyleWidth = 50f;
-            root.StyleHeight = 50f;
+            root.Width = 50f;
+            root.Height = 50f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.PositionType = CSSPositionType.Absolute;
@@ -199,8 +199,8 @@ namespace Facebook.CSSLayout
             root.Insert(0, root_child0);
 
             CSSNode root_child0_child0 = new CSSNode();
-            root_child0_child0.StyleWidth = 100f;
-            root_child0_child0.StyleHeight = 100f;
+            root_child0_child0.Width = 100f;
+            root_child0_child0.Height = 100f;
             root_child0.Insert(0, root_child0_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -255,23 +255,23 @@ namespace Facebook.CSSLayout
             root.SetBorder(CSSEdge.Top, 10f);
             root.SetBorder(CSSEdge.Right, 10f);
             root.SetBorder(CSSEdge.Bottom, 10f);
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.PositionType = CSSPositionType.Absolute;
             root_child0.SetPosition(CSSEdge.Left, 0f);
             root_child0.SetPosition(CSSEdge.Top, 0f);
-            root_child0.StyleWidth = 50f;
-            root_child0.StyleHeight = 50f;
+            root_child0.Width = 50f;
+            root_child0.Height = 50f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
             root_child1.PositionType = CSSPositionType.Absolute;
             root_child1.SetPosition(CSSEdge.Right, 0f);
             root_child1.SetPosition(CSSEdge.Bottom, 0f);
-            root_child1.StyleWidth = 50f;
-            root_child1.StyleHeight = 50f;
+            root_child1.Width = 50f;
+            root_child1.Height = 50f;
             root.Insert(1, root_child1);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();

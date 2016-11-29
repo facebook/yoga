@@ -201,14 +201,14 @@ namespace Facebook.CSSLayout
         public void TestPrint()
         {
             CSSNode parent = new CSSNode();
-            parent.StyleWidth = 100;
-            parent.StyleHeight = 120;
+            parent.Width = 100;
+            parent.Height = 120;
             CSSNode child0 = new CSSNode();
-            child0.StyleWidth = 30;
-            child0.StyleHeight = 40;
+            child0.Width = 30;
+            child0.Height = 40;
             CSSNode child1 = new CSSNode();
-            child1.StyleWidth = 35;
-            child1.StyleHeight = 45;
+            child1.Width = 35;
+            child1.Height = 45;
             parent.Insert(0, child0);
             parent.Insert(0, child1);
             parent.CalculateLayout();
@@ -219,13 +219,13 @@ namespace Facebook.CSSLayout
         public void TestCopyStyle()
         {
             CSSNode node0 = new CSSNode();
-            Assert.IsTrue(CSSConstants.IsUndefined(node0.StyleMaxHeight));
+            Assert.IsTrue(CSSConstants.IsUndefined(node0.MaxHeight));
 
             CSSNode node1 = new CSSNode();
-            node1.StyleMaxHeight = 100;
+            node1.MaxHeight = 100;
 
             node0.CopyStyle(node1);
-            Assert.AreEqual(100, node0.StyleMaxHeight);
+            Assert.AreEqual(100, node0.MaxHeight);
         }
 
 #if !UNITY_EDITOR

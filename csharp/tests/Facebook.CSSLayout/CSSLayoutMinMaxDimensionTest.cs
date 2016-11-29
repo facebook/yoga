@@ -21,12 +21,12 @@ namespace Facebook.CSSLayout
         public void Test_max_width()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleMaxWidth = 50f;
-            root_child0.StyleHeight = 10f;
+            root_child0.MaxWidth = 50f;
+            root_child0.Height = 10f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -60,12 +60,12 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 10f;
-            root_child0.StyleMaxHeight = 50f;
+            root_child0.Width = 10f;
+            root_child0.MaxHeight = 50f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -98,12 +98,12 @@ namespace Facebook.CSSLayout
         public void Test_min_height()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
-            root_child0.StyleMinHeight = 60f;
+            root_child0.MinHeight = 60f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
@@ -151,12 +151,12 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
-            root.StyleWidth = 100f;
-            root.StyleHeight = 100f;
+            root.Width = 100f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexGrow = 1f;
-            root_child0.StyleMinWidth = 60f;
+            root_child0.MinWidth = 60f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
@@ -204,13 +204,13 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.JustifyContent = CSSJustify.Center;
-            root.StyleWidth = 100f;
-            root.StyleMinHeight = 100f;
-            root.StyleMaxHeight = 200f;
+            root.Width = 100f;
+            root.MinHeight = 100f;
+            root.MaxHeight = 200f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 60f;
-            root_child0.StyleHeight = 60f;
+            root_child0.Width = 60f;
+            root_child0.Height = 60f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -244,13 +244,13 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.AlignItems = CSSAlign.Center;
-            root.StyleMinWidth = 100f;
-            root.StyleMaxWidth = 200f;
-            root.StyleHeight = 100f;
+            root.MinWidth = 100f;
+            root.MaxWidth = 200f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 60f;
-            root_child0.StyleHeight = 60f;
+            root_child0.Width = 60f;
+            root_child0.Height = 60f;
             root.Insert(0, root_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -284,22 +284,22 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.JustifyContent = CSSJustify.Center;
-            root.StyleMinHeight = 100f;
-            root.StyleMaxHeight = 110f;
+            root.MinHeight = 100f;
+            root.MaxHeight = 110f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.StyleWidth = 50f;
-            root_child0.StyleHeight = 50f;
+            root_child0.Width = 50f;
+            root_child0.Height = 50f;
             root.Insert(0, root_child0);
 
             CSSNode root_child1 = new CSSNode();
-            root_child1.StyleWidth = 50f;
-            root_child1.StyleHeight = 50f;
+            root_child1.Width = 50f;
+            root_child1.Height = 50f;
             root.Insert(1, root_child1);
 
             CSSNode root_child2 = new CSSNode();
-            root_child2.StyleWidth = 50f;
-            root_child2.StyleHeight = 50f;
+            root_child2.Width = 50f;
+            root_child2.Height = 50f;
             root.Insert(2, root_child2);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -352,17 +352,17 @@ namespace Facebook.CSSLayout
         public void Test_flex_grow_within_max_width()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 200f;
-            root.StyleHeight = 100f;
+            root.Width = 200f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexDirection = CSSFlexDirection.Row;
-            root_child0.StyleMaxWidth = 100f;
+            root_child0.MaxWidth = 100f;
             root.Insert(0, root_child0);
 
             CSSNode root_child0_child0 = new CSSNode();
             root_child0_child0.FlexGrow = 1f;
-            root_child0_child0.StyleHeight = 20f;
+            root_child0_child0.Height = 20f;
             root_child0.Insert(0, root_child0_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();
@@ -405,17 +405,17 @@ namespace Facebook.CSSLayout
         public void Test_flex_grow_within_constrained_max_width()
         {
             CSSNode root = new CSSNode();
-            root.StyleWidth = 200f;
-            root.StyleHeight = 100f;
+            root.Width = 200f;
+            root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.FlexDirection = CSSFlexDirection.Row;
-            root_child0.StyleMaxWidth = 300f;
+            root_child0.MaxWidth = 300f;
             root.Insert(0, root_child0);
 
             CSSNode root_child0_child0 = new CSSNode();
             root_child0_child0.FlexGrow = 1f;
-            root_child0_child0.StyleHeight = 20f;
+            root_child0_child0.Height = 20f;
             root_child0.Insert(0, root_child0_child0);
             root.StyleDirection = CSSDirection.LTR;
             root.CalculateLayout();

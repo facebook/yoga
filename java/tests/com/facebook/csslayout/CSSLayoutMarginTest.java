@@ -20,12 +20,12 @@ public class CSSLayoutMarginTest {
   public void test_margin_start() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setMargin(Spacing.START, 10f);
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -57,12 +57,12 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_top() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setMargin(Spacing.TOP, 10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -96,12 +96,12 @@ public class CSSLayoutMarginTest {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
     root.setJustifyContent(CSSJustify.FLEX_END);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setMargin(Spacing.END, 10f);
-    root_child0.setStyleWidth(10f);
+    root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -134,12 +134,12 @@ public class CSSLayoutMarginTest {
   public void test_margin_bottom() {
     final CSSNode root = new CSSNode();
     root.setJustifyContent(CSSJustify.FLEX_END);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setMargin(Spacing.BOTTOM, 10f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -172,8 +172,8 @@ public class CSSLayoutMarginTest {
   public void test_margin_and_flex_row() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
@@ -209,8 +209,8 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_and_flex_column() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
@@ -247,8 +247,8 @@ public class CSSLayoutMarginTest {
   public void test_margin_and_stretch_row() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
@@ -284,8 +284,8 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_and_stretch_column() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
@@ -322,8 +322,8 @@ public class CSSLayoutMarginTest {
   public void test_margin_with_sibling_row() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
@@ -372,8 +372,8 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_with_sibling_column() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);

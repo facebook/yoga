@@ -19,12 +19,12 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_max_width() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleMaxWidth(50f);
-    root_child0.setStyleHeight(10f);
+    root_child0.setMaxWidth(50f);
+    root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -57,12 +57,12 @@ public class CSSLayoutMinMaxDimensionTest {
   public void test_max_height() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(10f);
-    root_child0.setStyleMaxHeight(50f);
+    root_child0.setWidth(10f);
+    root_child0.setMaxHeight(50f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -94,12 +94,12 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_min_height() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setStyleMinHeight(60f);
+    root_child0.setMinHeight(60f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
@@ -146,12 +146,12 @@ public class CSSLayoutMinMaxDimensionTest {
   public void test_min_width() {
     final CSSNode root = new CSSNode();
     root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setStyleWidth(100f);
-    root.setStyleHeight(100f);
+    root.setWidth(100f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setStyleMinWidth(60f);
+    root_child0.setMinWidth(60f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
@@ -198,13 +198,13 @@ public class CSSLayoutMinMaxDimensionTest {
   public void test_justify_content_min_max() {
     final CSSNode root = new CSSNode();
     root.setJustifyContent(CSSJustify.CENTER);
-    root.setStyleWidth(100f);
-    root.setStyleMinHeight(100f);
-    root.setStyleMaxHeight(200f);
+    root.setWidth(100f);
+    root.setMinHeight(100f);
+    root.setMaxHeight(200f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(60f);
-    root_child0.setStyleHeight(60f);
+    root_child0.setWidth(60f);
+    root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -237,13 +237,13 @@ public class CSSLayoutMinMaxDimensionTest {
   public void test_align_items_min_max() {
     final CSSNode root = new CSSNode();
     root.setAlignItems(CSSAlign.CENTER);
-    root.setStyleMinWidth(100f);
-    root.setStyleMaxWidth(200f);
-    root.setStyleHeight(100f);
+    root.setMinWidth(100f);
+    root.setMaxWidth(200f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(60f);
-    root_child0.setStyleHeight(60f);
+    root_child0.setWidth(60f);
+    root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -276,22 +276,22 @@ public class CSSLayoutMinMaxDimensionTest {
   public void test_justify_content_overflow_min_max() {
     final CSSNode root = new CSSNode();
     root.setJustifyContent(CSSJustify.CENTER);
-    root.setStyleMinHeight(100f);
-    root.setStyleMaxHeight(110f);
+    root.setMinHeight(100f);
+    root.setMaxHeight(110f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setStyleWidth(50f);
-    root_child0.setStyleHeight(50f);
+    root_child0.setWidth(50f);
+    root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
-    root_child1.setStyleWidth(50f);
-    root_child1.setStyleHeight(50f);
+    root_child1.setWidth(50f);
+    root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
 
     final CSSNode root_child2 = new CSSNode();
-    root_child2.setStyleWidth(50f);
-    root_child2.setStyleHeight(50f);
+    root_child2.setWidth(50f);
+    root_child2.setHeight(50f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -343,17 +343,17 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_max_width() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(200f);
-    root.setStyleHeight(100f);
+    root.setWidth(200f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexDirection(CSSFlexDirection.ROW);
-    root_child0.setStyleMaxWidth(100f);
+    root_child0.setMaxWidth(100f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child0_child0 = new CSSNode();
     root_child0_child0.setFlexGrow(1f);
-    root_child0_child0.setStyleHeight(20f);
+    root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
@@ -395,17 +395,17 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_constrained_max_width() {
     final CSSNode root = new CSSNode();
-    root.setStyleWidth(200f);
-    root.setStyleHeight(100f);
+    root.setWidth(200f);
+    root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexDirection(CSSFlexDirection.ROW);
-    root_child0.setStyleMaxWidth(300f);
+    root_child0.setMaxWidth(300f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child0_child0 = new CSSNode();
     root_child0_child0.setFlexGrow(1f);
-    root_child0_child0.setStyleHeight(20f);
+    root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
     root.setDirection(CSSDirection.LTR);
     root.calculateLayout(null);
