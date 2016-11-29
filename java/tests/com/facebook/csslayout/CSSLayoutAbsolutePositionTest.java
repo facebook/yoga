@@ -24,13 +24,13 @@ public class CSSLayoutAbsolutePositionTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setPositionType(CSSPositionType.ABSOLUTE);
-    root_child0.setPosition(Spacing.START, 10f);
-    root_child0.setPosition(Spacing.TOP, 10f);
+    root_child0.setPosition(CSSEdge.START, 10f);
+    root_child0.setPosition(CSSEdge.TOP, 10f);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -43,7 +43,7 @@ public class CSSLayoutAbsolutePositionTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -64,13 +64,13 @@ public class CSSLayoutAbsolutePositionTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setPositionType(CSSPositionType.ABSOLUTE);
-    root_child0.setPosition(Spacing.END, 10f);
-    root_child0.setPosition(Spacing.BOTTOM, 10f);
+    root_child0.setPosition(CSSEdge.END, 10f);
+    root_child0.setPosition(CSSEdge.BOTTOM, 10f);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -83,7 +83,7 @@ public class CSSLayoutAbsolutePositionTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -104,13 +104,13 @@ public class CSSLayoutAbsolutePositionTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setPositionType(CSSPositionType.ABSOLUTE);
-    root_child0.setPosition(Spacing.START, 10f);
-    root_child0.setPosition(Spacing.TOP, 10f);
-    root_child0.setPosition(Spacing.END, 10f);
-    root_child0.setPosition(Spacing.BOTTOM, 10f);
+    root_child0.setPosition(CSSEdge.START, 10f);
+    root_child0.setPosition(CSSEdge.TOP, 10f);
+    root_child0.setPosition(CSSEdge.END, 10f);
+    root_child0.setPosition(CSSEdge.BOTTOM, 10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -123,7 +123,7 @@ public class CSSLayoutAbsolutePositionTest {
     assertEquals(80f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -144,15 +144,15 @@ public class CSSLayoutAbsolutePositionTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setPositionType(CSSPositionType.ABSOLUTE);
-    root_child0.setPosition(Spacing.START, 10f);
-    root_child0.setPosition(Spacing.TOP, 10f);
-    root_child0.setPosition(Spacing.END, 10f);
-    root_child0.setPosition(Spacing.BOTTOM, 10f);
+    root_child0.setPosition(CSSEdge.START, 10f);
+    root_child0.setPosition(CSSEdge.TOP, 10f);
+    root_child0.setPosition(CSSEdge.END, 10f);
+    root_child0.setPosition(CSSEdge.BOTTOM, 10f);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -165,7 +165,7 @@ public class CSSLayoutAbsolutePositionTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -188,8 +188,8 @@ public class CSSLayoutAbsolutePositionTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setPositionType(CSSPositionType.ABSOLUTE);
-    root_child0.setPosition(Spacing.START, 0f);
-    root_child0.setPosition(Spacing.TOP, 0f);
+    root_child0.setPosition(CSSEdge.START, 0f);
+    root_child0.setPosition(CSSEdge.TOP, 0f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child0_child0 = new CSSNode();
@@ -197,7 +197,7 @@ public class CSSLayoutAbsolutePositionTest {
     root_child0_child0.setHeight(100f);
     root_child0.addChildAt(root_child0_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -215,7 +215,7 @@ public class CSSLayoutAbsolutePositionTest {
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -236,38 +236,38 @@ public class CSSLayoutAbsolutePositionTest {
   @Test
   public void test_absolute_layout_within_border() {
     final CSSNode root = new CSSNode();
-    root.setMargin(Spacing.LEFT, 10f);
-    root.setMargin(Spacing.TOP, 10f);
-    root.setMargin(Spacing.RIGHT, 10f);
-    root.setMargin(Spacing.BOTTOM, 10f);
-    root.setPadding(Spacing.LEFT, 10);
-    root.setPadding(Spacing.TOP, 10);
-    root.setPadding(Spacing.RIGHT, 10);
-    root.setPadding(Spacing.BOTTOM, 10);
-    root.setBorder(Spacing.LEFT, 10f);
-    root.setBorder(Spacing.TOP, 10f);
-    root.setBorder(Spacing.RIGHT, 10f);
-    root.setBorder(Spacing.BOTTOM, 10f);
+    root.setMargin(CSSEdge.LEFT, 10f);
+    root.setMargin(CSSEdge.TOP, 10f);
+    root.setMargin(CSSEdge.RIGHT, 10f);
+    root.setMargin(CSSEdge.BOTTOM, 10f);
+    root.setPadding(CSSEdge.LEFT, 10);
+    root.setPadding(CSSEdge.TOP, 10);
+    root.setPadding(CSSEdge.RIGHT, 10);
+    root.setPadding(CSSEdge.BOTTOM, 10);
+    root.setBorder(CSSEdge.LEFT, 10f);
+    root.setBorder(CSSEdge.TOP, 10f);
+    root.setBorder(CSSEdge.RIGHT, 10f);
+    root.setBorder(CSSEdge.BOTTOM, 10f);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setPositionType(CSSPositionType.ABSOLUTE);
-    root_child0.setPosition(Spacing.LEFT, 0f);
-    root_child0.setPosition(Spacing.TOP, 0f);
+    root_child0.setPosition(CSSEdge.LEFT, 0f);
+    root_child0.setPosition(CSSEdge.TOP, 0f);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
     final CSSNode root_child1 = new CSSNode();
     root_child1.setPositionType(CSSPositionType.ABSOLUTE);
-    root_child1.setPosition(Spacing.RIGHT, 0f);
-    root_child1.setPosition(Spacing.BOTTOM, 0f);
+    root_child1.setPosition(CSSEdge.RIGHT, 0f);
+    root_child1.setPosition(CSSEdge.BOTTOM, 0f);
     root_child1.setWidth(50f);
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(10f, root.getLayoutX(), 0.0f);
     assertEquals(10f, root.getLayoutY(), 0.0f);
@@ -285,7 +285,7 @@ public class CSSLayoutAbsolutePositionTest {
     assertEquals(50f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(10f, root.getLayoutX(), 0.0f);
     assertEquals(10f, root.getLayoutY(), 0.0f);

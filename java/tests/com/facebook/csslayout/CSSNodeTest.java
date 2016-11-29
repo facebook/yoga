@@ -36,7 +36,7 @@ public class CSSNodeTest {
           return MeasureOutput.make(100, 100);
         }
     });
-    node.calculateLayout(null);
+    node.calculateLayout();
     assertEquals(100, (int) node.getLayoutWidth());
     assertEquals(100, (int) node.getLayoutHeight());
   }

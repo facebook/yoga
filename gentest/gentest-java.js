@@ -93,12 +93,12 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   CSSDirectionLTR:{value:'CSSDirection.LTR'},
   CSSDirectionRTL:{value:'CSSDirection.RTL'},
 
-  CSSEdgeBottom:{value:'Spacing.BOTTOM'},
-  CSSEdgeEnd:{value:'Spacing.END'},
-  CSSEdgeLeft:{value:'Spacing.LEFT'},
-  CSSEdgeRight:{value:'Spacing.RIGHT'},
-  CSSEdgeStart:{value:'Spacing.START'},
-  CSSEdgeTop:{value:'Spacing.TOP'},
+  CSSEdgeBottom:{value:'CSSEdge.BOTTOM'},
+  CSSEdgeEnd:{value:'CSSEdge.END'},
+  CSSEdgeLeft:{value:'CSSEdge.LEFT'},
+  CSSEdgeRight:{value:'CSSEdge.RIGHT'},
+  CSSEdgeStart:{value:'CSSEdge.START'},
+  CSSEdgeTop:{value:'CSSEdge.TOP'},
 
   CSSFlexDirectionColumn:{value:'CSSFlexDirection.COLUMN'},
   CSSFlexDirectionColumnReverse:{value:'CSSFlexDirection.COLUMN_REVERSE'},
@@ -124,7 +124,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   CSSNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.setDirection(' + dir + ');');
-    this.push(node + '.calculateLayout(null);');
+    this.push(node + '.calculateLayout();');
   }},
 
   CSSNodeInsertChild:{value:function(parentName, nodeName, index) {

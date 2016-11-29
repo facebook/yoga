@@ -31,7 +31,7 @@ public class CSSLayoutFlexTest {
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -49,7 +49,7 @@ public class CSSLayoutFlexTest {
     assertEquals(25f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -83,7 +83,7 @@ public class CSSLayoutFlexTest {
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -101,7 +101,7 @@ public class CSSLayoutFlexTest {
     assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -134,7 +134,7 @@ public class CSSLayoutFlexTest {
     root_child1.setFlexBasis(50f);
     root.addChildAt(root_child1, 1);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -152,7 +152,7 @@ public class CSSLayoutFlexTest {
     assertEquals(50f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -186,7 +186,7 @@ public class CSSLayoutFlexTest {
     root_child1.setFlexBasis(50f);
     root.addChildAt(root_child1, 1);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -204,7 +204,7 @@ public class CSSLayoutFlexTest {
     assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -243,7 +243,7 @@ public class CSSLayoutFlexTest {
     root_child2.setHeight(50f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -266,7 +266,7 @@ public class CSSLayoutFlexTest {
     assertEquals(50f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -311,7 +311,7 @@ public class CSSLayoutFlexTest {
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -334,7 +334,7 @@ public class CSSLayoutFlexTest {
     assertEquals(20f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -371,7 +371,7 @@ public class CSSLayoutFlexTest {
     root_child0_child0.setFlexShrink(1f);
     root_child0.addChildAt(root_child0_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -389,7 +389,7 @@ public class CSSLayoutFlexTest {
     assertEquals(0f, root_child0_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);

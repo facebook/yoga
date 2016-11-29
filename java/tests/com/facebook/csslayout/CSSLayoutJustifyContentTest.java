@@ -35,7 +35,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -58,7 +58,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -101,7 +101,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -124,7 +124,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -167,7 +167,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -190,7 +190,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -233,7 +233,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -256,7 +256,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -299,7 +299,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -322,7 +322,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -362,7 +362,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -385,7 +385,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -427,7 +427,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -450,7 +450,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -492,7 +492,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -515,7 +515,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -557,7 +557,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -580,7 +580,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -622,7 +622,7 @@ public class CSSLayoutJustifyContentTest {
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -645,7 +645,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);

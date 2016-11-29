@@ -42,7 +42,7 @@ public class CSSLayoutFlexWrapTest {
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -70,7 +70,7 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(30f, root_child3.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -125,7 +125,7 @@ public class CSSLayoutFlexWrapTest {
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -153,7 +153,7 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(30f, root_child3.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -209,7 +209,7 @@ public class CSSLayoutFlexWrapTest {
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -237,7 +237,7 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(30f, root_child3.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -293,7 +293,7 @@ public class CSSLayoutFlexWrapTest {
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -321,7 +321,7 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(30f, root_child3.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);

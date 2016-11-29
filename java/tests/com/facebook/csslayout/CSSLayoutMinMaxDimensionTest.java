@@ -27,7 +27,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -40,7 +40,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -65,7 +65,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0.setMaxHeight(50f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -78,7 +78,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(50f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -106,7 +106,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -124,7 +124,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(20f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -158,7 +158,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -176,7 +176,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -207,7 +207,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -220,7 +220,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(60f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -246,7 +246,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -259,7 +259,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(60f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -294,7 +294,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child2.setHeight(50f);
     root.addChildAt(root_child2, 2);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -317,7 +317,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(50f, root_child2.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -356,7 +356,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -374,7 +374,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(20f, root_child0_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -408,7 +408,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -426,7 +426,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(20f, root_child0_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);

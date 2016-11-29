@@ -19,12 +19,12 @@ public class CSSLayoutPaddingTest {
   @Test
   public void test_padding_no_size() {
     final CSSNode root = new CSSNode();
-    root.setPadding(Spacing.LEFT, 10);
-    root.setPadding(Spacing.TOP, 10);
-    root.setPadding(Spacing.RIGHT, 10);
-    root.setPadding(Spacing.BOTTOM, 10);
+    root.setPadding(CSSEdge.LEFT, 10);
+    root.setPadding(CSSEdge.TOP, 10);
+    root.setPadding(CSSEdge.RIGHT, 10);
+    root.setPadding(CSSEdge.BOTTOM, 10);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -32,7 +32,7 @@ public class CSSLayoutPaddingTest {
     assertEquals(20f, root.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -43,17 +43,17 @@ public class CSSLayoutPaddingTest {
   @Test
   public void test_padding_container_match_child() {
     final CSSNode root = new CSSNode();
-    root.setPadding(Spacing.LEFT, 10);
-    root.setPadding(Spacing.TOP, 10);
-    root.setPadding(Spacing.RIGHT, 10);
-    root.setPadding(Spacing.BOTTOM, 10);
+    root.setPadding(CSSEdge.LEFT, 10);
+    root.setPadding(CSSEdge.TOP, 10);
+    root.setPadding(CSSEdge.RIGHT, 10);
+    root.setPadding(CSSEdge.BOTTOM, 10);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -66,7 +66,7 @@ public class CSSLayoutPaddingTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -82,10 +82,10 @@ public class CSSLayoutPaddingTest {
   @Test
   public void test_padding_flex_child() {
     final CSSNode root = new CSSNode();
-    root.setPadding(Spacing.LEFT, 10);
-    root.setPadding(Spacing.TOP, 10);
-    root.setPadding(Spacing.RIGHT, 10);
-    root.setPadding(Spacing.BOTTOM, 10);
+    root.setPadding(CSSEdge.LEFT, 10);
+    root.setPadding(CSSEdge.TOP, 10);
+    root.setPadding(CSSEdge.RIGHT, 10);
+    root.setPadding(CSSEdge.BOTTOM, 10);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -94,7 +94,7 @@ public class CSSLayoutPaddingTest {
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -107,7 +107,7 @@ public class CSSLayoutPaddingTest {
     assertEquals(80f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -123,10 +123,10 @@ public class CSSLayoutPaddingTest {
   @Test
   public void test_padding_stretch_child() {
     final CSSNode root = new CSSNode();
-    root.setPadding(Spacing.LEFT, 10);
-    root.setPadding(Spacing.TOP, 10);
-    root.setPadding(Spacing.RIGHT, 10);
-    root.setPadding(Spacing.BOTTOM, 10);
+    root.setPadding(CSSEdge.LEFT, 10);
+    root.setPadding(CSSEdge.TOP, 10);
+    root.setPadding(CSSEdge.RIGHT, 10);
+    root.setPadding(CSSEdge.BOTTOM, 10);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -134,7 +134,7 @@ public class CSSLayoutPaddingTest {
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -147,7 +147,7 @@ public class CSSLayoutPaddingTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -165,9 +165,9 @@ public class CSSLayoutPaddingTest {
     final CSSNode root = new CSSNode();
     root.setJustifyContent(CSSJustify.CENTER);
     root.setAlignItems(CSSAlign.CENTER);
-    root.setPadding(Spacing.START, 10);
-    root.setPadding(Spacing.END, 20);
-    root.setPadding(Spacing.BOTTOM, 20);
+    root.setPadding(CSSEdge.START, 10);
+    root.setPadding(CSSEdge.END, 20);
+    root.setPadding(CSSEdge.BOTTOM, 20);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -176,7 +176,7 @@ public class CSSLayoutPaddingTest {
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(CSSDirection.LTR);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -189,7 +189,7 @@ public class CSSLayoutPaddingTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(CSSDirection.RTL);
-    root.calculateLayout(null);
+    root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
