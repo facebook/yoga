@@ -29,9 +29,10 @@ cxx_library(
   tests=[':tests'],
   exported_headers = subdir_glob([('', 'CSSLayout/*.h')]),
   header_namespace = '',
-  force_static = True,
   compiler_flags = COMPILER_FLAGS,
-  deps = [],
+  deps = [] if THIS_IS_FBOBJC else [
+    csslayout_dep('lib/fb:ndklog'),
+  ],
   visibility = ['PUBLIC'],
 )
 
