@@ -192,3 +192,45 @@ TEST(CSSLayoutTest, padding_center_child) {
 
   CSSNodeFreeRecursive(root);
 }
+
+TEST(CSSLayoutTest, child_with_padding_align_end) {
+  const CSSNodeRef root = CSSNodeNew();
+  CSSNodeStyleSetJustifyContent(root, CSSJustifyFlexEnd);
+  CSSNodeStyleSetAlignItems(root, CSSAlignFlexEnd);
+  CSSNodeStyleSetWidth(root, 200);
+  CSSNodeStyleSetHeight(root, 200);
+
+  const CSSNodeRef root_child0 = CSSNodeNew();
+  CSSNodeStyleSetPadding(root_child0, CSSEdgeLeft, 20);
+  CSSNodeStyleSetPadding(root_child0, CSSEdgeTop, 20);
+  CSSNodeStyleSetPadding(root_child0, CSSEdgeRight, 20);
+  CSSNodeStyleSetPadding(root_child0, CSSEdgeBottom, 20);
+  CSSNodeStyleSetWidth(root_child0, 100);
+  CSSNodeStyleSetHeight(root_child0, 100);
+  CSSNodeInsertChild(root, root_child0, 0);
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(200, CSSNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(200, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(200, CSSNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(200, CSSNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
+
+  CSSNodeFreeRecursive(root);
+}

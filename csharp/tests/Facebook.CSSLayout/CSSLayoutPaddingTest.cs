@@ -208,5 +208,49 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child0.LayoutHeight);
         }
 
+        [Test]
+        public void Test_child_with_padding_align_end()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.FlexEnd;
+            root.AlignItems = CSSAlign.FlexEnd;
+            root.Width = 200f;
+            root.Height = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.Width = 100f;
+            root_child0.Height = 100f;
+            root.Insert(0, root_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+        }
+
     }
 }
