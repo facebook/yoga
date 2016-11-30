@@ -9,10 +9,7 @@ GTEST_TARGET = '//lib/gtest:gtest'
 JNI_TARGET = '//lib/jni:jni'
 FBJNI_TARGET = '//lib/fb:fbjni'
 
-THIS_IS_FBOBJC = False
-
 CXX_LIBRARY_WHITELIST = [
-  '//:CSSLayout',
   '//lib/fb:fbjni',
   '//java:jni',
 ]
