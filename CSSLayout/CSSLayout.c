@@ -1290,14 +1290,14 @@ static bool setMeasuredDimensionsIfEmptyOrFixedSize(const CSSNodeRef node,
     node->layout.measuredDimensions[CSSDimensionWidth] =
         boundAxis(node,
                   CSSFlexDirectionRow,
-                  CSSValueIsUndefined(availableWidth) || availableWidth < 0
+                  CSSValueIsUndefined(availableWidth) || (widthMeasureMode == CSSMeasureModeAtMost && availableWidth < 0)
                       ? 0
                       : availableWidth - marginAxisRow);
 
     node->layout.measuredDimensions[CSSDimensionHeight] =
         boundAxis(node,
                   CSSFlexDirectionColumn,
-                  CSSValueIsUndefined(availableHeight) || availableHeight < 0
+                  CSSValueIsUndefined(availableHeight) || (heightMeasureMode == CSSMeasureModeAtMost && availableHeight < 0)
                       ? 0
                       : availableHeight - marginAxisColumn);
 
