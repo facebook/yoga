@@ -291,11 +291,13 @@ bool CSSNodeIsDirty(const CSSNodeRef node) {
 
 void CSSNodeHide(const CSSNodeRef node) {
   node->isVisible = false;
+  node->isDirty = false; /* See https://github.com/facebook/css-layout/issues/241 */
   _CSSNodeMarkDirty(node);
 }
 
 void CSSNodeShow(const CSSNodeRef node) {
   node->isVisible = true;
+  node->isDirty = false; /* See https://github.com/facebook/css-layout/issues/241 */
   _CSSNodeMarkDirty(node);
 }
 
@@ -2198,12 +2200,16 @@ bool layoutNodeInternal(const CSSNodeRef node,
   gDepth++;
 
 #if 0  
+  printf("---\n");
+  printf("node->isDirty: %c\n", (node->isDirty) ? 'y' : 'n');
+  printf("layout->generationCount != gCurrentGenerationCount: %c\n", layout->generationCount != gCurrentGenerationCount ? 'y' : 'n');
+  printf("layout->lastParentDirection != parentDirection: %c\n", layout->lastParentDirection != parentDirection ? 'y' : 'n');
+#endif
+  
   const bool needToVisitNode =
       (node->isDirty && layout->generationCount != gCurrentGenerationCount) ||
       layout->lastParentDirection != parentDirection;
-#else
-  const bool needToVisitNode = true;
-#endif  
+
   if (needToVisitNode) {
 
     // Invalidate the cached results.
