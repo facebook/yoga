@@ -1591,7 +1591,9 @@ static void layoutNodeImpl(const CSSNodeRef node,
       child->lineIndex = lineCount;
 
       if (child->style.positionType != CSSPositionTypeAbsolute) {
-        const float marginAndPaddingAndBorderAxis = getPaddingAndBorderAxis(child, mainAxis) + getMarginAxis(child, mainAxis);
+        const float marginAndPaddingAndBorderAxis = (isNodeFlexWrap 
+          ? getPaddingAndBorderAxis(child, mainAxis)
+          : 0) + getMarginAxis(child, mainAxis);
         const float minimumSize = child->style.minDimensions[isMainAxisRow ? CSSDimensionWidth : CSSDimensionHeight] + marginAndPaddingAndBorderAxis;
         const float outerFlexBasis =
             child->layout.computedFlexBasis + marginAndPaddingAndBorderAxis;
@@ -1704,7 +1706,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
           // Is this child able to shrink?
           if (flexShrinkScaledFactor != 0) {
             baseMainSize =
-              childFlexBasis + getPaddingAndBorderAxis(currentRelativeChild, mainAxis) +
+              childFlexBasis + (isNodeFlexWrap ? getPaddingAndBorderAxis(currentRelativeChild, mainAxis) : 0) +
                 remainingFreeSpace / totalFlexShrinkScaledFactors * flexShrinkScaledFactor;
             boundMainSize = boundAxis(currentRelativeChild, mainAxis, baseMainSize);
             if (baseMainSize != boundMainSize) {
@@ -1723,8 +1725,8 @@ static void layoutNodeImpl(const CSSNodeRef node,
 
           // Is this child able to grow?
           if (flexGrowFactor != 0) {
-            baseMainSize = getPaddingAndBorderAxis(currentRelativeChild, mainAxis) +
-              childFlexBasis + getPaddingAndBorderAxis(currentRelativeChild, mainAxis) + remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor;
+            baseMainSize = (isNodeFlexWrap ? getPaddingAndBorderAxis(currentRelativeChild, mainAxis) : 0) +
+              childFlexBasis + remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor;
             boundMainSize = boundAxis(currentRelativeChild, mainAxis, baseMainSize);
             if (baseMainSize != boundMainSize) {
               // By excluding this item's size and flex factor from remaining,
@@ -1768,7 +1770,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
                   (remainingFreeSpace / totalFlexShrinkScaledFactors) * flexShrinkScaledFactor;
             }
 
-            updatedMainSize = boundAxis(currentRelativeChild, mainAxis, childSize + getPaddingAndBorderAxis(currentRelativeChild, mainAxis));
+            updatedMainSize = boundAxis(currentRelativeChild, mainAxis, childSize + (isNodeFlexWrap ? getPaddingAndBorderAxis(currentRelativeChild, mainAxis) : 0));
           }
         } else if (remainingFreeSpace > 0) {
           flexGrowFactor = CSSNodeStyleGetFlexGrow(currentRelativeChild);
@@ -1778,7 +1780,7 @@ static void layoutNodeImpl(const CSSNodeRef node,
             updatedMainSize =
                 boundAxis(currentRelativeChild,
                           mainAxis,
-                          childFlexBasis + getPaddingAndBorderAxis(currentRelativeChild, mainAxis) +
+                          childFlexBasis + (isNodeFlexWrap ? getPaddingAndBorderAxis(currentRelativeChild, mainAxis) : 0) +
                               remainingFreeSpace / totalFlexGrowFactors * flexGrowFactor);
           }
         }
@@ -1942,6 +1944,18 @@ static void layoutNodeImpl(const CSSNodeRef node,
         if (child->style.positionType == CSSPositionTypeRelative) {
           if (performLayout) {
             child->layout.position[pos[mainAxis]] += mainDim;
+          }
+
+          if (isNodeFlexWrap){
+            switch (node->style.justifyContent){
+            case CSSJustifyFlexEnd:
+              child->layout.position[pos[mainAxis]] += getPaddingAndBorderAxis(child, mainAxis);
+              break;
+            case CSSJustifyCenter:
+            case CSSJustifySpaceAround:
+              child->layout.position[pos[mainAxis]] += getLeadingPaddingAndBorder(child, mainAxis);
+              break;
+            }
           }
 
           if (canSkipFlex) {

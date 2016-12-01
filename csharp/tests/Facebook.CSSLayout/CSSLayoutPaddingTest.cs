@@ -208,5 +208,519 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child0.LayoutHeight);
         }
 
+        [Test]
+        public void Test_child_with_padding_align_end()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.FlexEnd;
+            root.AlignItems = CSSAlign.FlexEnd;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_child_with_padding_align_end1()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.FlexEnd;
+            root.AlignItems = CSSAlign.FlexEnd;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.StyleWidth = 100f;
+            root_child0_child0.StyleHeight = 100f;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(-20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_child_with_padding_align_end2()
+        {
+            CSSNode root = new CSSNode();
+            root.AlignItems = CSSAlign.FlexEnd;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.StyleWidth = 100f;
+            root_child0_child0.StyleHeight = 100f;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(-20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_child_with_padding_align_end3()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.FlexEnd;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.StyleWidth = 100f;
+            root_child0_child0.StyleHeight = 100f;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(-20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_child_with_padding_align_end4()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.FlexEnd;
+            root.AlignItems = CSSAlign.FlexStart;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.StyleWidth = 100f;
+            root_child0_child0.StyleHeight = 100f;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(-20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_child_with_padding_align_end5()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.FlexEnd;
+            root.AlignItems = CSSAlign.FlexEnd;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.StyleWidth = 100f;
+            root_child0_child0.StyleHeight = 100f;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(100f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(-20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_child_with_padding_align_end6()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.SpaceAround;
+            root.AlignItems = CSSAlign.FlexEnd;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.StyleWidth = 100f;
+            root_child0_child0.StyleHeight = 100f;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(50f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(50f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(-20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_child_with_padding_align_end7()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.SpaceBetween;
+            root.AlignItems = CSSAlign.FlexEnd;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.StyleWidth = 100f;
+            root_child0_child0.StyleHeight = 100f;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(-20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_child_with_padding_align_end8()
+        {
+            CSSNode root = new CSSNode();
+            root.JustifyContent = CSSJustify.Center;
+            root.AlignItems = CSSAlign.FlexEnd;
+            root.StyleWidth = 200f;
+            root.StyleHeight = 200f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.SetPadding(CSSEdge.Left, 20f);
+            root_child0.SetPadding(CSSEdge.Top, 20f);
+            root_child0.SetPadding(CSSEdge.Right, 20f);
+            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.StyleWidth = 100f;
+            root_child0.StyleHeight = 100f;
+            root.Insert(0, root_child0);
+
+            CSSNode root_child0_child0 = new CSSNode();
+            root_child0_child0.StyleWidth = 100f;
+            root_child0_child0.StyleHeight = 100f;
+            root_child0.Insert(0, root_child0_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(100f, root_child0.LayoutX);
+            Assert.AreEqual(50f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(200f, root.LayoutWidth);
+            Assert.AreEqual(200f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(50f, root_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0.LayoutHeight);
+
+            Assert.AreEqual(-20f, root_child0_child0.LayoutX);
+            Assert.AreEqual(20f, root_child0_child0.LayoutY);
+            Assert.AreEqual(100f, root_child0_child0.LayoutWidth);
+            Assert.AreEqual(100f, root_child0_child0.LayoutHeight);
+        }
+
     }
 }
