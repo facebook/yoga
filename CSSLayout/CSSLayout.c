@@ -291,10 +291,12 @@ bool CSSNodeIsDirty(const CSSNodeRef node) {
 
 void CSSNodeHide(const CSSNodeRef node) {
   node->isVisible = false;
+  _CSSNodeMarkDirty(node);
 }
 
 void CSSNodeShow(const CSSNodeRef node) {
   node->isVisible = true;
+  _CSSNodeMarkDirty(node);
 }
 
 WIN_EXPORT bool CSSNodeIsVisible(const CSSNodeRef node) {
@@ -2075,9 +2077,9 @@ static void layoutNodeImpl(const CSSNodeRef node,
 }
 
 uint32_t gDepth = 0;
-bool gPrintTree = false;
-bool gPrintChanges = false;
-bool gPrintSkips = false;
+bool gPrintTree = true;
+bool gPrintChanges = true;
+bool gPrintSkips = true;
 
 static const char *spacer = "                                                            ";
 
@@ -2140,6 +2142,7 @@ bool CSSNodeCanUseCachedMeasurement(const bool isTextNode,
                                            const float lastComputedHeight,
                                            const float marginRow,
                                            const float marginColumn) {
+
   if (lastComputedHeight < 0 || lastComputedWidth < 0) {
     return false;
   }
@@ -2194,11 +2197,15 @@ bool layoutNodeInternal(const CSSNodeRef node,
 
   gDepth++;
 
+#if 0  
   const bool needToVisitNode =
       (node->isDirty && layout->generationCount != gCurrentGenerationCount) ||
       layout->lastParentDirection != parentDirection;
-
+#else
+  const bool needToVisitNode = true;
+#endif  
   if (needToVisitNode) {
+
     // Invalidate the cached results.
     layout->nextCachedMeasurementsIndex = 0;
     layout->cachedLayout.widthMeasureMode = (CSSMeasureMode) -1;
