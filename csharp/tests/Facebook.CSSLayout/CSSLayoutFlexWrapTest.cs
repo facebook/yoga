@@ -1100,6 +1100,7 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
+            root.JustifyContent = CSSJustify.FlexEnd;
             root.Wrap = CSSWrap.Wrap;
             root.StyleWidth = 80f;
 
@@ -1145,6 +1146,52 @@ namespace Facebook.CSSLayout
         {
             CSSNode root = new CSSNode();
             root.FlexDirection = CSSFlexDirection.Row;
+            root.JustifyContent = CSSJustify.Center;
+            root.StyleWidth = 80f;
+
+            CSSNode root_child0 = new CSSNode();
+            root_child0.FlexGrow = 1f;
+            root_child0.FlexBasis = 34f;
+            root_child0.SetMargin(CSSEdge.Left, 1f);
+            root_child0.SetMargin(CSSEdge.Right, 1f);
+            root_child0.SetPadding(CSSEdge.Left, 1f);
+            root_child0.SetPadding(CSSEdge.Right, 1f);
+            root_child0.StyleMinWidth = 39f;
+            root_child0.StyleHeight = 20f;
+            root.Insert(0, root_child0);
+            root.StyleDirection = CSSDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(80f, root.LayoutWidth);
+            Assert.AreEqual(20f, root.LayoutHeight);
+
+            Assert.AreEqual(1f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(78f, root_child0.LayoutWidth);
+            Assert.AreEqual(20f, root_child0.LayoutHeight);
+
+            root.StyleDirection = CSSDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(80f, root.LayoutWidth);
+            Assert.AreEqual(20f, root.LayoutHeight);
+
+            Assert.AreEqual(1f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(78f, root_child0.LayoutWidth);
+            Assert.AreEqual(20f, root_child0.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_wrap_flex_with_flex_basis_smallerthan_min_width_single5()
+        {
+            CSSNode root = new CSSNode();
+            root.FlexDirection = CSSFlexDirection.Row;
+            root.JustifyContent = CSSJustify.FlexEnd;
             root.StyleWidth = 80f;
 
             CSSNode root_child0 = new CSSNode();
