@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include "CSSBenchmark.h"
+#include "YGBenchmark.h"
 
 #include <CSSLayout/CSSLayout.h>
 
@@ -22,9 +22,9 @@ static CSSSize _measure(CSSNodeRef node,
   };
 }
 
-CSS_BENCHMARKS({
+YGBENCHMARKS({
 
-  CSS_BENCHMARK("Stack with flex", {
+  YGBENCHMARK("Stack with flex", {
     const CSSNodeRef root = CSSNodeNew();
     CSSNodeStyleSetWidth(root, 100);
     CSSNodeStyleSetHeight(root, 100);
@@ -40,7 +40,7 @@ CSS_BENCHMARKS({
     CSSNodeFreeRecursive(root);
   });
 
-  CSS_BENCHMARK("Align stretch in undefined axis", {
+  YGBENCHMARK("Align stretch in undefined axis", {
     const CSSNodeRef root = CSSNodeNew();
 
     for (uint32_t i = 0; i < 10; i++) {
@@ -54,7 +54,7 @@ CSS_BENCHMARKS({
     CSSNodeFreeRecursive(root);
   });
 
-  CSS_BENCHMARK("Nested flex", {
+  YGBENCHMARK("Nested flex", {
     const CSSNodeRef root = CSSNodeNew();
 
     for (uint32_t i = 0; i < 10; i++) {
@@ -74,7 +74,7 @@ CSS_BENCHMARKS({
     CSSNodeFreeRecursive(root);
   });
 
-  CSS_BENCHMARK("Huge nested layout", {
+  YGBENCHMARK("Huge nested layout", {
     const CSSNodeRef root = CSSNodeNew();
 
     for (uint32_t i = 0; i < 10; i++) {
