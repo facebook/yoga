@@ -20,7 +20,7 @@ TEST(CSSLayoutTest, align_items_stretch) {
   const CSSNodeRef root_child0 = CSSNodeNew();
   CSSNodeStyleSetHeight(root_child0, 10);
   CSSNodeInsertChild(root, root_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -32,7 +32,7 @@ TEST(CSSLayoutTest, align_items_stretch) {
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -49,7 +49,7 @@ TEST(CSSLayoutTest, align_items_stretch) {
 
 TEST(CSSLayoutTest, align_items_center) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignCenter);
+  CSSNodeStyleSetAlignItems(root, YGAlignCenter);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -57,7 +57,7 @@ TEST(CSSLayoutTest, align_items_center) {
   CSSNodeStyleSetWidth(root_child0, 10);
   CSSNodeStyleSetHeight(root_child0, 10);
   CSSNodeInsertChild(root, root_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -69,7 +69,7 @@ TEST(CSSLayoutTest, align_items_center) {
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -86,7 +86,7 @@ TEST(CSSLayoutTest, align_items_center) {
 
 TEST(CSSLayoutTest, align_items_flex_start) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -94,7 +94,7 @@ TEST(CSSLayoutTest, align_items_flex_start) {
   CSSNodeStyleSetWidth(root_child0, 10);
   CSSNodeStyleSetHeight(root_child0, 10);
   CSSNodeInsertChild(root, root_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -106,7 +106,7 @@ TEST(CSSLayoutTest, align_items_flex_start) {
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -123,7 +123,7 @@ TEST(CSSLayoutTest, align_items_flex_start) {
 
 TEST(CSSLayoutTest, align_items_flex_end) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexEnd);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexEnd);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -131,7 +131,7 @@ TEST(CSSLayoutTest, align_items_flex_end) {
   CSSNodeStyleSetWidth(root_child0, 10);
   CSSNodeStyleSetHeight(root_child0, 10);
   CSSNodeInsertChild(root, root_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -143,7 +143,7 @@ TEST(CSSLayoutTest, align_items_flex_end) {
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));

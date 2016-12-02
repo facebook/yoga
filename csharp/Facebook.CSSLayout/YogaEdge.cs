@@ -9,9 +9,16 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSPositionType
+    public enum YogaEdge
     {
-        Relative,
-        Absolute,
+        Left,
+        Top,
+        Right,
+        Bottom,
+        Start,
+        End,
+        Horizontal,
+        Vertical,
+        All,
     }
 }

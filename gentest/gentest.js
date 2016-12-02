@@ -87,13 +87,13 @@ function printTest(e, LTRContainer, RTLContainer, genericContainer) {
         'root',
         null);
 
-    e.CSSNodeCalculateLayout('root', e.CSSDirectionLTR);
+    e.CSSNodeCalculateLayout('root', e.YGDirectionLTR);
     e.push('');
 
     assertTestTree(e, LTRLayoutTree[i], 'root', null);
     e.push('');
 
-    e.CSSNodeCalculateLayout('root', e.CSSDirectionRTL);
+    e.CSSNodeCalculateLayout('root', e.YGDirectionRTL);
     e.push('');
 
     assertTestTree(e, RTLLayoutTree[i], 'root', null);
@@ -119,7 +119,7 @@ function assertTestTree(e, node, nodeName, parentName) {
 }
 
 function checkDefaultValues() {
-  // Sanity check of the CSSLayout default values by test-template.html
+  // Sanity check of the Yoga default values by test-template.html
   [
     {style:'flex-direction', value:'column'},
     {style:'justify-content', value:'flex-start'},
@@ -198,83 +198,83 @@ function setupTestTree(e, parent, node, genericNode, nodeName, parentName, index
           break;
         case 'left':
           if (genericNode.rawStyle.indexOf('start:') >= 0) {
-            e.CSSNodeStyleSetPosition(nodeName, e.CSSEdgeStart, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetPosition(nodeName, e.CSSEdgeLeft, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
           }
           break;
         case 'top':
-          e.CSSNodeStyleSetPosition(nodeName, e.CSSEdgeTop, pixelValue(e, node.style[style]));
+          e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
           break;
         case 'right':
           if (genericNode.rawStyle.indexOf('end:') >= 0) {
-            e.CSSNodeStyleSetPosition(nodeName, e.CSSEdgeEnd, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetPosition(nodeName, e.CSSEdgeRight, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
           }
           break;
         case 'bottom':
-          e.CSSNodeStyleSetPosition(nodeName, e.CSSEdgeBottom, pixelValue(e, node.style[style]));
+          e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
           break;
         case 'margin-left':
           if (genericNode.rawStyle.indexOf('margin-start:') >= 0) {
-            e.CSSNodeStyleSetMargin(nodeName, e.CSSEdgeStart, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetMargin(nodeName, e.CSSEdgeLeft, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
           }
           break;
         case 'margin-top':
-          e.CSSNodeStyleSetMargin(nodeName, e.CSSEdgeTop, pixelValue(e, node.style[style]));
+          e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
           break;
         case 'margin-right':
           if (genericNode.rawStyle.indexOf('margin-end:') >= 0) {
-            e.CSSNodeStyleSetMargin(nodeName, e.CSSEdgeEnd, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetMargin(nodeName, e.CSSEdgeRight, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
           }
           break;
         case 'margin-bottom':
-          e.CSSNodeStyleSetMargin(nodeName, e.CSSEdgeBottom, pixelValue(e, node.style[style]));
+          e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
           break;
         case 'padding-left':
           if (genericNode.rawStyle.indexOf('padding-start:') >= 0) {
-            e.CSSNodeStyleSetPadding(nodeName, e.CSSEdgeStart, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetPadding(nodeName, e.CSSEdgeLeft, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
           }
           break;
         case 'padding-top':
-          e.CSSNodeStyleSetPadding(nodeName, e.CSSEdgeTop, pixelValue(e, node.style[style]));
+          e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
           break;
         case 'padding-right':
           if (genericNode.rawStyle.indexOf('padding-end:') >= 0) {
-            e.CSSNodeStyleSetPadding(nodeName, e.CSSEdgeEnd, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetPadding(nodeName, e.CSSEdgeRight, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
           }
           break;
         case 'padding-bottom':
-          e.CSSNodeStyleSetPadding(nodeName, e.CSSEdgeBottom, pixelValue(e, node.style[style]));
+          e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
           break;
         case 'border-left-width':
           if (genericNode.rawStyle.indexOf('border-start-width:') >= 0) {
-            e.CSSNodeStyleSetBorder(nodeName, e.CSSEdgeStart, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetBorder(nodeName, e.CSSEdgeLeft, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
           }
           break;
         case 'border-top-width':
-          e.CSSNodeStyleSetBorder(nodeName, e.CSSEdgeTop, pixelValue(e, node.style[style]));
+          e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
           break;
         case 'border-right-width':
           if (genericNode.rawStyle.indexOf('border-end-width:') >= 0) {
-            e.CSSNodeStyleSetBorder(nodeName, e.CSSEdgeEnd, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetBorder(nodeName, e.CSSEdgeRight, pixelValue(e, node.style[style]));
+            e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
           }
           break;
         case 'border-bottom-width':
-          e.CSSNodeStyleSetBorder(nodeName, e.CSSEdgeBottom, pixelValue(e, node.style[style]));
+          e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
           break;
         case 'width':
           e.CSSNodeStyleSetWidth(nodeName, pixelValue(e, node.style[style]));
@@ -318,66 +318,66 @@ function setupTestTree(e, parent, node, genericNode, nodeName, parentName, index
 
 function overflowValue(e, value) {
   switch (value) {
-    case 'visible': return e.CSSOverflowVisible;
-    case 'hidden': return e.CSSOverflowHidden;
+    case 'visible': return e.YGOverflowVisible;
+    case 'hidden': return e.YGOverflowHidden;
   }
 }
 
 function wrapValue(e, value) {
   switch (value) {
-    case 'wrap': return e.CSSWrapWrap;
-    case 'nowrap': return e.CSSWrapNoWrap;
+    case 'wrap': return e.YGWrapWrap;
+    case 'nowrap': return e.YGWrapNoWrap;
   }
 }
 
 function flexDirectionValue(e, value) {
   switch (value) {
-    case 'row': return e.CSSFlexDirectionRow;
-    case 'row-reverse': return e.CSSFlexDirectionRowReverse;
-    case 'column': return e.CSSFlexDirectionColumn;
-    case 'column-reverse': return e.CSSFlexDirectionColumnReverse;
+    case 'row': return e.YGFlexDirectionRow;
+    case 'row-reverse': return e.YGFlexDirectionRowReverse;
+    case 'column': return e.YGFlexDirectionColumn;
+    case 'column-reverse': return e.YGFlexDirectionColumnReverse;
   }
 }
 
 function justifyValue(e, value) {
   switch (value) {
-    case 'center': return e.CSSJustifyCenter;
-    case 'space-around': return e.CSSJustifySpaceAround;
-    case 'space-between': return e.CSSJustifySpaceBetween;
-    case 'flex-start': return e.CSSJustifyFlexStart;
-    case 'flex-end': return e.CSSJustifyFlexEnd;
+    case 'center': return e.YGJustifyCenter;
+    case 'space-around': return e.YGJustifySpaceAround;
+    case 'space-between': return e.YGJustifySpaceBetween;
+    case 'flex-start': return e.YGJustifyFlexStart;
+    case 'flex-end': return e.YGJustifyFlexEnd;
   }
 }
 
 function positionValue(e, value) {
   switch (value) {
-    case 'absolute': return e.CSSPositionTypeAbsolute;
-    default: return e.CSSPositionTypeRelative
+    case 'absolute': return e.YGPositionTypeAbsolute;
+    default: return e.YGPositionTypeRelative
   }
 }
 
 function directionValue(e, value) {
   switch (value) {
-    case 'ltr': return e.CSSDirectionLTR;
-    case 'rtl': return e.CSSDirectionRTL;
-    case 'inherit': return e.CSSDirectionInherit;
+    case 'ltr': return e.YGDirectionLTR;
+    case 'rtl': return e.YGDirectionRTL;
+    case 'inherit': return e.YGDirectionInherit;
   }
 }
 
 function alignValue(e, value) {
   switch (value) {
-    case 'auto': return e.CSSAlignAuto;
-    case 'center': return e.CSSAlignCenter;
-    case 'stretch': return e.CSSAlignStretch;
-    case 'flex-start': return e.CSSAlignFlexStart;
-    case 'flex-end': return e.CSSAlignFlexEnd;
+    case 'auto': return e.YGAlignAuto;
+    case 'center': return e.YGAlignCenter;
+    case 'stretch': return e.YGAlignStretch;
+    case 'flex-start': return e.YGAlignFlexStart;
+    case 'flex-end': return e.YGAlignFlexEnd;
   }
 }
 
 function pixelValue(e, value) {
   switch (value) {
-    case 'auto': return e.CSSUndefined;
-    case 'undefined': return e.CSSUndefined;
+    case 'auto': return e.YGUndefined;
+    case 'undefined': return e.YGUndefined;
     default: return value.replace('px', '');
   }
 }

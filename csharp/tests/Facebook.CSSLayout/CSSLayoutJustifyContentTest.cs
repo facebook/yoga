@@ -21,7 +21,7 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_row_flex_start()
         {
             CSSNode root = new CSSNode();
-            root.FlexDirection = CSSFlexDirection.Row;
+            root.FlexDirection = YogaFlexDirection.Row;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -36,7 +36,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Width = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -59,7 +59,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child2.LayoutWidth);
             Assert.AreEqual(102f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -87,8 +87,8 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_row_flex_end()
         {
             CSSNode root = new CSSNode();
-            root.FlexDirection = CSSFlexDirection.Row;
-            root.JustifyContent = CSSJustify.FlexEnd;
+            root.FlexDirection = YogaFlexDirection.Row;
+            root.JustifyContent = YogaJustify.FlexEnd;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -103,7 +103,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Width = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -126,7 +126,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child2.LayoutWidth);
             Assert.AreEqual(102f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -154,8 +154,8 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_row_center()
         {
             CSSNode root = new CSSNode();
-            root.FlexDirection = CSSFlexDirection.Row;
-            root.JustifyContent = CSSJustify.Center;
+            root.FlexDirection = YogaFlexDirection.Row;
+            root.JustifyContent = YogaJustify.Center;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -170,7 +170,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Width = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -193,7 +193,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child2.LayoutWidth);
             Assert.AreEqual(102f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -221,8 +221,8 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_row_space_between()
         {
             CSSNode root = new CSSNode();
-            root.FlexDirection = CSSFlexDirection.Row;
-            root.JustifyContent = CSSJustify.SpaceBetween;
+            root.FlexDirection = YogaFlexDirection.Row;
+            root.JustifyContent = YogaJustify.SpaceBetween;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -237,7 +237,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Width = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -260,7 +260,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child2.LayoutWidth);
             Assert.AreEqual(102f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -288,8 +288,8 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_row_space_around()
         {
             CSSNode root = new CSSNode();
-            root.FlexDirection = CSSFlexDirection.Row;
-            root.JustifyContent = CSSJustify.SpaceAround;
+            root.FlexDirection = YogaFlexDirection.Row;
+            root.JustifyContent = YogaJustify.SpaceAround;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -304,7 +304,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Width = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -327,7 +327,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child2.LayoutWidth);
             Assert.AreEqual(102f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -368,7 +368,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -391,7 +391,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(102f, root_child2.LayoutWidth);
             Assert.AreEqual(10f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -419,7 +419,7 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_column_flex_end()
         {
             CSSNode root = new CSSNode();
-            root.JustifyContent = CSSJustify.FlexEnd;
+            root.JustifyContent = YogaJustify.FlexEnd;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -434,7 +434,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -457,7 +457,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(102f, root_child2.LayoutWidth);
             Assert.AreEqual(10f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -485,7 +485,7 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_column_center()
         {
             CSSNode root = new CSSNode();
-            root.JustifyContent = CSSJustify.Center;
+            root.JustifyContent = YogaJustify.Center;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -500,7 +500,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -523,7 +523,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(102f, root_child2.LayoutWidth);
             Assert.AreEqual(10f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -551,7 +551,7 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_column_space_between()
         {
             CSSNode root = new CSSNode();
-            root.JustifyContent = CSSJustify.SpaceBetween;
+            root.JustifyContent = YogaJustify.SpaceBetween;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -566,7 +566,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -589,7 +589,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(102f, root_child2.LayoutWidth);
             Assert.AreEqual(10f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -617,7 +617,7 @@ namespace Facebook.CSSLayout
         public void Test_justify_content_column_space_around()
         {
             CSSNode root = new CSSNode();
-            root.JustifyContent = CSSJustify.SpaceAround;
+            root.JustifyContent = YogaJustify.SpaceAround;
             root.Width = 102f;
             root.Height = 102f;
 
@@ -632,7 +632,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -655,7 +655,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(102f, root_child2.LayoutWidth);
             Assert.AreEqual(10f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);

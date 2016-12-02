@@ -12,7 +12,7 @@ namespace Facebook.CSSLayout
     public delegate long MeasureFunction(
         CSSNode node,
         float width,
-        CSSMeasureMode widthMode,
+        YogaMeasureMode widthMode,
         float height,
-        CSSMeasureMode heightMode);
+        YogaMeasureMode heightMode);
 }

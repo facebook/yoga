@@ -25,7 +25,7 @@ public class CSSLayoutAlignItemsTest {
     final CSSNode root_child0 = new CSSNode();
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -38,7 +38,7 @@ public class CSSLayoutAlignItemsTest {
     assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -55,7 +55,7 @@ public class CSSLayoutAlignItemsTest {
   @Test
   public void test_align_items_center() {
     final CSSNode root = new CSSNode();
-    root.setAlignItems(CSSAlign.CENTER);
+    root.setAlignItems(YogaAlign.CENTER);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -63,7 +63,7 @@ public class CSSLayoutAlignItemsTest {
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -76,7 +76,7 @@ public class CSSLayoutAlignItemsTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -93,7 +93,7 @@ public class CSSLayoutAlignItemsTest {
   @Test
   public void test_align_items_flex_start() {
     final CSSNode root = new CSSNode();
-    root.setAlignItems(CSSAlign.FLEX_START);
+    root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -101,7 +101,7 @@ public class CSSLayoutAlignItemsTest {
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -114,7 +114,7 @@ public class CSSLayoutAlignItemsTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -131,7 +131,7 @@ public class CSSLayoutAlignItemsTest {
   @Test
   public void test_align_items_flex_end() {
     final CSSNode root = new CSSNode();
-    root.setAlignItems(CSSAlign.FLEX_END);
+    root.setAlignItems(YogaAlign.FLEX_END);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -139,7 +139,7 @@ public class CSSLayoutAlignItemsTest {
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -152,7 +152,7 @@ public class CSSLayoutAlignItemsTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);

@@ -12,54 +12,54 @@ from __future__ import unicode_literals
 import os
 
 ENUMS = {
-    'CSSDirection': [
+    'Direction': [
         'Inherit',
         'LTR',
         'RTL',
     ],
-    'CSSFlexDirection': [
+    'FlexDirection': [
         'Column',
         'ColumnReverse',
         'Row',
         'RowReverse',
     ],
-    'CSSJustify': [
+    'Justify': [
         'FlexStart',
         'Center',
         'FlexEnd',
         'SpaceBetween',
         'SpaceAround',
     ],
-    'CSSOverflow': [
+    'Overflow': [
         'Visible',
         'Hidden',
         'Scroll',
     ],
-    'CSSAlign': [
+    'Align': [
         'Auto',
         'FlexStart',
         'Center',
         'FlexEnd',
         'Stretch',
     ],
-    'CSSPositionType': [
+    'PositionType': [
         'Relative',
         'Absolute',
     ],
-    'CSSWrap': [
+    'Wrap': [
         'NoWrap',
         'Wrap',
     ],
-    'CSSMeasureMode': [
+    'MeasureMode': [
         'Undefined',
         'Exactly',
         'AtMost',
     ],
-    'CSSDimension': [
+    'Dimension': [
         'Width',
         'Height',
     ],
-    'CSSEdge': [
+    'Edge': [
         'Left',
         'Top',
         'Right',
@@ -70,19 +70,19 @@ ENUMS = {
         'Vertical',
         'All',
     ],
-    'CSSLogLevel': [
+    'LogLevel': [
         'Error',
         'Warn',
         'Info',
         'Debug',
         'Verbose',
     ],
-    'CSSExperimentalFeature': [
+    'ExperimentalFeature': [
         'Rounding',
         # Mimic web flex-basis behavior.
         'WebFlexBasis',
     ],
-    'CSSPrintOptions': [
+    'PrintOptions': [
         ('Layout', 1),
         ('Style', 2),
         ('Children', 4),
@@ -118,26 +118,26 @@ with open(root + '/CSSLayout/CSSEnums.h', 'w') as f:
     f.write(LICENSE)
     remaining = len(ENUMS)
     for name, values in ENUMS.items():
-        f.write('typedef enum %s {\n' % name)
+        f.write('typedef enum YG%s {\n' % name)
         for value in values:
             if isinstance(value, tuple):
-                f.write('  %s%s = %d,\n' % (name, value[0], value[1]))
+                f.write('  YG%s%s = %d,\n' % (name, value[0], value[1]))
             else:
-                f.write('  %s%s,\n' % (name, value))
-        f.write('  %sCount,\n' % name)
-        f.write('} %s;\n' % name)
+                f.write('  YG%s%s,\n' % (name, value))
+        f.write('  YG%sCount,\n' % name)
+        f.write('} YG%s;\n' % name)
         if remaining > 1:
             f.write('\n')
         remaining = remaining - 1
 
 # write out java files
 for name, values in ENUMS.items():
-    with open(root + '/java/com/facebook/csslayout/%s.java' % name, 'w') as f:
+    with open(root + '/java/com/facebook/csslayout/Yoga%s.java' % name, 'w') as f:
         f.write(LICENSE)
         f.write('package com.facebook.csslayout;\n\n')
         f.write('import com.facebook.proguard.annotations.DoNotStrip;\n\n')
         f.write('@DoNotStrip\n')
-        f.write('public enum %s {\n' % name)
+        f.write('public enum Yoga%s {\n' % name)
         if len(values) > 0:
             for value in values:
                 if isinstance(value, tuple):
@@ -153,7 +153,7 @@ for name, values in ENUMS.items():
         f.write('\n')
         f.write('  private int mIntValue;\n')
         f.write('\n')
-        f.write('  %s(int intValue) {\n' % name)
+        f.write('  Yoga%s(int intValue) {\n' % name)
         f.write('    mIntValue = intValue;\n')
         f.write('  }\n')
         f.write('\n')
@@ -161,7 +161,7 @@ for name, values in ENUMS.items():
         f.write('    return mIntValue;\n')
         f.write('  }\n')
         f.write('\n')
-        f.write('  public static %s fromInt(int value) {\n' % name)
+        f.write('  public static Yoga%s fromInt(int value) {\n' % name)
         f.write('    switch (value) {\n')
         for value in values:
             if isinstance(value, tuple):
@@ -175,10 +175,10 @@ for name, values in ENUMS.items():
 
 # write out csharp files
 for name, values in ENUMS.items():
-    with open(root + '/csharp/Facebook.CSSLayout/%s.cs' % name, 'w') as f:
+    with open(root + '/csharp/Facebook.CSSLayout/Yoga%s.cs' % name, 'w') as f:
         f.write(LICENSE)
         f.write('namespace Facebook.CSSLayout\n{\n')
-        f.write('    public enum %s\n    {\n' % name)
+        f.write('    public enum Yoga%s\n    {\n' % name)
         for value in values:
             if isinstance(value, tuple):
                 f.write('        %s = %d,\n' % (value[0], value[1]))

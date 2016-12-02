@@ -9,12 +9,10 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSJustify
+    public enum YogaPrintOptions
     {
-        FlexStart,
-        Center,
-        FlexEnd,
-        SpaceBetween,
-        SpaceAround,
+        Layout = 1,
+        Style = 2,
+        Children = 4,
     }
 }

@@ -14,9 +14,9 @@ namespace Facebook.CSSLayout
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate CSSSize CSSMeasureFunc(
-        IntPtr node, 
+        IntPtr node,
         float width,
-        CSSMeasureMode widthMode,
+        YogaMeasureMode widthMode,
         float height,
-        CSSMeasureMode heightMode);
+        YogaMeasureMode heightMode);
 }

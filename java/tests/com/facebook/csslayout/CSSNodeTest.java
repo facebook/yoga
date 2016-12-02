@@ -30,9 +30,9 @@ public class CSSNodeTest {
         public long measure(
             CSSNodeAPI node,
             float width,
-            CSSMeasureMode widthMode,
+            YogaMeasureMode widthMode,
             float height,
-            CSSMeasureMode heightMode) {
+            YogaMeasureMode heightMode) {
           return MeasureOutput.make(100, 100);
         }
     });
@@ -41,42 +41,42 @@ public class CSSNodeTest {
     assertEquals(100, (int) node.getLayoutHeight());
   }
 
-  private CSSLogLevel mLogLevel;
+  private YogaLogLevel mLogLevel;
   private String mLogMessage;
 
   @Test
   public void testLogger() {
     CSSNode.setLogger(new CSSLogger() {
-        public void log(CSSLogLevel level, String message) {
+        public void log(YogaLogLevel level, String message) {
           mLogLevel = level;
           mLogMessage = message;
         }
     });
-    CSSNode.jni_CSSLog(CSSLogLevel.DEBUG.intValue(), "Hello");
-    assertEquals(CSSLogLevel.DEBUG, mLogLevel);
+    CSSNode.jni_CSSLog(YogaLogLevel.DEBUG.intValue(), "Hello");
+    assertEquals(YogaLogLevel.DEBUG, mLogLevel);
     assertEquals("Hello", mLogMessage);
   }
 
   @Test
   public void testUpdateLogger() {
     CSSNode.setLogger(new CSSLogger() {
-        public void log(CSSLogLevel level, String message) {}
+        public void log(YogaLogLevel level, String message) {}
     });
     CSSNode.setLogger(new CSSLogger() {
-        public void log(CSSLogLevel level, String message) {
+        public void log(YogaLogLevel level, String message) {
           mLogLevel = level;
           mLogMessage = message;
         }
     });
-    CSSNode.jni_CSSLog(CSSLogLevel.VERBOSE.intValue(), "Flexbox");
-    assertEquals(CSSLogLevel.VERBOSE, mLogLevel);
+    CSSNode.jni_CSSLog(YogaLogLevel.VERBOSE.intValue(), "Flexbox");
+    assertEquals(YogaLogLevel.VERBOSE, mLogLevel);
     assertEquals("Flexbox", mLogMessage);
   }
 
   @Test
   public void testCopyStyle() {
     final CSSNode node0 = new CSSNode();
-    assertTrue(CSSConstants.isUndefined(node0.getMaxHeight()));
+    assertTrue(YogaConstants.isUndefined(node0.getMaxHeight()));
 
     final CSSNode node1 = new CSSNode();
     node1.setMaxHeight(100);

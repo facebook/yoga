@@ -12,9 +12,9 @@
 
 struct _MeasureConstraint {
   float width;
-  CSSMeasureMode widthMode;
+  YGMeasureMode widthMode;
   float height;
-  CSSMeasureMode heightMode;
+  YGMeasureMode heightMode;
 };
 
 struct _MeasureConstraintList {
@@ -24,9 +24,9 @@ struct _MeasureConstraintList {
 
 static CSSSize _measure(CSSNodeRef node,
                         float width,
-                        CSSMeasureMode widthMode,
+                        YGMeasureMode widthMode,
                         float height,
-                        CSSMeasureMode heightMode) {
+                        YGMeasureMode heightMode) {
   struct _MeasureConstraintList *constraintList = (struct _MeasureConstraintList *)CSSNodeGetContext(node);
   struct _MeasureConstraint *constraints = constraintList->constraints;
   uint32_t currentIndex = constraintList->length;
@@ -37,8 +37,8 @@ static CSSSize _measure(CSSNodeRef node,
   constraintList->length = currentIndex + 1;
 
   return CSSSize {
-      .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
-      .height = heightMode == CSSMeasureModeUndefined ? 10 : width,
+      .width = widthMode == YGMeasureModeUndefined ? 10 : width,
+      .height = heightMode == YGMeasureModeUndefined ? 10 : width,
   };
 }
 
@@ -57,12 +57,12 @@ TEST(CSSLayoutTest, exactly_measure_stretched_child_column) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
-  ASSERT_EQ(CSSMeasureModeExactly, constraintList.constraints[0].widthMode);
+  ASSERT_EQ(YGMeasureModeExactly, constraintList.constraints[0].widthMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -75,7 +75,7 @@ TEST(CSSLayoutTest, exactly_measure_stretched_child_row) {
   };
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -84,12 +84,12 @@ TEST(CSSLayoutTest, exactly_measure_stretched_child_row) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
-  ASSERT_EQ(CSSMeasureModeExactly, constraintList.constraints[0].heightMode);
+  ASSERT_EQ(YGMeasureModeExactly, constraintList.constraints[0].heightMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -110,12 +110,12 @@ TEST(CSSLayoutTest, at_most_main_axis_column) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
-  ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].heightMode);
+  ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].heightMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -128,7 +128,7 @@ TEST(CSSLayoutTest, at_most_cross_axis_column) {
   };
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -137,12 +137,12 @@ TEST(CSSLayoutTest, at_most_cross_axis_column) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
-  ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].widthMode);
+  ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].widthMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -155,7 +155,7 @@ TEST(CSSLayoutTest, at_most_main_axis_row) {
   };
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -164,12 +164,12 @@ TEST(CSSLayoutTest, at_most_main_axis_row) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
-  ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].widthMode);
+  ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].widthMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -182,8 +182,8 @@ TEST(CSSLayoutTest, at_most_cross_axis_row) {
   };
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -192,12 +192,12 @@ TEST(CSSLayoutTest, at_most_cross_axis_row) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
-  ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].heightMode);
+  ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].heightMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -218,15 +218,15 @@ TEST(CSSLayoutTest, flex_child) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(2, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
-  ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].heightMode);
+  ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].heightMode);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[1].height);
-  ASSERT_EQ(CSSMeasureModeExactly, constraintList.constraints[1].heightMode);
+  ASSERT_EQ(YGMeasureModeExactly, constraintList.constraints[1].heightMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -248,12 +248,12 @@ TEST(CSSLayoutTest, flex_child_with_flex_basis) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
-  ASSERT_EQ(CSSMeasureModeExactly, constraintList.constraints[0].heightMode);
+  ASSERT_EQ(YGMeasureModeExactly, constraintList.constraints[0].heightMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -266,8 +266,8 @@ TEST(CSSLayoutTest, overflow_scroll_column) {
   };
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
-  CSSNodeStyleSetOverflow(root, CSSOverflowScroll);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  CSSNodeStyleSetOverflow(root, YGOverflowScroll);
   CSSNodeStyleSetHeight(root, 100);
   CSSNodeStyleSetWidth(root, 100);
 
@@ -276,15 +276,15 @@ TEST(CSSLayoutTest, overflow_scroll_column) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
-  ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].widthMode);
+  ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].widthMode);
 
   ASSERT_TRUE(CSSValueIsUndefined(constraintList.constraints[0].height));
-  ASSERT_EQ(CSSMeasureModeUndefined, constraintList.constraints[0].heightMode);
+  ASSERT_EQ(YGMeasureModeUndefined, constraintList.constraints[0].heightMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);
@@ -297,9 +297,9 @@ TEST(CSSLayoutTest, overflow_scroll_row) {
   };
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
-  CSSNodeStyleSetOverflow(root, CSSOverflowScroll);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  CSSNodeStyleSetOverflow(root, YGOverflowScroll);
   CSSNodeStyleSetHeight(root, 100);
   CSSNodeStyleSetWidth(root, 100);
 
@@ -308,15 +308,15 @@ TEST(CSSLayoutTest, overflow_scroll_row) {
   CSSNodeSetMeasureFunc(root_child0, _measure);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_TRUE(CSSValueIsUndefined(constraintList.constraints[0].width));
-  ASSERT_EQ(CSSMeasureModeUndefined, constraintList.constraints[0].widthMode);
+  ASSERT_EQ(YGMeasureModeUndefined, constraintList.constraints[0].widthMode);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
-  ASSERT_EQ(CSSMeasureModeAtMost, constraintList.constraints[0].heightMode);
+  ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].heightMode);
 
   free(constraintList.constraints);
   CSSNodeFreeRecursive(root);

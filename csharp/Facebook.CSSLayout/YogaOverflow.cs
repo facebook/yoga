@@ -9,10 +9,10 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSMeasureMode
+    public enum YogaOverflow
     {
-        Undefined,
-        Exactly,
-        AtMost,
+        Visible,
+        Hidden,
+        Scroll,
     }
 }

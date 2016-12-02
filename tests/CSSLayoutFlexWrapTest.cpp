@@ -14,7 +14,7 @@
 
 TEST(CSSLayoutTest, wrap_column) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
+  CSSNodeStyleSetFlexWrap(root, YGWrapWrap);
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -36,7 +36,7 @@ TEST(CSSLayoutTest, wrap_column) {
   CSSNodeStyleSetWidth(root_child3, 30);
   CSSNodeStyleSetHeight(root_child3, 30);
   CSSNodeInsertChild(root, root_child3, 3);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -63,7 +63,7 @@ TEST(CSSLayoutTest, wrap_column) {
   ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetWidth(root_child3));
   ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetHeight(root_child3));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -95,8 +95,8 @@ TEST(CSSLayoutTest, wrap_column) {
 
 TEST(CSSLayoutTest, wrap_row) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  CSSNodeStyleSetFlexWrap(root, YGWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -118,7 +118,7 @@ TEST(CSSLayoutTest, wrap_row) {
   CSSNodeStyleSetWidth(root_child3, 30);
   CSSNodeStyleSetHeight(root_child3, 30);
   CSSNodeInsertChild(root, root_child3, 3);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -145,7 +145,7 @@ TEST(CSSLayoutTest, wrap_row) {
   ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetWidth(root_child3));
   ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetHeight(root_child3));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -177,9 +177,9 @@ TEST(CSSLayoutTest, wrap_row) {
 
 TEST(CSSLayoutTest, wrap_row_align_items_flex_end) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexEnd);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexEnd);
+  CSSNodeStyleSetFlexWrap(root, YGWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -201,7 +201,7 @@ TEST(CSSLayoutTest, wrap_row_align_items_flex_end) {
   CSSNodeStyleSetWidth(root_child3, 30);
   CSSNodeStyleSetHeight(root_child3, 30);
   CSSNodeInsertChild(root, root_child3, 3);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -228,7 +228,7 @@ TEST(CSSLayoutTest, wrap_row_align_items_flex_end) {
   ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetWidth(root_child3));
   ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetHeight(root_child3));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -260,9 +260,9 @@ TEST(CSSLayoutTest, wrap_row_align_items_flex_end) {
 
 TEST(CSSLayoutTest, wrap_row_align_items_center) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
-  CSSNodeStyleSetAlignItems(root, CSSAlignCenter);
-  CSSNodeStyleSetFlexWrap(root, CSSWrapWrap);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  CSSNodeStyleSetAlignItems(root, YGAlignCenter);
+  CSSNodeStyleSetFlexWrap(root, YGWrapWrap);
   CSSNodeStyleSetWidth(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
@@ -284,7 +284,7 @@ TEST(CSSLayoutTest, wrap_row_align_items_center) {
   CSSNodeStyleSetWidth(root_child3, 30);
   CSSNodeStyleSetHeight(root_child3, 30);
   CSSNodeInsertChild(root, root_child3, 3);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -311,7 +311,7 @@ TEST(CSSLayoutTest, wrap_row_align_items_center) {
   ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetWidth(root_child3));
   ASSERT_FLOAT_EQ(30, CSSNodeLayoutGetHeight(root_child3));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));

@@ -30,7 +30,7 @@ public class CSSLayoutFlexTest {
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -48,7 +48,7 @@ public class CSSLayoutFlexTest {
     assertEquals(100f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(25f, root_child1.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -70,7 +70,7 @@ public class CSSLayoutFlexTest {
   @Test
   public void test_flex_basis_flex_grow_row() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -82,7 +82,7 @@ public class CSSLayoutFlexTest {
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -100,7 +100,7 @@ public class CSSLayoutFlexTest {
     assertEquals(25f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -133,7 +133,7 @@ public class CSSLayoutFlexTest {
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexBasis(50f);
     root.addChildAt(root_child1, 1);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -151,7 +151,7 @@ public class CSSLayoutFlexTest {
     assertEquals(100f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child1.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -173,7 +173,7 @@ public class CSSLayoutFlexTest {
   @Test
   public void test_flex_basis_flex_shrink_row() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -185,7 +185,7 @@ public class CSSLayoutFlexTest {
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexBasis(50f);
     root.addChildAt(root_child1, 1);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -203,7 +203,7 @@ public class CSSLayoutFlexTest {
     assertEquals(50f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -242,7 +242,7 @@ public class CSSLayoutFlexTest {
     root_child2.setWidth(50f);
     root_child2.setHeight(50f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -265,7 +265,7 @@ public class CSSLayoutFlexTest {
     assertEquals(50f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -310,7 +310,7 @@ public class CSSLayoutFlexTest {
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -333,7 +333,7 @@ public class CSSLayoutFlexTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -370,7 +370,7 @@ public class CSSLayoutFlexTest {
     root_child0_child0.setFlexGrow(1f);
     root_child0_child0.setFlexShrink(1f);
     root_child0.addChildAt(root_child0_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -388,7 +388,7 @@ public class CSSLayoutFlexTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(0f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);

@@ -26,7 +26,7 @@ static const unsigned long __nan[2] = {0xffffffff, 0x7fffffff};
 #define NAN (*(const float *) __nan)
 #endif
 
-#define CSSUndefined NAN
+#define YGUndefined NAN
 
 #include "CSSEnums.h"
 #include "CSSMacros.h"
@@ -41,11 +41,11 @@ typedef struct CSSSize {
 typedef struct CSSNode *CSSNodeRef;
 typedef CSSSize (*CSSMeasureFunc)(CSSNodeRef node,
                                   float width,
-                                  CSSMeasureMode widthMode,
+                                  YGMeasureMode widthMode,
                                   float height,
-                                  CSSMeasureMode heightMode);
+                                  YGMeasureMode heightMode);
 typedef void (*CSSPrintFunc)(CSSNodeRef node);
-typedef int (*CSSLogger)(CSSLogLevel level, const char *format, va_list args);
+typedef int (*CSSLogger)(YGLogLevel level, const char *format, va_list args);
 
 typedef void *(*CSSMalloc)(size_t size);
 typedef void *(*CSSCalloc)(size_t count, size_t size);
@@ -70,7 +70,7 @@ WIN_EXPORT uint32_t CSSNodeChildCount(const CSSNodeRef node);
 WIN_EXPORT void CSSNodeCalculateLayout(const CSSNodeRef node,
                                        const float availableWidth,
                                        const float availableHeight,
-                                       const CSSDirection parentDirection);
+                                       const YGDirection parentDirection);
 
 // Mark a node as dirty. Only valid for nodes with a custom measure function
 // set.
@@ -81,17 +81,17 @@ WIN_EXPORT void CSSNodeCalculateLayout(const CSSNodeRef node,
 WIN_EXPORT void CSSNodeMarkDirty(const CSSNodeRef node);
 WIN_EXPORT bool CSSNodeIsDirty(const CSSNodeRef node);
 
-WIN_EXPORT void CSSNodePrint(const CSSNodeRef node, const CSSPrintOptions options);
+WIN_EXPORT void CSSNodePrint(const CSSNodeRef node, const YGPrintOptions options);
 
 WIN_EXPORT bool CSSValueIsUndefined(const float value);
 
-WIN_EXPORT bool CSSNodeCanUseCachedMeasurement(const CSSMeasureMode widthMode,
+WIN_EXPORT bool CSSNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
                                                const float width,
-                                               const CSSMeasureMode heightMode,
+                                               const YGMeasureMode heightMode,
                                                const float height,
-                                               const CSSMeasureMode lastWidthMode,
+                                               const YGMeasureMode lastWidthMode,
                                                const float lastWidth,
-                                               const CSSMeasureMode lastHeightMode,
+                                               const YGMeasureMode lastHeightMode,
                                                const float lastHeight,
                                                const float lastComputedWidth,
                                                const float lastComputedHeight,
@@ -110,9 +110,9 @@ WIN_EXPORT void CSSNodeCopyStyle(const CSSNodeRef dstNode, const CSSNodeRef srcN
 
 #define CSS_NODE_STYLE_EDGE_PROPERTY(type, name, paramName)    \
   WIN_EXPORT void CSSNodeStyleSet##name(const CSSNodeRef node, \
-                                        const CSSEdge edge,    \
+                                        const YGEdge edge,     \
                                         const type paramName); \
-  WIN_EXPORT type CSSNodeStyleGet##name(const CSSNodeRef node, const CSSEdge edge);
+  WIN_EXPORT type CSSNodeStyleGet##name(const CSSNodeRef node, const YGEdge edge);
 
 #define CSS_NODE_LAYOUT_PROPERTY(type, name) \
   WIN_EXPORT type CSSNodeLayoutGet##name(const CSSNodeRef node);
@@ -122,15 +122,15 @@ CSS_NODE_PROPERTY(CSSMeasureFunc, MeasureFunc, measureFunc);
 CSS_NODE_PROPERTY(CSSPrintFunc, PrintFunc, printFunc);
 CSS_NODE_PROPERTY(bool, HasNewLayout, hasNewLayout);
 
-CSS_NODE_STYLE_PROPERTY(CSSDirection, Direction, direction);
-CSS_NODE_STYLE_PROPERTY(CSSFlexDirection, FlexDirection, flexDirection);
-CSS_NODE_STYLE_PROPERTY(CSSJustify, JustifyContent, justifyContent);
-CSS_NODE_STYLE_PROPERTY(CSSAlign, AlignContent, alignContent);
-CSS_NODE_STYLE_PROPERTY(CSSAlign, AlignItems, alignItems);
-CSS_NODE_STYLE_PROPERTY(CSSAlign, AlignSelf, alignSelf);
-CSS_NODE_STYLE_PROPERTY(CSSPositionType, PositionType, positionType);
-CSS_NODE_STYLE_PROPERTY(CSSWrap, FlexWrap, flexWrap);
-CSS_NODE_STYLE_PROPERTY(CSSOverflow, Overflow, overflow);
+CSS_NODE_STYLE_PROPERTY(YGDirection, Direction, direction);
+CSS_NODE_STYLE_PROPERTY(YGFlexDirection, FlexDirection, flexDirection);
+CSS_NODE_STYLE_PROPERTY(YGJustify, JustifyContent, justifyContent);
+CSS_NODE_STYLE_PROPERTY(YGAlign, AlignContent, alignContent);
+CSS_NODE_STYLE_PROPERTY(YGAlign, AlignItems, alignItems);
+CSS_NODE_STYLE_PROPERTY(YGAlign, AlignSelf, alignSelf);
+CSS_NODE_STYLE_PROPERTY(YGPositionType, PositionType, positionType);
+CSS_NODE_STYLE_PROPERTY(YGWrap, FlexWrap, flexWrap);
+CSS_NODE_STYLE_PROPERTY(YGOverflow, Overflow, overflow);
 
 WIN_EXPORT void CSSNodeStyleSetFlex(const CSSNodeRef node, const float flex);
 CSS_NODE_STYLE_PROPERTY(float, FlexGrow, flexGrow);
@@ -167,14 +167,13 @@ CSS_NODE_LAYOUT_PROPERTY(float, Right);
 CSS_NODE_LAYOUT_PROPERTY(float, Bottom);
 CSS_NODE_LAYOUT_PROPERTY(float, Width);
 CSS_NODE_LAYOUT_PROPERTY(float, Height);
-CSS_NODE_LAYOUT_PROPERTY(CSSDirection, Direction);
+CSS_NODE_LAYOUT_PROPERTY(YGDirection, Direction);
 
 WIN_EXPORT void CSSLayoutSetLogger(CSSLogger logger);
-WIN_EXPORT void CSSLog(CSSLogLevel level, const char *message, ...);
+WIN_EXPORT void CSSLog(YGLogLevel level, const char *message, ...);
 
-WIN_EXPORT void CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeature feature,
-                                                       bool enabled);
-WIN_EXPORT bool CSSLayoutIsExperimentalFeatureEnabled(CSSExperimentalFeature feature);
+WIN_EXPORT void CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeature feature, bool enabled);
+WIN_EXPORT bool CSSLayoutIsExperimentalFeatureEnabled(YGExperimentalFeature feature);
 
 WIN_EXPORT void CSSLayoutSetMemoryFuncs(CSSMalloc cssMalloc,
                                         CSSCalloc cssCalloc,

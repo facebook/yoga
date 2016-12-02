@@ -11,7 +11,7 @@
 
 static CSSInteropLoggerFunc gManagedFunc;
 
-static int unmanagedLogger(CSSLogLevel level, const char *format, va_list args) {
+static int unmanagedLogger(YGLogLevel level, const char *format, va_list args) {
   int result = 0;
   if (gManagedFunc) {
     char buffer[256];

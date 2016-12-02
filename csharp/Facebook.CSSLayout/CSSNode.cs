@@ -95,7 +95,7 @@ namespace Facebook.CSSLayout
             Native.CSSNodeCopyStyle(_cssNode, srcNode._cssNode);
         }
 
-        public CSSDirection StyleDirection
+        public YogaDirection StyleDirection
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSFlexDirection FlexDirection
+        public YogaFlexDirection FlexDirection
         {
             get
             {
@@ -121,7 +121,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSJustify JustifyContent
+        public YogaJustify JustifyContent
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSAlign AlignItems
+        public YogaAlign AlignItems
         {
             get
             {
@@ -147,7 +147,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSAlign AlignSelf
+        public YogaAlign AlignSelf
         {
             get
             {
@@ -160,7 +160,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSAlign AlignContent
+        public YogaAlign AlignContent
         {
             get
             {
@@ -173,7 +173,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSPositionType PositionType
+        public YogaPositionType PositionType
         {
             get
             {
@@ -186,7 +186,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSWrap Wrap
+        public YogaWrap Wrap
         {
             get
             {
@@ -246,42 +246,42 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public float GetMargin(CSSEdge edge)
+        public float GetMargin(YogaEdge edge)
         {
             return Native.CSSNodeStyleGetMargin(_cssNode, edge);
         }
 
-        public void SetMargin(CSSEdge edge, float value)
+        public void SetMargin(YogaEdge edge, float value)
         {
             Native.CSSNodeStyleSetMargin(_cssNode, edge, value);
         }
 
-        public float GetPadding(CSSEdge edge)
+        public float GetPadding(YogaEdge edge)
         {
             return Native.CSSNodeStyleGetPadding(_cssNode, edge);
         }
 
-        public void SetPadding(CSSEdge edge, float padding)
+        public void SetPadding(YogaEdge edge, float padding)
         {
             Native.CSSNodeStyleSetPadding(_cssNode, edge, padding);
         }
 
-        public float GetBorder(CSSEdge edge)
+        public float GetBorder(YogaEdge edge)
         {
             return Native.CSSNodeStyleGetBorder(_cssNode, edge);
         }
 
-        public void SetBorder(CSSEdge edge, float border)
+        public void SetBorder(YogaEdge edge, float border)
         {
             Native.CSSNodeStyleSetBorder(_cssNode, edge, border);
         }
 
-        public float GetPosition(CSSEdge edge)
+        public float GetPosition(YogaEdge edge)
         {
             return Native.CSSNodeStyleGetPosition(_cssNode, edge);
         }
 
-        public void SetPosition(CSSEdge edge, float position)
+        public void SetPosition(YogaEdge edge, float position)
         {
             Native.CSSNodeStyleSetPosition(_cssNode, edge, position);
         }
@@ -409,7 +409,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSDirection LayoutDirection
+        public YogaDirection LayoutDirection
         {
             get
             {
@@ -417,7 +417,7 @@ namespace Facebook.CSSLayout
             }
         }
 
-        public CSSOverflow Overflow
+        public YogaOverflow Overflow
         {
             get
             {
@@ -520,17 +520,17 @@ namespace Facebook.CSSLayout
         {
             Native.CSSNodeCalculateLayout(
                 _cssNode,
-                CSSConstants.Undefined,
-                CSSConstants.Undefined,
+                YogaConstants.Undefined,
+                YogaConstants.Undefined,
                 Native.CSSNodeStyleGetDirection(_cssNode));
         }
 
         private CSSSize MeasureInternal(
             IntPtr node,
             float width,
-            CSSMeasureMode widthMode,
+            YogaMeasureMode widthMode,
             float height,
-            CSSMeasureMode heightMode)
+            YogaMeasureMode heightMode)
         {
             if (_measureFunction == null)
             {
@@ -541,8 +541,8 @@ namespace Facebook.CSSLayout
             return new CSSSize { width = MeasureOutput.GetWidth(output), height = MeasureOutput.GetHeight(output) };
         }
 
-        public string Print(CSSPrintOptions options =
-            CSSPrintOptions.Layout|CSSPrintOptions.Style|CSSPrintOptions.Children)
+        public string Print(YogaPrintOptions options =
+            YogaPrintOptions.Layout|YogaPrintOptions.Style|YogaPrintOptions.Children)
         {
             StringBuilder sb = new StringBuilder();
             CSSLogger.Func orig = CSSLogger.Logger;
@@ -570,13 +570,13 @@ namespace Facebook.CSSLayout
         }
 
         public static void SetExperimentalFeatureEnabled(
-            CSSExperimentalFeature feature,
+            YogaExperimentalFeature feature,
             bool enabled)
         {
             Native.CSSLayoutSetExperimentalFeatureEnabled(feature, enabled);
         }
 
-        public static bool IsExperimentalFeatureEnabled(CSSExperimentalFeature feature)
+        public static bool IsExperimentalFeatureEnabled(YogaExperimentalFeature feature)
         {
             return Native.CSSLayoutIsExperimentalFeatureEnabled(feature);
         }

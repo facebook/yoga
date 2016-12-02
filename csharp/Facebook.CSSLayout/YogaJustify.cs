@@ -9,10 +9,12 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSOverflow
+    public enum YogaJustify
     {
-        Visible,
-        Hidden,
-        Scroll,
+        FlexStart,
+        Center,
+        FlexEnd,
+        SpaceBetween,
+        SpaceAround,
     }
 }

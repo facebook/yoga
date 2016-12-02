@@ -18,13 +18,13 @@ TEST(CSSLayoutTest, absolute_layout_width_height_start_top) {
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeStart, 10);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeTop, 10);
+  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeStart, 10);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 10);
   CSSNodeStyleSetWidth(root_child0, 10);
   CSSNodeStyleSetHeight(root_child0, 10);
   CSSNodeInsertChild(root, root_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -36,7 +36,7 @@ TEST(CSSLayoutTest, absolute_layout_width_height_start_top) {
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -57,13 +57,13 @@ TEST(CSSLayoutTest, absolute_layout_width_height_end_bottom) {
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeEnd, 10);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeBottom, 10);
+  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeEnd, 10);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeBottom, 10);
   CSSNodeStyleSetWidth(root_child0, 10);
   CSSNodeStyleSetHeight(root_child0, 10);
   CSSNodeInsertChild(root, root_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -75,7 +75,7 @@ TEST(CSSLayoutTest, absolute_layout_width_height_end_bottom) {
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -96,13 +96,13 @@ TEST(CSSLayoutTest, absolute_layout_start_top_end_bottom) {
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeStart, 10);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeTop, 10);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeEnd, 10);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeBottom, 10);
+  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeStart, 10);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 10);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeEnd, 10);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeBottom, 10);
   CSSNodeInsertChild(root, root_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -114,7 +114,7 @@ TEST(CSSLayoutTest, absolute_layout_start_top_end_bottom) {
   ASSERT_FLOAT_EQ(80, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(80, CSSNodeLayoutGetHeight(root_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -135,15 +135,15 @@ TEST(CSSLayoutTest, absolute_layout_width_height_start_top_end_bottom) {
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeStart, 10);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeTop, 10);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeEnd, 10);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeBottom, 10);
+  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeStart, 10);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 10);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeEnd, 10);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeBottom, 10);
   CSSNodeStyleSetWidth(root_child0, 10);
   CSSNodeStyleSetHeight(root_child0, 10);
   CSSNodeInsertChild(root, root_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -155,7 +155,7 @@ TEST(CSSLayoutTest, absolute_layout_width_height_start_top_end_bottom) {
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -172,22 +172,22 @@ TEST(CSSLayoutTest, absolute_layout_width_height_start_top_end_bottom) {
 
 TEST(CSSLayoutTest, do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
-  CSSNodeStyleSetOverflow(root, CSSOverflowHidden);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  CSSNodeStyleSetOverflow(root, YGOverflowHidden);
   CSSNodeStyleSetWidth(root, 50);
   CSSNodeStyleSetHeight(root, 50);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeStart, 0);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeTop, 0);
+  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeStart, 0);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
   CSSNodeInsertChild(root, root_child0, 0);
 
   const CSSNodeRef root_child0_child0 = CSSNodeNew();
   CSSNodeStyleSetWidth(root_child0_child0, 100);
   CSSNodeStyleSetHeight(root_child0_child0, 100);
   CSSNodeInsertChild(root_child0, root_child0_child0, 0);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -204,7 +204,7 @@ TEST(CSSLayoutTest, do_not_clamp_height_of_absolute_node_to_height_of_its_overfl
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetHeight(root_child0_child0));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -226,37 +226,37 @@ TEST(CSSLayoutTest, do_not_clamp_height_of_absolute_node_to_height_of_its_overfl
 
 TEST(CSSLayoutTest, absolute_layout_within_border) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetMargin(root, CSSEdgeLeft, 10);
-  CSSNodeStyleSetMargin(root, CSSEdgeTop, 10);
-  CSSNodeStyleSetMargin(root, CSSEdgeRight, 10);
-  CSSNodeStyleSetMargin(root, CSSEdgeBottom, 10);
-  CSSNodeStyleSetPadding(root, CSSEdgeLeft, 10);
-  CSSNodeStyleSetPadding(root, CSSEdgeTop, 10);
-  CSSNodeStyleSetPadding(root, CSSEdgeRight, 10);
-  CSSNodeStyleSetPadding(root, CSSEdgeBottom, 10);
-  CSSNodeStyleSetBorder(root, CSSEdgeLeft, 10);
-  CSSNodeStyleSetBorder(root, CSSEdgeTop, 10);
-  CSSNodeStyleSetBorder(root, CSSEdgeRight, 10);
-  CSSNodeStyleSetBorder(root, CSSEdgeBottom, 10);
+  CSSNodeStyleSetMargin(root, YGEdgeLeft, 10);
+  CSSNodeStyleSetMargin(root, YGEdgeTop, 10);
+  CSSNodeStyleSetMargin(root, YGEdgeRight, 10);
+  CSSNodeStyleSetMargin(root, YGEdgeBottom, 10);
+  CSSNodeStyleSetPadding(root, YGEdgeLeft, 10);
+  CSSNodeStyleSetPadding(root, YGEdgeTop, 10);
+  CSSNodeStyleSetPadding(root, YGEdgeRight, 10);
+  CSSNodeStyleSetPadding(root, YGEdgeBottom, 10);
+  CSSNodeStyleSetBorder(root, YGEdgeLeft, 10);
+  CSSNodeStyleSetBorder(root, YGEdgeTop, 10);
+  CSSNodeStyleSetBorder(root, YGEdgeRight, 10);
+  CSSNodeStyleSetBorder(root, YGEdgeBottom, 10);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeLeft, 0);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeTop, 0);
+  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
   CSSNodeStyleSetWidth(root_child0, 50);
   CSSNodeStyleSetHeight(root_child0, 50);
   CSSNodeInsertChild(root, root_child0, 0);
 
   const CSSNodeRef root_child1 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child1, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child1, CSSEdgeRight, 0);
-  CSSNodeStyleSetPosition(root_child1, CSSEdgeBottom, 0);
+  CSSNodeStyleSetPositionType(root_child1, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child1, YGEdgeRight, 0);
+  CSSNodeStyleSetPosition(root_child1, YGEdgeBottom, 0);
   CSSNodeStyleSetWidth(root_child1, 50);
   CSSNodeStyleSetHeight(root_child1, 50);
   CSSNodeInsertChild(root, root_child1, 1);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetTop(root));
@@ -273,7 +273,7 @@ TEST(CSSLayoutTest, absolute_layout_within_border) {
   ASSERT_FLOAT_EQ(50, CSSNodeLayoutGetWidth(root_child1));
   ASSERT_FLOAT_EQ(50, CSSNodeLayoutGetHeight(root_child1));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetTop(root));

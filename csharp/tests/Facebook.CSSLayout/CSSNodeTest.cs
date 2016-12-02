@@ -219,7 +219,7 @@ namespace Facebook.CSSLayout
         public void TestCopyStyle()
         {
             CSSNode node0 = new CSSNode();
-            Assert.IsTrue(CSSConstants.IsUndefined(node0.MaxHeight));
+            Assert.IsTrue(YogaConstants.IsUndefined(node0.MaxHeight));
 
             CSSNode node1 = new CSSNode();
             node1.MaxHeight = 100;

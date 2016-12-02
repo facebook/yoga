@@ -61,7 +61,7 @@ for (uint32_t i = 0; i < 10; i++) {
   CSSNodeInsertChild(root, child, 0);
 }
 
-CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
 // Get for resulting layout
 CSSNodeLayoutGetLeft(root);

@@ -9,10 +9,10 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSPrintOptions
+    public enum YogaDirection
     {
-        Layout = 1,
-        Style = 2,
-        Children = 4,
+        Inherit,
+        LTR,
+        RTL,
     }
 }

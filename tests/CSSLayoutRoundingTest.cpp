@@ -13,10 +13,10 @@
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, rounding_flex_basis_flex_grow_row_width_of_100) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -31,7 +31,7 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_grow_row_width_of_100) {
   const CSSNodeRef root_child2 = CSSNodeNew();
   CSSNodeStyleSetFlexGrow(root_child2, 1);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -53,7 +53,7 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_grow_row_width_of_100) {
   ASSERT_FLOAT_EQ(33, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -77,14 +77,14 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_grow_row_width_of_100) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   CSSNodeStyleSetWidth(root, 113);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -107,7 +107,7 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
   const CSSNodeRef root_child4 = CSSNodeNew();
   CSSNodeStyleSetFlexGrow(root_child4, 1);
   CSSNodeInsertChild(root, root_child4, 4);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -139,7 +139,7 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
   ASSERT_FLOAT_EQ(23, CSSNodeLayoutGetWidth(root_child4));
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetHeight(root_child4));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -173,14 +173,14 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_flex_basis_flex_shrink_row) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   CSSNodeStyleSetWidth(root, 101);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -196,7 +196,7 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_shrink_row) {
   const CSSNodeRef root_child2 = CSSNodeNew();
   CSSNodeStyleSetFlexBasis(root_child2, 25);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -218,7 +218,7 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_shrink_row) {
   ASSERT_FLOAT_EQ(25, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -242,11 +242,11 @@ TEST(CSSLayoutTest, rounding_flex_basis_flex_shrink_row) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_flex_basis_overrides_main_size) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 100);
@@ -267,7 +267,7 @@ TEST(CSSLayoutTest, rounding_flex_basis_overrides_main_size) {
   CSSNodeStyleSetFlexGrow(root_child2, 1);
   CSSNodeStyleSetHeight(root_child2, 10);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -289,7 +289,7 @@ TEST(CSSLayoutTest, rounding_flex_basis_overrides_main_size) {
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -313,11 +313,11 @@ TEST(CSSLayoutTest, rounding_flex_basis_overrides_main_size) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_total_fractial) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 87.4f);
@@ -338,7 +338,7 @@ TEST(CSSLayoutTest, rounding_total_fractial) {
   CSSNodeStyleSetFlexGrow(root_child2, 1.1f);
   CSSNodeStyleSetHeight(root_child2, 10.7f);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -360,7 +360,7 @@ TEST(CSSLayoutTest, rounding_total_fractial) {
   ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -384,11 +384,11 @@ TEST(CSSLayoutTest, rounding_total_fractial) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_total_fractial_nested) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 87.4f);
@@ -403,14 +403,14 @@ TEST(CSSLayoutTest, rounding_total_fractial_nested) {
   const CSSNodeRef root_child0_child0 = CSSNodeNew();
   CSSNodeStyleSetFlexGrow(root_child0_child0, 1);
   CSSNodeStyleSetFlexBasis(root_child0_child0, 0.3f);
-  CSSNodeStyleSetPosition(root_child0_child0, CSSEdgeBottom, 13.3f);
+  CSSNodeStyleSetPosition(root_child0_child0, YGEdgeBottom, 13.3f);
   CSSNodeStyleSetHeight(root_child0_child0, 9.9f);
   CSSNodeInsertChild(root_child0, root_child0_child0, 0);
 
   const CSSNodeRef root_child0_child1 = CSSNodeNew();
   CSSNodeStyleSetFlexGrow(root_child0_child1, 4);
   CSSNodeStyleSetFlexBasis(root_child0_child1, 0.3f);
-  CSSNodeStyleSetPosition(root_child0_child1, CSSEdgeTop, 13.3f);
+  CSSNodeStyleSetPosition(root_child0_child1, YGEdgeTop, 13.3f);
   CSSNodeStyleSetHeight(root_child0_child1, 1.1f);
   CSSNodeInsertChild(root_child0, root_child0_child1, 1);
 
@@ -423,7 +423,7 @@ TEST(CSSLayoutTest, rounding_total_fractial_nested) {
   CSSNodeStyleSetFlexGrow(root_child2, 1.1f);
   CSSNodeStyleSetHeight(root_child2, 10.7f);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -455,7 +455,7 @@ TEST(CSSLayoutTest, rounding_total_fractial_nested) {
   ASSERT_FLOAT_EQ(87, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -489,11 +489,11 @@ TEST(CSSLayoutTest, rounding_total_fractial_nested) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_fractial_input_1) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 100);
@@ -514,7 +514,7 @@ TEST(CSSLayoutTest, rounding_fractial_input_1) {
   CSSNodeStyleSetFlexGrow(root_child2, 1);
   CSSNodeStyleSetHeight(root_child2, 10);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -536,7 +536,7 @@ TEST(CSSLayoutTest, rounding_fractial_input_1) {
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -560,11 +560,11 @@ TEST(CSSLayoutTest, rounding_fractial_input_1) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_fractial_input_2) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
   CSSNodeStyleSetWidth(root, 100);
@@ -585,7 +585,7 @@ TEST(CSSLayoutTest, rounding_fractial_input_2) {
   CSSNodeStyleSetFlexGrow(root_child2, 1);
   CSSNodeStyleSetHeight(root_child2, 10);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -607,7 +607,7 @@ TEST(CSSLayoutTest, rounding_fractial_input_2) {
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(25, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -631,14 +631,14 @@ TEST(CSSLayoutTest, rounding_fractial_input_2) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_fractial_input_3) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetPosition(root, CSSEdgeTop, 0.3f);
+  CSSNodeStyleSetPosition(root, YGEdgeTop, 0.3f);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 113.4f);
 
@@ -657,7 +657,7 @@ TEST(CSSLayoutTest, rounding_fractial_input_3) {
   CSSNodeStyleSetFlexGrow(root_child2, 1);
   CSSNodeStyleSetHeight(root_child2, 10);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -679,7 +679,7 @@ TEST(CSSLayoutTest, rounding_fractial_input_3) {
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
@@ -703,14 +703,14 @@ TEST(CSSLayoutTest, rounding_fractial_input_3) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_fractial_input_4) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetPosition(root, CSSEdgeTop, 0.7f);
+  CSSNodeStyleSetPosition(root, YGEdgeTop, 0.7f);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 113.4f);
 
@@ -729,7 +729,7 @@ TEST(CSSLayoutTest, rounding_fractial_input_4) {
   CSSNodeStyleSetFlexGrow(root_child2, 1);
   CSSNodeStyleSetHeight(root_child2, 10);
   CSSNodeInsertChild(root, root_child2, 2);
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(1, CSSNodeLayoutGetTop(root));
@@ -751,7 +751,7 @@ TEST(CSSLayoutTest, rounding_fractial_input_4) {
   ASSERT_FLOAT_EQ(100, CSSNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, CSSNodeLayoutGetHeight(root_child2));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionRTL);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(1, CSSNodeLayoutGetTop(root));
@@ -775,5 +775,5 @@ TEST(CSSLayoutTest, rounding_fractial_input_4) {
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }

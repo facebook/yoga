@@ -15,7 +15,7 @@ namespace Facebook.CSSLayout
     internal static class CSSLogger
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void Func(CSSLogLevel level, string message);
+        public delegate void Func(YogaLogLevel level, string message);
 
         private static bool _initialized;
         private static Func _managedLogger = null;
@@ -32,7 +32,7 @@ namespace Facebook.CSSLayout
                         Logger(level, message);
                     }
 
-                    if (level == CSSLogLevel.Error)
+                    if (level == YogaLogLevel.Error)
                     {
                         throw new InvalidOperationException(message);
                     }

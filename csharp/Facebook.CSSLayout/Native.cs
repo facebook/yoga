@@ -41,12 +41,12 @@ namespace Facebook.CSSLayout
 
         [DllImport(DllName)]
         public static extern void CSSLayoutSetExperimentalFeatureEnabled(
-            CSSExperimentalFeature feature,
+            YogaExperimentalFeature feature,
             bool enabled);
 
         [DllImport(DllName)]
         public static extern bool CSSLayoutIsExperimentalFeatureEnabled(
-            CSSExperimentalFeature feature);
+            YogaExperimentalFeature feature);
 
         [DllImport(DllName)]
         public static extern void CSSNodeInsertChild(IntPtr node, IntPtr child, uint index);
@@ -64,7 +64,7 @@ namespace Facebook.CSSLayout
         public static extern void CSSNodeCalculateLayout(IntPtr node,
                             float availableWidth,
                             float availableHeight,
-                            CSSDirection parentDirection);
+                            YogaDirection parentDirection);
 
         [DllImport(DllName)]
         public static extern void CSSNodeMarkDirty(IntPtr node);
@@ -74,7 +74,7 @@ namespace Facebook.CSSLayout
         public static extern bool CSSNodeIsDirty(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodePrint(IntPtr node, CSSPrintOptions options);
+        public static extern void CSSNodePrint(IntPtr node, YogaPrintOptions options);
 
         [DllImport(DllName)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -112,58 +112,58 @@ namespace Facebook.CSSLayout
         #region CSS_NODE_STYLE_PROPERTY
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetDirection(IntPtr node, CSSDirection direction);
+        public static extern void CSSNodeStyleSetDirection(IntPtr node, YogaDirection direction);
 
         [DllImport(DllName)]
-        public static extern CSSDirection CSSNodeStyleGetDirection(IntPtr node);
+        public static extern YogaDirection CSSNodeStyleGetDirection(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetFlexDirection(IntPtr node, CSSFlexDirection flexDirection);
+        public static extern void CSSNodeStyleSetFlexDirection(IntPtr node, YogaFlexDirection flexDirection);
 
         [DllImport(DllName)]
-        public static extern CSSFlexDirection CSSNodeStyleGetFlexDirection(IntPtr node);
+        public static extern YogaFlexDirection CSSNodeStyleGetFlexDirection(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetJustifyContent(IntPtr node, CSSJustify justifyContent);
+        public static extern void CSSNodeStyleSetJustifyContent(IntPtr node, YogaJustify justifyContent);
 
         [DllImport(DllName)]
-        public static extern CSSJustify CSSNodeStyleGetJustifyContent(IntPtr node);
+        public static extern YogaJustify CSSNodeStyleGetJustifyContent(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetAlignContent(IntPtr node, CSSAlign alignContent);
+        public static extern void CSSNodeStyleSetAlignContent(IntPtr node, YogaAlign alignContent);
 
         [DllImport(DllName)]
-        public static extern CSSAlign CSSNodeStyleGetAlignContent(IntPtr node);
+        public static extern YogaAlign CSSNodeStyleGetAlignContent(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetAlignItems(IntPtr node, CSSAlign alignItems);
+        public static extern void CSSNodeStyleSetAlignItems(IntPtr node, YogaAlign alignItems);
 
         [DllImport(DllName)]
-        public static extern CSSAlign CSSNodeStyleGetAlignItems(IntPtr node);
+        public static extern YogaAlign CSSNodeStyleGetAlignItems(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetAlignSelf(IntPtr node, CSSAlign alignSelf);
+        public static extern void CSSNodeStyleSetAlignSelf(IntPtr node, YogaAlign alignSelf);
 
         [DllImport(DllName)]
-        public static extern CSSAlign CSSNodeStyleGetAlignSelf(IntPtr node);
+        public static extern YogaAlign CSSNodeStyleGetAlignSelf(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetPositionType(IntPtr node, CSSPositionType positionType);
+        public static extern void CSSNodeStyleSetPositionType(IntPtr node, YogaPositionType positionType);
 
         [DllImport(DllName)]
-        public static extern CSSPositionType CSSNodeStyleGetPositionType(IntPtr node);
+        public static extern YogaPositionType CSSNodeStyleGetPositionType(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetFlexWrap(IntPtr node, CSSWrap flexWrap);
+        public static extern void CSSNodeStyleSetFlexWrap(IntPtr node, YogaWrap flexWrap);
 
         [DllImport(DllName)]
-        public static extern CSSWrap CSSNodeStyleGetFlexWrap(IntPtr node);
+        public static extern YogaWrap CSSNodeStyleGetFlexWrap(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetOverflow(IntPtr node, CSSOverflow flexWrap);
+        public static extern void CSSNodeStyleSetOverflow(IntPtr node, YogaOverflow flexWrap);
 
         [DllImport(DllName)]
-        public static extern CSSOverflow CSSNodeStyleGetOverflow(IntPtr node);
+        public static extern YogaOverflow CSSNodeStyleGetOverflow(IntPtr node);
 
         [DllImport(DllName)]
         public static extern void CSSNodeStyleSetFlex(IntPtr node, float flex);
@@ -233,28 +233,28 @@ namespace Facebook.CSSLayout
         #region CSS_NODE_STYLE_EDGE_PROPERTY
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetPosition(IntPtr node, CSSEdge edge, float position);
+        public static extern void CSSNodeStyleSetPosition(IntPtr node, YogaEdge edge, float position);
 
         [DllImport(DllName)]
-        public static extern float CSSNodeStyleGetPosition(IntPtr node, CSSEdge edge);
+        public static extern float CSSNodeStyleGetPosition(IntPtr node, YogaEdge edge);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetMargin(IntPtr node, CSSEdge edge, float margin);
+        public static extern void CSSNodeStyleSetMargin(IntPtr node, YogaEdge edge, float margin);
 
         [DllImport(DllName)]
-        public static extern float CSSNodeStyleGetMargin(IntPtr node, CSSEdge edge);
+        public static extern float CSSNodeStyleGetMargin(IntPtr node, YogaEdge edge);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetPadding(IntPtr node, CSSEdge edge, float padding);
+        public static extern void CSSNodeStyleSetPadding(IntPtr node, YogaEdge edge, float padding);
 
         [DllImport(DllName)]
-        public static extern float CSSNodeStyleGetPadding(IntPtr node, CSSEdge edge);
+        public static extern float CSSNodeStyleGetPadding(IntPtr node, YogaEdge edge);
 
         [DllImport(DllName)]
-        public static extern void CSSNodeStyleSetBorder(IntPtr node, CSSEdge edge, float border);
+        public static extern void CSSNodeStyleSetBorder(IntPtr node, YogaEdge edge, float border);
 
         [DllImport(DllName)]
-        public static extern float CSSNodeStyleGetBorder(IntPtr node, CSSEdge edge);
+        public static extern float CSSNodeStyleGetBorder(IntPtr node, YogaEdge edge);
 
         #endregion
 
@@ -279,7 +279,7 @@ namespace Facebook.CSSLayout
         public static extern float CSSNodeLayoutGetHeight(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern CSSDirection CSSNodeLayoutGetDirection(IntPtr node);
+        public static extern YogaDirection CSSNodeLayoutGetDirection(IntPtr node);
 
         #endregion
     }

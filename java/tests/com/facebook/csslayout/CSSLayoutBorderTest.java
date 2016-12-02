@@ -19,11 +19,11 @@ public class CSSLayoutBorderTest {
   @Test
   public void test_border_no_size() {
     final CSSNode root = new CSSNode();
-    root.setBorder(CSSEdge.LEFT, 10f);
-    root.setBorder(CSSEdge.TOP, 10f);
-    root.setBorder(CSSEdge.RIGHT, 10f);
-    root.setBorder(CSSEdge.BOTTOM, 10f);
-    root.setDirection(CSSDirection.LTR);
+    root.setBorder(YogaEdge.LEFT, 10f);
+    root.setBorder(YogaEdge.TOP, 10f);
+    root.setBorder(YogaEdge.RIGHT, 10f);
+    root.setBorder(YogaEdge.BOTTOM, 10f);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -31,7 +31,7 @@ public class CSSLayoutBorderTest {
     assertEquals(20f, root.getLayoutWidth(), 0.0f);
     assertEquals(20f, root.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -43,16 +43,16 @@ public class CSSLayoutBorderTest {
   @Test
   public void test_border_container_match_child() {
     final CSSNode root = new CSSNode();
-    root.setBorder(CSSEdge.LEFT, 10f);
-    root.setBorder(CSSEdge.TOP, 10f);
-    root.setBorder(CSSEdge.RIGHT, 10f);
-    root.setBorder(CSSEdge.BOTTOM, 10f);
+    root.setBorder(YogaEdge.LEFT, 10f);
+    root.setBorder(YogaEdge.TOP, 10f);
+    root.setBorder(YogaEdge.RIGHT, 10f);
+    root.setBorder(YogaEdge.BOTTOM, 10f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -65,7 +65,7 @@ public class CSSLayoutBorderTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -82,10 +82,10 @@ public class CSSLayoutBorderTest {
   @Test
   public void test_border_flex_child() {
     final CSSNode root = new CSSNode();
-    root.setBorder(CSSEdge.LEFT, 10f);
-    root.setBorder(CSSEdge.TOP, 10f);
-    root.setBorder(CSSEdge.RIGHT, 10f);
-    root.setBorder(CSSEdge.BOTTOM, 10f);
+    root.setBorder(YogaEdge.LEFT, 10f);
+    root.setBorder(YogaEdge.TOP, 10f);
+    root.setBorder(YogaEdge.RIGHT, 10f);
+    root.setBorder(YogaEdge.BOTTOM, 10f);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -93,7 +93,7 @@ public class CSSLayoutBorderTest {
     root_child0.setFlexGrow(1f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -106,7 +106,7 @@ public class CSSLayoutBorderTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(80f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -123,17 +123,17 @@ public class CSSLayoutBorderTest {
   @Test
   public void test_border_stretch_child() {
     final CSSNode root = new CSSNode();
-    root.setBorder(CSSEdge.LEFT, 10f);
-    root.setBorder(CSSEdge.TOP, 10f);
-    root.setBorder(CSSEdge.RIGHT, 10f);
-    root.setBorder(CSSEdge.BOTTOM, 10f);
+    root.setBorder(YogaEdge.LEFT, 10f);
+    root.setBorder(YogaEdge.TOP, 10f);
+    root.setBorder(YogaEdge.RIGHT, 10f);
+    root.setBorder(YogaEdge.BOTTOM, 10f);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -146,7 +146,7 @@ public class CSSLayoutBorderTest {
     assertEquals(80f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -163,11 +163,11 @@ public class CSSLayoutBorderTest {
   @Test
   public void test_border_center_child() {
     final CSSNode root = new CSSNode();
-    root.setJustifyContent(CSSJustify.CENTER);
-    root.setAlignItems(CSSAlign.CENTER);
-    root.setBorder(CSSEdge.START, 10f);
-    root.setBorder(CSSEdge.END, 20f);
-    root.setBorder(CSSEdge.BOTTOM, 20f);
+    root.setJustifyContent(YogaJustify.CENTER);
+    root.setAlignItems(YogaAlign.CENTER);
+    root.setBorder(YogaEdge.START, 10f);
+    root.setBorder(YogaEdge.END, 20f);
+    root.setBorder(YogaEdge.BOTTOM, 20f);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -175,7 +175,7 @@ public class CSSLayoutBorderTest {
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -188,7 +188,7 @@ public class CSSLayoutBorderTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);

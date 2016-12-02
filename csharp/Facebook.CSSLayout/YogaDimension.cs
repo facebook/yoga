@@ -9,16 +9,9 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSEdge
+    public enum YogaDimension
     {
-        Left,
-        Top,
-        Right,
-        Bottom,
-        Start,
-        End,
-        Horizontal,
-        Vertical,
-        All,
+        Width,
+        Height,
     }
 }

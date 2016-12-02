@@ -34,9 +34,9 @@
 #endif
 
 #ifndef CSS_ASSERT
-#define CSS_ASSERT(X, message)               \
-  if (!(X)) {                                \
-    CSSLog(CSSLogLevelError, "%s", message); \
-    CSS_ABORT();                             \
+#define CSS_ASSERT(X, message)              \
+  if (!(X)) {                               \
+    CSSLog(YGLogLevelError, "%s", message); \
+    CSS_ABORT();                            \
   }
 #endif

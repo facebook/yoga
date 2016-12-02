@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -9,9 +9,13 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSDimension
+    public static class YogaConstants
     {
-        Width,
-        Height,
+        public const float Undefined = float.NaN;
+
+        public static bool IsUndefined(float value)
+        {
+            return float.IsNaN(value);
+        }
     }
 }

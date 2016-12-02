@@ -46,7 +46,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
     if (experiments.length > 0) {
       for (var i in experiments) {
-        this.push('CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
+        this.push('CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
       }
       this.push('');
     }
@@ -60,7 +60,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     if (experiments.length > 0) {
       this.push('');
       for (var i in experiments) {
-        this.push('CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.' + toJavaUpper(experiments[i]) +', false);');
+        this.push('CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', false);');
       }
     }
 
@@ -83,44 +83,44 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('assertEquals(' + v0 + 'f, ' + v1 + ', 0.0f);');
   }},
 
-  CSSAlignAuto:{value:'CSSAlign.AUTO'},
-  CSSAlignCenter:{value:'CSSAlign.CENTER'},
-  CSSAlignFlexEnd:{value:'CSSAlign.FLEX_END'},
-  CSSAlignFlexStart:{value:'CSSAlign.FLEX_START'},
-  CSSAlignStretch:{value:'CSSAlign.STRETCH'},
+  YGAlignAuto:{value:'YogaAlign.AUTO'},
+  YGAlignCenter:{value:'YogaAlign.CENTER'},
+  YGAlignFlexEnd:{value:'YogaAlign.FLEX_END'},
+  YGAlignFlexStart:{value:'YogaAlign.FLEX_START'},
+  YGAlignStretch:{value:'YogaAlign.STRETCH'},
 
-  CSSDirectionInherit:{value:'CSSDirection.INHERIT'},
-  CSSDirectionLTR:{value:'CSSDirection.LTR'},
-  CSSDirectionRTL:{value:'CSSDirection.RTL'},
+  YGDirectionInherit:{value:'YogaDirection.INHERIT'},
+  YGDirectionLTR:{value:'YogaDirection.LTR'},
+  YGDirectionRTL:{value:'YogaDirection.RTL'},
 
-  CSSEdgeBottom:{value:'CSSEdge.BOTTOM'},
-  CSSEdgeEnd:{value:'CSSEdge.END'},
-  CSSEdgeLeft:{value:'CSSEdge.LEFT'},
-  CSSEdgeRight:{value:'CSSEdge.RIGHT'},
-  CSSEdgeStart:{value:'CSSEdge.START'},
-  CSSEdgeTop:{value:'CSSEdge.TOP'},
+  YGEdgeBottom:{value:'YogaEdge.BOTTOM'},
+  YGEdgeEnd:{value:'YogaEdge.END'},
+  YGEdgeLeft:{value:'YogaEdge.LEFT'},
+  YGEdgeRight:{value:'YogaEdge.RIGHT'},
+  YGEdgeStart:{value:'YogaEdge.START'},
+  YGEdgeTop:{value:'YogaEdge.TOP'},
 
-  CSSFlexDirectionColumn:{value:'CSSFlexDirection.COLUMN'},
-  CSSFlexDirectionColumnReverse:{value:'CSSFlexDirection.COLUMN_REVERSE'},
-  CSSFlexDirectionRow:{value:'CSSFlexDirection.ROW'},
-  CSSFlexDirectionRowReverse:{value:'CSSFlexDirection.ROW_REVERSE'},
+  YGFlexDirectionColumn:{value:'YogaFlexDirection.COLUMN'},
+  YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.COLUMN_REVERSE'},
+  YGFlexDirectionRow:{value:'YogaFlexDirection.ROW'},
+  YGFlexDirectionRowReverse:{value:'YogaFlexDirection.ROW_REVERSE'},
 
-  CSSJustifyCenter:{value:'CSSJustify.CENTER'},
-  CSSJustifyFlexEnd:{value:'CSSJustify.FLEX_END'},
-  CSSJustifyFlexStart:{value:'CSSJustify.FLEX_START'},
-  CSSJustifySpaceAround:{value:'CSSJustify.SPACE_AROUND'},
-  CSSJustifySpaceBetween:{value:'CSSJustify.SPACE_BETWEEN'},
+  YGJustifyCenter:{value:'YogaJustify.CENTER'},
+  YGJustifyFlexEnd:{value:'YogaJustify.FLEX_END'},
+  YGJustifyFlexStart:{value:'YogaJustify.FLEX_START'},
+  YGJustifySpaceAround:{value:'YogaJustify.SPACE_AROUND'},
+  YGJustifySpaceBetween:{value:'YogaJustify.SPACE_BETWEEN'},
 
-  CSSOverflowHidden:{value:'CSSOverflow.HIDDEN'},
-  CSSOverflowVisible:{value:'CSSOverflow.VISIBLE'},
+  YGOverflowHidden:{value:'YogaOverflow.HIDDEN'},
+  YGOverflowVisible:{value:'YogaOverflow.VISIBLE'},
 
-  CSSPositionTypeAbsolute:{value:'CSSPositionType.ABSOLUTE'},
-  CSSPositionTypeRelative:{value:'CSSPositionType.RELATIVE'},
+  YGPositionTypeAbsolute:{value:'YogaPositionType.ABSOLUTE'},
+  YGPositionTypeRelative:{value:'YogaPositionType.RELATIVE'},
 
-  CSSUndefined:{value:'CSSConstants.UNDEFINED'},
+  YGUndefined:{value:'YogaConstants.UNDEFINED'},
 
-  CSSWrapNoWrap:{value:'CSSWrap.NO_WRAP'},
-  CSSWrapWrap:{value:'CSSWrap.WRAP'},
+  YGWrapNoWrap:{value:'YogaWrap.NO_WRAP'},
+  YGWrapWrap:{value:'YogaWrap.WRAP'},
 
   CSSNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.setDirection(' + dir + ');');

@@ -20,10 +20,10 @@ namespace Facebook.CSSLayout
         [Test]
         public void Test_rounding_flex_basis_flex_grow_row_width_of_100()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.FlexDirection = CSSFlexDirection.Row;
+            root.FlexDirection = YogaFlexDirection.Row;
             root.Width = 100f;
             root.Height = 100f;
 
@@ -38,7 +38,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexGrow = 1f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -61,7 +61,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(33f, root_child2.LayoutWidth);
             Assert.AreEqual(100f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -84,16 +84,16 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(33f, root_child2.LayoutWidth);
             Assert.AreEqual(100f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_flex_basis_flex_grow_row_prime_number_width()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.FlexDirection = CSSFlexDirection.Row;
+            root.FlexDirection = YogaFlexDirection.Row;
             root.Width = 113f;
             root.Height = 100f;
 
@@ -116,7 +116,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child4 = new CSSNode();
             root_child4.FlexGrow = 1f;
             root.Insert(4, root_child4);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -149,7 +149,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(23f, root_child4.LayoutWidth);
             Assert.AreEqual(100f, root_child4.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -182,16 +182,16 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(23f, root_child4.LayoutWidth);
             Assert.AreEqual(100f, root_child4.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_flex_basis_flex_shrink_row()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.FlexDirection = CSSFlexDirection.Row;
+            root.FlexDirection = YogaFlexDirection.Row;
             root.Width = 101f;
             root.Height = 100f;
 
@@ -207,7 +207,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child2 = new CSSNode();
             root_child2.FlexBasis = 25f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -230,7 +230,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(25f, root_child2.LayoutWidth);
             Assert.AreEqual(100f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -253,13 +253,13 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(25f, root_child2.LayoutWidth);
             Assert.AreEqual(100f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_flex_basis_overrides_main_size()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
             root.Width = 100f;
@@ -280,7 +280,7 @@ namespace Facebook.CSSLayout
             root_child2.FlexGrow = 1f;
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -303,7 +303,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -326,13 +326,13 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_total_fractial()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
             root.Width = 87.4f;
@@ -353,7 +353,7 @@ namespace Facebook.CSSLayout
             root_child2.FlexGrow = 1.1f;
             root_child2.Height = 10.7f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -376,7 +376,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(87f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -399,13 +399,13 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(87f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_total_fractial_nested()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
             root.Width = 87.4f;
@@ -420,14 +420,14 @@ namespace Facebook.CSSLayout
             CSSNode root_child0_child0 = new CSSNode();
             root_child0_child0.FlexGrow = 1f;
             root_child0_child0.FlexBasis = 0.3f;
-            root_child0_child0.SetPosition(CSSEdge.Bottom, 13.3f);
+            root_child0_child0.SetPosition(YogaEdge.Bottom, 13.3f);
             root_child0_child0.Height = 9.9f;
             root_child0.Insert(0, root_child0_child0);
 
             CSSNode root_child0_child1 = new CSSNode();
             root_child0_child1.FlexGrow = 4f;
             root_child0_child1.FlexBasis = 0.3f;
-            root_child0_child1.SetPosition(CSSEdge.Top, 13.3f);
+            root_child0_child1.SetPosition(YogaEdge.Top, 13.3f);
             root_child0_child1.Height = 1.1f;
             root_child0.Insert(1, root_child0_child1);
 
@@ -440,7 +440,7 @@ namespace Facebook.CSSLayout
             root_child2.FlexGrow = 1.1f;
             root_child2.Height = 10.7f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -473,7 +473,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(87f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -506,13 +506,13 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(87f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_fractial_input_1()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
             root.Width = 100f;
@@ -533,7 +533,7 @@ namespace Facebook.CSSLayout
             root_child2.FlexGrow = 1f;
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -556,7 +556,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -579,13 +579,13 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_fractial_input_2()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
             root.Width = 100f;
@@ -606,7 +606,7 @@ namespace Facebook.CSSLayout
             root_child2.FlexGrow = 1f;
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -629,7 +629,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(25f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -652,16 +652,16 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(25f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_fractial_input_3()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.SetPosition(CSSEdge.Top, 0.3f);
+            root.SetPosition(YogaEdge.Top, 0.3f);
             root.Width = 100f;
             root.Height = 113.4f;
 
@@ -680,7 +680,7 @@ namespace Facebook.CSSLayout
             root_child2.FlexGrow = 1f;
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -703,7 +703,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -726,16 +726,16 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_fractial_input_4()
         {
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, true);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             CSSNode root = new CSSNode();
-            root.SetPosition(CSSEdge.Top, 0.7f);
+            root.SetPosition(YogaEdge.Top, 0.7f);
             root.Width = 100f;
             root.Height = 113.4f;
 
@@ -754,7 +754,7 @@ namespace Facebook.CSSLayout
             root_child2.FlexGrow = 1f;
             root_child2.Height = 10f;
             root.Insert(2, root_child2);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -777,7 +777,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -800,7 +800,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
 
-            CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.Rounding, false);
+            CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
     }

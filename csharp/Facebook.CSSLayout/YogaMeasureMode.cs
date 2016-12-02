@@ -9,9 +9,10 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSExperimentalFeature
+    public enum YogaMeasureMode
     {
-        Rounding,
-        WebFlexBasis,
+        Undefined,
+        Exactly,
+        AtMost,
     }
 }

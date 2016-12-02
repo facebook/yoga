@@ -19,7 +19,7 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_row_flex_start() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -34,7 +34,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -57,7 +57,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -84,8 +84,8 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_row_flex_end() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setJustifyContent(CSSJustify.FLEX_END);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setJustifyContent(YogaJustify.FLEX_END);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -100,7 +100,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -123,7 +123,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -150,8 +150,8 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_row_center() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setJustifyContent(CSSJustify.CENTER);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setJustifyContent(YogaJustify.CENTER);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -166,7 +166,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -189,7 +189,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -216,8 +216,8 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_row_space_between() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setJustifyContent(CSSJustify.SPACE_BETWEEN);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setJustifyContent(YogaJustify.SPACE_BETWEEN);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -232,7 +232,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -255,7 +255,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -282,8 +282,8 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_row_space_around() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setJustifyContent(CSSJustify.SPACE_AROUND);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setJustifyContent(YogaJustify.SPACE_AROUND);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -298,7 +298,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -321,7 +321,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(10f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(102f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -361,7 +361,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -384,7 +384,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -411,7 +411,7 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_column_flex_end() {
     final CSSNode root = new CSSNode();
-    root.setJustifyContent(CSSJustify.FLEX_END);
+    root.setJustifyContent(YogaJustify.FLEX_END);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -426,7 +426,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -449,7 +449,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -476,7 +476,7 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_column_center() {
     final CSSNode root = new CSSNode();
-    root.setJustifyContent(CSSJustify.CENTER);
+    root.setJustifyContent(YogaJustify.CENTER);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -491,7 +491,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -514,7 +514,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -541,7 +541,7 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_column_space_between() {
     final CSSNode root = new CSSNode();
-    root.setJustifyContent(CSSJustify.SPACE_BETWEEN);
+    root.setJustifyContent(YogaJustify.SPACE_BETWEEN);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -556,7 +556,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -579,7 +579,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -606,7 +606,7 @@ public class CSSLayoutJustifyContentTest {
   @Test
   public void test_justify_content_column_space_around() {
     final CSSNode root = new CSSNode();
-    root.setJustifyContent(CSSJustify.SPACE_AROUND);
+    root.setJustifyContent(YogaJustify.SPACE_AROUND);
     root.setWidth(102f);
     root.setHeight(102f);
 
@@ -621,7 +621,7 @@ public class CSSLayoutJustifyContentTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -644,7 +644,7 @@ public class CSSLayoutJustifyContentTest {
     assertEquals(102f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);

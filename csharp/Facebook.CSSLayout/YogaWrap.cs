@@ -9,14 +9,9 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSDirection
+    public enum YogaWrap
     {
-        Inherit,
-        LTR,
-        RTL,
-        [System.Obsolete("Use LTR instead")]
-        LeftToRight = LTR,
-        [System.Obsolete("Use RTL instead")]
-        RightToLeft = RTL,
+        NoWrap,
+        Wrap,
     }
 }

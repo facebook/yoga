@@ -11,7 +11,7 @@
 #include <gtest/gtest.h>
 
 TEST(CSSLayoutTest, dont_cache_computed_flex_basis_between_layouts) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
 
   const CSSNodeRef root = CSSNodeNew();
 
@@ -20,12 +20,12 @@ TEST(CSSLayoutTest, dont_cache_computed_flex_basis_between_layouts) {
   CSSNodeStyleSetFlexBasis(root_child0, 20);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, 100, CSSUndefined, CSSDirectionLTR);
-  CSSNodeCalculateLayout(root, 100, 100, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, YGUndefined, YGDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetHeight(root_child0));
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, false);
 }

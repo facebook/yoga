@@ -12,18 +12,18 @@
 
 static CSSSize _measure(CSSNodeRef node,
                         float width,
-                        CSSMeasureMode widthMode,
+                        YGMeasureMode widthMode,
                         float height,
-                        CSSMeasureMode heightMode) {
+                        YGMeasureMode heightMode) {
   return CSSSize {
-      .width = widthMode == CSSMeasureModeExactly ? width : 50,
-      .height = heightMode == CSSMeasureModeExactly ? height : 50,
+      .width = widthMode == YGMeasureModeExactly ? width : 50,
+      .height = heightMode == YGMeasureModeExactly ? height : 50,
   };
 }
 
 TEST(CSSLayoutTest, aspect_ratio_cross_defined) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -32,7 +32,7 @@ TEST(CSSLayoutTest, aspect_ratio_cross_defined) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -44,7 +44,7 @@ TEST(CSSLayoutTest, aspect_ratio_cross_defined) {
 
 TEST(CSSLayoutTest, aspect_ratio_main_defined) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -53,7 +53,7 @@ TEST(CSSLayoutTest, aspect_ratio_main_defined) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -73,7 +73,7 @@ TEST(CSSLayoutTest, aspect_ratio_both_dimensions_defined) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -92,7 +92,7 @@ TEST(CSSLayoutTest, aspect_ratio_align_stretch) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -104,7 +104,7 @@ TEST(CSSLayoutTest, aspect_ratio_align_stretch) {
 
 TEST(CSSLayoutTest, aspect_ratio_flex_grow) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -114,7 +114,7 @@ TEST(CSSLayoutTest, aspect_ratio_flex_grow) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -126,7 +126,7 @@ TEST(CSSLayoutTest, aspect_ratio_flex_grow) {
 
 TEST(CSSLayoutTest, aspect_ratio_flex_shrink) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -136,7 +136,7 @@ TEST(CSSLayoutTest, aspect_ratio_flex_shrink) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -148,7 +148,7 @@ TEST(CSSLayoutTest, aspect_ratio_flex_shrink) {
 
 TEST(CSSLayoutTest, aspect_ratio_basis) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -157,7 +157,7 @@ TEST(CSSLayoutTest, aspect_ratio_basis) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -173,14 +173,14 @@ TEST(CSSLayoutTest, aspect_ratio_absolute_layout_width_defined) {
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeLeft, 0);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeTop, 0);
+  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
   CSSNodeStyleSetWidth(root_child0, 50);
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -196,14 +196,14 @@ TEST(CSSLayoutTest, aspect_ratio_absolute_layout_height_defined) {
   CSSNodeStyleSetHeight(root, 100);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, CSSPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeLeft, 0);
-  CSSNodeStyleSetPosition(root_child0, CSSEdgeTop, 0);
+  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
+  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
   CSSNodeStyleSetHeight(root_child0, 50);
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -215,7 +215,7 @@ TEST(CSSLayoutTest, aspect_ratio_absolute_layout_height_defined) {
 
 TEST(CSSLayoutTest, aspect_ratio_with_max_cross_defined) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -225,7 +225,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_max_cross_defined) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -237,7 +237,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_max_cross_defined) {
 
 TEST(CSSLayoutTest, aspect_ratio_with_max_main_defined) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -247,7 +247,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_max_main_defined) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -259,7 +259,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_max_main_defined) {
 
 TEST(CSSLayoutTest, aspect_ratio_with_min_cross_defined) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -269,7 +269,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_min_cross_defined) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -281,7 +281,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_min_cross_defined) {
 
 TEST(CSSLayoutTest, aspect_ratio_with_min_main_defined) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -291,7 +291,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_min_main_defined) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -303,7 +303,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_min_main_defined) {
 
 TEST(CSSLayoutTest, aspect_ratio_double_cross) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -312,7 +312,7 @@ TEST(CSSLayoutTest, aspect_ratio_double_cross) {
   CSSNodeStyleSetAspectRatio(root_child0, 2);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -324,7 +324,7 @@ TEST(CSSLayoutTest, aspect_ratio_double_cross) {
 
 TEST(CSSLayoutTest, aspect_ratio_half_cross) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -333,7 +333,7 @@ TEST(CSSLayoutTest, aspect_ratio_half_cross) {
   CSSNodeStyleSetAspectRatio(root_child0, 0.5);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -345,7 +345,7 @@ TEST(CSSLayoutTest, aspect_ratio_half_cross) {
 
 TEST(CSSLayoutTest, aspect_ratio_double_main) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -354,7 +354,7 @@ TEST(CSSLayoutTest, aspect_ratio_double_main) {
   CSSNodeStyleSetAspectRatio(root_child0, 2);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -366,7 +366,7 @@ TEST(CSSLayoutTest, aspect_ratio_double_main) {
 
 TEST(CSSLayoutTest, aspect_ratio_half_main) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -375,7 +375,7 @@ TEST(CSSLayoutTest, aspect_ratio_half_main) {
   CSSNodeStyleSetAspectRatio(root_child0, 0.5);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
@@ -387,7 +387,7 @@ TEST(CSSLayoutTest, aspect_ratio_half_main) {
 
 TEST(CSSLayoutTest, aspect_ratio_with_measure_func) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -396,7 +396,7 @@ TEST(CSSLayoutTest, aspect_ratio_with_measure_func) {
   CSSNodeStyleSetAspectRatio(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));

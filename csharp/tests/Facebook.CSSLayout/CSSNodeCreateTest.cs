@@ -22,8 +22,8 @@ namespace Facebook.CSSLayout
         public void TestSimple()
         {
             CSSNode nodeDefault = new CSSNode();
-            CSSNode nodeCreated = CSSNode.Create(flexDirection: CSSFlexDirection.Row);
-            Assert.AreEqual(CSSFlexDirection.Row, nodeCreated.FlexDirection);
+            CSSNode nodeCreated = CSSNode.Create(flexDirection: YogaFlexDirection.Row);
+            Assert.AreEqual(YogaFlexDirection.Row, nodeCreated.FlexDirection);
             Assert.IsFalse(nodeDefault.IsDirty);
             nodeDefault.CopyStyle(nodeCreated);
             Assert.IsTrue(nodeDefault.IsDirty);
@@ -43,39 +43,39 @@ namespace Facebook.CSSLayout
         public void TestMultiple()
         {
             CSSNode node = CSSNode.Create(
-                positionType: CSSPositionType.Absolute,
-                wrap: CSSWrap.Wrap,
+                positionType: YogaPositionType.Absolute,
+                wrap: YogaWrap.Wrap,
                 position: new Spacing(top:6, right:4),
                 margin: new Spacing(bottom:5, left:3));
 
-            Assert.AreEqual(CSSFlexDirection.Column, node.FlexDirection);
-            Assert.AreEqual(CSSPositionType.Absolute, node.PositionType);
-            Assert.AreEqual(CSSWrap.Wrap, node.Wrap);
-            Assert.AreEqual(6, node.GetPosition(CSSEdge.Top));
-            Assert.IsTrue(CSSConstants.IsUndefined(node.GetPosition(CSSEdge.Bottom)));
-            Assert.AreEqual(4, node.GetPosition(CSSEdge.Right));
-            Assert.IsTrue(CSSConstants.IsUndefined(node.GetPosition(CSSEdge.Left)));
-            Assert.AreEqual(0, node.GetMargin(CSSEdge.Top));
-            Assert.AreEqual(5, node.GetMargin(CSSEdge.Bottom));
-            Assert.AreEqual(3, node.GetMargin(CSSEdge.Left));
-            Assert.AreEqual(0, node.GetMargin(CSSEdge.Right));
+            Assert.AreEqual(YogaFlexDirection.Column, node.FlexDirection);
+            Assert.AreEqual(YogaPositionType.Absolute, node.PositionType);
+            Assert.AreEqual(YogaWrap.Wrap, node.Wrap);
+            Assert.AreEqual(6, node.GetPosition(YogaEdge.Top));
+            Assert.IsTrue(YogaConstants.IsUndefined(node.GetPosition(YogaEdge.Bottom)));
+            Assert.AreEqual(4, node.GetPosition(YogaEdge.Right));
+            Assert.IsTrue(YogaConstants.IsUndefined(node.GetPosition(YogaEdge.Left)));
+            Assert.AreEqual(0, node.GetMargin(YogaEdge.Top));
+            Assert.AreEqual(5, node.GetMargin(YogaEdge.Bottom));
+            Assert.AreEqual(3, node.GetMargin(YogaEdge.Left));
+            Assert.AreEqual(0, node.GetMargin(YogaEdge.Right));
         }
 
         [Test]
         public void TestFull()
         {
             CSSNode node = CSSNode.Create(
-                styleDirection: CSSDirection.RTL,
-                flexDirection: CSSFlexDirection.RowReverse,
+                styleDirection: YogaDirection.RTL,
+                flexDirection: YogaFlexDirection.RowReverse,
 
-                justifyContent: CSSJustify.SpaceAround,
-                alignContent: CSSAlign.Center,
-                alignItems: CSSAlign.FlexEnd,
-                alignSelf: CSSAlign.Stretch,
+                justifyContent: YogaJustify.SpaceAround,
+                alignContent: YogaAlign.Center,
+                alignItems: YogaAlign.FlexEnd,
+                alignSelf: YogaAlign.Stretch,
 
-                positionType: CSSPositionType.Absolute,
-                wrap: CSSWrap.Wrap,
-                overflow: CSSOverflow.Scroll,
+                positionType: YogaPositionType.Absolute,
+                wrap: YogaWrap.Wrap,
+                overflow: YogaOverflow.Scroll,
 
                 flex: 1,
                 flexGrow: 2,
@@ -94,43 +94,43 @@ namespace Facebook.CSSLayout
                 maxWidth: 25,
                 maxHeight: 26);
 
-            Assert.AreEqual(CSSDirection.RTL, node.StyleDirection);
-            Assert.AreEqual(CSSFlexDirection.RowReverse, node.FlexDirection);
+            Assert.AreEqual(YogaDirection.RTL, node.StyleDirection);
+            Assert.AreEqual(YogaFlexDirection.RowReverse, node.FlexDirection);
 
-            Assert.AreEqual(CSSJustify.SpaceAround, node.JustifyContent);
-            Assert.AreEqual(CSSAlign.Center, node.AlignContent);
-            Assert.AreEqual(CSSAlign.FlexEnd, node.AlignItems);
-            Assert.AreEqual(CSSAlign.Stretch, node.AlignSelf);
+            Assert.AreEqual(YogaJustify.SpaceAround, node.JustifyContent);
+            Assert.AreEqual(YogaAlign.Center, node.AlignContent);
+            Assert.AreEqual(YogaAlign.FlexEnd, node.AlignItems);
+            Assert.AreEqual(YogaAlign.Stretch, node.AlignSelf);
 
-            Assert.AreEqual(CSSPositionType.Absolute, node.PositionType);
-            Assert.AreEqual(CSSWrap.Wrap, node.Wrap);
-            Assert.AreEqual(CSSOverflow.Scroll, node.Overflow);
+            Assert.AreEqual(YogaPositionType.Absolute, node.PositionType);
+            Assert.AreEqual(YogaWrap.Wrap, node.Wrap);
+            Assert.AreEqual(YogaOverflow.Scroll, node.Overflow);
 
             Assert.AreEqual(2, node.FlexGrow);
             Assert.AreEqual(3, node.FlexShrink);
             Assert.AreEqual(4, node.FlexBasis);
-            node.FlexGrow = CSSConstants.Undefined;
+            node.FlexGrow = YogaConstants.Undefined;
             Assert.AreEqual(1, node.FlexGrow);
 
-            Assert.AreEqual(5, node.GetPosition(CSSEdge.Top));
-            Assert.AreEqual(6, node.GetPosition(CSSEdge.Bottom));
-            Assert.AreEqual(7, node.GetPosition(CSSEdge.Left));
-            Assert.AreEqual(8, node.GetPosition(CSSEdge.Right));
+            Assert.AreEqual(5, node.GetPosition(YogaEdge.Top));
+            Assert.AreEqual(6, node.GetPosition(YogaEdge.Bottom));
+            Assert.AreEqual(7, node.GetPosition(YogaEdge.Left));
+            Assert.AreEqual(8, node.GetPosition(YogaEdge.Right));
 
-            Assert.AreEqual(9, node.GetMargin(CSSEdge.Top));
-            Assert.AreEqual(10, node.GetMargin(CSSEdge.Bottom));
-            Assert.AreEqual(11, node.GetMargin(CSSEdge.Left));
-            Assert.AreEqual(12, node.GetMargin(CSSEdge.Right));
+            Assert.AreEqual(9, node.GetMargin(YogaEdge.Top));
+            Assert.AreEqual(10, node.GetMargin(YogaEdge.Bottom));
+            Assert.AreEqual(11, node.GetMargin(YogaEdge.Left));
+            Assert.AreEqual(12, node.GetMargin(YogaEdge.Right));
 
-            Assert.AreEqual(13, node.GetPadding(CSSEdge.Top));
-            Assert.AreEqual(14, node.GetPadding(CSSEdge.Bottom));
-            Assert.AreEqual(15, node.GetPadding(CSSEdge.Left));
-            Assert.AreEqual(16, node.GetPadding(CSSEdge.Right));
+            Assert.AreEqual(13, node.GetPadding(YogaEdge.Top));
+            Assert.AreEqual(14, node.GetPadding(YogaEdge.Bottom));
+            Assert.AreEqual(15, node.GetPadding(YogaEdge.Left));
+            Assert.AreEqual(16, node.GetPadding(YogaEdge.Right));
 
-            Assert.AreEqual(17, node.GetBorder(CSSEdge.Top));
-            Assert.AreEqual(18, node.GetBorder(CSSEdge.Bottom));
-            Assert.AreEqual(19, node.GetBorder(CSSEdge.Left));
-            Assert.AreEqual(20, node.GetBorder(CSSEdge.Right));
+            Assert.AreEqual(17, node.GetBorder(YogaEdge.Top));
+            Assert.AreEqual(18, node.GetBorder(YogaEdge.Bottom));
+            Assert.AreEqual(19, node.GetBorder(YogaEdge.Left));
+            Assert.AreEqual(20, node.GetBorder(YogaEdge.Right));
 
             Assert.AreEqual(21, node.Width);
             Assert.AreEqual(22, node.Height);

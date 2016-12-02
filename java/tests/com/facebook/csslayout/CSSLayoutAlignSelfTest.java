@@ -23,11 +23,11 @@ public class CSSLayoutAlignSelfTest {
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setAlignSelf(CSSAlign.CENTER);
+    root_child0.setAlignSelf(YogaAlign.CENTER);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -40,7 +40,7 @@ public class CSSLayoutAlignSelfTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -61,11 +61,11 @@ public class CSSLayoutAlignSelfTest {
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setAlignSelf(CSSAlign.FLEX_END);
+    root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -78,7 +78,7 @@ public class CSSLayoutAlignSelfTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -99,11 +99,11 @@ public class CSSLayoutAlignSelfTest {
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setAlignSelf(CSSAlign.FLEX_START);
+    root_child0.setAlignSelf(YogaAlign.FLEX_START);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -116,7 +116,7 @@ public class CSSLayoutAlignSelfTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -133,16 +133,16 @@ public class CSSLayoutAlignSelfTest {
   @Test
   public void test_align_self_flex_end_override_flex_start() {
     final CSSNode root = new CSSNode();
-    root.setAlignItems(CSSAlign.FLEX_START);
+    root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setAlignSelf(CSSAlign.FLEX_END);
+    root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -155,7 +155,7 @@ public class CSSLayoutAlignSelfTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);

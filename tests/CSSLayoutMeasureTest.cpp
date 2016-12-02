@@ -12,9 +12,9 @@
 
 static CSSSize _measure(CSSNodeRef node,
                         float width,
-                        CSSMeasureMode widthMode,
+                        YGMeasureMode widthMode,
                         float height,
-                        CSSMeasureMode heightMode) {
+                        YGMeasureMode heightMode) {
   int *measureCount = (int*) CSSNodeGetContext(node);
   if (measureCount) {
     (*measureCount)++;
@@ -40,7 +40,7 @@ TEST(CSSLayoutTest, dont_measure_single_grow_shrink_child) {
   CSSNodeStyleSetFlexShrink(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, measureCount);
 

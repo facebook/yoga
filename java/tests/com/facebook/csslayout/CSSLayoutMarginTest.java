@@ -19,15 +19,15 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_start() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setMargin(CSSEdge.START, 10f);
+    root_child0.setMargin(YogaEdge.START, 10f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -40,7 +40,7 @@ public class CSSLayoutMarginTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -61,10 +61,10 @@ public class CSSLayoutMarginTest {
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setMargin(CSSEdge.TOP, 10f);
+    root_child0.setMargin(YogaEdge.TOP, 10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -77,7 +77,7 @@ public class CSSLayoutMarginTest {
     assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -94,16 +94,16 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_end() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setJustifyContent(CSSJustify.FLEX_END);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setJustifyContent(YogaJustify.FLEX_END);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setMargin(CSSEdge.END, 10f);
+    root_child0.setMargin(YogaEdge.END, 10f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -116,7 +116,7 @@ public class CSSLayoutMarginTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -133,15 +133,15 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_bottom() {
     final CSSNode root = new CSSNode();
-    root.setJustifyContent(CSSJustify.FLEX_END);
+    root.setJustifyContent(YogaJustify.FLEX_END);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setMargin(CSSEdge.BOTTOM, 10f);
+    root_child0.setMargin(YogaEdge.BOTTOM, 10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -154,7 +154,7 @@ public class CSSLayoutMarginTest {
     assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -171,15 +171,15 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_and_flex_row() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setMargin(CSSEdge.START, 10f);
+    root_child0.setMargin(YogaEdge.START, 10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -192,7 +192,7 @@ public class CSSLayoutMarginTest {
     assertEquals(90f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -214,9 +214,9 @@ public class CSSLayoutMarginTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setMargin(CSSEdge.TOP, 10f);
+    root_child0.setMargin(YogaEdge.TOP, 10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -229,7 +229,7 @@ public class CSSLayoutMarginTest {
     assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(90f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -246,15 +246,15 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_and_stretch_row() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setMargin(CSSEdge.TOP, 10f);
+    root_child0.setMargin(YogaEdge.TOP, 10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -267,7 +267,7 @@ public class CSSLayoutMarginTest {
     assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(90f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -289,9 +289,9 @@ public class CSSLayoutMarginTest {
 
     final CSSNode root_child0 = new CSSNode();
     root_child0.setFlexGrow(1f);
-    root_child0.setMargin(CSSEdge.START, 10f);
+    root_child0.setMargin(YogaEdge.START, 10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -304,7 +304,7 @@ public class CSSLayoutMarginTest {
     assertEquals(90f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -321,7 +321,7 @@ public class CSSLayoutMarginTest {
   @Test
   public void test_margin_with_sibling_row() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -332,7 +332,7 @@ public class CSSLayoutMarginTest {
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -350,7 +350,7 @@ public class CSSLayoutMarginTest {
     assertEquals(50f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -382,7 +382,7 @@ public class CSSLayoutMarginTest {
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -400,7 +400,7 @@ public class CSSLayoutMarginTest {
     assertEquals(100f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child1.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);

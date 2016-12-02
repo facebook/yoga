@@ -12,9 +12,9 @@
 
 static CSSSize _measureFloor(CSSNodeRef node,
   float width,
-  CSSMeasureMode widthMode,
+  YGMeasureMode widthMode,
   float height,
-  CSSMeasureMode heightMode) {
+  YGMeasureMode heightMode) {
 
   return CSSSize{
     width = 10.2,
@@ -24,9 +24,9 @@ static CSSSize _measureFloor(CSSNodeRef node,
 
 static CSSSize _measureCeil(CSSNodeRef node,
   float width,
-  CSSMeasureMode widthMode,
+  YGMeasureMode widthMode,
   float height,
-  CSSMeasureMode heightMode) {
+  YGMeasureMode heightMode) {
 
   return CSSSize{
     width = 10.5,
@@ -35,7 +35,7 @@ static CSSSize _measureCeil(CSSNodeRef node,
 }
 
 TEST(CSSLayoutTest, rounding_feature_with_custom_measure_func_floor) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
 
@@ -43,18 +43,18 @@ TEST(CSSLayoutTest, rounding_feature_with_custom_measure_func_floor) {
   CSSNodeSetMeasureFunc(root_child0, _measureFloor);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
 TEST(CSSLayoutTest, rounding_feature_with_custom_measure_func_ceil) {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
   const CSSNodeRef root = CSSNodeNew();
 
@@ -62,12 +62,12 @@ TEST(CSSLayoutTest, rounding_feature_with_custom_measure_func_ceil) {
   CSSNodeSetMeasureFunc(root_child0, _measureCeil);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(11, CSSNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(11, CSSNodeLayoutGetHeight(root_child0));
 
   CSSNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureRounding, false);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }

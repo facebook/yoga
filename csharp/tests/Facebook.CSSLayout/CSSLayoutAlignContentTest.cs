@@ -21,7 +21,7 @@ namespace Facebook.CSSLayout
         public void Test_align_content_flex_start()
         {
             CSSNode root = new CSSNode();
-            root.Wrap = CSSWrap.Wrap;
+            root.Wrap = YogaWrap.Wrap;
             root.Width = 100f;
             root.Height = 100f;
 
@@ -49,7 +49,7 @@ namespace Facebook.CSSLayout
             root_child4.Width = 50f;
             root_child4.Height = 10f;
             root.Insert(4, root_child4);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -82,7 +82,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(50f, root_child4.LayoutWidth);
             Assert.AreEqual(10f, root_child4.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -120,8 +120,8 @@ namespace Facebook.CSSLayout
         public void Test_align_content_flex_end()
         {
             CSSNode root = new CSSNode();
-            root.AlignContent = CSSAlign.FlexEnd;
-            root.Wrap = CSSWrap.Wrap;
+            root.AlignContent = YogaAlign.FlexEnd;
+            root.Wrap = YogaWrap.Wrap;
             root.Width = 100f;
             root.Height = 100f;
 
@@ -149,7 +149,7 @@ namespace Facebook.CSSLayout
             root_child4.Width = 50f;
             root_child4.Height = 10f;
             root.Insert(4, root_child4);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -182,7 +182,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(50f, root_child4.LayoutWidth);
             Assert.AreEqual(10f, root_child4.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -220,8 +220,8 @@ namespace Facebook.CSSLayout
         public void Test_align_content_center()
         {
             CSSNode root = new CSSNode();
-            root.AlignContent = CSSAlign.Center;
-            root.Wrap = CSSWrap.Wrap;
+            root.AlignContent = YogaAlign.Center;
+            root.Wrap = YogaWrap.Wrap;
             root.Width = 100f;
             root.Height = 100f;
 
@@ -249,7 +249,7 @@ namespace Facebook.CSSLayout
             root_child4.Width = 50f;
             root_child4.Height = 10f;
             root.Insert(4, root_child4);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -282,7 +282,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(50f, root_child4.LayoutWidth);
             Assert.AreEqual(10f, root_child4.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -320,8 +320,8 @@ namespace Facebook.CSSLayout
         public void Test_align_content_stretch()
         {
             CSSNode root = new CSSNode();
-            root.AlignContent = CSSAlign.Stretch;
-            root.Wrap = CSSWrap.Wrap;
+            root.AlignContent = YogaAlign.Stretch;
+            root.Wrap = YogaWrap.Wrap;
             root.Width = 100f;
             root.Height = 100f;
 
@@ -344,7 +344,7 @@ namespace Facebook.CSSLayout
             CSSNode root_child4 = new CSSNode();
             root_child4.Width = 50f;
             root.Insert(4, root_child4);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -377,7 +377,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(50f, root_child4.LayoutWidth);
             Assert.AreEqual(0f, root_child4.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);

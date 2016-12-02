@@ -9,12 +9,9 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSAlign
+    public enum YogaExperimentalFeature
     {
-        Auto,
-        FlexStart,
-        Center,
-        FlexEnd,
-        Stretch,
+        Rounding,
+        WebFlexBasis,
     }
 }

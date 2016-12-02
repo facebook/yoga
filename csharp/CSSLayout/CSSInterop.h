@@ -13,7 +13,7 @@
 
 CSS_EXTERN_C_BEGIN
 
-typedef void (*CSSInteropLoggerFunc)(CSSLogLevel level, const char *message);
+typedef void (*CSSInteropLoggerFunc)(YGLogLevel level, const char *message);
 
 WIN_EXPORT void CSSInteropSetLogger(CSSInteropLoggerFunc managedFunc);
 

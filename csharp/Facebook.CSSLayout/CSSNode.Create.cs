@@ -14,15 +14,15 @@ namespace Facebook.CSSLayout
     public partial class CSSNode
     {
         public static CSSNode Create(
-            CSSDirection? styleDirection = null,
-            CSSFlexDirection? flexDirection = null,
-            CSSJustify? justifyContent = null,
-            CSSAlign? alignContent = null,
-            CSSAlign? alignItems = null,
-            CSSAlign? alignSelf = null,
-            CSSPositionType? positionType = null,
-            CSSWrap? wrap = null,
-            CSSOverflow? overflow = null,
+            YogaDirection? styleDirection = null,
+            YogaFlexDirection? flexDirection = null,
+            YogaJustify? justifyContent = null,
+            YogaAlign? alignContent = null,
+            YogaAlign? alignItems = null,
+            YogaAlign? alignSelf = null,
+            YogaPositionType? positionType = null,
+            YogaWrap? wrap = null,
+            YogaOverflow? overflow = null,
             float? flex = null,
             float? flexGrow = null,
             float? flexShrink = null,
@@ -110,22 +110,22 @@ namespace Facebook.CSSLayout
             {
                 if (position.Top.HasValue)
                 {
-                    node.SetPosition(CSSEdge.Top, position.Top.Value);
+                    node.SetPosition(YogaEdge.Top, position.Top.Value);
                 }
 
                 if (position.Bottom.HasValue)
                 {
-                    node.SetPosition(CSSEdge.Bottom, position.Bottom.Value);
+                    node.SetPosition(YogaEdge.Bottom, position.Bottom.Value);
                 }
 
                 if (position.Left.HasValue)
                 {
-                    node.SetPosition(CSSEdge.Left, position.Left.Value);
+                    node.SetPosition(YogaEdge.Left, position.Left.Value);
                 }
 
                 if (position.Right.HasValue)
                 {
-                    node.SetPosition(CSSEdge.Right, position.Right.Value);
+                    node.SetPosition(YogaEdge.Right, position.Right.Value);
                 }
             }
 
@@ -133,22 +133,22 @@ namespace Facebook.CSSLayout
             {
                 if (margin.Top.HasValue)
                 {
-                    node.SetMargin(CSSEdge.Top, margin.Top.Value);
+                    node.SetMargin(YogaEdge.Top, margin.Top.Value);
                 }
 
                 if (margin.Bottom.HasValue)
                 {
-                    node.SetMargin(CSSEdge.Bottom, margin.Bottom.Value);
+                    node.SetMargin(YogaEdge.Bottom, margin.Bottom.Value);
                 }
 
                 if (margin.Left.HasValue)
                 {
-                    node.SetMargin(CSSEdge.Left, margin.Left.Value);
+                    node.SetMargin(YogaEdge.Left, margin.Left.Value);
                 }
 
                 if (margin.Right.HasValue)
                 {
-                    node.SetMargin(CSSEdge.Right, margin.Right.Value);
+                    node.SetMargin(YogaEdge.Right, margin.Right.Value);
                 }
             }
 
@@ -156,22 +156,22 @@ namespace Facebook.CSSLayout
             {
                 if (padding.Top.HasValue)
                 {
-                    node.SetPadding(CSSEdge.Top, padding.Top.Value);
+                    node.SetPadding(YogaEdge.Top, padding.Top.Value);
                 }
 
                 if (padding.Bottom.HasValue)
                 {
-                    node.SetPadding(CSSEdge.Bottom, padding.Bottom.Value);
+                    node.SetPadding(YogaEdge.Bottom, padding.Bottom.Value);
                 }
 
                 if (padding.Left.HasValue)
                 {
-                    node.SetPadding(CSSEdge.Left, padding.Left.Value);
+                    node.SetPadding(YogaEdge.Left, padding.Left.Value);
                 }
 
                 if (padding.Right.HasValue)
                 {
-                    node.SetPadding(CSSEdge.Right, padding.Right.Value);
+                    node.SetPadding(YogaEdge.Right, padding.Right.Value);
                 }
             }
 
@@ -179,22 +179,22 @@ namespace Facebook.CSSLayout
             {
                 if (border.Top.HasValue)
                 {
-                    node.SetBorder(CSSEdge.Top, border.Top.Value);
+                    node.SetBorder(YogaEdge.Top, border.Top.Value);
                 }
 
                 if (border.Bottom.HasValue)
                 {
-                    node.SetBorder(CSSEdge.Bottom, border.Bottom.Value);
+                    node.SetBorder(YogaEdge.Bottom, border.Bottom.Value);
                 }
 
                 if (border.Left.HasValue)
                 {
-                    node.SetBorder(CSSEdge.Left, border.Left.Value);
+                    node.SetBorder(YogaEdge.Left, border.Left.Value);
                 }
 
                 if (border.Right.HasValue)
                 {
-                    node.SetBorder(CSSEdge.Right, border.Right.Value);
+                    node.SetBorder(YogaEdge.Right, border.Right.Value);
                 }
             }
 

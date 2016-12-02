@@ -22,22 +22,22 @@
  */
 @property (nonatomic, readwrite, assign, setter=css_setUsesFlexbox:) BOOL css_usesFlexbox;
 
-- (void)css_setDirection:(CSSDirection)direction;
-- (void)css_setFlexDirection:(CSSFlexDirection)flexDirection;
-- (void)css_setJustifyContent:(CSSJustify)justifyContent;
-- (void)css_setAlignContent:(CSSAlign)alignContent;
-- (void)css_setAlignItems:(CSSAlign)alignItems;
-- (void)css_setAlignSelf:(CSSAlign)alignSelf;
-- (void)css_setPositionType:(CSSPositionType)positionType;
-- (void)css_setFlexWrap:(CSSWrap)flexWrap;
+- (void)css_setDirection:(YGDirection)direction;
+- (void)css_setFlexDirection:(YGFlexDirection)flexDirection;
+- (void)css_setJustifyContent:(YGJustify)justifyContent;
+- (void)css_setAlignContent:(YGAlign)alignContent;
+- (void)css_setAlignItems:(YGAlign)alignItems;
+- (void)css_setAlignSelf:(YGAlign)alignSelf;
+- (void)css_setPositionType:(YGPositionType)positionType;
+- (void)css_setFlexWrap:(YGWrap)flexWrap;
 
 - (void)css_setFlexGrow:(CGFloat)flexGrow;
 - (void)css_setFlexShrink:(CGFloat)flexShrink;
 - (void)css_setFlexBasis:(CGFloat)flexBasis;
 
-- (void)css_setPosition:(CGFloat)position forEdge:(CSSEdge)edge;
-- (void)css_setMargin:(CGFloat)margin forEdge:(CSSEdge)edge;
-- (void)css_setPadding:(CGFloat)padding forEdge:(CSSEdge)edge;
+- (void)css_setPosition:(CGFloat)position forEdge:(YGEdge)edge;
+- (void)css_setMargin:(CGFloat)margin forEdge:(YGEdge)edge;
+- (void)css_setPadding:(CGFloat)padding forEdge:(YGEdge)edge;
 
 - (void)css_setWidth:(CGFloat)width;
 - (void)css_setHeight:(CGFloat)height;
@@ -50,9 +50,9 @@
 - (void)css_setAspectRatio:(CGFloat)aspectRatio;
 
 /**
- Get the resolved direction of this node. This won't be CSSDirectionInherit
+ Get the resolved direction of this node. This won't be YGDirectionInherit
  */
-- (CSSDirection)css_resolvedDirection;
+- (YGDirection)css_resolvedDirection;
 
 /**
  Perform a layout calculation and update the frames of the views in the hierarchy with th results

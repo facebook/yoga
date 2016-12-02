@@ -9,9 +9,9 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSWrap
+    public enum YogaPositionType
     {
-        NoWrap,
-        Wrap,
+        Relative,
+        Absolute,
     }
 }

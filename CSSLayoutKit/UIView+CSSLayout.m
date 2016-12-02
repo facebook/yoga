@@ -19,7 +19,7 @@
 
 + (void)initialize
 {
-  CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeatureWebFlexBasis, true);
+  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
 }
 
 - (instancetype)init
@@ -76,42 +76,42 @@
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)css_setDirection:(CSSDirection)direction
+- (void)css_setDirection:(YGDirection)direction
 {
   CSSNodeStyleSetDirection([self cssNode], direction);
 }
 
-- (void)css_setFlexDirection:(CSSFlexDirection)flexDirection
+- (void)css_setFlexDirection:(YGFlexDirection)flexDirection
 {
   CSSNodeStyleSetFlexDirection([self cssNode], flexDirection);
 }
 
-- (void)css_setJustifyContent:(CSSJustify)justifyContent
+- (void)css_setJustifyContent:(YGJustify)justifyContent
 {
   CSSNodeStyleSetJustifyContent([self cssNode], justifyContent);
 }
 
-- (void)css_setAlignContent:(CSSAlign)alignContent
+- (void)css_setAlignContent:(YGAlign)alignContent
 {
   CSSNodeStyleSetAlignContent([self cssNode], alignContent);
 }
 
-- (void)css_setAlignItems:(CSSAlign)alignItems
+- (void)css_setAlignItems:(YGAlign)alignItems
 {
   CSSNodeStyleSetAlignItems([self cssNode], alignItems);
 }
 
-- (void)css_setAlignSelf:(CSSAlign)alignSelf
+- (void)css_setAlignSelf:(YGAlign)alignSelf
 {
   CSSNodeStyleSetAlignSelf([self cssNode], alignSelf);
 }
 
-- (void)css_setPositionType:(CSSPositionType)positionType
+- (void)css_setPositionType:(YGPositionType)positionType
 {
   CSSNodeStyleSetPositionType([self cssNode], positionType);
 }
 
-- (void)css_setFlexWrap:(CSSWrap)flexWrap
+- (void)css_setFlexWrap:(YGWrap)flexWrap
 {
   CSSNodeStyleSetFlexWrap([self cssNode], flexWrap);
 }
@@ -131,17 +131,17 @@
   CSSNodeStyleSetFlexBasis([self cssNode], flexBasis);
 }
 
-- (void)css_setPosition:(CGFloat)position forEdge:(CSSEdge)edge
+- (void)css_setPosition:(CGFloat)position forEdge:(YGEdge)edge
 {
   CSSNodeStyleSetPosition([self cssNode], edge, position);
 }
 
-- (void)css_setMargin:(CGFloat)margin forEdge:(CSSEdge)edge
+- (void)css_setMargin:(CGFloat)margin forEdge:(YGEdge)edge
 {
   CSSNodeStyleSetMargin([self cssNode], edge, margin);
 }
 
-- (void)css_setPadding:(CGFloat)padding forEdge:(CSSEdge)edge
+- (void)css_setPadding:(CGFloat)padding forEdge:(YGEdge)edge
 {
   CSSNodeStyleSetPadding([self cssNode], edge, padding);
 }
@@ -183,7 +183,7 @@
 
 #pragma mark - Layout and Sizing
 
-- (CSSDirection)css_resolvedDirection
+- (YGDirection)css_resolvedDirection
 {
   return CSSNodeLayoutGetDirection([self cssNode]);
 }
@@ -197,8 +197,8 @@
 - (CGSize)css_intrinsicSize
 {
   const CGSize constrainedSize = {
-      .width = CSSUndefined,
-      .height = CSSUndefined,
+      .width = YGUndefined,
+      .height = YGUndefined,
   };
   return [self calculateLayoutWithSize:constrainedSize];
 }
@@ -240,12 +240,12 @@
 static CSSSize CSSMeasureView(
   CSSNodeRef node,
   float width,
-  CSSMeasureMode widthMode,
+  YGMeasureMode widthMode,
   float height,
-  CSSMeasureMode heightMode)
+  YGMeasureMode heightMode)
 {
-  const CGFloat constrainedWidth = (widthMode == CSSMeasureModeUndefined) ? CGFLOAT_MAX : width;
-  const CGFloat constrainedHeight = (heightMode == CSSMeasureModeUndefined) ? CGFLOAT_MAX: height;
+  const CGFloat constrainedWidth = (widthMode == YGMeasureModeUndefined) ? CGFLOAT_MAX : width;
+  const CGFloat constrainedHeight = (heightMode == YGMeasureModeUndefined) ? CGFLOAT_MAX: height;
 
   UIView *view = (__bridge UIView*) CSSNodeGetContext(node);
   const CGSize sizeThatFits = [view sizeThatFits:(CGSize) {
@@ -262,12 +262,12 @@ static CSSSize CSSMeasureView(
 static CGFloat CSSSanitizeMeasurement(
   CGFloat constrainedSize,
   CGFloat measuredSize,
-  CSSMeasureMode measureMode)
+  YGMeasureMode measureMode)
 {
   CGFloat result;
-  if (measureMode == CSSMeasureModeExactly) {
+  if (measureMode == YGMeasureModeExactly) {
     result = constrainedSize;
-  } else if (measureMode == CSSMeasureModeAtMost) {
+  } else if (measureMode == YGMeasureModeAtMost) {
     result = MIN(constrainedSize, measuredSize);
   } else {
     result = measuredSize;

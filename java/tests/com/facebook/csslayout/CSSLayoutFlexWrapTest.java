@@ -19,7 +19,7 @@ public class CSSLayoutFlexWrapTest {
   @Test
   public void test_wrap_column() {
     final CSSNode root = new CSSNode();
-    root.setWrap(CSSWrap.WRAP);
+    root.setWrap(YogaWrap.WRAP);
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
@@ -41,7 +41,7 @@ public class CSSLayoutFlexWrapTest {
     root_child3.setWidth(30f);
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -69,7 +69,7 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(30f, root_child3.getLayoutWidth(), 0.0f);
     assertEquals(30f, root_child3.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -101,8 +101,8 @@ public class CSSLayoutFlexWrapTest {
   @Test
   public void test_wrap_row() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setWrap(CSSWrap.WRAP);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
 
     final CSSNode root_child0 = new CSSNode();
@@ -124,7 +124,7 @@ public class CSSLayoutFlexWrapTest {
     root_child3.setWidth(30f);
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -152,7 +152,7 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(30f, root_child3.getLayoutWidth(), 0.0f);
     assertEquals(30f, root_child3.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -184,9 +184,9 @@ public class CSSLayoutFlexWrapTest {
   @Test
   public void test_wrap_row_align_items_flex_end() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setAlignItems(CSSAlign.FLEX_END);
-    root.setWrap(CSSWrap.WRAP);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setAlignItems(YogaAlign.FLEX_END);
+    root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
 
     final CSSNode root_child0 = new CSSNode();
@@ -208,7 +208,7 @@ public class CSSLayoutFlexWrapTest {
     root_child3.setWidth(30f);
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -236,7 +236,7 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(30f, root_child3.getLayoutWidth(), 0.0f);
     assertEquals(30f, root_child3.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -268,9 +268,9 @@ public class CSSLayoutFlexWrapTest {
   @Test
   public void test_wrap_row_align_items_center() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
-    root.setAlignItems(CSSAlign.CENTER);
-    root.setWrap(CSSWrap.WRAP);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setAlignItems(YogaAlign.CENTER);
+    root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
 
     final CSSNode root_child0 = new CSSNode();
@@ -292,7 +292,7 @@ public class CSSLayoutFlexWrapTest {
     root_child3.setWidth(30f);
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -320,7 +320,7 @@ public class CSSLayoutFlexWrapTest {
     assertEquals(30f, root_child3.getLayoutWidth(), 0.0f);
     assertEquals(30f, root_child3.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);

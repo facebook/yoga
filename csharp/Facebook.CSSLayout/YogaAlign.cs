@@ -9,11 +9,12 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSFlexDirection
+    public enum YogaAlign
     {
-        Column,
-        ColumnReverse,
-        Row,
-        RowReverse,
+        Auto,
+        FlexStart,
+        Center,
+        FlexEnd,
+        Stretch,
     }
 }

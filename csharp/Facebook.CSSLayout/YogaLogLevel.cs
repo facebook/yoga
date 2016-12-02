@@ -9,7 +9,7 @@
 
 namespace Facebook.CSSLayout
 {
-    public enum CSSLogLevel
+    public enum YogaLogLevel
     {
         Error,
         Warn,

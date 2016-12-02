@@ -21,11 +21,11 @@ namespace Facebook.CSSLayout
         public void Test_padding_no_size()
         {
             CSSNode root = new CSSNode();
-            root.SetPadding(CSSEdge.Left, 10f);
-            root.SetPadding(CSSEdge.Top, 10f);
-            root.SetPadding(CSSEdge.Right, 10f);
-            root.SetPadding(CSSEdge.Bottom, 10f);
-            root.StyleDirection = CSSDirection.LTR;
+            root.SetPadding(YogaEdge.Left, 10f);
+            root.SetPadding(YogaEdge.Top, 10f);
+            root.SetPadding(YogaEdge.Right, 10f);
+            root.SetPadding(YogaEdge.Bottom, 10f);
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -33,7 +33,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(20f, root.LayoutWidth);
             Assert.AreEqual(20f, root.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -46,16 +46,16 @@ namespace Facebook.CSSLayout
         public void Test_padding_container_match_child()
         {
             CSSNode root = new CSSNode();
-            root.SetPadding(CSSEdge.Left, 10f);
-            root.SetPadding(CSSEdge.Top, 10f);
-            root.SetPadding(CSSEdge.Right, 10f);
-            root.SetPadding(CSSEdge.Bottom, 10f);
+            root.SetPadding(YogaEdge.Left, 10f);
+            root.SetPadding(YogaEdge.Top, 10f);
+            root.SetPadding(YogaEdge.Right, 10f);
+            root.SetPadding(YogaEdge.Bottom, 10f);
 
             CSSNode root_child0 = new CSSNode();
             root_child0.Width = 10f;
             root_child0.Height = 10f;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -68,7 +68,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child0.LayoutWidth);
             Assert.AreEqual(10f, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -86,10 +86,10 @@ namespace Facebook.CSSLayout
         public void Test_padding_flex_child()
         {
             CSSNode root = new CSSNode();
-            root.SetPadding(CSSEdge.Left, 10f);
-            root.SetPadding(CSSEdge.Top, 10f);
-            root.SetPadding(CSSEdge.Right, 10f);
-            root.SetPadding(CSSEdge.Bottom, 10f);
+            root.SetPadding(YogaEdge.Left, 10f);
+            root.SetPadding(YogaEdge.Top, 10f);
+            root.SetPadding(YogaEdge.Right, 10f);
+            root.SetPadding(YogaEdge.Bottom, 10f);
             root.Width = 100f;
             root.Height = 100f;
 
@@ -97,7 +97,7 @@ namespace Facebook.CSSLayout
             root_child0.FlexGrow = 1f;
             root_child0.Width = 10f;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -110,7 +110,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child0.LayoutWidth);
             Assert.AreEqual(80f, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -128,17 +128,17 @@ namespace Facebook.CSSLayout
         public void Test_padding_stretch_child()
         {
             CSSNode root = new CSSNode();
-            root.SetPadding(CSSEdge.Left, 10f);
-            root.SetPadding(CSSEdge.Top, 10f);
-            root.SetPadding(CSSEdge.Right, 10f);
-            root.SetPadding(CSSEdge.Bottom, 10f);
+            root.SetPadding(YogaEdge.Left, 10f);
+            root.SetPadding(YogaEdge.Top, 10f);
+            root.SetPadding(YogaEdge.Right, 10f);
+            root.SetPadding(YogaEdge.Bottom, 10f);
             root.Width = 100f;
             root.Height = 100f;
 
             CSSNode root_child0 = new CSSNode();
             root_child0.Height = 10f;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -151,7 +151,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(80f, root_child0.LayoutWidth);
             Assert.AreEqual(10f, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -169,11 +169,11 @@ namespace Facebook.CSSLayout
         public void Test_padding_center_child()
         {
             CSSNode root = new CSSNode();
-            root.JustifyContent = CSSJustify.Center;
-            root.AlignItems = CSSAlign.Center;
-            root.SetPadding(CSSEdge.Start, 10f);
-            root.SetPadding(CSSEdge.End, 20f);
-            root.SetPadding(CSSEdge.Bottom, 20f);
+            root.JustifyContent = YogaJustify.Center;
+            root.AlignItems = YogaAlign.Center;
+            root.SetPadding(YogaEdge.Start, 10f);
+            root.SetPadding(YogaEdge.End, 20f);
+            root.SetPadding(YogaEdge.Bottom, 20f);
             root.Width = 100f;
             root.Height = 100f;
 
@@ -181,7 +181,7 @@ namespace Facebook.CSSLayout
             root_child0.Width = 10f;
             root_child0.Height = 10f;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -194,7 +194,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(10f, root_child0.LayoutWidth);
             Assert.AreEqual(10f, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -212,20 +212,20 @@ namespace Facebook.CSSLayout
         public void Test_child_with_padding_align_end()
         {
             CSSNode root = new CSSNode();
-            root.JustifyContent = CSSJustify.FlexEnd;
-            root.AlignItems = CSSAlign.FlexEnd;
+            root.JustifyContent = YogaJustify.FlexEnd;
+            root.AlignItems = YogaAlign.FlexEnd;
             root.Width = 200f;
             root.Height = 200f;
 
             CSSNode root_child0 = new CSSNode();
-            root_child0.SetPadding(CSSEdge.Left, 20f);
-            root_child0.SetPadding(CSSEdge.Top, 20f);
-            root_child0.SetPadding(CSSEdge.Right, 20f);
-            root_child0.SetPadding(CSSEdge.Bottom, 20f);
+            root_child0.SetPadding(YogaEdge.Left, 20f);
+            root_child0.SetPadding(YogaEdge.Top, 20f);
+            root_child0.SetPadding(YogaEdge.Right, 20f);
+            root_child0.SetPadding(YogaEdge.Bottom, 20f);
             root_child0.Width = 100f;
             root_child0.Height = 100f;
             root.Insert(0, root_child0);
-            root.StyleDirection = CSSDirection.LTR;
+            root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);
@@ -238,7 +238,7 @@ namespace Facebook.CSSLayout
             Assert.AreEqual(100f, root_child0.LayoutWidth);
             Assert.AreEqual(100f, root_child0.LayoutHeight);
 
-            root.StyleDirection = CSSDirection.RTL;
+            root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
 
             Assert.AreEqual(0f, root.LayoutX);

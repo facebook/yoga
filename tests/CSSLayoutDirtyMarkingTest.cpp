@@ -12,7 +12,7 @@
 
 TEST(CSSLayoutTest, dirty_propagation) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -26,7 +26,7 @@ TEST(CSSLayoutTest, dirty_propagation) {
   CSSNodeStyleSetHeight(root_child1, 20);
   CSSNodeInsertChild(root, root_child1, 1);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   CSSNodeStyleSetWidth(root_child0, 20);
 
@@ -34,7 +34,7 @@ TEST(CSSLayoutTest, dirty_propagation) {
   EXPECT_FALSE(CSSNodeIsDirty(root_child1));
   EXPECT_TRUE(CSSNodeIsDirty(root));
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   EXPECT_FALSE(CSSNodeIsDirty(root_child0));
   EXPECT_FALSE(CSSNodeIsDirty(root_child1));
@@ -45,7 +45,7 @@ TEST(CSSLayoutTest, dirty_propagation) {
 
 TEST(CSSLayoutTest, dirty_propagation_only_if_prop_changed) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -59,7 +59,7 @@ TEST(CSSLayoutTest, dirty_propagation_only_if_prop_changed) {
   CSSNodeStyleSetHeight(root_child1, 20);
   CSSNodeInsertChild(root, root_child1, 1);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   CSSNodeStyleSetWidth(root_child0, 50);
 
@@ -72,7 +72,7 @@ TEST(CSSLayoutTest, dirty_propagation_only_if_prop_changed) {
 
 TEST(CSSLayoutTest, dirty_node_only_if_children_are_actually_removed) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 50);
   CSSNodeStyleSetHeight(root, 50);
 
@@ -81,7 +81,7 @@ TEST(CSSLayoutTest, dirty_node_only_if_children_are_actually_removed) {
   CSSNodeStyleSetHeight(child0, 25);
   CSSNodeInsertChild(root, child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   const CSSNodeRef child1 = CSSNodeNew();
   CSSNodeRemoveChild(root, child1);

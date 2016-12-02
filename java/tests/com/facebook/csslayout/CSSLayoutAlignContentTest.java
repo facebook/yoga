@@ -19,7 +19,7 @@ public class CSSLayoutAlignContentTest {
   @Test
   public void test_align_content_flex_start() {
     final CSSNode root = new CSSNode();
-    root.setWrap(CSSWrap.WRAP);
+    root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -47,7 +47,7 @@ public class CSSLayoutAlignContentTest {
     root_child4.setWidth(50f);
     root_child4.setHeight(10f);
     root.addChildAt(root_child4, 4);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -80,7 +80,7 @@ public class CSSLayoutAlignContentTest {
     assertEquals(50f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child4.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -117,8 +117,8 @@ public class CSSLayoutAlignContentTest {
   @Test
   public void test_align_content_flex_end() {
     final CSSNode root = new CSSNode();
-    root.setAlignContent(CSSAlign.FLEX_END);
-    root.setWrap(CSSWrap.WRAP);
+    root.setAlignContent(YogaAlign.FLEX_END);
+    root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -146,7 +146,7 @@ public class CSSLayoutAlignContentTest {
     root_child4.setWidth(50f);
     root_child4.setHeight(10f);
     root.addChildAt(root_child4, 4);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -179,7 +179,7 @@ public class CSSLayoutAlignContentTest {
     assertEquals(50f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child4.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -216,8 +216,8 @@ public class CSSLayoutAlignContentTest {
   @Test
   public void test_align_content_center() {
     final CSSNode root = new CSSNode();
-    root.setAlignContent(CSSAlign.CENTER);
-    root.setWrap(CSSWrap.WRAP);
+    root.setAlignContent(YogaAlign.CENTER);
+    root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -245,7 +245,7 @@ public class CSSLayoutAlignContentTest {
     root_child4.setWidth(50f);
     root_child4.setHeight(10f);
     root.addChildAt(root_child4, 4);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -278,7 +278,7 @@ public class CSSLayoutAlignContentTest {
     assertEquals(50f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child4.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -315,8 +315,8 @@ public class CSSLayoutAlignContentTest {
   @Test
   public void test_align_content_stretch() {
     final CSSNode root = new CSSNode();
-    root.setAlignContent(CSSAlign.STRETCH);
-    root.setWrap(CSSWrap.WRAP);
+    root.setAlignContent(YogaAlign.STRETCH);
+    root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -339,7 +339,7 @@ public class CSSLayoutAlignContentTest {
     final CSSNode root_child4 = new CSSNode();
     root_child4.setWidth(50f);
     root.addChildAt(root_child4, 4);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -372,7 +372,7 @@ public class CSSLayoutAlignContentTest {
     assertEquals(50f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(0f, root_child4.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);

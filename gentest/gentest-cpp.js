@@ -32,7 +32,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
     if (experiments.length > 0) {
       for (var i in experiments) {
-        this.push('CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeature' + experiments[i] +', true);');
+        this.push('CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', true);');
       }
       this.push('');
     }
@@ -51,7 +51,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     if (experiments.length > 0) {
       this.push('');
       for (var i in experiments) {
-        this.push('CSSLayoutSetExperimentalFeatureEnabled(CSSExperimentalFeature' + experiments[i] +', false);');
+        this.push('CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', false);');
       }
     }
 
@@ -69,47 +69,47 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('ASSERT_FLOAT_EQ(' + toFloatString(v0) + ', ' + v1 + ');');
   }},
 
-  CSSAlignAuto:{value:'CSSAlignAuto'},
-  CSSAlignCenter:{value:'CSSAlignCenter'},
-  CSSAlignFlexEnd:{value:'CSSAlignFlexEnd'},
-  CSSAlignFlexStart:{value:'CSSAlignFlexStart'},
-  CSSAlignStretch:{value:'CSSAlignStretch'},
+  YGAlignAuto:{value:'YGAlignAuto'},
+  YGAlignCenter:{value:'YGAlignCenter'},
+  YGAlignFlexEnd:{value:'YGAlignFlexEnd'},
+  YGAlignFlexStart:{value:'YGAlignFlexStart'},
+  YGAlignStretch:{value:'YGAlignStretch'},
 
-  CSSDirectionInherit:{value:'CSSDirectionInherit'},
-  CSSDirectionLTR:{value:'CSSDirectionLTR'},
-  CSSDirectionRTL:{value:'CSSDirectionRTL'},
+  YGDirectionInherit:{value:'YGDirectionInherit'},
+  YGDirectionLTR:{value:'YGDirectionLTR'},
+  YGDirectionRTL:{value:'YGDirectionRTL'},
 
-  CSSEdgeBottom:{value:'CSSEdgeBottom'},
-  CSSEdgeEnd:{value:'CSSEdgeEnd'},
-  CSSEdgeLeft:{value:'CSSEdgeLeft'},
-  CSSEdgeRight:{value:'CSSEdgeRight'},
-  CSSEdgeStart:{value:'CSSEdgeStart'},
-  CSSEdgeTop:{value:'CSSEdgeTop'},
+  YGEdgeBottom:{value:'YGEdgeBottom'},
+  YGEdgeEnd:{value:'YGEdgeEnd'},
+  YGEdgeLeft:{value:'YGEdgeLeft'},
+  YGEdgeRight:{value:'YGEdgeRight'},
+  YGEdgeStart:{value:'YGEdgeStart'},
+  YGEdgeTop:{value:'YGEdgeTop'},
 
-  CSSFlexDirectionColumn:{value:'CSSFlexDirectionColumn'},
-  CSSFlexDirectionColumnReverse:{value:'CSSFlexDirectionColumnReverse'},
-  CSSFlexDirectionRow:{value:'CSSFlexDirectionRow'},
-  CSSFlexDirectionRowReverse:{value:'CSSFlexDirectionRowReverse'},
+  YGFlexDirectionColumn:{value:'YGFlexDirectionColumn'},
+  YGFlexDirectionColumnReverse:{value:'YGFlexDirectionColumnReverse'},
+  YGFlexDirectionRow:{value:'YGFlexDirectionRow'},
+  YGFlexDirectionRowReverse:{value:'YGFlexDirectionRowReverse'},
 
-  CSSJustifyCenter:{value:'CSSJustifyCenter'},
-  CSSJustifyFlexEnd:{value:'CSSJustifyFlexEnd'},
-  CSSJustifyFlexStart:{value:'CSSJustifyFlexStart'},
-  CSSJustifySpaceAround:{value:'CSSJustifySpaceAround'},
-  CSSJustifySpaceBetween:{value:'CSSJustifySpaceBetween'},
+  YGJustifyCenter:{value:'YGJustifyCenter'},
+  YGJustifyFlexEnd:{value:'YGJustifyFlexEnd'},
+  YGJustifyFlexStart:{value:'YGJustifyFlexStart'},
+  YGJustifySpaceAround:{value:'YGJustifySpaceAround'},
+  YGJustifySpaceBetween:{value:'YGJustifySpaceBetween'},
 
-  CSSOverflowHidden:{value:'CSSOverflowHidden'},
-  CSSOverflowVisible:{value:'CSSOverflowVisible'},
+  YGOverflowHidden:{value:'YGOverflowHidden'},
+  YGOverflowVisible:{value:'YGOverflowVisible'},
 
-  CSSPositionTypeAbsolute:{value:'CSSPositionTypeAbsolute'},
-  CSSPositionTypeRelative:{value:'CSSPositionTypeRelative'},
+  YGPositionTypeAbsolute:{value:'YGPositionTypeAbsolute'},
+  YGPositionTypeRelative:{value:'YGPositionTypeRelative'},
 
-  CSSWrapNoWrap:{value:'CSSWrapNoWrap'},
-  CSSWrapWrap:{value:'CSSWrapWrap'},
+  YGWrapNoWrap:{value:'YGWrapNoWrap'},
+  YGWrapWrap:{value:'YGWrapWrap'},
 
-  CSSUndefined:{value:'CSSUndefined'},
+  YGUndefined:{value:'YGUndefined'},
 
   CSSNodeCalculateLayout:{value:function(node, dir) {
-    this.push('CSSNodeCalculateLayout(' + node + ', CSSUndefined, CSSUndefined, ' + dir + ');');
+    this.push('CSSNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
   }},
 
   CSSNodeInsertChild:{value:function(parentName, nodeName, index) {

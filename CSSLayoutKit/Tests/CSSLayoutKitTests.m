@@ -74,8 +74,8 @@
 {
   UIView *container = [[UIView alloc] initWithFrame:CGRectZero];
   [container css_setUsesFlexbox:YES];
-  [container css_setFlexDirection:CSSFlexDirectionRow];
-  [container css_setAlignItems:CSSAlignFlexStart];
+  [container css_setFlexDirection:YGFlexDirectionRow];
+  [container css_setAlignItems:YGAlignFlexStart];
 
   UILabel *longTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   longTextLabel.text = @"This is a very very very very very very very very long piece of text.";
@@ -87,7 +87,7 @@
 
   UIView *textBadgeView = [[UIView alloc] initWithFrame:CGRectZero];
   [textBadgeView css_setUsesFlexbox:YES];
-  [textBadgeView css_setMargin:3.0 forEdge:CSSEdgeLeft];
+  [textBadgeView css_setMargin:3.0 forEdge:YGEdgeLeft];
   [textBadgeView css_setWidth:10];
   [textBadgeView css_setHeight:10];
   [container addSubview:textBadgeView];
@@ -102,7 +102,7 @@
 
   UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, containerSize.width, containerSize.height)];
   [container css_setUsesFlexbox:YES];
-  [container css_setFlexDirection:CSSFlexDirectionRow];
+  [container css_setFlexDirection:YGFlexDirectionRow];
 
   for (int i = 0; i < 3; i++) {
     UIView *subview = [[UIView alloc] initWithFrame:CGRectZero];
@@ -131,7 +131,7 @@
 
   UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, containerSize.width, containerSize.height)];
   [container css_setUsesFlexbox:YES];
-  [container css_setFlexDirection:CSSFlexDirectionRow];
+  [container css_setFlexDirection:YGFlexDirectionRow];
 
   UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
   [subview1 css_setUsesFlexbox:YES];
@@ -171,7 +171,7 @@
 
   UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, containerSize.width, containerSize.height)];
   [container css_setUsesFlexbox:YES];
-  [container css_setFlexDirection:CSSFlexDirectionRow];
+  [container css_setFlexDirection:YGFlexDirectionRow];
 
   UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
   [subview1 css_setUsesFlexbox:YES];
@@ -208,7 +208,7 @@
 {
   UIView *container = [[UIView alloc] initWithFrame:CGRectZero];
   [container css_setUsesFlexbox:YES];
-  [container css_setFlexDirection:CSSFlexDirectionRow];
+  [container css_setFlexDirection:YGFlexDirectionRow];
 
   UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
   [subview1 css_setUsesFlexbox:YES];
@@ -237,7 +237,7 @@
 {
   UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
   [container css_setUsesFlexbox:YES];
-  [container css_setFlexDirection:CSSFlexDirectionRow];
+  [container css_setFlexDirection:YGFlexDirectionRow];
 
   UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
   [subview1 css_setUsesFlexbox:YES];

@@ -7,102 +7,102 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-typedef enum CSSOverflow {
-  CSSOverflowVisible,
-  CSSOverflowHidden,
-  CSSOverflowScroll,
-  CSSOverflowCount,
-} CSSOverflow;
+typedef enum YGFlexDirection {
+  YGFlexDirectionColumn,
+  YGFlexDirectionColumnReverse,
+  YGFlexDirectionRow,
+  YGFlexDirectionRowReverse,
+  YGFlexDirectionCount,
+} YGFlexDirection;
 
-typedef enum CSSJustify {
-  CSSJustifyFlexStart,
-  CSSJustifyCenter,
-  CSSJustifyFlexEnd,
-  CSSJustifySpaceBetween,
-  CSSJustifySpaceAround,
-  CSSJustifyCount,
-} CSSJustify;
+typedef enum YGMeasureMode {
+  YGMeasureModeUndefined,
+  YGMeasureModeExactly,
+  YGMeasureModeAtMost,
+  YGMeasureModeCount,
+} YGMeasureMode;
 
-typedef enum CSSFlexDirection {
-  CSSFlexDirectionColumn,
-  CSSFlexDirectionColumnReverse,
-  CSSFlexDirectionRow,
-  CSSFlexDirectionRowReverse,
-  CSSFlexDirectionCount,
-} CSSFlexDirection;
+typedef enum YGPrintOptions {
+  YGPrintOptionsLayout = 1,
+  YGPrintOptionsStyle = 2,
+  YGPrintOptionsChildren = 4,
+  YGPrintOptionsCount,
+} YGPrintOptions;
 
-typedef enum CSSAlign {
-  CSSAlignAuto,
-  CSSAlignFlexStart,
-  CSSAlignCenter,
-  CSSAlignFlexEnd,
-  CSSAlignStretch,
-  CSSAlignCount,
-} CSSAlign;
+typedef enum YGEdge {
+  YGEdgeLeft,
+  YGEdgeTop,
+  YGEdgeRight,
+  YGEdgeBottom,
+  YGEdgeStart,
+  YGEdgeEnd,
+  YGEdgeHorizontal,
+  YGEdgeVertical,
+  YGEdgeAll,
+  YGEdgeCount,
+} YGEdge;
 
-typedef enum CSSEdge {
-  CSSEdgeLeft,
-  CSSEdgeTop,
-  CSSEdgeRight,
-  CSSEdgeBottom,
-  CSSEdgeStart,
-  CSSEdgeEnd,
-  CSSEdgeHorizontal,
-  CSSEdgeVertical,
-  CSSEdgeAll,
-  CSSEdgeCount,
-} CSSEdge;
+typedef enum YGPositionType {
+  YGPositionTypeRelative,
+  YGPositionTypeAbsolute,
+  YGPositionTypeCount,
+} YGPositionType;
 
-typedef enum CSSWrap {
-  CSSWrapNoWrap,
-  CSSWrapWrap,
-  CSSWrapCount,
-} CSSWrap;
+typedef enum YGDimension {
+  YGDimensionWidth,
+  YGDimensionHeight,
+  YGDimensionCount,
+} YGDimension;
 
-typedef enum CSSDirection {
-  CSSDirectionInherit,
-  CSSDirectionLTR,
-  CSSDirectionRTL,
-  CSSDirectionCount,
-} CSSDirection;
+typedef enum YGJustify {
+  YGJustifyFlexStart,
+  YGJustifyCenter,
+  YGJustifyFlexEnd,
+  YGJustifySpaceBetween,
+  YGJustifySpaceAround,
+  YGJustifyCount,
+} YGJustify;
 
-typedef enum CSSExperimentalFeature {
-  CSSExperimentalFeatureRounding,
-  CSSExperimentalFeatureWebFlexBasis,
-  CSSExperimentalFeatureCount,
-} CSSExperimentalFeature;
+typedef enum YGDirection {
+  YGDirectionInherit,
+  YGDirectionLTR,
+  YGDirectionRTL,
+  YGDirectionCount,
+} YGDirection;
 
-typedef enum CSSLogLevel {
-  CSSLogLevelError,
-  CSSLogLevelWarn,
-  CSSLogLevelInfo,
-  CSSLogLevelDebug,
-  CSSLogLevelVerbose,
-  CSSLogLevelCount,
-} CSSLogLevel;
+typedef enum YGLogLevel {
+  YGLogLevelError,
+  YGLogLevelWarn,
+  YGLogLevelInfo,
+  YGLogLevelDebug,
+  YGLogLevelVerbose,
+  YGLogLevelCount,
+} YGLogLevel;
 
-typedef enum CSSDimension {
-  CSSDimensionWidth,
-  CSSDimensionHeight,
-  CSSDimensionCount,
-} CSSDimension;
+typedef enum YGWrap {
+  YGWrapNoWrap,
+  YGWrapWrap,
+  YGWrapCount,
+} YGWrap;
 
-typedef enum CSSMeasureMode {
-  CSSMeasureModeUndefined,
-  CSSMeasureModeExactly,
-  CSSMeasureModeAtMost,
-  CSSMeasureModeCount,
-} CSSMeasureMode;
+typedef enum YGOverflow {
+  YGOverflowVisible,
+  YGOverflowHidden,
+  YGOverflowScroll,
+  YGOverflowCount,
+} YGOverflow;
 
-typedef enum CSSPositionType {
-  CSSPositionTypeRelative,
-  CSSPositionTypeAbsolute,
-  CSSPositionTypeCount,
-} CSSPositionType;
+typedef enum YGExperimentalFeature {
+  YGExperimentalFeatureRounding,
+  YGExperimentalFeatureWebFlexBasis,
+  YGExperimentalFeatureCount,
+} YGExperimentalFeature;
 
-typedef enum CSSPrintOptions {
-  CSSPrintOptionsLayout = 1,
-  CSSPrintOptionsStyle = 2,
-  CSSPrintOptionsChildren = 4,
-  CSSPrintOptionsCount,
-} CSSPrintOptions;
+typedef enum YGAlign {
+  YGAlignAuto,
+  YGAlignFlexStart,
+  YGAlignCenter,
+  YGAlignFlexEnd,
+  YGAlignStretch,
+  YGAlignCount,
+} YGAlign;

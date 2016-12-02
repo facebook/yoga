@@ -25,16 +25,16 @@ TEST(CSSLayoutTest, copy_style_same) {
 TEST(CSSLayoutTest, copy_style_modified) {
   const CSSNodeRef node0 = CSSNodeNew();
   ASSERT_FALSE(CSSNodeIsDirty(node0));
-  ASSERT_EQ(CSSFlexDirectionColumn, CSSNodeStyleGetFlexDirection(node0));
+  ASSERT_EQ(YGFlexDirectionColumn, CSSNodeStyleGetFlexDirection(node0));
   ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetMaxHeight(node0)));
 
   const CSSNodeRef node1 = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(node1, CSSFlexDirectionRow);
+  CSSNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
   CSSNodeStyleSetMaxHeight(node1, 10);
 
   CSSNodeCopyStyle(node0, node1);
   ASSERT_TRUE(CSSNodeIsDirty(node0));
-  ASSERT_EQ(CSSFlexDirectionRow, CSSNodeStyleGetFlexDirection(node0));
+  ASSERT_EQ(YGFlexDirectionRow, CSSNodeStyleGetFlexDirection(node0));
   ASSERT_FLOAT_EQ(10, CSSNodeStyleGetMaxHeight(node0));
 
   CSSNodeFree(node0);
@@ -43,13 +43,13 @@ TEST(CSSLayoutTest, copy_style_modified) {
 
 TEST(CSSLayoutTest, copy_style_modified_same) {
   const CSSNodeRef node0 = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(node0, CSSFlexDirectionRow);
+  CSSNodeStyleSetFlexDirection(node0, YGFlexDirectionRow);
   CSSNodeStyleSetMaxHeight(node0, 10);
-  CSSNodeCalculateLayout(node0, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(node0, YGUndefined, YGUndefined, YGDirectionLTR);
   ASSERT_FALSE(CSSNodeIsDirty(node0));
 
   const CSSNodeRef node1 = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(node1, CSSFlexDirectionRow);
+  CSSNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
   CSSNodeStyleSetMaxHeight(node1, 10);
 
   CSSNodeCopyStyle(node0, node1);

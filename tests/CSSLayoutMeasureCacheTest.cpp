@@ -12,37 +12,37 @@
 
 static CSSSize _measureMax(CSSNodeRef node,
                         float width,
-                        CSSMeasureMode widthMode,
+                        YGMeasureMode widthMode,
                         float height,
-                        CSSMeasureMode heightMode) {
+                        YGMeasureMode heightMode) {
 
   int *measureCount = (int *)CSSNodeGetContext(node);
   (*measureCount)++;
 
   return CSSSize {
-      .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
-      .height = heightMode == CSSMeasureModeUndefined ? 10 : height,
+      .width = widthMode == YGMeasureModeUndefined ? 10 : width,
+      .height = heightMode == YGMeasureModeUndefined ? 10 : height,
   };
 }
 
 static CSSSize _measureMin(CSSNodeRef node,
                         float width,
-                        CSSMeasureMode widthMode,
+                        YGMeasureMode widthMode,
                         float height,
-                        CSSMeasureMode heightMode) {
+                        YGMeasureMode heightMode) {
 
   int *measureCount = (int *)CSSNodeGetContext(node);
   *measureCount = *measureCount + 1;
   return CSSSize {
-      .width = widthMode == CSSMeasureModeUndefined || (widthMode == CSSMeasureModeAtMost && width > 10) ? 10 : width,
-      .height = heightMode == CSSMeasureModeUndefined || (heightMode == CSSMeasureModeAtMost && height > 10) ? 10 : height,
+      .width = widthMode == YGMeasureModeUndefined || (widthMode == YGMeasureModeAtMost && width > 10) ? 10 : width,
+      .height = heightMode == YGMeasureModeUndefined || (heightMode == YGMeasureModeAtMost && height > 10) ? 10 : height,
   };
 }
 
 TEST(CSSLayoutTest, measure_once_single_flexible_child) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, CSSFlexDirectionRow);
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
   CSSNodeStyleSetWidth(root, 100);
   CSSNodeStyleSetHeight(root, 100);
 
@@ -53,7 +53,7 @@ TEST(CSSLayoutTest, measure_once_single_flexible_child) {
   CSSNodeStyleSetFlexGrow(root_child0, 1);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, measureCount);
 
@@ -69,8 +69,8 @@ TEST(CSSLayoutTest, remeasure_with_same_exact_width_larger_than_needed_height) {
   CSSNodeSetMeasureFunc(root_child0, _measureMin);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, 100, 100, CSSDirectionLTR);
-  CSSNodeCalculateLayout(root, 100, 50, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 50, YGDirectionLTR);
 
   ASSERT_EQ(1, measureCount);
 
@@ -79,7 +79,7 @@ TEST(CSSLayoutTest, remeasure_with_same_exact_width_larger_than_needed_height) {
 
 TEST(CSSLayoutTest, remeasure_with_same_atmost_width_larger_than_needed_height) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
   int measureCount = 0;
@@ -87,8 +87,8 @@ TEST(CSSLayoutTest, remeasure_with_same_atmost_width_larger_than_needed_height) 
   CSSNodeSetMeasureFunc(root_child0, _measureMin);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, 100, 100, CSSDirectionLTR);
-  CSSNodeCalculateLayout(root, 100, 50, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 50, YGDirectionLTR);
 
   ASSERT_EQ(1, measureCount);
 
@@ -97,7 +97,7 @@ TEST(CSSLayoutTest, remeasure_with_same_atmost_width_larger_than_needed_height) 
 
 TEST(CSSLayoutTest, remeasure_with_computed_width_larger_than_needed_height) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
   int measureCount = 0;
@@ -105,9 +105,9 @@ TEST(CSSLayoutTest, remeasure_with_computed_width_larger_than_needed_height) {
   CSSNodeSetMeasureFunc(root_child0, _measureMin);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, 100, 100, CSSDirectionLTR);
-  CSSNodeStyleSetAlignItems(root, CSSAlignStretch);
-  CSSNodeCalculateLayout(root, 10, 50, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
+  CSSNodeStyleSetAlignItems(root, YGAlignStretch);
+  CSSNodeCalculateLayout(root, 10, 50, YGDirectionLTR);
 
   ASSERT_EQ(1, measureCount);
 
@@ -116,7 +116,7 @@ TEST(CSSLayoutTest, remeasure_with_computed_width_larger_than_needed_height) {
 
 TEST(CSSLayoutTest, remeasure_with_atmost_computed_width_undefined_height) {
   const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, CSSAlignFlexStart);
+  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
 
   const CSSNodeRef root_child0 = CSSNodeNew();
   int measureCount = 0;
@@ -124,8 +124,8 @@ TEST(CSSLayoutTest, remeasure_with_atmost_computed_width_undefined_height) {
   CSSNodeSetMeasureFunc(root_child0, _measureMin);
   CSSNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, 100, CSSUndefined, CSSDirectionLTR);
-  CSSNodeCalculateLayout(root, 10, CSSUndefined, CSSDirectionLTR);
+  CSSNodeCalculateLayout(root, 100, YGUndefined, YGDirectionLTR);
+  CSSNodeCalculateLayout(root, 10, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(1, measureCount);
 

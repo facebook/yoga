@@ -13,12 +13,12 @@
 
 static CSSSize _measure(CSSNodeRef node,
                         float width,
-                        CSSMeasureMode widthMode,
+                        YGMeasureMode widthMode,
                         float height,
-                        CSSMeasureMode heightMode) {
+                        YGMeasureMode heightMode) {
   return (CSSSize){
-      .width = widthMode == CSSMeasureModeUndefined ? 10 : width,
-      .height = heightMode == CSSMeasureModeUndefined ? 10 : width,
+      .width = widthMode == YGMeasureModeUndefined ? 10 : width,
+      .height = heightMode == YGMeasureModeUndefined ? 10 : width,
   };
 }
 
@@ -36,7 +36,7 @@ CSS_BENCHMARKS({
       CSSNodeInsertChild(root, child, 0);
     }
 
-    CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+    CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     CSSNodeFreeRecursive(root);
   });
 
@@ -50,7 +50,7 @@ CSS_BENCHMARKS({
       CSSNodeInsertChild(root, child, 0);
     }
 
-    CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+    CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     CSSNodeFreeRecursive(root);
   });
 
@@ -70,7 +70,7 @@ CSS_BENCHMARKS({
       }
     }
 
-    CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+    CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     CSSNodeFreeRecursive(root);
   });
 
@@ -86,7 +86,7 @@ CSS_BENCHMARKS({
 
       for (uint32_t ii = 0; ii < 10; ii++) {
         const CSSNodeRef grandChild = CSSNodeNew();
-        CSSNodeStyleSetFlexDirection(grandChild, CSSFlexDirectionRow);
+        CSSNodeStyleSetFlexDirection(grandChild, YGFlexDirectionRow);
         CSSNodeStyleSetFlexGrow(grandChild, 1);
         CSSNodeStyleSetWidth(grandChild, 10);
         CSSNodeStyleSetHeight(grandChild, 10);
@@ -101,7 +101,7 @@ CSS_BENCHMARKS({
 
           for (uint32_t iii = 0; iii < 10; iii++) {
             const CSSNodeRef grandGrandGrandChild = CSSNodeNew();
-            CSSNodeStyleSetFlexDirection(grandGrandGrandChild, CSSFlexDirectionRow);
+            CSSNodeStyleSetFlexDirection(grandGrandGrandChild, YGFlexDirectionRow);
             CSSNodeStyleSetFlexGrow(grandGrandGrandChild, 1);
             CSSNodeStyleSetWidth(grandGrandGrandChild, 10);
             CSSNodeStyleSetHeight(grandGrandGrandChild, 10);
@@ -111,7 +111,7 @@ CSS_BENCHMARKS({
       }
     }
 
-    CSSNodeCalculateLayout(root, CSSUndefined, CSSUndefined, CSSDirectionLTR);
+    CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     CSSNodeFreeRecursive(root);
   });
 

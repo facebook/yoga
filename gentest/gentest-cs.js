@@ -39,7 +39,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
     if (experiments.length > 0) {
       for (var i in experiments) {
-        this.push('CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.' + experiments[i] +', true);');
+        this.push('CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', true);');
       }
       this.push('');
     }
@@ -53,7 +53,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
     if (experiments.length > 0) {
       this.push('');
       for (var i in experiments) {
-        this.push('CSSNode.SetExperimentalFeatureEnabled(CSSExperimentalFeature.' + experiments[i] +', false);');
+        this.push('CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', false);');
       }
     }
 
@@ -78,44 +78,44 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('Assert.AreEqual(' + v0 + 'f, ' + v1 + ');');
   }},
 
-  CSSAlignAuto:{value:'CSSAlign.Auto'},
-  CSSAlignCenter:{value:'CSSAlign.Center'},
-  CSSAlignFlexEnd:{value:'CSSAlign.FlexEnd'},
-  CSSAlignFlexStart:{value:'CSSAlign.FlexStart'},
-  CSSAlignStretch:{value:'CSSAlign.Stretch'},
+  YGAlignAuto:{value:'YogaAlign.Auto'},
+  YGAlignCenter:{value:'YogaAlign.Center'},
+  YGAlignFlexEnd:{value:'YogaAlign.FlexEnd'},
+  YGAlignFlexStart:{value:'YogaAlign.FlexStart'},
+  YGAlignStretch:{value:'YogaAlign.Stretch'},
 
-  CSSDirectionInherit:{value:'CSSDirection.Inherit'},
-  CSSDirectionLTR:{value:'CSSDirection.LTR'},
-  CSSDirectionRTL:{value:'CSSDirection.RTL'},
+  YGDirectionInherit:{value:'YogaDirection.Inherit'},
+  YGDirectionLTR:{value:'YogaDirection.LTR'},
+  YGDirectionRTL:{value:'YogaDirection.RTL'},
 
-  CSSEdgeBottom:{value:'CSSEdge.Bottom'},
-  CSSEdgeEnd:{value:'CSSEdge.End'},
-  CSSEdgeLeft:{value:'CSSEdge.Left'},
-  CSSEdgeRight:{value:'CSSEdge.Right'},
-  CSSEdgeStart:{value:'CSSEdge.Start'},
-  CSSEdgeTop:{value:'CSSEdge.Top'},
+  YGEdgeBottom:{value:'YogaEdge.Bottom'},
+  YGEdgeEnd:{value:'YogaEdge.End'},
+  YGEdgeLeft:{value:'YogaEdge.Left'},
+  YGEdgeRight:{value:'YogaEdge.Right'},
+  YGEdgeStart:{value:'YogaEdge.Start'},
+  YGEdgeTop:{value:'YogaEdge.Top'},
 
-  CSSFlexDirectionColumn:{value:'CSSFlexDirection.Column'},
-  CSSFlexDirectionColumnReverse:{value:'CSSFlexDirection.ColumnReverse'},
-  CSSFlexDirectionRow:{value:'CSSFlexDirection.Row'},
-  CSSFlexDirectionRowReverse:{value:'CSSFlexDirection.RowReverse'},
+  YGFlexDirectionColumn:{value:'YogaFlexDirection.Column'},
+  YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.ColumnReverse'},
+  YGFlexDirectionRow:{value:'YogaFlexDirection.Row'},
+  YGFlexDirectionRowReverse:{value:'YogaFlexDirection.RowReverse'},
 
-  CSSJustifyCenter:{value:'CSSJustify.Center'},
-  CSSJustifyFlexEnd:{value:'CSSJustify.FlexEnd'},
-  CSSJustifyFlexStart:{value:'CSSJustify.FlexStart'},
-  CSSJustifySpaceAround:{value:'CSSJustify.SpaceAround'},
-  CSSJustifySpaceBetween:{value:'CSSJustify.SpaceBetween'},
+  YGJustifyCenter:{value:'YogaJustify.Center'},
+  YGJustifyFlexEnd:{value:'YogaJustify.FlexEnd'},
+  YGJustifyFlexStart:{value:'YogaJustify.FlexStart'},
+  YGJustifySpaceAround:{value:'YogaJustify.SpaceAround'},
+  YGJustifySpaceBetween:{value:'YogaJustify.SpaceBetween'},
 
-  CSSOverflowHidden:{value:'CSSOverflow.Hidden'},
-  CSSOverflowVisible:{value:'CSSOverflow.Visible'},
+  YGOverflowHidden:{value:'YogaOverflow.Hidden'},
+  YGOverflowVisible:{value:'YogaOverflow.Visible'},
 
-  CSSPositionTypeAbsolute:{value:'CSSPositionType.Absolute'},
-  CSSPositionTypeRelative:{value:'CSSPositionType.Relative'},
+  YGPositionTypeAbsolute:{value:'YogaPositionType.Absolute'},
+  YGPositionTypeRelative:{value:'YogaPositionType.Relative'},
 
-  CSSUndefined:{value:'CSSConstants.Undefined'},
+  YGUndefined:{value:'YogaConstants.Undefined'},
 
-  CSSWrapNoWrap:{value:'CSSWrap.NoWrap'},
-  CSSWrapWrap:{value:'CSSWrap.Wrap'},
+  YGWrapNoWrap:{value:'YogaWrap.NoWrap'},
+  YGWrapWrap:{value:'YogaWrap.Wrap'},
 
   CSSNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.StyleDirection = ' + dir + ';');

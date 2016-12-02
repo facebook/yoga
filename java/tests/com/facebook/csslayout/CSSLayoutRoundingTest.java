@@ -18,10 +18,10 @@ import static org.junit.Assert.assertEquals;
 public class CSSLayoutRoundingTest {
   @Test
   public void test_rounding_flex_basis_flex_grow_row_width_of_100() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -36,7 +36,7 @@ public class CSSLayoutRoundingTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setFlexGrow(1f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -59,7 +59,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(33f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -82,15 +82,15 @@ public class CSSLayoutRoundingTest {
     assertEquals(33f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_flex_basis_flex_grow_row_prime_number_width() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(113f);
     root.setHeight(100f);
 
@@ -113,7 +113,7 @@ public class CSSLayoutRoundingTest {
     final CSSNode root_child4 = new CSSNode();
     root_child4.setFlexGrow(1f);
     root.addChildAt(root_child4, 4);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -146,7 +146,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(23f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child4.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -179,15 +179,15 @@ public class CSSLayoutRoundingTest {
     assertEquals(23f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child4.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_flex_basis_flex_shrink_row() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(101f);
     root.setHeight(100f);
 
@@ -203,7 +203,7 @@ public class CSSLayoutRoundingTest {
     final CSSNode root_child2 = new CSSNode();
     root_child2.setFlexBasis(25f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -226,7 +226,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(25f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -249,12 +249,12 @@ public class CSSLayoutRoundingTest {
     assertEquals(25f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_flex_basis_overrides_main_size() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
     root.setWidth(100f);
@@ -275,7 +275,7 @@ public class CSSLayoutRoundingTest {
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -298,7 +298,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -321,12 +321,12 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_total_fractial() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
     root.setWidth(87.4f);
@@ -347,7 +347,7 @@ public class CSSLayoutRoundingTest {
     root_child2.setFlexGrow(1.1f);
     root_child2.setHeight(10.7f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -370,7 +370,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(87f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -393,12 +393,12 @@ public class CSSLayoutRoundingTest {
     assertEquals(87f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_total_fractial_nested() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
     root.setWidth(87.4f);
@@ -413,14 +413,14 @@ public class CSSLayoutRoundingTest {
     final CSSNode root_child0_child0 = new CSSNode();
     root_child0_child0.setFlexGrow(1f);
     root_child0_child0.setFlexBasis(0.3f);
-    root_child0_child0.setPosition(CSSEdge.BOTTOM, 13.3f);
+    root_child0_child0.setPosition(YogaEdge.BOTTOM, 13.3f);
     root_child0_child0.setHeight(9.9f);
     root_child0.addChildAt(root_child0_child0, 0);
 
     final CSSNode root_child0_child1 = new CSSNode();
     root_child0_child1.setFlexGrow(4f);
     root_child0_child1.setFlexBasis(0.3f);
-    root_child0_child1.setPosition(CSSEdge.TOP, 13.3f);
+    root_child0_child1.setPosition(YogaEdge.TOP, 13.3f);
     root_child0_child1.setHeight(1.1f);
     root_child0.addChildAt(root_child0_child1, 1);
 
@@ -433,7 +433,7 @@ public class CSSLayoutRoundingTest {
     root_child2.setFlexGrow(1.1f);
     root_child2.setHeight(10.7f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -466,7 +466,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(87f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -499,12 +499,12 @@ public class CSSLayoutRoundingTest {
     assertEquals(87f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_fractial_input_1() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
     root.setWidth(100f);
@@ -525,7 +525,7 @@ public class CSSLayoutRoundingTest {
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -548,7 +548,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -571,12 +571,12 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_fractial_input_2() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
     root.setWidth(100f);
@@ -597,7 +597,7 @@ public class CSSLayoutRoundingTest {
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -620,7 +620,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(25f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -643,15 +643,15 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(25f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_fractial_input_3() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
-    root.setPosition(CSSEdge.TOP, 0.3f);
+    root.setPosition(YogaEdge.TOP, 0.3f);
     root.setWidth(100f);
     root.setHeight(113.4f);
 
@@ -670,7 +670,7 @@ public class CSSLayoutRoundingTest {
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -693,7 +693,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -716,15 +716,15 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_rounding_fractial_input_4() {
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, true);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final CSSNode root = new CSSNode();
-    root.setPosition(CSSEdge.TOP, 0.7f);
+    root.setPosition(YogaEdge.TOP, 0.7f);
     root.setWidth(100f);
     root.setHeight(113.4f);
 
@@ -743,7 +743,7 @@ public class CSSLayoutRoundingTest {
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -766,7 +766,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -789,7 +789,7 @@ public class CSSLayoutRoundingTest {
     assertEquals(100f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(24f, root_child2.getLayoutHeight(), 0.0f);
 
-    CSSNode.setExperimentalFeatureEnabled(CSSExperimentalFeature.ROUNDING, false);
+    CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
 }

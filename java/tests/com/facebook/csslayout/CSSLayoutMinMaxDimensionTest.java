@@ -26,7 +26,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0.setMaxWidth(50f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -39,7 +39,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -56,7 +56,7 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_max_height() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -64,7 +64,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0.setWidth(10f);
     root_child0.setMaxHeight(50f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -77,7 +77,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -105,7 +105,7 @@ public class CSSLayoutMinMaxDimensionTest {
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -123,7 +123,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(100f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child1.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -145,7 +145,7 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_min_width() {
     final CSSNode root = new CSSNode();
-    root.setFlexDirection(CSSFlexDirection.ROW);
+    root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -157,7 +157,7 @@ public class CSSLayoutMinMaxDimensionTest {
     final CSSNode root_child1 = new CSSNode();
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -175,7 +175,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(20f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -197,7 +197,7 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_justify_content_min_max() {
     final CSSNode root = new CSSNode();
-    root.setJustifyContent(CSSJustify.CENTER);
+    root.setJustifyContent(YogaJustify.CENTER);
     root.setWidth(100f);
     root.setMinHeight(100f);
     root.setMaxHeight(200f);
@@ -206,7 +206,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0.setWidth(60f);
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -219,7 +219,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(60f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(60f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -236,7 +236,7 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_align_items_min_max() {
     final CSSNode root = new CSSNode();
-    root.setAlignItems(CSSAlign.CENTER);
+    root.setAlignItems(YogaAlign.CENTER);
     root.setMinWidth(100f);
     root.setMaxWidth(200f);
     root.setHeight(100f);
@@ -245,7 +245,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0.setWidth(60f);
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -258,7 +258,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(60f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(60f, root_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -275,7 +275,7 @@ public class CSSLayoutMinMaxDimensionTest {
   @Test
   public void test_justify_content_overflow_min_max() {
     final CSSNode root = new CSSNode();
-    root.setJustifyContent(CSSJustify.CENTER);
+    root.setJustifyContent(YogaJustify.CENTER);
     root.setMinHeight(100f);
     root.setMaxHeight(110f);
 
@@ -293,7 +293,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child2.setWidth(50f);
     root_child2.setHeight(50f);
     root.addChildAt(root_child2, 2);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -316,7 +316,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(50f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child2.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -347,7 +347,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setFlexDirection(CSSFlexDirection.ROW);
+    root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setMaxWidth(100f);
     root.addChildAt(root_child0, 0);
 
@@ -355,7 +355,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0_child0.setFlexGrow(1f);
     root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -373,7 +373,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -399,7 +399,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root.setHeight(100f);
 
     final CSSNode root_child0 = new CSSNode();
-    root_child0.setFlexDirection(CSSFlexDirection.ROW);
+    root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setMaxWidth(300f);
     root.addChildAt(root_child0, 0);
 
@@ -407,7 +407,7 @@ public class CSSLayoutMinMaxDimensionTest {
     root_child0_child0.setFlexGrow(1f);
     root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
-    root.setDirection(CSSDirection.LTR);
+    root.setDirection(YogaDirection.LTR);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
@@ -425,7 +425,7 @@ public class CSSLayoutMinMaxDimensionTest {
     assertEquals(200f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    root.setDirection(CSSDirection.RTL);
+    root.setDirection(YogaDirection.RTL);
     root.calculateLayout();
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
