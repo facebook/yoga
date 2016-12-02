@@ -94,23 +94,23 @@ root.getLayoutHeight();
 ```
 
 ### UIKit
-The full API can be found in `CSSLayoutKit/UIView+CSSLayout.h`.
+The full API can be found in `YogaKit/UIView+Yoga.h`.
 
 ```objective-c
 UIView *root = [UIView new];
-[root css_setUsesFlexbox:YES];
-[root css_setWidth:100];
-[root css_setHeight:100];
+[root yg_setUsesYoga:YES];
+[root yg_setWidth:100];
+[root yg_setHeight:100];
 
 for (NSUInteger i = 0; i < 10; i++) {
   UIView *child = [UIView new];
-  [child css_setUsesFlexbox:YES];
-  [child css_setHeight:10];
+  [child yg_setUsesYoga:YES];
+  [child yg_setHeight:10];
   [root addSubview:child];
 }
 
 // Resulting layout will be set on the UIView hierarchy frames.
-[root css_applyLayout];
+[root yg_applyLayout];
 ```
 
 ### .NET

@@ -28,9 +28,9 @@ UIKIT_CSSLAYOUT_COMPILER_FLAGS = [
 ]
 
 apple_library(
-  name = 'CSSLayoutKit',
+  name = 'YogaKit',
   compiler_flags = UIKIT_CSSLAYOUT_COMPILER_FLAGS,
-  tests = [':CSSLayoutKitTests'],
+  tests = [':YogaKitTests'],
   srcs = glob(['*.m']),
   exported_headers = glob(['*.h']),
   frameworks = [
@@ -44,7 +44,7 @@ apple_library(
 )
 
 apple_test(
-  name = 'CSSLayoutKitTests',
+  name = 'YogaKitTests',
   compiler_flags = UIKIT_CSSLAYOUT_COMPILER_FLAGS,
   info_plist = 'Tests/Info.plist',
   srcs = glob(['Tests/**/*.m']),
@@ -53,7 +53,7 @@ apple_test(
     '$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework',
   ],
   deps = [
-    ':CSSLayoutKit',
+    ':YogaKit',
   ],
   visibility = ['PUBLIC'],
 )

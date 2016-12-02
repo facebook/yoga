@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import "UIView+CSSLayout.h"
+#import "UIView+Yoga.h"
 
 #import <objc/runtime.h>
 
@@ -39,162 +39,162 @@
 
 @implementation UIView (CSSLayout)
 
-- (BOOL)css_usesFlexbox
+- (BOOL)yg_usesYoga
 {
-  NSNumber *usesFlexbox = objc_getAssociatedObject(self, @selector(css_usesFlexbox));
-  return [usesFlexbox boolValue];
+  NSNumber *usesYoga = objc_getAssociatedObject(self, @selector(yg_usesYoga));
+  return [usesYoga boolValue];
 }
 
-- (BOOL)css_includeInLayout
+- (BOOL)yg_includeInLayout
 {
-  NSNumber *includeInLayout = objc_getAssociatedObject(self, @selector(css_includeInLayout));
+  NSNumber *includeInLayout = objc_getAssociatedObject(self, @selector(yg_includeInLayout));
   return (includeInLayout != nil) ? [includeInLayout boolValue] : YES;
 }
 
-- (NSUInteger)css_numberOfChildren
+- (NSUInteger)yg_numberOfChildren
 {
   return CSSNodeChildCount([self cssNode]);
 }
 
 #pragma mark - Setters
 
-- (void)css_setIncludeInLayout:(BOOL)includeInLayout
+- (void)yg_setIncludeInLayout:(BOOL)includeInLayout
 {
   objc_setAssociatedObject(
     self,
-    @selector(css_includeInLayout),
+    @selector(yg_includeInLayout),
     @(includeInLayout),
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)css_setUsesFlexbox:(BOOL)enabled
+- (void)yg_setUsesYoga:(BOOL)enabled
 {
   objc_setAssociatedObject(
     self,
-    @selector(css_usesFlexbox),
+    @selector(yg_usesYoga),
     @(enabled),
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)css_setDirection:(YGDirection)direction
+- (void)yg_setDirection:(YGDirection)direction
 {
   CSSNodeStyleSetDirection([self cssNode], direction);
 }
 
-- (void)css_setFlexDirection:(YGFlexDirection)flexDirection
+- (void)yg_setFlexDirection:(YGFlexDirection)flexDirection
 {
   CSSNodeStyleSetFlexDirection([self cssNode], flexDirection);
 }
 
-- (void)css_setJustifyContent:(YGJustify)justifyContent
+- (void)yg_setJustifyContent:(YGJustify)justifyContent
 {
   CSSNodeStyleSetJustifyContent([self cssNode], justifyContent);
 }
 
-- (void)css_setAlignContent:(YGAlign)alignContent
+- (void)yg_setAlignContent:(YGAlign)alignContent
 {
   CSSNodeStyleSetAlignContent([self cssNode], alignContent);
 }
 
-- (void)css_setAlignItems:(YGAlign)alignItems
+- (void)yg_setAlignItems:(YGAlign)alignItems
 {
   CSSNodeStyleSetAlignItems([self cssNode], alignItems);
 }
 
-- (void)css_setAlignSelf:(YGAlign)alignSelf
+- (void)yg_setAlignSelf:(YGAlign)alignSelf
 {
   CSSNodeStyleSetAlignSelf([self cssNode], alignSelf);
 }
 
-- (void)css_setPositionType:(YGPositionType)positionType
+- (void)yg_setPositionType:(YGPositionType)positionType
 {
   CSSNodeStyleSetPositionType([self cssNode], positionType);
 }
 
-- (void)css_setFlexWrap:(YGWrap)flexWrap
+- (void)yg_setFlexWrap:(YGWrap)flexWrap
 {
   CSSNodeStyleSetFlexWrap([self cssNode], flexWrap);
 }
 
-- (void)css_setFlexGrow:(CGFloat)flexGrow
+- (void)yg_setFlexGrow:(CGFloat)flexGrow
 {
   CSSNodeStyleSetFlexGrow([self cssNode], flexGrow);
 }
 
-- (void)css_setFlexShrink:(CGFloat)flexShrink
+- (void)yg_setFlexShrink:(CGFloat)flexShrink
 {
   CSSNodeStyleSetFlexShrink([self cssNode], flexShrink);
 }
 
-- (void)css_setFlexBasis:(CGFloat)flexBasis
+- (void)yg_setFlexBasis:(CGFloat)flexBasis
 {
   CSSNodeStyleSetFlexBasis([self cssNode], flexBasis);
 }
 
-- (void)css_setPosition:(CGFloat)position forEdge:(YGEdge)edge
+- (void)yg_setPosition:(CGFloat)position forEdge:(YGEdge)edge
 {
   CSSNodeStyleSetPosition([self cssNode], edge, position);
 }
 
-- (void)css_setMargin:(CGFloat)margin forEdge:(YGEdge)edge
+- (void)yg_setMargin:(CGFloat)margin forEdge:(YGEdge)edge
 {
   CSSNodeStyleSetMargin([self cssNode], edge, margin);
 }
 
-- (void)css_setPadding:(CGFloat)padding forEdge:(YGEdge)edge
+- (void)yg_setPadding:(CGFloat)padding forEdge:(YGEdge)edge
 {
   CSSNodeStyleSetPadding([self cssNode], edge, padding);
 }
 
-- (void)css_setWidth:(CGFloat)width
+- (void)yg_setWidth:(CGFloat)width
 {
   CSSNodeStyleSetWidth([self cssNode], width);
 }
 
-- (void)css_setHeight:(CGFloat)height
+- (void)yg_setHeight:(CGFloat)height
 {
   CSSNodeStyleSetHeight([self cssNode], height);
 }
 
-- (void)css_setMinWidth:(CGFloat)minWidth
+- (void)yg_setMinWidth:(CGFloat)minWidth
 {
   CSSNodeStyleSetMinWidth([self cssNode], minWidth);
 }
 
-- (void)css_setMinHeight:(CGFloat)minHeight
+- (void)yg_setMinHeight:(CGFloat)minHeight
 {
   CSSNodeStyleSetMinHeight([self cssNode], minHeight);
 }
 
-- (void)css_setMaxWidth:(CGFloat)maxWidth
+- (void)yg_setMaxWidth:(CGFloat)maxWidth
 {
   CSSNodeStyleSetMaxWidth([self cssNode], maxWidth);
 }
 
-- (void)css_setMaxHeight:(CGFloat)maxHeight
+- (void)yg_setMaxHeight:(CGFloat)maxHeight
 {
   CSSNodeStyleSetMaxHeight([self cssNode], maxHeight);
 }
 
-- (void)css_setAspectRatio:(CGFloat)aspectRatio
+- (void)yg_setAspectRatio:(CGFloat)aspectRatio
 {
   CSSNodeStyleSetAspectRatio([self cssNode], aspectRatio);
 }
 
 #pragma mark - Layout and Sizing
 
-- (YGDirection)css_resolvedDirection
+- (YGDirection)yg_resolvedDirection
 {
   return CSSNodeLayoutGetDirection([self cssNode]);
 }
 
-- (void)css_applyLayout
+- (void)yg_applyLayout
 {
   [self calculateLayoutWithSize:self.bounds.size];
   CSSApplyLayoutToViewHierarchy(self);
 }
 
-- (CGSize)css_intrinsicSize
+- (CGSize)yg_intrinsicSize
 {
   const CGSize constrainedSize = {
       .width = YGUndefined,
@@ -220,7 +220,7 @@
 - (CGSize)calculateLayoutWithSize:(CGSize)size
 {
   NSAssert([NSThread isMainThread], @"CSS Layout calculation must be done on main.");
-  NSAssert([self css_usesFlexbox], @"CSS Layout is not enabled for this view.");
+  NSAssert([self yg_usesYoga], @"CSS Layout is not enabled for this view.");
 
   CSSAttachNodesFromViewHierachy(self);
 
@@ -280,7 +280,7 @@ static void CSSAttachNodesFromViewHierachy(UIView *view) {
   CSSNodeRef node = [view cssNode];
 
   // Only leaf nodes should have a measure function
-  if (![view css_usesFlexbox] || view.subviews.count == 0) {
+  if (![view yg_usesYoga] || view.subviews.count == 0) {
     CSSNodeSetMeasureFunc(node, CSSMeasureView);
     CSSRemoveAllChildren(node);
   } else {
@@ -289,7 +289,7 @@ static void CSSAttachNodesFromViewHierachy(UIView *view) {
     // Create a list of all the subviews that we are going to use for layout.
     NSMutableArray<UIView *> *subviewsToInclude = [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
     for (UIView *subview in view.subviews) {
-      if ([subview css_includeInLayout]) {
+      if ([subview yg_includeInLayout]) {
         [subviewsToInclude addObject:subview];
       }
     }
@@ -342,7 +342,7 @@ static CGFloat CSSRoundPixelValue(CGFloat value)
 
 static void CSSApplyLayoutToViewHierarchy(UIView *view) {
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
-  if (![view css_includeInLayout]) {
+  if (![view yg_includeInLayout]) {
      return;
   }
 
@@ -368,7 +368,7 @@ static void CSSApplyLayoutToViewHierarchy(UIView *view) {
     },
   };
 
-  const BOOL isLeaf = ![view css_usesFlexbox] || view.subviews.count == 0;
+  const BOOL isLeaf = ![view yg_usesYoga] || view.subviews.count == 0;
   if (!isLeaf) {
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
       CSSApplyLayoutToViewHierarchy(view.subviews[i]);
