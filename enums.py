@@ -175,9 +175,9 @@ for name, values in ENUMS.items():
 
 # write out csharp files
 for name, values in ENUMS.items():
-    with open(root + '/csharp/Facebook.CSSLayout/Yoga%s.cs' % name, 'w') as f:
+    with open(root + '/csharp/Facebook.Yoga/Yoga%s.cs' % name, 'w') as f:
         f.write(LICENSE)
-        f.write('namespace Facebook.CSSLayout\n{\n')
+        f.write('namespace Facebook.Yoga\n{\n')
         f.write('    public enum Yoga%s\n    {\n' % name)
         for value in values:
             if isinstance(value, tuple):

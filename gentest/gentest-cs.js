@@ -19,13 +19,13 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
       'using System;',
       'using NUnit.Framework;',
       '',
-      'namespace Facebook.CSSLayout',
+      'namespace Facebook.Yoga',
       '{',
     ]);
     this.pushIndent();
     this.push([
       '[TestFixture]',
-      'public class CSSNodeLayoutTest',
+      'public class YogaTest',
       '{',
     ]);
     this.pushIndent();
@@ -39,21 +39,21 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
     if (experiments.length > 0) {
       for (var i in experiments) {
-        this.push('CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', true);');
+        this.push('YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', true);');
       }
       this.push('');
     }
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('CSSNode ' + nodeName + ' = new CSSNode();');
+    this.push('YogaNode ' + nodeName + ' = new YogaNode();');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
     if (experiments.length > 0) {
       this.push('');
       for (var i in experiments) {
-        this.push('CSSNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', false);');
+        this.push('YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', false);');
       }
     }
 

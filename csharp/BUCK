@@ -7,14 +7,14 @@
 
 csharp_library(
   name = 'csslibnet46',
-  dll_name = 'Facebook.CSSLayout.dll',
+  dll_name = 'Facebook.Yoga.dll',
   framework_ver = 'net46',
   srcs = glob(['**/*.cs']),
 )
 
 csharp_library(
   name = 'csslibnet45',
-  dll_name = 'Facebook.CSSLayout.dll',
+  dll_name = 'Facebook.Yoga.dll',
   framework_ver = 'net45',
   srcs = glob(['**/*.cs']),
 )
