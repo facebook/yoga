@@ -41,7 +41,7 @@ Dir['fixtures/*.html'].each do |file|
   f.close
 
   f = File.open("../java/tests/com/facebook/csslayout/#{name}.java", 'w')
-  f.write eval(logs[1].message.sub(/^[^"]*/, '')).sub('CSSNodeLayoutTest', name)
+  f.write eval(logs[1].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
 
   f = File.open("../csharp/tests/Facebook.Yoga/#{name}.cs", 'w')

@@ -34,7 +34,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
       '',
       'import static org.junit.Assert.assertEquals;',
       '',
-      'public class CSSNodeLayoutTest {',
+      'public class YogaTest {',
     ]);
     this.pushIndent();
   }},
@@ -122,116 +122,116 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGWrapNoWrap:{value:'YogaWrap.NO_WRAP'},
   YGWrapWrap:{value:'YogaWrap.WRAP'},
 
-  CSSNodeCalculateLayout:{value:function(node, dir) {
+  YGNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.setDirection(' + dir + ');');
     this.push(node + '.calculateLayout();');
   }},
 
-  CSSNodeInsertChild:{value:function(parentName, nodeName, index) {
+  YGNodeInsertChild:{value:function(parentName, nodeName, index) {
     this.push(parentName + '.addChildAt(' + nodeName + ', ' + index + ');');
   }},
 
-  CSSNodeLayoutGetLeft:{value:function(nodeName) {
+  YGNodeLayoutGetLeft:{value:function(nodeName) {
     return nodeName + '.getLayoutX()';
   }},
 
-  CSSNodeLayoutGetTop:{value:function(nodeName) {
+  YGNodeLayoutGetTop:{value:function(nodeName) {
     return nodeName + '.getLayoutY()';
   }},
 
-  CSSNodeLayoutGetWidth:{value:function(nodeName) {
+  YGNodeLayoutGetWidth:{value:function(nodeName) {
     return nodeName + '.getLayoutWidth()';
   }},
 
-  CSSNodeLayoutGetHeight:{value:function(nodeName) {
+  YGNodeLayoutGetHeight:{value:function(nodeName) {
     return nodeName + '.getLayoutHeight()';
   }},
 
-  CSSNodeStyleSetAlignContent:{value:function(nodeName, value) {
+  YGNodeStyleSetAlignContent:{value:function(nodeName, value) {
     this.push(nodeName + '.setAlignContent(' + value + ');');
   }},
 
-  CSSNodeStyleSetAlignItems:{value:function(nodeName, value) {
+  YGNodeStyleSetAlignItems:{value:function(nodeName, value) {
     this.push(nodeName + '.setAlignItems(' + value + ');');
   }},
 
-  CSSNodeStyleSetAlignSelf:{value:function(nodeName, value) {
+  YGNodeStyleSetAlignSelf:{value:function(nodeName, value) {
     this.push(nodeName + '.setAlignSelf(' + value + ');');
   }},
 
-  CSSNodeStyleSetBorder:{value:function(nodeName, edge, value) {
+  YGNodeStyleSetBorder:{value:function(nodeName, edge, value) {
     this.push(nodeName + '.setBorder(' + edge + ', ' + value + 'f);');
   }},
 
-  CSSNodeStyleSetDirection:{value:function(nodeName, value) {
+  YGNodeStyleSetDirection:{value:function(nodeName, value) {
     this.push(nodeName + '.setDirection(' + value + ');');
   }},
 
-  CSSNodeStyleSetFlexBasis:{value:function(nodeName, value) {
+  YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {
     this.push(nodeName + '.setFlexBasis(' + value + 'f);');
   }},
 
-  CSSNodeStyleSetFlexDirection:{value:function(nodeName, value) {
+  YGNodeStyleSetFlexDirection:{value:function(nodeName, value) {
     this.push(nodeName + '.setFlexDirection(' + value + ');');
   }},
 
-  CSSNodeStyleSetFlexGrow:{value:function(nodeName, value) {
+  YGNodeStyleSetFlexGrow:{value:function(nodeName, value) {
     this.push(nodeName + '.setFlexGrow(' + value + 'f);');
   }},
 
-  CSSNodeStyleSetFlexShrink:{value:function(nodeName, value) {
+  YGNodeStyleSetFlexShrink:{value:function(nodeName, value) {
     this.push(nodeName + '.setFlexShrink(' + value + 'f);');
   }},
 
-  CSSNodeStyleSetFlexWrap:{value:function(nodeName, value) {
+  YGNodeStyleSetFlexWrap:{value:function(nodeName, value) {
     this.push(nodeName + '.setWrap(' + value + ');');
   }},
 
-  CSSNodeStyleSetHeight:{value:function(nodeName, value) {
+  YGNodeStyleSetHeight:{value:function(nodeName, value) {
     this.push(nodeName + '.setHeight(' + value + 'f);');
   }},
 
-  CSSNodeStyleSetJustifyContent:{value:function(nodeName, value) {
+  YGNodeStyleSetJustifyContent:{value:function(nodeName, value) {
     this.push(nodeName + '.setJustifyContent(' + value + ');');
   }},
 
-  CSSNodeStyleSetMargin:{value:function(nodeName, edge, value) {
+  YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
     this.push(nodeName + '.setMargin(' + edge + ', ' + value + 'f);');
   }},
 
-  CSSNodeStyleSetMaxHeight:{value:function(nodeName, value) {
+  YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
     this.push(nodeName + '.setMaxHeight(' + value + 'f);');
   }},
 
-  CSSNodeStyleSetMaxWidth:{value:function(nodeName, value) {
+  YGNodeStyleSetMaxWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.setMaxWidth(' + value + 'f);');
   }},
 
-  CSSNodeStyleSetMinHeight:{value:function(nodeName, value) {
+  YGNodeStyleSetMinHeight:{value:function(nodeName, value) {
     this.push(nodeName + '.setMinHeight(' + value + 'f);');
   }},
 
-  CSSNodeStyleSetMinWidth:{value:function(nodeName, value) {
+  YGNodeStyleSetMinWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.setMinWidth(' + value + 'f);');
   }},
 
-  CSSNodeStyleSetOverflow:{value:function(nodeName, value) {
+  YGNodeStyleSetOverflow:{value:function(nodeName, value) {
     this.push(nodeName + '.setOverflow(' + value + ');');
   }},
 
-  CSSNodeStyleSetPadding:{value:function(nodeName, edge, value) {
+  YGNodeStyleSetPadding:{value:function(nodeName, edge, value) {
     this.push(nodeName + '.setPadding(' + edge + ', ' + value + ');');
   }},
 
-  CSSNodeStyleSetPosition:{value:function(nodeName, edge, value) {
+  YGNodeStyleSetPosition:{value:function(nodeName, edge, value) {
     this.push(nodeName + '.setPosition(' + edge + ', ' + value + 'f);');
   }},
 
-  CSSNodeStyleSetPositionType:{value:function(nodeName, value) {
+  YGNodeStyleSetPositionType:{value:function(nodeName, value) {
     this.push(nodeName + '.setPositionType(' + value + ');');
   }},
 
-  CSSNodeStyleSetWidth:{value:function(nodeName, value) {
+  YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.setWidth(' + value + 'f);');
   }},
 });

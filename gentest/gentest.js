@@ -87,13 +87,13 @@ function printTest(e, LTRContainer, RTLContainer, genericContainer) {
         'root',
         null);
 
-    e.CSSNodeCalculateLayout('root', e.YGDirectionLTR);
+    e.YGNodeCalculateLayout('root', e.YGDirectionLTR);
     e.push('');
 
     assertTestTree(e, LTRLayoutTree[i], 'root', null);
     e.push('');
 
-    e.CSSNodeCalculateLayout('root', e.YGDirectionRTL);
+    e.YGNodeCalculateLayout('root', e.YGDirectionRTL);
     e.push('');
 
     assertTestTree(e, RTLLayoutTree[i], 'root', null);
@@ -106,10 +106,10 @@ function printTest(e, LTRContainer, RTLContainer, genericContainer) {
 }
 
 function assertTestTree(e, node, nodeName, parentName) {
-  e.AssertEQ(node.left, e.CSSNodeLayoutGetLeft(nodeName));
-  e.AssertEQ(node.top, e.CSSNodeLayoutGetTop(nodeName));
-  e.AssertEQ(node.width, e.CSSNodeLayoutGetWidth(nodeName));
-  e.AssertEQ(node.height, e.CSSNodeLayoutGetHeight(nodeName));
+  e.AssertEQ(node.left, e.YGNodeLayoutGetLeft(nodeName));
+  e.AssertEQ(node.top, e.YGNodeLayoutGetTop(nodeName));
+  e.AssertEQ(node.width, e.YGNodeLayoutGetWidth(nodeName));
+  e.AssertEQ(node.height, e.YGNodeLayoutGetHeight(nodeName));
 
   for (var i = 0; i < node.children.length; i++) {
     e.push('');
@@ -159,147 +159,147 @@ function setupTestTree(e, parent, node, genericNode, nodeName, parentName, index
     if (node.style[style] !== getDefaultStyleValue(style)) {
       switch (style) {
         case 'direction':
-          e.CSSNodeStyleSetDirection(nodeName, directionValue(e, node.style[style]));
+          e.YGNodeStyleSetDirection(nodeName, directionValue(e, node.style[style]));
           break;
         case 'flex-direction':
-          e.CSSNodeStyleSetFlexDirection(nodeName, flexDirectionValue(e, node.style[style]));
+          e.YGNodeStyleSetFlexDirection(nodeName, flexDirectionValue(e, node.style[style]));
           break;
         case 'justify-content':
-          e.CSSNodeStyleSetJustifyContent(nodeName, justifyValue(e, node.style[style]));
+          e.YGNodeStyleSetJustifyContent(nodeName, justifyValue(e, node.style[style]));
           break;
         case 'align-content':
-          e.CSSNodeStyleSetAlignContent(nodeName, alignValue(e, node.style[style]));
+          e.YGNodeStyleSetAlignContent(nodeName, alignValue(e, node.style[style]));
           break;
         case 'align-items':
-          e.CSSNodeStyleSetAlignItems(nodeName, alignValue(e, node.style[style]));
+          e.YGNodeStyleSetAlignItems(nodeName, alignValue(e, node.style[style]));
           break;
         case 'align-self':
           if (!parent || node.style[style] !== parent.style['align-items']) {
-            e.CSSNodeStyleSetAlignSelf(nodeName, alignValue(e, node.style[style]));
+            e.YGNodeStyleSetAlignSelf(nodeName, alignValue(e, node.style[style]));
           }
           break;
         case 'position':
-          e.CSSNodeStyleSetPositionType(nodeName, positionValue(e, node.style[style]));
+          e.YGNodeStyleSetPositionType(nodeName, positionValue(e, node.style[style]));
           break;
         case 'flex-wrap':
-          e.CSSNodeStyleSetFlexWrap(nodeName, wrapValue(e, node.style[style]));
+          e.YGNodeStyleSetFlexWrap(nodeName, wrapValue(e, node.style[style]));
           break;
         case 'overflow':
-          e.CSSNodeStyleSetOverflow(nodeName, overflowValue(e, node.style[style]));
+          e.YGNodeStyleSetOverflow(nodeName, overflowValue(e, node.style[style]));
           break;
         case 'flex-grow':
-          e.CSSNodeStyleSetFlexGrow(nodeName, node.style[style]);
+          e.YGNodeStyleSetFlexGrow(nodeName, node.style[style]);
           break;
         case 'flex-shrink':
-          e.CSSNodeStyleSetFlexShrink(nodeName, node.style[style]);
+          e.YGNodeStyleSetFlexShrink(nodeName, node.style[style]);
           break;
         case 'flex-basis':
-          e.CSSNodeStyleSetFlexBasis(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetFlexBasis(nodeName, pixelValue(e, node.style[style]));
           break;
         case 'left':
           if (genericNode.rawStyle.indexOf('start:') >= 0) {
-            e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
           }
           break;
         case 'top':
-          e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetPosition(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
           break;
         case 'right':
           if (genericNode.rawStyle.indexOf('end:') >= 0) {
-            e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
           }
           break;
         case 'bottom':
-          e.CSSNodeStyleSetPosition(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetPosition(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
           break;
         case 'margin-left':
           if (genericNode.rawStyle.indexOf('margin-start:') >= 0) {
-            e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
           }
           break;
         case 'margin-top':
-          e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMargin(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
           break;
         case 'margin-right':
           if (genericNode.rawStyle.indexOf('margin-end:') >= 0) {
-            e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
           }
           break;
         case 'margin-bottom':
-          e.CSSNodeStyleSetMargin(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMargin(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
           break;
         case 'padding-left':
           if (genericNode.rawStyle.indexOf('padding-start:') >= 0) {
-            e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
           }
           break;
         case 'padding-top':
-          e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetPadding(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
           break;
         case 'padding-right':
           if (genericNode.rawStyle.indexOf('padding-end:') >= 0) {
-            e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
           }
           break;
         case 'padding-bottom':
-          e.CSSNodeStyleSetPadding(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetPadding(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
           break;
         case 'border-left-width':
           if (genericNode.rawStyle.indexOf('border-start-width:') >= 0) {
-            e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
           }
           break;
         case 'border-top-width':
-          e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetBorder(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
           break;
         case 'border-right-width':
           if (genericNode.rawStyle.indexOf('border-end-width:') >= 0) {
-            e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
           } else {
-            e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
           }
           break;
         case 'border-bottom-width':
-          e.CSSNodeStyleSetBorder(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetBorder(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
           break;
         case 'width':
-          e.CSSNodeStyleSetWidth(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetWidth(nodeName, pixelValue(e, node.style[style]));
           break;
         case 'min-width':
-          e.CSSNodeStyleSetMinWidth(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMinWidth(nodeName, pixelValue(e, node.style[style]));
           break;
         case 'max-width':
-          e.CSSNodeStyleSetMaxWidth(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMaxWidth(nodeName, pixelValue(e, node.style[style]));
           break;
         case 'height':
-          e.CSSNodeStyleSetHeight(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetHeight(nodeName, pixelValue(e, node.style[style]));
           break;
         case 'min-height':
-          e.CSSNodeStyleSetMinHeight(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMinHeight(nodeName, pixelValue(e, node.style[style]));
           break;
         case 'max-height':
-          e.CSSNodeStyleSetMaxHeight(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMaxHeight(nodeName, pixelValue(e, node.style[style]));
           break;
       }
     }
   }
 
   if (parentName) {
-    e.CSSNodeInsertChild(parentName, nodeName, index);
+    e.YGNodeInsertChild(parentName, nodeName, index);
   }
 
   for (var i = 0; i < node.children.length; i++) {
@@ -411,7 +411,7 @@ function calculateTree(root) {
       width: child.offsetWidth,
       height: child.offsetHeight,
       children: calculateTree(child),
-      style: getCSSLayoutStyle(child),
+      style: getYogaStyle(child),
       declaredStyle: child.style,
       rawStyle: child.getAttribute('style'),
       experiments: child.getAttribute('experiments')
@@ -423,7 +423,7 @@ function calculateTree(root) {
   return rootLayout;
 }
 
-function getCSSLayoutStyle(node) {
+function getYogaStyle(node) {
   return [
     'direction',
     'flex-direction',
