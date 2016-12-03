@@ -18,22 +18,22 @@ public class YogaNodeTest {
 
   @Test
   public void testInit() {
-    final int refCount = CSSNode.jni_YGNodeGetInstanceCount();
-    final CSSNode node = new CSSNode();
-    assertEquals(refCount + 1, CSSNode.jni_YGNodeGetInstanceCount());
+    final int refCount = YogaNode.jni_YGNodeGetInstanceCount();
+    final YogaNode node = new YogaNode();
+    assertEquals(refCount + 1, YogaNode.jni_YGNodeGetInstanceCount());
   }
 
   @Test
   public void testMeasure() {
-    final CSSNode node = new CSSNode();
-    node.setMeasureFunction(new CSSNodeAPI.MeasureFunction() {
+    final YogaNode node = new YogaNode();
+    node.setMeasureFunction(new YogaMeasureFunction() {
         public long measure(
-            CSSNodeAPI node,
+            YogaNodeAPI node,
             float width,
             YogaMeasureMode widthMode,
             float height,
             YogaMeasureMode heightMode) {
-          return MeasureOutput.make(100, 100);
+          return YogaMeasureOutput.make(100, 100);
         }
     });
     node.calculateLayout();
@@ -46,39 +46,39 @@ public class YogaNodeTest {
 
   @Test
   public void testLogger() {
-    CSSNode.setLogger(new CSSLogger() {
+    YogaNode.setLogger(new YogaLogger() {
         public void log(YogaLogLevel level, String message) {
           mLogLevel = level;
           mLogMessage = message;
         }
     });
-    CSSNode.jni_YGLog(YogaLogLevel.DEBUG.intValue(), "Hello");
+    YogaNode.jni_YGLog(YogaLogLevel.DEBUG.intValue(), "Hello");
     assertEquals(YogaLogLevel.DEBUG, mLogLevel);
     assertEquals("Hello", mLogMessage);
   }
 
   @Test
   public void testUpdateLogger() {
-    CSSNode.setLogger(new CSSLogger() {
+    YogaNode.setLogger(new YogaLogger() {
         public void log(YogaLogLevel level, String message) {}
     });
-    CSSNode.setLogger(new CSSLogger() {
+    YogaNode.setLogger(new YogaLogger() {
         public void log(YogaLogLevel level, String message) {
           mLogLevel = level;
           mLogMessage = message;
         }
     });
-    CSSNode.jni_YGLog(YogaLogLevel.VERBOSE.intValue(), "Flexbox");
+    YogaNode.jni_YGLog(YogaLogLevel.VERBOSE.intValue(), "Flexbox");
     assertEquals(YogaLogLevel.VERBOSE, mLogLevel);
     assertEquals("Flexbox", mLogMessage);
   }
 
   @Test
   public void testCopyStyle() {
-    final CSSNode node0 = new CSSNode();
+    final YogaNode node0 = new YogaNode();
     assertTrue(YogaConstants.isUndefined(node0.getMaxHeight()));
 
-    final CSSNode node1 = new CSSNode();
+    final YogaNode node1 = new YogaNode();
     node1.setMaxHeight(100);
 
     node0.copyStyle(node1);

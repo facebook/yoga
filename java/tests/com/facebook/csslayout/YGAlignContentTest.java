@@ -18,32 +18,32 @@ import static org.junit.Assert.assertEquals;
 public class YGAlignContentTest {
   @Test
   public void test_align_content_flex_start() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setWidth(50f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child1 = new CSSNode();
+    final YogaNode root_child1 = new YogaNode();
     root_child1.setWidth(50f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
-    final CSSNode root_child2 = new CSSNode();
+    final YogaNode root_child2 = new YogaNode();
     root_child2.setWidth(50f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
 
-    final CSSNode root_child3 = new CSSNode();
+    final YogaNode root_child3 = new YogaNode();
     root_child3.setWidth(50f);
     root_child3.setHeight(10f);
     root.addChildAt(root_child3, 3);
 
-    final CSSNode root_child4 = new CSSNode();
+    final YogaNode root_child4 = new YogaNode();
     root_child4.setWidth(50f);
     root_child4.setHeight(10f);
     root.addChildAt(root_child4, 4);
@@ -116,33 +116,33 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_flex_end() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setAlignContent(YogaAlign.FLEX_END);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setWidth(50f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child1 = new CSSNode();
+    final YogaNode root_child1 = new YogaNode();
     root_child1.setWidth(50f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
-    final CSSNode root_child2 = new CSSNode();
+    final YogaNode root_child2 = new YogaNode();
     root_child2.setWidth(50f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
 
-    final CSSNode root_child3 = new CSSNode();
+    final YogaNode root_child3 = new YogaNode();
     root_child3.setWidth(50f);
     root_child3.setHeight(10f);
     root.addChildAt(root_child3, 3);
 
-    final CSSNode root_child4 = new CSSNode();
+    final YogaNode root_child4 = new YogaNode();
     root_child4.setWidth(50f);
     root_child4.setHeight(10f);
     root.addChildAt(root_child4, 4);
@@ -215,33 +215,33 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_center() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setAlignContent(YogaAlign.CENTER);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setWidth(50f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child1 = new CSSNode();
+    final YogaNode root_child1 = new YogaNode();
     root_child1.setWidth(50f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
-    final CSSNode root_child2 = new CSSNode();
+    final YogaNode root_child2 = new YogaNode();
     root_child2.setWidth(50f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
 
-    final CSSNode root_child3 = new CSSNode();
+    final YogaNode root_child3 = new YogaNode();
     root_child3.setWidth(50f);
     root_child3.setHeight(10f);
     root.addChildAt(root_child3, 3);
 
-    final CSSNode root_child4 = new CSSNode();
+    final YogaNode root_child4 = new YogaNode();
     root_child4.setWidth(50f);
     root_child4.setHeight(10f);
     root.addChildAt(root_child4, 4);
@@ -314,29 +314,29 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setAlignContent(YogaAlign.STRETCH);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setWidth(50f);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child1 = new CSSNode();
+    final YogaNode root_child1 = new YogaNode();
     root_child1.setWidth(50f);
     root.addChildAt(root_child1, 1);
 
-    final CSSNode root_child2 = new CSSNode();
+    final YogaNode root_child2 = new YogaNode();
     root_child2.setWidth(50f);
     root.addChildAt(root_child2, 2);
 
-    final CSSNode root_child3 = new CSSNode();
+    final YogaNode root_child3 = new YogaNode();
     root_child3.setWidth(50f);
     root.addChildAt(root_child3, 3);
 
-    final CSSNode root_child4 = new CSSNode();
+    final YogaNode root_child4 = new YogaNode();
     root_child4.setWidth(50f);
     root.addChildAt(root_child4, 4);
     root.setDirection(YogaDirection.LTR);

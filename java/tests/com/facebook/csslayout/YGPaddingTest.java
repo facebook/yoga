@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 public class YGPaddingTest {
   @Test
   public void test_padding_no_size() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setPadding(YogaEdge.LEFT, 10);
     root.setPadding(YogaEdge.TOP, 10);
     root.setPadding(YogaEdge.RIGHT, 10);
@@ -42,13 +42,13 @@ public class YGPaddingTest {
 
   @Test
   public void test_padding_container_match_child() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setPadding(YogaEdge.LEFT, 10);
     root.setPadding(YogaEdge.TOP, 10);
     root.setPadding(YogaEdge.RIGHT, 10);
     root.setPadding(YogaEdge.BOTTOM, 10);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -81,7 +81,7 @@ public class YGPaddingTest {
 
   @Test
   public void test_padding_flex_child() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setPadding(YogaEdge.LEFT, 10);
     root.setPadding(YogaEdge.TOP, 10);
     root.setPadding(YogaEdge.RIGHT, 10);
@@ -89,7 +89,7 @@ public class YGPaddingTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setFlexGrow(1f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
@@ -122,7 +122,7 @@ public class YGPaddingTest {
 
   @Test
   public void test_padding_stretch_child() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setPadding(YogaEdge.LEFT, 10);
     root.setPadding(YogaEdge.TOP, 10);
     root.setPadding(YogaEdge.RIGHT, 10);
@@ -130,7 +130,7 @@ public class YGPaddingTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
@@ -162,7 +162,7 @@ public class YGPaddingTest {
 
   @Test
   public void test_padding_center_child() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
     root.setPadding(YogaEdge.START, 10);
@@ -171,7 +171,7 @@ public class YGPaddingTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -204,13 +204,13 @@ public class YGPaddingTest {
 
   @Test
   public void test_child_with_padding_align_end() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setJustifyContent(YogaJustify.FLEX_END);
     root.setAlignItems(YogaAlign.FLEX_END);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setPadding(YogaEdge.LEFT, 20);
     root_child0.setPadding(YogaEdge.TOP, 20);
     root_child0.setPadding(YogaEdge.RIGHT, 20);

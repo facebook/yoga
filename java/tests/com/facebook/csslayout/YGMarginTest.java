@@ -18,12 +18,12 @@ import static org.junit.Assert.assertEquals;
 public class YGMarginTest {
   @Test
   public void test_margin_start() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setMargin(YogaEdge.START, 10f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
@@ -56,11 +56,11 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_top() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setMargin(YogaEdge.TOP, 10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -93,13 +93,13 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_end() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setJustifyContent(YogaJustify.FLEX_END);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setMargin(YogaEdge.END, 10f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
@@ -132,12 +132,12 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_bottom() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setJustifyContent(YogaJustify.FLEX_END);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setMargin(YogaEdge.BOTTOM, 10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -170,12 +170,12 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_and_flex_row() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setFlexGrow(1f);
     root_child0.setMargin(YogaEdge.START, 10f);
     root.addChildAt(root_child0, 0);
@@ -208,11 +208,11 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_and_flex_column() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setFlexGrow(1f);
     root_child0.setMargin(YogaEdge.TOP, 10f);
     root.addChildAt(root_child0, 0);
@@ -245,12 +245,12 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_and_stretch_row() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setFlexGrow(1f);
     root_child0.setMargin(YogaEdge.TOP, 10f);
     root.addChildAt(root_child0, 0);
@@ -283,11 +283,11 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_and_stretch_column() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setFlexGrow(1f);
     root_child0.setMargin(YogaEdge.START, 10f);
     root.addChildAt(root_child0, 0);
@@ -320,16 +320,16 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_with_sibling_row() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child1 = new CSSNode();
+    final YogaNode root_child1 = new YogaNode();
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -371,15 +371,15 @@ public class YGMarginTest {
 
   @Test
   public void test_margin_with_sibling_column() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child1 = new CSSNode();
+    final YogaNode root_child1 = new YogaNode();
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);

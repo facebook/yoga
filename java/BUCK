@@ -9,7 +9,7 @@ include_defs('//YOGA_DEFS')
 
 cxx_library(
   name = 'jni',
-  soname = 'libcsslayout.$(ext)',
+  soname = 'libyoga.$(ext)',
   srcs = glob(['jni/*.cpp']),
   header_namespace = '',
   compiler_flags = [

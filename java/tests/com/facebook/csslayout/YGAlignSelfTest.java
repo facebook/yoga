@@ -18,11 +18,11 @@ import static org.junit.Assert.assertEquals;
 public class YGAlignSelfTest {
   @Test
   public void test_align_self_center() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setAlignSelf(YogaAlign.CENTER);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -56,11 +56,11 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_end() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -94,11 +94,11 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_start() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setAlignSelf(YogaAlign.FLEX_START);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -132,12 +132,12 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_end_override_flex_start() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);

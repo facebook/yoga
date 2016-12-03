@@ -46,21 +46,21 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
     if (experiments.length > 0) {
       for (var i in experiments) {
-        this.push('CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
+        this.push('YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
       }
       this.push('');
     }
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('final CSSNode ' + nodeName + ' = new CSSNode();');
+    this.push('final YogaNode ' + nodeName + ' = new YogaNode();');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
     if (experiments.length > 0) {
       this.push('');
       for (var i in experiments) {
-        this.push('CSSNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', false);');
+        this.push('YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', false);');
       }
     }
 

@@ -18,11 +18,11 @@ import static org.junit.Assert.assertEquals;
 public class YGAbsolutePositionTest {
   @Test
   public void test_absolute_layout_width_height_start_top() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.START, 10f);
     root_child0.setPosition(YogaEdge.TOP, 10f);
@@ -58,11 +58,11 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_width_height_end_bottom() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.END, 10f);
     root_child0.setPosition(YogaEdge.BOTTOM, 10f);
@@ -98,11 +98,11 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_start_top_end_bottom() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.START, 10f);
     root_child0.setPosition(YogaEdge.TOP, 10f);
@@ -138,11 +138,11 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_width_height_start_top_end_bottom() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.START, 10f);
     root_child0.setPosition(YogaEdge.TOP, 10f);
@@ -180,19 +180,19 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setOverflow(YogaOverflow.HIDDEN);
     root.setWidth(50f);
     root.setHeight(50f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.START, 0f);
     root_child0.setPosition(YogaEdge.TOP, 0f);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child0_child0 = new CSSNode();
+    final YogaNode root_child0_child0 = new YogaNode();
     root_child0_child0.setWidth(100f);
     root_child0_child0.setHeight(100f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -235,7 +235,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_within_border() {
-    final CSSNode root = new CSSNode();
+    final YogaNode root = new YogaNode();
     root.setMargin(YogaEdge.LEFT, 10f);
     root.setMargin(YogaEdge.TOP, 10f);
     root.setMargin(YogaEdge.RIGHT, 10f);
@@ -251,7 +251,7 @@ public class YGAbsolutePositionTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final CSSNode root_child0 = new CSSNode();
+    final YogaNode root_child0 = new YogaNode();
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.LEFT, 0f);
     root_child0.setPosition(YogaEdge.TOP, 0f);
@@ -259,7 +259,7 @@ public class YGAbsolutePositionTest {
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final CSSNode root_child1 = new CSSNode();
+    final YogaNode root_child1 = new YogaNode();
     root_child1.setPositionType(YogaPositionType.ABSOLUTE);
     root_child1.setPosition(YogaEdge.RIGHT, 0f);
     root_child1.setPosition(YogaEdge.BOTTOM, 0f);
