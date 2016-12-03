@@ -7,401 +7,401 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 #include <gtest/gtest.h>
 
-static CSSSize _measure(CSSNodeRef node,
+static YGSize _measure(YGNodeRef node,
                         float width,
                         YGMeasureMode widthMode,
                         float height,
                         YGMeasureMode heightMode) {
-  return CSSSize {
+  return YGSize {
       .width = widthMode == YGMeasureModeExactly ? width : 50,
       .height = heightMode == YGMeasureModeExactly ? height : 50,
   };
 }
 
-TEST(CSSLayoutTest, aspect_ratio_cross_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_cross_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 50);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_main_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_main_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 50);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_both_dimensions_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_both_dimensions_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 50);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_align_stretch) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_align_stretch) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_flex_grow) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_flex_grow) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 50);
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_flex_shrink) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_flex_shrink) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 150);
-  CSSNodeStyleSetFlexShrink(root_child0, 1);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 150);
+  YGNodeStyleSetFlexShrink(root_child0, 1);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_basis) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_basis) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexBasis(root_child0, 50);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexBasis(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_absolute_layout_width_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_absolute_layout_width_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
-  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
-  CSSNodeStyleSetWidth(root_child0, 50);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  YGNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
+  YGNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_absolute_layout_height_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_absolute_layout_height_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
-  CSSNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
-  CSSNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
-  CSSNodeStyleSetHeight(root_child0, 50);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  YGNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
+  YGNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
+  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_with_max_cross_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_with_max_cross_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 50);
-  CSSNodeStyleSetMaxWidth(root_child0, 40);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetMaxWidth(root_child0, 40);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(40, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(40, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_with_max_main_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_with_max_main_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 50);
-  CSSNodeStyleSetMaxHeight(root_child0, 40);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetMaxHeight(root_child0, 40);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(40, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(40, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_with_min_cross_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_with_min_cross_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 30);
-  CSSNodeStyleSetMinWidth(root_child0, 40);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 30);
+  YGNodeStyleSetMinWidth(root_child0, 40);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(40, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(30, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(40, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(30, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_with_min_main_defined) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_with_min_main_defined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 30);
-  CSSNodeStyleSetMinHeight(root_child0, 40);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 30);
+  YGNodeStyleSetMinHeight(root_child0, 40);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(30, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(40, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(30, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(40, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_double_cross) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_double_cross) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 50);
-  CSSNodeStyleSetAspectRatio(root_child0, 2);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 2);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_half_cross) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_half_cross) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 100);
-  CSSNodeStyleSetAspectRatio(root_child0, 0.5);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 100);
+  YGNodeStyleSetAspectRatio(root_child0, 0.5);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_double_main) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_double_main) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 50);
-  CSSNodeStyleSetAspectRatio(root_child0, 2);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 2);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_half_main) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_half_main) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 100);
-  CSSNodeStyleSetAspectRatio(root_child0, 0.5);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 100);
+  YGNodeStyleSetAspectRatio(root_child0, 0.5);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, aspect_ratio_with_measure_func) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, aspect_ratio_with_measure_func) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeSetMeasureFunc(root_child0, _measure);
-  CSSNodeStyleSetAspectRatio(root_child0, 1);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeSetMeasureFunc(root_child0, _measure);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(0, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }

@@ -17,19 +17,19 @@ namespace Facebook.Yoga
 {
     public partial class YogaNode : IEnumerable<YogaNode>
     {
-        private IntPtr _cssNode;
+        private IntPtr _ygNode;
         private WeakReference _parent;
         private List<YogaNode> _children;
         private MeasureFunction _measureFunction;
-        private YogaMeasureFunc _cssMeasureFunc;
+        private YogaMeasureFunc _ygMeasureFunc;
         private object _data;
 
         public YogaNode()
         {
             YogaLogger.Initialize();
 
-            _cssNode = Native.CSSNodeNew();
-            if (_cssNode == IntPtr.Zero)
+            _ygNode = Native.YGNodeNew();
+            if (_ygNode == IntPtr.Zero)
             {
                 throw new InvalidOperationException("Failed to allocate native memory");
             }
@@ -37,7 +37,7 @@ namespace Facebook.Yoga
 
         ~YogaNode()
         {
-            Native.CSSNodeFree(_cssNode);
+            Native.YGNodeFree(_ygNode);
         }
 
         public void Reset()
@@ -45,33 +45,33 @@ namespace Facebook.Yoga
             _measureFunction = null;
             _data = null;
 
-            Native.CSSNodeReset(_cssNode);
+            Native.YGNodeReset(_ygNode);
         }
 
         public bool IsDirty
         {
             get
             {
-                return Native.CSSNodeIsDirty(_cssNode);
+                return Native.YGNodeIsDirty(_ygNode);
             }
         }
 
         public virtual void MarkDirty()
         {
-            Native.CSSNodeMarkDirty(_cssNode);
+            Native.YGNodeMarkDirty(_ygNode);
         }
 
         public bool HasNewLayout
         {
             get
             {
-                return Native.CSSNodeGetHasNewLayout(_cssNode);
+                return Native.YGNodeGetHasNewLayout(_ygNode);
             }
         }
 
         public void MarkHasNewLayout()
         {
-            Native.CSSNodeSetHasNewLayout(_cssNode, true);
+            Native.YGNodeSetHasNewLayout(_ygNode, true);
         }
 
         public YogaNode Parent
@@ -92,19 +92,19 @@ namespace Facebook.Yoga
 
         public void CopyStyle(YogaNode srcNode)
         {
-            Native.CSSNodeCopyStyle(_cssNode, srcNode._cssNode);
+            Native.YGNodeCopyStyle(_ygNode, srcNode._ygNode);
         }
 
         public YogaDirection StyleDirection
         {
             get
             {
-                return Native.CSSNodeStyleGetDirection(_cssNode);
+                return Native.YGNodeStyleGetDirection(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetDirection(_cssNode, value);
+                Native.YGNodeStyleSetDirection(_ygNode, value);
             }
         }
 
@@ -112,12 +112,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetFlexDirection(_cssNode);
+                return Native.YGNodeStyleGetFlexDirection(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetFlexDirection(_cssNode, value);
+                Native.YGNodeStyleSetFlexDirection(_ygNode, value);
             }
         }
 
@@ -125,12 +125,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetJustifyContent(_cssNode);
+                return Native.YGNodeStyleGetJustifyContent(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetJustifyContent(_cssNode, value);
+                Native.YGNodeStyleSetJustifyContent(_ygNode, value);
             }
         }
 
@@ -138,12 +138,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetAlignItems(_cssNode);
+                return Native.YGNodeStyleGetAlignItems(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetAlignItems(_cssNode, value);
+                Native.YGNodeStyleSetAlignItems(_ygNode, value);
             }
         }
 
@@ -151,12 +151,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetAlignSelf(_cssNode);
+                return Native.YGNodeStyleGetAlignSelf(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetAlignSelf(_cssNode, value);
+                Native.YGNodeStyleSetAlignSelf(_ygNode, value);
             }
         }
 
@@ -164,12 +164,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetAlignContent(_cssNode);
+                return Native.YGNodeStyleGetAlignContent(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetAlignContent(_cssNode, value);
+                Native.YGNodeStyleSetAlignContent(_ygNode, value);
             }
         }
 
@@ -177,12 +177,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetPositionType(_cssNode);
+                return Native.YGNodeStyleGetPositionType(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetPositionType(_cssNode, value);
+                Native.YGNodeStyleSetPositionType(_ygNode, value);
             }
         }
 
@@ -190,12 +190,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetFlexWrap(_cssNode);
+                return Native.YGNodeStyleGetFlexWrap(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetFlexWrap(_cssNode, value);
+                Native.YGNodeStyleSetFlexWrap(_ygNode, value);
             }
         }
 
@@ -203,7 +203,7 @@ namespace Facebook.Yoga
         {
             set
             {
-                Native.CSSNodeStyleSetFlex(_cssNode, value);
+                Native.YGNodeStyleSetFlex(_ygNode, value);
             }
         }
 
@@ -211,12 +211,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetFlexGrow(_cssNode);
+                return Native.YGNodeStyleGetFlexGrow(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetFlexGrow(_cssNode, value);
+                Native.YGNodeStyleSetFlexGrow(_ygNode, value);
             }
         }
 
@@ -224,12 +224,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetFlexShrink(_cssNode);
+                return Native.YGNodeStyleGetFlexShrink(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetFlexShrink(_cssNode, value);
+                Native.YGNodeStyleSetFlexShrink(_ygNode, value);
             }
         }
 
@@ -237,65 +237,65 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetFlexBasis(_cssNode);
+                return Native.YGNodeStyleGetFlexBasis(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetFlexBasis(_cssNode, value);
+                Native.YGNodeStyleSetFlexBasis(_ygNode, value);
             }
         }
 
         public float GetMargin(YogaEdge edge)
         {
-            return Native.CSSNodeStyleGetMargin(_cssNode, edge);
+            return Native.YGNodeStyleGetMargin(_ygNode, edge);
         }
 
         public void SetMargin(YogaEdge edge, float value)
         {
-            Native.CSSNodeStyleSetMargin(_cssNode, edge, value);
+            Native.YGNodeStyleSetMargin(_ygNode, edge, value);
         }
 
         public float GetPadding(YogaEdge edge)
         {
-            return Native.CSSNodeStyleGetPadding(_cssNode, edge);
+            return Native.YGNodeStyleGetPadding(_ygNode, edge);
         }
 
         public void SetPadding(YogaEdge edge, float padding)
         {
-            Native.CSSNodeStyleSetPadding(_cssNode, edge, padding);
+            Native.YGNodeStyleSetPadding(_ygNode, edge, padding);
         }
 
         public float GetBorder(YogaEdge edge)
         {
-            return Native.CSSNodeStyleGetBorder(_cssNode, edge);
+            return Native.YGNodeStyleGetBorder(_ygNode, edge);
         }
 
         public void SetBorder(YogaEdge edge, float border)
         {
-            Native.CSSNodeStyleSetBorder(_cssNode, edge, border);
+            Native.YGNodeStyleSetBorder(_ygNode, edge, border);
         }
 
         public float GetPosition(YogaEdge edge)
         {
-            return Native.CSSNodeStyleGetPosition(_cssNode, edge);
+            return Native.YGNodeStyleGetPosition(_ygNode, edge);
         }
 
         public void SetPosition(YogaEdge edge, float position)
         {
-            Native.CSSNodeStyleSetPosition(_cssNode, edge, position);
+            Native.YGNodeStyleSetPosition(_ygNode, edge, position);
         }
 
         public float Width
         {
             get
             {
-                return Native.CSSNodeStyleGetWidth(_cssNode);
+                return Native.YGNodeStyleGetWidth(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetWidth(_cssNode, value);
+                Native.YGNodeStyleSetWidth(_ygNode, value);
             }
         }
 
@@ -303,12 +303,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetHeight(_cssNode);
+                return Native.YGNodeStyleGetHeight(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetHeight(_cssNode, value);
+                Native.YGNodeStyleSetHeight(_ygNode, value);
             }
         }
 
@@ -316,12 +316,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetMaxWidth(_cssNode);
+                return Native.YGNodeStyleGetMaxWidth(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetMaxWidth(_cssNode, value);
+                Native.YGNodeStyleSetMaxWidth(_ygNode, value);
             }
         }
 
@@ -329,12 +329,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetMaxHeight(_cssNode);
+                return Native.YGNodeStyleGetMaxHeight(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetMaxHeight(_cssNode, value);
+                Native.YGNodeStyleSetMaxHeight(_ygNode, value);
             }
         }
 
@@ -342,12 +342,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetMinWidth(_cssNode);
+                return Native.YGNodeStyleGetMinWidth(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetMinWidth(_cssNode, value);
+                Native.YGNodeStyleSetMinWidth(_ygNode, value);
             }
         }
 
@@ -355,12 +355,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetMinHeight(_cssNode);
+                return Native.YGNodeStyleGetMinHeight(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetMinHeight(_cssNode, value);
+                Native.YGNodeStyleSetMinHeight(_ygNode, value);
             }
         }
 
@@ -368,12 +368,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetAspectRatio(_cssNode);
+                return Native.YGNodeStyleGetAspectRatio(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetAspectRatio(_cssNode, value);
+                Native.YGNodeStyleSetAspectRatio(_ygNode, value);
             }
         }
 
@@ -381,7 +381,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeLayoutGetLeft(_cssNode);
+                return Native.YGNodeLayoutGetLeft(_ygNode);
             }
         }
 
@@ -389,7 +389,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeLayoutGetTop(_cssNode);
+                return Native.YGNodeLayoutGetTop(_ygNode);
             }
         }
 
@@ -397,7 +397,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeLayoutGetWidth(_cssNode);
+                return Native.YGNodeLayoutGetWidth(_ygNode);
             }
         }
 
@@ -405,7 +405,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeLayoutGetHeight(_cssNode);
+                return Native.YGNodeLayoutGetHeight(_ygNode);
             }
         }
 
@@ -413,7 +413,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeLayoutGetDirection(_cssNode);
+                return Native.YGNodeLayoutGetDirection(_ygNode);
             }
         }
 
@@ -421,12 +421,12 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.CSSNodeStyleGetOverflow(_cssNode);
+                return Native.YGNodeStyleGetOverflow(_ygNode);
             }
 
             set
             {
-                Native.CSSNodeStyleSetOverflow(_cssNode, value);
+                Native.YGNodeStyleSetOverflow(_ygNode, value);
             }
         }
 
@@ -461,7 +461,7 @@ namespace Facebook.Yoga
 
         public void MarkLayoutSeen()
         {
-            Native.CSSNodeSetHasNewLayout(_cssNode, false);
+            Native.YGNodeSetHasNewLayout(_ygNode, false);
         }
 
         public bool ValuesEqual(float f1, float f2)
@@ -482,7 +482,7 @@ namespace Facebook.Yoga
             }
             _children.Insert(index, node);
             node._parent = new WeakReference(this);
-            Native.CSSNodeInsertChild(_cssNode, node._cssNode, (uint)index);
+            Native.YGNodeInsertChild(_ygNode, node._ygNode, (uint)index);
         }
 
         public void RemoveAt(int index)
@@ -490,7 +490,7 @@ namespace Facebook.Yoga
             var child = _children[index];
             child._parent = null;
             _children.RemoveAt(index);
-            Native.CSSNodeRemoveChild(_cssNode, child._cssNode);
+            Native.YGNodeRemoveChild(_ygNode, child._ygNode);
         }
 
         public void Clear()
@@ -512,17 +512,17 @@ namespace Facebook.Yoga
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
             _measureFunction = measureFunction;
-            _cssMeasureFunc = measureFunction != null ? MeasureInternal : (YogaMeasureFunc)null;
-            Native.CSSNodeSetMeasureFunc(_cssNode, _cssMeasureFunc);
+            _ygMeasureFunc = measureFunction != null ? MeasureInternal : (YogaMeasureFunc)null;
+            Native.YGNodeSetMeasureFunc(_ygNode, _ygMeasureFunc);
         }
 
         public void CalculateLayout()
         {
-            Native.CSSNodeCalculateLayout(
-                _cssNode,
+            Native.YGNodeCalculateLayout(
+                _ygNode,
                 YogaConstants.Undefined,
                 YogaConstants.Undefined,
-                Native.CSSNodeStyleGetDirection(_cssNode));
+                Native.YGNodeStyleGetDirection(_ygNode));
         }
 
         private YogaSize MeasureInternal(
@@ -547,7 +547,7 @@ namespace Facebook.Yoga
             StringBuilder sb = new StringBuilder();
             YogaLogger.Func orig = YogaLogger.Logger;
             YogaLogger.Logger = (level, message) => {sb.Append(message);};
-            Native.CSSNodePrint(_cssNode, options);
+            Native.YGNodePrint(_ygNode, options);
             YogaLogger.Logger = orig;
             return sb.ToString();
         }
@@ -566,19 +566,19 @@ namespace Facebook.Yoga
 
         public static int GetInstanceCount()
         {
-            return Native.CSSNodeGetInstanceCount();
+            return Native.YGNodeGetInstanceCount();
         }
 
         public static void SetExperimentalFeatureEnabled(
             YogaExperimentalFeature feature,
             bool enabled)
         {
-            Native.CSSLayoutSetExperimentalFeatureEnabled(feature, enabled);
+            Native.YGSetExperimentalFeatureEnabled(feature, enabled);
         }
 
         public static bool IsExperimentalFeatureEnabled(YogaExperimentalFeature feature)
         {
-            return Native.CSSLayoutIsExperimentalFeatureEnabled(feature);
+            return Native.YGIsExperimentalFeatureEnabled(feature);
         }
     }
 }

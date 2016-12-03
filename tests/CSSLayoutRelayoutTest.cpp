@@ -7,25 +7,25 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 #include <gtest/gtest.h>
 
-TEST(CSSLayoutTest, dont_cache_computed_flex_basis_between_layouts) {
-  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
+TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
+  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
 
-  const CSSNodeRef root = CSSNodeNew();
+  const YGNodeRef root = YGNodeNew();
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetHeight(root_child0, 10);
-  CSSNodeStyleSetFlexBasis(root_child0, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 10);
+  YGNodeStyleSetFlexBasis(root_child0, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, 100, YGUndefined, YGDirectionLTR);
-  CSSNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
+  YGNodeCalculateLayout(root, 100, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
 
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, false);
+  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, false);
 }

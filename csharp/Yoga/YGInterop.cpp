@@ -23,5 +23,5 @@ static int unmanagedLogger(YGLogLevel level, const char *format, va_list args) {
 
 void YGInteropSetLogger(YGInteropLoggerFunc managedFunc) {
   gManagedFunc = managedFunc;
-  CSSLayoutSetLogger(&unmanagedLogger);
+  YGSetLogger(&unmanagedLogger);
 }

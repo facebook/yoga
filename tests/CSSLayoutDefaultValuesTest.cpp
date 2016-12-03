@@ -7,70 +7,70 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 #include <gtest/gtest.h>
 
-TEST(CSSLayoutTest, assert_default_values) {
-  const CSSNodeRef root = CSSNodeNew();
+TEST(YogaTest, assert_default_values) {
+  const YGNodeRef root = YGNodeNew();
 
-  ASSERT_EQ(0, CSSNodeChildCount(root));
-  ASSERT_EQ(NULL, CSSNodeGetChild(root, 1));
+  ASSERT_EQ(0, YGNodeChildCount(root));
+  ASSERT_EQ(NULL, YGNodeGetChild(root, 1));
 
-  ASSERT_EQ(YGDirectionInherit, CSSNodeStyleGetDirection(root));
-  ASSERT_EQ(YGFlexDirectionColumn, CSSNodeStyleGetFlexDirection(root));
-  ASSERT_EQ(YGJustifyFlexStart, CSSNodeStyleGetJustifyContent(root));
-  ASSERT_EQ(YGAlignFlexStart, CSSNodeStyleGetAlignContent(root));
-  ASSERT_EQ(YGAlignStretch, CSSNodeStyleGetAlignItems(root));
-  ASSERT_EQ(YGAlignAuto, CSSNodeStyleGetAlignSelf(root));
-  ASSERT_EQ(YGPositionTypeRelative, CSSNodeStyleGetPositionType(root));
-  ASSERT_EQ(YGWrapNoWrap, CSSNodeStyleGetFlexWrap(root));
-  ASSERT_EQ(YGOverflowVisible, CSSNodeStyleGetOverflow(root));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetFlexGrow(root));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetFlexShrink(root));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetFlexBasis(root)));
+  ASSERT_EQ(YGDirectionInherit, YGNodeStyleGetDirection(root));
+  ASSERT_EQ(YGFlexDirectionColumn, YGNodeStyleGetFlexDirection(root));
+  ASSERT_EQ(YGJustifyFlexStart, YGNodeStyleGetJustifyContent(root));
+  ASSERT_EQ(YGAlignFlexStart, YGNodeStyleGetAlignContent(root));
+  ASSERT_EQ(YGAlignStretch, YGNodeStyleGetAlignItems(root));
+  ASSERT_EQ(YGAlignAuto, YGNodeStyleGetAlignSelf(root));
+  ASSERT_EQ(YGPositionTypeRelative, YGNodeStyleGetPositionType(root));
+  ASSERT_EQ(YGWrapNoWrap, YGNodeStyleGetFlexWrap(root));
+  ASSERT_EQ(YGOverflowVisible, YGNodeStyleGetOverflow(root));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexGrow(root));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexShrink(root));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetFlexBasis(root)));
 
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetPosition(root, YGEdgeLeft)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetPosition(root, YGEdgeTop)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetPosition(root, YGEdgeRight)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetPosition(root, YGEdgeBottom)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetPosition(root, YGEdgeStart)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetPosition(root, YGEdgeEnd)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetPosition(root, YGEdgeLeft)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetPosition(root, YGEdgeTop)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetPosition(root, YGEdgeRight)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetPosition(root, YGEdgeBottom)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetPosition(root, YGEdgeStart)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetPosition(root, YGEdgeEnd)));
 
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetMargin(root, YGEdgeLeft));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetMargin(root, YGEdgeTop));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetMargin(root, YGEdgeRight));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetMargin(root, YGEdgeBottom));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetMargin(root, YGEdgeStart)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetMargin(root, YGEdgeEnd)));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeLeft));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeTop));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeRight));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeBottom));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetMargin(root, YGEdgeStart)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetMargin(root, YGEdgeEnd)));
 
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetPadding(root, YGEdgeLeft));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetPadding(root, YGEdgeTop));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetPadding(root, YGEdgeRight));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetPadding(root, YGEdgeBottom));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetPadding(root, YGEdgeStart)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetPadding(root, YGEdgeEnd)));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeLeft));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeTop));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeRight));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeBottom));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetPadding(root, YGEdgeStart)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetPadding(root, YGEdgeEnd)));
 
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetBorder(root, YGEdgeLeft));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetBorder(root, YGEdgeTop));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetBorder(root, YGEdgeRight));
-  ASSERT_FLOAT_EQ(0, CSSNodeStyleGetBorder(root, YGEdgeBottom));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetBorder(root, YGEdgeStart)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetBorder(root, YGEdgeEnd)));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeLeft));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeTop));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeRight));
+  ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeBottom));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetBorder(root, YGEdgeStart)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetBorder(root, YGEdgeEnd)));
 
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetWidth(root)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetHeight(root)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetMinWidth(root)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetMinHeight(root)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetMaxWidth(root)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetMaxHeight(root)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetWidth(root)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetHeight(root)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetMinWidth(root)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetMinHeight(root)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetMaxWidth(root)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetMaxHeight(root)));
 
-  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetLeft(root));
-  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetTop(root));
-  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetRight(root));
-  ASSERT_FLOAT_EQ(0, CSSNodeLayoutGetBottom(root));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeLayoutGetWidth(root)));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeLayoutGetHeight(root)));
-  ASSERT_EQ(YGDirectionInherit, CSSNodeLayoutGetDirection(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetRight(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetBottom(root));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeLayoutGetWidth(root)));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeLayoutGetHeight(root)));
+  ASSERT_EQ(YGDirectionInherit, YGNodeLayoutGetDirection(root));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }

@@ -7,54 +7,54 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 #include <gtest/gtest.h>
 
-TEST(CSSLayoutTest, copy_style_same) {
-  const CSSNodeRef node0 = CSSNodeNew();
-  const CSSNodeRef node1 = CSSNodeNew();
-  ASSERT_FALSE(CSSNodeIsDirty(node0));
+TEST(YogaTest, copy_style_same) {
+  const YGNodeRef node0 = YGNodeNew();
+  const YGNodeRef node1 = YGNodeNew();
+  ASSERT_FALSE(YGNodeIsDirty(node0));
 
-  CSSNodeCopyStyle(node0, node1);
-  ASSERT_FALSE(CSSNodeIsDirty(node0));
+  YGNodeCopyStyle(node0, node1);
+  ASSERT_FALSE(YGNodeIsDirty(node0));
 
-  CSSNodeFree(node0);
-  CSSNodeFree(node1);
+  YGNodeFree(node0);
+  YGNodeFree(node1);
 }
 
-TEST(CSSLayoutTest, copy_style_modified) {
-  const CSSNodeRef node0 = CSSNodeNew();
-  ASSERT_FALSE(CSSNodeIsDirty(node0));
-  ASSERT_EQ(YGFlexDirectionColumn, CSSNodeStyleGetFlexDirection(node0));
-  ASSERT_TRUE(CSSValueIsUndefined(CSSNodeStyleGetMaxHeight(node0)));
+TEST(YogaTest, copy_style_modified) {
+  const YGNodeRef node0 = YGNodeNew();
+  ASSERT_FALSE(YGNodeIsDirty(node0));
+  ASSERT_EQ(YGFlexDirectionColumn, YGNodeStyleGetFlexDirection(node0));
+  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetMaxHeight(node0)));
 
-  const CSSNodeRef node1 = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
-  CSSNodeStyleSetMaxHeight(node1, 10);
+  const YGNodeRef node1 = YGNodeNew();
+  YGNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
+  YGNodeStyleSetMaxHeight(node1, 10);
 
-  CSSNodeCopyStyle(node0, node1);
-  ASSERT_TRUE(CSSNodeIsDirty(node0));
-  ASSERT_EQ(YGFlexDirectionRow, CSSNodeStyleGetFlexDirection(node0));
-  ASSERT_FLOAT_EQ(10, CSSNodeStyleGetMaxHeight(node0));
+  YGNodeCopyStyle(node0, node1);
+  ASSERT_TRUE(YGNodeIsDirty(node0));
+  ASSERT_EQ(YGFlexDirectionRow, YGNodeStyleGetFlexDirection(node0));
+  ASSERT_FLOAT_EQ(10, YGNodeStyleGetMaxHeight(node0));
 
-  CSSNodeFree(node0);
-  CSSNodeFree(node1);
+  YGNodeFree(node0);
+  YGNodeFree(node1);
 }
 
-TEST(CSSLayoutTest, copy_style_modified_same) {
-  const CSSNodeRef node0 = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(node0, YGFlexDirectionRow);
-  CSSNodeStyleSetMaxHeight(node0, 10);
-  CSSNodeCalculateLayout(node0, YGUndefined, YGUndefined, YGDirectionLTR);
-  ASSERT_FALSE(CSSNodeIsDirty(node0));
+TEST(YogaTest, copy_style_modified_same) {
+  const YGNodeRef node0 = YGNodeNew();
+  YGNodeStyleSetFlexDirection(node0, YGFlexDirectionRow);
+  YGNodeStyleSetMaxHeight(node0, 10);
+  YGNodeCalculateLayout(node0, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FALSE(YGNodeIsDirty(node0));
 
-  const CSSNodeRef node1 = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
-  CSSNodeStyleSetMaxHeight(node1, 10);
+  const YGNodeRef node1 = YGNodeNew();
+  YGNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
+  YGNodeStyleSetMaxHeight(node1, 10);
 
-  CSSNodeCopyStyle(node0, node1);
-  ASSERT_FALSE(CSSNodeIsDirty(node0));
+  YGNodeCopyStyle(node0, node1);
+  ASSERT_FALSE(YGNodeIsDirty(node0));
 
-  CSSNodeFree(node0);
-  CSSNodeFree(node1);
+  YGNodeFree(node0);
+  YGNodeFree(node1);
 }

@@ -87,7 +87,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CSSLAYOUT_EXPORTS;CSS_ASSERT_FAIL_ENABLED;FB_ASSERTIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;YOGA_EXPORTS;FB_ASSERTIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -102,7 +102,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;CSSLAYOUT_EXPORTS;CSS_ASSERT_FAIL_ENABLED;FB_ASSERTIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;YOGA_EXPORTS;FB_ASSERTIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -119,7 +119,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CSSLAYOUT_EXPORTS;CSS_ASSERT_FAIL_ENABLED;FB_ASSERTIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;YOGA_EXPORTS;FB_ASSERTIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -138,7 +138,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;CSSLAYOUT_EXPORTS;CSS_ASSERT_FAIL_ENABLED;FB_ASSERTIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;YOGA_EXPORTS;FB_ASSERTIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -150,16 +150,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\CSSLayout\CSSLayout.h" />
-    <ClInclude Include="..\..\CSSLayout\CSSMacros.h" />
-    <ClInclude Include="..\..\CSSLayout\CSSNodeList.h" />
+    <ClInclude Include="..\..\CSSLayout\Yoga.h" />
+    <ClInclude Include="..\..\CSSLayout\YGMacros.h" />
+    <ClInclude Include="..\..\CSSLayout\YGNodeList.h" />
     <ClInclude Include="YGInterop.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\CSSLayout\CSSLayout.c" />
-    <ClCompile Include="..\..\CSSLayout\CSSNodeList.c" />
+    <ClCompile Include="..\..\CSSLayout\Yoga.c" />
+    <ClCompile Include="..\..\CSSLayout\YGNodeList.c" />
     <ClCompile Include="YGInterop.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

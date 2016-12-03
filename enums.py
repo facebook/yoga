@@ -114,7 +114,7 @@ def to_java_upper(symbol):
 root = os.path.dirname(__file__)
 
 # write out C header
-with open(root + '/CSSLayout/CSSEnums.h', 'w') as f:
+with open(root + '/CSSLayout/YGEnums.h', 'w') as f:
     f.write(LICENSE)
     remaining = len(ENUMS)
     for name, values in ENUMS.items():

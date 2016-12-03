@@ -9,14 +9,14 @@
 
 #include "YGBenchmark.h"
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 
-static CSSSize _measure(CSSNodeRef node,
+static YGSize _measure(YGNodeRef node,
                         float width,
                         YGMeasureMode widthMode,
                         float height,
                         YGMeasureMode heightMode) {
-  return (CSSSize){
+  return (YGSize){
       .width = widthMode == YGMeasureModeUndefined ? 10 : width,
       .height = heightMode == YGMeasureModeUndefined ? 10 : width,
   };
@@ -25,94 +25,94 @@ static CSSSize _measure(CSSNodeRef node,
 YGBENCHMARKS({
 
   YGBENCHMARK("Stack with flex", {
-    const CSSNodeRef root = CSSNodeNew();
-    CSSNodeStyleSetWidth(root, 100);
-    CSSNodeStyleSetHeight(root, 100);
+    const YGNodeRef root = YGNodeNew();
+    YGNodeStyleSetWidth(root, 100);
+    YGNodeStyleSetHeight(root, 100);
 
     for (uint32_t i = 0; i < 10; i++) {
-      const CSSNodeRef child = CSSNodeNew();
-      CSSNodeSetMeasureFunc(child, _measure);
-      CSSNodeStyleSetFlex(child, 1);
-      CSSNodeInsertChild(root, child, 0);
+      const YGNodeRef child = YGNodeNew();
+      YGNodeSetMeasureFunc(child, _measure);
+      YGNodeStyleSetFlex(child, 1);
+      YGNodeInsertChild(root, child, 0);
     }
 
-    CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-    CSSNodeFreeRecursive(root);
+    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+    YGNodeFreeRecursive(root);
   });
 
   YGBENCHMARK("Align stretch in undefined axis", {
-    const CSSNodeRef root = CSSNodeNew();
+    const YGNodeRef root = YGNodeNew();
 
     for (uint32_t i = 0; i < 10; i++) {
-      const CSSNodeRef child = CSSNodeNew();
-      CSSNodeStyleSetHeight(child, 20);
-      CSSNodeSetMeasureFunc(child, _measure);
-      CSSNodeInsertChild(root, child, 0);
+      const YGNodeRef child = YGNodeNew();
+      YGNodeStyleSetHeight(child, 20);
+      YGNodeSetMeasureFunc(child, _measure);
+      YGNodeInsertChild(root, child, 0);
     }
 
-    CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-    CSSNodeFreeRecursive(root);
+    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+    YGNodeFreeRecursive(root);
   });
 
   YGBENCHMARK("Nested flex", {
-    const CSSNodeRef root = CSSNodeNew();
+    const YGNodeRef root = YGNodeNew();
 
     for (uint32_t i = 0; i < 10; i++) {
-      const CSSNodeRef child = CSSNodeNew();
-      CSSNodeStyleSetFlex(child, 1);
-      CSSNodeInsertChild(root, child, 0);
+      const YGNodeRef child = YGNodeNew();
+      YGNodeStyleSetFlex(child, 1);
+      YGNodeInsertChild(root, child, 0);
 
       for (uint32_t ii = 0; ii < 10; ii++) {
-        const CSSNodeRef grandChild = CSSNodeNew();
-        CSSNodeSetMeasureFunc(grandChild, _measure);
-        CSSNodeStyleSetFlex(grandChild, 1);
-        CSSNodeInsertChild(child, grandChild, 0);
+        const YGNodeRef grandChild = YGNodeNew();
+        YGNodeSetMeasureFunc(grandChild, _measure);
+        YGNodeStyleSetFlex(grandChild, 1);
+        YGNodeInsertChild(child, grandChild, 0);
       }
     }
 
-    CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-    CSSNodeFreeRecursive(root);
+    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+    YGNodeFreeRecursive(root);
   });
 
   YGBENCHMARK("Huge nested layout", {
-    const CSSNodeRef root = CSSNodeNew();
+    const YGNodeRef root = YGNodeNew();
 
     for (uint32_t i = 0; i < 10; i++) {
-      const CSSNodeRef child = CSSNodeNew();
-      CSSNodeStyleSetFlexGrow(child, 1);
-      CSSNodeStyleSetWidth(child, 10);
-      CSSNodeStyleSetHeight(child, 10);
-      CSSNodeInsertChild(root, child, 0);
+      const YGNodeRef child = YGNodeNew();
+      YGNodeStyleSetFlexGrow(child, 1);
+      YGNodeStyleSetWidth(child, 10);
+      YGNodeStyleSetHeight(child, 10);
+      YGNodeInsertChild(root, child, 0);
 
       for (uint32_t ii = 0; ii < 10; ii++) {
-        const CSSNodeRef grandChild = CSSNodeNew();
-        CSSNodeStyleSetFlexDirection(grandChild, YGFlexDirectionRow);
-        CSSNodeStyleSetFlexGrow(grandChild, 1);
-        CSSNodeStyleSetWidth(grandChild, 10);
-        CSSNodeStyleSetHeight(grandChild, 10);
-        CSSNodeInsertChild(child, grandChild, 0);
+        const YGNodeRef grandChild = YGNodeNew();
+        YGNodeStyleSetFlexDirection(grandChild, YGFlexDirectionRow);
+        YGNodeStyleSetFlexGrow(grandChild, 1);
+        YGNodeStyleSetWidth(grandChild, 10);
+        YGNodeStyleSetHeight(grandChild, 10);
+        YGNodeInsertChild(child, grandChild, 0);
 
         for (uint32_t iii = 0; iii < 10; iii++) {
-          const CSSNodeRef grandGrandChild = CSSNodeNew();
-          CSSNodeStyleSetFlexGrow(grandGrandChild, 1);
-          CSSNodeStyleSetWidth(grandGrandChild, 10);
-          CSSNodeStyleSetHeight(grandGrandChild, 10);
-          CSSNodeInsertChild(grandChild, grandGrandChild, 0);
+          const YGNodeRef grandGrandChild = YGNodeNew();
+          YGNodeStyleSetFlexGrow(grandGrandChild, 1);
+          YGNodeStyleSetWidth(grandGrandChild, 10);
+          YGNodeStyleSetHeight(grandGrandChild, 10);
+          YGNodeInsertChild(grandChild, grandGrandChild, 0);
 
           for (uint32_t iii = 0; iii < 10; iii++) {
-            const CSSNodeRef grandGrandGrandChild = CSSNodeNew();
-            CSSNodeStyleSetFlexDirection(grandGrandGrandChild, YGFlexDirectionRow);
-            CSSNodeStyleSetFlexGrow(grandGrandGrandChild, 1);
-            CSSNodeStyleSetWidth(grandGrandGrandChild, 10);
-            CSSNodeStyleSetHeight(grandGrandGrandChild, 10);
-            CSSNodeInsertChild(grandGrandChild, grandGrandGrandChild, 0);
+            const YGNodeRef grandGrandGrandChild = YGNodeNew();
+            YGNodeStyleSetFlexDirection(grandGrandGrandChild, YGFlexDirectionRow);
+            YGNodeStyleSetFlexGrow(grandGrandGrandChild, 1);
+            YGNodeStyleSetWidth(grandGrandGrandChild, 10);
+            YGNodeStyleSetHeight(grandGrandGrandChild, 10);
+            YGNodeInsertChild(grandGrandChild, grandGrandGrandChild, 0);
           }
         }
       }
     }
 
-    CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-    CSSNodeFreeRecursive(root);
+    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+    YGNodeFreeRecursive(root);
   });
 
 });

@@ -7,157 +7,157 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 #include <gtest/gtest.h>
 
-TEST(CSSLayoutTest, start_overrides) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, start_overrides) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeStart, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeRight, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetMargin(root_child0, YGEdgeStart, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
+  YGNodeStyleSetMargin(root_child0, YGEdgeRight, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetRight(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetRight(root_child0));
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetRight(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetRight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, end_overrides) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, end_overrides) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeEnd, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeRight, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetMargin(root_child0, YGEdgeEnd, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
+  YGNodeStyleSetMargin(root_child0, YGEdgeRight, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetRight(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetRight(root_child0));
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetRight(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetRight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, horizontal_overridden) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, horizontal_overridden) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeHorizontal, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetMargin(root_child0, YGEdgeHorizontal, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetRight(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetRight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, vertical_overridden) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, vertical_overridden) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeVertical, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeTop, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetMargin(root_child0, YGEdgeVertical, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeTop, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetBottom(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetBottom(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, horizontal_overrides_all) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, horizontal_overrides_all) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeHorizontal, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeAll, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetMargin(root_child0, YGEdgeHorizontal, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeAll, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetRight(root_child0));
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetBottom(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetRight(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetBottom(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, vertical_overrides_all) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, vertical_overrides_all) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeVertical, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeAll, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetMargin(root_child0, YGEdgeVertical, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeAll, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(20, CSSNodeLayoutGetRight(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetBottom(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetRight(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetBottom(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, all_overridden) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, all_overridden) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetFlexGrow(root_child0, 1);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeLeft, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeTop, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeRight, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeBottom, 10);
-  CSSNodeStyleSetMargin(root_child0, YGEdgeAll, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeTop, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeRight, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeBottom, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeAll, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetRight(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetBottom(root_child0));
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetRight(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetBottom(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }

@@ -8,9 +8,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <CSSLayout/CSSLayout.h>
+#import <CSSLayout/Yoga.h>
 
-@interface UIView (CSSLayout)
+@interface UIView (Yoga)
 
 /**
   The property that decides if we should include this view when calculating layout. Defaults to YES.

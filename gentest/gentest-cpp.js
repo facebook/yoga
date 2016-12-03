@@ -20,38 +20,38 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue:{value:function() {
     this.push([
-      '#include <CSSLayout/CSSLayout.h>',
+      '#include <CSSLayout/Yoga.h>',
       '#include <gtest/gtest.h>',
       '',
     ]);
   }},
 
   emitTestPrologue:{value:function(name, experiments) {
-    this.push('TEST(CSSLayoutTest, ' + name + ') {');
+    this.push('TEST(YogaTest, ' + name + ') {');
     this.pushIndent();
 
     if (experiments.length > 0) {
       for (var i in experiments) {
-        this.push('CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', true);');
+        this.push('YGSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', true);');
       }
       this.push('');
     }
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('const CSSNodeRef ' + nodeName + ' = CSSNodeNew();');
+    this.push('const YGNodeRef ' + nodeName + ' = YGNodeNew();');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
     this.push([
       '',
-      'CSSNodeFreeRecursive(root);',
+      'YGNodeFreeRecursive(root);',
     ]);
 
     if (experiments.length > 0) {
       this.push('');
       for (var i in experiments) {
-        this.push('CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', false);');
+        this.push('YGSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', false);');
       }
     }
 
@@ -109,114 +109,114 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGUndefined:{value:'YGUndefined'},
 
   CSSNodeCalculateLayout:{value:function(node, dir) {
-    this.push('CSSNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
+    this.push('YGNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
   }},
 
   CSSNodeInsertChild:{value:function(parentName, nodeName, index) {
-    this.push('CSSNodeInsertChild(' + parentName + ', ' + nodeName + ', ' + index + ');');
+    this.push('YGNodeInsertChild(' + parentName + ', ' + nodeName + ', ' + index + ');');
   }},
 
   CSSNodeLayoutGetLeft:{value:function(nodeName) {
-    return 'CSSNodeLayoutGetLeft(' + nodeName + ')';
+    return 'YGNodeLayoutGetLeft(' + nodeName + ')';
   }},
 
   CSSNodeLayoutGetTop:{value:function(nodeName) {
-    return 'CSSNodeLayoutGetTop(' + nodeName + ')';
+    return 'YGNodeLayoutGetTop(' + nodeName + ')';
   }},
 
   CSSNodeLayoutGetWidth:{value:function(nodeName) {
-    return 'CSSNodeLayoutGetWidth(' + nodeName + ')';
+    return 'YGNodeLayoutGetWidth(' + nodeName + ')';
   }},
 
   CSSNodeLayoutGetHeight:{value:function(nodeName) {
-    return 'CSSNodeLayoutGetHeight(' + nodeName + ')';
+    return 'YGNodeLayoutGetHeight(' + nodeName + ')';
   }},
 
   CSSNodeStyleSetAlignContent:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetAlignContent(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetAlignContent(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetAlignItems:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetAlignItems(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetAlignItems(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetAlignSelf:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetAlignSelf(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetAlignSelf(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetBorder(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetBorder(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetDirection:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetDirection(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetDirection(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexBasis(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetFlexBasis(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetFlexDirection:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexDirection(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetFlexDirection(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexGrow(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetFlexGrow(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexShrink(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetFlexShrink(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetFlexWrap:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetFlexWrap(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetFlexWrap(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetHeight(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetHeight(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetJustifyContent:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetJustifyContent(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetJustifyContent(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetMargin(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetMargin(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMaxHeight(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetMaxHeight(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMaxWidth(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetMaxWidth(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMinHeight(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetMinHeight(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetMinWidth(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetMinWidth(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetOverflow:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetOverflow(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetOverflow(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetPadding(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetPadding(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push('CSSNodeStyleSetPosition(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetPosition(' + nodeName + ', ' + edge + ', ' + toFloatString(value) + ');');
   }},
 
   CSSNodeStyleSetPositionType:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetPositionType(' + nodeName + ', ' + value + ');');
+    this.push('YGNodeStyleSetPositionType(' + nodeName + ', ' + value + ');');
   }},
 
   CSSNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push('CSSNodeStyleSetWidth(' + nodeName + ', ' + toFloatString(value) + ');');
+    this.push('YGNodeStyleSetWidth(' + nodeName + ', ' + toFloatString(value) + ');');
   }},
 });

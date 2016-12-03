@@ -7,90 +7,90 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 #include <gtest/gtest.h>
 
-TEST(CSSLayoutTest, dirty_propagation) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, dirty_propagation) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 50);
-  CSSNodeStyleSetHeight(root_child0, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  const CSSNodeRef root_child1 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child1, 50);
-  CSSNodeStyleSetHeight(root_child1, 20);
-  CSSNodeInsertChild(root, root_child1, 1);
+  const YGNodeRef root_child1 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child1, 50);
+  YGNodeStyleSetHeight(root_child1, 20);
+  YGNodeInsertChild(root, root_child1, 1);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  CSSNodeStyleSetWidth(root_child0, 20);
+  YGNodeStyleSetWidth(root_child0, 20);
 
-  EXPECT_TRUE(CSSNodeIsDirty(root_child0));
-  EXPECT_FALSE(CSSNodeIsDirty(root_child1));
-  EXPECT_TRUE(CSSNodeIsDirty(root));
+  EXPECT_TRUE(YGNodeIsDirty(root_child0));
+  EXPECT_FALSE(YGNodeIsDirty(root_child1));
+  EXPECT_TRUE(YGNodeIsDirty(root));
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  EXPECT_FALSE(CSSNodeIsDirty(root_child0));
-  EXPECT_FALSE(CSSNodeIsDirty(root_child1));
-  EXPECT_FALSE(CSSNodeIsDirty(root));
+  EXPECT_FALSE(YGNodeIsDirty(root_child0));
+  EXPECT_FALSE(YGNodeIsDirty(root_child1));
+  EXPECT_FALSE(YGNodeIsDirty(root));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, dirty_propagation_only_if_prop_changed) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 100);
-  CSSNodeStyleSetHeight(root, 100);
+TEST(YogaTest, dirty_propagation_only_if_prop_changed) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child0, 50);
-  CSSNodeStyleSetHeight(root_child0, 20);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, 20);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  const CSSNodeRef root_child1 = CSSNodeNew();
-  CSSNodeStyleSetWidth(root_child1, 50);
-  CSSNodeStyleSetHeight(root_child1, 20);
-  CSSNodeInsertChild(root, root_child1, 1);
+  const YGNodeRef root_child1 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child1, 50);
+  YGNodeStyleSetHeight(root_child1, 20);
+  YGNodeInsertChild(root, root_child1, 1);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  CSSNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetWidth(root_child0, 50);
 
-  EXPECT_FALSE(CSSNodeIsDirty(root_child0));
-  EXPECT_FALSE(CSSNodeIsDirty(root_child1));
-  EXPECT_FALSE(CSSNodeIsDirty(root));
+  EXPECT_FALSE(YGNodeIsDirty(root_child0));
+  EXPECT_FALSE(YGNodeIsDirty(root_child1));
+  EXPECT_FALSE(YGNodeIsDirty(root));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }
 
-TEST(CSSLayoutTest, dirty_node_only_if_children_are_actually_removed) {
-  const CSSNodeRef root = CSSNodeNew();
-  CSSNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  CSSNodeStyleSetWidth(root, 50);
-  CSSNodeStyleSetHeight(root, 50);
+TEST(YogaTest, dirty_node_only_if_children_are_actually_removed) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 50);
+  YGNodeStyleSetHeight(root, 50);
 
-  const CSSNodeRef child0 = CSSNodeNew();
-  CSSNodeStyleSetWidth(child0, 50);
-  CSSNodeStyleSetHeight(child0, 25);
-  CSSNodeInsertChild(root, child0, 0);
+  const YGNodeRef child0 = YGNodeNew();
+  YGNodeStyleSetWidth(child0, 50);
+  YGNodeStyleSetHeight(child0, 25);
+  YGNodeInsertChild(root, child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  const CSSNodeRef child1 = CSSNodeNew();
-  CSSNodeRemoveChild(root, child1);
-  EXPECT_FALSE(CSSNodeIsDirty(root));
-  CSSNodeFree(child1);
+  const YGNodeRef child1 = YGNodeNew();
+  YGNodeRemoveChild(root, child1);
+  EXPECT_FALSE(YGNodeIsDirty(root));
+  YGNodeFree(child1);
 
-  CSSNodeRemoveChild(root, child0);
-  EXPECT_TRUE(CSSNodeIsDirty(root));
-  CSSNodeFree(child0);
+  YGNodeRemoveChild(root, child0);
+  EXPECT_TRUE(YGNodeIsDirty(root));
+  YGNodeFree(child0);
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 }

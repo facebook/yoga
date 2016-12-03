@@ -18,9 +18,9 @@ public class CSSNodeTest {
 
   @Test
   public void testInit() {
-    final int refCount = CSSNode.jni_CSSNodeGetInstanceCount();
+    final int refCount = CSSNode.jni_YGNodeGetInstanceCount();
     final CSSNode node = new CSSNode();
-    assertEquals(refCount + 1, CSSNode.jni_CSSNodeGetInstanceCount());
+    assertEquals(refCount + 1, CSSNode.jni_YGNodeGetInstanceCount());
   }
 
   @Test
@@ -52,7 +52,7 @@ public class CSSNodeTest {
           mLogMessage = message;
         }
     });
-    CSSNode.jni_CSSLog(YogaLogLevel.DEBUG.intValue(), "Hello");
+    CSSNode.jni_YGLog(YogaLogLevel.DEBUG.intValue(), "Hello");
     assertEquals(YogaLogLevel.DEBUG, mLogLevel);
     assertEquals("Hello", mLogMessage);
   }
@@ -68,7 +68,7 @@ public class CSSNodeTest {
           mLogMessage = message;
         }
     });
-    CSSNode.jni_CSSLog(YogaLogLevel.VERBOSE.intValue(), "Flexbox");
+    CSSNode.jni_YGLog(YogaLogLevel.VERBOSE.intValue(), "Flexbox");
     assertEquals(YogaLogLevel.VERBOSE, mLogLevel);
     assertEquals("Flexbox", mLogMessage);
   }

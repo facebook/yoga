@@ -9,12 +9,12 @@
 
 #pragma once
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 
-CSS_EXTERN_C_BEGIN
+YG_EXTERN_C_BEGIN
 
 typedef void (*YGInteropLoggerFunc)(YGLogLevel level, const char *message);
 
 WIN_EXPORT void YGInteropSetLogger(YGInteropLoggerFunc managedFunc);
 
-CSS_EXTERN_C_END
+YG_EXTERN_C_END

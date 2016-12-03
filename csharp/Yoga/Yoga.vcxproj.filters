@@ -21,13 +21,13 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\CSSLayout\CSSLayout.h">
+    <ClInclude Include="..\..\CSSLayout\Yoga.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\CSSLayout\CSSMacros.h">
+    <ClInclude Include="..\..\CSSLayout\YGMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\CSSLayout\CSSNodeList.h">
+    <ClInclude Include="..\..\CSSLayout\YGNodeList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="YGInterop.h">
@@ -41,10 +41,10 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\CSSLayout\CSSLayout.c">
+    <ClCompile Include="..\..\CSSLayout\Yoga.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\CSSLayout\CSSNodeList.c">
+    <ClCompile Include="..\..\CSSLayout\YGNodeList.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="YGInterop.cpp">

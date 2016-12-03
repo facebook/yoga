@@ -7,67 +7,67 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <CSSLayout/CSSLayout.h>
+#include <CSSLayout/Yoga.h>
 #include <gtest/gtest.h>
 
-static CSSSize _measureFloor(CSSNodeRef node,
+static YGSize _measureFloor(YGNodeRef node,
   float width,
   YGMeasureMode widthMode,
   float height,
   YGMeasureMode heightMode) {
 
-  return CSSSize{
+  return YGSize{
     width = 10.2,
     height = 10.2,
   };
 }
 
-static CSSSize _measureCeil(CSSNodeRef node,
+static YGSize _measureCeil(YGNodeRef node,
   float width,
   YGMeasureMode widthMode,
   float height,
   YGMeasureMode heightMode) {
 
-  return CSSSize{
+  return YGSize{
     width = 10.5,
     height = 10.5,
   };
 }
 
-TEST(CSSLayoutTest, rounding_feature_with_custom_measure_func_floor) {
-  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
+  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
-  const CSSNodeRef root = CSSNodeNew();
+  const YGNodeRef root = YGNodeNew();
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeSetMeasureFunc(root_child0, _measureFloor);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeSetMeasureFunc(root_child0, _measureFloor);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_FLOAT_EQ(10, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }
 
-TEST(CSSLayoutTest, rounding_feature_with_custom_measure_func_ceil) {
-  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
+  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
 
-  const CSSNodeRef root = CSSNodeNew();
+  const YGNodeRef root = YGNodeNew();
 
-  const CSSNodeRef root_child0 = CSSNodeNew();
-  CSSNodeSetMeasureFunc(root_child0, _measureCeil);
-  CSSNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeSetMeasureFunc(root_child0, _measureCeil);
+  YGNodeInsertChild(root, root_child0, 0);
 
-  CSSNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_FLOAT_EQ(11, CSSNodeLayoutGetWidth(root_child0));
-  ASSERT_FLOAT_EQ(11, CSSNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(11, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(11, YGNodeLayoutGetHeight(root_child0));
 
-  CSSNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root);
 
-  CSSLayoutSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
 }

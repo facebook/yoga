@@ -20,19 +20,19 @@
 
 - (void)testNodesAreDeallocedWithSingleView
 {
-  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+  XCTAssertEqual(0, YGNodeGetInstanceCount());
 
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
   [view yg_setFlexBasis:1];
-  XCTAssertEqual(1, CSSNodeGetInstanceCount());
+  XCTAssertEqual(1, YGNodeGetInstanceCount());
   view = nil;
 
-  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+  XCTAssertEqual(0, YGNodeGetInstanceCount());
 }
 
 - (void)testNodesAreDeallocedCascade
 {
-  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+  XCTAssertEqual(0, YGNodeGetInstanceCount());
 
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
   [view yg_setFlexBasis:1];
@@ -42,10 +42,10 @@
     [subview yg_setFlexBasis:1];
     [view addSubview:subview];
   }
-  XCTAssertEqual(11, CSSNodeGetInstanceCount());
+  XCTAssertEqual(11, YGNodeGetInstanceCount());
   view = nil;
 
-  XCTAssertEqual(0, CSSNodeGetInstanceCount());
+  XCTAssertEqual(0, YGNodeGetInstanceCount());
 }
 
 #endif
