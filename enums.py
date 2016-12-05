@@ -116,7 +116,9 @@ root = os.path.dirname(__file__)
 # write out C header
 with open(root + '/CSSLayout/YGEnums.h', 'w') as f:
     f.write(LICENSE)
-    remaining = len(ENUMS)
+    f.write('#pragma once\n\n')
+    f.write('#include "YGMacros.h"\n\n')
+    f.write('YG_EXTERN_C_BEGIN\n\n')
     for name, values in ENUMS.items():
         f.write('typedef enum YG%s {\n' % name)
         for value in values:
@@ -126,9 +128,8 @@ with open(root + '/CSSLayout/YGEnums.h', 'w') as f:
                 f.write('  YG%s%s,\n' % (name, value))
         f.write('  YG%sCount,\n' % name)
         f.write('} YG%s;\n' % name)
-        if remaining > 1:
-            f.write('\n')
-        remaining = remaining - 1
+        f.write('\n')
+    f.write('YG_EXTERN_C_END\n')
 
 # write out java files
 for name, values in ENUMS.items():
