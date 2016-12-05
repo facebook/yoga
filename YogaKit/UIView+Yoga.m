@@ -19,7 +19,7 @@
 
 + (void)initialize
 {
-  YogaSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
+  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
 }
 
 - (instancetype)init
