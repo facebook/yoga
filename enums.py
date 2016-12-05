@@ -134,7 +134,7 @@ with open(root + '/CSSLayout/YGEnums.h', 'w') as f:
 for name, values in ENUMS.items():
     with open(root + '/java/com/facebook/csslayout/Yoga%s.java' % name, 'w') as f:
         f.write(LICENSE)
-        f.write('package com.facebook.csslayout;\n\n')
+        f.write('package com.facebook.yoga;\n\n')
         f.write('import com.facebook.proguard.annotations.DoNotStrip;\n\n')
         f.write('@DoNotStrip\n')
         f.write('public enum Yoga%s {\n' % name)

@@ -28,7 +28,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue:{value:function() {
     this.push([
-      'package com.facebook.csslayout;',
+      'package com.facebook.yoga;',
       '',
       'import org.junit.Test;',
       '',
