@@ -88,4 +88,11 @@
   .gistsample {
     margin-left: 0px;
   }
+
+  .gridBlock .imageAlignSide {
+    display: flex;
+    flex: 1 1;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
