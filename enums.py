@@ -114,7 +114,7 @@ def to_java_upper(symbol):
 root = os.path.dirname(__file__)
 
 # write out C header
-with open(root + '/CSSLayout/YGEnums.h', 'w') as f:
+with open(root + '/yoga/YGEnums.h', 'w') as f:
     f.write(LICENSE)
     f.write('#pragma once\n\n')
     f.write('#include "YGMacros.h"\n\n')
@@ -133,7 +133,7 @@ with open(root + '/CSSLayout/YGEnums.h', 'w') as f:
 
 # write out java files
 for name, values in ENUMS.items():
-    with open(root + '/java/com/facebook/csslayout/Yoga%s.java' % name, 'w') as f:
+    with open(root + '/java/com/facebook/yoga/Yoga%s.java' % name, 'w') as f:
         f.write(LICENSE)
         f.write('package com.facebook.yoga;\n\n')
         f.write('import com.facebook.proguard.annotations.DoNotStrip;\n\n')

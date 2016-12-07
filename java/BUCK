@@ -24,16 +24,16 @@ cxx_library(
   deps = [
     FBJNI_TARGET,
     JNI_TARGET,
-    csslayout_dep(':CSSLayout'),
+    yoga_dep(':yoga'),
   ],
   visibility = ['PUBLIC'],
 )
 
 java_library(
   name = 'java',
-  srcs = glob(['com/facebook/csslayout/*.java']),
+  srcs = glob(['com/facebook/yoga/*.java']),
   tests=[
-    csslayout_dep('java:tests'),
+    yoga_dep('java:tests'),
   ],
   source = '1.7',
   target = '1.7',

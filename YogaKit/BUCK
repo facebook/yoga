@@ -7,7 +7,7 @@
 
 include_defs('//YOGA_DEFS')
 
-UIKIT_CSSLAYOUT_COMPILER_FLAGS = [
+COMPILER_FLAGS = [
   '-fobjc-arc',
   '-Wconditional-uninitialized',
   '-Wdangling-else',
@@ -29,7 +29,7 @@ UIKIT_CSSLAYOUT_COMPILER_FLAGS = [
 
 apple_library(
   name = 'YogaKit',
-  compiler_flags = UIKIT_CSSLAYOUT_COMPILER_FLAGS,
+  compiler_flags = COMPILER_FLAGS,
   tests = [':YogaKitTests'],
   srcs = glob(['*.m']),
   exported_headers = glob(['*.h']),
@@ -38,14 +38,14 @@ apple_library(
     '$SDKROOT/System/Library/Frameworks/UIKit.framework',
   ],
   deps = [
-    csslayout_dep(':CSSLayout'),
+    yoga_dep(':yoga'),
   ],
   visibility = ['PUBLIC'],
 )
 
 apple_test(
   name = 'YogaKitTests',
-  compiler_flags = UIKIT_CSSLAYOUT_COMPILER_FLAGS,
+  compiler_flags = COMPILER_FLAGS,
   info_plist = 'Tests/Info.plist',
   srcs = glob(['Tests/**/*.m']),
   frameworks = [

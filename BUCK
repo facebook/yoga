@@ -24,14 +24,14 @@ COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c11', '-fPIC']
 TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ['-std=c++11']
 
 cxx_library(
-  name = 'CSSLayout',
-  srcs = glob(['CSSLayout/*.c']),
+  name = 'yoga',
+  srcs = glob(['yoga/*.c']),
   tests=[':tests'],
-  exported_headers = subdir_glob([('', 'CSSLayout/*.h')]),
+  exported_headers = subdir_glob([('', 'yoga/*.h')]),
   header_namespace = '',
   compiler_flags = COMPILER_FLAGS,
   deps = [] if THIS_IS_FBOBJC else [
-    csslayout_dep('lib/fb:ndklog'),
+    yoga_dep('lib/fb:ndklog'),
   ],
   visibility = ['PUBLIC'],
 )
@@ -42,7 +42,7 @@ cxx_test(
   srcs = glob(['tests/*.cpp']),
   compiler_flags = TEST_COMPILER_FLAGS,
   deps = [
-    ':CSSLayout',
+    ':yoga',
     GTEST_TARGET,
   ],
   visibility = ['PUBLIC'],

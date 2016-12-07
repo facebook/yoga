@@ -21,7 +21,7 @@ cxx_binary(
     '-std=c11',
   ],
   deps = [
-    csslayout_dep(':CSSLayout'),
+    yoga_dep(':yoga'),
   ],
   visibility = ['PUBLIC'],
 )

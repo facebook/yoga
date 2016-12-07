@@ -9,7 +9,7 @@
 
 #include "YGBenchmark.h"
 
-#include <CSSLayout/Yoga.h>
+#include <yoga/Yoga.h>
 
 static YGSize _measure(YGNodeRef node,
                         float width,

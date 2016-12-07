@@ -10,5 +10,5 @@ include_defs('//YOGA_DEFS')
 android_prebuilt_aar(
   name = 'soloader',
   aar = 'soloader-0.1.0.aar',
-  visibility = [CSSLAYOUT_ROOT],
+  visibility = [YOGA_ROOT],
 )

@@ -13,5 +13,5 @@ java_library(
   source = '1.7',
   target = '1.7',
   deps = [],
-  visibility = [CSSLAYOUT_ROOT],
+  visibility = [YOGA_ROOT],
 )

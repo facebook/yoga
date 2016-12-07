@@ -23,5 +23,5 @@ cxx_library(
   header_namespace = '',
   compiler_flags = COMPILER_FLAGS,
   deps = [],
-  visibility = [CSSLAYOUT_ROOT],
+  visibility = [YOGA_ROOT],
 )

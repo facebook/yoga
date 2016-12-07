@@ -20,7 +20,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue:{value:function() {
     this.push([
-      '#include <CSSLayout/Yoga.h>',
+      '#include <yoga/Yoga.h>',
       '#include <gtest/gtest.h>',
       '',
     ]);

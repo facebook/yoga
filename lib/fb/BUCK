@@ -13,7 +13,7 @@ prebuilt_cxx_library(
   exported_platform_linker_flags = [
     ('android.*', ['-llog']),
   ],
-  visibility = [CSSLAYOUT_ROOT],
+  visibility = [YOGA_ROOT],
 )
 
 cxx_library(

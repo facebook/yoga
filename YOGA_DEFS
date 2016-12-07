@@ -1,5 +1,5 @@
 
-CSSLAYOUT_ROOT = '//...'
+YOGA_ROOT = '//...'
 INFER_ANNOTATIONS_TARGET = '//lib/infer-annotations:infer-annotations'
 JSR_305_TARGET = '//lib/jsr-305:jsr-305'
 JUNIT_TARGET = '//lib/junit:junit'
@@ -12,12 +12,12 @@ FBJNI_TARGET = '//lib/fb:fbjni'
 THIS_IS_FBOBJC = False
 
 CXX_LIBRARY_WHITELIST = [
-  '//:CSSLayout',
+  '//:yoga',
   '//lib/fb:fbjni',
   '//java:jni',
 ]
 
-def csslayout_dep(dep):
+def yoga_dep(dep):
   return '//' + dep
 
 class allow_unsafe_import:

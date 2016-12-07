@@ -28,6 +28,6 @@ if [ -d $NUNIT \
   rm NUnit-2.6.4.zip
 fi
 
-clang -g -Wall -Wextra -dynamiclib -o libyoga.dylib -I../../.. ../../../CSSLayout/*.c ../../Yoga/YGInterop.cpp
+clang -g -Wall -Wextra -dynamiclib -o libyoga.dylib -I../../.. ../../../yoga/*.c ../../Yoga/YGInterop.cpp
 mcs -debug -t:library -r:$NUNIT/nunit.framework.dll -out:YogaTest.dll *.cs ../../../csharp/Facebook.Yoga/*cs
 MONO_PATH=$NUNIT mono --arch=64 --debug $NUNIT/nunit-console.exe YogaTest.dll

@@ -40,7 +40,7 @@ Dir['fixtures/*.html'].each do |file|
   f.write eval(logs[0].message.sub(/^[^"]*/, ''))
   f.close
 
-  f = File.open("../java/tests/com/facebook/csslayout/#{name}.java", 'w')
+  f = File.open("../java/tests/com/facebook/yoga/#{name}.java", 'w')
   f.write eval(logs[1].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
 

@@ -21,7 +21,7 @@ before_install:
   - export PATH=$JAVA_HOME/bin:$PATH
 
 script:
-  - buck test //:CSSLayout
+  - buck test //:yoga
   - buck test //java:java
   - buck test //YogaKit:YogaKit --config cxx.default_platform=iphonesimulator-x86_64 --config cxx.cflags=-DTRAVIS_CI
   - sh csharp/tests/Facebook.Yoga/test_macos.sh

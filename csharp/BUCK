@@ -6,14 +6,14 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 csharp_library(
-  name = 'csslibnet46',
+  name = 'yogalibnet46',
   dll_name = 'Facebook.Yoga.dll',
   framework_ver = 'net46',
   srcs = glob(['**/*.cs']),
 )
 
 csharp_library(
-  name = 'csslibnet45',
+  name = 'yogalibnet45',
   dll_name = 'Facebook.Yoga.dll',
   framework_ver = 'net45',
   srcs = glob(['**/*.cs']),

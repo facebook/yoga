@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include <CSSLayout/Yoga.h>
+#include <yoga/Yoga.h>
 
 YG_EXTERN_C_BEGIN
 

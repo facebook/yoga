@@ -150,16 +150,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\CSSLayout\Yoga.h" />
-    <ClInclude Include="..\..\CSSLayout\YGMacros.h" />
-    <ClInclude Include="..\..\CSSLayout\YGNodeList.h" />
+    <ClInclude Include="..\..\yoga\Yoga.h" />
+    <ClInclude Include="..\..\yoga\YGMacros.h" />
+    <ClInclude Include="..\..\yoga\YGNodeList.h" />
     <ClInclude Include="YGInterop.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\CSSLayout\Yoga.c" />
-    <ClCompile Include="..\..\CSSLayout\YGNodeList.c" />
+    <ClCompile Include="..\..\yoga\Yoga.c" />
+    <ClCompile Include="..\..\yoga\YGNodeList.c" />
     <ClCompile Include="YGInterop.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

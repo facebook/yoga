@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <CSSLayout/Yoga.h>
+#include <yoga/Yoga.h>
 #include <gtest/gtest.h>
 
 TEST(YogaTest, assert_default_values) {
