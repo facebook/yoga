@@ -119,6 +119,10 @@ h1, h2, h3, h4 {
 section#intro {
   margin: 40px 0;
   color: $primary-overlay-special;
+
+  p {
+    line-height: 2;
+  }
 }
 
 .fbossFontLight {
