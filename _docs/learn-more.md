@@ -37,6 +37,6 @@ The goal of Yoga is to be a library which makes layout easy. Of course, implemen
 <div class="pluginWrapper buttonWrapper">
   <a
     class="button"
-    href="/yoga/docs/rtl/"
+    href="/yoga/docs/aspect-ratio/"
   >Learn More about Aspect Ratio</a>
 </div>
