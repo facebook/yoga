@@ -6,7 +6,7 @@
     <ul>
       {% for item in site.data.nav %}
       <li class="navItem">
-        <a href="{{ item.href }}"{% if item.category == "external" %} target="_blank"{% endif %}>{{ item.title }}</a>
+        <a href="/yoga/{{ item.href }}"{% if item.category == "external" %} target="_blank"{% endif %}>{{ item.title }}</a>
       </li>
       {% endfor %}
       {% if site.searchconfig %}
