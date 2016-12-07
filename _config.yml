@@ -45,9 +45,9 @@ color:
   secondary-overlay: "light"
 
 #Uncomment this if you want to enable Algolia doc search with your own values
-#searchconfig:
-#  apikey: ""
-#  indexname: ""
+searchconfig:
+  apikey: "48f81041f782ed6463719d8d98c94f38"
+  indexname: "yoga"
 
 # Blog posts are built into Jekyll by default, with the `_posts` directory.
 # Here you can specify other types of documentation. The names here are `docs`
