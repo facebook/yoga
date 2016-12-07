@@ -25,6 +25,7 @@ TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ['-std=c++11'
 
 cxx_library(
   name = 'yoga',
+  soname = 'libyogacore.$(ext)',
   srcs = glob(['yoga/*.c']),
   tests=[':tests'],
   exported_headers = subdir_glob([('', 'yoga/*.h')]),
