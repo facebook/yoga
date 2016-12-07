@@ -121,7 +121,24 @@ section#intro {
   color: $primary-overlay-special;
 
   p {
-    line-height: 2;
+    line-height: 1.5;
+    padding-bottom: 20px;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol, ul {
+    padding-left: 24px;
+    li {
+      padding-bottom: 8px;
+      padding-left: 6px;
+    }
+  }
+
+  strong, b {
+    font-weight: bold;
   }
 }
 

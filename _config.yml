@@ -2,8 +2,6 @@
 permalink: /blog/:year/:month/:day/:title.html
 title: Yoga
 tagline: A cross-platform layout engine
-description: >
-  Yoga is a cross-platform layout engine which implements Flexbox. Yoga enables maximum collaboration within your team by implementing an API familiar to many designers and opening it up to developers across different platforms. In addition, Yoga is implemented in C for maximum performance.
 
 fbappid: "1615782811974223"
 gacode: "UA-12345-6"
