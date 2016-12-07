@@ -26,8 +26,8 @@ a {
   border-bottom: 1px dotted $primary-bg;
   color: $text;
   text-decoration: none;
-  -webkit-transition: background 0.3s, color 0.3s;
-  transition: background 0.3s, color 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 blockquote {
