@@ -14,7 +14,8 @@ namespace Facebook.Yoga.Mac.Test
 			// This assumes your YogaNode and NSView children were inserted in same order
 			for (int i = 0; i < n.Count; ++i) {
 				YogaNode childNode = n[i];
-				view.Subviews[i].Frame = new CGRect (childNode.LayoutX, childNode.LayoutY, childNode.LayoutWidth, childNode.LayoutHeight);
+				// Cocoa coord space is from bottom left not top left
+				view.Subviews[i].Frame = new CGRect (childNode.LayoutX, n.LayoutHeight - childNode.LayoutY - childNode.LayoutHeight, childNode.LayoutWidth, childNode.LayoutHeight);
 			}
 		}
 	}
@@ -66,12 +67,14 @@ namespace Facebook.Yoga.Mac.Test
 
 			var imageNode = new YogaNode () {
 				Width = (float)imageSize.Width,
+				Height = (float)imageSize.Height,
 			};
 			imageNode.SetMargin (YogaEdge.End, 20);
 
 			var textNode = new YogaNode () {
 				AlignSelf = YogaAlign.Center,
 				FlexGrow = 1,
+				Height = 60,
 			};
 			rootNode.Insert (0, imageNode);
 			rootNode.Insert (1, textNode);
