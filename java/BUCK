@@ -5,32 +5,35 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs('//CSSLAYOUT_DEFS')
+include_defs('//YOGA_DEFS')
 
 cxx_library(
   name = 'jni',
-  soname = 'libcsslayout.$(ext)',
+  soname = 'libyoga.$(ext)',
   srcs = glob(['jni/*.cpp']),
   header_namespace = '',
   compiler_flags = [
     '-fno-omit-frame-pointer',
     '-fexceptions',
+    '-fPIC',
     '-Wall',
     '-Werror',
     '-O3',
     '-std=c++11',
   ],
-  deps = JNI_DEPS + [
-    csslayout_dep(':CSSLayout'),
+  deps = [
+    FBJNI_TARGET,
+    JNI_TARGET,
+    yoga_dep(':yoga'),
   ],
   visibility = ['PUBLIC'],
 )
 
 java_library(
   name = 'java',
-  srcs = glob(['com/facebook/csslayout/*.java']),
+  srcs = glob(['com/facebook/yoga/*.java']),
   tests=[
-    csslayout_dep('/java:tests'),
+    yoga_dep('java:tests'),
   ],
   source = '1.7',
   target = '1.7',
@@ -47,10 +50,11 @@ java_library(
 java_test(
   name = 'tests',
   srcs = glob(['tests/**/*.java']),
+  use_cxx_libraries = True,
+  cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
   deps = [
     ':java',
     JUNIT_TARGET,
   ],
-  use_cxx_libraries = True,
-  cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
+  visibility = ['PUBLIC'],
 )

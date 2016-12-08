@@ -1,9 +1,6 @@
-# Contributing to css-layout
+# Contributing to yoga
 We want to make contributing to this project as easy and transparent as
 possible.
-
-## Our Development Process
-All the development is happening on GitHub first and we have internal tools to sync down to Facebook codebase.
 
 ## Pull Requests
 We actively welcome your pull requests.
@@ -32,5 +29,5 @@ outlined on that page and do not file a public issue.
 * format.sh
 
 ## License
-By contributing to css-layout, you agree that your contributions will be licensed
+By contributing to yoga, you agree that your contributions will be licensed
 under its BSD license.

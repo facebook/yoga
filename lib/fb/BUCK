@@ -5,7 +5,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs('//CSSLAYOUT_DEFS')
+include_defs('//YOGA_DEFS')
 
 prebuilt_cxx_library(
   name = 'ndklog',
@@ -13,7 +13,7 @@ prebuilt_cxx_library(
   exported_platform_linker_flags = [
     ('android.*', ['-llog']),
   ],
-  visibility = [CSSLAYOUT_ROOT],
+  visibility = [YOGA_ROOT],
 )
 
 cxx_library(
@@ -34,8 +34,9 @@ cxx_library(
     '-Wno-unused-parameter',
     '-std=c++11',
   ],
-  deps = JNI_DEPS + [
+  deps = [
     ':ndklog',
+    JNI_TARGET,
   ],
   visibility = ['PUBLIC'],
 )
