@@ -353,13 +353,13 @@ bool YGNodeIsDirty(const YGNodeRef node) {
 void YGNodeHide(const YGNodeRef node) {
   node->isVisible = false;
   node->isDirty = false; /* See https://github.com/facebook/css-layout/issues/241 */
-  _YGNodeMarkDirty(node);
+  YGNodeMarkDirty(node);
 }
 
 void YGNodeShow(const YGNodeRef node) {
   node->isVisible = true;
   node->isDirty = false; /* See https://github.com/facebook/css-layout/issues/241 */
-  _YGNodeMarkDirty(node);
+  YGNodeMarkDirty(node);
 }
 
 bool YGNodeIsVisible(const YGNodeRef node) {

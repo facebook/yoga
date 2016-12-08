@@ -80,10 +80,9 @@ WIN_EXPORT void YGNodeCalculateLayout(const YGNodeRef node,
 WIN_EXPORT void YGNodeMarkDirty(const YGNodeRef node);
 WIN_EXPORT bool YGNodeIsDirty(const YGNodeRef node);
 
-WIN_EXPORT void YGNodeHide(const CSSNodeRef node);
-WIN_EXPORT void YGNodeShow(const CSSNodeRef node);
-WIN_EXPORT bool YGNodeIsVisible(const CSSNodeRef node);
-
+WIN_EXPORT void YGNodeHide(const YGNodeRef node);
+WIN_EXPORT void YGNodeShow(const YGNodeRef node);
+WIN_EXPORT bool YGNodeIsVisible(const YGNodeRef node);
 
 WIN_EXPORT void YGNodePrint(const YGNodeRef node, const YGPrintOptions options);
 
