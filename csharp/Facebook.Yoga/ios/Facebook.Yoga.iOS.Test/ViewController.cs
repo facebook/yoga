@@ -1,5 +1,6 @@
 ﻿using System;
 using CoreGraphics;
+using Facebook.YogaKit.iOS;
 using Foundation;
 using UIKit;
 
@@ -30,66 +31,41 @@ namespace Facebook.Yoga.iOS.Test
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-			UIImage image = FromUrl("https://placehold.it/50x50");
 
-			UIView root = CreateViewHierarchy(image);
-
-			var rootNode = CalculateLayout(image.Size);
-
-			root.ApplyYogaLayout(rootNode);
-
-			View.AddSubview(root);
-
-		}
-		static UIImage FromUrl(string uri)
-		{
-			using (var url = new NSUrl(uri))
-			using (var data = NSData.FromUrl(url))
-				return UIImage.LoadFromData(data);
-		}
-		static UIView CreateViewHierarchy(UIImage image)
-		{
-			var root = new UIView();
-			UIImageView imageView = new UIImageView()
-			{
-				Image = image
-			};
-			root.AddSubview(imageView);
-
-			UITextField text = new UITextField()
-			{
-				Text = "Hello World",
-			};
-			root.AddSubview(text);
-			return root;
+			CreateViewHierarchy(View, View.Bounds.Size.Width, View.Bounds.Size.Height);
 		}
 
-		static YogaNode CalculateLayout(CGSize imageSize)
+		static void CreateViewHierarchy(UIView root, nfloat width, nfloat height)
 		{
-			var rootNode = new YogaNode()
-			{
-				Width = 400,
-				Height = 120,
-				FlexDirection = YogaFlexDirection.Row
-			};
-			rootNode.SetPadding(YogaEdge.All, 20);
+			root.BackgroundColor = UIColor.Red;
 
-			var imageNode = new YogaNode()
-			{
-				Width = (float)imageSize.Width,
-			};
-			imageNode.SetMargin(YogaEdge.End, 20);
+			root.UsesYoga(true);
+			root.YogaWidth(width);
+			root.YogaWidth(height);
+			root.YogaAlignItems(YogaAlign.Center);
+			root.YogaJustify(YogaJustify.Center);
 
-			var textNode = new YogaNode()
-			{
-				AlignSelf = YogaAlign.Center,
-				FlexGrow = 1,
-			};
-			rootNode.Insert(0, imageNode);
-			rootNode.Insert(1, textNode);
-			rootNode.CalculateLayout();
+			var child1 = new UIView { BackgroundColor = UIColor.Blue };
+			child1.YogaWidth(100);
+			child1.YogaHeight(100);
+			child1.UsesYoga(true);
 
-			return rootNode;
+			var child2 = new UIView
+			{
+				BackgroundColor = UIColor.Green,
+				Frame = new CGRect { Size = new CGSize(200, 100) }
+			};
+
+			var child3 = new UIView
+			{
+				BackgroundColor = UIColor.Yellow,
+				Frame = new CGRect { Size = new CGSize(100, 100) }
+			};
+
+			child2.AddSubview(child3);
+			root.AddSubview(child1);
+			root.AddSubview(child2);
+			root.YogaApplyLayout();
 		}
 
 		public override void DidReceiveMemoryWarning()

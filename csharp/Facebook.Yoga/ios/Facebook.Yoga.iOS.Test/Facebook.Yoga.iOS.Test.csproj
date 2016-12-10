@@ -119,6 +119,10 @@
       <Project>{BE4CBFDA-02E2-4DF0-A81A-CEFB7987A708}</Project>
       <Name>Facebook.Yoga.iOS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Facebook.YogaKit.iOS\Facebook.YogaKit.iOS.csproj">
+      <Project>{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}</Project>
+      <Name>Facebook.YogaKit.iOS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
