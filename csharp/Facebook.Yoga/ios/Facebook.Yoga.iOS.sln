@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.iOS", "Facebo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.iOS.Test", "Facebook.Yoga.iOS.Test\Facebook.Yoga.iOS.Test.csproj", "{3B27656A-129D-4779-BDAD-1A088DFDD9C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.YogaKit.iOS", "Facebook.YogaKit.iOS\Facebook.YogaKit.iOS.csproj", "{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,5 +41,17 @@ Global
 		{3B27656A-129D-4779-BDAD-1A088DFDD9C5}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{3B27656A-129D-4779-BDAD-1A088DFDD9C5}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{3B27656A-129D-4779-BDAD-1A088DFDD9C5}.Debug|iPhone.Build.0 = Debug|iPhone
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Release|iPhone.Build.0 = Release|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{33B1B6BE-F415-4819-A5FB-CFFE2E40AD6E}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
