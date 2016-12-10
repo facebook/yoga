@@ -17,6 +17,14 @@ CXX_LIBRARY_WHITELIST = [
   '//java:jni',
 ]
 
+BASE_COMPILER_FLAGS = [
+  '-fno-omit-frame-pointer',
+  '-fexceptions',
+  '-Wall',
+  '-Werror',
+  '-O3',
+]
+
 def yoga_dep(dep):
   return '//' + dep
 
