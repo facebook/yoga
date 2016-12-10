@@ -10,6 +10,7 @@ namespace Facebook.YogaKit.iOS
 {
 	class YGNodeBridge : NSObject
 	{
+		bool disposed;
 		internal WeakReference<UIView> viewRef;
 		internal YogaNode node;
 		public YGNodeBridge()
@@ -22,11 +23,22 @@ namespace Facebook.YogaKit.iOS
 			viewRef = new WeakReference<UIView>(view);
 			YogaKit.Bridges.Add(node, this);
 		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && !disposed)
+			{
+				disposed = true;
+				YogaKit.Bridges.Remove(node);
+				viewRef = null;
+				node = null;
+			}
+			base.Dispose(disposing);
+		}
 	}
 
 	public static class YogaKit
 	{
-
 		internal static Dictionary<YogaNode, YGNodeBridge> Bridges = new Dictionary<YogaNode, YGNodeBridge>();
 
 		static NSString YogaNodeKey = new NSString(nameof(GetYogaNode));
@@ -71,6 +83,30 @@ namespace Facebook.YogaKit.iOS
 			node.Height = (float)height;
 		}
 
+		public static void YogaMinWidth(this UIView view, float minWidth)
+		{
+			var node = GetYogaNode(view);
+			node.MinWidth = minWidth;
+		}
+
+		public static void YogaMinHeight(this UIView view, float minHeight)
+		{
+			var node = GetYogaNode(view);
+			node.MinHeight = minHeight;
+		}
+
+		public static void YogaMaxWidth(this UIView view, float maxWidth)
+		{
+			var node = GetYogaNode(view);
+			node.MaxWidth = maxWidth;
+		}
+
+		public static void YogaMaxHeight(this UIView view, float maxHeight)
+		{
+			var node = GetYogaNode(view);
+			node.MaxHeight = maxHeight;
+		}
+
 		public static void YogaAlignItems(this UIView view, Yoga.YogaAlign align)
 		{
 			var node = GetYogaNode(view);
@@ -83,11 +119,108 @@ namespace Facebook.YogaKit.iOS
 			node.JustifyContent = justify;
 		}
 
+		public static void YogaAlign(this UIView view, Yoga.YogaAlign align)
+		{
+			var node = GetYogaNode(view);
+			node.AlignContent = align;
+		}
+
+		public static void YogaAlignSelf(this UIView view, Yoga.YogaAlign align)
+		{
+			var node = GetYogaNode(view);
+			node.AlignSelf = align;
+		}
+
+		public static void YogaDirection(this UIView view, Yoga.YogaDirection direction)
+		{
+			var node = GetYogaNode(view);
+			node.StyleDirection = direction;
+		}
+
+		public static void YogaFlexDirection(this UIView view, Yoga.YogaFlexDirection direction)
+		{
+			var node = GetYogaNode(view);
+			node.FlexDirection = direction;
+		}
+
+		public static void YogaPositionType(this UIView view, Yoga.YogaPositionType position)
+		{
+			var node = GetYogaNode(view);
+			node.PositionType = position;
+		}
+
+		public static void YogaFlexWrap(this UIView view, Yoga.YogaWrap wrap)
+		{
+			var node = GetYogaNode(view);
+			node.Wrap = wrap;
+		}
+
+		public static void YogaFlexShrink(this UIView view, float shrink)
+		{
+			var node = GetYogaNode(view);
+			node.FlexShrink = shrink;
+		}
+
+		public static void YogaFlexGrow(this UIView view, float grow)
+		{
+			var node = GetYogaNode(view);
+			node.FlexGrow = grow;
+		}
+
+		public static void YogaFlexBasis(this UIView view, float basis)
+		{
+			var node = GetYogaNode(view);
+			node.FlexBasis = basis;
+		}
+
+		public static void YogaPositionForEdge(this UIView view, float position, YogaEdge edge)
+		{
+			var node = GetYogaNode(view);
+			node.SetPosition(edge, position);
+		}
+
+		public static void YogaMarginForEdge(this UIView view, float margin, YogaEdge edge)
+		{
+			var node = GetYogaNode(view);
+			node.SetMargin(edge, margin);
+		}
+
+		public static void YogaPaddingForEdge(this UIView view, float padding, YogaEdge edge)
+		{
+			var node = GetYogaNode(view);
+			node.SetPadding(edge, padding);
+		}
+
+		public static void YogaAspectRation(this UIView view, float ratio)
+		{
+			var node = GetYogaNode(view);
+			node.StyleAspectRatio = ratio;
+		}
+
+		#region Layout and Sizing
 		public static void YogaApplyLayout(this UIView view)
 		{
 			CalculateLayoutWithSize(view, view.Bounds.Size);
 			ApplyLayoutToViewHierarchy(view);
 		}
+
+		public static CGSize YogaIntrinsicSize(this UIView view)
+		{
+			var constrainedSize = new CGSize
+			{
+				Width = float.NaN,
+				Height = float.NaN
+			};
+			return CalculateLayoutWithSize(view, constrainedSize);
+		}
+
+		public static YogaDirection YogaResolvedDirection(this UIView view)
+		{
+			var node = GetYogaNode(view);
+			return node.LayoutDirection;
+		}
+
+		#endregion
 
 		static CGSize CalculateLayoutWithSize(UIView view, CGSize size)
 		{
