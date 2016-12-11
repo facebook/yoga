@@ -7,20 +7,6 @@ using UIKit;
 namespace Facebook.Yoga.iOS.Test
 {
 
-	public static class UIViewYogaExtensions
-	{
-		public static void ApplyYogaLayout(this UIView view, YogaNode n)
-		{
-			view.Frame = new CGRect(n.LayoutX, n.LayoutY, n.LayoutWidth, n.LayoutHeight);
-			// This assumes your YogaNode and NSView children were inserted in same order
-			for (int i = 0; i < n.Count; ++i)
-			{
-				YogaNode childNode = n[i];
-				view.Subviews[i].Frame = new CGRect(childNode.LayoutX, childNode.LayoutY, childNode.LayoutWidth, childNode.LayoutHeight);
-			}
-		}
-	}
-
 	public partial class ViewController : UIViewController
 	{
 		protected ViewController(IntPtr handle) : base(handle)
