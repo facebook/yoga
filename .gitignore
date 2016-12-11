@@ -8,3 +8,8 @@
 
 # Visual studio code
 .vscode
+*.pdb
+*.tlog
+*.obj
+*.pch
+*.log
