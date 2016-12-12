@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <NativeOutputRoot>$(SolutionDir)Yoga\bin\</NativeOutputRoot>
+    <NativeDLLMoniker>Yoga</NativeDLLMoniker>
+    <CurrentPlatform>x86</CurrentPlatform>
+    <CurrentPlatform Condition="$(PROCESSOR_ARCHITECTURE) =='AMD64' or $(PROCESSOR_ARCHITECTURE) == 'IA64' or $(PROCESSOR_ARCHITEW6432) == 'AMD64'">AMD64</CurrentPlatform>
+    <CurrentPlatform Condition="$(PROCESSOR_ARCHITECTURE) =='ARM'">ARM</CurrentPlatform>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="$(Platform) == 'AnyCPU'">
+      <Choose>
+        <When Condition="$(Prefer32Bit) == 'true'">
+          <ItemGroup Condition="$(CurrentPlatform) == 'x86' Or $(CurrentPlatform) == 'AMD64'">
+            <InteropDll Include="$(NativeOutputRoot)x86\$(Configuration)\$(NativeDLLMoniker).dll" />
+            <InteropPDB Include="$(NativeOutputRoot)x86\$(Configuration)\$(NativeDLLMoniker).pdb" />
+          </ItemGroup>
+          <ItemGroup Condition="$(CurrentPlatform) == 'ARM'">
+            <InteropDll Include="$(NativeOutputRoot)ARM\$(Configuration)\$(NativeDLLMoniker).dll" />
+            <InteropPDB Include="$(NativeOutputRoot)ARM\$(Configuration)\$(NativeDLLMoniker).pdb" />
+          </ItemGroup>
+        </When>
+        <Otherwise>
+          <ItemGroup Condition="$(CurrentPlatform) == 'x86'">
+            <InteropDll Include="$(NativeOutputRoot)x86\$(Configuration)\$(NativeDLLMoniker).dll" />
+            <InteropPDB Include="$(NativeOutputRoot)x86\$(Configuration)\$(NativeDLLMoniker).pdb" />
+          </ItemGroup>
+          <ItemGroup Condition="$(CurrentPlatform) == 'AMD64'">
+            <InteropDll Include="$(NativeOutputRoot)x64\$(Configuration)\$(NativeDLLMoniker).dll" />
+            <InteropPDB Include="$(NativeOutputRoot)x64\$(Configuration)\$(NativeDLLMoniker).pdb" />
+          </ItemGroup>
+          <ItemGroup Condition="$(CurrentPlatform) == 'ARM'">
+            <InteropDll Include="$(NativeOutputRoot)ARM\$(Configuration)\$(NativeDLLMoniker).dll" />
+            <InteropPDB Include="$(NativeOutputRoot)ARM\$(Configuration)\$(NativeDLLMoniker).pdb" />
+          </ItemGroup>
+        </Otherwise>
+      </Choose>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <InteropDll Include="$(NativeOutputRoot)$(PlatformTarget)\$(Configuration)\$(NativeDLLMoniker).dll" />
+        <InteropPDB Include="$(NativeOutputRoot)$(PlatformTarget)\$(Configuration)\$(NativeDLLMoniker).pdb" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+</Project>
