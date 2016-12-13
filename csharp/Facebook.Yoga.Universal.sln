@@ -1,0 +1,116 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Yoga", "Yoga\Yoga.vcxproj", "{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga", "Facebook.Yoga\Facebook.Yoga.csproj", "{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5} = {0446C86B-F47B-4C46-B673-C7AE0CFF35D5}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5289E508-8386-45A1-A12B-258A5899CD45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native", "Native", "{51A8E803-C084-431F-9130-F277481C2BB2}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared.Tests", "tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.shproj", "{320EB7B7-CE99-4382-B145-BDD49F33C7B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NETStandard", "NETStandard", "{DCF7899B-A487-49C0-BCDE-DC088B6750C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Universal.Tests", "tests\Facebook.Yoga.Universal.Tests\Facebook.Yoga.Universal.Tests.csproj", "{4130594A-0BFE-4846-8A98-2D6040C7B2E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{559E5706-CBAC-4587-BE42-36A537DA9230}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Universal.App", "Facebook.Yoga.App\Facebook.Yoga.Universal.App\Facebook.Yoga.Universal.App.csproj", "{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA552E8A-0245-4614-84D6-DFC5C582004B}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Facebook.Yoga.NativeInterop.targets = Build\Facebook.Yoga.NativeInterop.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems*{320eb7b7-ce99-4382-b145-bdd49f33c7b2}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|ARM.ActiveCfg = Debug|ARM
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|ARM.Build.0 = Debug|ARM
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|x64.ActiveCfg = Debug|x64
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|x64.Build.0 = Debug|x64
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|x86.ActiveCfg = Debug|Win32
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|x86.Build.0 = Debug|Win32
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|ARM.ActiveCfg = Release|ARM
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|ARM.Build.0 = Release|ARM
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|x64.ActiveCfg = Release|x64
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|x64.Build.0 = Release|x64
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|x86.ActiveCfg = Release|Win32
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|x86.Build.0 = Release|Win32
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|ARM.ActiveCfg = Debug|ARM
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|ARM.Build.0 = Debug|ARM
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|x64.ActiveCfg = Debug|x64
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|x64.Build.0 = Debug|x64
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|x86.ActiveCfg = Debug|x86
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|x86.Build.0 = Debug|x86
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|ARM.ActiveCfg = Release|ARM
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|ARM.Build.0 = Release|ARM
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|x64.ActiveCfg = Release|x64
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|x64.Build.0 = Release|x64
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|x86.ActiveCfg = Release|x86
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|x86.Build.0 = Release|x86
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|ARM.ActiveCfg = Debug|ARM
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|ARM.Build.0 = Debug|ARM
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|ARM.Deploy.0 = Debug|ARM
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|x64.ActiveCfg = Debug|x64
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|x64.Build.0 = Debug|x64
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|x64.Deploy.0 = Debug|x64
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|x86.ActiveCfg = Debug|x86
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|x86.Build.0 = Debug|x86
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Debug|x86.Deploy.0 = Debug|x86
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|ARM.ActiveCfg = Release|ARM
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|ARM.Build.0 = Release|ARM
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|ARM.Deploy.0 = Release|ARM
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|x64.ActiveCfg = Release|x64
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|x64.Build.0 = Release|x64
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|x64.Deploy.0 = Release|x64
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|x86.ActiveCfg = Release|x86
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|x86.Build.0 = Release|x86
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5}.Release|x86.Deploy.0 = Release|x86
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|ARM.ActiveCfg = Debug|ARM
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|ARM.Build.0 = Debug|ARM
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|ARM.Deploy.0 = Debug|ARM
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|x64.ActiveCfg = Debug|x64
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|x64.Build.0 = Debug|x64
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|x64.Deploy.0 = Debug|x64
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|x86.ActiveCfg = Debug|x86
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|x86.Build.0 = Debug|x86
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Debug|x86.Deploy.0 = Debug|x86
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|ARM.ActiveCfg = Release|ARM
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|ARM.Build.0 = Release|ARM
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|ARM.Deploy.0 = Release|ARM
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|x64.ActiveCfg = Release|x64
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|x64.Build.0 = Release|x64
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|x64.Deploy.0 = Release|x64
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|x86.ActiveCfg = Release|x86
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|x86.Build.0 = Release|x86
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5} = {51A8E803-C084-431F-9130-F277481C2BB2}
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD} = {DCF7899B-A487-49C0-BCDE-DC088B6750C2}
+		{320EB7B7-CE99-4382-B145-BDD49F33C7B2} = {5289E508-8386-45A1-A12B-258A5899CD45}
+		{4130594A-0BFE-4846-8A98-2D6040C7B2E5} = {5289E508-8386-45A1-A12B-258A5899CD45}
+		{4A5F9DD6-1939-44BA-A36E-EA86D91660FA} = {559E5706-CBAC-4587-BE42-36A537DA9230}
+	EndGlobalSection
+EndGlobal
