@@ -14,6 +14,8 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -146,9 +148,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)Build\Facebook.Yoga.AfterBuild.targets" Label="YogaAfterBuild" />
-  <Target Name="AfterBuild" DependsOnTargets="$(YogaAfterBuild)">
-    <Copy SourceFiles="@(InteropDll)" DestinationFolder="$(OutputPath)" ContinueOnError="false" />
-    <Copy SourceFiles="@(InteropPDB)" DestinationFolder="$(OutputPath)" ContinueOnError="false" />
+  <Import Project="$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets" Condition="Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets')" Label="ImportNativeInteropTargets" />
+  <Target Name="EnsureNativeInteropImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references a native interop target that is missing. The missing build target is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets'))" />
   </Target>
 </Project>

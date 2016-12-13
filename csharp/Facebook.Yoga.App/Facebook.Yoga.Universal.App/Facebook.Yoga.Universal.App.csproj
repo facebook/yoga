@@ -136,11 +136,11 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+  <Import Project="$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets" Condition="Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets')" Label="ImportNativeInteropTargets" />
+  <Target Name="EnsureNativeInteropImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references a native interop target that is missing. The missing build target is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets'))" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
