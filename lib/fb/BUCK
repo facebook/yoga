@@ -11,7 +11,7 @@ prebuilt_cxx_library(
   name = 'ndklog',
   header_only = True,
   exported_platform_linker_flags = [
-    ('android.*', ['-llog']),
+    ('^android.*', ['-llog']),
   ],
   visibility = [YOGA_ROOT],
 )
