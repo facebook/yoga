@@ -80,18 +80,52 @@
       </Choose>
     </When>
     <Otherwise>
-      <ItemGroup>
-        <Content Include="$(NativeRootPath)$(PlatformTarget)\$(Configuration)\$(NativeDLLMoniker).dll">
+      <ItemGroup Condition="$(PlatformTarget) == 'x86'">
+        <Content Include="$(NativeX86Path)$(Configuration)\$(NativeDLLMoniker).dll">
           <Link>$(NativeDLLMoniker).dll</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <Visible>False</Visible>
         </Content>
-        <Content Include="$(NativeRootPath)$(PlatformTarget)\$(Configuration)\$(NativeDLLMoniker).pdb">
+        <Content Include="$(NativeX86Path)$(Configuration)\$(NativeDLLMoniker).pdb">
           <Link>$(NativeDLLMoniker).pdb</Link>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <Visible>False</Visible>
         </Content>
       </ItemGroup>
-    </Otherwise>    
+      <ItemGroup Condition="$(PlatformTarget) == 'x64'">
+        <Content Include="$(NativeX64Path)$(Configuration)\$(NativeDLLMoniker).dll">
+          <Link>$(NativeDLLMoniker).dll</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Visible>False</Visible>
+        </Content>
+        <Content Include="$(NativeX64Path)$(Configuration)\$(NativeDLLMoniker).pdb">
+          <Link>$(NativeDLLMoniker).pdb</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Visible>False</Visible>
+        </Content>
+      </ItemGroup>
+      <ItemGroup Condition="$(PlatformTarget) == 'ARM'">
+        <!--<Content Include="$(NativeARMPath)$(Configuration)\$(NativeDLLMoniker).dll">
+          <Link>$(NativeDLLMoniker).dll</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Visible>False</Visible>
+        </Content>
+        <Content Include="$(NativeARMPath)$(Configuration)\$(NativeDLLMoniker).pdb">
+          <Link>$(NativeDLLMoniker).pdb</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Visible>False</Visible>
+        </Content>-->
+        <Content Include="$(NativeX86Path)$(Configuration)\$(NativeDLLMoniker).dll">
+          <Link>$(NativeDLLMoniker).dll</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Visible>False</Visible>
+        </Content>
+        <Content Include="$(NativeX86Path)$(Configuration)\$(NativeDLLMoniker).pdb">
+          <Link>$(NativeDLLMoniker).pdb</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Visible>False</Visible>
+        </Content>
+      </ItemGroup>
+    </Otherwise>
   </Choose>
 </Project>

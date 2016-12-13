@@ -34,6 +34,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Universal.App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Desktop.Tests", "tests\Facebook.Yoga.Desktop.Tests\Facebook.Yoga.Desktop.Tests.csproj", "{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA552E8A-0245-4614-84D6-DFC5C582004B}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Facebook.Yoga.NativeInterop.targets = Build\Facebook.Yoga.NativeInterop.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems*{320eb7b7-ce99-4382-b145-bdd49f33c7b2}*SharedItemsImports = 13
@@ -206,7 +211,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5} = {51A8E803-C084-431F-9130-F277481C2BB2}
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5} = {DCF7899B-A487-49C0-BCDE-DC088B6750C2}
 		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD} = {DCF7899B-A487-49C0-BCDE-DC088B6750C2}
 		{320EB7B7-CE99-4382-B145-BDD49F33C7B2} = {5289E508-8386-45A1-A12B-258A5899CD45}
 		{4130594A-0BFE-4846-8A98-2D6040C7B2E5} = {5289E508-8386-45A1-A12B-258A5899CD45}
