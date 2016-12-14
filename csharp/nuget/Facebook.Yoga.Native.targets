@@ -26,4 +26,11 @@
       <Visible>False</Visible>
     </Content>
   </ItemGroup>
+  <ItemGroup Condition=" (Exists('packages.config') Or Exists('packages.$(MSBuildProjectName).config')) And '$(Platform)' == 'ARM'">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-arm\native\*">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>  
 </Project>

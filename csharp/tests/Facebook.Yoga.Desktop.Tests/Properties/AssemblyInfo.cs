@@ -11,24 +11,18 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
+[assembly: AssemblyTitle("Facebook.Yoga.Desktop.Tests")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Facebook, Inc.")]
 [assembly: AssemblyProduct("Facebook.Yoga")]
-[assembly: AssemblyTrademark("Copyright (c) 2014-present, Facebook, Inc.")]
+[assembly: AssemblyCopyright("Copyright (c) 2014-present, Facebook, Inc.")]
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("ac23f444-5545-4196-8b9f-5c1f6b3e7fb3")]
 
 [assembly: NeutralResourcesLanguage("en")]
 
 [assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyTitle("Facebook.Yoga")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
