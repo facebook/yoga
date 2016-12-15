@@ -5,6 +5,10 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
+include_defs('//YOGA_DEFS')
+
+COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c++11']
+
 csharp_library(
   name = 'yogalibnet46',
   dll_name = 'Facebook.Yoga.dll',
@@ -17,4 +21,15 @@ csharp_library(
   dll_name = 'Facebook.Yoga.dll',
   framework_ver = 'net45',
   srcs = glob(['**/*.cs']),
+)
+
+cxx_library(
+  name = 'yoganet',
+  soname = 'libyoga.$(ext)',
+  srcs = glob(['Yoga/YGInterop.cpp']),
+  compiler_flags = COMPILER_FLAGS,
+  link_style = 'static',
+  link_whole = True,
+  deps = [yoga_dep(':yoga')],
+  visibility = ['PUBLIC'],
 )

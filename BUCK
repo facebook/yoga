@@ -7,14 +7,6 @@
 
 include_defs('//YOGA_DEFS')
 
-BASE_COMPILER_FLAGS = [
-  '-fno-omit-frame-pointer',
-  '-fexceptions',
-  '-Wall',
-  '-Werror',
-  '-O3',
-]
-
 GMOCK_OVERRIDE_FLAGS = [
   # gmock does not mark mocked methods as override, ignore the warnings in tests
   '-Wno-inconsistent-missing-override',
