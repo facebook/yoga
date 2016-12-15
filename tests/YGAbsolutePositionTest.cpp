@@ -234,10 +234,10 @@ TEST(YogaTest, absolute_layout_within_border) {
   YGNodeStyleSetPaddingWithUnit(root, YGEdgeTop, YGPx(10));
   YGNodeStyleSetPaddingWithUnit(root, YGEdgeRight, YGPx(10));
   YGNodeStyleSetPaddingWithUnit(root, YGEdgeBottom, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeLeft, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeTop, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeRight, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeBottom, YGPx(10));
+  YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
+  YGNodeStyleSetBorder(root, YGEdgeTop, 10);
+  YGNodeStyleSetBorder(root, YGEdgeRight, 10);
+  YGNodeStyleSetBorder(root, YGEdgeBottom, 10);
   YGNodeStyleSetWidthWithUnit(root, YGPx(100));
   YGNodeStyleSetHeightWithUnit(root, YGPx(100));
 

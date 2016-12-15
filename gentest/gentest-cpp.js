@@ -156,7 +156,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push('YGNodeStyleSetBorderWithUnit(' + nodeName + ', ' + edge + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetBorder(' + nodeName + ', ' + edge + ', ' + toValueCpp(value) + ');');
   }},
 
   YGNodeStyleSetDirection:{value:function(nodeName, value) {

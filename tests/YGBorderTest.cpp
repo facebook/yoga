@@ -14,10 +14,10 @@
 
 TEST(YogaTest, border_no_size) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeLeft, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeTop, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeRight, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeBottom, YGPx(10));
+  YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
+  YGNodeStyleSetBorder(root, YGEdgeTop, 10);
+  YGNodeStyleSetBorder(root, YGEdgeRight, 10);
+  YGNodeStyleSetBorder(root, YGEdgeBottom, 10);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
@@ -37,10 +37,10 @@ TEST(YogaTest, border_no_size) {
 
 TEST(YogaTest, border_container_match_child) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeLeft, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeTop, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeRight, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeBottom, YGPx(10));
+  YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
+  YGNodeStyleSetBorder(root, YGEdgeTop, 10);
+  YGNodeStyleSetBorder(root, YGEdgeRight, 10);
+  YGNodeStyleSetBorder(root, YGEdgeBottom, 10);
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetWidthWithUnit(root_child0, YGPx(10));
@@ -75,10 +75,10 @@ TEST(YogaTest, border_container_match_child) {
 
 TEST(YogaTest, border_flex_child) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeLeft, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeTop, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeRight, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeBottom, YGPx(10));
+  YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
+  YGNodeStyleSetBorder(root, YGEdgeTop, 10);
+  YGNodeStyleSetBorder(root, YGEdgeRight, 10);
+  YGNodeStyleSetBorder(root, YGEdgeBottom, 10);
   YGNodeStyleSetWidthWithUnit(root, YGPx(100));
   YGNodeStyleSetHeightWithUnit(root, YGPx(100));
 
@@ -115,10 +115,10 @@ TEST(YogaTest, border_flex_child) {
 
 TEST(YogaTest, border_stretch_child) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeLeft, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeTop, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeRight, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeBottom, YGPx(10));
+  YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
+  YGNodeStyleSetBorder(root, YGEdgeTop, 10);
+  YGNodeStyleSetBorder(root, YGEdgeRight, 10);
+  YGNodeStyleSetBorder(root, YGEdgeBottom, 10);
   YGNodeStyleSetWidthWithUnit(root, YGPx(100));
   YGNodeStyleSetHeightWithUnit(root, YGPx(100));
 
@@ -156,9 +156,9 @@ TEST(YogaTest, border_center_child) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeStart, YGPx(10));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeEnd, YGPx(20));
-  YGNodeStyleSetBorderWithUnit(root, YGEdgeBottom, YGPx(20));
+  YGNodeStyleSetBorder(root, YGEdgeStart, 10);
+  YGNodeStyleSetBorder(root, YGEdgeEnd, 20);
+  YGNodeStyleSetBorder(root, YGEdgeBottom, 20);
   YGNodeStyleSetWidthWithUnit(root, YGPx(100));
   YGNodeStyleSetHeightWithUnit(root, YGPx(100));
 

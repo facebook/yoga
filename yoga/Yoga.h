@@ -162,7 +162,7 @@ YG_NODE_STYLE_PROPERTY_UNIT(YGValue, FlexBasis, flexBasis);
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT(YGValue, Position, position);
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT(YGValue, Margin, margin);
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT(YGValue, Padding, padding);
-YG_NODE_STYLE_EDGE_PROPERTY_UNIT(YGValue, Border, border);
+YG_NODE_STYLE_EDGE_PROPERTY(float, Border, border);
 
 YG_NODE_STYLE_PROPERTY_UNIT(YGValue, Width, width);
 YG_NODE_STYLE_PROPERTY_UNIT(YGValue, Height, height);
