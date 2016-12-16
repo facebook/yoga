@@ -55,7 +55,7 @@ namespace Facebook.Yoga
         public static extern IntPtr YGNodeGetChild(IntPtr node, uint index);
 
         [DllImport(DllName)]
-        public static extern uint YGNodeChildCount(IntPtr node);
+        public static extern uint YGNodeGetChildCount(IntPtr node);
 
         [DllImport(DllName)]
         public static extern void YGNodeCalculateLayout(IntPtr node,
