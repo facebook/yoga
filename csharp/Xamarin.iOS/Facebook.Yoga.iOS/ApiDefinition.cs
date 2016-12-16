@@ -7,5 +7,5 @@ using CoreGraphics;
 
 namespace Facebook.Yoga.iOS
 {
-	//this is needed
+	// The build will fail without ApiDefinition.cs
 }
