@@ -7,14 +7,6 @@
 
 include_defs('//YOGA_DEFS')
 
-BASE_COMPILER_FLAGS = [
-  '-fno-omit-frame-pointer',
-  '-fexceptions',
-  '-Wall',
-  '-Werror',
-  '-O3',
-]
-
 GMOCK_OVERRIDE_FLAGS = [
   # gmock does not mark mocked methods as override, ignore the warnings in tests
   '-Wno-inconsistent-missing-override',
@@ -27,7 +19,7 @@ cxx_library(
   name = 'yoga',
   soname = 'libyogacore.$(ext)',
   srcs = glob(['yoga/*.c']),
-  tests=[':tests'],
+  tests=[':YogaTests'],
   exported_headers = subdir_glob([('', 'yoga/*.h')]),
   header_namespace = '',
   compiler_flags = COMPILER_FLAGS,
@@ -38,7 +30,7 @@ cxx_library(
 )
 
 cxx_test(
-  name = 'tests',
+  name = 'YogaTests',
   contacts = ['emilsj@fb.com'],
   srcs = glob(['tests/*.cpp']),
   compiler_flags = TEST_COMPILER_FLAGS,

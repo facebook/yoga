@@ -21,6 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>yoga</ProjectName>
     <RootNamespace>Yoga</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
