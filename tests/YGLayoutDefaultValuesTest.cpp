@@ -27,49 +27,49 @@ TEST(YogaTest, assert_default_values) {
   ASSERT_EQ(YGOverflowVisible, YGNodeStyleGetOverflow(root));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexGrow(root));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexShrink(root));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetFlexBasis(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetFlexBasis(root)));
 
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetPosition(root, YGEdgeLeft)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetPosition(root, YGEdgeTop)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetPosition(root, YGEdgeRight)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetPosition(root, YGEdgeBottom)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetPosition(root, YGEdgeStart)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetPosition(root, YGEdgeEnd)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetPosition(root, YGEdgeLeft)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetPosition(root, YGEdgeTop)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetPosition(root, YGEdgeRight)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetPosition(root, YGEdgeBottom)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetPosition(root, YGEdgeStart)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetPosition(root, YGEdgeEnd)));
 
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeLeft));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeTop));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeRight));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeBottom));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetMargin(root, YGEdgeStart)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetMargin(root, YGEdgeEnd)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetMargin(root, YGEdgeStart)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetMargin(root, YGEdgeEnd)));
 
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeLeft));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeTop));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeRight));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeBottom));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetPadding(root, YGEdgeStart)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetPadding(root, YGEdgeEnd)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetPadding(root, YGEdgeStart)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetPadding(root, YGEdgeEnd)));
 
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeLeft));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeTop));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeRight));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeBottom));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetBorder(root, YGEdgeStart)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetBorder(root, YGEdgeEnd)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeStart)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeEnd)));
 
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetWidth(root)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetHeight(root)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetMinWidth(root)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetMinHeight(root)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetMaxWidth(root)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeStyleGetMaxHeight(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetWidth(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetHeight(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetMinWidth(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetMinHeight(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetMaxWidth(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetMaxHeight(root)));
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetRight(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetBottom(root));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeLayoutGetWidth(root)));
-  ASSERT_TRUE(YGValueIsUndefinedf(YGNodeLayoutGetHeight(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeLayoutGetWidth(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeLayoutGetHeight(root)));
   ASSERT_EQ(YGDirectionInherit, YGNodeLayoutGetDirection(root));
 
   YGNodeFreeRecursive(root);

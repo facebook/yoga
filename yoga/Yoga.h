@@ -92,7 +92,7 @@ WIN_EXPORT bool YGNodeIsDirty(const YGNodeRef node);
 
 WIN_EXPORT void YGNodePrint(const YGNodeRef node, const YGPrintOptions options);
 
-WIN_EXPORT bool YGValueIsUndefinedf(const float value);
+WIN_EXPORT bool YGFloatIsUndefined(const float value);
 WIN_EXPORT bool YGValueIsUndefined(const YGValue value);
 
 WIN_EXPORT bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
