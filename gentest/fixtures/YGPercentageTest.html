@@ -65,3 +65,22 @@
  </div>
  <div style="flex-grow: 4; flex-basis: 15%; min-width: 20%;"></div>
 </div>
+
+<div id="percentage_margin_should_calculate_based_only_on_width" experiments="Rounding" style="width: 200px; height: 100px;">
+ <div style="flex-grow: 1; margin: 10%;">
+	<div style="width: 10px; height: 10px;">
+	</div>
+ </div>
+</div>
+
+<div id="percentage_padding_should_calculate_based_only_on_width" experiments="Rounding" style="width: 200px; height: 100px;">
+ <div style="flex-grow: 1; padding: 10%;">
+	<div style="width: 10px; height: 10px;">
+	</div>
+ </div>
+</div>
+
+<div id="percentage_absolute_position" experiments="Rounding" style="width: 200px; height: 100px;">
+ <div style="position: absolute; top: 10%; left: 30%; width: 10px; height: 10px;">
+ </div>
+</div>
