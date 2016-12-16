@@ -26,7 +26,7 @@ TEST(YogaTest, copy_style_modified) {
   const YGNodeRef node0 = YGNodeNew();
   ASSERT_FALSE(YGNodeIsDirty(node0));
   ASSERT_EQ(YGFlexDirectionColumn, YGNodeStyleGetFlexDirection(node0));
-  ASSERT_TRUE(YGValueIsUndefined(YGNodeStyleGetMaxHeight(node0)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetMaxHeight(node0)));
 
   const YGNodeRef node1 = YGNodeNew();
   YGNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
