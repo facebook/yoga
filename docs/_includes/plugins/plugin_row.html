@@ -1,0 +1,6 @@
+<div class="pluginRowBlock">
+{% for child in include.children %}
+  {% include plugins/{{child.type}}.html href=child.href text=child.text %}
+  <div style="width: 20px;"></div>
+{% endfor %}
+</div>
