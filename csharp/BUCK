@@ -33,3 +33,31 @@ cxx_library(
   deps = [yoga_dep(':yoga')],
   visibility = ['PUBLIC'],
 )
+
+with allow_unsafe_import():
+  import os
+
+if os.path.isdir('/Applications/Xcode.app'):
+  yoganet_ios_srcs = []
+  for arch in ['iphonesimulator-x86_64', 'iphoneos-arm64', 'iphoneos-armv7']:
+    name = 'yoganet-' + arch
+    yoganet_ios_srcs.append(':' + name)
+    genrule(
+      name = name,
+      srcs = [
+        yoga_dep(':yoga#%s,static' % arch),
+        yoga_dep('YogaKit:YogaKit#%s,static' % arch),
+        yoga_dep('csharp:yoganet#%s,static' % arch),
+      ],
+      out = 'libyoga-%s.a' % arch,
+      cmd = 'libtool -static -o $OUT $SRCS',
+      visibility = [yoga_dep('csharp:yoganet-ios')],
+    )
+
+  genrule(
+    name = 'yoganet-ios',
+    srcs = yoganet_ios_srcs,
+    out = 'libyoga.a',
+    cmd = 'lipo $SRCS -create -output $OUT',
+    visibility = ['PUBLIC'],
+  )
