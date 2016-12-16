@@ -15,7 +15,7 @@ static int unmanagedLogger(YGLogLevel level, const char *format, va_list args) {
   int result = 0;
   if (gManagedFunc) {
     char buffer[256];
-    result = vsnprintf_s(buffer, sizeof(buffer), format, args);
+    result = vsnprintf(buffer, sizeof(buffer), format, args);
     (*gManagedFunc)(level, buffer);
   }
   return result;
