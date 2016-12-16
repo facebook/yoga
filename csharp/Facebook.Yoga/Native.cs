@@ -28,9 +28,6 @@ namespace Facebook.Yoga
         public static extern IntPtr YGNodeNew();
 
         [DllImport(DllName)]
-        public static extern void YGNodeInit(IntPtr node);
-
-        [DllImport(DllName)]
         public static extern void YGNodeFree(IntPtr node);
 
         [DllImport(DllName)]
