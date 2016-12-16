@@ -105,16 +105,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="libyoga.a">
-      <Kind>Static</Kind>
-      <SmartLink>False</SmartLink>
-    </NativeReference>
-  </ItemGroup>
-  <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CustomBuildAction.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="libyoga.dylib">
+      <Kind>Dynamic</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.ObjcBinding.CSharp.targets" />
   <Import Project="CustomBuildAction.targets" />  

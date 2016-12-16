@@ -14,23 +14,18 @@ namespace Facebook.Yoga
 {
     internal static class YogaLogger
     {
-#if !MONOMAC
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void Func(YogaLogLevel level, string message);
-#endif
 
         private static bool _initialized;
-#if !MONOMAC
         private static Func _managedLogger = null;
 
         public static Func Logger = null;
-#endif
 
         public static void Initialize()
         {
             if (!_initialized)
             {
-#if !MONOMAC
                 _managedLogger = (level, message) => {
                     if (Logger != null)
                     {
@@ -43,7 +38,6 @@ namespace Facebook.Yoga
                     }
                 };
                 Native.YGInteropSetLogger(_managedLogger);
-#endif
                 _initialized = true;
             }
         }
