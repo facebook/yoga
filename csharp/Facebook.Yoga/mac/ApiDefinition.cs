@@ -7,7 +7,8 @@ using CoreGraphics;
 
 namespace Facebook.Yoga.Mac
 {
-	// We're actually abusing the Xamarin.Mac binding project
-	// to bundle in the static lib for us. There is no objective-c
-	// lib to bind, but the build will fail without ApiDefinition.cs
+	// Xamarin.Mac binding projects allow you to include native libraries inside C# DLLs for easy consumption
+	// later. However, the binding project build files currently assume you are binding some objective-c API
+	// and that you need an ApiDefinition.cs for that. yoga is all C APIs, so just include this "blank" file so
+	// the dylib gets packaged
 }

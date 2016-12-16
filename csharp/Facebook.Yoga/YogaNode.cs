@@ -541,7 +541,6 @@ namespace Facebook.Yoga
             return new YogaSize { width = MeasureOutput.GetWidth(output), height = MeasureOutput.GetHeight(output) };
         }
 
-#if !MONOMAC
         public string Print(YogaPrintOptions options =
             YogaPrintOptions.Layout|YogaPrintOptions.Style|YogaPrintOptions.Children)
         {
@@ -552,7 +551,6 @@ namespace Facebook.Yoga
             YogaLogger.Logger = orig;
             return sb.ToString();
         }
-#endif
 
         public IEnumerator<YogaNode> GetEnumerator()
         {
