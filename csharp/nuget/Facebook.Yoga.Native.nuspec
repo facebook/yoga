@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Facebook.Yoga.Native</id>
-    <version>3.0.0-pre</version>
+    <version>1.0.0-pre</version>
     <title>Facebook.Yoga.Native</title>
     <authors>Facebook</authors>
     <owners>Facebook</owners>
@@ -31,8 +31,8 @@
     <file src="..\Yoga\bin\x64\Release\Yoga.dll" target="runtimes\win-x64\native"/>
     <file src="..\Yoga\bin\x64\Release\Yoga.pdb" target="runtimes\win-x64\native"/>
 
-    <file src="..\Yoga\bin\ARM\Release\Yoga.dll" target="runtimes\win-arm\native"/>
-    <file src="..\Yoga\bin\ARM\Release\Yoga.pdb" target="runtimes\win-arm\native"/>    
+    <file src="..\Yoga\bin\ARM\Release\Yoga.dll" target="runtimes\win8-arm\native"/>
+    <file src="..\Yoga\bin\ARM\Release\Yoga.pdb" target="runtimes\win8-arm\native"/>    
   </files>
   
 </package>

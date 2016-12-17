@@ -53,7 +53,7 @@
 
 - (NSUInteger)yg_numberOfChildren
 {
-  return YGNodeChildCount([self ygNode]);
+  return YGNodeGetChildCount([self ygNode]);
 }
 
 #pragma mark - Setters
@@ -295,7 +295,7 @@ static void YGAttachNodesFromViewHierachy(UIView *view) {
     }
 
     BOOL shouldReconstructChildList = NO;
-    if (YGNodeChildCount(node) != subviewsToInclude.count) {
+    if (YGNodeGetChildCount(node) != subviewsToInclude.count) {
       shouldReconstructChildList = YES;
     } else {
       for (int i = 0; i < subviewsToInclude.count; i++) {
@@ -324,8 +324,8 @@ static void YGRemoveAllChildren(const YGNodeRef node)
       return;
   }
 
-  while (YGNodeChildCount(node) > 0) {
-    YGNodeRemoveChild(node, YGNodeGetChild(node, YGNodeChildCount(node) - 1));
+  while (YGNodeGetChildCount(node) > 0) {
+    YGNodeRemoveChild(node, YGNodeGetChild(node, YGNodeGetChildCount(node) - 1));
   }
 }
 

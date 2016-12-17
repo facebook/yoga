@@ -87,12 +87,12 @@ namespace Facebook.Yoga
                 padding: new Spacing(top: 13, bottom: 14, left: 15, right: 16),
                 border: new Spacing(top: 17, bottom: 18, left: 19, right: 20),
 
-                Width: 21,
-                Height: 22,
-                MinWidth: 23,
-                MinHeight: 24,
-                MaxWidth: 25,
-                MaxHeight: 26);
+                width: 21,
+                height: 22,
+                minWidth: 23,
+                minHeight: 24,
+                maxWidth: 25,
+                maxHeight: 26);
 
             Assert.AreEqual(YogaDirection.RTL, node.StyleDirection);
             Assert.AreEqual(YogaFlexDirection.RowReverse, node.FlexDirection);

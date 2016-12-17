@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Yoga", "Yoga\Yoga.vcxproj", "{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yoga", "Yoga\Yoga.vcxproj", "{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga", "Facebook.Yoga\Facebook.Yoga.csproj", "{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -25,7 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Build\Facebook.Yoga.NativeInterop.targets = Build\Facebook.Yoga.NativeInterop.targets
 		NuGet\Facebook.Yoga.nuspec = NuGet\Facebook.Yoga.nuspec
 		NuGet\Facebook.Yoga.targets = NuGet\Facebook.Yoga.targets
-		nuget\NuGetPackageBuilder.ps1 = nuget\NuGetPackageBuilder.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Universal.Tests", "tests\Facebook.Yoga.Universal.Tests\Facebook.Yoga.Universal.Tests.csproj", "{0856757B-1671-4E43-AF41-4AEA53988796}"
