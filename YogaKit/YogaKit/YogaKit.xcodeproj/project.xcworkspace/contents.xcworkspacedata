@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:YogaKitSample.xcodeproj">
+      location = "self:/Users/david/Projects/yoga/YogaKit/YogaKit/YogaKit.xcodeproj">
    </FileRef>
 </Workspace>
