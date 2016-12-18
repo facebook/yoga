@@ -15,3 +15,4 @@ FOUNDATION_EXPORT double YogaKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char YogaKitVersionString[];
 
 #import <YogaKit/UIView+YogaKit.h>
+#import <YogaKit/YKEnums.h>

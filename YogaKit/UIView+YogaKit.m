@@ -76,9 +76,19 @@
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (YKDirection)yk_direction
+{
+  return (YKDirection)YGNodeStyleGetDirection([self ygNode]);
+}
+
 - (void)yk_setDirection:(YKDirection)direction
 {
   YGNodeStyleSetDirection([self ygNode], (YGDirection)direction);
+}
+
+- (YKFlexDirection)yk_flexDirection
+{
+  return (YKFlexDirection)YGNodeStyleGetFlexDirection([self ygNode]);
 }
 
 - (void)yk_setFlexDirection:(YKFlexDirection)flexDirection
@@ -86,9 +96,19 @@
   YGNodeStyleSetFlexDirection([self ygNode], (YGFlexDirection)flexDirection);
 }
 
+- (YKJustify)yk_justifyContent
+{
+  return (YKJustify)YGNodeStyleGetJustifyContent([self ygNode]);
+}
+
 - (void)yk_setJustifyContent:(YKJustify)justifyContent
 {
   YGNodeStyleSetJustifyContent([self ygNode], (YGJustify)justifyContent);
+}
+
+- (YKAlign)yk_alignContent
+{
+  return (YKAlign)YGNodeStyleGetAlignContent([self ygNode]);
 }
 
 - (void)yk_setAlignContent:(YKAlign)alignContent
@@ -96,9 +116,19 @@
   YGNodeStyleSetAlignContent([self ygNode], (YGAlign)alignContent);
 }
 
+- (YKAlign)yk_alignItems
+{
+  return (YKAlign)YGNodeStyleGetAlignItems([self ygNode]);
+}
+
 - (void)yk_setAlignItems:(YKAlign)alignItems
 {
   YGNodeStyleSetAlignItems([self ygNode], (YGAlign)alignItems);
+}
+
+- (YKAlign)yk_alignSelf
+{
+  return (YKAlign)YGNodeStyleGetAlignSelf([self ygNode]);
 }
 
 - (void)yk_setAlignSelf:(YKAlign)alignSelf
@@ -106,9 +136,19 @@
   YGNodeStyleSetAlignSelf([self ygNode], (YGAlign)alignSelf);
 }
 
+- (YKPositionType)yk_positionType
+{
+  return (YKPositionType)YGNodeStyleGetPositionType([self ygNode]);
+}
+
 - (void)yk_setPositionType:(YKPositionType)positionType
 {
   YGNodeStyleSetPositionType([self ygNode], (YGPositionType)positionType);
+}
+
+- (YKWrap)yk_flexWrap
+{
+  return (YKWrap)YGNodeStyleGetFlexWrap([self ygNode]);
 }
 
 - (void)yk_setFlexWrap:(YKWrap)flexWrap
@@ -116,9 +156,19 @@
   YGNodeStyleSetFlexWrap([self ygNode], (YGWrap)flexWrap);
 }
 
+- (CGFloat)yk_flexGrow
+{
+  return YGNodeStyleGetFlexGrow([self ygNode]);
+}
+
 - (void)yk_setFlexGrow:(CGFloat)flexGrow
 {
   YGNodeStyleSetFlexGrow([self ygNode], flexGrow);
+}
+
+- (CGFloat)yk_flexShrink
+{
+  return YGNodeStyleGetFlexShrink([self ygNode]);
 }
 
 - (void)yk_setFlexShrink:(CGFloat)flexShrink
@@ -126,9 +176,19 @@
   YGNodeStyleSetFlexShrink([self ygNode], flexShrink);
 }
 
+- (CGFloat)yk_flexBasis
+{
+  return YGNodeStyleGetFlexBasis([self ygNode]);
+}
+
 - (void)yk_setFlexBasis:(CGFloat)flexBasis
 {
   YGNodeStyleSetFlexBasis([self ygNode], flexBasis);
+}
+
+- (CGFloat)yk_positionForEdge:(YKEdge)edge
+{
+  return YGNodeStyleGetPosition([self ygNode], (YGEdge)edge);
 }
 
 - (void)yk_setPosition:(CGFloat)position forEdge:(YKEdge)edge
@@ -136,9 +196,19 @@
   YGNodeStyleSetPosition([self ygNode], (YGEdge)edge, position);
 }
 
+- (CGFloat)yk_marginForEdge:(YKEdge)edge
+{
+  return YGNodeStyleGetMargin([self ygNode], (YGEdge)edge);
+}
+
 - (void)yk_setMargin:(CGFloat)margin forEdge:(YKEdge)edge
 {
   YGNodeStyleSetMargin([self ygNode], (YGEdge)edge, margin);
+}
+
+- (CGFloat)yk_paddingForEdge:(YKEdge)edge
+{
+  return YGNodeStyleGetPadding([self ygNode], (YGEdge)edge);
 }
 
 - (void)yk_setPadding:(CGFloat)padding forEdge:(YKEdge)edge
@@ -146,9 +216,19 @@
   YGNodeStyleSetPadding([self ygNode], (YGEdge)edge, padding);
 }
 
+- (CGFloat)yk_width
+{
+  return YGNodeStyleGetWidth([self ygNode]);
+}
+
 - (void)yk_setWidth:(CGFloat)width
 {
   YGNodeStyleSetWidth([self ygNode], width);
+}
+
+- (CGFloat)yk_height
+{
+  return YGNodeStyleGetHeight([self ygNode]);
 }
 
 - (void)yk_setHeight:(CGFloat)height
@@ -156,9 +236,19 @@
   YGNodeStyleSetHeight([self ygNode], height);
 }
 
+- (CGFloat)yk_minWidth
+{
+  return YGNodeStyleGetMinWidth([self ygNode]);
+}
+
 - (void)yk_setMinWidth:(CGFloat)minWidth
 {
   YGNodeStyleSetMinWidth([self ygNode], minWidth);
+}
+
+- (CGFloat)yk_minHeight
+{
+  return YGNodeStyleGetMinHeight([self ygNode]);
 }
 
 - (void)yk_setMinHeight:(CGFloat)minHeight
@@ -166,14 +256,29 @@
   YGNodeStyleSetMinHeight([self ygNode], minHeight);
 }
 
+- (CGFloat)yk_maxWidth
+{
+  return YGNodeStyleGetMaxWidth([self ygNode]);
+}
+
 - (void)yk_setMaxWidth:(CGFloat)maxWidth
 {
   YGNodeStyleSetMaxWidth([self ygNode], maxWidth);
 }
 
+- (CGFloat)yk_maxHeight
+{
+  return YGNodeStyleGetMaxHeight([self ygNode]);
+}
+
 - (void)yk_setMaxHeight:(CGFloat)maxHeight
 {
   YGNodeStyleSetMaxHeight([self ygNode], maxHeight);
+}
+
+- (CGFloat)yk_aspectRatio
+{
+  return YGNodeStyleGetAspectRatio([self ygNode]);
 }
 
 - (void)yk_setAspectRatio:(CGFloat)aspectRatio

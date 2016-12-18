@@ -14,18 +14,6 @@ typedef NS_ENUM(NSInteger, YKFlexDirection) {
   YKFlexDirectionRowReverse,
 };
 
-typedef NS_ENUM(NSInteger, YKMeasureMode) {
-  YKMeasureModeUndefined,
-  YKMeasureModeExactly,
-  YKMeasureModeAtMost,
-};
-
-typedef NS_ENUM(NSInteger, YKPrintOptions) {
-  YKPrintOptionsLayout = 1,
-  YKPrintOptionsStyle = 2,
-  YKPrintOptionsChildren = 4,
-};
-
 typedef NS_ENUM(NSInteger, YKEdge) {
   YKEdgeLeft,
   YKEdgeTop,
@@ -43,11 +31,6 @@ typedef NS_ENUM(NSInteger, YKPositionType) {
   YKPositionTypeAbsolute,
 };
 
-typedef NS_ENUM(NSInteger, YKDimension) {
-  YKDimensionWidth,
-  YKDimensionHeight,
-};
-
 typedef NS_ENUM(NSInteger, YKJustify) {
   YKJustifyFlexStart,
   YKJustifyCenter,
@@ -62,28 +45,9 @@ typedef NS_ENUM(NSInteger, YKDirection) {
   YKDirectionRightToLeft,
 };
 
-typedef NS_ENUM(NSInteger, YKLogLevel) {
-  YKLogLevelError,
-  YKLogLevelWarn,
-  YKLogLevelInfo,
-  YKLogLevelDebug,
-  YKLogLevelVerbose,
-};
-
 typedef NS_ENUM(NSInteger, YKWrap) {
   YKWrapNoWrap,
   YKWrapWrap,
-};
-
-typedef NS_ENUM(NSInteger, YKOverflow) {
-  YKOverflowVisible,
-  YKOverflowHidden,
-  YKOverflowScroll,
-};
-
-typedef NS_ENUM(NSInteger, YKExperimentalFeature) {
-  YKExperimentalFeatureRounding,
-  YKExperimentalFeatureWebFlexBasis,
 };
 
 typedef NS_ENUM(NSInteger, YKAlign) {
