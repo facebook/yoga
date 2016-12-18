@@ -24,6 +24,7 @@
 		63EE08501E06EECB00EE5F9A /* Yoga.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D631DF8778F00E7C260 /* Yoga.h */; };
 		63EE08511E06EECB00EE5F9A /* UIView+YogaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D691DF8778F00E7C260 /* UIView+YogaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63EE08531E06F3D100EE5F9A /* YKEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EE08521E06F3D100EE5F9A /* YKEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		63EE08551E072EF800EE5F9A /* SwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE08541E072EF800EE5F9A /* SwiftViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		63EE083F1E06ED3D00EE5F9A /* YogaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YogaKit.h; sourceTree = "<group>"; };
 		63EE08401E06ED3D00EE5F9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63EE08521E06F3D100EE5F9A /* YKEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKEnums.h; path = ../../YKEnums.h; sourceTree = "<group>"; };
+		63EE08541E072EF800EE5F9A /* SwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				13687D4A1DF8748400E7C260 /* AppDelegate.m */,
 				13687D4C1DF8748400E7C260 /* ViewController.h */,
 				13687D4D1DF8748400E7C260 /* ViewController.m */,
+				63EE08541E072EF800EE5F9A /* SwiftViewController.swift */,
 				13687D521DF8748400E7C260 /* Assets.xcassets */,
 				13687D571DF8748400E7C260 /* Info.plist */,
 				13687D461DF8748400E7C260 /* Supporting Files */,
@@ -238,6 +241,7 @@
 				TargetAttributes = {
 					13687D421DF8748300E7C260 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					63EE083C1E06ED3D00EE5F9A = {
@@ -288,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63EE08551E072EF800EE5F9A /* SwiftViewController.swift in Sources */,
 				13687D4E1DF8748400E7C260 /* ViewController.m in Sources */,
 				13687D4B1DF8748400E7C260 /* AppDelegate.m in Sources */,
 				13687D481DF8748400E7C260 /* main.m in Sources */,
@@ -409,10 +414,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = YogaKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKitSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -420,10 +428,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = YogaKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKitSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
