@@ -7,8 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import "UIView+Yoga.h"
-
+#import <YogaKit/UIView+Yoga.h>
+#import <YogaKit/yoga.h>
 #import <objc/runtime.h>
 
 @interface YGNodeBridge : NSObject
@@ -37,164 +37,164 @@
 }
 @end
 
-@implementation UIView (Yoga)
+@implementation UIView (YogaKit)
 
-- (BOOL)yg_usesYoga
+- (BOOL)yk_usesYoga
 {
-  NSNumber *usesYoga = objc_getAssociatedObject(self, @selector(yg_usesYoga));
+  NSNumber *usesYoga = objc_getAssociatedObject(self, @selector(yk_usesYoga));
   return [usesYoga boolValue];
 }
 
-- (BOOL)yg_includeInLayout
+- (BOOL)yk_includeInLayout
 {
-  NSNumber *includeInLayout = objc_getAssociatedObject(self, @selector(yg_includeInLayout));
+  NSNumber *includeInLayout = objc_getAssociatedObject(self, @selector(yk_includeInLayout));
   return (includeInLayout != nil) ? [includeInLayout boolValue] : YES;
 }
 
-- (NSUInteger)yg_numberOfChildren
+- (NSUInteger)yk_numberOfChildren
 {
   return YGNodeGetChildCount([self ygNode]);
 }
 
 #pragma mark - Setters
 
-- (void)yg_setIncludeInLayout:(BOOL)includeInLayout
+- (void)yk_setIncludeInLayout:(BOOL)includeInLayout
 {
   objc_setAssociatedObject(
     self,
-    @selector(yg_includeInLayout),
+    @selector(yk_includeInLayout),
     @(includeInLayout),
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)yg_setUsesYoga:(BOOL)enabled
+- (void)yk_setUsesYoga:(BOOL)enabled
 {
   objc_setAssociatedObject(
     self,
-    @selector(yg_usesYoga),
+    @selector(yk_usesYoga),
     @(enabled),
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)yg_setDirection:(YGDirection)direction
+- (void)yk_setDirection:(YKDirection)direction
 {
-  YGNodeStyleSetDirection([self ygNode], direction);
+  YGNodeStyleSetDirection([self ygNode], (YGDirection)direction);
 }
 
-- (void)yg_setFlexDirection:(YGFlexDirection)flexDirection
+- (void)yk_setFlexDirection:(YKFlexDirection)flexDirection
 {
-  YGNodeStyleSetFlexDirection([self ygNode], flexDirection);
+  YGNodeStyleSetFlexDirection([self ygNode], (YGFlexDirection)flexDirection);
 }
 
-- (void)yg_setJustifyContent:(YGJustify)justifyContent
+- (void)yk_setJustifyContent:(YKJustify)justifyContent
 {
-  YGNodeStyleSetJustifyContent([self ygNode], justifyContent);
+  YGNodeStyleSetJustifyContent([self ygNode], (YGJustify)justifyContent);
 }
 
-- (void)yg_setAlignContent:(YGAlign)alignContent
+- (void)yk_setAlignContent:(YKAlign)alignContent
 {
-  YGNodeStyleSetAlignContent([self ygNode], alignContent);
+  YGNodeStyleSetAlignContent([self ygNode], (YGAlign)alignContent);
 }
 
-- (void)yg_setAlignItems:(YGAlign)alignItems
+- (void)yk_setAlignItems:(YKAlign)alignItems
 {
-  YGNodeStyleSetAlignItems([self ygNode], alignItems);
+  YGNodeStyleSetAlignItems([self ygNode], (YGAlign)alignItems);
 }
 
-- (void)yg_setAlignSelf:(YGAlign)alignSelf
+- (void)yk_setAlignSelf:(YKAlign)alignSelf
 {
-  YGNodeStyleSetAlignSelf([self ygNode], alignSelf);
+  YGNodeStyleSetAlignSelf([self ygNode], (YGAlign)alignSelf);
 }
 
-- (void)yg_setPositionType:(YGPositionType)positionType
+- (void)yk_setPositionType:(YKPositionType)positionType
 {
-  YGNodeStyleSetPositionType([self ygNode], positionType);
+  YGNodeStyleSetPositionType([self ygNode], (YGPositionType)positionType);
 }
 
-- (void)yg_setFlexWrap:(YGWrap)flexWrap
+- (void)yk_setFlexWrap:(YKWrap)flexWrap
 {
-  YGNodeStyleSetFlexWrap([self ygNode], flexWrap);
+  YGNodeStyleSetFlexWrap([self ygNode], (YGWrap)flexWrap);
 }
 
-- (void)yg_setFlexGrow:(CGFloat)flexGrow
+- (void)yk_setFlexGrow:(CGFloat)flexGrow
 {
   YGNodeStyleSetFlexGrow([self ygNode], flexGrow);
 }
 
-- (void)yg_setFlexShrink:(CGFloat)flexShrink
+- (void)yk_setFlexShrink:(CGFloat)flexShrink
 {
   YGNodeStyleSetFlexShrink([self ygNode], flexShrink);
 }
 
-- (void)yg_setFlexBasis:(CGFloat)flexBasis
+- (void)yk_setFlexBasis:(CGFloat)flexBasis
 {
   YGNodeStyleSetFlexBasis([self ygNode], flexBasis);
 }
 
-- (void)yg_setPosition:(CGFloat)position forEdge:(YGEdge)edge
+- (void)yk_setPosition:(CGFloat)position forEdge:(YKEdge)edge
 {
-  YGNodeStyleSetPosition([self ygNode], edge, position);
+  YGNodeStyleSetPosition([self ygNode], (YGEdge)edge, position);
 }
 
-- (void)yg_setMargin:(CGFloat)margin forEdge:(YGEdge)edge
+- (void)yk_setMargin:(CGFloat)margin forEdge:(YKEdge)edge
 {
-  YGNodeStyleSetMargin([self ygNode], edge, margin);
+  YGNodeStyleSetMargin([self ygNode], (YGEdge)edge, margin);
 }
 
-- (void)yg_setPadding:(CGFloat)padding forEdge:(YGEdge)edge
+- (void)yk_setPadding:(CGFloat)padding forEdge:(YKEdge)edge
 {
-  YGNodeStyleSetPadding([self ygNode], edge, padding);
+  YGNodeStyleSetPadding([self ygNode], (YGEdge)edge, padding);
 }
 
-- (void)yg_setWidth:(CGFloat)width
+- (void)yk_setWidth:(CGFloat)width
 {
   YGNodeStyleSetWidth([self ygNode], width);
 }
 
-- (void)yg_setHeight:(CGFloat)height
+- (void)yk_setHeight:(CGFloat)height
 {
   YGNodeStyleSetHeight([self ygNode], height);
 }
 
-- (void)yg_setMinWidth:(CGFloat)minWidth
+- (void)yk_setMinWidth:(CGFloat)minWidth
 {
   YGNodeStyleSetMinWidth([self ygNode], minWidth);
 }
 
-- (void)yg_setMinHeight:(CGFloat)minHeight
+- (void)yk_setMinHeight:(CGFloat)minHeight
 {
   YGNodeStyleSetMinHeight([self ygNode], minHeight);
 }
 
-- (void)yg_setMaxWidth:(CGFloat)maxWidth
+- (void)yk_setMaxWidth:(CGFloat)maxWidth
 {
   YGNodeStyleSetMaxWidth([self ygNode], maxWidth);
 }
 
-- (void)yg_setMaxHeight:(CGFloat)maxHeight
+- (void)yk_setMaxHeight:(CGFloat)maxHeight
 {
   YGNodeStyleSetMaxHeight([self ygNode], maxHeight);
 }
 
-- (void)yg_setAspectRatio:(CGFloat)aspectRatio
+- (void)yk_setAspectRatio:(CGFloat)aspectRatio
 {
   YGNodeStyleSetAspectRatio([self ygNode], aspectRatio);
 }
 
 #pragma mark - Layout and Sizing
 
-- (YGDirection)yg_resolvedDirection
+- (YKDirection)yk_resolvedDirection
 {
-  return YGNodeLayoutGetDirection([self ygNode]);
+  return (YKDirection)YGNodeLayoutGetDirection([self ygNode]);
 }
 
-- (void)yg_applyLayout
+- (void)yk_applyLayout
 {
   [self calculateLayoutWithSize:self.bounds.size];
-  YGApplyLayoutToViewHierarchy(self);
+  YKApplyLayoutToViewHierarchy(self);
 }
 
-- (CGSize)yg_intrinsicSize
+- (CGSize)yk_intrinsicSize
 {
   const CGSize constrainedSize = {
       .width = YGUndefined,
@@ -220,9 +220,9 @@
 - (CGSize)calculateLayoutWithSize:(CGSize)size
 {
   NSAssert([NSThread isMainThread], @"YG Layout calculation must be done on main.");
-  NSAssert([self yg_usesYoga], @"YG Layout is not enabled for this view.");
+  NSAssert([self yk_usesYoga], @"YG Layout is not enabled for this view.");
 
-  YGAttachNodesFromViewHierachy(self);
+  YKAttachNodesFromViewHierachy(self);
 
   const YGNodeRef node = [self ygNode];
   YGNodeCalculateLayout(
@@ -237,7 +237,7 @@
   };
 }
 
-static YGSize YGMeasureView(
+static YGSize YKMeasureView(
   YGNodeRef node,
   float width,
   YGMeasureMode widthMode,
@@ -254,12 +254,12 @@ static YGSize YGMeasureView(
   }];
 
   return (YGSize) {
-    .width = YGSanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
-    .height = YGSanitizeMeasurement(constrainedHeight, sizeThatFits.height, heightMode),
+    .width = YKSanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
+    .height = YKSanitizeMeasurement(constrainedHeight, sizeThatFits.height, heightMode),
   };
 }
 
-static CGFloat YGSanitizeMeasurement(
+static CGFloat YKSanitizeMeasurement(
   CGFloat constrainedSize,
   CGFloat measuredSize,
   YGMeasureMode measureMode)
@@ -276,20 +276,20 @@ static CGFloat YGSanitizeMeasurement(
   return result;
 }
 
-static void YGAttachNodesFromViewHierachy(UIView *view) {
+static void YKAttachNodesFromViewHierachy(UIView *view) {
   YGNodeRef node = [view ygNode];
 
   // Only leaf nodes should have a measure function
-  if (![view yg_usesYoga] || view.subviews.count == 0) {
-    YGNodeSetMeasureFunc(node, YGMeasureView);
-    YGRemoveAllChildren(node);
+  if (![view yk_usesYoga] || view.subviews.count == 0) {
+    YGNodeSetMeasureFunc(node, YKMeasureView);
+    YKRemoveAllChildren(node);
   } else {
     YGNodeSetMeasureFunc(node, NULL);
 
     // Create a list of all the subviews that we are going to use for layout.
     NSMutableArray<UIView *> *subviewsToInclude = [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
     for (UIView *subview in view.subviews) {
-      if ([subview yg_includeInLayout]) {
+      if ([subview yk_includeInLayout]) {
         [subviewsToInclude addObject:subview];
       }
     }
@@ -307,18 +307,18 @@ static void YGAttachNodesFromViewHierachy(UIView *view) {
     }
 
     if (shouldReconstructChildList) {
-      YGRemoveAllChildren(node);
+      YKRemoveAllChildren(node);
 
       for (int i = 0 ; i < subviewsToInclude.count; i++) {
         UIView *const subview = subviewsToInclude[i];
         YGNodeInsertChild(node, [subview ygNode], i);
-        YGAttachNodesFromViewHierachy(subview);
+        YKAttachNodesFromViewHierachy(subview);
       }
     }
   }
 }
 
-static void YGRemoveAllChildren(const YGNodeRef node)
+static void YKRemoveAllChildren(const YGNodeRef node)
 {
   if (node == NULL) {
       return;
@@ -329,7 +329,7 @@ static void YGRemoveAllChildren(const YGNodeRef node)
   }
 }
 
-static CGFloat YGRoundPixelValue(CGFloat value)
+static CGFloat YKRoundPixelValue(CGFloat value)
 {
   static CGFloat scale;
   static dispatch_once_t onceToken;
@@ -340,9 +340,9 @@ static CGFloat YGRoundPixelValue(CGFloat value)
   return round(value * scale) / scale;
 }
 
-static void YGApplyLayoutToViewHierarchy(UIView *view) {
+static void YKApplyLayoutToViewHierarchy(UIView *view) {
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
-  if (![view yg_includeInLayout]) {
+  if (![view yk_includeInLayout]) {
      return;
   }
 
@@ -359,19 +359,19 @@ static void YGApplyLayoutToViewHierarchy(UIView *view) {
 
   view.frame = (CGRect) {
     .origin = {
-      .x = YGRoundPixelValue(topLeft.x),
-      .y = YGRoundPixelValue(topLeft.y),
+      .x = YKRoundPixelValue(topLeft.x),
+      .y = YKRoundPixelValue(topLeft.y),
     },
     .size = {
-      .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
-      .height = YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y),
+      .width = YKRoundPixelValue(bottomRight.x) - YKRoundPixelValue(topLeft.x),
+      .height = YKRoundPixelValue(bottomRight.y) - YKRoundPixelValue(topLeft.y),
     },
   };
 
-  const BOOL isLeaf = ![view yg_usesYoga] || view.subviews.count == 0;
+  const BOOL isLeaf = ![view yk_usesYoga] || view.subviews.count == 0;
   if (!isLeaf) {
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
-      YGApplyLayoutToViewHierarchy(view.subviews[i]);
+      YKApplyLayoutToViewHierarchy(view.subviews[i]);
     }
   }
 }

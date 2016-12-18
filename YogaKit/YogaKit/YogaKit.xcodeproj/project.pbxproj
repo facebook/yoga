@@ -11,13 +11,6 @@
 		13687D4B1DF8748400E7C260 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13687D4A1DF8748400E7C260 /* AppDelegate.m */; };
 		13687D4E1DF8748400E7C260 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13687D4D1DF8748400E7C260 /* ViewController.m */; };
 		13687D531DF8748400E7C260 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13687D521DF8748400E7C260 /* Assets.xcassets */; };
-		13687D781DF878C600E7C260 /* YGEnums.h in yoga */ = {isa = PBXBuildFile; fileRef = 13687D5E1DF8778F00E7C260 /* YGEnums.h */; };
-		13687D791DF878C600E7C260 /* YGMacros.h in yoga */ = {isa = PBXBuildFile; fileRef = 13687D5F1DF8778F00E7C260 /* YGMacros.h */; };
-		13687D7A1DF878C600E7C260 /* Yoga.h in yoga */ = {isa = PBXBuildFile; fileRef = 13687D631DF8778F00E7C260 /* Yoga.h */; };
-		13687D7C1DF878DD00E7C260 /* UIView+Yoga.h in YogaKit */ = {isa = PBXBuildFile; fileRef = 13687D691DF8778F00E7C260 /* UIView+Yoga.h */; };
-		13687D801DF87CEC00E7C260 /* UIView+Yoga.m in Sources */ = {isa = PBXBuildFile; fileRef = 13687D6A1DF8778F00E7C260 /* UIView+Yoga.m */; };
-		13687D811DF87CF200E7C260 /* YGNodeList.c in Sources */ = {isa = PBXBuildFile; fileRef = 13687D601DF8778F00E7C260 /* YGNodeList.c */; };
-		13687D821DF87CF200E7C260 /* Yoga.c in Sources */ = {isa = PBXBuildFile; fileRef = 13687D621DF8778F00E7C260 /* Yoga.c */; };
 		13687D851DF87D1E00E7C260 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13687D841DF87D1E00E7C260 /* UIKit.framework */; };
 		13687D871DF87D2400E7C260 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13687D861DF87D2400E7C260 /* Foundation.framework */; };
 		63EE08411E06ED3D00EE5F9A /* YogaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EE083F1E06ED3D00EE5F9A /* YogaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -25,12 +18,12 @@
 		63EE08451E06ED3D00EE5F9A /* YogaKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63EE083D1E06ED3D00EE5F9A /* YogaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63EE084A1E06EEB700EE5F9A /* YGNodeList.c in Sources */ = {isa = PBXBuildFile; fileRef = 13687D601DF8778F00E7C260 /* YGNodeList.c */; };
 		63EE084B1E06EEB700EE5F9A /* Yoga.c in Sources */ = {isa = PBXBuildFile; fileRef = 13687D621DF8778F00E7C260 /* Yoga.c */; };
-		63EE084C1E06EEB700EE5F9A /* UIView+Yoga.m in Sources */ = {isa = PBXBuildFile; fileRef = 13687D6A1DF8778F00E7C260 /* UIView+Yoga.m */; };
-		63EE084D1E06EECB00EE5F9A /* YGEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D5E1DF8778F00E7C260 /* YGEnums.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		63EE084E1E06EECB00EE5F9A /* YGMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D5F1DF8778F00E7C260 /* YGMacros.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		63EE084F1E06EECB00EE5F9A /* YGNodeList.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D611DF8778F00E7C260 /* YGNodeList.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		63EE08501E06EECB00EE5F9A /* Yoga.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D631DF8778F00E7C260 /* Yoga.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		63EE08511E06EECB00EE5F9A /* UIView+Yoga.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D691DF8778F00E7C260 /* UIView+Yoga.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		63EE084C1E06EEB700EE5F9A /* UIView+YogaKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 13687D6A1DF8778F00E7C260 /* UIView+YogaKit.m */; };
+		63EE084E1E06EECB00EE5F9A /* YGMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D5F1DF8778F00E7C260 /* YGMacros.h */; };
+		63EE084F1E06EECB00EE5F9A /* YGNodeList.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D611DF8778F00E7C260 /* YGNodeList.h */; };
+		63EE08501E06EECB00EE5F9A /* Yoga.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D631DF8778F00E7C260 /* Yoga.h */; };
+		63EE08511E06EECB00EE5F9A /* UIView+YogaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 13687D691DF8778F00E7C260 /* UIView+YogaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		63EE08531E06F3D100EE5F9A /* YKEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EE08521E06F3D100EE5F9A /* YKEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,30 +37,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		13687D771DF878A000E7C260 /* yoga */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = include/yoga;
-			dstSubfolderSpec = 16;
-			files = (
-				13687D781DF878C600E7C260 /* YGEnums.h in yoga */,
-				13687D791DF878C600E7C260 /* YGMacros.h in yoga */,
-				13687D7A1DF878C600E7C260 /* Yoga.h in yoga */,
-			);
-			name = yoga;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		13687D7B1DF878CE00E7C260 /* YogaKit */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = include/YogaKit;
-			dstSubfolderSpec = 16;
-			files = (
-				13687D7C1DF878DD00E7C260 /* UIView+Yoga.h in YogaKit */,
-			);
-			name = YogaKit;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		63EE08491E06ED3D00EE5F9A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -90,19 +59,19 @@
 		13687D4D1DF8748400E7C260 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		13687D521DF8748400E7C260 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13687D571DF8748400E7C260 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		13687D5E1DF8778F00E7C260 /* YGEnums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGEnums.h; sourceTree = "<group>"; };
 		13687D5F1DF8778F00E7C260 /* YGMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGMacros.h; sourceTree = "<group>"; };
 		13687D601DF8778F00E7C260 /* YGNodeList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = YGNodeList.c; sourceTree = "<group>"; };
 		13687D611DF8778F00E7C260 /* YGNodeList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YGNodeList.h; sourceTree = "<group>"; };
 		13687D621DF8778F00E7C260 /* Yoga.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Yoga.c; sourceTree = "<group>"; };
 		13687D631DF8778F00E7C260 /* Yoga.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Yoga.h; sourceTree = "<group>"; };
-		13687D691DF8778F00E7C260 /* UIView+Yoga.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIView+Yoga.h"; path = "../../UIView+Yoga.h"; sourceTree = "<group>"; };
-		13687D6A1DF8778F00E7C260 /* UIView+Yoga.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIView+Yoga.m"; path = "../../UIView+Yoga.m"; sourceTree = "<group>"; };
+		13687D691DF8778F00E7C260 /* UIView+YogaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIView+YogaKit.h"; path = "../../UIView+YogaKit.h"; sourceTree = "<group>"; };
+		13687D6A1DF8778F00E7C260 /* UIView+YogaKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIView+YogaKit.m"; path = "../../UIView+YogaKit.m"; sourceTree = "<group>"; };
 		13687D841DF87D1E00E7C260 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		13687D861DF87D2400E7C260 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		63EE083D1E06ED3D00EE5F9A /* YogaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YogaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EE083F1E06ED3D00EE5F9A /* YogaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YogaKit.h; sourceTree = "<group>"; };
 		63EE08401E06ED3D00EE5F9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63EE08521E06F3D100EE5F9A /* YKEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YKEnums.h; path = ../../YKEnums.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +139,6 @@
 		13687D5D1DF8778F00E7C260 /* yoga */ = {
 			isa = PBXGroup;
 			children = (
-				13687D5E1DF8778F00E7C260 /* YGEnums.h */,
 				13687D5F1DF8778F00E7C260 /* YGMacros.h */,
 				13687D601DF8778F00E7C260 /* YGNodeList.c */,
 				13687D611DF8778F00E7C260 /* YGNodeList.h */,
@@ -195,8 +163,9 @@
 			children = (
 				13687D5D1DF8778F00E7C260 /* yoga */,
 				63EE083F1E06ED3D00EE5F9A /* YogaKit.h */,
-				13687D691DF8778F00E7C260 /* UIView+Yoga.h */,
-				13687D6A1DF8778F00E7C260 /* UIView+Yoga.m */,
+				63EE08521E06F3D100EE5F9A /* YKEnums.h */,
+				13687D691DF8778F00E7C260 /* UIView+YogaKit.h */,
+				13687D6A1DF8778F00E7C260 /* UIView+YogaKit.m */,
 				63EE08401E06ED3D00EE5F9A /* Info.plist */,
 			);
 			path = YogaKit;
@@ -210,8 +179,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				63EE08411E06ED3D00EE5F9A /* YogaKit.h in Headers */,
-				63EE08511E06EECB00EE5F9A /* UIView+Yoga.h in Headers */,
-				63EE084D1E06EECB00EE5F9A /* YGEnums.h in Headers */,
+				63EE08531E06F3D100EE5F9A /* YKEnums.h in Headers */,
+				63EE08511E06EECB00EE5F9A /* UIView+YogaKit.h in Headers */,
 				63EE084E1E06EECB00EE5F9A /* YGMacros.h in Headers */,
 				63EE084F1E06EECB00EE5F9A /* YGNodeList.h in Headers */,
 				63EE08501E06EECB00EE5F9A /* Yoga.h in Headers */,
@@ -225,8 +194,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13687D5A1DF8748400E7C260 /* Build configuration list for PBXNativeTarget "YogaKitSample" */;
 			buildPhases = (
-				13687D771DF878A000E7C260 /* yoga */,
-				13687D7B1DF878CE00E7C260 /* YogaKit */,
 				13687D3F1DF8748300E7C260 /* Sources */,
 				13687D401DF8748300E7C260 /* Frameworks */,
 				13687D411DF8748300E7C260 /* Resources */,
@@ -266,7 +233,7 @@
 		13687D3B1DF8748300E7C260 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = facebook;
 				TargetAttributes = {
 					13687D421DF8748300E7C260 = {
@@ -321,11 +288,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13687D801DF87CEC00E7C260 /* UIView+Yoga.m in Sources */,
 				13687D4E1DF8748400E7C260 /* ViewController.m in Sources */,
 				13687D4B1DF8748400E7C260 /* AppDelegate.m in Sources */,
-				13687D821DF87CF200E7C260 /* Yoga.c in Sources */,
-				13687D811DF87CF200E7C260 /* YGNodeList.c in Sources */,
 				13687D481DF8748400E7C260 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,7 +300,7 @@
 			files = (
 				63EE084A1E06EEB700EE5F9A /* YGNodeList.c in Sources */,
 				63EE084B1E06EEB700EE5F9A /* Yoga.c in Sources */,
-				63EE084C1E06EEB700EE5F9A /* UIView+Yoga.m in Sources */,
+				63EE084C1E06EEB700EE5F9A /* UIView+YogaKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +333,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -416,6 +381,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

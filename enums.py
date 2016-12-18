@@ -89,6 +89,14 @@ ENUMS = {
     ],
 }
 
+OBJC_ENUMS = {
+    'Direction': [
+        'Inherit',
+        'LeftToRight',
+        'RightToLeft',
+    ]
+}
+
 LICENSE = """/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -111,7 +119,7 @@ def to_java_upper(symbol):
     return out
 
 
-root = os.path.dirname(__file__)
+root = os.path.dirname(os.path.abspath(__file__))
 
 # write out C header
 with open(root + '/yoga/YGEnums.h', 'w') as f:
@@ -187,3 +195,18 @@ for name, values in ENUMS.items():
                 f.write('        %s,\n' % value)
         f.write('    }\n')
         f.write('}\n')
+
+# write out objc files
+with open(root + '/YogaKit/YKEnums.h', 'w') as f:
+    objc_enums = ENUMS
+    objc_enums.update(OBJC_ENUMS)
+    f.write(LICENSE)
+    for name, values in objc_enums.items():
+        f.write('typedef NS_ENUM(NSInteger, YK%s) {\n' % name)
+        for value in values:
+            if isinstance(value, tuple):
+                f.write('  YK%s%s = %d,\n' % (name, value[0], value[1]))
+            else:
+                f.write('  YK%s%s,\n' % (name, value))
+        f.write('};\n')
+        f.write('\n')
