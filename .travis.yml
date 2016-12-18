@@ -14,12 +14,17 @@ before_install:
   - brew update
   - brew tap facebook/fb
   - brew install buck
+  - brew cask install java
   - brew outdated xctool || brew upgrade xctool
+  - brew install mono
+  - export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+  - export PATH=$JAVA_HOME/bin:$PATH
 
 script:
-  - buck test //:CSSLayout
+  - buck test //:yoga
   - buck test //java:java
-  - buck test //uikit/CSSLayout:CSSLayout
-  - buck run  //benchmark:benchmark
+  - buck test //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64 --config cxx.cflags=-DTRAVIS_CI
+  - sh csharp/tests/Facebook.Yoga/test_macos.sh
+  - buck run //benchmark:benchmark
   - git checkout HEAD^
-  - buck run  //benchmark:benchmark
+  - buck run //benchmark:benchmark

@@ -1,10 +1,17 @@
 #!/usr/bin/env ruby
+
 require 'watir-webdriver'
 require 'fileutils'
+
 caps = Selenium::WebDriver::Remote::Capabilities.chrome(
-  "loggingPrefs"=>{"browser"=>"ALL", "performance"=>"ALL"})
+  "loggingPrefs"=>{
+    "browser"=>"ALL",
+    "performance"=>"ALL"
+  }
+)
 browser = Watir::Browser.new(:chrome, :desired_capabilities => caps)
 Dir.chdir(File.dirname($0))
+
 Dir['fixtures/*.html'].each do |file|
   fixture = File.read(file)
   name = File.basename(file, '.*')
@@ -22,7 +29,7 @@ Dir['fixtures/*.html'].each do |file|
 
   template = File.open('test-template.html').read
   f = File.open('test.html', 'w')
-  f.write sprintf(template, ltr_fixture, rtl_fixture, fixture)
+  f.write sprintf(template, name, ltr_fixture, rtl_fixture, fixture)
   f.close
   FileUtils.copy('test.html', "#{name}.html") if $DEBUG
 
@@ -33,12 +40,12 @@ Dir['fixtures/*.html'].each do |file|
   f.write eval(logs[0].message.sub(/^[^"]*/, ''))
   f.close
 
-  f = File.open("../java/tests/com/facebook/csslayout/#{name}.java", 'w')
-  f.write eval(logs[1].message.sub(/^[^"]*/, '')).sub('CSSNodeLayoutTest', name)
+  f = File.open("../java/tests/com/facebook/yoga/#{name}.java", 'w')
+  f.write eval(logs[1].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
 
-  f = File.open("../csharp/tests/Facebook.CSSLayout/#{name}.cs", 'w')
-  f.write eval(logs[2].message.sub(/^[^"]*/, '')).sub('CSSNodeLayoutTest', name)
+  f = File.open("../csharp/tests/Facebook.Yoga/#{name}.cs", 'w')
+  f.write eval(logs[2].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
 end
 File.delete('test.html')

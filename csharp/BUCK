@@ -5,16 +5,59 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
+include_defs('//YOGA_DEFS')
+
+COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c++11']
+
 csharp_library(
-  name = 'csslibnet46',
-  dll_name = 'Facebook.CSSLayout.dll',
+  name = 'yogalibnet46',
+  dll_name = 'Facebook.Yoga.dll',
   framework_ver = 'net46',
   srcs = glob(['**/*.cs']),
 )
 
 csharp_library(
-  name = 'csslibnet45',
-  dll_name = 'Facebook.CSSLayout.dll',
+  name = 'yogalibnet45',
+  dll_name = 'Facebook.Yoga.dll',
   framework_ver = 'net45',
   srcs = glob(['**/*.cs']),
 )
+
+cxx_library(
+  name = 'yoganet',
+  soname = 'libyoga.$(ext)',
+  srcs = glob(['Yoga/YGInterop.cpp']),
+  compiler_flags = COMPILER_FLAGS,
+  link_style = 'static',
+  link_whole = True,
+  deps = [yoga_dep(':yoga')],
+  visibility = ['PUBLIC'],
+)
+
+with allow_unsafe_import():
+  import os
+
+if os.path.isdir('/Applications/Xcode.app'):
+  yoganet_ios_srcs = []
+  for arch in ['iphonesimulator-x86_64', 'iphoneos-arm64', 'iphoneos-armv7']:
+    name = 'yoganet-' + arch
+    yoganet_ios_srcs.append(':' + name)
+    genrule(
+      name = name,
+      srcs = [
+        yoga_dep(':yoga#%s,static' % arch),
+        yoga_dep('YogaKit:YogaKit#%s,static' % arch),
+        yoga_dep('csharp:yoganet#%s,static' % arch),
+      ],
+      out = 'libyoga-%s.a' % arch,
+      cmd = 'libtool -static -o $OUT $SRCS',
+      visibility = [yoga_dep('csharp:yoganet-ios')],
+    )
+
+  genrule(
+    name = 'yoganet-ios',
+    srcs = yoganet_ios_srcs,
+    out = 'libyoga.a',
+    cmd = 'lipo $SRCS -create -output $OUT',
+    visibility = ['PUBLIC'],
+  )

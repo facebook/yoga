@@ -29,7 +29,6 @@ clang-format \
     SpaceAfterCStyleCast: true, \
     UseTab: Never, \
   }" "$@" \
-  -i $(dirname $0)/CSSLayout/*.{h,c,cpp} \
-     $(dirname $0)/tests/CSSLayoutTestUtils/*.{h,c,cpp} \
+  -i $(dirname $0)/yoga/*.{h,c,cpp} \
      $(dirname $0)/benchmarks/*.{h,c,cpp} \
      $(dirname $0)/java/jni/*.{h,c,cpp}

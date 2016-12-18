@@ -30,6 +30,11 @@ bld/
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+csharp/tests/Facebook.Yoga/NUnit-[0-9\.]+/
+csharp/tests/Facebook.Yoga/YogaTest.dll
+csharp/tests/Facebook.Yoga/YogaTest.dll.mdb
+csharp/tests/Facebook.Yoga/libyoga.dylib
+csharp/tests/Facebook.Yoga/libyoga.dylib.dSYM/
 
 # NUNIT
 *.VisualState.xml

@@ -5,43 +5,37 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs('//CSSLAYOUT_DEFS')
-
-BASE_COMPILER_FLAGS = [
-  '-fno-omit-frame-pointer',
-  '-fexceptions',
-  '-Wall',
-  '-Werror',
-  '-O3',
-]
+include_defs('//YOGA_DEFS')
 
 GMOCK_OVERRIDE_FLAGS = [
   # gmock does not mark mocked methods as override, ignore the warnings in tests
   '-Wno-inconsistent-missing-override',
 ]
 
-COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c11']
+COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c11', '-fPIC']
 TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ['-std=c++11']
 
 cxx_library(
-  name = 'CSSLayout',
-  srcs = glob(['CSSLayout/*.c']),
-  tests=[':tests'],
-  exported_headers = subdir_glob([('', 'CSSLayout/*.h')]),
+  name = 'yoga',
+  soname = 'libyogacore.$(ext)',
+  srcs = glob(['yoga/*.c']),
+  tests=[':YogaTests'],
+  exported_headers = subdir_glob([('', 'yoga/*.h')]),
   header_namespace = '',
-  force_static = True,
   compiler_flags = COMPILER_FLAGS,
-  deps = [],
+  deps = [] if THIS_IS_FBOBJC else [
+    yoga_dep('lib/fb:ndklog'),
+  ],
   visibility = ['PUBLIC'],
 )
 
 cxx_test(
-  name = 'tests',
+  name = 'YogaTests',
   contacts = ['emilsj@fb.com'],
   srcs = glob(['tests/*.cpp']),
   compiler_flags = TEST_COMPILER_FLAGS,
   deps = [
-    ':CSSLayout',
+    ':yoga',
     GTEST_TARGET,
   ],
   visibility = ['PUBLIC'],
