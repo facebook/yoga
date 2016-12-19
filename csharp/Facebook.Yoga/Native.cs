@@ -14,7 +14,7 @@ namespace Facebook.Yoga
 {
     internal static class Native
     {
-#if UNITY_IOS && !UNITY_EDITOR
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
         private const string DllName = "__Internal";
 #else
         private const string DllName = "yoga";
@@ -26,9 +26,6 @@ namespace Facebook.Yoga
 
         [DllImport(DllName)]
         public static extern IntPtr YGNodeNew();
-
-        [DllImport(DllName)]
-        public static extern void YGNodeInit(IntPtr node);
 
         [DllImport(DllName)]
         public static extern void YGNodeFree(IntPtr node);
@@ -58,7 +55,7 @@ namespace Facebook.Yoga
         public static extern IntPtr YGNodeGetChild(IntPtr node, uint index);
 
         [DllImport(DllName)]
-        public static extern uint YGNodeChildCount(IntPtr node);
+        public static extern uint YGNodeGetChildCount(IntPtr node);
 
         [DllImport(DllName)]
         public static extern void YGNodeCalculateLayout(IntPtr node,

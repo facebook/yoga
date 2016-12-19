@@ -55,7 +55,7 @@
 - (YGDirection)yg_resolvedDirection;
 
 /**
- Perform a layout calculation and update the frames of the views in the hierarchy with th results
+ Perform a layout calculation and update the frames of the views in the hierarchy with the results
  */
 - (void)yg_applyLayout;
 

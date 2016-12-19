@@ -293,7 +293,7 @@ void YGNodeFree(const YGNodeRef node) {
     node->parent = NULL;
   }
 
-  const uint32_t childCount = YGNodeChildCount(node);
+  const uint32_t childCount = YGNodeGetChildCount(node);
   for (uint32_t i = 0; i < childCount; i++) {
     const YGNodeRef child = YGNodeGetChild(node, i);
     child->parent = NULL;
@@ -305,7 +305,7 @@ void YGNodeFree(const YGNodeRef node) {
 }
 
 void YGNodeFreeRecursive(const YGNodeRef root) {
-  while (YGNodeChildCount(root) > 0) {
+  while (YGNodeGetChildCount(root) > 0) {
     const YGNodeRef child = YGNodeGetChild(root, 0);
     YGNodeRemoveChild(root, child);
     YGNodeFreeRecursive(child);
@@ -314,7 +314,7 @@ void YGNodeFreeRecursive(const YGNodeRef root) {
 }
 
 void YGNodeReset(const YGNodeRef node) {
-  YG_ASSERT(YGNodeChildCount(node) == 0, "Cannot reset a node which still has children attached");
+  YG_ASSERT(YGNodeGetChildCount(node) == 0, "Cannot reset a node which still has children attached");
   YG_ASSERT(node->parent == NULL, "Cannot reset a node still attached to a parent");
 
   YGNodeListFree(node->children);
@@ -340,7 +340,7 @@ void YGNodeSetMeasureFunc(const YGNodeRef node, YGMeasureFunc measureFunc) {
   if (measureFunc == NULL) {
     node->measure = NULL;
   } else {
-    YG_ASSERT(YGNodeChildCount(node) == 0,
+    YG_ASSERT(YGNodeGetChildCount(node) == 0,
               "Cannot set measure function: Nodes with measure functions cannot have children.");
     node->measure = measureFunc;
   }
@@ -370,7 +370,11 @@ YGNodeRef YGNodeGetChild(const YGNodeRef node, const uint32_t index) {
   return YGNodeListGet(node->children, index);
 }
 
-inline uint32_t YGNodeChildCount(const YGNodeRef node) {
+YGNodeRef YGNodeGetParent(const YGNodeRef node) {
+  return node->parent;
+}
+
+inline uint32_t YGNodeGetChildCount(const YGNodeRef node) {
   return YGNodeListCount(node->children);
 }
 
