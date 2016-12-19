@@ -95,6 +95,7 @@ OBJC_ENUMS = {
         'LeftToRight',
         'RightToLeft',
     ],
+    'Edge': None,
     'MeasureMode': None,
     'PrintOptions': None,
     'Dimension': None,
@@ -215,5 +216,5 @@ with open(root + '/YogaKit/YKEnums.h', 'w') as f:
                     f.write('  YK%s%s = %d,\n' % (name, value[0], value[1]))
                 else:
                     f.write('  YK%s%s,\n' % (name, value))
-            f.write('};\n')
+            f.write('} NS_SWIFT_NAME(%s);\n' % name)
             f.write('\n')

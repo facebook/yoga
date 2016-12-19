@@ -7,11 +7,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <UIKit/UIKit.h>
 #import <YogaKit/YKLayout.h>
 
-@interface UIView (YogaKit)
+@interface YKLayout ()
 
-@property (nonatomic, readonly) YKLayout* layout;
+- (instancetype)initWithView:(UIView*)view;
 
 @end

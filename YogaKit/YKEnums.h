@@ -12,24 +12,12 @@ typedef NS_ENUM(NSInteger, YKFlexDirection) {
   YKFlexDirectionColumnReverse,
   YKFlexDirectionRow,
   YKFlexDirectionRowReverse,
-};
-
-typedef NS_ENUM(NSInteger, YKEdge) {
-  YKEdgeLeft,
-  YKEdgeTop,
-  YKEdgeRight,
-  YKEdgeBottom,
-  YKEdgeStart,
-  YKEdgeEnd,
-  YKEdgeHorizontal,
-  YKEdgeVertical,
-  YKEdgeAll,
-};
+} NS_SWIFT_NAME(FlexDirection);
 
 typedef NS_ENUM(NSInteger, YKPositionType) {
   YKPositionTypeRelative,
   YKPositionTypeAbsolute,
-};
+} NS_SWIFT_NAME(PositionType);
 
 typedef NS_ENUM(NSInteger, YKJustify) {
   YKJustifyFlexStart,
@@ -37,18 +25,18 @@ typedef NS_ENUM(NSInteger, YKJustify) {
   YKJustifyFlexEnd,
   YKJustifySpaceBetween,
   YKJustifySpaceAround,
-};
+} NS_SWIFT_NAME(Justify);
 
 typedef NS_ENUM(NSInteger, YKDirection) {
   YKDirectionInherit,
   YKDirectionLeftToRight,
   YKDirectionRightToLeft,
-};
+} NS_SWIFT_NAME(Direction);
 
 typedef NS_ENUM(NSInteger, YKWrap) {
   YKWrapNoWrap,
   YKWrapWrap,
-};
+} NS_SWIFT_NAME(Wrap);
 
 typedef NS_ENUM(NSInteger, YKAlign) {
   YKAlignAuto,
@@ -56,5 +44,5 @@ typedef NS_ENUM(NSInteger, YKAlign) {
   YKAlignCenter,
   YKAlignFlexEnd,
   YKAlignStretch,
-};
+} NS_SWIFT_NAME(Align);
 

@@ -13,17 +13,17 @@ class SwiftViewController : UIViewController {
     override func viewDidLoad() {
         let root = view!
         root.backgroundColor = .red
-        root.usesYoga = true
-        root.layoutWidth = view.bounds.size.width
-        root.layoutHeight = view.bounds.size.height
-        root.layoutAlignItems = .center
-        root.layoutJustifyContent = .center
+        root.layout.isEnabled = true
+        root.layout.width = view.bounds.size.width
+        root.layout.height = view.bounds.size.height
+        root.layout.alignItems = .center
+        root.layout.justifyContent = .center
       
         let child1 = UIView()
         child1.backgroundColor = .blue
-        child1.usesYoga = true
-        child1.layoutWidth = 100
-        child1.layoutHeight = 100
+        child1.layout.isEnabled = true
+        child1.layout.width = 100
+        child1.layout.height = 100
       
         let child2 = UIView()
         child2.backgroundColor = .green
@@ -36,6 +36,6 @@ class SwiftViewController : UIViewController {
         child2.addSubview(child3)
         root.addSubview(child1)
         root.addSubview(child2)
-        root.applyLayout()
+        root.layout.apply()
     }
 }
