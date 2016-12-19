@@ -49,8 +49,8 @@ TEST(YogaTest, exactly_measure_stretched_child_column) {
   };
 
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetContext(root_child0, &constraintList);
@@ -76,8 +76,8 @@ TEST(YogaTest, exactly_measure_stretched_child_row) {
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetContext(root_child0, &constraintList);
@@ -102,8 +102,8 @@ TEST(YogaTest, at_most_main_axis_column) {
   };
 
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetContext(root_child0, &constraintList);
@@ -129,8 +129,8 @@ TEST(YogaTest, at_most_cross_axis_column) {
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetContext(root_child0, &constraintList);
@@ -156,8 +156,8 @@ TEST(YogaTest, at_most_main_axis_row) {
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetContext(root_child0, &constraintList);
@@ -184,8 +184,8 @@ TEST(YogaTest, at_most_cross_axis_row) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetContext(root_child0, &constraintList);
@@ -210,7 +210,7 @@ TEST(YogaTest, flex_child) {
   };
 
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
@@ -239,7 +239,7 @@ TEST(YogaTest, flex_child_with_flex_basis) {
   };
 
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
@@ -268,8 +268,8 @@ TEST(YogaTest, overflow_scroll_column) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetOverflow(root, YGOverflowScroll);
-  YGNodeStyleSetHeight(root, 100);
-  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetContext(root_child0, &constraintList);
@@ -300,8 +300,8 @@ TEST(YogaTest, overflow_scroll_row) {
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetOverflow(root, YGOverflowScroll);
-  YGNodeStyleSetHeight(root, 100);
-  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetContext(root_child0, &constraintList);
