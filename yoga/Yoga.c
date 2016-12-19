@@ -115,7 +115,7 @@ YGFree gYGFree = &free;
 
 static YGValue YGValueUndefined = {
 	.value = YGUndefined,
-    .defined = false,
+    .isDefined = false,
     .unit = YGUnitPixel
 };
 
@@ -167,20 +167,20 @@ static inline YGValue YGComputedEdgeValue(const YGValue edges[YGEdgeCount],
                                         const float defaultValue) {
   YG_ASSERT(edge <= YGEdgeEnd, "Cannot get computed value of multi-edge shorthands");
 
-  if (edges[edge].defined) {
+  if (edges[edge].isDefined) {
     return edges[edge];
   }
 
-  if ((edge == YGEdgeTop || edge == YGEdgeBottom) && edges[YGEdgeVertical].defined) {
+  if ((edge == YGEdgeTop || edge == YGEdgeBottom) && edges[YGEdgeVertical].isDefined) {
     return edges[YGEdgeVertical];
   }
 
   if ((edge == YGEdgeLeft || edge == YGEdgeRight || edge == YGEdgeStart || edge == YGEdgeEnd) &&
-      edges[YGEdgeHorizontal].defined) {
+      edges[YGEdgeHorizontal].isDefined) {
     return edges[YGEdgeHorizontal];
   }
 
-  if (edges[YGEdgeAll].defined) {
+  if (edges[YGEdgeAll].isDefined) {
     return edges[YGEdgeAll];
   }
 
@@ -190,7 +190,7 @@ static inline YGValue YGComputedEdgeValue(const YGValue edges[YGEdgeCount],
 
   YGValue result = {
 	.value = defaultValue,
-	.defined = (defaultValue < 0 || defaultValue >= 0), /* is faster than a nan function call and enough at this point */
+	.isDefined = (defaultValue < 0 || defaultValue >= 0), /* is faster than a nan function call and enough at this point */
 	.unit = YGUnitPixel,
   };
   return result;
@@ -263,7 +263,7 @@ int32_t gNodeInstanceCount = 0;
 YGValue YGPx(const float value){
   YGValue result = {
     .value = value,
-    .defined = !YGFloatIsUndefined(value),
+    .isDefined = !YGFloatIsUndefined(value),
     .unit = YGUnitPixel,
   };
   return result;
@@ -272,7 +272,7 @@ YGValue YGPx(const float value){
 YGValue YGPercent(const float value){
   YGValue result = {
     .value = value,
-    .defined = !YGFloatIsUndefined(value),
+    .isDefined = !YGFloatIsUndefined(value),
     .unit = YGUnitPercent,
   };
   return result;
@@ -413,7 +413,7 @@ inline float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
 }
 
 inline YGValue YGNodeStyleGetFlexBasis(const YGNodeRef node) {
-  if (node->style.flexBasis.defined) {
+  if (node->style.flexBasis.isDefined) {
     return node->style.flexBasis;
   }
   if (!YGFloatIsUndefined(node->style.flex)) {
@@ -447,10 +447,10 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   }
 
 #define YG_NODE_STYLE_PROPERTY_SETTER_UNIT_IMPL(type, name, paramName, instanceName) \
-  void YGNodeStyleSet##name##(const YGNodeRef node, const type paramName) {      \
+  void YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {      \
     if (node->style.instanceName.value != paramName.value || node->style.instanceName.unit != paramName.unit) {                                 \
       node->style.instanceName.value = paramName.value;                                      \
-      node->style.instanceName.defined = !YGFloatIsUndefined(paramName.value);                                      \
+      node->style.instanceName.isDefined = !YGFloatIsUndefined(paramName.value);                                      \
       node->style.instanceName.unit = paramName.unit;                                      \
       YGNodeMarkDirtyInternal(node);                                                   \
     }                                                                            \
@@ -466,21 +466,21 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
 #define YG_NODE_STYLE_PROPERTY_UNIT_IMPL(type, name, paramName, instanceName)  \
   YG_NODE_STYLE_PROPERTY_SETTER_UNIT_IMPL(type, name, paramName, instanceName) \
                                                                            \
-  type YGNodeStyleGet##name##(const YGNodeRef node) {                      \
+  type YGNodeStyleGet##name(const YGNodeRef node) {                      \
     return node->style.instanceName;                                       \
   }
 
 #define YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(type, name, paramName, instanceName, defaultValue)    \
-  void YGNodeStyleSet##name##(const YGNodeRef node, const YGEdge edge, const type paramName) { \
+  void YGNodeStyleSet##name(const YGNodeRef node, const YGEdge edge, const type paramName) { \
     if (node->style.instanceName[edge].value != paramName.value || node->style.instanceName[edge].unit != paramName.unit ) { \
       node->style.instanceName[edge].value = paramName.value;                                   \
-      node->style.instanceName[edge].defined = !YGFloatIsUndefined(paramName.value);                                   \
+      node->style.instanceName[edge].isDefined = !YGFloatIsUndefined(paramName.value);                                   \
       node->style.instanceName[edge].unit = paramName.unit;                                     \
       YGNodeMarkDirtyInternal(node);                                                                  \
     }                                                                                           \
   }                                                                                             \
                                                                                                  \
-  type YGNodeStyleGet##name##(const YGNodeRef node, const YGEdge edge) {                       \
+  type YGNodeStyleGet##name(const YGNodeRef node, const YGEdge edge) {                       \
     return YGComputedEdgeValue(node->style.instanceName, edge, defaultValue);                     \
   }                                                                                            \
 
@@ -489,7 +489,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   void YGNodeStyleSet##name(const YGNodeRef node, const YGEdge edge, const float paramName) { \
     if (node->style.instanceName[edge].value != paramName || node->style.instanceName[edge].unit != YGUnitPixel ) { \
       node->style.instanceName[edge].value = paramName;                                   \
-      node->style.instanceName[edge].defined = !YGFloatIsUndefined(paramName);                                   \
+      node->style.instanceName[edge].isDefined = !YGFloatIsUndefined(paramName);                                   \
       node->style.instanceName[edge].unit = YGUnitPixel;                                     \
       YGNodeMarkDirtyInternal(node);                                                                  \
             }                                                                                           \
@@ -567,8 +567,8 @@ static inline bool YGValueEqual(const YGValue a, const YGValue b) {
     return false;
   }
 
-  if (!a.defined) {
-    return !b.defined;
+  if (!a.isDefined) {
+    return !b.isDefined;
   }
   return fabs(a.value - b.value) < 0.0001;
 }
@@ -599,7 +599,7 @@ static void YGPrintNumberIfNotUndefinedf(const char *str, const float number) {
 }
 
 static void YGPrintNumberIfNotUndefined(const char *str, const YGValue number) {
-  if (number.defined) {
+  if (number.isDefined) {
     YGLog(YGLogLevelDebug, "%s: %g%s, ", str, number, number.unit == YGUnitPixel ? "px" : "%");
   }
 }
@@ -805,7 +805,7 @@ static inline bool YGFlexDirectionIsColumn(const YGFlexDirection flexDirection) 
 }
 
 static inline float YGNodeLeadingMargin(const YGNodeRef node, const YGFlexDirection axis, const float widthSize) {
-  if (YGFlexDirectionIsRow(axis) && node->style.margin[YGEdgeStart].defined) {
+  if (YGFlexDirectionIsRow(axis) && node->style.margin[YGEdgeStart].isDefined) {
     return YGValueResolve(node->style.margin[YGEdgeStart], widthSize);
   }
 
@@ -813,7 +813,7 @@ static inline float YGNodeLeadingMargin(const YGNodeRef node, const YGFlexDirect
 }
 
 static float YGNodeTrailingMargin(const YGNodeRef node, const YGFlexDirection axis, const float widthSize) {
-  if (YGFlexDirectionIsRow(axis) && node->style.margin[YGEdgeEnd].defined) {
+  if (YGFlexDirectionIsRow(axis) && node->style.margin[YGEdgeEnd].isDefined) {
     return YGValueResolve(node->style.margin[YGEdgeEnd], widthSize);
   }
 
@@ -821,7 +821,7 @@ static float YGNodeTrailingMargin(const YGNodeRef node, const YGFlexDirection ax
 }
 
 static float YGNodeLeadingPadding(const YGNodeRef node, const YGFlexDirection axis, const float widthSize) {
-  if (YGFlexDirectionIsRow(axis) && node->style.padding[YGEdgeStart].defined &&
+  if (YGFlexDirectionIsRow(axis) && node->style.padding[YGEdgeStart].isDefined &&
       YGValueResolve(node->style.padding[YGEdgeStart], widthSize) >= 0) {
     return YGValueResolve(node->style.padding[YGEdgeStart], widthSize);
   }
@@ -830,7 +830,7 @@ static float YGNodeLeadingPadding(const YGNodeRef node, const YGFlexDirection ax
 }
 
 static float YGNodeTrailingPadding(const YGNodeRef node, const YGFlexDirection axis, const float widthSize) {
-  if (YGFlexDirectionIsRow(axis) && node->style.padding[YGEdgeEnd].defined &&
+  if (YGFlexDirectionIsRow(axis) && node->style.padding[YGEdgeEnd].isDefined &&
       YGValueResolve(node->style.padding[YGEdgeEnd], widthSize) >= 0) {
     return YGValueResolve(node->style.padding[YGEdgeEnd], widthSize);
   }
@@ -839,7 +839,7 @@ static float YGNodeTrailingPadding(const YGNodeRef node, const YGFlexDirection a
 }
 
 static float YGNodeLeadingBorder(const YGNodeRef node, const YGFlexDirection axis) {
-  if (YGFlexDirectionIsRow(axis) && node->style.border[YGEdgeStart].defined &&
+  if (YGFlexDirectionIsRow(axis) && node->style.border[YGEdgeStart].isDefined &&
       node->style.border[YGEdgeStart].value >= 0) {
     return node->style.border[YGEdgeStart].value;
   }
@@ -848,7 +848,7 @@ static float YGNodeLeadingBorder(const YGNodeRef node, const YGFlexDirection axi
 }
 
 static float YGNodeTrailingBorder(const YGNodeRef node, const YGFlexDirection axis) {
-  if (YGFlexDirectionIsRow(axis) && node->style.border[YGEdgeEnd].defined &&
+  if (YGFlexDirectionIsRow(axis) && node->style.border[YGEdgeEnd].isDefined &&
       node->style.border[YGEdgeEnd].value >= 0) {
     return node->style.border[YGEdgeEnd].value;
   }
@@ -920,7 +920,7 @@ static inline float YGNodeDimWithMargin(const YGNodeRef node, const YGFlexDirect
 
 static inline bool YGNodeIsStyleDimDefined(const YGNodeRef node, const YGFlexDirection axis) {
   const YGValue value = node->style.dimensions[dim[axis]];
-  return value.defined && value.value >= 0.0;
+  return value.isDefined && value.value >= 0.0;
 }
 
 static inline bool YGNodeIsLayoutDimDefined(const YGNodeRef node, const YGFlexDirection axis) {
@@ -930,21 +930,21 @@ static inline bool YGNodeIsLayoutDimDefined(const YGNodeRef node, const YGFlexDi
 
 static inline bool YGNodeIsLeadingPosDefined(const YGNodeRef node, const YGFlexDirection axis) {
   return (YGFlexDirectionIsRow(axis) &&
-                   YGComputedEdgeValue(node->style.position, YGEdgeStart, YGUndefined).defined) ||
-         YGComputedEdgeValue(node->style.position, leading[axis], YGUndefined).defined;
+                   YGComputedEdgeValue(node->style.position, YGEdgeStart, YGUndefined).isDefined) ||
+         YGComputedEdgeValue(node->style.position, leading[axis], YGUndefined).isDefined;
 }
 
 static inline bool YGNodeIsTrailingPosDefined(const YGNodeRef node, const YGFlexDirection axis) {
   return (YGFlexDirectionIsRow(axis) &&
-          YGComputedEdgeValue(node->style.position, YGEdgeEnd, YGUndefined).defined) ||
-             YGComputedEdgeValue(node->style.position, trailing[axis], YGUndefined).defined;
+          YGComputedEdgeValue(node->style.position, YGEdgeEnd, YGUndefined).isDefined) ||
+             YGComputedEdgeValue(node->style.position, trailing[axis], YGUndefined).isDefined;
 }
 
 static float YGNodeLeadingPosition(const YGNodeRef node, const YGFlexDirection axis, const float axisSize) {
   if (YGFlexDirectionIsRow(axis)) {
     const YGValue leadingPosition =
         YGComputedEdgeValue(node->style.position, YGEdgeStart, YGUndefined);
-    if (leadingPosition.defined) {
+    if (leadingPosition.isDefined) {
       return YGValueResolve(leadingPosition, axisSize);
     }
   }
@@ -952,14 +952,14 @@ static float YGNodeLeadingPosition(const YGNodeRef node, const YGFlexDirection a
   const YGValue leadingPosition =
       YGComputedEdgeValue(node->style.position, leading[axis], YGUndefined);
 
-  return !leadingPosition.defined ? 0 : YGValueResolve(leadingPosition, axisSize);
+  return !leadingPosition.isDefined ? 0 : YGValueResolve(leadingPosition, axisSize);
 }
 
 static float YGNodeTrailingPosition(const YGNodeRef node, const YGFlexDirection axis, const float axisSize) {
   if (YGFlexDirectionIsRow(axis)) {
     const YGValue trailingPosition =
         YGComputedEdgeValue(node->style.position, YGEdgeEnd, YGUndefined);
-    if (trailingPosition.defined) {
+    if (trailingPosition.isDefined) {
       return YGValueResolve(trailingPosition, axisSize);
     }
   }
@@ -967,7 +967,7 @@ static float YGNodeTrailingPosition(const YGNodeRef node, const YGFlexDirection 
   const YGValue trailingPosition =
       YGComputedEdgeValue(node->style.position, trailing[axis], YGUndefined);
 
-  return !trailingPosition.defined ? 0 : YGValueResolve(trailingPosition, axisSize);
+  return !trailingPosition.isDefined ? 0 : YGValueResolve(trailingPosition, axisSize);
 }
 
 static float YGNodeBoundAxisWithinMinAndMax(const YGNodeRef node,
@@ -1077,7 +1077,7 @@ static void YGNodeComputeFlexBasisForChild(const YGNodeRef node,
   const bool isRowStyleDimDefined = YGNodeIsStyleDimDefined(child, YGFlexDirectionRow);
   const bool isColumnStyleDimDefined = YGNodeIsStyleDimDefined(child, YGFlexDirectionColumn);
 
-  if (YGNodeStyleGetFlexBasis(child).defined &&
+  if (YGNodeStyleGetFlexBasis(child).isDefined &&
       !YGFloatIsUndefined(mainAxisSize)) {
     if (YGFloatIsUndefined(child->layout.computedFlexBasis) ||
         (YGIsExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis) &&
@@ -2009,7 +2009,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     // constraint by the min size defined for the main axis.
 
     if (measureModeMainDim == YGMeasureModeAtMost && remainingFreeSpace > 0) {
-      if (node->style.minDimensions[dim[mainAxis]].defined &&
+      if (node->style.minDimensions[dim[mainAxis]].isDefined &&
           YGValueResolve(node->style.minDimensions[dim[mainAxis]], mainAxisParentSize) >= 0) {
         remainingFreeSpace = fmaxf(0,
                                    YGValueResolve(node->style.minDimensions[dim[mainAxis]], mainAxisParentSize) -

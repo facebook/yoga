@@ -27,28 +27,28 @@ TEST(YogaTest, assert_default_values) {
   ASSERT_EQ(YGOverflowVisible, YGNodeStyleGetOverflow(root));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexGrow(root));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexShrink(root));
-  ASSERT_FALSE(YGNodeStyleGetFlexBasis(root).defined);
+  ASSERT_FALSE(YGNodeStyleGetFlexBasis(root).isDefined);
 
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeLeft).defined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeTop).defined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeRight).defined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeBottom).defined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeStart).defined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeEnd).defined);
+  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeLeft).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeTop).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeRight).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeBottom).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeStart).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeEnd).isDefined);
 
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeLeft).value);
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeTop).value);
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeRight).value);
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeBottom).value);
-  ASSERT_FALSE(YGNodeStyleGetMargin(root, YGEdgeStart).defined);
-  ASSERT_FALSE(YGNodeStyleGetMargin(root, YGEdgeEnd).defined);
+  ASSERT_FALSE(YGNodeStyleGetMargin(root, YGEdgeStart).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetMargin(root, YGEdgeEnd).isDefined);
 
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeLeft).value);
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeTop).value);
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeRight).value);
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeBottom).value);
-  ASSERT_FALSE(YGNodeStyleGetPadding(root, YGEdgeStart).defined);
-  ASSERT_FALSE(YGNodeStyleGetPadding(root, YGEdgeEnd).defined);
+  ASSERT_FALSE(YGNodeStyleGetPadding(root, YGEdgeStart).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetPadding(root, YGEdgeEnd).isDefined);
 
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeLeft));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeTop));
@@ -57,12 +57,12 @@ TEST(YogaTest, assert_default_values) {
   ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeStart)));
   ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeEnd)));
 
-  ASSERT_FALSE(YGNodeStyleGetWidth(root).defined);
-  ASSERT_FALSE(YGNodeStyleGetHeight(root).defined);
-  ASSERT_FALSE(YGNodeStyleGetMinWidth(root).defined);
-  ASSERT_FALSE(YGNodeStyleGetMinHeight(root).defined);
-  ASSERT_FALSE(YGNodeStyleGetMaxWidth(root).defined);
-  ASSERT_FALSE(YGNodeStyleGetMaxHeight(root).defined);
+  ASSERT_FALSE(YGNodeStyleGetWidth(root).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetHeight(root).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetMinWidth(root).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetMinHeight(root).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetMaxWidth(root).isDefined);
+  ASSERT_FALSE(YGNodeStyleGetMaxHeight(root).isDefined);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));

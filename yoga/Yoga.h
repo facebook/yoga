@@ -41,7 +41,7 @@ typedef struct YGSize {
 typedef struct YGValue {
   float value;
   YGUnit unit;
-  bool defined;
+  bool isDefined;
 } YGValue;
 
 WIN_EXPORT YGValue YGPx(const float value);
@@ -117,8 +117,8 @@ WIN_EXPORT void YGNodeCopyStyle(const YGNodeRef dstNode, const YGNodeRef srcNode
   WIN_EXPORT type YGNodeStyleGet##name(const YGNodeRef node);
 
 #define YG_NODE_STYLE_PROPERTY_UNIT(type, name, paramName)                                \
-  WIN_EXPORT void YGNodeStyleSet##name##(const YGNodeRef node, const type paramName); \
-  WIN_EXPORT type YGNodeStyleGet##name##(const YGNodeRef node);
+  WIN_EXPORT void YGNodeStyleSet##name(const YGNodeRef node, const type paramName); \
+  WIN_EXPORT type YGNodeStyleGet##name(const YGNodeRef node);
 
 #define YG_NODE_STYLE_EDGE_PROPERTY(type, name, paramName)    \
   WIN_EXPORT void YGNodeStyleSet##name(const YGNodeRef node,  \
@@ -127,10 +127,10 @@ WIN_EXPORT void YGNodeCopyStyle(const YGNodeRef dstNode, const YGNodeRef srcNode
   WIN_EXPORT type YGNodeStyleGet##name(const YGNodeRef node, const YGEdge edge);
 
 #define YG_NODE_STYLE_EDGE_PROPERTY_UNIT(type, name, paramName)    \
-  WIN_EXPORT void YGNodeStyleSet##name##(const YGNodeRef node, \
+  WIN_EXPORT void YGNodeStyleSet##name(const YGNodeRef node, \
                                         const YGEdge edge,    \
                                         const type paramName); \
-  WIN_EXPORT type YGNodeStyleGet##name##(const YGNodeRef node, const YGEdge edge);
+  WIN_EXPORT type YGNodeStyleGet##name(const YGNodeRef node, const YGEdge edge);
 
 #define YG_NODE_LAYOUT_PROPERTY(type, name) \
   WIN_EXPORT type YGNodeLayoutGet##name(const YGNodeRef node);
