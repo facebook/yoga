@@ -24,7 +24,7 @@ typedef enum YGFlexDirection {
 typedef enum YGUnit {
   YGUnitPixel,
   YGUnitPercent,
-  YGUnitModeCount,
+  YGUnitCount,
 } YGUnit;
 
 typedef enum YGMeasureMode {
