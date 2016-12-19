@@ -21,6 +21,7 @@
  The property that decides during layout/sizing whether or not yg_* properties should be applied. Defaults to NO.
  */
 @property (nonatomic, readwrite, assign, setter=yg_setUsesYoga:) BOOL yg_usesYoga;
+@property (nonatomic, readonly) BOOL yg_isLeaf;
 
 - (void)yg_setDirection:(YGDirection)direction;
 - (void)yg_setFlexDirection:(YGFlexDirection)flexDirection;

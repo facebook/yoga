@@ -10,6 +10,7 @@
 #import "UIView+Yoga.h"
 
 #import <objc/runtime.h>
+#import <MapKit/MapKit.h>
 
 @interface YGNodeBridge : NSObject
 @property (nonatomic, assign, readonly) YGNodeRef cnode;
@@ -53,7 +54,7 @@
 
 - (NSUInteger)yg_numberOfChildren
 {
-  return YGNodeGetChildCount([self ygNode]);
+  return YGNodeChildCount([self ygNode]);
 }
 
 #pragma mark - Setters
@@ -74,6 +75,11 @@
     @selector(yg_usesYoga),
     @(enabled),
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)yg_isLeaf
+{
+  return ![self yg_usesYoga] || self.subviews.count == 0;
 }
 
 - (void)yg_setDirection:(YGDirection)direction
@@ -181,6 +187,7 @@
   YGNodeStyleSetAspectRatio([self ygNode], aspectRatio);
 }
 
+
 #pragma mark - Layout and Sizing
 
 - (YGDirection)yg_resolvedDirection
@@ -280,7 +287,7 @@ static void YGAttachNodesFromViewHierachy(UIView *view) {
   YGNodeRef node = [view ygNode];
 
   // Only leaf nodes should have a measure function
-  if (![view yg_usesYoga] || view.subviews.count == 0) {
+  if ([view yg_isLeaf]) {
     YGNodeSetMeasureFunc(node, YGMeasureView);
     YGRemoveAllChildren(node);
   } else {
@@ -295,7 +302,7 @@ static void YGAttachNodesFromViewHierachy(UIView *view) {
     }
 
     BOOL shouldReconstructChildList = NO;
-    if (YGNodeGetChildCount(node) != subviewsToInclude.count) {
+    if (YGNodeChildCount(node) != subviewsToInclude.count) {
       shouldReconstructChildList = YES;
     } else {
       for (int i = 0; i < subviewsToInclude.count; i++) {
@@ -324,8 +331,8 @@ static void YGRemoveAllChildren(const YGNodeRef node)
       return;
   }
 
-  while (YGNodeGetChildCount(node) > 0) {
-    YGNodeRemoveChild(node, YGNodeGetChild(node, YGNodeGetChildCount(node) - 1));
+  while (YGNodeChildCount(node) > 0) {
+    YGNodeRemoveChild(node, YGNodeGetChild(node, YGNodeChildCount(node) - 1));
   }
 }
 
@@ -368,12 +375,24 @@ static void YGApplyLayoutToViewHierarchy(UIView *view) {
     },
   };
 
-  const BOOL isLeaf = ![view yg_usesYoga] || view.subviews.count == 0;
-  if (!isLeaf) {
+  if (![view yg_isLeaf]) {
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
       YGApplyLayoutToViewHierarchy(view.subviews[i]);
     }
   }
+}
+
+@end
+
+@interface MKMapView (Yoga)
+
+@end
+
+@implementation MKMapView (Yoga)
+
+- (BOOL)yg_isLeaf
+{
+  return YES;
 }
 
 @end
