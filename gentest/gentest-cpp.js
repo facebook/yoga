@@ -12,7 +12,7 @@ function toValueCpp(value) {
   return n + (Number(n) == n && n % 1 !== 0 ? 'f' : '');
 }
  
-function toValueCppWithUnitCpp(value) {
+function toValueCppCpp(value) {
   var methodName = '';
   if(value.indexOf('px') >= 0){
     methodName = 'YGPx';
@@ -164,7 +164,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push('YGNodeStyleSetFlexBasisWithUnit(' + nodeName + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetFlexBasis(' + nodeName + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetFlexDirection:{value:function(nodeName, value) {
@@ -184,7 +184,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push('YGNodeStyleSetHeightWithUnit(' + nodeName + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetHeight(' + nodeName + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetJustifyContent:{value:function(nodeName, value) {
@@ -192,23 +192,23 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push('YGNodeStyleSetMarginWithUnit(' + nodeName + ', ' + edge + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetMargin(' + nodeName + ', ' + edge + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push('YGNodeStyleSetMaxHeightWithUnit(' + nodeName + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetMaxHeight(' + nodeName + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push('YGNodeStyleSetMaxWidthWithUnit(' + nodeName + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetMaxWidth(' + nodeName + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push('YGNodeStyleSetMinHeightWithUnit(' + nodeName + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetMinHeight(' + nodeName + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push('YGNodeStyleSetMinWidthWithUnit(' + nodeName + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetMinWidth(' + nodeName + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetOverflow:{value:function(nodeName, value) {
@@ -216,11 +216,11 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push('YGNodeStyleSetPaddingWithUnit(' + nodeName + ', ' + edge + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetPadding(' + nodeName + ', ' + edge + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push('YGNodeStyleSetPositionWithUnit(' + nodeName + ', ' + edge + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetPosition(' + nodeName + ', ' + edge + ', ' + toValueCppCpp(value) + ');');
   }},
 
   YGNodeStyleSetPositionType:{value:function(nodeName, value) {
@@ -228,6 +228,6 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push('YGNodeStyleSetWidthWithUnit(' + nodeName + ', ' + toValueCppWithUnitCpp(value) + ');');
+    this.push('YGNodeStyleSetWidth(' + nodeName + ', ' + toValueCppCpp(value) + ');');
   }},
 });

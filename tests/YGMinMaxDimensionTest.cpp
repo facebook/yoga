@@ -14,12 +14,12 @@
 
 TEST(YogaTest, max_width) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root, YGPx(100));
-  YGNodeStyleSetHeightWithUnit(root, YGPx(100));
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetMaxWidthWithUnit(root_child0, YGPx(50));
-  YGNodeStyleSetHeightWithUnit(root_child0, YGPx(10));
+  YGNodeStyleSetMaxWidth(root_child0, YGPx(50));
+  YGNodeStyleSetHeight(root_child0, YGPx(10));
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -51,12 +51,12 @@ TEST(YogaTest, max_width) {
 TEST(YogaTest, max_height) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
-  YGNodeStyleSetWidthWithUnit(root, YGPx(100));
-  YGNodeStyleSetHeightWithUnit(root, YGPx(100));
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root_child0, YGPx(10));
-  YGNodeStyleSetMaxHeightWithUnit(root_child0, YGPx(50));
+  YGNodeStyleSetWidth(root_child0, YGPx(10));
+  YGNodeStyleSetMaxHeight(root_child0, YGPx(50));
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -87,12 +87,12 @@ TEST(YogaTest, max_height) {
 
 TEST(YogaTest, min_height) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root, YGPx(100));
-  YGNodeStyleSetHeightWithUnit(root, YGPx(100));
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
-  YGNodeStyleSetMinHeightWithUnit(root_child0, YGPx(60));
+  YGNodeStyleSetMinHeight(root_child0, YGPx(60));
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNew();
@@ -138,12 +138,12 @@ TEST(YogaTest, min_height) {
 TEST(YogaTest, min_width) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
-  YGNodeStyleSetWidthWithUnit(root, YGPx(100));
-  YGNodeStyleSetHeightWithUnit(root, YGPx(100));
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
-  YGNodeStyleSetMinWidthWithUnit(root_child0, YGPx(60));
+  YGNodeStyleSetMinWidth(root_child0, YGPx(60));
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNew();
@@ -189,13 +189,13 @@ TEST(YogaTest, min_width) {
 TEST(YogaTest, justify_content_min_max) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
-  YGNodeStyleSetWidthWithUnit(root, YGPx(100));
-  YGNodeStyleSetMinHeightWithUnit(root, YGPx(100));
-  YGNodeStyleSetMaxHeightWithUnit(root, YGPx(200));
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetMinHeight(root, YGPx(100));
+  YGNodeStyleSetMaxHeight(root, YGPx(200));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root_child0, YGPx(60));
-  YGNodeStyleSetHeightWithUnit(root_child0, YGPx(60));
+  YGNodeStyleSetWidth(root_child0, YGPx(60));
+  YGNodeStyleSetHeight(root_child0, YGPx(60));
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -227,13 +227,13 @@ TEST(YogaTest, justify_content_min_max) {
 TEST(YogaTest, align_items_min_max) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
-  YGNodeStyleSetMinWidthWithUnit(root, YGPx(100));
-  YGNodeStyleSetMaxWidthWithUnit(root, YGPx(200));
-  YGNodeStyleSetHeightWithUnit(root, YGPx(100));
+  YGNodeStyleSetMinWidth(root, YGPx(100));
+  YGNodeStyleSetMaxWidth(root, YGPx(200));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root_child0, YGPx(60));
-  YGNodeStyleSetHeightWithUnit(root_child0, YGPx(60));
+  YGNodeStyleSetWidth(root_child0, YGPx(60));
+  YGNodeStyleSetHeight(root_child0, YGPx(60));
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -265,22 +265,22 @@ TEST(YogaTest, align_items_min_max) {
 TEST(YogaTest, justify_content_overflow_min_max) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
-  YGNodeStyleSetMinHeightWithUnit(root, YGPx(100));
-  YGNodeStyleSetMaxHeightWithUnit(root, YGPx(110));
+  YGNodeStyleSetMinHeight(root, YGPx(100));
+  YGNodeStyleSetMaxHeight(root, YGPx(110));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root_child0, YGPx(50));
-  YGNodeStyleSetHeightWithUnit(root_child0, YGPx(50));
+  YGNodeStyleSetWidth(root_child0, YGPx(50));
+  YGNodeStyleSetHeight(root_child0, YGPx(50));
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root_child1, YGPx(50));
-  YGNodeStyleSetHeightWithUnit(root_child1, YGPx(50));
+  YGNodeStyleSetWidth(root_child1, YGPx(50));
+  YGNodeStyleSetHeight(root_child1, YGPx(50));
   YGNodeInsertChild(root, root_child1, 1);
 
   const YGNodeRef root_child2 = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root_child2, YGPx(50));
-  YGNodeStyleSetHeightWithUnit(root_child2, YGPx(50));
+  YGNodeStyleSetWidth(root_child2, YGPx(50));
+  YGNodeStyleSetHeight(root_child2, YGPx(50));
   YGNodeInsertChild(root, root_child2, 2);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -331,17 +331,17 @@ TEST(YogaTest, justify_content_overflow_min_max) {
 
 TEST(YogaTest, flex_grow_within_max_width) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root, YGPx(200));
-  YGNodeStyleSetHeightWithUnit(root, YGPx(100));
+  YGNodeStyleSetWidth(root, YGPx(200));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexDirection(root_child0, YGFlexDirectionRow);
-  YGNodeStyleSetMaxWidthWithUnit(root_child0, YGPx(100));
+  YGNodeStyleSetMaxWidth(root_child0, YGPx(100));
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child0_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0_child0, 1);
-  YGNodeStyleSetHeightWithUnit(root_child0_child0, YGPx(20));
+  YGNodeStyleSetHeight(root_child0_child0, YGPx(20));
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -382,17 +382,17 @@ TEST(YogaTest, flex_grow_within_max_width) {
 
 TEST(YogaTest, flex_grow_within_constrained_max_width) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidthWithUnit(root, YGPx(200));
-  YGNodeStyleSetHeightWithUnit(root, YGPx(100));
+  YGNodeStyleSetWidth(root, YGPx(200));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexDirection(root_child0, YGFlexDirectionRow);
-  YGNodeStyleSetMaxWidthWithUnit(root_child0, YGPx(300));
+  YGNodeStyleSetMaxWidth(root_child0, YGPx(300));
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child0_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0_child0, 1);
-  YGNodeStyleSetHeightWithUnit(root_child0_child0, YGPx(20));
+  YGNodeStyleSetHeight(root_child0_child0, YGPx(20));
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
