@@ -188,11 +188,12 @@ static inline YGValue YGComputedEdgeValue(const YGValue edges[YGEdgeCount],
     return YGValueUndefined;
   }
 
-   YGValue result; 
-   result.value = defaultValue;
-   result.defined = (defaultValue < 0 || defaultValue >= 0); /* is faster than a nan function call and enough at this point */
-   result.unit = YGUnitPixel;
-   return result;
+  YGValue result = {
+	.value = defaultValue,
+	.defined = (defaultValue < 0 || defaultValue >= 0), /* is faster than a nan function call and enough at this point */
+	.unit = YGUnitPixel,
+  };
+  return result;
 }
 
 static inline float YGValueResolve(const YGValue unit, const float parentSize) {
@@ -260,19 +261,21 @@ static void YGNodeInit(const YGNodeRef node) {
 int32_t gNodeInstanceCount = 0;
 
 YGValue YGPx(const float value){
-	YGValue result;
-	result.value = value;
-	result.defined = !YGFloatIsUndefined(value);
-	result.unit = YGUnitPixel;
-   return result;
+  YGValue result = {
+    .value = value,
+    .defined = !YGFloatIsUndefined(value),
+    .unit = YGUnitPixel,
+  };
+  return result;
 }
 
 YGValue YGPercent(const float value){
-	YGValue result;
-	result.value = value;
-	result.defined = !YGFloatIsUndefined(value);
-	result.unit = YGUnitPercent;
-	return result;
+  YGValue result = {
+    .value = value,
+    .defined = !YGFloatIsUndefined(value),
+    .unit = YGUnitPercent,
+  };
+  return result;
 }
 
 YGNodeRef YGNodeNew(void) {
