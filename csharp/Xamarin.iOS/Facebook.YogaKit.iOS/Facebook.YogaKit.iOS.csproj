@@ -56,9 +56,10 @@
   <ItemGroup>
     <Compile Include="YogaKit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="YogaKitNative.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Facebook.Yoga.iOS.csproj">
+    <ProjectReference Include="..\Facebook.Yoga.iOS\Facebook.Yoga.iOS.csproj">
       <Project>{BE4CBFDA-02E2-4DF0-A81A-CEFB7987A708}</Project>
       <Name>Facebook.Yoga.iOS</Name>
     </ProjectReference>
