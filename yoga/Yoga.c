@@ -592,7 +592,7 @@ static void YGIndent(const uint32_t n) {
 
 static void YGPrintNumberIfNotZero(const char *str, const YGValue number) {
   if (!YGFloatsEqual(number.value, 0)) {
-    YGLog(YGLogLevelDebug, "%s: %g%s, ", str, number, number.unit == YGUnitPixel ? "px" : "%");
+    YGLog(YGLogLevelDebug, "%s: %g%s, ", str, number.value, number.unit == YGUnitPixel ? "px" : "%");
   }
 }
 
@@ -604,7 +604,7 @@ static void YGPrintNumberIfNotUndefinedf(const char *str, const float number) {
 
 static void YGPrintNumberIfNotUndefined(const char *str, const YGValue number) {
   if (number.isDefined) {
-    YGLog(YGLogLevelDebug, "%s: %g%s, ", str, number, number.unit == YGUnitPixel ? "px" : "%");
+    YGLog(YGLogLevelDebug, "%s: %g%s, ", str, number.value, number.unit == YGUnitPixel ? "px" : "%");
   }
 }
 
