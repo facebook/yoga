@@ -26,17 +26,17 @@ namespace Facebook.Yoga
             float? flex = null,
             float? flexGrow = null,
             float? flexShrink = null,
-            float? flexBasis = null,
+            YogaValue? flexBasis = null,
             Spacing position = null,
             Spacing margin = null,
             Spacing padding = null,
-            Spacing border = null,
-            float? Width = null,
-            float? Height = null,
-            float? MaxWidth = null,
-            float? MaxHeight = null,
-            float? MinWidth = null,
-            float? MinHeight = null)
+            Border border = null,
+            YogaValue? Width = null,
+            YogaValue? Height = null,
+            YogaValue? MaxWidth = null,
+            YogaValue? MaxHeight = null,
+            YogaValue? MinWidth = null,
+            YogaValue? MinHeight = null)
         {
             YogaNode node = new YogaNode();
 

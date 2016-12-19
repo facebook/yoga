@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -6,21 +6,12 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
+ 
 namespace Facebook.Yoga
 {
-    public static class YogaConstants
+    public enum YogaUnit
     {
-        public const float Undefined = float.NaN;
-
-        public static bool IsUndefined(float value)
-        {
-            return float.IsNaN(value);
-        }
-
-        public static bool IsUndefined(YogaValue value)
-        {
-            return !value.IsDefined;
-        }
+        Pixel,
+        Percent
     }
 }

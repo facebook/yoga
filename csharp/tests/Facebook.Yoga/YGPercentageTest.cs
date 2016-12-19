@@ -24,12 +24,12 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode();
             root.FlexDirection = YogaFlexDirection.Row;
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.Width = 30f;
-            root_child0.Height = 30f;
+            root_child0.Width = 30.Percent();
+            root_child0.Height = 30.Percent();
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -67,14 +67,14 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode();
             root.FlexDirection = YogaFlexDirection.Row;
-            root.Width = 400f;
-            root.Height = 400f;
+            root.Width = 400.Px();
+            root.Height = 400.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.SetPosition(YogaEdge.Left, 10f);
-            root_child0.SetPosition(YogaEdge.Top, 20f);
-            root_child0.Width = 45f;
-            root_child0.Height = 55f;
+            root_child0.SetPosition(YogaEdge.Left, 10.Percent());
+            root_child0.SetPosition(YogaEdge.Top, 20.Percent());
+            root_child0.Width = 45.Percent();
+            root_child0.Height = 55.Percent();
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -112,14 +112,14 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode();
             root.FlexDirection = YogaFlexDirection.Row;
-            root.Width = 500f;
-            root.Height = 500f;
+            root.Width = 500.Px();
+            root.Height = 500.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.SetPosition(YogaEdge.Right, 20f);
-            root_child0.SetPosition(YogaEdge.Bottom, 10f);
-            root_child0.Width = 55f;
-            root_child0.Height = 15f;
+            root_child0.SetPosition(YogaEdge.Right, 20.Percent());
+            root_child0.SetPosition(YogaEdge.Bottom, 10.Percent());
+            root_child0.Width = 55.Percent();
+            root_child0.Height = 15.Percent();
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -157,17 +157,17 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode();
             root.FlexDirection = YogaFlexDirection.Row;
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 50f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 50.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 1f;
-            root_child1.FlexBasis = 25f;
+            root_child1.FlexGrow = 1;
+            root_child1.FlexBasis = 25.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -214,17 +214,17 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 50f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 50.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 1f;
-            root_child1.FlexBasis = 25f;
+            root_child1.FlexGrow = 1;
+            root_child1.FlexBasis = 25.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -271,17 +271,17 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.MinHeight = 60f;
+            root_child0.FlexGrow = 1;
+            root_child0.MinHeight = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 2f;
-            root_child1.MinHeight = 10f;
+            root_child1.FlexGrow = 2;
+            root_child1.MinHeight = 10.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -329,19 +329,19 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode();
             root.FlexDirection = YogaFlexDirection.Row;
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 10f;
-            root_child0.MaxHeight = 60f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 10.Percent();
+            root_child0.MaxHeight = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 4f;
-            root_child1.FlexBasis = 10f;
-            root_child1.MaxHeight = 20f;
+            root_child1.FlexGrow = 4;
+            root_child1.FlexBasis = 10.Percent();
+            root_child1.MaxHeight = 20.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -388,19 +388,19 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 10f;
-            root_child0.MaxHeight = 60f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 10.Percent();
+            root_child0.MaxHeight = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 4f;
-            root_child1.FlexBasis = 10f;
-            root_child1.MaxHeight = 20f;
+            root_child1.FlexGrow = 4;
+            root_child1.FlexBasis = 10.Percent();
+            root_child1.MaxHeight = 20.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -448,19 +448,19 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode();
             root.FlexDirection = YogaFlexDirection.Row;
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 15f;
-            root_child0.MaxWidth = 60f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 15.Percent();
+            root_child0.MaxWidth = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 4f;
-            root_child1.FlexBasis = 10f;
-            root_child1.MaxWidth = 20f;
+            root_child1.FlexGrow = 4;
+            root_child1.FlexBasis = 10.Percent();
+            root_child1.MaxWidth = 20.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -507,19 +507,19 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 10f;
-            root_child0.MaxWidth = 60f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 10.Percent();
+            root_child0.MaxWidth = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 4f;
-            root_child1.FlexBasis = 15f;
-            root_child1.MaxWidth = 20f;
+            root_child1.FlexGrow = 4;
+            root_child1.FlexBasis = 15.Percent();
+            root_child1.MaxWidth = 20.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -567,19 +567,19 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode();
             root.FlexDirection = YogaFlexDirection.Row;
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 15f;
-            root_child0.MinWidth = 60f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 15.Percent();
+            root_child0.MinWidth = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 4f;
-            root_child1.FlexBasis = 10f;
-            root_child1.MinWidth = 20f;
+            root_child1.FlexGrow = 4;
+            root_child1.FlexBasis = 10.Percent();
+            root_child1.MinWidth = 20.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -626,19 +626,19 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 10f;
-            root_child0.MinWidth = 60f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 10.Percent();
+            root_child0.MinWidth = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 4f;
-            root_child1.FlexBasis = 15f;
-            root_child1.MinWidth = 20f;
+            root_child1.FlexGrow = 4;
+            root_child1.FlexBasis = 15.Percent();
+            root_child1.MinWidth = 20.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -685,51 +685,51 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 200f;
+            root.Width = 200.Px();
+            root.Height = 200.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.FlexBasis = 10f;
-            root_child0.SetMargin(YogaEdge.Left, 5f);
-            root_child0.SetMargin(YogaEdge.Top, 5f);
-            root_child0.SetMargin(YogaEdge.Right, 5f);
-            root_child0.SetMargin(YogaEdge.Bottom, 5f);
-            root_child0.SetPadding(YogaEdge.Left, 3f);
-            root_child0.SetPadding(YogaEdge.Top, 3f);
-            root_child0.SetPadding(YogaEdge.Right, 3f);
-            root_child0.SetPadding(YogaEdge.Bottom, 3f);
-            root_child0.MinWidth = 60f;
+            root_child0.FlexGrow = 1;
+            root_child0.FlexBasis = 10.Percent();
+            root_child0.SetMargin(YogaEdge.Left, 5.Px());
+            root_child0.SetMargin(YogaEdge.Top, 5.Px());
+            root_child0.SetMargin(YogaEdge.Right, 5.Px());
+            root_child0.SetMargin(YogaEdge.Bottom, 5.Px());
+            root_child0.SetPadding(YogaEdge.Left, 3.Px());
+            root_child0.SetPadding(YogaEdge.Top, 3.Px());
+            root_child0.SetPadding(YogaEdge.Right, 3.Px());
+            root_child0.SetPadding(YogaEdge.Bottom, 3.Px());
+            root_child0.MinWidth = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child0_child0 = new YogaNode();
-            root_child0_child0.SetMargin(YogaEdge.Left, 5f);
-            root_child0_child0.SetMargin(YogaEdge.Top, 5f);
-            root_child0_child0.SetMargin(YogaEdge.Right, 5f);
-            root_child0_child0.SetMargin(YogaEdge.Bottom, 5f);
-            root_child0_child0.SetPadding(YogaEdge.Left, 3f);
-            root_child0_child0.SetPadding(YogaEdge.Top, 3f);
-            root_child0_child0.SetPadding(YogaEdge.Right, 3f);
-            root_child0_child0.SetPadding(YogaEdge.Bottom, 3f);
-            root_child0_child0.Width = 50f;
+            root_child0_child0.SetMargin(YogaEdge.Left, 5.Px());
+            root_child0_child0.SetMargin(YogaEdge.Top, 5.Px());
+            root_child0_child0.SetMargin(YogaEdge.Right, 5.Px());
+            root_child0_child0.SetMargin(YogaEdge.Bottom, 5.Px());
+            root_child0_child0.SetPadding(YogaEdge.Left, 3.Percent());
+            root_child0_child0.SetPadding(YogaEdge.Top, 3.Percent());
+            root_child0_child0.SetPadding(YogaEdge.Right, 3.Percent());
+            root_child0_child0.SetPadding(YogaEdge.Bottom, 3.Percent());
+            root_child0_child0.Width = 50.Percent();
             root_child0.Insert(0, root_child0_child0);
 
             YogaNode root_child0_child0_child0 = new YogaNode();
-            root_child0_child0_child0.SetMargin(YogaEdge.Left, 5f);
-            root_child0_child0_child0.SetMargin(YogaEdge.Top, 5f);
-            root_child0_child0_child0.SetMargin(YogaEdge.Right, 5f);
-            root_child0_child0_child0.SetMargin(YogaEdge.Bottom, 5f);
-            root_child0_child0_child0.SetPadding(YogaEdge.Left, 3f);
-            root_child0_child0_child0.SetPadding(YogaEdge.Top, 3f);
-            root_child0_child0_child0.SetPadding(YogaEdge.Right, 3f);
-            root_child0_child0_child0.SetPadding(YogaEdge.Bottom, 3f);
-            root_child0_child0_child0.Width = 45f;
+            root_child0_child0_child0.SetMargin(YogaEdge.Left, 5.Percent());
+            root_child0_child0_child0.SetMargin(YogaEdge.Top, 5.Percent());
+            root_child0_child0_child0.SetMargin(YogaEdge.Right, 5.Percent());
+            root_child0_child0_child0.SetMargin(YogaEdge.Bottom, 5.Percent());
+            root_child0_child0_child0.SetPadding(YogaEdge.Left, 3.Px());
+            root_child0_child0_child0.SetPadding(YogaEdge.Top, 3.Px());
+            root_child0_child0_child0.SetPadding(YogaEdge.Right, 3.Px());
+            root_child0_child0_child0.SetPadding(YogaEdge.Bottom, 3.Px());
+            root_child0_child0_child0.Width = 45.Percent();
             root_child0_child0.Insert(0, root_child0_child0_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.FlexGrow = 4f;
-            root_child1.FlexBasis = 15f;
-            root_child1.MinWidth = 20f;
+            root_child1.FlexGrow = 4;
+            root_child1.FlexBasis = 15.Percent();
+            root_child1.MinWidth = 20.Percent();
             root.Insert(1, root_child1);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -796,20 +796,20 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 100f;
+            root.Width = 200.Px();
+            root.Height = 100.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.SetMargin(YogaEdge.Left, 10f);
-            root_child0.SetMargin(YogaEdge.Top, 10f);
-            root_child0.SetMargin(YogaEdge.Right, 10f);
-            root_child0.SetMargin(YogaEdge.Bottom, 10f);
+            root_child0.FlexGrow = 1;
+            root_child0.SetMargin(YogaEdge.Left, 10.Percent());
+            root_child0.SetMargin(YogaEdge.Top, 10.Percent());
+            root_child0.SetMargin(YogaEdge.Right, 10.Percent());
+            root_child0.SetMargin(YogaEdge.Bottom, 10.Percent());
             root.Insert(0, root_child0);
 
             YogaNode root_child0_child0 = new YogaNode();
-            root_child0_child0.Width = 10f;
-            root_child0_child0.Height = 10f;
+            root_child0_child0.Width = 10.Px();
+            root_child0_child0.Height = 10.Px();
             root_child0.Insert(0, root_child0_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -856,20 +856,20 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 100f;
+            root.Width = 200.Px();
+            root.Height = 100.Px();
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.FlexGrow = 1f;
-            root_child0.SetPadding(YogaEdge.Left, 10f);
-            root_child0.SetPadding(YogaEdge.Top, 10f);
-            root_child0.SetPadding(YogaEdge.Right, 10f);
-            root_child0.SetPadding(YogaEdge.Bottom, 10f);
+            root_child0.FlexGrow = 1;
+            root_child0.SetPadding(YogaEdge.Left, 10.Percent());
+            root_child0.SetPadding(YogaEdge.Top, 10.Percent());
+            root_child0.SetPadding(YogaEdge.Right, 10.Percent());
+            root_child0.SetPadding(YogaEdge.Bottom, 10.Percent());
             root.Insert(0, root_child0);
 
             YogaNode root_child0_child0 = new YogaNode();
-            root_child0_child0.Width = 10f;
-            root_child0_child0.Height = 10f;
+            root_child0_child0.Width = 10.Px();
+            root_child0_child0.Height = 10.Px();
             root_child0.Insert(0, root_child0_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -916,15 +916,15 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
             YogaNode root = new YogaNode();
-            root.Width = 200f;
-            root.Height = 100f;
+            root.Width = 200.Px();
+            root.Height = 100.Px();
 
             YogaNode root_child0 = new YogaNode();
             root_child0.PositionType = YogaPositionType.Absolute;
-            root_child0.SetPosition(YogaEdge.Left, 30f);
-            root_child0.SetPosition(YogaEdge.Top, 10f);
-            root_child0.Width = 10f;
-            root_child0.Height = 10f;
+            root_child0.SetPosition(YogaEdge.Left, 30.Percent());
+            root_child0.SetPosition(YogaEdge.Top, 10.Percent());
+            root_child0.Width = 10.Px();
+            root_child0.Height = 10.Px();
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();

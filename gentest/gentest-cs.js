@@ -9,7 +9,17 @@
 
 function toValueCs(value) {
   var n = value.toString().replace('px','').replace('%','');
-  return n + (Number(n) == n && n % 1 !== 0 ? '' : '');
+  return n + (Number(n) == n && n % 1 !== 0 ? 'f' : '');
+}
+
+function toValueCsCs(value) {
+  var methodName = '';
+  if(value.indexOf('px') >= 0){
+    methodName = 'Px';
+  }else if (value.indexOf('%') >= 0){
+    methodName = 'Percent';
+  }
+  return toValueCs(value) + '.' + methodName + '()';
 }
  
 var CSEmitter = function() {
@@ -160,7 +170,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetBorder(' + edge + ', ' + toValueCs(value) + 'f);');
+    this.push(nodeName + '.SetBorder(' + edge + ', ' + toValueCs(value) + ');');
   }},
 
   YGNodeStyleSetDirection:{value:function(nodeName, value) {
@@ -168,7 +178,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexBasis = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.FlexBasis = ' + toValueCsCs(value) + ';');
   }},
 
   YGNodeStyleSetFlexDirection:{value:function(nodeName, value) {
@@ -176,11 +186,11 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexGrow = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.FlexGrow = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexShrink = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.FlexShrink = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetFlexWrap:{value:function(nodeName, value) {
@@ -188,7 +198,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.Height = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.Height = ' + toValueCsCs(value) + ';');
   }},
 
   YGNodeStyleSetJustifyContent:{value:function(nodeName, value) {
@@ -196,23 +206,23 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetMargin(' + edge + ', ' + toValueCs(value) + 'f);');
+    this.push(nodeName + '.SetMargin(' + edge + ', ' + toValueCsCs(value) + ');');
   }},
 
   YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.MaxHeight = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.MaxHeight = ' + toValueCsCs(value) + ';');
   }},
 
   YGNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.MaxWidth = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.MaxWidth = ' + toValueCsCs(value) + ';');
   }},
 
   YGNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.MinHeight = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.MinHeight = ' + toValueCsCs(value) + ';');
   }},
 
   YGNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.MinWidth = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.MinWidth = ' + toValueCsCs(value) + ';');
   }},
 
   YGNodeStyleSetOverflow:{value:function(nodeName, value) {
@@ -220,11 +230,11 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPadding(' + edge + ', ' + toValueCs(value) + 'f);');
+    this.push(nodeName + '.SetPadding(' + edge + ', ' + toValueCsCs(value) + ');');
   }},
 
   YGNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPosition(' + edge + ', ' + toValueCs(value) + 'f);');
+    this.push(nodeName + '.SetPosition(' + edge + ', ' + toValueCsCs(value) + ');');
   }},
 
   YGNodeStyleSetPositionType:{value:function(nodeName, value) {
@@ -232,6 +242,6 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.Width = ' + toValueCs(value) + 'f;');
+    this.push(nodeName + '.Width = ' + toValueCsCs(value) + ';');
   }},
 });

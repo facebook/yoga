@@ -10,7 +10,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Facebook.Yoga
@@ -233,7 +232,7 @@ namespace Facebook.Yoga
             }
         }
 
-        public float FlexBasis
+        public YogaValue FlexBasis
         {
             get
             {
@@ -246,22 +245,22 @@ namespace Facebook.Yoga
             }
         }
 
-        public float GetMargin(YogaEdge edge)
+        public YogaValue GetMargin(YogaEdge edge)
         {
             return Native.YGNodeStyleGetMargin(_ygNode, edge);
         }
 
-        public void SetMargin(YogaEdge edge, float value)
+        public void SetMargin(YogaEdge edge, YogaValue value)
         {
             Native.YGNodeStyleSetMargin(_ygNode, edge, value);
         }
 
-        public float GetPadding(YogaEdge edge)
+        public YogaValue GetPadding(YogaEdge edge)
         {
             return Native.YGNodeStyleGetPadding(_ygNode, edge);
         }
 
-        public void SetPadding(YogaEdge edge, float padding)
+        public void SetPadding(YogaEdge edge, YogaValue padding)
         {
             Native.YGNodeStyleSetPadding(_ygNode, edge, padding);
         }
@@ -276,17 +275,17 @@ namespace Facebook.Yoga
             Native.YGNodeStyleSetBorder(_ygNode, edge, border);
         }
 
-        public float GetPosition(YogaEdge edge)
+        public YogaValue GetPosition(YogaEdge edge)
         {
             return Native.YGNodeStyleGetPosition(_ygNode, edge);
         }
 
-        public void SetPosition(YogaEdge edge, float position)
+        public void SetPosition(YogaEdge edge, YogaValue position)
         {
             Native.YGNodeStyleSetPosition(_ygNode, edge, position);
         }
 
-        public float Width
+        public YogaValue Width
         {
             get
             {
@@ -299,7 +298,7 @@ namespace Facebook.Yoga
             }
         }
 
-        public float Height
+        public YogaValue Height
         {
             get
             {
@@ -312,7 +311,7 @@ namespace Facebook.Yoga
             }
         }
 
-        public float MaxWidth
+        public YogaValue MaxWidth
         {
             get
             {
@@ -325,7 +324,7 @@ namespace Facebook.Yoga
             }
         }
 
-        public float MaxHeight
+        public YogaValue MaxHeight
         {
             get
             {
@@ -338,7 +337,7 @@ namespace Facebook.Yoga
             }
         }
 
-        public float MinWidth
+        public YogaValue MinWidth
         {
             get
             {
@@ -351,7 +350,7 @@ namespace Facebook.Yoga
             }
         }
 
-        public float MinHeight
+        public YogaValue MinHeight
         {
             get
             {

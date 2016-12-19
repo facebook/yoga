@@ -225,7 +225,7 @@ namespace Facebook.Yoga
             node1.MaxHeight = 100;
 
             node0.CopyStyle(node1);
-            Assert.AreEqual(100, node0.MaxHeight);
+            Assert.AreEqual(100.Px(), node0.MaxHeight);
         }
 
 #if !UNITY_EDITOR

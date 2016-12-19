@@ -181,46 +181,46 @@ namespace Facebook.Yoga
         public static extern float YGNodeStyleGetFlexShrink(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetFlexBasis(IntPtr node, float flexBasis);
+        public static extern void YGNodeStyleSetFlexBasis(IntPtr node, YogaValue flexBasis);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetFlexBasis(IntPtr node);
+        public static extern YogaValue YGNodeStyleGetFlexBasis(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetWidth(IntPtr node, float width);
+        public static extern void YGNodeStyleSetWidth(IntPtr node, YogaValue width);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetWidth(IntPtr node);
+        public static extern YogaValue YGNodeStyleGetWidth(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetHeight(IntPtr node, float height);
+        public static extern void YGNodeStyleSetHeight(IntPtr node, YogaValue height);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetHeight(IntPtr node);
+        public static extern YogaValue YGNodeStyleGetHeight(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMinWidth(IntPtr node, float minWidth);
+        public static extern void YGNodeStyleSetMinWidth(IntPtr node, YogaValue minWidth);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetMinWidth(IntPtr node);
+        public static extern YogaValue YGNodeStyleGetMinWidth(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMinHeight(IntPtr node, float minHeight);
+        public static extern void YGNodeStyleSetMinHeight(IntPtr node, YogaValue minHeight);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetMinHeight(IntPtr node);
+        public static extern YogaValue YGNodeStyleGetMinHeight(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMaxWidth(IntPtr node, float maxWidth);
+        public static extern void YGNodeStyleSetMaxWidth(IntPtr node, YogaValue maxWidth);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetMaxWidth(IntPtr node);
+        public static extern YogaValue YGNodeStyleGetMaxWidth(IntPtr node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMaxHeight(IntPtr node, float maxHeight);
+        public static extern void YGNodeStyleSetMaxHeight(IntPtr node, YogaValue maxHeight);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetMaxHeight(IntPtr node);
+        public static extern YogaValue YGNodeStyleGetMaxHeight(IntPtr node);
 
         [DllImport(DllName)]
         public static extern void YGNodeStyleSetAspectRatio(IntPtr node, float aspectRatio);
@@ -233,22 +233,22 @@ namespace Facebook.Yoga
         #region YG_NODE_STYLE_EDGE_PROPERTY
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetPosition(IntPtr node, YogaEdge edge, float position);
+        public static extern void YGNodeStyleSetPosition(IntPtr node, YogaEdge edge, YogaValue position);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetPosition(IntPtr node, YogaEdge edge);
+        public static extern YogaValue YGNodeStyleGetPosition(IntPtr node, YogaEdge edge);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMargin(IntPtr node, YogaEdge edge, float margin);
+        public static extern void YGNodeStyleSetMargin(IntPtr node, YogaEdge edge, YogaValue margin);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetMargin(IntPtr node, YogaEdge edge);
+        public static extern YogaValue YGNodeStyleGetMargin(IntPtr node, YogaEdge edge);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetPadding(IntPtr node, YogaEdge edge, float padding);
+        public static extern void YGNodeStyleSetPadding(IntPtr node, YogaEdge edge, YogaValue padding);
 
         [DllImport(DllName)]
-        public static extern float YGNodeStyleGetPadding(IntPtr node, YogaEdge edge);
+        public static extern YogaValue YGNodeStyleGetPadding(IntPtr node, YogaEdge edge);
 
         [DllImport(DllName)]
         public static extern void YGNodeStyleSetBorder(IntPtr node, YogaEdge edge, float border);
