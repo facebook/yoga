@@ -212,9 +212,7 @@ static void YGNodeInit(const YGNodeRef node) {
   node->style.flex = YGUndefined;
   node->style.flexGrow = YGUndefined;
   node->style.flexShrink = YGUndefined;
-  node->style.flexBasis.value = YGUndefined;
-  node->style.flexBasis.defined = false;
-  node->style.flexBasis.unit = YGUnitPixel;
+  node->style.flexBasis = YGValueUndefined;
 
   node->style.alignItems = YGAlignStretch;
   node->style.alignContent = YGAlignFlexStart;
