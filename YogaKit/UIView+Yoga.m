@@ -54,7 +54,7 @@
 
 - (NSUInteger)yg_numberOfChildren
 {
-  return YGNodeChildCount([self ygNode]);
+  return YGNodeGetChildCount([self ygNode]);
 }
 
 #pragma mark - Setters
@@ -79,7 +79,17 @@
 
 - (BOOL)yg_isLeaf
 {
-  return ![self yg_usesYoga] || self.subviews.count == 0;
+  NSNumber *isLeaf = objc_getAssociatedObject(self, @selector(yg_isLeaf));
+  if (isLeaf) {
+    return [isLeaf boolValue];
+  } else {
+    return ![self yg_usesYoga] || self.subviews.count == 0;
+  }
+}
+
+- (void)yg_setLeaf:(BOOL)leaf
+{
+  objc_setAssociatedObject(self, @selector(yg_isLeaf), @(leaf), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)yg_setDirection:(YGDirection)direction
@@ -302,7 +312,7 @@ static void YGAttachNodesFromViewHierachy(UIView *view) {
     }
 
     BOOL shouldReconstructChildList = NO;
-    if (YGNodeChildCount(node) != subviewsToInclude.count) {
+    if (YGNodeGetChildCount(node) != subviewsToInclude.count) {
       shouldReconstructChildList = YES;
     } else {
       for (int i = 0; i < subviewsToInclude.count; i++) {
@@ -331,8 +341,8 @@ static void YGRemoveAllChildren(const YGNodeRef node)
       return;
   }
 
-  while (YGNodeChildCount(node) > 0) {
-    YGNodeRemoveChild(node, YGNodeGetChild(node, YGNodeChildCount(node) - 1));
+  while (YGNodeGetChildCount(node) > 0) {
+    YGNodeRemoveChild(node, YGNodeGetChild(node, YGNodeGetChildCount(node) - 1));
   }
 }
 
@@ -384,11 +394,18 @@ static void YGApplyLayoutToViewHierarchy(UIView *view) {
 
 @end
 
-@interface MKMapView (Yoga)
+// This "hacks" are needed because YogaKit does not correctly account for composite UIView when doing layout
+
+@implementation MKMapView (Yoga)
+
+- (BOOL)yg_isLeaf
+{
+  return YES;
+}
 
 @end
 
-@implementation MKMapView (Yoga)
+@implementation UIButton (Yoga)
 
 - (BOOL)yg_isLeaf
 {
