@@ -11,6 +11,7 @@
 
 #include "YGNodeList.h"
 #include "Yoga.h"
+#include "YGEnums-Private.h"
 
 #ifdef _MSC_VER
 #include <float.h>
@@ -949,8 +950,6 @@ static void YGConstrainMaxSizeForMode(const float maxSize, YGMeasureMode *mode, 
         *mode = YGMeasureModeAtMost;
         *size = maxSize;
       }
-      break;
-    case YGMeasureModeCount:
       break;
   }
 }
@@ -1934,7 +1933,6 @@ static void YGNodelayoutImpl(const YGNodeRef node,
         leadingMainDim = betweenMainDim / 2;
         break;
       case YGJustifyFlexStart:
-      case YGJustifyCount:
         break;
     }
 
@@ -2127,7 +2125,6 @@ static void YGNodelayoutImpl(const YGNodeRef node,
         break;
       case YGAlignAuto:
       case YGAlignFlexStart:
-      case YGAlignCount:
         break;
     }
 
@@ -2187,7 +2184,6 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                 break;
               }
               case YGAlignAuto:
-              case YGAlignCount:
                 break;
             }
           }

@@ -18,21 +18,18 @@ typedef enum YGFlexDirection {
   YGFlexDirectionColumnReverse,
   YGFlexDirectionRow,
   YGFlexDirectionRowReverse,
-  YGFlexDirectionCount,
 } YGFlexDirection;
 
 typedef enum YGMeasureMode {
   YGMeasureModeUndefined,
   YGMeasureModeExactly,
   YGMeasureModeAtMost,
-  YGMeasureModeCount,
 } YGMeasureMode;
 
 typedef enum YGPrintOptions {
   YGPrintOptionsLayout = 1,
   YGPrintOptionsStyle = 2,
   YGPrintOptionsChildren = 4,
-  YGPrintOptionsCount,
 } YGPrintOptions;
 
 typedef enum YGEdge {
@@ -45,19 +42,16 @@ typedef enum YGEdge {
   YGEdgeHorizontal,
   YGEdgeVertical,
   YGEdgeAll,
-  YGEdgeCount,
 } YGEdge;
 
 typedef enum YGPositionType {
   YGPositionTypeRelative,
   YGPositionTypeAbsolute,
-  YGPositionTypeCount,
 } YGPositionType;
 
 typedef enum YGDimension {
   YGDimensionWidth,
   YGDimensionHeight,
-  YGDimensionCount,
 } YGDimension;
 
 typedef enum YGJustify {
@@ -66,14 +60,12 @@ typedef enum YGJustify {
   YGJustifyFlexEnd,
   YGJustifySpaceBetween,
   YGJustifySpaceAround,
-  YGJustifyCount,
 } YGJustify;
 
 typedef enum YGDirection {
   YGDirectionInherit,
   YGDirectionLTR,
   YGDirectionRTL,
-  YGDirectionCount,
 } YGDirection;
 
 typedef enum YGLogLevel {
@@ -82,26 +74,22 @@ typedef enum YGLogLevel {
   YGLogLevelInfo,
   YGLogLevelDebug,
   YGLogLevelVerbose,
-  YGLogLevelCount,
 } YGLogLevel;
 
 typedef enum YGWrap {
   YGWrapNoWrap,
   YGWrapWrap,
-  YGWrapCount,
 } YGWrap;
 
 typedef enum YGOverflow {
   YGOverflowVisible,
   YGOverflowHidden,
   YGOverflowScroll,
-  YGOverflowCount,
 } YGOverflow;
 
 typedef enum YGExperimentalFeature {
   YGExperimentalFeatureRounding,
   YGExperimentalFeatureWebFlexBasis,
-  YGExperimentalFeatureCount,
 } YGExperimentalFeature;
 
 typedef enum YGAlign {
@@ -110,7 +98,6 @@ typedef enum YGAlign {
   YGAlignCenter,
   YGAlignFlexEnd,
   YGAlignStretch,
-  YGAlignCount,
 } YGAlign;
 
 YG_EXTERN_C_END
