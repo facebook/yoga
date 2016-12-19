@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{0856757B-1671-4E43-AF41-4AEA53988796}</ProjectGuid>
+    <ProjectGuid>{0C76D2FE-6767-44FE-B03D-21B2076BAA73}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Facebook.Yoga.Universal.Tests</RootNamespace>
@@ -124,13 +124,10 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Facebook.Yoga\Facebook.Yoga.csproj">
+    <ProjectReference Include="..\Facebook.Yoga\Facebook.Yoga.csproj">
       <Project>{3aace384-fdec-4d91-a3b2-eeb21b46c9ad}</Project>
       <Name>Facebook.Yoga</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

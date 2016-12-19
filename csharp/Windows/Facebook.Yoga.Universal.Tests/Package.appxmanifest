@@ -5,15 +5,15 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   IgnorableNamespaces="uap mp">
 
-  <Identity Name="d1de6e91-6781-489c-958a-1a12f9e305dc"
-            Publisher="CN=blue"
+  <Identity Name="6797a00b-cf19-41b1-bd06-467391a2a6e3"
+            Publisher="CN=anforste"
             Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="d1de6e91-6781-489c-958a-1a12f9e305dc" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="6797a00b-cf19-41b1-bd06-467391a2a6e3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Facebook.Yoga.Universal.Tests</DisplayName>
-    <PublisherDisplayName>blue</PublisherDisplayName>
+    <PublisherDisplayName>anforste</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   

@@ -21,17 +21,17 @@
     <file src="Facebook.Yoga.targets" target="build\netstandard"/>
 
     <!-- lib -->
-    <file src="..\Facebook.Yoga\bin\Release\Facebook.Yoga.dll" target="lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\Release\Facebook.Yoga.dll" target="lib\netstandard"/>
 
     <!-- runtimes -->
-    <file src="..\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win-x86\lib\netstandard"/>
-    <file src="..\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win-x86\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win-x86\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win-x86\lib\netstandard"/>
     
-    <file src="..\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win-x64\lib\netstandard"/>
-    <file src="..\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win-x64\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win-x64\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win-x64\lib\netstandard"/>
     
-    <file src="..\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win8-arm\lib\netstandard"/>
-    <file src="..\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win8-arm\lib\netstandard"/>    
+    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win8-arm\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win8-arm\lib\netstandard"/>    
 
     <!-- Native -->
     <file src="..\Yoga\bin\x86\Release\Yoga.dll" target="runtimes\win-x86\native"/>
