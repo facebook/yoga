@@ -26,8 +26,8 @@ YGBENCHMARKS({
 
   YGBENCHMARK("Stack with flex", {
     const YGNodeRef root = YGNodeNew();
-    YGNodeStyleSetWidth(root, 100);
-    YGNodeStyleSetHeight(root, 100);
+    YGNodeStyleSetWidth(root, YGPx(100));
+    YGNodeStyleSetHeight(root, YGPx(100));
 
     for (uint32_t i = 0; i < 10; i++) {
       const YGNodeRef child = YGNodeNew();
@@ -45,7 +45,7 @@ YGBENCHMARKS({
 
     for (uint32_t i = 0; i < 10; i++) {
       const YGNodeRef child = YGNodeNew();
-      YGNodeStyleSetHeight(child, 20);
+      YGNodeStyleSetHeight(child, YGPx(20));
       YGNodeSetMeasureFunc(child, _measure);
       YGNodeInsertChild(root, child, 0);
     }
@@ -80,31 +80,31 @@ YGBENCHMARKS({
     for (uint32_t i = 0; i < 10; i++) {
       const YGNodeRef child = YGNodeNew();
       YGNodeStyleSetFlexGrow(child, 1);
-      YGNodeStyleSetWidth(child, 10);
-      YGNodeStyleSetHeight(child, 10);
+      YGNodeStyleSetWidth(child, YGPx(10));
+      YGNodeStyleSetHeight(child, YGPx(10));
       YGNodeInsertChild(root, child, 0);
 
       for (uint32_t ii = 0; ii < 10; ii++) {
         const YGNodeRef grandChild = YGNodeNew();
         YGNodeStyleSetFlexDirection(grandChild, YGFlexDirectionRow);
         YGNodeStyleSetFlexGrow(grandChild, 1);
-        YGNodeStyleSetWidth(grandChild, 10);
-        YGNodeStyleSetHeight(grandChild, 10);
+        YGNodeStyleSetWidth(grandChild, YGPx(10));
+        YGNodeStyleSetHeight(grandChild, YGPx/10));
         YGNodeInsertChild(child, grandChild, 0);
 
         for (uint32_t iii = 0; iii < 10; iii++) {
           const YGNodeRef grandGrandChild = YGNodeNew();
           YGNodeStyleSetFlexGrow(grandGrandChild, 1);
-          YGNodeStyleSetWidth(grandGrandChild, 10);
-          YGNodeStyleSetHeight(grandGrandChild, 10);
+          YGNodeStyleSetWidth(grandGrandChild, YGPx(10));
+          YGNodeStyleSetHeight(grandGrandChild, YGPx(10));
           YGNodeInsertChild(grandChild, grandGrandChild, 0);
 
           for (uint32_t iii = 0; iii < 10; iii++) {
             const YGNodeRef grandGrandGrandChild = YGNodeNew();
             YGNodeStyleSetFlexDirection(grandGrandGrandChild, YGFlexDirectionRow);
             YGNodeStyleSetFlexGrow(grandGrandGrandChild, 1);
-            YGNodeStyleSetWidth(grandGrandGrandChild, 10);
-            YGNodeStyleSetHeight(grandGrandGrandChild, 10);
+            YGNodeStyleSetWidth(grandGrandGrandChild, YGPx(10));
+            YGNodeStyleSetHeight(grandGrandGrandChild, YGPx(10));
             YGNodeInsertChild(grandGrandChild, grandGrandGrandChild, 0);
           }
         }
