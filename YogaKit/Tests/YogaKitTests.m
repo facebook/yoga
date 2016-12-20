@@ -268,4 +268,25 @@
   }
 }
 
+- (void)testyg_isLeafFlag
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  XCTAssertTrue(view.yg_isLeaf);
+
+  for (int i=0; i<10; i++) {
+    UIView *subview = [[UIView alloc] initWithFrame:CGRectZero];
+    [view addSubview:subview];
+  }
+  XCTAssertTrue(view.yg_isLeaf);
+
+  [view yg_setUsesYoga:YES];
+  [view yg_setWidth:50.0];
+  XCTAssertTrue(view.yg_isLeaf);
+
+  UIView *const subview = view.subviews[0];
+  [subview yg_setUsesYoga:YES];
+  [subview yg_setWidth:50.0];
+  XCTAssertFalse(view.yg_isLeaf);
+}
+
 @end

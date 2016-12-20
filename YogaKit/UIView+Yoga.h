@@ -69,4 +69,9 @@
  */
 - (NSUInteger)yg_numberOfChildren;
 
+/**
+ Return a BOOL indiciating whether or not we this node contains any subviews that are included in Yoga's layout.
+ */
+- (BOOL)yg_isLeaf;
+
 @end
