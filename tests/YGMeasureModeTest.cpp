@@ -243,7 +243,7 @@ TEST(YogaTest, flex_child_with_flex_basis) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
-  YGNodeStyleSetFlexBasis(root_child0, 0);
+  YGNodeStyleSetFlexBasis(root_child0, YGPx(0));
   YGNodeSetContext(root_child0, &constraintList);
   YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);

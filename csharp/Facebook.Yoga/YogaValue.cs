@@ -16,7 +16,7 @@ namespace Facebook.Yoga
     {
         private float Value;
         private YogaUnit Unit;
-        private byte isDefined;
+        private byte isDefined; /* use byte to keep struct blitable */
 
         public bool IsDefined => isDefined != 0;
 
@@ -25,7 +25,7 @@ namespace Facebook.Yoga
             return new YogaValue
             {
                 Value = value,
-                isDefined = 1,
+                isDefined = YogaConstants.IsUndefined(value) ? (byte)0 : (byte)1,
                 Unit = YogaUnit.Pixel
             };
         }
@@ -49,12 +49,22 @@ namespace Facebook.Yoga
             }
         }
 
+        public static YogaValue Undefined()
+        {
+            return new YogaValue
+            {
+                Value = YogaConstants.Undefined,
+                isDefined = 0,
+                Unit = YogaUnit.Pixel
+            };
+        }
+
         public static YogaValue Percent(float value)
         {
             return new YogaValue
             {
                 Value = value,
-                isDefined = 1,
+                isDefined = YogaConstants.IsUndefined(value) ? (byte)0 : (byte)1,,
                 Unit = YogaUnit.Percent
             };
         }

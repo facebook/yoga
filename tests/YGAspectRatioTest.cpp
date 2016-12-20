@@ -24,11 +24,11 @@ static YGSize _measure(YGNodeRef node,
 TEST(YogaTest, aspect_ratio_cross_defined) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetWidth(root_child0, YGPx(50));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -45,11 +45,11 @@ TEST(YogaTest, aspect_ratio_cross_defined) {
 TEST(YogaTest, aspect_ratio_main_defined) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, YGPx(50));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -65,11 +65,11 @@ TEST(YogaTest, aspect_ratio_main_defined) {
 
 TEST(YogaTest, aspect_ratio_both_dimensions_defined) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, YGPx(50));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -85,8 +85,8 @@ TEST(YogaTest, aspect_ratio_both_dimensions_defined) {
 
 TEST(YogaTest, aspect_ratio_align_stretch) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetAspectRatio(root_child0, 1);
@@ -105,11 +105,11 @@ TEST(YogaTest, aspect_ratio_align_stretch) {
 TEST(YogaTest, aspect_ratio_flex_grow) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, YGPx(50));
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
@@ -127,11 +127,11 @@ TEST(YogaTest, aspect_ratio_flex_grow) {
 TEST(YogaTest, aspect_ratio_flex_shrink) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 150);
+  YGNodeStyleSetHeight(root_child0, YGPx(150));
   YGNodeStyleSetFlexShrink(root_child0, 1);
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
@@ -149,11 +149,11 @@ TEST(YogaTest, aspect_ratio_flex_shrink) {
 TEST(YogaTest, aspect_ratio_basis) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetFlexBasis(root_child0, 50);
+  YGNodeStyleSetFlexBasis(root_child0, YGPx(50));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -169,14 +169,14 @@ TEST(YogaTest, aspect_ratio_basis) {
 
 TEST(YogaTest, aspect_ratio_absolute_layout_width_defined) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
-  YGNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
-  YGNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
-  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetPosition(root_child0, YGEdgeLeft, YGPx(0));
+  YGNodeStyleSetPosition(root_child0, YGEdgeTop, YGPx(0));
+  YGNodeStyleSetWidth(root_child0, YGPx(50));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -192,14 +192,14 @@ TEST(YogaTest, aspect_ratio_absolute_layout_width_defined) {
 
 TEST(YogaTest, aspect_ratio_absolute_layout_height_defined) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
-  YGNodeStyleSetPosition(root_child0, YGEdgeLeft, 0);
-  YGNodeStyleSetPosition(root_child0, YGEdgeTop, 0);
-  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetPosition(root_child0, YGEdgeLeft, YGPx(0));
+  YGNodeStyleSetPosition(root_child0, YGEdgeTop, YGPx(0));
+  YGNodeStyleSetHeight(root_child0, YGPx(50));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -216,12 +216,12 @@ TEST(YogaTest, aspect_ratio_absolute_layout_height_defined) {
 TEST(YogaTest, aspect_ratio_with_max_cross_defined) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 50);
-  YGNodeStyleSetMaxWidth(root_child0, 40);
+  YGNodeStyleSetHeight(root_child0, YGPx(50));
+  YGNodeStyleSetMaxWidth(root_child0, YGPx(40));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -238,12 +238,12 @@ TEST(YogaTest, aspect_ratio_with_max_cross_defined) {
 TEST(YogaTest, aspect_ratio_with_max_main_defined) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child0, 50);
-  YGNodeStyleSetMaxHeight(root_child0, 40);
+  YGNodeStyleSetWidth(root_child0, YGPx(50));
+  YGNodeStyleSetMaxHeight(root_child0, YGPx(40));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -260,12 +260,12 @@ TEST(YogaTest, aspect_ratio_with_max_main_defined) {
 TEST(YogaTest, aspect_ratio_with_min_cross_defined) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 30);
-  YGNodeStyleSetMinWidth(root_child0, 40);
+  YGNodeStyleSetHeight(root_child0, YGPx(30));
+  YGNodeStyleSetMinWidth(root_child0, YGPx(40));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -282,12 +282,12 @@ TEST(YogaTest, aspect_ratio_with_min_cross_defined) {
 TEST(YogaTest, aspect_ratio_with_min_main_defined) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child0, 30);
-  YGNodeStyleSetMinHeight(root_child0, 40);
+  YGNodeStyleSetWidth(root_child0, YGPx(30));
+  YGNodeStyleSetMinHeight(root_child0, YGPx(40));
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -304,11 +304,11 @@ TEST(YogaTest, aspect_ratio_with_min_main_defined) {
 TEST(YogaTest, aspect_ratio_double_cross) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, YGPx(50));
   YGNodeStyleSetAspectRatio(root_child0, 2);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -325,11 +325,11 @@ TEST(YogaTest, aspect_ratio_double_cross) {
 TEST(YogaTest, aspect_ratio_half_cross) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 100);
+  YGNodeStyleSetHeight(root_child0, YGPx(100));
   YGNodeStyleSetAspectRatio(root_child0, 0.5);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -346,11 +346,11 @@ TEST(YogaTest, aspect_ratio_half_cross) {
 TEST(YogaTest, aspect_ratio_double_main) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetWidth(root_child0, YGPx(50));
   YGNodeStyleSetAspectRatio(root_child0, 2);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -367,11 +367,11 @@ TEST(YogaTest, aspect_ratio_double_main) {
 TEST(YogaTest, aspect_ratio_half_main) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child0, 100);
+  YGNodeStyleSetWidth(root_child0, YGPx(100));
   YGNodeStyleSetAspectRatio(root_child0, 0.5);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -388,8 +388,8 @@ TEST(YogaTest, aspect_ratio_half_main) {
 TEST(YogaTest, aspect_ratio_with_measure_func) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, 100);
-  YGNodeStyleSetHeight(root, 100);
+  YGNodeStyleSetWidth(root, YGPx(100));
+  YGNodeStyleSetHeight(root, YGPx(100));
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeSetMeasureFunc(root_child0, _measure);

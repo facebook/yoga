@@ -31,12 +31,12 @@ namespace Facebook.Yoga
             Spacing margin = null,
             Spacing padding = null,
             Border border = null,
-            YogaValue? Width = null,
-            YogaValue? Height = null,
-            YogaValue? MaxWidth = null,
-            YogaValue? MaxHeight = null,
-            YogaValue? MinWidth = null,
-            YogaValue? MinHeight = null)
+            YogaValue? width = null,
+            YogaValue? height = null,
+            YogaValue? maxWidth = null,
+            YogaValue? maxHeight = null,
+            YogaValue? minWidth = null,
+            YogaValue? minHeight = null)
         {
             YogaNode node = new YogaNode();
 
@@ -197,34 +197,34 @@ namespace Facebook.Yoga
                 }
             }
 
-            if (Width.HasValue)
+            if (width.HasValue)
             {
-                node.Width = Width.Value;
+                node.Width = width.Value;
             }
 
-            if (Height.HasValue)
+            if (height.HasValue)
             {
-                node.Height = Height.Value;
+                node.Height = height.Value;
             }
 
-            if (MinWidth.HasValue)
+            if (minWidth.HasValue)
             {
-                node.MinWidth = MinWidth.Value;
+                node.MinWidth = minWidth.Value;
             }
 
-            if (MinHeight.HasValue)
+            if (minHeight.HasValue)
             {
-                node.MinHeight = MinHeight.Value;
+                node.MinHeight = minHeight.Value;
             }
 
-            if (MaxWidth.HasValue)
+            if (maxWidth.HasValue)
             {
-                node.MaxWidth = MaxWidth.Value;
+                node.MaxWidth = maxWidth.Value;
             }
 
-            if (MaxHeight.HasValue)
+            if (maxHeight.HasValue)
             {
-                node.MaxHeight = MaxHeight.Value;
+                node.MaxHeight = maxHeight.Value;
             }
 
             return node;
