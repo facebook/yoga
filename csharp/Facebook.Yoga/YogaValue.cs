@@ -64,7 +64,7 @@ namespace Facebook.Yoga
             return new YogaValue
             {
                 Value = value,
-                isDefined = YogaConstants.IsUndefined(value) ? (byte)0 : (byte)1,,
+                isDefined = YogaConstants.IsUndefined(value) ? (byte)0 : (byte)1,
                 Unit = YogaUnit.Percent
             };
         }
