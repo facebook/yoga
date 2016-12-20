@@ -511,8 +511,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
       }                                                                                             \
                                                                                                  \
    float YGNodeStyleGet##name(const YGNodeRef node, const YGEdge edge) {   \
-		YGValue defaultYGValue = YGPx(defaultValue);                     \
-		return YGComputedEdgeValue(node->style.instanceName, edge, &defaultYGValue)->value;                     \
+		return YGComputedEdgeValue(node->style.instanceName, edge, &defaultValue)->value;                     \
    }
 
 #define YG_NODE_LAYOUT_PROPERTY_IMPL(type, name, instanceName) \
@@ -541,7 +540,7 @@ YG_NODE_STYLE_PROPERTY_SETTER_UNIT_IMPL(YGValue, FlexBasis, flexBasis, flexBasis
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Position, position, position, YGValueUndefined);
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Margin, margin, margin, YGValueZero);
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Padding, padding, padding, YGValueZero);
-YG_NODE_STYLE_EDGE_PROPERTY_IMPL(float, Border, border, border, 0);
+YG_NODE_STYLE_EDGE_PROPERTY_IMPL(float, Border, border, border, YGValueZero);
 
 YG_NODE_STYLE_PROPERTY_UNIT_IMPL(YGValue, Width, width, dimensions[YGDimensionWidth]);
 YG_NODE_STYLE_PROPERTY_UNIT_IMPL(YGValue, Height, height, dimensions[YGDimensionHeight]);
