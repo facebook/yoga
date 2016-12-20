@@ -10,6 +10,7 @@
 #import "UIView+Yoga.h"
 
 #import <objc/runtime.h>
+#import <MapKit/MapKit.h>
 
 @interface YGNodeBridge : NSObject
 @property (nonatomic, assign, readonly) YGNodeRef cnode;
@@ -74,6 +75,21 @@
     @selector(yg_usesYoga),
     @(enabled),
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)yg_isLeaf
+{
+  NSNumber *isLeaf = objc_getAssociatedObject(self, @selector(yg_isLeaf));
+  if (isLeaf) {
+    return [isLeaf boolValue];
+  } else {
+    return ![self yg_usesYoga] || self.subviews.count == 0;
+  }
+}
+
+- (void)yg_setLeaf:(BOOL)leaf
+{
+  objc_setAssociatedObject(self, @selector(yg_isLeaf), @(leaf), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)yg_setDirection:(YGDirection)direction
@@ -181,6 +197,7 @@
   YGNodeStyleSetAspectRatio([self ygNode], aspectRatio);
 }
 
+
 #pragma mark - Layout and Sizing
 
 - (YGDirection)yg_resolvedDirection
@@ -280,7 +297,7 @@ static void YGAttachNodesFromViewHierachy(UIView *view) {
   YGNodeRef node = [view ygNode];
 
   // Only leaf nodes should have a measure function
-  if (![view yg_usesYoga] || view.subviews.count == 0) {
+  if ([view yg_isLeaf]) {
     YGNodeSetMeasureFunc(node, YGMeasureView);
     YGRemoveAllChildren(node);
   } else {
@@ -368,12 +385,31 @@ static void YGApplyLayoutToViewHierarchy(UIView *view) {
     },
   };
 
-  const BOOL isLeaf = ![view yg_usesYoga] || view.subviews.count == 0;
-  if (!isLeaf) {
+  if (![view yg_isLeaf]) {
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
       YGApplyLayoutToViewHierarchy(view.subviews[i]);
     }
   }
+}
+
+@end
+
+// This "hacks" are needed because YogaKit does not correctly account for composite UIView when doing layout
+
+@implementation MKMapView (Yoga)
+
+- (BOOL)yg_isLeaf
+{
+  return YES;
+}
+
+@end
+
+@implementation UIButton (Yoga)
+
+- (BOOL)yg_isLeaf
+{
+  return YES;
 }
 
 @end
