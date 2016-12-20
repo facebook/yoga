@@ -89,7 +89,7 @@ YGBENCHMARKS({
         YGNodeStyleSetFlexDirection(grandChild, YGFlexDirectionRow);
         YGNodeStyleSetFlexGrow(grandChild, 1);
         YGNodeStyleSetWidth(grandChild, YGPx(10));
-        YGNodeStyleSetHeight(grandChild, YGPx/10));
+        YGNodeStyleSetHeight(grandChild, YGPx(10));
         YGNodeInsertChild(child, grandChild, 0);
 
         for (uint32_t iii = 0; iii < 10; iii++) {
