@@ -1609,7 +1609,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   const float availableInnerHeight = fmaxf(fminf(availableHeight - marginAxisColumn - paddingAndBorderAxisColumn, maxInnerHeight), minInnerHeight);
   
   float availableInnerMainDim = isMainAxisRow ? availableInnerWidth : availableInnerHeight;
-  float availableInnerCrossDim = isMainAxisRow ? availableInnerHeight : availableInnerWidth;
+  const float availableInnerCrossDim = isMainAxisRow ? availableInnerHeight : availableInnerWidth;
 
   // If there is only one child with flexGrow + flexShrink it means we can set the
   // computedFlexBasis to 0 instead of measuring and shrinking / flexing the child to exactly
