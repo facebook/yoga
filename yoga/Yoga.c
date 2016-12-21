@@ -417,16 +417,6 @@ inline float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
   return 0.0f;
 }
 
-inline YGValue YGNodeStyleGetFlexBasis(const YGNodeRef node) {
-  if (node->style.flexBasis.isDefined) {
-    return node->style.flexBasis;
-  }
-  if (!YGFloatIsUndefined(node->style.flex) && node->style.flex > 0.0f) {
-		return YGValueZero;
-  }
-  return YGValueUndefined;
-}
-
 static inline const YGValue * YGNodeStyleGetFlexBasisPtr(const YGNodeRef node) {
 	if (node->style.flexBasis.isDefined) {
 		return &node->style.flexBasis;
@@ -435,6 +425,10 @@ static inline const YGValue * YGNodeStyleGetFlexBasisPtr(const YGNodeRef node) {
 		return &YGValueZero;
 	}
 	return &YGValueUndefined;
+}
+
+inline YGValue YGNodeStyleGetFlexBasis(const YGNodeRef node) {
+	return *YGNodeStyleGetFlexBasisPtr(node);
 }
 
 void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
