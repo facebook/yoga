@@ -1597,8 +1597,6 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   const float marginAxisColumn = YGNodeMarginForAxis(node, YGFlexDirectionColumn, parentWidth);
 
   // STEP 2: DETERMINE AVAILABLE SIZE IN MAIN AND CROSS DIRECTIONS
-  float availableInnerWidth = availableWidth - marginAxisRow - paddingAndBorderAxisRow;
-  float availableInnerHeight = availableHeight - marginAxisColumn - paddingAndBorderAxisColumn;
   const float minInnerWidth = YGValueResolve(&node->style.minDimensions[YGDimensionWidth], parentWidth) - marginAxisRow - paddingAndBorderAxisRow;
   const float maxInnerWidth = YGValueResolve(&node->style.maxDimensions[YGDimensionWidth], parentWidth) - marginAxisRow - paddingAndBorderAxisRow;
   const float minInnerHeight = YGValueResolve(&node->style.minDimensions[YGDimensionHeight], parentHeight) - marginAxisColumn - paddingAndBorderAxisColumn;
@@ -1607,15 +1605,11 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   const float maxInnerMainDim = isMainAxisRow ? maxInnerWidth : maxInnerHeight;
   
   // Max dimension overrides predefined dimension value; Min dimension in turn overrides both of the above
-  if (!YGFloatIsUndefined(availableInnerWidth)) {
-    availableInnerWidth = fmaxf(fminf(availableInnerWidth, maxInnerWidth), minInnerWidth);
-  }
-  if (!YGFloatIsUndefined(availableInnerHeight)) {
-    availableInnerHeight = fmaxf(fminf(availableInnerHeight, maxInnerHeight), minInnerHeight);
-  }
+  const float availableInnerWidth = fmaxf(fminf(availableWidth - marginAxisRow - paddingAndBorderAxisRow, maxInnerWidth), minInnerWidth);
+  const float availableInnerHeight = fmaxf(fminf(availableHeight - marginAxisColumn - paddingAndBorderAxisColumn, maxInnerHeight), minInnerHeight);
   
   float availableInnerMainDim = isMainAxisRow ? availableInnerWidth : availableInnerHeight;
-  const float availableInnerCrossDim = isMainAxisRow ? availableInnerHeight : availableInnerWidth;
+  float availableInnerCrossDim = isMainAxisRow ? availableInnerHeight : availableInnerWidth;
 
   // If there is only one child with flexGrow + flexShrink it means we can set the
   // computedFlexBasis to 0 instead of measuring and shrinking / flexing the child to exactly
@@ -1772,11 +1766,11 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     // the line length, so there's no more space left to distribute.
     
     // We resolve main dimension to fit minimum and maximum values
-    if (YGValueIsUndefined(availableInnerMainDim)) {
-      if (!YGValueIsUndefined(minInnerMainDim) &&
+    if (YGFloatIsUndefined(availableInnerMainDim)) {
+      if (!YGFloatIsUndefined(minInnerMainDim) &&
           sizeConsumedOnCurrentLine < minInnerMainDim) {
         availableInnerMainDim = minInnerMainDim;
-      } else if (!YGValueIsUndefined(maxInnerMainDim) &&
+      } else if (!YGFloatIsUndefined(maxInnerMainDim) &&
                  sizeConsumedOnCurrentLine > maxInnerMainDim) {
         availableInnerMainDim = maxInnerMainDim;
       }
