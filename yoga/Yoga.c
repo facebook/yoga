@@ -217,6 +217,7 @@ static void YGNodeInit(const YGNodeRef node) {
   node->style.flexBasis = YGValueUndefined;
 
   node->style.alignItems = YGAlignStretch;
+  node->style.justifyContent = YGJustifyFlexStart;
   node->style.alignContent = YGAlignFlexStart;
 
   node->style.direction = YGDirectionInherit;

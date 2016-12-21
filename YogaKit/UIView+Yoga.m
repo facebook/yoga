@@ -56,6 +56,20 @@
   return YGNodeGetChildCount([self ygNode]);
 }
 
+- (BOOL)yg_isLeaf
+{
+  NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
+  if ([self yg_usesYoga]) {
+      for (UIView *subview in self.subviews) {
+          if ([subview yg_usesYoga] && [subview yg_includeInLayout]) {
+              return NO;
+          }
+      }
+  }
+
+  return YES;
+}
+
 #pragma mark - Setters
 
 - (void)yg_setIncludeInLayout:(BOOL)includeInLayout
@@ -276,11 +290,12 @@ static CGFloat YGSanitizeMeasurement(
   return result;
 }
 
-static void YGAttachNodesFromViewHierachy(UIView *view) {
+static void YGAttachNodesFromViewHierachy(UIView *view)
+{
   YGNodeRef node = [view ygNode];
 
   // Only leaf nodes should have a measure function
-  if (![view yg_usesYoga] || view.subviews.count == 0) {
+  if (view.yg_isLeaf) {
     YGNodeSetMeasureFunc(node, YGMeasureView);
     YGRemoveAllChildren(node);
   } else {
@@ -340,7 +355,8 @@ static CGFloat YGRoundPixelValue(CGFloat value)
   return round(value * scale) / scale;
 }
 
-static void YGApplyLayoutToViewHierarchy(UIView *view) {
+static void YGApplyLayoutToViewHierarchy(UIView *view)
+{
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
   if (![view yg_includeInLayout]) {
      return;
@@ -368,8 +384,7 @@ static void YGApplyLayoutToViewHierarchy(UIView *view) {
     },
   };
 
-  const BOOL isLeaf = ![view yg_usesYoga] || view.subviews.count == 0;
-  if (!isLeaf) {
+  if (!view.yg_isLeaf) {
     for (NSUInteger i = 0; i < view.subviews.count; i++) {
       YGApplyLayoutToViewHierarchy(view.subviews[i]);
     }
