@@ -351,7 +351,7 @@ TEST(YogaTest, aspect_ratio_double_main) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetWidth(root_child0, 50);
-  YGNodeStyleSetAspectRatio(root_child0, 2);
+  YGNodeStyleSetAspectRatio(root_child0, 0.5);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -372,7 +372,7 @@ TEST(YogaTest, aspect_ratio_half_main) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetWidth(root_child0, 100);
-  YGNodeStyleSetAspectRatio(root_child0, 0.5);
+  YGNodeStyleSetAspectRatio(root_child0, 2);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
