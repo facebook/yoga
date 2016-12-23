@@ -1494,15 +1494,17 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   const float leadingPaddingAndBorderMain = YGNodeLeadingPaddingAndBorder(node, mainAxis);
   const float trailingPaddingAndBorderMain = YGNodeTrailingPaddingAndBorder(node, mainAxis);
   const float leadingPaddingAndBorderCross = YGNodeLeadingPaddingAndBorder(node, crossAxis);
-  const float paddingAndBorderAxisMain = YGNodePaddingAndBorderForAxis(node, mainAxis);
-  const float paddingAndBorderAxisCross = YGNodePaddingAndBorderForAxis(node, crossAxis);
+  const float trailingPaddingAndBorderCross = YGNodeTrailingPaddingAndBorder(node, crossAxis);
+
+  const float paddingAndBorderAxisMain = leadingPaddingAndBorderMain + trailingPaddingAndBorderMain;
+  const float paddingAndBorderAxisCross = leadingPaddingAndBorderCross + trailingPaddingAndBorderCross;
 
   const YGMeasureMode measureModeMainDim = isMainAxisRow ? widthMeasureMode : heightMeasureMode;
   const YGMeasureMode measureModeCrossDim = isMainAxisRow ? heightMeasureMode : widthMeasureMode;
 
-  const float paddingAndBorderAxisRow = YGNodePaddingAndBorderForAxis(node, YGFlexDirectionRow);
-  const float paddingAndBorderAxisColumn =
-      YGNodePaddingAndBorderForAxis(node, YGFlexDirectionColumn);
+  const float paddingAndBorderAxisRow = isMainAxisRow ? paddingAndBorderAxisMain : paddingAndBorderAxisCross;
+  const float paddingAndBorderAxisColumn = isMainAxisRow ? paddingAndBorderAxisCross : paddingAndBorderAxisMain;
+
   const float marginAxisRow = YGNodeMarginForAxis(node, YGFlexDirectionRow);
   const float marginAxisColumn = YGNodeMarginForAxis(node, YGFlexDirectionColumn);
 
