@@ -14,13 +14,13 @@
 
 TEST(YogaTest, align_self_center) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, YGPx(100));
-  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetAlignSelf(root_child0, YGAlignCenter);
-  YGNodeStyleSetWidth(root_child0, YGPx(10));
-  YGNodeStyleSetHeight(root_child0, YGPx(10));
+  YGNodeStyleSetWidth(root_child0, 10);
+  YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -51,13 +51,13 @@ TEST(YogaTest, align_self_center) {
 
 TEST(YogaTest, align_self_flex_end) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, YGPx(100));
-  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetAlignSelf(root_child0, YGAlignFlexEnd);
-  YGNodeStyleSetWidth(root_child0, YGPx(10));
-  YGNodeStyleSetHeight(root_child0, YGPx(10));
+  YGNodeStyleSetWidth(root_child0, 10);
+  YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -88,13 +88,13 @@ TEST(YogaTest, align_self_flex_end) {
 
 TEST(YogaTest, align_self_flex_start) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, YGPx(100));
-  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetAlignSelf(root_child0, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root_child0, YGPx(10));
-  YGNodeStyleSetHeight(root_child0, YGPx(10));
+  YGNodeStyleSetWidth(root_child0, 10);
+  YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -126,13 +126,13 @@ TEST(YogaTest, align_self_flex_start) {
 TEST(YogaTest, align_self_flex_end_override_flex_start) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, YGPx(100));
-  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetAlignSelf(root_child0, YGAlignFlexEnd);
-  YGNodeStyleSetWidth(root_child0, YGPx(10));
-  YGNodeStyleSetHeight(root_child0, YGPx(10));
+  YGNodeStyleSetWidth(root_child0, 10);
+  YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 

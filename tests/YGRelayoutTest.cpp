@@ -16,8 +16,8 @@ TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
   const YGNodeRef root = YGNodeNew();
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, YGPx(10));
-  YGNodeStyleSetFlexBasis(root_child0, YGPx(20));
+  YGNodeStyleSetHeight(root_child0, 10);
+  YGNodeStyleSetFlexBasis(root_child0, 20);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, 100, YGUndefined, YGDirectionLTR);

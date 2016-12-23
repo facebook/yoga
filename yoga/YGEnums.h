@@ -21,8 +21,9 @@ typedef enum YGFlexDirection {
   YGFlexDirectionRowReverse,
 } YGFlexDirection;
 
-#define YGUnitCount 2
+#define YGUnitCount 3
 typedef enum YGUnit {
+  YGUnitUndefined,
   YGUnitPixel,
   YGUnitPercent,
 } YGUnit;

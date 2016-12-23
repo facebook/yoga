@@ -13,22 +13,22 @@
 TEST(YogaTest, dirty_propagation) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, YGPx(100));
-  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child0, YGPx(50));
-  YGNodeStyleSetHeight(root_child0, YGPx(20));
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, 20);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child1, YGPx(50));
-  YGNodeStyleSetHeight(root_child1, YGPx(20));
+  YGNodeStyleSetWidth(root_child1, 50);
+  YGNodeStyleSetHeight(root_child1, 20);
   YGNodeInsertChild(root, root_child1, 1);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  YGNodeStyleSetWidth(root_child0, YGPx(20));
+  YGNodeStyleSetWidth(root_child0, 20);
 
   EXPECT_TRUE(YGNodeIsDirty(root_child0));
   EXPECT_FALSE(YGNodeIsDirty(root_child1));
@@ -46,22 +46,22 @@ TEST(YogaTest, dirty_propagation) {
 TEST(YogaTest, dirty_propagation_only_if_prop_changed) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, YGPx(100));
-  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child0, YGPx(50));
-  YGNodeStyleSetHeight(root_child0, YGPx(20));
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, 20);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child1, YGPx(50));
-  YGNodeStyleSetHeight(root_child1, YGPx(20));
+  YGNodeStyleSetWidth(root_child1, 50);
+  YGNodeStyleSetHeight(root_child1, 20);
   YGNodeInsertChild(root, root_child1, 1);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  YGNodeStyleSetWidth(root_child0, YGPx(50));
+  YGNodeStyleSetWidth(root_child0, 50);
 
   EXPECT_FALSE(YGNodeIsDirty(root_child0));
   EXPECT_FALSE(YGNodeIsDirty(root_child1));
@@ -73,12 +73,12 @@ TEST(YogaTest, dirty_propagation_only_if_prop_changed) {
 TEST(YogaTest, dirty_node_only_if_children_are_actually_removed) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetWidth(root, YGPx(50));
-  YGNodeStyleSetHeight(root, YGPx(50));
+  YGNodeStyleSetWidth(root, 50);
+  YGNodeStyleSetHeight(root, 50);
 
   const YGNodeRef child0 = YGNodeNew();
-  YGNodeStyleSetWidth(child0, YGPx(50));
-  YGNodeStyleSetHeight(child0, YGPx(25));
+  YGNodeStyleSetWidth(child0, 50);
+  YGNodeStyleSetHeight(child0, 25);
   YGNodeInsertChild(root, child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);

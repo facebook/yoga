@@ -18,6 +18,7 @@ ENUMS = {
         'RTL',
     ],
 	'Unit': [
+	    'Undefined',
         'Pixel',
         'Percent',
     ],
