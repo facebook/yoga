@@ -1,0 +1,69 @@
+<html>
+<script>
+function ASSERT_FLOAT_EQ(a, b) {
+  if (a !== b) {
+    console.error( 'ASSERT_FLOAT_EQ', a, b );
+    //throw 'Assert fails';
+  }
+}
+function ASSERT_EQ(a, b) {
+  if (a !== b) {
+    console.error( 'ASSERT_EQ', a, b );
+    //throw 'Assert fails';
+  }
+}
+function ASSERT_FALSE(a) {
+  if (a) {
+    console.error( 'ASSERT_FALSE', a );
+    //throw 'Assert fails';
+  }
+}
+function ASSERT_TRUE(a) {
+  if (!a) {
+    console.error( 'ASSERT_TRUE', a );
+    //throw 'Assert fails';
+  }
+}
+function ASSERT_DEATH(a,text) {
+  console.error( `ASSERT_DEATH`, text );
+}
+function EXPECT_TRUE(a) {
+  if (!a) {
+    console.error( 'EXPECT_TRUE', a );
+    //throw 'Assert fails';
+  }
+}
+function EXPECT_FALSE(a) {
+  if (a) {
+    console.error( 'EXPECT_FALSE', a );
+    //throw 'Assert fails';
+  }
+}
+
+</script>
+<script src="../src/YGEnums.js"></script>
+<script src="../src/Yoga.js"></script>
+<script src="YGAbsolutePositionTest.js"></script>
+<script src="YGAlignContentTest.js"></script>
+<script src="YGAlignItemsTest.js"></script>
+<script src="YGAlignSelfTest.js"></script>
+<script src="YGAspectRatioTest.js"></script>
+<script src="YGBorderTest.js"></script>
+<script src="YGDefaultValuesTest.js"></script>
+<script src="YGDirtyMarkingTest.js"></script>
+<script src="YGEdgeTest.js"></script>
+<script src="YGFlexDirectionTest.js"></script>
+<script src="YGFlexTest.js"></script>
+<script src="YGFlexWrapTest.js"></script>
+<script src="YGJustifyContentTest.js"></script>
+<script src="YGMarginTest.js"></script>
+<script src="YGMeasureCacheTest.js"></script>
+<script src="YGMeasureModeTest.js"></script>
+<script src="YGMeasureTest.js"></script>
+<script src="YGMinMaxDimensionTest.js"></script>
+<script src="YGPaddingTest.js"></script>
+<script src="YGRelayoutTest.js"></script>
+<script src="YGRoundingMeasureFuncTest.js"></script>
+<script src="YGRoundingTest.js"></script>
+<script src="YGStyleTest.js"></script>
+</html>
