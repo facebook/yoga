@@ -20,7 +20,6 @@ cxx_library(
   soname = 'libyogacore.$(ext)',
   srcs = glob(['yoga/*.c']),
   tests=[':YogaTests'],
-  fbobjc_macosx_tests_override = [],
   exported_headers = subdir_glob([('', 'yoga/*.h')]),
   header_namespace = '',
   compiler_flags = COMPILER_FLAGS,
