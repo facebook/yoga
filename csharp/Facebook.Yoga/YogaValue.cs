@@ -14,25 +14,24 @@ namespace Facebook.Yoga
     [StructLayout(LayoutKind.Sequential)]
     public struct YogaValue
     {
-        private float Value;
-        private YogaUnit Unit;
-        private byte isDefined; /* use byte to keep struct blitable */
+        private float value;
+        private YogaUnit unit;
 
-        public bool IsDefined => isDefined != 0;
+        public YogaUnit Unit => unit;
+        public float Value => value;
 
         public static YogaValue Pixel(float value)
         {
             return new YogaValue
             {
-                Value = value,
-                isDefined = YogaConstants.IsUndefined(value) ? (byte)0 : (byte)1,
-                Unit = YogaUnit.Pixel
+                value = value,
+                unit = YogaConstants.IsUndefined(value) ? YogaUnit.Undefined : YogaUnit.Pixel
             };
         }
 
         public bool Equals(YogaValue other)
         {
-            return Value.Equals(other.Value) && Unit == other.Unit;
+            return Unit == other.Unit && (Value.Equals(other.Value) || Unit == YogaUnit.Undefined);
         }
 
         public override bool Equals(object obj)
@@ -53,9 +52,8 @@ namespace Facebook.Yoga
         {
             return new YogaValue
             {
-                Value = YogaConstants.Undefined,
-                isDefined = 0,
-                Unit = YogaUnit.Pixel
+                value = YogaConstants.Undefined,
+                unit = YogaUnit.Undefined
             };
         }
 
@@ -63,9 +61,8 @@ namespace Facebook.Yoga
         {
             return new YogaValue
             {
-                Value = value,
-                isDefined = YogaConstants.IsUndefined(value) ? (byte)0 : (byte)1,
-                Unit = YogaUnit.Percent
+                value = value,
+                unit = YogaConstants.IsUndefined(value) ? YogaUnit.Undefined : YogaUnit.Percent
             };
         }
 

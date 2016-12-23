@@ -20,7 +20,7 @@ namespace Facebook.Yoga
 
         public static bool IsUndefined(YogaValue value)
         {
-            return !value.IsDefined;
+            return value.Unit == YogaUnit.Undefined;
         }
     }
 }

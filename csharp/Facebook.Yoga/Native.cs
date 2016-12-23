@@ -194,43 +194,64 @@ namespace Facebook.Yoga
         public static extern float YGNodeStyleGetFlexShrink(YGNodeHandle node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetFlexBasis(YGNodeHandle node, YogaValue flexBasis);
+        public static extern void YGNodeStyleSetFlexBasis(YGNodeHandle node, float flexBasis);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetFlexBasisPercent(YGNodeHandle node, float flexBasis);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetFlexBasis(YGNodeHandle node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetWidth(YGNodeHandle node, YogaValue width);
+        public static extern void YGNodeStyleSetWidth(YGNodeHandle node, float width);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetWidthPercent(YGNodeHandle node, float width);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetWidth(YGNodeHandle node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetHeight(YGNodeHandle node, YogaValue height);
+        public static extern void YGNodeStyleSetHeight(YGNodeHandle node, float height);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetHeightPercent(YGNodeHandle node, float height);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetHeight(YGNodeHandle node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMinWidth(YGNodeHandle node, YogaValue minWidth);
+        public static extern void YGNodeStyleSetMinWidth(YGNodeHandle node, float minWidth);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetMinWidthPercent(YGNodeHandle node, float minWidth);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetMinWidth(YGNodeHandle node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMinHeight(YGNodeHandle node, YogaValue minHeight);
+        public static extern void YGNodeStyleSetMinHeight(YGNodeHandle node, float minHeight);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetMinHeightPercent(YGNodeHandle node, float minHeight);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetMinHeight(YGNodeHandle node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMaxWidth(YGNodeHandle node, YogaValue maxWidth);
+        public static extern void YGNodeStyleSetMaxWidth(YGNodeHandle node, float maxWidth);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetMaxWidthPercent(YGNodeHandle node, float maxWidth);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetMaxWidth(YGNodeHandle node);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMaxHeight(YGNodeHandle node, YogaValue maxHeight);
+        public static extern void YGNodeStyleSetMaxHeight(YGNodeHandle node, float maxHeight);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetMaxHeightPercent(YGNodeHandle node, float maxHeight);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetMaxHeight(YGNodeHandle node);
@@ -246,19 +267,28 @@ namespace Facebook.Yoga
         #region YG_NODE_STYLE_EDGE_PROPERTY
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetPosition(YGNodeHandle node, YogaEdge edge, YogaValue position);
+        public static extern void YGNodeStyleSetPosition(YGNodeHandle node, YogaEdge edge, float position);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetPositionPercent(YGNodeHandle node, YogaEdge edge, float position);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetPosition(YGNodeHandle node, YogaEdge edge);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetMargin(YGNodeHandle node, YogaEdge edge, YogaValue margin);
+        public static extern void YGNodeStyleSetMargin(YGNodeHandle node, YogaEdge edge, float margin);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetMarginPercent(YGNodeHandle node, YogaEdge edge, float margin);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetMargin(YGNodeHandle node, YogaEdge edge);
 
         [DllImport(DllName)]
-        public static extern void YGNodeStyleSetPadding(YGNodeHandle node, YogaEdge edge, YogaValue padding);
+        public static extern void YGNodeStyleSetPadding(YGNodeHandle node, YogaEdge edge, float padding);
+
+        [DllImport(DllName)]
+        public static extern void YGNodeStyleSetPaddingPercent(YGNodeHandle node, YogaEdge edge, float padding);
 
         [DllImport(DllName)]
         public static extern YogaValue YGNodeStyleGetPadding(YGNodeHandle node, YogaEdge edge);

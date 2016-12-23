@@ -11,6 +11,7 @@ namespace Facebook.Yoga
 {
     public enum YogaUnit
     {
+        Undefined,
         Pixel,
         Percent
     }

@@ -145,7 +145,7 @@ typedef struct YGNode {
   [YGDimensionHeight] = YG_UNDEFINED_VALUES,  \
 }
 
-YGNode gYGNodeDefaults = {
+static YGNode gYGNodeDefaults = {
   .parent = NULL,
   .children = NULL,
   .hasNewLayout = true,
@@ -195,10 +195,7 @@ YGCalloc gYGCalloc = &calloc;
 YGRealloc gYGRealloc = &realloc;
 YGFree gYGFree = &free;
 
-static YGValue YGValueUndefined = {
-	.value = YGUndefined,
-	.unit = YGUnitUndefined
-};
+static YGValue YGValueUndefined = YG_UNDEFINED_VALUES;
 
 static YGValue YGValueZero = {
 	.value = 0,
@@ -598,8 +595,13 @@ inline bool YGFloatIsUndefined(const float value) {
 }
 
 static inline bool YGValueEqual(const YGValue a, const YGValue b) {
-  if (a.unit != YGUnitUndefined != b.unit != YGUnitUndefined || a.unit != b.unit) {
+  if (a.unit != b.unit) {
     return false;
+  }
+
+  if(a.unit == YGUnitUndefined)
+  {
+    return true;
   }
   
   return fabs(a.value - b.value) < 0.0001f;
