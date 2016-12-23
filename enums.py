@@ -131,6 +131,20 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
         f.write('\n')
     f.write('YG_EXTERN_C_END\n')
 
+# write out C headers
+with open(root + '/JavaScript/src/YGEnums.js', 'w') as f:
+    f.write(LICENSE)
+    f.write('var _YGUndefined = NaN;\n\n')
+    for name, values in ENUMS.items():
+        count = 0;
+        for value in values:
+            if isinstance(value, tuple):
+                f.write('var _YG%s%s = %d;\n' % (name, value[0], value[1]))
+            else:
+                f.write('var _YG%s%s = %d;\n' % (name, value, count))
+            count+=1;
+        f.write('\n')
+
 # write out java files
 for name, values in ENUMS.items():
     with open(root + '/java/com/facebook/yoga/Yoga%s.java' % name, 'w') as f:
