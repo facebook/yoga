@@ -21,10 +21,10 @@ namespace Facebook.Yoga
         public void Test_padding_no_size()
         {
             YogaNode root = new YogaNode();
-            root.SetPadding(YogaEdge.Left, 10.Px());
-            root.SetPadding(YogaEdge.Top, 10.Px());
-            root.SetPadding(YogaEdge.Right, 10.Px());
-            root.SetPadding(YogaEdge.Bottom, 10.Px());
+            root.SetPadding(YogaEdge.Left, 10);
+            root.SetPadding(YogaEdge.Top, 10);
+            root.SetPadding(YogaEdge.Right, 10);
+            root.SetPadding(YogaEdge.Bottom, 10);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
@@ -46,14 +46,14 @@ namespace Facebook.Yoga
         public void Test_padding_container_match_child()
         {
             YogaNode root = new YogaNode();
-            root.SetPadding(YogaEdge.Left, 10.Px());
-            root.SetPadding(YogaEdge.Top, 10.Px());
-            root.SetPadding(YogaEdge.Right, 10.Px());
-            root.SetPadding(YogaEdge.Bottom, 10.Px());
+            root.SetPadding(YogaEdge.Left, 10);
+            root.SetPadding(YogaEdge.Top, 10);
+            root.SetPadding(YogaEdge.Right, 10);
+            root.SetPadding(YogaEdge.Bottom, 10);
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.Width = 10.Px();
-            root_child0.Height = 10.Px();
+            root_child0.Width = 10;
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -86,16 +86,16 @@ namespace Facebook.Yoga
         public void Test_padding_flex_child()
         {
             YogaNode root = new YogaNode();
-            root.SetPadding(YogaEdge.Left, 10.Px());
-            root.SetPadding(YogaEdge.Top, 10.Px());
-            root.SetPadding(YogaEdge.Right, 10.Px());
-            root.SetPadding(YogaEdge.Bottom, 10.Px());
-            root.Width = 100.Px();
-            root.Height = 100.Px();
+            root.SetPadding(YogaEdge.Left, 10);
+            root.SetPadding(YogaEdge.Top, 10);
+            root.SetPadding(YogaEdge.Right, 10);
+            root.SetPadding(YogaEdge.Bottom, 10);
+            root.Width = 100;
+            root.Height = 100;
 
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
-            root_child0.Width = 10.Px();
+            root_child0.Width = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -128,15 +128,15 @@ namespace Facebook.Yoga
         public void Test_padding_stretch_child()
         {
             YogaNode root = new YogaNode();
-            root.SetPadding(YogaEdge.Left, 10.Px());
-            root.SetPadding(YogaEdge.Top, 10.Px());
-            root.SetPadding(YogaEdge.Right, 10.Px());
-            root.SetPadding(YogaEdge.Bottom, 10.Px());
-            root.Width = 100.Px();
-            root.Height = 100.Px();
+            root.SetPadding(YogaEdge.Left, 10);
+            root.SetPadding(YogaEdge.Top, 10);
+            root.SetPadding(YogaEdge.Right, 10);
+            root.SetPadding(YogaEdge.Bottom, 10);
+            root.Width = 100;
+            root.Height = 100;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.Height = 10.Px();
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -171,15 +171,15 @@ namespace Facebook.Yoga
             YogaNode root = new YogaNode();
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
-            root.SetPadding(YogaEdge.Start, 10.Px());
-            root.SetPadding(YogaEdge.End, 20.Px());
-            root.SetPadding(YogaEdge.Bottom, 20.Px());
-            root.Width = 100.Px();
-            root.Height = 100.Px();
+            root.SetPadding(YogaEdge.Start, 10);
+            root.SetPadding(YogaEdge.End, 20);
+            root.SetPadding(YogaEdge.Bottom, 20);
+            root.Width = 100;
+            root.Height = 100;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.Width = 10.Px();
-            root_child0.Height = 10.Px();
+            root_child0.Width = 10;
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -214,16 +214,16 @@ namespace Facebook.Yoga
             YogaNode root = new YogaNode();
             root.JustifyContent = YogaJustify.FlexEnd;
             root.AlignItems = YogaAlign.FlexEnd;
-            root.Width = 200.Px();
-            root.Height = 200.Px();
+            root.Width = 200;
+            root.Height = 200;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.SetPadding(YogaEdge.Left, 20.Px());
-            root_child0.SetPadding(YogaEdge.Top, 20.Px());
-            root_child0.SetPadding(YogaEdge.Right, 20.Px());
-            root_child0.SetPadding(YogaEdge.Bottom, 20.Px());
-            root_child0.Width = 100.Px();
-            root_child0.Height = 100.Px();
+            root_child0.SetPadding(YogaEdge.Left, 20);
+            root_child0.SetPadding(YogaEdge.Top, 20);
+            root_child0.SetPadding(YogaEdge.Right, 20);
+            root_child0.SetPadding(YogaEdge.Bottom, 20);
+            root_child0.Width = 100;
+            root_child0.Height = 100;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();

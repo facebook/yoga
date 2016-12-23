@@ -14,12 +14,10 @@ function toValueCs(value) {
 
 function toValueCsCs(value) {
   var methodName = '';
-  if(value.indexOf('px') >= 0){
-    methodName = 'Px';
-  }else if (value.indexOf('%') >= 0){
-    methodName = 'Percent';
+  if (value.indexOf('%') >= 0){
+    methodName = '.Percent()';
   }
-  return toValueCs(value) + '.' + methodName + '()';
+  return toValueCs(value) + methodName;
 }
  
 var CSEmitter = function() {
