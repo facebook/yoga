@@ -99,12 +99,6 @@ namespace Facebook.Yoga
         #region YG_NODE_PROPERTY
 
         [DllImport(DllName)]
-        public static extern void YGNodeSetContext(YGNodeHandle node, IntPtr context);
-
-        [DllImport(DllName)]
-        public static extern IntPtr YGNodeGetContext(YGNodeHandle node);
-
-        [DllImport(DllName)]
         public static extern void YGNodeSetMeasureFunc(
             YGNodeHandle node,
             [MarshalAs(UnmanagedType.FunctionPtr)] YogaMeasureFunc measureFunc);
