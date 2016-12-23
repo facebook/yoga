@@ -8,3 +8,6 @@
 
 # Visual studio code
 .vscode
+
+# Xcode
+xcuserdata
