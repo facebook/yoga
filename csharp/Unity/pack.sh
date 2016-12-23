@@ -6,6 +6,8 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
+set -e
+
 cd "$( dirname "$0" )"
 
 if [ \! -f yoga.dll ]; then
@@ -49,5 +51,14 @@ tests=Yoga/Assets/Facebook.Yoga/Editor/Facebook.Yoga.Tests
 mkdir -p $tests
 (cd ../tests/Facebook.Yoga; tar cf - *.cs)|tar -C $tests -xf -
 
-Unity -quit -batchMode -projectPath `pwd`/Yoga -exportPackage Assets/Facebook.Yoga $libs `pwd`/yoga.unitypackage
+function onerror {
+  local xml=Yoga/EditorTestResults.xml
+  if [ -f $xml ]; then cat $xml|grep 'success="False"'; fi
+}
+trap onerror EXIT
+Unity -quit -batchMode -projectPath `pwd`/Yoga -runEditorTests
 
+pkg="`pwd`/yoga.unitypackage"
+Unity -quit -batchMode -projectPath `pwd`/Yoga -exportPackage Assets/Facebook.Yoga $libs $pkg
+
+echo "Success: $pkg"

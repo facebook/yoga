@@ -228,7 +228,6 @@ namespace Facebook.Yoga
             Assert.AreEqual(100, node0.MaxHeight);
         }
 
-#if !UNITY_EDITOR
         private void ForceGC()
         {
             GC.Collect(GC.MaxGeneration);
@@ -356,6 +355,5 @@ namespace Facebook.Yoga
                 return MeasureOutput.Make(120, 130);
             });
         }
-#endif
     }
 }
