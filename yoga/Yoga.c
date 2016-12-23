@@ -111,18 +111,6 @@ typedef struct YGNode {
   .unit = YGUnitUndefined		 \
 }
 
-#define YG_DEFAULT_EDGE_VALUES {    \
-  [YGEdgeLeft] = YGUndefined,       \
-  [YGEdgeTop] = YGUndefined,        \
-  [YGEdgeRight] = YGUndefined,      \
-  [YGEdgeBottom] = YGUndefined,     \
-  [YGEdgeStart] = YGUndefined,      \
-  [YGEdgeEnd] = YGUndefined,        \
-  [YGEdgeHorizontal] = YGUndefined, \
-  [YGEdgeVertical] = YGUndefined,   \
-  [YGEdgeAll] = YGUndefined,        \
-}
-
 #define YG_DEFAULT_EDGE_VALUES_UNIT {    \
   [YGEdgeLeft] = YG_UNDEFINED_VALUES,       \
   [YGEdgeTop] = YG_UNDEFINED_VALUES,        \
@@ -168,7 +156,7 @@ static YGNode gYGNodeDefaults = {
     .position = YG_DEFAULT_EDGE_VALUES_UNIT,
     .margin = YG_DEFAULT_EDGE_VALUES_UNIT,
     .padding = YG_DEFAULT_EDGE_VALUES_UNIT,
-    .border = YG_DEFAULT_EDGE_VALUES,
+    .border = YG_DEFAULT_EDGE_VALUES_UNIT,
     .aspectRatio = YGUndefined,
   },
 
@@ -968,7 +956,7 @@ static float YGNodeLeadingPosition(const YGNodeRef node, const YGFlexDirection a
   const YGValue * leadingPosition =
       YGComputedEdgeValue(node->style.position, leading[axis], &YGValueUndefined);
 
-  return !leadingPosition->unit != YGUnitUndefined ? 0.0f : YGValueResolve(leadingPosition, axisSize);
+  return leadingPosition->unit == YGUnitUndefined ? 0.0f : YGValueResolve(leadingPosition, axisSize);
 }
 
 static float YGNodeTrailingPosition(const YGNodeRef node, const YGFlexDirection axis, const float axisSize) {
@@ -983,7 +971,7 @@ static float YGNodeTrailingPosition(const YGNodeRef node, const YGFlexDirection 
   const YGValue * trailingPosition =
       YGComputedEdgeValue(node->style.position, trailing[axis], &YGValueUndefined);
 
-  return !trailingPosition->unit != YGUnitUndefined ? 0.0f : YGValueResolve(trailingPosition, axisSize);
+  return trailingPosition->unit == YGUnitUndefined ? 0.0f : YGValueResolve(trailingPosition, axisSize);
 }
 
 static float YGNodeBoundAxisWithinMinAndMax(const YGNodeRef node,
