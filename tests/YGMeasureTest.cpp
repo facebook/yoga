@@ -28,8 +28,8 @@ static YGSize _measure(YGNodeRef node,
 
 TEST(YogaTest, dont_measure_single_grow_shrink_child) {
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, YGPx(100));
-  YGNodeStyleSetHeight(root, YGPx(100));
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
 
   int measureCount = 0;
 
