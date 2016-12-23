@@ -9,7 +9,7 @@
 
 namespace Facebook.Yoga
 {
-    public delegate long MeasureFunction(
+    public delegate YogaSize MeasureFunction(
         YogaNode node,
         float width,
         YogaMeasureMode widthMode,
