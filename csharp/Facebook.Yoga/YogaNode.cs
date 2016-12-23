@@ -17,7 +17,7 @@ namespace Facebook.Yoga
 {
     public partial class YogaNode : IEnumerable<YogaNode>
     {
-        private IntPtr _ygNode;
+        private Native.YGNodeHandle _ygNode;
         private WeakReference _parent;
         private List<YogaNode> _children;
         private MeasureFunction _measureFunction;
@@ -29,15 +29,10 @@ namespace Facebook.Yoga
             YogaLogger.Initialize();
 
             _ygNode = Native.YGNodeNew();
-            if (_ygNode == IntPtr.Zero)
+            if (_ygNode.IsInvalid)
             {
                 throw new InvalidOperationException("Failed to allocate native memory");
             }
-        }
-
-        ~YogaNode()
-        {
-            Native.YGNodeFree(_ygNode);
         }
 
         public void Reset()
