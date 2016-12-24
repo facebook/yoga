@@ -1,6 +1,5 @@
 {
   "jest" : {
-    "testRegex": "Test.js",
-    "automock": false
+    "testRegex": "Test.js"
   }
 }

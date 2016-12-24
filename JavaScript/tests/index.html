@@ -1,47 +1,6 @@
 <html>
 <script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-function ASSERT_FLOAT_EQ(a, b) {
-  if (a !== b) {
-    console.error( 'ASSERT_FLOAT_EQ', a, b );
-    //throw 'Assert fails';
-  }
-}
-function ASSERT_EQ(a, b) {
-  if (a !== b) {
-    console.error( 'ASSERT_EQ', a, b );
-    //throw 'Assert fails';
-  }
-}
-function ASSERT_FALSE(a) {
-  if (a) {
-    console.error( 'ASSERT_FALSE', a );
-    //throw 'Assert fails';
-  }
-}
-function ASSERT_TRUE(a) {
-  if (!a) {
-    console.error( 'ASSERT_TRUE', a );
-    //throw 'Assert fails';
-  }
-}
-function ASSERT_DEATH(a,text) {
-  console.error( `ASSERT_DEATH`, text );
-}
-function EXPECT_TRUE(a) {
-  if (!a) {
-    console.error( 'EXPECT_TRUE', a );
-    //throw 'Assert fails';
-  }
-}
-function EXPECT_FALSE(a) {
-  if (a) {
-    console.error( 'EXPECT_FALSE', a );
-    //throw 'Assert fails';
-=======
-=======
->>>>>>> splhack-gentest-js
+
 function ResultCheck(a) {
   this.result = a;
   this.toBe = function(test) {
@@ -99,10 +58,6 @@ function YGBENCHMARK(a, b) {
     }
     let end = Date.now();
     console.log('full run:', a, (end - start) / count);
-<<<<<<< HEAD
->>>>>>> origin/splhack-gentest-js
-=======
->>>>>>> splhack-gentest-js
   }
 }
 
@@ -131,12 +86,5 @@ function YGBENCHMARK(a, b) {
 <script src="YGRoundingMeasureFuncTest.js"></script>
 <script src="YGRoundingTest.js"></script>
 <script src="YGStyleTest.js"></script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 <script src="../benchmark/YGBenchmark.js"></script>
->>>>>>> origin/splhack-gentest-js
-=======
-<script src="../benchmark/YGBenchmark.js"></script>
->>>>>>> splhack-gentest-js
 </html>
