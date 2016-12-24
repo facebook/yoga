@@ -532,8 +532,7 @@ namespace Facebook.Yoga
                 throw new InvalidOperationException("Measure function is not defined.");
             }
 
-            long output = _measureFunction(this, width, widthMode, height, heightMode);
-            return new YogaSize { width = MeasureOutput.GetWidth(output), height = MeasureOutput.GetHeight(output) };
+            return _measureFunction(this, width, widthMode, height, heightMode);
         }
 
         public string Print(YogaPrintOptions options =
