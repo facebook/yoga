@@ -5,6 +5,7 @@
 /.buckconfig.local
 /.buckd
 /gentest/test.html
+.buckversion
 
 # Visual studio code
 .vscode
