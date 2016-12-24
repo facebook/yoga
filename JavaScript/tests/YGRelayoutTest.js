@@ -8,21 +8,21 @@
  */
 
 (function() {
-  _YGSetExperimentalFeatureEnabled(_YGExperimentalFeatureWebFlexBasis, true);
+  Yoga.setExperimentalFeatureEnabled(Yoga.ExperimentalFeatureWebFlexBasis, true);
 
-  const root = _YGNodeNew();
+  const root = Yoga.nodeNew();
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 10);
-  _YGNodeStyleSetFlexBasis(root_child0, 20);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 10);
+  Yoga.nodeStyleSetFlexBasis(root_child0, 20);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, 100, _YGUndefined, _YGDirectionLTR);
-  _YGNodeCalculateLayout(root, 100, 100, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, 100, Yoga.Undefined, Yoga.DirectionLTR);
+  Yoga.nodeCalculateLayout(root, 100, 100, Yoga.DirectionLTR);
 
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 
-  _YGSetExperimentalFeatureEnabled(_YGExperimentalFeatureWebFlexBasis, false);
+  Yoga.setExperimentalFeatureEnabled(Yoga.ExperimentalFeatureWebFlexBasis, false);
 })();

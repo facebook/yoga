@@ -9,7 +9,7 @@
 
 var constraintList = [];
 
-var _measure = Runtime.addFunction(
+var _measure = Yoga.addFunction(
 function (retAddr, node, width, widthMode, height, heightMode) {
   var currentIndex = constraintList.length;
   constraintList[currentIndex] = {
@@ -17,236 +17,236 @@ function (retAddr, node, width, widthMode, height, heightMode) {
     widthMode : widthMode,
     height : height,
     heightMode : heightMode };
-  setValue(retAddr + 0, widthMode == _YGMeasureModeUndefined ? 10 : width, 'float');
-  setValue(retAddr + 4, heightMode == _YGMeasureModeUndefined ? 10 : width, 'float');
+  Yoga.setValue(retAddr + 0, widthMode == Yoga.MeasureModeUndefined ? 10 : width, 'float');
+  Yoga.setValue(retAddr + 4, heightMode == Yoga.MeasureModeUndefined ? 10 : width, 'float');
 });
 
 (function() {
   constraintList = [];
 
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-
-  ASSERT_EQ(1, constraintList.length);
-
-  ASSERT_FLOAT_EQ(100, constraintList[0].width);
-  ASSERT_EQ(_YGMeasureModeExactly, constraintList[0].widthMode);
-
-  _YGNodeFreeRecursive(root);
-})();
-
-(function() {
-  constraintList = [];
-
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
-
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
-
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-
-  ASSERT_EQ(1, constraintList.length);
-
-  ASSERT_FLOAT_EQ(100, constraintList[0].height);
-  ASSERT_EQ(_YGMeasureModeExactly, constraintList[0].heightMode);
-
-  _YGNodeFreeRecursive(root);
-})();
-
-(function() {
-  constraintList = [];
-
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
-
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
-
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-
-  ASSERT_EQ(1, constraintList.length);
-
-  ASSERT_FLOAT_EQ(100, constraintList[0].height);
-  ASSERT_EQ(_YGMeasureModeAtMost, constraintList[0].heightMode);
-
-  _YGNodeFreeRecursive(root);
-})();
-
-(function() {
-  constraintList = [];
-
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
-
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
-
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList[0].width);
-  ASSERT_EQ(_YGMeasureModeAtMost, constraintList[0].widthMode);
+  ASSERT_EQ(Yoga.MeasureModeExactly, constraintList[0].widthMode);
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
   constraintList = [];
 
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-
-  ASSERT_EQ(1, constraintList.length);
-
-  ASSERT_FLOAT_EQ(100, constraintList[0].width);
-  ASSERT_EQ(_YGMeasureModeAtMost, constraintList[0].widthMode);
-
-  _YGNodeFreeRecursive(root);
-})();
-
-(function() {
-  constraintList = [];
-
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
-
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
-
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList[0].height);
-  ASSERT_EQ(_YGMeasureModeAtMost, constraintList[0].heightMode);
+  ASSERT_EQ(Yoga.MeasureModeExactly, constraintList[0].heightMode);
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
   constraintList = [];
 
-  const root = _YGNodeNew();
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+
+  ASSERT_EQ(1, constraintList.length);
+
+  ASSERT_FLOAT_EQ(100, constraintList[0].height);
+  ASSERT_EQ(Yoga.MeasureModeAtMost, constraintList[0].heightMode);
+
+  Yoga.nodeFreeRecursive(root);
+})();
+
+(function() {
+  constraintList = [];
+
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
+
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
+
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+
+  ASSERT_EQ(1, constraintList.length);
+
+  ASSERT_FLOAT_EQ(100, constraintList[0].width);
+  ASSERT_EQ(Yoga.MeasureModeAtMost, constraintList[0].widthMode);
+
+  Yoga.nodeFreeRecursive(root);
+})();
+
+(function() {
+  constraintList = [];
+
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
+
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
+
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+
+  ASSERT_EQ(1, constraintList.length);
+
+  ASSERT_FLOAT_EQ(100, constraintList[0].width);
+  ASSERT_EQ(Yoga.MeasureModeAtMost, constraintList[0].widthMode);
+
+  Yoga.nodeFreeRecursive(root);
+})();
+
+(function() {
+  constraintList = [];
+
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
+
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
+
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+
+  ASSERT_EQ(1, constraintList.length);
+
+  ASSERT_FLOAT_EQ(100, constraintList[0].height);
+  ASSERT_EQ(Yoga.MeasureModeAtMost, constraintList[0].heightMode);
+
+  Yoga.nodeFreeRecursive(root);
+})();
+
+(function() {
+  constraintList = [];
+
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root, 100);
+
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
+
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
   ASSERT_EQ(2, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList[0].height);
-  ASSERT_EQ(_YGMeasureModeAtMost, constraintList[0].heightMode);
+  ASSERT_EQ(Yoga.MeasureModeAtMost, constraintList[0].heightMode);
 
   ASSERT_FLOAT_EQ(100, constraintList[1].height);
-  ASSERT_EQ(_YGMeasureModeExactly, constraintList[1].heightMode);
+  ASSERT_EQ(Yoga.MeasureModeExactly, constraintList[1].heightMode);
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
   constraintList = [];
 
-  const root = _YGNodeNew();
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetFlexBasis(root_child0, 0);
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetFlexBasis(root_child0, 0);
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList[0].height);
-  ASSERT_EQ(_YGMeasureModeExactly, constraintList[0].heightMode);
+  ASSERT_EQ(Yoga.MeasureModeExactly, constraintList[0].heightMode);
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
   constraintList = [];
 
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetOverflow(root, _YGOverflowScroll);
-  _YGNodeStyleSetHeight(root, 100);
-  _YGNodeStyleSetWidth(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetOverflow(root, Yoga.OverflowScroll);
+  Yoga.nodeStyleSetHeight(root, 100);
+  Yoga.nodeStyleSetWidth(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList[0].width);
-  ASSERT_EQ(_YGMeasureModeAtMost, constraintList[0].widthMode);
+  ASSERT_EQ(Yoga.MeasureModeAtMost, constraintList[0].widthMode);
 
-  ASSERT_TRUE(_YGValueIsUndefined(constraintList[0].height));
-  ASSERT_EQ(_YGMeasureModeUndefined, constraintList[0].heightMode);
+  ASSERT_TRUE(Yoga.valueIsUndefined(constraintList[0].height));
+  ASSERT_EQ(Yoga.MeasureModeUndefined, constraintList[0].heightMode);
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
   constraintList = [];
 
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetOverflow(root, _YGOverflowScroll);
-  _YGNodeStyleSetHeight(root, 100);
-  _YGNodeStyleSetWidth(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetOverflow(root, Yoga.OverflowScroll);
+  Yoga.nodeStyleSetHeight(root, 100);
+  Yoga.nodeStyleSetWidth(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
   ASSERT_EQ(1, constraintList.length);
 
-  ASSERT_TRUE(_YGValueIsUndefined(constraintList[0].width));
-  ASSERT_EQ(_YGMeasureModeUndefined, constraintList[0].widthMode);
+  ASSERT_TRUE(Yoga.valueIsUndefined(constraintList[0].width));
+  ASSERT_EQ(Yoga.MeasureModeUndefined, constraintList[0].widthMode);
 
   ASSERT_FLOAT_EQ(100, constraintList[0].height);
-  ASSERT_EQ(_YGMeasureModeAtMost, constraintList[0].heightMode);
+  ASSERT_EQ(Yoga.MeasureModeAtMost, constraintList[0].heightMode);
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
