@@ -1,5 +1,6 @@
 <html>
 <script>
+<<<<<<< HEAD
 function ASSERT_FLOAT_EQ(a, b) {
   if (a !== b) {
     console.error( 'ASSERT_FLOAT_EQ', a, b );
@@ -37,6 +38,65 @@ function EXPECT_FALSE(a) {
   if (a) {
     console.error( 'EXPECT_FALSE', a );
     //throw 'Assert fails';
+=======
+function ResultCheck(a) {
+  this.result = a;
+  this.toBe = function(test) {
+    if (this.result !== test) {
+      console.warn(this.result, test);
+    }
+  }
+}
+function describe(name,func) {
+  console.log(name);
+  func();
+}
+function it(name,func) {
+  console.log(name);
+  func();
+}
+function expect(value) {
+  return new ResultCheck(value);
+}
+function ASSERT_EQ(a, b) {
+  expect(a).toBe(b);
+}
+function ASSERT_FLOAT_EQ(a, b) {
+  expect(a).toBe(b);
+}
+function ASSERT_TRUE(a) {
+  expect(!!a).toBe(true);
+}
+function EXPECT_TRUE(a) {
+  expect(!!a).toBe(true);
+}
+function ASSERT_FALSE(a) {
+  expect(!!a).toBe(false);
+}
+function EXPECT_FALSE(a) {
+  expect(!!a).toBe(false);
+}
+function YGBENCHMARK(a, b) {
+  // warm up pass of test
+  {
+    let start = Date.now();
+    let count = 10;
+    for (let i=0; i<count; i++) {
+      b();
+    }
+    let end = Date.now();
+    console.log('warmup:', a, (end - start) / count);
+  }
+  // actual run test
+  {
+    let start = Date.now();
+    let count = 20;
+    for (let i=0; i<count; i++) {
+      b();
+    }
+    let end = Date.now();
+    console.log('full run:', a, (end - start) / count);
+>>>>>>> origin/splhack-gentest-js
   }
 }
 
@@ -65,4 +125,8 @@ function EXPECT_FALSE(a) {
 <script src="YGRoundingMeasureFuncTest.js"></script>
 <script src="YGRoundingTest.js"></script>
 <script src="YGStyleTest.js"></script>
+<<<<<<< HEAD
+=======
+<script src="../benchmark/YGBenchmark.js"></script>
+>>>>>>> origin/splhack-gentest-js
 </html>

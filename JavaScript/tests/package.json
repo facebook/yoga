@@ -1,0 +1,6 @@
+{
+  "jest" : {
+    "testRegex": "Test.js",
+    "automock": false
+  }
+}
