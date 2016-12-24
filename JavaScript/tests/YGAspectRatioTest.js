@@ -7,665 +7,665 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var _measure = Runtime.addFunction(
+var _measure = Yoga.addFunction(
 function (retAddr, node, width, widthMode, height, heightMode) {
-  setValue(retAddr + 0, widthMode === _YGMeasureModeExactly ? width : 50, 'float');
-  setValue(retAddr + 4, heightMode === _YGMeasureModeExactly ? height : 50, 'float');
+  Yoga.setValue(retAddr + 0, widthMode === Yoga.MeasureModeExactly ? width : 50, 'float');
+  Yoga.setValue(retAddr + 4, heightMode === Yoga.MeasureModeExactly ? height : 50, 'float');
 });
 
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 100);
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 100);
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 100);
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 100);
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 150);
-  _YGNodeStyleSetFlexShrink(root_child0, 1);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 150);
+  Yoga.nodeStyleSetFlexShrink(root_child0, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexBasis(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexBasis(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetPositionType(root_child0, _YGPositionTypeAbsolute);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeLeft, 0);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeTop, 0);
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetPositionType(root_child0, Yoga.PositionTypeAbsolute);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeLeft, 0);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeTop, 0);
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetPositionType(root_child0, _YGPositionTypeAbsolute);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeLeft, 0);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeTop, 0);
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetPositionType(root_child0, Yoga.PositionTypeAbsolute);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeLeft, 0);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeTop, 0);
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetMaxWidth(root_child0, 40);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetMaxWidth(root_child0, 40);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(40, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(40, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetMaxHeight(root_child0, 40);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetMaxHeight(root_child0, 40);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(40, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(40, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 30);
-  _YGNodeStyleSetMinWidth(root_child0, 40);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 30);
+  Yoga.nodeStyleSetMinWidth(root_child0, 40);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(40, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(30, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(40, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(30, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 30);
-  _YGNodeStyleSetMinHeight(root_child0, 40);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 30);
+  Yoga.nodeStyleSetMinHeight(root_child0, 40);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(30, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(40, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(30, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(40, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 2);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 2);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 100);
-  _YGNodeStyleSetAspectRatio(root_child0, 0.5);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 100);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 0.5);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 0.5);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 0.5);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 100);
-  _YGNodeStyleSetAspectRatio(root_child0, 2);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 100);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 2);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 200);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 200);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 200);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 200);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetWidth(root, 200);
-  _YGNodeStyleSetHeight(root, 200);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetWidth(root, 200);
+  Yoga.nodeStyleSetHeight(root, 200);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  const root_child1 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child1, 100);
-  _YGNodeStyleSetFlexGrow(root_child1, 1);
-  _YGNodeStyleSetAspectRatio(root_child1, 1);
-  _YGNodeInsertChild(root, root_child1, 1);
+  const root_child1 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child1, 100);
+  Yoga.nodeStyleSetFlexGrow(root_child1, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child1, 1);
+  Yoga.nodeInsertChild(root, root_child1, 1);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(75, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(75, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(75, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(75, Yoga.nodeLayoutGetHeight(root_child0));
 
-  ASSERT_EQ(75, _YGNodeLayoutGetLeft(root_child1));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child1));
-  ASSERT_EQ(125, _YGNodeLayoutGetWidth(root_child1));
-  ASSERT_EQ(125, _YGNodeLayoutGetHeight(root_child1));
+  ASSERT_EQ(75, Yoga.nodeLayoutGetLeft(root_child1));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child1));
+  ASSERT_EQ(125, Yoga.nodeLayoutGetWidth(root_child1));
+  ASSERT_EQ(125, Yoga.nodeLayoutGetHeight(root_child1));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 200);
-  _YGNodeStyleSetHeight(root, 200);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 200);
+  Yoga.nodeStyleSetHeight(root, 200);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  const root_child1 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child1, 100);
-  _YGNodeStyleSetFlexGrow(root_child1, 1);
-  _YGNodeStyleSetAspectRatio(root_child1, 1);
-  _YGNodeInsertChild(root, root_child1, 1);
+  const root_child1 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child1, 100);
+  Yoga.nodeStyleSetFlexGrow(root_child1, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child1, 1);
+  Yoga.nodeInsertChild(root, root_child1, 1);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(75, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(75, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(75, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(75, Yoga.nodeLayoutGetHeight(root_child0));
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child1));
-  ASSERT_EQ(75, _YGNodeLayoutGetTop(root_child1));
-  ASSERT_EQ(125, _YGNodeLayoutGetWidth(root_child1));
-  ASSERT_EQ(125, _YGNodeLayoutGetHeight(root_child1));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child1));
+  ASSERT_EQ(75, Yoga.nodeLayoutGetTop(root_child1));
+  ASSERT_EQ(125, Yoga.nodeLayoutGetWidth(root_child1));
+  ASSERT_EQ(125, Yoga.nodeLayoutGetHeight(root_child1));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetAspectRatio(root_child0, 0.5);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 0.5);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetAlignItems(root, _YGAlignFlexStart);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetAlignItems(root, Yoga.AlignFlexStart);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetAspectRatio(root_child0, 2);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 2);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(100, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetPositionType(root_child0, _YGPositionTypeAbsolute);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeLeft, 10);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeTop, 10);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeRight, 10);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetPositionType(root_child0, Yoga.PositionTypeAbsolute);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeLeft, 10);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeTop, 10);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeRight, 10);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(10, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(10, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(80, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(80, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(10, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(10, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(80, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(80, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetPositionType(root_child0, _YGPositionTypeAbsolute);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeLeft, 10);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeTop, 10);
-  _YGNodeStyleSetPosition(root_child0, _YGEdgeBottom, 10);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetPositionType(root_child0, Yoga.PositionTypeAbsolute);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeLeft, 10);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeTop, 10);
+  Yoga.nodeStyleSetPosition(root_child0, Yoga.EdgeBottom, 10);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(10, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(10, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(80, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(80, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(10, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(10, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(80, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(80, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetWidth(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetHeight(root_child0, 50);
-  _YGNodeStyleSetAspectRatio(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetHeight(root_child0, 50);
+  Yoga.nodeStyleSetAspectRatio(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_EQ(0, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_EQ(0, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_EQ(50, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(0, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();

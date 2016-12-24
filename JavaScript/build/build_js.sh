@@ -1,4 +1,4 @@
-emcc -O2 yoga/Yoga.c yoga/YGNodeList.c -o JavaScript/src/Yoga.js -s RESERVED_FUNCTION_POINTERS=20 -s NO_EXIT_RUNTIME=1 --memory-init-file 0 -s EXPORTED_FUNCTIONS="[ \
+emcc -O3 yoga/Yoga.c yoga/YGNodeList.c -o Yoga.tmp.js --post-js "JavaScript/src/YGEnums.js" -s EXPORT_NAME="'Yoga'" -s MODULARIZE=1 -s RESERVED_FUNCTION_POINTERS=20 -s NO_EXIT_RUNTIME=1 --memory-init-file 0 -s EXPORTED_FUNCTIONS="[ \
 '_YGNodeNew', \
 '_YGNodeFree', \
 '_YGNodeFreeRecursive', \
@@ -81,4 +81,4 @@ emcc -O2 yoga/Yoga.c yoga/YGNodeList.c -o JavaScript/src/Yoga.js -s RESERVED_FUN
 '_YGSetLogger', \
 '_YGLog', \
 '_YGSetExperimentalFeatureEnabled', \
-'_YGIsExperimentalFeatureEnabled']"
+'_YGIsExperimentalFeatureEnabled']" && cat JavaScript/build/Yoga-pre.js Yoga.tmp.js JavaScript/build/Yoga-post.js > JavaScript/src/Yoga.js && rm Yoga.tmp.js

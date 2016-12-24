@@ -8,50 +8,50 @@
  */
 
 (function() {
-  const node0 = _YGNodeNew();
-  const node1 = _YGNodeNew();
-  ASSERT_FALSE(_YGNodeIsDirty(node0));
+  const node0 = Yoga.nodeNew();
+  const node1 = Yoga.nodeNew();
+  ASSERT_FALSE(Yoga.nodeIsDirty(node0));
 
-  _YGNodeCopyStyle(node0, node1);
-  ASSERT_FALSE(_YGNodeIsDirty(node0));
+  Yoga.nodeCopyStyle(node0, node1);
+  ASSERT_FALSE(Yoga.nodeIsDirty(node0));
 
-  _YGNodeFree(node0);
-  _YGNodeFree(node1);
+  Yoga.nodeFree(node0);
+  Yoga.nodeFree(node1);
 })();
 
 (function() {
-  const node0 = _YGNodeNew();
-  ASSERT_FALSE(_YGNodeIsDirty(node0));
-  ASSERT_EQ(_YGFlexDirectionColumn, _YGNodeStyleGetFlexDirection(node0));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetMaxHeight(node0)));
+  const node0 = Yoga.nodeNew();
+  ASSERT_FALSE(Yoga.nodeIsDirty(node0));
+  ASSERT_EQ(Yoga.FlexDirectionColumn, Yoga.nodeStyleGetFlexDirection(node0));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetMaxHeight(node0)));
 
-  const node1 = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(node1, _YGFlexDirectionRow);
-  _YGNodeStyleSetMaxHeight(node1, 10);
+  const node1 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(node1, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetMaxHeight(node1, 10);
 
-  _YGNodeCopyStyle(node0, node1);
-  ASSERT_TRUE(_YGNodeIsDirty(node0));
-  ASSERT_EQ(_YGFlexDirectionRow, _YGNodeStyleGetFlexDirection(node0));
-  ASSERT_FLOAT_EQ(10, _YGNodeStyleGetMaxHeight(node0));
+  Yoga.nodeCopyStyle(node0, node1);
+  ASSERT_TRUE(Yoga.nodeIsDirty(node0));
+  ASSERT_EQ(Yoga.FlexDirectionRow, Yoga.nodeStyleGetFlexDirection(node0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeStyleGetMaxHeight(node0));
 
-  _YGNodeFree(node0);
-  _YGNodeFree(node1);
+  Yoga.nodeFree(node0);
+  Yoga.nodeFree(node1);
 })();
 
 (function() {
-  const node0 = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(node0, _YGFlexDirectionRow);
-  _YGNodeStyleSetMaxHeight(node0, 10);
-  _YGNodeCalculateLayout(node0, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-  ASSERT_FALSE(_YGNodeIsDirty(node0));
+  const node0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(node0, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetMaxHeight(node0, 10);
+  Yoga.nodeCalculateLayout(node0, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+  ASSERT_FALSE(Yoga.nodeIsDirty(node0));
 
-  const node1 = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(node1, _YGFlexDirectionRow);
-  _YGNodeStyleSetMaxHeight(node1, 10);
+  const node1 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(node1, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetMaxHeight(node1, 10);
 
-  _YGNodeCopyStyle(node0, node1);
-  ASSERT_FALSE(_YGNodeIsDirty(node0));
+  Yoga.nodeCopyStyle(node0, node1);
+  ASSERT_FALSE(Yoga.nodeIsDirty(node0));
 
-  _YGNodeFree(node0);
-  _YGNodeFree(node1);
+  Yoga.nodeFree(node0);
+  Yoga.nodeFree(node1);
 })();

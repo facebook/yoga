@@ -8,66 +8,66 @@
  */
 
 (function() {
-  const root = _YGNodeNew();
+  const root = Yoga.nodeNew();
 
-  ASSERT_EQ(0, _YGNodeGetChildCount(root));
-  ASSERT_EQ(0, _YGNodeGetChild(root, 1));
+  ASSERT_EQ(0, Yoga.nodeGetChildCount(root));
+  ASSERT_EQ(0, Yoga.nodeGetChild(root, 1));
 
-  ASSERT_EQ(_YGDirectionInherit, _YGNodeStyleGetDirection(root));
-  ASSERT_EQ(_YGFlexDirectionColumn, _YGNodeStyleGetFlexDirection(root));
-  ASSERT_EQ(_YGJustifyFlexStart, _YGNodeStyleGetJustifyContent(root));
-  ASSERT_EQ(_YGAlignFlexStart, _YGNodeStyleGetAlignContent(root));
-  ASSERT_EQ(_YGAlignStretch, _YGNodeStyleGetAlignItems(root));
-  ASSERT_EQ(_YGAlignAuto, _YGNodeStyleGetAlignSelf(root));
-  ASSERT_EQ(_YGPositionTypeRelative, _YGNodeStyleGetPositionType(root));
-  ASSERT_EQ(_YGWrapNoWrap, _YGNodeStyleGetFlexWrap(root));
-  ASSERT_EQ(_YGOverflowVisible, _YGNodeStyleGetOverflow(root));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetFlexGrow(root));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetFlexShrink(root));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetFlexBasis(root)));
+  ASSERT_EQ(Yoga.DirectionInherit, Yoga.nodeStyleGetDirection(root));
+  ASSERT_EQ(Yoga.FlexDirectionColumn, Yoga.nodeStyleGetFlexDirection(root));
+  ASSERT_EQ(Yoga.JustifyFlexStart, Yoga.nodeStyleGetJustifyContent(root));
+  ASSERT_EQ(Yoga.AlignFlexStart, Yoga.nodeStyleGetAlignContent(root));
+  ASSERT_EQ(Yoga.AlignStretch, Yoga.nodeStyleGetAlignItems(root));
+  ASSERT_EQ(Yoga.AlignAuto, Yoga.nodeStyleGetAlignSelf(root));
+  ASSERT_EQ(Yoga.PositionTypeRelative, Yoga.nodeStyleGetPositionType(root));
+  ASSERT_EQ(Yoga.WrapNoWrap, Yoga.nodeStyleGetFlexWrap(root));
+  ASSERT_EQ(Yoga.OverflowVisible, Yoga.nodeStyleGetOverflow(root));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetFlexGrow(root));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetFlexShrink(root));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetFlexBasis(root)));
 
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetPosition(root, _YGEdgeLeft)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetPosition(root, _YGEdgeTop)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetPosition(root, _YGEdgeRight)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetPosition(root, _YGEdgeBottom)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetPosition(root, _YGEdgeStart)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetPosition(root, _YGEdgeEnd)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetPosition(root, Yoga.EdgeLeft)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetPosition(root, Yoga.EdgeTop)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetPosition(root, Yoga.EdgeRight)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetPosition(root, Yoga.EdgeBottom)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetPosition(root, Yoga.EdgeStart)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetPosition(root, Yoga.EdgeEnd)));
 
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetMargin(root, _YGEdgeLeft));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetMargin(root, _YGEdgeTop));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetMargin(root, _YGEdgeRight));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetMargin(root, _YGEdgeBottom));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetMargin(root, _YGEdgeStart)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetMargin(root, _YGEdgeEnd)));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetMargin(root, Yoga.EdgeLeft));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetMargin(root, Yoga.EdgeTop));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetMargin(root, Yoga.EdgeRight));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetMargin(root, Yoga.EdgeBottom));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetMargin(root, Yoga.EdgeStart)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetMargin(root, Yoga.EdgeEnd)));
 
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetPadding(root, _YGEdgeLeft));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetPadding(root, _YGEdgeTop));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetPadding(root, _YGEdgeRight));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetPadding(root, _YGEdgeBottom));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetPadding(root, _YGEdgeStart)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetPadding(root, _YGEdgeEnd)));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetPadding(root, Yoga.EdgeLeft));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetPadding(root, Yoga.EdgeTop));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetPadding(root, Yoga.EdgeRight));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetPadding(root, Yoga.EdgeBottom));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetPadding(root, Yoga.EdgeStart)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetPadding(root, Yoga.EdgeEnd)));
 
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetBorder(root, _YGEdgeLeft));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetBorder(root, _YGEdgeTop));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetBorder(root, _YGEdgeRight));
-  ASSERT_FLOAT_EQ(0, _YGNodeStyleGetBorder(root, _YGEdgeBottom));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetBorder(root, _YGEdgeStart)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetBorder(root, _YGEdgeEnd)));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetBorder(root, Yoga.EdgeLeft));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetBorder(root, Yoga.EdgeTop));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetBorder(root, Yoga.EdgeRight));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeStyleGetBorder(root, Yoga.EdgeBottom));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetBorder(root, Yoga.EdgeStart)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetBorder(root, Yoga.EdgeEnd)));
 
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetWidth(root)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetHeight(root)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetMinWidth(root)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetMinHeight(root)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetMaxWidth(root)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeStyleGetMaxHeight(root)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetWidth(root)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetHeight(root)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetMinWidth(root)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetMinHeight(root)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetMaxWidth(root)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeStyleGetMaxHeight(root)));
 
-  ASSERT_FLOAT_EQ(0, _YGNodeLayoutGetLeft(root));
-  ASSERT_FLOAT_EQ(0, _YGNodeLayoutGetTop(root));
-  ASSERT_FLOAT_EQ(0, _YGNodeLayoutGetRight(root));
-  ASSERT_FLOAT_EQ(0, _YGNodeLayoutGetBottom(root));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeLayoutGetWidth(root)));
-  ASSERT_TRUE(_YGValueIsUndefined(_YGNodeLayoutGetHeight(root)));
-  ASSERT_EQ(_YGDirectionInherit, _YGNodeLayoutGetDirection(root));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeLayoutGetRight(root));
+  ASSERT_FLOAT_EQ(0, Yoga.nodeLayoutGetBottom(root));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeLayoutGetWidth(root)));
+  ASSERT_TRUE(Yoga.valueIsUndefined(Yoga.nodeLayoutGetHeight(root)));
+  ASSERT_EQ(Yoga.DirectionInherit, Yoga.nodeLayoutGetDirection(root));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();

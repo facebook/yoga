@@ -9,65 +9,65 @@
 
 var measureCount = 0;
 
-var _measure = Runtime.addFunction(
+var _measure = Yoga.addFunction(
 function (retAddr, node, width, widthMode, height, heightMode) {
   measureCount++;
-  setValue(retAddr + 0, 10, 'float');
-  setValue(retAddr + 4, 10, 'float');
+  Yoga.setValue(retAddr + 0, 10, 'float');
+  Yoga.setValue(retAddr + 4, 10, 'float');
 });
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
   measureCount = 0;
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measure);
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetFlexShrink(root_child0, 1);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measure);
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetFlexShrink(root_child0, 1);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
   ASSERT_EQ(0, measureCount);
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root, _measure);
+  const root = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root, _measure);
 
-  const root_child0 = _YGNodeNew();
+  const root_child0 = Yoga.nodeNew();
   try {
-    ASSERT_DEATH(_YGNodeInsertChild(root, root_child0, 0), "Cannot add child.*");
+    ASSERT_DEATH(Yoga.nodeInsertChild(root, root_child0, 0), "Cannot add child.*");
   } catch (e) {
   }
-  _YGNodeFree(root_child0);
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFree(root_child0);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  const root_child0 = _YGNodeNew();
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root = Yoga.nodeNew();
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
   try {
-    ASSERT_DEATH(_YGNodeSetMeasureFunc(root, _measure), "Cannot set measure function.*");
+    ASSERT_DEATH(Yoga.nodeSetMeasureFunc(root, _measure), "Cannot set measure function.*");
   } catch (e) {
 
   }
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeInsertChild(root, _YGNodeNew(), 0);
+  const root = Yoga.nodeNew();
+  Yoga.nodeInsertChild(root, Yoga.nodeNew(), 0);
 
-  _YGNodeSetMeasureFunc(root, 0);
-  ASSERT_TRUE(_YGNodeGetMeasureFunc(root) === 0);
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeSetMeasureFunc(root, 0);
+  ASSERT_TRUE(Yoga.nodeGetMeasureFunc(root) === 0);
+  Yoga.nodeFreeRecursive(root);
 })();
 

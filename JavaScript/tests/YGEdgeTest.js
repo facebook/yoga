@@ -8,153 +8,153 @@
  */
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeStart, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeLeft, 20);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeRight, 20);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeStart, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeLeft, 20);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeRight, 20);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetRight(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetRight(root_child0));
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionRTL);
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetRight(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionRTL);
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetRight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeEnd, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeLeft, 20);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeRight, 20);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeEnd, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeLeft, 20);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeRight, 20);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetRight(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetRight(root_child0));
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionRTL);
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetRight(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionRTL);
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetRight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionRow);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionRow);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeHorizontal, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeLeft, 20);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeHorizontal, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeLeft, 20);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetRight(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetRight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionColumn);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionColumn);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeVertical, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeTop, 20);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeVertical, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeTop, 20);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetBottom(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetBottom(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionColumn);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionColumn);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeHorizontal, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeAll, 20);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeHorizontal, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeAll, 20);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetRight(root_child0));
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetBottom(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetRight(root_child0));
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetBottom(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionColumn);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionColumn);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeVertical, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeAll, 20);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeVertical, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeAll, 20);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(20, _YGNodeLayoutGetRight(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetBottom(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(20, Yoga.nodeLayoutGetRight(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetBottom(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();
 
 (function() {
-  const root = _YGNodeNew();
-  _YGNodeStyleSetFlexDirection(root, _YGFlexDirectionColumn);
-  _YGNodeStyleSetWidth(root, 100);
-  _YGNodeStyleSetHeight(root, 100);
+  const root = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexDirection(root, Yoga.FlexDirectionColumn);
+  Yoga.nodeStyleSetWidth(root, 100);
+  Yoga.nodeStyleSetHeight(root, 100);
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeStyleSetFlexGrow(root_child0, 1);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeLeft, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeTop, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeRight, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeBottom, 10);
-  _YGNodeStyleSetMargin(root_child0, _YGEdgeAll, 20);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeStyleSetFlexGrow(root_child0, 1);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeLeft, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeTop, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeRight, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeBottom, 10);
+  Yoga.nodeStyleSetMargin(root_child0, Yoga.EdgeAll, 20);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetLeft(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetRight(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetBottom(root_child0));
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetRight(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetBottom(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 })();

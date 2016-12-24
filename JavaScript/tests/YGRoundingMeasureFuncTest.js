@@ -7,54 +7,54 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var _measureFloor = Runtime.addFunction(
+var _measureFloor = Yoga.addFunction(
 function (retAddr, node, width, widthMode, height, heightMode) {
   measureCount++;
-  setValue(retAddr + 0, 10.2, 'float');
-  setValue(retAddr + 4, 10.2, 'float');
+  Yoga.setValue(retAddr + 0, 10.2, 'float');
+  Yoga.setValue(retAddr + 4, 10.2, 'float');
 });
 
-var _measureCeil = Runtime.addFunction(
+var _measureCeil = Yoga.addFunction(
 function (retAddr, node, width, widthMode, height, heightMode) {
   measureCount++;
-  setValue(retAddr + 0, 10.5, 'float');
-  setValue(retAddr + 4, 10.5, 'float');
+  Yoga.setValue(retAddr + 0, 10.5, 'float');
+  Yoga.setValue(retAddr + 4, 10.5, 'float');
 });
 
 (function() {
-  _YGSetExperimentalFeatureEnabled(_YGExperimentalFeatureRounding, true);
+  Yoga.setExperimentalFeatureEnabled(Yoga.ExperimentalFeatureRounding, true);
 
-  const root = _YGNodeNew();
+  const root = Yoga.nodeNew();
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measureFloor);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measureFloor);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_FLOAT_EQ(10, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(10, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 
-  _YGSetExperimentalFeatureEnabled(_YGExperimentalFeatureRounding, false);
+  Yoga.setExperimentalFeatureEnabled(Yoga.ExperimentalFeatureRounding, false);
 })();
 
 (function() {
-  _YGSetExperimentalFeatureEnabled(_YGExperimentalFeatureRounding, true);
+  Yoga.setExperimentalFeatureEnabled(Yoga.ExperimentalFeatureRounding, true);
 
-  const root = _YGNodeNew();
+  const root = Yoga.nodeNew();
 
-  const root_child0 = _YGNodeNew();
-  _YGNodeSetMeasureFunc(root_child0, _measureCeil);
-  _YGNodeInsertChild(root, root_child0, 0);
+  const root_child0 = Yoga.nodeNew();
+  Yoga.nodeSetMeasureFunc(root_child0, _measureCeil);
+  Yoga.nodeInsertChild(root, root_child0, 0);
 
-  _YGNodeCalculateLayout(root, _YGUndefined, _YGUndefined, _YGDirectionLTR);
+  Yoga.nodeCalculateLayout(root, Yoga.Undefined, Yoga.Undefined, Yoga.DirectionLTR);
 
-  ASSERT_FLOAT_EQ(11, _YGNodeLayoutGetWidth(root_child0));
-  ASSERT_FLOAT_EQ(11, _YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(11, Yoga.nodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(11, Yoga.nodeLayoutGetHeight(root_child0));
 
-  _YGNodeFreeRecursive(root);
+  Yoga.nodeFreeRecursive(root);
 
-  _YGSetExperimentalFeatureEnabled(_YGExperimentalFeatureRounding, false);
+  Yoga.setExperimentalFeatureEnabled(Yoga.ExperimentalFeatureRounding, false);
 })();
