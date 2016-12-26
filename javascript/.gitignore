@@ -1,0 +1,9 @@
+node_modules
+
+*.gypi
+!/final-flags.gypi
+
+/build
+/sources/yoga
+
+npm-debug.log*

@@ -1,0 +1,42 @@
+{
+    "name": "yoga-layout",
+
+    "main": "./sources/entry-node",
+    "browser": "./sources/entry-browser",
+
+    "scripts": {
+
+        "env": "env",
+        "autogypi": "autogypi",
+        "node-gyp": "node-gyp",
+        "emcc-path": "emcc-path",
+
+        "build:native": "npm run node-gyp configure build",
+        "build:asmjs": "npm run node-gyp configure build --asmjs=1",
+        "build:all": "npm run build:native && npm run build:asmjs",
+        "build": "npm run build:all",
+
+        "test:native": "TEST_ENTRY=node time mocha tests/**/*.js",
+        "test:asmjs": "TEST_ENTRY=browser time mocha tests/**/*.js",
+        "test:all": "npm run test:native && npm run test:asmjs",
+        "test": "npm run test:all",
+
+        "install": "npm run autogypi && npm run build:native",
+        "prepublish": "rm -rf sources/yoga && cp -r ../yoga sources/ && test -f build/Release/nbind.js"
+
+    },
+
+    "dependencies": {
+
+        "autogypi": "^0.2.2",
+        "nbind": "^0.3.6",
+        "node-gyp": "^3.4.0"
+
+    },
+
+    "devDependencies": {
+
+        "mocha": "^3.2.0"
+
+    }
+}

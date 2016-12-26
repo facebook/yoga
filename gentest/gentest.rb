@@ -47,6 +47,10 @@ Dir['fixtures/*.html'].each do |file|
   f = File.open("../csharp/tests/Facebook.Yoga/#{name}.cs", 'w')
   f.write eval(logs[2].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
+
+  f = File.open("../javascript/tests/Facebook.Yoga/#{name}.js", 'w')
+  f.write eval(logs[3].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
+  f.close
 end
 File.delete('test.html')
 browser.close
