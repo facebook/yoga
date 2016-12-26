@@ -8,7 +8,7 @@
 os: osx
 osx_image: xcode7.3
 language: cpp
-compiler: clang
+compiler: gcc
 
 before_install:
   - brew update
@@ -17,8 +17,30 @@ before_install:
   - brew cask install java
   - brew outdated xctool || brew upgrade xctool
   - brew install mono
+
+    # https://github.com/kripken/emscripten/issues/4682#issuecomment-260159020
+  - export CXX=$(which clang)
+  - git clone https://github.com/juj/emsdk.git /tmp/emsdk && cd /tmp/emsdk
+  - ./emsdk update-tags
+  - ./emsdk install sdk-nightly-latest-64bit >& /dev/null
+  - ./emsdk activate --embedded sdk-nightly-latest-64bit
+  - source /tmp/emsdk/emsdk_env.sh
+  - emcc --clear-cache --clear-ports
+  - source /tmp/emsdk/emsdk_env.sh
+  - python $EMSCRIPTEN/embuilder.py build libc libc-mt dlmalloc libcxx libcxx_noexcept libcxxabi
+  - cd $TRAVIS_BUILD_DIR
+
   - export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
   - export PATH=$JAVA_HOME/bin:$PATH
+
+install:
+  - cd javascript
+  - cp -r ../yoga sources/yoga
+  - npm install
+  - ls -lR node_modules/nbind
+  - (cd node_modules/nbind && npm install)
+  - npm run build:asmjs
+  - cd $TRAVIS_BUILD_DIR
 
 script:
   - buck test //:yoga
@@ -28,3 +50,7 @@ script:
   - buck run //benchmark:benchmark
   - git checkout HEAD^
   - buck run //benchmark:benchmark
+
+  - cd javascript
+  - npm run test:all
+  - cd $TRAVIS_BUILD_DIR
