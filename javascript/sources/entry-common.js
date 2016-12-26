@@ -36,6 +36,10 @@ module.exports = function (bind, lib) {
     constants.JUSTIFY_SPACE_AROUND = 4;
     constants.JUSTIFY_SPACE_BETWEEN = 3;
 
+    constants.MEASURE_MODE_UNDEFINED = 0;
+    constants.MEASURE_MODE_EXACTLY = 1;
+    constants.MEASURE_MODE_AT_MOST = 2;
+
     constants.OVERFLOW_HIDDEN = 1;
     constants.OVERFLOW_VISIBLE = 0;
     constants.OVERFLOW_SCROLL = 2;
@@ -77,7 +81,36 @@ module.exports = function (bind, lib) {
 
     }
 
+    class Size {
+
+        constructor(width, height) {
+
+            this.width = width;
+            this.height = height;
+
+        }
+
+        fromJS(expose) {
+
+            expose(this.width, this.height);
+
+        }
+
+        toString() {
+
+            return `<Size#${this.width}x${this.height}>`;
+
+        }
+
+    }
+
     class Node extends lib.Node {
+
+        calculateLayout(width, height, direction = constants.YGDirectionLTR) {
+
+            return super.calculateLayout(width, height, direction);
+
+        }
 
     }
 

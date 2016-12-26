@@ -1,26 +1,30 @@
 #pragma once
 
+#include <memory>
+
+#include <nbind/api.h>
+#include <nbind/BindDefiner.h>
 #include <yoga/Yoga.h>
 
 #include "./Layout.hh"
+#include "./Size.hh"
 
 class Node {
 
  public:
 
     Node(void);
-    Node(YGNodeRef node);
     Node(Node && other);
 
     ~Node(void);
 
- public:
+ public: // Prevent accidental copy
 
     Node(Node const &) = delete;
 
     Node const & operator=(Node const &) = delete;
 
- public:
+public: // Style setters
 
     void setPositionType(int positionType);
     void setPosition(int edge, double position);
@@ -53,7 +57,7 @@ class Node {
 
     void setPadding(int edge, double padding);
 
- public:
+ public: // Style getters
 
     int getPositionType(void) const;
     double getPosition(int edge) const;
@@ -86,21 +90,31 @@ class Node {
 
     double getPadding(int edge) const;
 
- public:
+ public: // Tree hierarchy mutators
 
-    void insertChild(Node const & child, unsigned index) const;
-    void removeChild(Node const & child) const;
+    void insertChild(Node const & child, unsigned index);
+    void removeChild(Node const & child);
 
- public:
+ public: // Tree hierarchy inspectors
 
     unsigned getChildCount(void) const;
-    Node getChild(unsigned index) const;
 
- public:
+    Node * getChild(unsigned index) const;
 
-    void calculateLayout(double width, double height, int direction = YGDirectionLTR) const;
+ public: // Measure func mutators
 
- public:
+    void setMeasureFunc(nbind::cbFunction & measureFunc);
+    void unsetMeasureFunc(void);
+
+ public: // Measure func inspectors
+
+    Size callMeasureFunc(double width, int widthMode, double height, int heightMode) const;
+
+ public: // Layout mutators
+
+    void calculateLayout(double width, double height, int direction);
+
+ public: // Layout inspectors
 
     double getComputedLeft(void) const;
     double getComputedRight(void) const;
@@ -116,5 +130,7 @@ class Node {
  private:
 
     YGNodeRef m_node;
+
+    std::unique_ptr<nbind::cbFunction> m_measureFunc;
 
 };

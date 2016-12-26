@@ -1,20 +1,31 @@
+#include <algorithm>
+
 #include <yoga/Yoga.h>
 
 #include "./Node.hh"
 #include "./Layout.hh"
+#include "./Size.hh"
+
+static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode)
+{
+    Node const & node = *reinterpret_cast<Node const *>(YGNodeGetContext(nodeRef));
+
+    Size size = node.callMeasureFunc(width, widthMode, height, heightMode);
+    YGSize ygSize = { static_cast<float>(size.width), static_cast<float>(size.height) };
+
+    return ygSize;
+}
 
 Node::Node(void)
 : m_node(YGNodeNew())
+, m_measureFunc(nullptr)
 {
-}
-
-Node::Node(YGNodeRef node)
-: m_node(node)
-{
+    YGNodeSetContext(m_node, reinterpret_cast<void *>(this));
 }
 
 Node::Node(Node && other)
 : m_node(other.m_node)
+, m_measureFunc(std::move(other.m_measureFunc))
 {
 }
 
@@ -233,12 +244,12 @@ double Node::getPadding(int edge) const
     return YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge));
 }
 
-void Node::insertChild(Node const & child, unsigned index) const
+void Node::insertChild(Node const & child, unsigned index)
 {
     YGNodeInsertChild(m_node, child.m_node, index);
 }
 
-void Node::removeChild(Node const & child) const
+void Node::removeChild(Node const & child)
 {
     YGNodeRemoveChild(m_node, child.m_node);
 }
@@ -248,12 +259,31 @@ unsigned Node::getChildCount(void) const
     return YGNodeGetChildCount(m_node);
 }
 
-Node Node::getChild(unsigned index) const
+Node * Node::getChild(unsigned index) const
 {
-    return Node(YGNodeGetChild(m_node, index));
+    return reinterpret_cast<Node *>(YGNodeGetContext(YGNodeGetChild(m_node, index)));
 }
 
-void Node::calculateLayout(double width, double height, int direction) const
+void Node::setMeasureFunc(nbind::cbFunction & measureFunc)
+{
+    m_measureFunc.reset(new nbind::cbFunction(measureFunc));
+
+    YGNodeSetMeasureFunc(m_node, &globalMeasureFunc);
+}
+
+void Node::unsetMeasureFunc(void)
+{
+    m_measureFunc.reset(nullptr);
+
+    YGNodeSetMeasureFunc(m_node, nullptr);
+}
+
+Size Node::callMeasureFunc(double width, int widthMode, double height, int heightMode) const
+{
+    return m_measureFunc->call<Size>(width, widthMode, height, heightMode);
+}
+
+void Node::calculateLayout(double width, double height, int direction)
 {
     YGNodeCalculateLayout(m_node, width, height, static_cast<YGDirection>(direction));
 }
