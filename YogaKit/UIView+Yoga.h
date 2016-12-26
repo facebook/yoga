@@ -8,7 +8,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <yoga/Yoga.h>
+#import <YogaKit/YGEnums.h>
 
 @interface UIView (Yoga)
 

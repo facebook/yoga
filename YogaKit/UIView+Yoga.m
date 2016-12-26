@@ -8,6 +8,7 @@
  */
 
 #import "UIView+Yoga.h"
+#import <YogaKit/Yoga.h>
 
 #import <objc/runtime.h>
 

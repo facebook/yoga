@@ -45,8 +45,8 @@ apple_library(
 apple_test(
   name = 'YogaKitTests',
   compiler_flags = COMPILER_FLAGS,
-  info_plist = 'Tests/Info.plist',
-  srcs = glob(['Tests/**/*.m']),
+  info_plist = 'YogaKitTests/Info.plist',
+  srcs = glob(['YogaKitTests/**/*.m']),
   frameworks = [
     '$SDKROOT/System/Library/Frameworks/CoreGraphics.framework',
     '$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework',
