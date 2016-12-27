@@ -38,6 +38,13 @@ Node::~Node(void)
     }
 }
 
+void Node::reset(void)
+{
+    m_measureFunc.reset(nullptr);
+
+    YGNodeReset(m_node);
+}
+
 void Node::copyStyle(Node const & other)
 {
     YGNodeCopyStyle(m_node, other.m_node);
@@ -141,6 +148,11 @@ void Node::setMaxWidth(double maxWidth)
 void Node::setMaxHeight(double maxHeight)
 {
     YGNodeStyleSetMaxHeight(m_node, maxHeight);
+}
+
+void Node::setAspectRatio(double aspectRatio)
+{
+    YGNodeStyleSetAspectRatio(m_node, aspectRatio);
 }
 
 void Node::setBorder(int edge, double border)
@@ -248,6 +260,11 @@ double Node::getMaxHeight(void) const
     return YGNodeStyleGetMaxHeight(m_node);
 }
 
+double Node::getAspectRatio(void) const
+{
+    return YGNodeStyleGetAspectRatio(m_node);
+}
+
 double Node::getBorder(int edge) const
 {
     return YGNodeStyleGetBorder(m_node, static_cast<YGEdge>(edge));
@@ -273,9 +290,18 @@ unsigned Node::getChildCount(void) const
     return YGNodeGetChildCount(m_node);
 }
 
-Node * Node::getChild(unsigned index) const
+Node * Node::getParent(void)
 {
-    return reinterpret_cast<Node *>(YGNodeGetContext(YGNodeGetChild(m_node, index)));
+    auto nodePtr = YGNodeGetParent(m_node);
+
+    return nodePtr ? reinterpret_cast<Node *>(YGNodeGetContext(nodePtr)) : nullptr;
+}
+
+Node * Node::getChild(unsigned index)
+{
+    auto nodePtr = YGNodeGetChild(m_node, index);
+
+    return nodePtr ? reinterpret_cast<Node *>(YGNodeGetContext(nodePtr)) : nullptr;
 }
 
 void Node::setMeasureFunc(nbind::cbFunction & measureFunc)
@@ -307,9 +333,19 @@ bool Node::isDirty(void) const
     return YGNodeIsDirty(m_node);
 }
 
+void Node::setHasNewLayout(bool hasNewLayout)
+{
+    YGNodeSetHasNewLayout(m_node, hasNewLayout);
+}
+
 void Node::calculateLayout(double width, double height, int direction)
 {
     YGNodeCalculateLayout(m_node, width, height, static_cast<YGDirection>(direction));
+}
+
+bool Node::hasNewLayout(void) const
+{
+    return YGNodeGetHasNewLayout(m_node);
 }
 
 double Node::getComputedLeft(void) const

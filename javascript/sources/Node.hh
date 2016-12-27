@@ -24,6 +24,10 @@ class Node {
 
     Node const & operator=(Node const &) = delete;
 
+ public:
+
+    void reset(void);
+
  public: // Style setters
 
     void copyStyle(Node const & other);
@@ -55,6 +59,8 @@ class Node {
 
     void setMaxWidth(double maxWidth);
     void setMaxHeight(double maxHeight);
+
+    void setAspectRatio(double aspectRatio);
 
     void setBorder(int edge, double border);
 
@@ -89,6 +95,8 @@ class Node {
     double getMaxWidth(void) const;
     double getMaxHeight(void) const;
 
+    double getAspectRatio(void) const;
+
     double getBorder(int edge) const;
 
     double getPadding(int edge) const;
@@ -102,7 +110,10 @@ class Node {
 
     unsigned getChildCount(void) const;
 
-    Node * getChild(unsigned index) const;
+    // The following functions cannot be const because they could discard const qualifiers (ex: constNode->getChild(0)->getParent() wouldn't be const)
+
+    Node * getParent(void);
+    Node * getChild(unsigned index);
 
  public: // Measure func mutators
 
@@ -120,9 +131,13 @@ class Node {
 
  public: // Layout mutators
 
+    void setHasNewLayout(bool hasNewLayout);
+
     void calculateLayout(double width, double height, int direction);
 
  public: // Layout inspectors
+
+    bool hasNewLayout(void) const;
 
     double getComputedLeft(void) const;
     double getComputedRight(void) const;

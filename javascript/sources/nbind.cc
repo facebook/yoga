@@ -28,6 +28,8 @@ NBIND_CLASS(Node)
 {
     construct<>();
 
+    method(reset);
+
     method(copyStyle);
 
     method(setPositionType);
@@ -58,6 +60,8 @@ NBIND_CLASS(Node)
     method(setMaxWidth);
     method(setMaxHeight);
 
+    method(setAspectRatio);
+
     method(setBorder);
 
     method(setPadding);
@@ -87,6 +91,8 @@ NBIND_CLASS(Node)
     method(getMaxWidth);
     method(getMaxHeight);
 
+    method(getAspectRatio);
+
     method(getBorder);
 
     method(getPadding);
@@ -95,6 +101,8 @@ NBIND_CLASS(Node)
     method(removeChild);
 
     method(getChildCount);
+
+    method(getParent);
     method(getChild);
 
     method(setMeasureFunc);
@@ -102,6 +110,9 @@ NBIND_CLASS(Node)
 
     method(markDirty);
     method(isDirty);
+
+    method(setHasNewLayout);
+    method(hasNewLayout);
 
     method(calculateLayout);
 
