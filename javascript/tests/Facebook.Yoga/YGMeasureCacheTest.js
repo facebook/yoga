@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var Yoga = require("../../sources/entry-" + process.env.TEST_ENTRY);
+var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("measure_once_single_flexible_child", function () {
     var root = new Yoga.Node();

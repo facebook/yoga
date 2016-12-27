@@ -1,6 +1,7 @@
-var Yoga = require("../sources/entry-" + process.env.TEST_ENTRY);
+var Yoga = Yoga || require("../sources/entry-" + process.env.TEST_ENTRY);
+var target = typeof global !== "undefined" ? global : window;
 
-global.getMeasureCounter = function (cb, staticWidth, staticHeight) {
+target.getMeasureCounter = function (cb, staticWidth, staticHeight) {
 
     var counter = 0;
 
@@ -24,7 +25,7 @@ global.getMeasureCounter = function (cb, staticWidth, staticHeight) {
 
 }
 
-global.getMeasureCounterMax = function () {
+target.getMeasureCounterMax = function () {
 
     return getMeasureCounter(function (width, widthMode, height, heightMode) {
 
@@ -37,7 +38,7 @@ global.getMeasureCounterMax = function () {
 
 };
 
-global.getMeasureCounterMin = function () {
+target.getMeasureCounterMin = function () {
 
     return getMeasureCounter(function (width, widthMode, height, heightMode) {
 

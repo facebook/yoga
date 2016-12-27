@@ -83,6 +83,12 @@ module.exports = function (bind, lib) {
 
     class Size {
 
+        static fromJS({ width, height }) {
+
+            return new Size(width, height);
+
+        }
+
         constructor(width, height) {
 
             this.width = width;
@@ -109,7 +115,7 @@ module.exports = function (bind, lib) {
         setMeasureFunc(measureFunc) {
 
             if (measureFunc) {
-                return super.setMeasureFunc(measureFunc);
+                return super.setMeasureFunc((... args) => Size.fromJS(measureFunc(... args)));
             } else {
                 return super.unsetMeasureFunc();
             }

@@ -28,7 +28,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue:{value:function() {
     this.push([
-      'var Yoga = require("../../sources/entry-" + process.env.TEST_ENTRY);',
+      'var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);',
       ''
     ]);
   }},
@@ -62,6 +62,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitEpilogue:{value:function () {
+    this.push('');
   }},
 
   AssertEQ:{value:function(v0, v1) {

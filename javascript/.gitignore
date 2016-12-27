@@ -3,6 +3,7 @@ node_modules
 *.gypi
 !/final-flags.gypi
 
+/dist
 /build
 /sources/yoga
 

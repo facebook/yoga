@@ -1,18 +1,4 @@
-var nbind = null;
-
-try {
-
-    nbind = require('../build/Release/nbind.js');
-
-} catch (err) {
-
-    try {
-        nbind = require('../build/Debug/nbind.js');
-    } catch (err2) {
-        throw err;
-    }
-
-}
+var nbind = require('../build/Release/nbind.js');
 
 var ran = false;
 var ret = null;
