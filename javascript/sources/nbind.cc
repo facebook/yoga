@@ -2,6 +2,7 @@
 
 #include "./Node.hh"
 #include "./Layout.hh"
+#include "./Size.hh"
 #include "./global.hh"
 
 #include <nbind/nbind.h>
@@ -12,6 +13,12 @@ NBIND_GLOBAL()
     function(isExperimentalFeatureEnabled);
 }
 
+NBIND_CLASS(Size)
+{
+    construct<>();
+    construct<double, double>();
+}
+
 NBIND_CLASS(Layout)
 {
     construct<>();
@@ -20,6 +27,8 @@ NBIND_CLASS(Layout)
 NBIND_CLASS(Node)
 {
     construct<>();
+
+    method(copyStyle);
 
     method(setPositionType);
     method(setPosition);
@@ -35,6 +44,7 @@ NBIND_CLASS(Node)
 
     method(setOverflow);
 
+    method(setFlex);
     method(setFlexBasis);
     method(setFlexGrow);
     method(setFlexShrink);
@@ -86,6 +96,12 @@ NBIND_CLASS(Node)
 
     method(getChildCount);
     method(getChild);
+
+    method(setMeasureFunc);
+    method(unsetMeasureFunc);
+
+    method(markDirty);
+    method(isDirty);
 
     method(calculateLayout);
 

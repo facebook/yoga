@@ -31,7 +31,16 @@ Node::Node(Node && other)
 
 Node::~Node(void)
 {
-    YGNodeFree(m_node);
+    auto childCount = this->getChildCount();
+
+    for (auto t = 0u; t < childCount; ++t) {
+        delete this->getChild(t);
+    }
+}
+
+void Node::copyStyle(Node const & other)
+{
+    YGNodeCopyStyle(m_node, other.m_node);
 }
 
 void Node::setPositionType(int positionType)
@@ -82,6 +91,11 @@ void Node::setMargin(int edge, double margin)
 void Node::setOverflow(int overflow)
 {
     YGNodeStyleSetOverflow(m_node, static_cast<YGOverflow>(overflow));
+}
+
+void Node::setFlex(double flex)
+{
+    YGNodeStyleSetFlex(m_node, flex);
 }
 
 void Node::setFlexBasis(double flexBasis)
@@ -281,6 +295,16 @@ void Node::unsetMeasureFunc(void)
 Size Node::callMeasureFunc(double width, int widthMode, double height, int heightMode) const
 {
     return m_measureFunc->call<Size>(width, widthMode, height, heightMode);
+}
+
+void Node::markDirty(void)
+{
+    YGNodeMarkDirty(m_node);
+}
+
+bool Node::isDirty(void) const
+{
+    return YGNodeIsDirty(m_node);
 }
 
 void Node::calculateLayout(double width, double height, int direction)

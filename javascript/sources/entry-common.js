@@ -106,6 +106,16 @@ module.exports = function (bind, lib) {
 
     class Node extends lib.Node {
 
+        setMeasureFunc(measureFunc) {
+
+            if (measureFunc) {
+                return super.setMeasureFunc(measureFunc);
+            } else {
+                return super.unsetMeasureFunc();
+            }
+
+        }
+
         calculateLayout(width, height, direction = constants.YGDirectionLTR) {
 
             return super.calculateLayout(width, height, direction);
@@ -127,7 +137,8 @@ module.exports = function (bind, lib) {
     }
 
     bind(`Layout`, Layout);
+    bind(`Size`, Size);
 
-    return Object.assign({ Layout, Node, setExperimentalFeatureEnabled, isExperimentalFeatureEnabled }, constants);
+    return Object.assign({ Layout, Node, Size, setExperimentalFeatureEnabled, isExperimentalFeatureEnabled }, constants);
 
 };

@@ -24,7 +24,9 @@ class Node {
 
     Node const & operator=(Node const &) = delete;
 
-public: // Style setters
+ public: // Style setters
+
+    void copyStyle(Node const & other);
 
     void setPositionType(int positionType);
     void setPosition(int edge, double position);
@@ -40,6 +42,7 @@ public: // Style setters
 
     void setOverflow(int overflow);
 
+    void setFlex(double flex);
     void setFlexBasis(double flexBasis);
     void setFlexGrow(double flexGrow);
     void setFlexShrink(double flexShrink);
@@ -109,6 +112,11 @@ public: // Style setters
  public: // Measure func inspectors
 
     Size callMeasureFunc(double width, int widthMode, double height, int heightMode) const;
+
+ public: // Dirtiness accessors
+
+    void markDirty(void);
+    bool isDirty(void) const;
 
  public: // Layout mutators
 
