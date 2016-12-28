@@ -29,7 +29,7 @@
     "dependencies": {
 
         "autogypi": "^0.2.2",
-        "nbind": "arcanis/nbind",
+        "nbind": "^0.3.8",
         "node-gyp": "^3.4.0"
 
     },
