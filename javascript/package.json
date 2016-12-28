@@ -1,28 +1,32 @@
 {
     "name": "yoga-layout",
+    "version": "1.0.0",
 
     "main": "./sources/entry-node",
     "browser": "./sources/entry-browser",
 
     "scripts": {
 
+        "which": "which",
         "autogypi": "autogypi",
         "node-gyp": "node-gyp",
         "emcc-path": "emcc-path",
 
-        "build:native": "npm run node-gyp configure build",
-        "build:asmjs": "npm run node-gyp configure build --asmjs=1",
+        "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
+        "copy-sources": "! npm -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
+
+        "build:native": "npm -- run copy-sources && npm -- run node-gyp configure build",
+        "build:asmjs": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1",
         "build:browser": "webpack",
-        "build:all": "npm run build:native && npm run build:asmjs && npm run build:browser",
-        "build": "npm run build:all",
+        "build:all": "npm -- run build:native && npm -- run build:asmjs && npm -- run build:browser",
+        "build": "npm -- run build:all",
 
         "test:native": "TEST_ENTRY=node time mocha -r tests/tools.js tests/Facebook.Yoga/**/*.js",
         "test:asmjs": "TEST_ENTRY=browser time mocha -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-        "test:all": "npm run test:native && npm run test:asmjs",
-        "test": "npm run test:all",
+        "test:all": "npm -- run test:native && npm -- run test:asmjs",
+        "test": "npm -- run test:all",
 
-        "install": "npm run autogypi && npm run build:native",
-        "prepublish": "! test -d ../javascript || (rm -rf sources/yoga && cp -r ../yoga sources/)"
+        "install": "npm -- run autogypi && npm -- run build:native"
 
     },
 
