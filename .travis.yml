@@ -28,3 +28,4 @@ script:
   - buck run //benchmark:benchmark
   - git checkout HEAD^
   - buck run //benchmark:benchmark
+  - cd YogaKit && pod lib lint
