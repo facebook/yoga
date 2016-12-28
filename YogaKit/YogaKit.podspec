@@ -5,7 +5,7 @@ Pod::Spec.new do |spec|
   spec.homepage             = 'https://facebook.github.io/yoga/'
   spec.authors              = {
                               'Emil Sjölander'      => 'sjolander.emil@gmail.com',
-                              'Dustin Shahidehpour' => 'email@email.com'
+                              'Dustin Shahidehpour' => 'dshahidehpour@gmail.com'
                             }
   spec.summary              = 'Yoga is a cross-platform layout engine which implements Flexbox.'
   spec.description          = <<-DESC
