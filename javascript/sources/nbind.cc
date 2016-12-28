@@ -26,6 +26,8 @@ NBIND_CLASS(Layout)
 
 NBIND_CLASS(Node)
 {
+    method(makeNode);
+
     construct<>();
 
     method(reset);

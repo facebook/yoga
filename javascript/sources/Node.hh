@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include <memory>
 
 #include <nbind/api.h>
@@ -13,8 +14,19 @@ class Node {
 
  public:
 
+    static std::shared_ptr<Node> makeNode(void) {
+
+        auto node = std::make_shared<Node>();
+
+        node->m_self = node;
+
+        return node;
+
+    }
+
+ public:
+
     Node(void);
-    Node(Node && other);
 
     ~Node(void);
 
@@ -103,8 +115,8 @@ class Node {
 
  public: // Tree hierarchy mutators
 
-    void insertChild(Node const & child, unsigned index);
-    void removeChild(Node const & child);
+    void insertChild(std::shared_ptr<Node> child, unsigned index);
+    void removeChild(std::shared_ptr<Node> child);
 
  public: // Tree hierarchy inspectors
 
@@ -112,8 +124,8 @@ class Node {
 
     // The following functions cannot be const because they could discard const qualifiers (ex: constNode->getChild(0)->getParent() wouldn't be const)
 
-    Node * getParent(void);
-    Node * getChild(unsigned index);
+    std::shared_ptr<Node> getParent(void);
+    std::shared_ptr<Node> getChild(unsigned index);
 
  public: // Measure func mutators
 
@@ -152,7 +164,12 @@ class Node {
 
  private:
 
+    std::weak_ptr<Node> m_self;
+
     YGNodeRef m_node;
+
+    std::shared_ptr<Node> m_parentNode;
+    std::list<std::shared_ptr<Node>> m_childNodes;
 
     std::unique_ptr<nbind::cbFunction> m_measureFunc;
 

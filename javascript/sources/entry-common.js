@@ -145,6 +145,6 @@ module.exports = function (bind, lib) {
     bind(`Layout`, Layout);
     bind(`Size`, Size);
 
-    return Object.assign({ Layout, Node, Size, setExperimentalFeatureEnabled, isExperimentalFeatureEnabled }, constants);
+    return Object.assign({ Layout, Node: function() { return Node.makeNode(); }, Size, setExperimentalFeatureEnabled, isExperimentalFeatureEnabled }, constants);
 
 };

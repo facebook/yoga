@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <memory>
 
 #include <yoga/Yoga.h>
 
@@ -17,29 +18,25 @@ static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode wi
 }
 
 Node::Node(void)
-: m_node(YGNodeNew())
+: m_self()
+, m_node(YGNodeNew())
+, m_parentNode()
+, m_childNodes{}
 , m_measureFunc(nullptr)
 {
     YGNodeSetContext(m_node, reinterpret_cast<void *>(this));
 }
 
-Node::Node(Node && other)
-: m_node(other.m_node)
-, m_measureFunc(std::move(other.m_measureFunc))
-{
-}
-
 Node::~Node(void)
 {
-    auto childCount = this->getChildCount();
-
-    for (auto t = 0u; t < childCount; ++t) {
-        delete this->getChild(t);
-    }
+    YGNodeFree(m_node);
 }
 
 void Node::reset(void)
 {
+    m_parentNode.reset();
+    m_childNodes.clear();
+
     m_measureFunc.reset(nullptr);
 
     YGNodeReset(m_node);
@@ -275,14 +272,25 @@ double Node::getPadding(int edge) const
     return YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge));
 }
 
-void Node::insertChild(Node const & child, unsigned index)
+void Node::insertChild(std::shared_ptr<Node> child, unsigned index)
 {
-    YGNodeInsertChild(m_node, child.m_node, index);
+    YGNodeInsertChild(m_node, child->m_node, index);
+
+    child->m_parentNode = m_self.lock();
+    m_childNodes.insert(std::next(m_childNodes.begin(), index), child);
 }
 
-void Node::removeChild(Node const & child)
+void Node::removeChild(std::shared_ptr<Node> child)
 {
-    YGNodeRemoveChild(m_node, child.m_node);
+    auto it = std::find(m_childNodes.begin(), m_childNodes.end(), child);
+
+    if (it == m_childNodes.end())
+        return;
+
+    child->m_parentNode.reset();
+    m_childNodes.erase(it);
+
+    YGNodeRemoveChild(m_node, child->m_node);
 }
 
 unsigned Node::getChildCount(void) const
@@ -290,18 +298,17 @@ unsigned Node::getChildCount(void) const
     return YGNodeGetChildCount(m_node);
 }
 
-Node * Node::getParent(void)
+std::shared_ptr<Node> Node::getParent(void)
 {
-    auto nodePtr = YGNodeGetParent(m_node);
-
-    return nodePtr ? reinterpret_cast<Node *>(YGNodeGetContext(nodePtr)) : nullptr;
+    return m_parentNode;
 }
 
-Node * Node::getChild(unsigned index)
+std::shared_ptr<Node> Node::getChild(unsigned index)
 {
-    auto nodePtr = YGNodeGetChild(m_node, index);
+    if (index >= this->getChildCount())
+        return std::shared_ptr<Node>();
 
-    return nodePtr ? reinterpret_cast<Node *>(YGNodeGetContext(nodePtr)) : nullptr;
+    return *std::next(m_childNodes.begin(), index);
 }
 
 void Node::setMeasureFunc(nbind::cbFunction & measureFunc)
