@@ -46,17 +46,29 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
     this.push('(function () {');
     this.pushIndent();
+    this.push('var allocated = [];');
+    this.push('');
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
     this.push('var ' + nodeName + ' = new Yoga.Node();');
+
+    if (nodeName !== 'root') {
+      this.push('allocated.push(' + nodeName + ');');
+    }
   }},
 
   emitTestEpilogue:{value:function(experiments) {
     this.push('');
-    this.push('if (typeof root !== "undefined") {');
+    this.push('if (typeof root !== "undefined")');
     this.pushIndent();
     this.push('root.freeRecursive();');
+    this.popIndent();
+
+    this.push('');
+    this.push('for (var t = 0; t < allocated.length; ++t) {');
+    this.pushIndent();
+    this.push('allocated[t].release();');
     this.popIndent();
     this.push('}');
 
@@ -64,12 +76,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('}());');
 
     this.push('');
-    this.push('if (typeof gc !== "undefined") {');
-    this.pushIndent();
-    this.push('gc();');
+    this.push('(typeof gc !== "undefined") && gc();');
     this.AssertEQ('0', 'Yoga.getInstanceCount()');
-    this.popIndent();
-    this.push('}');
 
     if (experiments.length > 0) {
       this.push('');

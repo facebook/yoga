@@ -13,12 +13,15 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("margin_start", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setMargin(Yoga.EDGE_START, 10);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
@@ -46,23 +49,27 @@ it("margin_start", function () {
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(100 === root_child0.getComputedHeight(), "100 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_top", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setMargin(Yoga.EDGE_TOP, 10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -90,18 +97,21 @@ it("margin_top", function () {
     console.assert(100 === root_child0.getComputedWidth(), "100 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_end", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
@@ -109,6 +119,7 @@ it("margin_end", function () {
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setMargin(Yoga.EDGE_END, 10);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
@@ -136,24 +147,28 @@ it("margin_end", function () {
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(100 === root_child0.getComputedHeight(), "100 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_bottom", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setMargin(Yoga.EDGE_BOTTOM, 10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -181,24 +196,28 @@ it("margin_bottom", function () {
     console.assert(100 === root_child0.getComputedWidth(), "100 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_and_flex_row", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_START, 10);
     root.insertChild(root_child0, 0);
@@ -226,23 +245,27 @@ it("margin_and_flex_row", function () {
     console.assert(90 === root_child0.getComputedWidth(), "90 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(100 === root_child0.getComputedHeight(), "100 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_and_flex_column", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_TOP, 10);
     root.insertChild(root_child0, 0);
@@ -270,24 +293,28 @@ it("margin_and_flex_column", function () {
     console.assert(100 === root_child0.getComputedWidth(), "100 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(90 === root_child0.getComputedHeight(), "90 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_and_stretch_row", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_TOP, 10);
     root.insertChild(root_child0, 0);
@@ -315,23 +342,27 @@ it("margin_and_stretch_row", function () {
     console.assert(100 === root_child0.getComputedWidth(), "100 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(90 === root_child0.getComputedHeight(), "90 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_and_stretch_column", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_START, 10);
     root.insertChild(root_child0, 0);
@@ -359,28 +390,33 @@ it("margin_and_stretch_column", function () {
     console.assert(90 === root_child0.getComputedWidth(), "90 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(100 === root_child0.getComputedHeight(), "100 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_with_sibling_row", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setFlexGrow(1);
     root.insertChild(root_child0, 0);
 
     var root_child1 = new Yoga.Node();
+    allocated.push(root_child1);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -417,27 +453,32 @@ it("margin_with_sibling_row", function () {
     console.assert(50 === root_child1.getComputedWidth(), "50 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(100 === root_child1.getComputedHeight(), "100 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("margin_with_sibling_column", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setFlexGrow(1);
     root.insertChild(root_child0, 0);
 
     var root_child1 = new Yoga.Node();
+    allocated.push(root_child1);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -474,13 +515,14 @@ it("margin_with_sibling_column", function () {
     console.assert(100 === root_child1.getComputedWidth(), "100 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(50 === root_child1.getComputedHeight(), "50 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });

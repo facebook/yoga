@@ -5,6 +5,8 @@
 #include "./Size.hh"
 #include "./global.hh"
 
+#define NBIND_DUPLICATE_POINTERS true
+
 #include <nbind/nbind.h>
 
 NBIND_GLOBAL()

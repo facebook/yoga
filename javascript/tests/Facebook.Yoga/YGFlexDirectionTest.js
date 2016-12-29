@@ -13,18 +13,23 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("flex_direction_column_no_height", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setWidth(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
 
     var root_child1 = new Yoga.Node();
+    allocated.push(root_child1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
     var root_child2 = new Yoga.Node();
+    allocated.push(root_child2);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -71,31 +76,37 @@ it("flex_direction_column_no_height", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("flex_direction_row_no_width", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
 
     var root_child1 = new Yoga.Node();
+    allocated.push(root_child1);
     root_child1.setWidth(10);
     root.insertChild(root_child1, 1);
 
     var root_child2 = new Yoga.Node();
+    allocated.push(root_child2);
     root_child2.setWidth(10);
     root.insertChild(root_child2, 2);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -142,31 +153,37 @@ it("flex_direction_row_no_width", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("flex_direction_column", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
 
     var root_child1 = new Yoga.Node();
+    allocated.push(root_child1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
     var root_child2 = new Yoga.Node();
+    allocated.push(root_child2);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -213,32 +230,38 @@ it("flex_direction_column", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("flex_direction_row", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
 
     var root_child1 = new Yoga.Node();
+    allocated.push(root_child1);
     root_child1.setWidth(10);
     root.insertChild(root_child1, 1);
 
     var root_child2 = new Yoga.Node();
+    allocated.push(root_child2);
     root_child2.setWidth(10);
     root.insertChild(root_child2, 2);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -285,32 +308,38 @@ it("flex_direction_row", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("flex_direction_column_reverse", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_COLUMN_REVERSE);
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
 
     var root_child1 = new Yoga.Node();
+    allocated.push(root_child1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
     var root_child2 = new Yoga.Node();
+    allocated.push(root_child2);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -357,32 +386,38 @@ it("flex_direction_column_reverse", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
 it("flex_direction_row_reverse", function () {
   (function () {
+    var allocated = [];
+
     var root = new Yoga.Node();
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW_REVERSE);
     root.setWidth(100);
     root.setHeight(100);
 
     var root_child0 = new Yoga.Node();
+    allocated.push(root_child0);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
 
     var root_child1 = new Yoga.Node();
+    allocated.push(root_child1);
     root_child1.setWidth(10);
     root.insertChild(root_child1, 1);
 
     var root_child2 = new Yoga.Node();
+    allocated.push(root_child2);
     root_child2.setWidth(10);
     root.insertChild(root_child2, 2);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -429,13 +464,14 @@ it("flex_direction_row_reverse", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
 
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
+
+    for (var t = 0; t < allocated.length; ++t) {
+      allocated[t].release();
     }
   }());
 
-  if (typeof gc !== "undefined") {
-    gc();
-    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
-  }
+  (typeof gc !== "undefined") && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
