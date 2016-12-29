@@ -124,20 +124,26 @@ module.exports = function (bind, lib) {
 
         // We do this because we need to return a shared_ptr instead of a raw instance so that we can prevent it from being garbage collected too soon
 
-        return lib.Node.makeNode();
-
+        return makeSharedNode();
 
     }
+
+    lib.Node.prototype.release = lib.Node.prototype.free;
 
     patch(lib.Node.prototype, `free`, function (original) {
 
         let parent = this.getParent();
 
-        if (parent)
+        if (parent) {
             parent.removeChild(this);
+            parent.release();
+        }
 
-        for (let t = this.getChildCount() - 1; t >= 0; --t)
-            this.removeChild(this.getChild(t));
+        for (let t = this.getChildCount() - 1; t >= 0; --t) {
+            let child = this.getChild(t);
+            this.removeChild(child);
+            child.release();
+        }
 
         return original.call(this);
 
@@ -145,8 +151,16 @@ module.exports = function (bind, lib) {
 
     patch(lib.Node.prototype, `freeRecursive`, function () {
 
-        for (let t = this.getChildCount() - 1; t >= 0; --t)
-            this.getChild(t).freeRecursive();
+        let children = [];
+
+        for (let t = this.getChildCount() - 1; t >= 0; --t) {
+
+            let child = this.getChild(t);
+            this.removeChild(child);
+
+            child.freeRecursive();
+
+        }
 
         this.free();
 
@@ -186,6 +200,12 @@ module.exports = function (bind, lib) {
 
     }
 
+    function makeSharedNode() {
+
+        return lib.Node.makeNode();
+
+    }
+
     bind(`Layout`, Layout);
     bind(`Size`, Size);
 
@@ -197,6 +217,7 @@ module.exports = function (bind, lib) {
 
         setExperimentalFeatureEnabled,
         isExperimentalFeatureEnabled,
+        makeSharedNode,
         getInstanceCount
 
     }, constants);
