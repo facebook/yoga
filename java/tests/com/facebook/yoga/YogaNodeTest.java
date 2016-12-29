@@ -41,6 +41,60 @@ public class YogaNodeTest {
     assertEquals(100, (int) node.getLayoutHeight());
   }
 
+  @Test
+  public void testMeasureFloat() {
+    final YogaNode node = new YogaNode();
+    node.setMeasureFunction(new YogaMeasureFunction() {
+        public long measure(
+            YogaNodeAPI node,
+            float width,
+            YogaMeasureMode widthMode,
+            float height,
+            YogaMeasureMode heightMode) {
+          return YogaMeasureOutput.make(100.5f, 100.5f);
+        }
+    });
+    node.calculateLayout();
+    assertEquals(100.5f, node.getLayoutWidth(), 0.0f);
+    assertEquals(100.5f, node.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
+  public void testMeasureFloatMin() {
+    final YogaNode node = new YogaNode();
+    node.setMeasureFunction(new YogaMeasureFunction() {
+        public long measure(
+            YogaNodeAPI node,
+            float width,
+            YogaMeasureMode widthMode,
+            float height,
+            YogaMeasureMode heightMode) {
+          return YogaMeasureOutput.make(Float.MIN_VALUE, Float.MIN_VALUE);
+        }
+    });
+    node.calculateLayout();
+    assertEquals(Float.MIN_VALUE, node.getLayoutWidth(), 0.0f);
+    assertEquals(Float.MIN_VALUE, node.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
+  public void testMeasureFloatMax() {
+    final YogaNode node = new YogaNode();
+    node.setMeasureFunction(new YogaMeasureFunction() {
+        public long measure(
+            YogaNodeAPI node,
+            float width,
+            YogaMeasureMode widthMode,
+            float height,
+            YogaMeasureMode heightMode) {
+          return YogaMeasureOutput.make(Float.MAX_VALUE, Float.MAX_VALUE);
+        }
+    });
+    node.calculateLayout();
+    assertEquals(Float.MAX_VALUE, node.getLayoutWidth(), 0.0f);
+    assertEquals(Float.MAX_VALUE, node.getLayoutHeight(), 0.0f);
+  }
+
   private YogaLogLevel mLogLevel;
   private String mLogMessage;
 
