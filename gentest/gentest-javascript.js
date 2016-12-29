@@ -43,19 +43,10 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
       }
       this.push('');
     }
-
-    this.push('(function () {');
-    this.pushIndent();
-    this.push('var allocated = [];');
-    this.push('');
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('var ' + nodeName + ' = new Yoga.Node();');
-
-    if (nodeName !== 'root') {
-      this.push('allocated.push(' + nodeName + ');');
-    }
+    this.push('var ' + nodeName + ' = Yoga.Node.create();');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
@@ -64,16 +55,6 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     this.pushIndent();
     this.push('root.freeRecursive();');
     this.popIndent();
-
-    this.push('');
-    this.push('for (var t = 0; t < allocated.length; ++t) {');
-    this.pushIndent();
-    this.push('allocated[t].release();');
-    this.popIndent();
-    this.push('}');
-
-    this.popIndent();
-    this.push('}());');
 
     this.push('');
     this.push('(typeof gc !== "undefined") && gc();');

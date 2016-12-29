@@ -29,9 +29,8 @@ NBIND_CLASS(Layout)
 
 NBIND_CLASS(Node)
 {
-    method(makeNode);
-
-    construct<>();
+    method(create);
+    method(destroy);
 
     method(reset);
 
@@ -115,9 +114,6 @@ NBIND_CLASS(Node)
 
     method(markDirty);
     method(isDirty);
-
-    method(setHasNewLayout);
-    method(hasNewLayout);
 
     method(calculateLayout);
 

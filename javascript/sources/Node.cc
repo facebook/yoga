@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <memory>
 
 #include <yoga/Yoga.h>
 
@@ -17,11 +16,23 @@ static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode wi
     return ygSize;
 }
 
+/* static */ Node * Node::create(void)
+{
+    return new Node();
+}
+
+/* static */ void Node::destroy(Node * node)
+{
+    delete node;
+}
+
+/* static */ Node * Node::fromYGNode(YGNodeRef nodeRef)
+{
+    return reinterpret_cast<Node *>(YGNodeGetContext(nodeRef));
+}
+
 Node::Node(void)
-: m_self()
-, m_node(YGNodeNew())
-, m_parentNode()
-, m_childNodes{}
+: m_node(YGNodeNew())
 , m_measureFunc(nullptr)
 {
     YGNodeSetContext(m_node, reinterpret_cast<void *>(this));
@@ -34,9 +45,6 @@ Node::~Node(void)
 
 void Node::reset(void)
 {
-    m_parentNode.reset();
-    m_childNodes.clear();
-
     m_measureFunc.reset(nullptr);
 
     YGNodeReset(m_node);
@@ -272,24 +280,13 @@ double Node::getPadding(int edge) const
     return YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge));
 }
 
-void Node::insertChild(std::shared_ptr<Node> child, unsigned index)
+void Node::insertChild(Node * child, unsigned index)
 {
     YGNodeInsertChild(m_node, child->m_node, index);
-
-    child->m_parentNode = m_self.lock();
-    m_childNodes.insert(std::next(m_childNodes.begin(), index), child);
 }
 
-void Node::removeChild(std::shared_ptr<Node> child)
+void Node::removeChild(Node * child)
 {
-    auto it = std::find(m_childNodes.begin(), m_childNodes.end(), child);
-
-    if (it == m_childNodes.end())
-        return;
-
-    child->m_parentNode.reset();
-    m_childNodes.erase(it);
-
     YGNodeRemoveChild(m_node, child->m_node);
 }
 
@@ -298,17 +295,24 @@ unsigned Node::getChildCount(void) const
     return YGNodeGetChildCount(m_node);
 }
 
-std::shared_ptr<Node> Node::getParent(void)
+Node * Node::getParent(void)
 {
-    return m_parentNode;
+    auto nodePtr = YGNodeGetParent(m_node);
+
+    if (nodePtr == nullptr)
+        return nullptr;
+
+    return Node::fromYGNode(nodePtr);
 }
 
-std::shared_ptr<Node> Node::getChild(unsigned index)
+Node * Node::getChild(unsigned index)
 {
-    if (index >= this->getChildCount())
-        return std::shared_ptr<Node>();
+    auto nodePtr = YGNodeGetChild(m_node, index);
 
-    return *std::next(m_childNodes.begin(), index);
+    if (nodePtr == nullptr)
+        return nullptr;
+
+    return Node::fromYGNode(nodePtr);
 }
 
 void Node::setMeasureFunc(nbind::cbFunction & measureFunc)
@@ -340,19 +344,9 @@ bool Node::isDirty(void) const
     return YGNodeIsDirty(m_node);
 }
 
-void Node::setHasNewLayout(bool hasNewLayout)
-{
-    YGNodeSetHasNewLayout(m_node, hasNewLayout);
-}
-
 void Node::calculateLayout(double width, double height, int direction)
 {
     YGNodeCalculateLayout(m_node, width, height, static_cast<YGDirection>(direction));
-}
-
-bool Node::hasNewLayout(void) const
-{
-    return YGNodeGetHasNewLayout(m_node);
 }
 
 double Node::getComputedLeft(void) const

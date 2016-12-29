@@ -120,47 +120,16 @@ module.exports = function (bind, lib) {
 
     }
 
-    function Node() {
+    patch(lib.Node.prototype, `free`, function () {
 
-        // We do this because we need to return a shared_ptr instead of a raw instance so that we can prevent it from being garbage collected too soon
-
-        return makeSharedNode();
-
-    }
-
-    lib.Node.prototype.release = lib.Node.prototype.free;
-
-    patch(lib.Node.prototype, `free`, function (original) {
-
-        let parent = this.getParent();
-
-        if (parent) {
-            parent.removeChild(this);
-            parent.release();
-        }
-
-        for (let t = this.getChildCount() - 1; t >= 0; --t) {
-            let child = this.getChild(t);
-            this.removeChild(child);
-            child.release();
-        }
-
-        return original.call(this);
+        lib.Node.destroy(this);
 
     });
 
     patch(lib.Node.prototype, `freeRecursive`, function () {
 
-        let children = [];
-
-        for (let t = this.getChildCount() - 1; t >= 0; --t) {
-
-            let child = this.getChild(t);
-            this.removeChild(child);
-
-            child.freeRecursive();
-
-        }
+        for (let t = 0, T = this.getChildCount(); t < T; ++t)
+            this.getChild(0).freeRecursive();
 
         this.free();
 
@@ -200,24 +169,19 @@ module.exports = function (bind, lib) {
 
     }
 
-    function makeSharedNode() {
-
-        return lib.Node.makeNode();
-
-    }
-
     bind(`Layout`, Layout);
     bind(`Size`, Size);
 
     return Object.assign({
 
+        Node: lib.Node,
+
         Layout,
-        Node,
         Size,
 
         setExperimentalFeatureEnabled,
         isExperimentalFeatureEnabled,
-        makeSharedNode,
+
         getInstanceCount
 
     }, constants);
