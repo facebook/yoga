@@ -1,0 +1,90 @@
+<html>
+<script>
+
+function ResultCheck(a) {
+  this.result = a;
+  this.toBe = function(test) {
+    if (this.result !== test) {
+      console.warn(this.result, test);
+    }
+  }
+}
+function describe(name,func) {
+  console.log(name);
+  func();
+}
+function it(name,func) {
+  console.log(name);
+  func();
+}
+function expect(value) {
+  return new ResultCheck(value);
+}
+function ASSERT_EQ(a, b) {
+  expect(a).toBe(b);
+}
+function ASSERT_FLOAT_EQ(a, b) {
+  expect(a).toBe(b);
+}
+function ASSERT_TRUE(a) {
+  expect(!!a).toBe(true);
+}
+function EXPECT_TRUE(a) {
+  expect(!!a).toBe(true);
+}
+function ASSERT_FALSE(a) {
+  expect(!!a).toBe(false);
+}
+function EXPECT_FALSE(a) {
+  expect(!!a).toBe(false);
+}
+function YGBENCHMARK(a, b) {
+  // warm up pass of test
+  {
+    let start = Date.now();
+    let count = 10;
+    for (let i=0; i<count; i++) {
+      b();
+    }
+    let end = Date.now();
+    console.log('warmup:', a, (end - start) / count);
+  }
+  // actual run test
+  {
+    let start = Date.now();
+    let count = 20;
+    for (let i=0; i<count; i++) {
+      b();
+    }
+    let end = Date.now();
+    console.log('full run:', a, (end - start) / count);
+  }
+}
+
+</script>
+<script src="../src/Yoga.js"></script>
+<script src="YGAbsolutePositionTest.js"></script>
+<script src="YGAlignContentTest.js"></script>
+<script src="YGAlignItemsTest.js"></script>
+<script src="YGAlignSelfTest.js"></script>
+<script src="YGAspectRatioTest.js"></script>
+<script src="YGBorderTest.js"></script>
+<script src="YGDefaultValuesTest.js"></script>
+<script src="YGDirtyMarkingTest.js"></script>
+<script src="YGEdgeTest.js"></script>
+<script src="YGFlexDirectionTest.js"></script>
+<script src="YGFlexTest.js"></script>
+<script src="YGFlexWrapTest.js"></script>
+<script src="YGJustifyContentTest.js"></script>
+<script src="YGMarginTest.js"></script>
+<script src="YGMeasureCacheTest.js"></script>
+<script src="YGMeasureModeTest.js"></script>
+<script src="YGMeasureTest.js"></script>
+<script src="YGMinMaxDimensionTest.js"></script>
+<script src="YGPaddingTest.js"></script>
+<script src="YGRelayoutTest.js"></script>
+<script src="YGRoundingMeasureFuncTest.js"></script>
+<script src="YGRoundingTest.js"></script>
+<script src="YGStyleTest.js"></script>
+<script src="../benchmark/YGBenchmark.js"></script>
+</html>

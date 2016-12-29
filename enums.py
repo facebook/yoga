@@ -89,6 +89,92 @@ ENUMS = {
     ],
 }
 
+JS_EXPORT_NAMES = [
+'_YGNodeNew',
+'_YGNodeFree',
+'_YGNodeFreeRecursive',
+'_YGNodeReset',
+'_YGNodeGetInstanceCount',
+'_YGNodeInsertChild',
+'_YGNodeRemoveChild',
+'_YGNodeGetChild',
+'_YGNodeGetParent',
+'_YGNodeGetChildCount',
+'_YGNodeCalculateLayout',
+'_YGNodeMarkDirty',
+'_YGNodeIsDirty',
+'_YGNodePrint',
+'_YGValueIsUndefined',
+'_YGNodeCanUseCachedMeasurement',
+'_YGNodeCopyStyle',
+'_YGNodeSetContext',
+'_YGNodeGetContext',
+'_YGNodeSetMeasureFunc',
+'_YGNodeGetMeasureFunc',
+'_YGNodeSetPrintFunc',
+'_YGNodeGetPrintFunc',
+'_YGNodeSetHasNewLayout',
+'_YGNodeGetHasNewLayout',
+'_YGNodeStyleSetDirection',
+'_YGNodeStyleGetDirection',
+'_YGNodeStyleSetFlexDirection',
+'_YGNodeStyleGetFlexDirection',
+'_YGNodeStyleSetJustifyContent',
+'_YGNodeStyleGetJustifyContent',
+'_YGNodeStyleSetAlignContent',
+'_YGNodeStyleGetAlignContent',
+'_YGNodeStyleSetAlignItems',
+'_YGNodeStyleGetAlignItems',
+'_YGNodeStyleSetAlignSelf',
+'_YGNodeStyleGetAlignSelf',
+'_YGNodeStyleSetPositionType',
+'_YGNodeStyleGetPositionType',
+'_YGNodeStyleSetFlexWrap',
+'_YGNodeStyleGetFlexWrap',
+'_YGNodeStyleSetOverflow',
+'_YGNodeStyleGetOverflow',
+'_YGNodeStyleSetFlex',
+'_YGNodeStyleSetFlexGrow',
+'_YGNodeStyleGetFlexGrow',
+'_YGNodeStyleSetFlexShrink',
+'_YGNodeStyleGetFlexShrink',
+'_YGNodeStyleSetFlexBasis',
+'_YGNodeStyleGetFlexBasis',
+'_YGNodeStyleSetPosition',
+'_YGNodeStyleGetPosition',
+'_YGNodeStyleSetMargin',
+'_YGNodeStyleGetMargin',
+'_YGNodeStyleSetPadding',
+'_YGNodeStyleGetPadding',
+'_YGNodeStyleSetBorder',
+'_YGNodeStyleGetBorder',
+'_YGNodeStyleSetWidth',
+'_YGNodeStyleGetWidth',
+'_YGNodeStyleSetHeight',
+'_YGNodeStyleGetHeight',
+'_YGNodeStyleSetMinWidth',
+'_YGNodeStyleGetMinWidth',
+'_YGNodeStyleSetMinHeight',
+'_YGNodeStyleGetMinHeight',
+'_YGNodeStyleSetMaxWidth',
+'_YGNodeStyleGetMaxWidth',
+'_YGNodeStyleSetMaxHeight',
+'_YGNodeStyleGetMaxHeight',
+'_YGNodeStyleSetAspectRatio',
+'_YGNodeStyleGetAspectRatio',
+'_YGNodeLayoutGetLeft',
+'_YGNodeLayoutGetTop',
+'_YGNodeLayoutGetRight',
+'_YGNodeLayoutGetBottom',
+'_YGNodeLayoutGetWidth',
+'_YGNodeLayoutGetHeight',
+'_YGNodeLayoutGetDirection',
+'_YGSetLogger',
+'_YGLog',
+'_YGSetExperimentalFeatureEnabled',
+'_YGIsExperimentalFeatureEnabled'
+]
+
 LICENSE = """/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -110,6 +196,8 @@ def to_java_upper(symbol):
         out += c.upper()
     return out
 
+def uncapitalize(s):
+    return s[:1].lower() + s[1:]
 
 root = os.path.dirname(os.path.abspath(__file__))
 
@@ -130,6 +218,26 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
         f.write('} YG%s;\n' % name)
         f.write('\n')
     f.write('YG_EXTERN_C_END\n')
+
+# write out JavaScripe Emscripten post-js headers
+with open(root + '/JavaScript/src/YGEnums.js', 'w') as f:
+    f.write(LICENSE)
+    f.write('Module.Undefined = NaN;\n\n')
+    for name, values in ENUMS.items():
+        count = 0;
+        for value in values:
+            if isinstance(value, tuple):
+                f.write('Module.%s%s = %d;\n' % (name, value[0], value[1]))
+            else:
+                f.write('Module.%s%s = %d;\n' % (name, value, count))
+            count+=1;
+        f.write('\n')
+    for name in JS_EXPORT_NAMES:
+        f.write('Module.%s = %s;\n' % (uncapitalize(name.replace('_YG','')), name))
+    f.write('Module.addFunction = Runtime.addFunction;')
+    f.write('Module.removeFunction = Runtime.removeFunction;')
+    f.write('\n')
+
 
 # write out java files
 for name, values in ENUMS.items():

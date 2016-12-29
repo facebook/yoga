@@ -109,7 +109,8 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGUndefined:{value:'YGUndefined'},
 
   YGNodeCalculateLayout:{value:function(node, dir) {
-    this.push('YGNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
+    this.push('YGNodeCalculateLayout(' +
+      node + ', ' + this.YGUndefined + ', ' + this.YGUndefined + ', ' + dir + ');');
   }},
 
   YGNodeInsertChild:{value:function(parentName, nodeName, index) {
