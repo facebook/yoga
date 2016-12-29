@@ -10,6 +10,7 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("dont_measure_single_grow_shrink_child", function () {
+  (function () {
     var root = new Yoga.Node();
     root.setWidth(100);
     root.setHeight(100);
@@ -23,5 +24,15 @@ it("dont_measure_single_grow_shrink_child", function () {
     root.insertChild(root_child0, 0);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
 
-    console.assert(0 === measureCounter.get(), "0 === measureCounter.get()");
+    console.assert(0 === measureCounter.get(), "0 === measureCounter.get() (" + measureCounter.get() + ")");
+
+    if (typeof root !== "undefined") {
+      root.freeRecursive();
+    }
+  }());
+
+  if (typeof gc !== "undefined") {
+    gc();
+    console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
+  }
 });

@@ -43,6 +43,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
       }
       this.push('');
     }
+
+    this.push('(function () {');
+    this.pushIndent();
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
@@ -50,6 +53,24 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestEpilogue:{value:function(experiments) {
+    this.push('');
+    this.push('if (typeof root !== "undefined") {');
+    this.pushIndent();
+    this.push('root.freeRecursive();');
+    this.popIndent();
+    this.push('}');
+
+    this.popIndent();
+    this.push('}());');
+
+    this.push('');
+    this.push('if (typeof gc !== "undefined") {');
+    this.pushIndent();
+    this.push('gc();');
+    this.AssertEQ('0', 'Yoga.getInstanceCount()');
+    this.popIndent();
+    this.push('}');
+
     if (experiments.length > 0) {
       this.push('');
       for (var i in experiments) {
@@ -66,7 +87,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   AssertEQ:{value:function(v0, v1) {
-    this.push('console.assert(' + v0 + ' === ' + v1 + ', "' + v0 + ' === ' + v1 + '");');
+    this.push('console.assert(' + v0 + ' === ' + v1 + ', "' + v0 + ' === ' + v1 + ' (" + ' + v1 + ' + ")");');
   }},
 
   YGAlignAuto:{value:'Yoga.ALIGN_AUTO'},

@@ -11,6 +11,7 @@ NBIND_GLOBAL()
 {
     function(setExperimentalFeatureEnabled);
     function(isExperimentalFeatureEnabled);
+    function(getInstanceCount);
 }
 
 NBIND_CLASS(Size)

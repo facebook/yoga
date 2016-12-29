@@ -1,3 +1,13 @@
+function patch(prototype, name, fn) {
+
+    let original = prototype[name];
+
+    prototype[name] = function (... args) {
+        return fn.call(this, original, ... args);
+    };
+
+}
+
 module.exports = function (bind, lib) {
 
     let constants = {};
@@ -110,25 +120,53 @@ module.exports = function (bind, lib) {
 
     }
 
-    class Node extends lib.Node {
+    function Node() {
 
-        setMeasureFunc(measureFunc) {
+        // We do this because we need to return a shared_ptr instead of a raw instance so that we can prevent it from being garbage collected too soon
 
-            if (measureFunc) {
-                return super.setMeasureFunc((... args) => Size.fromJS(measureFunc(... args)));
-            } else {
-                return super.unsetMeasureFunc();
-            }
+        return lib.Node.makeNode();
 
-        }
-
-        calculateLayout(width, height, direction = constants.YGDirectionLTR) {
-
-            return super.calculateLayout(width, height, direction);
-
-        }
 
     }
+
+    patch(lib.Node.prototype, `free`, function (original) {
+
+        let parent = this.getParent();
+
+        if (parent)
+            parent.removeChild(this);
+
+        for (let t = this.getChildCount() - 1; t >= 0; --t)
+            this.removeChild(this.getChild(t));
+
+        return original.call(this);
+
+    });
+
+    patch(lib.Node.prototype, `freeRecursive`, function () {
+
+        for (let t = this.getChildCount() - 1; t >= 0; --t)
+            this.getChild(t).freeRecursive();
+
+        this.free();
+
+    });
+
+    patch(lib.Node.prototype, `setMeasureFunc`, function (original, measureFunc) {
+
+        if (measureFunc) {
+            return original.call(this, (... args) => Size.fromJS(measureFunc(... args)));
+        } else {
+            return this.unsetMeasureFunc();
+        }
+
+    });
+
+    patch(lib.Node.prototype, `calculateLayout`, function (original, width, height, direction = constants.YGDirectionLTR) {
+
+        return original.call(this, width, height, direction);
+
+    });
 
     function setExperimentalFeatureEnabled(... args) {
 
@@ -142,9 +180,25 @@ module.exports = function (bind, lib) {
 
     }
 
+    function getInstanceCount(... args) {
+
+        return lib.getInstanceCount(... args);
+
+    }
+
     bind(`Layout`, Layout);
     bind(`Size`, Size);
 
-    return Object.assign({ Layout, Node: function() { return Node.makeNode(); }, Size, setExperimentalFeatureEnabled, isExperimentalFeatureEnabled }, constants);
+    return Object.assign({
+
+        Layout,
+        Node,
+        Size,
+
+        setExperimentalFeatureEnabled,
+        isExperimentalFeatureEnabled,
+        getInstanceCount
+
+    }, constants);
 
 };

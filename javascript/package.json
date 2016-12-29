@@ -21,8 +21,8 @@
         "build:all": "npm -- run build:native && npm -- run build:asmjs && npm -- run build:browser",
         "build": "npm -- run build:all",
 
-        "test:native": "TEST_ENTRY=node time mocha -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-        "test:asmjs": "TEST_ENTRY=browser time mocha -r tests/tools.js tests/Facebook.Yoga/**/*.js",
+        "test:native": "TEST_ENTRY=node time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
+        "test:asmjs": "TEST_ENTRY=browser time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
         "test:all": "npm -- run test:native && npm -- run test:asmjs",
         "test": "npm -- run test:all",
 
