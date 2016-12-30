@@ -3,6 +3,9 @@ require(`./tools`);
 let fs = require(`fs`);
 let vm = require(`vm`);
 
+let WARMUP_ITERATIONS = 3;
+let BENCHMARK_ITERATIONS = 10;
+
 let testFiles = process.argv.slice(2).map(file => {
     return fs.readFileSync(file).toString();
 });
@@ -24,11 +27,17 @@ for (let type of [ `node`, `browser` ]) {
                 if (testEntry === undefined)
                     testResults.set(name, testEntry = new Map());
 
+                for (let t = 0; t < WARMUP_ITERATIONS; ++t)
+                    fn();
+
                 let start = Date.now();
-                fn();
+
+                for (let t = 0; t < BENCHMARK_ITERATIONS; ++t)
+                    fn();
+
                 let end = Date.now();
 
-                testEntry.set(type, end - start);
+                testEntry.set(type, (end - start) / BENCHMARK_ITERATIONS);
 
             }
 
