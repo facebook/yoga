@@ -14,7 +14,7 @@ it("dont_measure_single_grow_shrink_child", function () {
   root.setWidth(100);
   root.setHeight(100);
 
-  var measureCounter = getMeasureCounter(null, 100, 100);
+  var measureCounter = getMeasureCounter(Yoga, null, 100, 100);
 
   var root_child0 = Yoga.Node.create();
   root_child0.setMeasureFunc(measureCounter.inc);

@@ -15,18 +15,20 @@
         "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
         "copy-sources": "! npm -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
 
-        "build:native": "npm -- run copy-sources && npm -- run node-gyp configure build",
-        "build:asmjs": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1",
-        "build:browser": "webpack",
-        "build:all": "npm -- run build:native && npm -- run build:asmjs && npm -- run build:browser",
+        "build:node": "npm -- run copy-sources && npm -- run node-gyp configure build",
+        "build:browser": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1",
+        "build:standalone": "webpack",
+        "build:all": "npm -- run build:node && npm -- run build:browser && npm -- run build:standalone",
         "build": "npm -- run build:all",
 
-        "test:native": "TEST_ENTRY=node time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-        "test:asmjs": "TEST_ENTRY=browser time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-        "test:all": "npm -- run test:native && npm -- run test:asmjs",
+        "test:node": "TEST_ENTRY=node time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
+        "test:browser": "TEST_ENTRY=browser time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
+        "test:all": "npm -- run test:node && npm -- run test:browser",
         "test": "npm -- run test:all",
 
-        "install": "npm -- run autogypi && npm -- run build:native"
+        "bench": "node tests/run-bench $(find tests/Benchmarks -name '*.js')",
+
+        "install": "npm -- run autogypi && npm -- run build:node"
 
     },
 

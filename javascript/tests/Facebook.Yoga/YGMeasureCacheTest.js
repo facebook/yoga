@@ -16,7 +16,7 @@ it("measure_once_single_flexible_child", function () {
   root.setWidth(100);
   root.setHeight(100);
 
-  var measureCounter = getMeasureCounterMax();
+  var measureCounter = getMeasureCounterMax(Yoga);
 
   var root_child0 = Yoga.Node.create();
   root_child0.setMeasureFunc(measureCounter.inc);

@@ -1,7 +1,6 @@
-var Yoga = Yoga || require("../sources/entry-" + process.env.TEST_ENTRY);
 var target = typeof global !== "undefined" ? global : window;
 
-target.getMeasureCounter = function (cb, staticWidth, staticHeight) {
+target.getMeasureCounter = function (Yoga, cb, staticWidth, staticHeight) {
 
     var counter = 0;
 
@@ -11,7 +10,7 @@ target.getMeasureCounter = function (cb, staticWidth, staticHeight) {
 
             counter += 1;
 
-            return cb ? cb(width, widthMode, height, heightMode) : new Yoga.Size(staticWidth, staticHeight);
+            return cb ? cb(width, widthMode, height, heightMode) : { width: staticWidth, height: staticHeight };
 
         },
 
@@ -25,27 +24,27 @@ target.getMeasureCounter = function (cb, staticWidth, staticHeight) {
 
 }
 
-target.getMeasureCounterMax = function () {
+target.getMeasureCounterMax = function (Yoga) {
 
-    return getMeasureCounter(function (width, widthMode, height, heightMode) {
+    return getMeasureCounter(Yoga, function (width, widthMode, height, heightMode) {
 
         var measuredWidth = widthMode === Yoga.MEASURE_MODE_UNDEFINED ? 10 : width;
         var measuredHeight = heightMode === Yoga.MEASURE_MODE_UNDEFINED ? 10 : height;
 
-        return new Yoga.Size(measuredWidth, measuredHeight);
+        return { width: measuredWidth, height: measuredHeight };
 
     });
 
 };
 
-target.getMeasureCounterMin = function () {
+target.getMeasureCounterMin = function (Yoga) {
 
-    return getMeasureCounter(function (width, widthMode, height, heightMode) {
+    return getMeasureCounter(Yoga, function (width, widthMode, height, heightMode) {
 
         var measuredWidth = widthMode === Yoga.MEASURE_MODE_UNDEFINED || (widthMode == Yoga.MEASURE_MODE_AT_MOST && width > 10) ? 10 : width;
         var measuredHeight = heightMode === Yoga.MEASURE_MODE_UNDEFINED || (heightMode == Yoga.MEASURE_MODE_AT_MOST && height > 10) ? 10 : height;
 
-        return new Yoga.Size(measuredWidth, measuredHeight);
+        return { width: measuredWidth, height: measuredHeight };
 
     });
 

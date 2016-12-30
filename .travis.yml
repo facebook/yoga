@@ -34,6 +34,7 @@ script:
 
   - cd javascript
   - npm run test:all
+  - npm run bench
   - cd $TRAVIS_BUILD_DIR
 
   - buck run //benchmark:benchmark
