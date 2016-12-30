@@ -33,7 +33,7 @@ script:
   - sh csharp/tests/Facebook.Yoga/test_macos.sh
 
   - cd javascript
-  - npm run test:native
+  - npm run test:all
   - cd $TRAVIS_BUILD_DIR
 
   - buck run //benchmark:benchmark
