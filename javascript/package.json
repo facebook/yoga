@@ -1,0 +1,49 @@
+{
+    "name": "yoga-layout",
+    "version": "1.0.0",
+
+    "main": "./sources/entry-node",
+    "browser": "./sources/entry-browser",
+
+    "scripts": {
+
+        "which": "which",
+        "autogypi": "autogypi",
+        "node-gyp": "node-gyp",
+        "emcc-path": "emcc-path",
+
+        "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
+        "copy-sources": "! npm -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
+
+        "build:node": "npm -- run copy-sources && npm -- run node-gyp configure build",
+        "build:browser": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1",
+        "build:standalone": "webpack",
+        "build:all": "npm -- run build:node && npm -- run build:browser && npm -- run build:standalone",
+        "build": "npm -- run build:all",
+
+        "test:node": "TEST_ENTRY=node time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
+        "test:browser": "TEST_ENTRY=browser time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
+        "test:all": "npm -- run test:node && npm -- run test:browser",
+        "test": "npm -- run test:all",
+
+        "bench": "node tests/run-bench $(find tests/Benchmarks -name '*.js')",
+
+        "install": "npm -- run autogypi && npm -- run build:node"
+
+    },
+
+    "dependencies": {
+
+        "autogypi": "^0.2.2",
+        "nbind": "^0.3.8",
+        "node-gyp": "^3.4.0"
+
+    },
+
+    "devDependencies": {
+
+        "mocha": "^3.2.0",
+        "webpack": "^2.2.0-rc.2"
+
+    }
+}
