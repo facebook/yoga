@@ -9,6 +9,12 @@
 
 # Visual studio code
 .vscode
+*.pdb
+*.tlog
+*.obj
+*.pch
+*.log
+*.orig
 
 # Xcode
 ## Build generated

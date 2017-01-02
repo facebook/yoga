@@ -283,7 +283,7 @@ TEST(YogaTest, overflow_scroll_column) {
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
   ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].widthMode);
 
-  ASSERT_TRUE(YGValueIsUndefined(constraintList.constraints[0].height));
+  ASSERT_TRUE(YGFloatIsUndefined(constraintList.constraints[0].height));
   ASSERT_EQ(YGMeasureModeUndefined, constraintList.constraints[0].heightMode);
 
   free(constraintList.constraints);
@@ -312,7 +312,7 @@ TEST(YogaTest, overflow_scroll_row) {
 
   ASSERT_EQ(1, constraintList.length);
 
-  ASSERT_TRUE(YGValueIsUndefined(constraintList.constraints[0].width));
+  ASSERT_TRUE(YGFloatIsUndefined(constraintList.constraints[0].width));
   ASSERT_EQ(YGMeasureModeUndefined, constraintList.constraints[0].widthMode);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
