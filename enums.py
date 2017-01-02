@@ -17,6 +17,11 @@ ENUMS = {
         'LTR',
         'RTL',
     ],
+    'Unit': [
+        'Undefined',
+        'Pixel',
+        'Percent',
+    ],
     'FlexDirection': [
         'Column',
         'ColumnReverse',

@@ -136,6 +136,6 @@ public class YogaNodeTest {
     node1.setMaxHeight(100);
 
     node0.copyStyle(node1);
-    assertEquals(100, (int) node0.getMaxHeight());
+    assertEquals(100, (int) node0.getMaxHeight().value);
   }
 }

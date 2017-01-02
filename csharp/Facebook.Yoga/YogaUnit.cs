@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -9,18 +9,10 @@
 
 namespace Facebook.Yoga
 {
-    public static class YogaConstants
+    public enum YogaUnit
     {
-        public const float Undefined = float.NaN;
-
-        public static bool IsUndefined(float value)
-        {
-            return float.IsNaN(value);
-        }
-
-        public static bool IsUndefined(YogaValue value)
-        {
-            return value.Unit == YogaUnit.Undefined;
-        }
+        Undefined,
+        Pixel,
+        Percent,
     }
 }

@@ -212,7 +212,7 @@ namespace Facebook.Yoga
             parent.Insert(0, child0);
             parent.Insert(0, child1);
             parent.CalculateLayout();
-            Assert.AreEqual(parent.Print(), "{layout: {width: 100, height: 120, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 100, height: 120, children: [\n  {layout: {width: 35, height: 45, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 35, height: 45, },\n  {layout: {width: 30, height: 40, top: 45, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 30, height: 40, },\n]},\n");
+            Assert.AreEqual("{layout: {width: 100, height: 120, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 100px, height: 120px, children: [\n  {layout: {width: 35, height: 45, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 35px, height: 45px, },\n  {layout: {width: 30, height: 40, top: 45, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 30px, height: 40px, },\n]},\n", parent.Print());
         }
 
         [Test]
@@ -225,7 +225,7 @@ namespace Facebook.Yoga
             node1.MaxHeight = 100;
 
             node0.CopyStyle(node1);
-            Assert.AreEqual(100, node0.MaxHeight);
+            Assert.AreEqual(100.Px(), node0.MaxHeight);
         }
 
         private void ForceGC()

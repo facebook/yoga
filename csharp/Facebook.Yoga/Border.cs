@@ -9,18 +9,18 @@
 
 namespace Facebook.Yoga
 {
-    public class Spacing
+    public class Border
     {
-        public YogaValue? Top;
-        public YogaValue? Bottom;
-        public YogaValue? Left;
-        public YogaValue? Right;
+        public float? Top;
+        public float? Bottom;
+        public float? Left;
+        public float? Right;
 
-        public Spacing(
-            YogaValue? top = null,
-            YogaValue? bottom = null,
-            YogaValue? left = null,
-            YogaValue? right = null)
+        public Border(
+            float? top = null,
+            float? bottom = null,
+            float? left = null,
+            float? right = null)
         {
             Top = top;
             Bottom = bottom;

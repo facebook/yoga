@@ -384,7 +384,7 @@ function pixelValue(e, value) {
   switch (value) {
     case 'auto': return e.YGUndefined;
     case 'undefined': return e.YGUndefined;
-    default: return value.replace('px', '');
+    default: return value;
   }
 }
 

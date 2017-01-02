@@ -21,13 +21,13 @@ namespace Facebook.Yoga
         public void Test_align_self_center()
         {
             YogaNode root = new YogaNode();
-            root.Width = 100f;
-            root.Height = 100f;
+            root.Width = 100;
+            root.Height = 100;
 
             YogaNode root_child0 = new YogaNode();
             root_child0.AlignSelf = YogaAlign.Center;
-            root_child0.Width = 10f;
-            root_child0.Height = 10f;
+            root_child0.Width = 10;
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -60,13 +60,13 @@ namespace Facebook.Yoga
         public void Test_align_self_flex_end()
         {
             YogaNode root = new YogaNode();
-            root.Width = 100f;
-            root.Height = 100f;
+            root.Width = 100;
+            root.Height = 100;
 
             YogaNode root_child0 = new YogaNode();
             root_child0.AlignSelf = YogaAlign.FlexEnd;
-            root_child0.Width = 10f;
-            root_child0.Height = 10f;
+            root_child0.Width = 10;
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -99,13 +99,13 @@ namespace Facebook.Yoga
         public void Test_align_self_flex_start()
         {
             YogaNode root = new YogaNode();
-            root.Width = 100f;
-            root.Height = 100f;
+            root.Width = 100;
+            root.Height = 100;
 
             YogaNode root_child0 = new YogaNode();
             root_child0.AlignSelf = YogaAlign.FlexStart;
-            root_child0.Width = 10f;
-            root_child0.Height = 10f;
+            root_child0.Width = 10;
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -139,13 +139,13 @@ namespace Facebook.Yoga
         {
             YogaNode root = new YogaNode();
             root.AlignItems = YogaAlign.FlexStart;
-            root.Width = 100f;
-            root.Height = 100f;
+            root.Width = 100;
+            root.Height = 100;
 
             YogaNode root_child0 = new YogaNode();
             root_child0.AlignSelf = YogaAlign.FlexEnd;
-            root_child0.Width = 10f;
-            root_child0.Height = 10f;
+            root_child0.Width = 10;
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
