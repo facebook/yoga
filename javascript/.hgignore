@@ -1,0 +1,15 @@
+syntax:glob
+
+node_modules
+
+*.gypi
+!/final-flags.gypi
+
+/dist
+/build/*
+!/build/Release
+/build/Release/*
+!/build/Release/nbind.js
+/sources/yoga
+
+npm-debug.log*
