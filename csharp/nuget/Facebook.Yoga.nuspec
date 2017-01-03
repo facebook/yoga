@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Facebook.Yoga</id>
-    <version>1.0.0-pre</version>
+    <version>1.0.1-pre</version>
     <title>Facebook.Yoga</title>
     <authors>Facebook</authors>
     <owners>Facebook</owners>
