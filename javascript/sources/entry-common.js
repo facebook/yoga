@@ -83,6 +83,77 @@ module.exports = function (bind, lib) {
 
     }
 
+    class Value {
+
+        constructor(unit, value) {
+
+            this.unit = unit;
+            this.value = value;
+
+        }
+
+        fromJS(expose) {
+
+            expose(this.unit, this.value);
+
+        }
+
+        toString() {
+
+            switch (this.unit) {
+
+                case constants.UNIT_PIXEL:
+                    return `${this.value}`;
+
+                case constants.UNIT_PERCENT:
+                    return `${this.value}%`;
+
+                default: {
+                    return `${this.value}?`;
+                }
+
+            }
+
+        }
+
+        valueOf() {
+
+            return this.value;
+
+        }
+
+    }
+
+    for (let fnName of [ `setPosition`, `setMargin`, `setFlexBasis`, `setWidth`, `setHeight`, `setMinWidth`, `setMinHeight`, `setMaxWidth`, `setMaxHeight`, `setPadding` ]) {
+
+        let methods = { [constants.UNIT_PIXEL]: lib.Node.prototype[fnName], [constants.UNIT_PERCENT]: lib.Node.prototype[`${fnName}Percent`] };
+
+        patch(lib.Node.prototype, fnName, function (original, ... args) {
+
+            // We patch all these functions to add support for the following calls:
+            // .setWidth(100) / .setWidth("100%") / .setWidth(.getWidth())
+
+            let value = args.pop();
+            let unit, asNumber;
+
+            if (value instanceof Value) {
+
+                unit = value.unit;
+                asNumber = value.valueOf();
+
+            } else {
+
+                unit = typeof value === `string` && value.endsWith(`%`) ? constants.UNIT_PERCENT : constants.UNIT_PIXEL;
+                asNumber = parseFloat(value);
+
+            }
+
+            return methods[unit].call(this, ... args, asNumber);
+
+        });
+
+    }
+
     patch(lib.Node.prototype, `free`, function () {
 
         // Since we handle the memory allocation ourselves (via lib.Node.create), we also need to handle the deallocation
@@ -141,6 +212,7 @@ module.exports = function (bind, lib) {
 
     bind(`Layout`, Layout);
     bind(`Size`, Size);
+    bind(`Value`, Value);
 
     return Object.assign({
 
@@ -148,6 +220,7 @@ module.exports = function (bind, lib) {
 
         Layout,
         Size,
+        Value,
 
         setExperimentalFeatureEnabled,
         isExperimentalFeatureEnabled,
