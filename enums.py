@@ -192,3 +192,20 @@ for name, values in ENUMS.items():
                 f.write('        %s,\n' % value)
         f.write('    }\n')
         f.write('}\n')
+
+# write out javascript file
+with open(root + '/javascript/sources/YGEnums.js', 'w') as f:
+    f.write(LICENSE)
+    f.write('module.exports = {\n\n')
+    for name, values in ENUMS.items():
+        f.write('  %s_COUNT: %s,\n' % (to_java_upper(name), len(values)))
+        base = 0
+        for value in values:
+            if isinstance(value, tuple):
+                f.write('  %s_%s: %d,\n' % (to_java_upper(name), to_java_upper(value[0]), value[1]))
+                base = value[1] + 1
+            else:
+                f.write('  %s_%s: %d,\n' % (to_java_upper(name), to_java_upper(value), base))
+                base += 1
+        f.write('\n');
+    f.write('};\n')
