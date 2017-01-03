@@ -30,6 +30,7 @@
 - (void)yg_setAlignSelf:(YGAlign)alignSelf;
 - (void)yg_setPositionType:(YGPositionType)positionType;
 - (void)yg_setFlexWrap:(YGWrap)flexWrap;
+- (void)yg_setOverflow:(YGOverflow)overflow;
 
 - (void)yg_setFlexGrow:(CGFloat)flexGrow;
 - (void)yg_setFlexShrink:(CGFloat)flexShrink;

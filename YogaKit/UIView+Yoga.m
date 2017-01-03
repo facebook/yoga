@@ -130,6 +130,11 @@
   YGNodeStyleSetFlexWrap([self ygNode], flexWrap);
 }
 
+- (void)yg_setOverflow:(YGOverflow)overflow
+{
+  YGNodeStyleSetOverflow([self ygNode], overflow);
+}
+
 - (void)yg_setFlexGrow:(CGFloat)flexGrow
 {
   YGNodeStyleSetFlexGrow([self ygNode], flexGrow);
