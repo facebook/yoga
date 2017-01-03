@@ -479,6 +479,11 @@ namespace Facebook.Yoga
             {
                 return Native.YGNodeLayoutGetDirection(_ygNode);
             }
+            
+            set
+            {
+                Native.YGNodeLayoutSetDirection(_ygNode, value);
+            }
         }
 
         public YogaOverflow Overflow
