@@ -128,6 +128,9 @@ module.exports = function (bind, lib) {
 
         let methods = { [constants.UNIT_PIXEL]: lib.Node.prototype[fnName], [constants.UNIT_PERCENT]: lib.Node.prototype[`${fnName}Percent`] };
 
+        if (Object.keys(methods).some(method => methods[method] == null))
+            throw new Error(`Assertion failed; some unit derivates of ${fnName} seem missing`);
+
         patch(lib.Node.prototype, fnName, function (original, ... args) {
 
             // We patch all these functions to add support for the following calls:
