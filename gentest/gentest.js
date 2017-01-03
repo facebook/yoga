@@ -27,6 +27,12 @@ window.onload = function() {
       document.body.children[0],
       document.body.children[1],
       document.body.children[2]);
+
+  printTest(
+      new JavascriptEmitter(),
+      document.body.children[0],
+      document.body.children[1],
+      document.body.children[2]);
 }
 
 function assert(condition, message) {
@@ -378,7 +384,7 @@ function pixelValue(e, value) {
   switch (value) {
     case 'auto': return e.YGUndefined;
     case 'undefined': return e.YGUndefined;
-    default: return value.replace('px', '');
+    default: return value;
   }
 }
 

@@ -17,5 +17,10 @@ namespace Facebook.Yoga
         {
             return float.IsNaN(value);
         }
+
+        public static bool IsUndefined(YogaValue value)
+        {
+            return value.Unit == YogaUnit.Undefined;
+        }
     }
 }

@@ -7,6 +7,19 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+function toValueCs(value) {
+  var n = value.toString().replace('px','').replace('%','');
+  return n + (Number(n) == n && n % 1 !== 0 ? 'f' : '');
+}
+
+function toCsUnitValue(value) {
+  var methodName = '';
+  if (value.indexOf('%') >= 0){
+    methodName = '.Percent()';
+  }
+  return toValueCs(value) + methodName;
+}
+
 var CSEmitter = function() {
   Emitter.call(this, 'cs', '    ');
 };
@@ -143,90 +156,90 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetAlignContent:{value:function(nodeName, value) {
-    this.push(nodeName + '.AlignContent = ' + value + ';');
+    this.push(nodeName + '.AlignContent = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetAlignItems:{value:function(nodeName, value) {
-    this.push(nodeName + '.AlignItems = ' + value + ';');
+    this.push(nodeName + '.AlignItems = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetAlignSelf:{value:function(nodeName, value) {
-    this.push(nodeName + '.AlignSelf = ' + value + ';');
+    this.push(nodeName + '.AlignSelf = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetBorder(' + edge + ', ' + value + 'f);');
+    this.push(nodeName + '.SetBorder(' + edge + ', ' + toValueCs(value) + ');');
   }},
 
   YGNodeStyleSetDirection:{value:function(nodeName, value) {
-    this.push(nodeName + '.StyleDirection = ' + value + ';');
+    this.push(nodeName + '.StyleDirection = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexBasis = ' + value + 'f;');
+    this.push(nodeName + '.FlexBasis = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetFlexDirection:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexDirection = ' + value + ';');
+    this.push(nodeName + '.FlexDirection = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexGrow = ' + value + 'f;');
+    this.push(nodeName + '.FlexGrow = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push(nodeName + '.FlexShrink = ' + value + 'f;');
+    this.push(nodeName + '.FlexShrink = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetFlexWrap:{value:function(nodeName, value) {
-    this.push(nodeName + '.Wrap = ' + value + ';');
+    this.push(nodeName + '.Wrap = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.Height = ' + value + 'f;');
+    this.push(nodeName + '.Height = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetJustifyContent:{value:function(nodeName, value) {
-    this.push(nodeName + '.JustifyContent = ' + value + ';');
+    this.push(nodeName + '.JustifyContent = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetMargin(' + edge + ', ' + value + 'f);');
+    this.push(nodeName + '.SetMargin(' + edge + ', ' + toCsUnitValue(value) + ');');
   }},
 
   YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.MaxHeight = ' + value + 'f;');
+    this.push(nodeName + '.MaxHeight = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.MaxWidth = ' + value + 'f;');
+    this.push(nodeName + '.MaxWidth = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.MinHeight = ' + value + 'f;');
+    this.push(nodeName + '.MinHeight = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.MinWidth = ' + value + 'f;');
+    this.push(nodeName + '.MinWidth = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetOverflow:{value:function(nodeName, value) {
-    this.push(nodeName + '.Overflow = ' + value + ';');
+    this.push(nodeName + '.Overflow = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPadding(' + edge + ', ' + value + 'f);');
+    this.push(nodeName + '.SetPadding(' + edge + ', ' + toCsUnitValue(value) + ');');
   }},
 
   YGNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPosition(' + edge + ', ' + value + 'f);');
+    this.push(nodeName + '.SetPosition(' + edge + ', ' + toCsUnitValue(value) + ');');
   }},
 
   YGNodeStyleSetPositionType:{value:function(nodeName, value) {
-    this.push(nodeName + '.PositionType = ' + value + ';');
+    this.push(nodeName + '.PositionType = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.Width = ' + value + 'f;');
+    this.push(nodeName + '.Width = ' + toCsUnitValue(value) + ';');
   }},
 });

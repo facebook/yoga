@@ -289,4 +289,58 @@
   XCTAssertFalse(view.yg_isLeaf);
 }
 
+- (void)testThatWeCorrectlyAttachNestedViews
+{
+    UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+    [container yg_setUsesYoga:YES];
+    [container yg_setFlexDirection:YGFlexDirectionColumn];
+
+    UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
+    [subview1 yg_setUsesYoga:YES];
+    [subview1 yg_setWidth:100];
+    [subview1 yg_setFlexGrow:1];
+    [subview1 yg_setFlexDirection:YGFlexDirectionColumn];
+    [container addSubview:subview1];
+
+    UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
+    [subview2 yg_setUsesYoga:YES];
+    [subview2 yg_setWidth:150];
+    [subview2 yg_setFlexGrow:1];
+    [subview2 yg_setFlexDirection:YGFlexDirectionColumn];
+    [container addSubview:subview2];
+
+    for (UIView *view in @[subview1, subview2]) {
+        UIView *someView = [[UIView alloc] initWithFrame:CGRectZero];
+        [someView yg_setUsesYoga:YES];
+        [someView yg_setFlexGrow:1];
+        [view addSubview:someView];
+    }
+    [container yg_applyLayout];
+
+    // Add the same amount of new views, reapply layout.
+    for (UIView *view in @[subview1, subview2]) {
+        UIView *someView = [[UIView alloc] initWithFrame:CGRectZero];
+        [someView yg_setUsesYoga:YES];
+        [someView yg_setFlexGrow:1];
+        [view addSubview:someView];
+    }
+    [container yg_applyLayout];
+
+    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 25), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview1.bounds.size));
+    for (UIView *subview in subview1.subviews) {
+        const CGSize subviewSize = subview.bounds.size;
+        XCTAssertFalse(CGSizeEqualToSize(CGSizeZero, subviewSize));
+        XCTAssertFalse(isnan(subviewSize.height));
+        XCTAssertFalse(isnan(subviewSize.width));
+    }
+
+    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 25), subview2.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview2.bounds.size));
+    for (UIView *subview in subview2.subviews) {
+        const CGSize subviewSize = subview.bounds.size;
+        XCTAssertFalse(CGSizeEqualToSize(CGSizeZero, subview.bounds.size));
+        XCTAssertFalse(isnan(subviewSize.height));
+        XCTAssertFalse(isnan(subviewSize.width));
+    }
+}
+
 @end

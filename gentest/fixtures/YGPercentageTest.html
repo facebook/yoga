@@ -1,0 +1,82 @@
+<div id="percentage_width_height" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: row;">
+  <div style="width: 30%; height: 30%;"></div>
+</div>
+
+<div id="percentage_position_left_top" experiments="Rounding" style="width: 400px; height: 400px; flex-direction: row;">
+  <div style="width: 45%; height: 55%; left: 10%; top: 20%"></div>
+</div>
+
+<div id="percentage_position_bottom_right" experiments="Rounding" style="width: 500px; height: 500px; flex-direction: row;">
+  <div style="width: 55%; height: 15%; bottom: 10%; right: 20%"></div>
+</div>
+
+<div id="percentage_flex_basis" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: row;">
+  <div style="flex-grow: 1; flex-basis: 50%;"></div>
+  <div style="flex-grow: 1; flex-basis: 25%;"></div>
+</div>
+
+<div id="percentage_flex_basis_cross" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: column;">
+  <div style="flex-grow: 1; flex-basis: 50%;"></div>
+  <div style="flex-grow: 1; flex-basis: 25%;"></div>
+</div>
+
+<div id="percentage_flex_basis_cross_min_height" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: column;">
+  <div style="flex-grow: 1; min-height: 60%;"></div>
+  <div style="flex-grow: 2; min-height: 10%;"></div>
+</div>
+
+<div id="percentage_flex_basis_main_max_height" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: row;">
+  <div style="flex-grow: 1; flex-basis: 10%; max-height: 60%;"></div>
+  <div style="flex-grow: 4; flex-basis: 10%; max-height: 20%;"></div>
+</div>
+
+<div id="percentage_flex_basis_cross_max_height" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: column;">
+  <div style="flex-grow: 1; flex-basis: 10%; max-height: 60%;"></div>
+  <div style="flex-grow: 4; flex-basis: 10%; max-height: 20%;"></div>
+</div>
+
+<div id="percentage_flex_basis_main_max_width" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: row;">
+  <div style="flex-grow: 1; flex-basis: 15%; max-width: 60%;"></div>
+  <div style="flex-grow: 4; flex-basis: 10%; max-width: 20%;"></div>
+</div>
+
+<div id="percentage_flex_basis_cross_max_width" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: column;">
+  <div style="flex-grow: 1; flex-basis: 10%; max-width: 60%;"></div>
+  <div style="flex-grow: 4; flex-basis: 15%; max-width: 20%;"></div>
+</div>
+
+
+<div id="percentage_flex_basis_main_min_width" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: row;">
+  <div style="flex-grow: 1; flex-basis: 15%; min-width: 60%;"></div>
+  <div style="flex-grow: 4; flex-basis: 10%; min-width: 20%;"></div>
+</div>
+
+<div id="percentage_flex_basis_cross_min_width" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: column;">
+  <div style="flex-grow: 1; flex-basis: 10%; min-width: 60%;"></div>
+  <div style="flex-grow: 4; flex-basis: 15%; min-width: 20%;"></div>
+</div>
+
+<div id="percentage_multiple_nested_with_padding_margin_and_percentage_values" experiments="Rounding" style="width: 200px; height: 200px; flex-direction: column;">
+  <div style="flex-grow: 1; flex-basis: 10%; min-width: 60%; margin: 5px; padding: 3px;">
+    <div style="width: 50%; margin: 5px; padding: 3%;">
+      <div style="width: 45%; margin: 5%; padding: 3px;"></div>
+    </div>
+  </div>
+  <div style="flex-grow: 4; flex-basis: 15%; min-width: 20%;"></div>
+</div>
+
+<div id="percentage_margin_should_calculate_based_only_on_width" experiments="Rounding" style="width: 200px; height: 100px;">
+  <div style="flex-grow: 1; margin: 10%;">
+    <div style="width: 10px; height: 10px;"></div>
+  </div>
+</div>
+
+<div id="percentage_padding_should_calculate_based_only_on_width" experiments="Rounding" style="width: 200px; height: 100px;">
+  <div style="flex-grow: 1; padding: 10%;">
+    <div style="width: 10px; height: 10px;"></div>
+  </div>
+</div>
+
+<div id="percentage_absolute_position" experiments="Rounding" style="width: 200px; height: 100px;">
+  <div style="position: absolute; top: 10%; left: 30%; width: 10px; height: 10px;"></div>
+</div>
