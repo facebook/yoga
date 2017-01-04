@@ -17,8 +17,8 @@ static YGSize _measureFloor(YGNodeRef node,
   YGMeasureMode heightMode) {
 
   return YGSize{
-    width = 10.2,
-    height = 10.2,
+    width = 10.2f,
+    height = 10.2f,
   };
 }
 
