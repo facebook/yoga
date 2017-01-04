@@ -16,5 +16,6 @@ namespace Facebook.Yoga
         Center,
         FlexEnd,
         Stretch,
+        Baseline,
     }
 }

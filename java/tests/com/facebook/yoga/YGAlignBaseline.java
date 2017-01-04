@@ -20,7 +20,7 @@ public class YGAlignBaseline {
   public void test_align_baseline() {
     final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
-    root.setAlignItems(YogaAlign.Baseline);
+    root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -74,7 +74,7 @@ public class YGAlignBaseline {
   public void test_align_baseline_child() {
     final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
-    root.setAlignItems(YogaAlign.Baseline);
+    root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -143,7 +143,7 @@ public class YGAlignBaseline {
   public void test_align_baseline_double_nested_child() {
     final YogaNode root = new YogaNode();
     root.setFlexDirection(YogaFlexDirection.ROW);
-    root.setAlignItems(YogaAlign.Baseline);
+    root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
@@ -226,7 +226,7 @@ public class YGAlignBaseline {
   @Test
   public void test_align_baseline_column() {
     final YogaNode root = new YogaNode();
-    root.setAlignItems(YogaAlign.Baseline);
+    root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 

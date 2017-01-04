@@ -100,7 +100,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignFlexEnd:{value:'YogaAlign.FLEX_END'},
   YGAlignFlexStart:{value:'YogaAlign.FLEX_START'},
   YGAlignStretch:{value:'YogaAlign.STRETCH'},
-  YGAlignBaseline:{value:'YogaAlign.Baseline'},
+  YGAlignBaseline:{value:'YogaAlign.BASELINE'},
 
   YGDirectionInherit:{value:'YogaDirection.INHERIT'},
   YGDirectionLTR:{value:'YogaDirection.LTR'},
