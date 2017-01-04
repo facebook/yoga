@@ -2554,7 +2554,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
           if (child->style.positionType == YGPositionTypeRelative) {
             switch (YGNodeAlignItem(node, child)) {
-              case YGAlignFlexStart: { 
+              case YGAlignFlexStart: {
                 child->layout.position[pos[crossAxis]] =
                     currentLead + YGNodeLeadingMargin(child, crossAxis, availableInnerWidth);
                 break;
@@ -2580,9 +2580,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                 break;
               }
               case YGAlignBaseline: {
-                child->layout.position[pos[crossAxis]] = currentLead
-                  + maxAscentForCurrentLine -
-                    YGBaselineWithMargin(child, crossAxis, availableInnerWidth);;
+                child->layout.position[pos[crossAxis]] =
+                       currentLead + maxAscentForCurrentLine -
+                       YGBaselineWithMargin(child, crossAxis, availableInnerWidth);;
                 break;
               }
               case YGAlignAuto:
