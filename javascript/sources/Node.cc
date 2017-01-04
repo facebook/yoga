@@ -74,6 +74,11 @@ void Node::setPosition(int edge, double position)
     YGNodeStyleSetPosition(m_node, static_cast<YGEdge>(edge), position);
 }
 
+void Node::setPositionPercent(int edge, double position)
+{
+    YGNodeStyleSetPositionPercent(m_node, static_cast<YGEdge>(edge), position);
+}
+
 void Node::setAlignContent(int alignContent)
 {
     YGNodeStyleSetAlignContent(m_node, static_cast<YGAlign>(alignContent));
@@ -109,6 +114,11 @@ void Node::setMargin(int edge, double margin)
     YGNodeStyleSetMargin(m_node, static_cast<YGEdge>(edge), margin);
 }
 
+void Node::setMarginPercent(int edge, double margin)
+{
+    YGNodeStyleSetMarginPercent(m_node, static_cast<YGEdge>(edge), margin);
+}
+
 void Node::setOverflow(int overflow)
 {
     YGNodeStyleSetOverflow(m_node, static_cast<YGOverflow>(overflow));
@@ -122,6 +132,11 @@ void Node::setFlex(double flex)
 void Node::setFlexBasis(double flexBasis)
 {
     YGNodeStyleSetFlexBasis(m_node, flexBasis);
+}
+
+void Node::setFlexBasisPercent(double flexBasis)
+{
+    YGNodeStyleSetFlexBasisPercent(m_node, flexBasis);
 }
 
 void Node::setFlexGrow(double flexGrow)
@@ -139,9 +154,19 @@ void Node::setWidth(double width)
     YGNodeStyleSetWidth(m_node, width);
 }
 
+void Node::setWidthPercent(double width)
+{
+    YGNodeStyleSetWidthPercent(m_node, width);
+}
+
 void Node::setHeight(double height)
 {
     YGNodeStyleSetHeight(m_node, height);
+}
+
+void Node::setHeightPercent(double height)
+{
+    YGNodeStyleSetHeightPercent(m_node, height);
 }
 
 void Node::setMinWidth(double minWidth)
@@ -149,9 +174,19 @@ void Node::setMinWidth(double minWidth)
     YGNodeStyleSetMinWidth(m_node, minWidth);
 }
 
+void Node::setMinWidthPercent(double minWidth)
+{
+    YGNodeStyleSetMinWidthPercent(m_node, minWidth);
+}
+
 void Node::setMinHeight(double minHeight)
 {
     YGNodeStyleSetMinHeight(m_node, minHeight);
+}
+
+void Node::setMinHeightPercent(double minHeight)
+{
+    YGNodeStyleSetMinHeightPercent(m_node, minHeight);
 }
 
 void Node::setMaxWidth(double maxWidth)
@@ -159,9 +194,19 @@ void Node::setMaxWidth(double maxWidth)
     YGNodeStyleSetMaxWidth(m_node, maxWidth);
 }
 
+void Node::setMaxWidthPercent(double maxWidth)
+{
+    YGNodeStyleSetMaxWidthPercent(m_node, maxWidth);
+}
+
 void Node::setMaxHeight(double maxHeight)
 {
     YGNodeStyleSetMaxHeight(m_node, maxHeight);
+}
+
+void Node::setMaxHeightPercent(double maxHeight)
+{
+    YGNodeStyleSetMaxHeightPercent(m_node, maxHeight);
 }
 
 void Node::setAspectRatio(double aspectRatio)
@@ -179,14 +224,19 @@ void Node::setPadding(int edge, double padding)
     YGNodeStyleSetPadding(m_node, static_cast<YGEdge>(edge), padding);
 }
 
+void Node::setPaddingPercent(int edge, double padding)
+{
+    YGNodeStyleSetPaddingPercent(m_node, static_cast<YGEdge>(edge), padding);
+}
+
 int Node::getPositionType(void) const
 {
     return YGNodeStyleGetPositionType(m_node);
 }
 
-double Node::getPosition(int edge) const
+Value Node::getPosition(int edge) const
 {
-    return YGNodeStyleGetPosition(m_node, static_cast<YGEdge>(edge));
+    return Value::fromYGValue(YGNodeStyleGetPosition(m_node, static_cast<YGEdge>(edge)));
 }
 
 int Node::getAlignContent(void) const
@@ -219,9 +269,9 @@ int Node::getJustifyContent(void) const
     return YGNodeStyleGetJustifyContent(m_node);
 }
 
-double Node::getMargin(int edge) const
+Value Node::getMargin(int edge) const
 {
-    return YGNodeStyleGetMargin(m_node, static_cast<YGEdge>(edge));
+    return Value::fromYGValue(YGNodeStyleGetMargin(m_node, static_cast<YGEdge>(edge)));
 }
 
 int Node::getOverflow(void) const
@@ -229,9 +279,9 @@ int Node::getOverflow(void) const
     return YGNodeStyleGetOverflow(m_node);
 }
 
-double Node::getFlexBasis(void) const
+Value Node::getFlexBasis(void) const
 {
-    return YGNodeStyleGetFlexBasis(m_node);
+    return Value::fromYGValue(YGNodeStyleGetFlexBasis(m_node));
 }
 
 double Node::getFlexGrow(void) const
@@ -244,34 +294,34 @@ double Node::getFlexShrink(void) const
     return YGNodeStyleGetFlexShrink(m_node);
 }
 
-double Node::getWidth(void) const
+Value Node::getWidth(void) const
 {
-    return YGNodeStyleGetWidth(m_node);
+    return Value::fromYGValue(YGNodeStyleGetWidth(m_node));
 }
 
-double Node::getHeight(void) const
+Value Node::getHeight(void) const
 {
-    return YGNodeStyleGetHeight(m_node);
+    return Value::fromYGValue(YGNodeStyleGetHeight(m_node));
 }
 
-double Node::getMinWidth(void) const
+Value Node::getMinWidth(void) const
 {
-    return YGNodeStyleGetMinWidth(m_node);
+    return Value::fromYGValue(YGNodeStyleGetMinWidth(m_node));
 }
 
-double Node::getMinHeight(void) const
+Value Node::getMinHeight(void) const
 {
-    return YGNodeStyleGetMinHeight(m_node);
+    return Value::fromYGValue(YGNodeStyleGetMinHeight(m_node));
 }
 
-double Node::getMaxWidth(void) const
+Value Node::getMaxWidth(void) const
 {
-    return YGNodeStyleGetMaxWidth(m_node);
+    return Value::fromYGValue(YGNodeStyleGetMaxWidth(m_node));
 }
 
-double Node::getMaxHeight(void) const
+Value Node::getMaxHeight(void) const
 {
-    return YGNodeStyleGetMaxHeight(m_node);
+    return Value::fromYGValue(YGNodeStyleGetMaxHeight(m_node));
 }
 
 double Node::getAspectRatio(void) const
@@ -284,9 +334,9 @@ double Node::getBorder(int edge) const
     return YGNodeStyleGetBorder(m_node, static_cast<YGEdge>(edge));
 }
 
-double Node::getPadding(int edge) const
+Value Node::getPadding(int edge) const
 {
-    return YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge));
+    return Value::fromYGValue(YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
 }
 
 void Node::insertChild(Node * child, unsigned index)

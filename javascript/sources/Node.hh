@@ -17,6 +17,7 @@
 
 #include "./Layout.hh"
 #include "./Size.hh"
+#include "./Value.hh"
 
 class Node {
 
@@ -53,6 +54,7 @@ class Node {
 
     void setPositionType(int positionType);
     void setPosition(int edge, double position);
+    void setPositionPercent(int edge, double position);
 
     void setAlignContent(int alignContent);
     void setAlignItems(int alignItems);
@@ -62,33 +64,42 @@ class Node {
     void setJustifyContent(int justifyContent);
 
     void setMargin(int edge, double margin);
+    void setMarginPercent(int edge, double margin);
 
     void setOverflow(int overflow);
 
     void setFlex(double flex);
     void setFlexBasis(double flexBasis);
+    void setFlexBasisPercent(double flexBasis);
     void setFlexGrow(double flexGrow);
     void setFlexShrink(double flexShrink);
 
     void setWidth(double width);
+    void setWidthPercent(double width);
     void setHeight(double height);
+    void setHeightPercent(double height);
 
     void setMinWidth(double minWidth);
+    void setMinWidthPercent(double minWidth);
     void setMinHeight(double minHeight);
+    void setMinHeightPercent(double minHeight);
 
     void setMaxWidth(double maxWidth);
+    void setMaxWidthPercent(double maxWidth);
     void setMaxHeight(double maxHeight);
+    void setMaxHeightPercent(double maxHeight);
 
     void setAspectRatio(double aspectRatio);
 
     void setBorder(int edge, double border);
 
     void setPadding(int edge, double padding);
+    void setPaddingPercent(int edge, double padding);
 
  public: // Style getters
 
     int getPositionType(void) const;
-    double getPosition(int edge) const;
+    Value getPosition(int edge) const;
 
     int getAlignContent(void) const;
     int getAlignItems(void) const;
@@ -97,28 +108,28 @@ class Node {
     int getFlexWrap(void) const;
     int getJustifyContent(void) const;
 
-    double getMargin(int edge) const;
+    Value getMargin(int edge) const;
 
     int getOverflow(void) const;
 
-    double getFlexBasis(void) const;
+    Value getFlexBasis(void) const;
     double getFlexGrow(void) const;
     double getFlexShrink(void) const;
 
-    double getWidth(void) const;
-    double getHeight(void) const;
+    Value getWidth(void) const;
+    Value getHeight(void) const;
 
-    double getMinWidth(void) const;
-    double getMinHeight(void) const;
+    Value getMinWidth(void) const;
+    Value getMinHeight(void) const;
 
-    double getMaxWidth(void) const;
-    double getMaxHeight(void) const;
+    Value getMaxWidth(void) const;
+    Value getMaxHeight(void) const;
 
     double getAspectRatio(void) const;
 
     double getBorder(int edge) const;
 
-    double getPadding(int edge) const;
+    Value getPadding(int edge) const;
 
  public: // Tree hierarchy mutators
 

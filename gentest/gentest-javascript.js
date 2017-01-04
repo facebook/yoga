@@ -11,6 +11,12 @@ var JavascriptEmitter = function() {
   Emitter.call(this, 'js', '  ');
 };
 
+function toValueJavascript(value) {
+  if (value.match(/^[0-9.e+-]+px$/i)) return parseFloat(value);
+  if (value.match(/^[0-9.e+-]+%/i)) return JSON.stringify(value);
+  return value;
+}
+
 function toJavascriptUpper(symbol) {
   var out = '';
   for (var i = 0; i < symbol.length; i++) {
@@ -143,90 +149,90 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetAlignContent:{value:function(nodeName, value) {
-    this.push(nodeName + '.setAlignContent(' + value + ');');
+    this.push(nodeName + '.setAlignContent(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetAlignItems:{value:function(nodeName, value) {
-    this.push(nodeName + '.setAlignItems(' + value + ');');
+    this.push(nodeName + '.setAlignItems(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetAlignSelf:{value:function(nodeName, value) {
-    this.push(nodeName + '.setAlignSelf(' + value + ');');
+    this.push(nodeName + '.setAlignSelf(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setBorder(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.setBorder(' + toValueJavascript(edge) + ', ' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetDirection:{value:function(nodeName, value) {
-    this.push(nodeName + '.setDirection(' + value + ');');
+    this.push(nodeName + '.setDirection(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexBasis(' + value + ');');
+    this.push(nodeName + '.setFlexBasis(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetFlexDirection:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexDirection(' + value + ');');
+    this.push(nodeName + '.setFlexDirection(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexGrow(' + value + ');');
+    this.push(nodeName + '.setFlexGrow(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexShrink(' + value + ');');
+    this.push(nodeName + '.setFlexShrink(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetFlexWrap:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexWrap(' + value + ');');
+    this.push(nodeName + '.setFlexWrap(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setHeight(' + value + ');');
+    this.push(nodeName + '.setHeight(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetJustifyContent:{value:function(nodeName, value) {
-    this.push(nodeName + '.setJustifyContent(' + value + ');');
+    this.push(nodeName + '.setJustifyContent(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setMargin(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.setMargin(' + toValueJavascript(edge) + ', ' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setMaxHeight(' + value + ');');
+    this.push(nodeName + '.setMaxHeight(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setMaxWidth(' + value + ');');
+    this.push(nodeName + '.setMaxWidth(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setMinHeight(' + value + ');');
+    this.push(nodeName + '.setMinHeight(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setMinWidth(' + value + ');');
+    this.push(nodeName + '.setMinWidth(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetOverflow:{value:function(nodeName, value) {
-    this.push(nodeName + '.setOverflow(' + value + ');');
+    this.push(nodeName + '.setOverflow(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setPadding(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.setPadding(' + toValueJavascript(edge) + ', ' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setPosition(' + edge + ', ' + value + ');');
+    this.push(nodeName + '.setPosition(' + toValueJavascript(edge) + ', ' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetPositionType:{value:function(nodeName, value) {
-    this.push(nodeName + '.setPositionType(' + value + ');');
+    this.push(nodeName + '.setPositionType(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setWidth(' + value + ');');
+    this.push(nodeName + '.setWidth(' + toValueJavascript(value) + ');');
   }},
 });

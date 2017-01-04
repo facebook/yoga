@@ -12,6 +12,7 @@
 #include "./Node.hh"
 #include "./Layout.hh"
 #include "./Size.hh"
+#include "./Value.hh"
 #include "./global.hh"
 
 #define NBIND_DUPLICATE_POINTERS true
@@ -36,6 +37,12 @@ NBIND_CLASS(Layout)
     construct<>();
 }
 
+NBIND_CLASS(Value)
+{
+    construct<>();
+    construct<int, double>();
+}
+
 NBIND_CLASS(Node)
 {
     method(create);
@@ -47,6 +54,7 @@ NBIND_CLASS(Node)
 
     method(setPositionType);
     method(setPosition);
+    method(setPositionPercent);
 
     method(setAlignContent);
     method(setAlignItems);
@@ -56,28 +64,37 @@ NBIND_CLASS(Node)
     method(setJustifyContent);
 
     method(setMargin);
+    method(setMarginPercent);
 
     method(setOverflow);
 
     method(setFlex);
     method(setFlexBasis);
+    method(setFlexBasisPercent);
     method(setFlexGrow);
     method(setFlexShrink);
 
     method(setWidth);
+    method(setWidthPercent);
     method(setHeight);
+    method(setHeightPercent);
 
     method(setMinWidth);
+    method(setMinWidthPercent);
     method(setMinHeight);
+    method(setMinHeightPercent);
 
     method(setMaxWidth);
+    method(setMaxWidthPercent);
     method(setMaxHeight);
+    method(setMaxHeightPercent);
 
     method(setAspectRatio);
 
     method(setBorder);
 
     method(setPadding);
+    method(setPaddingPercent);
 
     method(getPositionType);
     method(getPosition);

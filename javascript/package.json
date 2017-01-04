@@ -28,7 +28,9 @@
 
         "bench": "node tests/run-bench $(find tests/Benchmarks -name '*.js')",
 
-        "install": "npm -- run autogypi && npm -- run build:node"
+        "install": "npm -- run autogypi && npm -- run build:node",
+
+        "prepare": "npm -- run build:browser"
 
     },
 
