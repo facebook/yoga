@@ -17,8 +17,21 @@ namespace Facebook.Yoga
         private float value;
         private YogaUnit unit;
 
-        public YogaUnit Unit => unit;
-        public float Value => value;
+        public YogaUnit Unit
+        {
+            get
+            {
+                return unit;
+            }
+        }
+
+        public float Value
+        {
+            get
+            {
+                return value;
+            }
+        }
 
         public static YogaValue Pixel(float value)
         {
