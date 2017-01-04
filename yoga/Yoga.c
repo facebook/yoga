@@ -990,7 +990,7 @@ static float YGBaselineOfFirstLine(const YGNodeRef node, const YGFlexDirection m
     return YGUndefined;
   }
 
-  float baseline = YGBaselineOfFirstLine(baselineChild, node->style.direction, node->layout.measuredDimensions[YGDimensionWidth]);
+  float baseline = YGBaselineOfFirstLine(baselineChild, node->style.flexDirection, node->layout.measuredDimensions[YGDimensionWidth]);
   if(YGFloatIsUndefined(baseline))
   {
     baseline = YGNodeLeadingPaddingAndBorder(baselineChild, mainAxis, parentWidth)
