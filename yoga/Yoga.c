@@ -1015,6 +1015,9 @@ static inline bool YGNodeIsFlex(const YGNodeRef node) {
 }
 
 static bool YGIsBaselineLayout(const YGNodeRef node) {
+  if (YGFlexDirectionIsColumn(node->style.flexDirection)) {
+    return false;
+  }
   if (node->style.alignItems == YGAlignBaseline) {
     return true;
   }
