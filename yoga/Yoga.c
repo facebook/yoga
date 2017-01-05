@@ -1000,14 +1000,14 @@ static float YGBaselineOfFirstLine(const YGNodeRef node, const YGFlexDirection m
   return baseline + baselineChild->layout.position[YGEdgeTop];
 }
 
-static float YGBaselineWithMargin(const YGNodeRef node, const YGFlexDirection mainAxis, const float parentWidth)
+static inline float YGBaselineForNode(const YGNodeRef node, const YGFlexDirection crossAxis, const float parentWidth)
 {
-  float baseline = YGBaselineOfFirstLine(node, mainAxis, parentWidth);
+  float baseline = YGBaselineOfFirstLine(node, crossAxis, parentWidth);
   if(YGFloatIsUndefined(baseline))
   {
-    baseline = node->layout.measuredDimensions[dim[mainAxis]];
+    return node->layout.measuredDimensions[dim[crossAxis]];
   }
-  return baseline + YGNodeLeadingMargin(node, mainAxis, parentWidth);
+  return baseline;
 }
 
 
@@ -2535,7 +2535,8 @@ static void YGNodelayoutImpl(const YGNodeRef node,
           if (performLayout && YGNodeAlignItem(node, child) == YGAlignBaseline)
           {
             maxAscentForCurrentLine = fmaxf(maxAscentForCurrentLine, 
-                YGBaselineWithMargin(child, crossAxis, availableInnerWidth));
+                YGBaselineForNode(child, crossAxis, availableInnerWidth))
+                  + YGNodeLeadingMargin(child, crossAxis, availableInnerWidth);
           }
 
           if (YGNodeIsLayoutDimDefined(child, crossAxis)) {
@@ -2582,7 +2583,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
               case YGAlignBaseline: {
                 child->layout.position[pos[crossAxis]] =
                        currentLead + maxAscentForCurrentLine -
-                       YGBaselineWithMargin(child, crossAxis, availableInnerWidth);;
+                       YGBaselineForNode(child, crossAxis, availableInnerWidth);
                 break;
               }
               case YGAlignAuto:
