@@ -953,10 +953,11 @@ static inline YGDirection YGNodeResolveDirection(const YGNodeRef node,
 static float YGBaselineOfFirstLine(const YGNodeRef node, const YGFlexDirection crossAxis) {
   if (node->baseline != NULL) {
     const float baseline = node->baseline(node);
-    if (YGFloatIsUndefined(baseline)) {
-      return node->layout.measuredDimensions[dim[crossAxis]];
-    }
-    return baseline;
+	if(YGFloatIsUndefined(baseline))
+	{
+		return node->layout.measuredDimensions[dim[crossAxis]];
+	}
+	return  baseline;
   }
 
   YGNodeRef baselineChild = NULL;
