@@ -337,12 +337,7 @@ YGMeasureFunc YGNodeGetMeasureFunc(const YGNodeRef node) {
 
 
 void YGNodeSetBaselineFunc(const YGNodeRef node, YGBaselineFunc baselineFunc) {
-  if (baselineFunc == NULL) {
-    node->baseline = NULL;
-  }
-  else {
-    node->baseline = baselineFunc;
-  }
+  node->baseline = baselineFunc;
 }
 
 YGBaselineFunc YGNodeGetBaselineFunc(const YGNodeRef node) {
@@ -965,7 +960,7 @@ static float YGBaselineOfFirstLine(const YGNodeRef node, const YGFlexDirection m
   }
 
   YGNodeRef baselineChild = NULL;
-  for(unsigned int i = 0; i < YGNodeGetChildCount(node); ++i)
+  for(uint32_t i = 0; i < YGNodeGetChildCount(node); i++)
   {
     const YGNodeRef child = YGNodeGetChild(node, i);
     if(child->style.positionType == YGPositionTypeAbsolute || child->lineIndex > 0)
@@ -2524,6 +2519,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
       // compute the line's height and find the endIndex
       float lineHeight = 0;
       float maxAscentForCurrentLine = 0;
+	  float maxDescentForCurrentLine = 0;
       for (ii = startIndex; ii < childCount; ii++) {
         const YGNodeRef child = YGNodeListGet(node->children, ii);
 
@@ -2531,18 +2527,20 @@ static void YGNodelayoutImpl(const YGNodeRef node,
           if (child->lineIndex != i) {
             break;
           }
-
-          if (performLayout && YGNodeAlignItem(node, child) == YGAlignBaseline)
-          {
-            maxAscentForCurrentLine = fmaxf(maxAscentForCurrentLine, 
-                YGBaselineForNode(child, crossAxis, availableInnerWidth))
-                  + YGNodeLeadingMargin(child, crossAxis, availableInnerWidth);
-          }
-
           if (YGNodeIsLayoutDimDefined(child, crossAxis)) {
             lineHeight = fmaxf(lineHeight,
                                child->layout.measuredDimensions[dim[crossAxis]] +
                                    YGNodeMarginForAxis(child, crossAxis, availableInnerWidth));
+          }
+          if (performLayout && YGNodeAlignItem(node, child) == YGAlignBaseline)
+          {
+            const float ascent = YGBaselineForNode(child, crossAxis, availableInnerWidth) +
+               YGNodeLeadingMargin(child, crossAxis, availableInnerWidth);
+            const float descent = child->layout.measuredDimensions[dim[crossAxis]] +
+               YGNodeMarginForAxis(child, crossAxis, availableInnerWidth) - ascent;
+            maxAscentForCurrentLine = fmaxf(maxAscentForCurrentLine, ascent);
+            maxDescentForCurrentLine = fmaxf(maxDescentForCurrentLine, descent);
+            lineHeight = fmaxf(lineHeight, maxAscentForCurrentLine + maxDescentForCurrentLine);
           }
         }
       }
