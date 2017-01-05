@@ -94,16 +94,18 @@ typedef struct YGNode {
   YGStyle style;
   YGLayout layout;
   uint32_t lineIndex;
-  bool hasNewLayout;
+
   YGNodeRef parent;
   YGNodeListRef children;
-  bool isDirty;
 
   struct YGNode *nextChild;
 
   YGMeasureFunc measure;
   YGPrintFunc print;
   void *context;
+
+  bool isDirty;
+  bool hasNewLayout;
 } YGNode;
 
 #define YG_UNDEFINED_VALUES \
