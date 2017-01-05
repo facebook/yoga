@@ -7,11 +7,13 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <UIKit/UIKit.h>
-#import "YGLayout.h"
+#pragma once
 
-@interface UIView (Yoga)
+YG_EXTERN_C_BEGIN
 
-@property (nonatomic, readonly, retain) YGLayout *yoga;
+typedef struct YGValue {
+  float value;
+  YGUnit unit;
+} YGValue;
 
-@end
+YG_EXTERN_C_END
