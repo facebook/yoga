@@ -1008,17 +1008,20 @@ static inline bool YGNodeIsFlex(const YGNodeRef node) {
           (YGNodeStyleGetFlexGrow(node) != 0 || YGNodeStyleGetFlexShrink(node) != 0));
 }
 
-static bool YGIsBaselineLayout(const YGNodeRef node) {
-  if (node->style.alignItems == YGAlignBaseline) {
-    return true;
+static bool YGIsBaselineLayout(const YGNodeRef node)
+{
+  if(node->style.alignItems == YGAlignBaseline)
+  {
+	  return true;
   }
 
-  for (uint32_t i = 0; i < YGNodeGetChildCount(node); i++) {
-    const YGNodeRef child = YGNodeGetChild(node, i);
-    if (child->style.positionType == YGPositionTypeRelative &&
-        child->style.alignSelf == YGAlignBaseline) {
-      return true;
-    }
+  for(uint32_t i = 0; i < YGNodeGetChildCount(node); i++)
+  {
+	  const YGNodeRef child = YGNodeGetChild(node, i);
+	  if(child->style.positionType == YGPositionTypeRelative && child->style.alignSelf == YGAlignBaseline)
+	  {
+		  return true;
+	  }
   }
   return false;
 }
