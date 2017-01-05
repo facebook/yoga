@@ -950,7 +950,7 @@ static inline YGDirection YGNodeResolveDirection(const YGNodeRef node,
   }
 }
 
-static float YGBaselineOfFirstLine(const YGNodeRef node, const YGFlexDirection crossAxis) {
+static float YGBaseline(const YGNodeRef node, const YGFlexDirection crossAxis) {
   if (node->baseline != NULL) {
     const float baseline = node->baseline(node);
     if (YGFloatIsUndefined(baseline)) {
@@ -979,7 +979,7 @@ static float YGBaselineOfFirstLine(const YGNodeRef node, const YGFlexDirection c
   if (baselineChild == NULL) {
     return node->layout.measuredDimensions[dim[crossAxis]];
   }
-  const float baseline = YGBaselineOfFirstLine(baselineChild, crossAxis);
+  const float baseline = YGBaseline(baselineChild, crossAxis);
   return baseline + baselineChild->layout.position[pos[crossAxis]];
 }
 
@@ -2508,8 +2508,8 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                                child->layout.measuredDimensions[dim[crossAxis]] +
                                    YGNodeMarginForAxis(child, crossAxis, availableInnerWidth));
           }
-          if (performLayout && YGNodeAlignItem(node, child) == YGAlignBaseline) {
-            const float ascent = YGBaselineOfFirstLine(child, crossAxis) +
+          if (YGNodeAlignItem(node, child) == YGAlignBaseline) {
+            const float ascent = YGBaseline(child, crossAxis) +
                                  YGNodeLeadingMargin(child, crossAxis, availableInnerWidth);
             const float descent = child->layout.measuredDimensions[dim[crossAxis]] +
                                   YGNodeMarginForAxis(child, crossAxis, availableInnerWidth) -
@@ -2557,7 +2557,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
               case YGAlignBaseline: {
                 child->layout.position[pos[crossAxis]] =
                     currentLead + maxAscentForCurrentLine -
-                    YGBaselineOfFirstLine(child, crossAxis) +
+                    YGBaseline(child, crossAxis) +
                     YGNodeLeadingPosition(child, crossAxis, availableInnerCrossDim);
                 break;
               }
