@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Facebook.Yoga</id>
+    <version>1.0.1-pre</version>
+    <title>Facebook.Yoga</title>
+    <authors>Facebook</authors>
+    <owners>Facebook</owners>
+    <licenseUrl>https://github.com/facebook/css-layout/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/facebook/css-layout</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A subset of CSS's flexbox layout algorithm and box model.</description>
+    <copyright>Copyright 2016 Facebook</copyright>
+    <tags>flexbox flex-box css layout css-layout yoga facebook native</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard1.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <!-- build -->
+    <file src="Facebook.Yoga.targets" target="build\netstandard"/>
+
+    <!-- lib -->
+    <file src="..\Windows\Facebook.Yoga\bin\Release\Facebook.Yoga.dll" target="lib\netstandard"/>
+
+    <!-- runtimes -->
+    <file src="..\Windows\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win-x86\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win-x86\lib\netstandard"/>
+    
+    <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win-x64\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win-x64\lib\netstandard"/>
+    
+    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win8-arm\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win8-arm\lib\netstandard"/>    
+
+    <!-- Native -->
+    <file src="..\Yoga\bin\x86\Release\Yoga.dll" target="runtimes\win-x86\native"/>
+    <file src="..\Yoga\bin\x86\Release\Yoga.pdb" target="runtimes\win-x86\native"/>
+    
+    <file src="..\Yoga\bin\x64\Release\Yoga.dll" target="runtimes\win-x64\native"/>
+    <file src="..\Yoga\bin\x64\Release\Yoga.pdb" target="runtimes\win-x64\native"/>
+
+    <file src="..\Yoga\bin\ARM\Release\Yoga.dll" target="runtimes\win8-arm\native"/>
+    <file src="..\Yoga\bin\ARM\Release\Yoga.pdb" target="runtimes\win8-arm\native"/>
+  </files>
+</package>
