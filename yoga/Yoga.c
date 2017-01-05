@@ -967,10 +967,12 @@ static float YGBaseline(const YGNodeRef node) {
   YGNodeRef baselineChild = NULL;
   for (uint32_t i = 0; i < YGNodeGetChildCount(node); i++) {
     const YGNodeRef child = YGNodeGetChild(node, i);
-    if (child->style.positionType == YGPositionTypeAbsolute || child->lineIndex > 0) {
+    if (child->lineIndex > 0) {
+      break;
+    }
+    if (child->style.positionType == YGPositionTypeAbsolute) {
       continue;
     }
-
     if (YGNodeAlignItem(node, child) == YGAlignBaseline) {
       baselineChild = child;
       break;
@@ -2529,8 +2531,8 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                                    YGNodeMarginForAxis(child, crossAxis, availableInnerWidth));
           }
           if (YGNodeAlignItem(node, child) == YGAlignBaseline) {
-            const float ascent = YGBaseline(child) +
-                                 YGNodeLeadingMargin(child, crossAxis, availableInnerWidth);
+            const float ascent =
+                YGBaseline(child) + YGNodeLeadingMargin(child, crossAxis, availableInnerWidth);
             const float descent = child->layout.measuredDimensions[dim[crossAxis]] +
                                   YGNodeMarginForAxis(child, crossAxis, availableInnerWidth) -
                                   ascent;
