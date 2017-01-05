@@ -1025,6 +1025,7 @@ static bool YGIsBaselineLayout(const YGNodeRef node) {
       return true;
     }
   }
+
   return false;
 }
 
@@ -2575,9 +2576,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                 break;
               }
               case YGAlignBaseline: {
-                child->layout.position[pos[crossAxis]] =
+                child->layout.position[YGEdgeTop] =
                     currentLead + maxAscentForCurrentLine - YGBaseline(child) +
-                    YGNodeLeadingPosition(child, crossAxis, availableInnerCrossDim);
+                    YGNodeLeadingPosition(child, YGFlexDirectionColumn, availableInnerCrossDim);
                 break;
               }
               case YGAlignAuto:
