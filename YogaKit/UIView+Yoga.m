@@ -11,6 +11,8 @@
 
 #import <objc/runtime.h>
 
+static const void *kYGNodeBridgeAssociatedKey = &kYGNodeBridgeAssociatedKey;
+
 @interface YGNodeBridge : NSObject
 @property (nonatomic, assign, readonly) YGNodeRef cnode;
 @end
@@ -38,6 +40,14 @@
 @end
 
 @implementation UIView (Yoga)
+
+- (void)yg_markDirty
+{
+  YGNodeBridge *const bridge = objc_getAssociatedObject(self, kYGNodeBridgeAssociatedKey);
+  if (bridge != nil && [self yg_isLeaf]) {
+    YGNodeMarkDirty(bridge.cnode);
+  }
+}
 
 - (BOOL)yg_usesYoga
 {
@@ -226,13 +236,12 @@
 
 - (YGNodeRef)ygNode
 {
-  YGNodeBridge *node = objc_getAssociatedObject(self, @selector(ygNode));
+  YGNodeBridge *node = objc_getAssociatedObject(self, kYGNodeBridgeAssociatedKey);
   if (!node) {
     node = [YGNodeBridge new];
     YGNodeSetContext(node.cnode, (__bridge void *) self);
-    objc_setAssociatedObject(self, @selector(ygNode), node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kYGNodeBridgeAssociatedKey, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
-
   return node.cnode;
 }
 

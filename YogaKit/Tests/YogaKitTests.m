@@ -96,6 +96,29 @@
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(514,21), containerSize), @"Size is actually %@", NSStringFromCGSize(containerSize));
 }
 
+- (void)testThatMarkingLeafsAsDirtyWillTriggerASizeRecalculation
+{
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 500, 50)];
+  [container yg_setUsesYoga:YES];
+  [container yg_setFlexDirection:YGFlexDirectionRow];
+  [container yg_setAlignItems:YGAlignFlexStart];
+
+  UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+  label.text = @"This is a short text.";
+  label.numberOfLines = 1;
+  [label yg_setUsesYoga:YES];
+  [container addSubview:label];
+
+  [container yg_applyLayout];
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(146,21), label.bounds.size), @"Size is actually %@", NSStringFromCGSize(label.bounds.size));
+
+  label.text = @"This is a slightly longer text.";
+  [label yg_markDirty];
+
+  [container yg_applyLayout];
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(213,21), label.bounds.size), @"Size is actually %@", NSStringFromCGSize(label.bounds.size));
+}
+
 - (void)testFrameAndOriginPlacement
 {
   const CGSize containerSize = CGSizeMake(320, 50);
