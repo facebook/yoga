@@ -951,7 +951,7 @@ static inline YGDirection YGNodeResolveDirection(const YGNodeRef node,
 }
 
 static float YGBaselineOfFirstLine(const YGNodeRef node,
-                                   const YGFlexDirection mainAxis,
+                                   const YGFlexDirection crossAxis,
                                    const float parentWidth) {
   if (node->baseline != NULL) {
     return node->baseline(node);
@@ -982,8 +982,8 @@ static float YGBaselineOfFirstLine(const YGNodeRef node,
                                          node->style.flexDirection,
                                          node->layout.measuredDimensions[YGDimensionWidth]);
   if (YGFloatIsUndefined(baseline)) {
-    baseline = YGNodeLeadingPaddingAndBorder(baselineChild, mainAxis, parentWidth) +
-               baselineChild->layout.measuredDimensions[dim[mainAxis]];
+    baseline = YGNodeLeadingPaddingAndBorder(baselineChild, node->style.flexDirection, node->layout.measuredDimensions[YGDimensionWidth]) +
+               baselineChild->layout.measuredDimensions[dim[node->style.flexDirection]];
   }
 
   return baseline + baselineChild->layout.position[YGEdgeTop];
