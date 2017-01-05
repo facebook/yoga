@@ -980,7 +980,7 @@ static float YGBaselineOfFirstLine(const YGNodeRef node, const YGFlexDirection c
     return node->layout.measuredDimensions[dim[crossAxis]];
   }
 
-  const float baseline = YGBaselineOfFirstLine(baselineChild, node->style.flexDirection);
+  const float baseline = YGBaselineOfFirstLine(baselineChild, crossAxis);
   return baseline + baselineChild->layout.position[YGEdgeTop];
 }
 
