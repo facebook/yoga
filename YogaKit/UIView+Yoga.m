@@ -316,8 +316,8 @@ static void YGAttachNodesFromViewHierachy(UIView *const view)
 
   // Only leaf nodes should have a measure function
   if (view.yg_isLeaf) {
-    YGNodeSetMeasureFunc(node, YGMeasureView);
     YGRemoveAllChildren(node);
+    YGNodeSetMeasureFunc(node, YGMeasureView);
   } else {
     YGNodeSetMeasureFunc(node, NULL);
 
