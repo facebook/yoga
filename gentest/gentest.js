@@ -377,6 +377,7 @@ function alignValue(e, value) {
     case 'stretch': return e.YGAlignStretch;
     case 'flex-start': return e.YGAlignFlexStart;
     case 'flex-end': return e.YGAlignFlexEnd;
+    case 'baseline': return e.YGAlignBaseline;
   }
 }
 
