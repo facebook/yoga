@@ -958,9 +958,7 @@ static inline YGDirection YGNodeResolveDirection(const YGNodeRef node,
 static float YGBaseline(const YGNodeRef node) {
   if (node->baseline != NULL) {
     const float baseline = node->baseline(node);
-    if (YGFloatIsUndefined(baseline)) {
-      return node->layout.measuredDimensions[YGDimensionHeight];
-    }
+    YG_ASSERT(!YGFloatIsUndefined(baseline), "Expect custom baseline function to not return NaN")
     return baseline;
   }
 
