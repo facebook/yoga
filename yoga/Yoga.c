@@ -2531,7 +2531,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
           if (YGNodeAlignItem(node, child) == YGAlignBaseline) {
             const float ascent =
                 YGBaseline(child) + YGNodeLeadingMargin(child, crossAxis, availableInnerWidth);
-            const float descent = child->layout.measuredDimensions[dim[crossAxis]] +
+            const float descent = child->layout.measuredDimensions[YGDimensionHeight] +
                                   YGNodeMarginForAxis(child, crossAxis, availableInnerWidth) -
                                   ascent;
             maxAscentForCurrentLine = fmaxf(maxAscentForCurrentLine, ascent);
