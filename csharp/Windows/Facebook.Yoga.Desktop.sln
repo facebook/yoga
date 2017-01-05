@@ -1,0 +1,102 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5289E508-8386-45A1-A12B-258A5899CD45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native", "Native", "{51A8E803-C084-431F-9130-F277481C2BB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NETStandard", "NETStandard", "{DCF7899B-A487-49C0-BCDE-DC088B6750C2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yoga", "..\Yoga\Yoga.vcxproj", "{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{39A2FFDA-C093-4FA6-8143-45B5019E7DAC}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared", "..\Facebook.Yoga\Facebook.Yoga.Shared.shproj", "{91C42D32-291D-4B72-90B4-551663D60B8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga", "Facebook.Yoga\Facebook.Yoga.csproj", "{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5} = {0446C86B-F47B-4C46-B673-C7AE0CFF35D5}
+	EndProjectSection
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared.Tests", "..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.shproj", "{4EDC82D9-A201-4831-8FE0-98F468F8E4AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Desktop.Tests", "Facebook.Yoga.Desktop.Tests\Facebook.Yoga.Desktop.Tests.csproj", "{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{3aace384-fdec-4d91-a3b2-eeb21b46c9ad}*SharedItemsImports = 4
+		..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems*{4edc82d9-a201-4831-8fe0-98f468f8e4ae}*SharedItemsImports = 13
+		..\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{91c42d32-291d-4b72-90b4-551663d60b8b}*SharedItemsImports = 13
+		..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems*{ac23f444-5545-4196-8b9f-5c1f6b3e7fb3}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|ARM.ActiveCfg = Debug|ARM
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|ARM.Build.0 = Debug|ARM
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|x64.ActiveCfg = Debug|x64
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|x64.Build.0 = Debug|x64
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|x86.ActiveCfg = Debug|Win32
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Debug|x86.Build.0 = Debug|Win32
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|Any CPU.ActiveCfg = Release|Win32
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|ARM.ActiveCfg = Release|ARM
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|ARM.Build.0 = Release|ARM
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|x64.ActiveCfg = Release|x64
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|x64.Build.0 = Release|x64
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|x86.ActiveCfg = Release|Win32
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5}.Release|x86.Build.0 = Release|Win32
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|ARM.ActiveCfg = Debug|ARM
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|ARM.Build.0 = Debug|ARM
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|x64.ActiveCfg = Debug|x64
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|x64.Build.0 = Debug|x64
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|x86.ActiveCfg = Debug|x86
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Debug|x86.Build.0 = Debug|x86
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|ARM.ActiveCfg = Release|ARM
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|ARM.Build.0 = Release|ARM
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|x64.ActiveCfg = Release|x64
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|x64.Build.0 = Release|x64
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|x86.ActiveCfg = Release|x86
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD}.Release|x86.Build.0 = Release|x86
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Debug|ARM.Build.0 = Debug|Any CPU
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Debug|x64.ActiveCfg = Debug|x64
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Debug|x64.Build.0 = Debug|x64
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Debug|x86.ActiveCfg = Debug|x86
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Debug|x86.Build.0 = Debug|x86
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Release|ARM.Build.0 = Release|Any CPU
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Release|x64.ActiveCfg = Release|x64
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Release|x64.Build.0 = Release|x64
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Release|x86.ActiveCfg = Release|x86
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0446C86B-F47B-4C46-B673-C7AE0CFF35D5} = {51A8E803-C084-431F-9130-F277481C2BB2}
+		{91C42D32-291D-4B72-90B4-551663D60B8B} = {39A2FFDA-C093-4FA6-8143-45B5019E7DAC}
+		{3AACE384-FDEC-4D91-A3B2-EEB21B46C9AD} = {DCF7899B-A487-49C0-BCDE-DC088B6750C2}
+		{4EDC82D9-A201-4831-8FE0-98F468F8E4AE} = {39A2FFDA-C093-4FA6-8143-45B5019E7DAC}
+		{AC23F444-5545-4196-8B9F-5C1F6B3E7FB3} = {5289E508-8386-45A1-A12B-258A5899CD45}
+	EndGlobalSection
+EndGlobal
