@@ -940,9 +940,7 @@ static inline float YGNodePaddingAndBorderForAxis(const YGNodeRef node,
 static inline YGAlign YGNodeAlignItem(const YGNodeRef node, const YGNodeRef child) {
   YGAlign align =
       child->style.alignSelf == YGAlignAuto ? node->style.alignItems : child->style.alignSelf;
-  if (align == YGAlignBaseline &&
-      YGFlexDirectionIsRow(node->style.flexDirection) ==
-          YGFlexDirectionIsRow(child->style.flexDirection)) {
+  if (align == YGAlignBaseline && YGFlexDirectionIsColumn(node->style.flexDirection)) {
     return YGAlignFlexStart;
   }
   return align;
@@ -989,17 +987,7 @@ static float YGBaseline(const YGNodeRef node,
     return node->layout.measuredDimensions[dim[crossAxis]];
   }
 
-  float baseline = YGUndefined;
-  if (YGFlexDirectionIsRow(node->style.flexDirection) &&
-      YGFlexDirectionIsColumn(baselineChild->style.flexDirection)) {
-    baseline = baselineChild->layout.measuredDimensions[dim[crossAxis]];
-  } else if (YGFlexDirectionIsColumn(node->style.flexDirection) &&
-             YGFlexDirectionIsRow(baselineChild->style.flexDirection)) {
-    baseline = baselineChild->layout.measuredDimensions[dim[mainAxis]];
-  } else {
-    baseline = YGBaseline(baselineChild, crossAxis, mainAxis);
-  }
-
+  const float baseline = YGBaseline(baselineChild, crossAxis, mainAxis);
   return baseline + baselineChild->layout.position[pos[crossAxis]];
 }
 
