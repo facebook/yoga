@@ -10,6 +10,7 @@
 #import <XCTest/XCTest.h>
 
 #import <YogaKit/UIView+Yoga.h>
+#import "Yoga.h"
 
 @interface YogaKitTests : XCTestCase
 @end
