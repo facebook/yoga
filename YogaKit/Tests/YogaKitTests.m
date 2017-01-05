@@ -343,4 +343,22 @@
     }
 }
 
+- (void)testThatANonLeafNodeCanBecomeALeafNode
+{
+    UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+    [container yg_setUsesYoga:YES];
+
+    UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
+    [subview1 yg_setUsesYoga:YES];
+    [container addSubview:subview1];
+
+    UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
+    [subview2 yg_setUsesYoga:YES];
+    [subview1 addSubview:subview2];
+
+    [container yg_applyLayout];
+    [subview2 removeFromSuperview];
+    [container yg_applyLayout];
+}
+
 @end
