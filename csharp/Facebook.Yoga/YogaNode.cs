@@ -308,6 +308,11 @@ namespace Facebook.Yoga
             }
         }
 
+        public float GetLayoutPadding(YogaEdge edge)
+        {
+            return Native.YGNodeLayoutGetPadding(_ygNode, edge);
+        }
+
         public YogaValue Width
         {
             get

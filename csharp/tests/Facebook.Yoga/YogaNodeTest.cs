@@ -355,5 +355,22 @@ namespace Facebook.Yoga
                 return MeasureOutput.Make(120, 130);
             });
         }
+
+        [Test]
+        public void TestLayoutPadding() {
+          YogaNode node = new YogaNode();
+          node.Width = 100;
+          node.Height = 100;
+          node.SetPadding(YogaEdge.Start, 1);
+          node.SetPadding(YogaEdge.End, 2);
+          node.SetPadding(YogaEdge.Top, 3);
+          node.SetPadding(YogaEdge.Bottom, 4);
+          node.CalculateLayout();
+
+          Assert.AreEqual(1, node.GetLayoutPadding(YogaEdge.Left));
+          Assert.AreEqual(2, node.GetLayoutPadding(YogaEdge.Right));
+          Assert.AreEqual(3, node.GetLayoutPadding(YogaEdge.Top));
+          Assert.AreEqual(4, node.GetLayoutPadding(YogaEdge.Bottom));
+        }
     }
 }

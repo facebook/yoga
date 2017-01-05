@@ -316,6 +316,9 @@ namespace Facebook.Yoga
         public static extern float YGNodeLayoutGetHeight(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern float YGNodeLayoutGetPadding(YGNodeHandle node, YogaEdge edge);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaDirection YGNodeLayoutGetDirection(YGNodeHandle node);
 
         #endregion
