@@ -136,6 +136,16 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
         f.write('\n')
     f.write('YG_EXTERN_C_END\n')
 
+with open(root + '/yoga/YGEnums-Private.h', 'w') as f:
+    f.write(LICENSE)
+    f.write('#pragma once\n\n')
+    f.write('#include "YGMacros.h"\n\n')
+    f.write('YG_EXTERN_C_BEGIN\n\n')
+    for name, values in ENUMS.items():
+        f.write('#define YG%sCount %s\n' % (name, len(values)))
+    f.write('\n')
+    f.write('YG_EXTERN_C_END\n')
+
 # write out java files
 for name, values in ENUMS.items():
     with open(root + '/java/com/facebook/yoga/Yoga%s.java' % name, 'w') as f:

@@ -11,6 +11,7 @@
 
 #include "YGNodeList.h"
 #include "Yoga.h"
+#include "YGEnums-Private.h"
 
 #ifdef _MSC_VER
 #include <float.h>
