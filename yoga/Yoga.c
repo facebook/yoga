@@ -979,9 +979,8 @@ static float YGBaselineOfFirstLine(const YGNodeRef node, const YGFlexDirection c
   if (baselineChild == NULL) {
     return node->layout.measuredDimensions[dim[crossAxis]];
   }
-
   const float baseline = YGBaselineOfFirstLine(baselineChild, crossAxis);
-  return baseline + baselineChild->layout.position[YGEdgeTop];
+  return baseline + baselineChild->layout.position[pos[crossAxis]];
 }
 
 static inline YGFlexDirection YGFlexDirectionResolve(const YGFlexDirection flexDirection,
@@ -2557,7 +2556,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
               }
               case YGAlignBaseline: {
                 child->layout.position[pos[crossAxis]] =
-                    currentLead + maxAscentForCurrentLine - YGBaselineOfFirstLine(child, crossAxis);
+                    currentLead + maxAscentForCurrentLine -
+                    YGBaselineOfFirstLine(child, crossAxis) +
+                    YGNodeLeadingPosition(child, crossAxis, availableInnerCrossDim);
                 break;
               }
               case YGAlignAuto:
