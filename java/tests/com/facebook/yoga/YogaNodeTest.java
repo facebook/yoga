@@ -138,4 +138,21 @@ public class YogaNodeTest {
     node0.copyStyle(node1);
     assertEquals(100, (int) node0.getMaxHeight().value);
   }
+
+  @Test
+  public void testLayoutPadding() {
+    final YogaNode node = new YogaNode();
+    node.setWidth(100);
+    node.setHeight(100);
+    node.setPadding(YogaEdge.START, 1);
+    node.setPadding(YogaEdge.END, 2);
+    node.setPadding(YogaEdge.TOP, 3);
+    node.setPadding(YogaEdge.BOTTOM, 4);
+    node.calculateLayout();
+
+    assertEquals(1, (int) node.getLayoutPadding(YogaEdge.LEFT));
+    assertEquals(2, (int) node.getLayoutPadding(YogaEdge.RIGHT));
+    assertEquals(3, (int) node.getLayoutPadding(YogaEdge.TOP));
+    assertEquals(4, (int) node.getLayoutPadding(YogaEdge.BOTTOM));
+  }
 }
