@@ -13,6 +13,7 @@
 
 @interface YGNodeBridge : NSObject
 @property (nonatomic, assign, readonly) YGNodeRef cnode;
+@property (nonatomic, assign) YGSize cachedSize;
 @end
 
 @implementation YGNodeBridge
@@ -226,14 +227,19 @@
 
 - (YGNodeRef)ygNode
 {
-  YGNodeBridge *node = objc_getAssociatedObject(self, @selector(ygNode));
-  if (!node) {
-    node = [YGNodeBridge new];
-    YGNodeSetContext(node.cnode, (__bridge void *) self);
-    objc_setAssociatedObject(self, @selector(ygNode), node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  return self.ygBridge.cnode;
+}
+
+- (YGNodeBridge *)ygBridge
+{
+  YGNodeBridge *bridge = objc_getAssociatedObject(self, @selector(ygBridge));
+  if (!bridge) {
+    bridge = [YGNodeBridge new];
+    YGNodeSetContext(bridge.cnode, (__bridge void *) self);
+    objc_setAssociatedObject(self, @selector(ygBridge), bridge, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
 
-  return node.cnode;
+  return bridge;
 }
 
 - (CGSize)calculateLayoutWithSize:(CGSize)size
@@ -241,7 +247,7 @@
   NSAssert([NSThread isMainThread], @"YG Layout calculation must be done on main.");
   NSAssert([self yg_usesYoga], @"YG Layout is not enabled for this view.");
 
-  YGAttachNodesFromViewHierachy(self);
+  YGUpdateNodesFromViewHierachy(self);
 
   const YGNodeRef node = [self ygNode];
   YGNodeCalculateLayout(
@@ -310,14 +316,23 @@ static BOOL YGNodeHasExactSameChildren(const YGNodeRef node, NSArray<UIView *> *
   return YES;
 }
 
-static void YGAttachNodesFromViewHierachy(UIView *const view)
+static void YGUpdateNodesFromViewHierachy(UIView *const view)
 {
   const YGNodeRef node = [view ygNode];
 
   // Only leaf nodes should have a measure function
   if (view.yg_isLeaf) {
     YGNodeSetMeasureFunc(node, YGMeasureView);
-    YGRemoveAllChildren(node);
+    YGRemoveAllChildren(node);    
+    
+    YGNodeBridge *bridge = [view ygBridge];
+    YGSize oldSize = bridge.cachedSize;
+    YGSize newSize = YGMeasureView(node, 0, YGMeasureModeUndefined, 0, YGMeasureModeUndefined);
+    bridge.cachedSize = newSize;
+      
+    if (!YGNodeIsDirty(node) && (oldSize.width != newSize.width || oldSize.height != newSize.height)) {
+      YGNodeMarkDirty(node);
+    }
   } else {
     YGNodeSetMeasureFunc(node, NULL);
 
@@ -336,7 +351,7 @@ static void YGAttachNodesFromViewHierachy(UIView *const view)
     }
 
     for (UIView *const subview in subviewsToInclude) {
-        YGAttachNodesFromViewHierachy(subview);
+        YGUpdateNodesFromViewHierachy(subview);
     }
   }
 }
