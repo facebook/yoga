@@ -13,3 +13,135 @@
 <div id="align_items_flex_end" style="width: 100px; height: 100px; align-items: flex-end;">
   <div style="height: 10px; width: 10px;"></div>
 </div>
+
+<div id="align_baseline" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 50px;"></div>
+  <div style="width: 50px; height: 20px;"></div>
+</div>
+
+<div id="align_baseline_child" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 50px;"></div>
+  <div style="width: 50px; height: 20px;">
+    <div style="width: 50px; height: 10px;"></div>
+  </div>
+</div>
+
+<div id="align_baseline_child_multiline" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 60px;"></div>
+  <div style="width: 50px; height: 25px;flex-wrap:wrap;flex-direction:row;">
+    <div style="width: 25px; height: 20px;"></div>
+    <div style="width: 25px; height: 10px;"></div>
+    <div style="width: 25px; height: 20px;"></div>
+    <div style="width: 25px; height: 10px;"></div>
+  </div>
+</div>
+
+<div id="align_baseline_child_multiline_override" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 60px;"></div>
+  <div style="width: 50px; height: 25px;flex-wrap:wrap;flex-direction:row;">
+    <div style="width: 25px; height: 20px;"></div>
+    <div style="width: 25px; height: 10px;align-self:baseline;"></div>
+    <div style="width: 25px; height: 20px;"></div>
+    <div style="width: 25px; height: 10px;align-self:baseline;"></div>
+  </div>
+</div>
+
+<div id="align_baseline_child_multiline_no_override_on_secondline" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 60px;"></div>
+  <div style="width: 50px; height: 25px;flex-wrap:wrap;flex-direction:row;">
+    <div style="width: 25px; height: 20px;"></div>
+    <div style="width: 25px; height: 10px;"></div>
+    <div style="width: 25px; height: 20px;"></div>
+    <div style="width: 25px; height: 10px;align-self:baseline;"></div>
+  </div>
+</div>
+
+
+<div id="align_baseline_child_top" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 50px;top:10px;"></div>
+  <div style="width: 50px; height: 20px;">
+    <div style="width: 50px; height: 10px;"></div>
+  </div>
+</div>
+
+<div id="align_baseline_child_top2" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 50px;"></div>
+  <div style="width: 50px; height: 20px;top:5px">
+    <div style="width: 50px; height: 10px;"></div>
+  </div>
+</div>
+
+<div id="align_baseline_double_nested_child" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 50px;">
+    <div style="width: 50px; height: 20px;"></div>
+  </div>
+  <div style="width: 50px; height: 20px;">
+    <div style="width: 50px; height: 15px;"></div>
+  </div>
+</div>
+
+
+<div id="align_baseline_column" style="width: 100px; height: 100px; flex-direction:column; align-items: baseline;">
+  <div style="width: 50px; height: 50px;"></div>
+  <div style="width: 50px; height: 20px;"></div>
+</div>
+
+<div id="align_baseline_child_margin" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 50px;margin: 5px;"></div>
+  <div style="width: 50px; height: 20px;">
+    <div style="width: 50px; height: 10px;margin: 1px;"></div>
+  </div>
+</div>
+
+<div id="align_baseline_child_padding" style="width: 100px; height: 100px; padding:5px; flex-direction:row; align-items: baseline;">
+  <div style="width: 50px; height: 50px;"></div>
+  <div style="width: 50px; height: 20px;padding:5px;">
+    <div style="width: 50px; height: 10px;"></div>
+  </div>
+</div>
+
+<div id="align_baseline_multiline" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;flex-wrap:wrap;">
+  <div style="width: 50px; height: 50px;"></div>
+  <div style="width: 50px; height: 20px;">
+    <div style="width: 50px; height: 10px;"></div>
+  </div>
+  <div style="width: 50px; height: 20px;">
+    <div style="width: 50px; height: 10px;"></div>
+  </div>
+  <div style="width: 50px; height: 50px;"></div>
+</div>
+
+<div id="align_baseline_multiline_column" style="width: 100px; height: 100px; flex-direction:column; align-items: baseline;flex-wrap:wrap;">
+  <div style="width: 50px; height: 50px;"></div>
+  <div style="width: 30px; height: 50px;">
+    <div style="width: 20px; height: 20px;"></div>
+  </div>
+  <div style="width: 40px; height: 70px;">
+    <div style="width: 10px; height: 10px;"></div>
+  </div>
+  <div style="width: 50px; height: 20px;"></div>
+</div>
+
+<div id="align_baseline_multiline_column2" style="width: 100px; height: 100px; flex-direction:column; align-items: baseline;flex-wrap:wrap;">
+  <div style="width: 50px; height: 50px;flex-direction:column;"></div>
+  <div style="width: 30px; height: 50px;flex-direction:column;">
+    <div style="width: 20px; height: 20px;flex-direction:column;"></div>
+  </div>
+  <div style="width: 40px; height: 70px;flex-direction:column;">
+    <div style="width: 10px; height: 10px;flex-direction:column;"></div>
+  </div>
+  <div style="width: 50px; height: 20px;flex-direction:column;"></div>
+</div>
+
+
+
+<div id="align_baseline_multiline_row_and_column" style="width: 100px; height: 100px; flex-direction:row; align-items: baseline;flex-wrap:wrap;">
+  <div style="width: 50px; height: 50px;"></div>
+  <div style="width: 50px; height: 50px;flex-direction:column;">
+    <div style="width: 50px; height: 10px;"></div>
+  </div>
+  <div style="width: 50px; height: 20px;flex-direction:column;">
+    <div style="width: 50px; height: 10px;"></div>
+  </div>
+  <div style="width: 50px; height: 20px;"></div>
+</div>
