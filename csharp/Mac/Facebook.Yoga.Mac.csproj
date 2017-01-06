@@ -34,77 +34,6 @@
     <Reference Include="Xamarin.Mac" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\YogaWrap.cs">
-      <Link>YogaWrap.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaSize.cs">
-      <Link>YogaSize.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaPrintOptions.cs">
-      <Link>YogaPrintOptions.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaPositionType.cs">
-      <Link>YogaPositionType.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaOverflow.cs">
-      <Link>YogaOverflow.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaNode.cs">
-      <Link>YogaNode.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaNode.Create.cs">
-      <Link>YogaNode.Create.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaMeasureMode.cs">
-      <Link>YogaMeasureMode.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaMeasureFunc.cs">
-      <Link>YogaMeasureFunc.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaLogLevel.cs">
-      <Link>YogaLogLevel.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaLogger.cs">
-      <Link>YogaLogger.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaJustify.cs">
-      <Link>YogaJustify.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaFlexDirection.cs">
-      <Link>YogaFlexDirection.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaExperimentalFeature.cs">
-      <Link>YogaExperimentalFeature.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaEdge.cs">
-      <Link>YogaEdge.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaDirection.cs">
-      <Link>YogaDirection.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaDimension.cs">
-      <Link>YogaDimension.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaConstants.cs">
-      <Link>YogaConstants.cs</Link>
-    </Compile>
-    <Compile Include="..\YogaAlign.cs">
-      <Link>YogaAlign.cs</Link>
-    </Compile>
-    <Compile Include="..\Spacing.cs">
-      <Link>Spacing.cs</Link>
-    </Compile>
-    <Compile Include="..\Native.cs">
-      <Link>Native.cs</Link>
-    </Compile>
-    <Compile Include="..\MeasureOutput.cs">
-      <Link>MeasureOutput.cs</Link>
-    </Compile>
-    <Compile Include="..\MeasureFunction.cs">
-      <Link>MeasureFunction.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +45,7 @@
       <SmartLink>False</SmartLink>
     </NativeReference>
   </ItemGroup>
+  <Import Project="..\Facebook.Yoga\Facebook.Yoga.Shared.projitems" Label="Shared" Condition="Exists('..\Facebook.Yoga\Facebook.Yoga.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.ObjcBinding.CSharp.targets" />
   <Import Project="CustomBuildAction.targets" />  
 </Project>

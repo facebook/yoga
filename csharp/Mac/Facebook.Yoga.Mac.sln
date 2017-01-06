@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Mac.Test", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Mac", "Facebook.Yoga.Mac.csproj", "{19A1C7D7-C9CC-476A-B604-DF6A3DE1BA71}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared", "..\Facebook.Yoga\Facebook.Yoga.Shared.shproj", "{91C42D32-291D-4B72-90B4-551663D60B8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
