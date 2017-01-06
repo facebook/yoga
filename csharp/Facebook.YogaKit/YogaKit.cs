@@ -163,6 +163,21 @@ namespace Facebook.YogaKit
             node.Overflow = overflow;
         }
 
+        public static bool YogaIsLeaf(this NativeView view)
+        {
+            if (view.GetUsesYoga())
+            {
+                foreach (NativeView subview in GetChildren(view))
+                {
+                    if (subview.GetUsesYoga() && subview.GetIncludeYogaLayout())
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         #region Layout and Sizing
         public static void YogaApplyLayout(this NativeView view)
         {
@@ -181,6 +196,13 @@ namespace Facebook.YogaKit
         public static YogaNode GetYogaNode(this NativeView view)
         {
             return YogaKitNative.GetYogaNode(view);
+        }
+
+        static IList<NativeView> GetChildren(NativeView view)
+        {
+            var result = new List<NativeView>();
+            result.AddRange(YogaKitNative.GetChildren(view));
+            return result;
         }
     }
 }

@@ -6,6 +6,7 @@ using Facebook.Yoga;
 using CoreGraphics;
 using Foundation;
 using UIKit;
+using NativeView = UIKit.UIView;
 #endif
 
 namespace Facebook.YogaKit
@@ -79,8 +80,7 @@ namespace Facebook.YogaKit
             CGPoint topLeft = new CGPoint(node.LayoutX, node.LayoutY);
             CGPoint bottomRight = new CGPoint(topLeft.X + node.LayoutWidth, topLeft.Y + node.LayoutHeight);
             view.Frame = new CGRect(RoundPixelValue(topLeft.X), RoundPixelValue(topLeft.Y), RoundPixelValue(bottomRight.X) - RoundPixelValue(topLeft.X), RoundPixelValue(bottomRight.Y) - RoundPixelValue(topLeft.Y));
-            bool isLeaf = !view.GetUsesYoga() || view.Subviews.Length == 0;
-            if (!isLeaf)
+            if (!view.YogaIsLeaf())
             {
                 for (int i = 0; i < view.Subviews.Length; i++)
                 {
@@ -97,6 +97,11 @@ namespace Facebook.YogaKit
                 Height = float.NaN
             };
             return CalculateLayoutWithSize(view, constrainedSize);
+        }
+
+        internal static IEnumerable<NativeView> GetChildren(NativeView view)
+        {
+            return view.Subviews;
         }
 
         static YogaSize MeasureView(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
@@ -147,7 +152,7 @@ namespace Facebook.YogaKit
             var node = GetYogaNode(view);
 
             // Only leaf nodes should have a measure function
-            if (!view.GetUsesYoga() || view.Subviews.Length == 0)
+            if (view.YogaIsLeaf())
             {
                 node.SetMeasureFunction(MeasureView);
                 RemoveAllChildren(node);
