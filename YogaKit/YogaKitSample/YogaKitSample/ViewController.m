@@ -20,17 +20,17 @@
 {
     UIView *root = self.view;
     root.backgroundColor = [UIColor redColor];
-    [root yg_setUsesYoga:YES];
-    [root yg_setWidth:self.view.bounds.size.width];
-    [root yg_setHeight:self.view.bounds.size.height];
-    [root yg_setAlignItems:YGAlignCenter];
-    [root yg_setJustifyContent:YGJustifyCenter];
+    root.yoga.isEnabled = YES;
+    root.yoga.width = self.view.bounds.size.width;
+    root.yoga.height = self.view.bounds.size.height;
+    root.yoga.alignItems = YGAlignCenter;
+    root.yoga.justifyContent = YGJustifyCenter;
 
     UIView *child1 = [UIView new];
     child1.backgroundColor = [UIColor blueColor];
-    [child1 yg_setUsesYoga:YES];
-    [child1 yg_setWidth:100];
-    [child1 yg_setHeight:100];
+    child1.yoga.isEnabled = YES;
+    child1.yoga.width = 100;
+    child1.yoga.height = 100;
 
     UIView *child2 = [UIView new];
     child2.backgroundColor = [UIColor greenColor];
@@ -53,7 +53,7 @@
     [child2 addSubview:child3];
     [root addSubview:child1];
     [root addSubview:child2];
-    [root yg_applyLayout];
+    [root.yoga applyLayout];
 }
 
 
