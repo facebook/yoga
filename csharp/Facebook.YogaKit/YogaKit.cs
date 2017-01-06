@@ -157,6 +157,12 @@ namespace Facebook.YogaKit
 			node.StyleAspectRatio = ratio;
 		}
 
+		public static void YogaOverflow(this NativeView view, YogaOverflow overflow)
+		{
+			var node = GetYogaNode(view);
+			node.Overflow = overflow;
+		}
+
 		#region Layout and Sizing
 		public static void YogaApplyLayout(this NativeView view)
 		{
