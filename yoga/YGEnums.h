@@ -14,55 +14,29 @@
 YG_EXTERN_C_BEGIN
 
 #define YGFlexDirectionCount 4
-#ifndef NS_ENUM
-typedef enum YGFlexDirection {
+typedef YG_ENUM_BEGIN(YGFlexDirection) {
   YGFlexDirectionColumn,
   YGFlexDirectionColumnReverse,
   YGFlexDirectionRow,
   YGFlexDirectionRowReverse,
-} YGFlexDirection;
-#else
-typedef NS_ENUM(NSInteger, YGFlexDirection) {
-  YGFlexDirectionColumn,
-  YGFlexDirectionColumnReverse,
-  YGFlexDirectionRow,
-  YGFlexDirectionRowReverse,
-};
-#endif
+} YG_ENUM_END(YGFlexDirection);
 
 #define YGMeasureModeCount 3
-#ifndef NS_ENUM
-typedef enum YGMeasureMode {
+typedef YG_ENUM_BEGIN(YGMeasureMode) {
   YGMeasureModeUndefined,
   YGMeasureModeExactly,
   YGMeasureModeAtMost,
-} YGMeasureMode;
-#else
-typedef NS_ENUM(NSInteger, YGMeasureMode) {
-  YGMeasureModeUndefined,
-  YGMeasureModeExactly,
-  YGMeasureModeAtMost,
-};
-#endif
+} YG_ENUM_END(YGMeasureMode);
 
 #define YGPrintOptionsCount 3
-#ifndef NS_ENUM
-typedef enum YGPrintOptions {
+typedef YG_ENUM_BEGIN(YGPrintOptions) {
   YGPrintOptionsLayout = 1,
   YGPrintOptionsStyle = 2,
   YGPrintOptionsChildren = 4,
-} YGPrintOptions;
-#else
-typedef NS_ENUM(NSInteger, YGPrintOptions) {
-  YGPrintOptionsLayout = 1,
-  YGPrintOptionsStyle = 2,
-  YGPrintOptionsChildren = 4,
-};
-#endif
+} YG_ENUM_END(YGPrintOptions);
 
 #define YGEdgeCount 9
-#ifndef NS_ENUM
-typedef enum YGEdge {
+typedef YG_ENUM_BEGIN(YGEdge) {
   YGEdgeLeft,
   YGEdgeTop,
   YGEdgeRight,
@@ -72,173 +46,78 @@ typedef enum YGEdge {
   YGEdgeHorizontal,
   YGEdgeVertical,
   YGEdgeAll,
-} YGEdge;
-#else
-typedef NS_ENUM(NSInteger, YGEdge) {
-  YGEdgeLeft,
-  YGEdgeTop,
-  YGEdgeRight,
-  YGEdgeBottom,
-  YGEdgeStart,
-  YGEdgeEnd,
-  YGEdgeHorizontal,
-  YGEdgeVertical,
-  YGEdgeAll,
-};
-#endif
+} YG_ENUM_END(YGEdge);
 
 #define YGPositionTypeCount 2
-#ifndef NS_ENUM
-typedef enum YGPositionType {
+typedef YG_ENUM_BEGIN(YGPositionType) {
   YGPositionTypeRelative,
   YGPositionTypeAbsolute,
-} YGPositionType;
-#else
-typedef NS_ENUM(NSInteger, YGPositionType) {
-  YGPositionTypeRelative,
-  YGPositionTypeAbsolute,
-};
-#endif
+} YG_ENUM_END(YGPositionType);
 
 #define YGDimensionCount 2
-#ifndef NS_ENUM
-typedef enum YGDimension {
+typedef YG_ENUM_BEGIN(YGDimension) {
   YGDimensionWidth,
   YGDimensionHeight,
-} YGDimension;
-#else
-typedef NS_ENUM(NSInteger, YGDimension) {
-  YGDimensionWidth,
-  YGDimensionHeight,
-};
-#endif
+} YG_ENUM_END(YGDimension);
 
 #define YGJustifyCount 5
-#ifndef NS_ENUM
-typedef enum YGJustify {
+typedef YG_ENUM_BEGIN(YGJustify) {
   YGJustifyFlexStart,
   YGJustifyCenter,
   YGJustifyFlexEnd,
   YGJustifySpaceBetween,
   YGJustifySpaceAround,
-} YGJustify;
-#else
-typedef NS_ENUM(NSInteger, YGJustify) {
-  YGJustifyFlexStart,
-  YGJustifyCenter,
-  YGJustifyFlexEnd,
-  YGJustifySpaceBetween,
-  YGJustifySpaceAround,
-};
-#endif
+} YG_ENUM_END(YGJustify);
 
 #define YGDirectionCount 3
-#ifndef NS_ENUM
-typedef enum YGDirection {
+typedef YG_ENUM_BEGIN(YGDirection) {
   YGDirectionInherit,
   YGDirectionLTR,
   YGDirectionRTL,
-} YGDirection;
-#else
-typedef NS_ENUM(NSInteger, YGDirection) {
-  YGDirectionInherit,
-  YGDirectionLTR,
-  YGDirectionRTL,
-};
-#endif
+} YG_ENUM_END(YGDirection);
 
 #define YGLogLevelCount 5
-#ifndef NS_ENUM
-typedef enum YGLogLevel {
+typedef YG_ENUM_BEGIN(YGLogLevel) {
   YGLogLevelError,
   YGLogLevelWarn,
   YGLogLevelInfo,
   YGLogLevelDebug,
   YGLogLevelVerbose,
-} YGLogLevel;
-#else
-typedef NS_ENUM(NSInteger, YGLogLevel) {
-  YGLogLevelError,
-  YGLogLevelWarn,
-  YGLogLevelInfo,
-  YGLogLevelDebug,
-  YGLogLevelVerbose,
-};
-#endif
+} YG_ENUM_END(YGLogLevel);
 
 #define YGWrapCount 2
-#ifndef NS_ENUM
-typedef enum YGWrap {
+typedef YG_ENUM_BEGIN(YGWrap) {
   YGWrapNoWrap,
   YGWrapWrap,
-} YGWrap;
-#else
-typedef NS_ENUM(NSInteger, YGWrap) {
-  YGWrapNoWrap,
-  YGWrapWrap,
-};
-#endif
+} YG_ENUM_END(YGWrap);
 
 #define YGOverflowCount 3
-#ifndef NS_ENUM
-typedef enum YGOverflow {
+typedef YG_ENUM_BEGIN(YGOverflow) {
   YGOverflowVisible,
   YGOverflowHidden,
   YGOverflowScroll,
-} YGOverflow;
-#else
-typedef NS_ENUM(NSInteger, YGOverflow) {
-  YGOverflowVisible,
-  YGOverflowHidden,
-  YGOverflowScroll,
-};
-#endif
+} YG_ENUM_END(YGOverflow);
 
 #define YGExperimentalFeatureCount 2
-#ifndef NS_ENUM
-typedef enum YGExperimentalFeature {
+typedef YG_ENUM_BEGIN(YGExperimentalFeature) {
   YGExperimentalFeatureRounding,
   YGExperimentalFeatureWebFlexBasis,
-} YGExperimentalFeature;
-#else
-typedef NS_ENUM(NSInteger, YGExperimentalFeature) {
-  YGExperimentalFeatureRounding,
-  YGExperimentalFeatureWebFlexBasis,
-};
-#endif
+} YG_ENUM_END(YGExperimentalFeature);
 
 #define YGAlignCount 5
-#ifndef NS_ENUM
-typedef enum YGAlign {
+typedef YG_ENUM_BEGIN(YGAlign) {
   YGAlignAuto,
   YGAlignFlexStart,
   YGAlignCenter,
   YGAlignFlexEnd,
   YGAlignStretch,
-} YGAlign;
-#else
-typedef NS_ENUM(NSInteger, YGAlign) {
-  YGAlignAuto,
-  YGAlignFlexStart,
-  YGAlignCenter,
-  YGAlignFlexEnd,
-  YGAlignStretch,
-};
-#endif
+} YG_ENUM_END(YGAlign);
 
 #define YGUnitCount 3
-#ifndef NS_ENUM
-typedef enum YGUnit {
+typedef YG_ENUM_BEGIN(YGUnit) {
   YGUnitUndefined,
   YGUnitPixel,
   YGUnitPercent,
-} YGUnit;
-#else
-typedef NS_ENUM(NSInteger, YGUnit) {
-  YGUnitUndefined,
-  YGUnitPixel,
-  YGUnitPercent,
-};
-#endif
+} YG_ENUM_END(YGUnit);
 
 YG_EXTERN_C_END

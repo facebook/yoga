@@ -9,7 +9,6 @@
 
 #import <UIKit/UIKit.h>
 #import <yoga/YGEnums.h>
-#import <yoga/YGValue.h>
 
 @interface YGLayout : NSObject
 

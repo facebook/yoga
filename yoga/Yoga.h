@@ -30,7 +30,6 @@ static const unsigned long __nan[2] = {0xffffffff, 0x7fffffff};
 
 #include "YGEnums.h"
 #include "YGMacros.h"
-#include "YGValue.h"
 
 YG_EXTERN_C_BEGIN
 
@@ -38,6 +37,11 @@ typedef struct YGSize {
   float width;
   float height;
 } YGSize;
+
+typedef struct YGValue {
+  float value;
+  YGUnit unit;
+} YGValue;
 
 typedef struct YGNode *YGNodeRef;
 typedef YGSize (*YGMeasureFunc)(YGNodeRef node,

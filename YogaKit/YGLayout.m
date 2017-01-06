@@ -10,11 +10,6 @@
 #import "YGLayout+Private.h"
 #import "UIView+Yoga.h"
 #import <yoga/Yoga.h>
-#import <UIKit/UIKit.h>
-
-extern YGValue YGValueMake(CGFloat value, YGUnit unit) {
-  return (YGValue) { .value = value, .unit = unit };
-}
 
 #define YG_STYLE_PROPERTY_IMPL(type, lowercased_name, capitalized_name) \
 - (type)lowercased_name                                                 \
@@ -81,7 +76,7 @@ YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeAll, )
 
 @interface YGLayout ()
 
-@property (nonatomic, weak, readonly) UIView* view;
+@property (nonatomic, weak, readonly) UIView *view;
 @property (nonatomic, assign, readonly) YGNodeRef node;
 
 @end
