@@ -201,7 +201,7 @@ namespace Facebook.YogaKit
             if (node == null)
                 return;
 
-            while (node.Count > 0)
+            if (node.Count > 0)
             {
                 node.Clear();
             }
