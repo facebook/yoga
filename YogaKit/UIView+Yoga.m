@@ -11,6 +11,8 @@
 
 #import <objc/runtime.h>
 
+static const void *kYGNodeBridgeAssociatedKey = &kYGNodeBridgeAssociatedKey;
+
 @interface YGNodeBridge : NSObject
 @property (nonatomic, assign, readonly) YGNodeRef cnode;
 @end
@@ -39,6 +41,14 @@
 
 @implementation UIView (Yoga)
 
+- (void)yg_markDirty
+{
+  YGNodeBridge *const bridge = objc_getAssociatedObject(self, kYGNodeBridgeAssociatedKey);
+  if (bridge != nil && [self yg_isLeaf]) {
+    YGNodeMarkDirty(bridge.cnode);
+  }
+}
+
 - (BOOL)yg_usesYoga
 {
   NSNumber *usesYoga = objc_getAssociatedObject(self, @selector(yg_usesYoga));
@@ -54,6 +64,20 @@
 - (NSUInteger)yg_numberOfChildren
 {
   return YGNodeGetChildCount([self ygNode]);
+}
+
+- (BOOL)yg_isLeaf
+{
+  NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
+  if ([self yg_usesYoga]) {
+      for (UIView *subview in self.subviews) {
+          if ([subview yg_usesYoga] && [subview yg_includeInLayout]) {
+              return NO;
+          }
+      }
+  }
+
+  return YES;
 }
 
 #pragma mark - Setters
@@ -114,6 +138,11 @@
 - (void)yg_setFlexWrap:(YGWrap)flexWrap
 {
   YGNodeStyleSetFlexWrap([self ygNode], flexWrap);
+}
+
+- (void)yg_setOverflow:(YGOverflow)overflow
+{
+  YGNodeStyleSetOverflow([self ygNode], overflow);
 }
 
 - (void)yg_setFlexGrow:(CGFloat)flexGrow
@@ -207,13 +236,12 @@
 
 - (YGNodeRef)ygNode
 {
-  YGNodeBridge *node = objc_getAssociatedObject(self, @selector(ygNode));
+  YGNodeBridge *node = objc_getAssociatedObject(self, kYGNodeBridgeAssociatedKey);
   if (!node) {
     node = [YGNodeBridge new];
     YGNodeSetContext(node.cnode, (__bridge void *) self);
-    objc_setAssociatedObject(self, @selector(ygNode), node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kYGNodeBridgeAssociatedKey, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
-
   return node.cnode;
 }
 
@@ -276,17 +304,32 @@ static CGFloat YGSanitizeMeasurement(
   return result;
 }
 
-static void YGAttachNodesFromViewHierachy(UIView *view) {
-  YGNodeRef node = [view ygNode];
+static BOOL YGNodeHasExactSameChildren(const YGNodeRef node, NSArray<UIView *> *subviews)
+{
+  if (YGNodeGetChildCount(node) != subviews.count) {
+    return NO;
+  }
+
+  for (int i=0; i<subviews.count; i++) {
+    if (YGNodeGetChild(node, i) != subviews[i].ygNode) {
+      return NO;
+    }
+  }
+
+  return YES;
+}
+
+static void YGAttachNodesFromViewHierachy(UIView *const view)
+{
+  const YGNodeRef node = [view ygNode];
 
   // Only leaf nodes should have a measure function
-  if (![view yg_usesYoga] || view.subviews.count == 0) {
-    YGNodeSetMeasureFunc(node, YGMeasureView);
+  if (view.yg_isLeaf) {
     YGRemoveAllChildren(node);
+    YGNodeSetMeasureFunc(node, YGMeasureView);
   } else {
     YGNodeSetMeasureFunc(node, NULL);
 
-    // Create a list of all the subviews that we are going to use for layout.
     NSMutableArray<UIView *> *subviewsToInclude = [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
     for (UIView *subview in view.subviews) {
       if ([subview yg_includeInLayout]) {
@@ -294,26 +337,15 @@ static void YGAttachNodesFromViewHierachy(UIView *view) {
       }
     }
 
-    BOOL shouldReconstructChildList = NO;
-    if (YGNodeGetChildCount(node) != subviewsToInclude.count) {
-      shouldReconstructChildList = YES;
-    } else {
-      for (int i = 0; i < subviewsToInclude.count; i++) {
-        if (YGNodeGetChild(node, i) != [subviewsToInclude[i] ygNode]) {
-          shouldReconstructChildList = YES;
-          break;
+    if (!YGNodeHasExactSameChildren(node, subviewsToInclude)) {
+        YGRemoveAllChildren(node);
+        for (int i=0; i<subviewsToInclude.count; i++) {
+            YGNodeInsertChild(node, [subviewsToInclude[i] ygNode], i);
         }
-      }
     }
 
-    if (shouldReconstructChildList) {
-      YGRemoveAllChildren(node);
-
-      for (int i = 0 ; i < subviewsToInclude.count; i++) {
-        UIView *const subview = subviewsToInclude[i];
-        YGNodeInsertChild(node, [subview ygNode], i);
+    for (UIView *const subview in subviewsToInclude) {
         YGAttachNodesFromViewHierachy(subview);
-      }
     }
   }
 }
@@ -340,7 +372,8 @@ static CGFloat YGRoundPixelValue(CGFloat value)
   return round(value * scale) / scale;
 }
 
-static void YGApplyLayoutToViewHierarchy(UIView *view) {
+static void YGApplyLayoutToViewHierarchy(UIView *view)
+{
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
   if (![view yg_includeInLayout]) {
      return;
@@ -368,9 +401,8 @@ static void YGApplyLayoutToViewHierarchy(UIView *view) {
     },
   };
 
-  const BOOL isLeaf = ![view yg_usesYoga] || view.subviews.count == 0;
-  if (!isLeaf) {
-    for (NSUInteger i = 0; i < view.subviews.count; i++) {
+  if (!view.yg_isLeaf) {
+    for (NSUInteger i=0; i<view.subviews.count; i++) {
       YGApplyLayoutToViewHierarchy(view.subviews[i]);
     }
   }

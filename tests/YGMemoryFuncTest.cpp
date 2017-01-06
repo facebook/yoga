@@ -56,7 +56,7 @@ TEST(YogaTest, memory_func_test_funcs) {
   }
   YGNodeFreeRecursive(root);
   ASSERT_NE(testMallocCount, 0);
-  ASSERT_NE(testCallocCount, 0);
+  ASSERT_EQ(testCallocCount, 0);
   ASSERT_NE(testReallocCount, 0);
   ASSERT_NE(testFreeCount, 0);
   YGSetMemoryFuncs(NULL, NULL, NULL, NULL);

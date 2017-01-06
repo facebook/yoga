@@ -30,6 +30,7 @@
 - (void)yg_setAlignSelf:(YGAlign)alignSelf;
 - (void)yg_setPositionType:(YGPositionType)positionType;
 - (void)yg_setFlexWrap:(YGWrap)flexWrap;
+- (void)yg_setOverflow:(YGOverflow)overflow;
 
 - (void)yg_setFlexGrow:(CGFloat)flexGrow;
 - (void)yg_setFlexShrink:(CGFloat)flexShrink;
@@ -68,5 +69,15 @@
  Returns the number of children that are using Flexbox.
  */
 - (NSUInteger)yg_numberOfChildren;
+
+/**
+ Return a BOOL indiciating whether or not we this node contains any subviews that are included in Yoga's layout.
+ */
+- (BOOL)yg_isLeaf;
+
+/**
+ Mark that a view's layout needs to be recalculated. Only works for leaf views.
+ */
+- (void)yg_markDirty;
 
 @end

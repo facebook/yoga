@@ -22,26 +22,26 @@ namespace Facebook.Yoga
         {
             YogaNode root = new YogaNode();
             root.Wrap = YogaWrap.Wrap;
-            root.Height = 100f;
+            root.Height = 100;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.Width = 30f;
-            root_child0.Height = 30f;
+            root_child0.Width = 30;
+            root_child0.Height = 30;
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.Width = 30f;
-            root_child1.Height = 30f;
+            root_child1.Width = 30;
+            root_child1.Height = 30;
             root.Insert(1, root_child1);
 
             YogaNode root_child2 = new YogaNode();
-            root_child2.Width = 30f;
-            root_child2.Height = 30f;
+            root_child2.Width = 30;
+            root_child2.Height = 30;
             root.Insert(2, root_child2);
 
             YogaNode root_child3 = new YogaNode();
-            root_child3.Width = 30f;
-            root_child3.Height = 30f;
+            root_child3.Width = 30;
+            root_child3.Height = 30;
             root.Insert(3, root_child3);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -106,26 +106,26 @@ namespace Facebook.Yoga
             YogaNode root = new YogaNode();
             root.FlexDirection = YogaFlexDirection.Row;
             root.Wrap = YogaWrap.Wrap;
-            root.Width = 100f;
+            root.Width = 100;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.Width = 30f;
-            root_child0.Height = 30f;
+            root_child0.Width = 30;
+            root_child0.Height = 30;
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.Width = 30f;
-            root_child1.Height = 30f;
+            root_child1.Width = 30;
+            root_child1.Height = 30;
             root.Insert(1, root_child1);
 
             YogaNode root_child2 = new YogaNode();
-            root_child2.Width = 30f;
-            root_child2.Height = 30f;
+            root_child2.Width = 30;
+            root_child2.Height = 30;
             root.Insert(2, root_child2);
 
             YogaNode root_child3 = new YogaNode();
-            root_child3.Width = 30f;
-            root_child3.Height = 30f;
+            root_child3.Width = 30;
+            root_child3.Height = 30;
             root.Insert(3, root_child3);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -191,26 +191,26 @@ namespace Facebook.Yoga
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.FlexEnd;
             root.Wrap = YogaWrap.Wrap;
-            root.Width = 100f;
+            root.Width = 100;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.Width = 30f;
-            root_child0.Height = 10f;
+            root_child0.Width = 30;
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.Width = 30f;
-            root_child1.Height = 20f;
+            root_child1.Width = 30;
+            root_child1.Height = 20;
             root.Insert(1, root_child1);
 
             YogaNode root_child2 = new YogaNode();
-            root_child2.Width = 30f;
-            root_child2.Height = 30f;
+            root_child2.Width = 30;
+            root_child2.Height = 30;
             root.Insert(2, root_child2);
 
             YogaNode root_child3 = new YogaNode();
-            root_child3.Width = 30f;
-            root_child3.Height = 30f;
+            root_child3.Width = 30;
+            root_child3.Height = 30;
             root.Insert(3, root_child3);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -276,26 +276,26 @@ namespace Facebook.Yoga
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Center;
             root.Wrap = YogaWrap.Wrap;
-            root.Width = 100f;
+            root.Width = 100;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.Width = 30f;
-            root_child0.Height = 10f;
+            root_child0.Width = 30;
+            root_child0.Height = 10;
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
-            root_child1.Width = 30f;
-            root_child1.Height = 20f;
+            root_child1.Width = 30;
+            root_child1.Height = 20;
             root.Insert(1, root_child1);
 
             YogaNode root_child2 = new YogaNode();
-            root_child2.Width = 30f;
-            root_child2.Height = 30f;
+            root_child2.Width = 30;
+            root_child2.Height = 30;
             root.Insert(2, root_child2);
 
             YogaNode root_child3 = new YogaNode();
-            root_child3.Width = 30f;
-            root_child3.Height = 30f;
+            root_child3.Width = 30;
+            root_child3.Height = 30;
             root.Insert(3, root_child3);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
