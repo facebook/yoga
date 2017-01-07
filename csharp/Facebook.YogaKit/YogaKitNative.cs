@@ -168,8 +168,8 @@ namespace Facebook.YogaKit
             // Only leaf nodes should have a measure function
             if (view.YogaIsLeaf())
             {
-                node.SetMeasureFunction(MeasureView);
                 RemoveAllChildren(node);
+                node.SetMeasureFunction(MeasureView);
             }
             else
             {
