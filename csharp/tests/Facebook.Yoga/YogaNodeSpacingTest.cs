@@ -19,13 +19,30 @@ namespace Facebook.Yoga
     public class YogaNodeSpacingTest
     {
         [Test]
-        public void TestRead()
+        public void TestObjectInitializer()
         {
-            YogaNode node = YogaNode.Create(
-                position: new Spacing(top: 1, bottom: 2, left: 3, right: 4),
-                margin: new Spacing(top: 5, bottom: 6, left: 7, right: 8),
-                padding: new Spacing(top: 9, bottom: 10, left: 11, right: 12),
-                border: new Border(top: 13, bottom: 14, left: 15, right: 16));
+            YogaNode node = new YogaNode
+            {
+                Top = 1,
+                Bottom = 2,
+                Left = 3,
+                Right = 4,
+
+                MarginTop = 5,
+                MarginBottom = 6,
+                MarginLeft = 7,
+                MarginRight = 8,
+
+                PaddingTop = 9,
+                PaddingBottom = 10,
+                PaddingLeft = 11,
+                PaddingRight = 12,
+
+                BorderTopWidth = 13,
+                BorderBottomWidth = 14,
+                BorderLeftWidth = 15,
+                BorderRightWidth = 16,
+            };
 
             Assert.AreEqual(1.Px(), node.Top);
             Assert.AreEqual(2.Px(), node.Bottom);

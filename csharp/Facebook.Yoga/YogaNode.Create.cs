@@ -13,6 +13,7 @@ namespace Facebook.Yoga
 {
     public partial class YogaNode
     {
+        [Obsolete("use Object Initializer")]
         public static YogaNode Create(
             YogaDirection? styleDirection = null,
             YogaFlexDirection? flexDirection = null,
