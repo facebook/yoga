@@ -89,6 +89,13 @@ namespace Facebook.YogaKit
             }
         }
 
+        public static void MarkDirty(this NativeView view)
+        {
+            YGNodeBridge bridge = ObjCRuntime.Runtime.GetNSObject(objc_getAssociatedObject(view.Handle, YogaNodeKey.Handle)) as YGNodeBridge;
+            if (bridge != null && view.YogaIsLeaf())
+                bridge.node.MarkDirty();
+        }
+
         public static CGSize YogaIntrinsicSize(this UIView view)
         {
             var constrainedSize = new CGSize

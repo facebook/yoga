@@ -178,6 +178,11 @@ namespace Facebook.YogaKit
             return true;
         }
 
+        public static void YogaMarkDirty(this NativeView view)
+        {
+            YogaKitNative.MarkDirty(view);
+        }
+
         #region Layout and Sizing
         public static void YogaApplyLayout(this NativeView view)
         {
