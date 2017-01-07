@@ -8,8 +8,8 @@
  */
 
 #import <XCTest/XCTest.h>
-
 #import <YogaKit/UIView+Yoga.h>
+#import <yoga/Yoga.h>
 
 @interface YogaKitTests : XCTestCase
 @end
@@ -50,7 +50,7 @@
 
 #endif
 
-- (void)testUsesYoga
+- (void)testIsEnabled
 {
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
   XCTAssertFalse(view.yoga.isEnabled);
@@ -382,6 +382,17 @@
     [container.yoga applyLayout];
     [subview2 removeFromSuperview];
     [container.yoga applyLayout];
+}
+
+- (void)testPositionalPropertiesWork
+{
+  YGNodeRef node = YGNodeNew();
+  YGNodeStyleSetPosition(node, YGEdgeLeft, 1);
+
+  XCTAssertEqual(1, YGNodeStyleGetPosition(node, YGEdgeLeft).value);
+  XCTAssertEqual(YGUnitPixel, YGNodeStyleGetPosition(node, YGEdgeLeft).unit);
+
+  YGNodeFree(node);
 }
 
 @end

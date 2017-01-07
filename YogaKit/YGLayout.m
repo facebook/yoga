@@ -9,7 +9,6 @@
 
 #import "YGLayout+Private.h"
 #import "UIView+Yoga.h"
-#import <yoga/Yoga.h>
 
 #define YG_STYLE_PROPERTY_IMPL(type, lowercased_name, capitalized_name) \
 - (type)lowercased_name                                                 \
@@ -47,37 +46,36 @@
   YGNodeStyleSet##capitalized_name(self.node, lowercased_name);         \
 }
 
-#define YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, edge, edge_suffix) \
-- (CGFloat)lowercased_name##edge_suffix                                                        \
-{                                                                                              \
-  YGValue value = YGNodeStyleGet##capitalized_name(self.node, edge);                           \
-  if (value.unit == YGUnitPixel) {                                                             \
-    return value.value;                                                                        \
-  } else {                                                                                     \
-    return YGUndefined;                                                                        \
-  }                                                                                            \
-}                                                                                              \
-                                                                                               \
-- (void)set##capitalized_name##edge_suffix:(CGFloat)lowercased_name                            \
-{                                                                                              \
-  YGNodeStyleSet##capitalized_name(self.node, edge, lowercased_name);                          \
+#define YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(objc_lowercased_name, objc_capitalized_name, c_name, edge) \
+- (CGFloat)objc_lowercased_name                                                                     \
+{                                                                                                   \
+  YGValue value = YGNodeStyleGet##c_name(self.node, edge);                                          \
+  if (value.unit == YGUnitPixel) {                                                                  \
+    return value.value;                                                                             \
+  } else {                                                                                          \
+    return YGUndefined;                                                                             \
+  }                                                                                                 \
+}                                                                                                   \
+                                                                                                    \
+- (void)set##objc_capitalized_name:(CGFloat)objc_lowercased_name                                    \
+{                                                                                                   \
+  YGNodeStyleSet##c_name(self.node, edge, objc_lowercased_name);                                    \
 }
 
-#define YG_STYLE_ALL_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name)                   \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeLeft, Left)             \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeTop, Top)               \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeRight, Right)           \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeBottom, Bottom)         \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeStart, Start)           \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeEnd, End)               \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeHorizontal, Horizontal) \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeVertical, Vertical)     \
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeAll, )
+#define YG_STYLE_ALL_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name)                                                 \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name##Left, capitalized_name##Left, capitalized_name, YGEdgeLeft)                   \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name##Top, capitalized_name##Top, capitalized_name, YGEdgeTop)                      \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name##Right, capitalized_name##Right, capitalized_name, YGEdgeRight)                \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name##Bottom, capitalized_name##Bottom, capitalized_name, YGEdgeBottom)             \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name##Start, capitalized_name##Start, capitalized_name, YGEdgeStart)                \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name##End, capitalized_name##End, capitalized_name, YGEdgeEnd)                      \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name##Horizontal, capitalized_name##Horizontal, capitalized_name, YGEdgeHorizontal) \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name##Vertical, capitalized_name##Vertical, capitalized_name, YGEdgeVertical)       \
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, capitalized_name, YGEdgeAll)
 
 @interface YGLayout ()
 
 @property (nonatomic, weak, readonly) UIView *view;
-@property (nonatomic, assign, readonly) YGNodeRef node;
 
 @end
 
@@ -85,6 +83,7 @@ YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(lowercased_name, capitalized_name, YGEdgeAll, )
 
 @synthesize isEnabled=_isEnabled;
 @synthesize isIncludedInLayout=_isIncludedInLayout;
+@synthesize node=_node;
 
 + (void)initialize
 {
@@ -161,12 +160,12 @@ YG_STYLE_PROPERTY_IMPL(CGFloat, flexGrow, FlexGrow)
 YG_STYLE_PROPERTY_IMPL(CGFloat, flexShrink, FlexShrink)
 YG_STYLE_VALUE_PROPERTY_IMPL(flexBasis, FlexBasis)
 
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(position, Position, YGEdgeLeft, Left)
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(position, Position, YGEdgeTop, Top)
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(position, Position, YGEdgeRight, Right)
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(position, Position, YGEdgeBottom, Bottom)
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(position, Position, YGEdgeStart, Start)
-YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(position, Position, YGEdgeEnd, End)
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(left, Left, Position, YGEdgeLeft)
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(top, Top, Position, YGEdgeTop)
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(right, Right, Position, YGEdgeRight)
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(bottom, Bottom, Position, YGEdgeBottom)
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(start, Start, Position, YGEdgeStart)
+YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(end, End, Position, YGEdgeEnd)
 YG_STYLE_ALL_EDGE_PROPERTY_UNIT_IMPL(margin, Margin)
 YG_STYLE_ALL_EDGE_PROPERTY_UNIT_IMPL(padding, Padding)
 
