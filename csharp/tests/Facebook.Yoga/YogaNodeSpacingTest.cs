@@ -49,7 +49,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void TestWrite()
+        public void TestWriteRead()
         {
             YogaNode node = new YogaNode();
 
@@ -73,25 +73,25 @@ namespace Facebook.Yoga
             node.BorderLeftWidth = 15;
             node.BorderRightWidth = 16;
 
-            Assert.AreEqual(1.Px(), node.GetPosition(YogaEdge.Top));
-            Assert.AreEqual(2.Px(), node.GetPosition(YogaEdge.Bottom));
-            Assert.AreEqual(3.Px(), node.GetPosition(YogaEdge.Left));
-            Assert.AreEqual(4.Px(), node.GetPosition(YogaEdge.Right));
+            Assert.AreEqual(1.Px(), node.Top);
+            Assert.AreEqual(2.Px(), node.Bottom);
+            Assert.AreEqual(3.Px(), node.Left);
+            Assert.AreEqual(4.Px(), node.Right);
 
-            Assert.AreEqual(5.Px(), node.GetMargin(YogaEdge.Top));
-            Assert.AreEqual(6.Px(), node.GetMargin(YogaEdge.Bottom));
-            Assert.AreEqual(7.Px(), node.GetMargin(YogaEdge.Left));
-            Assert.AreEqual(8.Px(), node.GetMargin(YogaEdge.Right));
+            Assert.AreEqual(5.Px(), node.MarginTop);
+            Assert.AreEqual(6.Px(), node.MarginBottom);
+            Assert.AreEqual(7.Px(), node.MarginLeft);
+            Assert.AreEqual(8.Px(), node.MarginRight);
 
-            Assert.AreEqual(9.Px(), node.GetPadding(YogaEdge.Top));
-            Assert.AreEqual(10.Px(), node.GetPadding(YogaEdge.Bottom));
-            Assert.AreEqual(11.Px(), node.GetPadding(YogaEdge.Left));
-            Assert.AreEqual(12.Px(), node.GetPadding(YogaEdge.Right));
+            Assert.AreEqual(9.Px(), node.PaddingTop);
+            Assert.AreEqual(10.Px(), node.PaddingBottom);
+            Assert.AreEqual(11.Px(), node.PaddingLeft);
+            Assert.AreEqual(12.Px(), node.PaddingRight);
 
-            Assert.AreEqual(13, node.GetBorder(YogaEdge.Top));
-            Assert.AreEqual(14, node.GetBorder(YogaEdge.Bottom));
-            Assert.AreEqual(15, node.GetBorder(YogaEdge.Left));
-            Assert.AreEqual(16, node.GetBorder(YogaEdge.Right));
+            Assert.AreEqual(13, node.BorderTopWidth);
+            Assert.AreEqual(14, node.BorderBottomWidth);
+            Assert.AreEqual(15, node.BorderLeftWidth);
+            Assert.AreEqual(16, node.BorderRightWidth);
         }
     }
 }
