@@ -247,11 +247,13 @@ namespace Facebook.Yoga
             }
         }
 
+        [Obsolete("use Margin properties")]
         public YogaValue GetMargin(YogaEdge edge)
         {
             return Native.YGNodeStyleGetMargin(_ygNode, edge);
         }
 
+        [Obsolete("use Margin properties")]
         public void SetMargin(YogaEdge edge, YogaValue value)
         {
             if (value.Unit == YogaUnit.Percent)
@@ -264,11 +266,13 @@ namespace Facebook.Yoga
             }
         }
 
+        [Obsolete("use Padding properties")]
         public YogaValue GetPadding(YogaEdge edge)
         {
             return Native.YGNodeStyleGetPadding(_ygNode, edge);
         }
 
+        [Obsolete("use Padding properties")]
         public void SetPadding(YogaEdge edge, YogaValue value)
         {
             if (value.Unit == YogaUnit.Percent)
@@ -281,21 +285,25 @@ namespace Facebook.Yoga
             }
         }
 
+        [Obsolete("use BorderWidth properties")]
         public float GetBorder(YogaEdge edge)
         {
             return Native.YGNodeStyleGetBorder(_ygNode, edge);
         }
 
+        [Obsolete("use BorderWidth properties")]
         public void SetBorder(YogaEdge edge, float border)
         {
             Native.YGNodeStyleSetBorder(_ygNode, edge, border);
         }
 
+        [Obsolete("use Position properties")]
         public YogaValue GetPosition(YogaEdge edge)
         {
             return Native.YGNodeStyleGetPosition(_ygNode, edge);
         }
 
+        [Obsolete("use Position properties")]
         public void SetPosition(YogaEdge edge, YogaValue value)
         {
             if (value.Unit == YogaUnit.Percent)
@@ -308,6 +316,7 @@ namespace Facebook.Yoga
             }
         }
 
+        [Obsolete("use LayoutPadding properties")]
         public float GetLayoutPadding(YogaEdge edge)
         {
             return Native.YGNodeLayoutGetPadding(_ygNode, edge);
