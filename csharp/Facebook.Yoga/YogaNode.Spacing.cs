@@ -607,5 +607,77 @@ namespace Facebook.Yoga
                 Native.YGNodeStyleSetBorder(_ygNode, YogaEdge.All, value);
             }
         }
+
+        public float LayoutPaddingLeft
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.Left);
+            }
+        }
+
+        public float LayoutPaddingTop
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.Top);
+            }
+        }
+
+        public float LayoutPaddingRight
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.Right);
+            }
+        }
+
+        public float LayoutPaddingBottom
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.Bottom);
+            }
+        }
+
+        public float LayoutPaddingStart
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.Start);
+            }
+        }
+
+        public float LayoutPaddingEnd
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.End);
+            }
+        }
+
+        public float LayoutPaddingHorizontal
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.Horizontal);
+            }
+        }
+
+        public float LayoutPaddingVertical
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.Vertical);
+            }
+        }
+
+        public float LayoutPadding
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetPadding(_ygNode, YogaEdge.All);
+            }
+        }
     }
 }
