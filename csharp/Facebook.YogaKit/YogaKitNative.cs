@@ -147,6 +147,20 @@ namespace Facebook.YogaKit
             return Math.Round(value * scale) / scale;
         }
 
+        static bool NodeHasExactSameChildren(YogaNode node, NativeView[] subviews)
+        {
+            if (node.Count != subviews.Length)
+                return false;
+            for (int i = 0; i < subviews.Length; i++)
+            {
+                if (node[i] != subviews[i].GetYogaNode())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         static void AttachNodesFromViewHierachy(UIView view)
         {
             var node = GetYogaNode(view);
@@ -170,33 +184,18 @@ namespace Facebook.YogaKit
                     }
                 }
 
-                var shouldReconstructChildList = false;
-                if (node.Count != subviewsToInclude.Count)
-                {
-                    shouldReconstructChildList = true;
-                }
-                else
-                {
-                    for (int i = 0; i < subviewsToInclude.Count; i++)
-                    {
-                        if (node[i] != GetYogaNode(subviewsToInclude[i]))
-                        {
-                            shouldReconstructChildList = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (shouldReconstructChildList)
+                if (!NodeHasExactSameChildren(node, subviewsToInclude.ToArray()))
                 {
                     RemoveAllChildren(node);
-
                     for (int i = 0; i < subviewsToInclude.Count; i++)
                     {
-                        var subView = subviewsToInclude[i];
-                        node.Insert(i, subView.GetYogaNode());
-                        AttachNodesFromViewHierachy(subView);
+                        node.Insert(i, subviewsToInclude[i].GetYogaNode());
                     }
+                }
+
+                foreach (var subView in subviewsToInclude)
+                {
+                    AttachNodesFromViewHierachy(subView);
                 }
             }
         }
