@@ -104,8 +104,9 @@ namespace Facebook.Yoga
             [MarshalAs(UnmanagedType.FunctionPtr)] YogaMeasureFunc measureFunc);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.FunctionPtr)]
-        public static extern YogaMeasureFunc YGNodeGetMeasureFunc(YGNodeHandle node);
+        public static extern void YGNodeSetBaselineFunc(
+            YGNodeHandle node,
+            [MarshalAs(UnmanagedType.FunctionPtr)] YogaBaselineFunc baselineFunc);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeSetHasNewLayout(YGNodeHandle node, [MarshalAs(UnmanagedType.I1)] bool hasNewLayout);
