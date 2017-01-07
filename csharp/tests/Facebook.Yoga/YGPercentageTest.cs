@@ -71,8 +71,8 @@ namespace Facebook.Yoga
             root.Height = 400;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.SetPosition(YogaEdge.Left, 10.Percent());
-            root_child0.SetPosition(YogaEdge.Top, 20.Percent());
+            root_child0.Left = 10.Percent();
+            root_child0.Top = 20.Percent();
             root_child0.Width = 45.Percent();
             root_child0.Height = 55.Percent();
             root.Insert(0, root_child0);
@@ -116,8 +116,8 @@ namespace Facebook.Yoga
             root.Height = 500;
 
             YogaNode root_child0 = new YogaNode();
-            root_child0.SetPosition(YogaEdge.Right, 20.Percent());
-            root_child0.SetPosition(YogaEdge.Bottom, 10.Percent());
+            root_child0.Right = 20.Percent();
+            root_child0.Bottom = 10.Percent();
             root_child0.Width = 55.Percent();
             root_child0.Height = 15.Percent();
             root.Insert(0, root_child0);
@@ -691,38 +691,38 @@ namespace Facebook.Yoga
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
             root_child0.FlexBasis = 10.Percent();
-            root_child0.SetMargin(YogaEdge.Left, 5);
-            root_child0.SetMargin(YogaEdge.Top, 5);
-            root_child0.SetMargin(YogaEdge.Right, 5);
-            root_child0.SetMargin(YogaEdge.Bottom, 5);
-            root_child0.SetPadding(YogaEdge.Left, 3);
-            root_child0.SetPadding(YogaEdge.Top, 3);
-            root_child0.SetPadding(YogaEdge.Right, 3);
-            root_child0.SetPadding(YogaEdge.Bottom, 3);
+            root_child0.MarginLeft = 5;
+            root_child0.MarginTop = 5;
+            root_child0.MarginRight = 5;
+            root_child0.MarginBottom = 5;
+            root_child0.PaddingLeft = 3;
+            root_child0.PaddingTop = 3;
+            root_child0.PaddingRight = 3;
+            root_child0.PaddingBottom = 3;
             root_child0.MinWidth = 60.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child0_child0 = new YogaNode();
-            root_child0_child0.SetMargin(YogaEdge.Left, 5);
-            root_child0_child0.SetMargin(YogaEdge.Top, 5);
-            root_child0_child0.SetMargin(YogaEdge.Right, 5);
-            root_child0_child0.SetMargin(YogaEdge.Bottom, 5);
-            root_child0_child0.SetPadding(YogaEdge.Left, 3.Percent());
-            root_child0_child0.SetPadding(YogaEdge.Top, 3.Percent());
-            root_child0_child0.SetPadding(YogaEdge.Right, 3.Percent());
-            root_child0_child0.SetPadding(YogaEdge.Bottom, 3.Percent());
+            root_child0_child0.MarginLeft = 5;
+            root_child0_child0.MarginTop = 5;
+            root_child0_child0.MarginRight = 5;
+            root_child0_child0.MarginBottom = 5;
+            root_child0_child0.PaddingLeft = 3.Percent();
+            root_child0_child0.PaddingTop = 3.Percent();
+            root_child0_child0.PaddingRight = 3.Percent();
+            root_child0_child0.PaddingBottom = 3.Percent();
             root_child0_child0.Width = 50.Percent();
             root_child0.Insert(0, root_child0_child0);
 
             YogaNode root_child0_child0_child0 = new YogaNode();
-            root_child0_child0_child0.SetMargin(YogaEdge.Left, 5.Percent());
-            root_child0_child0_child0.SetMargin(YogaEdge.Top, 5.Percent());
-            root_child0_child0_child0.SetMargin(YogaEdge.Right, 5.Percent());
-            root_child0_child0_child0.SetMargin(YogaEdge.Bottom, 5.Percent());
-            root_child0_child0_child0.SetPadding(YogaEdge.Left, 3);
-            root_child0_child0_child0.SetPadding(YogaEdge.Top, 3);
-            root_child0_child0_child0.SetPadding(YogaEdge.Right, 3);
-            root_child0_child0_child0.SetPadding(YogaEdge.Bottom, 3);
+            root_child0_child0_child0.MarginLeft = 5.Percent();
+            root_child0_child0_child0.MarginTop = 5.Percent();
+            root_child0_child0_child0.MarginRight = 5.Percent();
+            root_child0_child0_child0.MarginBottom = 5.Percent();
+            root_child0_child0_child0.PaddingLeft = 3;
+            root_child0_child0_child0.PaddingTop = 3;
+            root_child0_child0_child0.PaddingRight = 3;
+            root_child0_child0_child0.PaddingBottom = 3;
             root_child0_child0_child0.Width = 45.Percent();
             root_child0_child0.Insert(0, root_child0_child0_child0);
 
@@ -801,10 +801,10 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
-            root_child0.SetMargin(YogaEdge.Left, 10.Percent());
-            root_child0.SetMargin(YogaEdge.Top, 10.Percent());
-            root_child0.SetMargin(YogaEdge.Right, 10.Percent());
-            root_child0.SetMargin(YogaEdge.Bottom, 10.Percent());
+            root_child0.MarginLeft = 10.Percent();
+            root_child0.MarginTop = 10.Percent();
+            root_child0.MarginRight = 10.Percent();
+            root_child0.MarginBottom = 10.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child0_child0 = new YogaNode();
@@ -861,10 +861,10 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
-            root_child0.SetPadding(YogaEdge.Left, 10.Percent());
-            root_child0.SetPadding(YogaEdge.Top, 10.Percent());
-            root_child0.SetPadding(YogaEdge.Right, 10.Percent());
-            root_child0.SetPadding(YogaEdge.Bottom, 10.Percent());
+            root_child0.PaddingLeft = 10.Percent();
+            root_child0.PaddingTop = 10.Percent();
+            root_child0.PaddingRight = 10.Percent();
+            root_child0.PaddingBottom = 10.Percent();
             root.Insert(0, root_child0);
 
             YogaNode root_child0_child0 = new YogaNode();
@@ -921,8 +921,8 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.PositionType = YogaPositionType.Absolute;
-            root_child0.SetPosition(YogaEdge.Left, 30.Percent());
-            root_child0.SetPosition(YogaEdge.Top, 10.Percent());
+            root_child0.Left = 30.Percent();
+            root_child0.Top = 10.Percent();
             root_child0.Width = 10;
             root_child0.Height = 10;
             root.Insert(0, root_child0);

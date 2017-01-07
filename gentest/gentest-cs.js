@@ -20,6 +20,10 @@ function toCsUnitValue(value) {
   return toValueCs(value) + methodName;
 }
 
+function toEdgeString(value) {
+  return value.replace('YogaEdge.', '');
+}
+
 var CSEmitter = function() {
   Emitter.call(this, 'cs', '    ');
 };
@@ -169,7 +173,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetBorder(' + edge + ', ' + toValueCs(value) + ');');
+    this.push(nodeName + '.Border' + toEdgeString(edge) + 'Width = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetDirection:{value:function(nodeName, value) {
@@ -205,7 +209,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetMargin(' + edge + ', ' + toCsUnitValue(value) + ');');
+    this.push(nodeName + '.Margin' + toEdgeString(edge) + ' = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
@@ -229,11 +233,11 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPadding(' + edge + ', ' + toCsUnitValue(value) + ');');
+    this.push(nodeName + '.Padding' + toEdgeString(edge) + ' = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPosition(' + edge + ', ' + toCsUnitValue(value) + ');');
+    this.push(nodeName + '.' + toEdgeString(edge) + ' = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetPositionType:{value:function(nodeName, value) {
