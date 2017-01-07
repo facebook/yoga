@@ -109,22 +109,22 @@ namespace Facebook.Yoga
             {
                 if (position.Top.HasValue)
                 {
-                    node.SetPosition(YogaEdge.Top, position.Top.Value);
+                    node.Top = position.Top.Value;
                 }
 
                 if (position.Bottom.HasValue)
                 {
-                    node.SetPosition(YogaEdge.Bottom, position.Bottom.Value);
+                    node.Bottom = position.Bottom.Value;
                 }
 
                 if (position.Left.HasValue)
                 {
-                    node.SetPosition(YogaEdge.Left, position.Left.Value);
+                    node.Left = position.Left.Value;
                 }
 
                 if (position.Right.HasValue)
                 {
-                    node.SetPosition(YogaEdge.Right, position.Right.Value);
+                    node.Right = position.Right.Value;
                 }
             }
 
@@ -132,22 +132,22 @@ namespace Facebook.Yoga
             {
                 if (margin.Top.HasValue)
                 {
-                    node.SetMargin(YogaEdge.Top, margin.Top.Value);
+                    node.MarginTop = margin.Top.Value;
                 }
 
                 if (margin.Bottom.HasValue)
                 {
-                    node.SetMargin(YogaEdge.Bottom, margin.Bottom.Value);
+                    node.MarginBottom = margin.Bottom.Value;
                 }
 
                 if (margin.Left.HasValue)
                 {
-                    node.SetMargin(YogaEdge.Left, margin.Left.Value);
+                    node.MarginLeft = margin.Left.Value;
                 }
 
                 if (margin.Right.HasValue)
                 {
-                    node.SetMargin(YogaEdge.Right, margin.Right.Value);
+                    node.MarginRight = margin.Right.Value;
                 }
             }
 
@@ -155,22 +155,22 @@ namespace Facebook.Yoga
             {
                 if (padding.Top.HasValue)
                 {
-                    node.SetPadding(YogaEdge.Top, padding.Top.Value);
+                    node.PaddingTop = padding.Top.Value;
                 }
 
                 if (padding.Bottom.HasValue)
                 {
-                    node.SetPadding(YogaEdge.Bottom, padding.Bottom.Value);
+                    node.PaddingBottom = padding.Bottom.Value;
                 }
 
                 if (padding.Left.HasValue)
                 {
-                    node.SetPadding(YogaEdge.Left, padding.Left.Value);
+                    node.PaddingLeft = padding.Left.Value;
                 }
 
                 if (padding.Right.HasValue)
                 {
-                    node.SetPadding(YogaEdge.Right, padding.Right.Value);
+                    node.PaddingRight = padding.Right.Value;
                 }
             }
 
@@ -178,22 +178,22 @@ namespace Facebook.Yoga
             {
                 if (border.Top.HasValue)
                 {
-                    node.SetBorder(YogaEdge.Top, border.Top.Value);
+                    node.BorderTopWidth = border.Top.Value;
                 }
 
                 if (border.Bottom.HasValue)
                 {
-                    node.SetBorder(YogaEdge.Bottom, border.Bottom.Value);
+                    node.BorderBottomWidth = border.Bottom.Value;
                 }
 
                 if (border.Left.HasValue)
                 {
-                    node.SetBorder(YogaEdge.Left, border.Left.Value);
+                    node.BorderLeftWidth = border.Left.Value;
                 }
 
                 if (border.Right.HasValue)
                 {
-                    node.SetBorder(YogaEdge.Right, border.Right.Value);
+                    node.BorderRightWidth = border.Right.Value;
                 }
             }
 
