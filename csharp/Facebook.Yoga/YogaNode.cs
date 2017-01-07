@@ -21,6 +21,8 @@ namespace Facebook.Yoga
         private List<YogaNode> _children;
         private MeasureFunction _measureFunction;
         private YogaMeasureFunc _ygMeasureFunc;
+        private BaselineFunction _baselineFunction;
+        private YogaBaselineFunc _ygBaselineFunc;
         private object _data;
 
         public YogaNode()
@@ -37,6 +39,7 @@ namespace Facebook.Yoga
         public void Reset()
         {
             _measureFunction = null;
+            _baselineFunction = null;
             _data = null;
 
             Native.YGNodeReset(_ygNode);
@@ -81,6 +84,14 @@ namespace Facebook.Yoga
             get
             {
                 return _measureFunction != null;
+            }
+        }
+
+        public bool IsBaselineDefined
+        {
+            get
+            {
+                return _baselineFunction != null;
             }
         }
 
@@ -585,6 +596,13 @@ namespace Facebook.Yoga
             Native.YGNodeSetMeasureFunc(_ygNode, _ygMeasureFunc);
         }
 
+        public void SetBaselineFunction(BaselineFunction baselineFunction)
+        {
+            _baselineFunction = baselineFunction;
+            _ygBaselineFunc = baselineFunction != null ? BaselineInternal : (YogaBaselineFunc)null;
+            Native.YGNodeSetBaselineFunc(_ygNode, _ygBaselineFunc);
+        }
+
         public void CalculateLayout()
         {
             Native.YGNodeCalculateLayout(
@@ -607,6 +625,16 @@ namespace Facebook.Yoga
             }
 
             return _measureFunction(this, width, widthMode, height, heightMode);
+        }
+
+        private float BaselineInternal(IntPtr node, float width, float height)
+        {
+            if (_baselineFunction == null)
+            {
+                throw new InvalidOperationException("Baseline function is not defined.");
+            }
+
+            return _baselineFunction(this, width, height);
         }
 
         public string Print(YogaPrintOptions options =

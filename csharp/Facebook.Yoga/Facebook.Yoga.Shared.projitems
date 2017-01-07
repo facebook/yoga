@@ -9,12 +9,14 @@
     <Import_RootNamespace>Facebook.Yoga.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaselineFunction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Border.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MeasureFunction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MeasureOutput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Spacing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaAlign.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)YogaBaselineFunc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaDimension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaDirection.cs" />
