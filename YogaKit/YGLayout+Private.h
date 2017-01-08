@@ -7,11 +7,10 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <UIKit/UIKit.h>
 #import "YGLayout.h"
 
-@interface UIView (Yoga)
+@interface YGLayout (Private)
 
-@property (nonatomic, readonly, strong) YGLayout *yoga;
+- (instancetype)initWithView:(UIView *)view;
 
 @end

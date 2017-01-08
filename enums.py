@@ -119,21 +119,21 @@ def to_java_upper(symbol):
 
 root = os.path.dirname(os.path.abspath(__file__))
 
-# write out C headers
+# write out C & Objective-C headers
 with open(root + '/yoga/YGEnums.h', 'w') as f:
     f.write(LICENSE)
     f.write('#pragma once\n\n')
     f.write('#include "YGMacros.h"\n\n')
     f.write('YG_EXTERN_C_BEGIN\n\n')
     for name, values in ENUMS.items():
-        f.write('#define YG%sCount %s\n' % (name, len(values)))
-        f.write('typedef enum YG%s {\n' % name)
+        f.write('#define YG%sCount %s\n' % (name, len(values)))        
+        f.write('typedef YG_ENUM_BEGIN(YG%s) {\n' % name)
         for value in values:
             if isinstance(value, tuple):
                 f.write('  YG%s%s = %d,\n' % (name, value[0], value[1]))
             else:
                 f.write('  YG%s%s,\n' % (name, value))
-        f.write('} YG%s;\n' % name)
+        f.write('} YG_ENUM_END(YG%s);\n' % name)
         f.write('\n')
     f.write('YG_EXTERN_C_END\n')
 
