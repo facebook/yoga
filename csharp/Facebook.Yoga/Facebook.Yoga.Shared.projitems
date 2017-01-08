@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)YogaMeasureFunc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaMeasureMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaNode.Create.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)YogaNode.Spacing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaOverflow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaPositionType.cs" />

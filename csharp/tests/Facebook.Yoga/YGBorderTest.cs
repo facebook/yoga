@@ -21,10 +21,10 @@ namespace Facebook.Yoga
         public void Test_border_no_size()
         {
             YogaNode root = new YogaNode();
-            root.SetBorder(YogaEdge.Left, 10);
-            root.SetBorder(YogaEdge.Top, 10);
-            root.SetBorder(YogaEdge.Right, 10);
-            root.SetBorder(YogaEdge.Bottom, 10);
+            root.BorderLeftWidth = 10;
+            root.BorderTopWidth = 10;
+            root.BorderRightWidth = 10;
+            root.BorderBottomWidth = 10;
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
 
@@ -46,10 +46,10 @@ namespace Facebook.Yoga
         public void Test_border_container_match_child()
         {
             YogaNode root = new YogaNode();
-            root.SetBorder(YogaEdge.Left, 10);
-            root.SetBorder(YogaEdge.Top, 10);
-            root.SetBorder(YogaEdge.Right, 10);
-            root.SetBorder(YogaEdge.Bottom, 10);
+            root.BorderLeftWidth = 10;
+            root.BorderTopWidth = 10;
+            root.BorderRightWidth = 10;
+            root.BorderBottomWidth = 10;
 
             YogaNode root_child0 = new YogaNode();
             root_child0.Width = 10;
@@ -86,10 +86,10 @@ namespace Facebook.Yoga
         public void Test_border_flex_child()
         {
             YogaNode root = new YogaNode();
-            root.SetBorder(YogaEdge.Left, 10);
-            root.SetBorder(YogaEdge.Top, 10);
-            root.SetBorder(YogaEdge.Right, 10);
-            root.SetBorder(YogaEdge.Bottom, 10);
+            root.BorderLeftWidth = 10;
+            root.BorderTopWidth = 10;
+            root.BorderRightWidth = 10;
+            root.BorderBottomWidth = 10;
             root.Width = 100;
             root.Height = 100;
 
@@ -128,10 +128,10 @@ namespace Facebook.Yoga
         public void Test_border_stretch_child()
         {
             YogaNode root = new YogaNode();
-            root.SetBorder(YogaEdge.Left, 10);
-            root.SetBorder(YogaEdge.Top, 10);
-            root.SetBorder(YogaEdge.Right, 10);
-            root.SetBorder(YogaEdge.Bottom, 10);
+            root.BorderLeftWidth = 10;
+            root.BorderTopWidth = 10;
+            root.BorderRightWidth = 10;
+            root.BorderBottomWidth = 10;
             root.Width = 100;
             root.Height = 100;
 
@@ -171,9 +171,9 @@ namespace Facebook.Yoga
             YogaNode root = new YogaNode();
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
-            root.SetBorder(YogaEdge.Start, 10);
-            root.SetBorder(YogaEdge.End, 20);
-            root.SetBorder(YogaEdge.Bottom, 20);
+            root.BorderStartWidth = 10;
+            root.BorderEndWidth = 20;
+            root.BorderBottomWidth = 20;
             root.Width = 100;
             root.Height = 100;
 

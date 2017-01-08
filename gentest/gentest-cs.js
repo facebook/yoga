@@ -102,12 +102,12 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGDirectionLTR:{value:'YogaDirection.LTR'},
   YGDirectionRTL:{value:'YogaDirection.RTL'},
 
-  YGEdgeBottom:{value:'YogaEdge.Bottom'},
-  YGEdgeEnd:{value:'YogaEdge.End'},
-  YGEdgeLeft:{value:'YogaEdge.Left'},
-  YGEdgeRight:{value:'YogaEdge.Right'},
-  YGEdgeStart:{value:'YogaEdge.Start'},
-  YGEdgeTop:{value:'YogaEdge.Top'},
+  YGEdgeBottom:{value:'Bottom'},
+  YGEdgeEnd:{value:'End'},
+  YGEdgeLeft:{value:'Left'},
+  YGEdgeRight:{value:'Right'},
+  YGEdgeStart:{value:'Start'},
+  YGEdgeTop:{value:'Top'},
 
   YGFlexDirectionColumn:{value:'YogaFlexDirection.Column'},
   YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.ColumnReverse'},
@@ -169,7 +169,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetBorder(' + edge + ', ' + toValueCs(value) + ');');
+    this.push(nodeName + '.Border' + edge + 'Width = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetDirection:{value:function(nodeName, value) {
@@ -205,7 +205,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetMargin(' + edge + ', ' + toCsUnitValue(value) + ');');
+    this.push(nodeName + '.Margin' + edge + ' = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
@@ -229,11 +229,11 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPadding(' + edge + ', ' + toCsUnitValue(value) + ');');
+    this.push(nodeName + '.Padding' + edge + ' = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.SetPosition(' + edge + ', ' + toCsUnitValue(value) + ');');
+    this.push(nodeName + '.' + edge + ' = ' + toCsUnitValue(value) + ';');
   }},
 
   YGNodeStyleSetPositionType:{value:function(nodeName, value) {
