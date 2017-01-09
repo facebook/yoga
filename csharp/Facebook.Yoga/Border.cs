@@ -9,6 +9,7 @@
 
 namespace Facebook.Yoga
 {
+    [System.Obsolete]
     public class Border
     {
         public float? Top;

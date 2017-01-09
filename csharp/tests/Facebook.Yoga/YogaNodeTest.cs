@@ -198,6 +198,54 @@ namespace Facebook.Yoga
         }
 
         [Test]
+        public void TestBaselineFunc()
+        {
+            YogaNode node = new YogaNode();
+            node.Height = 200;
+            node.FlexDirection = YogaFlexDirection.Row;
+            node.AlignItems = YogaAlign.Baseline;
+
+            YogaNode child0 = new YogaNode();
+            child0.Width = 100;
+            child0.Height = 110;
+            child0.SetBaselineFunction((_, width, height) => {
+                Assert.AreEqual(100, width);
+                Assert.AreEqual(110, height);
+                return 65;
+            });
+            node.Insert(0, child0);
+
+            YogaNode child1 = new YogaNode();
+            child1.Width = 100;
+            child1.Height = 110;
+            child1.SetBaselineFunction((_, width, height) => {
+                Assert.AreEqual(100, width);
+                Assert.AreEqual(110, height);
+                return 80;
+            });
+            node.Insert(1, child1);
+
+            YogaNode child2 = new YogaNode();
+            child2.Width = 100;
+            child2.Height = 110;
+            child2.SetBaselineFunction((_, width, height) => {
+                Assert.AreEqual(100, width);
+                Assert.AreEqual(110, height);
+                return 88;
+            });
+            node.Insert(2, child2);
+
+            node.CalculateLayout();
+
+            Assert.AreEqual(0, child0.LayoutX);
+            Assert.AreEqual(23, child0.LayoutY);
+            Assert.AreEqual(100, child1.LayoutX);
+            Assert.AreEqual(8, child1.LayoutY);
+            Assert.AreEqual(200, child2.LayoutX);
+            Assert.AreEqual(0, child2.LayoutY);
+        }
+
+        [Test]
         public void TestPrint()
         {
             YogaNode parent = new YogaNode();
@@ -226,6 +274,36 @@ namespace Facebook.Yoga
 
             node0.CopyStyle(node1);
             Assert.AreEqual(100.Px(), node0.MaxHeight);
+        }
+
+        [Test]
+        public void TestCopyConstructor()
+        {
+            YogaNode node0 = new YogaNode();
+            node0.MaxWidth = 80;
+
+            YogaNode node1 = new YogaNode(node0);
+            Assert.AreEqual(80.Px(), node1.MaxWidth);
+
+            YogaNode node2 = new YogaNode(node1)
+            {
+                MaxHeight = 90,
+            };
+            Assert.AreEqual(80.Px(), node2.MaxWidth);
+            Assert.AreEqual(90.Px(), node2.MaxHeight);
+
+            YogaNode node3 = new YogaNode(node0)
+            {
+                MaxWidth = 100,
+            };
+            Assert.AreEqual(100.Px(), node3.MaxWidth);
+
+            YogaNode node4 = new YogaNode(node2)
+            {
+                MaxWidth = 100,
+            };
+            Assert.AreEqual(100.Px(), node4.MaxWidth);
+            Assert.AreEqual(90.Px(), node4.MaxHeight);
         }
 
         private void ForceGC()
@@ -361,16 +439,16 @@ namespace Facebook.Yoga
           YogaNode node = new YogaNode();
           node.Width = 100;
           node.Height = 100;
-          node.SetPadding(YogaEdge.Start, 1);
-          node.SetPadding(YogaEdge.End, 2);
-          node.SetPadding(YogaEdge.Top, 3);
-          node.SetPadding(YogaEdge.Bottom, 4);
+          node.PaddingStart = 1;
+          node.PaddingEnd = 2;
+          node.PaddingTop = 3;
+          node.PaddingBottom = 4;
           node.CalculateLayout();
 
-          Assert.AreEqual(1, node.GetLayoutPadding(YogaEdge.Left));
-          Assert.AreEqual(2, node.GetLayoutPadding(YogaEdge.Right));
-          Assert.AreEqual(3, node.GetLayoutPadding(YogaEdge.Top));
-          Assert.AreEqual(4, node.GetLayoutPadding(YogaEdge.Bottom));
+          Assert.AreEqual(1, node.LayoutPaddingLeft);
+          Assert.AreEqual(2, node.LayoutPaddingRight);
+          Assert.AreEqual(3, node.LayoutPaddingTop);
+          Assert.AreEqual(4, node.LayoutPaddingBottom);
         }
     }
 }
