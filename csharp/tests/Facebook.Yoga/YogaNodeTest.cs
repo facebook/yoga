@@ -276,6 +276,36 @@ namespace Facebook.Yoga
             Assert.AreEqual(100.Px(), node0.MaxHeight);
         }
 
+        [Test]
+        public void TestCopyConstructor()
+        {
+            YogaNode node0 = new YogaNode();
+            node0.MaxWidth = 80;
+
+            YogaNode node1 = new YogaNode(node0);
+            Assert.AreEqual(80.Px(), node1.MaxWidth);
+
+            YogaNode node2 = new YogaNode(node1)
+            {
+                MaxHeight = 90,
+            };
+            Assert.AreEqual(80.Px(), node2.MaxWidth);
+            Assert.AreEqual(90.Px(), node2.MaxHeight);
+
+            YogaNode node3 = new YogaNode(node0)
+            {
+                MaxWidth = 100,
+            };
+            Assert.AreEqual(100.Px(), node3.MaxWidth);
+
+            YogaNode node4 = new YogaNode(node2)
+            {
+                MaxWidth = 100,
+            };
+            Assert.AreEqual(100.Px(), node4.MaxWidth);
+            Assert.AreEqual(90.Px(), node4.MaxHeight);
+        }
+
         private void ForceGC()
         {
             GC.Collect(GC.MaxGeneration);

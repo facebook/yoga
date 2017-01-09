@@ -36,6 +36,12 @@ namespace Facebook.Yoga
             }
         }
 
+        public YogaNode(YogaNode srcNode)
+            : this()
+        {
+            CopyStyle(srcNode);
+        }
+
         public void Reset()
         {
             _measureFunction = null;
