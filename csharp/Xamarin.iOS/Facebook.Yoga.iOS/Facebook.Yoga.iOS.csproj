@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProjectGuid>{BE4CBFDA-02E2-4DF0-A81A-CEFB7987A708}</ProjectGuid>
+		<ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+		<OutputType>Library</OutputType>
+		<RootNamespace>Facebook.Yoga.iOS</RootNamespace>
+		<AssemblyName>Facebook.Yoga.iOS</AssemblyName>
+		<IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Debug</OutputPath>
+		<DefineConstants>DEBUG;</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<Optimize>true</Optimize>
+		<OutputPath>bin\Release</OutputPath>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="Xamarin.iOS" />
+		<Reference Include="System.Core" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Properties\AssemblyInfo.cs" />
+		<Compile Include="..\..\Facebook.Yoga\MeasureFunction.cs">
+		  <Link>MeasureFunction.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\MeasureOutput.cs">
+		  <Link>MeasureOutput.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\Native.cs">
+		  <Link>Native.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\Spacing.cs">
+		  <Link>Spacing.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaAlign.cs">
+		  <Link>YogaAlign.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaConstants.cs">
+		  <Link>YogaConstants.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaDimension.cs">
+		  <Link>YogaDimension.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaDirection.cs">
+		  <Link>YogaDirection.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaEdge.cs">
+		  <Link>YogaEdge.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaExperimentalFeature.cs">
+		  <Link>YogaExperimentalFeature.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaFlexDirection.cs">
+		  <Link>YogaFlexDirection.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaJustify.cs">
+		  <Link>YogaJustify.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaLogger.cs">
+		  <Link>YogaLogger.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaLogLevel.cs">
+		  <Link>YogaLogLevel.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaMeasureFunc.cs">
+		  <Link>YogaMeasureFunc.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaMeasureMode.cs">
+		  <Link>YogaMeasureMode.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaNode.Create.cs">
+		  <Link>YogaNode.Create.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaNode.cs">
+		  <Link>YogaNode.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaOverflow.cs">
+		  <Link>YogaOverflow.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaPositionType.cs">
+		  <Link>YogaPositionType.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaPrintOptions.cs">
+		  <Link>YogaPrintOptions.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaSize.cs">
+		  <Link>YogaSize.cs</Link>
+		</Compile>
+		<Compile Include="..\..\Facebook.Yoga\YogaWrap.cs">
+		  <Link>YogaWrap.cs</Link>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<BundleResource Include="CustomBuildAction.targets" />
+	</ItemGroup>
+	<ItemGroup>
+	  <NativeReference Include="libyoga.a">
+	    <Kind>Static</Kind>
+	    <SmartLink>False</SmartLink>
+	  </NativeReference>
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
+	<Import Project="CustomBuildAction.targets" />
+</Project>
