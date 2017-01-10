@@ -676,3 +676,24 @@ TEST(YogaTest, aspect_ratio_height_overrides_align_stretch_column) {
 
   YGNodeFreeRecursive(root);
 }
+
+TEST(YogaTest, aspect_ratio_allow_child_overflow_parent_size) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 4);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(200, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+}
