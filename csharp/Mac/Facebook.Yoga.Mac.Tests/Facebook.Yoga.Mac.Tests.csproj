@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{64E0AB97-A904-4607-A535-EEA5A966C09E}</ProjectGuid>
+    <ProjectGuid>{9FCB6149-DFA8-4EAA-B4DB-2E91A5D8FF77}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Facebook.Yoga.Mac.Test</RootNamespace>
-    <AssemblyName>Facebook.Yoga.Mac.Test</AssemblyName>
+    <RootNamespace>Facebook.Yoga.Mac.Tests</RootNamespace>
+    <AssemblyName>Facebook.Yoga.Mac.Tests</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -52,9 +52,9 @@
     <XamMacArch></XamMacArch>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Xamarin.Mac" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -62,17 +62,10 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <Compile Include="AppDelegate.cs" />
-    <Compile Include="ViewController.cs" />
-    <Compile Include="ViewController.designer.cs">
-      <DependentUpon>ViewController.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Facebook.Yoga.Mac.csproj">
@@ -80,5 +73,6 @@
       <Name>Facebook.Yoga.Mac</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems" Label="Shared" Condition="Exists('..\..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
