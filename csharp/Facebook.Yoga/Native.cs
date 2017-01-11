@@ -90,10 +90,6 @@ namespace Facebook.Yoga
         public static extern void YGNodePrint(YGNodeHandle node, YogaPrintOptions options);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool YGValueIsUndefined(float value);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeCopyStyle(YGNodeHandle dstNode, YGNodeHandle srcNode);
 
         #region YG_NODE_PROPERTY
