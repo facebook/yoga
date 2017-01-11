@@ -1,0 +1,81 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.iOS", "Facebook.Yoga.iOS\Facebook.Yoga.iOS.csproj", "{128FB32A-C4A1-4363-BF06-0A36E700B7FA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared", "..\Facebook.Yoga\Facebook.Yoga.Shared.shproj", "{91C42D32-291D-4B72-90B4-551663D60B8B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{89A39C6B-6A7B-4458-872B-A0456550CAA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.iOS.Tests", "Facebook.Yoga.iOS.Tests\Facebook.Yoga.iOS.Tests.csproj", "{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared.Tests", "..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.shproj", "{4EDC82D9-A201-4831-8FE0-98F468F8E4AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Release|iPhone.Build.0 = Release|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Release|Any CPU.Build.0 = Release|iPhone
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Release|iPhone.ActiveCfg = Release|iPhone
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Release|iPhone.Build.0 = Release|iPhone
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{FCF0BE59-AE56-4D4F-8524-94532B2DFC71}.Debug|iPhone.Build.0 = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{91C42D32-291D-4B72-90B4-551663D60B8B} = {89A39C6B-6A7B-4458-872B-A0456550CAA6}
+		{4EDC82D9-A201-4831-8FE0-98F468F8E4AE} = {89A39C6B-6A7B-4458-872B-A0456550CAA6}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.IndentSwitchSection = True
+		$2.NewLinesForBracesInProperties = True
+		$2.NewLinesForBracesInAccessors = True
+		$2.NewLinesForBracesInAnonymousMethods = True
+		$2.NewLinesForBracesInControlBlocks = True
+		$2.NewLinesForBracesInAnonymousTypes = True
+		$2.NewLinesForBracesInObjectCollectionArrayInitializers = True
+		$2.NewLinesForBracesInLambdaExpressionBody = True
+		$2.NewLineForElse = True
+		$2.NewLineForCatch = True
+		$2.NewLineForFinally = True
+		$2.NewLineForMembersInObjectInit = True
+		$2.NewLineForMembersInAnonymousTypes = True
+		$2.NewLineForClausesInQuery = True
+		$2.SpacingAfterMethodDeclarationName = False
+		$2.SpaceAfterMethodCallName = False
+		$2.SpaceBeforeOpenSquareBracket = False
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+	EndGlobalSection
+EndGlobal
