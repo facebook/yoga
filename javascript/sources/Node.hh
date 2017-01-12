@@ -176,6 +176,9 @@ class Node {
 
     Layout getComputedLayout(void) const;
 
+    double getComputedMargin(int edge) const;
+    double getComputedPadding(int edge) const;
+
  private:
 
     YGNodeRef m_node;
