@@ -452,6 +452,54 @@ namespace Facebook.Yoga
             }
         }
 
+        public float LayoutMarginLeft
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetMargin(_ygNode, YogaEdge.Left);
+            }
+        }
+
+        public float LayoutMarginTop
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetMargin(_ygNode, YogaEdge.Top);
+            }
+        }
+
+        public float LayoutMarginRight
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetMargin(_ygNode, YogaEdge.Right);
+            }
+        }
+
+        public float LayoutMarginBottom
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetMargin(_ygNode, YogaEdge.Bottom);
+            }
+        }
+
+        public float LayoutMarginStart
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetMargin(_ygNode, YogaEdge.Start);
+            }
+        }
+
+        public float LayoutMarginEnd
+        {
+            get
+            {
+                return Native.YGNodeLayoutGetMargin(_ygNode, YogaEdge.End);
+            }
+        }
+
         public float LayoutPaddingLeft
         {
             get
