@@ -459,6 +459,11 @@ double Node::getComputedMargin(int edge) const
     return YGNodeLayoutGetMargin(m_node, static_cast<YGEdge>(edge));
 }
 
+double Node::getComputedBorder(int edge) const
+{
+    return YGNodeLayoutGetBorder(m_node, static_cast<YGEdge>(edge));
+}
+
 double Node::getComputedPadding(int edge) const
 {
     return YGNodeLayoutGetPadding(m_node, static_cast<YGEdge>(edge));
