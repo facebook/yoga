@@ -7,6 +7,10 @@
 /gentest/test.html
 .buckversion
 
+# Jekyll
+/.sass-cache/
+/_site/
+
 # Visual studio code
 .vscode
 *.pdb
