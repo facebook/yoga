@@ -13,7 +13,7 @@ using AppKit;
 using Foundation;
 using CoreGraphics;
 
-namespace Facebook.Yoga.Mac.Test
+namespace Facebook.Yoga.Mac.Sample
 {
     public static class NSViewYogaExtensions
     {

@@ -8,7 +8,7 @@
 
 using AppKit;
 
-namespace Facebook.Yoga.Mac.Test
+namespace Facebook.Yoga.Mac.Sample
 {
     static class MainClass
     {
