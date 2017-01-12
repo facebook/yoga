@@ -333,12 +333,6 @@ namespace Facebook.Yoga
             }
         }
 
-        [Obsolete("use LayoutMargin properties")]
-        public float GetLayoutMargin(YogaEdge edge)
-        {
-            return Native.YGNodeLayoutGetMargin(_ygNode, edge);
-        }
-
         [Obsolete("use LayoutPadding properties")]
         public float GetLayoutPadding(YogaEdge edge)
         {
