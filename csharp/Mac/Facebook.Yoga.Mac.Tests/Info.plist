@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleName</key>
-	<string>Facebook.Yoga.Mac.Test</string>
+	<string>Facebook.Yoga.Mac.Tests</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.facebook-yoga-mac-test</string>
+	<string>com.facebook.facebook-yoga-mac-tests</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>

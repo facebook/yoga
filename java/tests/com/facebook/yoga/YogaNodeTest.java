@@ -24,6 +24,35 @@ public class YogaNodeTest {
   }
 
   @Test
+  public void testBaseline() {
+    final YogaNode root = new YogaNode();
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setAlignItems(YogaAlign.BASELINE);
+    root.setWidth(100);
+    root.setHeight(100);
+
+    final YogaNode child1 = new YogaNode();
+    child1.setWidth(40);
+    child1.setHeight(40);
+    root.addChildAt(child1, 0);
+
+    final YogaNode child2 = new YogaNode();
+    child2.setWidth(40);
+    child2.setHeight(40);
+    child2.setBaselineFunction(new YogaBaselineFunction() {
+        public float baseline(YogaNodeAPI node, float width, float height) {
+          return 0;
+        }
+    });
+    root.addChildAt(child2, 1);
+
+    root.calculateLayout();
+
+    assertEquals(0, (int) child1.getLayoutY());
+    assertEquals(40, (int) child2.getLayoutY());
+  }
+
+  @Test
   public void testMeasure() {
     final YogaNode node = new YogaNode();
     node.setMeasureFunction(new YogaMeasureFunction() {
