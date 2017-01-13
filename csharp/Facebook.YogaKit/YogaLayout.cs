@@ -720,6 +720,13 @@ namespace Facebook.YogaKit
 				ApplyLayoutToViewHierarchy(view);
 			}
 		}
+		public SizeF IntrinsicSize
+		{
+			get
+			{
+				return CalculateLayoutWithSize(this, float.NaN, float.NaN);
+			}
+		}
 
 		SizeF CalculateLayoutWithSize(YogaLayout layout, float width, float height)
 		{
@@ -847,7 +854,7 @@ namespace Facebook.YogaKit
 			}
 		}
 
-		static double RoundPixelValue(nfloat value)
+		static double RoundPixelValue(float value)
 		{
 			float scale = NativePixelScale;
 

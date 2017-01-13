@@ -30,7 +30,7 @@ namespace Facebook.YogaKit
 		{
 			var topLeft = new CGPoint(node.LayoutX, node.LayoutY);
 			var bottomRight = new CGPoint(topLeft.X + node.LayoutWidth, topLeft.Y + node.LayoutHeight);
-			view.Frame = new CGRect(RoundPixelValue(topLeft.X), RoundPixelValue(topLeft.Y), RoundPixelValue(bottomRight.X) - RoundPixelValue(topLeft.X), RoundPixelValue(bottomRight.Y) - RoundPixelValue(topLeft.Y));
+			view.Frame = new CGRect(RoundPixelValue((float)topLeft.X), RoundPixelValue((float)topLeft.Y), RoundPixelValue((float)bottomRight.X) - RoundPixelValue((float)topLeft.X), RoundPixelValue((float)bottomRight.Y) - RoundPixelValue((float)topLeft.Y));
 		}
 
 		bool _disposed;

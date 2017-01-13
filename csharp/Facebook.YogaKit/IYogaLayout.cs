@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Facebook.Yoga;
 
 namespace Facebook.YogaKit
@@ -66,11 +67,19 @@ namespace Facebook.YogaKit
 		float MaxHeight { get; set; }
 
 		// Yoga specific properties, not compatible with flexbox specification
+
+		// Returns the size of the view if no constraints were given. This could equivalent to calling [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+		SizeF IntrinsicSize { get; }
 		float AspectRatio { get; set; }
+		// Get the resolved direction of this node. This won't be YGDirectionInherit
 		YogaDirection ResolvedDirection { get; }
+		// Returns the number of children that are using Flexbox.
 		int NumberOfChildren { get; }
+		// Return a BOOL indiciating whether or not we this node contains any subviews that are included in Yoga's layout.
 		bool IsLeaf { get; }
+		// Perform a layout calculation and update the frames of the views in the hierarchy with the results
 		void ApplyLayout();
+		// Mark that a view's layout needs to be recalculated. Only works for leaf views.
 		void MarkDirty();
 	}
 }
