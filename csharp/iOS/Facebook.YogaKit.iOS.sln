@@ -13,6 +13,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.iOS", "Facebook.Yoga.iOS\Facebook.Yoga.iOS.csproj", "{128FB32A-C4A1-4363-BF06-0A36E700B7FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.YogaKit.iOS.Tests", "Facebook.YogaKit.iOS.Tests\Facebook.YogaKit.iOS.Tests.csproj", "{238DB3A2-1182-4775-92BC-F62C885725D8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.YogaKit.Shared.Tests", "..\tests\Facebook.YogaKit.Shared.Tests\Facebook.YogaKit.Shared.Tests.shproj", "{63AB08F4-4F7C-42B7-A20F-D84204D0D3CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,9 +63,22 @@ Global
 		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{128FB32A-C4A1-4363-BF06-0A36E700B7FA}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Release|Any CPU.Build.0 = Release|iPhone
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Release|iPhone.ActiveCfg = Release|iPhone
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Release|iPhone.Build.0 = Release|iPhone
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{238DB3A2-1182-4775-92BC-F62C885725D8}.Debug|iPhone.Build.0 = Debug|iPhone
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A24B3BA6-3143-4FFF-B8B8-1EDF166F5F4A} = {9FB621AA-66DD-46F1-8B10-94F508272A8D}
 		{91C42D32-291D-4B72-90B4-551663D60B8B} = {9FB621AA-66DD-46F1-8B10-94F508272A8D}
+		{63AB08F4-4F7C-42B7-A20F-D84204D0D3CE} = {9FB621AA-66DD-46F1-8B10-94F508272A8D}
 	EndGlobalSection
 EndGlobal
