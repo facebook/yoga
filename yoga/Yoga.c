@@ -227,6 +227,8 @@ static YGLogger gLogger = &YGDefaultLog;
 static inline const YGValue *YGComputedEdgeValue(const YGValue edges[YGEdgeCount],
                                                  const YGEdge edge,
                                                  const YGValue *const defaultValue) {
+  YG_ASSERT(edge <= YGEdgeEnd, "Cannot get computed value of multi-edge shorthands");
+
   if (edges[edge].unit != YGUnitUndefined) {
     return &edges[edge];
   }

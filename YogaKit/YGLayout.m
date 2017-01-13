@@ -49,12 +49,13 @@
 #define YG_STYLE_EDGE_PROPERTY_UNIT_IMPL(objc_lowercased_name, objc_capitalized_name, c_name, edge) \
 - (CGFloat)objc_lowercased_name                                                                     \
 {                                                                                                   \
-  YGValue value = YGNodeStyleGet##c_name(self.node, edge);                                          \
-  if (value.unit == YGUnitPixel) {                                                                  \
-    return value.value;                                                                             \
-  } else {                                                                                          \
-    return YGUndefined;                                                                             \
+  if (edge <= YGEdgeEnd) {                                                                          \
+    YGValue value = YGNodeStyleGet##c_name(self.node, edge);                                        \
+    if (value.unit == YGUnitPixel) {                                                                \
+      return value.value;                                                                           \
+    }                                                                                               \
   }                                                                                                 \
+  return YGUndefined;                                                                               \
 }                                                                                                   \
                                                                                                     \
 - (void)set##objc_capitalized_name:(CGFloat)objc_lowercased_name                                    \
