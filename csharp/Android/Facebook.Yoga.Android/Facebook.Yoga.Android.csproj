@@ -43,15 +43,7 @@
 		<Reference Include="Mono.Android" />
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Include="Resources\Resource.designer.cs" />
-		<Compile Include="Properties\AssemblyInfo.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="Resources\AboutResources.txt" />
 		<None Include="CustomBuildAction.targets" />
-	</ItemGroup>
-	<ItemGroup>
-		<AndroidResource Include="Resources\values\Strings.xml" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="lib\x86\" />
