@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{A24B3BA6-3143-4FFF-B8B8-1EDF166F5F4A}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Facebook.YogaKit</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)YogaLayout.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IYogaLayout.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)YogaKit.cs" />
+  </ItemGroup>
+</Project>
