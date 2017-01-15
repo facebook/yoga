@@ -435,6 +435,23 @@ namespace Facebook.Yoga
         }
 
         [Test]
+        public void TestLayoutMargin() {
+          YogaNode node = new YogaNode();
+          node.Width = 100;
+          node.Height = 100;
+          node.MarginStart = 1;
+          node.MarginEnd = 2;
+          node.MarginTop = 3;
+          node.MarginBottom = 4;
+          node.CalculateLayout();
+
+          Assert.AreEqual(1, node.LayoutMarginLeft);
+          Assert.AreEqual(2, node.LayoutMarginRight);
+          Assert.AreEqual(3, node.LayoutMarginTop);
+          Assert.AreEqual(4, node.LayoutMarginBottom);
+        }
+
+        [Test]
         public void TestLayoutPadding() {
           YogaNode node = new YogaNode();
           node.Width = 100;

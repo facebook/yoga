@@ -169,6 +169,23 @@ public class YogaNodeTest {
   }
 
   @Test
+  public void testLayoutMargin() {
+    final YogaNode node = new YogaNode();
+    node.setWidth(100);
+    node.setHeight(100);
+    node.setMargin(YogaEdge.START, 1);
+    node.setMargin(YogaEdge.END, 2);
+    node.setMargin(YogaEdge.TOP, 3);
+    node.setMargin(YogaEdge.BOTTOM, 4);
+    node.calculateLayout();
+
+    assertEquals(1, (int) node.getLayoutMargin(YogaEdge.LEFT));
+    assertEquals(2, (int) node.getLayoutMargin(YogaEdge.RIGHT));
+    assertEquals(3, (int) node.getLayoutMargin(YogaEdge.TOP));
+    assertEquals(4, (int) node.getLayoutMargin(YogaEdge.BOTTOM));
+  }
+
+  @Test
   public void testLayoutPadding() {
     final YogaNode node = new YogaNode();
     node.setWidth(100);

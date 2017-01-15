@@ -453,3 +453,13 @@ Layout Node::getComputedLayout(void) const
 
     return layout;
 }
+
+double Node::getComputedMargin(int edge) const
+{
+    return YGNodeLayoutGetMargin(m_node, static_cast<YGEdge>(edge));
+}
+
+double Node::getComputedPadding(int edge) const
+{
+    return YGNodeLayoutGetPadding(m_node, static_cast<YGEdge>(edge));
+}

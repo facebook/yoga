@@ -214,7 +214,7 @@
   [container.yoga applyLayout];
 
   for (UIView *view in container.subviews) {
-    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
+    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), view.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
   }
 
   subview3.yoga.isIncludedInLayout = NO;
@@ -287,7 +287,7 @@
   subview3.yoga.isIncludedInLayout = YES;
   [container.yoga applyLayout];
   for (UIView *view in container.subviews) {
-    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
+    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), view.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
   }
 }
 

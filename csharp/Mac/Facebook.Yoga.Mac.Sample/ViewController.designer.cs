@@ -6,7 +6,7 @@
 //
 using Foundation;
 
-namespace Facebook.Yoga.Mac.Test
+namespace Facebook.Yoga.Mac.Sample
 {
 	[Register("ViewController")]
 	partial class ViewController

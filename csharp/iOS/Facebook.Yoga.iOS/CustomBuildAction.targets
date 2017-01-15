@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<CompileDependsOn>Buck;CopyInNativeLib;$(CompileDependsOn)</CompileDependsOn>
-	</PropertyGroup>
-	<Target Name="Buck">
-		<Exec WorkingDirectory="$(OutDir)" Command="buck build //csharp:yoganet-ios" />
-	</Target>
-	<!-- The # and , in this path does not play nice with the binding project logic, so make a copy -->
-	<Target Name="CopyInNativeLib" Inputs="..\..\..\buck-out\gen\csharp\yoganet-ios\libyoga.a" Outputs="$(ProjectDir)libyoga.a">
-		<Copy SourceFiles="..\..\..\buck-out\gen\csharp\yoganet-ios\libyoga.a" DestinationFiles="$(ProjectDir)/libyoga.a" />
-	</Target>
+        <CompileDependsOn>NativeLibrary;$(CompileDependsOn)</CompileDependsOn>
+    </PropertyGroup>
+    <Target Name="NativeLibrary" Outputs="$(ProjectDir)libyoga.a">
+        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../Mac/buck-build.sh //csharp:yoganet-ios" />
+        <Copy SourceFiles="$(ProjectDir)..\..\..\buck-out\gen\csharp\yoganet-ios\libyoga.a" DestinationFiles="$(ProjectDir)libyoga.a" SkipUnchangedFiles="true" />
+    </Target>
 </Project>

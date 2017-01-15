@@ -9,7 +9,7 @@
 using AppKit;
 using Foundation;
 
-namespace Facebook.Yoga.Mac.Test
+namespace Facebook.Yoga.Mac.Sample
 {
     [Register("AppDelegate")]
     public class AppDelegate : NSApplicationDelegate
