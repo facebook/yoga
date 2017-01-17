@@ -21,7 +21,6 @@
 		13687D851DF87D1E00E7C260 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13687D841DF87D1E00E7C260 /* UIKit.framework */; };
 		13687D871DF87D2400E7C260 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13687D861DF87D2400E7C260 /* Foundation.framework */; };
 		638A94431E1EF5D000A726AD /* YGLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 638A94411E1EF5D000A726AD /* YGLayout.m */; };
-		638A94451E1EF8A900A726AD /* YGValue.h in yoga */ = {isa = PBXBuildFile; fileRef = 638A94441E1EF89C00A726AD /* YGValue.h */; };
 		638A94481E1F06D100A726AD /* SwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638A94471E1F06D100A726AD /* SwiftViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +31,6 @@
 			dstPath = include/yoga;
 			dstSubfolderSpec = 16;
 			files = (
-				638A94451E1EF8A900A726AD /* YGValue.h in yoga */,
 				13687D781DF878C600E7C260 /* YGEnums.h in yoga */,
 				13687D791DF878C600E7C260 /* YGMacros.h in yoga */,
 				13687D7A1DF878C600E7C260 /* Yoga.h in yoga */,
@@ -75,7 +73,6 @@
 		638A94401E1EF5D000A726AD /* YGLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGLayout.h; sourceTree = "<group>"; };
 		638A94411E1EF5D000A726AD /* YGLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGLayout.m; sourceTree = "<group>"; };
 		638A94421E1EF5D000A726AD /* YGLayout+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YGLayout+Private.h"; sourceTree = "<group>"; };
-		638A94441E1EF89C00A726AD /* YGValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGValue.h; sourceTree = "<group>"; };
 		638A94461E1F06D100A726AD /* YogaKitSample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YogaKitSample-Bridging-Header.h"; sourceTree = "<group>"; };
 		638A94471E1F06D100A726AD /* SwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,7 +136,6 @@
 		13687D5D1DF8778F00E7C260 /* yoga */ = {
 			isa = PBXGroup;
 			children = (
-				638A94441E1EF89C00A726AD /* YGValue.h */,
 				13687D5E1DF8778F00E7C260 /* YGEnums.h */,
 				13687D5F1DF8778F00E7C260 /* YGMacros.h */,
 				13687D601DF8778F00E7C260 /* YGNodeList.c */,
