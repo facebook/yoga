@@ -8,8 +8,11 @@
  */
 
 #import "YGLayout.h"
+#import <yoga/Yoga.h>
 
-@interface YGLayout (Private)
+@interface YGLayout ()
+
+@property (nonatomic, assign, readonly) YGNodeRef node;
 
 - (instancetype)initWithView:(UIView *)view;
 
