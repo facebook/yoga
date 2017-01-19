@@ -22,6 +22,7 @@ before_install:
   - export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
   - export PATH=$JAVA_HOME/bin:$PATH
   - curl ipecho.net/plain; echo
+  - echo 'this is a test'
 
 install:
   - cd javascript
