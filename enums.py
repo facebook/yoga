@@ -175,7 +175,7 @@ for name, values in ENUMS.items():
                 f.write('      case %d: return %s;\n' % (value[1], to_java_upper(value[0])))
             else:
                 f.write('      case %d: return %s;\n' % (values.index(value), to_java_upper(value)))
-        f.write('      default: throw new IllegalArgumentException("Unkown enum value: " + value);\n')
+        f.write('      default: throw new IllegalArgumentException("Unknown enum value: " + value);\n')
         f.write('    }\n')
         f.write('  }\n')
         f.write('}\n')
@@ -208,5 +208,5 @@ with open(root + '/javascript/sources/YGEnums.js', 'w') as f:
             else:
                 f.write('  %s_%s: %d,\n' % (to_java_upper(name), to_java_upper(value), base))
                 base += 1
-        f.write('\n');
+        f.write('\n')
     f.write('};\n')
