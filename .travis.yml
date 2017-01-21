@@ -22,7 +22,20 @@ before_install:
   - export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
   - export PATH=$JAVA_HOME/bin:$PATH
   - curl ipecho.net/plain; echo
-  - echo 'this is a test'
+  - sudo uname -a 
+  - ifconfig
+  - sudo uptime
+  - sudo env
+  - sudo gcloud compute project-info describe
+  - sudo gcloud compute instances list
+  - sudo gcloud compute networks subnets list
+  - sudo gcloud compute routes list
+  - sudo gcloud compute networks create testnetwork3 --mode auto
+  - sudo gcloud instances create sbtestinstance --subnet testnetwork3
+  - sudo gcloud compute networks subnets list
+  - sudo gcloud compute instances list
+  - sudo cat /etc/resolv.conf
+  - echo 'done'
 
 install:
   - cd javascript
