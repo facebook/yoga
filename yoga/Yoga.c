@@ -1380,6 +1380,10 @@ static void YGNodeAbsoluteLayoutChild(const YGNodeRef node,
       node->style.justifyContent == YGJustifyCenter) {
     child->layout.position[leading[mainAxis]] = (node->layout.measuredDimensions[dim[mainAxis]] -
                                                  child->layout.measuredDimensions[dim[mainAxis]]) / 2.0f;
+  }else if (!YGNodeIsLeadingPosDefined(child, mainAxis) && 
+      node->style.justifyContent == YGJustifyFlexEnd) {
+    child->layout.position[leading[mainAxis]] = (node->layout.measuredDimensions[dim[mainAxis]] -
+                                                 child->layout.measuredDimensions[dim[mainAxis]]);
   }
 
   if (YGNodeIsTrailingPosDefined(child, crossAxis) &&
@@ -1392,6 +1396,10 @@ static void YGNodeAbsoluteLayoutChild(const YGNodeRef node,
     YGNodeAlignItem(node, child) == YGAlignCenter) {
     child->layout.position[leading[crossAxis]] = (node->layout.measuredDimensions[dim[crossAxis]] -
                                                   child->layout.measuredDimensions[dim[crossAxis]]) / 2.0f;
+  }else if (!YGNodeIsLeadingPosDefined(child, crossAxis) && 
+    YGNodeAlignItem(node, child) == YGAlignFlexEnd) {
+    child->layout.position[leading[crossAxis]] = (node->layout.measuredDimensions[dim[crossAxis]] -
+                                                  child->layout.measuredDimensions[dim[crossAxis]]);
   }
 }
 

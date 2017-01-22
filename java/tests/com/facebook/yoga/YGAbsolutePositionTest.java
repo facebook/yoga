@@ -345,6 +345,47 @@ public class YGAbsolutePositionTest {
   }
 
   @Test
+  public void test_absolute_layout_align_items_and_justify_content_flex_end() {
+    final YogaNode root = new YogaNode();
+    root.setJustifyContent(YogaJustify.FLEX_END);
+    root.setAlignItems(YogaAlign.FLEX_END);
+    root.setFlexGrow(1f);
+    root.setWidth(110f);
+    root.setHeight(100f);
+
+    final YogaNode root_child0 = new YogaNode();
+    root_child0.setPositionType(YogaPositionType.ABSOLUTE);
+    root_child0.setWidth(60f);
+    root_child0.setHeight(40f);
+    root.addChildAt(root_child0, 0);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout();
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(110f, root.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(50f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(60f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(60f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(40f, root_child0.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout();
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(110f, root.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(60f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(60f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(40f, root_child0.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
   public void test_absolute_layout_justify_content_center() {
     final YogaNode root = new YogaNode();
     root.setJustifyContent(YogaJustify.CENTER);
