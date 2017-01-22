@@ -1371,6 +1371,16 @@ static void YGNodeAbsoluteLayoutChild(const YGNodeRef node,
                        true,
                        "abs-layout");
 
+  if (node->style.alignItems == YGAlignCenter) {
+	  child->layout.position[leading[crossAxis]] = (node->layout.measuredDimensions[dim[crossAxis]] -
+		  child->layout.measuredDimensions[dim[crossAxis]]) / 2.0f;
+  }
+
+  if (node->style.justifyContent == YGJustifyCenter) {
+	  child->layout.position[leading[mainAxis]] = (node->layout.measuredDimensions[dim[mainAxis]] - 
+		  child->layout.measuredDimensions[dim[mainAxis]]) / 2.0f;
+  }
+
   if (YGNodeIsTrailingPosDefined(child, mainAxis) && !YGNodeIsLeadingPosDefined(child, mainAxis)) {
     child->layout.position[leading[mainAxis]] = node->layout.measuredDimensions[dim[mainAxis]] -
                                                 child->layout.measuredDimensions[dim[mainAxis]] -
