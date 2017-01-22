@@ -284,16 +284,15 @@
 
   [container.yoga applyLayout];
 
-  XCTAssertEqual(subview1.bounds.size.width, 150);
-  XCTAssertEqual(subview2.bounds.size.width, 150);
-  XCTAssertEqual(subview3.bounds.size.width, 0);
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview1.bounds.size));
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview2.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview2.bounds.size));
+  XCTAssertTrue(CGSizeEqualToSize(CGSizeZero, subview3.bounds.size), @"Actual size %@", NSStringFromCGSize(subview3.bounds.size));
 
   subview3.yoga.isIncludedInLayout = YES;
   [container.yoga applyLayout];
-  
-  XCTAssertEqual(subview1.bounds.size.width, 100);
-  XCTAssertEqual(subview2.bounds.size.width, 100);
-  XCTAssertEqual(subview3.bounds.size.width, 100);
+  for (UIView *view in container.subviews) {
+    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), view.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
+  }
 }
 
 - (void)testyg_isLeafFlag
