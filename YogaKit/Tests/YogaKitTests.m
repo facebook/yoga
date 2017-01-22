@@ -22,19 +22,19 @@
 
 - (void)testNodesAreDeallocedWithSingleView
 {
-  XCTAssertEqual(0, YGNodeGetInstanceCount());
+  XCTAssertEqual(YGNodeGetInstanceCount(), 0);
 
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
   view.yoga.flexBasis = 1;
-  XCTAssertEqual(1, YGNodeGetInstanceCount());
+  XCTAssertEqual(YGNodeGetInstanceCount(), 1);
   view = nil;
 
-  XCTAssertEqual(0, YGNodeGetInstanceCount());
+  XCTAssertEqual(YGNodeGetInstanceCount(), 0);
 }
 
 - (void)testNodesAreDeallocedCascade
 {
-  XCTAssertEqual(0, YGNodeGetInstanceCount());
+  XCTAssertEqual(YGNodeGetInstanceCount(), 0);
 
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
   view.yoga.flexBasis = 1;
@@ -44,10 +44,10 @@
     subview.yoga.flexBasis = 1;
     [view addSubview:subview];
   }
-  XCTAssertEqual(11, YGNodeGetInstanceCount());
+  XCTAssertEqual(YGNodeGetInstanceCount(), 11);
   view = nil;
 
-  XCTAssertEqual(0, YGNodeGetInstanceCount());
+  XCTAssertEqual(YGNodeGetInstanceCount(), 0);
 }
 
 #endif
@@ -95,7 +95,8 @@
   [container addSubview:textBadgeView];
 
   const CGSize containerSize = container.yoga.intrinsicSize;
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(514,21), containerSize), @"Size is actually %@", NSStringFromCGSize(containerSize));
+  XCTAssertEqual(containerSize.width, 514);
+  XCTAssertEqual(containerSize.height, 21);
 }
 
 - (void)testThatMarkingLeafsAsDirtyWillTriggerASizeRecalculation
@@ -112,13 +113,13 @@
   [container addSubview:label];
 
   [container.yoga applyLayout];
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(146,21), label.bounds.size), @"Size is actually %@", NSStringFromCGSize(label.bounds.size));
+  XCTAssertEqual(label.bounds.size.width, 146);
 
   label.text = @"This is a slightly longer text.";
   [label.yoga markDirty];
 
   [container.yoga applyLayout];
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(213,21), label.bounds.size), @"Size is actually %@", NSStringFromCGSize(label.bounds.size));
+  XCTAssertEqual(label.bounds.size.width, 213);
 }
 
 - (void)testFrameAndOriginPlacement
@@ -138,9 +139,9 @@
   }
   [container.yoga applyLayout];
 
-  XCTAssertFalse(CGRectIntersectsRect([container.subviews objectAtIndex:0].frame, [container.subviews objectAtIndex:1].frame));
-  XCTAssertFalse(CGRectIntersectsRect([container.subviews objectAtIndex:1].frame, [container.subviews objectAtIndex:2].frame));
-  XCTAssertFalse(CGRectIntersectsRect([container.subviews objectAtIndex:0].frame, [container.subviews objectAtIndex:2].frame));
+  XCTAssertFalse(CGRectIntersectsRect(container.subviews[0].frame, container.subviews[1].frame));
+  XCTAssertFalse(CGRectIntersectsRect(container.subviews[1].frame, container.subviews[2].frame));
+  XCTAssertFalse(CGRectIntersectsRect(container.subviews[0].frame, container.subviews[2].frame));
 
   CGFloat totalWidth = 0;
   for (UIView *view in container.subviews) {
@@ -215,18 +216,18 @@
 
   [container.yoga applyLayout];
 
-  for (UIView *view in container.subviews) {
-    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), view.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
-  }
+  XCTAssertEqual(subview1.bounds.size.width, 100);
+  XCTAssertEqual(subview2.bounds.size.width, 100);
+  XCTAssertEqual(subview3.bounds.size.width, 100);
 
   subview3.yoga.isIncludedInLayout = NO;
   [container.yoga applyLayout];
 
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview1.bounds.size));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview2.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview2.bounds.size));
+  XCTAssertEqual(subview1.bounds.size.width, 150);
+  XCTAssertEqual(subview2.bounds.size.width, 150);
 
   // We don't set the frame to zero, so, it should be set to what it was previously at.
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), subview3.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview3.bounds.size));
+  XCTAssertEqual(subview3.bounds.size.width, 100);
 }
 
 - (void)testThatNumberOfChildrenIsCorrectWhenWeIgnoreSubviews
@@ -251,11 +252,11 @@
   [container addSubview:subview3];
 
   [container.yoga applyLayout];
-  XCTAssertEqual(1, container.yoga.numberOfChildren);
+  XCTAssertEqual(container.yoga.numberOfChildren, 1);
 
   subview2.yoga.isIncludedInLayout = YES;
   [container.yoga applyLayout];
-  XCTAssertEqual(2, container.yoga.numberOfChildren);
+  XCTAssertEqual(container.yoga.numberOfChildren, 2);
 }
 
 - (void)testThatViewNotIncludedInFirstLayoutPassAreIncludedInSecond
@@ -282,15 +283,16 @@
 
   [container.yoga applyLayout];
 
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview1.bounds.size));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview2.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview2.bounds.size));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeZero, subview3.bounds.size), @"Actual size %@", NSStringFromCGSize(subview3.bounds.size));
+  XCTAssertEqual(subview1.bounds.size.width, 150);
+  XCTAssertEqual(subview2.bounds.size.width, 150);
+  XCTAssertEqual(subview3.bounds.size.width, 0);
 
   subview3.yoga.isIncludedInLayout = YES;
   [container.yoga applyLayout];
-  for (UIView *view in container.subviews) {
-    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), view.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
-  }
+
+  XCTAssertEqual(subview1.bounds.size.width, 100);
+  XCTAssertEqual(subview2.bounds.size.width, 100);
+  XCTAssertEqual(subview3.bounds.size.width, 100);
 }
 
 - (void)testyg_isLeafFlag
@@ -351,18 +353,22 @@
     }
     [container.yoga applyLayout];
 
-    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 25), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview1.bounds.size));
+    XCTAssertEqual(subview1.bounds.size.width, 100);
+    XCTAssertEqual(subview1.bounds.size.height, 25);
     for (UIView *subview in subview1.subviews) {
         const CGSize subviewSize = subview.bounds.size;
-        XCTAssertFalse(CGSizeEqualToSize(CGSizeZero, subviewSize));
+        XCTAssertNotEqual(subviewSize.width, 0);
+        XCTAssertNotEqual(subviewSize.height, 0);
         XCTAssertFalse(isnan(subviewSize.height));
         XCTAssertFalse(isnan(subviewSize.width));
     }
 
-    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 25), subview2.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview2.bounds.size));
+    XCTAssertEqual(subview2.bounds.size.width, 150);
+    XCTAssertEqual(subview2.bounds.size.height, 25);
     for (UIView *subview in subview2.subviews) {
         const CGSize subviewSize = subview.bounds.size;
-        XCTAssertFalse(CGSizeEqualToSize(CGSizeZero, subview.bounds.size));
+        XCTAssertNotEqual(subviewSize.width, 0);
+        XCTAssertNotEqual(subviewSize.height, 0);
         XCTAssertFalse(isnan(subviewSize.height));
         XCTAssertFalse(isnan(subviewSize.width));
     }
