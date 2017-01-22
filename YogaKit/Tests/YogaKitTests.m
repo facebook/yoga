@@ -98,7 +98,7 @@
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(514,21), containerSize), @"Size is actually %@", NSStringFromCGSize(containerSize));
 }
 
-- (void)testThatMarkingLeafsAsDirtyWillTriggerASizeRecalculation
+- (void)testThatLeafsDetectWhenTheyBecomeDirty
 {
   UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 500, 50)];
   container.yoga.isEnabled = YES;
@@ -115,7 +115,6 @@
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(146,21), label.bounds.size), @"Size is actually %@", NSStringFromCGSize(label.bounds.size));
 
   label.text = @"This is a slightly longer text.";
-  [label.yoga markDirty];
 
   [container.yoga applyLayout];
   XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(213,21), label.bounds.size), @"Size is actually %@", NSStringFromCGSize(label.bounds.size));
@@ -267,30 +266,34 @@
   UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
   subview1.yoga.isEnabled = YES;
   subview1.yoga.flexGrow = 1;
+  subview1.yoga.flexBasis = 0;
   [container addSubview:subview1];
 
   UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
   subview2.yoga.isEnabled = YES;
   subview2.yoga.flexGrow = 1;
+  subview2.yoga.flexBasis = 0;
   [container addSubview:subview2];
 
   UIView *subview3 = [[UIView alloc] initWithFrame:CGRectZero];
   subview3.yoga.isEnabled = YES;
   subview3.yoga.flexGrow = 1;
+  subview3.yoga.flexBasis = 0;
   subview3.yoga.isIncludedInLayout = NO;
   [container addSubview:subview3];
 
   [container.yoga applyLayout];
 
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview1.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview1.bounds.size));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(150, 50), subview2.bounds.size), @"Actual size is %@", NSStringFromCGSize(subview2.bounds.size));
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeZero, subview3.bounds.size), @"Actual size %@", NSStringFromCGSize(subview3.bounds.size));
+  XCTAssertEqual(subview1.bounds.size.width, 150);
+  XCTAssertEqual(subview2.bounds.size.width, 150);
+  XCTAssertEqual(subview3.bounds.size.width, 0);
 
   subview3.yoga.isIncludedInLayout = YES;
   [container.yoga applyLayout];
-  for (UIView *view in container.subviews) {
-    XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(100, 50), view.bounds.size), @"Actual size is %@", NSStringFromCGSize(view.bounds.size));
-  }
+  
+  XCTAssertEqual(subview1.bounds.size.width, 100);
+  XCTAssertEqual(subview2.bounds.size.width, 100);
+  XCTAssertEqual(subview3.bounds.size.width, 100);
 }
 
 - (void)testyg_isLeafFlag
