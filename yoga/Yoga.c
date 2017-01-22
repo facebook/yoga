@@ -2636,7 +2636,7 @@ static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureM
                                                                       float lastSize,
                                                                       float lastComputedSize) {
   return lastSizeMode == YGMeasureModeAtMost && sizeMode == YGMeasureModeAtMost &&
-         lastSize > size && lastComputedSize <= size;
+         lastSize > size && (lastComputedSize <= size || YGFloatsEqual(size, lastComputedSize));
 }
 
 bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
