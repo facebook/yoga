@@ -16,7 +16,7 @@
 		9D4FF1571E35AB870029DFF7 /* YGLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4FF1521E35AB870029DFF7 /* YGLayout.m */; };
 		9D4FF1581E35AB870029DFF7 /* YGLayout+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D4FF1531E35AB870029DFF7 /* YGLayout+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9D4FF1601E35ABC00029DFF7 /* YGEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D4FF15A1E35ABC00029DFF7 /* YGEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9D4FF1611E35ABC00029DFF7 /* YGMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D4FF15B1E35ABC00029DFF7 /* YGMacros.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9D4FF1611E35ABC00029DFF7 /* YGMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D4FF15B1E35ABC00029DFF7 /* YGMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9D4FF1621E35ABC00029DFF7 /* YGNodeList.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D4FF15C1E35ABC00029DFF7 /* YGNodeList.c */; };
 		9D4FF1631E35ABC00029DFF7 /* YGNodeList.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D4FF15D1E35ABC00029DFF7 /* YGNodeList.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9D4FF1641E35ABC00029DFF7 /* Yoga.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D4FF15E1E35ABC00029DFF7 /* Yoga.c */; };
@@ -137,11 +137,11 @@
 				9D4FF1581E35AB870029DFF7 /* YGLayout+Private.h in Headers */,
 				9D4FF1561E35AB870029DFF7 /* YGLayout.h in Headers */,
 				9D4FF1541E35AB870029DFF7 /* UIView+Yoga.h in Headers */,
+				9D4FF1611E35ABC00029DFF7 /* YGMacros.h in Headers */,
 				9D4FF1601E35ABC00029DFF7 /* YGEnums.h in Headers */,
 				9D4FF1461E35AB150029DFF7 /* YogaKit.h in Headers */,
 				9D4FF1651E35ABC00029DFF7 /* Yoga.h in Headers */,
 				9D4FF1631E35ABC00029DFF7 /* YGNodeList.h in Headers */,
-				9D4FF1611E35ABC00029DFF7 /* YGMacros.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
