@@ -1376,11 +1376,11 @@ static void YGNodeAbsoluteLayoutChild(const YGNodeRef node,
                                                 child->layout.measuredDimensions[dim[mainAxis]] -
                                                 YGNodeTrailingBorder(node, mainAxis) -
                                                 YGNodeTrailingPosition(child, mainAxis, width);
-  }else if (!YGNodeIsLeadingPosDefined(child, mainAxis) && 
+  } else if (!YGNodeIsLeadingPosDefined(child, mainAxis) && 
       node->style.justifyContent == YGJustifyCenter) {
     child->layout.position[leading[mainAxis]] = (node->layout.measuredDimensions[dim[mainAxis]] -
                                                  child->layout.measuredDimensions[dim[mainAxis]]) / 2.0f;
-  }else if (!YGNodeIsLeadingPosDefined(child, mainAxis) && 
+  } else if (!YGNodeIsLeadingPosDefined(child, mainAxis) && 
       node->style.justifyContent == YGJustifyFlexEnd) {
     child->layout.position[leading[mainAxis]] = (node->layout.measuredDimensions[dim[mainAxis]] -
                                                  child->layout.measuredDimensions[dim[mainAxis]]);
@@ -1392,11 +1392,11 @@ static void YGNodeAbsoluteLayoutChild(const YGNodeRef node,
                                                  child->layout.measuredDimensions[dim[crossAxis]] -
                                                  YGNodeTrailingBorder(node, crossAxis) -
                                                  YGNodeTrailingPosition(child, crossAxis, width);
-  }else if (!YGNodeIsLeadingPosDefined(child, crossAxis) && 
+  } else if (!YGNodeIsLeadingPosDefined(child, crossAxis) && 
     YGNodeAlignItem(node, child) == YGAlignCenter) {
     child->layout.position[leading[crossAxis]] = (node->layout.measuredDimensions[dim[crossAxis]] -
                                                   child->layout.measuredDimensions[dim[crossAxis]]) / 2.0f;
-  }else if (!YGNodeIsLeadingPosDefined(child, crossAxis) && 
+  } else if (!YGNodeIsLeadingPosDefined(child, crossAxis) && 
     YGNodeAlignItem(node, child) == YGAlignFlexEnd) {
     child->layout.position[leading[crossAxis]] = (node->layout.measuredDimensions[dim[crossAxis]] -
                                                   child->layout.measuredDimensions[dim[crossAxis]]);
