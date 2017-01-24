@@ -18,39 +18,43 @@
 
 @implementation YogaKitTests
 
-#ifndef TRAVIS_CI
-
 - (void)testNodesAreDeallocedWithSingleView
 {
-  XCTAssertEqual(0, YGNodeGetInstanceCount());
+  __weak YGLayout *layoutRef = nil;
 
-  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-  view.yoga.flexBasis = 1;
-  XCTAssertEqual(1, YGNodeGetInstanceCount());
-  view = nil;
+  @autoreleasepool {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+    view.yoga.flexBasis = 1;
 
-  XCTAssertEqual(0, YGNodeGetInstanceCount());
+    layoutRef = view.yoga;
+    XCTAssertNotNil(layoutRef);
+
+    view = nil;
+  }
+
+  XCTAssertNil(layoutRef);
 }
 
 - (void)testNodesAreDeallocedCascade
 {
-  XCTAssertEqual(0, YGNodeGetInstanceCount());
+  __weak YGLayout *topLayout = nil;
+  __weak YGLayout *subviewLayout = nil;
 
-  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-  view.yoga.flexBasis = 1;
+  @autoreleasepool {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+    topLayout = view.yoga;
+    topLayout.flexBasis = 1;
 
-  for (int i=0; i<10; i++) {
     UIView *subview = [[UIView alloc] initWithFrame:CGRectZero];
-    subview.yoga.flexBasis = 1;
-    [view addSubview:subview];
+    subviewLayout = subview.yoga;
+    subviewLayout.flexBasis = 1;
+
+    view = nil;
   }
-  XCTAssertEqual(11, YGNodeGetInstanceCount());
-  view = nil;
 
-  XCTAssertEqual(0, YGNodeGetInstanceCount());
+  XCTAssertNil(topLayout);
+  XCTAssertNil(subviewLayout);
 }
-
-#endif
 
 - (void)testIsEnabled
 {
@@ -89,13 +93,20 @@
 
   UIView *textBadgeView = [[UIView alloc] initWithFrame:CGRectZero];
   textBadgeView.yoga.isEnabled = YES;
-  textBadgeView.yoga.marginLeft = 3.0;
+  textBadgeView.yoga.margin = 0;
   textBadgeView.yoga.width = 10;
   textBadgeView.yoga.height = 10;
   [container addSubview:textBadgeView];
 
+  const CGSize textBadgeViewSize = textBadgeView.yoga.intrinsicSize;
+  XCTAssertEqual(10, textBadgeViewSize.height);
+  XCTAssertEqual(10, textBadgeViewSize.width);
+
   const CGSize containerSize = container.yoga.intrinsicSize;
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(514,21), containerSize), @"Size is actually %@", NSStringFromCGSize(containerSize));
+  const CGSize longTextLabelSize = longTextLabel.yoga.intrinsicSize;
+
+  XCTAssertEqual(containerSize.height, longTextLabelSize.height);
+  XCTAssertEqual(containerSize.width, longTextLabelSize.width + textBadgeView.yoga.intrinsicSize.width);
 }
 
 - (void)testThatMarkingLeafsAsDirtyWillTriggerASizeRecalculation
@@ -112,13 +123,15 @@
   [container addSubview:label];
 
   [container.yoga applyLayout];
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(146,21), label.bounds.size), @"Size is actually %@", NSStringFromCGSize(label.bounds.size));
+  CGSize const labelSizeAfterFirstPass = label.frame.size;
 
   label.text = @"This is a slightly longer text.";
+  XCTAssertTrue(CGSizeEqualToSize(label.frame.size, labelSizeAfterFirstPass));
+
   [label.yoga markDirty];
 
   [container.yoga applyLayout];
-  XCTAssertTrue(CGSizeEqualToSize(CGSizeMake(213,21), label.bounds.size), @"Size is actually %@", NSStringFromCGSize(label.bounds.size));
+  XCTAssertFalse(CGSizeEqualToSize(label.frame.size, labelSizeAfterFirstPass));
 }
 
 - (void)testFrameAndOriginPlacement
@@ -129,18 +142,25 @@
   container.yoga.isEnabled = YES;
   container.yoga.flexDirection = YGFlexDirectionRow;
 
-  for (int i = 0; i < 3; i++) {
-    UIView *subview = [[UIView alloc] initWithFrame:CGRectZero];
-    subview.yoga.isEnabled = YES;
-    subview.yoga.flexGrow = 1;
+  UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
+  subview1.yoga.isEnabled = YES;
+  subview1.yoga.flexGrow = 1;
+  [container addSubview:subview1];
 
-    [container addSubview:subview];
-  }
+  UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
+  subview2.yoga.isEnabled = YES;
+  subview2.yoga.flexGrow = 1;
+  [container addSubview:subview2];
+
+  UIView *subview3 = [[UIView alloc] initWithFrame:CGRectZero];
+  subview3.yoga.isEnabled = YES;
+  subview3.yoga.flexGrow = 1;
+  [container addSubview:subview3];
+
   [container.yoga applyLayout];
 
-  XCTAssertFalse(CGRectIntersectsRect([container.subviews objectAtIndex:0].frame, [container.subviews objectAtIndex:1].frame));
-  XCTAssertFalse(CGRectIntersectsRect([container.subviews objectAtIndex:1].frame, [container.subviews objectAtIndex:2].frame));
-  XCTAssertFalse(CGRectIntersectsRect([container.subviews objectAtIndex:0].frame, [container.subviews objectAtIndex:2].frame));
+  XCTAssertEqualWithAccuracy(subview2.frame.origin.x, CGRectGetMaxX(subview1.frame), FLT_EPSILON);
+  XCTAssertEqualWithAccuracy(subview3.frame.origin.x, CGRectGetMaxX(subview2.frame), FLT_EPSILON);
 
   CGFloat totalWidth = 0;
   for (UIView *view in container.subviews) {
