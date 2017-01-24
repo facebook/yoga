@@ -16,7 +16,17 @@ Pod::Spec.new do |spec|
   spec.documentation_url    = 'https://facebook.github.io/yoga/docs/getting-started/'
   spec.source               = { :git => 'https://github.com/facebook/yoga.git', :tag => "v#{spec.version}" }
   spec.platform             = :ios
-  spec.source_files         = './YogaKit/*.m', '../yoga/*.c'
-  spec.public_header_files  = './YogaKit/YogaKit.h', './YogaKit/YGLayout.h', './YogaKit/UIView+Yoga.h', '../yoga/YGEnums.h'
-  spec.private_header_files = '../yoga/*.h', './YogaKit/YGLayout+Private.h'
+  spec.source_files         = 'YogaKit/*.{h,m}', 'lib/*.{h,c}'
+  spec.public_header_files  = [
+    'YogaKit/YogaKit.h',
+    'YogaKit/YGLayout.h',
+    'YogaKit/UIView+Yoga.h',
+    'lib/YGEnums.h',
+    'lib/YGMacros.h'
+  ]
+  spec.private_header_files = [
+    'YogaKit/YGLayout+Private.h',
+    'lib/YGNodeList.h',
+    'lib/Yoga.h'
+  ]
 end
