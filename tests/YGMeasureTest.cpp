@@ -47,6 +47,27 @@ TEST(YogaTest, dont_measure_single_grow_shrink_child) {
   YGNodeFreeRecursive(root);
 }
 
+TEST(YogaTest, measure_absolute_child_with_no_constraints) {
+  const YGNodeRef root = YGNodeNew();
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeInsertChild(root, root_child0, 0);
+
+  int measureCount = 0;
+
+  const YGNodeRef root_child0_child0 = YGNodeNew();
+  YGNodeStyleSetPositionType(root_child0_child0, YGPositionTypeAbsolute);
+  YGNodeSetContext(root_child0_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0_child0, _measure);
+  YGNodeInsertChild(root_child0, root_child0_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+
+  YGNodeFreeRecursive(root);
+}
+
 #if GTEST_HAS_DEATH_TEST
 TEST(YogaTest, cannot_add_child_to_node_with_measure_func) {
   const YGNodeRef root = YGNodeNew();
