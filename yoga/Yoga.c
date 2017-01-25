@@ -2785,7 +2785,7 @@ static inline bool YGMeasureModeOldSizeIsUnspecifiedAndStillFits(YGMeasureMode s
                                                                  YGMeasureMode lastSizeMode,
                                                                  float lastComputedSize) {
   return sizeMode == YGMeasureModeAtMost && lastSizeMode == YGMeasureModeUndefined &&
-         size >= lastComputedSize;
+         (size >= lastComputedSize || YGFloatsEqual(size, lastComputedSize));
 }
 
 static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureMode sizeMode,
@@ -2794,7 +2794,7 @@ static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureM
                                                                       float lastSize,
                                                                       float lastComputedSize) {
   return lastSizeMode == YGMeasureModeAtMost && sizeMode == YGMeasureModeAtMost &&
-         lastSize > size && lastComputedSize <= size;
+         lastSize > size && (lastComputedSize <= size || YGFloatsEqual(size, lastComputedSize));
 }
 
 bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
