@@ -177,6 +177,7 @@ class Node {
     Layout getComputedLayout(void) const;
 
     double getComputedMargin(int edge) const;
+    double getComputedBorder(int edge) const;
     double getComputedPadding(int edge) const;
 
  private:
