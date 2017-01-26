@@ -529,7 +529,7 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.PositionType = YogaPositionType.Absolute;
-            root_child0.SetPosition(YogaEdge.Top, 10);
+            root_child0.Top = 10;
             root_child0.Width = 60;
             root_child0.Height = 40;
             root.Insert(0, root_child0);
@@ -572,7 +572,7 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.PositionType = YogaPositionType.Absolute;
-            root_child0.SetPosition(YogaEdge.Bottom, 10);
+            root_child0.Bottom = 10;
             root_child0.Width = 60;
             root_child0.Height = 40;
             root.Insert(0, root_child0);
@@ -615,7 +615,7 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.PositionType = YogaPositionType.Absolute;
-            root_child0.SetPosition(YogaEdge.Left, 5);
+            root_child0.Left = 5;
             root_child0.Width = 60;
             root_child0.Height = 40;
             root.Insert(0, root_child0);
@@ -658,7 +658,7 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.PositionType = YogaPositionType.Absolute;
-            root_child0.SetPosition(YogaEdge.Right, 5);
+            root_child0.Right = 5;
             root_child0.Width = 60;
             root_child0.Height = 40;
             root.Insert(0, root_child0);
