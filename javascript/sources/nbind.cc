@@ -155,5 +155,6 @@ NBIND_CLASS(Node)
     method(getComputedLayout);
 
     method(getComputedMargin);
+    method(getComputedBorder);
     method(getComputedPadding);
 }
