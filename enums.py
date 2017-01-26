@@ -21,6 +21,7 @@ ENUMS = {
         'Undefined',
         'Pixel',
         'Percent',
+        'Auto',
     ],
     'FlexDirection': [
         'Column',

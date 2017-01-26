@@ -15,6 +15,8 @@ function toValueJava(value) {
 function toMethodName(value) {
   if (value.indexOf('%') >= 0){
     return 'Percent';
+  } else if(value.indexOf('AUTO') >= 0) {
+    return 'Auto';
   }
   return '';
 }
@@ -136,6 +138,8 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGDisplayFlex:{value:'YogaDisplay.FLEX'},
   YGDisplayNone:{value:'YogaDisplay.NONE'},
+  YGAuto:{value:'YogaConstants.AUTO'},
+
 
   YGWrapNoWrap:{value:'YogaWrap.NO_WRAP'},
   YGWrapWrap:{value:'YogaWrap.WRAP'},
@@ -218,7 +222,14 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setMargin' + toMethodName(value) + '(' + edge + ', ' + toValueJava(value) + 'f);');
+    var valueStr = toValueJava(value);
+    if (valueStr != 'YogaConstants.AUTO') {
+      valueStr = ', ' + valueStr + 'f';
+    } else {
+      valueStr = '';
+    }
+
+    this.push(nodeName + '.setMargin' + toMethodName(value) + '(' + edge + valueStr + ');');
   }},
 
   YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
