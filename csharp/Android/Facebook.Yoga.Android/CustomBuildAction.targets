@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<CompileDependsOn>CopyInNativeLib;$(CompileDependsOn)</CompileDependsOn>
+	</PropertyGroup>
+	<!--
+     This should be fixed to be just yoganet-android and we build all platforms for the right folder name.
+    <Target Name="Buck">
+		<Exec WorkingDirectory="$(OutDir)" Command="buck build //csharp:yoganet#shared,android-armv7" />
+	</Target>-->
+	<!-- The # and , in this path does not play nice with the binding project logic, so make a copy -->
+	<Target Name="CopyInNativeLib">
+		<Copy SourceFiles="..\..\..\buck-out\gen\csharp\yoganet#android-armv7,shared\libyoga.so" DestinationFiles="$(ProjectDir)/lib/armeabi-v7a/libyoga.so" />
+		<Copy SourceFiles="..\..\..\buck-out\gen\csharp\yoganet#android-x86,shared\libyoga.so" DestinationFiles="$(ProjectDir)/lib/x86/libyoga.so" />
+	</Target>
+</Project>
