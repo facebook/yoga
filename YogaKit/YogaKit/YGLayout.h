@@ -8,7 +8,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <yoga/YGEnums.h>
+#import <YogaKit/YGEnums.h>
 
 @interface YGLayout : NSObject
 
