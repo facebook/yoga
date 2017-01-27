@@ -30,8 +30,8 @@ COMPILER_FLAGS = [
 apple_library(
   name = 'YogaKit',
   compiler_flags = COMPILER_FLAGS,
-  srcs = glob(['*.m']),
-  exported_headers = glob(['*.h']),
+  srcs = glob(['Source/**/*.m']),
+  exported_headers = glob(['Source/**/*.h']),
   frameworks = [
     '$SDKROOT/System/Library/Frameworks/Foundation.framework',
     '$SDKROOT/System/Library/Frameworks/UIKit.framework',
