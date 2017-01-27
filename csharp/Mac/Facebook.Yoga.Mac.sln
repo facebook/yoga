@@ -1,0 +1,39 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Mac", "Facebook.Yoga.Mac.csproj", "{19A1C7D7-C9CC-476A-B604-DF6A3DE1BA71}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared", "..\Facebook.Yoga\Facebook.Yoga.Shared.shproj", "{91C42D32-291D-4B72-90B4-551663D60B8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Mac.Sample", "Facebook.Yoga.Mac.Sample\Facebook.Yoga.Mac.Sample.csproj", "{64E0AB97-A904-4607-A535-EEA5A966C09E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared.Tests", "..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.shproj", "{4EDC82D9-A201-4831-8FE0-98F468F8E4AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{9352A9B6-F93B-45DD-8BCE-4696A62B3789}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Mac.Tests", "Facebook.Yoga.Mac.Tests\Facebook.Yoga.Mac.Tests.csproj", "{9FCB6149-DFA8-4EAA-B4DB-2E91A5D8FF77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19A1C7D7-C9CC-476A-B604-DF6A3DE1BA71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A1C7D7-C9CC-476A-B604-DF6A3DE1BA71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A1C7D7-C9CC-476A-B604-DF6A3DE1BA71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A1C7D7-C9CC-476A-B604-DF6A3DE1BA71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64E0AB97-A904-4607-A535-EEA5A966C09E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E0AB97-A904-4607-A535-EEA5A966C09E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E0AB97-A904-4607-A535-EEA5A966C09E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E0AB97-A904-4607-A535-EEA5A966C09E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FCB6149-DFA8-4EAA-B4DB-2E91A5D8FF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FCB6149-DFA8-4EAA-B4DB-2E91A5D8FF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FCB6149-DFA8-4EAA-B4DB-2E91A5D8FF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FCB6149-DFA8-4EAA-B4DB-2E91A5D8FF77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{91C42D32-291D-4B72-90B4-551663D60B8B} = {9352A9B6-F93B-45DD-8BCE-4696A62B3789}
+		{4EDC82D9-A201-4831-8FE0-98F468F8E4AE} = {9352A9B6-F93B-45DD-8BCE-4696A62B3789}
+	EndGlobalSection
+EndGlobal

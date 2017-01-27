@@ -83,6 +83,8 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignFlexStart:{value:'YGAlignFlexStart'},
   YGAlignStretch:{value:'YGAlignStretch'},
 
+  YGAlignBaseline:{value:'YGAlignBaseline'},
+
   YGDirectionInherit:{value:'YGDirectionInherit'},
   YGDirectionLTR:{value:'YGDirectionLTR'},
   YGDirectionRTL:{value:'YGDirectionRTL'},

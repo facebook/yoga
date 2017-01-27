@@ -1,4 +1,4 @@
-# Yoga [![Build Status](https://travis-ci.org/facebook/yoga.svg?branch=master)](https://travis-ci.org/facebook/yoga)
+# Yoga [![Build Status](https://travis-ci.org/facebook/yoga.svg?branch=master)](https://travis-ci.org/facebook/yoga) [![Cocoapods](https://img.shields.io/cocoapods/v/Yoga.svg)](http://cocoapods.org/pods/Yoga)
 
 ## Building
 Yoga builds with [buck](https://buckbuild.com). Make sure you install buck before contributing to Yoga. Yoga's main implementation is in C, with bindings to supported languages and frameworks. When making changes to Yoga please ensure the changes are also propagated to these bindings when applicable.
@@ -27,4 +27,4 @@ You may need to install the latest watir-webdriver gem (`gem install watir-webdr
 For the main C implementation of Yoga clang-format is used to ensure a consistent code style. Please run `bash format.sh` before submitting a pull request. For other languages just try to follow the current code style.
 
 ## Benchmarks
-Benchmarks are located in `benchmarks/YGBenchmark.c` and can be run with `buck run //benchmarks:benchmarks`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed. Benchmarks are run on every commit in CI.
+Benchmarks are located in `benchmark/YGBenchmark.c` and can be run with `buck run //benchmark:benchmark`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed. Benchmarks are run on every commit in CI.
