@@ -184,7 +184,7 @@ namespace Facebook.Yoga
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
             root_child0.MarginStart = 10;
-            root_child0.SetMargin(YogaEdge.End, 10);
+            root_child0.MarginEnd = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -223,7 +223,7 @@ namespace Facebook.Yoga
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
             root_child0.MarginTop = 10;
-            root_child0.SetMargin(YogaEdge.Bottom, 10);
+            root_child0.MarginBottom = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -263,7 +263,7 @@ namespace Facebook.Yoga
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
             root_child0.MarginTop = 10;
-            root_child0.SetMargin(YogaEdge.Bottom, 10);
+            root_child0.MarginBottom = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -302,7 +302,7 @@ namespace Facebook.Yoga
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
             root_child0.MarginStart = 10;
-            root_child0.SetMargin(YogaEdge.End, 10);
+            root_child0.MarginEnd = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
             root.CalculateLayout();
@@ -341,7 +341,7 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
-            root_child0.SetMargin(YogaEdge.End, 10);
+            root_child0.MarginEnd = 10;
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
@@ -393,7 +393,7 @@ namespace Facebook.Yoga
 
             YogaNode root_child0 = new YogaNode();
             root_child0.FlexGrow = 1;
-            root_child0.SetMargin(YogaEdge.Bottom, 10);
+            root_child0.MarginBottom = 10;
             root.Insert(0, root_child0);
 
             YogaNode root_child1 = new YogaNode();
