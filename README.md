@@ -1,4 +1,4 @@
-# Yoga [![Build Status](https://travis-ci.org/facebook/yoga.svg?branch=master)](https://travis-ci.org/facebook/yoga) [![Cocoapods](https://img.shields.io/cocoapods/v/Yoga.svg)](http://cocoapods.org/pods/Yoga)
+# Yoga [![Build Status](https://travis-ci.org/facebook/yoga.svg?branch=master)](https://travis-ci.org/facebook/yoga) [![Cocoapods](https://img.shields.io/cocoapods/v/Yoga.svg)](http://cocoapods.org/pods/Yoga)[![Cocoapods](https://img.shields.io/cocoapods/v/YogaKit.svg)](http://cocoapods.org/pods/YogaKit)[![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout)
 
 ## Building
 Yoga builds with [buck](https://buckbuild.com). Make sure you install buck before contributing to Yoga. Yoga's main implementation is in C, with bindings to supported languages and frameworks. When making changes to Yoga please ensure the changes are also propagated to these bindings when applicable.

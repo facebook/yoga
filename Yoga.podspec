@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Yoga'
-  s.version = '1.0.0'
+  s.version = '1.0.1'
   s.summary = 'A cross-platform layout engine.'
   s.homepage = 'https://github.com/facebook/yoga'
   s.documentation_url = 'https://facebook.github.io/yoga'
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/fbOpenSource'
   s.source = {
     :git => 'https://github.com/facebook/yoga.git',
-    :tag => 'v2017.01.23.00',
+    :tag => 'v2017.01.27.00',
   }
   s.module_name = 'yoga'
   s.requires_arc = false
