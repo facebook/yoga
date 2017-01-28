@@ -1,0 +1,33 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Android.Tests", "Facebook.Yoga.Android.Tests\Facebook.Yoga.Android.Tests.csproj", "{2021459E-8FB1-44A4-89F1-E291769CD2C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Android", "Facebook.Yoga.Android\Facebook.Yoga.Android.csproj", "{EDF7CF8B-5640-4E1D-A2C7-E4BC8BE44363}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4804A8E6-E7B7-4F9E-A446-3DE8E73DB38A}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared", "..\Facebook.Yoga\Facebook.Yoga.Shared.shproj", "{91C42D32-291D-4B72-90B4-551663D60B8B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facebook.Yoga.Shared.Tests", "..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.shproj", "{4EDC82D9-A201-4831-8FE0-98F468F8E4AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2021459E-8FB1-44A4-89F1-E291769CD2C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2021459E-8FB1-44A4-89F1-E291769CD2C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2021459E-8FB1-44A4-89F1-E291769CD2C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2021459E-8FB1-44A4-89F1-E291769CD2C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDF7CF8B-5640-4E1D-A2C7-E4BC8BE44363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF7CF8B-5640-4E1D-A2C7-E4BC8BE44363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF7CF8B-5640-4E1D-A2C7-E4BC8BE44363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF7CF8B-5640-4E1D-A2C7-E4BC8BE44363}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{91C42D32-291D-4B72-90B4-551663D60B8B} = {4804A8E6-E7B7-4F9E-A446-3DE8E73DB38A}
+		{4EDC82D9-A201-4831-8FE0-98F468F8E4AE} = {4804A8E6-E7B7-4F9E-A446-3DE8E73DB38A}
+	EndGlobalSection
+EndGlobal
