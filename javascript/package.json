@@ -19,7 +19,7 @@
         "emcc-path": "emcc-path",
 
         "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
-        "copy-sources": "! npm -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
+        "copy-sources": "! npm -s -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
 
         "build:node": "npm -- run copy-sources && npm -- run node-gyp configure build",
         "build:browser": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1",
