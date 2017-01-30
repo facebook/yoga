@@ -1,21 +1,22 @@
-Pod::Spec.new do |s|
-  s.name = 'Yoga'
-  s.version = '1.0.1'
-  s.summary = 'A cross-platform layout engine.'
-  s.homepage = 'https://github.com/facebook/yoga'
-  s.documentation_url = 'https://facebook.github.io/yoga'
-  s.description = 'Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.'
+Pod::Spec.new do |spec|
+  spec.name = 'Yoga'
+  spec.version = '1.0.2'
+  spec.license =  { :type => 'BSD', :file => "LICENSE" }
+  spec.homepage = 'https://facebook.github.io/yoga/'
+  spec.documentation_url = 'https://facebook.github.io/yoga/docs/api/c/'
 
-  s.license =  { :type => 'BSD', :file => "LICENSE" }
-  s.authors = 'Facebook'
-  s.social_media_url = 'https://twitter.com/fbOpenSource'
-  s.source = {
+  spec.summary = 'Yoga is a cross-platform layout engine which implements Flexbox.'
+  spec.description = 'Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.'
+
+  spec.authors = 'Facebook'
+  spec.source = {
     :git => 'https://github.com/facebook/yoga.git',
     :tag => 'v2017.01.27.00',
   }
-  s.module_name = 'yoga'
-  s.requires_arc = false
-  s.compiler_flags = [
+
+  spec.module_name = 'yoga'
+  spec.requires_arc = false
+  spec.compiler_flags = [
       '-fno-omit-frame-pointer',
       '-fexceptions',
       '-Wall',
@@ -23,5 +24,5 @@ Pod::Spec.new do |s|
       '-std=c11',
       '-fPIC'
   ]
-  s.source_files = 'yoga/**/*.{c,h}'
+  spec.source_files = 'yoga/**/*.{c,h}'
 end
