@@ -90,6 +90,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignFlexEnd:{value:'Yoga.ALIGN_FLEX_END'},
   YGAlignFlexStart:{value:'Yoga.ALIGN_FLEX_START'},
   YGAlignStretch:{value:'Yoga.ALIGN_STRETCH'},
+  YGAlignSpaceBetween:{value:'Yoga.ALIGN_SPACE_BETWEEN'},
+  YGAlignSpaceAround:{value:'Yoga.ALIGN_SPACE_AROUND'},
   YGAlignBaseline:{value:'Yoga.ALIGN_BASELINE'},
 
   YGDirectionInherit:{value:'Yoga.DIRECTION_INHERIT'},
