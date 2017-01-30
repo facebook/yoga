@@ -21,6 +21,8 @@ Pod::Spec.new do |spec|
     :tag => 'v2017.01.27.00'
   }
   spec.platform = :ios
+  spec.ios.deployment_target = '8.0'
+  spec.ios.frameworks = 'UIKit'
 
   spec.dependency 'Yoga', '~> 1.0'
   spec.source_files = 'YogaKit/Source/*.{h,m}',
