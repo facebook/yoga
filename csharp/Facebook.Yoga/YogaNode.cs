@@ -145,6 +145,19 @@ namespace Facebook.Yoga
             }
         }
 
+        public YogaDisplay Display
+        {
+            get
+            {
+                return Native.YGNodeStyleGetDisplay(_ygNode);
+            }
+
+            set
+            {
+                Native.YGNodeStyleSetDisplay(_ygNode, value);
+            }
+        }
+
         public YogaAlign AlignItems
         {
             get

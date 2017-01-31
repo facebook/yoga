@@ -170,6 +170,12 @@ namespace Facebook.Yoga
         public static extern YogaOverflow YGNodeStyleGetOverflow(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetDisplay(YGNodeHandle node, YogaDisplay display);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YogaDisplay YGNodeStyleGetDisplay(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeStyleSetFlex(YGNodeHandle node, float flex);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
