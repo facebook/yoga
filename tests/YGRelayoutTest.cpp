@@ -7,8 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <yoga/Yoga.h>
 #include <gtest/gtest.h>
+#include <yoga/Yoga.h>
 
 TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
   YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);

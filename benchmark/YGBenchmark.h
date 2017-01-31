@@ -17,7 +17,7 @@
 
 #define NUM_REPETITIONS 1000
 
-#define YGBENCHMARKS(BLOCK)              \
+#define YGBENCHMARKS(BLOCK)                \
   int main(int argc, char const *argv[]) { \
     clock_t __start;                       \
     clock_t __endTimes[NUM_REPETITIONS];   \
@@ -25,7 +25,7 @@
     return 0;                              \
   }
 
-#define YGBENCHMARK(NAME, BLOCK)                       \
+#define YGBENCHMARK(NAME, BLOCK)                         \
   __start = clock();                                     \
   for (uint32_t __i = 0; __i < NUM_REPETITIONS; __i++) { \
     { BLOCK }                                            \

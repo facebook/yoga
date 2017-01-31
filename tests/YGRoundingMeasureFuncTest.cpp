@@ -7,30 +7,26 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <yoga/Yoga.h>
 #include <gtest/gtest.h>
+#include <yoga/Yoga.h>
 
 static YGSize _measureFloor(YGNodeRef node,
-  float width,
-  YGMeasureMode widthMode,
-  float height,
-  YGMeasureMode heightMode) {
-
+                            float width,
+                            YGMeasureMode widthMode,
+                            float height,
+                            YGMeasureMode heightMode) {
   return YGSize{
-    width = 10.2f,
-    height = 10.2f,
+      width = 10.2f, height = 10.2f,
   };
 }
 
 static YGSize _measureCeil(YGNodeRef node,
-  float width,
-  YGMeasureMode widthMode,
-  float height,
-  YGMeasureMode heightMode) {
-
+                           float width,
+                           YGMeasureMode widthMode,
+                           float height,
+                           YGMeasureMode heightMode) {
   return YGSize{
-    width = 10.5,
-    height = 10.5,
+      width = 10.5, height = 10.5,
   };
 }
 

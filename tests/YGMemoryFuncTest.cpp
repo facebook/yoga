@@ -7,8 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <yoga/Yoga.h>
 #include <gtest/gtest.h>
+#include <yoga/Yoga.h>
 
 extern int32_t gNodeInstanceCount;
 
@@ -66,12 +66,14 @@ TEST(YogaTest, memory_func_test_funcs) {
 TEST(YogaTest, memory_func_assert_zero_nodes) {
   gNodeInstanceCount = 0; // Reset YGNode instance count for memory func test
   const YGNodeRef root = YGNodeNew();
-  ASSERT_DEATH(YGSetMemoryFuncs(&testMalloc, &testCalloc, &testRealloc, &testFree), "Cannot set memory functions: all node must be freed first");
+  ASSERT_DEATH(YGSetMemoryFuncs(&testMalloc, &testCalloc, &testRealloc, &testFree),
+               "Cannot set memory functions: all node must be freed first");
   YGNodeFreeRecursive(root);
 }
 
 TEST(YogaTest, memory_func_assert_all_non_null) {
   gNodeInstanceCount = 0; // Reset YGNode instance count for memory func test
-  ASSERT_DEATH(YGSetMemoryFuncs(NULL, &testCalloc, &testRealloc, &testFree), "Cannot set memory functions: functions must be all NULL or Non-NULL");
+  ASSERT_DEATH(YGSetMemoryFuncs(NULL, &testCalloc, &testRealloc, &testFree),
+               "Cannot set memory functions: functions must be all NULL or Non-NULL");
 }
 #endif

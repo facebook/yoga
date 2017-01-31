@@ -12,10 +12,10 @@
 #include <yoga/Yoga.h>
 
 static YGSize _measure(YGNodeRef node,
-                        float width,
-                        YGMeasureMode widthMode,
-                        float height,
-                        YGMeasureMode heightMode) {
+                       float width,
+                       YGMeasureMode widthMode,
+                       float height,
+                       YGMeasureMode heightMode) {
   return (YGSize){
       .width = widthMode == YGMeasureModeUndefined ? 10 : width,
       .height = heightMode == YGMeasureModeUndefined ? 10 : width,

@@ -7,8 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <UIKit/UIKit.h>
 #import "YGLayout.h"
+#import <UIKit/UIKit.h>
 
 @interface UIView (Yoga)
 

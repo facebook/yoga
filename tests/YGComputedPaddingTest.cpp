@@ -7,8 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include <yoga/Yoga.h>
 #include <gtest/gtest.h>
+#include <yoga/Yoga.h>
 
 TEST(YogaTest, computed_layout_padding) {
   const YGNodeRef root = YGNodeNew();
