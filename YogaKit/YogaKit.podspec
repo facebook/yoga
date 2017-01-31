@@ -1,4 +1,4 @@
-Pod::Spec.new do |spec|
+podspec = Pod::Spec.new do |spec|
   spec.name = 'YogaKit'
   spec.version = '1.0.2'
   spec.license =  { :type => 'BSD', :file => "LICENSE" }
@@ -23,3 +23,7 @@ Pod::Spec.new do |spec|
   spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h'
   spec.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
 end
+
+# See https://github.com/facebook/yoga/pull/366
+podspec.attributes_hash["readme"] = "YogaKit/README.md"
+podspec
