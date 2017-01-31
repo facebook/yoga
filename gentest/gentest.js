@@ -140,6 +140,7 @@ function checkDefaultValues() {
     {style:'top', value:'undefined'},
     {style:'right', value:'undefined'},
     {style:'bottom', value:'undefined'},
+    {style:'display', value:'flex'},
   ].forEach(function(item) {
     assert(item.value === getDefaultStyleValue(item.style),
         item.style + ' should be ' + item.value);
@@ -300,6 +301,9 @@ function setupTestTree(e, parent, node, genericNode, nodeName, parentName, index
         case 'max-height':
           e.YGNodeStyleSetMaxHeight(nodeName, pixelValue(e, node.style[style]));
           break;
+        case 'display':
+          e.YGNodeStyleSetDisplay(nodeName, displayValue(e, node.style[style]))
+          break;
       }
     }
   }
@@ -389,6 +393,13 @@ function pixelValue(e, value) {
   }
 }
 
+function displayValue(e, value){
+  switch(value){
+    case 'flex': return e.YGDisplayFlex;
+    case 'none': return e.YGDisplayNone;
+  }
+}
+
 function getDefaultStyleValue(style) {
   if (style == 'position') {
     return 'relative';
@@ -466,6 +477,7 @@ function getYogaStyle(node) {
     'height',
     'min-height',
     'max-height',
+    'display',
   ].reduce(function(map, key) {
     map[key] = node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
     return map;

@@ -77,6 +77,7 @@ typedef struct YGStyle {
   YGPositionType positionType;
   YGWrap flexWrap;
   YGOverflow overflow;
+  YGDisplay display;
   float flex;
   float flexGrow;
   float flexShrink;
@@ -148,6 +149,7 @@ static YGNode gYGNodeDefaults = {
             .direction = YGDirectionInherit,
             .flexDirection = YGFlexDirectionColumn,
             .overflow = YGOverflowVisible,
+            .display = YGDisplayFlex,
             .dimensions = YG_DEFAULT_DIMENSION_VALUES_UNIT,
             .minDimensions = YG_DEFAULT_DIMENSION_VALUES_UNIT,
             .maxDimensions = YG_DEFAULT_DIMENSION_VALUES_UNIT,
@@ -568,6 +570,7 @@ YG_NODE_STYLE_PROPERTY_IMPL(YGAlign, AlignSelf, alignSelf, alignSelf);
 YG_NODE_STYLE_PROPERTY_IMPL(YGPositionType, PositionType, positionType, positionType);
 YG_NODE_STYLE_PROPERTY_IMPL(YGWrap, FlexWrap, flexWrap, flexWrap);
 YG_NODE_STYLE_PROPERTY_IMPL(YGOverflow, Overflow, overflow, overflow);
+YG_NODE_STYLE_PROPERTY_IMPL(YGDisplay, Display, display, display);
 
 YG_NODE_STYLE_PROPERTY_SETTER_IMPL(float, FlexGrow, flexGrow, flexGrow);
 YG_NODE_STYLE_PROPERTY_SETTER_IMPL(float, FlexShrink, flexShrink, flexShrink);
@@ -1915,7 +1918,13 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   // STEP 3: DETERMINE FLEX BASIS FOR EACH ITEM
   for (uint32_t i = 0; i < childCount; i++) {
     const YGNodeRef child = YGNodeListGet(node->children, i);
-
+    if (child->style.display == YGDisplayNone) {
+      child->layout.dimensions[YGDimensionHeight] = 0;
+      child->layout.dimensions[YGDimensionWidth] = 0;
+      child->hasNewLayout = true;
+      child->isDirty = false;
+      continue;
+    }
     if (performLayout) {
       // Set the initial position (relative to the parent).
       const YGDirection childDirection = YGNodeResolveDirection(child, direction);
@@ -1995,6 +2004,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     // Add items to the current line until it's full or we run out of items.
     for (uint32_t i = startOfLineIndex; i < childCount; i++, endOfLineIndex++) {
       const YGNodeRef child = YGNodeListGet(node->children, i);
+      if (child->style.display == YGDisplayNone) {
+        continue;
+      }
       child->lineIndex = lineCount;
 
       if (child->style.positionType != YGPositionTypeAbsolute) {
@@ -2386,7 +2398,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
     for (uint32_t i = startOfLineIndex; i < endOfLineIndex; i++) {
       const YGNodeRef child = YGNodeListGet(node->children, i);
-
+      if (child->style.display == YGDisplayNone) {
+        continue;
+      }
       if (child->style.positionType == YGPositionTypeAbsolute &&
           YGNodeIsLeadingPosDefined(child, mainAxis)) {
         if (performLayout) {
@@ -2467,7 +2481,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     if (performLayout) {
       for (uint32_t i = startOfLineIndex; i < endOfLineIndex; i++) {
         const YGNodeRef child = YGNodeListGet(node->children, i);
-
+        if (child->style.display == YGDisplayNone) {
+          continue;
+        }
         if (child->style.positionType == YGPositionTypeAbsolute) {
           // If the child is absolutely positioned and has a
           // top/left/bottom/right
@@ -2618,7 +2634,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
       float maxDescentForCurrentLine = 0;
       for (ii = startIndex; ii < childCount; ii++) {
         const YGNodeRef child = YGNodeListGet(node->children, ii);
-
+        if (child->style.display == YGDisplayNone) {
+          continue;
+        }
         if (child->style.positionType == YGPositionTypeRelative) {
           if (child->lineIndex != i) {
             break;
@@ -2647,7 +2665,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
       if (performLayout) {
         for (ii = startIndex; ii < endIndex; ii++) {
           const YGNodeRef child = YGNodeListGet(node->children, ii);
-
+          if (child->style.display == YGDisplayNone) {
+            continue;
+          }
           if (child->style.positionType == YGPositionTypeRelative) {
             switch (YGNodeAlignItem(node, child)) {
               case YGAlignFlexStart: {
@@ -2757,7 +2777,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     if (needsMainTrailingPos || needsCrossTrailingPos) {
       for (uint32_t i = 0; i < childCount; i++) {
         const YGNodeRef child = YGNodeListGet(node->children, i);
-
+        if (child->style.display == YGDisplayNone) {
+          continue;
+        }
         if (needsMainTrailingPos) {
           YGNodeSetChildTrailingPosition(node, child, mainAxis);
         }

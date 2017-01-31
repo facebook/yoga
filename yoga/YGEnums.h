@@ -100,4 +100,10 @@ typedef YG_ENUM_BEGIN(YGUnit) {
 }
 YG_ENUM_END(YGUnit);
 
+#define YGDisplayCount 2
+typedef YG_ENUM_BEGIN(YGDisplay) {
+  YGDisplayFlex, YGDisplayNone,
+}
+YG_ENUM_END(YGDisplay);
+
 YG_EXTERN_C_END
