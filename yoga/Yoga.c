@@ -1649,6 +1649,15 @@ static bool YGNodeFixedSizeSetMeasuredDimensions(const YGNodeRef node,
   return false;
 }
 
+static void YGZeroOutLayoutRecursivly(const YGNodeRef node) {
+  node->layout.dimensions[YGDimensionHeight] = 0;
+  node->layout.dimensions[YGDimensionWidth] = 0;
+  for (uint32_t i = 0; i < YGNodeGetChildCount(node); i++) {
+    const YGNodeRef child = YGNodeListGet(node->children, i);
+    YGZeroOutLayoutRecursivly(child);
+  }
+}
+
 //
 // This is the main routine that implements a subset of the flexbox layout
 // algorithm
@@ -1919,8 +1928,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   for (uint32_t i = 0; i < childCount; i++) {
     const YGNodeRef child = YGNodeListGet(node->children, i);
     if (child->style.display == YGDisplayNone) {
-      child->layout.dimensions[YGDimensionHeight] = 0;
-      child->layout.dimensions[YGDimensionWidth] = 0;
+      YGZeroOutLayoutRecursivly(child);
       child->hasNewLayout = true;
       child->isDirty = false;
       continue;
