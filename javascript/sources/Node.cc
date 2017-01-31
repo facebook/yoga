@@ -124,6 +124,11 @@ void Node::setOverflow(int overflow)
     YGNodeStyleSetOverflow(m_node, static_cast<YGOverflow>(overflow));
 }
 
+void Node::setDisplay(int display)
+{
+    YGNodeStyleSetDisplay(m_node, static_cast<YGDisplay>(display));
+}
+
 void Node::setFlex(double flex)
 {
     YGNodeStyleSetFlex(m_node, flex);
@@ -277,6 +282,11 @@ Value Node::getMargin(int edge) const
 int Node::getOverflow(void) const
 {
     return YGNodeStyleGetOverflow(m_node);
+}
+
+int Node::getDisplay(void) const
+{
+    return YGNodeStyleGetDisplay(m_node);
 }
 
 Value Node::getFlexBasis(void) const
