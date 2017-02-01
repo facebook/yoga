@@ -313,7 +313,7 @@ public class YogaNode implements YogaNodeAPI<YogaNode> {
   private native int jni_YGNodeStyleGetDisplay(long nativePointer);
   @Override
   public YogaDisplay getDisplay() {
-    return YogaDisplay.values()[jni_YGNodeStyleGetDisplay(mNativePointer)];
+    return YogaDisplay.fromInt(jni_YGNodeStyleGetDisplay(mNativePointer));
   }
 
   private native void jni_YGNodeStyleSetDisplay(long nativePointer, int display);

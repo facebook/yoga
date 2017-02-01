@@ -1652,6 +1652,10 @@ static bool YGNodeFixedSizeSetMeasuredDimensions(const YGNodeRef node,
 static void YGZeroOutLayoutRecursivly(const YGNodeRef node) {
   node->layout.dimensions[YGDimensionHeight] = 0;
   node->layout.dimensions[YGDimensionWidth] = 0;
+  node->layout.position[YGEdgeTop] = 0;
+  node->layout.position[YGEdgeBottom] = 0;
+  node->layout.position[YGEdgeLeft] = 0;
+  node->layout.position[YGEdgeRight] = 0;
   for (uint32_t i = 0; i < YGNodeGetChildCount(node); i++) {
     const YGNodeRef child = YGNodeListGet(node->children, i);
     YGZeroOutLayoutRecursivly(child);
