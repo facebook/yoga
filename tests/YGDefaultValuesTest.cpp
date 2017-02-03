@@ -29,45 +29,61 @@ TEST(YogaTest, assert_default_values) {
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexShrink(root));
   ASSERT_FALSE(YGNodeStyleGetFlexBasis(root).unit != YGUnitUndefined);
 
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeLeft).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeTop).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeRight).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeBottom).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeStart).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetPosition(root, YGEdgeEnd).unit != YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPosition(root, YGEdgeLeft).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPosition(root, YGEdgeTop).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPosition(root, YGEdgeRight).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPosition(root, YGEdgeBottom).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPosition(root, YGEdgeStart).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPosition(root, YGEdgeEnd).unit, YGUnitUndefined);
 
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeLeft).value);
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeTop).value);
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeRight).value);
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetMargin(root, YGEdgeBottom).value);
-  ASSERT_FALSE(YGNodeStyleGetMargin(root, YGEdgeStart).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetMargin(root, YGEdgeEnd).unit != YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMargin(root, YGEdgeLeft).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMargin(root, YGEdgeTop).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMargin(root, YGEdgeRight).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMargin(root, YGEdgeBottom).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMargin(root, YGEdgeStart).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMargin(root, YGEdgeEnd).unit, YGUnitUndefined);
 
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeLeft).value);
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeTop).value);
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeRight).value);
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetPadding(root, YGEdgeBottom).value);
-  ASSERT_FALSE(YGNodeStyleGetPadding(root, YGEdgeStart).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetPadding(root, YGEdgeEnd).unit != YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPadding(root, YGEdgeLeft).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPadding(root, YGEdgeTop).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPadding(root, YGEdgeRight).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPadding(root, YGEdgeBottom).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPadding(root, YGEdgeStart).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetPadding(root, YGEdgeEnd).unit, YGUnitUndefined);
 
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeLeft));
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeTop));
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeRight));
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetBorder(root, YGEdgeBottom));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeLeft)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeTop)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeRight)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeBottom)));
   ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeStart)));
   ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetBorder(root, YGEdgeEnd)));
 
-  ASSERT_FALSE(YGNodeStyleGetWidth(root).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetHeight(root).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetMinWidth(root).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetMinHeight(root).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetMaxWidth(root).unit != YGUnitUndefined);
-  ASSERT_FALSE(YGNodeStyleGetMaxHeight(root).unit != YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetWidth(root).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetHeight(root).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMinWidth(root).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMinHeight(root).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMaxWidth(root).unit, YGUnitUndefined);
+  ASSERT_EQ(YGNodeStyleGetMaxHeight(root).unit, YGUnitUndefined);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetRight(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetBottom(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetMargin(root, YGEdgeLeft));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetMargin(root, YGEdgeTop));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetMargin(root, YGEdgeRight));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetMargin(root, YGEdgeBottom));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetPadding(root, YGEdgeLeft));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetPadding(root, YGEdgeTop));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetPadding(root, YGEdgeRight));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetPadding(root, YGEdgeBottom));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetBorder(root, YGEdgeLeft));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetBorder(root, YGEdgeTop));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetBorder(root, YGEdgeRight));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetBorder(root, YGEdgeBottom));
+
   ASSERT_TRUE(YGFloatIsUndefined(YGNodeLayoutGetWidth(root)));
   ASSERT_TRUE(YGFloatIsUndefined(YGNodeLayoutGetHeight(root)));
   ASSERT_EQ(YGDirectionInherit, YGNodeLayoutGetDirection(root));
