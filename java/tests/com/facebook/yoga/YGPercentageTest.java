@@ -30,7 +30,7 @@ public class YGPercentageTest {
     root_child0.setHeightPercent(30f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -43,7 +43,7 @@ public class YGPercentageTest {
     assertEquals(60f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -74,7 +74,7 @@ public class YGPercentageTest {
     root_child0.setHeightPercent(55f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -87,7 +87,7 @@ public class YGPercentageTest {
     assertEquals(220f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -118,7 +118,7 @@ public class YGPercentageTest {
     root_child0.setHeightPercent(15f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -131,7 +131,7 @@ public class YGPercentageTest {
     assertEquals(75f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -165,7 +165,7 @@ public class YGPercentageTest {
     root_child1.setFlexBasisPercent(25f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -183,7 +183,7 @@ public class YGPercentageTest {
     assertEquals(200f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -221,7 +221,7 @@ public class YGPercentageTest {
     root_child1.setFlexBasisPercent(25f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -239,7 +239,7 @@ public class YGPercentageTest {
     assertEquals(75f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -277,7 +277,7 @@ public class YGPercentageTest {
     root_child1.setMinHeightPercent(10f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -295,7 +295,7 @@ public class YGPercentageTest {
     assertEquals(60f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -336,7 +336,7 @@ public class YGPercentageTest {
     root_child1.setMaxHeightPercent(20f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -354,7 +354,7 @@ public class YGPercentageTest {
     assertEquals(40f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -394,7 +394,7 @@ public class YGPercentageTest {
     root_child1.setMaxHeightPercent(20f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -412,7 +412,7 @@ public class YGPercentageTest {
     assertEquals(40f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -453,7 +453,7 @@ public class YGPercentageTest {
     root_child1.setMaxWidthPercent(20f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -471,7 +471,7 @@ public class YGPercentageTest {
     assertEquals(200f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -511,7 +511,7 @@ public class YGPercentageTest {
     root_child1.setMaxWidthPercent(20f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -529,7 +529,7 @@ public class YGPercentageTest {
     assertEquals(150f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -570,7 +570,7 @@ public class YGPercentageTest {
     root_child1.setMinWidthPercent(20f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -588,7 +588,7 @@ public class YGPercentageTest {
     assertEquals(200f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -628,7 +628,7 @@ public class YGPercentageTest {
     root_child1.setMinWidthPercent(20f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -646,7 +646,7 @@ public class YGPercentageTest {
     assertEquals(150f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -718,7 +718,7 @@ public class YGPercentageTest {
     root_child1.setMinWidthPercent(20f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -746,7 +746,7 @@ public class YGPercentageTest {
     assertEquals(142f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -797,7 +797,7 @@ public class YGPercentageTest {
     root_child0_child0.setHeight(10f);
     root_child0.addChildAt(root_child0_child0, 0);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -815,7 +815,7 @@ public class YGPercentageTest {
     assertEquals(10f, root_child0_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -856,7 +856,7 @@ public class YGPercentageTest {
     root_child0_child0.setHeight(10f);
     root_child0.addChildAt(root_child0_child0, 0);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -874,7 +874,7 @@ public class YGPercentageTest {
     assertEquals(10f, root_child0_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -910,7 +910,7 @@ public class YGPercentageTest {
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -923,7 +923,7 @@ public class YGPercentageTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -947,7 +947,7 @@ public class YGPercentageTest {
     root_child0.setHeightPercent(50f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);
@@ -960,7 +960,7 @@ public class YGPercentageTest {
     assertEquals(0f, root_child0.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0f, root.getLayoutX(), 0.0f);
     assertEquals(0f, root.getLayoutY(), 0.0f);

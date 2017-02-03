@@ -137,7 +137,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.setDirection(' + dir + ');');
-    this.push(node + '.calculateLayout();');
+    this.push(node + '.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);');
   }},
 
   YGNodeInsertChild:{value:function(parentName, nodeName, index) {

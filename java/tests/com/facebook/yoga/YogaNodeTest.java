@@ -46,7 +46,7 @@ public class YogaNodeTest {
     });
     root.addChildAt(child2, 1);
 
-    root.calculateLayout();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(0, (int) child1.getLayoutY());
     assertEquals(40, (int) child2.getLayoutY());
@@ -65,7 +65,7 @@ public class YogaNodeTest {
           return YogaMeasureOutput.make(100, 100);
         }
     });
-    node.calculateLayout();
+    node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
     assertEquals(100, (int) node.getLayoutWidth());
     assertEquals(100, (int) node.getLayoutHeight());
   }
@@ -83,7 +83,7 @@ public class YogaNodeTest {
           return YogaMeasureOutput.make(100.5f, 100.5f);
         }
     });
-    node.calculateLayout();
+    node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
     assertEquals(100.5f, node.getLayoutWidth(), 0.0f);
     assertEquals(100.5f, node.getLayoutHeight(), 0.0f);
   }
@@ -101,7 +101,7 @@ public class YogaNodeTest {
           return YogaMeasureOutput.make(Float.MIN_VALUE, Float.MIN_VALUE);
         }
     });
-    node.calculateLayout();
+    node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
     assertEquals(Float.MIN_VALUE, node.getLayoutWidth(), 0.0f);
     assertEquals(Float.MIN_VALUE, node.getLayoutHeight(), 0.0f);
   }
@@ -119,7 +119,7 @@ public class YogaNodeTest {
           return YogaMeasureOutput.make(Float.MAX_VALUE, Float.MAX_VALUE);
         }
     });
-    node.calculateLayout();
+    node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
     assertEquals(Float.MAX_VALUE, node.getLayoutWidth(), 0.0f);
     assertEquals(Float.MAX_VALUE, node.getLayoutHeight(), 0.0f);
   }
@@ -177,7 +177,7 @@ public class YogaNodeTest {
     node.setMargin(YogaEdge.END, 2);
     node.setMargin(YogaEdge.TOP, 3);
     node.setMargin(YogaEdge.BOTTOM, 4);
-    node.calculateLayout();
+    node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(1, (int) node.getLayoutMargin(YogaEdge.LEFT));
     assertEquals(2, (int) node.getLayoutMargin(YogaEdge.RIGHT));
@@ -194,11 +194,23 @@ public class YogaNodeTest {
     node.setPadding(YogaEdge.END, 2);
     node.setPadding(YogaEdge.TOP, 3);
     node.setPadding(YogaEdge.BOTTOM, 4);
-    node.calculateLayout();
+    node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertEquals(1, (int) node.getLayoutPadding(YogaEdge.LEFT));
     assertEquals(2, (int) node.getLayoutPadding(YogaEdge.RIGHT));
     assertEquals(3, (int) node.getLayoutPadding(YogaEdge.TOP));
     assertEquals(4, (int) node.getLayoutPadding(YogaEdge.BOTTOM));
+  }
+
+  @Test
+  public void testPercentPaddingOnRoot() {
+    final YogaNode node = new YogaNode();
+    node.setPaddingPercent(YogaEdge.ALL, 10);
+    node.calculateLayout(50, 50);
+
+    assertEquals(5, (int) node.getLayoutPadding(YogaEdge.LEFT));
+    assertEquals(5, (int) node.getLayoutPadding(YogaEdge.RIGHT));
+    assertEquals(5, (int) node.getLayoutPadding(YogaEdge.TOP));
+    assertEquals(5, (int) node.getLayoutPadding(YogaEdge.BOTTOM));
   }
 }
