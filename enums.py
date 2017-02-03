@@ -125,7 +125,7 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
     f.write('#pragma once\n\n')
     f.write('#include "YGMacros.h"\n\n')
     f.write('YG_EXTERN_C_BEGIN\n\n')
-    for name, values in ENUMS.items():
+    for name, values in sorted(ENUMS.items()):
         f.write('#define YG%sCount %s\n' % (name, len(values)))        
         f.write('typedef YG_ENUM_BEGIN(YG%s) {\n' % name)
         for value in values:
@@ -138,7 +138,7 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
     f.write('YG_EXTERN_C_END\n')
 
 # write out java files
-for name, values in ENUMS.items():
+for name, values in sorted(ENUMS.items()):
     with open(root + '/java/com/facebook/yoga/Yoga%s.java' % name, 'w') as f:
         f.write(LICENSE)
         f.write('package com.facebook.yoga;\n\n')
@@ -181,7 +181,7 @@ for name, values in ENUMS.items():
         f.write('}\n')
 
 # write out csharp files
-for name, values in ENUMS.items():
+for name, values in sorted(ENUMS.items()):
     with open(root + '/csharp/Facebook.Yoga/Yoga%s.cs' % name, 'w') as f:
         f.write(LICENSE)
         f.write('namespace Facebook.Yoga\n{\n')
@@ -198,7 +198,7 @@ for name, values in ENUMS.items():
 with open(root + '/javascript/sources/YGEnums.js', 'w') as f:
     f.write(LICENSE)
     f.write('module.exports = {\n\n')
-    for name, values in ENUMS.items():
+    for name, values in sorted(ENUMS.items()):
         f.write('  %s_COUNT: %s,\n' % (to_java_upper(name), len(values)))
         base = 0
         for value in values:
