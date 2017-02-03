@@ -25,7 +25,7 @@
 - (CGFloat)lowercased_name                                      \
 {                                                               \
   YGValue value = YGNodeStyleGet##capitalized_name(self.node);  \
-  if (value.unit == YGUnitPixel) {                              \
+  if (value.unit == YGUnitPoint) {                              \
     return value.value;                                         \
   } else {                                                      \
     return YGUndefined;                                         \
@@ -67,7 +67,7 @@ YG_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
 - (CGFloat)objc_lowercased_name                                                                  \
 {                                                                                                \
   YGValue value = YGNodeStyleGet##c_name(self.node, edge);                                       \
-  if (value.unit == YGUnitPixel) {                                                               \
+  if (value.unit == YGUnitPoint) {                                                               \
     return value.value;                                                                          \
   } else {                                                                                       \
     return YGUndefined;                                                                          \
@@ -353,7 +353,7 @@ static void YGRemoveAllChildren(const YGNodeRef node)
   }
 }
 
-static CGFloat YGRoundPixelValue(CGFloat value)
+static CGFloat YGRoundPointValue(CGFloat value)
 {
   static CGFloat scale;
   static dispatch_once_t onceToken;
@@ -387,12 +387,12 @@ static void YGApplyLayoutToViewHierarchy(UIView *view)
 
   view.frame = (CGRect) {
     .origin = {
-      .x = YGRoundPixelValue(topLeft.x),
-      .y = YGRoundPixelValue(topLeft.y),
+      .x = YGRoundPointValue(topLeft.x),
+      .y = YGRoundPointValue(topLeft.y),
     },
     .size = {
-      .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
-      .height = YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y),
+      .width = YGRoundPointValue(bottomRight.x) - YGRoundPointValue(topLeft.x),
+      .height = YGRoundPointValue(bottomRight.y) - YGRoundPointValue(topLeft.y),
     },
   };
 

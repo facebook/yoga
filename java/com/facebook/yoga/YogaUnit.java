@@ -14,7 +14,7 @@ import com.facebook.proguard.annotations.DoNotStrip;
 @DoNotStrip
 public enum YogaUnit {
   UNDEFINED(0),
-  PIXEL(1),
+  POINT(1),
   PERCENT(2);
 
   private int mIntValue;
@@ -30,7 +30,7 @@ public enum YogaUnit {
   public static YogaUnit fromInt(int value) {
     switch (value) {
       case 0: return UNDEFINED;
-      case 1: return PIXEL;
+      case 1: return POINT;
       case 2: return PERCENT;
       default: throw new IllegalArgumentException("Unknown enum value: " + value);
     }
