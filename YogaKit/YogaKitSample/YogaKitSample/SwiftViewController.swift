@@ -7,6 +7,7 @@
  */
 
 import UIKit
+import YogaKit
 
 class SwiftViewController: UIViewController {
   override func viewDidLoad() {

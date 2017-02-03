@@ -1,0 +1,5 @@
+use_frameworks!
+
+target 'YogaKitSample' do
+  pod 'YogaKit', :path => '../../YogaKit.podspec'
+end
