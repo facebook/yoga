@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{810C163F-4746-4721-8B8E-88A3673A62EA};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>Facebook.Yoga.Mac</RootNamespace>
-    <AssemblyName>Facebook.Yoga.Mac</AssemblyName>
+    <AssemblyName>Facebook.Yoga</AssemblyName>
     <MacResourcePrefix>Resources</MacResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
