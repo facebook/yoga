@@ -125,6 +125,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGUndefined:{value:'Yoga.UNDEFINED'},
 
+  YGDisplayFlex:{value:'Yoga.DISPLAY_FLEX'},
+  YGDisplayNone:{value:'Yoga.DISPLAY_NONE'},
+
   YGNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, ' + dir + ');');
   }},
@@ -167,6 +170,10 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetDirection:{value:function(nodeName, value) {
     this.push(nodeName + '.setDirection(' + toValueJavascript(value) + ');');
+  }},
+
+  YGNodeStyleSetDisplay:{value:function(nodeName, value) {
+    this.push(nodeName + '.setDisplay(' + toValueJavascript(value) + ');');
   }},
 
   YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {

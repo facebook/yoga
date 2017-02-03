@@ -67,6 +67,7 @@ NBIND_CLASS(Node)
     method(setMarginPercent);
 
     method(setOverflow);
+    method(setDisplay);
 
     method(setFlex);
     method(setFlexBasis);
@@ -124,6 +125,9 @@ NBIND_CLASS(Node)
     method(getAspectRatio);
 
     method(getBorder);
+
+    method(getOverflow);
+    method(getDisplay);
 
     method(getPadding);
 
