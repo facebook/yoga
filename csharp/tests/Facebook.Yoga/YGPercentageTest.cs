@@ -955,5 +955,41 @@ namespace Facebook.Yoga
             YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
+        [Test]
+        public void Test_percentage_width_height_undefined_parent_size()
+        {
+            YogaNode root = new YogaNode();
+
+            YogaNode root_child0 = new YogaNode();
+            root_child0.Width = 50.Percent();
+            root_child0.Height = 50.Percent();
+            root.Insert(0, root_child0);
+            root.StyleDirection = YogaDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(0f, root.LayoutWidth);
+            Assert.AreEqual(0f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(0f, root_child0.LayoutWidth);
+            Assert.AreEqual(0f, root_child0.LayoutHeight);
+
+            root.StyleDirection = YogaDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(0f, root.LayoutWidth);
+            Assert.AreEqual(0f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(0f, root_child0.LayoutWidth);
+            Assert.AreEqual(0f, root_child0.LayoutHeight);
+        }
+
     }
 }
