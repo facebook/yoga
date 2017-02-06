@@ -26,6 +26,10 @@ module.exports = {
   DIRECTION_LTR: 1,
   DIRECTION_RTL: 2,
 
+  DISPLAY_COUNT: 2,
+  DISPLAY_FLEX: 0,
+  DISPLAY_NONE: 1,
+
   EDGE_COUNT: 9,
   EDGE_LEFT: 0,
   EDGE_TOP: 1,

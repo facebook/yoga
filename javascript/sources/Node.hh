@@ -67,6 +67,7 @@ class Node {
     void setMarginPercent(int edge, double margin);
 
     void setOverflow(int overflow);
+    void setDisplay(int display);
 
     void setFlex(double flex);
     void setFlexBasis(double flexBasis);
@@ -111,6 +112,7 @@ class Node {
     Value getMargin(int edge) const;
 
     int getOverflow(void) const;
+    int getDisplay(void) const;
 
     Value getFlexBasis(void) const;
     double getFlexGrow(void) const;

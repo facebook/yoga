@@ -32,6 +32,7 @@
 @property (nonatomic, readwrite, assign) YGPositionType position;
 @property (nonatomic, readwrite, assign) YGWrap flexWrap;
 @property (nonatomic, readwrite, assign) YGOverflow overflow;
+@property (nonatomic, readwrite, assign) YGDisplay display;
 
 @property (nonatomic, readwrite, assign) CGFloat flexGrow;
 @property (nonatomic, readwrite, assign) CGFloat flexShrink;

@@ -128,6 +128,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGUndefined:{value:'YogaConstants.Undefined'},
 
+  YGDisplayFlex:{value:'YogaDisplay.Flex'},
+  YGDisplayNone:{value:'YogaDisplay.None'},
+
   YGWrapNoWrap:{value:'YogaWrap.NoWrap'},
   YGWrapWrap:{value:'YogaWrap.Wrap'},
 
@@ -174,6 +177,10 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetDirection:{value:function(nodeName, value) {
     this.push(nodeName + '.StyleDirection = ' + toValueCs(value) + ';');
+  }},
+
+  YGNodeStyleSetDisplay:{value:function(nodeName, value) {
+    this.push(nodeName + '.Display = ' + toValueCs(value) + ';');
   }},
 
   YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {

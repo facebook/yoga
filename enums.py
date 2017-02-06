@@ -52,6 +52,10 @@ ENUMS = {
         'Relative',
         'Absolute',
     ],
+    'Display': [
+        'Flex',
+        'None',
+    ],
     'Wrap': [
         'NoWrap',
         'Wrap',
