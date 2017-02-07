@@ -33,9 +33,9 @@ YG_ENUM_END(YGDirection);
 
 #define YGDisplayCount 2
 typedef YG_ENUM_BEGIN(YGDisplay) {
-  YGDisplayFlex,
-  YGDisplayNone,
-} YG_ENUM_END(YGDisplay);
+  YGDisplayFlex, YGDisplayNone,
+}
+YG_ENUM_END(YGDisplay);
 
 #define YGEdgeCount 9
 typedef YG_ENUM_BEGIN(YGEdge) {
