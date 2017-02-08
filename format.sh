@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 BASEDIR="$(dirname "$0")"
-FILES=$(find $BASEDIR \( -path "$BASEDIR/buck-out" -o -path "$BASEDIR/lib" \) -prune -o \
+FILES=$(find "$BASEDIR" \( -path "$BASEDIR/buck-out" -o -path "$BASEDIR/lib" \) -prune -o \
   \( -name  \*.h ! -name YGEnums.h -o -name \*.c -o -name \*.cpp \) -print)
 
 for f in $FILES "$@"; do
