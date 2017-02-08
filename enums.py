@@ -132,20 +132,21 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
     for name, values in sorted(ENUMS.items()):
         f.write('#define YG%sCount %s\n' % (name, len(values)))        
         f.write('typedef YG_ENUM_BEGIN(YG%s) {\n ' % name)
-        charsOnLine = 0
+        charsOnLine = 1
         for value in values:
-            charsOnLine += len(name) + len(value) + 4
+            textToWrite = ''
             if isinstance(value, tuple):
-                charsOnLine += 4
-            if charsOnLine >= 100:
-                f.write('\n     ')
-                charsOnLine = 0
-
-            if isinstance(value, tuple):
-                f.write(' YG%s%s = %d,' % (name, value[0], value[1]))
+                textToWrite = ' YG%s%s = %d,' % (name, value[0], value[1])
             else:
-                f.write(' YG%s%s,' % (name, value))
-                
+                textToWrite = ' YG%s%s,' % (name, value)
+            
+            charsOnLine += len(textToWrite)
+            if charsOnLine > 100:
+                f.write('\n     ')
+                charsOnLine = 5
+            
+            f.write(textToWrite)
+     
         f.write('\n}\nYG_ENUM_END(YG%s);\n' % name)
         f.write('\n')
     f.write('YG_EXTERN_C_END\n')
