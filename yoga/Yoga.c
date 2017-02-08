@@ -2484,7 +2484,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
             // the spacing.
             mainDim += betweenMainDim + YGNodeDimWithMargin(child, mainAxis, availableInnerWidth);
 
-            if (YGNodeIsStyleDimDefined(child, crossAxis) || child->measure != NULL) {
+            if (YGNodeIsStyleDimDefined(child, crossAxis, availableInnerCrossDim) || child->measure != NULL) {
               // The cross dimension is the max of the elements dimension since
               // there
               // can only be one element in that cross dimension.
@@ -2759,7 +2759,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
                 // Remeasure child with the line height as it as been only measured with the
                 // parents height yet.
-                if (!YGNodeIsStyleDimDefined(child, crossAxis)) {
+                if (!YGNodeIsStyleDimDefined(child, crossAxis, availableInnerCrossDim)) {
                   const float childWidth =
                       isMainAxisRow ? (child->layout.measuredDimensions[YGDimensionWidth] +
                                        YGNodeMarginForAxis(child, crossAxis, availableInnerWidth))
