@@ -1,4 +1,3 @@
-
 #!/bin/sh
 if buck --version >/dev/null 2>&1; then true; else
     echo "Building Buck!"
