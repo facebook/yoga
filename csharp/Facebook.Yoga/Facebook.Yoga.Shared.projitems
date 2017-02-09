@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)YogaConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaDimension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaDirection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)YogaDisplay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaEdge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaExperimentalFeature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaFlexDirection.cs" />
