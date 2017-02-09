@@ -618,4 +618,39 @@
   XCTAssertEqual(view.yoga.borderEndWidth, 7);
 }
 
+- (void)testOriginIsPreservedOnRootOfLayout {
+  const CGSize containerSize = CGSizeMake(200, 50);
+
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(10, 10, containerSize.width, containerSize.height)];
+  container.yoga.isEnabled = YES;
+  container.yoga.flexDirection = YGFlexDirectionRow;
+
+  UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
+  subview1.yoga.isEnabled = YES;
+  subview1.yoga.flexGrow = 1;
+  [container addSubview:subview1];
+
+  UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
+  subview2.yoga.isEnabled = YES;
+  subview2.yoga.flexGrow = 1;
+  subview2.yoga.flexDirection = YGFlexDirectionColumn;
+  subview2.yoga.marginLeft = 10;
+  [container addSubview:subview2];
+  [container.yoga applyLayout];
+
+  XCTAssertTrue(CGRectEqualToRect(container.frame, CGRectMake(10, 10, 200, 50)));
+  XCTAssertTrue(CGRectEqualToRect(subview1.frame, CGRectMake(0, 0, 95, 50)));
+  XCTAssertTrue(CGRectEqualToRect(subview2.frame, CGRectMake(105, 0, 95, 50)));
+
+  UIView *subview3 = [[UIView alloc] initWithFrame:CGRectZero];
+  subview3.yoga.isEnabled = YES;
+  subview3.yoga.alignSelf = YGAlignFlexEnd;
+  subview3.yoga.height = 50;
+  [subview2 addSubview:subview3];
+  [subview2.yoga applyLayout];
+
+  XCTAssertTrue(CGRectEqualToRect(subview2.frame, CGRectMake(115, 0, 85, 50)));
+  XCTAssertTrue(CGRectEqualToRect(subview3.frame, CGRectMake(85,0,0,50)));
+}
+
 @end

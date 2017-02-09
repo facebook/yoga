@@ -222,7 +222,7 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 - (void)applyLayout
 {
   [self calculateLayoutWithSize:self.view.bounds.size];
-  YGApplyLayoutToViewHierarchy(self.view);
+  YGApplyLayoutToViewHierarchy(self.view, YES);
 }
 
 - (CGSize)intrinsicSize
@@ -364,7 +364,7 @@ static CGFloat YGRoundPixelValue(CGFloat value)
   return round(value * scale) / scale;
 }
 
-static void YGApplyLayoutToViewHierarchy(UIView *view)
+static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
 {
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
 
@@ -385,10 +385,11 @@ static void YGApplyLayoutToViewHierarchy(UIView *view)
     topLeft.y + YGNodeLayoutGetHeight(node),
   };
 
+  const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
   view.frame = (CGRect) {
     .origin = {
-      .x = YGRoundPixelValue(topLeft.x),
-      .y = YGRoundPixelValue(topLeft.y),
+      .x = YGRoundPixelValue(topLeft.x + origin.x),
+      .y = YGRoundPixelValue(topLeft.y + origin.y),
     },
     .size = {
       .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
@@ -398,7 +399,7 @@ static void YGApplyLayoutToViewHierarchy(UIView *view)
 
   if (!yoga.isLeaf) {
     for (NSUInteger i=0; i<view.subviews.count; i++) {
-      YGApplyLayoutToViewHierarchy(view.subviews[i]);
+      YGApplyLayoutToViewHierarchy(view.subviews[i], NO);
     }
   }
 }
