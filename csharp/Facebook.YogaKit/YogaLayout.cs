@@ -854,9 +854,9 @@ namespace Facebook.YogaKit
 			}
 		}
 
-		static double RoundPixelValue(float value)
+		static double RoundPointValue(float value)
 		{
-			float scale = NativePixelScale;
+			float scale = NativePointScale;
 
 			return Math.Round(value * scale) / scale;
 		}

@@ -16,9 +16,9 @@ namespace Facebook.Yoga
             return YogaValue.Percent(value);
         }
 
-        public static YogaValue Px(this float value)
+        public static YogaValue Pt(this float value)
         {
-            return YogaValue.Pixel(value);
+            return YogaValue.Point(value);
         }
 
         public static YogaValue Percent(this int value)
@@ -26,9 +26,9 @@ namespace Facebook.Yoga
             return YogaValue.Percent(value);
         }
 
-        public static YogaValue Px(this int value)
+        public static YogaValue Pt(this int value)
         {
-            return YogaValue.Pixel(value);
+            return YogaValue.Point(value);
         }
     }
 }

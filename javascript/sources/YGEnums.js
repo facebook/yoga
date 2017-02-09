@@ -86,7 +86,7 @@ module.exports = {
 
   UNIT_COUNT: 3,
   UNIT_UNDEFINED: 0,
-  UNIT_PIXEL: 1,
+  UNIT_POINT: 1,
   UNIT_PERCENT: 2,
 
   WRAP_COUNT: 2,
