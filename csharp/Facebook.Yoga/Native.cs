@@ -22,6 +22,8 @@ namespace Facebook.Yoga
 
         internal class YGNodeHandle : SafeHandle
         {
+            private GCHandle _managed;
+
             private YGNodeHandle() : base(IntPtr.Zero, true)
             {
             }
@@ -36,10 +38,39 @@ namespace Facebook.Yoga
 
             protected override bool ReleaseHandle()
             {
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+                if (_managed.IsAllocated)
+                {
+                    _managed.Free();
+                }
+#endif
                 Native.YGNodeFree(this.handle);
                 GC.KeepAlive(this);
                 return true;
             }
+
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+            public void SetContext(YogaNode node)
+            {
+                if (!_managed.IsAllocated)
+                {
+                    _managed = GCHandle.Alloc(node, GCHandleType.Weak);
+                    Native.YGNodeSetContext(this.handle, GCHandle.ToIntPtr(_managed));
+                }
+            }
+
+            public static YogaNode GetManaged(IntPtr ygNodePtr)
+            {
+                var node =
+                    GCHandle.FromIntPtr(Native.YGNodeGetContext(ygNodePtr)).Target as YogaNode;
+                if (node == null)
+                {
+                    throw new InvalidOperationException("YogaNode is already deallocated");
+                }
+
+                return node;
+            }
+#endif
         }
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -63,7 +94,7 @@ namespace Facebook.Yoga
         public static extern IntPtr YGNodeGetContext(IntPtr node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeSetContext(YGNodeHandle node, IntPtr managed);
+        public static extern void YGNodeSetContext(IntPtr node, IntPtr managed);
 #endif
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
