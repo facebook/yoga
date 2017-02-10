@@ -27,9 +27,3 @@ BASE_COMPILER_FLAGS = [
 
 def yoga_dep(dep):
   return '//' + dep
-
-class allow_unsafe_import:
-    def __enter__(self):
-        pass
-    def __exit__(self, type, value, traceback):
-        pass
