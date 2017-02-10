@@ -29,3 +29,22 @@ TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
 
   YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, false);
 }
+
+TEST(YogaTest, recalculate_resolvedDimonsion_onchange) {
+  const YGNodeRef root = YGNodeNew();
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetMinHeight(root_child0, 10);
+  YGNodeStyleSetMaxHeight(root_child0, 10);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeStyleSetMinHeight(root_child0, YGUndefined);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+}
