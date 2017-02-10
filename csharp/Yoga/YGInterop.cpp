@@ -47,7 +47,7 @@ static YGSize unmanagedMeasureFunc(YGNodeRef node,
 }
 
 void YGInteropNodeSetMeasureFunc(YGNodeRef node, YGInteropMeasureFunc managedFunc) {
-  gManagedMeasureFunc = managedFunc;
+  gManagedMeasureFunc = managedFunc; // this is always the same static managed method
   YGNodeSetMeasureFunc(node, &unmanagedMeasureFunc);
 }
 
@@ -59,6 +59,6 @@ static float unmanagedBaselineFunc(YGNodeRef node, const float width, const floa
 }
 
 void YGInteropNodeSetBaselineFunc(YGNodeRef node, YGInteropBaselineFunc managedFunc) {
-  gManagedBaselineFunc = managedFunc;
+  gManagedBaselineFunc = managedFunc; // this is always the same static managed method
   YGNodeSetBaselineFunc(node, &unmanagedBaselineFunc);
 }
