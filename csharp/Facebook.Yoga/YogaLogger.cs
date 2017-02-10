@@ -37,9 +37,31 @@ namespace Facebook.Yoga
                         throw new InvalidOperationException(message);
                     }
                 };
+#if __IOS__
+                Native.YGInteropSetLogger(ManagedLogger);
+#else
                 Native.YGInteropSetLogger(_managedLogger);
+#endif
                 _initialized = true;
             }
         }
+
+#if __IOS__
+		delegate void ManagedLoggerCallback(YogaLogLevel level, string message);
+
+		[ObjCRuntime.MonoPInvokeCallback(typeof(ManagedLoggerCallback))]
+		public static void ManagedLogger(YogaLogLevel level, string message)
+		{
+			if (Logger != null)
+			{
+				Logger(level, message);
+			}
+
+			if (level == YogaLogLevel.Error)
+			{
+				throw new InvalidOperationException(message);
+			}
+		}
+#endif
     }
 }
