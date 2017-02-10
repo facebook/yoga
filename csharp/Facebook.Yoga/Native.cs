@@ -22,7 +22,9 @@ namespace Facebook.Yoga
 
         internal class YGNodeHandle : SafeHandle
         {
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
             private GCHandle _managed;
+#endif
 
             private YGNodeHandle() : base(IntPtr.Zero, true)
             {
@@ -88,14 +90,6 @@ namespace Facebook.Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern int YGNodeGetInstanceCount();
-
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr YGNodeGetContext(IntPtr node);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeSetContext(IntPtr node, IntPtr managed);
-#endif
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGSetExperimentalFeatureEnabled(
@@ -371,6 +365,18 @@ namespace Facebook.Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaDirection YGNodeLayoutGetDirection(YGNodeHandle node);
+
+        #endregion
+
+        #region IOS
+
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr YGNodeGetContext(IntPtr node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetContext(IntPtr node, IntPtr managed);
+#endif
 
         #endregion
     }
