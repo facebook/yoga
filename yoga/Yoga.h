@@ -143,6 +143,7 @@ WIN_EXPORT void YGNodeCopyStyle(const YGNodeRef dstNode, const YGNodeRef srcNode
   WIN_EXPORT type YGNodeLayoutGet##name(const YGNodeRef node, const YGEdge edge);
 
 YG_NODE_PROPERTY(void *, Context, context);
+YG_NODE_PROPERTY(void *, Managed, managed);
 YG_NODE_PROPERTY(YGMeasureFunc, MeasureFunc, measureFunc);
 YG_NODE_PROPERTY(YGBaselineFunc, BaselineFunc, baselineFunc)
 YG_NODE_PROPERTY(YGPrintFunc, PrintFunc, printFunc);
