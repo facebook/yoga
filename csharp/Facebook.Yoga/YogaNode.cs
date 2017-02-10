@@ -609,7 +609,6 @@ namespace Facebook.Yoga
             float height,
             YogaMeasureMode heightMode)
         {
-
             if (_measureFunction == null)
             {
                 throw new InvalidOperationException("Measure function is not defined.");
