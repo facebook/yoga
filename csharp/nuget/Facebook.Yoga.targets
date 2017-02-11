@@ -48,4 +48,14 @@
       <Visible>False</Visible>
     </Content>
   </ItemGroup>
+  <ItemGroup Condition=" '$(OS)' == 'Unix' ">
+    <None Include="$(MSBuildThisFileDirectory)..\..\runtimes\osx\native\libyoga.dylib">
+      <Link>libyoga.dylib</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Facebook.Yoga.dll.config">
+      <Link>Facebook.Yoga.dll.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
