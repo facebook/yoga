@@ -675,5 +675,138 @@ namespace Facebook.Yoga
             Assert.AreEqual(50f, root_child1.LayoutHeight);
         }
 
+        [Test]
+        public void Test_min_width_overrides_width()
+        {
+            YogaNode root = new YogaNode();
+            root.Width = 50;
+            root.MinWidth = 100;
+            root.StyleDirection = YogaDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(100f, root.LayoutWidth);
+            Assert.AreEqual(0f, root.LayoutHeight);
+
+            root.StyleDirection = YogaDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(100f, root.LayoutWidth);
+            Assert.AreEqual(0f, root.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_max_width_overrides_width()
+        {
+            YogaNode root = new YogaNode();
+            root.Width = 200;
+            root.MaxWidth = 100;
+            root.StyleDirection = YogaDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(100f, root.LayoutWidth);
+            Assert.AreEqual(0f, root.LayoutHeight);
+
+            root.StyleDirection = YogaDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(100f, root.LayoutWidth);
+            Assert.AreEqual(0f, root.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_min_height_overrides_height()
+        {
+            YogaNode root = new YogaNode();
+            root.Height = 50;
+            root.MinHeight = 100;
+            root.StyleDirection = YogaDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(0f, root.LayoutWidth);
+            Assert.AreEqual(100f, root.LayoutHeight);
+
+            root.StyleDirection = YogaDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(0f, root.LayoutWidth);
+            Assert.AreEqual(100f, root.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_max_height_overrides_height()
+        {
+            YogaNode root = new YogaNode();
+            root.Height = 200;
+            root.MaxHeight = 100;
+            root.StyleDirection = YogaDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(0f, root.LayoutWidth);
+            Assert.AreEqual(100f, root.LayoutHeight);
+
+            root.StyleDirection = YogaDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(0f, root.LayoutWidth);
+            Assert.AreEqual(100f, root.LayoutHeight);
+        }
+
+        [Test]
+        public void Test_min_max_percent_no_width_height()
+        {
+            YogaNode root = new YogaNode();
+            root.AlignItems = YogaAlign.FlexStart;
+            root.Width = 100;
+            root.Height = 100;
+
+            YogaNode root_child0 = new YogaNode();
+            root_child0.MinWidth = 10.Percent();
+            root_child0.MaxWidth = 10.Percent();
+            root_child0.MinHeight = 10.Percent();
+            root_child0.MaxHeight = 10.Percent();
+            root.Insert(0, root_child0);
+            root.StyleDirection = YogaDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(100f, root.LayoutWidth);
+            Assert.AreEqual(100f, root.LayoutHeight);
+
+            Assert.AreEqual(0f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(10f, root_child0.LayoutWidth);
+            Assert.AreEqual(10f, root_child0.LayoutHeight);
+
+            root.StyleDirection = YogaDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(0f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(100f, root.LayoutWidth);
+            Assert.AreEqual(100f, root.LayoutHeight);
+
+            Assert.AreEqual(90f, root_child0.LayoutX);
+            Assert.AreEqual(0f, root_child0.LayoutY);
+            Assert.AreEqual(10f, root_child0.LayoutWidth);
+            Assert.AreEqual(10f, root_child0.LayoutHeight);
+        }
+
     }
 }
