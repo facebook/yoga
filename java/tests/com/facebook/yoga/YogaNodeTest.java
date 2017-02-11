@@ -203,6 +203,23 @@ public class YogaNodeTest {
   }
 
   @Test
+  public void testLayoutBorder() {
+    final YogaNode node = new YogaNode();
+    node.setWidth(100);
+    node.setHeight(100);
+    node.setBorder(YogaEdge.START, 1);
+    node.setBorder(YogaEdge.END, 2);
+    node.setBorder(YogaEdge.TOP, 3);
+    node.setBorder(YogaEdge.BOTTOM, 4);
+    node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(1, (int) node.getLayoutBorder(YogaEdge.LEFT));
+    assertEquals(2, (int) node.getLayoutBorder(YogaEdge.RIGHT));
+    assertEquals(3, (int) node.getLayoutBorder(YogaEdge.TOP));
+    assertEquals(4, (int) node.getLayoutBorder(YogaEdge.BOTTOM));
+  }
+
+  @Test
   public void testPercentPaddingOnRoot() {
     final YogaNode node = new YogaNode();
     node.setPaddingPercent(YogaEdge.ALL, 10);
