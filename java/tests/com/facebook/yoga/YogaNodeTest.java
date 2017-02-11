@@ -230,4 +230,16 @@ public class YogaNodeTest {
     assertEquals(5, (int) node.getLayoutPadding(YogaEdge.TOP));
     assertEquals(5, (int) node.getLayoutPadding(YogaEdge.BOTTOM));
   }
+
+  @Test
+  public void testDefaultEdgeValues() {
+    final YogaNode node = new YogaNode();
+
+    for (YogaEdge edge : YogaEdge.values()) {
+      assertEquals(YogaUnit.UNDEFINED, node.getMargin(edge).unit);
+      assertEquals(YogaUnit.UNDEFINED, node.getPadding(edge).unit);
+      assertEquals(YogaUnit.UNDEFINED, node.getPosition(edge).unit);
+      assertTrue(YogaConstants.isUndefined(node.getBorder(edge)));
+    }
+  }
 }
