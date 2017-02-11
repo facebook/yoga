@@ -89,9 +89,10 @@
 @property (nonatomic, readonly, assign) YGDirection resolvedDirection;
 
 /**
- Perform a layout calculation and update the frames of the views in the hierarchy with the results
+ Perform a layout calculation and update the frames of the views in the hierarchy with the results.
+ If the origin is not preserved, the root view's layout results will applied from {0,0}.
  */
-- (void)applyLayout NS_SWIFT_NAME(applyLayout());
+- (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin NS_SWIFT_NAME(applyLayout(preservingOrigin:));
 
 /**
  Returns the size of the view if no constraints were given. This could equivalent to calling [self

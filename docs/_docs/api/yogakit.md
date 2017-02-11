@@ -22,6 +22,6 @@ Yoga relies on `UIView` subviews to build up its internal layout tree. However, 
 It is also possible to query the number of children **included** in layout via `numberOfChildren`.
 
 ### Layout
-To apply a layout to a view (and its' subviews) you need to call `[view.yoga applyLayout]`. This will do a layout calculation (if needed) and apply the calculated frames to every view included in the layout.
+To apply a layout to a view (and its' subviews) you need to call `[view.yoga applyLayoutPreservingOrigin:NO]`. This will do a layout calculation (if needed) and apply the calculated frames to every view included in the layout.
 
 In the event that you need to another layout pass on a view you can mark it dirty via `[view.yoga markDirty]`.

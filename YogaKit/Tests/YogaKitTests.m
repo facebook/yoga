@@ -109,6 +109,31 @@
   XCTAssertEqual(longTextLabelSize.width + textBadgeView.yoga.intrinsicSize.width, containerSize.width);
 }
 
+- (void)testPreservingOrigin
+{
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0,0,50,75)];
+  container.yoga.isEnabled = YES;
+
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  view.yoga.isEnabled = YES;
+  view.yoga.flexBasis = 0;
+  view.yoga.flexGrow = 1;
+  [container addSubview:view];
+
+  UIView *view2 = [[UIView alloc] initWithFrame:CGRectZero];
+  view2.yoga.isEnabled = YES;
+  view2.yoga.marginTop = 25;
+  view2.yoga.flexBasis = 0;
+  view2.yoga.flexGrow = 1;
+  [container addSubview:view2];
+
+  [container.yoga applyLayoutPreservingOrigin:YES];
+  XCTAssertEqual(50, view2.frame.origin.y);
+
+  [view2.yoga applyLayoutPreservingOrigin:NO];
+  XCTAssertEqual(25, view2.frame.origin.y);
+}
+
 - (void)testThatMarkingLeafsAsDirtyWillTriggerASizeRecalculation
 {
   UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 500, 50)];
@@ -116,22 +141,22 @@
   container.yoga.flexDirection = YGFlexDirectionRow;
   container.yoga.alignItems = YGAlignFlexStart;
 
-  UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-  label.text = @"This is a short text.";
-  label.numberOfLines = 1;
-  label.yoga.isEnabled = YES;
-  [container addSubview:label];
+  UILabel *view = [[UILabel alloc] initWithFrame:CGRectZero];
+  view.text = @"This is a short text.";
+  view.numberOfLines = 1;
+  view.yoga.isEnabled = YES;
+  [container addSubview:view];
 
-  [container.yoga applyLayout];
-  CGSize const labelSizeAfterFirstPass = label.frame.size;
+  [container.yoga applyLayoutPreservingOrigin:YES];
+  CGSize const viewSizeAfterFirstPass = view.frame.size;
 
-  label.text = @"This is a slightly longer text.";
-  XCTAssertTrue(CGSizeEqualToSize(label.frame.size, labelSizeAfterFirstPass));
+  view.text = @"This is a slightly longer text.";
+  XCTAssertTrue(CGSizeEqualToSize(view.frame.size, viewSizeAfterFirstPass));
 
-  [label.yoga markDirty];
+  [view.yoga markDirty];
 
-  [container.yoga applyLayout];
-  XCTAssertFalse(CGSizeEqualToSize(label.frame.size, labelSizeAfterFirstPass));
+  [container.yoga applyLayoutPreservingOrigin:YES];
+  XCTAssertFalse(CGSizeEqualToSize(view.frame.size, viewSizeAfterFirstPass));
 }
 
 - (void)testFrameAndOriginPlacement
@@ -157,7 +182,7 @@
   subview3.yoga.flexGrow = 1;
   [container addSubview:subview3];
 
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
 
   XCTAssertEqualWithAccuracy(subview2.frame.origin.x, CGRectGetMaxX(subview1.frame), FLT_EPSILON);
   XCTAssertEqualWithAccuracy(subview3.frame.origin.x, CGRectGetMaxX(subview2.frame), FLT_EPSILON);
@@ -193,7 +218,7 @@
   subview3.yoga.flexGrow = 1;
   [container addSubview:subview3];
 
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
 
   XCTAssertTrue(CGRectEqualToRect(subview1.frame, CGRectMake(0, 0, 100, 50)));
   XCTAssertTrue(CGRectEqualToRect(subview2.frame, CGRectMake(100, 0, 100, 50)));
@@ -201,7 +226,7 @@
 
   [container exchangeSubviewAtIndex:2 withSubviewAtIndex:0];
   subview2.yoga.isIncludedInLayout = NO;
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
 
   XCTAssertTrue(CGRectEqualToRect(subview3.frame, CGRectMake(0, 0, 150, 50)));
   XCTAssertTrue(CGRectEqualToRect(subview1.frame, CGRectMake(150, 0, 150, 50)));
@@ -233,14 +258,14 @@
   subview3.yoga.flexGrow = 1;
   [container addSubview:subview3];
 
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
 
   for (UIView *subview in container.subviews) {
     XCTAssertEqual(subview.bounds.size.width, 100);
   }
 
   subview3.yoga.isIncludedInLayout = NO;
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
 
   XCTAssertEqual(subview1.bounds.size.width, 150);
   XCTAssertEqual(subview2.bounds.size.width, 150);
@@ -270,11 +295,11 @@
   subview3.yoga.isIncludedInLayout = YES;
   [container addSubview:subview3];
 
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
   XCTAssertEqual(container.yoga.numberOfChildren, 1);
 
   subview2.yoga.isIncludedInLayout = YES;
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
   XCTAssertEqual(container.yoga.numberOfChildren, 2);
 }
 
@@ -300,14 +325,14 @@
   subview3.yoga.isIncludedInLayout = NO;
   [container addSubview:subview3];
 
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
 
   XCTAssertEqual(subview1.bounds.size.width, 150);
   XCTAssertEqual(subview2.bounds.size.width, 150);
   XCTAssertEqual(subview3.bounds.size.width, 0);
 
   subview3.yoga.isIncludedInLayout = YES;
-  [container.yoga applyLayout];
+  [container.yoga applyLayoutPreservingOrigin:YES];
 
   XCTAssertEqual(subview1.bounds.size.width, 100);
   XCTAssertEqual(subview2.bounds.size.width, 100);
@@ -361,7 +386,7 @@
         someView.yoga.flexGrow = 1;
         [view addSubview:someView];
     }
-    [container.yoga applyLayout];
+    [container.yoga applyLayoutPreservingOrigin:YES];
 
     // Add the same amount of new views, reapply layout.
     for (UIView *view in @[subview1, subview2]) {
@@ -370,7 +395,7 @@
         someView.yoga.flexGrow = 1;
         [view addSubview:someView];
     }
-    [container.yoga applyLayout];
+    [container.yoga applyLayoutPreservingOrigin:YES];
 
     XCTAssertEqual(subview1.bounds.size.width, 100);
     XCTAssertEqual(subview1.bounds.size.height, 25);
@@ -406,9 +431,9 @@
     subview2.yoga.isEnabled = YES;
     [subview1 addSubview:subview2];
 
-    [container.yoga applyLayout];
+    [container.yoga applyLayoutPreservingOrigin:YES];
     [subview2 removeFromSuperview];
-    [container.yoga applyLayout];
+    [container.yoga applyLayoutPreservingOrigin:YES];
 }
 
 - (void)testPositionalPropertiesWork
@@ -592,42 +617,6 @@
 
   view.yoga.borderEndWidth = 7;
   XCTAssertEqual(view.yoga.borderEndWidth, 7);
-}
-
-- (void)testOriginIsPreservedOnRootOfLayout
-{
-  const CGSize containerSize = CGSizeMake(200, 50);
-
-  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(10, 10, containerSize.width, containerSize.height)];
-  container.yoga.isEnabled = YES;
-  container.yoga.flexDirection = YGFlexDirectionRow;
-
-  UIView *subview1 = [[UIView alloc] initWithFrame:CGRectZero];
-  subview1.yoga.isEnabled = YES;
-  subview1.yoga.flexGrow = 1;
-  [container addSubview:subview1];
-
-  UIView *subview2 = [[UIView alloc] initWithFrame:CGRectZero];
-  subview2.yoga.isEnabled = YES;
-  subview2.yoga.flexGrow = 1;
-  subview2.yoga.flexDirection = YGFlexDirectionColumn;
-  subview2.yoga.marginLeft = 10;
-  [container addSubview:subview2];
-  [container.yoga applyLayout];
-
-  XCTAssertTrue(CGRectEqualToRect(container.frame, CGRectMake(10, 10, 200, 50)));
-  XCTAssertTrue(CGRectEqualToRect(subview1.frame, CGRectMake(0, 0, 95, 50)));
-  XCTAssertTrue(CGRectEqualToRect(subview2.frame, CGRectMake(105, 0, 95, 50)));
-
-  UIView *subview3 = [[UIView alloc] initWithFrame:CGRectZero];
-  subview3.yoga.isEnabled = YES;
-  subview3.yoga.alignSelf = YGAlignFlexEnd;
-  subview3.yoga.height = 50;
-  [subview2 addSubview:subview3];
-  [subview2.yoga applyLayout];
-
-  XCTAssertTrue(CGRectEqualToRect(subview2.frame, CGRectMake(115, 0, 85, 50)));
-  XCTAssertTrue(CGRectEqualToRect(subview3.frame, CGRectMake(85,0,0,50)));
 }
 
 @end

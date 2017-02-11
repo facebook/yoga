@@ -36,6 +36,6 @@ class SwiftViewController: UIViewController {
     child2.addSubview(child3)
     root.addSubview(child1)
     root.addSubview(child2)
-    root.yoga.applyLayout()
+    root.yoga.applyLayout(preservingOrigin: false)
   }
 }

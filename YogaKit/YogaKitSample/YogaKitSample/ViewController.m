@@ -10,10 +10,6 @@
 
 #import <YogaKit/UIView+Yoga.h>
 
-@interface ViewController ()
-
-@end
-
 @implementation ViewController
 
 - (void)viewDidLoad
@@ -53,7 +49,7 @@
     [child2 addSubview:child3];
     [root addSubview:child1];
     [root addSubview:child2];
-    [root.yoga applyLayout];
+    [root.yoga applyLayoutPreservingOrigin:NO];
 }
 
 

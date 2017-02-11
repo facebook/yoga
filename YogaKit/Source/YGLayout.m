@@ -208,7 +208,13 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 - (void)applyLayout
 {
   [self calculateLayoutWithSize:self.view.bounds.size];
-  YGApplyLayoutToViewHierarchy(self.view, YES);
+  YGApplyLayoutToViewHierarchy(self.view, NO);
+}
+
+- (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin
+{
+  [self calculateLayoutWithSize:self.view.bounds.size];
+  YGApplyLayoutToViewHierarchy(self.view, preserveOrigin);
 }
 
 - (CGSize)intrinsicSize
