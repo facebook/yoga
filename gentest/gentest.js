@@ -381,6 +381,8 @@ function alignValue(e, value) {
     case 'stretch': return e.YGAlignStretch;
     case 'flex-start': return e.YGAlignFlexStart;
     case 'flex-end': return e.YGAlignFlexEnd;
+    case 'space-between': return e.YGAlignSpaceBetween;
+    case 'space-around': return e.YGAlignSpaceAround;
     case 'baseline': return e.YGAlignBaseline;
   }
 }
