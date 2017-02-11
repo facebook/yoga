@@ -43,12 +43,6 @@
   return YGNodeStyleGet##property(self.node, edge);                                \
 }
 
-#define YG_SHORTHAND_EDGE_PROPERTY_GETTER(lowercased_name) \
-- (CGFloat)lowercased_name                                 \
-{                                                          \
-  return YGUndefined;                                      \
-}
-
 #define YG_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge) \
 - (void)set##capitalized_name:(CGFloat)lowercased_name                             \
 {                                                                                  \
@@ -57,10 +51,6 @@
 
 #define YG_EDGE_PROPERTY(lowercased_name, capitalized_name, property, edge) \
 YG_EDGE_PROPERTY_GETTER(lowercased_name, capitalized_name, property, edge)  \
-YG_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
-
-#define YG_SHORTHAND_EDGE_PROPERTY(lowercased_name, capitalized_name, property, edge) \
-YG_SHORTHAND_EDGE_PROPERTY_GETTER(lowercased_name)                                    \
 YG_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
 
 #define YG_VALUE_EDGE_PROPERTY_GETTER(objc_lowercased_name, objc_capitalized_name, c_name, edge) \
@@ -84,10 +74,6 @@ YG_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
 YG_VALUE_EDGE_PROPERTY_GETTER(lowercased_name, capitalized_name, property, edge)  \
 YG_VALUE_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
 
-#define YG_VALUE_SHORTHAND_EDGE_PROPERTY(lowercased_name, capitalized_name, property, edge) \
-YG_SHORTHAND_EDGE_PROPERTY_GETTER(lowercased_name)                                          \
-YG_VALUE_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
-
 #define YG_VALUE_EDGES_PROPERTIES(lowercased_name, capitalized_name)                                                            \
 YG_VALUE_EDGE_PROPERTY(lowercased_name##Left, capitalized_name##Left, capitalized_name, YGEdgeLeft)                             \
 YG_VALUE_EDGE_PROPERTY(lowercased_name##Top, capitalized_name##Top, capitalized_name, YGEdgeTop)                                \
@@ -95,9 +81,9 @@ YG_VALUE_EDGE_PROPERTY(lowercased_name##Right, capitalized_name##Right, capitali
 YG_VALUE_EDGE_PROPERTY(lowercased_name##Bottom, capitalized_name##Bottom, capitalized_name, YGEdgeBottom)                       \
 YG_VALUE_EDGE_PROPERTY(lowercased_name##Start, capitalized_name##Start, capitalized_name, YGEdgeStart)                          \
 YG_VALUE_EDGE_PROPERTY(lowercased_name##End, capitalized_name##End, capitalized_name, YGEdgeEnd)                                \
-YG_VALUE_SHORTHAND_EDGE_PROPERTY(lowercased_name##Horizontal, capitalized_name##Horizontal, capitalized_name, YGEdgeHorizontal) \
-YG_VALUE_SHORTHAND_EDGE_PROPERTY(lowercased_name##Vertical, capitalized_name##Vertical, capitalized_name, YGEdgeVertical)       \
-YG_VALUE_SHORTHAND_EDGE_PROPERTY(lowercased_name, capitalized_name, capitalized_name, YGEdgeAll)
+YG_VALUE_EDGE_PROPERTY(lowercased_name##Horizontal, capitalized_name##Horizontal, capitalized_name, YGEdgeHorizontal) \
+YG_VALUE_EDGE_PROPERTY(lowercased_name##Vertical, capitalized_name##Vertical, capitalized_name, YGEdgeVertical)       \
+YG_VALUE_EDGE_PROPERTY(lowercased_name, capitalized_name, capitalized_name, YGEdgeAll)
 
 @interface YGLayout ()
 
@@ -202,7 +188,7 @@ YG_EDGE_PROPERTY(borderRightWidth, BorderRightWidth, Border, YGEdgeRight)
 YG_EDGE_PROPERTY(borderBottomWidth, BorderBottomWidth, Border, YGEdgeBottom)
 YG_EDGE_PROPERTY(borderStartWidth, BorderStartWidth, Border, YGEdgeStart)
 YG_EDGE_PROPERTY(borderEndWidth, BorderEndWidth, Border, YGEdgeEnd)
-YG_SHORTHAND_EDGE_PROPERTY(borderWidth, BorderWidth, Border, YGEdgeAll)
+YG_EDGE_PROPERTY(borderWidth, BorderWidth, Border, YGEdgeAll)
 
 YG_VALUE_PROPERTY(width, Width)
 YG_VALUE_PROPERTY(height, Height)
