@@ -25,3 +25,20 @@ view.yoga.marginLeft // 0
 ### Enhancements
 
 - Pixel Rounding now uses `roundf()` instead of `round()`.
+
+- There is now a method that allows "bulk" updates to YGLayout.
+```objc
+[view configureLayoutWithBlock:^(YGLayout *layout) {
+  layout.isEnabled = YES;
+  layout.width = 50;
+  layout.height = 50;
+}];
+```
+
+```swift
+view.configureLayout { (layout) in
+  layout.isEnabled = true
+  layout.width = 50
+  layout.height = 50
+}
+```
