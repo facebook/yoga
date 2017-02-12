@@ -10,6 +10,8 @@
 #import "YGLayout.h"
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void (^YGLayoutConfigurationBlock)(YGLayout *);
 
 @interface UIView (Yoga)
@@ -24,6 +26,8 @@ typedef void (^YGLayoutConfigurationBlock)(YGLayout *);
  to your code. If you plan on making multiple changes to YGLayout, it's more performant
  to use this method, which uses a single objc_msgSend call.
  */ 
-- (void)configureLayoutWithBlock:(YGLayoutConfigurationBlock)block NS_SWIFT_NAME(configureLayout(:));
+- (void)configureLayoutWithBlock:(YGLayoutConfigurationBlock)block NS_SWIFT_NAME(configureLayout(block:));
 
 @end
+
+NS_ASSUME_NONNULL_END
