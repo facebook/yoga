@@ -389,7 +389,7 @@ function alignValue(e, value) {
 
 function pixelValue(e, value) {
   switch (value) {
-    case 'auto': return e.YGUndefined;
+    case 'auto': return e.YGAuto;
     case 'undefined': return e.YGUndefined;
     default: return value;
   }

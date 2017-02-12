@@ -65,6 +65,7 @@ NBIND_CLASS(Node)
 
     method(setMargin);
     method(setMarginPercent);
+    method(setMarginAuto);
 
     method(setOverflow);
     method(setDisplay);
@@ -77,8 +78,10 @@ NBIND_CLASS(Node)
 
     method(setWidth);
     method(setWidthPercent);
+    method(setWidthAuto);
     method(setHeight);
     method(setHeightPercent);
+    method(setHeightAuto);
 
     method(setMinWidth);
     method(setMinWidthPercent);

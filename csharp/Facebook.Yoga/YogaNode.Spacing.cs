@@ -226,6 +226,10 @@ namespace Facebook.Yoga
             {
                 Native.YGNodeStyleSetMarginPercent(_ygNode, edge, value.Value);
             }
+            else if (value.Unit == YogaUnit.Auto)
+            {
+                Native.YGNodeStyleSetMarginAuto(_ygNode, edge);
+            }
             else
             {
                 Native.YGNodeStyleSetMargin(_ygNode, edge, value.Value);

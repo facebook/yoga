@@ -14,5 +14,6 @@ namespace Facebook.Yoga
         Undefined,
         Pixel,
         Percent,
+        Auto,
     }
 }

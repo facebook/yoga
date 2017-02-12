@@ -17,6 +17,9 @@ function toCsUnitValue(value) {
   if (value.indexOf('%') >= 0){
     methodName = '.Percent()';
   }
+  if(value.indexOf('Auto') >= 0){
+    return 'YogaValue.Auto()';
+  }
   return toValueCs(value) + methodName;
 }
 
@@ -129,6 +132,8 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGPositionTypeRelative:{value:'YogaPositionType.Relative'},
 
   YGUndefined:{value:'YogaConstants.Undefined'},
+
+  YGAuto:{value:'YogaConstants.Auto'},
 
   YGDisplayFlex:{value:'YogaDisplay.Flex'},
   YGDisplayNone:{value:'YogaDisplay.None'},
