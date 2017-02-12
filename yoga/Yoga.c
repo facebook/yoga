@@ -271,6 +271,7 @@ static inline const YGValue *YGComputedEdgeValue(const YGValue edges[YGEdgeCount
 static inline float YGValueResolve(const YGValue *const value, const float parentSize) {
   switch (value->unit) {
     case YGUnitUndefined:
+    case YGUnitAuto:
       return YGUndefined;
     case YGUnitPixel:
       return value->value;
@@ -278,6 +279,10 @@ static inline float YGValueResolve(const YGValue *const value, const float paren
       return value->value * parentSize / 100.0f;
   }
   return YGUndefined;
+}
+
+static inline float YGValueResolveMargin(const YGValue *const value, const float parentSize) {
+  return value->unit == YGUnitAuto ? 0 : YGValueResolve(value, parentSize);
 }
 
 int32_t gNodeInstanceCount = 0;
@@ -544,7 +549,6 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
     }                                                                        \
   }
 
-  
 #define YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(type, name, paramName, instanceName)            \
   void YGNodeStyleSet##name(const YGNodeRef node, const YGEdge edge, const float paramName) { \
     if (node->style.instanceName[edge].value != paramName ||                                  \
@@ -635,6 +639,7 @@ YG_NODE_STYLE_PROPERTY_SETTER_IMPL(float, FlexShrink, flexShrink, flexShrink);
 YG_NODE_STYLE_PROPERTY_SETTER_UNIT_IMPL(float, FlexBasis, flexBasis, flexBasis);
 
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Position, position, position);
+YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Margin, margin, margin);
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_AUTO_IMPL(YGValue, Margin, margin);
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Padding, padding, padding);
 YG_NODE_STYLE_EDGE_PROPERTY_IMPL(float, Border, border, border);
@@ -952,22 +957,22 @@ static inline float YGNodeLeadingMargin(const YGNodeRef node,
                                         const YGFlexDirection axis,
                                         const float widthSize) {
   if (YGFlexDirectionIsRow(axis) && node->style.margin[YGEdgeStart].unit != YGUnitUndefined) {
-    return YGValueResolve(&node->style.margin[YGEdgeStart], widthSize);
+    return YGValueResolveMargin(&node->style.margin[YGEdgeStart], widthSize);
   }
 
-  return YGValueResolve(YGComputedEdgeValue(node->style.margin, leading[axis], &YGValueZero),
-                        widthSize);
+  return YGValueResolveMargin(YGComputedEdgeValue(node->style.margin, leading[axis], &YGValueZero),
+                              widthSize);
 }
 
 static float YGNodeTrailingMargin(const YGNodeRef node,
                                   const YGFlexDirection axis,
                                   const float widthSize) {
   if (YGFlexDirectionIsRow(axis) && node->style.margin[YGEdgeEnd].unit != YGUnitUndefined) {
-    return YGValueResolve(&node->style.margin[YGEdgeEnd], widthSize);
+    return YGValueResolveMargin(&node->style.margin[YGEdgeEnd], widthSize);
   }
 
-  return YGValueResolve(YGComputedEdgeValue(node->style.margin, trailing[axis], &YGValueZero),
-                        widthSize);
+  return YGValueResolveMargin(YGComputedEdgeValue(node->style.margin, trailing[axis], &YGValueZero),
+                              widthSize);
 }
 
 static float YGNodeLeadingPadding(const YGNodeRef node,
@@ -2559,8 +2564,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
             mainDim += betweenMainDim + YGNodeDimWithMargin(child, mainAxis, availableInnerWidth);
 
             if (YGNodeIsStyleDimDefined(child, crossAxis, availableInnerCrossDim) ||
-                child->measure != NULL ||
-                !isNodeFlexWrap) {
+                child->measure != NULL || !isNodeFlexWrap) {
               // The cross dimension is the max of the elements dimension since
               // there
               // can only be one element in that cross dimension.
