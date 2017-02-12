@@ -21,3 +21,7 @@ view.yoga.margin = 10
 view.yoga.marginTop // 0
 view.yoga.marginLeft // 0
 ```
+
+### Enhancements
+
+- Pixel Rounding now uses `roundf()` instead of `round()`.

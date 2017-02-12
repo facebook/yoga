@@ -353,7 +353,7 @@ static CGFloat YGRoundPixelValue(CGFloat value)
     scale = [UIScreen mainScreen].scale;
   });
 
-  return round(value * scale) / scale;
+  return roundf(value * scale) / scale;
 }
 
 static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
