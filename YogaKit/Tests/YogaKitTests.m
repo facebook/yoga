@@ -34,7 +34,7 @@
   }];
 
   XCTAssertTrue(view.yoga.isEnabled);
-  XCTAssertEquals(view.yoga.width, 25);
+  XCTAssertEqual(view.yoga.width, 25);
 }
 
 - (void)testNodesAreDeallocedWithSingleView
