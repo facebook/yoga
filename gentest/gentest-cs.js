@@ -96,6 +96,8 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignFlexEnd:{value:'YogaAlign.FlexEnd'},
   YGAlignFlexStart:{value:'YogaAlign.FlexStart'},
   YGAlignStretch:{value:'YogaAlign.Stretch'},
+  YGAlignSpaceBetween:{value:'YogaAlign.SpaceBetween'},
+  YGAlignSpaceAround:{value:'YogaAlign.SpaceAround'},
   YGAlignBaseline:{value:'YogaAlign.Baseline'},
 
   YGDirectionInherit:{value:'YogaDirection.Inherit'},

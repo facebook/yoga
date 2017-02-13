@@ -89,9 +89,10 @@
 @property (nonatomic, readonly, assign) YGDirection resolvedDirection;
 
 /**
- Perform a layout calculation and update the frames of the views in the hierarchy with the results
+ Perform a layout calculation and update the frames of the views in the hierarchy with the results.
+ If the origin is not preserved, the root view's layout results will applied from {0,0}.
  */
-- (void)applyLayout NS_SWIFT_NAME(applyLayout());
+- (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin NS_SWIFT_NAME(applyLayout(preservingOrigin:));
 
 /**
  Returns the size of the view if no constraints were given. This could equivalent to calling [self
@@ -109,6 +110,12 @@
  Yoga's layout.
  */
 @property (nonatomic, readonly, assign) BOOL isLeaf;
+
+/**
+ Return's a BOOL indicating if a view is dirty. When a node is dirty
+ it usually indicates that it will be remeasured on the next layout pass.
+ */
+@property (nonatomic, readonly, assign) BOOL isDirty;
 
 /**
  Mark that a view's layout needs to be recalculated. Only works for leaf views.

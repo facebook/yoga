@@ -10,33 +10,76 @@ osx_image: xcode8.2
 language: cpp
 compiler: clang
 
+env:
+  - TARGET=c
+  - TARGET=java
+  - TARGET=net
+  - TARGET=ios
+  - TARGET=js
+
 before_install:
   - brew update
   - brew tap facebook/fb
   - brew install buck
-  - brew cask install java
-  - brew outdated xctool || brew upgrade xctool
-  - brew install mono
 
-  - export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-  - export PATH=$JAVA_HOME/bin:$PATH
+  # Java
+  - |
+    if [[ $TARGET = "java" ]]; then
+      brew cask install java;
+      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
+      export PATH=$JAVA_HOME/bin:$PATH;
+    fi
 
-install:
-  - cd javascript
-  - npm install
-  - cd $TRAVIS_BUILD_DIR
+  # .NET
+  - |
+    if [[ $TARGET = "net" ]]; then
+      brew install mono;
+    fi
+
+  # iOS
+  - |
+    if [[ $TARGET = "ios" ]]; then
+      brew upgrade xctool;
+    fi
+
+  # JavaScript
+  - |
+    if [[ $TARGET = "js" ]]; then
+      cd javascript;
+      npm install;
+    fi
 
 script:
-  - buck test //:yoga
-  - buck test //java:java
-  - buck test //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64
-  - sh csharp/tests/Facebook.Yoga/test_macos.sh
+    # C
+    - |
+      if [[ $TARGET = "c" ]]; then
+        buck test --verbose 0 //:yoga;
+        buck run --verbose 0 //benchmark:benchmark;
+        git checkout HEAD^;
+        buck run --verbose 0 //benchmark:benchmark;
+      fi
 
-  - cd javascript
-  - npm run test:all
-  - npm run bench
-  - cd $TRAVIS_BUILD_DIR
+    # Java
+    - |
+      if [[ $TARGET = "java" ]]; then
+        buck test --verbose 0 //java:java;
+      fi
 
-  - buck run //benchmark:benchmark
-  - git checkout HEAD^
-  - buck run //benchmark:benchmark
+    # .NET
+    - |
+      if [[ $TARGET = "net" ]]; then
+        sh csharp/tests/Facebook.Yoga/test_macos.sh;
+      fi
+
+    # iOS
+    - |
+      if [[ $TARGET = "ios" ]]; then
+        buck test --verbose 0 //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64;
+      fi
+
+    # JavaScript
+    - |
+      if [[ $TARGET = "js" ]]; then
+        npm run test:all;
+        npm run bench;
+      fi

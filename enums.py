@@ -47,6 +47,8 @@ ENUMS = {
         'FlexEnd',
         'Stretch',
         'Baseline',
+        'SpaceBetween',
+        'SpaceAround',
     ],
     'PositionType': [
         'Relative',

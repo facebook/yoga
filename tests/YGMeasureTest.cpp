@@ -123,7 +123,7 @@ TEST(YogaTest, dont_measure_when_min_equals_max_percentages) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, dont_measure_when_min_equals_max_mixed) {
+TEST(YogaTest, dont_measure_when_min_equals_max_mixed_width_percent) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetWidth(root, 100);
@@ -151,7 +151,7 @@ TEST(YogaTest, dont_measure_when_min_equals_max_mixed) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, dont_measure_when_min_equals_max_mixed_2) {
+TEST(YogaTest, dont_measure_when_min_equals_max_mixed_height_percent) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetWidth(root, 100);
