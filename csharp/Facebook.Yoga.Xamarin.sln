@@ -23,7 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Android.Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuspec", "nuspec", "{2C3685DB-91B9-4207-9446-1C513DB36978}"
 	ProjectSection(SolutionItems) = preProject
-		nuget\Facebook.Yoga.Xamarin.nuspec = nuget\Facebook.Yoga.Xamarin.nuspec
+		nuget\Facebook.Yoga.dll.config = nuget\Facebook.Yoga.dll.config
+		nuget\Facebook.Yoga.nuspec = nuget\Facebook.Yoga.nuspec
+		nuget\Facebook.Yoga.OSX.targets = nuget\Facebook.Yoga.OSX.targets
+		nuget\Facebook.Yoga.targets = nuget\Facebook.Yoga.targets
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Mac", "Mac\Facebook.Yoga.Mac.csproj", "{19A1C7D7-C9CC-476A-B604-DF6A3DE1BA71}"
