@@ -9,6 +9,7 @@ os: osx
 osx_image: xcode8.2
 language: cpp
 compiler: clang
+sudo: required
 
 before_install:
   - brew update
@@ -20,6 +21,8 @@ before_install:
 
   - export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
   - export PATH=$JAVA_HOME/bin:$PATH
+  - curl ipecho.net/plain; echo
+  - echo 'this is a test'
 
 install:
   - cd javascript
