@@ -120,11 +120,26 @@ YG_VALUE_EDGE_PROPERTY(lowercased_name, capitalized_name, capitalized_name, YGEd
   YGNodeFree(self.node);
 }
 
+- (BOOL)isDirty
+{
+  return YGNodeIsDirty(self.node);
+}
+
 - (void)markDirty
 {
-  if (self.isLeaf) {
-    YGNodeMarkDirty(self.node);
+  if (self.isDirty || !self.isLeaf) {
+    return;
   }
+
+  // Yoga is not happy if we try to mark a node as "dirty" before we have set
+  // the measure function. Since we already know that this is a leaf,
+  // this *should* be fine. Forgive me Hack Gods.
+  const YGNodeRef node = self.node;
+  if (YGNodeGetMeasureFunc(node) == NULL) {
+    YGNodeSetMeasureFunc(node, YGMeasureView);
+  }
+
+  YGNodeMarkDirty(node);
 }
 
 - (NSUInteger)numberOfChildren

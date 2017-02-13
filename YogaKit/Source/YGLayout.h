@@ -112,6 +112,12 @@
 @property (nonatomic, readonly, assign) BOOL isLeaf;
 
 /**
+ Return's a BOOL indicating if a view is dirty. When a node is dirty
+ it usually indicates that it will be remeasured on the next layout pass.
+ */
+@property (nonatomic, readonly, assign) BOOL isDirty;
+
+/**
  Mark that a view's layout needs to be recalculated. Only works for leaf views.
  */
 - (void)markDirty;

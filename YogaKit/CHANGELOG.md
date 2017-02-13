@@ -42,3 +42,5 @@ view.configureLayout { (layout) in
   layout.height = 50
 }
 ```
+
+- Added new `isDirty` property, and make `markDirty` a little more performant.
