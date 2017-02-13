@@ -18,6 +18,25 @@
 
 @implementation YogaKitTests
 
+- (void)testConfigureLayoutIsNoOpWithNilBlock
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  XCTAssertNoThrow([view configureLayoutWithBlock:nil]);
+}
+
+- (void)testConfigureLayoutBlockWorksWithValidBlock
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  [view configureLayoutWithBlock:^(YGLayout *layout){
+    XCTAssertNotNil(layout);
+    layout.isEnabled = YES;
+    layout.width = 25;
+  }];
+
+  XCTAssertTrue(view.yoga.isEnabled);
+  XCTAssertEqual(view.yoga.width, 25);
+}
+
 - (void)testNodesAreDeallocedWithSingleView
 {
   __weak YGLayout *layoutRef = nil;
