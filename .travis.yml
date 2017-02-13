@@ -11,11 +11,11 @@ language: cpp
 compiler: clang
 
 env:
-  - LANG=c
-  - LANG=java
-  - LANG=net
-  - LANG=ios
-  - LANG=js
+  - TARGET=c
+  - TARGET=java
+  - TARGET=net
+  - TARGET=ios
+  - TARGET=js
 
 before_install:
   - brew update
@@ -24,53 +24,62 @@ before_install:
 
   # Java
   - |
-    [[ $LANG = "java" ]] &&
-    brew cask install java &&
-    export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) &&
-    export PATH=$JAVA_HOME/bin:$PATH
+    if [[ $TARGET = "java" ]]; then
+      brew cask install java;
+      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
+      export PATH=$JAVA_HOME/bin:$PATH;
+    fi
 
   # .NET
   - |
-    [[ $LANG = "net" ]] &&
-    brew install mono
+    if [[ $TARGET = "net" ]]; then
+      brew install mono;
+    fi
 
   # iOS
   - |
-    [[ $LANG = "ios" ]] &&
-    brew upgrade xctool
+    if [[ $TARGET = "ios" ]]; then
+      brew upgrade xctool;
+    fi
 
   # JavaScript
   - |
-    [[ $LANG = "js" ]] &&
-    cd javascript &&
-    npm install
+    if [[ $TARGET = "js" ]]; then
+      cd javascript;
+      npm install;
+    fi
 
 script:
     # C
     - |
-      [[ $LANG = "c" ]] &&
-      buck test //:yoga &&
-      buck run //benchmark:benchmark &&
-      git checkout HEAD^ &&
-      buck run //benchmark:benchmark
+      if [[ $TARGET = "c" ]]; then
+        buck test --verbose 0 //:yoga;
+        buck run --verbose 0 //benchmark:benchmark;
+        git checkout HEAD^;
+        buck run --verbose 0 //benchmark:benchmark;
+      fi
 
     # Java
     - |
-      [[ $LANG = "java" ]] &&
-      buck test //java:java
+      if [[ $TARGET = "java" ]]; then
+        buck test --verbose 0 //java:java;
+      fi
 
     # .NET
     - |
-      [[ $LANG = "net" ]] &&
-      sh csharp/tests/Facebook.Yoga/test_macos.sh
+      if [[ $TARGET = "net" ]]; then
+        sh csharp/tests/Facebook.Yoga/test_macos.sh;
+      fi
 
     # iOS
     - |
-      [[ $LANG = "ios" ]] &&
-      buck test //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64
+      if [[ $TARGET = "ios" ]]; then
+        buck test --verbose 0 //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64;
+      fi
 
     # JavaScript
     - |
-      [[ $LANG = "js" ]] &&
-      npm run test:all &&
-      npm run bench
+      if [[ $TARGET = "js" ]]; then
+        npm run test:all;
+        npm run bench;
+      fi
