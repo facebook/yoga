@@ -1876,7 +1876,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   const YGFlexDirection crossAxis = YGFlexDirectionCross(mainAxis, direction);
   const bool isMainAxisRow = YGFlexDirectionIsRow(mainAxis);
   const YGJustify justifyContent = node->style.justifyContent;
-  const bool isNodeFlexWrap = node->style.flexWrap == YGWrapWrap;
+  const bool isNodeFlexWrap = node->style.flexWrap != YGWrapNoWrap;
 
   const float mainAxisParentSize = isMainAxisRow ? parentWidth : parentHeight;
   const float crossAxisParentSize = isMainAxisRow ? parentHeight : parentWidth;
@@ -2859,6 +2859,17 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                                                    totalLineCrossDim + paddingAndBorderAxisCross,
                                                    crossAxisParentSize)),
               paddingAndBorderAxisCross);
+  }
+
+  if (performLayout && lineCount > 1 && node->style.flexWrap == YGWrapWrapReverse) {
+    for (uint32_t i = 0; i < YGNodeGetChildCount(node); i++) {
+      const YGNodeRef child = YGNodeGetChild(node, i);
+      if (child->style.positionType == YGPositionTypeRelative) {
+        child->layout.position[pos[crossAxis]] = node->layout.measuredDimensions[dim[crossAxis]] -
+                                                 child->layout.position[pos[crossAxis]] -
+                                                 child->layout.measuredDimensions[dim[crossAxis]];
+      }
+    }
   }
 
   if (performLayout) {

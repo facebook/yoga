@@ -61,6 +61,7 @@ ENUMS = {
     'Wrap': [
         'NoWrap',
         'Wrap',
+        'WrapReverse',
     ],
     'MeasureMode': [
         'Undefined',

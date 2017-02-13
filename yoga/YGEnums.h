@@ -123,10 +123,11 @@ typedef YG_ENUM_BEGIN(YGUnit) {
   YGUnitPercent,
 } YG_ENUM_END(YGUnit);
 
-#define YGWrapCount 2
+#define YGWrapCount 3
 typedef YG_ENUM_BEGIN(YGWrap) {
   YGWrapNoWrap,
   YGWrapWrap,
+  YGWrapWrapReverse,
 } YG_ENUM_END(YGWrap);
 
 YG_EXTERN_C_END

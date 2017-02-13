@@ -91,8 +91,9 @@ module.exports = {
   UNIT_PIXEL: 1,
   UNIT_PERCENT: 2,
 
-  WRAP_COUNT: 2,
+  WRAP_COUNT: 3,
   WRAP_NO_WRAP: 0,
   WRAP_WRAP: 1,
+  WRAP_WRAP_REVERSE: 2,
 
 };
