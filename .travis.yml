@@ -10,33 +10,49 @@ osx_image: xcode8.2
 language: cpp
 compiler: clang
 
+env:
+  - LANG=c
+  - LANG=java
+  - LANG=net
+  - LANG=ios
+  - LANG=js
+
 before_install:
   - brew update
   - brew tap facebook/fb
   - brew install buck
-  - brew cask install java
-  - brew outdated xctool || brew upgrade xctool
-  - brew install mono
 
-  - export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-  - export PATH=$JAVA_HOME/bin:$PATH
+  # Java
+  - [[ $LANG = "java" ]] && brew cask install java
+  - [[ $LANG = "java" ]] && export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+  - [[ $LANG = "java" ]] && export PATH=$JAVA_HOME/bin:$PATH
 
-install:
-  - cd javascript
-  - npm install
-  - cd $TRAVIS_BUILD_DIR
+  # .NET
+  - [[ $LANG = "net" ]] && brew install mono
 
-script:
-  - buck test //:yoga
-  - buck test //java:java
-  - buck test //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64
-  - sh csharp/tests/Facebook.Yoga/test_macos.sh
+  # iOS
+  - [[ $LANG = "ios" ]] && brew outdated xctool || brew upgrade xctool
 
-  - cd javascript
-  - npm run test:all
-  - npm run bench
-  - cd $TRAVIS_BUILD_DIR
+  # JavaScript
+  - [[ $LANG = "js" ]] && cd javascript
+  - [[ $LANG = "js" ]] && npm install
 
-  - buck run //benchmark:benchmark
-  - git checkout HEAD^
-  - buck run //benchmark:benchmark
+- script:
+    # C
+    - [[ $LANG = "c" ]] && buck test //:yoga
+    - [[ $LANG = "c" ]] && buck run //benchmark:benchmark
+    - [[ $LANG = "c" ]] && git checkout HEAD^
+    - [[ $LANG = "c" ]] && buck run //benchmark:benchmark
+
+    # Java
+    - [[ $LANG = "java" ]] && buck test //java:java
+
+    # .NET
+    - [[ $LANG = "net" ]] && sh csharp/tests/Facebook.Yoga/test_macos.sh
+
+    # iOS
+    - [[ $LANG = "ios" ]] && buck test //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64
+
+    # JavaScript
+    - [[ $LANG = "js" ]] && npm run test:all
+    - [[ $LANG = "js" ]] && npm run bench
