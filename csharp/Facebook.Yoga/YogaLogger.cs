@@ -23,6 +23,7 @@ namespace Facebook.Yoga
 
         private static bool _initialized;
 
+        public static Func _loggerInternal = LoggerInternal;
         public static Func Logger = null;
 
 #if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
@@ -45,7 +46,7 @@ namespace Facebook.Yoga
         {
             if (!_initialized)
             {
-                Native.YGInteropSetLogger(LoggerInternal);
+                Native.YGInteropSetLogger(_loggerInternal);
                 _initialized = true;
             }
         }
