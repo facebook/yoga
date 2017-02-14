@@ -1,3 +1,7 @@
+with allow_unsafe_import():
+  import os.path
+def isdir(filename):
+  return os.path.isdir(filename)
 
 YOGA_ROOT = '//...'
 JAVA_TARGET = '//java:java'

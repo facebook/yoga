@@ -35,7 +35,7 @@ cxx_library(
   visibility = ['PUBLIC'],
 )
 
-if py_sdk.os.path.isdir('/Applications/Xcode.app'):
+if isdir('/Applications/Xcode.app'):
   yoganet_ios_srcs = []
   for arch in [
     'iphonesimulator-x86_64', 'iphonesimulator-i386', 'iphoneos-arm64', 'iphoneos-armv7'
