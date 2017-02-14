@@ -39,7 +39,7 @@ before_install:
   # iOS
   - |
     if [[ $TARGET = "ios" ]]; then
-      brew upgrade xctool;
+      brew outdated xctool || brew upgrade xctool;
     fi
 
   # JavaScript
@@ -53,9 +53,9 @@ script:
     # C
     - |
       if [[ $TARGET = "c" ]]; then
-        buck test --verbose 0 //:yoga;
-        buck run --verbose 0 //benchmark:benchmark;
-        git checkout HEAD^;
+        buck test --verbose 0 //:yoga &&
+        buck run --verbose 0 //benchmark:benchmark &&
+        git checkout HEAD^ &&
         buck run --verbose 0 //benchmark:benchmark;
       fi
 
@@ -80,6 +80,6 @@ script:
     # JavaScript
     - |
       if [[ $TARGET = "js" ]]; then
-        npm run test:all;
+        npm run test:all &&
         npm run bench;
       fi
