@@ -6,6 +6,7 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 include_defs('//YOGA_DEFS')
+include_defs('xplat//configurations/buck/py_sdk')
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c++11']
 
@@ -34,10 +35,7 @@ cxx_library(
   visibility = ['PUBLIC'],
 )
 
-with allow_unsafe_import():
-  import os
-
-if os.path.isdir('/Applications/Xcode.app'):
+if py_sdk.os.path.isdir('/Applications/Xcode.app'):
   yoganet_ios_srcs = []
   for arch in [
     'iphonesimulator-x86_64', 'iphonesimulator-i386', 'iphoneos-arm64', 'iphoneos-armv7'
