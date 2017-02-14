@@ -1706,9 +1706,6 @@ static void YGZeroOutLayoutRecursivly(const YGNodeRef node) {
 //  * The 'visibility' property is always assumed to be 'visible'. Values of
 //  'collapse'
 //    and 'hidden' are not supported.
-//  * The 'wrap' property supports only 'nowrap' (which is the default) or
-//  'wrap'. The
-//    rarely-used 'wrap-reverse' is not supported.
 //  * Rather than allowing arbitrary combinations of flexGrow, flexShrink and
 //    flexBasis, this algorithm supports only the three most common
 //    combinations:
@@ -2864,7 +2861,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
               paddingAndBorderAxisCross);
   }
 
-  // As we only wrapped in normal direction yet, we need to reverse the positions on wrap-reverse
+  // As we only wrapped in normal direction yet, we need to reverse the positions on wrap-reverse.
   if (performLayout && node->style.flexWrap == YGWrapWrapReverse) {
     for (uint32_t i = 0; i < childCount; i++) {
       const YGNodeRef child = YGNodeGetChild(node, i);
