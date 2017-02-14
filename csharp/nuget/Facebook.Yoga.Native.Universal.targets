@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Condition=" (Exists('packages.config') Or Exists('packages.$(MSBuildProjectName).config')) And '$(Platform)' == 'AnyCPU'">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\uap-x86\native\*">
+      <Link>x86\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\uap-x64\native\*">
+      <Link>x64\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" (Exists('packages.config') Or Exists('packages.$(MSBuildProjectName).config')) And '$(Platform)' == 'x86'">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\uap-x86\native\*">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" (Exists('packages.config') Or Exists('packages.$(MSBuildProjectName).config')) And '$(Platform)' == 'x64'">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\uap-x64\native\*">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" (Exists('packages.config') Or Exists('packages.$(MSBuildProjectName).config')) And '$(Platform)' == 'ARM'">
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\uap-arm\native\*">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>  
+</Project>
