@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 
 import com.facebook.samples.yoga.R;
 import com.facebook.soloader.SoLoader;
+import com.facebook.yoga.android.YogaViewLayoutFactory;
 
 /**
  * A (non-interactive) splash screen.  Displays for two seconds before calling the main activity.

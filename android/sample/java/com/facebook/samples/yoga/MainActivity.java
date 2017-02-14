@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 
 import com.facebook.samples.yoga.R;
+import com.facebook.yoga.android.YogaViewLayoutFactory;
 
 /**
  * An activity to show off Yoga in Android.  This activity shows a simple layout (defined in

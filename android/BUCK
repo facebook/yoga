@@ -7,17 +7,30 @@
 
 include_defs('//YOGA_DEFS')
 
-android_library(
-  name = 'yoga',
-  srcs = glob(['**/*.java']),
+android_aar(
+  name = 'android',
+  manifest_skeleton = 'AndroidManifest.xml',
   deps = [
     ANDROID_JAVA_TARGET,
-    ANDROID_SAMPLE_RES_TARGET,
-    ANDROID_SUPPORT_TARGET,
-    APPCOMPAT_TARGET,
-    SOLOADER_TARGET,
+    ANDROID_RES_TARGET,
+    INFER_ANNOTATIONS_TARGET,
+    JAVA_TARGET,
+    PROGRUARD_ANNOTATIONS_TARGET,
   ],
   visibility = [
     'PUBLIC',
-  ]
+  ],
+)
+
+android_resource(
+  name = 'res',
+  res = 'src/main/res',
+  package = 'com.facebook.yoga.android',
+  visibility = [
+    'PUBLIC',
+  ],
+)
+
+project_config(
+  src_target = ':android',
 )

@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-package com.facebook.samples.yoga;
+package com.facebook.yoga.android;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.samples.yoga.R;
+import com.facebook.yoga.android.R;
 import com.facebook.yoga.YogaAlign;
 import com.facebook.yoga.YogaConstants;
 import com.facebook.yoga.YogaDirection;
