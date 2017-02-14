@@ -2345,8 +2345,8 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
         if (!YGFloatIsUndefined(availableInnerCrossDim) &&
             !YGNodeIsStyleDimDefined(currentRelativeChild, crossAxis, availableInnerCrossDim) &&
-            heightMeasureMode == YGMeasureModeExactly &&
-              !(isNodeFlexWrap && flexBasisOverflows) &&
+            measureModeCrossDim == YGMeasureModeExactly &&
+            !(isNodeFlexWrap && flexBasisOverflows) &&
             YGNodeAlignItem(node, currentRelativeChild) == YGAlignStretch) {
           childCrossSize = availableInnerCrossDim;
           childCrossMeasureMode = YGMeasureModeExactly;
@@ -2612,33 +2612,29 @@ static void YGNodelayoutImpl(const YGNodeRef node,
           if (alignItem == YGAlignStretch &&
               child->style.margin[leading[crossAxis]].unit != YGUnitAuto &&
               child->style.margin[trailing[crossAxis]].unit != YGUnitAuto) {
-              
-            const bool isCrossSizeDefined =
-                YGNodeIsStyleDimDefined(child, crossAxis, availableInnerCrossDim);
-
-            float childMainSize = child->layout.measuredDimensions[dim[mainAxis]];
-            float childCrossSize =
-                !YGFloatIsUndefined(child->style.aspectRatio)
-                    ? (YGNodeMarginForAxis(child, crossAxis, availableInnerWidth) +
-                       childMainSize / child->style.aspectRatio)
-                    : crossDim;
-
-            childMainSize += YGNodeMarginForAxis(child, mainAxis, availableInnerWidth);
-
-            YGMeasureMode childMainMeasureMode = YGMeasureModeExactly;
-            YGMeasureMode childCrossMeasureMode = YGMeasureModeExactly;
-            YGConstrainMaxSizeForMode(YGValueResolve(&child->style.maxDimensions[dim[mainAxis]],
-                                                     availableInnerMainDim),
-                                      &childMainMeasureMode,
-                                      &childMainSize);
-            YGConstrainMaxSizeForMode(YGValueResolve(&child->style.maxDimensions[dim[crossAxis]],
-                                                     availableInnerCrossDim),
-                                      &childCrossMeasureMode,
-                                      &childCrossSize);
-
             // If the child defines a definite size for its cross axis, there's
             // no need to stretch.
-            if (!isCrossSizeDefined) {
+            if (!YGNodeIsStyleDimDefined(child, crossAxis, availableInnerCrossDim)) {
+              float childMainSize = child->layout.measuredDimensions[dim[mainAxis]];
+              float childCrossSize =
+                  !YGFloatIsUndefined(child->style.aspectRatio)
+                      ? (YGNodeMarginForAxis(child, crossAxis, availableInnerWidth) +
+                         childMainSize / child->style.aspectRatio)
+                      : crossDim;
+
+              childMainSize += YGNodeMarginForAxis(child, mainAxis, availableInnerWidth);
+
+              YGMeasureMode childMainMeasureMode = YGMeasureModeExactly;
+              YGMeasureMode childCrossMeasureMode = YGMeasureModeExactly;
+              YGConstrainMaxSizeForMode(YGValueResolve(&child->style.maxDimensions[dim[mainAxis]],
+                                                       availableInnerMainDim),
+                                        &childMainMeasureMode,
+                                        &childMainSize);
+              YGConstrainMaxSizeForMode(YGValueResolve(&child->style.maxDimensions[dim[crossAxis]],
+                                                       availableInnerCrossDim),
+                                        &childCrossMeasureMode,
+                                        &childCrossSize);
+
               const float childWidth = isMainAxisRow ? childMainSize : childCrossSize;
               const float childHeight = !isMainAxisRow ? childMainSize : childCrossSize;
 
@@ -2731,7 +2727,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
     uint32_t endIndex = 0;
     for (uint32_t i = 0; i < lineCount; i++) {
-      uint32_t startIndex = endIndex;
+      const uint32_t startIndex = endIndex;
       uint32_t ii;
 
       // compute the line's height and find the endIndex
