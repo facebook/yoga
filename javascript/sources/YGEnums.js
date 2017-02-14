@@ -88,7 +88,7 @@ module.exports = {
 
   UNIT_COUNT: 4,
   UNIT_UNDEFINED: 0,
-  UNIT_PIXEL: 1,
+  UNIT_POINT: 1,
   UNIT_PERCENT: 2,
   UNIT_AUTO: 3,
 

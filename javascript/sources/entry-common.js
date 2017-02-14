@@ -102,7 +102,7 @@ module.exports = function (bind, lib) {
 
             switch (this.unit) {
 
-                case constants.UNIT_PIXEL:
+                case constants.UNIT_POINT:
                     return `${this.value}`;
 
                 case constants.UNIT_PERCENT:
@@ -129,7 +129,7 @@ module.exports = function (bind, lib) {
 
     for (let fnName of [ `setPosition`, `setMargin`, `setFlexBasis`, `setWidth`, `setHeight`, `setMinWidth`, `setMinHeight`, `setMaxWidth`, `setMaxHeight`, `setPadding` ]) {
 
-        let methods = { [constants.UNIT_PIXEL]: lib.Node.prototype[fnName], [constants.UNIT_PERCENT]: lib.Node.prototype[`${fnName}Percent`] };
+        let methods = { [constants.UNIT_POINT]: lib.Node.prototype[fnName], [constants.UNIT_PERCENT]: lib.Node.prototype[`${fnName}Percent`] };
 
         if (Object.keys(methods).some(method => methods[method] == null))
             throw new Error(`Assertion failed; some unit derivates of ${fnName} seem missing`);
@@ -149,7 +149,7 @@ module.exports = function (bind, lib) {
 
             } else {
 
-                unit = typeof value === `string` && value.endsWith(`%`) ? constants.UNIT_PERCENT : constants.UNIT_PIXEL;
+                unit = typeof value === `string` && value.endsWith(`%`) ? constants.UNIT_PERCENT : constants.UNIT_POINT;
                 asNumber = parseFloat(value);
 
             }

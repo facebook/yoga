@@ -18,9 +18,9 @@ public class YogaValueTest {
   @Test
   public void testEquals() {
     assertEquals(new YogaValue(0, YogaUnit.UNDEFINED), new YogaValue(0, YogaUnit.UNDEFINED));
-    assertEquals(new YogaValue(0, YogaUnit.PIXEL), new YogaValue(0, YogaUnit.PIXEL));
+    assertEquals(new YogaValue(0, YogaUnit.POINT), new YogaValue(0, YogaUnit.POINT));
     assertEquals(new YogaValue(0, YogaUnit.PERCENT), new YogaValue(0, YogaUnit.PERCENT));
     assertEquals(new YogaValue(0, YogaUnit.UNDEFINED), new YogaValue(1, YogaUnit.UNDEFINED));
-    assertEquals(new YogaValue(Float.NaN, YogaUnit.PIXEL), new YogaValue(Float.NaN, YogaUnit.PIXEL));
+    assertEquals(new YogaValue(Float.NaN, YogaUnit.POINT), new YogaValue(Float.NaN, YogaUnit.POINT));
   }
 }

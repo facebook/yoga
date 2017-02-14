@@ -201,105 +201,105 @@ function setupTestTree(e, parent, node, genericNode, nodeName, parentName, index
           e.YGNodeStyleSetFlexShrink(nodeName, node.style[style]);
           break;
         case 'flex-basis':
-          e.YGNodeStyleSetFlexBasis(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetFlexBasis(nodeName, pointValue(e, node.style[style]));
           break;
         case 'left':
           if (genericNode.rawStyle.indexOf('start:') >= 0) {
-            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeStart, pointValue(e, node.style[style]));
           } else {
-            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeLeft, pointValue(e, node.style[style]));
           }
           break;
         case 'top':
-          e.YGNodeStyleSetPosition(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetPosition(nodeName, e.YGEdgeTop, pointValue(e, node.style[style]));
           break;
         case 'right':
           if (genericNode.rawStyle.indexOf('end:') >= 0) {
-            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeEnd, pointValue(e, node.style[style]));
           } else {
-            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPosition(nodeName, e.YGEdgeRight, pointValue(e, node.style[style]));
           }
           break;
         case 'bottom':
-          e.YGNodeStyleSetPosition(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetPosition(nodeName, e.YGEdgeBottom, pointValue(e, node.style[style]));
           break;
         case 'margin-left':
           if (genericNode.rawStyle.indexOf('margin-start:') >= 0) {
-            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeStart, pointValue(e, node.style[style]));
           } else {
-            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeLeft, pointValue(e, node.style[style]));
           }
           break;
         case 'margin-top':
-          e.YGNodeStyleSetMargin(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMargin(nodeName, e.YGEdgeTop, pointValue(e, node.style[style]));
           break;
         case 'margin-right':
           if (genericNode.rawStyle.indexOf('margin-end:') >= 0) {
-            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeEnd, pointValue(e, node.style[style]));
           } else {
-            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetMargin(nodeName, e.YGEdgeRight, pointValue(e, node.style[style]));
           }
           break;
         case 'margin-bottom':
-          e.YGNodeStyleSetMargin(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMargin(nodeName, e.YGEdgeBottom, pointValue(e, node.style[style]));
           break;
         case 'padding-left':
           if (genericNode.rawStyle.indexOf('padding-start:') >= 0) {
-            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeStart, pointValue(e, node.style[style]));
           } else {
-            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeLeft, pointValue(e, node.style[style]));
           }
           break;
         case 'padding-top':
-          e.YGNodeStyleSetPadding(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetPadding(nodeName, e.YGEdgeTop, pointValue(e, node.style[style]));
           break;
         case 'padding-right':
           if (genericNode.rawStyle.indexOf('padding-end:') >= 0) {
-            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeEnd, pointValue(e, node.style[style]));
           } else {
-            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetPadding(nodeName, e.YGEdgeRight, pointValue(e, node.style[style]));
           }
           break;
         case 'padding-bottom':
-          e.YGNodeStyleSetPadding(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetPadding(nodeName, e.YGEdgeBottom, pointValue(e, node.style[style]));
           break;
         case 'border-left-width':
           if (genericNode.rawStyle.indexOf('border-start-width:') >= 0) {
-            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeStart, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeStart, pointValue(e, node.style[style]));
           } else {
-            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeLeft, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeLeft, pointValue(e, node.style[style]));
           }
           break;
         case 'border-top-width':
-          e.YGNodeStyleSetBorder(nodeName, e.YGEdgeTop, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetBorder(nodeName, e.YGEdgeTop, pointValue(e, node.style[style]));
           break;
         case 'border-right-width':
           if (genericNode.rawStyle.indexOf('border-end-width:') >= 0) {
-            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeEnd, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeEnd, pointValue(e, node.style[style]));
           } else {
-            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeRight, pixelValue(e, node.style[style]));
+            e.YGNodeStyleSetBorder(nodeName, e.YGEdgeRight, pointValue(e, node.style[style]));
           }
           break;
         case 'border-bottom-width':
-          e.YGNodeStyleSetBorder(nodeName, e.YGEdgeBottom, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetBorder(nodeName, e.YGEdgeBottom, pointValue(e, node.style[style]));
           break;
         case 'width':
-          e.YGNodeStyleSetWidth(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetWidth(nodeName, pointValue(e, node.style[style]));
           break;
         case 'min-width':
-          e.YGNodeStyleSetMinWidth(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMinWidth(nodeName, pointValue(e, node.style[style]));
           break;
         case 'max-width':
-          e.YGNodeStyleSetMaxWidth(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMaxWidth(nodeName, pointValue(e, node.style[style]));
           break;
         case 'height':
-          e.YGNodeStyleSetHeight(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetHeight(nodeName, pointValue(e, node.style[style]));
           break;
         case 'min-height':
-          e.YGNodeStyleSetMinHeight(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMinHeight(nodeName, pointValue(e, node.style[style]));
           break;
         case 'max-height':
-          e.YGNodeStyleSetMaxHeight(nodeName, pixelValue(e, node.style[style]));
+          e.YGNodeStyleSetMaxHeight(nodeName, pointValue(e, node.style[style]));
           break;
         case 'display':
           e.YGNodeStyleSetDisplay(nodeName, displayValue(e, node.style[style]))
@@ -387,7 +387,7 @@ function alignValue(e, value) {
   }
 }
 
-function pixelValue(e, value) {
+function pointValue(e, value) {
   switch (value) {
     case 'auto': return e.YGAuto;
     case 'undefined': return e.YGUndefined;

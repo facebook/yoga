@@ -25,7 +25,7 @@
 - (CGFloat)lowercased_name                                      \
 {                                                               \
   YGValue value = YGNodeStyleGet##capitalized_name(self.node);  \
-  if (value.unit == YGUnitPixel) {                              \
+  if (value.unit == YGUnitPoint) {                              \
     return value.value;                                         \
   } else {                                                      \
     return YGUndefined;                                         \
@@ -57,7 +57,7 @@ YG_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
 - (CGFloat)objc_lowercased_name                                                                  \
 {                                                                                                \
   YGValue value = YGNodeStyleGet##c_name(self.node, edge);                                       \
-  if (value.unit == YGUnitPixel) {                                                               \
+  if (value.unit == YGUnitPoint) {                                                               \
     return value.value;                                                                          \
   } else {                                                                                       \
     return YGUndefined;                                                                          \
