@@ -63,3 +63,22 @@ id: home
     </div>
   </div>
 </div>
+
+<div class="gridBlock alternateColor">
+  <h3>Android</h3>
+  <div class="blockElement twoByGridBlock imageAlignSide">
+    <div class="blockContent layoutsample">
+      <div class="yoga sample" style="background-color: white; width: 500px; height: 300px; justify-content: stretch; flex-direction: column;">
+        <div class="yoga" style="background-color: #97dccf; flex: 1;"></div>
+        <div class="yoga" style="background-color: white; padding: 20px; flex-direction: row; align-items: center;">
+          <div class="yoga" style="background-color: #97dccf; height: 50px; width: 50px;"></div>
+          <div class="yoga" style="background-color: #303846; height: 25px; flex: 1; margin-left: 20px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="blockContent gistsample">
+      <script src="https://gist.github.com/rspencer01/0b3e467a58ab56a23f60579ea193189f.js"></script>
+    </div>
+  </div>
+</div>
+
