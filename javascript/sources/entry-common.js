@@ -107,6 +107,9 @@ module.exports = function (bind, lib) {
 
                 case constants.UNIT_PERCENT:
                     return `${this.value}%`;
+                
+                case constants.UNIT_AUTO:
+                    return `auto`;
 
                 default: {
                     return `${this.value}?`;

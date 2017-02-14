@@ -70,6 +70,15 @@ namespace Facebook.Yoga
             };
         }
 
+        public static YogaValue Auto()
+        {
+            return new YogaValue
+            {
+                value = 0f,
+                unit = YogaUnit.Auto
+            };
+        }
+
         public static YogaValue Percent(float value)
         {
             return new YogaValue

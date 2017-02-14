@@ -270,6 +270,10 @@ namespace Facebook.Yoga
                 {
                     Native.YGNodeStyleSetFlexBasisPercent(_ygNode, value.Value);
                 }
+                else if (value.Unit == YogaUnit.Auto)
+                {
+                    Native.YGNodeStyleSetFlexBasisAuto(_ygNode);
+                }
                 else
                 {
                     Native.YGNodeStyleSetFlexBasis(_ygNode, value.Value);
@@ -290,6 +294,10 @@ namespace Facebook.Yoga
                 {
                     Native.YGNodeStyleSetWidthPercent(_ygNode, value.Value);
                 }
+                else if (value.Unit == YogaUnit.Auto)
+                {
+                    Native.YGNodeStyleSetWidthAuto(_ygNode);
+                }
                 else
                 {
                     Native.YGNodeStyleSetWidth(_ygNode, value.Value);
@@ -309,6 +317,10 @@ namespace Facebook.Yoga
                 if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetHeightPercent(_ygNode, value.Value);
+                }
+                else if (value.Unit == YogaUnit.Auto)
+                {
+                    Native.YGNodeStyleSetHeightAuto(_ygNode);
                 }
                 else
                 {
