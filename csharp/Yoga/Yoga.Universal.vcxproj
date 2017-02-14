@@ -29,7 +29,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2EACF721-73B5-46AE-9775-4A8674D05A9C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>yoga</ProjectName>
+    <ProjectName>yoga.uwp</ProjectName>
     <RootNamespace>Yoga</RootNamespace>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
@@ -105,31 +105,37 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\Universal\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>obj\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <TargetName>yoga</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\Universal\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>obj\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <TargetName>yoga</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\Universal\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>obj\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <TargetName>yoga</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>bin\Universal\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>obj\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <TargetName>yoga</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>bin\Universal\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>obj\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <TargetName>yoga</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>bin\Universal\$(PlatformTarget)\$(Configuration)\</OutDir>
     <IntDir>obj\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <TargetName>yoga</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

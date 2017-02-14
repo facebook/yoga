@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native", "Native", "{51A8E8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NETStandard", "NETStandard", "{DCF7899B-A487-49C0-BCDE-DC088B6750C2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yoga", "..\Yoga\Yoga.Universal.vcxproj", "{2EACF721-73B5-46AE-9775-4A8674D05A9C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yoga.uwp", "..\Yoga\Yoga.Universal.vcxproj", "{2EACF721-73B5-46AE-9775-4A8674D05A9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{39A2FFDA-C093-4FA6-8143-45B5019E7DAC}"
 EndProject
