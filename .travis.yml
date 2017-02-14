@@ -39,7 +39,7 @@ before_install:
   # iOS
   - |
     if [[ $TARGET = "ios" ]]; then
-      brew upgrade xctool;
+      brew outdated xctool || brew upgrade xctool;
     fi
 
   # JavaScript
