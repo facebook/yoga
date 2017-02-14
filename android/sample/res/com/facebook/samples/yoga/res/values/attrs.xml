@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+  Copyright (c) 2014-present, Facebook, Inc.
+  All rights reserved.
+
+  This source code is licensed under the BSD-style license found in the
+  LICENSE file in the root directory of this source tree. An additional grant
+  of patent rights can be found in the PATENTS file in the same directory.
+-->
+
+<resources>
+  <declare-styleable name="yoga">
+
+    <attr name="align_content" format="enum">
+      <enum name="auto" value="0"/>
+      <enum name="flex-start" value="1"/>
+      <enum name="center" value="2"/>
+      <enum name="flex-end" value="3"/>
+      <enum name="stretch" value="4"/>
+      <enum name="baseline" value="5"/>
+    </attr>
+
+    <attr name="align_items" format="enum">
+      <enum name="auto" value="0"/>
+      <enum name="flex-start" value="1"/>
+      <enum name="center" value="2"/>
+      <enum name="flex-end" value="3"/>
+      <enum name="stretch" value="4"/>
+      <enum name="baseline" value="5"/>
+    </attr>
+
+    <attr name="align_self" format="enum">
+      <enum name="auto" value="0"/>
+      <enum name="flex-start" value="1"/>
+      <enum name="center" value="2"/>
+      <enum name="flex-end" value="3"/>
+      <enum name="stretch" value="4"/>
+      <enum name="baseline" value="5"/>
+    </attr>
+
+    <attr name="aspect_ratio" format="float"/>
+
+    <attr name="border_left" format="dimension"/>
+    <attr name="border_top" format="dimension"/>
+    <attr name="border_right" format="dimension"/>
+    <attr name="border_bottom" format="dimension"/>
+    <attr name="border_start" format="dimension"/>
+    <attr name="border_end" format="dimension"/>
+    <attr name="border_horizontal" format="dimension"/>
+    <attr name="border_vertical" format="dimension"/>
+    <attr name="border_all" format="dimension"/>
+
+    <attr name="direction" format="enum">
+      <enum name="inherit" value="0"/>
+      <enum name="ltr" value="1"/>
+      <enum name="rtl" value="2"/>
+    </attr>
+
+    <attr name="flex" format="float"/>
+
+    <attr name="flex_basis" format="float"/>
+
+    <attr name="flex_basis_percent" format="float"/>
+
+    <attr name="flex_direction" format="enum">
+      <enum name="column" value="0"/>
+      <enum name="column-reverse" value="1"/>
+      <enum name="row" value="2"/>
+      <enum name="row-reverse" value="3"/>
+    </attr>
+
+    <attr name="flex_grow" format="float"/>
+
+    <attr name="flex_shrink" format="float"/>
+
+    <!-- Height format not included as it is in the parent -->
+    <attr name="height"/>
+
+    <attr name="height_percent" format="float"/>
+
+    <attr name="justify_content" format="enum">
+      <enum name="flex-start" value="0"/>
+      <enum name="center" value="1"/>
+      <enum name="flex-end" value="2"/>
+      <enum name="space-between" value="3"/>
+      <enum name="space-around" value="4"/>
+    </attr>
+
+    <attr name="margin_left" format="dimension"/>
+    <attr name="margin_top" format="dimension"/>
+    <attr name="margin_right" format="dimension"/>
+    <attr name="margin_bottom" format="dimension"/>
+    <attr name="margin_start" format="dimension"/>
+    <attr name="margin_end" format="dimension"/>
+    <attr name="margin_horizontal" format="dimension"/>
+    <attr name="margin_vertical" format="dimension"/>
+    <attr name="margin_all" format="dimension"/>
+
+    <attr name="margin_percent_left" format="dimension"/>
+    <attr name="margin_percent_top" format="dimension"/>
+    <attr name="margin_percent_right" format="dimension"/>
+    <attr name="margin_percent_bottom" format="dimension"/>
+    <attr name="margin_percent_start" format="dimension"/>
+    <attr name="margin_percent_end" format="dimension"/>
+    <attr name="margin_percent_horizontal" format="dimension"/>
+    <attr name="margin_percent_vertical" format="dimension"/>
+    <attr name="margin_percent_all" format="dimension"/>
+
+    <attr name="max_height" format="dimension"/>
+
+    <attr name="max_height_percent" format="float"/>
+
+    <attr name="max_width" format="dimension"/>
+
+    <attr name="max_width_percent" format="float"/>
+
+    <attr name="min_height" format="dimension"/>
+
+    <attr name="min_height_percent" format="float"/>
+
+    <attr name="min_width" format="dimension"/>
+
+    <attr name="min_width_percent" format="float"/>
+
+    <attr name="overflow" format="enum">
+      <enum name="visible" value="0"/>
+      <enum name="hidden" value="1"/>
+      <enum name="scroll" value="2"/>
+    </attr>
+
+    <attr name="padding_left" format="dimension"/>
+    <attr name="padding_top" format="dimension"/>
+    <attr name="padding_right" format="dimension"/>
+    <attr name="padding_bottom" format="dimension"/>
+    <attr name="padding_start" format="dimension"/>
+    <attr name="padding_end" format="dimension"/>
+    <attr name="padding_horizontal" format="dimension"/>
+    <attr name="padding_vertical" format="dimension"/>
+    <attr name="padding_all" format="dimension"/>
+
+    <attr name="padding_percent_left" format="float"/>
+    <attr name="padding_percent_top" format="float"/>
+    <attr name="padding_percent_right" format="float"/>
+    <attr name="padding_percent_bottom" format="float"/>
+    <attr name="padding_percent_start" format="float"/>
+    <attr name="padding_percent_end" format="float"/>
+    <attr name="padding_percent_horizontal" format="float"/>
+    <attr name="padding_percent_vertical" format="float"/>
+    <attr name="padding_percent_all" format="float"/>
+
+    <attr name="position_left" format="dimension"/>
+    <attr name="position_top" format="dimension"/>
+    <attr name="position_right" format="dimension"/>
+    <attr name="position_bottom" format="dimension"/>
+    <attr name="position_start" format="dimension"/>
+    <attr name="position_end" format="dimension"/>
+    <attr name="position_horizontal" format="dimension"/>
+    <attr name="position_vertical" format="dimension"/>
+    <attr name="position_all" format="dimension"/>
+
+    <attr name="position_percent_left" format="float"/>
+    <attr name="position_percent_top" format="float"/>
+    <attr name="position_percent_right" format="float"/>
+    <attr name="position_percent_bottom" format="float"/>
+    <attr name="position_percent_start" format="float"/>
+    <attr name="position_percent_end" format="float"/>
+    <attr name="position_percent_horizontal" format="float"/>
+    <attr name="position_percent_vertical" format="float"/>
+    <attr name="position_percent_all" format="float"/>
+
+    <attr name="position_type" format="enum">
+      <enum name="relative" value="0"/>
+      <enum name="absolute" value="1"/>
+    </attr>
+
+    <attr name="width" format="dimension"/>
+
+    <attr name="width_percent" format="float"/>
+
+    <attr name="wrap" format="enum">
+      <enum name="no-wrap" value="0"/>
+      <enum name="wrap" value="1"/>
+    </attr>
+  </declare-styleable>
+</resources>
