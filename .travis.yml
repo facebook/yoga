@@ -16,6 +16,7 @@ env:
   - TARGET=net
   - TARGET=ios
   - TARGET=js
+  - TARGET=android
 
 before_install:
   - brew update
@@ -47,6 +48,15 @@ before_install:
     if [[ $TARGET = "js" ]]; then
       cd javascript;
       npm install;
+    fi
+
+  # Android
+  - |
+    if [[ $TARGET = "android" ]]; then
+      brew cask install java;
+      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
+      export PATH=$JAVA_HOME/bin:$PATH;
+      brew install android-sdk;
     fi
 
 script:
@@ -82,4 +92,10 @@ script:
       if [[ $TARGET = "js" ]]; then
         npm run test:all &&
         npm run bench;
+      fi
+
+    # Android
+    - |
+      if [[ $TARGET = "android" ]]; then
+        buck build --verbose 0 //android/sample:sample
       fi
