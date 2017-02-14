@@ -17,6 +17,15 @@ android_binary(
   ],
 )
 
+android_resource(
+  name = 'res',
+  res = 'res',
+  package = 'com.facebook.samples.yoga',
+  visibility = [
+    'PUBLIC',
+  ],
+)
+
 keystore(
     name='debug_keystore',
     store='debug.keystore',
