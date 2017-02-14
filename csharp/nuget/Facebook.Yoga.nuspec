@@ -42,8 +42,8 @@
     <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win-x64\lib\netstandard"/>
     <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win-x64\lib\netstandard"/>
     
-    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win-arm\lib\netstandard"/>
-    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win-arm\lib\netstandard"/>    
+    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win8-arm\lib\netstandard"/>
+    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win8-arm\lib\netstandard"/>    
 
     <!-- Native -->
     <file src="..\Yoga\bin\Universal\x86\Release\Yoga.dll" target="runtimes\win10-x86\native"/>
@@ -61,7 +61,7 @@
     <file src="..\Yoga\bin\x64\Release\Yoga.dll" target="runtimes\win-x64\native"/>
     <file src="..\Yoga\bin\x64\Release\Yoga.pdb" target="runtimes\win-x64\native"/>
 
-    <file src="..\Yoga\bin\ARM\Release\Yoga.dll" target="runtimes\win-arm\native"/>
-    <file src="..\Yoga\bin\ARM\Release\Yoga.pdb" target="runtimes\win-arm\native"/>
+    <file src="..\Yoga\bin\ARM\Release\Yoga.dll" target="runtimes\win8-arm\native"/>
+    <file src="..\Yoga\bin\ARM\Release\Yoga.pdb" target="runtimes\win8-arm\native"/>
   </files>
 </package>
