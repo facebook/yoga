@@ -44,20 +44,20 @@ namespace Facebook.Yoga
                 BorderRightWidth = 16,
             };
 
-            Assert.AreEqual(1.Px(), node.Top);
-            Assert.AreEqual(2.Px(), node.Bottom);
-            Assert.AreEqual(3.Px(), node.Left);
-            Assert.AreEqual(4.Px(), node.Right);
+            Assert.AreEqual(1.Pt(), node.Top);
+            Assert.AreEqual(2.Pt(), node.Bottom);
+            Assert.AreEqual(3.Pt(), node.Left);
+            Assert.AreEqual(4.Pt(), node.Right);
 
-            Assert.AreEqual(5.Px(), node.MarginTop);
-            Assert.AreEqual(6.Px(), node.MarginBottom);
-            Assert.AreEqual(7.Px(), node.MarginLeft);
-            Assert.AreEqual(8.Px(), node.MarginRight);
+            Assert.AreEqual(5.Pt(), node.MarginTop);
+            Assert.AreEqual(6.Pt(), node.MarginBottom);
+            Assert.AreEqual(7.Pt(), node.MarginLeft);
+            Assert.AreEqual(8.Pt(), node.MarginRight);
 
-            Assert.AreEqual(9.Px(), node.PaddingTop);
-            Assert.AreEqual(10.Px(), node.PaddingBottom);
-            Assert.AreEqual(11.Px(), node.PaddingLeft);
-            Assert.AreEqual(12.Px(), node.PaddingRight);
+            Assert.AreEqual(9.Pt(), node.PaddingTop);
+            Assert.AreEqual(10.Pt(), node.PaddingBottom);
+            Assert.AreEqual(11.Pt(), node.PaddingLeft);
+            Assert.AreEqual(12.Pt(), node.PaddingRight);
 
             Assert.AreEqual(13, node.BorderTopWidth);
             Assert.AreEqual(14, node.BorderBottomWidth);
@@ -90,20 +90,20 @@ namespace Facebook.Yoga
             node.BorderLeftWidth = 15;
             node.BorderRightWidth = 16;
 
-            Assert.AreEqual(1.Px(), node.Top);
-            Assert.AreEqual(2.Px(), node.Bottom);
-            Assert.AreEqual(3.Px(), node.Left);
-            Assert.AreEqual(4.Px(), node.Right);
+            Assert.AreEqual(1.Pt(), node.Top);
+            Assert.AreEqual(2.Pt(), node.Bottom);
+            Assert.AreEqual(3.Pt(), node.Left);
+            Assert.AreEqual(4.Pt(), node.Right);
 
-            Assert.AreEqual(5.Px(), node.MarginTop);
-            Assert.AreEqual(6.Px(), node.MarginBottom);
-            Assert.AreEqual(7.Px(), node.MarginLeft);
-            Assert.AreEqual(8.Px(), node.MarginRight);
+            Assert.AreEqual(5.Pt(), node.MarginTop);
+            Assert.AreEqual(6.Pt(), node.MarginBottom);
+            Assert.AreEqual(7.Pt(), node.MarginLeft);
+            Assert.AreEqual(8.Pt(), node.MarginRight);
 
-            Assert.AreEqual(9.Px(), node.PaddingTop);
-            Assert.AreEqual(10.Px(), node.PaddingBottom);
-            Assert.AreEqual(11.Px(), node.PaddingLeft);
-            Assert.AreEqual(12.Px(), node.PaddingRight);
+            Assert.AreEqual(9.Pt(), node.PaddingTop);
+            Assert.AreEqual(10.Pt(), node.PaddingBottom);
+            Assert.AreEqual(11.Pt(), node.PaddingLeft);
+            Assert.AreEqual(12.Pt(), node.PaddingRight);
 
             Assert.AreEqual(13, node.BorderTopWidth);
             Assert.AreEqual(14, node.BorderBottomWidth);
