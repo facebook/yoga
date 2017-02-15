@@ -2330,18 +2330,15 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
         deltaFreeSpace -= updatedMainSize - childFlexBasis;
 
-        float childMainSize;
-        float childCrossSize;
-        YGMeasureMode childMainMeasureMode;
-        YGMeasureMode childCrossMeasureMode;
-
         const float marginMain =
             YGNodeMarginForAxis(currentRelativeChild, mainAxis, availableInnerWidth);
         const float marginCross =
             YGNodeMarginForAxis(currentRelativeChild, crossAxis, availableInnerWidth);
 
-        childMainSize = updatedMainSize + marginMain;
-        childMainMeasureMode = YGMeasureModeExactly;
+        float childCrossSize;
+        float childMainSize = updatedMainSize + marginMain;
+        YGMeasureMode childCrossMeasureMode;
+        YGMeasureMode childMainMeasureMode = YGMeasureModeExactly;
 
         if (!YGFloatIsUndefined(availableInnerCrossDim) &&
             !YGNodeIsStyleDimDefined(currentRelativeChild, crossAxis, availableInnerCrossDim) &&
@@ -2365,20 +2362,23 @@ static void YGNodelayoutImpl(const YGNodeRef node,
         }
 
         if (!YGFloatIsUndefined(currentRelativeChild->style.aspectRatio)) {
-          childCrossSize =
-              fmaxf((childCrossSize - marginCross) / currentRelativeChild->style.aspectRatio,
-                    YGNodePaddingAndBorderForAxis(currentRelativeChild,
-                                                  YGFlexDirectionColumn,
-                                                  availableInnerWidth));
-          childMainMeasureMode = YGMeasureModeExactly;
+          childCrossSize = fmaxf(
+              isMainAxisRow
+                  ? (childMainSize - marginMain) / currentRelativeChild->style.aspectRatio
+                  : (childMainSize - marginMain) * currentRelativeChild->style.aspectRatio,
+              YGNodePaddingAndBorderForAxis(currentRelativeChild, crossAxis, availableInnerWidth));
+          childCrossMeasureMode = YGMeasureModeExactly;
 
           // Parent size constraint should have higher priority than flex
           if (YGNodeIsFlex(currentRelativeChild)) {
-            childMainSize = fminf(childMainSize - marginMain, availableInnerHeight);
-            childCrossSize = marginCross + childMainSize * currentRelativeChild->style.aspectRatio;
+            childCrossSize = fminf(childCrossSize - marginCross, availableInnerCrossDim);
+            childMainSize =
+                marginMain + (isMainAxisRow
+                                  ? childCrossSize * currentRelativeChild->style.aspectRatio
+                                  : childCrossSize / currentRelativeChild->style.aspectRatio);
           }
 
-          childMainSize += marginMain;
+          childCrossSize += marginCross;
         }
 
         YGConstrainMaxSizeForMode(
@@ -2618,8 +2618,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
               float childMainSize = child->layout.measuredDimensions[dim[mainAxis]];
               float childCrossSize =
                   !YGFloatIsUndefined(child->style.aspectRatio)
-                      ? (YGNodeMarginForAxis(child, crossAxis, availableInnerWidth) +
-                         childMainSize / child->style.aspectRatio)
+                      ? ((YGNodeMarginForAxis(child, crossAxis, availableInnerWidth) +
+                          (isMainAxisRow ? childMainSize / child->style.aspectRatio
+                                         : childMainSize * child->style.aspectRatio)))
                       : crossDim;
 
               childMainSize += YGNodeMarginForAxis(child, mainAxis, availableInnerWidth);
