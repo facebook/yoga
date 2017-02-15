@@ -14,6 +14,7 @@ var JavascriptEmitter = function() {
 function toValueJavascript(value) {
   if (value.match(/^[0-9.e+-]+px$/i)) return parseFloat(value);
   if (value.match(/^[0-9.e+-]+%/i)) return JSON.stringify(value);
+  if (value == 'Yoga.AUTO') return '"auto"';
   return value;
 }
 
@@ -121,6 +122,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGPositionTypeAbsolute:{value:'Yoga.POSITION_TYPE_ABSOLUTE'},
   YGPositionTypeRelative:{value:'Yoga.POSITION_TYPE_RELATIVE'},
+
+  YGAuto:{value:'Yoga.AUTO'},
 
   YGWrapNoWrap:{value:'Yoga.WRAP_NO_WRAP'},
   YGWrapWrap:{value:'Yoga.WRAP_WRAP'},

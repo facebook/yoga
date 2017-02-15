@@ -65,6 +65,7 @@ class Node {
 
     void setMargin(int edge, double margin);
     void setMarginPercent(int edge, double margin);
+    void setMarginAuto(int edge);
 
     void setOverflow(int overflow);
     void setDisplay(int display);
@@ -72,13 +73,16 @@ class Node {
     void setFlex(double flex);
     void setFlexBasis(double flexBasis);
     void setFlexBasisPercent(double flexBasis);
+    void setFlexBasisAuto();
     void setFlexGrow(double flexGrow);
     void setFlexShrink(double flexShrink);
 
     void setWidth(double width);
     void setWidthPercent(double width);
+    void setWidthAuto();
     void setHeight(double height);
     void setHeightPercent(double height);
+    void setHeightAuto();
 
     void setMinWidth(double minWidth);
     void setMinWidthPercent(double minWidth);

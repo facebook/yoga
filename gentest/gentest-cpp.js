@@ -13,8 +13,10 @@ function toValueCpp(value) {
 }
 
 function toFunctionName(value) {
-  if (value.indexOf('%') >= 0){
+  if (value.indexOf('%') >= 0) {
     return 'Percent';
+  } else if(value.indexOf('Auto') >= 0) {
+    return 'Auto';
   }
   return '';
 }
@@ -121,6 +123,8 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGDisplayFlex:{value:'YGDisplayFlex'},
   YGDisplayNone:{value:'YGDisplayNone'},
+  YGAuto:{value:'YGAuto'},
+
 
   YGNodeCalculateLayout:{value:function(node, dir) {
     this.push('YGNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
@@ -199,7 +203,13 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push('YGNodeStyleSetMargin' + toFunctionName(value) + '(' + nodeName + ', ' + edge + ', ' + toValueCpp(value) + ');');
+    var valueStr = toValueCpp(value);
+    if (valueStr != 'YGAuto') {
+      valueStr = ', ' + valueStr;
+    } else {
+      valueStr = '';
+    }
+    this.push('YGNodeStyleSetMargin' + toFunctionName(value) + '(' + nodeName + ', ' + edge +  valueStr + ');');
   }},
 
   YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {

@@ -16,6 +16,7 @@ env:
   - TARGET=net
   - TARGET=ios
   - TARGET=js
+  - TARGET=android
 
 before_install:
   - brew update
@@ -39,7 +40,7 @@ before_install:
   # iOS
   - |
     if [[ $TARGET = "ios" ]]; then
-      brew upgrade xctool;
+      brew outdated xctool || brew upgrade xctool;
     fi
 
   # JavaScript
@@ -49,13 +50,22 @@ before_install:
       npm install;
     fi
 
+  # Android
+  - |
+    if [[ $TARGET = "android" ]]; then
+      brew cask install java;
+      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
+      export PATH=$JAVA_HOME/bin:$PATH;
+      brew install android-sdk;
+    fi
+
 script:
     # C
     - |
       if [[ $TARGET = "c" ]]; then
-        buck test --verbose 0 //:yoga;
-        buck run --verbose 0 //benchmark:benchmark;
-        git checkout HEAD^;
+        buck test --verbose 0 //:yoga &&
+        buck run --verbose 0 //benchmark:benchmark &&
+        git checkout HEAD^ &&
         buck run --verbose 0 //benchmark:benchmark;
       fi
 
@@ -80,6 +90,12 @@ script:
     # JavaScript
     - |
       if [[ $TARGET = "js" ]]; then
-        npm run test:all;
+        npm run test:all &&
         npm run bench;
+      fi
+
+    # Android
+    - |
+      if [[ $TARGET = "android" ]]; then
+        buck build --verbose 0 //android/sample:sample
       fi

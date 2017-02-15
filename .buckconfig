@@ -1,2 +1,9 @@
 [cxx]
   gtest_dep = //lib/gtest:gtest
+[android]
+  target = Google Inc.:Google APIs:19
+[ndk]
+  ndk_version = r10e
+  compiler = clang
+  app_platform = android-19
+  cpu_abis = armv7, x86

@@ -19,8 +19,9 @@ ENUMS = {
     ],
     'Unit': [
         'Undefined',
-        'Pixel',
+        'Point',
         'Percent',
+        'Auto',
     ],
     'FlexDirection': [
         'Column',

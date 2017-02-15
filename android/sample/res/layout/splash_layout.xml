@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+  Copyright 2014-present, Facebook, Inc.
+  All rights reserved.
+
+  This source code is licensed under the license found in the
+  LICENSE-examples file in the root directory of this source tree.
+-->
+
+<YogaLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yoga="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yoga_grey"
+    yoga:align_items="center"
+    yoga:justify_content="center"
+    >
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_launcher"
+      yoga:height="200dp"
+      yoga:aspect_ratio="1"
+      />
+</YogaLayout>

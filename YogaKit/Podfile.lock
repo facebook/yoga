@@ -1,0 +1,16 @@
+PODS:
+  - Yoga (1.1.0)
+
+DEPENDENCIES:
+  - Yoga (from `../Yoga.podspec`)
+
+EXTERNAL SOURCES:
+  Yoga:
+    :path: ../Yoga.podspec
+
+SPEC CHECKSUMS:
+  Yoga: 0bf083b7c485b20598020dbedcea869cbe53071e
+
+PODFILE CHECKSUM: 975217fee19235295816a081e809454b2ab831b5
+
+COCOAPODS: 1.2.0

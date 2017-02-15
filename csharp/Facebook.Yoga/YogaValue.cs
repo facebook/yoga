@@ -33,12 +33,12 @@ namespace Facebook.Yoga
             }
         }
 
-        public static YogaValue Pixel(float value)
+        public static YogaValue Point(float value)
         {
             return new YogaValue
             {
                 value = value,
-                unit = YogaConstants.IsUndefined(value) ? YogaUnit.Undefined : YogaUnit.Pixel
+                unit = YogaConstants.IsUndefined(value) ? YogaUnit.Undefined : YogaUnit.Point
             };
         }
 
@@ -70,6 +70,15 @@ namespace Facebook.Yoga
             };
         }
 
+        public static YogaValue Auto()
+        {
+            return new YogaValue
+            {
+                value = 0f,
+                unit = YogaUnit.Auto
+            };
+        }
+
         public static YogaValue Percent(float value)
         {
             return new YogaValue
@@ -79,9 +88,9 @@ namespace Facebook.Yoga
             };
         }
 
-        public static implicit operator YogaValue(float pixelValue)
+        public static implicit operator YogaValue(float pointValue)
         {
-            return Pixel(pixelValue);
+            return Point(pointValue);
         }
     }
 }
