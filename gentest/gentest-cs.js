@@ -140,6 +140,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGWrapNoWrap:{value:'YogaWrap.NoWrap'},
   YGWrapWrap:{value:'YogaWrap.Wrap'},
+  YGWrapWrapReverse:{value: 'YogaWrap.WrapReverse'},
 
   YGNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.StyleDirection = ' + dir + ';');

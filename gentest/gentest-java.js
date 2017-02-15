@@ -143,6 +143,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGWrapNoWrap:{value:'YogaWrap.NO_WRAP'},
   YGWrapWrap:{value:'YogaWrap.WRAP'},
+  YGWrapWrapReverse:{value: 'YogaWrap.WRAP_REVERSE'},
 
   YGNodeCalculateLayout:{value:function(node, dir) {
     this.push(node + '.setDirection(' + dir + ');');
