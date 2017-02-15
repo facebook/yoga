@@ -1,0 +1,10 @@
+use_frameworks!
+
+workspace 'YogaKit'
+
+target 'YogaKit' do
+  pod 'Yoga', :path => '../Yoga.podspec'
+end
+
+target 'YogaKitTests' do
+end
