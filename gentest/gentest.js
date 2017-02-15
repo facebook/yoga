@@ -336,6 +336,7 @@ function overflowValue(e, value) {
 function wrapValue(e, value) {
   switch (value) {
     case 'wrap': return e.YGWrapWrap;
+    case 'wrap-reverse': return e.YGWrapWrapReverse;
     case 'nowrap': return e.YGWrapNoWrap;
   }
 }

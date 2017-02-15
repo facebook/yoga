@@ -127,6 +127,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGWrapNoWrap:{value:'Yoga.WRAP_NO_WRAP'},
   YGWrapWrap:{value:'Yoga.WRAP_WRAP'},
+  YGWrapWrapReverse:{value: 'Yoga.WRAP_WRAP_REVERSE'},
 
   YGUndefined:{value:'Yoga.UNDEFINED'},
 

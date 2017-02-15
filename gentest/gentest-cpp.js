@@ -118,6 +118,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGWrapNoWrap:{value:'YGWrapNoWrap'},
   YGWrapWrap:{value:'YGWrapWrap'},
+  YGWrapWrapReverse:{value: 'YGWrapWrapReverse'},
 
   YGUndefined:{value:'YGUndefined'},
 
