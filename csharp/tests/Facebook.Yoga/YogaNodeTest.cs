@@ -273,7 +273,7 @@ namespace Facebook.Yoga
             node1.MaxHeight = 100;
 
             node0.CopyStyle(node1);
-            Assert.AreEqual(100.Px(), node0.MaxHeight);
+            Assert.AreEqual(100.Pt(), node0.MaxHeight);
         }
 
         [Test]
@@ -283,27 +283,27 @@ namespace Facebook.Yoga
             node0.MaxWidth = 80;
 
             YogaNode node1 = new YogaNode(node0);
-            Assert.AreEqual(80.Px(), node1.MaxWidth);
+            Assert.AreEqual(80.Pt(), node1.MaxWidth);
 
             YogaNode node2 = new YogaNode(node1)
             {
                 MaxHeight = 90,
             };
-            Assert.AreEqual(80.Px(), node2.MaxWidth);
-            Assert.AreEqual(90.Px(), node2.MaxHeight);
+            Assert.AreEqual(80.Pt(), node2.MaxWidth);
+            Assert.AreEqual(90.Pt(), node2.MaxHeight);
 
             YogaNode node3 = new YogaNode(node0)
             {
                 MaxWidth = 100,
             };
-            Assert.AreEqual(100.Px(), node3.MaxWidth);
+            Assert.AreEqual(100.Pt(), node3.MaxWidth);
 
             YogaNode node4 = new YogaNode(node2)
             {
                 MaxWidth = 100,
             };
-            Assert.AreEqual(100.Px(), node4.MaxWidth);
-            Assert.AreEqual(90.Px(), node4.MaxHeight);
+            Assert.AreEqual(100.Pt(), node4.MaxWidth);
+            Assert.AreEqual(90.Pt(), node4.MaxHeight);
         }
 
         private void ForceGC()
