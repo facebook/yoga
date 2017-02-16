@@ -111,6 +111,13 @@ namespace Facebook.Yoga
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool YGNodeGetHasNewLayout(YGNodeHandle node);
 
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetContext(YGNodeHandle node, IntPtr context);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr YGNodeGetContext(IntPtr node);
+
+
         #endregion
 
         #region YG_NODE_STYLE_PROPERTY
