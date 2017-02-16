@@ -365,6 +365,7 @@ namespace Facebook.Yoga
             child = null;
         }
 
+#if !__IOS__
         [Test]
         public void TestParentDestructor()
         {
@@ -386,6 +387,7 @@ namespace Facebook.Yoga
             Assert.AreEqual(instanceCount + 1, YogaNode.GetInstanceCount());
             parent.Insert(0, child);
         }
+#endif
 
         [Test]
         public void TestClearWithChildDestructor()
