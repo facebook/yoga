@@ -108,6 +108,7 @@ typedef struct YGNode {
   YGBaselineFunc baseline;
   YGPrintFunc print;
   void *context;
+  void *managed;
 
   bool isDirty;
   bool hasNewLayout;
@@ -620,6 +621,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   }
 
 YG_NODE_PROPERTY_IMPL(void *, Context, context, context);
+YG_NODE_PROPERTY_IMPL(void *, Managed, managed, managed);
 YG_NODE_PROPERTY_IMPL(YGPrintFunc, PrintFunc, printFunc, print);
 YG_NODE_PROPERTY_IMPL(bool, HasNewLayout, hasNewLayout, hasNewLayout);
 

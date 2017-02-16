@@ -16,5 +16,7 @@ YG_EXTERN_C_BEGIN
 typedef void (*YGInteropLoggerFunc)(YGLogLevel level, const char *message);
 
 WIN_EXPORT void YGInteropSetLogger(YGInteropLoggerFunc managedFunc);
+WIN_EXPORT void YGInteropNodeSetMeasureFunc(YGNodeRef node, YGMeasureFunc measureFunc);
+WIN_EXPORT void YGInteropNodeSetBaselineFunc(YGNodeRef node, YGBaselineFunc baselineFunc);
 
 YG_EXTERN_C_END
