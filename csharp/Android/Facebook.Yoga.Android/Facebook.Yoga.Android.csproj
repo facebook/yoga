@@ -7,13 +7,14 @@
 		<ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
 		<OutputType>Library</OutputType>
 		<RootNamespace>Facebook.Yoga.Android</RootNamespace>
-		<AssemblyName>Facebook.Yoga.Android</AssemblyName>
-		<TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
+		<AssemblyName>Facebook.Yoga</AssemblyName>
+		<TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
 		<AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
 		<AndroidResgenClass>Resource</AndroidResgenClass>
 		<MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
 		<MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
 		<AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+		<AndroidTlsProvider></AndroidTlsProvider>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<DebugSymbols>true</DebugSymbols>

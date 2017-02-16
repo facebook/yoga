@@ -7,7 +7,7 @@
 		<ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
 		<OutputType>Library</OutputType>
 		<RootNamespace>Facebook.Yoga.iOS</RootNamespace>
-		<AssemblyName>Facebook.Yoga.iOS</AssemblyName>
+		<AssemblyName>Facebook.Yoga</AssemblyName>
 		<IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

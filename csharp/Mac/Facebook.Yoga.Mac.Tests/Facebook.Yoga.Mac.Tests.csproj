@@ -8,9 +8,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Facebook.Yoga.Mac.Tests</RootNamespace>
     <AssemblyName>Facebook.Yoga.Mac.Tests</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+    <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,8 +52,9 @@
     <XamMacArch></XamMacArch>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    <Reference Include="Xamarin.Mac" />
+    <Reference Include="GuiUnit">
+      <HintPath>..\..\packages\MonoDevelop.Addins.GuiUnit.0.1.1\lib\net45\GuiUnit.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
