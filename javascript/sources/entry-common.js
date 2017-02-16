@@ -107,7 +107,7 @@ module.exports = function (bind, lib) {
 
                 case constants.UNIT_PERCENT:
                     return `${this.value}%`;
-                
+
                 case constants.UNIT_AUTO:
                     return `auto`;
 
@@ -129,20 +129,22 @@ module.exports = function (bind, lib) {
 
     for (let fnName of [ `setPosition`, `setMargin`, `setFlexBasis`, `setWidth`, `setHeight`, `setMinWidth`, `setMinHeight`, `setMaxWidth`, `setMaxHeight`, `setPadding` ]) {
 
-        let methods = { [constants.UNIT_POINT]: lib.Node.prototype[fnName], [constants.UNIT_PERCENT]: lib.Node.prototype[`${fnName}Percent`] };
-
-        if (Object.keys(methods).some(method => methods[method] == null))
-            throw new Error(`Assertion failed; some unit derivates of ${fnName} seem missing`);
+        let methods = { [constants.UNIT_POINT]: lib.Node.prototype[fnName], [constants.UNIT_PERCENT]: lib.Node.prototype[`${fnName}Percent`], [constants.UNIT_AUTO]: lib.Node.prototype[`${fnName}Auto`] };
 
         patch(lib.Node.prototype, fnName, function (original, ... args) {
 
             // We patch all these functions to add support for the following calls:
-            // .setWidth(100) / .setWidth("100%") / .setWidth(.getWidth())
+            // .setWidth(100) / .setWidth("100%") / .setWidth(.getWidth()) / .setWidth("auto")
 
             let value = args.pop();
             let unit, asNumber;
 
-            if (value instanceof Value) {
+            if (value === `auto`) {
+
+                unit = constants.UNIT_AUTO;
+                asNumber = undefined;
+
+            } else if (value instanceof Value) {
 
                 unit = value.unit;
                 asNumber = value.valueOf();
@@ -154,7 +156,14 @@ module.exports = function (bind, lib) {
 
             }
 
-            return methods[unit].call(this, ... args, asNumber);
+            if (!Object.prototype.hasOwnProperty.call(methods, unit))
+                throw new Error(`Failed to execute "${fnName}": Unsupported unit.`);
+
+            if (asNumber !== undefined) {
+                return methods[unit].call(this, ... args, asNumber);
+            } else {
+                return methods[unit].call(this, ... args);
+            }
 
         });
 
