@@ -6,7 +6,6 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 include_defs('//YOGA_DEFS')
-include_defs('xplat//configurations/buck/py_sdk')
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ['-std=c++11']
 
