@@ -129,15 +129,18 @@
       <Name>Facebook.Yoga</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <Import Project="$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets" Condition="Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets')" Label="ImportNativeInteropTargets" />
+  <Import Project="$(SolutionDir)Build\Facebook.Yoga.NativeInterop.Universal.targets" Condition="Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.Universal.targets')" Label="ImportNativeInteropTargets" />
   <Target Name="EnsureNativeInteropImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references a native interop target that is missing. The missing build target is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.Universal.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)Build\Facebook.Yoga.NativeInterop.Universal.targets'))" />
   </Target>
 </Project>

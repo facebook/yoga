@@ -14,15 +14,18 @@
     <tags>native flexbox flex-box css layout css-layout yoga facebook</tags>
     <dependencies>
       <group targetFramework=".NETStandard1.0" />
+      <group targetFramework="uap10.0" />
     </dependencies>
   </metadata>
 
   <files>
     <!-- build -->
     <file src="Facebook.Yoga.Native.targets" target="build\netstandard1.0"/>
+    <file src="Facebook.Yoga.Native.targets" target="build\uap10.0"/>
 
     <!-- lib -->
     <file src="_._" target="lib\netstandard1.0"/>
+    <file src="_._" target="lib\uap10.0"/>
 
     <!-- Native -->
     <file src="..\Yoga\bin\x86\Release\Yoga.dll" target="runtimes\win-x86\native"/>
@@ -33,6 +36,15 @@
 
     <file src="..\Yoga\bin\ARM\Release\Yoga.dll" target="runtimes\win8-arm\native"/>
     <file src="..\Yoga\bin\ARM\Release\Yoga.pdb" target="runtimes\win8-arm\native"/>    
+
+    <file src="..\Yoga\bin\Universal\x86\Release\Yoga.dll" target="runtimes\win10-x86\native"/>
+    <file src="..\Yoga\bin\Universal\x86\Release\Yoga.pdb" target="runtimes\win10-x86\native"/>
+    
+    <file src="..\Yoga\bin\Universal\x64\Release\Yoga.dll" target="runtimes\win10-x64\native"/>
+    <file src="..\Yoga\bin\Universal\x64\Release\Yoga.pdb" target="runtimes\win10-x64\native"/>
+
+    <file src="..\Yoga\bin\Universal\ARM\Release\Yoga.dll" target="runtimes\win10-arm\native"/>
+    <file src="..\Yoga\bin\Universal\ARM\Release\Yoga.pdb" target="runtimes\win10-arm\native"/>  
   </files>
   
 </package>
