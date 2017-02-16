@@ -20,11 +20,4 @@
   <style name="MyTitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
     <item name="android:textColor">@color/yoga_blue</item>
   </style>
-  <style name="AppFullScreenTheme" parent="Theme.AppCompat.Light">
-    <item name="android:windowNoTitle">true</item>
-    <item name="android:windowActionBar">false</item>
-    <item name="android:windowFullscreen">true</item>
-    <item name="android:windowContentOverlay">@null</item>
-  </style>
-
 </resources>

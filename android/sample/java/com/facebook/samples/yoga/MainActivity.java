@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 
 import com.facebook.samples.yoga.R;
+import com.facebook.soloader.SoLoader;
 import com.facebook.yoga.android.YogaViewLayoutFactory;
 
 /**
@@ -26,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
   public void onCreate(Bundle savedInstanceState) {
     LayoutInflater.from(this).setFactory(YogaViewLayoutFactory.getInstance());
     super.onCreate(savedInstanceState);
+    SoLoader.init(this, false);
 
     setContentView(R.layout.main_layout);
   }
