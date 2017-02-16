@@ -10,8 +10,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Text;
+
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+using System.Runtime.InteropServices;
+#endif
+#if __IOS__
+using ObjCRuntime;
+#endif
 
 namespace Facebook.Yoga
 {
@@ -21,10 +27,15 @@ namespace Facebook.Yoga
         private WeakReference _parent;
         private List<YogaNode> _children;
         private MeasureFunction _measureFunction;
-        private YogaMeasureFunc _ygMeasureFunc;
         private BaselineFunction _baselineFunction;
-        private YogaBaselineFunc _ygBaselineFunc;
         private object _data;
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+        private static YogaMeasureFunc _managedMeasure = MeasureInternalIOS;
+        private static YogaBaselineFunc _managedBaseline = BaselineInternalIOS;
+#else
+        private YogaMeasureFunc _managedMeasure;
+        private YogaBaselineFunc _managedBaseline;
+#endif
 
         public YogaNode()
         {
@@ -545,7 +556,7 @@ namespace Facebook.Yoga
             {
                 while (_children.Count > 0)
                 {
-                    RemoveAt(_children.Count - 1);
+                    RemoveAt(_children.Count-1);
                 }
             }
         }
@@ -558,23 +569,29 @@ namespace Facebook.Yoga
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
             _measureFunction = measureFunction;
-            _ygMeasureFunc = measureFunction != null ? MeasureInternal : (YogaMeasureFunc)null;
-
-            var handle = GCHandle.Alloc(this);
-            Native.YGNodeSetContext(_ygNode, GCHandle.ToIntPtr(handle));
-
-            Native.YGNodeSetMeasureFunc(_ygNode, _ygMeasureFunc);
+            if (measureFunction != null)
+            {
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+                _ygNode.SetContext(this);
+#else
+                _managedMeasure = MeasureInternal;
+#endif
+            }
+            Native.YGNodeSetMeasureFunc(_ygNode, _managedMeasure);
         }
 
         public void SetBaselineFunction(BaselineFunction baselineFunction)
         {
             _baselineFunction = baselineFunction;
-            _ygBaselineFunc = baselineFunction != null ? BaselineInternal : (YogaBaselineFunc)null;
-
-            var handle = GCHandle.Alloc(this);
-            Native.YGNodeSetContext(_ygNode, GCHandle.ToIntPtr(handle));
-
-            Native.YGNodeSetBaselineFunc(_ygNode, _ygBaselineFunc);
+            if (baselineFunction != null)
+            {
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+                _ygNode.SetContext(this);
+#else
+                _managedBaseline = BaselineInternal;
+#endif
+            }
+            Native.YGNodeSetBaselineFunc(_ygNode, _managedBaseline);
         }
 
         public void CalculateLayout()
@@ -586,55 +603,63 @@ namespace Facebook.Yoga
                 Native.YGNodeStyleGetDirection(_ygNode));
         }
 
-#if __IOS__
-        [ObjCRuntime.MonoPInvokeCallback(typeof(YogaMeasureFunc))]
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+        [MonoPInvokeCallback(typeof(YogaMeasureFunc))]
+        private static YogaSize MeasureInternalIOS(
+            IntPtr ygNodePtr,
+            float width,
+            YogaMeasureMode widthMode,
+            float height,
+            YogaMeasureMode heightMode)
+        {
+            var node = Native.YGNodeHandle.GetManaged(ygNodePtr);
+            return node.MeasureInternal(IntPtr.Zero, width, widthMode, height, heightMode);
+        }
 #endif
-        private static YogaSize MeasureInternal(
+
+        private YogaSize MeasureInternal(
             IntPtr node,
             float width,
             YogaMeasureMode widthMode,
             float height,
             YogaMeasureMode heightMode)
         {
-
-            var yogaNodePointer = Native.YGNodeGetContext(node);
-
-            YogaNode yogaNode = GCHandle.FromIntPtr(yogaNodePointer).Target as YogaNode;
-
-            var measureFunction = yogaNode._measureFunction;
-            if (measureFunction == null)
+            if (_measureFunction == null)
             {
                 throw new InvalidOperationException("Measure function is not defined.");
             }
 
-            return measureFunction(yogaNode, width, widthMode, height, heightMode);
+            return _measureFunction(this, width, widthMode, height, heightMode);
         }
 
-
-#if __IOS__
-        [ObjCRuntime.MonoPInvokeCallback(typeof(YogaBaselineFunc))]
-#endif
-        private static float BaselineInternal(IntPtr node, float width, float height)
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+        [MonoPInvokeCallback(typeof(YogaBaselineFunc))]
+        private static float BaselineInternalIOS(
+            IntPtr ygNodePtr,
+            float width,
+            float height)
         {
-            var yogaNodePointer = Native.YGNodeGetContext(node);
+            var node = Native.YGNodeHandle.GetManaged(ygNodePtr);
+            return node.BaselineInternal(IntPtr.Zero, width, height);
+        }
+#endif
 
-            YogaNode yogaNode = GCHandle.FromIntPtr(yogaNodePointer).Target as YogaNode;
-
-            var baselineFunction = yogaNode._baselineFunction;
-            if (baselineFunction == null)
+        private float BaselineInternal(IntPtr node, float width, float height)
+        {
+            if (_baselineFunction == null)
             {
                 throw new InvalidOperationException("Baseline function is not defined.");
             }
 
-            return baselineFunction(yogaNode, width, height);
+            return _baselineFunction(this, width, height);
         }
 
         public string Print(YogaPrintOptions options =
-            YogaPrintOptions.Layout | YogaPrintOptions.Style | YogaPrintOptions.Children)
+            YogaPrintOptions.Layout|YogaPrintOptions.Style|YogaPrintOptions.Children)
         {
             StringBuilder sb = new StringBuilder();
             YogaLogger.Func orig = YogaLogger.Logger;
-            YogaLogger.Logger = (level, message) => { sb.Append(message); };
+            YogaLogger.Logger = (level, message) => {sb.Append(message);};
             Native.YGNodePrint(_ygNode, options);
             YogaLogger.Logger = orig;
             return sb.ToString();

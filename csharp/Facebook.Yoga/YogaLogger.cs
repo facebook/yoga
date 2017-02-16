@@ -8,29 +8,26 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
+
+#if __IOS__
+using ObjCRuntime;
+#endif
 
 namespace Facebook.Yoga
 {
     internal static class YogaLogger
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void Func(YogaLogLevel level, string message);
 
         private static bool _initialized;
+        private static Func _managedLogger = LoggerInternal;
 
         public static Func Logger = null;
 
-        public static void Initialize()
-        {
-            if (!_initialized)
-            {
-
-                Native.YGInteropSetLogger(LoggerInternal);
-                _initialized = true;
-            }
-        }
-
-#if __IOS__
-        [ObjCRuntime.MonoPInvokeCallback(typeof(Func))]
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+        [MonoPInvokeCallback(typeof(Func))]
 #endif
         public static void LoggerInternal(YogaLogLevel level, string message)
         {
@@ -45,5 +42,13 @@ namespace Facebook.Yoga
             }
         }
 
+        public static void Initialize()
+        {
+            if (!_initialized)
+            {
+                Native.YGInteropSetLogger(_managedLogger);
+                _initialized = true;
+            }
+        }
     }
 }
