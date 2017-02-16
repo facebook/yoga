@@ -57,6 +57,8 @@ before_install:
       export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
       export PATH=$JAVA_HOME/bin:$PATH;
       brew install android-sdk;
+      export ANDROID_SDK=/usr/local/opt/android-sdk
+      export ANDROID_HOME=/usr/local/opt/android-sdk
     fi
 
 script:
