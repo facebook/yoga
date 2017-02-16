@@ -260,7 +260,7 @@ namespace Facebook.Yoga
             parent.Insert(0, child0);
             parent.Insert(0, child1);
             parent.CalculateLayout();
-            Assert.AreEqual("{layout: {width: 100, height: 120, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, flexBasis: 0%, overflow: 'visible', width: 100pt, height: 120pt, children: [\n  {layout: {width: 35, height: 45, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, flexBasis: 0%, overflow: 'visible', width: 35pt, height: 45pt, },\n  {layout: {width: 30, height: 40, top: 45, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, flexBasis: 0%, overflow: 'visible', width: 30pt, height: 40pt, },\n]},\n", parent.Print());
+            Assert.AreEqual("{layout: {width: 100, height: 120, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, flexBasis: nan%, overflow: 'visible', width: 100pt, height: 120pt, children: [\n  {layout: {width: 35, height: 45, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, flexBasis: nan%, overflow: 'visible', width: 35pt, height: 45pt, },\n  {layout: {width: 30, height: 40, top: 45, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, flexBasis: nan%, overflow: 'visible', width: 30pt, height: 40pt, },\n]},\n", parent.Print());
         }
 
         [Test]
