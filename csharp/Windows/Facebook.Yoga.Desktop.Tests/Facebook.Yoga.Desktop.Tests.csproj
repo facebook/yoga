@@ -92,7 +92,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets" Condition="Exists('$(SolutionDir)Build\Facebook.Yoga.NativeInterop.targets')" Label="ImportNativeInteropTargets" />
   <Target Name="EnsureNativeInteropImports" BeforeTargets="PrepareForBuild">

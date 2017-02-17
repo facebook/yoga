@@ -19,49 +19,71 @@
   </metadata>
   <files>
     <!-- build -->
-    <file src="Facebook.Yoga.targets" target="build\netstandard"/>
-    <file src="Facebook.Yoga.targets" target="build\uap10.0"/>
+    <file src="Facebook.Yoga.OSX.targets" target="build\XamarinMac" /> 
+    <file src="Facebook.Yoga.targets" target="build\net45" />
+    <file src="Facebook.Yoga.dll.config" target="build\net45" />
+    <file src="Facebook.Yoga.Universal.targets" target="build\uap10.0"/>
 
     <!-- lib -->
-    <file src="..\Windows\Facebook.Yoga\bin\Release\Facebook.Yoga.dll" target="lib\netstandard"/>
-    <file src="..\Windows\Facebook.Yoga\bin\Release\Facebook.Yoga.dll" target="lib\uap10.0"/>
+    <file src="..\yoga_windows\bin\Release\Facebook.Yoga.dll" target="lib\netstandard"/>
+    
+    <!-- UAP -->
+    <file src="..\yoga_windows\bin\Release\Facebook.Yoga.dll" target="lib\uap10.0"/>
 
+    <!-- net45 -->
+    <file src="..\yoga_windows\bin\Release\Facebook.Yoga.dll" target="lib\net45" />
+    <file src="Facebook.Yoga.dll.config" target="lib\net45" />
+    
+    <!-- iOS -->
+    <file src="..\yoga_ios\bin\Release\Facebook.Yoga.dll" target="lib\Xamarin.iOS10" />
+  
+    <!-- macOS -->
+    <file src="..\yoga_mac\bin\Release\Facebook.Yoga.dll" target="lib\XamarinMac" />
+  
+    <!-- Android -->
+    <file src="..\yoga_android\bin\Release\Facebook.Yoga.dll" target="lib\MonoAndroid" />
+  
     <!-- runtimes -->
-    <file src="..\Windows\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win10-x86\lib\netstandard"/>
-    <file src="..\Windows\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win10-x86\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win10-x86\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win10-x86\lib\netstandard"/>
     
-    <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win10-x64\lib\netstandard"/>
-    <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win10-x64\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win10-x64\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win10-x64\lib\netstandard"/>
     
-    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win10-arm\lib\netstandard"/>
-    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win10-arm\lib\netstandard"/>    
+    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win10-arm\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win10-arm\lib\netstandard"/>    
 
-    <file src="..\Windows\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win-x86\lib\netstandard"/>
-    <file src="..\Windows\Facebook.Yoga\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win-x86\lib\netstandard"/>
     
-    <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win-x64\lib\netstandard"/>
-    <file src="..\Windows\Facebook.Yoga\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win-x64\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win-x86\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win-x86\lib\netstandard"/>
     
-    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win8-arm\lib\netstandard"/>
-    <file src="..\Windows\Facebook.Yoga\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win8-arm\lib\netstandard"/>    
+    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win-x64\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win-x64\lib\netstandard"/>
+
+    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win8-arm\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win8-arm\lib\netstandard"/>    
+
 
     <!-- Native -->
-    <file src="..\Yoga\bin\Universal\x86\Release\Yoga.dll" target="runtimes\win10-x86\native"/>
-    <file src="..\Yoga\bin\Universal\x86\Release\Yoga.pdb" target="runtimes\win10-x86\native"/>
+    <file src="..\yoga_native\bin\Universal\x86\Release\Yoga.dll" target="runtimes\win10-x86\native"/>
+    <file src="..\yoga_native\bin\Universal\x86\Release\Yoga.pdb" target="runtimes\win10-x86\native"/>
     
-    <file src="..\Yoga\bin\Universal\x64\Release\Yoga.dll" target="runtimes\win10-x64\native"/>
-    <file src="..\Yoga\bin\Universal\x64\Release\Yoga.pdb" target="runtimes\win10-x64\native"/>
+    <file src="..\yoga_native\bin\Universal\x64\Release\Yoga.dll" target="runtimes\win10-x64\native"/>
+    <file src="..\yoga_native\bin\Universal\x64\Release\Yoga.pdb" target="runtimes\win10-x64\native"/>
 
-    <file src="..\Yoga\bin\Universal\ARM\Release\Yoga.dll" target="runtimes\win10-arm\native"/>
-    <file src="..\Yoga\bin\Universal\ARM\Release\Yoga.pdb" target="runtimes\win10-arm\native"/>
+    <file src="..\yoga_native\bin\Universal\ARM\Release\Yoga.dll" target="runtimes\win10-arm\native"/>
+    <file src="..\yoga_native\bin\Universal\ARM\Release\Yoga.pdb" target="runtimes\win10-arm\native"/>
 
-    <file src="..\Yoga\bin\x86\Release\Yoga.dll" target="runtimes\win-x86\native"/>
-    <file src="..\Yoga\bin\x86\Release\Yoga.pdb" target="runtimes\win-x86\native"/>
+    <file src="..\yoga_mac\libyoga.dylib" target="runtimes\osx\native\" />
+
+    <file src="..\yoga_native\bin\x86\Release\Yoga.dll" target="runtimes\win-x86\native"/>
+    <file src="..\yoga_native\bin\x86\Release\Yoga.pdb" target="runtimes\win-x86\native"/>
+   
+    <file src="..\yoga_native\bin\x64\Release\Yoga.dll" target="runtimes\win-x64\native"/>
+    <file src="..\yoga_native\bin\x64\Release\Yoga.pdb" target="runtimes\win-x64\native"/>
     
-    <file src="..\Yoga\bin\x64\Release\Yoga.dll" target="runtimes\win-x64\native"/>
-    <file src="..\Yoga\bin\x64\Release\Yoga.pdb" target="runtimes\win-x64\native"/>
-
-    <file src="..\Yoga\bin\ARM\Release\Yoga.dll" target="runtimes\win8-arm\native"/>
-    <file src="..\Yoga\bin\ARM\Release\Yoga.pdb" target="runtimes\win8-arm\native"/>
+    <file src="..\yoga_native\bin\ARM\Release\Yoga.dll" target="runtimes\win8-arm\native"/>
+    <file src="..\yoga_native\bin\ARM\Release\Yoga.pdb" target="runtimes\win8-arm\native"/>
+    
   </files>
 </package>
