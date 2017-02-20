@@ -46,10 +46,13 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
     if (experiments.length > 0) {
       for (var i in experiments) {
-        this.push('Yoga.setExperimentalFeatureEnabled(Yoga.FEATURE_' + toJavascriptUpper(experiments[i]) + ', true);');
+        this.push('Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', true);');
       }
       this.push('');
     }
+
+    this.push('try {');
+    this.pushIndent();
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
@@ -57,22 +60,25 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestEpilogue:{value:function(experiments) {
-    this.push('');
-    this.push('if (typeof root !== "undefined")');
+    this.popIndent();
+    this.push('} finally {');
+    this.pushIndent();
+
+    this.push('if (typeof root !== "undefined") {');
     this.pushIndent();
     this.push('root.freeRecursive();');
     this.popIndent();
-
-    this.push('');
-    this.push('(typeof gc !== "undefined") && gc();');
-    this.AssertEQ('0', 'Yoga.getInstanceCount()');
+    this.push('}');
 
     if (experiments.length > 0) {
       this.push('');
       for (var i in experiments) {
-        this.push('Yoga.setExperimentalFeatureEnabled(Yoga.FEATURE_' + toJavascriptUpper(experiments[i]) + ', false);');
+        this.push('Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', false);');
       }
     }
+
+    this.popIndent();
+    this.push('}');
 
     this.popIndent();
     this.push('});');

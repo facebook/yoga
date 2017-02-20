@@ -5,9 +5,6 @@ node_modules
 
 /dist
 /build/*
-!/build/Release
-/build/Release/*
-!/build/Release/nbind.js
 /sources/yoga
 
 npm-debug.log*
