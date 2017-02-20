@@ -59,6 +59,7 @@ before_install:
       brew install android-sdk;
       export ANDROID_SDK=/usr/local/opt/android-sdk
       export ANDROID_HOME=/usr/local/opt/android-sdk
+      $ANDROID_SDK/tools/android update sdk --filter android-19,addon-google_apis-google-19
     fi
 
 script:
