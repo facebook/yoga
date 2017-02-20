@@ -17,6 +17,7 @@
 
             "ldflags": [
                 "--memory-init-file", "0",
+                "-s", "PRECISE_F32=1",
                 "-s", "TOTAL_MEMORY=134217728"
             ],
 

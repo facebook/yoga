@@ -19,86 +19,100 @@ env:
   - TARGET=android
 
 before_install:
-  - brew update
+  - brew update > /dev/null
   - brew tap facebook/fb
   - brew install buck
 
   # Java
   - |
     if [[ $TARGET = "java" ]]; then
-      brew cask install java;
-      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
-      export PATH=$JAVA_HOME/bin:$PATH;
+      brew cask install java &&
+      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) &&
+      export PATH=$JAVA_HOME/bin:$PATH
     fi
 
   # .NET
   - |
     if [[ $TARGET = "net" ]]; then
-      brew install mono;
+      brew install mono
     fi
 
   # iOS
   - |
     if [[ $TARGET = "ios" ]]; then
-      brew outdated xctool || brew upgrade xctool;
+      brew outdated xctool || brew upgrade xctool
     fi
 
-  # JavaScript
+  # Emscripten (used for js tests)
+  # Note: cannot be ran on Linux (because it will compile Clang from its sources :|)
   - |
     if [[ $TARGET = "js" ]]; then
-      cd javascript;
-      npm install;
+      wget -O /tmp/emsdk-portable.tar.gz https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz &&
+      tar xf /tmp/emsdk-portable.tar.gz -C /tmp/ &&
+      /tmp/emsdk_portable/emsdk install latest >& /dev/null &&
+      /tmp/emsdk_portable/emsdk activate latest
     fi
 
   # Android
   - |
     if [[ $TARGET = "android" ]]; then
-      brew cask install java;
-      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
-      export PATH=$JAVA_HOME/bin:$PATH;
-      brew install android-sdk;
-      export ANDROID_SDK=/usr/local/opt/android-sdk
+      brew cask install java &&
+      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) &&
+      export PATH=$JAVA_HOME/bin:$PATH &&
+      brew install android-sdk &&
+      export ANDROID_SDK=/usr/local/opt/android-sdk &&
       export ANDROID_HOME=/usr/local/opt/android-sdk
       $ANDROID_SDK/tools/android update sdk --filter android-19,addon-google_apis-google-19
     fi
 
+  # JavaScript
+  - |
+    if [[ $TARGET = "js" ]]; then (
+      cd javascript &&
+      npm install &&
+      unset CC && unset CXX && unset LINK &&
+      source /tmp/emsdk_portable/emsdk_env.sh &&
+      npm run build:browser
+    ) fi
+
 script:
-    # C
-    - |
-      if [[ $TARGET = "c" ]]; then
-        buck test --verbose 0 //:yoga &&
-        buck run --verbose 0 //benchmark:benchmark &&
-        git checkout HEAD^ &&
-        buck run --verbose 0 //benchmark:benchmark;
-      fi
+  # C
+  - |
+    if [[ $TARGET = "c" ]]; then
+      buck test --verbose 0 //:yoga &&
+      buck run --verbose 0 //benchmark:benchmark &&
+      git checkout HEAD^ &&
+      buck run --verbose 0 //benchmark:benchmark
+    fi
 
-    # Java
-    - |
-      if [[ $TARGET = "java" ]]; then
-        buck test --verbose 0 //java:java;
-      fi
+  # Java
+  - |
+    if [[ $TARGET = "java" ]]; then
+      buck test --verbose 0 //java:java
+    fi
 
-    # .NET
-    - |
-      if [[ $TARGET = "net" ]]; then
-        sh csharp/tests/Facebook.Yoga/test_macos.sh;
-      fi
+  # .NET
+  - |
+    if [[ $TARGET = "net" ]]; then
+      sh csharp/tests/Facebook.Yoga/test_macos.sh
+    fi
 
-    # iOS
-    - |
-      if [[ $TARGET = "ios" ]]; then
-        buck test --verbose 0 //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64;
-      fi
+  # iOS
+  - |
+    if [[ $TARGET = "ios" ]]; then
+      buck test --verbose 0 //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64
+    fi
 
-    # JavaScript
-    - |
-      if [[ $TARGET = "js" ]]; then
-        npm run test:all &&
-        npm run bench;
-      fi
+  # Android
+  - |
+    if [[ $TARGET = "android" ]]; then
+      buck build --verbose 0 //android/sample:sample
+    fi
 
-    # Android
-    - |
-      if [[ $TARGET = "android" ]]; then
-        buck build --verbose 0 //android/sample:sample
-      fi
+  # JavaScript
+  - |
+    if [[ $TARGET = "js" ]]; then (
+      cd javascript &&
+      npm run test:all &&
+      npm run bench
+    ) fi
