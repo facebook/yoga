@@ -18,14 +18,6 @@ env:
   - TARGET=js
   - TARGET=android
 
-android:
-  components:
-    # The BuildTools version used by your project
-    - build-tools-19.1.0
-
-    # The SDK version used to compile your project
-    - android-22
-
 before_install:
   - brew update
   - brew tap facebook/fb
