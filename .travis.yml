@@ -64,7 +64,6 @@ before_install:
       brew cask install java;
       export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
       export PATH=$JAVA_HOME/bin:$PATH;
-      export ANDROID_SDK=$ANDROID_HOME
     fi
 
 script:
@@ -105,5 +104,6 @@ script:
     # Android
     - |
       if [[ $TARGET = "android" ]]; then
+        export ANDROID_SDK=$ANDROID_HOME
         buck build --verbose 0 //android/sample:sample
       fi
