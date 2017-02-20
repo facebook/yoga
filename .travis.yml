@@ -56,9 +56,9 @@ before_install:
   # Android
   - |
     if [[ $TARGET = "android" ]]; then
-      brew cask install java
+      brew cask install java &&
       export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) &&
-      export PATH=$JAVA_HOME/bin:$PATH &&
+      export PATH=$JAVA_HOME/bin:$PATH
     fi
 
   # JavaScript
