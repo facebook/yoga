@@ -260,6 +260,13 @@ public class YogaLayout extends ViewGroup {
       if (view.getVisibility() == GONE) {
         return;
       }
+      view.measure(
+          View.MeasureSpec.makeMeasureSpec(
+              Math.round(node.getLayoutWidth()),
+              View.MeasureSpec.EXACTLY),
+          View.MeasureSpec.makeMeasureSpec(
+              Math.round(node.getLayoutHeight()),
+              View.MeasureSpec.EXACTLY));
       view.layout(
           Math.round(xOffset + node.getLayoutX()),
           Math.round(yOffset + node.getLayoutY()),
@@ -286,10 +293,12 @@ public class YogaLayout extends ViewGroup {
   protected void onLayout(boolean changed, int l, int t, int r, int b) {
     // Either we are a root of a tree, or this function is called by our parent's onLayout, in which
     // case our r-l and b-t are the size of our node.
-    if (!(getParent() instanceof YogaLayout)) {
-      createLayout(
-          MeasureSpec.makeMeasureSpec(r - l, MeasureSpec.EXACTLY),
-          MeasureSpec.makeMeasureSpec(b - t, MeasureSpec.EXACTLY));
+    if (!(getParent() instanceof YogaLayout) &&
+        Math.round(mYogaNode.getLayoutHeight()) != b-t &&
+        Math.round(mYogaNode.getLayoutWidth()) != r-l) {
+        createLayout(
+            MeasureSpec.makeMeasureSpec(r - l, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(b - t, MeasureSpec.EXACTLY));
     }
 
     applyLayoutRecursive(mYogaNode, 0, 0);
