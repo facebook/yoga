@@ -7,7 +7,7 @@
 
 os: osx
 osx_image: xcode8.2
-language: cpp
+language: android
 compiler: clang
 
 env:
@@ -56,10 +56,6 @@ before_install:
       brew cask install java;
       export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
       export PATH=$JAVA_HOME/bin:$PATH;
-      brew install android-sdk;
-      export ANDROID_SDK=/usr/local/opt/android-sdk
-      export ANDROID_HOME=/usr/local/opt/android-sdk
-      $ANDROID_SDK/tools/android update sdk --filter android-19,addon-google_apis-google-19
     fi
 
 script:
