@@ -18,6 +18,12 @@ env:
   - TARGET=js
   - TARGET=android
 
+android:
+  components:
+    - build-tools-19.1.0
+    - android-19
+    - addon-google_apis-google-19
+
 before_install:
   - brew update > /dev/null
   - brew tap facebook/fb
