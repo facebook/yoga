@@ -2045,7 +2045,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   }
 
   const bool flexBasisOverflows =
-    measureModeMainDim == YGMeasureModeUndefined ? false : totalFlexBasis > availableInnerMainDim;
+      measureModeMainDim == YGMeasureModeUndefined ? false : totalFlexBasis > availableInnerMainDim;
   if (isNodeFlexWrap && flexBasisOverflows && measureModeMainDim == YGMeasureModeAtMost) {
     measureModeMainDim = YGMeasureModeExactly;
   }
@@ -2339,7 +2339,12 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                                           availableInnerCrossDim) +
                            marginCross;
           childCrossMeasureMode =
-              YGFloatIsUndefined(childCrossSize) ? YGMeasureModeUndefined : YGMeasureModeExactly;
+              YGFloatIsUndefined(childCrossSize) ||
+                      (currentRelativeChild->resolvedDimensions[dim[crossAxis]]->unit ==
+                           YGUnitPercent &&
+                       measureModeCrossDim != YGMeasureModeExactly)
+                  ? YGMeasureModeUndefined
+                  : YGMeasureModeExactly;
         }
 
         if (!YGFloatIsUndefined(currentRelativeChild->style.aspectRatio)) {
