@@ -1749,7 +1749,7 @@ TEST(YogaTest, align_content_stretch_column) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, align_content_stretch_different_web_browser) {
+TEST(YogaTest, align_content_stretch_is_not_overriding_align_items) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignContent(root, YGAlignStretch);
 

@@ -1772,7 +1772,7 @@ public class YGAlignContentTest {
   }
 
   @Test
-  public void test_align_content_stretch_different_web_browser() {
+  public void test_align_content_stretch_is_not_overriding_align_items() {
     final YogaNode root = new YogaNode();
     root.setAlignContent(YogaAlign.STRETCH);
 

@@ -1791,7 +1791,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void Test_align_content_stretch_different_web_browser()
+        public void Test_align_content_stretch_is_not_overriding_align_items()
         {
             YogaNode root = new YogaNode();
             root.AlignContent = YogaAlign.Stretch;

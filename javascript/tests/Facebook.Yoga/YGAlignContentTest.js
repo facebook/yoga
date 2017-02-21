@@ -1802,7 +1802,7 @@ it("align_content_stretch_column", function () {
     }
   }
 });
-it("align_content_stretch_different_web_browser", function () {
+it("align_content_stretch_is_not_overriding_align_items", function () {
   try {
     var root = Yoga.Node.create();
     root.setAlignContent(Yoga.ALIGN_STRETCH);
