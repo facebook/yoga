@@ -3286,6 +3286,9 @@ void YGNodeCalculateLayoutWithConfig(const YGNodeRef node,
                                      const float availableHeight,
                                      const YGDirection parentDirection,
                                      const YGConfigRef config) {
+  YG_ASSERT(config,
+            "You must provide a config, use YGNodeCalculateLayout if you want the defaults");
+
   // Increment the generation count. This will force the recursive routine to
   // visit
   // all dirty nodes at least once. Subsequent visits will be skipped if the
