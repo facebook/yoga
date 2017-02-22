@@ -54,8 +54,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
     this.pushIndent();
 
     if (experiments.length > 0) {
+      this.push('YGConfig config = new YGConfig();')
       for (var i in experiments) {
-        this.push('YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', true);');
+        this.push('config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', true);');
       }
       this.push('');
     }
@@ -66,12 +67,6 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestEpilogue:{value:function(experiments) {
-    if (experiments.length > 0) {
-      this.push('');
-      for (var i in experiments) {
-        this.push('YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.' + experiments[i] +', false);');
-      }
-    }
 
     this.popIndent();
     this.push([
@@ -144,7 +139,11 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeCalculateLayout:{value:function(node, dir, experiments) {
     this.push(node + '.StyleDirection = ' + dir + ';');
-    this.push(node + '.CalculateLayout();');
+    if(experiments.length > 0){
+      this.push(node + '.CalculateLayout(config);');
+    }else{
+      this.push(node + '.CalculateLayout();');
+    }
   }},
 
   YGNodeInsertChild:{value:function(parentName, nodeName, index) {
