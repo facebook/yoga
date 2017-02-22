@@ -31,7 +31,8 @@ static YGSize _measureCeil(YGNodeRef node,
 }
 
 TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
 
@@ -46,11 +47,12 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
 
@@ -65,5 +67,5 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }

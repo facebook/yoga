@@ -11,7 +11,8 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureWebFlexBasis, true);
 
   const YGNodeRef root = YGNodeNew();
 
@@ -20,14 +21,14 @@ TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
   YGNodeStyleSetFlexBasis(root_child0, 20);
   YGNodeInsertChild(root, root_child0, 0);
 
-  YGNodeCalculateLayout(root, 100, YGUndefined, YGDirectionLTR);
-  YGNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, 100, YGUndefined, YGDirectionLTR, config);
+  YGNodeCalculateLayoutWithConfig(root, 100, 100, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, recalculate_resolvedDimonsion_onchange) {

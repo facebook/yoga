@@ -41,8 +41,9 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     this.pushIndent();
 
     if (experiments.length > 0) {
+      this.push('const YGConfigRef config = YGConfigNew();')
       for (var i in experiments) {
-        this.push('YGSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', true);');
+        this.push('YGSetExperimentalFeatureEnabled(config, YGExperimentalFeature' + experiments[i] +', true);');
       }
       this.push('');
     }
@@ -60,9 +61,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
     if (experiments.length > 0) {
       this.push('');
-      for (var i in experiments) {
-        this.push('YGSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', false);');
-      }
+      this.push('YGConfigFree(config);')
     }
 
     this.popIndent();
@@ -128,7 +127,11 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
 
   YGNodeCalculateLayout:{value:function(node, dir) {
-    this.push('YGNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
+    if (experiments.length > 0) {
+      this.push('YGNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
+    }else{
+      this.push('YGNodeCalculateLayoutWithConfig(' + node + ', YGUndefined, YGUndefined, ' + dir + ', config);');
+    }
   }},
 
   YGNodeInsertChild:{value:function(parentName, nodeName, index) {
