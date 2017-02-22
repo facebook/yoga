@@ -423,6 +423,14 @@ static inline float YGResolveFlexGrow(const YGNodeRef node) {
   return 0.0f;
 }
 
+float YGNodeStyleGetFlexGrow(const YGNodeRef node) {
+  return YGFloatIsUndefined(node->style.flexGrow) ? 0.0f : node->style.flexGrow;
+}
+
+float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
+  return YGFloatIsUndefined(node->style.flexShrink) ? 0.0f : node->style.flexShrink;
+}
+
 static inline float YGNodeResolveFlexShrink(const YGNodeRef node) {
   if (!YGFloatIsUndefined(node->style.flexShrink)) {
     return node->style.flexShrink;
@@ -624,8 +632,8 @@ YG_NODE_STYLE_PROPERTY_IMPL(YGOverflow, Overflow, overflow, overflow);
 YG_NODE_STYLE_PROPERTY_IMPL(YGDisplay, Display, display, display);
 
 YG_NODE_STYLE_PROPERTY_IMPL(float, Flex, flex, flex);
-YG_NODE_STYLE_PROPERTY_IMPL(float, FlexGrow, flexGrow, flexGrow);
-YG_NODE_STYLE_PROPERTY_IMPL(float, FlexShrink, flexShrink, flexShrink);
+YG_NODE_STYLE_PROPERTY_SETTER_IMPL(float, FlexGrow, flexGrow, flexGrow);
+YG_NODE_STYLE_PROPERTY_SETTER_IMPL(float, FlexShrink, flexShrink, flexShrink);
 YG_NODE_STYLE_PROPERTY_UNIT_AUTO_IMPL(YGValue, FlexBasis, flexBasis, flexBasis);
 
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Position, position, position);
