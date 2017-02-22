@@ -141,7 +141,7 @@ typedef struct YGNode {
 #define YG_DEFAULT_DIMENSION_VALUES_AUTO_UNIT \
   { [YGDimensionWidth] = YG_AUTO_VALUES, [YGDimensionHeight] = YG_AUTO_VALUES, }
 
-static YGNode gYGNodeDefaults = {
+static const YGNode gYGNodeDefaults = {
     .parent = NULL,
     .children = NULL,
     .hasNewLayout = true,
@@ -190,7 +190,7 @@ static YGNode gYGNodeDefaults = {
         },
 };
 
-static YGConfig gYGConfigDefaults = {
+static const YGConfig gYGConfigDefaults = {
     .experimentalFeatures =
         {
                 [YGExperimentalFeatureRounding] = false,
@@ -300,8 +300,6 @@ int32_t gNodeInstanceCount = 0;
 YGNodeRef YGNodeNew(void) {
   const YGNodeRef node = gYGMalloc(sizeof(YGNode));
   YG_ASSERT(node, "Could not allocate memory for node");
-  gNodeInstanceCount++;
-
   memcpy(node, &gYGNodeDefaults, sizeof(YGNode));
   return node;
 }
@@ -3360,7 +3358,7 @@ void YGLog(YGLogLevel level, const char *format, ...) {
   va_end(args);
 }
 
-void YGSetExperimentalFeatureEnabled(YGConfigRef config,
+void YGSetExperimentalFeatureEnabled(const YGConfigRef config,
                                      YGExperimentalFeature feature,
                                      bool enabled) {
   config->experimentalFeatures[feature] = enabled;

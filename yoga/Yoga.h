@@ -230,7 +230,7 @@ WIN_EXPORT void YGLog(YGLogLevel level, const char *message, ...);
 WIN_EXPORT YGConfigRef YGConfigNew(void);
 WIN_EXPORT void YGConfigFree(const YGConfigRef config);
 
-WIN_EXPORT void YGSetExperimentalFeatureEnabled(YGConfigRef config,
+WIN_EXPORT void YGSetExperimentalFeatureEnabled(const YGConfigRef config,
                                                 YGExperimentalFeature feature,
                                                 bool enabled);
 WIN_EXPORT bool YGIsExperimentalFeatureEnabled(const YGConfigRef config,
