@@ -25,9 +25,9 @@ TEST(YogaTest, assert_default_values) {
   ASSERT_EQ(YGPositionTypeRelative, YGNodeStyleGetPositionType(root));
   ASSERT_EQ(YGWrapNoWrap, YGNodeStyleGetFlexWrap(root));
   ASSERT_EQ(YGOverflowVisible, YGNodeStyleGetOverflow(root));
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexGrow(root));
-  ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexShrink(root));
-  ASSERT_FALSE(YGNodeStyleGetFlexBasis(root).unit != YGUnitAuto);
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetFlexGrow(root)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeStyleGetFlexShrink(root)));
+  ASSERT_EQ(YGNodeStyleGetFlexBasis(root).unit, YGUnitAuto);
 
   ASSERT_EQ(YGNodeStyleGetPosition(root, YGEdgeLeft).unit, YGUnitUndefined);
   ASSERT_EQ(YGNodeStyleGetPosition(root, YGEdgeTop).unit, YGUnitUndefined);

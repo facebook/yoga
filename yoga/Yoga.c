@@ -413,7 +413,7 @@ void YGNodeCopyStyle(const YGNodeRef dstNode, const YGNodeRef srcNode) {
   }
 }
 
-inline float YGNodeStyleGetFlexGrow(const YGNodeRef node) {
+static inline float YGResolveFlexGrow(const YGNodeRef node) {
   if (!YGFloatIsUndefined(node->style.flexGrow)) {
     return node->style.flexGrow;
   }
@@ -423,7 +423,7 @@ inline float YGNodeStyleGetFlexGrow(const YGNodeRef node) {
   return 0.0f;
 }
 
-inline float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
+static inline float YGNodeResolveFlexShrink(const YGNodeRef node) {
   if (!YGFloatIsUndefined(node->style.flexShrink)) {
     return node->style.flexShrink;
   }
@@ -433,7 +433,7 @@ inline float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
   return 0.0f;
 }
 
-static inline const YGValue *YGNodeStyleGetFlexBasisPtr(const YGNodeRef node) {
+static inline const YGValue *YGNodeResolveFlexBasisPtr(const YGNodeRef node) {
   if (node->style.flexBasis.unit != YGUnitAuto && node->style.flexBasis.unit != YGUnitUndefined) {
     return &node->style.flexBasis;
   }
@@ -441,10 +441,6 @@ static inline const YGValue *YGNodeStyleGetFlexBasisPtr(const YGNodeRef node) {
     return &YGValueZero;
   }
   return &YGValueAuto;
-}
-
-inline YGValue YGNodeStyleGetFlexBasis(const YGNodeRef node) {
-  return *YGNodeStyleGetFlexBasisPtr(node);
 }
 
 void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
@@ -634,9 +630,9 @@ YG_NODE_STYLE_PROPERTY_IMPL(YGWrap, FlexWrap, flexWrap, flexWrap);
 YG_NODE_STYLE_PROPERTY_IMPL(YGOverflow, Overflow, overflow, overflow);
 YG_NODE_STYLE_PROPERTY_IMPL(YGDisplay, Display, display, display);
 
-YG_NODE_STYLE_PROPERTY_SETTER_IMPL(float, FlexGrow, flexGrow, flexGrow);
-YG_NODE_STYLE_PROPERTY_SETTER_IMPL(float, FlexShrink, flexShrink, flexShrink);
-YG_NODE_STYLE_PROPERTY_SETTER_UNIT_AUTO_IMPL(float, FlexBasis, flexBasis, flexBasis);
+YG_NODE_STYLE_PROPERTY_IMPL(float, FlexGrow, flexGrow, flexGrow);
+YG_NODE_STYLE_PROPERTY_IMPL(float, FlexShrink, flexShrink, flexShrink);
+YG_NODE_STYLE_PROPERTY_UNIT_AUTO_IMPL(YGValue, FlexBasis, flexBasis, flexBasis);
 
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Position, position, position);
 YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(YGValue, Margin, margin, margin);
@@ -816,9 +812,9 @@ static void YGNodePrintInternal(const YGNodeRef node,
       YGLog(YGLogLevelDebug, "alignSelf: 'stretch', ");
     }
 
-    YGPrintNumberIfNotUndefinedf("flexGrow", YGNodeStyleGetFlexGrow(node));
-    YGPrintNumberIfNotUndefinedf("flexShrink", YGNodeStyleGetFlexShrink(node));
-    YGPrintNumberIfNotUndefined("flexBasis", YGNodeStyleGetFlexBasisPtr(node));
+    YGPrintNumberIfNotUndefinedf("flexGrow", YGResolveFlexGrow(node));
+    YGPrintNumberIfNotUndefinedf("flexShrink", YGNodeResolveFlexShrink(node));
+    YGPrintNumberIfNotUndefined("flexBasis", YGNodeResolveFlexBasisPtr(node));
 
     if (node->style.overflow == YGOverflowHidden) {
       YGLog(YGLogLevelDebug, "overflow: 'hidden', ");
@@ -1121,7 +1117,7 @@ static YGFlexDirection YGFlexDirectionCross(const YGFlexDirection flexDirection,
 
 static inline bool YGNodeIsFlex(const YGNodeRef node) {
   return (node->style.positionType == YGPositionTypeRelative &&
-          (YGNodeStyleGetFlexGrow(node) != 0 || YGNodeStyleGetFlexShrink(node) != 0));
+          (YGResolveFlexGrow(node) != 0 || YGNodeResolveFlexShrink(node) != 0));
 }
 
 static bool YGIsBaselineLayout(const YGNodeRef node) {
@@ -1330,7 +1326,7 @@ static void YGNodeComputeFlexBasisForChild(const YGNodeRef node,
   YGMeasureMode childHeightMeasureMode;
 
   const float resolvedFlexBasis =
-      YGValueResolve(YGNodeStyleGetFlexBasisPtr(child), mainAxisParentSize);
+      YGValueResolve(YGNodeResolveFlexBasisPtr(child), mainAxisParentSize);
   const bool isRowStyleDimDefined = YGNodeIsStyleDimDefined(child, YGFlexDirectionRow, parentWidth);
   const bool isColumnStyleDimDefined =
       YGNodeIsStyleDimDefined(child, YGFlexDirectionColumn, parentHeight);
@@ -1983,7 +1979,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
           singleFlexChild = NULL;
           break;
         }
-      } else if (YGNodeStyleGetFlexGrow(child) > 0.0f && YGNodeStyleGetFlexShrink(child) > 0.0f) {
+      } else if (YGResolveFlexGrow(child) > 0.0f && YGNodeResolveFlexShrink(child) > 0.0f) {
         singleFlexChild = child;
       }
     }
@@ -2112,13 +2108,13 @@ static void YGNodelayoutImpl(const YGNodeRef node,
         itemsOnLine++;
 
         if (YGNodeIsFlex(child)) {
-          totalFlexGrowFactors += YGNodeStyleGetFlexGrow(child);
+          totalFlexGrowFactors += YGResolveFlexGrow(child);
 
           // Unlike the grow factor, the shrink factor is scaled relative to the
           // child
           // dimension.
           totalFlexShrinkScaledFactors +=
-              -YGNodeStyleGetFlexShrink(child) * child->layout.computedFlexBasis;
+              -YGNodeResolveFlexShrink(child) * child->layout.computedFlexBasis;
         }
 
         // Store a private linked list of children that need to be layed out.
@@ -2212,7 +2208,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
         childFlexBasis = currentRelativeChild->layout.computedFlexBasis;
 
         if (remainingFreeSpace < 0) {
-          flexShrinkScaledFactor = -YGNodeStyleGetFlexShrink(currentRelativeChild) * childFlexBasis;
+          flexShrinkScaledFactor = -YGNodeResolveFlexShrink(currentRelativeChild) * childFlexBasis;
 
           // Is this child able to shrink?
           if (flexShrinkScaledFactor != 0) {
@@ -2236,7 +2232,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
             }
           }
         } else if (remainingFreeSpace > 0) {
-          flexGrowFactor = YGNodeStyleGetFlexGrow(currentRelativeChild);
+          flexGrowFactor = YGResolveFlexGrow(currentRelativeChild);
 
           // Is this child able to grow?
           if (flexGrowFactor != 0) {
@@ -2275,7 +2271,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
         float updatedMainSize = childFlexBasis;
 
         if (remainingFreeSpace < 0) {
-          flexShrinkScaledFactor = -YGNodeStyleGetFlexShrink(currentRelativeChild) * childFlexBasis;
+          flexShrinkScaledFactor = -YGNodeResolveFlexShrink(currentRelativeChild) * childFlexBasis;
           // Is this child able to shrink?
           if (flexShrinkScaledFactor != 0) {
             float childSize;
@@ -2295,7 +2291,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                                               availableInnerWidth);
           }
         } else if (remainingFreeSpace > 0) {
-          flexGrowFactor = YGNodeStyleGetFlexGrow(currentRelativeChild);
+          flexGrowFactor = YGResolveFlexGrow(currentRelativeChild);
 
           // Is this child able to grow?
           if (flexGrowFactor != 0) {
