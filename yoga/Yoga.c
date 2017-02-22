@@ -347,7 +347,7 @@ int32_t YGNodeGetInstanceCount(void) {
 
 YGConfigRef YGConfigNew(void) {
   const YGConfigRef config = gYGMalloc(sizeof(YGConfig));
-  YG_ASSERT(config, "Could not allocate memory for node");
+  YG_ASSERT(config, "Could not allocate memory for config");
   gNodeInstanceCount++;
 
   memcpy(config, &gYGConfigDefaults, sizeof(YGConfig));
