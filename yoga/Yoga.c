@@ -443,13 +443,6 @@ static inline const YGValue *YGNodeResolveFlexBasisPtr(const YGNodeRef node) {
   return &YGValueAuto;
 }
 
-void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
-  if (node->style.flex != flex) {
-    node->style.flex = flex;
-    YGNodeMarkDirtyInternal(node);
-  }
-}
-
 #define YG_NODE_PROPERTY_IMPL(type, name, paramName, instanceName) \
   void YGNodeSet##name(const YGNodeRef node, type paramName) {     \
     node->instanceName = paramName;                                \
@@ -630,6 +623,7 @@ YG_NODE_STYLE_PROPERTY_IMPL(YGWrap, FlexWrap, flexWrap, flexWrap);
 YG_NODE_STYLE_PROPERTY_IMPL(YGOverflow, Overflow, overflow, overflow);
 YG_NODE_STYLE_PROPERTY_IMPL(YGDisplay, Display, display, display);
 
+YG_NODE_STYLE_PROPERTY_IMPL(float, Flex, flex, flex);
 YG_NODE_STYLE_PROPERTY_IMPL(float, FlexGrow, flexGrow, flexGrow);
 YG_NODE_STYLE_PROPERTY_IMPL(float, FlexShrink, flexShrink, flexShrink);
 YG_NODE_STYLE_PROPERTY_UNIT_AUTO_IMPL(YGValue, FlexBasis, flexBasis, flexBasis);
