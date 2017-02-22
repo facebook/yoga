@@ -3276,8 +3276,7 @@ static void YGRoundToPixelGrid(const YGNodeRef node) {
 void YGNodeCalculateLayout(const YGNodeRef node,
                            const float availableWidth,
                            const float availableHeight,
-                           const YGDirection parentDirection,
-                           const YGConfigRef config) {
+                           const YGDirection parentDirection) {
   YGNodeCalculateLayoutWithConfig(
       node, availableWidth, availableHeight, parentDirection, &gYGConfigDefaults);
 }
