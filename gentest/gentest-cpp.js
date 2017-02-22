@@ -126,11 +126,11 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGAuto:{value:'YGAuto'},
 
 
-  YGNodeCalculateLayout:{value:function(node, dir) {
+  YGNodeCalculateLayout:{value:function(node, dir, experiments) {
     if (experiments.length > 0) {
-      this.push('YGNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
-    }else{
       this.push('YGNodeCalculateLayoutWithConfig(' + node + ', YGUndefined, YGUndefined, ' + dir + ', config);');
+    }else{
+      this.push('YGNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
     }
   }},
 
