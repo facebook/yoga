@@ -35,7 +35,7 @@ Once you have set up a tree of nodes with styles you will want to get the result
 
 ### Custom measurements
 
-Certain nodes need to ability to measure themselves, the most common example is nodes which represent text. Text has an intrinsic size and requires measuring itself to determine that size. This is not something Yoga can do as it requires relying on the host system's text rendering engine.
+Certain nodes need the ability to measure themselves, the most common example is nodes which represent text. Text has an intrinsic size and requires measuring itself to determine that size. This is not something Yoga can do as it requires relying on the host system's text rendering engine.
 
 - Call `YGNodeMarkDirty` if a node with a custom text measurement function needs to be re-measured during the next layout pass.
 
