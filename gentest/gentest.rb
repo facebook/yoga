@@ -9,7 +9,7 @@ caps = Selenium::WebDriver::Remote::Capabilities.chrome(
     "performance"=>"ALL"
   }
 )
-browser = Watir::Browser.new(:chrome, :desired_capabilities => caps)
+browser = Watir::Browser.new(:chrome, :desired_capabilities => caps, :switches => ['--force-device-scale-factor=1', '--window-position=0,0'])
 Dir.chdir(File.dirname($0))
 
 Dir['fixtures/*.html'].each do |file|
