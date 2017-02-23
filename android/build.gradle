@@ -7,13 +7,7 @@ targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
 
 version = '1.0.0'
-group = 'com.facebook.yoga'
-
-// We currently build the native libraries with buck and bundle them together
-// at this point into the AAR
-task buckBuildAndCopy(type: Exec) {
-    commandLine '../scripts/build_natives_for_gradle.sh'
-}
+group = 'com.facebook.yoga.android'
 
 android {
     compileSdkVersion 19
@@ -29,21 +23,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
-    sourceSets {
-        main {
-            java.srcDir 'com'
-            manifest.srcFile 'AndroidManifest.xml'
-            res.srcDirs = ['res']
-            jniLibs.srcDirs = ['build/buck-out/jniLibs']
-        }
+    sourceSets.main {
+        jni.srcDirs = [] // disalbe NDK auto build (not sure why this is necessary)
+        // The alternative, fat-aar does an equivalent thing to this hack
+        // seehttps://github.com/adwiv/android-fat-aar/blob/master/fat-aar.gradle#L307
+        jniLibs.srcDirs = ['build/intermediates/exploded-aar/com.facebook.yoga/yoga/1.0.0/jni']
     }
 }
 
-preBuild.dependsOn buckBuildAndCopy
-
 dependencies {
-    compile(name: 'jsr305')
-    compile(name: 'soloader-0.1.0', ext: 'aar')
+    compile project(':yoga')
 }
 
 task sourcesJar(type: Jar) {
@@ -64,7 +53,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 ext {
-    bintrayName = "com.facebook.yoga:yoga"
+    bintrayName = "com.facebook.yoga.android:yoga-layout"
 }
 
 apply from: rootProject.file('gradle/android-jcenter-install.gradle')

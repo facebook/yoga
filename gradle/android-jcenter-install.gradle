@@ -1,0 +1,81 @@
+ext {
+    bintrayUserOrg = 'facebook'
+    bintrayRepo = 'maven'
+    siteURL = "https://facebook.github.io/yoga/"
+    projectLicenses = {
+        license {
+            name 'BSD License'
+            url 'https://github.com/facebook/yoga/blob/master/LICENSE'
+            distribution 'repo'
+        }
+    }
+}
+
+def getBintrayUsername() {
+    return hasProperty('bintrayUsername') ? property('bintrayUsername') : System.getenv('BINTRAY_USERNAME')
+}
+
+def getBintrayApiKey() {
+    return hasProperty('bintrayApiKey') ? property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+}
+
+def getBintrayGpgPassword() {
+    return hasProperty('bintrayGpgPassword') ? property('bintrayGpgPassword') : System.getenv('BINTRAY_GPG_PASSWORD')
+}
+
+def dryRunOnly() {
+    return hasProperty('dryRun') ? property('dryRun').toBoolean() : false 
+}
+
+def pomConfig = {
+    licenses  {
+        // TODO Can we grab this from above?
+        license {
+            name 'BSD License'
+            url 'https://github.com/facebook/yoga/blob/master/LICENSE'
+            distribution 'repo'
+        }
+    }
+}
+
+publishing {
+    publications {
+        primaryPublication(MavenPublication) {
+          groupId group
+          artifact(sourcesJar)
+          artifact(javadocJar)
+          pom.withXml {
+              def root = asNode()
+              root.appendNode('name', 'Yoga')
+              root.appendNode('url', siteURL)
+              root.children().last() + pomConfig
+          }
+        }
+    }
+}
+
+
+bintray {
+    user = getBintrayUsername()
+    key = getBintrayApiKey()
+    publications = ['primaryPublication']
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        userOrg = bintrayUserOrg
+        name = project.bintrayName
+        dryRun = dryRunOnly()
+        licenses = projectLicenses
+        override = true
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            name = project.version
+            released = new Date()
+            gpg {
+                sign = true
+                passphrase = getBintrayGpgPassword()
+            }
+        }
+    }
+}

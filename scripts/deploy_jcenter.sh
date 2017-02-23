@@ -1,8 +1,14 @@
 #!/bin/bash
 set -e
+echo -e "\033[1;34m** We can deploy two libraries\n** (1) Java bindings to Yoga\n** (2) Android YogaLayout\n** Which do you want to ship today? \033[0m"
+read -p "" -n 1 mod
+case $mod in
+  1 ) MODULE="java";;
+  2 ) MODULE="android";;
+  * ) echo -e "\n\033[1;34m** Invalid selection" && exit
+  esac
 
-echo
-echo -e "\033[1;34m** We'll need your Bintray credentials. If you don't remember them go to https://bintray.com/profile/edit\033[0m"
+echo -e "\n\033[1;34m** We'll need your Bintray credentials. If you don't remember them go to https://bintray.com/profile/edit\033[0m"
 
 echo -e "\033[1;34m** [1/3] Please enter your Bintray username (probably not your email address): \033[0m"
 read -r BINTRAY_USER
@@ -15,7 +21,8 @@ uploadcmd="gradle clean build bintrayUpload --info -PbintrayUsername='$BINTRAY_U
 
 echo
 echo -e "\033[1;34m** Dry run\033[0m"
-(cd java; eval "$uploadcmd -PdryRun=true")
+
+(cd $MODULE ; eval "$uploadcmd -PdryRun=true")
 
 echo
 echo -e "\033[1;34m** Are you happy to conintue?: [yN]\033[0m"
@@ -27,4 +34,5 @@ read -p "" -n 1 yn
 
 echo
 echo -e "\033[1;34m** Publishing\033[0m"
-eval "$uploadcmd"
+
+(cd $MODULE ; eval "$uploadcmd")
