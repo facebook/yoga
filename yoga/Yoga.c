@@ -2338,13 +2338,12 @@ static void YGNodelayoutImpl(const YGNodeRef node,
           childCrossSize = YGValueResolve(currentRelativeChild->resolvedDimensions[dim[crossAxis]],
                                           availableInnerCrossDim) +
                            marginCross;
-          childCrossMeasureMode =
-              YGFloatIsUndefined(childCrossSize) ||
-                      (currentRelativeChild->resolvedDimensions[dim[crossAxis]]->unit ==
-                           YGUnitPercent &&
-                       measureModeCrossDim != YGMeasureModeExactly)
-                  ? YGMeasureModeUndefined
-                  : YGMeasureModeExactly;
+          const bool isLoosePercentageMeasurement =
+              currentRelativeChild->resolvedDimensions[dim[crossAxis]]->unit == YGUnitPercent &&
+              measureModeCrossDim != YGMeasureModeExactly;
+          childCrossMeasureMode = YGFloatIsUndefined(childCrossSize) || isLoosePercentageMeasurement
+                                      ? YGMeasureModeUndefined
+                                      : YGMeasureModeExactly;
         }
 
         if (!YGFloatIsUndefined(currentRelativeChild->style.aspectRatio)) {
