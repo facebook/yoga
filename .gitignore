@@ -60,3 +60,6 @@ Pods/
 # Carthage/Checkouts
 
 Carthage/Build
+
+# Gradle
+.gradle

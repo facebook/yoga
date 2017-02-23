@@ -1,0 +1,148 @@
+apply plugin: "com.jfrog.bintray"
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
+
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
+
+version = '1.0.0'
+group = 'com.facebook.yoga'
+
+// We currently build the native libraries with buck and bundle them together
+// at this point into the AAR
+task buckBuildAndCopy(type: Exec) {
+  commandLine '../scripts/build_natives_for_gradle.sh'
+}
+
+android {
+  compileSdkVersion 19
+  buildToolsVersion "19.1.0"
+
+  defaultConfig {
+      minSdkVersion 15
+      targetSdkVersion 19
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
+
+  sourceSets {
+    main {
+      java.srcDir 'com'
+      manifest.srcFile 'AndroidManifest.xml'
+      res.srcDirs = ['res']
+      jniLibs.srcDirs = ['build/buck-out/jniLibs']
+    }
+  }
+}
+
+preBuild.dependsOn buckBuildAndCopy
+
+dependencies {
+  compile(name: 'jsr305')
+  compile(name: 'soloader-0.1.0', ext: 'aar')
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'source'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayUserOrg = 'facebook'
+    bintrayName = "com.facebook.yoga:yoga"
+    siteURL = "https://facebook.github.io/yoga/"
+    projectLicenses = {
+        license {
+            name 'BSD License'
+            url 'https://github.com/facebook/yoga/blob/master/LICENSE'
+            distribution 'repo'
+        }
+    }
+}
+
+
+def pomConfig = {
+    licenses  {
+        // TODO Can we grab this from above?
+        license {
+            name 'BSD License'
+            url 'https://github.com/facebook/yoga/blob/master/LICENSE'
+            distribution 'repo'
+        }
+    }
+}
+
+publishing {
+  publications {
+    yoga(MavenPublication) {
+      groupId group
+      artifact(sourcesJar)
+      artifact(javadocJar)
+      pom.withXml {
+          def root = asNode()
+          root.appendNode('name', 'Yoga')
+          root.appendNode('url', siteURL)
+          root.children().last() + pomConfig
+      }
+    }
+  }
+}
+
+bintray {
+    user = getBintrayUsername()
+    key = getBintrayApiKey()
+    publications = ['yoga']
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        userOrg = bintrayUserOrg
+        name = bintrayName
+        dryRun = dryRunOnly()
+        licenses = projectLicenses
+        override = true
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            name = version
+            released = new Date()
+            gpg {
+                sign = true
+                passphrase = getBintrayGpgPassword()
+            }
+        }
+    }
+}
+
+
+def getBintrayUsername() {
+    return hasProperty('bintrayUsername') ? property('bintrayUsername') : System.getenv('BINTRAY_USERNAME')
+}
+
+def getBintrayApiKey() {
+    return hasProperty('bintrayApiKey') ? property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+}
+
+def getBintrayGpgPassword() {
+    return hasProperty('bintrayGpgPassword') ? property('bintrayGpgPassword') : System.getenv('BINTRAY_GPG_PASSWORD')
+}
+
+def dryRunOnly() {
+    return hasProperty('dryRun') ? property('dryRun').toBoolean() : false 
+}

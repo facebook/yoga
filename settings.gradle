@@ -1,0 +1,2 @@
+include ':yoga'
+project(':yoga').projectDir = file('java')

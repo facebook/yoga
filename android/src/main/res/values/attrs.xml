@@ -14,27 +14,27 @@
 
     <attr name="align_content" format="enum">
       <enum name="auto" value="0"/>
-      <enum name="flex-start" value="1"/>
+      <enum name="flex_start" value="1"/>
       <enum name="center" value="2"/>
-      <enum name="flex-end" value="3"/>
+      <enum name="flex_end" value="3"/>
       <enum name="stretch" value="4"/>
       <enum name="baseline" value="5"/>
     </attr>
 
     <attr name="align_items" format="enum">
       <enum name="auto" value="0"/>
-      <enum name="flex-start" value="1"/>
+      <enum name="flex_start" value="1"/>
       <enum name="center" value="2"/>
-      <enum name="flex-end" value="3"/>
+      <enum name="flex_end" value="3"/>
       <enum name="stretch" value="4"/>
       <enum name="baseline" value="5"/>
     </attr>
 
     <attr name="align_self" format="enum">
       <enum name="auto" value="0"/>
-      <enum name="flex-start" value="1"/>
+      <enum name="flex_start" value="1"/>
       <enum name="center" value="2"/>
-      <enum name="flex-end" value="3"/>
+      <enum name="flex_end" value="3"/>
       <enum name="stretch" value="4"/>
       <enum name="baseline" value="5"/>
     </attr>
@@ -65,9 +65,9 @@
 
     <attr name="flex_direction" format="enum">
       <enum name="column" value="0"/>
-      <enum name="column-reverse" value="1"/>
+      <enum name="column_reverse" value="1"/>
       <enum name="row" value="2"/>
-      <enum name="row-reverse" value="3"/>
+      <enum name="row_reverse" value="3"/>
     </attr>
 
     <attr name="flex_grow" format="float"/>
@@ -79,11 +79,11 @@
     <attr name="height_percent" format="float"/>
 
     <attr name="justify_content" format="enum">
-      <enum name="flex-start" value="0"/>
+      <enum name="flex_start" value="0"/>
       <enum name="center" value="1"/>
-      <enum name="flex-end" value="2"/>
-      <enum name="space-between" value="3"/>
-      <enum name="space-around" value="4"/>
+      <enum name="flex_end" value="2"/>
+      <enum name="space_between" value="3"/>
+      <enum name="space_around" value="4"/>
     </attr>
 
     <attr name="margin_left" format="dimension"/>
@@ -178,7 +178,7 @@
     <attr name="width_percent" format="float"/>
 
     <attr name="wrap" format="enum">
-      <enum name="no-wrap" value="0"/>
+      <enum name="no_wrap" value="0"/>
       <enum name="wrap" value="1"/>
     </attr>
   </declare-styleable>

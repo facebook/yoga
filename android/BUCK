@@ -9,7 +9,7 @@ include_defs('//YOGA_DEFS')
 
 android_aar(
   name = 'android',
-  manifest_skeleton = 'AndroidManifest.xml',
+  manifest_skeleton = 'src/main/AndroidManifest.xml',
   deps = [
     ANDROID_JAVA_TARGET,
     ANDROID_RES_TARGET,
