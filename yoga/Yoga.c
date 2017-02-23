@@ -139,6 +139,9 @@ typedef struct YGNode {
 #define YG_DEFAULT_DIMENSION_VALUES_AUTO_UNIT \
   { [YGDimensionWidth] = YG_AUTO_VALUES, [YGDimensionHeight] = YG_AUTO_VALUES, }
 
+static const float kDefaultFlexGrow = 0.0f;
+static const float kDefaultFlexShrink = 0.0f;
+
 static YGNode gYGNodeDefaults = {
     .parent = NULL,
     .children = NULL,
@@ -420,15 +423,15 @@ static inline float YGResolveFlexGrow(const YGNodeRef node) {
   if (!YGFloatIsUndefined(node->style.flex) && node->style.flex > 0.0f) {
     return node->style.flex;
   }
-  return 0.0f;
+  return kDefaultFlexGrow;
 }
 
 float YGNodeStyleGetFlexGrow(const YGNodeRef node) {
-  return YGFloatIsUndefined(node->style.flexGrow) ? 0.0f : node->style.flexGrow;
+  return YGFloatIsUndefined(node->style.flexGrow) ? kDefaultFlexGrow : node->style.flexGrow;
 }
 
 float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
-  return YGFloatIsUndefined(node->style.flexShrink) ? 0.0f : node->style.flexShrink;
+  return YGFloatIsUndefined(node->style.flexShrink) ? kDefaultFlexShrink : node->style.flexShrink;
 }
 
 static inline float YGNodeResolveFlexShrink(const YGNodeRef node) {
@@ -438,7 +441,7 @@ static inline float YGNodeResolveFlexShrink(const YGNodeRef node) {
   if (!YGFloatIsUndefined(node->style.flex) && node->style.flex < 0.0f) {
     return -node->style.flex;
   }
-  return 0.0f;
+  return kDefaultFlexShrink;
 }
 
 static inline const YGValue *YGNodeResolveFlexBasisPtr(const YGNodeRef node) {
