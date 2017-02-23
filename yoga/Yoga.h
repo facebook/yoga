@@ -231,10 +231,10 @@ WIN_EXPORT YGConfigRef YGConfigNew(void);
 WIN_EXPORT void YGConfigFree(const YGConfigRef config);
 
 WIN_EXPORT void YGSetExperimentalFeatureEnabled(const YGConfigRef config,
-                                                YGExperimentalFeature feature,
-                                                bool enabled);
+                                                const YGExperimentalFeature feature,
+                                                const bool enabled);
 WIN_EXPORT bool YGIsExperimentalFeatureEnabled(const YGConfigRef config,
-                                               YGExperimentalFeature feature);
+                                               const YGExperimentalFeature feature);
 
 WIN_EXPORT void
 YGSetMemoryFuncs(YGMalloc ygmalloc, YGCalloc yccalloc, YGRealloc ygrealloc, YGFree ygfree);

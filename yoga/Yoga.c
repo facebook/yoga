@@ -3357,13 +3357,13 @@ void YGLog(YGLogLevel level, const char *format, ...) {
 }
 
 void YGSetExperimentalFeatureEnabled(const YGConfigRef config,
-                                     YGExperimentalFeature feature,
-                                     bool enabled) {
+                                     const YGExperimentalFeature feature,
+                                     const bool enabled) {
   config->experimentalFeatures[feature] = enabled;
 }
 
 inline bool YGIsExperimentalFeatureEnabled(const YGConfigRef config,
-                                           YGExperimentalFeature feature) {
+                                           const YGExperimentalFeature feature) {
   return config->experimentalFeatures[feature];
 }
 
