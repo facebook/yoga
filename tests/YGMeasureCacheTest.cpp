@@ -19,8 +19,8 @@ static YGSize _measureMax(YGNodeRef node,
   (*measureCount)++;
 
   return YGSize{
-      width = widthMode == YGMeasureModeUndefined ? 10 : width,
-      height = heightMode == YGMeasureModeUndefined ? 10 : height,
+      .width = widthMode == YGMeasureModeUndefined ? 10 : width,
+      .height = heightMode == YGMeasureModeUndefined ? 10 : height,
   };
 }
 
@@ -32,11 +32,11 @@ static YGSize _measureMin(YGNodeRef node,
   int *measureCount = (int *) YGNodeGetContext(node);
   *measureCount = *measureCount + 1;
   return YGSize{
-      width =
+      .width =
           widthMode == YGMeasureModeUndefined || (widthMode == YGMeasureModeAtMost && width > 10)
               ? 10
               : width,
-      height =
+      .height =
           heightMode == YGMeasureModeUndefined || (heightMode == YGMeasureModeAtMost && height > 10)
               ? 10
               : height,
@@ -54,7 +54,7 @@ static YGSize _measure_84_49(YGNodeRef node,
   }
 
   return YGSize{
-      width = 84.f, height = 49.f,
+      .width = 84.f, .height = 49.f,
   };
 }
 
