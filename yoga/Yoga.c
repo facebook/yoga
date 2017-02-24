@@ -95,11 +95,11 @@ typedef struct YGStyle {
   float aspectRatio;
 } YGStyle;
 
-typedef enum YGDirtyness {
-  YGDirtynessIsNotDirty = 0,
-  YGDirtynessHasDirtyChildren = 1,
-  YGDirtynessNeedsFullRelayout = 2,
-} YGDirtyness;
+typedef enum YGDirtiness {
+  YGDirtinessIsNotDirty = 0,
+  YGDirtinessHasDirtyChildren = 1,
+  YGDirtinessNeedsFullRelayout = 2,
+} YGDirtiness;
 
 typedef struct YGNode {
   YGStyle style;
@@ -116,7 +116,7 @@ typedef struct YGNode {
   YGPrintFunc print;
   void *context;
 
-  YGDirtyness dirtynessLevel;
+  YGDirtiness dirtinessLevel;
   bool hasNewLayout;
 
   YGValue const *resolvedDimensions[2];
@@ -150,7 +150,7 @@ static YGNode gYGNodeDefaults = {
     .parent = NULL,
     .children = NULL,
     .hasNewLayout = true,
-    .dirtynessLevel = YGDirtynessIsNotDirty,
+    .dirtinessLevel = YGDirtinessIsNotDirty,
     .resolvedDimensions = {[YGDimensionWidth] = &YGValueUndefined,
                            [YGDimensionHeight] = &YGValueUndefined},
 
@@ -188,7 +188,7 @@ static YGNode gYGNodeDefaults = {
         },
 };
 
-static void YGNodeMarkDirtyInternal(const YGNodeRef node, const YGDirtyness level);
+static void YGNodeMarkDirtyInternal(const YGNodeRef node, const YGDirtiness level);
 
 YGMalloc gYGMalloc = &malloc;
 YGCalloc gYGCalloc = &calloc;
@@ -335,12 +335,12 @@ int32_t YGNodeGetInstanceCount(void) {
   return gNodeInstanceCount;
 }
 
-static void YGNodeMarkDirtyInternal(const YGNodeRef node, const enum YGDirtyness level) {
-  if (node->dirtynessLevel < level) {
-    node->dirtynessLevel |= level;
+static void YGNodeMarkDirtyInternal(const YGNodeRef node, const enum YGDirtiness level) {
+  if (node->dirtinessLevel < level) {
+    node->dirtinessLevel |= level;
     node->layout.computedFlexBasis = YGUndefined;
     if (node->parent) {
-      YGNodeMarkDirtyInternal(node->parent, YGDirtynessHasDirtyChildren);
+      YGNodeMarkDirtyInternal(node->parent, YGDirtinessHasDirtyChildren);
     }
   }
 }
@@ -373,13 +373,13 @@ void YGNodeInsertChild(const YGNodeRef node, const YGNodeRef child, const uint32
             "Cannot add child: Nodes with measure functions cannot have children.");
   YGNodeListInsert(&node->children, child, index);
   child->parent = node;
-  YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);
+  YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);
 }
 
 void YGNodeRemoveChild(const YGNodeRef node, const YGNodeRef child) {
   if (YGNodeListDelete(node->children, child) != NULL) {
     child->parent = NULL;
-    YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);
+    YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);
   }
 }
 
@@ -399,17 +399,17 @@ void YGNodeMarkDirty(const YGNodeRef node) {
   YG_ASSERT(node->measure != NULL,
             "Only leaf nodes with custom measure functions"
             "should manually mark themselves as dirty");
-  YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);
+  YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);
 }
 
 bool YGNodeIsDirty(const YGNodeRef node) {
-  return node->dirtynessLevel != YGDirtynessIsNotDirty;
+  return node->dirtinessLevel != YGDirtinessIsNotDirty;
 }
 
 void YGNodeCopyStyle(const YGNodeRef dstNode, const YGNodeRef srcNode) {
   if (memcmp(&dstNode->style, &srcNode->style, sizeof(YGStyle)) != 0) {
     memcpy(&dstNode->style, &srcNode->style, sizeof(YGStyle));
-    YGNodeMarkDirtyInternal(dstNode, YGDirtynessNeedsFullRelayout);
+    YGNodeMarkDirtyInternal(dstNode, YGDirtinessNeedsFullRelayout);
   }
 }
 
@@ -450,7 +450,7 @@ inline YGValue YGNodeStyleGetFlexBasis(const YGNodeRef node) {
 void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   if (node->style.flex != flex) {
     node->style.flex = flex;
-    YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);
+    YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);
   }
 }
 
@@ -467,7 +467,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   void YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {       \
     if (node->style.instanceName != paramName) {                                \
       node->style.instanceName = paramName;                                     \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);              \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);              \
     }                                                                           \
   }
 
@@ -477,7 +477,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
         node->style.instanceName.unit != YGUnitPoint) {                                           \
       node->style.instanceName.value = paramName;                                                 \
       node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPoint;   \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);                                \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }                                                                                               \
                                                                                                   \
@@ -486,7 +486,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
         node->style.instanceName.unit != YGUnitPercent) {                                         \
       node->style.instanceName.value = paramName;                                                 \
       node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPercent; \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);                                \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }
 
@@ -496,7 +496,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
         node->style.instanceName.unit != YGUnitPoint) {                                           \
       node->style.instanceName.value = paramName;                                                 \
       node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPoint;   \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);                                \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }                                                                                               \
                                                                                                   \
@@ -505,7 +505,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
         node->style.instanceName.unit != YGUnitPercent) {                                         \
       node->style.instanceName.value = paramName;                                                 \
       node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPercent; \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);                                \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }                                                                                               \
                                                                                                   \
@@ -513,7 +513,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
     if (node->style.instanceName.unit != YGUnitAuto) {                                            \
       node->style.instanceName.value = YGUndefined;                                               \
       node->style.instanceName.unit = YGUnitAuto;                                                 \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);                                \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }
 
@@ -543,7 +543,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
     if (node->style.instanceName[edge].unit != YGUnitAuto) {                 \
       node->style.instanceName[edge].value = YGUndefined;                    \
       node->style.instanceName[edge].unit = YGUnitAuto;                      \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);           \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);           \
     }                                                                        \
   }
 
@@ -554,7 +554,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
       node->style.instanceName[edge].value = paramName;                                       \
       node->style.instanceName[edge].unit =                                                   \
           YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint;                      \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);                            \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                            \
     }                                                                                         \
   }                                                                                           \
                                                                                               \
@@ -566,7 +566,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
       node->style.instanceName[edge].value = paramName;                                       \
       node->style.instanceName[edge].unit =                                                   \
           YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPercent;                    \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);                            \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                            \
     }                                                                                         \
   }                                                                                           \
                                                                                               \
@@ -581,7 +581,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
       node->style.instanceName[edge].value = paramName;                                       \
       node->style.instanceName[edge].unit =                                                   \
           YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint;                      \
-      YGNodeMarkDirtyInternal(node, YGDirtynessNeedsFullRelayout);                            \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                            \
     }                                                                                         \
   }                                                                                           \
                                                                                               \
@@ -1995,7 +1995,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     if (child->style.display == YGDisplayNone) {
       YGZeroOutLayoutRecursivly(child);
       child->hasNewLayout = true;
-      child->dirtynessLevel = YGDirtynessIsNotDirty;
+      child->dirtinessLevel = YGDirtinessIsNotDirty;
       continue;
     }
     YGResolveDimensions(child);
@@ -3084,7 +3084,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
 
   gDepth++;
 
-  const bool needToVisitNode = (node->dirtynessLevel != YGDirtynessIsNotDirty &&
+  const bool needToVisitNode = (node->dirtinessLevel != YGDirtinessIsNotDirty &&
                                 layout->generationCount != gCurrentGenerationCount) ||
                                layout->lastParentDirection != parentDirection;
 
@@ -3244,7 +3244,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
     node->layout.dimensions[YGDimensionWidth] = node->layout.measuredDimensions[YGDimensionWidth];
     node->layout.dimensions[YGDimensionHeight] = node->layout.measuredDimensions[YGDimensionHeight];
     node->hasNewLayout = true;
-    node->dirtynessLevel = YGDirtynessIsNotDirty;
+    node->dirtinessLevel = YGDirtinessIsNotDirty;
   }
 
   gDepth--;
