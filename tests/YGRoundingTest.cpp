@@ -13,7 +13,8 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, rounding_flex_basis_flex_grow_row_width_of_100) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
@@ -31,7 +32,7 @@ TEST(YogaTest, rounding_flex_basis_flex_grow_row_width_of_100) {
   const YGNodeRef root_child2 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child2, 1);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -53,7 +54,7 @@ TEST(YogaTest, rounding_flex_basis_flex_grow_row_width_of_100) {
   ASSERT_FLOAT_EQ(33, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -77,11 +78,12 @@ TEST(YogaTest, rounding_flex_basis_flex_grow_row_width_of_100) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
@@ -107,7 +109,7 @@ TEST(YogaTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
   const YGNodeRef root_child4 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child4, 1);
   YGNodeInsertChild(root, root_child4, 4);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -139,7 +141,7 @@ TEST(YogaTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
   ASSERT_FLOAT_EQ(23, YGNodeLayoutGetWidth(root_child4));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child4));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -173,11 +175,12 @@ TEST(YogaTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_flex_basis_flex_shrink_row) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
@@ -196,7 +199,7 @@ TEST(YogaTest, rounding_flex_basis_flex_shrink_row) {
   const YGNodeRef root_child2 = YGNodeNew();
   YGNodeStyleSetFlexBasis(root_child2, 25);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -218,7 +221,7 @@ TEST(YogaTest, rounding_flex_basis_flex_shrink_row) {
   ASSERT_FLOAT_EQ(25, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -242,11 +245,12 @@ TEST(YogaTest, rounding_flex_basis_flex_shrink_row) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_flex_basis_overrides_main_size) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 100);
@@ -267,7 +271,7 @@ TEST(YogaTest, rounding_flex_basis_overrides_main_size) {
   YGNodeStyleSetFlexGrow(root_child2, 1);
   YGNodeStyleSetHeight(root_child2, 10);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -289,7 +293,7 @@ TEST(YogaTest, rounding_flex_basis_overrides_main_size) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -313,11 +317,12 @@ TEST(YogaTest, rounding_flex_basis_overrides_main_size) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_total_fractial) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 87.4f);
@@ -338,7 +343,7 @@ TEST(YogaTest, rounding_total_fractial) {
   YGNodeStyleSetFlexGrow(root_child2, 1.1f);
   YGNodeStyleSetHeight(root_child2, 10.7f);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -360,7 +365,7 @@ TEST(YogaTest, rounding_total_fractial) {
   ASSERT_FLOAT_EQ(87, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -384,11 +389,12 @@ TEST(YogaTest, rounding_total_fractial) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_total_fractial_nested) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 87.4f);
@@ -423,7 +429,7 @@ TEST(YogaTest, rounding_total_fractial_nested) {
   YGNodeStyleSetFlexGrow(root_child2, 1.1f);
   YGNodeStyleSetHeight(root_child2, 10.7f);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -455,7 +461,7 @@ TEST(YogaTest, rounding_total_fractial_nested) {
   ASSERT_FLOAT_EQ(87, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -489,11 +495,12 @@ TEST(YogaTest, rounding_total_fractial_nested) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_fractial_input_1) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 100);
@@ -514,7 +521,7 @@ TEST(YogaTest, rounding_fractial_input_1) {
   YGNodeStyleSetFlexGrow(root_child2, 1);
   YGNodeStyleSetHeight(root_child2, 10);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -536,7 +543,7 @@ TEST(YogaTest, rounding_fractial_input_1) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -560,11 +567,12 @@ TEST(YogaTest, rounding_fractial_input_1) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_fractial_input_2) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 100);
@@ -585,7 +593,7 @@ TEST(YogaTest, rounding_fractial_input_2) {
   YGNodeStyleSetFlexGrow(root_child2, 1);
   YGNodeStyleSetHeight(root_child2, 10);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -607,7 +615,7 @@ TEST(YogaTest, rounding_fractial_input_2) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(25, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -631,11 +639,12 @@ TEST(YogaTest, rounding_fractial_input_2) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_fractial_input_3) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetPosition(root, YGEdgeTop, 0.3f);
@@ -657,7 +666,7 @@ TEST(YogaTest, rounding_fractial_input_3) {
   YGNodeStyleSetFlexGrow(root_child2, 1);
   YGNodeStyleSetHeight(root_child2, 10);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -679,7 +688,7 @@ TEST(YogaTest, rounding_fractial_input_3) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
@@ -703,11 +712,12 @@ TEST(YogaTest, rounding_fractial_input_3) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, rounding_fractial_input_4) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, true);
+  const YGConfigRef config = YGConfigNew();
+  YGSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetPosition(root, YGEdgeTop, 0.7f);
@@ -729,7 +739,7 @@ TEST(YogaTest, rounding_fractial_input_4) {
   YGNodeStyleSetFlexGrow(root_child2, 1);
   YGNodeStyleSetHeight(root_child2, 10);
   YGNodeInsertChild(root, root_child2, 2);
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionLTR, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(1, YGNodeLayoutGetTop(root));
@@ -751,7 +761,7 @@ TEST(YogaTest, rounding_fractial_input_4) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(24, YGNodeLayoutGetHeight(root_child2));
 
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+  YGNodeCalculateLayoutWithConfig(root, YGUndefined, YGUndefined, YGDirectionRTL, config);
 
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(1, YGNodeLayoutGetTop(root));
@@ -775,5 +785,5 @@ TEST(YogaTest, rounding_fractial_input_4) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureRounding, false);
+  YGConfigFree(config);
 }

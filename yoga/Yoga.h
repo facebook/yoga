@@ -46,6 +46,7 @@ typedef struct YGValue {
 static const YGValue YGValueUndefined = {YGUndefined, YGUnitUndefined};
 static const YGValue YGValueAuto = {YGUndefined, YGUnitAuto};
 
+typedef struct YGConfig *YGConfigRef;
 typedef struct YGNode *YGNodeRef;
 typedef YGSize (*YGMeasureFunc)(YGNodeRef node,
                                 float width,
@@ -80,6 +81,12 @@ WIN_EXPORT void YGNodeCalculateLayout(const YGNodeRef node,
                                       const float availableWidth,
                                       const float availableHeight,
                                       const YGDirection parentDirection);
+
+WIN_EXPORT void YGNodeCalculateLayoutWithConfig(const YGNodeRef node,
+                                                const float availableWidth,
+                                                const float availableHeight,
+                                                const YGDirection parentDirection,
+                                                const YGConfigRef config);
 
 // Mark a node as dirty. Only valid for nodes with a custom measure function
 // set.
@@ -219,8 +226,15 @@ YG_NODE_LAYOUT_EDGE_PROPERTY(float, Padding);
 WIN_EXPORT void YGSetLogger(YGLogger logger);
 WIN_EXPORT void YGLog(YGLogLevel level, const char *message, ...);
 
-WIN_EXPORT void YGSetExperimentalFeatureEnabled(YGExperimentalFeature feature, bool enabled);
-WIN_EXPORT bool YGIsExperimentalFeatureEnabled(YGExperimentalFeature feature);
+// YGConfig
+WIN_EXPORT YGConfigRef YGConfigNew(void);
+WIN_EXPORT void YGConfigFree(const YGConfigRef config);
+
+WIN_EXPORT void YGSetExperimentalFeatureEnabled(const YGConfigRef config,
+                                                const YGExperimentalFeature feature,
+                                                const bool enabled);
+WIN_EXPORT bool YGIsExperimentalFeatureEnabled(const YGConfigRef config,
+                                               const YGExperimentalFeature feature);
 
 WIN_EXPORT void
 YGSetMemoryFuncs(YGMalloc ygmalloc, YGCalloc yccalloc, YGRealloc ygrealloc, YGFree ygfree);

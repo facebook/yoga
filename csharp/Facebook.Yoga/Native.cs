@@ -75,6 +75,38 @@ namespace Facebook.Yoga
 #endif
         }
 
+        internal class YGConfigHandle : SafeHandle
+        {
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+            private GCHandle _managed;
+#endif
+
+            private YGConfigHandle() : base(IntPtr.Zero, true)
+            {
+            }
+
+            public override bool IsInvalid
+            {
+                get
+                {
+                    return this.handle == IntPtr.Zero;
+                }
+            }
+
+            protected override bool ReleaseHandle()
+            {
+#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+                if (_managed.IsAllocated)
+                {
+                    _managed.Free();
+                }
+#endif
+                Native.YGConfigFree(this.handle);
+                GC.KeepAlive(this);
+                return true;
+            }
+        }
+
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGInteropSetLogger(
             [MarshalAs(UnmanagedType.FunctionPtr)] YogaLogger.Func func);
@@ -89,15 +121,23 @@ namespace Facebook.Yoga
         public static extern void YGNodeReset(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YGConfigHandle YGConfigNew();
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGConfigFree(IntPtr node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern int YGNodeGetInstanceCount();
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGSetExperimentalFeatureEnabled(
+            YGConfigHandle config,
             YogaExperimentalFeature feature,
             bool enabled);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool YGIsExperimentalFeatureEnabled(
+            YGConfigHandle config,
             YogaExperimentalFeature feature);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -115,6 +155,14 @@ namespace Facebook.Yoga
             float availableWidth,
             float availableHeight,
             YogaDirection parentDirection);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeCalculateLayoutWithConfig(
+            YGNodeHandle node,
+            float availableWidth,
+            float availableHeight,
+            YogaDirection parentDirection,
+            YGConfigHandle config);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeMarkDirty(YGNodeHandle node);

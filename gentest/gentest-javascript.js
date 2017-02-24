@@ -140,7 +140,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGDisplayFlex:{value:'Yoga.DISPLAY_FLEX'},
   YGDisplayNone:{value:'Yoga.DISPLAY_NONE'},
 
-  YGNodeCalculateLayout:{value:function(node, dir) {
+  YGNodeCalculateLayout:{value:function(node, dir, experiments) {
     this.push(node + '.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, ' + dir + ');');
   }},
 
