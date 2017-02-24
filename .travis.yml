@@ -5,18 +5,28 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-os: osx
+os: 
+  - osx
+  - linux
+
 osx_image: xcode8.2
 language: cpp
 compiler: clang
 
-env:
-  - TARGET=c
-  - TARGET=java
-  - TARGET=net
-  - TARGET=ios
-  - TARGET=js
-  - TARGET=android
+matrix:
+  include:
+  - os: osx
+    env: TARGET=js
+  - os: osx
+    env: TARGET=ios
+  - os: linux
+    env: TARGET=c
+  - os: linux
+    env: TARGET=java
+  - os: linux
+    env: TARGET=net
+  - os: linux
+    env: TARGET=android
 
 before_install:
   - brew update > /dev/null
