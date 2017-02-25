@@ -2968,20 +2968,21 @@ static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureM
          lastSize > size && (lastComputedSize <= size || YGFloatsEqual(size, lastComputedSize));
 }
 
-typedef struct YGValueArraySizePair {
-  const YGValue *values;
-  const uint32_t size;
+typedef struct YGValueArraySizePair
+{
+	const YGValue * values;
+		int size;
 } YGValueArraySizePair;
 
 static inline bool YGNodeHasPercentageStyle(const YGStyle *style) {
   const YGValueArraySizePair valueArrays[] = {
-      {style->dimensions, YGDimensionCount},
-      {style->minDimensions, YGDimensionCount},
-      {style->maxDimensions, YGDimensionCount},
-      {&style->flexBasis, 1},
-      {style->padding, YGDimensionCount},
-      {style->margin, YGDimensionCount},
-      {style->position, YGDimensionCount},
+	  {style->dimensions, YGDimensionCount},
+	  {style->minDimensions,YGDimensionCount},
+	  {style->maxDimensions,YGDimensionCount},
+	  {&style->flexBasis,1},
+	  {style->padding,YGDimensionCount},
+	  {style->margin,YGDimensionCount},
+  {style->position,YGDimensionCount},
   };
 
   for (uint32_t i = 0; i < sizeof(valueArrays) / sizeof(valueArrays[0]); i++) {
