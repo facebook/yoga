@@ -3134,7 +3134,8 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
 
   if (cachedResults == NULL && checkOtherCache) {
     for (uint32_t i = 0; i < layout->nextCachedMeasurementsIndex; i++) {
-      if (YGNodeCanUseCachedMeasurement(widthMeasureMode,
+      if (layout->performLayoutCache != &layout->cachedMeasurements[i] &&
+          YGNodeCanUseCachedMeasurement(widthMeasureMode,
                                         availableWidth,
                                         heightMeasureMode,
                                         availableHeight,
