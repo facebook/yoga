@@ -2987,7 +2987,7 @@ static inline bool YGNodeHasPercentageStyle(const YGStyle *style) {
   };
 
   for (uint32_t i = 0; i < sizeof(valueArrays) / sizeof(valueArrays[0]); i++) {
-    for (uint32_t j = 0; j < sizeof(arraySize) / sizeof(arraySize[0]); j++) {
+    for (uint32_t j = 0; j < arraySize[i]; j++) {
       if (valueArrays[i][j].unit == YGUnitPercent) {
         return true;
       }
