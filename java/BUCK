@@ -5,56 +5,56 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs('//YOGA_DEFS')
+include_defs("//YOGA_DEFS")
 
 cxx_library(
-  name = 'jni',
-  soname = 'libyoga.$(ext)',
-  srcs = glob(['jni/*.cpp']),
-  header_namespace = '',
-  compiler_flags = [
-    '-fno-omit-frame-pointer',
-    '-fexceptions',
-    '-fPIC',
-    '-Wall',
-    '-Werror',
-    '-O3',
-    '-std=c++11',
-  ],
-  deps = [
-    FBJNI_TARGET,
-    JNI_TARGET,
-    yoga_dep(':yoga'),
-  ],
-  visibility = ['PUBLIC'],
+    name = "jni",
+    srcs = glob(["jni/*.cpp"]),
+    compiler_flags = [
+        "-fno-omit-frame-pointer",
+        "-fexceptions",
+        "-fPIC",
+        "-Wall",
+        "-Werror",
+        "-O3",
+        "-std=c++11",
+    ],
+    header_namespace = "",
+    soname = "libyoga.$(ext)",
+    visibility = ["PUBLIC"],
+    deps = [
+        FBJNI_TARGET,
+        JNI_TARGET,
+        yoga_dep(":yoga"),
+    ],
 )
 
 java_library(
-  name = 'java',
-  srcs = glob(['com/facebook/yoga/*.java']),
-  tests=[
-    yoga_dep('java:tests'),
-  ],
-  source = '1.7',
-  target = '1.7',
-  deps = [
-    ':jni',
-    INFER_ANNOTATIONS_TARGET,
-    JSR_305_TARGET,
-    PROGRUARD_ANNOTATIONS_TARGET,
-    SOLOADER_TARGET,
-  ],
-  visibility = ['PUBLIC'],
+    name = "java",
+    srcs = glob(["com/facebook/yoga/*.java"]),
+    source = "1.7",
+    target = "1.7",
+    tests = [
+        yoga_dep("java:tests"),
+    ],
+    visibility = ["PUBLIC"],
+    deps = [
+        ":jni",
+        INFER_ANNOTATIONS_TARGET,
+        JSR_305_TARGET,
+        PROGRUARD_ANNOTATIONS_TARGET,
+        SOLOADER_TARGET,
+    ],
 )
 
 java_test(
-  name = 'tests',
-  srcs = glob(['tests/**/*.java']),
-  use_cxx_libraries = True,
-  cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
-  deps = [
-    ':java',
-    JUNIT_TARGET,
-  ],
-  visibility = ['PUBLIC'],
+    name = "tests",
+    srcs = glob(["tests/**/*.java"]),
+    cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
+    use_cxx_libraries = True,
+    visibility = ["PUBLIC"],
+    deps = [
+        ":java",
+        JUNIT_TARGET,
+    ],
 )

@@ -5,54 +5,54 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs('//YOGA_DEFS')
+include_defs("//YOGA_DEFS")
 
 COMPILER_FLAGS = [
-  '-fobjc-arc',
-  '-Wconditional-uninitialized',
-  '-Wdangling-else',
-  '-Wdeprecated-declarations',
-  '-Wimplicit-retain-self',
-  '-Wincomplete-implementation',
-  '-Wobjc-method-access',
-  '-Wobjc-missing-super-calls',
-  '-Wmismatched-return-types',
-  '-Wreturn-type',
-  '-Wno-global-constructors',
-  '-Wno-shadow',
-  '-Wunused-const-variable',
-  '-Wunused-function',
-  '-Wunused-property-ivar',
-  '-Wunused-result',
-  '-Wunused-value',
+    "-fobjc-arc",
+    "-Wconditional-uninitialized",
+    "-Wdangling-else",
+    "-Wdeprecated-declarations",
+    "-Wimplicit-retain-self",
+    "-Wincomplete-implementation",
+    "-Wobjc-method-access",
+    "-Wobjc-missing-super-calls",
+    "-Wmismatched-return-types",
+    "-Wreturn-type",
+    "-Wno-global-constructors",
+    "-Wno-shadow",
+    "-Wunused-const-variable",
+    "-Wunused-function",
+    "-Wunused-property-ivar",
+    "-Wunused-result",
+    "-Wunused-value",
 ]
 
 apple_library(
-  name = 'YogaKit',
-  compiler_flags = COMPILER_FLAGS,
-  srcs = glob(['Source/**/*.m']),
-  exported_headers = glob(['Source/**/*.h']),
-  frameworks = [
-    '$SDKROOT/System/Library/Frameworks/Foundation.framework',
-    '$SDKROOT/System/Library/Frameworks/UIKit.framework',
-  ],
-  deps = [
-    yoga_dep(':yoga'),
-  ],
-  visibility = ['PUBLIC'],
+    name = "YogaKit",
+    srcs = glob(["Source/**/*.m"]),
+    compiler_flags = COMPILER_FLAGS,
+    exported_headers = glob(["Source/**/*.h"]),
+    frameworks = [
+        "$SDKROOT/System/Library/Frameworks/Foundation.framework",
+        "$SDKROOT/System/Library/Frameworks/UIKit.framework",
+    ],
+    visibility = ["PUBLIC"],
+    deps = [
+        yoga_dep(":yoga"),
+    ],
 )
 
 apple_test(
-  name = 'YogaKitTests',
-  compiler_flags = COMPILER_FLAGS,
-  info_plist = 'Tests/Info.plist',
-  srcs = glob(['Tests/**/*.m']),
-  frameworks = [
-    '$SDKROOT/System/Library/Frameworks/CoreGraphics.framework',
-    '$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework',
-  ],
-  deps = [
-    ':YogaKit',
-  ],
-  visibility = ['PUBLIC'],
+    name = "YogaKitTests",
+    srcs = glob(["Tests/**/*.m"]),
+    compiler_flags = COMPILER_FLAGS,
+    frameworks = [
+        "$SDKROOT/System/Library/Frameworks/CoreGraphics.framework",
+        "$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework",
+    ],
+    info_plist = "Tests/Info.plist",
+    visibility = ["PUBLIC"],
+    deps = [
+        ":YogaKit",
+    ],
 )

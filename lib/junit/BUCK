@@ -5,17 +5,17 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs('//YOGA_DEFS')
+include_defs("//YOGA_DEFS")
 
 prebuilt_jar(
-  name = 'junit-jar',
-  binary_jar = 'junit4.jar',
+    name = "junit-jar",
+    binary_jar = "junit4.jar",
 )
 
 java_library(
-  name = 'junit',
-  exported_deps = [
-    ':junit-jar',
-  ],
-  visibility = [YOGA_ROOT],
+    name = "junit",
+    exported_deps = [
+        ":junit-jar",
+    ],
+    visibility = [YOGA_ROOT],
 )

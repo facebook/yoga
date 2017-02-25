@@ -4,36 +4,36 @@
 # This source code is licensed under the license found in the
 # LICENSE-examples file in the root directory of this source tree.
 
-include_defs('//YOGA_DEFS')
+include_defs("//YOGA_DEFS")
 
 android_binary(
-  name = 'sample',
-  manifest = 'AndroidManifest.xml',
-  keystore = ':debug_keystore',
-  deps = [
-    ANDROID_SAMPLE_JAVA_TARGET,
-    ANDROID_SAMPLE_RES_TARGET,
-  ],
+    name = "sample",
+    keystore = ":debug_keystore",
+    manifest = "AndroidManifest.xml",
+    deps = [
+        ANDROID_SAMPLE_JAVA_TARGET,
+        ANDROID_SAMPLE_RES_TARGET,
+    ],
 )
 
 android_resource(
-  name = 'res',
-  res = 'res',
-  package = 'com.facebook.samples.yoga',
-  deps = [
-    ANDROID_RES_TARGET,
-  ],
-  visibility = [
-    'PUBLIC',
-  ],
+    name = "res",
+    package = "com.facebook.samples.yoga",
+    res = "res",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        ANDROID_RES_TARGET,
+    ],
 )
 
 keystore(
-    name='debug_keystore',
-    store='debug.keystore',
-    properties='debug.keystore.properties',
+    name = "debug_keystore",
+    properties = "debug.keystore.properties",
+    store = "debug.keystore",
 )
 
 project_config(
-  src_target = ':sample',
+    src_target = ":sample",
 )

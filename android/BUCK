@@ -5,32 +5,32 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs('//YOGA_DEFS')
+include_defs("//YOGA_DEFS")
 
 android_aar(
-  name = 'android',
-  manifest_skeleton = 'src/main/AndroidManifest.xml',
-  deps = [
-    ANDROID_JAVA_TARGET,
-    ANDROID_RES_TARGET,
-    INFER_ANNOTATIONS_TARGET,
-    JAVA_TARGET,
-    PROGRUARD_ANNOTATIONS_TARGET,
-  ],
-  visibility = [
-    'PUBLIC',
-  ],
+    name = "android",
+    manifest_skeleton = "src/main/AndroidManifest.xml",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        ANDROID_JAVA_TARGET,
+        ANDROID_RES_TARGET,
+        INFER_ANNOTATIONS_TARGET,
+        JAVA_TARGET,
+        PROGRUARD_ANNOTATIONS_TARGET,
+    ],
 )
 
 android_resource(
-  name = 'res',
-  res = 'src/main/res',
-  package = 'com.facebook.yoga.android',
-  visibility = [
-    'PUBLIC',
-  ],
+    name = "res",
+    package = "com.facebook.yoga.android",
+    res = "src/main/res",
+    visibility = [
+        "PUBLIC",
+    ],
 )
 
 project_config(
-  src_target = ':android',
+    src_target = ":android",
 )

@@ -5,19 +5,19 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs('//YOGA_DEFS')
+include_defs("//YOGA_DEFS")
 
 android_library(
-  name = 'yoga',
-  srcs = glob(['**/*.java']),
-  deps = [
-    ANDROID_JAVA_TARGET,
-    ANDROID_SAMPLE_RES_TARGET,
-    ANDROID_SUPPORT_TARGET,
-    APPCOMPAT_TARGET,
-    SOLOADER_TARGET,
-  ],
-  visibility = [
-    'PUBLIC',
-  ]
+    name = "yoga",
+    srcs = glob(["**/*.java"]),
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        ANDROID_JAVA_TARGET,
+        ANDROID_SAMPLE_RES_TARGET,
+        ANDROID_SUPPORT_TARGET,
+        APPCOMPAT_TARGET,
+        SOLOADER_TARGET,
+    ],
 )
