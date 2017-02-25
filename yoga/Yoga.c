@@ -2969,45 +2969,28 @@ static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureM
 }
 
 static inline bool YGNodeHasPercentageStyle(const YGStyle *style) {
-  const YGValue *values[YGEdgeCount * 3 + 2 * 3 + 1] = {
+  const int arraySize[] = {YGDimensionCount,
+                           YGDimensionCount,
+                           YGDimensionCount,
+                           1,
+                           YGEdgeCount,
+                           YGEdgeCount,
+                           YGEdgeCount};
+  const YGValue *valueArrays[] = {
+      style->dimensions,
+      style->minDimensions,
+      style->maxDimensions,
       &style->flexBasis,
-      &style->dimensions[YGDimensionHeight],
-      &style->dimensions[YGDimensionWidth],
-      &style->minDimensions[YGDimensionHeight],
-      &style->minDimensions[YGDimensionWidth],
-      &style->maxDimensions[YGDimensionHeight],
-      &style->maxDimensions[YGDimensionWidth],
-      &style->padding[YGEdgeAll],
-      &style->padding[YGEdgeLeft],
-      &style->padding[YGEdgeRight],
-      &style->padding[YGEdgeTop],
-      &style->padding[YGEdgeBottom],
-      &style->padding[YGEdgeStart],
-      &style->padding[YGEdgeEnd],
-      &style->padding[YGEdgeHorizontal],
-      &style->padding[YGEdgeVertical],
-      &style->margin[YGEdgeAll],
-      &style->margin[YGEdgeLeft],
-      &style->margin[YGEdgeRight],
-      &style->margin[YGEdgeTop],
-      &style->margin[YGEdgeBottom],
-      &style->margin[YGEdgeStart],
-      &style->margin[YGEdgeEnd],
-      &style->margin[YGEdgeHorizontal],
-      &style->margin[YGEdgeVertical],
-      &style->position[YGEdgeAll],
-      &style->position[YGEdgeLeft],
-      &style->position[YGEdgeRight],
-      &style->position[YGEdgeTop],
-      &style->position[YGEdgeBottom],
-      &style->position[YGEdgeStart],
-      &style->position[YGEdgeEnd],
-      &style->position[YGEdgeHorizontal],
-      &style->position[YGEdgeVertical],
+      style->padding,
+      style->margin,
+      style->position,
   };
-  for (uint32_t i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
-    if (values[i]->unit == YGUnitPercent) {
-      return true;
+
+  for (uint32_t i = 0; i < sizeof(valueArrays) / sizeof(valueArrays[0]); i++) {
+    for (uint32_t j = 0; j < sizeof(arraySize) / sizeof(arraySize[0]); j++) {
+      if (valueArrays[i][j].unit == YGUnitPercent) {
+        return true;
+      }
     }
   }
   return false;
