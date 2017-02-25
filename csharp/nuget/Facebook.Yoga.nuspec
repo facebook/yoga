@@ -12,10 +12,6 @@
     <description>A subset of CSS's flexbox layout algorithm and box model.</description>
     <copyright>Copyright 2016 Facebook</copyright>
     <tags>flexbox flex-box css layout css-layout yoga facebook native</tags>
-    <dependencies>
-      <group targetFramework=".NETStandard1.1" />
-      <group targetFramework="uap10.0" />
-    </dependencies>
   </metadata>
   <files>
     <!-- build -->
@@ -28,7 +24,7 @@
     <file src="..\yoga_windows\bin\Release\Facebook.Yoga.dll" target="lib\netstandard"/>
     
     <!-- UAP -->
-    <file src="..\yoga_windows\bin\Release\Facebook.Yoga.dll" target="lib\uap10.0"/>
+    <file src="..\yoga_universal\bin\Release\Facebook.Yoga.dll" target="lib\uap10.0"/>
 
     <!-- net45 -->
     <file src="..\yoga_windows\bin\Release\Facebook.Yoga.dll" target="lib\net45" />
@@ -44,24 +40,24 @@
     <file src="..\yoga_android\bin\Release\Facebook.Yoga.dll" target="lib\MonoAndroid" />
   
     <!-- runtimes -->
-    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win10-x86\lib\netstandard"/>
-    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win10-x86\lib\netstandard"/>
+    <file src="..\yoga_universal\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win10-x86\lib\netstandard1.0"/>
+    <file src="..\yoga_universal\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win10-x86\lib\netstandard1.0"/>
     
-    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win10-x64\lib\netstandard"/>
-    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win10-x64\lib\netstandard"/>
+    <file src="..\yoga_universal\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win10-x64\lib\netstandard1.0"/>
+    <file src="..\yoga_universal\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win10-x64\lib\netstandard1.0"/>
     
-    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win10-arm\lib\netstandard"/>
-    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win10-arm\lib\netstandard"/>    
+    <file src="..\yoga_universal\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win10-arm\lib\netstandard1.0"/>
+    <file src="..\yoga_universal\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win10-arm\lib\netstandard1.0"/>    
 
     
-    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win-x86\lib\netstandard"/>
-    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win-x86\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.dll" target="runtimes\win-x86\lib\netstandard1.0"/>
+    <file src="..\yoga_windows\bin\x86\Release\Facebook.Yoga.pdb" target="runtimes\win-x86\lib\netstandard1.0"/>
     
-    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win-x64\lib\netstandard"/>
-    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win-x64\lib\netstandard"/>
+    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.dll" target="runtimes\win-x64\lib\netstandard1.0"/>
+    <file src="..\yoga_windows\bin\x64\Release\Facebook.Yoga.pdb" target="runtimes\win-x64\lib\netstandard1.0"/>
 
-    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win8-arm\lib\netstandard"/>
-    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win8-arm\lib\netstandard"/>    
+    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.dll" target="runtimes\win8-arm\lib\netstandard1.0"/>
+    <file src="..\yoga_windows\bin\ARM\Release\Facebook.Yoga.pdb" target="runtimes\win8-arm\lib\netstandard1.0"/>    
 
 
     <!-- Native -->
