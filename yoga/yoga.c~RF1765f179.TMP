@@ -2979,8 +2979,8 @@ static inline bool YGNodeHasPercentageStyle(const YGStyle *style) {
       {style->maxDimensions, YGDimensionCount},
       {&style->flexBasis, 1},
       {style->padding, YGEdgeCount},
-      {style->margin, YGEdgeCount},
-      {style->position, YGEdgeCount},
+      {style->margin, YGEdgeCount },
+      {style->position, YGEdgeCount },
   };
 
   for (uint32_t i = 0; i < sizeof(valueArrays) / sizeof(valueArrays[0]); i++) {
