@@ -116,6 +116,7 @@ typedef struct YGNode {
   void *context;
 
   YGDirtiness dirtinessLevel;
+  bool hasPossiblePercentage;
   bool hasNewLayout;
 
   YGValue const *resolvedDimensions[2];
@@ -149,6 +150,7 @@ static YGNode gYGNodeDefaults = {
     .parent = NULL,
     .children = NULL,
     .hasNewLayout = true,
+    .hasPossiblePercentage = false,
     .dirtinessLevel = YGDirtinessIsNotDirty,
     .resolvedDimensions = {[YGDimensionWidth] = &YGValueUndefined,
                            [YGDimensionHeight] = &YGValueUndefined},
@@ -485,6 +487,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
         node->style.instanceName.unit != YGUnitPercent) {                                         \
       node->style.instanceName.value = paramName;                                                 \
       node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPercent; \
+      node->hasPossiblePercentage = true;                                                         \
       YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }
@@ -504,6 +507,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
         node->style.instanceName.unit != YGUnitPercent) {                                         \
       node->style.instanceName.value = paramName;                                                 \
       node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPercent; \
+      node->hasPossiblePercentage = true;                                                         \
       YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }                                                                                               \
@@ -565,6 +569,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
       node->style.instanceName[edge].value = paramName;                                       \
       node->style.instanceName[edge].unit =                                                   \
           YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPercent;                    \
+      node->hasPossiblePercentage = true;                                                     \
       YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                            \
     }                                                                                         \
   }                                                                                           \
@@ -3211,7 +3216,8 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
         newCacheEntry = layout->performLayoutCache;
       }
 
-      newCacheEntry->isPercentageInvolved = YGNodeHasPercentageStyle(&node->style);
+      newCacheEntry->isPercentageInvolved =
+          node->hasPossiblePercentage ? YGNodeHasPercentageStyle(&node->style) : false;
       newCacheEntry->availableWidth = availableWidth;
       newCacheEntry->availableHeight = availableHeight;
       newCacheEntry->widthMeasureMode = widthMeasureMode;
