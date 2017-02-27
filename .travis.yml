@@ -23,22 +23,26 @@ matrix:
     env: TARGET=c
   - os: linux
     env: TARGET=java
-  - os: linux
+  - os: osx
     env: TARGET=net
-  - os: linux
+  - os: osx
     env: TARGET=android
 
 before_install:
-  - brew update > /dev/null
-  - brew tap facebook/fb
-  - brew install buck
-
-  # Java
+  # Download and install buck
   - |
-    if [[ $TARGET = "java" ]]; then
-      brew cask install java &&
-      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) &&
-      export PATH=$JAVA_HOME/bin:$PATH
+    if [[ $TRAVIS_OS_NAME = "linux" ]]; then
+      sudo apt-get update && 
+      apt-get install default-jdk ant python git &&
+      git clone https://github.com/facebook/buck.git &&
+      cd buck &&
+      ant &&
+      cd .. &&
+      export PATH=$PATH:buck/bin
+    else
+      brew update > /dev/null &&
+      brew tap facebook/fb &&
+      brew install buck
     fi
 
   # .NET
