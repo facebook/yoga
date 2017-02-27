@@ -59,9 +59,8 @@ before_install:
       brew install android-sdk;
       export ANDROID_SDK=/usr/local/Cellar/android-sdk/24.4.1_1;
       export ANDROID_HOME=/usr/local/Cellar/android-sdk/24.4.1_1;
-      brew install lib32stdc++6 lib32z1;
       echo y | $ANDROID_SDK/tools/android update sdk --filter android-19,addon-google_apis-google-19,build-tools-19.1.0 --no-ui;
-      echo y | $ANDROID_SDK/tools/android update sdk -u;
+      echo -e "y\ny" | $ANDROID_SDK/tools/android update sdk -u;
     fi
 
 script:
@@ -102,7 +101,5 @@ script:
     # Android
     - |
       if [[ $TARGET = "android" ]]; then
-        ls -al /usr/local/Cellar/android-sdk/24.4.1_1
-        ls -al /usr/local/Cellar/android-sdk/24.4.1_1/platform_tools
         buck build --verbose 0 //android/sample:sample
       fi
