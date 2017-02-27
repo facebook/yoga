@@ -101,5 +101,8 @@ script:
     # Android
     - |
       if [[ $TARGET = "android" ]]; then
+        ls -al /usr/local/opt/;
+        ls -al /usr/local/opt/android-sdk;
+        ls -al /usr/local/opt/android-sdk/platform-tools;
         buck build --verbose 0 //android/sample:sample
       fi
