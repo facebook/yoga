@@ -57,6 +57,11 @@
       <enum name="rtl" value="2"/>
     </attr>
 
+    <attr name="display" format="enum">
+      <enum name="flex" value="0"/>
+      <enum name="none" value="1"/>
+    </attr>
+
     <attr name="flex" format="float"/>
 
     <attr name="flex_basis" format="float"/>

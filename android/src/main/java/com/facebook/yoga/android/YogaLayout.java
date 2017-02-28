@@ -29,6 +29,7 @@ import com.facebook.yoga.android.R;
 import com.facebook.yoga.YogaAlign;
 import com.facebook.yoga.YogaConstants;
 import com.facebook.yoga.YogaDirection;
+import com.facebook.yoga.YogaDisplay;
 import com.facebook.yoga.YogaEdge;
 import com.facebook.yoga.YogaFlexDirection;
 import com.facebook.yoga.YogaJustify;
@@ -411,6 +412,8 @@ public class YogaLayout extends ViewGroup {
         node.setBorder(YogaEdge.ALL, value);
       } else if (attribute == R.styleable.yoga_direction) {
         node.setDirection(YogaDirection.fromInt(Math.round(value)));
+      } else if (attribute == R.styleable.yoga_display) {
+        node.setDisplay(YogaDisplay.fromInt(Math.round(value)));
       } else if (attribute == R.styleable.yoga_flex) {
         node.setFlex(value);
       } else if (attribute == R.styleable.yoga_flex_basis) {
