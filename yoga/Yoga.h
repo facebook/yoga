@@ -105,7 +105,8 @@ WIN_EXPORT bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
                                               const float lastComputedWidth,
                                               const float lastComputedHeight,
                                               const float marginRow,
-                                              const float marginColumn);
+                                              const float marginColumn,
+                                              const bool isPercentageInvolved);
 
 WIN_EXPORT void YGNodeCopyStyle(const YGNodeRef dstNode, const YGNodeRef srcNode);
 

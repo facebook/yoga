@@ -38,6 +38,7 @@ typedef struct YGCachedMeasurement {
 
   float computedWidth;
   float computedHeight;
+  bool isPercentageInvolved;
 } YGCachedMeasurement;
 
 // This value was chosen based on empiracle data. Even the most complicated
@@ -63,8 +64,7 @@ typedef struct YGLayout {
   uint32_t nextCachedMeasurementsIndex;
   YGCachedMeasurement cachedMeasurements[YG_MAX_CACHED_RESULT_COUNT];
   float measuredDimensions[2];
-
-  YGCachedMeasurement cachedLayout;
+  YGCachedMeasurement *performLayoutCache;
 } YGLayout;
 
 typedef struct YGStyle {
@@ -94,6 +94,12 @@ typedef struct YGStyle {
   float aspectRatio;
 } YGStyle;
 
+typedef enum YGDirtiness {
+  YGDirtinessIsNotDirty = 0,
+  YGDirtinessHasDirtyChildren = 1,
+  YGDirtinessNeedsFullRelayout = 2,
+} YGDirtiness;
+
 typedef struct YGNode {
   YGStyle style;
   YGLayout layout;
@@ -109,7 +115,8 @@ typedef struct YGNode {
   YGPrintFunc print;
   void *context;
 
-  bool isDirty;
+  YGDirtiness dirtinessLevel;
+  bool hasPossiblePercentage;
   bool hasNewLayout;
 
   YGValue const *resolvedDimensions[2];
@@ -143,7 +150,8 @@ static YGNode gYGNodeDefaults = {
     .parent = NULL,
     .children = NULL,
     .hasNewLayout = true,
-    .isDirty = false,
+    .hasPossiblePercentage = false,
+    .dirtinessLevel = YGDirtinessIsNotDirty,
     .resolvedDimensions = {[YGDimensionWidth] = &YGValueUndefined,
                            [YGDimensionHeight] = &YGValueUndefined},
 
@@ -175,20 +183,13 @@ static YGNode gYGNodeDefaults = {
             .dimensions = YG_DEFAULT_DIMENSION_VALUES,
             .lastParentDirection = (YGDirection) -1,
             .nextCachedMeasurementsIndex = 0,
+            .performLayoutCache = NULL,
             .computedFlexBasis = YGUndefined,
             .measuredDimensions = YG_DEFAULT_DIMENSION_VALUES,
-
-            .cachedLayout =
-                {
-                    .widthMeasureMode = (YGMeasureMode) -1,
-                    .heightMeasureMode = (YGMeasureMode) -1,
-                    .computedWidth = -1,
-                    .computedHeight = -1,
-                },
         },
 };
 
-static void YGNodeMarkDirtyInternal(const YGNodeRef node);
+static void YGNodeMarkDirtyInternal(const YGNodeRef node, const YGDirtiness level);
 
 YGMalloc gYGMalloc = &malloc;
 YGCalloc gYGCalloc = &calloc;
@@ -335,12 +336,12 @@ int32_t YGNodeGetInstanceCount(void) {
   return gNodeInstanceCount;
 }
 
-static void YGNodeMarkDirtyInternal(const YGNodeRef node) {
-  if (!node->isDirty) {
-    node->isDirty = true;
+static void YGNodeMarkDirtyInternal(const YGNodeRef node, const enum YGDirtiness level) {
+  if (node->dirtinessLevel < level) {
+    node->dirtinessLevel |= level;
     node->layout.computedFlexBasis = YGUndefined;
     if (node->parent) {
-      YGNodeMarkDirtyInternal(node->parent);
+      YGNodeMarkDirtyInternal(node->parent, YGDirtinessHasDirtyChildren);
     }
   }
 }
@@ -373,13 +374,13 @@ void YGNodeInsertChild(const YGNodeRef node, const YGNodeRef child, const uint32
             "Cannot add child: Nodes with measure functions cannot have children.");
   YGNodeListInsert(&node->children, child, index);
   child->parent = node;
-  YGNodeMarkDirtyInternal(node);
+  YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);
 }
 
 void YGNodeRemoveChild(const YGNodeRef node, const YGNodeRef child) {
   if (YGNodeListDelete(node->children, child) != NULL) {
     child->parent = NULL;
-    YGNodeMarkDirtyInternal(node);
+    YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);
   }
 }
 
@@ -399,17 +400,17 @@ void YGNodeMarkDirty(const YGNodeRef node) {
   YG_ASSERT(node->measure != NULL,
             "Only leaf nodes with custom measure functions"
             "should manually mark themselves as dirty");
-  YGNodeMarkDirtyInternal(node);
+  YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);
 }
 
 bool YGNodeIsDirty(const YGNodeRef node) {
-  return node->isDirty;
+  return node->dirtinessLevel != YGDirtinessIsNotDirty;
 }
 
 void YGNodeCopyStyle(const YGNodeRef dstNode, const YGNodeRef srcNode) {
   if (memcmp(&dstNode->style, &srcNode->style, sizeof(YGStyle)) != 0) {
     memcpy(&dstNode->style, &srcNode->style, sizeof(YGStyle));
-    YGNodeMarkDirtyInternal(dstNode);
+    YGNodeMarkDirtyInternal(dstNode, YGDirtinessNeedsFullRelayout);
   }
 }
 
@@ -450,7 +451,7 @@ inline YGValue YGNodeStyleGetFlexBasis(const YGNodeRef node) {
 void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   if (node->style.flex != flex) {
     node->style.flex = flex;
-    YGNodeMarkDirtyInternal(node);
+    YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);
   }
 }
 
@@ -467,38 +468,17 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   void YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {       \
     if (node->style.instanceName != paramName) {                                \
       node->style.instanceName = paramName;                                     \
-      YGNodeMarkDirtyInternal(node);                                            \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);              \
     }                                                                           \
   }
 
-#define YG_NODE_STYLE_PROPERTY_SETTER_UNIT_IMPL(type, name, paramName, instanceName) \
-  void YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {            \
-    if (node->style.instanceName.value != paramName ||                               \
-        node->style.instanceName.unit != YGUnitPoint) {                              \
-      node->style.instanceName.value = paramName;                                    \
-      node->style.instanceName.unit =                                                \
-          YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPoint;                  \
-      YGNodeMarkDirtyInternal(node);                                                 \
-    }                                                                                \
-  }                                                                                  \
-                                                                                     \
-  void YGNodeStyleSet##name##Percent(const YGNodeRef node, const type paramName) {   \
-    if (node->style.instanceName.value != paramName ||                               \
-        node->style.instanceName.unit != YGUnitPercent) {                            \
-      node->style.instanceName.value = paramName;                                    \
-      node->style.instanceName.unit =                                                \
-          YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPercent;                \
-      YGNodeMarkDirtyInternal(node);                                                 \
-    }                                                                                \
-  }
-
-#define YG_NODE_STYLE_PROPERTY_SETTER_UNIT_AUTO_IMPL(type, name, paramName, instanceName)         \
+#define YG_NODE_STYLE_PROPERTY_SETTER_UNIT_IMPL(type, name, paramName, instanceName)              \
   void YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {                         \
     if (node->style.instanceName.value != paramName ||                                            \
         node->style.instanceName.unit != YGUnitPoint) {                                           \
       node->style.instanceName.value = paramName;                                                 \
       node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPoint;   \
-      YGNodeMarkDirtyInternal(node);                                                              \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }                                                                                               \
                                                                                                   \
@@ -507,7 +487,28 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
         node->style.instanceName.unit != YGUnitPercent) {                                         \
       node->style.instanceName.value = paramName;                                                 \
       node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPercent; \
-      YGNodeMarkDirtyInternal(node);                                                              \
+      node->hasPossiblePercentage = true;                                                         \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
+    }                                                                                             \
+  }
+
+#define YG_NODE_STYLE_PROPERTY_SETTER_UNIT_AUTO_IMPL(type, name, paramName, instanceName)         \
+  void YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {                         \
+    if (node->style.instanceName.value != paramName ||                                            \
+        node->style.instanceName.unit != YGUnitPoint) {                                           \
+      node->style.instanceName.value = paramName;                                                 \
+      node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPoint;   \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
+    }                                                                                             \
+  }                                                                                               \
+                                                                                                  \
+  void YGNodeStyleSet##name##Percent(const YGNodeRef node, const type paramName) {                \
+    if (node->style.instanceName.value != paramName ||                                            \
+        node->style.instanceName.unit != YGUnitPercent) {                                         \
+      node->style.instanceName.value = paramName;                                                 \
+      node->style.instanceName.unit = YGFloatIsUndefined(paramName) ? YGUnitAuto : YGUnitPercent; \
+      node->hasPossiblePercentage = true;                                                         \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }                                                                                               \
                                                                                                   \
@@ -515,7 +516,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
     if (node->style.instanceName.unit != YGUnitAuto) {                                            \
       node->style.instanceName.value = YGUndefined;                                               \
       node->style.instanceName.unit = YGUnitAuto;                                                 \
-      YGNodeMarkDirtyInternal(node);                                                              \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                                \
     }                                                                                             \
   }
 
@@ -545,7 +546,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
     if (node->style.instanceName[edge].unit != YGUnitAuto) {                 \
       node->style.instanceName[edge].value = YGUndefined;                    \
       node->style.instanceName[edge].unit = YGUnitAuto;                      \
-      YGNodeMarkDirtyInternal(node);                                         \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);           \
     }                                                                        \
   }
 
@@ -556,7 +557,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
       node->style.instanceName[edge].value = paramName;                                       \
       node->style.instanceName[edge].unit =                                                   \
           YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint;                      \
-      YGNodeMarkDirtyInternal(node);                                                          \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                            \
     }                                                                                         \
   }                                                                                           \
                                                                                               \
@@ -568,7 +569,8 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
       node->style.instanceName[edge].value = paramName;                                       \
       node->style.instanceName[edge].unit =                                                   \
           YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPercent;                    \
-      YGNodeMarkDirtyInternal(node);                                                          \
+      node->hasPossiblePercentage = true;                                                     \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                            \
     }                                                                                         \
   }                                                                                           \
                                                                                               \
@@ -583,7 +585,7 @@ void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
       node->style.instanceName[edge].value = paramName;                                       \
       node->style.instanceName[edge].unit =                                                   \
           YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint;                      \
-      YGNodeMarkDirtyInternal(node);                                                          \
+      YGNodeMarkDirtyInternal(node, YGDirtinessNeedsFullRelayout);                            \
     }                                                                                         \
   }                                                                                           \
                                                                                               \
@@ -1997,7 +1999,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     if (child->style.display == YGDisplayNone) {
       YGZeroOutLayoutRecursivly(child);
       child->hasNewLayout = true;
-      child->isDirty = false;
+      child->dirtinessLevel = YGDirtinessIsNotDirty;
       continue;
     }
     YGResolveDimensions(child);
@@ -2974,24 +2976,55 @@ static inline bool YGMeasureModeNewMeasureSizeIsStricterAndStillValid(YGMeasureM
          lastSize > size && (lastComputedSize <= size || YGFloatsEqual(size, lastComputedSize));
 }
 
-bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
-                                   const float width,
-                                   const YGMeasureMode heightMode,
-                                   const float height,
-                                   const YGMeasureMode lastWidthMode,
-                                   const float lastWidth,
-                                   const YGMeasureMode lastHeightMode,
-                                   const float lastHeight,
-                                   const float lastComputedWidth,
-                                   const float lastComputedHeight,
-                                   const float marginRow,
-                                   const float marginColumn) {
-  if (lastComputedHeight < 0 || lastComputedWidth < 0) {
+typedef struct YGValueArraySizePair {
+  const YGValue *values;
+  const uint32_t size;
+} YGValueArraySizePair;
+
+static inline bool YGNodeHasPercentageStyle(const YGStyle *style) {
+  const YGValueArraySizePair valueArrays[] = {
+      {style->dimensions, YGDimensionCount},
+      {style->minDimensions, YGDimensionCount},
+      {style->maxDimensions, YGDimensionCount},
+      {&style->flexBasis, 1},
+      {style->padding, YGEdgeCount},
+      {style->margin, YGEdgeCount},
+      {style->position, YGEdgeCount},
+  };
+
+  for (uint32_t i = 0; i < sizeof(valueArrays) / sizeof(valueArrays[0]); i++) {
+    for (uint32_t j = 0; j < valueArrays[i].size; j++) {
+      if (valueArrays[i].values[j].unit == YGUnitPercent) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+inline bool YGNodeCanUseCachedMeasurement(const YGMeasureMode widthMode,
+                                          const float width,
+                                          const YGMeasureMode heightMode,
+                                          const float height,
+                                          const YGMeasureMode lastWidthMode,
+                                          const float lastWidth,
+                                          const YGMeasureMode lastHeightMode,
+                                          const float lastHeight,
+                                          const float lastComputedWidth,
+                                          const float lastComputedHeight,
+                                          const float marginRow,
+                                          const float marginColumn,
+                                          const bool isPercentageInvolved) {
+  if (lastComputedHeight < 0 || lastComputedWidth < 0 || lastHeight < 0 || lastWidth < 0) {
     return false;
   }
 
   const bool hasSameWidthSpec = lastWidthMode == widthMode && YGFloatsEqual(lastWidth, width);
   const bool hasSameHeightSpec = lastHeightMode == heightMode && YGFloatsEqual(lastHeight, height);
+
+  if ((!hasSameHeightSpec || !hasSameWidthSpec) && isPercentageInvolved) {
+    return false;
+  }
 
   const bool widthIsCompatible =
       hasSameWidthSpec || YGMeasureModeSizeIsExactAndMatchesOldMeasuredSize(widthMode,
@@ -3040,17 +3073,14 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
 
   gDepth++;
 
-  const bool needToVisitNode =
-      (node->isDirty && layout->generationCount != gCurrentGenerationCount) ||
-      layout->lastParentDirection != parentDirection;
+  const bool needToVisitNode = (node->dirtinessLevel != YGDirtinessIsNotDirty &&
+                                layout->generationCount != gCurrentGenerationCount) ||
+                               layout->lastParentDirection != parentDirection;
 
   if (needToVisitNode) {
     // Invalidate the cached results.
+    layout->performLayoutCache = NULL;
     layout->nextCachedMeasurementsIndex = 0;
-    layout->cachedLayout.widthMeasureMode = (YGMeasureMode) -1;
-    layout->cachedLayout.heightMeasureMode = (YGMeasureMode) -1;
-    layout->cachedLayout.computedWidth = -1;
-    layout->cachedLayout.computedHeight = -1;
   }
 
   YGCachedMeasurement *cachedResults = NULL;
@@ -3067,57 +3097,46 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
   // most
   // expensive to measure, so it's worth avoiding redundant measurements if at
   // all possible.
-  if (node->measure) {
-    const float marginAxisRow = YGNodeMarginForAxis(node, YGFlexDirectionRow, parentWidth);
-    const float marginAxisColumn = YGNodeMarginForAxis(node, YGFlexDirectionColumn, parentWidth);
+  const float marginAxisRow = YGNodeMarginForAxis(node, YGFlexDirectionRow, parentWidth);
+  const float marginAxisColumn = YGNodeMarginForAxis(node, YGFlexDirectionColumn, parentWidth);
 
-    // First, try to use the layout cache.
-    if (YGNodeCanUseCachedMeasurement(widthMeasureMode,
-                                      availableWidth,
-                                      heightMeasureMode,
-                                      availableHeight,
-                                      layout->cachedLayout.widthMeasureMode,
-                                      layout->cachedLayout.availableWidth,
-                                      layout->cachedLayout.heightMeasureMode,
-                                      layout->cachedLayout.availableHeight,
-                                      layout->cachedLayout.computedWidth,
-                                      layout->cachedLayout.computedHeight,
-                                      marginAxisRow,
-                                      marginAxisColumn)) {
-      cachedResults = &layout->cachedLayout;
-    } else {
-      // Try to use the measurement cache.
-      for (uint32_t i = 0; i < layout->nextCachedMeasurementsIndex; i++) {
-        if (YGNodeCanUseCachedMeasurement(widthMeasureMode,
-                                          availableWidth,
-                                          heightMeasureMode,
-                                          availableHeight,
-                                          layout->cachedMeasurements[i].widthMeasureMode,
-                                          layout->cachedMeasurements[i].availableWidth,
-                                          layout->cachedMeasurements[i].heightMeasureMode,
-                                          layout->cachedMeasurements[i].availableHeight,
-                                          layout->cachedMeasurements[i].computedWidth,
-                                          layout->cachedMeasurements[i].computedHeight,
-                                          marginAxisRow,
-                                          marginAxisColumn)) {
-          cachedResults = &layout->cachedMeasurements[i];
-          break;
-        }
-      }
-    }
-  } else if (performLayout) {
-    if (YGFloatsEqual(layout->cachedLayout.availableWidth, availableWidth) &&
-        YGFloatsEqual(layout->cachedLayout.availableHeight, availableHeight) &&
-        layout->cachedLayout.widthMeasureMode == widthMeasureMode &&
-        layout->cachedLayout.heightMeasureMode == heightMeasureMode) {
-      cachedResults = &layout->cachedLayout;
-    }
-  } else {
+  const bool checkPerformLayoutCache =
+      (performLayout || node->measure != NULL) && layout->performLayoutCache != NULL;
+  const bool checkOtherCache = !performLayout || node->measure != NULL;
+
+  if (checkPerformLayoutCache &&
+      YGNodeCanUseCachedMeasurement(widthMeasureMode,
+                                    availableWidth,
+                                    heightMeasureMode,
+                                    availableHeight,
+                                    layout->performLayoutCache->widthMeasureMode,
+                                    layout->performLayoutCache->availableWidth,
+                                    layout->performLayoutCache->heightMeasureMode,
+                                    layout->performLayoutCache->availableHeight,
+                                    layout->performLayoutCache->computedWidth,
+                                    layout->performLayoutCache->computedHeight,
+                                    marginAxisRow,
+                                    marginAxisColumn,
+                                    layout->performLayoutCache->isPercentageInvolved)) {
+    cachedResults = layout->performLayoutCache;
+  }
+
+  if (cachedResults == NULL && checkOtherCache) {
     for (uint32_t i = 0; i < layout->nextCachedMeasurementsIndex; i++) {
-      if (YGFloatsEqual(layout->cachedMeasurements[i].availableWidth, availableWidth) &&
-          YGFloatsEqual(layout->cachedMeasurements[i].availableHeight, availableHeight) &&
-          layout->cachedMeasurements[i].widthMeasureMode == widthMeasureMode &&
-          layout->cachedMeasurements[i].heightMeasureMode == heightMeasureMode) {
+      if (layout->performLayoutCache != &layout->cachedMeasurements[i] &&
+          YGNodeCanUseCachedMeasurement(widthMeasureMode,
+                                        availableWidth,
+                                        heightMeasureMode,
+                                        availableHeight,
+                                        layout->cachedMeasurements[i].widthMeasureMode,
+                                        layout->cachedMeasurements[i].availableWidth,
+                                        layout->cachedMeasurements[i].heightMeasureMode,
+                                        layout->cachedMeasurements[i].availableHeight,
+                                        layout->cachedMeasurements[i].computedWidth,
+                                        layout->cachedMeasurements[i].computedHeight,
+                                        marginAxisRow,
+                                        marginAxisColumn,
+                                        layout->cachedMeasurements[i].isPercentageInvolved)) {
         cachedResults = &layout->cachedMeasurements[i];
         break;
       }
@@ -3190,15 +3209,19 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
       }
 
       YGCachedMeasurement *newCacheEntry;
-      if (performLayout) {
-        // Use the single layout cache entry.
-        newCacheEntry = &layout->cachedLayout;
-      } else {
-        // Allocate a new measurement cache entry.
+      if (!performLayout || layout->performLayoutCache == NULL) {
         newCacheEntry = &layout->cachedMeasurements[layout->nextCachedMeasurementsIndex];
         layout->nextCachedMeasurementsIndex++;
+
+        if (performLayout) {
+          layout->performLayoutCache = newCacheEntry;
+        }
+      } else {
+        newCacheEntry = layout->performLayoutCache;
       }
 
+      newCacheEntry->isPercentageInvolved =
+          node->hasPossiblePercentage ? YGNodeHasPercentageStyle(&node->style) : false;
       newCacheEntry->availableWidth = availableWidth;
       newCacheEntry->availableHeight = availableHeight;
       newCacheEntry->widthMeasureMode = widthMeasureMode;
@@ -3212,7 +3235,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
     node->layout.dimensions[YGDimensionWidth] = node->layout.measuredDimensions[YGDimensionWidth];
     node->layout.dimensions[YGDimensionHeight] = node->layout.measuredDimensions[YGDimensionHeight];
     node->hasNewLayout = true;
-    node->isDirty = false;
+    node->dirtinessLevel = YGDirtinessIsNotDirty;
   }
 
   gDepth--;

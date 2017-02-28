@@ -175,3 +175,21 @@ TEST(YogaTest, remeasure_with_already_measured_value_smaller_but_still_float_equ
 
   ASSERT_EQ(1, measureCount);
 }
+
+TEST(YogaTest, remeasure_with_percentage_value) {
+  const YGNodeRef root = YGNodeNew();
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  int measureCount = 0;
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeStyleSetMaxWidthPercent(root_child0, 50);
+  YGNodeSetMeasureFunc(root_child0, _measureMin);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
+  YGNodeCalculateLayout(root, 100, 50, YGDirectionLTR);
+
+  ASSERT_EQ(2, measureCount);
+
+  YGNodeFreeRecursive(root);
+}
