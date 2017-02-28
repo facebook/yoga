@@ -27,6 +27,7 @@
       android:icon="@drawable/ic_launcher"
       android:allowBackup="false"
       android:theme="@style/NoTitleBarWhiteBG"
+      android:supportsRtl="true"
       >
 
     <activity
