@@ -14,16 +14,17 @@ TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
   YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
 
   const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetHeightPercent(root, 100);
+  YGNodeStyleSetWidthPercent(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetHeight(root_child0, 10);
-  YGNodeStyleSetFlexBasis(root_child0, 20);
+  YGNodeStyleSetFlexBasisPercent(root_child0, 100);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, 100, YGUndefined, YGDirectionLTR);
   YGNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
 
-  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
 
