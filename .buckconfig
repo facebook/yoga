@@ -3,7 +3,7 @@
 [android]
   target = Google Inc.:Google APIs:19
 [ndk]
-  ndk_version = r10e
+  ndk_version = 12.1.2977051
   compiler = clang
   app_platform = android-19
   cpu_abis = armv7, x86
