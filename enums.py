@@ -95,6 +95,7 @@ ENUMS = {
         'Rounding',
         # Mimic web flex-basis behavior.
         'WebFlexBasis',
+        'MinFlexFix'
     ],
     'PrintOptions': [
         ('Layout', 1),

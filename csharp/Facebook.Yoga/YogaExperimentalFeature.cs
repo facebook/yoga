@@ -13,5 +13,6 @@ namespace Facebook.Yoga
     {
         Rounding,
         WebFlexBasis,
+        MinFlexFix,
     }
 }
