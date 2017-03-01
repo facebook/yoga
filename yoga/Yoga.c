@@ -198,7 +198,7 @@ static YGConfig gYGConfigDefaults = {
     .experimentalFeatures =
         {
                 [YGExperimentalFeatureRounding] = false,
-                [YGExperimentalFeatureWebFlexBasis] = false,
+                [YGExperimentalFeatureMinFlexFix] = false,
                 [YGExperimentalFeatureWebFlexBasis] = false,
         },
 };
