@@ -235,6 +235,10 @@ WIN_EXPORT void YGConfigSetExperimentalFeatureEnabled(const YGConfigRef config,
 WIN_EXPORT bool YGConfigIsExperimentalFeatureEnabled(const YGConfigRef config,
                                                      const YGExperimentalFeature feature);
 
+WIN_EXPORT void YGConfigSetUseWebDefaults(const YGConfigRef config, const bool enabled);
+
+WIN_EXPORT bool YGConfigGetUseWebDefaults(const YGConfigRef config);
+
 WIN_EXPORT void
 YGSetMemoryFuncs(YGMalloc ygmalloc, YGCalloc yccalloc, YGRealloc ygrealloc, YGFree ygfree);
 

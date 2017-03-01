@@ -94,7 +94,10 @@ typedef struct YGStyle {
   float aspectRatio;
 } YGStyle;
 
-typedef struct YGConfig { bool experimentalFeatures[YGExperimentalFeatureCount + 1]; } YGConfig;
+typedef struct YGConfig {
+  bool experimentalFeatures[YGExperimentalFeatureCount + 1];
+  bool useWebDefaults;
+} YGConfig;
 
 typedef struct YGNode {
   YGStyle style;
@@ -200,6 +203,7 @@ static YGConfig gYGConfigDefaults = {
                 [YGExperimentalFeatureRounding] = false,
                 [YGExperimentalFeatureWebFlexBasis] = false,
         },
+    .useWebDefaults = false,
 };
 
 static void YGNodeMarkDirtyInternal(const YGNodeRef node);
@@ -308,6 +312,10 @@ WIN_EXPORT YGNodeRef YGNodeNewWithConfig(const YGConfigRef config) {
   gNodeInstanceCount++;
 
   memcpy(node, &gYGNodeDefaults, sizeof(YGNode));
+  if (config->useWebDefaults) {
+    node->style.flexDirection = YGFlexDirectionRow;
+    node->style.alignContent = YGAlignStretch;
+  }
   node->config = config;
   return node;
 }
@@ -3431,6 +3439,14 @@ void YGConfigSetExperimentalFeatureEnabled(const YGConfigRef config,
 inline bool YGConfigIsExperimentalFeatureEnabled(const YGConfigRef config,
                                            const YGExperimentalFeature feature) {
   return config->experimentalFeatures[feature];
+}
+
+void YGConfigSetUseWebDefaults(const YGConfigRef config, const bool enabled) {
+  config->useWebDefaults = enabled;
+}
+
+bool YGConfigGetUseWebDefaults(const YGConfigRef config) {
+  return config->useWebDefaults;
 }
 
 void YGSetMemoryFuncs(YGMalloc ygmalloc, YGCalloc yccalloc, YGRealloc ygrealloc, YGFree ygfree) {
