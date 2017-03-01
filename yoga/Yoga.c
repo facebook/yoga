@@ -147,6 +147,7 @@ typedef struct YGNode {
 
 static const float kDefaultFlexGrow = 0.0f;
 static const float kDefaultFlexShrink = 0.0f;
+static const float kWebDefaultFlexShrink = 1.0f;
 
 static YGNode gYGNodeDefaults = {
     .parent = NULL,
@@ -470,7 +471,7 @@ float YGNodeStyleGetFlexGrow(const YGNodeRef node) {
 }
 
 float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
-  return YGFloatIsUndefined(node->style.flexShrink) ? kDefaultFlexShrink : node->style.flexShrink;
+  return YGFloatIsUndefined(node->style.flexShrink) ? (node->config->useWebDefaults ? kWebDefaultFlexShrink: kDefaultFlexShrink) : node->style.flexShrink;
 }
 
 static inline float YGNodeResolveFlexShrink(const YGNodeRef node) {
