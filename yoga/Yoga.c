@@ -471,17 +471,17 @@ float YGNodeStyleGetFlexGrow(const YGNodeRef node) {
 }
 
 float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
-  return YGFloatIsUndefined(node->style.flexShrink) ? (node->config->useWebDefaults ? kWebDefaultFlexShrink: kDefaultFlexShrink) : node->style.flexShrink;
+  return YGFloatIsUndefined(node->style.flexShrink) ? (node->config->useWebDefaults ? kWebDefaultFlexShrink : kDefaultFlexShrink) : node->style.flexShrink;
 }
 
 static inline float YGNodeResolveFlexShrink(const YGNodeRef node) {
   if (!YGFloatIsUndefined(node->style.flexShrink)) {
     return node->style.flexShrink;
   }
-  if (!YGFloatIsUndefined(node->style.flex) && node->style.flex < 0.0f) {
+  if (!node->config->useWebDefaults && !YGFloatIsUndefined(node->style.flex) && node->style.flex < 0.0f) {
     return -node->style.flex;
   }
-  return kDefaultFlexShrink;
+  return node->config->useWebDefaults ? kWebDefaultFlexShrink : kDefaultFlexShrink;
 }
 
 static inline const YGValue *YGNodeResolveFlexBasisPtr(const YGNodeRef node) {
@@ -489,7 +489,7 @@ static inline const YGValue *YGNodeResolveFlexBasisPtr(const YGNodeRef node) {
     return &node->style.flexBasis;
   }
   if (!YGFloatIsUndefined(node->style.flex) && node->style.flex > 0.0f) {
-    return &YGValueZero;
+    return node->config->useWebDefaults ? &YGValueAuto : &YGValueZero;
   }
   return &YGValueAuto;
 }
