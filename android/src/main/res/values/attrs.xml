@@ -91,15 +91,15 @@
       <enum name="space_around" value="4"/>
     </attr>
 
-    <attr name="margin_left" format="dimension"/>
-    <attr name="margin_top" format="dimension"/>
-    <attr name="margin_right" format="dimension"/>
-    <attr name="margin_bottom" format="dimension"/>
-    <attr name="margin_start" format="dimension"/>
-    <attr name="margin_end" format="dimension"/>
-    <attr name="margin_horizontal" format="dimension"/>
-    <attr name="margin_vertical" format="dimension"/>
-    <attr name="margin_all" format="dimension"/>
+    <attr name="margin_left" format="dimension|string"/>
+    <attr name="margin_top" format="dimension|string"/>
+    <attr name="margin_right" format="dimension|string"/>
+    <attr name="margin_bottom" format="dimension|string"/>
+    <attr name="margin_start" format="dimension|string"/>
+    <attr name="margin_end" format="dimension|string"/>
+    <attr name="margin_horizontal" format="dimension|string"/>
+    <attr name="margin_vertical" format="dimension|string"/>
+    <attr name="margin_all" format="dimension|string"/>
 
     <attr name="margin_percent_left" format="dimension"/>
     <attr name="margin_percent_top" format="dimension"/>

@@ -14,7 +14,6 @@ import java.util.Map;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -107,7 +106,7 @@ public class YogaLayout extends ViewGroup {
    * Adds a child view with the specified layout parameters.
    *
    * In the typical View is added, this constructs a {@code YogaNode} for this child and applies all
-   * the {@code yoga:*} attributes.  The Toga node is added to the Yoga tree and the child is added
+   * the {@code yoga:*} attributes.  The Yoga node is added to the Yoga tree and the child is added
    * to this ViewGroup.
    *
    * If the child is a {@link YogaLayout} itself, we do not construct a new Yoga node for that
@@ -380,9 +379,9 @@ public class YogaLayout extends ViewGroup {
       }
     }
 
-    for (int i = 0; i < layoutParameters.attributes.size(); i++) {
-      final int attribute = layoutParameters.attributes.keyAt(i);
-      final float value = layoutParameters.attributes.valueAt(i);
+    for (int i = 0; i < layoutParameters.numericAttributes.size(); i++) {
+      final int attribute = layoutParameters.numericAttributes.keyAt(i);
+      final float value = layoutParameters.numericAttributes.valueAt(i);
 
       if (attribute == R.styleable.yoga_align_content) {
         node.setAlignContent(YogaAlign.fromInt(Math.round(value)));
@@ -568,6 +567,33 @@ public class YogaLayout extends ViewGroup {
         node.setWrap(YogaWrap.fromInt(Math.round(value)));
       }
     }
+
+    for (int i = 0; i < layoutParameters.stringAttributes.size(); i++) {
+      final int attribute = layoutParameters.stringAttributes.keyAt(i);
+      final String value = layoutParameters.stringAttributes.valueAt(i);
+
+      if (value.equals("auto")) {
+        if (attribute == R.styleable.yoga_margin_left) {
+          node.setMarginAuto(YogaEdge.LEFT);
+        } else if (attribute == R.styleable.yoga_margin_top) {
+          node.setMarginAuto(YogaEdge.TOP);
+        } else if (attribute == R.styleable.yoga_margin_right) {
+          node.setMarginAuto(YogaEdge.RIGHT);
+        } else if (attribute == R.styleable.yoga_margin_bottom) {
+          node.setMarginAuto(YogaEdge.BOTTOM);
+        } else if (attribute == R.styleable.yoga_margin_start) {
+          node.setMarginAuto(YogaEdge.START);
+        } else if (attribute == R.styleable.yoga_margin_end) {
+          node.setMarginAuto(YogaEdge.END);
+        } else if (attribute == R.styleable.yoga_margin_horizontal) {
+          node.setMarginAuto(YogaEdge.HORIZONTAL);
+        } else if (attribute == R.styleable.yoga_margin_vertical) {
+          node.setMarginAuto(YogaEdge.VERTICAL);
+        } else if (attribute == R.styleable.yoga_margin_all) {
+          node.setMarginAuto(YogaEdge.ALL);
+        }
+      }
+    }
   }
 
   @Override
@@ -608,7 +634,13 @@ public class YogaLayout extends ViewGroup {
      * like align_self (enums), the integer enum value is cast (rounding is used on the other side
      * to prevent precision errors).  Dimension attributes are stored as float pixels.
      */
-    SparseArray<Float> attributes;
+    SparseArray<Float> numericAttributes;
+
+    /**
+     * A mapping from attribute keys ({@code R.styleable.yoga_*}) with string values to those
+     * strings.  This is used for values such as "auto".
+     */
+    SparseArray<String> stringAttributes;
 
     /**
      * Constructs a set of layout params from a source set.  In the case that the source set is
@@ -620,16 +652,18 @@ public class YogaLayout extends ViewGroup {
     public LayoutParams(ViewGroup.LayoutParams source) {
       super(source);
       if (source instanceof LayoutParams) {
-        attributes = ((LayoutParams) source).attributes.clone();
+        numericAttributes = ((LayoutParams) source).numericAttributes.clone();
+        stringAttributes = ((LayoutParams) source).stringAttributes.clone();
       } else {
-        attributes = new SparseArray<>();
+        numericAttributes = new SparseArray<>();
+        stringAttributes = new SparseArray<>();
 
         // Negative values include MATCH_PARENT and WRAP_CONTENT
         if (source.width >= 0) {
-          attributes.put(R.styleable.yoga_width, (float) width);
+          numericAttributes.put(R.styleable.yoga_width, (float) width);
         }
         if (source.height >= 0) {
-          attributes.put(R.styleable.yoga_height, (float) height);
+          numericAttributes.put(R.styleable.yoga_height, (float) height);
         }
       }
     }
@@ -648,13 +682,14 @@ public class YogaLayout extends ViewGroup {
      */
     public LayoutParams(int width, int height) {
       super(width, height);
-      attributes = new SparseArray<>();
+      numericAttributes = new SparseArray<>();
+      stringAttributes = new SparseArray<>();
       // Negative values include MATCH_PARENT and WRAP_CONTENT
       if (width >= 0) {
-        attributes.put(R.styleable.yoga_width, (float) width);
+        numericAttributes.put(R.styleable.yoga_width, (float) width);
       }
       if (height >= 0) {
-        attributes.put(R.styleable.yoga_height, (float) height);
+        numericAttributes.put(R.styleable.yoga_height, (float) height);
       }
     }
 
@@ -667,15 +702,16 @@ public class YogaLayout extends ViewGroup {
      */
     public LayoutParams(Context context, AttributeSet attrs) {
       super(context, attrs);
-      attributes = new SparseArray<>();
+      numericAttributes = new SparseArray<>();
+      stringAttributes = new SparseArray<>();
       final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.yoga);
 
       // Negative values include MATCH_PARENT and WRAP_CONTENT
       if (width >= 0) {
-        attributes.put(R.styleable.yoga_width, (float) width);
+        numericAttributes.put(R.styleable.yoga_width, (float) width);
       }
       if (height >= 0) {
-        attributes.put(R.styleable.yoga_height, (float) height);
+        numericAttributes.put(R.styleable.yoga_height, (float) height);
       }
 
       final int attributeCount = a.getIndexCount();
@@ -685,11 +721,13 @@ public class YogaLayout extends ViewGroup {
         a.getValue(attribute, val);
 
         if (val.type == TypedValue.TYPE_DIMENSION) {
-          attributes.put(
+          numericAttributes.put(
               attribute,
               (float) a.getDimensionPixelSize(attribute, 0));
+        } else if (val.type == TypedValue.TYPE_STRING) {
+          stringAttributes.put(attribute, a.getString(attribute));
         } else {
-          attributes.put(attribute, a.getFloat(attribute, 0));
+          numericAttributes.put(attribute, a.getFloat(attribute, 0));
         }
       }
       a.recycle();
