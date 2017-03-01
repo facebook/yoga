@@ -13,11 +13,11 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("align_self_center", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Yoga.ALIGN_CENTER);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
@@ -53,11 +53,11 @@ it("align_self_center", function () {
 });
 it("align_self_flex_end", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Yoga.ALIGN_FLEX_END);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
@@ -93,11 +93,11 @@ it("align_self_flex_end", function () {
 });
 it("align_self_flex_start", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Yoga.ALIGN_FLEX_START);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
@@ -133,12 +133,12 @@ it("align_self_flex_start", function () {
 });
 it("align_self_flex_end_override_flex_start", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_START);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Yoga.ALIGN_FLEX_END);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
@@ -174,24 +174,24 @@ it("align_self_flex_end_override_flex_start", function () {
 });
 it("align_self_baseline", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Yoga.ALIGN_BASELINE);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setAlignSelf(Yoga.ALIGN_BASELINE);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
-    var root_child1_child0 = Yoga.Node.create();
+    var root_child1_child0 = Yoga.Node.create(config);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(10);
     root_child1.insertChild(root_child1_child0, 0);

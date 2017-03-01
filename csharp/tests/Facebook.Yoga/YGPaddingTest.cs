@@ -20,7 +20,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_padding_no_size()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.PaddingLeft = 10;
             root.PaddingTop = 10;
             root.PaddingRight = 10;
@@ -45,13 +47,15 @@ namespace Facebook.Yoga
         [Test]
         public void Test_padding_container_match_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.PaddingLeft = 10;
             root.PaddingTop = 10;
             root.PaddingRight = 10;
             root.PaddingBottom = 10;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 10;
             root_child0.Height = 10;
             root.Insert(0, root_child0);
@@ -85,7 +89,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_padding_flex_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.PaddingLeft = 10;
             root.PaddingTop = 10;
             root.PaddingRight = 10;
@@ -93,7 +99,7 @@ namespace Facebook.Yoga
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root_child0.Width = 10;
             root.Insert(0, root_child0);
@@ -127,7 +133,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_padding_stretch_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.PaddingLeft = 10;
             root.PaddingTop = 10;
             root.PaddingRight = 10;
@@ -135,7 +143,7 @@ namespace Facebook.Yoga
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
@@ -168,7 +176,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_padding_center_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
             root.PaddingStart = 10;
@@ -177,7 +187,7 @@ namespace Facebook.Yoga
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 10;
             root_child0.Height = 10;
             root.Insert(0, root_child0);
@@ -211,13 +221,15 @@ namespace Facebook.Yoga
         [Test]
         public void Test_child_with_padding_align_end()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.FlexEnd;
             root.AlignItems = YogaAlign.FlexEnd;
             root.Width = 200;
             root.Height = 200;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PaddingLeft = 20;
             root_child0.PaddingTop = 20;
             root_child0.PaddingRight = 20;

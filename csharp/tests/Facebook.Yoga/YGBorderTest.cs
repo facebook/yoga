@@ -20,7 +20,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_border_no_size()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.BorderLeftWidth = 10;
             root.BorderTopWidth = 10;
             root.BorderRightWidth = 10;
@@ -45,13 +47,15 @@ namespace Facebook.Yoga
         [Test]
         public void Test_border_container_match_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.BorderLeftWidth = 10;
             root.BorderTopWidth = 10;
             root.BorderRightWidth = 10;
             root.BorderBottomWidth = 10;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 10;
             root_child0.Height = 10;
             root.Insert(0, root_child0);
@@ -85,7 +89,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_border_flex_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.BorderLeftWidth = 10;
             root.BorderTopWidth = 10;
             root.BorderRightWidth = 10;
@@ -93,7 +99,7 @@ namespace Facebook.Yoga
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root_child0.Width = 10;
             root.Insert(0, root_child0);
@@ -127,7 +133,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_border_stretch_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.BorderLeftWidth = 10;
             root.BorderTopWidth = 10;
             root.BorderRightWidth = 10;
@@ -135,7 +143,7 @@ namespace Facebook.Yoga
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
@@ -168,7 +176,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_border_center_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
             root.BorderStartWidth = 10;
@@ -177,7 +187,7 @@ namespace Facebook.Yoga
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 10;
             root_child0.Height = 10;
             root.Insert(0, root_child0);

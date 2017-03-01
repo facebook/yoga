@@ -58,26 +58,18 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('public void test_' + name + '() {');
     this.pushIndent();
 
-    if (experiments.length > 0) {
-      for (var i in experiments) {
-        this.push('YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
-      }
-      this.push('');
+    this.push("YogaConfig config = new YogaConfig();")
+    for (var i in experiments) {
+      this.push('config.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
     }
+    this.push('');
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('final YogaNode ' + nodeName + ' = new YogaNode();');
+    this.push('final YogaNode ' + nodeName + ' = new YogaNode(config);');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
-    if (experiments.length > 0) {
-      this.push('');
-      for (var i in experiments) {
-        this.push('YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', false);');
-      }
-    }
-
     this.popIndent();
     this.push([
       '}',
@@ -145,7 +137,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGWrapWrap:{value:'YogaWrap.WRAP'},
   YGWrapWrapReverse:{value: 'YogaWrap.WRAP_REVERSE'},
 
-  YGNodeCalculateLayout:{value:function(node, dir) {
+  YGNodeCalculateLayout:{value:function(node, dir, experiments) {
     this.push(node + '.setDirection(' + dir + ');');
     this.push(node + '.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);');
   }},

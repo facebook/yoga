@@ -20,11 +20,13 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_items_stretch()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Height = 10;
             root.Insert(0, root_child0);
             root.StyleDirection = YogaDirection.LTR;
@@ -57,12 +59,14 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_items_center()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.AlignItems = YogaAlign.Center;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 10;
             root_child0.Height = 10;
             root.Insert(0, root_child0);
@@ -96,12 +100,14 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_items_flex_start()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.AlignItems = YogaAlign.FlexStart;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 10;
             root_child0.Height = 10;
             root.Insert(0, root_child0);
@@ -135,12 +141,14 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_items_flex_end()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.AlignItems = YogaAlign.FlexEnd;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 10;
             root_child0.Height = 10;
             root.Insert(0, root_child0);
@@ -174,18 +182,20 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
@@ -229,23 +239,25 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 50;
             root_child1_child0.Height = 10;
             root_child1.Insert(0, root_child1_child0);
@@ -299,40 +311,42 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_child_multiline()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 60;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexDirection = YogaFlexDirection.Row;
             root_child1.Wrap = YogaWrap.Wrap;
             root_child1.Width = 50;
             root_child1.Height = 25;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 25;
             root_child1_child0.Height = 20;
             root_child1.Insert(0, root_child1_child0);
 
-            YogaNode root_child1_child1 = new YogaNode();
+            YogaNode root_child1_child1 = new YogaNode(config);
             root_child1_child1.Width = 25;
             root_child1_child1.Height = 10;
             root_child1.Insert(1, root_child1_child1);
 
-            YogaNode root_child1_child2 = new YogaNode();
+            YogaNode root_child1_child2 = new YogaNode(config);
             root_child1_child2.Width = 25;
             root_child1_child2.Height = 20;
             root_child1.Insert(2, root_child1_child2);
 
-            YogaNode root_child1_child3 = new YogaNode();
+            YogaNode root_child1_child3 = new YogaNode(config);
             root_child1_child3.Width = 25;
             root_child1_child3.Height = 10;
             root_child1.Insert(3, root_child1_child3);
@@ -416,41 +430,43 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_child_multiline_override()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 60;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexDirection = YogaFlexDirection.Row;
             root_child1.Wrap = YogaWrap.Wrap;
             root_child1.Width = 50;
             root_child1.Height = 25;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 25;
             root_child1_child0.Height = 20;
             root_child1.Insert(0, root_child1_child0);
 
-            YogaNode root_child1_child1 = new YogaNode();
+            YogaNode root_child1_child1 = new YogaNode(config);
             root_child1_child1.AlignSelf = YogaAlign.Baseline;
             root_child1_child1.Width = 25;
             root_child1_child1.Height = 10;
             root_child1.Insert(1, root_child1_child1);
 
-            YogaNode root_child1_child2 = new YogaNode();
+            YogaNode root_child1_child2 = new YogaNode(config);
             root_child1_child2.Width = 25;
             root_child1_child2.Height = 20;
             root_child1.Insert(2, root_child1_child2);
 
-            YogaNode root_child1_child3 = new YogaNode();
+            YogaNode root_child1_child3 = new YogaNode(config);
             root_child1_child3.AlignSelf = YogaAlign.Baseline;
             root_child1_child3.Width = 25;
             root_child1_child3.Height = 10;
@@ -535,40 +551,42 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_child_multiline_no_override_on_secondline()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 60;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexDirection = YogaFlexDirection.Row;
             root_child1.Wrap = YogaWrap.Wrap;
             root_child1.Width = 50;
             root_child1.Height = 25;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 25;
             root_child1_child0.Height = 20;
             root_child1.Insert(0, root_child1_child0);
 
-            YogaNode root_child1_child1 = new YogaNode();
+            YogaNode root_child1_child1 = new YogaNode(config);
             root_child1_child1.Width = 25;
             root_child1_child1.Height = 10;
             root_child1.Insert(1, root_child1_child1);
 
-            YogaNode root_child1_child2 = new YogaNode();
+            YogaNode root_child1_child2 = new YogaNode(config);
             root_child1_child2.Width = 25;
             root_child1_child2.Height = 20;
             root_child1.Insert(2, root_child1_child2);
 
-            YogaNode root_child1_child3 = new YogaNode();
+            YogaNode root_child1_child3 = new YogaNode(config);
             root_child1_child3.AlignSelf = YogaAlign.Baseline;
             root_child1_child3.Width = 25;
             root_child1_child3.Height = 10;
@@ -653,24 +671,26 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_child_top()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Top = 10;
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 50;
             root_child1_child0.Height = 10;
             root_child1.Insert(0, root_child1_child0);
@@ -724,24 +744,26 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_child_top2()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Top = 5;
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 50;
             root_child1_child0.Height = 10;
             root_child1.Insert(0, root_child1_child0);
@@ -795,28 +817,30 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_double_nested_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child0_child0 = new YogaNode();
+            YogaNode root_child0_child0 = new YogaNode(config);
             root_child0_child0.Width = 50;
             root_child0_child0.Height = 20;
             root_child0.Insert(0, root_child0_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 50;
             root_child1_child0.Height = 15;
             root_child1.Insert(0, root_child1_child0);
@@ -880,17 +904,19 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_column()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
@@ -934,13 +960,15 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_child_margin()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.MarginLeft = 5;
             root_child0.MarginTop = 5;
             root_child0.MarginRight = 5;
@@ -949,12 +977,12 @@ namespace Facebook.Yoga
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.MarginLeft = 1;
             root_child1_child0.MarginTop = 1;
             root_child1_child0.MarginRight = 1;
@@ -1012,7 +1040,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_child_padding()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.PaddingLeft = 5;
@@ -1022,12 +1052,12 @@ namespace Facebook.Yoga
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.PaddingLeft = 5;
             root_child1.PaddingTop = 5;
             root_child1.PaddingRight = 5;
@@ -1036,7 +1066,7 @@ namespace Facebook.Yoga
             root_child1.Height = 20;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 50;
             root_child1_child0.Height = 10;
             root_child1.Insert(0, root_child1_child0);
@@ -1090,39 +1120,41 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_multiline()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Wrap = YogaWrap.Wrap;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 50;
             root_child1_child0.Height = 10;
             root_child1.Insert(0, root_child1_child0);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.Width = 50;
             root_child2.Height = 20;
             root.Insert(2, root_child2);
 
-            YogaNode root_child2_child0 = new YogaNode();
+            YogaNode root_child2_child0 = new YogaNode(config);
             root_child2_child0.Width = 50;
             root_child2_child0.Height = 10;
             root_child2.Insert(0, root_child2_child0);
 
-            YogaNode root_child3 = new YogaNode();
+            YogaNode root_child3 = new YogaNode(config);
             root_child3.Width = 50;
             root_child3.Height = 50;
             root.Insert(3, root_child3);
@@ -1206,38 +1238,40 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_multiline_column()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.AlignItems = YogaAlign.Baseline;
             root.Wrap = YogaWrap.Wrap;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 30;
             root_child1.Height = 50;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 20;
             root_child1_child0.Height = 20;
             root_child1.Insert(0, root_child1_child0);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.Width = 40;
             root_child2.Height = 70;
             root.Insert(2, root_child2);
 
-            YogaNode root_child2_child0 = new YogaNode();
+            YogaNode root_child2_child0 = new YogaNode(config);
             root_child2_child0.Width = 10;
             root_child2_child0.Height = 10;
             root_child2.Insert(0, root_child2_child0);
 
-            YogaNode root_child3 = new YogaNode();
+            YogaNode root_child3 = new YogaNode(config);
             root_child3.Width = 50;
             root_child3.Height = 20;
             root.Insert(3, root_child3);
@@ -1321,38 +1355,40 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_multiline_column2()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.AlignItems = YogaAlign.Baseline;
             root.Wrap = YogaWrap.Wrap;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 30;
             root_child1.Height = 50;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 20;
             root_child1_child0.Height = 20;
             root_child1.Insert(0, root_child1_child0);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.Width = 40;
             root_child2.Height = 70;
             root.Insert(2, root_child2);
 
-            YogaNode root_child2_child0 = new YogaNode();
+            YogaNode root_child2_child0 = new YogaNode(config);
             root_child2_child0.Width = 10;
             root_child2_child0.Height = 10;
             root_child2.Insert(0, root_child2_child0);
 
-            YogaNode root_child3 = new YogaNode();
+            YogaNode root_child3 = new YogaNode(config);
             root_child3.Width = 50;
             root_child3.Height = 20;
             root.Insert(3, root_child3);
@@ -1436,39 +1472,41 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_baseline_multiline_row_and_column()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.AlignItems = YogaAlign.Baseline;
             root.Wrap = YogaWrap.Wrap;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.Width = 50;
             root_child1.Height = 50;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 50;
             root_child1_child0.Height = 10;
             root_child1.Insert(0, root_child1_child0);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.Width = 50;
             root_child2.Height = 20;
             root.Insert(2, root_child2);
 
-            YogaNode root_child2_child0 = new YogaNode();
+            YogaNode root_child2_child0 = new YogaNode(config);
             root_child2_child0.Width = 50;
             root_child2_child0.Height = 10;
             root_child2.Insert(0, root_child2_child0);
 
-            YogaNode root_child3 = new YogaNode();
+            YogaNode root_child3 = new YogaNode(config);
             root_child3.Width = 50;
             root_child3.Height = 20;
             root.Insert(3, root_child3);

@@ -14,6 +14,7 @@
 #include "./Node.hh"
 #include "./Layout.hh"
 #include "./Size.hh"
+#include "./Config.hh"
 
 static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode)
 {

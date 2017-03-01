@@ -13,9 +13,9 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("wrap_child", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setWidth(100);
     root_child0.setHeight(100);
     root.insertChild(root_child0, 0);
@@ -50,12 +50,12 @@ it("wrap_child", function () {
 });
 it("wrap_grandchild", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root.insertChild(root_child0, 0);
 
-    var root_child0_child0 = Yoga.Node.create();
+    var root_child0_child0 = Yoga.Node.create(config);
     root_child0_child0.setWidth(100);
     root_child0_child0.setHeight(100);
     root_child0.insertChild(root_child0_child0, 0);

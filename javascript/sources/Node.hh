@@ -18,12 +18,14 @@
 #include "./Layout.hh"
 #include "./Size.hh"
 #include "./Value.hh"
+#include "./Config.hh"
 
 class Node {
 
  public:
 
     static Node * create(void);
+    static Node * create(Config * config);
     static void destroy(Node * node);
 
  public:

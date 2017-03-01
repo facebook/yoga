@@ -93,13 +93,13 @@ function printTest(e, LTRContainer, RTLContainer, genericContainer) {
         'root',
         null);
 
-    e.YGNodeCalculateLayout('root', e.YGDirectionLTR);
+    e.YGNodeCalculateLayout('root', e.YGDirectionLTR, genericLayoutTree[i].experiments);
     e.push('');
 
     assertTestTree(e, LTRLayoutTree[i], 'root', null);
     e.push('');
 
-    e.YGNodeCalculateLayout('root', e.YGDirectionRTL);
+    e.YGNodeCalculateLayout('root', e.YGDirectionRTL, genericLayoutTree[i].experiments);
     e.push('');
 
     assertTestTree(e, RTLLayoutTree[i], 'root', null);

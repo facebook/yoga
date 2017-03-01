@@ -11,13 +11,14 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
+  const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureWebFlexBasis, true);
 
-  const YGNodeRef root = YGNodeNew();
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetHeightPercent(root, 100);
   YGNodeStyleSetWidthPercent(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexBasisPercent(root_child0, 100);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -28,7 +29,7 @@ TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, false);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, recalculate_resolvedDimonsion_onchange) {

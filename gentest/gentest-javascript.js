@@ -56,7 +56,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('var ' + nodeName + ' = Yoga.Node.create();');
+    this.push('var ' + nodeName + ' = Yoga.Node.create(config);');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
@@ -140,7 +140,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGDisplayFlex:{value:'Yoga.DISPLAY_FLEX'},
   YGDisplayNone:{value:'Yoga.DISPLAY_NONE'},
 
-  YGNodeCalculateLayout:{value:function(node, dir) {
+  YGNodeCalculateLayout:{value:function(node, dir, experiments) {
     this.push(node + '.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, ' + dir + ');');
   }},
 

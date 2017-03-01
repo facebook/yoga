@@ -18,11 +18,13 @@ import static org.junit.Assert.assertEquals;
 public class YGAlignItemsTest {
   @Test
   public void test_align_items_stretch() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
@@ -54,12 +56,14 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_center() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.CENTER);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -92,12 +96,14 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_flex_start() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -130,12 +136,14 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_flex_end() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.FLEX_END);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -168,18 +176,20 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
@@ -222,23 +232,25 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);
@@ -291,40 +303,42 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_multiline() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexDirection(YogaFlexDirection.ROW);
     root_child1.setWrap(YogaWrap.WRAP);
     root_child1.setWidth(50f);
     root_child1.setHeight(25f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(25f);
     root_child1_child0.setHeight(20f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child1_child1 = new YogaNode();
+    final YogaNode root_child1_child1 = new YogaNode(config);
     root_child1_child1.setWidth(25f);
     root_child1_child1.setHeight(10f);
     root_child1.addChildAt(root_child1_child1, 1);
 
-    final YogaNode root_child1_child2 = new YogaNode();
+    final YogaNode root_child1_child2 = new YogaNode(config);
     root_child1_child2.setWidth(25f);
     root_child1_child2.setHeight(20f);
     root_child1.addChildAt(root_child1_child2, 2);
 
-    final YogaNode root_child1_child3 = new YogaNode();
+    final YogaNode root_child1_child3 = new YogaNode(config);
     root_child1_child3.setWidth(25f);
     root_child1_child3.setHeight(10f);
     root_child1.addChildAt(root_child1_child3, 3);
@@ -407,41 +421,43 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_multiline_override() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexDirection(YogaFlexDirection.ROW);
     root_child1.setWrap(YogaWrap.WRAP);
     root_child1.setWidth(50f);
     root_child1.setHeight(25f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(25f);
     root_child1_child0.setHeight(20f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child1_child1 = new YogaNode();
+    final YogaNode root_child1_child1 = new YogaNode(config);
     root_child1_child1.setAlignSelf(YogaAlign.BASELINE);
     root_child1_child1.setWidth(25f);
     root_child1_child1.setHeight(10f);
     root_child1.addChildAt(root_child1_child1, 1);
 
-    final YogaNode root_child1_child2 = new YogaNode();
+    final YogaNode root_child1_child2 = new YogaNode(config);
     root_child1_child2.setWidth(25f);
     root_child1_child2.setHeight(20f);
     root_child1.addChildAt(root_child1_child2, 2);
 
-    final YogaNode root_child1_child3 = new YogaNode();
+    final YogaNode root_child1_child3 = new YogaNode(config);
     root_child1_child3.setAlignSelf(YogaAlign.BASELINE);
     root_child1_child3.setWidth(25f);
     root_child1_child3.setHeight(10f);
@@ -525,40 +541,42 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_multiline_no_override_on_secondline() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexDirection(YogaFlexDirection.ROW);
     root_child1.setWrap(YogaWrap.WRAP);
     root_child1.setWidth(50f);
     root_child1.setHeight(25f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(25f);
     root_child1_child0.setHeight(20f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child1_child1 = new YogaNode();
+    final YogaNode root_child1_child1 = new YogaNode(config);
     root_child1_child1.setWidth(25f);
     root_child1_child1.setHeight(10f);
     root_child1.addChildAt(root_child1_child1, 1);
 
-    final YogaNode root_child1_child2 = new YogaNode();
+    final YogaNode root_child1_child2 = new YogaNode(config);
     root_child1_child2.setWidth(25f);
     root_child1_child2.setHeight(20f);
     root_child1.addChildAt(root_child1_child2, 2);
 
-    final YogaNode root_child1_child3 = new YogaNode();
+    final YogaNode root_child1_child3 = new YogaNode(config);
     root_child1_child3.setAlignSelf(YogaAlign.BASELINE);
     root_child1_child3.setWidth(25f);
     root_child1_child3.setHeight(10f);
@@ -642,24 +660,26 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_top() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setPosition(YogaEdge.TOP, 10f);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);
@@ -712,24 +732,26 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_top2() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setPosition(YogaEdge.TOP, 5f);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);
@@ -782,28 +804,30 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_double_nested_child() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setWidth(50f);
     root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(15f);
     root_child1.addChildAt(root_child1_child0, 0);
@@ -866,17 +890,19 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_column() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
@@ -919,13 +945,15 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_margin() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setMargin(YogaEdge.LEFT, 5f);
     root_child0.setMargin(YogaEdge.TOP, 5f);
     root_child0.setMargin(YogaEdge.RIGHT, 5f);
@@ -934,12 +962,12 @@ public class YGAlignItemsTest {
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setMargin(YogaEdge.LEFT, 1f);
     root_child1_child0.setMargin(YogaEdge.TOP, 1f);
     root_child1_child0.setMargin(YogaEdge.RIGHT, 1f);
@@ -996,7 +1024,9 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_padding() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setPadding(YogaEdge.LEFT, 5);
@@ -1006,12 +1036,12 @@ public class YGAlignItemsTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setPadding(YogaEdge.LEFT, 5);
     root_child1.setPadding(YogaEdge.TOP, 5);
     root_child1.setPadding(YogaEdge.RIGHT, 5);
@@ -1020,7 +1050,7 @@ public class YGAlignItemsTest {
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);
@@ -1073,39 +1103,41 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_multiline() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(50f);
     root_child2.setHeight(20f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child2_child0 = new YogaNode();
+    final YogaNode root_child2_child0 = new YogaNode(config);
     root_child2_child0.setWidth(50f);
     root_child2_child0.setHeight(10f);
     root_child2.addChildAt(root_child2_child0, 0);
 
-    final YogaNode root_child3 = new YogaNode();
+    final YogaNode root_child3 = new YogaNode(config);
     root_child3.setWidth(50f);
     root_child3.setHeight(50f);
     root.addChildAt(root_child3, 3);
@@ -1188,38 +1220,40 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_multiline_column() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(20f);
     root_child1_child0.setHeight(20f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(40f);
     root_child2.setHeight(70f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child2_child0 = new YogaNode();
+    final YogaNode root_child2_child0 = new YogaNode(config);
     root_child2_child0.setWidth(10f);
     root_child2_child0.setHeight(10f);
     root_child2.addChildAt(root_child2_child0, 0);
 
-    final YogaNode root_child3 = new YogaNode();
+    final YogaNode root_child3 = new YogaNode(config);
     root_child3.setWidth(50f);
     root_child3.setHeight(20f);
     root.addChildAt(root_child3, 3);
@@ -1302,38 +1336,40 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_multiline_column2() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(20f);
     root_child1_child0.setHeight(20f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(40f);
     root_child2.setHeight(70f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child2_child0 = new YogaNode();
+    final YogaNode root_child2_child0 = new YogaNode(config);
     root_child2_child0.setWidth(10f);
     root_child2_child0.setHeight(10f);
     root_child2.addChildAt(root_child2_child0, 0);
 
-    final YogaNode root_child3 = new YogaNode();
+    final YogaNode root_child3 = new YogaNode(config);
     root_child3.setWidth(50f);
     root_child3.setHeight(20f);
     root.addChildAt(root_child3, 3);
@@ -1416,39 +1452,41 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_multiline_row_and_column() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.BASELINE);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(50f);
     root_child2.setHeight(20f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child2_child0 = new YogaNode();
+    final YogaNode root_child2_child0 = new YogaNode(config);
     root_child2_child0.setWidth(50f);
     root_child2_child0.setHeight(10f);
     root_child2.addChildAt(root_child2_child0, 0);
 
-    final YogaNode root_child3 = new YogaNode();
+    final YogaNode root_child3 = new YogaNode(config);
     root_child3.setWidth(50f);
     root_child3.setHeight(20f);
     root.addChildAt(root_child3, 3);

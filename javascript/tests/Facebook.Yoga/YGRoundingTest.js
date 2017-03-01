@@ -15,20 +15,20 @@ it("rounding_flex_basis_flex_grow_row_width_of_100", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1);
     root.insertChild(root_child2, 2);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -86,28 +86,28 @@ it("rounding_flex_basis_flex_grow_row_prime_number_width", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(113);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1);
     root.insertChild(root_child2, 2);
 
-    var root_child3 = Yoga.Node.create();
+    var root_child3 = Yoga.Node.create(config);
     root_child3.setFlexGrow(1);
     root.insertChild(root_child3, 3);
 
-    var root_child4 = Yoga.Node.create();
+    var root_child4 = Yoga.Node.create(config);
     root_child4.setFlexGrow(1);
     root.insertChild(root_child4, 4);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -185,21 +185,21 @@ it("rounding_flex_basis_flex_shrink_row", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(101);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexShrink(1);
     root_child0.setFlexBasis(100);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexBasis(25);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexBasis(25);
     root.insertChild(root_child2, 2);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -257,22 +257,22 @@ it("rounding_flex_basis_overrides_main_size", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(113);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(50);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);
@@ -331,22 +331,22 @@ it("rounding_total_fractial", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(87.4);
     root.setHeight(113.4);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(0.7);
     root_child0.setFlexBasis(50.3);
     root_child0.setHeight(20.3);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1.6);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1.1);
     root_child2.setHeight(10.7);
     root.insertChild(root_child2, 2);
@@ -405,36 +405,36 @@ it("rounding_total_fractial_nested", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(87.4);
     root.setHeight(113.4);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(0.7);
     root_child0.setFlexBasis(50.3);
     root_child0.setHeight(20.3);
     root.insertChild(root_child0, 0);
 
-    var root_child0_child0 = Yoga.Node.create();
+    var root_child0_child0 = Yoga.Node.create(config);
     root_child0_child0.setFlexGrow(1);
     root_child0_child0.setFlexBasis(0.3);
     root_child0_child0.setPosition(Yoga.EDGE_BOTTOM, 13.3);
     root_child0_child0.setHeight(9.9);
     root_child0.insertChild(root_child0_child0, 0);
 
-    var root_child0_child1 = Yoga.Node.create();
+    var root_child0_child1 = Yoga.Node.create(config);
     root_child0_child1.setFlexGrow(4);
     root_child0_child1.setFlexBasis(0.3);
     root_child0_child1.setPosition(Yoga.EDGE_TOP, 13.3);
     root_child0_child1.setHeight(1.1);
     root_child0.insertChild(root_child0_child1, 1);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1.6);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1.1);
     root_child2.setHeight(10.7);
     root.insertChild(root_child2, 2);
@@ -513,22 +513,22 @@ it("rounding_fractial_input_1", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(113.4);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(50);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);
@@ -587,22 +587,22 @@ it("rounding_fractial_input_2", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(113.6);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(50);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);
@@ -661,23 +661,23 @@ it("rounding_fractial_input_3", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setPosition(Yoga.EDGE_TOP, 0.3);
     root.setWidth(100);
     root.setHeight(113.4);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(50);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);
@@ -736,23 +736,23 @@ it("rounding_fractial_input_4", function () {
   Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setPosition(Yoga.EDGE_TOP, 0.7);
     root.setWidth(100);
     root.setHeight(113.4);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(50);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);

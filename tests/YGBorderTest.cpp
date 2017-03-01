@@ -13,7 +13,9 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, border_no_size) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
   YGNodeStyleSetBorder(root, YGEdgeTop, 10);
   YGNodeStyleSetBorder(root, YGEdgeRight, 10);
@@ -33,16 +35,20 @@ TEST(YogaTest, border_no_size) {
   ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, border_container_match_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
   YGNodeStyleSetBorder(root, YGEdgeTop, 10);
   YGNodeStyleSetBorder(root, YGEdgeRight, 10);
   YGNodeStyleSetBorder(root, YGEdgeBottom, 10);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -71,10 +77,14 @@ TEST(YogaTest, border_container_match_child) {
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, border_flex_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
   YGNodeStyleSetBorder(root, YGEdgeTop, 10);
   YGNodeStyleSetBorder(root, YGEdgeRight, 10);
@@ -82,7 +92,7 @@ TEST(YogaTest, border_flex_child) {
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -111,10 +121,14 @@ TEST(YogaTest, border_flex_child) {
   ASSERT_FLOAT_EQ(80, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, border_stretch_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
   YGNodeStyleSetBorder(root, YGEdgeTop, 10);
   YGNodeStyleSetBorder(root, YGEdgeRight, 10);
@@ -122,7 +136,7 @@ TEST(YogaTest, border_stretch_child) {
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -150,10 +164,14 @@ TEST(YogaTest, border_stretch_child) {
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, border_center_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
   YGNodeStyleSetBorder(root, YGEdgeStart, 10);
@@ -162,7 +180,7 @@ TEST(YogaTest, border_center_child) {
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -191,4 +209,6 @@ TEST(YogaTest, border_center_child) {
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }

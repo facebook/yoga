@@ -20,11 +20,13 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_self_center()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.AlignSelf = YogaAlign.Center;
             root_child0.Width = 10;
             root_child0.Height = 10;
@@ -59,11 +61,13 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_self_flex_end()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.AlignSelf = YogaAlign.FlexEnd;
             root_child0.Width = 10;
             root_child0.Height = 10;
@@ -98,11 +102,13 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_self_flex_start()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.AlignSelf = YogaAlign.FlexStart;
             root_child0.Width = 10;
             root_child0.Height = 10;
@@ -137,12 +143,14 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_self_flex_end_override_flex_start()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.AlignItems = YogaAlign.FlexStart;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.AlignSelf = YogaAlign.FlexEnd;
             root_child0.Width = 10;
             root_child0.Height = 10;
@@ -177,24 +185,26 @@ namespace Facebook.Yoga
         [Test]
         public void Test_align_self_baseline()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.AlignSelf = YogaAlign.Baseline;
             root_child0.Width = 50;
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.AlignSelf = YogaAlign.Baseline;
             root_child1.Width = 50;
             root_child1.Height = 20;
             root.Insert(1, root_child1);
 
-            YogaNode root_child1_child0 = new YogaNode();
+            YogaNode root_child1_child0 = new YogaNode(config);
             root_child1_child0.Width = 50;
             root_child1_child0.Height = 10;
             root_child1.Insert(0, root_child1_child0);

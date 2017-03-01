@@ -20,22 +20,23 @@ namespace Facebook.Yoga
         [Test]
         public void Test_rounding_flex_basis_flex_grow_row_width_of_100()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1;
             root.Insert(2, root_child2);
             root.StyleDirection = YogaDirection.LTR;
@@ -83,37 +84,36 @@ namespace Facebook.Yoga
             Assert.AreEqual(0f, root_child2.LayoutY);
             Assert.AreEqual(33f, root_child2.LayoutWidth);
             Assert.AreEqual(100f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_flex_basis_flex_grow_row_prime_number_width()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.Width = 113;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1;
             root.Insert(2, root_child2);
 
-            YogaNode root_child3 = new YogaNode();
+            YogaNode root_child3 = new YogaNode(config);
             root_child3.FlexGrow = 1;
             root.Insert(3, root_child3);
 
-            YogaNode root_child4 = new YogaNode();
+            YogaNode root_child4 = new YogaNode(config);
             root_child4.FlexGrow = 1;
             root.Insert(4, root_child4);
             root.StyleDirection = YogaDirection.LTR;
@@ -181,30 +181,29 @@ namespace Facebook.Yoga
             Assert.AreEqual(0f, root_child4.LayoutY);
             Assert.AreEqual(23f, root_child4.LayoutWidth);
             Assert.AreEqual(100f, root_child4.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_flex_basis_flex_shrink_row()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.Width = 101;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexShrink = 1;
             root_child0.FlexBasis = 100;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexBasis = 25;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexBasis = 25;
             root.Insert(2, root_child2);
             root.StyleDirection = YogaDirection.LTR;
@@ -252,31 +251,30 @@ namespace Facebook.Yoga
             Assert.AreEqual(0f, root_child2.LayoutY);
             Assert.AreEqual(25f, root_child2.LayoutWidth);
             Assert.AreEqual(100f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_flex_basis_overrides_main_size()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 113;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root_child0.FlexBasis = 50;
             root_child0.Height = 20;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1;
             root_child1.Height = 10;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1;
             root_child2.Height = 10;
             root.Insert(2, root_child2);
@@ -325,31 +323,30 @@ namespace Facebook.Yoga
             Assert.AreEqual(89f, root_child2.LayoutY);
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_total_fractial()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.Width = 87.4f;
             root.Height = 113.4f;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 0.7f;
             root_child0.FlexBasis = 50.3f;
             root_child0.Height = 20.3f;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1.6f;
             root_child1.Height = 10;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1.1f;
             root_child2.Height = 10.7f;
             root.Insert(2, root_child2);
@@ -398,45 +395,44 @@ namespace Facebook.Yoga
             Assert.AreEqual(89f, root_child2.LayoutY);
             Assert.AreEqual(87f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_total_fractial_nested()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.Width = 87.4f;
             root.Height = 113.4f;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 0.7f;
             root_child0.FlexBasis = 50.3f;
             root_child0.Height = 20.3f;
             root.Insert(0, root_child0);
 
-            YogaNode root_child0_child0 = new YogaNode();
+            YogaNode root_child0_child0 = new YogaNode(config);
             root_child0_child0.FlexGrow = 1;
             root_child0_child0.FlexBasis = 0.3f;
             root_child0_child0.Bottom = 13.3f;
             root_child0_child0.Height = 9.9f;
             root_child0.Insert(0, root_child0_child0);
 
-            YogaNode root_child0_child1 = new YogaNode();
+            YogaNode root_child0_child1 = new YogaNode(config);
             root_child0_child1.FlexGrow = 4;
             root_child0_child1.FlexBasis = 0.3f;
             root_child0_child1.Top = 13.3f;
             root_child0_child1.Height = 1.1f;
             root_child0.Insert(1, root_child0_child1);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1.6f;
             root_child1.Height = 10;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1.1f;
             root_child2.Height = 10.7f;
             root.Insert(2, root_child2);
@@ -505,31 +501,30 @@ namespace Facebook.Yoga
             Assert.AreEqual(89f, root_child2.LayoutY);
             Assert.AreEqual(87f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_fractial_input_1()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 113.4f;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root_child0.FlexBasis = 50;
             root_child0.Height = 20;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1;
             root_child1.Height = 10;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1;
             root_child2.Height = 10;
             root.Insert(2, root_child2);
@@ -578,31 +573,30 @@ namespace Facebook.Yoga
             Assert.AreEqual(89f, root_child2.LayoutY);
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_fractial_input_2()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 113.6f;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root_child0.FlexBasis = 50;
             root_child0.Height = 20;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1;
             root_child1.Height = 10;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1;
             root_child2.Height = 10;
             root.Insert(2, root_child2);
@@ -651,32 +645,31 @@ namespace Facebook.Yoga
             Assert.AreEqual(89f, root_child2.LayoutY);
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(25f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_fractial_input_3()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.Top = 0.3f;
             root.Width = 100;
             root.Height = 113.4f;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root_child0.FlexBasis = 50;
             root_child0.Height = 20;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1;
             root_child1.Height = 10;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1;
             root_child2.Height = 10;
             root.Insert(2, root_child2);
@@ -725,32 +718,31 @@ namespace Facebook.Yoga
             Assert.AreEqual(89f, root_child2.LayoutY);
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
         [Test]
         public void Test_rounding_fractial_input_4()
         {
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
+            YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, true);
 
-            YogaNode root = new YogaNode();
+            YogaNode root = new YogaNode(config);
             root.Top = 0.7f;
             root.Width = 100;
             root.Height = 113.4f;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.FlexGrow = 1;
             root_child0.FlexBasis = 50;
             root_child0.Height = 20;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.FlexGrow = 1;
             root_child1.Height = 10;
             root.Insert(1, root_child1);
 
-            YogaNode root_child2 = new YogaNode();
+            YogaNode root_child2 = new YogaNode(config);
             root_child2.FlexGrow = 1;
             root_child2.Height = 10;
             root.Insert(2, root_child2);
@@ -799,8 +791,6 @@ namespace Facebook.Yoga
             Assert.AreEqual(89f, root_child2.LayoutY);
             Assert.AreEqual(100f, root_child2.LayoutWidth);
             Assert.AreEqual(24f, root_child2.LayoutHeight);
-
-            YogaNode.SetExperimentalFeatureEnabled(YogaExperimentalFeature.Rounding, false);
         }
 
     }

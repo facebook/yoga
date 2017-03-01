@@ -20,14 +20,16 @@ namespace Facebook.Yoga
         [Test]
         public void Test_nested_overflowing_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root.Insert(0, root_child0);
 
-            YogaNode root_child0_child0 = new YogaNode();
+            YogaNode root_child0_child0 = new YogaNode(config);
             root_child0_child0.Width = 200;
             root_child0_child0.Height = 200;
             root_child0.Insert(0, root_child0_child0);
@@ -71,16 +73,18 @@ namespace Facebook.Yoga
         [Test]
         public void Test_nested_overflowing_child_in_constraint_parent()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 100;
             root_child0.Height = 100;
             root.Insert(0, root_child0);
 
-            YogaNode root_child0_child0 = new YogaNode();
+            YogaNode root_child0_child0 = new YogaNode(config);
             root_child0_child0.Width = 200;
             root_child0_child0.Height = 200;
             root_child0.Insert(0, root_child0_child0);
@@ -124,15 +128,17 @@ namespace Facebook.Yoga
         [Test]
         public void Test_parent_wrap_child_size_overflowing_parent()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 100;
             root.Insert(0, root_child0);
 
-            YogaNode root_child0_child0 = new YogaNode();
+            YogaNode root_child0_child0 = new YogaNode(config);
             root_child0_child0.Width = 100;
             root_child0_child0.Height = 200;
             root_child0.Insert(0, root_child0_child0);

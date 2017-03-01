@@ -18,14 +18,15 @@ import static org.junit.Assert.assertEquals;
 public class YGPercentageTest {
   @Test
   public void test_percentage_width_height() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidthPercent(30f);
     root_child0.setHeightPercent(30f);
     root.addChildAt(root_child0, 0);
@@ -54,20 +55,19 @@ public class YGPercentageTest {
     assertEquals(0f, root_child0.getLayoutY(), 0.0f);
     assertEquals(60f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(60f, root_child0.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_position_left_top() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(400f);
     root.setHeight(400f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setPositionPercent(YogaEdge.LEFT, 10f);
     root_child0.setPositionPercent(YogaEdge.TOP, 20f);
     root_child0.setWidthPercent(45f);
@@ -98,20 +98,19 @@ public class YGPercentageTest {
     assertEquals(80f, root_child0.getLayoutY(), 0.0f);
     assertEquals(180f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(220f, root_child0.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_position_bottom_right() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(500f);
     root.setHeight(500f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setPositionPercent(YogaEdge.RIGHT, 20f);
     root_child0.setPositionPercent(YogaEdge.BOTTOM, 10f);
     root_child0.setWidthPercent(55f);
@@ -142,25 +141,24 @@ public class YGPercentageTest {
     assertEquals(-50f, root_child0.getLayoutY(), 0.0f);
     assertEquals(275f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(75f, root_child0.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(1f);
     root_child1.setFlexBasisPercent(25f);
     root.addChildAt(root_child1, 1);
@@ -199,24 +197,23 @@ public class YGPercentageTest {
     assertEquals(0f, root_child1.getLayoutY(), 0.0f);
     assertEquals(75f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(200f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis_cross() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(1f);
     root_child1.setFlexBasisPercent(25f);
     root.addChildAt(root_child1, 1);
@@ -255,24 +252,23 @@ public class YGPercentageTest {
     assertEquals(125f, root_child1.getLayoutY(), 0.0f);
     assertEquals(200f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(75f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis_cross_min_height() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setMinHeightPercent(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(2f);
     root_child1.setMinHeightPercent(10f);
     root.addChildAt(root_child1, 1);
@@ -311,26 +307,25 @@ public class YGPercentageTest {
     assertEquals(140f, root_child1.getLayoutY(), 0.0f);
     assertEquals(200f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(60f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis_main_max_height() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(10f);
     root_child0.setMaxHeightPercent(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(4f);
     root_child1.setFlexBasisPercent(10f);
     root_child1.setMaxHeightPercent(20f);
@@ -370,25 +365,24 @@ public class YGPercentageTest {
     assertEquals(0f, root_child1.getLayoutY(), 0.0f);
     assertEquals(148f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(40f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis_cross_max_height() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(10f);
     root_child0.setMaxHeightPercent(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(4f);
     root_child1.setFlexBasisPercent(10f);
     root_child1.setMaxHeightPercent(20f);
@@ -428,26 +422,25 @@ public class YGPercentageTest {
     assertEquals(120f, root_child1.getLayoutY(), 0.0f);
     assertEquals(200f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(40f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis_main_max_width() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(15f);
     root_child0.setMaxWidthPercent(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(4f);
     root_child1.setFlexBasisPercent(10f);
     root_child1.setMaxWidthPercent(20f);
@@ -487,25 +480,24 @@ public class YGPercentageTest {
     assertEquals(0f, root_child1.getLayoutY(), 0.0f);
     assertEquals(40f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(200f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis_cross_max_width() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(10f);
     root_child0.setMaxWidthPercent(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(4f);
     root_child1.setFlexBasisPercent(15f);
     root_child1.setMaxWidthPercent(20f);
@@ -545,26 +537,25 @@ public class YGPercentageTest {
     assertEquals(50f, root_child1.getLayoutY(), 0.0f);
     assertEquals(40f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(150f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis_main_min_width() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(15f);
     root_child0.setMinWidthPercent(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(4f);
     root_child1.setFlexBasisPercent(10f);
     root_child1.setMinWidthPercent(20f);
@@ -604,25 +595,24 @@ public class YGPercentageTest {
     assertEquals(0f, root_child1.getLayoutY(), 0.0f);
     assertEquals(80f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(200f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_flex_basis_cross_min_width() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(10f);
     root_child0.setMinWidthPercent(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(4f);
     root_child1.setFlexBasisPercent(15f);
     root_child1.setMinWidthPercent(20f);
@@ -662,19 +652,18 @@ public class YGPercentageTest {
     assertEquals(50f, root_child1.getLayoutY(), 0.0f);
     assertEquals(200f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(150f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_multiple_nested_with_padding_margin_and_percentage_values() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasisPercent(10f);
     root_child0.setMargin(YogaEdge.LEFT, 5f);
@@ -688,7 +677,7 @@ public class YGPercentageTest {
     root_child0.setMinWidthPercent(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setMargin(YogaEdge.LEFT, 5f);
     root_child0_child0.setMargin(YogaEdge.TOP, 5f);
     root_child0_child0.setMargin(YogaEdge.RIGHT, 5f);
@@ -700,7 +689,7 @@ public class YGPercentageTest {
     root_child0_child0.setWidthPercent(50f);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child0_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0_child0 = new YogaNode(config);
     root_child0_child0_child0.setMarginPercent(YogaEdge.LEFT, 5f);
     root_child0_child0_child0.setMarginPercent(YogaEdge.TOP, 5f);
     root_child0_child0_child0.setMarginPercent(YogaEdge.RIGHT, 5f);
@@ -712,7 +701,7 @@ public class YGPercentageTest {
     root_child0_child0_child0.setWidthPercent(45f);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(4f);
     root_child1.setFlexBasisPercent(15f);
     root_child1.setMinWidthPercent(20f);
@@ -772,19 +761,18 @@ public class YGPercentageTest {
     assertEquals(58f, root_child1.getLayoutY(), 0.0f);
     assertEquals(200f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(142f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_margin_should_calculate_based_only_on_width() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setMarginPercent(YogaEdge.LEFT, 10f);
     root_child0.setMarginPercent(YogaEdge.TOP, 10f);
@@ -792,7 +780,7 @@ public class YGPercentageTest {
     root_child0.setMarginPercent(YogaEdge.BOTTOM, 10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setWidth(10f);
     root_child0_child0.setHeight(10f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -831,19 +819,18 @@ public class YGPercentageTest {
     assertEquals(0f, root_child0_child0.getLayoutY(), 0.0f);
     assertEquals(10f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0_child0.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_padding_should_calculate_based_only_on_width() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setPaddingPercent(YogaEdge.LEFT, 10);
     root_child0.setPaddingPercent(YogaEdge.TOP, 10);
@@ -851,7 +838,7 @@ public class YGPercentageTest {
     root_child0.setPaddingPercent(YogaEdge.BOTTOM, 10);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setWidth(10f);
     root_child0_child0.setHeight(10f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -890,19 +877,18 @@ public class YGPercentageTest {
     assertEquals(20f, root_child0_child0.getLayoutY(), 0.0f);
     assertEquals(10f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0_child0.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_absolute_position() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPositionPercent(YogaEdge.LEFT, 30f);
     root_child0.setPositionPercent(YogaEdge.TOP, 10f);
@@ -934,15 +920,15 @@ public class YGPercentageTest {
     assertEquals(10f, root_child0.getLayoutY(), 0.0f);
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, false);
   }
 
   @Test
   public void test_percentage_width_height_undefined_parent_size() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root = new YogaNode(config);
+
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidthPercent(50f);
     root_child0.setHeightPercent(50f);
     root.addChildAt(root_child0, 0);
@@ -975,24 +961,26 @@ public class YGPercentageTest {
 
   @Test
   public void test_percent_within_flex_grow() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(350f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(100f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidthPercent(100f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(100f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);

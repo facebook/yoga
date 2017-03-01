@@ -18,18 +18,20 @@ import static org.junit.Assert.assertEquals;
 public class YGFlexDirectionTest {
   @Test
   public void test_flex_direction_column_no_height() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -81,19 +83,21 @@ public class YGFlexDirectionTest {
 
   @Test
   public void test_flex_direction_row_no_width() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -145,19 +149,21 @@ public class YGFlexDirectionTest {
 
   @Test
   public void test_flex_direction_column() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -209,20 +215,22 @@ public class YGFlexDirectionTest {
 
   @Test
   public void test_flex_direction_row() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -274,20 +282,22 @@ public class YGFlexDirectionTest {
 
   @Test
   public void test_flex_direction_column_reverse() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.COLUMN_REVERSE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -339,20 +349,22 @@ public class YGFlexDirectionTest {
 
   @Test
   public void test_flex_direction_row_reverse() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW_REVERSE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);

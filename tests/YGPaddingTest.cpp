@@ -13,7 +13,9 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, padding_no_size) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
   YGNodeStyleSetPadding(root, YGEdgeTop, 10);
   YGNodeStyleSetPadding(root, YGEdgeRight, 10);
@@ -33,16 +35,20 @@ TEST(YogaTest, padding_no_size) {
   ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, padding_container_match_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
   YGNodeStyleSetPadding(root, YGEdgeTop, 10);
   YGNodeStyleSetPadding(root, YGEdgeRight, 10);
   YGNodeStyleSetPadding(root, YGEdgeBottom, 10);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -71,10 +77,14 @@ TEST(YogaTest, padding_container_match_child) {
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, padding_flex_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
   YGNodeStyleSetPadding(root, YGEdgeTop, 10);
   YGNodeStyleSetPadding(root, YGEdgeRight, 10);
@@ -82,7 +92,7 @@ TEST(YogaTest, padding_flex_child) {
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -111,10 +121,14 @@ TEST(YogaTest, padding_flex_child) {
   ASSERT_FLOAT_EQ(80, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, padding_stretch_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
   YGNodeStyleSetPadding(root, YGEdgeTop, 10);
   YGNodeStyleSetPadding(root, YGEdgeRight, 10);
@@ -122,7 +136,7 @@ TEST(YogaTest, padding_stretch_child) {
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -150,10 +164,14 @@ TEST(YogaTest, padding_stretch_child) {
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, padding_center_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
   YGNodeStyleSetPadding(root, YGEdgeStart, 10);
@@ -162,7 +180,7 @@ TEST(YogaTest, padding_center_child) {
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -191,16 +209,20 @@ TEST(YogaTest, padding_center_child) {
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, child_with_padding_align_end) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyFlexEnd);
   YGNodeStyleSetAlignItems(root, YGAlignFlexEnd);
   YGNodeStyleSetWidth(root, 200);
   YGNodeStyleSetHeight(root, 200);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root_child0, YGEdgeLeft, 20);
   YGNodeStyleSetPadding(root_child0, YGEdgeTop, 20);
   YGNodeStyleSetPadding(root_child0, YGEdgeRight, 20);
@@ -233,4 +255,6 @@ TEST(YogaTest, child_with_padding_align_end) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }

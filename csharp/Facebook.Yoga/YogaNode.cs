@@ -21,6 +21,40 @@ using ObjCRuntime;
 
 namespace Facebook.Yoga
 {
+    public class YogaConfig
+    {
+
+        private Native.YGConfigHandle _ygConfig;
+
+        public YogaConfig()
+        {
+            _ygConfig = Native.YGConfigNew();
+            if (_ygConfig.IsInvalid)
+            {
+                throw new InvalidOperationException("Failed to allocate native memory");
+            }
+        }
+
+        internal Native.YGConfigHandle Handle {
+            get {
+                return _ygConfig;
+            }
+        }
+
+        public void SetExperimentalFeatureEnabled(
+            YogaExperimentalFeature feature,
+            bool enabled)
+        {
+            Native.YGConfigSetExperimentalFeatureEnabled(_ygConfig, feature, enabled);
+        }
+
+        public bool IsExperimentalFeatureEnabled(YogaExperimentalFeature feature)
+        {
+            return Native.YGConfigIsExperimentalFeatureEnabled(_ygConfig, feature);
+        }
+
+    }
+
     public partial class YogaNode : IEnumerable<YogaNode>
     {
         private Native.YGNodeHandle _ygNode;
@@ -42,6 +76,17 @@ namespace Facebook.Yoga
             YogaLogger.Initialize();
 
             _ygNode = Native.YGNodeNew();
+            if (_ygNode.IsInvalid)
+            {
+                throw new InvalidOperationException("Failed to allocate native memory");
+            }
+        }
+
+        public YogaNode(YogaConfig config)
+        {
+            YogaLogger.Initialize();
+
+            _ygNode = Native.YGNodeNewWithConfig(config.Handle);
             if (_ygNode.IsInvalid)
             {
                 throw new InvalidOperationException("Failed to allocate native memory");
@@ -680,18 +725,6 @@ namespace Facebook.Yoga
         public static int GetInstanceCount()
         {
             return Native.YGNodeGetInstanceCount();
-        }
-
-        public static void SetExperimentalFeatureEnabled(
-            YogaExperimentalFeature feature,
-            bool enabled)
-        {
-            Native.YGSetExperimentalFeatureEnabled(feature, enabled);
-        }
-
-        public static bool IsExperimentalFeatureEnabled(YogaExperimentalFeature feature)
-        {
-            return Native.YGIsExperimentalFeatureEnabled(feature);
         }
     }
 }

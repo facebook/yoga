@@ -20,9 +20,11 @@ namespace Facebook.Yoga
         [Test]
         public void Test_wrap_child()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root = new YogaNode(config);
+
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.Width = 100;
             root_child0.Height = 100;
             root.Insert(0, root_child0);
@@ -56,12 +58,14 @@ namespace Facebook.Yoga
         [Test]
         public void Test_wrap_grandchild()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root = new YogaNode(config);
+
+            YogaNode root_child0 = new YogaNode(config);
             root.Insert(0, root_child0);
 
-            YogaNode root_child0_child0 = new YogaNode();
+            YogaNode root_child0_child0 = new YogaNode(config);
             root_child0_child0.Width = 100;
             root_child0_child0.Height = 100;
             root_child0.Insert(0, root_child0_child0);

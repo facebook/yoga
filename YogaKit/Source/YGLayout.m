@@ -85,6 +85,8 @@ YG_VALUE_EDGE_PROPERTY(lowercased_name##Horizontal, capitalized_name##Horizontal
 YG_VALUE_EDGE_PROPERTY(lowercased_name##Vertical, capitalized_name##Vertical, capitalized_name, YGEdgeVertical)       \
 YG_VALUE_EDGE_PROPERTY(lowercased_name, capitalized_name, capitalized_name, YGEdgeAll)
 
+static YGConfigRef globalConfig;
+
 @interface YGLayout ()
 
 @property (nonatomic, weak, readonly) UIView *view;
@@ -99,14 +101,15 @@ YG_VALUE_EDGE_PROPERTY(lowercased_name, capitalized_name, capitalized_name, YGEd
 
 + (void)initialize
 {
-  YGSetExperimentalFeatureEnabled(YGExperimentalFeatureWebFlexBasis, true);
+  globalConfig = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(globalConfig, YGExperimentalFeatureWebFlexBasis, true);
 }
 
 - (instancetype)initWithView:(UIView*)view
 {
   if (self = [super init]) {
     _view = view;
-    _node = YGNodeNew();
+    _node = YGNodeNewWithConfig(globalConfig);
     YGNodeSetContext(_node, (__bridge void *) view);
     _isEnabled = NO;
     _isIncludedInLayout = YES;

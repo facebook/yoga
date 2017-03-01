@@ -18,11 +18,13 @@ import static org.junit.Assert.assertEquals;
 public class YGMinMaxDimensionTest {
   @Test
   public void test_max_width() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setMaxWidth(50f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -55,12 +57,14 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_max_height() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(10f);
     root_child0.setMaxHeight(50f);
     root.addChildAt(root_child0, 0);
@@ -93,16 +97,18 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_min_height() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setMinHeight(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -144,17 +150,19 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_min_width() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setMinWidth(60f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -196,13 +204,15 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_justify_content_min_max() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setWidth(100f);
     root.setMinHeight(100f);
     root.setMaxHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(60f);
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
@@ -235,13 +245,15 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_align_items_min_max() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.CENTER);
     root.setMinWidth(100f);
     root.setMaxWidth(200f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(60f);
     root_child0.setHeight(60f);
     root.addChildAt(root_child0, 0);
@@ -274,22 +286,24 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_justify_content_overflow_min_max() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setMinHeight(100f);
     root.setMaxHeight(110f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode();
+    final YogaNode root_child2 = new YogaNode(config);
     root_child2.setWidth(50f);
     root_child2.setHeight(50f);
     root.addChildAt(root_child2, 2);
@@ -342,19 +356,20 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_flex_grow_to_min() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setMinHeight(100f);
     root.setMaxHeight(500f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexShrink(1f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -392,25 +407,24 @@ public class YGMinMaxDimensionTest {
     assertEquals(50f, root_child1.getLayoutY(), 0.0f);
     assertEquals(100f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child1.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, false);
   }
 
   @Test
   public void test_flex_grow_in_at_most_container() {
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, true);
+    YogaConfig config = new YogaConfig();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, true);
 
-    final YogaNode root = new YogaNode();
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setFlexGrow(1f);
     root_child0_child0.setFlexBasis(0f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -449,22 +463,22 @@ public class YGMinMaxDimensionTest {
     assertEquals(0f, root_child0_child0.getLayoutY(), 0.0f);
     assertEquals(0f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(0f, root_child0_child0.getLayoutHeight(), 0.0f);
-
-    YogaNode.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, false);
   }
 
   @Test
   public void test_flex_grow_within_max_width() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setMaxWidth(100f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setFlexGrow(1f);
     root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -507,16 +521,18 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_flex_grow_within_constrained_max_width() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setMaxWidth(300f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setFlexGrow(1f);
     root_child0_child0.setHeight(20f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -559,16 +575,18 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_flex_grow_within_constrained_min_row() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setMinWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setWidth(50f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -610,14 +628,16 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_flex_grow_within_constrained_min_column() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setMinHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -659,21 +679,23 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_flex_grow_within_constrained_max_row() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setMaxWidth(100f);
     root_child0.setHeight(100f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setFlexShrink(1f);
     root_child0_child0.setFlexBasis(100f);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child0_child1 = new YogaNode();
+    final YogaNode root_child0_child1 = new YogaNode(config);
     root_child0_child1.setWidth(50f);
     root_child0.addChildAt(root_child0_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -725,16 +747,18 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_flex_grow_within_constrained_max_column() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setMaxHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setFlexShrink(1f);
     root_child0.setFlexBasis(100f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -776,7 +800,9 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_min_width_overrides_width() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(50f);
     root.setMinWidth(100f);
     root.setDirection(YogaDirection.LTR);
@@ -798,7 +824,9 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_max_width_overrides_width() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
     root.setMaxWidth(100f);
     root.setDirection(YogaDirection.LTR);
@@ -820,7 +848,9 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_min_height_overrides_height() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setHeight(50f);
     root.setMinHeight(100f);
     root.setDirection(YogaDirection.LTR);
@@ -842,7 +872,9 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_max_height_overrides_height() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setHeight(200f);
     root.setMaxHeight(100f);
     root.setDirection(YogaDirection.LTR);
@@ -864,12 +896,14 @@ public class YGMinMaxDimensionTest {
 
   @Test
   public void test_min_max_percent_no_width_height() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setMinWidthPercent(10f);
     root_child0.setMaxWidthPercent(10f);
     root_child0.setMinHeightPercent(10f);

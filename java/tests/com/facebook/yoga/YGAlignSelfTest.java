@@ -18,11 +18,13 @@ import static org.junit.Assert.assertEquals;
 public class YGAlignSelfTest {
   @Test
   public void test_align_self_center() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setAlignSelf(YogaAlign.CENTER);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -56,11 +58,13 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_end() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -94,11 +98,13 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_start() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_START);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -132,12 +138,14 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_end_override_flex_start() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -171,24 +179,26 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_baseline() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setAlignSelf(YogaAlign.BASELINE);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode();
+    final YogaNode root_child1 = new YogaNode(config);
     root_child1.setAlignSelf(YogaAlign.BASELINE);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode();
+    final YogaNode root_child1_child0 = new YogaNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);

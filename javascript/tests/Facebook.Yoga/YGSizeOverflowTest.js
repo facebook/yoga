@@ -13,14 +13,14 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("nested_overflowing_child", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root.insertChild(root_child0, 0);
 
-    var root_child0_child0 = Yoga.Node.create();
+    var root_child0_child0 = Yoga.Node.create(config);
     root_child0_child0.setWidth(200);
     root_child0_child0.setHeight(200);
     root_child0.insertChild(root_child0_child0, 0);
@@ -65,16 +65,16 @@ it("nested_overflowing_child", function () {
 });
 it("nested_overflowing_child_in_constraint_parent", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setWidth(100);
     root_child0.setHeight(100);
     root.insertChild(root_child0, 0);
 
-    var root_child0_child0 = Yoga.Node.create();
+    var root_child0_child0 = Yoga.Node.create(config);
     root_child0_child0.setWidth(200);
     root_child0_child0.setHeight(200);
     root_child0.insertChild(root_child0_child0, 0);
@@ -119,15 +119,15 @@ it("nested_overflowing_child_in_constraint_parent", function () {
 });
 it("parent_wrap_child_size_overflowing_parent", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setWidth(100);
     root.insertChild(root_child0, 0);
 
-    var root_child0_child0 = Yoga.Node.create();
+    var root_child0_child0 = Yoga.Node.create(config);
     root_child0_child0.setWidth(100);
     root_child0_child0.setHeight(200);
     root_child0.insertChild(root_child0_child0, 0);

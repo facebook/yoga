@@ -40,16 +40,15 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('TEST(YogaTest, ' + name + ') {');
     this.pushIndent();
 
-    if (experiments.length > 0) {
-      for (var i in experiments) {
-        this.push('YGSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', true);');
-      }
-      this.push('');
+    this.push('const YGConfigRef config = YGConfigNew();')
+    for (var i in experiments) {
+      this.push('YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeature' + experiments[i] +', true);');
     }
+    this.push('');
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('const YGNodeRef ' + nodeName + ' = YGNodeNew();');
+    this.push('const YGNodeRef ' + nodeName + ' = YGNodeNewWithConfig(config);');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
@@ -58,12 +57,8 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
       'YGNodeFreeRecursive(root);',
     ]);
 
-    if (experiments.length > 0) {
-      this.push('');
-      for (var i in experiments) {
-        this.push('YGSetExperimentalFeatureEnabled(YGExperimentalFeature' + experiments[i] +', false);');
-      }
-    }
+    this.push('');
+    this.push('YGConfigFree(config);')
 
     this.popIndent();
     this.push([
@@ -127,7 +122,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGAuto:{value:'YGAuto'},
 
 
-  YGNodeCalculateLayout:{value:function(node, dir) {
+  YGNodeCalculateLayout:{value:function(node, dir, experiments) {
     this.push('YGNodeCalculateLayout(' + node + ', YGUndefined, YGUndefined, ' + dir + ');');
   }},
 

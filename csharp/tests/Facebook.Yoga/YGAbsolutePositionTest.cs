@@ -20,11 +20,13 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_width_height_start_top()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Start = 10;
             root_child0.Top = 10;
@@ -61,11 +63,13 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_width_height_end_bottom()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.End = 10;
             root_child0.Bottom = 10;
@@ -102,11 +106,13 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_start_top_end_bottom()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Start = 10;
             root_child0.Top = 10;
@@ -143,11 +149,13 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_width_height_start_top_end_bottom()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Start = 10;
             root_child0.Top = 10;
@@ -186,19 +194,21 @@ namespace Facebook.Yoga
         [Test]
         public void Test_do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
             root.Overflow = YogaOverflow.Hidden;
             root.Width = 50;
             root.Height = 50;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Start = 0;
             root_child0.Top = 0;
             root.Insert(0, root_child0);
 
-            YogaNode root_child0_child0 = new YogaNode();
+            YogaNode root_child0_child0 = new YogaNode(config);
             root_child0_child0.Width = 100;
             root_child0_child0.Height = 100;
             root_child0.Insert(0, root_child0_child0);
@@ -242,7 +252,9 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_within_border()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.MarginLeft = 10;
             root.MarginTop = 10;
             root.MarginRight = 10;
@@ -258,7 +270,7 @@ namespace Facebook.Yoga
             root.Width = 100;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Left = 0;
             root_child0.Top = 0;
@@ -266,7 +278,7 @@ namespace Facebook.Yoga
             root_child0.Height = 50;
             root.Insert(0, root_child0);
 
-            YogaNode root_child1 = new YogaNode();
+            YogaNode root_child1 = new YogaNode(config);
             root_child1.PositionType = YogaPositionType.Absolute;
             root_child1.Right = 0;
             root_child1.Bottom = 0;
@@ -313,14 +325,16 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_align_items_and_justify_content_center()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Width = 60;
             root_child0.Height = 40;
@@ -355,14 +369,16 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_align_items_and_justify_content_flex_end()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.FlexEnd;
             root.AlignItems = YogaAlign.FlexEnd;
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Width = 60;
             root_child0.Height = 40;
@@ -397,13 +413,15 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_justify_content_center()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Width = 60;
             root_child0.Height = 40;
@@ -438,13 +456,15 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_align_items_center()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.AlignItems = YogaAlign.Center;
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Width = 60;
             root_child0.Height = 40;
@@ -479,12 +499,14 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_align_items_center_on_child_only()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.AlignSelf = YogaAlign.Center;
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Width = 60;
@@ -520,14 +542,16 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_align_items_and_justify_content_center_and_top_position()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Top = 10;
             root_child0.Width = 60;
@@ -563,14 +587,16 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_align_items_and_justify_content_center_and_bottom_position()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Bottom = 10;
             root_child0.Width = 60;
@@ -606,14 +632,16 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_align_items_and_justify_content_center_and_left_position()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Left = 5;
             root_child0.Width = 60;
@@ -649,14 +677,16 @@ namespace Facebook.Yoga
         [Test]
         public void Test_absolute_layout_align_items_and_justify_content_center_and_right_position()
         {
-            YogaNode root = new YogaNode();
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
             root.FlexGrow = 1;
             root.Width = 110;
             root.Height = 100;
 
-            YogaNode root_child0 = new YogaNode();
+            YogaNode root_child0 = new YogaNode(config);
             root_child0.PositionType = YogaPositionType.Absolute;
             root_child0.Right = 5;
             root_child0.Width = 60;

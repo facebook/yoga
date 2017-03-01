@@ -13,12 +13,12 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("margin_start", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_START, 10);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
@@ -53,11 +53,11 @@ it("margin_start", function () {
 });
 it("margin_top", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_TOP, 10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -92,13 +92,13 @@ it("margin_top", function () {
 });
 it("margin_end", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_END, 10);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
@@ -133,12 +133,12 @@ it("margin_end", function () {
 });
 it("margin_bottom", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_BOTTOM, 10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -173,12 +173,12 @@ it("margin_bottom", function () {
 });
 it("margin_and_flex_row", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_START, 10);
     root_child0.setMargin(Yoga.EDGE_END, 10);
@@ -214,11 +214,11 @@ it("margin_and_flex_row", function () {
 });
 it("margin_and_flex_column", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_TOP, 10);
     root_child0.setMargin(Yoga.EDGE_BOTTOM, 10);
@@ -254,12 +254,12 @@ it("margin_and_flex_column", function () {
 });
 it("margin_and_stretch_row", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_TOP, 10);
     root_child0.setMargin(Yoga.EDGE_BOTTOM, 10);
@@ -295,11 +295,11 @@ it("margin_and_stretch_row", function () {
 });
 it("margin_and_stretch_column", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_START, 10);
     root_child0.setMargin(Yoga.EDGE_END, 10);
@@ -335,17 +335,17 @@ it("margin_and_stretch_column", function () {
 });
 it("margin_with_sibling_row", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_END, 10);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -389,16 +389,16 @@ it("margin_with_sibling_row", function () {
 });
 it("margin_with_sibling_column", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setMargin(Yoga.EDGE_BOTTOM, 10);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -442,18 +442,18 @@ it("margin_with_sibling_column", function () {
 });
 it("margin_auto_bottom", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_BOTTOM, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -498,18 +498,18 @@ it("margin_auto_bottom", function () {
 });
 it("margin_auto_top", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_TOP, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -554,19 +554,19 @@ it("margin_auto_top", function () {
 });
 it("margin_auto_bottom_and_top", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_TOP, "auto");
     root_child0.setMargin(Yoga.EDGE_BOTTOM, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -611,19 +611,19 @@ it("margin_auto_bottom_and_top", function () {
 });
 it("margin_auto_bottom_and_top_justify_center", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_TOP, "auto");
     root_child0.setMargin(Yoga.EDGE_BOTTOM, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -668,24 +668,24 @@ it("margin_auto_bottom_and_top_justify_center", function () {
 });
 it("margin_auto_mutiple_children_column", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_TOP, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setMargin(Yoga.EDGE_TOP, "auto");
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setWidth(50);
     root_child2.setHeight(50);
     root.insertChild(root_child2, 2);
@@ -740,25 +740,25 @@ it("margin_auto_mutiple_children_column", function () {
 });
 it("margin_auto_mutiple_children_row", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_RIGHT, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setMargin(Yoga.EDGE_RIGHT, "auto");
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setWidth(50);
     root_child2.setHeight(50);
     root.insertChild(root_child2, 2);
@@ -813,20 +813,20 @@ it("margin_auto_mutiple_children_row", function () {
 });
 it("margin_auto_left_and_right_column", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_LEFT, "auto");
     root_child0.setMargin(Yoga.EDGE_RIGHT, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -871,18 +871,18 @@ it("margin_auto_left_and_right_column", function () {
 });
 it("margin_auto_left_and_right", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_LEFT, "auto");
     root_child0.setMargin(Yoga.EDGE_RIGHT, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -1041,19 +1041,19 @@ it("margin_auto_start_and_end", function () {
 });
 it("margin_auto_left_and_right_column_and_center", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_LEFT, "auto");
     root_child0.setMargin(Yoga.EDGE_RIGHT, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -1098,18 +1098,18 @@ it("margin_auto_left_and_right_column_and_center", function () {
 });
 it("margin_auto_left", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_LEFT, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -1154,18 +1154,18 @@ it("margin_auto_left", function () {
 });
 it("margin_auto_right", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_RIGHT, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -1210,19 +1210,19 @@ it("margin_auto_right", function () {
 });
 it("margin_auto_left_and_right_strech", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_LEFT, "auto");
     root_child0.setMargin(Yoga.EDGE_RIGHT, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
@@ -1267,18 +1267,18 @@ it("margin_auto_left_and_right_strech", function () {
 });
 it("margin_auto_top_and_bottom_strech", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(200);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_TOP, "auto");
     root_child0.setMargin(Yoga.EDGE_BOTTOM, "auto");
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);

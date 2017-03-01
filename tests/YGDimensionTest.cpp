@@ -13,9 +13,11 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, wrap_child) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child0, 100);
   YGNodeStyleSetHeight(root_child0, 100);
   YGNodeInsertChild(root, root_child0, 0);
@@ -44,15 +46,19 @@ TEST(YogaTest, wrap_child) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, wrap_grandchild) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child0_child0 = YGNodeNew();
+  const YGNodeRef root_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child0_child0, 100);
   YGNodeStyleSetHeight(root_child0_child0, 100);
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
@@ -91,4 +97,6 @@ TEST(YogaTest, wrap_grandchild) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }

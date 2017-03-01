@@ -13,6 +13,7 @@
 #include "./Layout.hh"
 #include "./Size.hh"
 #include "./Value.hh"
+#include "./Config.hh"
 #include "./global.hh"
 
 #define NBIND_DUPLICATE_POINTERS true
@@ -21,8 +22,6 @@
 
 NBIND_GLOBAL()
 {
-    function(setExperimentalFeatureEnabled);
-    function(isExperimentalFeatureEnabled);
     function(getInstanceCount);
 }
 
@@ -41,6 +40,13 @@ NBIND_CLASS(Value)
 {
     construct<>();
     construct<int, double>();
+}
+
+NBIND_CLASS(Config)
+{
+    method(create);
+    method(destroy);
+    method(setExperimentalFeatureEnabled);
 }
 
 NBIND_CLASS(Node)

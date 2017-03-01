@@ -18,14 +18,16 @@ import static org.junit.Assert.assertEquals;
 public class YGSizeOverflowTest {
   @Test
   public void test_nested_overflowing_child() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setWidth(200f);
     root_child0_child0.setHeight(200f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -68,16 +70,18 @@ public class YGSizeOverflowTest {
 
   @Test
   public void test_nested_overflowing_child_in_constraint_parent() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(100f);
     root_child0.setHeight(100f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setWidth(200f);
     root_child0_child0.setHeight(200f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -120,15 +124,17 @@ public class YGSizeOverflowTest {
 
   @Test
   public void test_parent_wrap_child_size_overflowing_parent() {
-    final YogaNode root = new YogaNode();
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode();
+    final YogaNode root_child0 = new YogaNode(config);
     root_child0.setWidth(100f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode();
+    final YogaNode root_child0_child0 = new YogaNode(config);
     root_child0_child0.setWidth(100f);
     root_child0_child0.setHeight(200f);
     root_child0.addChildAt(root_child0_child0, 0);

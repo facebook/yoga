@@ -13,16 +13,16 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("display_none", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root_child1.setDisplay(Yoga.DISPLAY_NONE);
     root.insertChild(root_child1, 1);
@@ -67,16 +67,16 @@ it("display_none", function () {
 });
 it("display_none_fixed_size", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setWidth(20);
     root_child1.setHeight(20);
     root_child1.setDisplay(Yoga.DISPLAY_NONE);
@@ -122,12 +122,12 @@ it("display_none_fixed_size", function () {
 });
 it("display_none_with_margin", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setMargin(Yoga.EDGE_LEFT, 10);
     root_child0.setMargin(Yoga.EDGE_TOP, 10);
     root_child0.setMargin(Yoga.EDGE_RIGHT, 10);
@@ -137,7 +137,7 @@ it("display_none_with_margin", function () {
     root_child0.setDisplay(Yoga.DISPLAY_NONE);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -181,25 +181,25 @@ it("display_none_with_margin", function () {
 });
 it("display_none_with_child", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root_child0.setFlexShrink(1);
     root_child0.setFlexBasis("0%");
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root_child1.setFlexShrink(1);
     root_child1.setFlexBasis("0%");
     root_child1.setDisplay(Yoga.DISPLAY_NONE);
     root.insertChild(root_child1, 1);
 
-    var root_child1_child0 = Yoga.Node.create();
+    var root_child1_child0 = Yoga.Node.create(config);
     root_child1_child0.setFlexGrow(1);
     root_child1_child0.setFlexShrink(1);
     root_child1_child0.setFlexBasis("0%");
@@ -208,7 +208,7 @@ it("display_none_with_child", function () {
     root_child1_child0.setMinHeight(0);
     root_child1.insertChild(root_child1_child0, 0);
 
-    var root_child2 = Yoga.Node.create();
+    var root_child2 = Yoga.Node.create(config);
     root_child2.setFlexGrow(1);
     root_child2.setFlexShrink(1);
     root_child2.setFlexBasis("0%");
@@ -274,16 +274,16 @@ it("display_none_with_child", function () {
 });
 it("display_none_with_position", function () {
   try {
-    var root = Yoga.Node.create();
+    var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
 
-    var root_child0 = Yoga.Node.create();
+    var root_child0 = Yoga.Node.create(config);
     root_child0.setFlexGrow(1);
     root.insertChild(root_child0, 0);
 
-    var root_child1 = Yoga.Node.create();
+    var root_child1 = Yoga.Node.create(config);
     root_child1.setFlexGrow(1);
     root_child1.setPosition(Yoga.EDGE_TOP, 10);
     root_child1.setDisplay(Yoga.DISPLAY_NONE);
