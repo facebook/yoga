@@ -1178,7 +1178,7 @@ TEST(YogaTest, wrapped_row_within_align_items_center) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, wrapped_row_within_align_items_center2) {
+TEST(YogaTest, wrapped_row_within_align_items_flex_start) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetWidth(root, 200);
@@ -1245,7 +1245,7 @@ TEST(YogaTest, wrapped_row_within_align_items_center2) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, wrapped_row_within_align_items_center3) {
+TEST(YogaTest, wrapped_row_within_align_items_flex_end) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexEnd);
   YGNodeStyleSetWidth(root, 200);

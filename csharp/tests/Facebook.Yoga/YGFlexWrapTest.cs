@@ -1212,7 +1212,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void Test_wrapped_row_within_align_items_center2()
+        public void Test_wrapped_row_within_align_items_flex_start()
         {
             YogaNode root = new YogaNode();
             root.AlignItems = YogaAlign.FlexStart;
@@ -1281,7 +1281,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void Test_wrapped_row_within_align_items_center3()
+        public void Test_wrapped_row_within_align_items_flex_end()
         {
             YogaNode root = new YogaNode();
             root.AlignItems = YogaAlign.FlexEnd;

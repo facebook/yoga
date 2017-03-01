@@ -1197,7 +1197,7 @@ public class YGFlexWrapTest {
   }
 
   @Test
-  public void test_wrapped_row_within_align_items_center2() {
+  public void test_wrapped_row_within_align_items_flex_start() {
     final YogaNode root = new YogaNode();
     root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(200f);
@@ -1265,7 +1265,7 @@ public class YGFlexWrapTest {
   }
 
   @Test
-  public void test_wrapped_row_within_align_items_center3() {
+  public void test_wrapped_row_within_align_items_flex_end() {
     final YogaNode root = new YogaNode();
     root.setAlignItems(YogaAlign.FLEX_END);
     root.setWidth(200f);
