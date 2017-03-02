@@ -4,7 +4,7 @@ This directory will contain the user, feature and API documentation for Yoga. Th
 
 ### Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to add or modify content.
+See [CONTRIBUTING.md](https://github.com/facebook/yoga/blob/master/CONTRIBUTING.md) for details on how to add or modify content.
 
 ### Run the Site Locally
 

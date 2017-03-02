@@ -19,4 +19,4 @@ We also have a sample project. To try it out, clone this repo and open `YogaKitS
 ## Contributing
 We welcome all pull-requests! At Facebook we sync the open source version of `YogaKit` daily, so we're always testing the latest changes.
 
-See the [CONTRIBUTING](https://github.com/facebook/yoga/blob/master/CONTRIBUTING) file for how to help out.
+See the [CONTRIBUTING.md](https://github.com/facebook/yoga/blob/master/CONTRIBUTING.md) file for how to help out.
