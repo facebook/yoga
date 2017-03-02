@@ -30,3 +30,9 @@ The list of all attributes can be found in [attrs.xml](https://github.com/facebo
 ## Auto margins
 
 You can specify `margin_left="auto"` (or `margin_right` etc.) for auto values.  This is in addition to the dimensions you can speicfy, such as `margin_left="20dp"`.
+
+## Invalidation (_temporary_)
+
+If you change any attribute of a view that will change its measure size, you must invalidate it.  Do this by calling `YogaLayout#invalidate(View)` on any `YogaLayout` further up the tree.  Obviously it is most efficient to call it on the view's parent (if it is a `YogaLayout`, but in case this is impractical, you can call it on the root of the tree.
+
+This is a temporary solution.  Ideally, the view should invalidate itself whenever an attribute (text, font etc.) that will alter its size changes.  This will be automatic once we find a good way to hook into the Android invalidation system.

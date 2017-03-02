@@ -231,6 +231,28 @@ public class YogaLayout extends ViewGroup {
     super.removeAllViewsInLayout();
   }
 
+  /**
+   * Marks a particular view as "dirty" and to be relaid out.  If the view is not a child of this
+   * {@link YogaLayout}, the entire tree is traversed to find it.
+   *
+   * @param view the view to mark as dirty
+   */
+  public void invalidate(View view) {
+    if (mYogaNodes.containsKey(view)) {
+      mYogaNodes.get(view).dirty();
+      return;
+    }
+
+    final int childCount = mYogaNode.getChildCount();
+    for (int i = 0; i < childCount; i++) {
+      final YogaNode yogaNode = mYogaNode.getChildAt(i);
+      if (yogaNode.getData() instanceof YogaLayout) {
+        ((YogaLayout) yogaNode.getData()).invalidate(view);
+      }
+    }
+    invalidate();
+  }
+
   private void removeViewFromYogaTree(View view, boolean inLayout) {
     final YogaNode node = mYogaNodes.get(view);
     if (node == null) {
@@ -293,9 +315,7 @@ public class YogaLayout extends ViewGroup {
   protected void onLayout(boolean changed, int l, int t, int r, int b) {
     // Either we are a root of a tree, or this function is called by our parent's onLayout, in which
     // case our r-l and b-t are the size of our node.
-    if (!(getParent() instanceof YogaLayout) &&
-        Math.round(mYogaNode.getLayoutHeight()) != b-t &&
-        Math.round(mYogaNode.getLayoutWidth()) != r-l) {
+    if (!(getParent() instanceof YogaLayout)) {
         createLayout(
             MeasureSpec.makeMeasureSpec(r - l, MeasureSpec.EXACTLY),
             MeasureSpec.makeMeasureSpec(b - t, MeasureSpec.EXACTLY));
