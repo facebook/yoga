@@ -47,8 +47,8 @@ apple_test(
     srcs = glob(["Tests/**/*.m"]),
     compiler_flags = COMPILER_FLAGS,
     frameworks = [
-        "$SDKROOT/System/Library/Frameworks/CoreGraphics.framework",
         "$PLATFORM_DIR/Developer/Library/Frameworks/XCTest.framework",
+        "$SDKROOT/System/Library/Frameworks/CoreGraphics.framework",
     ],
     info_plist = "Tests/Info.plist",
     visibility = ["PUBLIC"],
