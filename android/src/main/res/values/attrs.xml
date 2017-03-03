@@ -64,9 +64,7 @@
 
     <attr name="yg_flex" format="float"/>
 
-    <attr name="yg_flex_basis" format="float"/>
-
-    <attr name="yg_flex_basis_percent" format="float"/>
+    <attr name="yg_flex_basis" format="float|string"/>
 
     <attr name="yg_flex_direction" format="enum">
       <enum name="column" value="0"/>
@@ -79,9 +77,7 @@
 
     <attr name="yg_flex_shrink" format="float"/>
 
-    <attr name="yg_height" format="dimension"/>
-
-    <attr name="yg_height_percent" format="float"/>
+    <attr name="yg_height" format="dimension|string"/>
 
     <attr name="yg_justify_content" format="enum">
       <enum name="flex_start" value="0"/>
@@ -101,31 +97,13 @@
     <attr name="yg_margin_vertical" format="dimension|string"/>
     <attr name="yg_margin_all" format="dimension|string"/>
 
-    <attr name="yg_margin_percent_left" format="dimension"/>
-    <attr name="yg_margin_percent_top" format="dimension"/>
-    <attr name="yg_margin_percent_right" format="dimension"/>
-    <attr name="yg_margin_percent_bottom" format="dimension"/>
-    <attr name="yg_margin_percent_start" format="dimension"/>
-    <attr name="yg_margin_percent_end" format="dimension"/>
-    <attr name="yg_margin_percent_horizontal" format="dimension"/>
-    <attr name="yg_margin_percent_vertical" format="dimension"/>
-    <attr name="yg_margin_percent_all" format="dimension"/>
+    <attr name="yg_max_height" format="dimension|string"/>
 
-    <attr name="yg_max_height" format="dimension"/>
+    <attr name="yg_max_width" format="dimension|string"/>
 
-    <attr name="yg_max_height_percent" format="float"/>
+    <attr name="yg_min_height" format="dimension|string"/>
 
-    <attr name="yg_max_width" format="dimension"/>
-
-    <attr name="yg_max_width_percent" format="float"/>
-
-    <attr name="yg_min_height" format="dimension"/>
-
-    <attr name="yg_min_height_percent" format="float"/>
-
-    <attr name="yg_min_width" format="dimension"/>
-
-    <attr name="yg_min_width_percent" format="float"/>
+    <attr name="yg_min_width" format="dimension|string"/>
 
     <attr name="yg_overflow" format="enum">
       <enum name="visible" value="0"/>
@@ -133,54 +111,32 @@
       <enum name="scroll" value="2"/>
     </attr>
 
-    <attr name="yg_padding_left" format="dimension"/>
-    <attr name="yg_padding_top" format="dimension"/>
-    <attr name="yg_padding_right" format="dimension"/>
-    <attr name="yg_padding_bottom" format="dimension"/>
-    <attr name="yg_padding_start" format="dimension"/>
-    <attr name="yg_padding_end" format="dimension"/>
-    <attr name="yg_padding_horizontal" format="dimension"/>
-    <attr name="yg_padding_vertical" format="dimension"/>
-    <attr name="yg_padding_all" format="dimension"/>
+    <attr name="yg_padding_left" format="dimension|string"/>
+    <attr name="yg_padding_top" format="dimension|string"/>
+    <attr name="yg_padding_right" format="dimension|string"/>
+    <attr name="yg_padding_bottom" format="dimension|string"/>
+    <attr name="yg_padding_start" format="dimension|string"/>
+    <attr name="yg_padding_end" format="dimension|string"/>
+    <attr name="yg_padding_horizontal" format="dimension|string"/>
+    <attr name="yg_padding_vertical" format="dimension|string"/>
+    <attr name="yg_padding_all" format="dimension|string"/>
 
-    <attr name="yg_padding_percent_left" format="float"/>
-    <attr name="yg_padding_percent_top" format="float"/>
-    <attr name="yg_padding_percent_right" format="float"/>
-    <attr name="yg_padding_percent_bottom" format="float"/>
-    <attr name="yg_padding_percent_start" format="float"/>
-    <attr name="yg_padding_percent_end" format="float"/>
-    <attr name="yg_padding_percent_horizontal" format="float"/>
-    <attr name="yg_padding_percent_vertical" format="float"/>
-    <attr name="yg_padding_percent_all" format="float"/>
-
-    <attr name="yg_position_left" format="dimension"/>
-    <attr name="yg_position_top" format="dimension"/>
-    <attr name="yg_position_right" format="dimension"/>
-    <attr name="yg_position_bottom" format="dimension"/>
-    <attr name="yg_position_start" format="dimension"/>
-    <attr name="yg_position_end" format="dimension"/>
-    <attr name="yg_position_horizontal" format="dimension"/>
-    <attr name="yg_position_vertical" format="dimension"/>
-    <attr name="yg_position_all" format="dimension"/>
-
-    <attr name="yg_position_percent_left" format="float"/>
-    <attr name="yg_position_percent_top" format="float"/>
-    <attr name="yg_position_percent_right" format="float"/>
-    <attr name="yg_position_percent_bottom" format="float"/>
-    <attr name="yg_position_percent_start" format="float"/>
-    <attr name="yg_position_percent_end" format="float"/>
-    <attr name="yg_position_percent_horizontal" format="float"/>
-    <attr name="yg_position_percent_vertical" format="float"/>
-    <attr name="yg_position_percent_all" format="float"/>
+    <attr name="yg_position_left" format="dimension|string"/>
+    <attr name="yg_position_top" format="dimension|string"/>
+    <attr name="yg_position_right" format="dimension|string"/>
+    <attr name="yg_position_bottom" format="dimension|string"/>
+    <attr name="yg_position_start" format="dimension|string"/>
+    <attr name="yg_position_end" format="dimension|string"/>
+    <attr name="yg_position_horizontal" format="dimension|string"/>
+    <attr name="yg_position_vertical" format="dimension|string"/>
+    <attr name="yg_position_all" format="dimension|string"/>
 
     <attr name="yg_position_type" format="enum">
       <enum name="relative" value="0"/>
       <enum name="absolute" value="1"/>
     </attr>
 
-    <attr name="yg_width" format="dimension"/>
-
-    <attr name="yg_width_percent" format="float"/>
+    <attr name="yg_width" format="dimension|string"/>
 
     <attr name="yg_wrap" format="enum">
       <enum name="no_wrap" value="0"/>

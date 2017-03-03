@@ -51,7 +51,7 @@ import com.facebook.yoga.YogaWrap;
  * <pre>{@code
  * <YogaLayout
  *     xmlns:android="http://schemas.android.com/apk/res/android"
- *     xmlns:yoga="http://schemas.android.com/apk/res-auto"
+ *     xmlns:yoga="http://schemas.android.com/lib/com.facebook.yoga.android"
  *     android:layout_width="match_parent"
  *     android:layout_height="match_parent"
  *     yoga:flex_direction="row"
@@ -437,8 +437,6 @@ public class YogaLayout extends ViewGroup {
         node.setFlex(value);
       } else if (attribute == R.styleable.yoga_yg_flex_basis) {
         node.setFlexBasis(value);
-      } else if (attribute == R.styleable.yoga_yg_flex_basis_percent) {
-        node.setFlexBasisPercent(value);
       } else if (attribute == R.styleable.yoga_yg_flex_direction) {
         node.setFlexDirection(YogaFlexDirection.fromInt(Math.round(value)));
       } else if (attribute == R.styleable.yoga_yg_flex_grow) {
@@ -447,8 +445,6 @@ public class YogaLayout extends ViewGroup {
         node.setFlexShrink(value);
       } else if (attribute == R.styleable.yoga_yg_height) {
         node.setHeight(value);
-      } else if (attribute == R.styleable.yoga_yg_height_percent) {
-        node.setHeightPercent(value);
       } else if (attribute == R.styleable.yoga_yg_margin_left) {
         node.setMargin(YogaEdge.LEFT, value);
       } else if (attribute == R.styleable.yoga_yg_justify_content) {
@@ -469,40 +465,14 @@ public class YogaLayout extends ViewGroup {
         node.setMargin(YogaEdge.VERTICAL, value);
       } else if (attribute == R.styleable.yoga_yg_margin_all) {
         node.setMargin(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_left) {
-        node.setMarginPercent(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_top) {
-        node.setMarginPercent(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_right) {
-        node.setMarginPercent(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_bottom) {
-        node.setMarginPercent(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_start) {
-        node.setMarginPercent(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_end) {
-        node.setMarginPercent(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_horizontal) {
-        node.setMarginPercent(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_vertical) {
-        node.setMarginPercent(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_yg_margin_percent_all) {
-        node.setMarginPercent(YogaEdge.ALL, value);
       } else if (attribute == R.styleable.yoga_yg_max_height) {
         node.setMaxHeight(value);
-      } else if (attribute == R.styleable.yoga_yg_max_height_percent) {
-        node.setMaxHeightPercent(value);
       } else if (attribute == R.styleable.yoga_yg_max_width) {
         node.setMaxWidth(value);
-      } else if (attribute == R.styleable.yoga_yg_max_width_percent) {
-        node.setMaxWidthPercent(value);
       } else if (attribute == R.styleable.yoga_yg_min_height) {
         node.setMinHeight(value);
-      } else if (attribute == R.styleable.yoga_yg_min_height_percent) {
-        node.setMinHeightPercent(value);
       } else if (attribute == R.styleable.yoga_yg_min_width) {
         node.setMinWidth(value);
-      } else if (attribute == R.styleable.yoga_yg_min_width_percent) {
-        node.setMinWidthPercent(value);
       } else if (attribute == R.styleable.yoga_yg_overflow) {
         node.setOverflow(YogaOverflow.fromInt(Math.round(value)));
       } else if (attribute == R.styleable.yoga_yg_padding_left) {
@@ -523,24 +493,6 @@ public class YogaLayout extends ViewGroup {
         node.setPadding(YogaEdge.VERTICAL, value);
       } else if (attribute == R.styleable.yoga_yg_padding_all) {
         node.setPadding(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_left) {
-        node.setPaddingPercent(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_top) {
-        node.setPaddingPercent(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_right) {
-        node.setPaddingPercent(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_bottom) {
-        node.setPaddingPercent(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_start) {
-        node.setPaddingPercent(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_end) {
-        node.setPaddingPercent(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_horizontal) {
-        node.setPaddingPercent(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_vertical) {
-        node.setPaddingPercent(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_yg_padding_percent_all) {
-        node.setPaddingPercent(YogaEdge.ALL, value);
       } else if (attribute == R.styleable.yoga_yg_position_left) {
         node.setPosition(YogaEdge.LEFT, value);
       } else if (attribute == R.styleable.yoga_yg_position_top) {
@@ -559,30 +511,10 @@ public class YogaLayout extends ViewGroup {
         node.setPosition(YogaEdge.VERTICAL, value);
       } else if (attribute == R.styleable.yoga_yg_position_all) {
         node.setPosition(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_left) {
-        node.setPositionPercent(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_top) {
-        node.setPositionPercent(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_right) {
-        node.setPositionPercent(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_bottom) {
-        node.setPositionPercent(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_start) {
-        node.setPositionPercent(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_end) {
-        node.setPositionPercent(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_horizontal) {
-        node.setPositionPercent(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_vertical) {
-        node.setPositionPercent(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_yg_position_percent_all) {
-        node.setPositionPercent(YogaEdge.ALL, value);
       } else if (attribute == R.styleable.yoga_yg_position_type) {
         node.setPositionType(YogaPositionType.fromInt(Math.round(value)));
       } else if (attribute == R.styleable.yoga_yg_width) {
         node.setWidth(value);
-      } else if (attribute == R.styleable.yoga_yg_width_percent) {
-        node.setWidthPercent(value);
       } else if (attribute == R.styleable.yoga_yg_wrap) {
         node.setWrap(YogaWrap.fromInt(Math.round(value)));
       }
@@ -611,6 +543,80 @@ public class YogaLayout extends ViewGroup {
           node.setMarginAuto(YogaEdge.VERTICAL);
         } else if (attribute == R.styleable.yoga_yg_margin_all) {
           node.setMarginAuto(YogaEdge.ALL);
+        }
+      }
+
+      if (value.endsWith("%")) {
+        final float numericValue = Float.parseFloat(value.substring(0, value.length()-1));
+
+        if (attribute == R.styleable.yoga_yg_flex_basis) {
+          node.setFlexBasisPercent(numericValue);
+        } else if (attribute == R.styleable.yoga_yg_height) {
+          node.setHeightPercent(numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_left) {
+          node.setMarginPercent(YogaEdge.LEFT, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_top) {
+          node.setMarginPercent(YogaEdge.TOP, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_right) {
+          node.setMarginPercent(YogaEdge.RIGHT, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_bottom) {
+          node.setMarginPercent(YogaEdge.BOTTOM, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_start) {
+          node.setMarginPercent(YogaEdge.START, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_end) {
+          node.setMarginPercent(YogaEdge.END, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_horizontal) {
+          node.setMarginPercent(YogaEdge.HORIZONTAL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_vertical) {
+          node.setMarginPercent(YogaEdge.VERTICAL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_margin_all) {
+          node.setMarginPercent(YogaEdge.ALL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_max_height) {
+          node.setMaxHeightPercent(numericValue);
+        } else if (attribute == R.styleable.yoga_yg_max_width) {
+          node.setMaxWidthPercent(numericValue);
+        } else if (attribute == R.styleable.yoga_yg_min_height) {
+          node.setMinHeightPercent(numericValue);
+        } else if (attribute == R.styleable.yoga_yg_min_width) {
+          node.setMinWidthPercent(numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_left) {
+          node.setPaddingPercent(YogaEdge.LEFT, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_top) {
+          node.setPaddingPercent(YogaEdge.TOP, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_right) {
+          node.setPaddingPercent(YogaEdge.RIGHT, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_bottom) {
+          node.setPaddingPercent(YogaEdge.BOTTOM, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_start) {
+          node.setPaddingPercent(YogaEdge.START, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_end) {
+          node.setPaddingPercent(YogaEdge.END, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_horizontal) {
+          node.setPaddingPercent(YogaEdge.HORIZONTAL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_vertical) {
+          node.setPaddingPercent(YogaEdge.VERTICAL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_padding_all) {
+          node.setPaddingPercent(YogaEdge.ALL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_left) {
+          node.setPositionPercent(YogaEdge.LEFT, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_top) {
+          node.setPositionPercent(YogaEdge.TOP, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_right) {
+          node.setPositionPercent(YogaEdge.RIGHT, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_bottom) {
+          node.setPositionPercent(YogaEdge.BOTTOM, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_start) {
+          node.setPositionPercent(YogaEdge.START, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_end) {
+          node.setPositionPercent(YogaEdge.END, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_horizontal) {
+          node.setPositionPercent(YogaEdge.HORIZONTAL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_vertical) {
+          node.setPositionPercent(YogaEdge.VERTICAL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_position_all) {
+          node.setPositionPercent(YogaEdge.ALL, numericValue);
+        } else if (attribute == R.styleable.yoga_yg_width) {
+          node.setWidthPercent(numericValue);
         }
       }
     }

@@ -10,7 +10,7 @@
 
 <YogaLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:yoga="http://schemas.android.com/apk/res-auto"
+    xmlns:yoga="http://schemas.android.com/apk/res/com.facebook.samples.yoga"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
