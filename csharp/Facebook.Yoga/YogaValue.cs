@@ -95,12 +95,12 @@ namespace Facebook.Yoga
         }
 
 #if WINDOWS_UWP_ARM
-        public static YogaValue MarshalValue(IntPtr ptr)
+        internal static YogaValue MarshalValue(IntPtr ptr)
         {
             return Marshal.PtrToStructure<YogaValue>(ptr);
         }
 #else
-        public static YogaValue MarshalValue(YogaValue value)
+        internal static YogaValue MarshalValue(YogaValue value)
         {
             return value;
         }
