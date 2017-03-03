@@ -945,20 +945,22 @@ TEST(YogaTest, margin_auto_left_and_right) {
 }
 
 TEST(YogaTest, margin_auto_start_and_end_column) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
   YGNodeStyleSetWidth(root, 200);
   YGNodeStyleSetHeight(root, 200);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetMarginAuto(root_child0, YGEdgeStart);
   YGNodeStyleSetMarginAuto(root_child0, YGEdgeEnd);
   YGNodeStyleSetWidth(root_child0, 50);
   YGNodeStyleSetHeight(root_child0, 50);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNew();
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child1, 50);
   YGNodeStyleSetHeight(root_child1, 50);
   YGNodeInsertChild(root, root_child1, 1);
@@ -997,21 +999,25 @@ TEST(YogaTest, margin_auto_start_and_end_column) {
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child1));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, margin_auto_start_and_end) {
-  const YGNodeRef root = YGNodeNew();
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 200);
   YGNodeStyleSetHeight(root, 200);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetMarginAuto(root_child0, YGEdgeStart);
   YGNodeStyleSetMarginAuto(root_child0, YGEdgeEnd);
   YGNodeStyleSetWidth(root_child0, 50);
   YGNodeStyleSetHeight(root_child0, 50);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNew();
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child1, 50);
   YGNodeStyleSetHeight(root_child1, 50);
   YGNodeInsertChild(root, root_child1, 1);
@@ -1050,6 +1056,8 @@ TEST(YogaTest, margin_auto_start_and_end) {
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child1));
 
   YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, margin_auto_left_and_right_column_and_center) {
