@@ -90,3 +90,16 @@ TEST(YogaTest, assert_default_values) {
 
   YGNodeFreeRecursive(root);
 }
+
+TEST(YogaTest, assert_webdefault_values) {
+  YGConfig * config = YGConfigNew();
+  YGConfigSetUseWebDefaults(config, true);
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+
+  ASSERT_EQ(YGFlexDirectionRow, YGNodeStyleGetFlexDirection(root));
+  ASSERT_EQ(YGAlignStretch, YGNodeStyleGetAlignContent(root));
+  ASSERT_FLOAT_EQ(1.0f, YGNodeStyleGetFlexShrink(root));
+
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
+}
