@@ -19,10 +19,14 @@
 
 #ifdef _WINDLL
 #define WIN_EXPORT __declspec(dllexport)
+#else
+#define WIN_EXPORT
+#endif
+
+#ifdef WINARMDLL
 #define WIN_STRUCT(type) type*
 #define WIN_STRUCT_REF(value) &value
 #else
-#define WIN_EXPORT
 #define WIN_STRUCT(type) type
 #define WIN_STRUCT_REF(value) value
 #endif

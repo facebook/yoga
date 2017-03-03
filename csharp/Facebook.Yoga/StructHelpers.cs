@@ -5,10 +5,18 @@ namespace Facebook.Yoga
 {
     static class StructHelpers
     {
+#if WINDOWS_UWP_ARM
         public static T MarshalStruct<T>(IntPtr ptr)
             where T : struct
         {
-            return (T)Marshal.PtrToStructure(ptr, typeof(T));
+            return Marshal.PtrToStructure<T>(ptr);
         }
+#else
+        public static T MarshalStruct<T>(T value)
+            where T : struct
+        {
+            return value;
+        }
+#endif
     }
 }
