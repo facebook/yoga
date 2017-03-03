@@ -7,8 +7,6 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-using System;
-
 namespace Facebook.Yoga
 {
     public partial class YogaNode
@@ -17,7 +15,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Left);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Left));
             }
 
             set
@@ -30,7 +28,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Top);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Top));
             }
 
             set
@@ -43,7 +41,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Right);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Right));
             }
 
             set
@@ -56,7 +54,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Bottom);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Bottom));
             }
 
             set
@@ -69,7 +67,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Start);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.Start));
             }
 
             set
@@ -82,7 +80,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.End);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPosition(_ygNode, YogaEdge.End));
             }
 
             set
@@ -107,7 +105,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Left);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Left));
             }
 
             set
@@ -120,7 +118,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Top);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Top));
             }
 
             set
@@ -133,7 +131,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Right);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Right));
             }
 
             set
@@ -146,7 +144,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Bottom);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Bottom));
             }
 
             set
@@ -159,7 +157,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Start);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Start));
             }
 
             set
@@ -172,7 +170,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.End);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.End));
             }
 
             set
@@ -185,7 +183,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Horizontal);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Horizontal));
             }
 
             set
@@ -198,7 +196,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Vertical);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.Vertical));
             }
 
             set
@@ -211,7 +209,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.All);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMargin(_ygNode, YogaEdge.All));
             }
 
             set
@@ -240,7 +238,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Left);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Left));
             }
 
             set
@@ -253,7 +251,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Top);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Top));
             }
 
             set
@@ -266,7 +264,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Right);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Right));
             }
 
             set
@@ -279,7 +277,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Bottom);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Bottom));
             }
 
             set
@@ -292,7 +290,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Start);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Start));
             }
 
             set
@@ -305,7 +303,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.End);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.End));
             }
 
             set
@@ -318,7 +316,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Horizontal);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Horizontal));
             }
 
             set
@@ -331,7 +329,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Vertical);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.Vertical));
             }
 
             set
@@ -344,7 +342,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.All);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetPadding(_ygNode, YogaEdge.All));
             }
 
             set

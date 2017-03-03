@@ -318,7 +318,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetFlexBasis(_ygNode);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetFlexBasis(_ygNode));
             }
 
             set
@@ -342,7 +342,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetWidth(_ygNode);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetWidth(_ygNode));
             }
 
             set
@@ -366,7 +366,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetHeight(_ygNode);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetHeight(_ygNode));
             }
 
             set
@@ -390,7 +390,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMaxWidth(_ygNode);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMaxWidth(_ygNode));
             }
 
             set
@@ -410,7 +410,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMaxHeight(_ygNode);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMaxHeight(_ygNode));
             }
 
             set
@@ -430,7 +430,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMinWidth(_ygNode);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMinWidth(_ygNode));
             }
 
             set
@@ -450,7 +450,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return Native.YGNodeStyleGetMinHeight(_ygNode);
+                return StructHelpers.MarshalStruct<YogaValue>(Native.YGNodeStyleGetMinHeight(_ygNode));
             }
 
             set

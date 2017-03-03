@@ -19,8 +19,12 @@
 
 #ifdef _WINDLL
 #define WIN_EXPORT __declspec(dllexport)
+#define WIN_STRUCT(type) type*
+#define WIN_STRUCT_REF(value) &value
 #else
 #define WIN_EXPORT
+#define WIN_STRUCT(type) type
+#define WIN_STRUCT_REF(value) value
 #endif
 
 #ifndef FB_ASSERTIONS_ENABLED
