@@ -85,9 +85,18 @@
 </div>
 
 <div id="percent_within_flex_grow" style="flex-direction:row; width: 350px; height: 100px; align-items: stretch; ">
-    <div style="width:100px;"></div>
-    <div style="flex-grow: 1;">
-        <div style="width:100%;"></div>
+  <div style="width:100px;"></div>
+  <div style="flex-grow: 1;">
+      <div style="width:100%;"></div>
+  </div>
+  <div style="width: 100px;"></div>
+</div>
+
+<div id="percentage_container_in_wrapping_container" experiments="MinFlexFix" style="align-items: center; width: 200px; height: 200px; justify-content: center;">
+  <div>
+    <div style="alignItems: center; flex-direction: row; justify-content: center; width: 100%;">
+      <div style="width: 50px; height: 50px;"></div>
+      <div style="width: 50px; height: 50px;"></div>
     </div>
-    <div style="width: 100px;"></div>
+  </div>
 </div>
