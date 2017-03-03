@@ -403,187 +403,187 @@ public class YogaLayout extends ViewGroup {
       final int attribute = layoutParameters.numericAttributes.keyAt(i);
       final float value = layoutParameters.numericAttributes.valueAt(i);
 
-      if (attribute == R.styleable.yoga_align_content) {
+      if (attribute == R.styleable.yoga_yg_align_content) {
         node.setAlignContent(YogaAlign.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_align_items) {
+      } else if (attribute == R.styleable.yoga_yg_align_items) {
         node.setAlignItems(YogaAlign.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_align_self) {
+      } else if (attribute == R.styleable.yoga_yg_align_self) {
         node.setAlignSelf(YogaAlign.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_aspect_ratio) {
+      } else if (attribute == R.styleable.yoga_yg_aspect_ratio) {
         node.setAspectRatio(value);
-      } else if (attribute == R.styleable.yoga_border_left) {
+      } else if (attribute == R.styleable.yoga_yg_border_left) {
         node.setBorder(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_border_top) {
+      } else if (attribute == R.styleable.yoga_yg_border_top) {
         node.setBorder(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_border_right) {
+      } else if (attribute == R.styleable.yoga_yg_border_right) {
         node.setBorder(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_border_bottom) {
+      } else if (attribute == R.styleable.yoga_yg_border_bottom) {
         node.setBorder(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_border_start) {
+      } else if (attribute == R.styleable.yoga_yg_border_start) {
         node.setBorder(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_border_end) {
+      } else if (attribute == R.styleable.yoga_yg_border_end) {
         node.setBorder(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_border_horizontal) {
+      } else if (attribute == R.styleable.yoga_yg_border_horizontal) {
         node.setBorder(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_border_vertical) {
+      } else if (attribute == R.styleable.yoga_yg_border_vertical) {
         node.setBorder(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_border_all) {
+      } else if (attribute == R.styleable.yoga_yg_border_all) {
         node.setBorder(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_direction) {
+      } else if (attribute == R.styleable.yoga_yg_direction) {
         node.setDirection(YogaDirection.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_display) {
+      } else if (attribute == R.styleable.yoga_yg_display) {
         node.setDisplay(YogaDisplay.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_flex) {
+      } else if (attribute == R.styleable.yoga_yg_flex) {
         node.setFlex(value);
-      } else if (attribute == R.styleable.yoga_flex_basis) {
+      } else if (attribute == R.styleable.yoga_yg_flex_basis) {
         node.setFlexBasis(value);
-      } else if (attribute == R.styleable.yoga_flex_basis_percent) {
+      } else if (attribute == R.styleable.yoga_yg_flex_basis_percent) {
         node.setFlexBasisPercent(value);
-      } else if (attribute == R.styleable.yoga_flex_direction) {
+      } else if (attribute == R.styleable.yoga_yg_flex_direction) {
         node.setFlexDirection(YogaFlexDirection.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_flex_grow) {
+      } else if (attribute == R.styleable.yoga_yg_flex_grow) {
         node.setFlexGrow(value);
-      } else if (attribute == R.styleable.yoga_flex_shrink) {
+      } else if (attribute == R.styleable.yoga_yg_flex_shrink) {
         node.setFlexShrink(value);
-      } else if (attribute == R.styleable.yoga_height) {
+      } else if (attribute == R.styleable.yoga_yg_height) {
         node.setHeight(value);
-      } else if (attribute == R.styleable.yoga_height_percent) {
+      } else if (attribute == R.styleable.yoga_yg_height_percent) {
         node.setHeightPercent(value);
-      } else if (attribute == R.styleable.yoga_margin_left) {
+      } else if (attribute == R.styleable.yoga_yg_margin_left) {
         node.setMargin(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_justify_content) {
+      } else if (attribute == R.styleable.yoga_yg_justify_content) {
         node.setJustifyContent(YogaJustify.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_margin_top) {
+      } else if (attribute == R.styleable.yoga_yg_margin_top) {
         node.setMargin(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_margin_right) {
+      } else if (attribute == R.styleable.yoga_yg_margin_right) {
         node.setMargin(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_margin_bottom) {
+      } else if (attribute == R.styleable.yoga_yg_margin_bottom) {
         node.setMargin(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_margin_start) {
+      } else if (attribute == R.styleable.yoga_yg_margin_start) {
         node.setMargin(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_margin_end) {
+      } else if (attribute == R.styleable.yoga_yg_margin_end) {
         node.setMargin(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_margin_horizontal) {
+      } else if (attribute == R.styleable.yoga_yg_margin_horizontal) {
         node.setMargin(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_margin_vertical) {
+      } else if (attribute == R.styleable.yoga_yg_margin_vertical) {
         node.setMargin(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_margin_all) {
+      } else if (attribute == R.styleable.yoga_yg_margin_all) {
         node.setMargin(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_left) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_left) {
         node.setMarginPercent(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_top) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_top) {
         node.setMarginPercent(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_right) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_right) {
         node.setMarginPercent(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_bottom) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_bottom) {
         node.setMarginPercent(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_start) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_start) {
         node.setMarginPercent(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_end) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_end) {
         node.setMarginPercent(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_horizontal) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_horizontal) {
         node.setMarginPercent(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_vertical) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_vertical) {
         node.setMarginPercent(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_margin_percent_all) {
+      } else if (attribute == R.styleable.yoga_yg_margin_percent_all) {
         node.setMarginPercent(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_max_height) {
+      } else if (attribute == R.styleable.yoga_yg_max_height) {
         node.setMaxHeight(value);
-      } else if (attribute == R.styleable.yoga_max_height_percent) {
+      } else if (attribute == R.styleable.yoga_yg_max_height_percent) {
         node.setMaxHeightPercent(value);
-      } else if (attribute == R.styleable.yoga_max_width) {
+      } else if (attribute == R.styleable.yoga_yg_max_width) {
         node.setMaxWidth(value);
-      } else if (attribute == R.styleable.yoga_max_width_percent) {
+      } else if (attribute == R.styleable.yoga_yg_max_width_percent) {
         node.setMaxWidthPercent(value);
-      } else if (attribute == R.styleable.yoga_min_height) {
+      } else if (attribute == R.styleable.yoga_yg_min_height) {
         node.setMinHeight(value);
-      } else if (attribute == R.styleable.yoga_min_height_percent) {
+      } else if (attribute == R.styleable.yoga_yg_min_height_percent) {
         node.setMinHeightPercent(value);
-      } else if (attribute == R.styleable.yoga_min_width) {
+      } else if (attribute == R.styleable.yoga_yg_min_width) {
         node.setMinWidth(value);
-      } else if (attribute == R.styleable.yoga_min_width_percent) {
+      } else if (attribute == R.styleable.yoga_yg_min_width_percent) {
         node.setMinWidthPercent(value);
-      } else if (attribute == R.styleable.yoga_overflow) {
+      } else if (attribute == R.styleable.yoga_yg_overflow) {
         node.setOverflow(YogaOverflow.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_padding_left) {
+      } else if (attribute == R.styleable.yoga_yg_padding_left) {
         node.setPadding(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_padding_top) {
+      } else if (attribute == R.styleable.yoga_yg_padding_top) {
         node.setPadding(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_padding_right) {
+      } else if (attribute == R.styleable.yoga_yg_padding_right) {
         node.setPadding(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_padding_bottom) {
+      } else if (attribute == R.styleable.yoga_yg_padding_bottom) {
         node.setPadding(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_padding_start) {
+      } else if (attribute == R.styleable.yoga_yg_padding_start) {
         node.setPadding(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_padding_end) {
+      } else if (attribute == R.styleable.yoga_yg_padding_end) {
         node.setPadding(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_padding_horizontal) {
+      } else if (attribute == R.styleable.yoga_yg_padding_horizontal) {
         node.setPadding(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_padding_vertical) {
+      } else if (attribute == R.styleable.yoga_yg_padding_vertical) {
         node.setPadding(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_padding_all) {
+      } else if (attribute == R.styleable.yoga_yg_padding_all) {
         node.setPadding(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_left) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_left) {
         node.setPaddingPercent(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_top) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_top) {
         node.setPaddingPercent(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_right) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_right) {
         node.setPaddingPercent(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_bottom) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_bottom) {
         node.setPaddingPercent(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_start) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_start) {
         node.setPaddingPercent(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_end) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_end) {
         node.setPaddingPercent(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_horizontal) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_horizontal) {
         node.setPaddingPercent(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_vertical) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_vertical) {
         node.setPaddingPercent(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_padding_percent_all) {
+      } else if (attribute == R.styleable.yoga_yg_padding_percent_all) {
         node.setPaddingPercent(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_position_left) {
+      } else if (attribute == R.styleable.yoga_yg_position_left) {
         node.setPosition(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_position_top) {
+      } else if (attribute == R.styleable.yoga_yg_position_top) {
         node.setPosition(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_position_right) {
+      } else if (attribute == R.styleable.yoga_yg_position_right) {
         node.setPosition(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_position_bottom) {
+      } else if (attribute == R.styleable.yoga_yg_position_bottom) {
         node.setPosition(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_position_start) {
+      } else if (attribute == R.styleable.yoga_yg_position_start) {
         node.setPosition(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_position_end) {
+      } else if (attribute == R.styleable.yoga_yg_position_end) {
         node.setPosition(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_position_horizontal) {
+      } else if (attribute == R.styleable.yoga_yg_position_horizontal) {
         node.setPosition(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_position_vertical) {
+      } else if (attribute == R.styleable.yoga_yg_position_vertical) {
         node.setPosition(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_position_all) {
+      } else if (attribute == R.styleable.yoga_yg_position_all) {
         node.setPosition(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_position_percent_left) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_left) {
         node.setPositionPercent(YogaEdge.LEFT, value);
-      } else if (attribute == R.styleable.yoga_position_percent_top) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_top) {
         node.setPositionPercent(YogaEdge.TOP, value);
-      } else if (attribute == R.styleable.yoga_position_percent_right) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_right) {
         node.setPositionPercent(YogaEdge.RIGHT, value);
-      } else if (attribute == R.styleable.yoga_position_percent_bottom) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_bottom) {
         node.setPositionPercent(YogaEdge.BOTTOM, value);
-      } else if (attribute == R.styleable.yoga_position_percent_start) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_start) {
         node.setPositionPercent(YogaEdge.START, value);
-      } else if (attribute == R.styleable.yoga_position_percent_end) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_end) {
         node.setPositionPercent(YogaEdge.END, value);
-      } else if (attribute == R.styleable.yoga_position_percent_horizontal) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_horizontal) {
         node.setPositionPercent(YogaEdge.HORIZONTAL, value);
-      } else if (attribute == R.styleable.yoga_position_percent_vertical) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_vertical) {
         node.setPositionPercent(YogaEdge.VERTICAL, value);
-      } else if (attribute == R.styleable.yoga_position_percent_all) {
+      } else if (attribute == R.styleable.yoga_yg_position_percent_all) {
         node.setPositionPercent(YogaEdge.ALL, value);
-      } else if (attribute == R.styleable.yoga_position_type) {
+      } else if (attribute == R.styleable.yoga_yg_position_type) {
         node.setPositionType(YogaPositionType.fromInt(Math.round(value)));
-      } else if (attribute == R.styleable.yoga_width) {
+      } else if (attribute == R.styleable.yoga_yg_width) {
         node.setWidth(value);
-      } else if (attribute == R.styleable.yoga_width_percent) {
+      } else if (attribute == R.styleable.yoga_yg_width_percent) {
         node.setWidthPercent(value);
-      } else if (attribute == R.styleable.yoga_wrap) {
+      } else if (attribute == R.styleable.yoga_yg_wrap) {
         node.setWrap(YogaWrap.fromInt(Math.round(value)));
       }
     }
@@ -593,23 +593,23 @@ public class YogaLayout extends ViewGroup {
       final String value = layoutParameters.stringAttributes.valueAt(i);
 
       if (value.equals("auto")) {
-        if (attribute == R.styleable.yoga_margin_left) {
+        if (attribute == R.styleable.yoga_yg_margin_left) {
           node.setMarginAuto(YogaEdge.LEFT);
-        } else if (attribute == R.styleable.yoga_margin_top) {
+        } else if (attribute == R.styleable.yoga_yg_margin_top) {
           node.setMarginAuto(YogaEdge.TOP);
-        } else if (attribute == R.styleable.yoga_margin_right) {
+        } else if (attribute == R.styleable.yoga_yg_margin_right) {
           node.setMarginAuto(YogaEdge.RIGHT);
-        } else if (attribute == R.styleable.yoga_margin_bottom) {
+        } else if (attribute == R.styleable.yoga_yg_margin_bottom) {
           node.setMarginAuto(YogaEdge.BOTTOM);
-        } else if (attribute == R.styleable.yoga_margin_start) {
+        } else if (attribute == R.styleable.yoga_yg_margin_start) {
           node.setMarginAuto(YogaEdge.START);
-        } else if (attribute == R.styleable.yoga_margin_end) {
+        } else if (attribute == R.styleable.yoga_yg_margin_end) {
           node.setMarginAuto(YogaEdge.END);
-        } else if (attribute == R.styleable.yoga_margin_horizontal) {
+        } else if (attribute == R.styleable.yoga_yg_margin_horizontal) {
           node.setMarginAuto(YogaEdge.HORIZONTAL);
-        } else if (attribute == R.styleable.yoga_margin_vertical) {
+        } else if (attribute == R.styleable.yoga_yg_margin_vertical) {
           node.setMarginAuto(YogaEdge.VERTICAL);
-        } else if (attribute == R.styleable.yoga_margin_all) {
+        } else if (attribute == R.styleable.yoga_yg_margin_all) {
           node.setMarginAuto(YogaEdge.ALL);
         }
       }
@@ -643,13 +643,14 @@ public class YogaLayout extends ViewGroup {
    *
    * <p>
    * This is actually mostly a wrapper around a {@code SparseArray} that holds a mapping between
-   * styleable id's ({@code R.styleable.yoga_*}) and the float of their values.  In cases where the
-   * value is an enum or an integer, they should first be cast to int (with rounding) before using.
+   * styleable id's ({@code R.styleable.yoga_yg_*}) and the float of their values.  In cases where
+   * the value is an enum or an integer, they should first be cast to int (with rounding) before
+   * using.
    */
   public static class LayoutParams extends ViewGroup.LayoutParams {
 
     /**
-     * A mapping from attribute keys ({@code R.styleable.yoga_*}) to the float of their values.
+     * A mapping from attribute keys ({@code R.styleable.yoga_yg_*}) to the float of their values.
      * For attributes like position_percent_left (float), this is the native type.  For attributes
      * like align_self (enums), the integer enum value is cast (rounding is used on the other side
      * to prevent precision errors).  Dimension attributes are stored as float pixels.
@@ -657,7 +658,7 @@ public class YogaLayout extends ViewGroup {
     SparseArray<Float> numericAttributes;
 
     /**
-     * A mapping from attribute keys ({@code R.styleable.yoga_*}) with string values to those
+     * A mapping from attribute keys ({@code R.styleable.yoga_yg_*}) with string values to those
      * strings.  This is used for values such as "auto".
      */
     SparseArray<String> stringAttributes;
@@ -680,10 +681,10 @@ public class YogaLayout extends ViewGroup {
 
         // Negative values include MATCH_PARENT and WRAP_CONTENT
         if (source.width >= 0) {
-          numericAttributes.put(R.styleable.yoga_width, (float) width);
+          numericAttributes.put(R.styleable.yoga_yg_width, (float) width);
         }
         if (source.height >= 0) {
-          numericAttributes.put(R.styleable.yoga_height, (float) height);
+          numericAttributes.put(R.styleable.yoga_yg_height, (float) height);
         }
       }
     }
@@ -706,10 +707,10 @@ public class YogaLayout extends ViewGroup {
       stringAttributes = new SparseArray<>();
       // Negative values include MATCH_PARENT and WRAP_CONTENT
       if (width >= 0) {
-        numericAttributes.put(R.styleable.yoga_width, (float) width);
+        numericAttributes.put(R.styleable.yoga_yg_width, (float) width);
       }
       if (height >= 0) {
-        numericAttributes.put(R.styleable.yoga_height, (float) height);
+        numericAttributes.put(R.styleable.yoga_yg_height, (float) height);
       }
     }
 
@@ -728,10 +729,10 @@ public class YogaLayout extends ViewGroup {
 
       // Negative values include MATCH_PARENT and WRAP_CONTENT
       if (width >= 0) {
-        numericAttributes.put(R.styleable.yoga_width, (float) width);
+        numericAttributes.put(R.styleable.yoga_yg_width, (float) width);
       }
       if (height >= 0) {
-        numericAttributes.put(R.styleable.yoga_height, (float) height);
+        numericAttributes.put(R.styleable.yoga_yg_height, (float) height);
       }
 
       final int attributeCount = a.getIndexCount();
