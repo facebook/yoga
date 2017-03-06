@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Facebook.Yoga
@@ -92,5 +93,17 @@ namespace Facebook.Yoga
         {
             return Point(pointValue);
         }
+
+#if WINDOWS_UWP_ARM
+        internal static YogaValue MarshalValue(IntPtr ptr)
+        {
+            return Marshal.PtrToStructure<YogaValue>(ptr);
+        }
+#else
+        internal static YogaValue MarshalValue(YogaValue value)
+        {
+            return value;
+        }
+#endif
     }
 }
