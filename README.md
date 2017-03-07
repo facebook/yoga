@@ -1,4 +1,4 @@
-# Yoga [![CocoaPods](https://img.shields.io/cocoapods/v/YogaKit.svg)](http://cocoapods.org/pods/YogaKit) [![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout) [![bintray](https://img.shields.io/bintray/v/facebook/maven/com.facebook.yoga:yoga.png)](https://bintray.com/facebook/maven/com.facebook.yoga%3Ayoga/_latestVersion)
+# Yoga [![CocoaPods](https://img.shields.io/cocoapods/v/YogaKit.svg)](http://cocoapods.org/pods/YogaKit) [![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout) [![bintray](https://img.shields.io/bintray/v/facebook/maven/com.facebook.yoga:yoga.svg)](https://bintray.com/facebook/maven/com.facebook.yoga%3Ayoga/_latestVersion)
 
 [![C Status](https://badges.herokuapp.com/travis/facebook/yoga?env=TARGET=c&label=C)](https://travis-ci.org/facebook/yoga)
 [![Java Status](https://badges.herokuapp.com/travis/facebook/yoga?env=TARGET=java&label=Java)](https://travis-ci.org/facebook/yoga)

@@ -1,4 +1,4 @@
-# YogaLayout [![Platform](https://img.shields.io/badge/platforms-Android-orange.svg)](https://facebook.github.io/yoga/docs/api/android/) [![Languages](https://img.shields.io/badge/languages-Java-orange.svg)](https://facebook.github.io/yoga/docs/api/android/) [![Download](https://img.shields.io/bintray/v/facebook/maven/com.facebook.yoga.android:yoga-layout.png)](https://bintray.com/facebook/maven/com.facebook.yoga.android%3Ayoga-layout/_latestVersion)
+# YogaLayout [![Platform](https://img.shields.io/badge/platforms-Android-orange.svg)](https://facebook.github.io/yoga/docs/api/android/) [![Languages](https://img.shields.io/badge/languages-Java-orange.svg)](https://facebook.github.io/yoga/docs/api/android/) [![Download](https://img.shields.io/bintray/v/facebook/maven/com.facebook.yoga.android:yoga-layout.svg)](https://bintray.com/facebook/maven/com.facebook.yoga.android%3Ayoga-layout/_latestVersion)
 
 ## Installation
 
