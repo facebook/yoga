@@ -1,4 +1,5 @@
 #!/bin/sh
+echo $ANDROID_SDK
 if buck --version >/dev/null 2>&1; then true; else
     echo "Building Buck!"
     mkdir lib
