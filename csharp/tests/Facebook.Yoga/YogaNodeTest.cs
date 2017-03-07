@@ -365,7 +365,9 @@ namespace Facebook.Yoga
             child = null;
         }
 
+#if !__UNIFIED__
         [Test]
+#endif
         public void TestParentDestructor()
         {
             ForceGC();
