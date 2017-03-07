@@ -5,11 +5,16 @@ layout: docs
 permalink: /docs/api/android/
 ---
 
-There is an easy interface to Yoga called `YogaLayout`.  This is a view group that lays out its children using Yoga.  We recommend looking at the sample app for details on its usage.  However, as an overview you can simply define XML layouts such as
+To include the java bindings and `.so` libraries, add to your build:
+<script src="https://gist.github.com/rspencer01/e3cb51e789147b359d842aac6fa30f9f.js"></script>
 
+There is an easy interface to Yoga called `YogaLayout`.  This is a view group that lays out its children using Yoga.  We recommend looking at the sample app for details on its usage.  However, as an overview you can simply define XML layouts such as
 <script src="https://gist.github.com/rspencer01/c1964b98f0c60de7c49683a049ed0640.js"></script>
 
 Note that there are some caveats, such as requiring the custom `YogaLayoutViewFactory` in order to have tags `YogaLayout` instead of `com.facebook.samples.yoga.YogaLayout`.
+
+To include this in your project, add to your build:
+<script src="https://gist.github.com/rspencer01/499a9e02185985bf3167f818d9c3398f.js"></script>
 
 ## layout\_width and layout\_height
 
