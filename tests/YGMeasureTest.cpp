@@ -180,7 +180,7 @@ TEST(YogaTest, dont_measure_when_min_equals_max_mixed_height_percent) {
 }
 
 #if GTEST_HAS_DEATH_TEST
-TEST(YogaTest, cannot_add_child_to_node_with_measure_func) {
+TEST(YogaDeathTest, cannot_add_child_to_node_with_measure_func) {
   const YGNodeRef root = YGNodeNew();
   YGNodeSetMeasureFunc(root, _measure);
 
@@ -190,7 +190,7 @@ TEST(YogaTest, cannot_add_child_to_node_with_measure_func) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, cannot_add_nonnull_measure_func_to_non_leaf_node) {
+TEST(YogaDeathTest, cannot_add_nonnull_measure_func_to_non_leaf_node) {
   const YGNodeRef root = YGNodeNew();
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeInsertChild(root, root_child0, 0);
@@ -198,6 +198,8 @@ TEST(YogaTest, cannot_add_nonnull_measure_func_to_non_leaf_node) {
   ASSERT_DEATH(YGNodeSetMeasureFunc(root, _measure), "Cannot set measure function.*");
   YGNodeFreeRecursive(root);
 }
+
+#endif
 
 TEST(YogaTest, can_nullify_measure_func_on_any_node) {
   const YGNodeRef root = YGNodeNew();
@@ -208,4 +210,3 @@ TEST(YogaTest, can_nullify_measure_func_on_any_node) {
   YGNodeFreeRecursive(root);
 }
 
-#endif
