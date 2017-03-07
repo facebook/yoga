@@ -17,6 +17,7 @@ buildscript {
 
 allprojects {
   repositories {
+    jcenter()
     flatDir {
       dirs "${rootDir}/lib/jsr-305"
       dirs "${rootDir}/lib/soloader"

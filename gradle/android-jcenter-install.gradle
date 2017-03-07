@@ -41,15 +41,26 @@ def pomConfig = {
 publishing {
     publications {
         primaryPublication(MavenPublication) {
-          groupId group
-          artifact(sourcesJar)
-          artifact(javadocJar)
-          pom.withXml {
-              def root = asNode()
-              root.appendNode('name', 'Yoga')
-              root.appendNode('url', siteURL)
-              root.children().last() + pomConfig
-          }
+            groupId group
+            artifact(sourcesJar)
+            artifact(javadocJar)
+            pom.packaging='aar'
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('name', 'Yoga')
+                root.appendNode('url', siteURL)
+                root.children().last() + pomConfig
+                def dependenciesNode = root.appendNode('dependencies')
+                //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.compile.allDependencies.each {
+                    if(it.group != null && (it.name != null || "unspecified".equals(it.name)) && it.version != null) {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
         }
     }
 }

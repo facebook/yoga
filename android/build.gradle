@@ -6,7 +6,7 @@ apply plugin: 'maven-publish'
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
 
-version = '1.0.0'
+version = '1.2.0'
 group = 'com.facebook.yoga.android'
 
 android {
@@ -22,17 +22,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-
-    sourceSets.main {
-        jni.srcDirs = [] // disalbe NDK auto build (not sure why this is necessary)
-        // The alternative, fat-aar does an equivalent thing to this hack
-        // seehttps://github.com/adwiv/android-fat-aar/blob/master/fat-aar.gradle#L307
-        jniLibs.srcDirs = ['build/intermediates/exploded-aar/com.facebook.yoga/yoga/1.0.0/jni']
-    }
 }
 
 dependencies {
-    compile project(':yoga')
+    compile 'com.facebook.yoga:yoga:1.2.0'
 }
 
 task sourcesJar(type: Jar) {
