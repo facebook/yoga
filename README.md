@@ -1,4 +1,4 @@
-# Yoga [![CocoaPods](https://img.shields.io/cocoapods/v/YogaKit.svg)](http://cocoapods.org/pods/YogaKit) [![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout)
+# Yoga [![CocoaPods](https://img.shields.io/cocoapods/v/YogaKit.svg)](http://cocoapods.org/pods/YogaKit) [![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout) [![bintray](https://img.shields.io/bintray/v/facebook/maven/com.facebook.yoga:yoga.png)](https://bintray.com/facebook/maven/com.facebook.yoga%3Ayoga/_latestVersion)
 
 [![C Status](https://badges.herokuapp.com/travis/facebook/yoga?env=TARGET=c&label=C)](https://travis-ci.org/facebook/yoga)
 [![Java Status](https://badges.herokuapp.com/travis/facebook/yoga?env=TARGET=java&label=Java)](https://travis-ci.org/facebook/yoga)
@@ -6,6 +6,7 @@
 [![.NET Status](https://badges.herokuapp.com/travis/facebook/yoga?env=TARGET=net&label=.NET)](https://travis-ci.org/facebook/yoga)
 [![JavaScript Status](https://badges.herokuapp.com/travis/facebook/yoga?env=TARGET=js&label=JavaScript)](https://travis-ci.org/facebook/yoga)
 [![Android Status](https://badges.herokuapp.com/travis/facebook/yoga?env=TARGET=android&label=Android)](https://travis-ci.org/facebook/yoga)
+
 
 ## Building
 Yoga builds with [buck](https://buckbuild.com). Make sure you install buck before contributing to Yoga. Yoga's main implementation is in C, with bindings to supported languages and frameworks. When making changes to Yoga please ensure the changes are also propagated to these bindings when applicable.
