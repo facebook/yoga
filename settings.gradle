@@ -1,3 +1,4 @@
-include ':yoga', ':yoga-layout'
+include ':yoga', ':yoga-layout', ':yoga:proguard-annotations'
 project(':yoga').projectDir = file('java')
+project(':yoga:proguard-annotations').projectDir = file('java/proguard-annotations')
 project(':yoga-layout').projectDir = file('android')

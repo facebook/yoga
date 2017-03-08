@@ -44,6 +44,7 @@ preBuild.dependsOn buckBuildAndCopy
 dependencies {
     compile(name: 'jsr305')
     compile(name: 'soloader-0.1.0', ext: 'aar')
+    provided(project(':yoga:proguard-annotations'))
 }
 
 task sourcesJar(type: Jar) {
