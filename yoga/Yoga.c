@@ -389,6 +389,15 @@ static void YGNodeMarkDirtyInternal(const YGNodeRef node) {
   }
 }
 
+static void YGNodeMarkChildrenAsDirtyRecursive(const YGNodeRef node) {
+  for (uint32_t i = 0; i < YGNodeGetChildCount(node); ++i) {
+    const YGNodeRef child = YGNodeGetChild(node, i);
+    child->isDirty = true;
+    child->layout.computedFlexBasis = YGUndefined;
+    YGNodeMarkChildrenAsDirtyRecursive(child);
+  }
+}
+
 void YGNodeSetMeasureFunc(const YGNodeRef node, YGMeasureFunc measureFunc) {
   if (measureFunc == NULL) {
     node->measure = NULL;
@@ -673,7 +682,6 @@ YG_NODE_STYLE_PROPERTY_IMPL(YGAlign, AlignSelf, alignSelf, alignSelf);
 YG_NODE_STYLE_PROPERTY_IMPL(YGPositionType, PositionType, positionType, positionType);
 YG_NODE_STYLE_PROPERTY_IMPL(YGWrap, FlexWrap, flexWrap, flexWrap);
 YG_NODE_STYLE_PROPERTY_IMPL(YGOverflow, Overflow, overflow, overflow);
-YG_NODE_STYLE_PROPERTY_IMPL(YGDisplay, Display, display, display);
 
 YG_NODE_STYLE_PROPERTY_IMPL(float, Flex, flex, flex);
 YG_NODE_STYLE_PROPERTY_SETTER_IMPL(float, FlexGrow, flexGrow, flexGrow);
@@ -707,6 +715,18 @@ YG_NODE_LAYOUT_PROPERTY_IMPL(YGDirection, Direction, direction);
 YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Margin, margin);
 YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Border, border);
 YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Padding, padding);
+
+void YGNodeStyleSetDisplay(const YGNodeRef node, const YGDisplay display) {
+  if (node->style.display != display) {
+    node->style.display = display;
+    YGNodeMarkDirtyInternal(node);
+    YGNodeMarkChildrenAsDirtyRecursive(node);
+  }
+}
+
+YGDisplay YGNodeStyleGetDisplay(const YGNodeRef node) {
+  return node->style.display;
+}
 
 uint32_t gCurrentGenerationCount = 0;
 
