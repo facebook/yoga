@@ -223,7 +223,7 @@ WIN_EXPORT void YGLog(YGLogLevel level, const char *message, ...);
 
 // Set this to number of pixels in 1 point to round calculation results
 // If you want to avoid rounding - set PointScaleFactor to 0
-WIN_EXPORT void YGSetPointScaleFactor(const YGConfigRef config, const float pixelsInPoint);
+WIN_EXPORT void YGConfigSetPointScaleFactor(const YGConfigRef config, const float pixelsInPoint);
 
 // YGConfig
 WIN_EXPORT YGConfigRef YGConfigNew(void);
