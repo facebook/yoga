@@ -64,8 +64,8 @@ namespace Facebook.Yoga
         private BaselineFunction _baselineFunction;
         private object _data;
 #if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
-        private static YogaMeasureFunc _managedMeasure = MeasureInternalIOS;
-        private static YogaBaselineFunc _managedBaseline = BaselineInternalIOS;
+        private static YogaMeasureFunc _managedMeasure;
+        private static YogaBaselineFunc _managedBaseline;
 #else
         private YogaMeasureFunc _managedMeasure;
         private YogaBaselineFunc _managedBaseline;
@@ -617,10 +617,15 @@ namespace Facebook.Yoga
             if (measureFunction != null)
             {
 #if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+                _managedMeasure = MeasureInternalIOS;
                 _ygNode.SetContext(this);
 #else
                 _managedMeasure = MeasureInternal;
 #endif
+            }
+            else
+            {
+                _managedMeasure = null;
             }
             Native.YGNodeSetMeasureFunc(_ygNode, _managedMeasure);
         }
@@ -631,10 +636,15 @@ namespace Facebook.Yoga
             if (baselineFunction != null)
             {
 #if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+                _managedBaseline = BaselineInternalIOS;
                 _ygNode.SetContext(this);
 #else
                 _managedBaseline = BaselineInternal;
 #endif
+            }
+            else
+            {
+                _managedBaseline = null;
             }
             Native.YGNodeSetBaselineFunc(_ygNode, _managedBaseline);
         }
