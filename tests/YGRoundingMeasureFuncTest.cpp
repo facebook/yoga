@@ -40,35 +40,35 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
   YGNodeSetMeasureFunc(root_child0, _measureFloor);
   YGNodeInsertChild(root, root_child0, 0);
 
-  YGSetPointScaleFactor(0.0);
+  YGConfigSetPointScaleFactor(config, 0.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(10.2, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10.2, YGNodeLayoutGetHeight(root_child0));
 
-  YGSetPointScaleFactor(1.0);
+  YGConfigSetPointScaleFactor(config, 1.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
-  YGSetPointScaleFactor(2.0);
+  YGConfigSetPointScaleFactor(config, 2.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
-  YGSetPointScaleFactor(4.0);
+  YGConfigSetPointScaleFactor(config, 4.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_FLOAT_EQ(10.25, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(10.25f, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10.25, YGNodeLayoutGetHeight(root_child0));
 
-  YGSetPointScaleFactor(1.0 / 3.0);
+  YGConfigSetPointScaleFactor(config, 1.0f / 3.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
@@ -77,7 +77,6 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetPointScaleFactor(1.0);
   YGConfigFree(config);
 }
 
@@ -91,7 +90,7 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
   YGNodeSetMeasureFunc(root_child0, _measureCeil);
   YGNodeInsertChild(root, root_child0, 0);
 
-  YGSetPointScaleFactor(1.0);
+  YGConfigSetPointScaleFactor(config, 1.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -100,6 +99,5 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
 
   YGNodeFreeRecursive(root);
 
-  YGSetPointScaleFactor(1.0);
   YGConfigFree(config);
 }
