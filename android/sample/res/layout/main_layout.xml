@@ -18,10 +18,10 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/sample_children_background"
-      yoga:yg_margin_horizontal="10dp"
-      yoga:yg_margin_top="5dp"
-      yoga:yg_flex_direction="row"
-      yoga:yg_align_items="center"
+      yoga:yg_marginHorizontal="10dp"
+      yoga:yg_marginTop="5dp"
+      yoga:yg_flexDirection="row"
+      yoga:yg_alignItems="center"
       >
     <ImageView
         android:layout_width="50dp"
@@ -35,17 +35,17 @@
         android:text="@string/child_1_text"
         android:textColor="@color/children_text"
         yoga:yg_flex="1"
-        yoga:yg_margin_start="8dp"
+        yoga:yg_marginStart="8dp"
         />
   </YogaLayout>
   <YogaLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/sample_children_background"
-      yoga:yg_margin_horizontal="10dp"
-      yoga:yg_margin_top="5dp"
-      yoga:yg_flex_direction="row"
-      yoga:yg_align_items="center"
+      yoga:yg_marginHorizontal="10dp"
+      yoga:yg_marginTop="5dp"
+      yoga:yg_flexDirection="row"
+      yoga:yg_alignItems="center"
       >
     <ImageView
         android:layout_width="50dp"
@@ -59,17 +59,17 @@
         android:text="@string/child_2_text"
         android:textColor="@color/children_text"
         yoga:yg_flex="1"
-        yoga:yg_margin_start="8dp"
+        yoga:yg_marginStart="8dp"
         />
   </YogaLayout>
   <YogaLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/sample_children_background"
-      yoga:yg_margin_horizontal="10dp"
-      yoga:yg_margin_top="5dp"
-      yoga:yg_flex_direction="row"
-      yoga:yg_align_items="center"
+      yoga:yg_marginHorizontal="10dp"
+      yoga:yg_marginTop="5dp"
+      yoga:yg_flexDirection="row"
+      yoga:yg_alignItems="center"
       >
     <ImageView
         android:layout_width="50dp"
@@ -83,17 +83,17 @@
         android:text="@string/child_3_text"
         android:textColor="@color/children_text"
         yoga:yg_flex="1"
-        yoga:yg_margin_start="8dp"
+        yoga:yg_marginStart="8dp"
         />
   </YogaLayout>
   <YogaLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/sample_children_background"
-      yoga:yg_margin_horizontal="10dp"
-      yoga:yg_margin_top="5dp"
-      yoga:yg_flex_direction="row"
-      yoga:yg_align_items="center"
+      yoga:yg_marginHorizontal="10dp"
+      yoga:yg_marginTop="5dp"
+      yoga:yg_flexDirection="row"
+      yoga:yg_alignItems="center"
       >
     <ImageView
         android:layout_width="50dp"
@@ -107,17 +107,17 @@
         android:text="@string/child_4_text"
         android:textColor="@color/children_text"
         yoga:yg_flex="1"
-        yoga:yg_margin_start="8dp"
+        yoga:yg_marginStart="8dp"
         />
   </YogaLayout>
   <YogaLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/sample_children_background"
-      yoga:yg_margin_horizontal="10dp"
-      yoga:yg_margin_top="5dp"
-      yoga:yg_flex_direction="row"
-      yoga:yg_align_items="center"
+      yoga:yg_marginHorizontal="10dp"
+      yoga:yg_marginTop="5dp"
+      yoga:yg_flexDirection="row"
+      yoga:yg_alignItems="center"
       >
     <ImageView
         android:layout_width="50dp"
@@ -131,7 +131,7 @@
         android:text="@string/child_5_text"
         android:textColor="@color/children_text"
         yoga:yg_flex="1"
-        yoga:yg_margin_start="10dp"
+        yoga:yg_marginStart="10dp"
         />
   </YogaLayout>
 </YogaLayout>
