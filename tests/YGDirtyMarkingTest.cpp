@@ -70,7 +70,7 @@ TEST(YogaTest, dirty_propagation_only_if_prop_changed) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(Yogatest, dirty_mark_all_children_as_dirty_when_display_changes){
+TEST(YogaTest, dirty_mark_all_children_as_dirty_when_display_changes){
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetHeight(root, 100);
