@@ -1,21 +1,39 @@
 #!/bin/bash
 
-buck build //android:android
+DESTINATIONS=(
+  "build/buck-out/jniLibs/x86"
+  "build/buck-out/jniLibs/x86_64"
+  "build/buck-out/jniLibs/armeabi-v7a"
+  "build/buck-out/jniLibs/arm64-v8a"
+)
 
-X86_DEST=build/buck-out/jniLibs/x86
-ARMV7_DEST=build/buck-out/jniLibs/armeabi-v7a
+BUCK_TARGETS=(
+  "android-x86"
+  "android-x86_64"
+  "android-armv7"
+  "android-arm64"
+)
 
-mkdir -p $X86_DEST
-mkdir -p $ARMV7_DEST
+# There must be a better way to get gnustl_shared than building the android target.
+# But for now, we include that target simply for that shared library...
+echo "Build libgnustl_shared.so"
+~/mybuck/bin/buck build //android/sample:sample
 
-cp ../buck-out/gen/java/jni#ARMV7,android-armv7,android-strip,libyoga.so,shared/libyoga.so $ARMV7_DEST
-cp ../buck-out/gen/java/jni#X86,android-strip,android-x86,libyoga.so,shared/libyoga.so $X86_DEST
+cp "../buck-out/gen/android/sample/sample#X86,android-strip,libgnustl_shared.so/libgnustl_shared.so" "${DESTINATIONS[0]}"
+cp "../buck-out/gen/android/sample/sample#X86_64,android-strip,libgnustl_shared.so/libgnustl_shared.so" "${DESTINATIONS[1]}"
+cp "../buck-out/gen/android/sample/sample#ARMV7,android-strip,libgnustl_shared.so/libgnustl_shared.so" "${DESTINATIONS[2]}"
+cp "../buck-out/gen/android/sample/sample#ARM64,android-strip,libgnustl_shared.so/libgnustl_shared.so" "${DESTINATIONS[3]}"
 
-cp ../buck-out/gen/yoga#ARMV7,android-armv7,android-strip,libyogacore.so,shared/libyogacore.so $ARMV7_DEST
-cp ../buck-out/gen/yoga#X86,android-strip,android-x86,libyogacore.so,shared/libyogacore.so $X86_DEST
+# This is to clean up after the mess above.  Yes, it is required.
+~/mybuck/bin/buck clean
+rm -r ../buck-out
 
-cp ../buck-out/gen/lib/fb/fbjni#ARMV7,android-armv7,android-strip,liblib_fb_fbjni.so,shared/liblib_fb_fbjni.so $ARMV7_DEST
-cp ../buck-out/gen/lib/fb/fbjni#X86,android-strip,android-x86,liblib_fb_fbjni.so,shared/liblib_fb_fbjni.so $X86_DEST
-
-cp ../buck-out/gen/android/android#ARMV7,android-strip,libgnustl_shared.so/libgnustl_shared.so $ARMV7_DEST
-cp ../buck-out/gen/android/android#X86,android-strip,libgnustl_shared.so/libgnustl_shared.so $X86_DEST
+for (( i=0; i<4; i++ ));
+do
+  echo "Build ${BUCK_TARGETS[i]}"
+  buck build "//java:jni#${BUCK_TARGETS[i]},shared"
+  mkdir -p ${DESTINATIONS[i]}
+  cp "../buck-out/gen/java/jni#${BUCK_TARGETS[i]},shared/libyoga.so" "${DESTINATIONS[i]}"
+  cp "../buck-out/gen/yoga#${BUCK_TARGETS[i]},shared/libyogacore.so" "${DESTINATIONS[i]}"
+  cp "../buck-out/gen/lib/fb/fbjni#${BUCK_TARGETS[i]},shared/liblib_fb_fbjni.so" "${DESTINATIONS[i]}"
+done
