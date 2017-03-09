@@ -303,7 +303,7 @@ static inline float YGResolveValue(const YGValue *const value, const float paren
   return YGUndefined;
 }
 
-static inline float YGValueResolveMargin(const YGValue *const value, const float parentSize) {
+static inline float YGResolveValueMargin(const YGValue *const value, const float parentSize) {
   return value->unit == YGUnitAuto ? 0 : YGResolveValue(value, parentSize);
 }
 
@@ -1001,10 +1001,10 @@ static inline float YGNodeLeadingMargin(const YGNodeRef node,
                                         const YGFlexDirection axis,
                                         const float widthSize) {
   if (YGFlexDirectionIsRow(axis) && node->style.margin[YGEdgeStart].unit != YGUnitUndefined) {
-    return YGValueResolveMargin(&node->style.margin[YGEdgeStart], widthSize);
+    return YGResolveValueMargin(&node->style.margin[YGEdgeStart], widthSize);
   }
 
-  return YGValueResolveMargin(YGComputedEdgeValue(node->style.margin, leading[axis], &YGValueZero),
+  return YGResolveValueMargin(YGComputedEdgeValue(node->style.margin, leading[axis], &YGValueZero),
                               widthSize);
 }
 
@@ -1012,10 +1012,10 @@ static float YGNodeTrailingMargin(const YGNodeRef node,
                                   const YGFlexDirection axis,
                                   const float widthSize) {
   if (YGFlexDirectionIsRow(axis) && node->style.margin[YGEdgeEnd].unit != YGUnitUndefined) {
-    return YGValueResolveMargin(&node->style.margin[YGEdgeEnd], widthSize);
+    return YGResolveValueMargin(&node->style.margin[YGEdgeEnd], widthSize);
   }
 
-  return YGValueResolveMargin(YGComputedEdgeValue(node->style.margin, trailing[axis], &YGValueZero),
+  return YGResolveValueMargin(YGComputedEdgeValue(node->style.margin, trailing[axis], &YGValueZero),
                               widthSize);
 }
 
