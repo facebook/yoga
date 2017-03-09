@@ -1488,9 +1488,9 @@ static void YGNodeComputeFlexBasisForChild(const YGNodeRef node,
     }
 
     YGConstrainMaxSizeForMode(
-        child, YGDimensionWidth, parentWidth, parentWidth, &childWidthMeasureMode, &childWidth);
+        child, YGFlexDirectionRow, parentWidth, parentWidth, &childWidthMeasureMode, &childWidth);
     YGConstrainMaxSizeForMode(
-        child, YGDimensionHeight, parentHeight, parentWidth, &childHeightMeasureMode, &childHeight);
+        child, YGFlexDirectionColumn, parentHeight, parentWidth, &childHeightMeasureMode, &childHeight);
 
     // Measure the child
     YGLayoutNodeInternal(child,
@@ -2448,13 +2448,13 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
         YGConstrainMaxSizeForMode(currentRelativeChild,
                                   mainAxis,
-                                  availableInnerWidth,
+                                  availableInnerMainDim,
                                   availableInnerWidth,
                                   &childMainMeasureMode,
                                   &childMainSize);
         YGConstrainMaxSizeForMode(currentRelativeChild,
                                   crossAxis,
-                                  availableInnerHeight,
+                                  availableInnerCrossDim,
                                   availableInnerWidth,
                                   &childCrossMeasureMode,
                                   &childCrossSize);
