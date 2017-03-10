@@ -138,7 +138,8 @@ namespace Facebook.Yoga
         {
             get
             {
-                return _parent != null ? _parent.Target as YogaNode : null;
+                var parent = _parent != null ? _parent.Target : null;
+                return (YogaNode)parent;
             }
         }
 
