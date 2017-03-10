@@ -365,9 +365,8 @@ namespace Facebook.Yoga
             child = null;
         }
 
-#if !__UNIFIED__
+#if YOGA_ENABLE_GC_TEST
         [Test]
-#endif
         public void TestParentDestructor()
         {
             ForceGC();
@@ -388,6 +387,7 @@ namespace Facebook.Yoga
             Assert.AreEqual(instanceCount + 1, YogaNode.GetInstanceCount());
             parent.Insert(0, child);
         }
+#endif
 
         [Test]
         public void TestClearWithChildDestructor()
