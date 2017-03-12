@@ -1414,7 +1414,6 @@ public class YGMarginTest {
 
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
-    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(52f);
     root.setHeight(52f);
 
@@ -1457,7 +1456,6 @@ public class YGMarginTest {
 
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
-    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(52f);
     root.setHeight(52f);
 
@@ -1499,7 +1497,6 @@ public class YGMarginTest {
 
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
-    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(52f);
     root.setHeight(52f);
 
@@ -1542,7 +1539,6 @@ public class YGMarginTest {
 
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
-    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(52f);
     root.setHeight(52f);
 

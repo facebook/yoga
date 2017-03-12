@@ -1407,7 +1407,6 @@ it("margin_auto_left_right_child_bigger_than_parent", function () {
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
-    root.setPositionType(Yoga.POSITION_TYPE_ABSOLUTE);
     root.setWidth(52);
     root.setHeight(52);
 
@@ -1450,7 +1449,6 @@ it("margin_auto_left_child_bigger_than_parent", function () {
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
-    root.setPositionType(Yoga.POSITION_TYPE_ABSOLUTE);
     root.setWidth(52);
     root.setHeight(52);
 
@@ -1492,7 +1490,6 @@ it("margin_fix_left_auto_right_child_bigger_than_parent", function () {
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
-    root.setPositionType(Yoga.POSITION_TYPE_ABSOLUTE);
     root.setWidth(52);
     root.setHeight(52);
 
@@ -1535,7 +1532,6 @@ it("margin_auto_left_fix_right_child_bigger_than_parent", function () {
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
-    root.setPositionType(Yoga.POSITION_TYPE_ABSOLUTE);
     root.setWidth(52);
     root.setHeight(52);
 

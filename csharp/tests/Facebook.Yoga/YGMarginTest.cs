@@ -1443,7 +1443,6 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
-            root.PositionType = YogaPositionType.Absolute;
             root.Width = 52;
             root.Height = 52;
 
@@ -1487,7 +1486,6 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
-            root.PositionType = YogaPositionType.Absolute;
             root.Width = 52;
             root.Height = 52;
 
@@ -1530,7 +1528,6 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
-            root.PositionType = YogaPositionType.Absolute;
             root.Width = 52;
             root.Height = 52;
 
@@ -1574,7 +1571,6 @@ namespace Facebook.Yoga
 
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
-            root.PositionType = YogaPositionType.Absolute;
             root.Width = 52;
             root.Height = 52;
 

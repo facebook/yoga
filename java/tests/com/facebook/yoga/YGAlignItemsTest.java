@@ -1574,7 +1574,6 @@ public class YGAlignItemsTest {
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
-    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(52f);
     root.setHeight(52f);
 
@@ -1632,7 +1631,6 @@ public class YGAlignItemsTest {
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
-    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(52f);
     root.setHeight(52f);
 
@@ -1690,7 +1688,6 @@ public class YGAlignItemsTest {
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
-    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(52f);
     root.setHeight(52f);
 
@@ -1746,7 +1743,6 @@ public class YGAlignItemsTest {
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
-    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(52f);
     root.setHeight(52f);
 

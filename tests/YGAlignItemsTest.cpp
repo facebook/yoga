@@ -1588,7 +1588,6 @@ TEST(YogaTest, align_items_center_child_with_margin_bigger_than_parent) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
-  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetWidth(root, 52);
   YGNodeStyleSetHeight(root, 52);
 
@@ -1647,7 +1646,6 @@ TEST(YogaTest, align_items_flex_end_child_with_margin_bigger_than_parent) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
-  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetWidth(root, 52);
   YGNodeStyleSetHeight(root, 52);
 
@@ -1706,7 +1704,6 @@ TEST(YogaTest, align_items_center_child_without_margin_bigger_than_parent) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
-  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetWidth(root, 52);
   YGNodeStyleSetHeight(root, 52);
 
@@ -1763,7 +1760,6 @@ TEST(YogaTest, align_items_flex_end_child_without_margin_bigger_than_parent) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
-  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetWidth(root, 52);
   YGNodeStyleSetHeight(root, 52);
 
