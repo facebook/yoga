@@ -2624,7 +2624,6 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                                            crossAxisParentSize,
                                            parentWidth) -
                            paddingAndBorderAxisCross;
-
     }
 
     // If there's no flex wrap, the cross dimension is defined by the container.
