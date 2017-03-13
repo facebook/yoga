@@ -4,9 +4,9 @@ PODS:
   - IGListKit/Default (2.1.0):
     - IGListKit/Diffing
   - IGListKit/Diffing (2.1.0)
-  - Yoga (1.2.0)
-  - YogaKit (1.2.0):
-    - Yoga (~> 1.2)
+  - Yoga (1.3.0)
+  - YogaKit (1.3.0):
+    - Yoga (~> 1.3)
 
 DEPENDENCIES:
   - IGListKit (~> 2.1.0)
@@ -18,8 +18,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   IGListKit: b826c68ef7a4ae1626c09d4d3e1ea7a169e6c36e
-  Yoga: 20fc010c282cc5f3c27ce512de1329cd1e72b077
-  YogaKit: 72d5c8a806dc5cf2aa50c93a6dd88913cdbec6fe
+  Yoga: 2ed1d7accfef3610a67f58c0cf101a0662137f2c
+  YogaKit: cddeccc6a8d2aff563e4c738d3bddb290a6de4cb
 
 PODFILE CHECKSUM: 216f8e7127767709e0e43f3711208d238fa5c404
 

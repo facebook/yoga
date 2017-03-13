@@ -15,32 +15,38 @@ final class BasicViewController: UIViewController {
 
         let root = self.view!
         root.backgroundColor = .white
-        root.yoga.isEnabled = true
-        root.yoga.width = containerSize.width
-        root.yoga.height = containerSize.height
-        root.yoga.alignItems = .center
-        root.yoga.justifyContent = .center
+        root.configureLayout { (layout) in
+            layout.isEnabled = true
+            layout.width = containerSize.width
+            layout.height = containerSize.height
+            layout.alignItems = .center
+            layout.justifyContent = .center
+        }
 
         let child1 = UIView()
         child1.backgroundColor = .blue
-        child1.yoga.isEnabled = true
-        child1.yoga.width = 100
-        child1.yoga.height = 10
-        child1.yoga.marginBottom = 25
+        child1.configureLayout { (layout) in
+            layout.isEnabled = true
+            layout.width = 100
+            layout.height = 10
+            layout.marginBottom = 25
+        }
         root.addSubview(child1)
 
-        let child2 = UIView()
-        child2.yoga.isEnabled = true
-        child2.yoga.alignSelf = .flexEnd
+        let child2 = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         child2.backgroundColor = .green
-        child2.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+        child2.configureLayout { (layout) in
+            layout.isEnabled = true
+            layout.alignSelf = .flexEnd
+        }
         root.addSubview(child2)
 
-        let child3 = UIView()
-        child3.yoga.isEnabled = true
-        child3.yoga.alignSelf = .flexStart
+        let child3 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         child3.backgroundColor = .yellow
-        child3.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        child3.configureLayout { (layout) in
+            layout.isEnabled = true
+            layout.alignSelf = .flexStart
+        }
         root.addSubview(child3)
 
         root.yoga.applyLayout(preservingOrigin: true)

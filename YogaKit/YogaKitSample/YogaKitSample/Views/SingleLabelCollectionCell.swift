@@ -15,9 +15,11 @@ final class SingleLabelCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.yoga.isEnabled = true
-        contentView.yoga.flexDirection = .column
-        contentView.yoga.justifyContent = .flexEnd
+        contentView.configureLayout { (layout) in
+            layout.isEnabled = true
+            layout.flexDirection = .column
+            layout.justifyContent = .flexEnd
+        }
 
         label.textAlignment = .center
         label.numberOfLines = 1
@@ -26,9 +28,11 @@ final class SingleLabelCollectionCell: UICollectionViewCell {
 
         let border = UIView(frame: .zero)
         border.backgroundColor = .lightGray
-        border.yoga.isEnabled = true
-        border.yoga.height = 0.5
-        border.yoga.marginHorizontal = 25
+        border.configureLayout { (layout) in
+            layout.isEnabled = true
+            layout.height = 0.5
+            layout.marginHorizontal = 25
+        }
         contentView.addSubview(border)
     }
 
