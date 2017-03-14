@@ -43,6 +43,7 @@ before_install:
       brew outdated xctool || brew upgrade xctool;
       gem install xcpretty --no-document --quiet;
       gem install cocoapods --pre --no-document --quiet;
+      pod repo update --silent;
       pod install --project-directory=YogaKit/YogaKitSample/;
     fi
 
