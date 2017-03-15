@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<YogaLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yoga="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    yoga:yg_flexDirection="row"
+    yoga:yg_alignItems="center"
+    >
+  <View
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:background="@color/yoga_blue"
+      yoga:yg_flex="0"
+      yoga:yg_marginAll="5dp"
+      />
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/child_1_text"
+      yoga:yg_flex="0"
+      />
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/child_2_text"
+      yoga:yg_flex="1"
+      yoga:yg_marginHorizontal="5dp"
+  />
+</YogaLayout>

@@ -23,6 +23,7 @@ import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.util.Log;
 
 import com.facebook.yoga.android.R;
 import com.facebook.yoga.YogaAlign;
@@ -278,6 +279,7 @@ public class YogaLayout extends ViewGroup {
 
   private void applyLayoutRecursive(YogaNode node, float xOffset, float yOffset) {
     View view = (View) node.getData();
+
     if (view != null && view != this) {
       if (view.getVisibility() == GONE) {
         return;
@@ -360,7 +362,6 @@ public class YogaLayout extends ViewGroup {
     if (widthMode == MeasureSpec.AT_MOST) {
       mYogaNode.setMaxWidth(widthSize);
     }
-
     mYogaNode.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
   }
 

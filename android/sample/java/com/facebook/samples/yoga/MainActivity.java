@@ -8,9 +8,13 @@
 
 package com.facebook.samples.yoga;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.Menu;
 
 import com.facebook.samples.yoga.R;
 import com.facebook.soloader.SoLoader;
@@ -30,5 +34,21 @@ public class MainActivity extends ActionBarActivity {
     SoLoader.init(this, false);
 
     setContentView(R.layout.main_layout);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.action_bar_home, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // There is only one option
+    Intent intent = new Intent(this, BenchmarkActivity.class);
+    startActivity(intent);
+    this.finish();
+    return true;
   }
 }
