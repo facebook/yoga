@@ -40,7 +40,11 @@ before_install:
   # iOS
   - |
     if [[ $TARGET = "ios" ]]; then
-      brew outdated xctool || brew upgrade xctool
+      brew outdated xctool || brew upgrade xctool;
+      gem install xcpretty --no-document --quiet;
+      gem install cocoapods --pre --no-document --quiet;
+      pod repo update --silent;
+      pod install --project-directory=YogaKit/YogaKitSample/;
     fi
 
   # Emscripten (used for js tests)
@@ -102,7 +106,9 @@ script:
   # iOS
   - |
     if [[ $TARGET = "ios" ]]; then
-      buck test --verbose 0 //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64
+      buck test --verbose 0 //YogaKit:YogaKitTests --config cxx.default_platform=iphonesimulator-x86_64 &&
+      set -o pipefail &&
+      xcodebuild build -workspace YogaKit/YogaKitSample/YogaKitSample.xcworkspace -scheme YogaKitSample -sdk iphonesimulator | xcpretty -c
     fi
 
   # Android
