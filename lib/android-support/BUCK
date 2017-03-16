@@ -10,5 +10,5 @@ include_defs("//YOGA_DEFS")
 prebuilt_jar(
     name = "android-support",
     binary_jar = "android-support-v4.jar",
-    visibility = [YOGA_ROOT],
+    visibility = YOGA_ROOTS,
 )

@@ -12,6 +12,6 @@ java_library(
     srcs = glob(["*.java"]),
     source = "1.7",
     target = "1.7",
-    visibility = [YOGA_ROOT],
+    visibility = YOGA_ROOTS,
     deps = [],
 )

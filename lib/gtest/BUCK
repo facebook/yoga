@@ -22,6 +22,6 @@ cxx_library(
         ("googletest/googletest", "src/*.cc"),
     ]),
     header_namespace = "",
-    visibility = [YOGA_ROOT],
+    visibility = YOGA_ROOTS,
     deps = [],
 )

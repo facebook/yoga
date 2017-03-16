@@ -16,7 +16,7 @@ prebuilt_cxx_library(
         ),
     ],
     header_only = True,
-    visibility = [YOGA_ROOT],
+    visibility = YOGA_ROOTS,
 )
 
 cxx_library(
