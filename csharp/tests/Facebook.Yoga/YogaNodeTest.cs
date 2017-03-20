@@ -73,25 +73,22 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        [ExpectedException("System.NullReferenceException")]
         public void TestRemoveAtFromEmpty()
         {
             YogaNode parent = new YogaNode();
-            parent.RemoveAt(0);
+            Assert.Throws<NullReferenceException>(() => parent.RemoveAt(0));
         }
 
         [Test]
-        [ExpectedException("System.ArgumentOutOfRangeException")]
         public void TestRemoveAtOutOfRange()
         {
             YogaNode parent = new YogaNode();
             YogaNode child = new YogaNode();
             parent.Insert(0, child);
-            parent.RemoveAt(1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => parent.RemoveAt(1));
         }
 
         [Test]
-        [ExpectedException("System.InvalidOperationException")]
         public void TestCannotAddChildToMultipleParents()
         {
             YogaNode parent1 = new YogaNode();
@@ -99,7 +96,7 @@ namespace Facebook.Yoga
             YogaNode child = new YogaNode();
 
             parent1.Insert(0, child);
-            parent2.Insert(0, child);
+            Assert.Throws<InvalidOperationException>(() => parent2.Insert(0, child));
         }
 
         [Test]
@@ -113,23 +110,21 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        [ExpectedException("System.InvalidOperationException")]
         public void TestResetParent()
         {
             YogaNode parent = new YogaNode();
             YogaNode child = new YogaNode();
             parent.Insert(0, child);
-            parent.Reset();
+            Assert.Throws<InvalidOperationException>(() => parent.Reset());
         }
 
         [Test]
-        [ExpectedException("System.InvalidOperationException")]
         public void TestResetChild()
         {
             YogaNode parent = new YogaNode();
             YogaNode child = new YogaNode();
             parent.Insert(0, child);
-            child.Reset();
+            Assert.Throws<InvalidOperationException>(() => child.Reset());
         }
 
         [Test]
@@ -174,7 +169,6 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        [ExpectedException("System.InvalidOperationException")]
         public void TestChildWithMeasureFunc()
         {
             YogaNode node = new YogaNode();
@@ -182,19 +176,20 @@ namespace Facebook.Yoga
                 return MeasureOutput.Make(100, 150);
             });
             YogaNode child = new YogaNode();
-            node.Insert(0, child);
+            Assert.Throws<InvalidOperationException>(() => node.Insert(0, child));
         }
 
         [Test]
-        [ExpectedException("System.InvalidOperationException")]
         public void TestMeasureFuncWithChild()
         {
             YogaNode node = new YogaNode();
             YogaNode child = new YogaNode();
             node.Insert(0, child);
-            node.SetMeasureFunction((_, width, widthMode, height, heightMode) => {
-                return MeasureOutput.Make(100, 150);
-            });
+            Assert.Throws<InvalidOperationException>(() =>
+                node.SetMeasureFunction((_, width, widthMode, height, heightMode) => {
+                    return MeasureOutput.Make(100, 150);
+                })
+            );
         }
 
         [Test]
