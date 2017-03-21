@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("flex_direction_column_no_height", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -71,12 +73,15 @@ it("flex_direction_column_no_height", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("flex_direction_row_no_width", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -137,12 +142,15 @@ it("flex_direction_row_no_width", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("flex_direction_column", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -203,12 +211,15 @@ it("flex_direction_column", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("flex_direction_row", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -270,12 +281,15 @@ it("flex_direction_row", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("flex_direction_column_reverse", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_COLUMN_REVERSE);
@@ -337,12 +351,15 @@ it("flex_direction_column_reverse", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("flex_direction_row_reverse", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW_REVERSE);
@@ -404,8 +421,9 @@ it("flex_direction_row_reverse", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });

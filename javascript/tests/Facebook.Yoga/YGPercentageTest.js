@@ -12,7 +12,9 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("percentage_width_height", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -48,15 +50,16 @@ it("percentage_width_height", function () {
     console.assert(60 === root_child0.getComputedWidth(), "60 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(60 === root_child0.getComputedHeight(), "60 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_position_left_top", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -94,15 +97,16 @@ it("percentage_position_left_top", function () {
     console.assert(180 === root_child0.getComputedWidth(), "180 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(220 === root_child0.getComputedHeight(), "220 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_position_bottom_right", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -140,15 +144,16 @@ it("percentage_position_bottom_right", function () {
     console.assert(275 === root_child0.getComputedWidth(), "275 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(75 === root_child0.getComputedHeight(), "75 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -199,15 +204,16 @@ it("percentage_flex_basis", function () {
     console.assert(75 === root_child1.getComputedWidth(), "75 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(200 === root_child1.getComputedHeight(), "200 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis_cross", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -257,15 +263,16 @@ it("percentage_flex_basis_cross", function () {
     console.assert(200 === root_child1.getComputedWidth(), "200 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(75 === root_child1.getComputedHeight(), "75 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis_cross_min_height", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -315,15 +322,16 @@ it("percentage_flex_basis_cross_min_height", function () {
     console.assert(200 === root_child1.getComputedWidth(), "200 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(60 === root_child1.getComputedHeight(), "60 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis_main_max_height", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -376,15 +384,16 @@ it("percentage_flex_basis_main_max_height", function () {
     console.assert(148 === root_child1.getComputedWidth(), "148 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(40 === root_child1.getComputedHeight(), "40 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis_cross_max_height", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -436,15 +445,16 @@ it("percentage_flex_basis_cross_max_height", function () {
     console.assert(200 === root_child1.getComputedWidth(), "200 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(40 === root_child1.getComputedHeight(), "40 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis_main_max_width", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -497,15 +507,16 @@ it("percentage_flex_basis_main_max_width", function () {
     console.assert(40 === root_child1.getComputedWidth(), "40 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(200 === root_child1.getComputedHeight(), "200 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis_cross_max_width", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -557,15 +568,16 @@ it("percentage_flex_basis_cross_max_width", function () {
     console.assert(40 === root_child1.getComputedWidth(), "40 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(150 === root_child1.getComputedHeight(), "150 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis_main_min_width", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -618,15 +630,16 @@ it("percentage_flex_basis_main_min_width", function () {
     console.assert(80 === root_child1.getComputedWidth(), "80 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(200 === root_child1.getComputedHeight(), "200 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_flex_basis_cross_min_width", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -678,15 +691,16 @@ it("percentage_flex_basis_cross_min_width", function () {
     console.assert(200 === root_child1.getComputedWidth(), "200 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(150 === root_child1.getComputedHeight(), "150 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_multiple_nested_with_padding_margin_and_percentage_values", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -790,15 +804,16 @@ it("percentage_multiple_nested_with_padding_margin_and_percentage_values", funct
     console.assert(200 === root_child1.getComputedWidth(), "200 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(142 === root_child1.getComputedHeight(), "142 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_margin_should_calculate_based_only_on_width", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -851,15 +866,16 @@ it("percentage_margin_should_calculate_based_only_on_width", function () {
     console.assert(10 === root_child0_child0.getComputedWidth(), "10 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0_child0.getComputedHeight(), "10 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_padding_should_calculate_based_only_on_width", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -912,15 +928,16 @@ it("percentage_padding_should_calculate_based_only_on_width", function () {
     console.assert(10 === root_child0_child0.getComputedWidth(), "10 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0_child0.getComputedHeight(), "10 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_absolute_position", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -958,14 +975,15 @@ it("percentage_absolute_position", function () {
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("percentage_width_height_undefined_parent_size", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
 
@@ -997,12 +1015,15 @@ it("percentage_width_height_undefined_parent_size", function () {
     console.assert(0 === root_child0.getComputedWidth(), "0 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(0 === root_child0.getComputedHeight(), "0 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("percent_within_flex_grow", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -1078,9 +1099,10 @@ it("percent_within_flex_grow", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("percentage_container_in_wrapping_container", function () {

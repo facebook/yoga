@@ -183,7 +183,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   YGNodeStyleSetDisplay:{value:function(nodeName, value) {
-    this.push(nodeName + '.setDisplay(' + toValueJavascript(value) + ');');
+    this.push(nodeName + '.setDisplay(' + toValueJava(value) + ');');
   }},
 
   YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {
