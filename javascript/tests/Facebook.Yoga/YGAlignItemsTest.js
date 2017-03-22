@@ -1620,6 +1620,8 @@ it("align_baseline_multiline_row_and_column", function () {
   }
 });
 it("align_items_center_child_with_margin_bigger_than_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1671,12 +1673,15 @@ it("align_items_center_child_with_margin_bigger_than_parent", function () {
     console.assert(52 === root_child0_child0.getComputedWidth(), "52 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(52 === root_child0_child0.getComputedHeight(), "52 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("align_items_flex_end_child_with_margin_bigger_than_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1728,12 +1733,15 @@ it("align_items_flex_end_child_with_margin_bigger_than_parent", function () {
     console.assert(52 === root_child0_child0.getComputedWidth(), "52 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(52 === root_child0_child0.getComputedHeight(), "52 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("align_items_center_child_without_margin_bigger_than_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1783,12 +1791,15 @@ it("align_items_center_child_without_margin_bigger_than_parent", function () {
     console.assert(72 === root_child0_child0.getComputedWidth(), "72 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(72 === root_child0_child0.getComputedHeight(), "72 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });
 it("align_items_flex_end_child_without_margin_bigger_than_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1838,8 +1849,9 @@ it("align_items_flex_end_child_without_margin_bigger_than_parent", function () {
     console.assert(72 === root_child0_child0.getComputedWidth(), "72 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(72 === root_child0_child0.getComputedHeight(), "72 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined") {
+    if (typeof root !== "undefined")
       root.freeRecursive();
-    }
+
+    config.free();
   }
 });

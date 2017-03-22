@@ -12,7 +12,7 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("absolute_layout_width_height_start_top", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -57,7 +57,7 @@ it("absolute_layout_width_height_start_top", function () {
   }
 });
 it("absolute_layout_width_height_end_bottom", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -102,7 +102,7 @@ it("absolute_layout_width_height_end_bottom", function () {
   }
 });
 it("absolute_layout_start_top_end_bottom", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -147,7 +147,7 @@ it("absolute_layout_start_top_end_bottom", function () {
   }
 });
 it("absolute_layout_width_height_start_top_end_bottom", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -194,7 +194,7 @@ it("absolute_layout_width_height_start_top_end_bottom", function () {
   }
 });
 it("do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -254,7 +254,7 @@ it("do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent
   }
 });
 it("absolute_layout_within_border", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -329,7 +329,7 @@ it("absolute_layout_within_border", function () {
   }
 });
 it("absolute_layout_align_items_and_justify_content_center", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -375,7 +375,7 @@ it("absolute_layout_align_items_and_justify_content_center", function () {
   }
 });
 it("absolute_layout_align_items_and_justify_content_flex_end", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -421,7 +421,7 @@ it("absolute_layout_align_items_and_justify_content_flex_end", function () {
   }
 });
 it("absolute_layout_justify_content_center", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -466,7 +466,7 @@ it("absolute_layout_justify_content_center", function () {
   }
 });
 it("absolute_layout_align_items_center", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -511,7 +511,7 @@ it("absolute_layout_align_items_center", function () {
   }
 });
 it("absolute_layout_align_items_center_on_child_only", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -556,7 +556,7 @@ it("absolute_layout_align_items_center_on_child_only", function () {
   }
 });
 it("absolute_layout_align_items_and_justify_content_center_and_top_position", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -603,7 +603,7 @@ it("absolute_layout_align_items_and_justify_content_center_and_top_position", fu
   }
 });
 it("absolute_layout_align_items_and_justify_content_center_and_bottom_position", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -650,7 +650,7 @@ it("absolute_layout_align_items_and_justify_content_center_and_bottom_position",
   }
 });
 it("absolute_layout_align_items_and_justify_content_center_and_left_position", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
@@ -697,7 +697,7 @@ it("absolute_layout_align_items_and_justify_content_center_and_left_position", f
   }
 });
 it("absolute_layout_align_items_and_justify_content_center_and_right_position", function () {
-  const config = Yoga.Config.create();
+  var config = Yoga.Config.create();
 
   try {
     var root = Yoga.Node.create(config);
