@@ -48,8 +48,9 @@ it("align_self_center", function () {
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -91,8 +92,9 @@ it("align_self_flex_end", function () {
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -134,8 +136,9 @@ it("align_self_flex_start", function () {
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -178,8 +181,9 @@ it("align_self_flex_end_override_flex_start", function () {
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -253,8 +257,9 @@ it("align_self_baseline", function () {
     console.assert(50 === root_child1_child0.getComputedWidth(), "50 === root_child1_child0.getComputedWidth() (" + root_child1_child0.getComputedWidth() + ")");
     console.assert(10 === root_child1_child0.getComputedHeight(), "10 === root_child1_child0.getComputedHeight() (" + root_child1_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }

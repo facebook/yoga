@@ -109,8 +109,9 @@ it("align_content_flex_start", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(10 === root_child4.getComputedHeight(), "10 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -209,8 +210,9 @@ it("align_content_flex_start_without_height_on_children", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(0 === root_child4.getComputedHeight(), "0 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -315,8 +317,9 @@ it("align_content_flex_start_with_flex", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(0 === root_child4.getComputedHeight(), "0 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -419,8 +422,9 @@ it("align_content_flex_end", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(10 === root_child4.getComputedHeight(), "10 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -518,8 +522,9 @@ it("align_content_stretch", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(0 === root_child4.getComputedHeight(), "0 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -623,8 +628,9 @@ it("align_content_spacebetween", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(10 === root_child4.getComputedHeight(), "10 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -728,8 +734,9 @@ it("align_content_spacearound", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(10 === root_child4.getComputedHeight(), "10 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -828,8 +835,9 @@ it("align_content_stretch_row", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(50 === root_child4.getComputedHeight(), "50 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -944,8 +952,9 @@ it("align_content_stretch_row_with_children", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(50 === root_child4.getComputedHeight(), "50 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1050,8 +1059,9 @@ it("align_content_stretch_row_with_flex", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(100 === root_child4.getComputedHeight(), "100 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1155,8 +1165,9 @@ it("align_content_stretch_row_with_flex_no_shrink", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(100 === root_child4.getComputedHeight(), "100 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1263,8 +1274,9 @@ it("align_content_stretch_row_with_margin", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(20 === root_child4.getComputedHeight(), "20 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1371,8 +1383,9 @@ it("align_content_stretch_row_with_padding", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(50 === root_child4.getComputedHeight(), "50 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1429,8 +1442,9 @@ it("align_content_stretch_row_with_single_row", function () {
     console.assert(50 === root_child1.getComputedWidth(), "50 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(100 === root_child1.getComputedHeight(), "100 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1530,8 +1544,9 @@ it("align_content_stretch_row_with_fixed_height", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(20 === root_child4.getComputedHeight(), "20 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1631,8 +1646,9 @@ it("align_content_stretch_row_with_max_height", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(50 === root_child4.getComputedHeight(), "50 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1732,8 +1748,9 @@ it("align_content_stretch_row_with_min_height", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(10 === root_child4.getComputedHeight(), "10 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1850,8 +1867,9 @@ it("align_content_stretch_column", function () {
     console.assert(50 === root_child4.getComputedWidth(), "50 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(50 === root_child4.getComputedHeight(), "50 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -1910,8 +1928,9 @@ it("align_content_stretch_is_not_overriding_align_items", function () {
     console.assert(10 === root_child0_child0.getComputedWidth(), "10 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0_child0.getComputedHeight(), "10 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }

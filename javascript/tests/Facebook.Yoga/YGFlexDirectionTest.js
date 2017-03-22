@@ -73,8 +73,9 @@ it("flex_direction_column_no_height", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -142,8 +143,9 @@ it("flex_direction_row_no_width", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -211,8 +213,9 @@ it("flex_direction_column", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -281,8 +284,9 @@ it("flex_direction_row", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -351,8 +355,9 @@ it("flex_direction_column_reverse", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(10 === root_child2.getComputedHeight(), "10 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -421,8 +426,9 @@ it("flex_direction_row_reverse", function () {
     console.assert(10 === root_child2.getComputedWidth(), "10 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }

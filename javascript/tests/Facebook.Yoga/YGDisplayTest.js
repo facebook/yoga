@@ -62,8 +62,9 @@ it("display_none", function () {
     console.assert(0 === root_child1.getComputedWidth(), "0 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(0 === root_child1.getComputedHeight(), "0 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -120,8 +121,9 @@ it("display_none_fixed_size", function () {
     console.assert(0 === root_child1.getComputedWidth(), "0 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(0 === root_child1.getComputedHeight(), "0 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -182,8 +184,9 @@ it("display_none_with_margin", function () {
     console.assert(100 === root_child1.getComputedWidth(), "100 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(100 === root_child1.getComputedHeight(), "100 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -278,8 +281,9 @@ it("display_none_with_child", function () {
     console.assert(50 === root_child2.getComputedWidth(), "50 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -336,8 +340,9 @@ it("display_none_with_position", function () {
     console.assert(0 === root_child1.getComputedWidth(), "0 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(0 === root_child1.getComputedHeight(), "0 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }

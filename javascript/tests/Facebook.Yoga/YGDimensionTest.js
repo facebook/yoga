@@ -45,8 +45,9 @@ it("wrap_child", function () {
     console.assert(100 === root_child0.getComputedWidth(), "100 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(100 === root_child0.getComputedHeight(), "100 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -98,8 +99,9 @@ it("wrap_grandchild", function () {
     console.assert(100 === root_child0_child0.getComputedWidth(), "100 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(100 === root_child0_child0.getComputedHeight(), "100 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }

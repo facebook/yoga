@@ -60,8 +60,9 @@ it("nested_overflowing_child", function () {
     console.assert(200 === root_child0_child0.getComputedWidth(), "200 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(200 === root_child0_child0.getComputedHeight(), "200 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -117,8 +118,9 @@ it("nested_overflowing_child_in_constraint_parent", function () {
     console.assert(200 === root_child0_child0.getComputedWidth(), "200 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(200 === root_child0_child0.getComputedHeight(), "200 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -173,8 +175,9 @@ it("parent_wrap_child_size_overflowing_parent", function () {
     console.assert(100 === root_child0_child0.getComputedWidth(), "100 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
     console.assert(200 === root_child0_child0.getComputedHeight(), "200 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }

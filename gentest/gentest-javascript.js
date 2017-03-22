@@ -66,10 +66,11 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('} finally {');
     this.pushIndent();
 
-    this.push('if (typeof root !== "undefined")');
+    this.push('if (typeof root !== "undefined") {');
     this.pushIndent();
     this.push('root.freeRecursive();');
     this.popIndent();
+    this.push('}');
     this.push('');
     this.push('config.free();');
 

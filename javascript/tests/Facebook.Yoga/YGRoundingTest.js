@@ -77,8 +77,9 @@ it("rounding_flex_basis_flex_grow_row_width_of_100", function () {
     console.assert(33 === root_child2.getComputedWidth(), "33 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -177,8 +178,9 @@ it("rounding_flex_basis_flex_grow_row_prime_number_width", function () {
     console.assert(23 === root_child4.getComputedWidth(), "23 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
     console.assert(100 === root_child4.getComputedHeight(), "100 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -250,8 +252,9 @@ it("rounding_flex_basis_flex_shrink_row", function () {
     console.assert(25 === root_child2.getComputedWidth(), "25 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(100 === root_child2.getComputedHeight(), "100 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -325,8 +328,9 @@ it("rounding_flex_basis_overrides_main_size", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(24 === root_child2.getComputedHeight(), "24 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -400,8 +404,9 @@ it("rounding_total_fractial", function () {
     console.assert(87 === root_child2.getComputedWidth(), "87 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(24 === root_child2.getComputedHeight(), "24 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -509,8 +514,9 @@ it("rounding_total_fractial_nested", function () {
     console.assert(87 === root_child2.getComputedWidth(), "87 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(24 === root_child2.getComputedHeight(), "24 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -584,8 +590,9 @@ it("rounding_fractial_input_1", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(24 === root_child2.getComputedHeight(), "24 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -659,8 +666,9 @@ it("rounding_fractial_input_2", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(25 === root_child2.getComputedHeight(), "25 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -735,8 +743,9 @@ it("rounding_fractial_input_3", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(24 === root_child2.getComputedHeight(), "24 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
@@ -811,8 +820,9 @@ it("rounding_fractial_input_4", function () {
     console.assert(100 === root_child2.getComputedWidth(), "100 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(24 === root_child2.getComputedHeight(), "24 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
   } finally {
-    if (typeof root !== "undefined")
+    if (typeof root !== "undefined") {
       root.freeRecursive();
+    }
 
     config.free();
   }
