@@ -28,7 +28,7 @@ namespace Facebook.Yoga
 
         internal class YGNodeHandle : SafeHandle
         {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__ || ENABLE_IL2CPP
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
             private GCHandle _managed;
 #endif
 
@@ -46,7 +46,7 @@ namespace Facebook.Yoga
 
             protected override bool ReleaseHandle()
             {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__ || ENABLE_IL2CPP
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
                 ReleaseManaged();
 #endif
                 Native.YGNodeFree(this.handle);
@@ -54,7 +54,7 @@ namespace Facebook.Yoga
                 return true;
             }
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__ || ENABLE_IL2CPP
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
             public void SetContext(YogaNode node)
             {
                 if (!_managed.IsAllocated)
@@ -431,7 +431,7 @@ namespace Facebook.Yoga
 
 #region AOT
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__ || ENABLE_IL2CPP
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr YGNodeGetContext(IntPtr node);
 

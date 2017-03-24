@@ -29,7 +29,7 @@ namespace Facebook.Yoga
 
         public static Func Logger = null;
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__ || ENABLE_IL2CPP
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(Func))]
 #endif
         public static void LoggerInternal(YogaLogLevel level, string message)
