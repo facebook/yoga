@@ -13,6 +13,9 @@ using System.Runtime.InteropServices;
 #if __IOS__
 using ObjCRuntime;
 #endif
+#if ENABLE_IL2CPP
+using AOT;
+#endif
 
 namespace Facebook.Yoga
 {
@@ -26,7 +29,7 @@ namespace Facebook.Yoga
 
         public static Func Logger = null;
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(Func))]
 #endif
         public static void LoggerInternal(YogaLogLevel level, string message)

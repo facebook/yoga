@@ -12,11 +12,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
 using System.Runtime.InteropServices;
 #endif
 #if __IOS__
 using ObjCRuntime;
+#endif
+#if ENABLE_IL2CPP
+using AOT;
 #endif
 
 namespace Facebook.Yoga
@@ -63,7 +66,7 @@ namespace Facebook.Yoga
         private MeasureFunction _measureFunction;
         private BaselineFunction _baselineFunction;
         private object _data;
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         private static YogaMeasureFunc _managedMeasure;
         private static YogaBaselineFunc _managedBaseline;
 #else
@@ -106,6 +109,9 @@ namespace Facebook.Yoga
             _data = null;
 
             Native.YGNodeReset(_ygNode);
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
+            _ygNode.ReleaseManaged();
+#endif
         }
 
         public bool IsDirty
@@ -616,8 +622,8 @@ namespace Facebook.Yoga
             _measureFunction = measureFunction;
             if (measureFunction != null)
             {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
-                _managedMeasure = MeasureInternalIOS;
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
+                _managedMeasure = MeasureInternalAOT;
                 _ygNode.SetContext(this);
 #else
                 _managedMeasure = MeasureInternal;
@@ -635,8 +641,8 @@ namespace Facebook.Yoga
             _baselineFunction = baselineFunction;
             if (baselineFunction != null)
             {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
-                _managedBaseline = BaselineInternalIOS;
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
+                _managedBaseline = BaselineInternalAOT;
                 _ygNode.SetContext(this);
 #else
                 _managedBaseline = BaselineInternal;
@@ -658,9 +664,9 @@ namespace Facebook.Yoga
                 Native.YGNodeStyleGetDirection(_ygNode));
         }
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaMeasureFunc))]
-        private static YogaSize MeasureInternalIOS(
+        private static YogaSize MeasureInternalAOT(
             IntPtr ygNodePtr,
             float width,
             YogaMeasureMode widthMode,
@@ -687,9 +693,9 @@ namespace Facebook.Yoga
             return _measureFunction(this, width, widthMode, height, heightMode);
         }
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaBaselineFunc))]
-        private static float BaselineInternalIOS(
+        private static float BaselineInternalAOT(
             IntPtr ygNodePtr,
             float width,
             float height)

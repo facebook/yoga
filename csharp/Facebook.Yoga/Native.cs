@@ -28,7 +28,7 @@ namespace Facebook.Yoga
 
         internal class YGNodeHandle : SafeHandle
         {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
             private GCHandle _managed;
 #endif
 
@@ -46,24 +46,34 @@ namespace Facebook.Yoga
 
             protected override bool ReleaseHandle()
             {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
-                if (_managed.IsAllocated)
-                {
-                    _managed.Free();
-                }
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
+                ReleaseManaged();
 #endif
                 Native.YGNodeFree(this.handle);
                 GC.KeepAlive(this);
                 return true;
             }
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
             public void SetContext(YogaNode node)
             {
                 if (!_managed.IsAllocated)
                 {
+#if ENABLE_IL2CPP
+                    // Weak causes 'GCHandle value belongs to a different domain' error
+                    _managed = GCHandle.Alloc(node);
+#else
                     _managed = GCHandle.Alloc(node, GCHandleType.Weak);
+#endif
                     Native.YGNodeSetContext(this.handle, GCHandle.ToIntPtr(_managed));
+                }
+            }
+
+            public void ReleaseManaged()
+            {
+                if (_managed.IsAllocated)
+                {
+                    _managed.Free();
                 }
             }
 
@@ -83,10 +93,6 @@ namespace Facebook.Yoga
 
         internal class YGConfigHandle : SafeHandle
         {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
-            private GCHandle _managed;
-#endif
-
             private YGConfigHandle() : base(IntPtr.Zero, true)
             {
             }
@@ -101,12 +107,6 @@ namespace Facebook.Yoga
 
             protected override bool ReleaseHandle()
             {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
-                if (_managed.IsAllocated)
-                {
-                    _managed.Free();
-                }
-#endif
                 Native.YGConfigFree(this.handle);
                 GC.KeepAlive(this);
                 return true;
@@ -429,9 +429,9 @@ namespace Facebook.Yoga
 
 #endregion
 
-#region IOS
+#region AOT
 
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr YGNodeGetContext(IntPtr node);
 
