@@ -82,7 +82,7 @@ public class YogaNode implements YogaNodeAPI<YogaNode> {
   @DoNotStrip
   private int mLayoutDirection = 0;
   @DoNotStrip
-  private bool mHasNewLayout = true;
+  private boolean mHasNewLayout = true;
 
   private native long jni_YGNodeNew();
   public YogaNode() {
