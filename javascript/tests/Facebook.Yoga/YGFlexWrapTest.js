@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("wrap_column", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexWrap(Yoga.WRAP_WRAP);
@@ -93,9 +95,13 @@ it("wrap_column", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_row", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -178,9 +184,13 @@ it("wrap_row", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_row_align_items_flex_end", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -264,9 +274,13 @@ it("wrap_row_align_items_flex_end", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_row_align_items_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -350,9 +364,13 @@ it("wrap_row_align_items_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("flex_wrap_children_with_min_main_overriding_flex_basis", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -407,9 +425,13 @@ it("flex_wrap_children_with_min_main_overriding_flex_basis", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("flex_wrap_wrap_to_child_height", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
 
@@ -489,9 +511,13 @@ it("flex_wrap_wrap_to_child_height", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("flex_wrap_align_stretch_fits_one_row", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -543,9 +569,13 @@ it("flex_wrap_align_stretch_fits_one_row", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_reverse_row_align_content_flex_start", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -643,9 +673,13 @@ it("wrap_reverse_row_align_content_flex_start", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_reverse_row_align_content_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -744,9 +778,13 @@ it("wrap_reverse_row_align_content_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_reverse_row_single_line_different_size", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -844,9 +882,13 @@ it("wrap_reverse_row_single_line_different_size", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_reverse_row_align_content_stretch", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -945,9 +987,13 @@ it("wrap_reverse_row_align_content_stretch", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_reverse_row_align_content_space_around", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -1046,9 +1092,13 @@ it("wrap_reverse_row_align_content_space_around", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_reverse_column_fixed_size", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -1147,9 +1197,13 @@ it("wrap_reverse_column_fixed_size", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrapped_row_within_align_items_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -1217,9 +1271,13 @@ it("wrapped_row_within_align_items_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrapped_row_within_align_items_flex_start", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_START);
@@ -1287,9 +1345,13 @@ it("wrapped_row_within_align_items_flex_start", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrapped_row_within_align_items_flex_end", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_END);
@@ -1357,5 +1419,7 @@ it("wrapped_row_within_align_items_flex_end", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

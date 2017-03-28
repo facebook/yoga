@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("display_none", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -63,9 +65,13 @@ it("display_none", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("display_none_fixed_size", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -118,9 +124,13 @@ it("display_none_fixed_size", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("display_none_with_margin", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -177,9 +187,13 @@ it("display_none_with_margin", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("display_none_with_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -270,9 +284,13 @@ it("display_none_with_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("display_none_with_position", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -325,5 +343,7 @@ it("display_none_with_position", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

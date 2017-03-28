@@ -169,6 +169,22 @@ module.exports = function (bind, lib) {
 
     }
 
+    patch(lib.Config.prototype, `free`, function () {
+
+        // Since we handle the memory allocation ourselves (via lib.Config.create), we also need to handle the deallocation
+
+	lib.Config.destroy(this);
+
+    });
+
+    patch(lib.Node, `create`, function (_, config) {
+
+        // We decide the constructor we want to call depending on the parameters
+
+        return config ? lib.Node.createWithConfig(config) : lib.Node.createDefault();
+
+    });
+
     patch(lib.Node.prototype, `free`, function () {
 
         // Since we handle the memory allocation ourselves (via lib.Node.create), we also need to handle the deallocation
@@ -207,18 +223,6 @@ module.exports = function (bind, lib) {
 
     });
 
-    function setExperimentalFeatureEnabled(... args) {
-
-        return lib.setExperimentalFeatureEnabled(... args);
-
-    }
-
-    function isExperimentalFeatureEnabled(... args) {
-
-        return lib.isExperimentalFeatureEnabled(... args);
-
-    }
-
     function getInstanceCount(... args) {
 
         return lib.getInstanceCount(... args);
@@ -231,14 +235,12 @@ module.exports = function (bind, lib) {
 
     return Object.assign({
 
+	Config: lib.Config,
         Node: lib.Node,
 
         Layout,
         Size,
         Value,
-
-        setExperimentalFeatureEnabled,
-        isExperimentalFeatureEnabled,
 
         getInstanceCount
 

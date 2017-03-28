@@ -16,8 +16,6 @@
 #include "./Config.hh"
 #include "./global.hh"
 
-#define NBIND_DUPLICATE_POINTERS true
-
 #include <nbind/nbind.h>
 
 NBIND_GLOBAL()
@@ -45,13 +43,18 @@ NBIND_CLASS(Value)
 NBIND_CLASS(Config)
 {
     method(create);
+
     method(destroy);
+
     method(setExperimentalFeatureEnabled);
+
+    method(isExperimentalFeatureEnabled);
 }
 
 NBIND_CLASS(Node)
 {
-    method(create);
+    method(createDefault);
+    method(createWithConfig);
     method(destroy);
 
     method(reset);

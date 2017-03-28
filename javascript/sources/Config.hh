@@ -14,36 +14,39 @@
 #include <yoga/Yoga.h>
 
 class Config {
-private:
-  YGConfigRef m_config;
 
-  Config(void)
-  : m_config(YGConfigNew())
-  {}
+    friend class Node;
 
-public:
+ public:
 
-  static Config * create(void)
-  {
-    return new Config();
-  }
+    static Config * create(void);
 
-  static void destroy(Config * config)
-  {
-    delete config;
-  }
+    static void destroy(Config * config);
 
-  ~Config(void)
-  {
-    YGConfigFree(m_config);
-  }
+ private:
 
-  void setExperimentalFeatureEnabled(int feature, bool enabled)
-  {
-    YGConfigSetExperimentalFeatureEnabled(m_config, static_cast<YGExperimentalFeature>(feature), enabled);
-  }
+    Config(void);
 
-  Config(Config const &) = delete;
+ public:
 
-  Config const & operator=(Config const &) = delete;
+    ~Config(void);
+
+ public: // Prevent accidental copy
+
+    Config(Config const &) = delete;
+
+    Config const & operator=(Config const &) = delete;
+
+ public: // Setters
+
+    void setExperimentalFeatureEnabled(int feature, bool enabled);
+ 
+ public: // Getters
+
+    bool isExperimentalFeatureEnabled(int feature) const;
+
+ private:
+
+    YGConfigRef m_config;
+
 };

@@ -43,10 +43,12 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   emitTestPrologue:{value:function(name, experiments) {
     this.push('it(' + JSON.stringify(name) + ', function () {');
     this.pushIndent();
+    this.push('var config = Yoga.Config.create();');
+    this.push('');
 
     if (experiments.length > 0) {
       for (var i in experiments) {
-        this.push('Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', true);');
+        this.push('config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', true);');
       }
       this.push('');
     }
@@ -69,13 +71,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('root.freeRecursive();');
     this.popIndent();
     this.push('}');
-
-    if (experiments.length > 0) {
-      this.push('');
-      for (var i in experiments) {
-        this.push('Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', false);');
-      }
-    }
+    this.push('');
+    this.push('config.free();');
 
     this.popIndent();
     this.push('}');

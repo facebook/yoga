@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("align_self_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -49,9 +51,13 @@ it("align_self_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_self_flex_end", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -89,9 +95,13 @@ it("align_self_flex_end", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_self_flex_start", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -129,9 +139,13 @@ it("align_self_flex_start", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_self_flex_end_override_flex_start", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_START);
@@ -170,9 +184,13 @@ it("align_self_flex_end_override_flex_start", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_self_baseline", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -242,5 +260,7 @@ it("align_self_baseline", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

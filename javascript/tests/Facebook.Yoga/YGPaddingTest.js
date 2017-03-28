@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("padding_no_size", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
@@ -35,9 +37,13 @@ it("padding_no_size", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("padding_container_match_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
@@ -76,9 +82,13 @@ it("padding_container_match_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("padding_flex_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
@@ -119,9 +129,13 @@ it("padding_flex_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("padding_stretch_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
@@ -161,9 +175,13 @@ it("padding_stretch_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("padding_center_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -205,9 +223,13 @@ it("padding_center_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("child_with_padding_align_end", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
@@ -250,5 +272,7 @@ it("child_with_padding_align_end", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

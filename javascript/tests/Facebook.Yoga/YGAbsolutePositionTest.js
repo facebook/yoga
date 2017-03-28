@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("absolute_layout_width_height_start_top", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -51,9 +53,13 @@ it("absolute_layout_width_height_start_top", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_width_height_end_bottom", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -93,9 +99,13 @@ it("absolute_layout_width_height_end_bottom", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_start_top_end_bottom", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -135,9 +145,13 @@ it("absolute_layout_start_top_end_bottom", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_width_height_start_top_end_bottom", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -179,9 +193,13 @@ it("absolute_layout_width_height_start_top_end_bottom", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -236,9 +254,13 @@ it("do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_within_border", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setMargin(Yoga.EDGE_LEFT, 10);
@@ -308,9 +330,13 @@ it("absolute_layout_within_border", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_align_items_and_justify_content_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -351,9 +377,13 @@ it("absolute_layout_align_items_and_justify_content_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_align_items_and_justify_content_flex_end", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
@@ -394,9 +424,13 @@ it("absolute_layout_align_items_and_justify_content_flex_end", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_justify_content_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -436,9 +470,13 @@ it("absolute_layout_justify_content_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_align_items_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -478,9 +516,13 @@ it("absolute_layout_align_items_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_align_items_center_on_child_only", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexGrow(1);
@@ -520,9 +562,13 @@ it("absolute_layout_align_items_center_on_child_only", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_align_items_and_justify_content_center_and_top_position", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -564,9 +610,13 @@ it("absolute_layout_align_items_and_justify_content_center_and_top_position", fu
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_align_items_and_justify_content_center_and_bottom_position", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -608,9 +658,13 @@ it("absolute_layout_align_items_and_justify_content_center_and_bottom_position",
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_align_items_and_justify_content_center_and_left_position", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -652,9 +706,13 @@ it("absolute_layout_align_items_and_justify_content_center_and_left_position", f
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("absolute_layout_align_items_and_justify_content_center_and_right_position", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -696,5 +754,7 @@ it("absolute_layout_align_items_and_justify_content_center_and_right_position", 
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

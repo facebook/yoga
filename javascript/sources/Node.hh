@@ -24,8 +24,9 @@ class Node {
 
  public:
 
-    static Node * create(void);
-    static Node * create(Config * config);
+    static Node * createDefault(void);
+    static Node * createWithConfig(Config * config);
+
     static void destroy(Node * node);
 
  public:
@@ -34,7 +35,7 @@ class Node {
 
  private:
 
-    Node(void);
+    Node(Config * config);
 
  public:
 

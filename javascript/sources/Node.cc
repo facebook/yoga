@@ -26,9 +26,14 @@ static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode wi
     return ygSize;
 }
 
-/* static */ Node * Node::create(void)
+/* static */ Node * Node::createDefault(void)
 {
-    return new Node();
+    return new Node(nullptr);
+}
+
+/* static */ Node * Node::createWithConfig(Config * config)
+{
+    return new Node(config);
 }
 
 /* static */ void Node::destroy(Node * node)
@@ -41,8 +46,8 @@ static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode wi
     return reinterpret_cast<Node *>(YGNodeGetContext(nodeRef));
 }
 
-Node::Node(void)
-: m_node(YGNodeNew())
+Node::Node(Config * config)
+: m_node(config != nullptr ? YGNodeNewWithConfig(config->m_config) : YGNodeNew())
 , m_measureFunc(nullptr)
 {
     YGNodeSetContext(m_node, reinterpret_cast<void *>(this));

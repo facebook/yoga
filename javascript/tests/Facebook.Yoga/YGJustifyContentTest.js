@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("justify_content_row_flex_start", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -76,9 +78,13 @@ it("justify_content_row_flex_start", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_row_flex_end", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -144,9 +150,13 @@ it("justify_content_row_flex_end", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_row_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -212,9 +222,13 @@ it("justify_content_row_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_row_space_between", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -280,9 +294,13 @@ it("justify_content_row_space_between", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_row_space_around", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -348,9 +366,13 @@ it("justify_content_row_space_around", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_column_flex_start", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(102);
@@ -413,9 +435,13 @@ it("justify_content_column_flex_start", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_column_flex_end", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
@@ -480,9 +506,13 @@ it("justify_content_column_flex_end", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_column_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -547,9 +577,13 @@ it("justify_content_column_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_column_space_between", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_SPACE_BETWEEN);
@@ -614,9 +648,13 @@ it("justify_content_column_space_between", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("justify_content_column_space_around", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_SPACE_AROUND);
@@ -681,5 +719,7 @@ it("justify_content_column_space_around", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

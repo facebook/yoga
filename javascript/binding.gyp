@@ -9,6 +9,7 @@
 	"sources": [
             "sources/yoga/YGNodeList.c",
             "sources/yoga/Yoga.c",
+            "sources/Config.cc",
             "sources/Node.cc",
             "sources/global.cc",
 	    "sources/nbind.cc"

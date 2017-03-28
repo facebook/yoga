@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("border_no_size", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
@@ -35,9 +37,13 @@ it("border_no_size", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("border_container_match_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
@@ -76,9 +82,13 @@ it("border_container_match_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("border_flex_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
@@ -119,9 +129,13 @@ it("border_flex_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("border_stretch_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
@@ -161,9 +175,13 @@ it("border_stretch_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("border_center_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -205,5 +223,7 @@ it("border_center_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

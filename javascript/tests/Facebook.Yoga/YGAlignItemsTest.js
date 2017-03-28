@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("align_items_stretch", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -47,9 +49,13 @@ it("align_items_stretch", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_items_center", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -87,9 +93,13 @@ it("align_items_center", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_items_flex_start", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_START);
@@ -127,9 +137,13 @@ it("align_items_flex_start", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_items_flex_end", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_END);
@@ -167,9 +181,13 @@ it("align_items_flex_end", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -223,9 +241,13 @@ it("align_baseline", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -294,9 +316,13 @@ it("align_baseline_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_child_multiline", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -412,9 +438,13 @@ it("align_baseline_child_multiline", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_child_multiline_override", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -532,9 +562,13 @@ it("align_baseline_child_multiline_override", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_child_multiline_no_override_on_secondline", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -651,9 +685,13 @@ it("align_baseline_child_multiline_no_override_on_secondline", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_child_top", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -723,9 +761,13 @@ it("align_baseline_child_top", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_child_top2", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -795,9 +837,13 @@ it("align_baseline_child_top2", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_double_nested_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -881,9 +927,13 @@ it("align_baseline_double_nested_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_column", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_BASELINE);
@@ -936,9 +986,13 @@ it("align_baseline_column", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_child_margin", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -1015,9 +1069,13 @@ it("align_baseline_child_margin", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_child_padding", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -1094,9 +1152,13 @@ it("align_baseline_child_padding", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_multiline", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -1211,9 +1273,13 @@ it("align_baseline_multiline", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_multiline_column", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_BASELINE);
@@ -1327,9 +1393,13 @@ it("align_baseline_multiline_column", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_multiline_column2", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_BASELINE);
@@ -1443,9 +1513,13 @@ it("align_baseline_multiline_column2", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_baseline_multiline_row_and_column", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -1560,9 +1634,13 @@ it("align_baseline_multiline_row_and_column", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_items_center_child_with_margin_bigger_than_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1617,9 +1695,13 @@ it("align_items_center_child_with_margin_bigger_than_parent", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_items_flex_end_child_with_margin_bigger_than_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1674,9 +1756,13 @@ it("align_items_flex_end_child_with_margin_bigger_than_parent", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_items_center_child_without_margin_bigger_than_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1729,9 +1815,13 @@ it("align_items_center_child_without_margin_bigger_than_parent", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("align_items_flex_end_child_without_margin_bigger_than_parent", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1784,5 +1874,7 @@ it("align_items_flex_end_child_without_margin_bigger_than_parent", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

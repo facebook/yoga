@@ -4,7 +4,8 @@
         [ "1==1", {
 
             "cflags_cc": [
-                "-std=c++14"
+                "-std=c++14",
+                "-DNBIND_DUPLICATE_POINTERS"
             ],
 
 	    "xcode_settings": {

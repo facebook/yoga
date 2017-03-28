@@ -12,6 +12,8 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("wrap_child", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
 
@@ -46,9 +48,13 @@ it("wrap_child", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });
 it("wrap_grandchild", function () {
+  var config = Yoga.Config.create();
+
   try {
     var root = Yoga.Node.create(config);
 
@@ -96,5 +102,7 @@ it("wrap_grandchild", function () {
     if (typeof root !== "undefined") {
       root.freeRecursive();
     }
+
+    config.free();
   }
 });

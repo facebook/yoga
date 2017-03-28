@@ -12,7 +12,9 @@
 var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 
 it("rounding_flex_basis_flex_grow_row_width_of_100", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -79,11 +81,13 @@ it("rounding_flex_basis_flex_grow_row_width_of_100", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_flex_basis_flex_grow_row_prime_number_width", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -178,11 +182,13 @@ it("rounding_flex_basis_flex_grow_row_prime_number_width", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_flex_basis_flex_shrink_row", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -250,11 +256,13 @@ it("rounding_flex_basis_flex_shrink_row", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_flex_basis_overrides_main_size", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -324,11 +332,13 @@ it("rounding_flex_basis_overrides_main_size", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_total_fractial", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -398,11 +408,13 @@ it("rounding_total_fractial", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_total_fractial_nested", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -506,11 +518,13 @@ it("rounding_total_fractial_nested", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_fractial_input_1", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -580,11 +594,13 @@ it("rounding_fractial_input_1", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_fractial_input_2", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -654,11 +670,13 @@ it("rounding_fractial_input_2", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_fractial_input_3", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -729,11 +747,13 @@ it("rounding_fractial_input_3", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
 it("rounding_fractial_input_4", function () {
-  Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
+  var config = Yoga.Config.create();
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -804,6 +824,6 @@ it("rounding_fractial_input_4", function () {
       root.freeRecursive();
     }
 
-    Yoga.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, false);
+    config.free();
   }
 });
