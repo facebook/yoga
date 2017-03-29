@@ -47,35 +47,51 @@ static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
       static auto borderBottomField = obj->getClass()->getField<jfloat>("mBorderBottom");
 
       static auto hasNewLayoutField = obj->getClass()->getField<jboolean>("mHasNewLayout");
+    static auto edgeSetFlagField = obj->getClass()->getField<jint>("mEdgeSetFlag");
+
+    /* Those flags needs be in sync with YogaNode.java */
+    const int MARGIN = 1;
+    const int PADDING = 2;
+    const int BORDER = 4;
+
+    int hasEdgeSetFlag = (int)obj->getFieldValue(edgeSetFlagField);
 
       obj->setFieldValue(widthField, YGNodeLayoutGetWidth(root));
       obj->setFieldValue(heightField, YGNodeLayoutGetHeight(root));
       obj->setFieldValue(leftField, YGNodeLayoutGetLeft(root));
       obj->setFieldValue(topField, YGNodeLayoutGetTop(root));
 
+    if((hasEdgeSetFlag & MARGIN) == MARGIN){
       obj->setFieldValue(marginLeftField, YGNodeLayoutGetMargin(root, YGEdgeLeft));
       obj->setFieldValue(marginTopField, YGNodeLayoutGetMargin(root, YGEdgeTop));
       obj->setFieldValue(marginRightField, YGNodeLayoutGetMargin(root, YGEdgeRight));
       obj->setFieldValue(marginBottomField, YGNodeLayoutGetMargin(root, YGEdgeBottom));
+    }
 
+    if((hasEdgeSetFlag & PADDING) == PADDING){
       obj->setFieldValue(paddingLeftField, YGNodeLayoutGetPadding(root, YGEdgeLeft));
       obj->setFieldValue(paddingTopField, YGNodeLayoutGetPadding(root, YGEdgeTop));
       obj->setFieldValue(paddingRightField, YGNodeLayoutGetPadding(root, YGEdgeRight));
       obj->setFieldValue(paddingBottomField, YGNodeLayoutGetPadding(root, YGEdgeBottom));
+    }
 
+    if((hasEdgeSetFlag & BORDER) == BORDER){
       obj->setFieldValue(borderLeftField, YGNodeLayoutGetBorder(root, YGEdgeLeft));
       obj->setFieldValue(borderTopField, YGNodeLayoutGetBorder(root, YGEdgeTop));
       obj->setFieldValue(borderRightField, YGNodeLayoutGetBorder(root, YGEdgeRight));
       obj->setFieldValue(borderBottomField, YGNodeLayoutGetBorder(root, YGEdgeBottom));
+    }
 
       obj->setFieldValue<jboolean>(hasNewLayoutField, true);
       YGTransferLayoutDirection(root, obj);
       YGNodeSetHasNewLayout(root, false);
+  } else {
+    YGLog(YGLogLevelError, "Java YGNode was GCed during layout calculation\n");
+    return;
+  }
       for (uint32_t i = 0; i < YGNodeGetChildCount(root); i++) {
         YGTransferLayoutOutputsRecursive(YGNodeGetChild(root, i));
       }
-    } else {
-      YGLog(YGLogLevelError, "Java YGNode was GCed during layout calculation\n");
     }
   }
 }
