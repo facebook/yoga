@@ -220,6 +220,14 @@ public class YogaNodeTest {
   }
 
   @Test
+  public void testUseWebDefaults() {
+    final YogaConfig config = new YogaConfig();
+    config.setUseWebDefaults(true);
+    final YogaNode node = new YogaNode(config);
+    assertEquals(YogaFlexDirection.ROW, node.getFlexDirection());
+  }
+
+  @Test
   public void testPercentPaddingOnRoot() {
     final YogaNode node = new YogaNode();
     node.setPaddingPercent(YogaEdge.ALL, 10);
