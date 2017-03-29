@@ -14,6 +14,11 @@ BUCK_TARGETS=(
   "android-arm64"
 )
 
+for (( i=0; i<4; i++ ));
+do
+  mkdir -p "${DESTINATIONS[i]}"
+done
+
 # There must be a better way to get gnustl_shared than building the android target.
 # But for now, we include that target simply for that shared library...
 echo "Build libgnustl_shared.so"
@@ -32,7 +37,6 @@ for (( i=0; i<4; i++ ));
 do
   echo "Build ${BUCK_TARGETS[i]}"
   buck build "//java:jni#${BUCK_TARGETS[i]},shared"
-  mkdir -p ${DESTINATIONS[i]}
   cp "../buck-out/gen/java/jni#${BUCK_TARGETS[i]},shared/libyoga.so" "${DESTINATIONS[i]}"
   cp "../buck-out/gen/yoga#${BUCK_TARGETS[i]},shared/libyogacore.so" "${DESTINATIONS[i]}"
   cp "../buck-out/gen/lib/fb/fbjni#${BUCK_TARGETS[i]},shared/liblib_fb_fbjni.so" "${DESTINATIONS[i]}"
