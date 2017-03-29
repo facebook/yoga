@@ -24,6 +24,7 @@ static void YGTransferLayoutDirection(YGNodeRef node, alias_ref<jobject> javaNod
 }
 
 static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
+  if(YGNodeGetHasNewLayout(root)){
   if (auto obj = YGNodeJobject(root)->lockLocal()) {
     static auto widthField = obj->getClass()->getField<jfloat>("mWidth");
     static auto heightField = obj->getClass()->getField<jfloat>("mHeight");
@@ -45,6 +46,8 @@ static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
     static auto borderRightField = obj->getClass()->getField<jfloat>("mBorderRight");
     static auto borderBottomField = obj->getClass()->getField<jfloat>("mBorderBottom");
 
+    static auto hasNewLayoutField = obj->getClass()->getField<jboolean>("mHasNewLayout");
+
     obj->setFieldValue(widthField, YGNodeLayoutGetWidth(root));
     obj->setFieldValue(heightField, YGNodeLayoutGetHeight(root));
     obj->setFieldValue(leftField, YGNodeLayoutGetLeft(root));
@@ -65,13 +68,15 @@ static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
     obj->setFieldValue(borderRightField, YGNodeLayoutGetBorder(root, YGEdgeRight));
     obj->setFieldValue(borderBottomField, YGNodeLayoutGetBorder(root, YGEdgeBottom));
 
+    obj->setFieldValue<jboolean>(hasNewLayoutField, true);
     YGTransferLayoutDirection(root, obj);
-
+    YGNodeSetHasNewLayout(root, false);
     for (uint32_t i = 0; i < YGNodeGetChildCount(root); i++) {
       YGTransferLayoutOutputsRecursive(YGNodeGetChild(root, i));
     }
   } else {
     YGLog(YGLogLevelError, "Java YGNode was GCed during layout calculation\n");
+  }
   }
 }
 
@@ -242,14 +247,6 @@ void jni_YGNodeSetHasBaselineFunc(alias_ref<jobject>,
                         hasBaselineFunc ? YGJNIBaselineFunc : NULL);
 }
 
-jboolean jni_YGNodeHasNewLayout(alias_ref<jobject>, jlong nativePointer) {
-  return (jboolean) YGNodeGetHasNewLayout(_jlong2YGNodeRef(nativePointer));
-}
-
-void jni_YGNodeMarkLayoutSeen(alias_ref<jobject>, jlong nativePointer) {
-  YGNodeSetHasNewLayout(_jlong2YGNodeRef(nativePointer), false);
-}
-
 void jni_YGNodeCopyStyle(alias_ref<jobject>, jlong dstNativePointer, jlong srcNativePointer) {
   YGNodeCopyStyle(_jlong2YGNodeRef(dstNativePointer), _jlong2YGNodeRef(srcNativePointer));
 }
@@ -403,10 +400,8 @@ jint JNI_OnLoad(JavaVM *vm, void *) {
                         YGMakeNativeMethod(jni_YGNodeInsertChild),
                         YGMakeNativeMethod(jni_YGNodeRemoveChild),
                         YGMakeNativeMethod(jni_YGNodeCalculateLayout),
-                        YGMakeNativeMethod(jni_YGNodeHasNewLayout),
                         YGMakeNativeMethod(jni_YGNodeMarkDirty),
                         YGMakeNativeMethod(jni_YGNodeIsDirty),
-                        YGMakeNativeMethod(jni_YGNodeMarkLayoutSeen),
                         YGMakeNativeMethod(jni_YGNodeSetHasMeasureFunc),
                         YGMakeNativeMethod(jni_YGNodeSetHasBaselineFunc),
                         YGMakeNativeMethod(jni_YGNodeCopyStyle),
