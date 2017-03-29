@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)YGMinMaxDimensionTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YGPaddingTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YGRoundingTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)YogaConfigTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaNodeSpacingTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaNodeTest.cs" />
   </ItemGroup>

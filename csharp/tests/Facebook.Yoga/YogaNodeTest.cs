@@ -301,7 +301,7 @@ namespace Facebook.Yoga
             Assert.AreEqual(90.Pt(), node4.MaxHeight);
         }
 
-        private void ForceGC()
+        public static void ForceGC()
         {
             GC.Collect(GC.MaxGeneration);
             GC.WaitForPendingFinalizers();
