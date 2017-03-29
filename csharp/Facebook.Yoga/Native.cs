@@ -150,6 +150,19 @@ namespace Facebook.Yoga
             YogaExperimentalFeature feature);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGConfigSetUseWebDefaults(
+            YGConfigHandle config,
+            bool useWebDefaults);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool YGConfigGetUseWebDefaults(YGConfigHandle config);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGConfigSetPointScaleFactor(
+            YGConfigHandle config,
+            float pixelsInPoint);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeInsertChild(
             YGNodeHandle node,
             YGNodeHandle child,
