@@ -63,5 +63,10 @@ namespace Facebook.Yoga
                 Native.YGConfigSetPointScaleFactor(_ygConfig, value);
             }
         }
+
+        public static int GetInstanceCount()
+        {
+            return Native.YGConfigGetInstanceCount();
+        }
     }
 }
