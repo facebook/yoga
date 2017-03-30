@@ -91,9 +91,9 @@ public class YogaLayout extends ViewGroup {
     mYogaNode.setMeasureFunction(new ViewMeasureFunction());
 
     LayoutParams layoutParams = null;
-    if(attrs != null){
+    if (attrs != null) {
       layoutParams = new LayoutParams(context, attrs);
-    } else{
+    } else {
       layoutParams = (LayoutParams) generateDefaultLayoutParams();
     }
     applyLayoutParams(layoutParams, mYogaNode, this);
@@ -158,9 +158,9 @@ public class YogaLayout extends ViewGroup {
     if (child instanceof YogaLayout) {
       childNode = ((YogaLayout) child).getYogaNode();
     } else {
-      if(mYogaNodes.containsKey(child)){
+      if(mYogaNodes.containsKey(child)) {
         childNode = mYogaNodes.get(child);
-      } else{
+      } else {
         childNode = new YogaNode();
       }
 
