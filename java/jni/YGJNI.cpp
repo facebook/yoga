@@ -89,9 +89,8 @@ static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
       YGLog(YGLogLevelError, "Java YGNode was GCed during layout calculation\n");
       return;
     }
-      for (uint32_t i = 0; i < YGNodeGetChildCount(root); i++) {
-        YGTransferLayoutOutputsRecursive(YGNodeGetChild(root, i));
-      }
+    for (uint32_t i = 0; i < YGNodeGetChildCount(root); i++) {
+      YGTransferLayoutOutputsRecursive(YGNodeGetChild(root, i));
     }
   }
 }
