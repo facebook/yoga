@@ -52,7 +52,7 @@ import com.facebook.yoga.YogaWrap;
  * <pre>{@code
  * <YogaLayout
  *     xmlns:android="http://schemas.android.com/apk/res/android"
- *     xmlns:yoga="http://schemas.android.com/lib/com.facebook.yoga.android"
+ *     xmlns:yoga="http://schemas.android.com/apk/com.facebook.yoga.android"
  *     android:layout_width="match_parent"
  *     android:layout_height="match_parent"
  *     yoga:flex_direction="row"
