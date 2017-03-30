@@ -85,12 +85,12 @@ static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
       obj->setFieldValue<jboolean>(hasNewLayoutField, true);
       YGTransferLayoutDirection(root, obj);
       YGNodeSetHasNewLayout(root, false);
+
+      for (uint32_t i = 0; i < YGNodeGetChildCount(root); i++) {
+        YGTransferLayoutOutputsRecursive(YGNodeGetChild(root, i));
+      }
     } else {
       YGLog(YGLogLevelError, "Java YGNode was GCed during layout calculation\n");
-      return;
-    }
-    for (uint32_t i = 0; i < YGNodeGetChildCount(root); i++) {
-      YGTransferLayoutOutputsRecursive(YGNodeGetChild(root, i));
     }
   }
 }
