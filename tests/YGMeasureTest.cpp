@@ -179,6 +179,45 @@ TEST(YogaTest, dont_measure_when_min_equals_max_mixed_height_percent) {
   YGNodeFreeRecursive(root);
 }
 
+TEST(YogaTest, measure_nodes_on_at_most_with_zero_space)
+{
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetHeight(root, 200);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
+  YGNodeStyleSetAlignItems(root, YGAlignStretch);
+  YGNodeStyleSetAlignContent(root, YGAlignStretch);
+  YGNodeStyleSetFlexGrow(root, 0);
+  YGNodeStyleSetOverflow(root, YGOverflowHidden);
+  YGNodeStyleSetAlignSelf(root, YGAlignAuto);
+  YGNodeStyleSetPositionType(root, YGPositionTypeRelative);
+  YGNodeStyleSetJustifyContent(root, YGJustifyFlexStart);
+
+  int measureCount = 0;
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetFlexDirection(root_child0, YGFlexDirectionColumn);
+  YGNodeStyleSetAlignItems(root_child0, YGAlignStretch);
+  YGNodeStyleSetAlignContent(root_child0, YGAlignStretch);
+  YGNodeStyleSetAlignSelf(root_child0, YGAlignStretch);
+  YGNodeStyleSetJustifyContent(root_child0, YGJustifyFlexStart);
+  YGNodeStyleSetOverflow(root_child0, YGOverflowHidden);
+  YGNodeStyleSetPadding(root_child0, YGEdgeLeft, 100);
+  YGNodeStyleSetPadding(root_child0, YGEdgeTop, 100);
+  YGNodeStyleSetPadding(root_child0, YGEdgeRight, 100);
+  YGNodeStyleSetPadding(root_child0, YGEdgeBottom, 100);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure);
+
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, 282, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+  ASSERT_FLOAT_EQ(282, YGNodeLayoutGetWidth(root_child0));
+
+  YGNodeFreeRecursive(root);
+}
+
 #if GTEST_HAS_DEATH_TEST
 TEST(YogaTest, cannot_add_child_to_node_with_measure_func) {
   const YGNodeRef root = YGNodeNew();

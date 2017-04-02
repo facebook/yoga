@@ -1694,7 +1694,7 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(const YGNodeRef node,
         node, YGFlexDirectionRow, availableWidth - marginAxisRow, parentWidth, parentWidth);
     node->layout.measuredDimensions[YGDimensionHeight] = YGNodeBoundAxis(
         node, YGFlexDirectionColumn, availableHeight - marginAxisColumn, parentHeight, parentWidth);
-  } else if (innerWidth <= 0.0f || innerHeight <= 0.0f) {
+  } else if ((innerWidth <= 0.0f && widthMeasureMode != YGMeasureModeAtMost) || (innerHeight <= 0.0f && heightMeasureMode != YGMeasureModeAtMost)) {
     // Don't bother sizing the text if there's no horizontal or vertical
     // space.
     node->layout.measuredDimensions[YGDimensionWidth] =
