@@ -63,7 +63,7 @@ TEST(YogaTest, memory_func_test_funcs) {
 }
 
 #if GTEST_HAS_DEATH_TEST
-TEST(YogaTest, memory_func_assert_zero_nodes) {
+TEST(YogaDeathTest, memory_func_assert_zero_nodes) {
   gNodeInstanceCount = 0; // Reset YGNode instance count for memory func test
   const YGNodeRef root = YGNodeNew();
   ASSERT_DEATH(YGSetMemoryFuncs(&testMalloc, &testCalloc, &testRealloc, &testFree),
@@ -71,7 +71,7 @@ TEST(YogaTest, memory_func_assert_zero_nodes) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, memory_func_assert_all_non_null) {
+TEST(YogaDeathTest, memory_func_assert_all_non_null) {
   gNodeInstanceCount = 0; // Reset YGNode instance count for memory func test
   ASSERT_DEATH(YGSetMemoryFuncs(NULL, &testCalloc, &testRealloc, &testFree),
                "Cannot set memory functions: functions must be all NULL or Non-NULL");

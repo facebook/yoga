@@ -125,6 +125,16 @@ def to_java_upper(symbol):
         out += c.upper()
     return out
 
+def to_log_lower(symbol):
+    symbol = str(symbol)
+    out = ''
+    for i in range(0, len(symbol)):
+        c = symbol[i]
+        if str.istitle(c) and i is not 0 and not str.istitle(symbol[i - 1]):
+            out += '-'
+        out += c.lower()
+    return out
+
 
 root = os.path.dirname(os.path.abspath(__file__))
 
@@ -143,8 +153,27 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
             else:
                 f.write('  YG%s%s,\n' % (name, value))
         f.write('} YG_ENUM_END(YG%s);\n' % name)
+        f.write('WIN_EXPORT const char *YG%sToString(const YG%s value);\n' % (name, name))
         f.write('\n')
     f.write('YG_EXTERN_C_END\n')
+
+# write out C body for printing
+with open(root + '/yoga/YGEnums.c', 'w') as f:
+    f.write(LICENSE)
+    f.write('#include "YGEnums.h"\n\n')
+    for name, values in sorted(ENUMS.items()):
+        f.write('const char *YG%sToString(const YG%s value){\n' % (name, name))
+        f.write('  switch(value){\n')
+        for value in values:
+            if isinstance(value, tuple):
+                f.write('    case YG%s%s:\n' % (name, value[0]))
+                f.write('      return "%s";\n' % to_log_lower(value[0]))
+            else:
+                f.write('    case YG%s%s:\n' % (name, value))
+                f.write('      return "%s";\n' % to_log_lower(value))
+        f.write('  }\n')
+        f.write('  return "unknown";\n')
+        f.write('}\n\n')
 
 # write out java files
 for name, values in sorted(ENUMS.items()):
