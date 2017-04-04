@@ -184,27 +184,15 @@ TEST(YogaTest, measure_nodes_on_at_most_with_zero_space)
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetHeight(root, 200);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
-  YGNodeStyleSetAlignItems(root, YGAlignStretch);
-  YGNodeStyleSetAlignContent(root, YGAlignStretch);
   YGNodeStyleSetFlexGrow(root, 0);
   YGNodeStyleSetOverflow(root, YGOverflowHidden);
-  YGNodeStyleSetAlignSelf(root, YGAlignAuto);
-  YGNodeStyleSetPositionType(root, YGPositionTypeRelative);
-  YGNodeStyleSetJustifyContent(root, YGJustifyFlexStart);
 
   int measureCount = 0;
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexDirection(root_child0, YGFlexDirectionColumn);
-  YGNodeStyleSetAlignItems(root_child0, YGAlignStretch);
-  YGNodeStyleSetAlignContent(root_child0, YGAlignStretch);
-  YGNodeStyleSetAlignSelf(root_child0, YGAlignStretch);
-  YGNodeStyleSetJustifyContent(root_child0, YGJustifyFlexStart);
   YGNodeStyleSetOverflow(root_child0, YGOverflowHidden);
-  YGNodeStyleSetPadding(root_child0, YGEdgeLeft, 100);
-  YGNodeStyleSetPadding(root_child0, YGEdgeTop, 100);
-  YGNodeStyleSetPadding(root_child0, YGEdgeRight, 100);
-  YGNodeStyleSetPadding(root_child0, YGEdgeBottom, 100);
+  YGNodeStyleSetPadding(root_child0, YGEdgeAll, 100);
   YGNodeSetContext(root_child0, &measureCount);
   YGNodeSetMeasureFunc(root_child0, _measure);
 
