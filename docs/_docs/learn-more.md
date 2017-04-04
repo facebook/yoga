@@ -15,7 +15,23 @@ Yoga aims to be compatible with Flexbox according to the [w3 specification](http
 
 Yoga has chosen to change the default values of some properties to better fit mobile layout use cases. The following CSS block describes the differences in default values from the [Flexbox w3 specification](https://www.w3.org/TR/css3-flexbox).
 
-<script src="https://gist.github.com/emilsjolander/f9b3981cab44c51afa9ac446b8fdb60c.js"></script>
+```css
+div {
+  box-sizing: border-box;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+  align-content: flex-start;
+
+  border-width: 0px;
+  margin: 0px;
+  padding: 0px;
+  min-width: 0px;
+}
+```
 
 We have set up a [JSFiddle](https://jsfiddle.net/emilsjolander/jckmwztt/) so you can see these default values in action.
 

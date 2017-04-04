@@ -6,15 +6,56 @@ permalink: /docs/api/android/
 ---
 
 To include the java bindings and `.so` libraries, add to your build:
-<script src="https://gist.github.com/rspencer01/e3cb51e789147b359d842aac6fa30f9f.js"></script>
 
-There is an easy interface to Yoga called `YogaLayout`.  This is a view group that lays out its children using Yoga.  We recommend looking at the sample app for details on its usage.  However, as an overview you can simply define XML layouts such as
-<script src="https://gist.github.com/rspencer01/c1964b98f0c60de7c49683a049ed0640.js"></script>
+```java
+compile 'com.facebook.yoga:yoga:1.2.0'
+```
+
+There is an easy interface to Yoga called `YogaLayout`.  This is a view group that lays out its children using Yoga.  We recommend looking at the sample app for details on its usage.  However, as an overview you can simply define XML layouts such as:
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<YogaLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yoga="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    yoga:align_items="stretch"
+    >
+  <YogaLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/sample_children_background"
+      yoga:margin_horizontal="10dp"
+      yoga:margin_top="5dp"
+      yoga:flex_direction="row"
+      yoga:align_items="center"
+      >
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_launcher"
+        yoga:flex="0"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/child_1_text"
+        android:textColor="@color/children_text"
+        yoga:flex="1"
+        yoga:margin_start="8dp"
+        />
+  </YogaLayout>
+</YogaLayout>
+```
 
 Note that there are some caveats, such as requiring the custom `YogaLayoutViewFactory` in order to have tags `YogaLayout` instead of `com.facebook.samples.yoga.YogaLayout`.
 
 To include this in your project, add to your build:
-<script src="https://gist.github.com/rspencer01/499a9e02185985bf3167f818d9c3398f.js"></script>
+
+```java
+compile 'com.facebook.yoga.android:yoga-layout:1.2.0'
+```
 
 ## layout\_width and layout\_height
 

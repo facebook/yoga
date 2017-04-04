@@ -10,25 +10,166 @@ permalink: /docs/api/java/
 
 Create a `YogaNode` via its default constructor and use `reset` if you want to pool and re-use nodes. The native memory of a `YogaNode` will automatically be freed when the node is garbage collected.
 
-<script src="https://gist.github.com/emilsjolander/8775de8c778eb99a05a38e8257f0b4a7.js"></script>
+```java
+YogaNode();
+void reset();
+```
 
 ### Children
 
 The following methods help manage the children of a node.
 
-<script src="https://gist.github.com/emilsjolander/5d1c64d8d3be7f7942435c4f5bec45a5.js"></script>
+```java
+int getChildCount();
+YogaNodeType getChildAt(int i);
+void addChildAt(YogaNodeType child, int i);
+YogaNodeType removeChildAt(int i);
+YogaNodeType getParent();
+int indexOf(YogaNodeType child);
+```
 
 ### Style getters & setters
 
 The large part of Yoga's API consists of setters and getters for styles. These all follow the same general structure. Bellow are the function and enums used to control the various styles. For an in depth guide to how each style works see the getting started guide.
 
-<script src="https://gist.github.com/emilsjolander/f94ca2aa69441a3060a7c9f5126f202f.js"></script>
+```java
+enum YogaDirection {
+  INHERIT,
+  LTR,
+  RTL
+}
+
+YogaDirection getStyleDirection();
+void setDirection(YogaDirection direction);
+
+enum YogaFlexDirection {
+  COLUMN,
+  COLUMN_REVERSE,
+  ROW,
+  ROW_REVERSE
+}
+
+YogaFlexDirection getFlexDirection();
+void setFlexDirection(YogaFlexDirection flexDirection);
+
+enum YogaJustify {
+  FLEX_START,
+  CENTER,
+  FLEX_END,
+  SPACE_BETWEEN,
+  SPACE_AROUND
+}
+
+YogaJustify getJustifyContent();
+void setJustifyContent(YogaJustify justifyContent);
+
+enum YogaAlign {
+  AUTO,
+  FLEX_START,
+  CENTER,
+  FLEX_END,
+  STRETCH
+}
+
+YogaAlign getAlignItems();
+void setAlignItems(YogaAlign alignItems);
+
+YogaAlign getAlignSelf();
+void setAlignSelf(YogaAlign alignSelf);
+
+YogaAlign getAlignContent();
+void setAlignContent(YogaAlign alignContent);
+
+enum YogaPositionType {
+  RELATIVE,
+  ABSOLUTE
+}
+
+YogaPositionType getPositionType();
+void setPositionType(YogaPositionType positionType);
+
+enum YogaWrap {
+  NO_WRAP,
+  WRAP
+}
+
+void setWrap(YogaWrap flexWrap);
+
+enum YogaOverflow {
+  VISIBLE,
+  HIDDEN,
+  SCROLL
+}
+
+YogaOverflow getOverflow();
+void setOverflow(YogaOverflow overflow);
+
+void setFlex(float flex);
+float getFlexGrow();
+void setFlexGrow(float flexGrow);
+float getFlexShrink();
+void setFlexShrink(float flexShrink);
+float getFlexBasis();
+void setFlexBasis(float flexBasis);
+
+enum YogaEdge {
+  LEFT,
+  TOP,
+  RIGHT,
+  BOTTOM,
+  START,
+  END,
+  HORIZONTAL,
+  VERTICAL,
+  ALL
+}
+
+float getMargin(YogaEdge edge);
+void setMargin(YogaEdge edge, float margin);
+
+float getPadding(YogaEdge edge);
+void setPadding(YogaEdge edge, float padding);
+
+float getBorder(YogaEdge edge);
+void setBorder(YogaEdge edge, float border);
+
+float getPosition(YogaEdge edge);
+void setPosition(YogaEdge edge, float position);
+
+float getWidth();
+void setWidth(float width);
+
+float getHeight();
+void setHeight(float height);
+
+float getMaxWidth();
+void setMaxWidth(float maxWidth);
+
+float getMinWidth();
+void setMinWidth(float minWidth);
+
+float getMaxHeight();
+void setMaxHeight(float maxHeight);
+
+float getMinHeight();
+void setMinHeight(float minHeight);
+
+float getAspectRatio();
+void setAspectRatio(float aspectRatio);
+```
 
 ### Layout results
 
 Once you have set up a tree of nodes with styles you will want to get the result of a layout calculation. Call `calculateLayout()` perform layout calculation. Once this function returns the results of the layout calculation is stored on each node. Traverse the tree and retrieve the values from each node.
 
-<script src="https://gist.github.com/emilsjolander/613a80ae11abce423a4806521e1e315b.js"></script>
+```java
+void calculateLayout();
+float getLayoutX();
+float getLayoutY();
+float getLayoutWidth();
+float getLayoutHeight();
+YogaDirection getLayoutDirection();
+```
 
 ### Custom measurements
 
@@ -38,22 +179,74 @@ Certain nodes need to ability to measure themselves, the most common example is 
 
 > A measure function can only be attached to a leaf node in the hierarchy.
 
-<script src="https://gist.github.com/emilsjolander/70fd958b87647abbba604956709a9026.js"></script>
+```java
+enum YogaMeasureMode {
+  UNDEFINED,
+  EXACTLY,
+  AT_MOST
+}
+
+interface YogaMeasureFunction {
+  long measure(
+      YogaNodeAPI node,
+      float width,
+      YogaMeasureMode widthMode,
+      float height,
+      YogaMeasureMode heightMode);
+}
+
+class YogaMeasureOutput {
+  static long make(int width, int height);
+}
+
+void setMeasureFunction(YogaMeasureFunction measureFunction);
+boolean isMeasureDefined();
+
+boolean isDirty();
+void dirty();
+```
 
 ### Data
 
 Data is important when integrating Yoga into another layout system. Data allows you to associate another object with a `YogaNode`. This data can then be retrieved from a `YogaNode` when for example its measure function is called. This is what enables Yoga to rely on the Android system implementations of text measurement in React Native.
 
-<script src="https://gist.github.com/emilsjolander/3f10f3fa91120960b71783780f528973.js"></script>
+```java
+void setData(Object data);
+Object getData();
+```
 
 ### Logging
 
 Yoga will by default log to stdout and stderr (or logcat on Android). You may however customize this to instead log to your own logger.
 
-<script src="https://gist.github.com/emilsjolander/6d012f5d48be0e98b7f9c2225c358f6e.js"></script>
+```java
+enum YogaLogLevel {
+  ERROR,
+  WARN,
+  INFO,
+  DEBUG,
+  VERBOSE
+}
+
+interface YogaLogger {
+  void log(YogaLogLevel level, String message);
+}
+
+void setLogger(YogaLogger logger);
+```
 
 ### Experiments
 
 Yoga has the concept of experiments. An experiment is a feature which is not yet stable. To enable a feature use the following functions. Once a feature has been tested and is ready to be released as a stable API we will remove its feature flag.
 
-<script src="https://gist.github.com/emilsjolander/97b2500918687826cdfe9429638f2d57.js"></script>
+```java
+enum YogaExperimentalFeature {
+  // Current experiments
+}
+
+static void setExperimentalFeatureEnabled(
+  YogaExperimentalFeature feature, 
+  boolean enabled);
+static boolean isExperimentalFeatureEnabled(
+  YogaExperimentalFeature feature);
+```

@@ -19,13 +19,22 @@ For now we recommend including Yoga as a [git submodule](https://git-scm.com/doc
 
 Yoga ships with an [iOS example](https://github.com/facebook/yoga/tree/master/YogaKit/YogaKitSample). To get it running:
 
-<script src="https://gist.github.com/emilsjolander/903b16185b24c957acc4cd250c6e73d9.js"></script>
+```sh
+$ git clone https://github.com/facebook/yoga.git
+$ cd open yoga/YogaKit/YogaKitSample/
+$ pod install
+$ open YogaKitSample.xcworkspace
+```
 
 #### Android
 
 Yoga ships with an [Android example too](https://github.com/facebook/yoga/tree/master/android/sample). To get it running on an attached device (or emulator):
 
-<script src="https://gist.github.com/rspencer01/a512f7cd24055c948675be15d48eba78.js"></script>
+```sh
+$ git clone https://github.com/facebook/yoga.git
+$ cd yoga
+$ buck install -r android/sample
+```
 
 Actually, this is more than just an example, and more a layout system for Android using Yoga in general (see `YogaLayout`).  For more information see the [Android API section](/yoga/docs/api/android).
 
@@ -35,4 +44,15 @@ Yoga uses [Buck](https://buckbuild.com/) as its build system. Buck is not requir
 
 If you are using Buck all you need to do is reference the language bindings you want to use in your `BUCK` file.
 
-<script src="https://gist.github.com/emilsjolander/895b4ec79425882b8d4676b6545d6943.js"></script>
+```sh
+deps = [
+  # C
+  '//path/to/submodule/yoga:yoga',
+  
+  # Java
+  '//path/to/submodule/yoga/java:jni',
+  
+  # Objective-C
+  '//path/to/submodule/yoga/YogaKit:YogaKit',
+]
+```
