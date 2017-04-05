@@ -21,7 +21,7 @@ static YGSize _measure(YGNodeRef node,
   }
 
   return YGSize{
-      width = 10, height = 10,
+      .width = 10, .height = 10,
   };
 }
 
