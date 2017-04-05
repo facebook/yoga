@@ -1,15 +1,15 @@
 
 
-.rougeHighlight { background-color: $code-bg; color: #93a1a1 }
+.rougeHighlight { background-color: $code-bg; color: #000 }
 .rougeHighlight .c { color: #586e75 } /* Comment */
 .rougeHighlight .err { color: #93a1a1 } /* Error */
 .rougeHighlight .g { color: #93a1a1 } /* Generic */
 .rougeHighlight .k { color: #859900 } /* Keyword */
 .rougeHighlight .l { color: #93a1a1 } /* Literal */
-.rougeHighlight .n { color: #93a1a1 } /* Name */
+.rougeHighlight .n { color: #795da3 } /* Name */
 .rougeHighlight .o { color: #859900 } /* Operator */
 .rougeHighlight .x { color: #cb4b16 } /* Other */
-.rougeHighlight .p { color: #93a1a1 } /* Punctuation */
+.rougeHighlight .p { color: #000000 } /* Punctuation */
 .rougeHighlight .cm { color: #586e75 } /* Comment.Multiline */
 .rougeHighlight .cp { color: #859900 } /* Comment.Preproc */
 .rougeHighlight .c1 { color: #72c02c; } /* Comment.Single */
@@ -20,7 +20,7 @@
 .rougeHighlight .gh { color: #cb4b16 } /* Generic.Heading */
 .rougeHighlight .gi { color: #859900 } /* Generic.Inserted */
 .rougeHighlight .go { color: #93a1a1 } /* Generic.Output */
-.rougeHighlight .gp { color: #93a1a1 } /* Generic.Prompt */
+.rougeHighlight .gp { color: #000000 } /* Generic.Prompt */
 .rougeHighlight .gs { color: #93a1a1; font-weight: bold } /* Generic.Strong */
 .rougeHighlight .gu { color: #cb4b16 } /* Generic.Subheading */
 .rougeHighlight .gt { color: #93a1a1 } /* Generic.Traceback */
@@ -41,11 +41,11 @@
 .rougeHighlight .ni { color: #cb4b16 } /* Name.Entity */
 .rougeHighlight .ne { color: #cb4b16 } /* Name.Exception */
 .rougeHighlight .nf { color: #268bd2 } /* Name.Function */
-.rougeHighlight .nl { color: #93a1a1 } /* Name.Label */
+.rougeHighlight .nl { color: #0086b3 } /* Name.Label */
 .rougeHighlight .nn { color: #93a1a1 } /* Name.Namespace */
 .rougeHighlight .nx { color: #93a1a1 } /* Name.Other */
 .rougeHighlight .py { color: #93a1a1 } /* Name.Property */
-.rougeHighlight .nt { color: #268bd2 } /* Name.Tag */
+.rougeHighlight .nt { color: #63a35c } /* Name.Tag */
 .rougeHighlight .nv { color: #268bd2 } /* Name.Variable */
 .rougeHighlight .ow { color: #859900 } /* Operator.Word */
 .rougeHighlight .w { color: #93a1a1 } /* Text.Whitespace */
@@ -72,11 +72,12 @@
 
 .highlighter-rouge {
   color: darken(#72c02c, 8%);
-  font: 800 12px/1.5em Hack, monospace;
+  font: 500 12px/1.8em "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   max-width: 100%;
 
   .rougeHighlight {
     border-radius: 3px;
+    border: 1px solid #ccc;
     margin: 20px 0;
     padding: 0px;
     overflow-x: scroll;
@@ -97,8 +98,9 @@
             flex: 1 1;
 
             &.gutter {
-              border-right: 1px solid lighten($code-bg, 10%);
-              color: lighten($code-bg, 15%);
+              border-right: 1px solid darken($code-bg, 10%);
+              color: darken($code-bg, 25%);
+              margin-left: 10px;
               margin-right: 10px;
               max-width: 40px;
               padding-right: 10px;
