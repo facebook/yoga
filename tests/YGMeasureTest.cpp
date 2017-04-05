@@ -179,7 +179,7 @@ TEST(YogaTest, dont_measure_when_min_equals_max_mixed_height_percent) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, measure_nodes_on_at_most_with_zero_space)
+TEST(YogaTest, measure_zero_space_should_grow)
 {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetHeight(root, 200);
@@ -204,7 +204,7 @@ TEST(YogaTest, measure_nodes_on_at_most_with_zero_space)
 
   YGNodeCalculateLayout(root, 282, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, measureCount);
+  ASSERT_EQ(0, measureCount);
   ASSERT_FLOAT_EQ(282, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
   ASSERT_FLOAT_EQ(210, YGNodeLayoutGetTop(root_child1));

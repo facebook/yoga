@@ -150,6 +150,11 @@ static const float kDefaultFlexGrow = 0.0f;
 static const float kDefaultFlexShrink = 0.0f;
 static const float kWebDefaultFlexShrink = 1.0f;
 
+static YGSize gYGSizeZero = {
+    .width = 0.0f,
+    .height = 0.0f,
+};
+
 static YGNode gYGNodeDefaults = {
     .parent = NULL,
     .children = NULL,
@@ -1694,18 +1699,13 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(const YGNodeRef node,
         node, YGFlexDirectionRow, availableWidth - marginAxisRow, parentWidth, parentWidth);
     node->layout.measuredDimensions[YGDimensionHeight] = YGNodeBoundAxis(
         node, YGFlexDirectionColumn, availableHeight - marginAxisColumn, parentHeight, parentWidth);
-  } else if ((innerWidth <= 0.0f && widthMeasureMode == YGMeasureModeExactly) ||
-             (innerHeight <= 0.0f && heightMeasureMode == YGMeasureModeExactly)) {
-    // Don't bother sizing the text if there's no horizontal or vertical
-    // space.
-    node->layout.measuredDimensions[YGDimensionWidth] =
-        YGNodeBoundAxis(node, YGFlexDirectionRow, 0.0f, availableWidth, availableWidth);
-    node->layout.measuredDimensions[YGDimensionHeight] =
-        YGNodeBoundAxis(node, YGFlexDirectionColumn, 0.0f, availableHeight, availableWidth);
   } else {
-    // Measure the text under the current constraints.
     const YGSize measuredSize =
-        node->measure(node, innerWidth, widthMeasureMode, innerHeight, heightMeasureMode);
+        (innerWidth <= 0.0f || innerHeight <= 0.0f)
+            ? // Don't bother sizing the text if there's no horizontal or vertical space.
+            gYGSizeZero
+            : // Measure the text under the current constraints.
+            node->measure(node, innerWidth, widthMeasureMode, innerHeight, heightMeasureMode);
 
     node->layout.measuredDimensions[YGDimensionWidth] =
         YGNodeBoundAxis(node,
