@@ -1700,11 +1700,8 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(const YGNodeRef node,
     node->layout.measuredDimensions[YGDimensionHeight] = YGNodeBoundAxis(
         node, YGFlexDirectionColumn, availableHeight - marginAxisColumn, parentHeight, parentWidth);
   } else {
+    // Measure the text under the current constraints.
     const YGSize measuredSize =
-        (innerWidth <= 0.0f || innerHeight <= 0.0f)
-            ? // Don't bother sizing the text if there's no horizontal or vertical space.
-            gYGSizeZero
-            : // Measure the text under the current constraints.
             node->measure(node, innerWidth, widthMeasureMode, innerHeight, heightMeasureMode);
 
     node->layout.measuredDimensions[YGDimensionWidth] =
