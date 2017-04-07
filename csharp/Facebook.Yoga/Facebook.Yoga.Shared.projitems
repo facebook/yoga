@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Native.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaAlign.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaBaselineFunc.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)YogaConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaDimension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)YogaDirection.cs" />

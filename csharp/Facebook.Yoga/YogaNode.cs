@@ -24,43 +24,10 @@ using AOT;
 
 namespace Facebook.Yoga
 {
-    public class YogaConfig
-    {
-
-        private Native.YGConfigHandle _ygConfig;
-
-        public YogaConfig()
-        {
-            _ygConfig = Native.YGConfigNew();
-            if (_ygConfig.IsInvalid)
-            {
-                throw new InvalidOperationException("Failed to allocate native memory");
-            }
-        }
-
-        internal Native.YGConfigHandle Handle {
-            get {
-                return _ygConfig;
-            }
-        }
-
-        public void SetExperimentalFeatureEnabled(
-            YogaExperimentalFeature feature,
-            bool enabled)
-        {
-            Native.YGConfigSetExperimentalFeatureEnabled(_ygConfig, feature, enabled);
-        }
-
-        public bool IsExperimentalFeatureEnabled(YogaExperimentalFeature feature)
-        {
-            return Native.YGConfigIsExperimentalFeatureEnabled(_ygConfig, feature);
-        }
-
-    }
-
     public partial class YogaNode : IEnumerable<YogaNode>
     {
         private Native.YGNodeHandle _ygNode;
+        private YogaConfig _config;
         private WeakReference _parent;
         private List<YogaNode> _children;
         private MeasureFunction _measureFunction;
@@ -89,7 +56,15 @@ namespace Facebook.Yoga
         {
             YogaLogger.Initialize();
 
-            _ygNode = Native.YGNodeNewWithConfig(config.Handle);
+            if (config != null)
+            {
+                _config = config;
+                _ygNode = Native.YGNodeNewWithConfig(_config.Handle);
+            }
+            else
+            {
+                _ygNode = Native.YGNodeNew();
+            }
             if (_ygNode.IsInvalid)
             {
                 throw new InvalidOperationException("Failed to allocate native memory");
@@ -97,7 +72,7 @@ namespace Facebook.Yoga
         }
 
         public YogaNode(YogaNode srcNode)
-            : this()
+            : this(srcNode._config)
         {
             CopyStyle(srcNode);
         }

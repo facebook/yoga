@@ -139,6 +139,9 @@ namespace Facebook.Yoga
         public static extern int YGNodeGetInstanceCount();
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int YGConfigGetInstanceCount();
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGConfigSetExperimentalFeatureEnabled(
             YGConfigHandle config,
             YogaExperimentalFeature feature,
@@ -148,6 +151,19 @@ namespace Facebook.Yoga
         public static extern bool YGConfigIsExperimentalFeatureEnabled(
             YGConfigHandle config,
             YogaExperimentalFeature feature);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGConfigSetUseWebDefaults(
+            YGConfigHandle config,
+            bool useWebDefaults);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool YGConfigGetUseWebDefaults(YGConfigHandle config);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGConfigSetPointScaleFactor(
+            YGConfigHandle config,
+            float pixelsInPoint);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeInsertChild(
