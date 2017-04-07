@@ -91,15 +91,20 @@ public class YogaLayout extends ViewGroup {
     mYogaNode.setData(this);
     mYogaNode.setMeasureFunction(new ViewMeasureFunction());
 
-    final LayoutParams layoutParams = new LayoutParams(context, attrs);
+    LayoutParams layoutParams = null;
+    if (attrs != null) {
+      layoutParams = new LayoutParams(context, attrs);
+    } else {
+      layoutParams = (LayoutParams) generateDefaultLayoutParams();
+    }
     applyLayoutParams(layoutParams, mYogaNode, this);
   }
 
-  YogaNode getYogaNode() {
+  public YogaNode getYogaNode() {
     return mYogaNode;
   }
 
-  YogaNode getYogaNodeForView(View view) {
+  public YogaNode getYogaNodeForView(View view) {
     return mYogaNodes.get(view);
   }
 
@@ -154,7 +159,11 @@ public class YogaLayout extends ViewGroup {
     if (child instanceof YogaLayout) {
       childNode = ((YogaLayout) child).getYogaNode();
     } else {
-      childNode = new YogaNode();
+      if(mYogaNodes.containsKey(child)) {
+        childNode = mYogaNodes.get(child);
+      } else {
+        childNode = new YogaNode();
+      }
 
       childNode.setData(child);
       childNode.setMeasureFunction(new ViewMeasureFunction());
