@@ -196,18 +196,11 @@ TEST(YogaTest, measure_zero_space_should_grow)
 
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNew();
-  YGNodeStyleSetWidth(root_child1, 10);
-  YGNodeStyleSetHeight(root_child1, 10);
-
-  YGNodeInsertChild(root, root_child1, 1);
-
   YGNodeCalculateLayout(root, 282, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(0, measureCount);
   ASSERT_FLOAT_EQ(282, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
-  ASSERT_FLOAT_EQ(210, YGNodeLayoutGetTop(root_child1));
 
   YGNodeFreeRecursive(root);
 }
