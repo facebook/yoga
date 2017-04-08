@@ -1697,7 +1697,7 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(const YGNodeRef node,
   } else {
     // Measure the text under the current constraints.
     const YGSize measuredSize =
-            node->measure(node, innerWidth, widthMeasureMode, innerHeight, heightMeasureMode);
+        node->measure(node, innerWidth, widthMeasureMode, innerHeight, heightMeasureMode);
 
     node->layout.measuredDimensions[YGDimensionWidth] =
         YGNodeBoundAxis(node,
