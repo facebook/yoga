@@ -2302,11 +2302,11 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
         currentRelativeChild = currentRelativeChild->nextChild;
       }
-
+    float sizeConsumedOnCurrentLineIncludingMinConstraint = 0;
       totalFlexShrinkScaledFactors += deltaFlexShrinkScaledFactors;
       totalFlexGrowFactors += deltaFlexGrowFactors;
       remainingFreeSpace += deltaFreeSpace;
-    float sizeConsumedOnCurrentLineIncludingMinConstraint = 0;
+
       // Second pass: resolve the sizes of the flexible items
       deltaFreeSpace = 0;
       currentRelativeChild = firstRelativeChild;
