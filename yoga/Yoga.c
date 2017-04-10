@@ -1319,8 +1319,14 @@ static void YGNodeSetPosition(const YGNodeRef node,
                               const float parentWidth) {
   const YGFlexDirection mainAxis = YGResolveFlexDirection(node->style.flexDirection, direction);
   const YGFlexDirection crossAxis = YGFlexDirectionCross(mainAxis, direction);
-  const float relativePositionMain = YGNodeRelativePosition(node, mainAxis, mainSize);
-  const float relativePositionCross = YGNodeRelativePosition(node, crossAxis, crossSize);
+  const bool isRootNodeAndRtl = direction == YGDirectionRTL && YGFloatIsUndefined(crossSize);
+
+  const float relativePositionMain =
+      (YGFlexDirectionIsRow(mainAxis) && isRootNodeAndRtl ? -1 : 1) *
+      YGNodeRelativePosition(node, mainAxis, mainSize);
+  const float relativePositionCross =
+      (YGFlexDirectionIsRow(crossAxis) && isRootNodeAndRtl ? -1 : 1) *
+      YGNodeRelativePosition(node, crossAxis, crossSize);
 
   node->layout.position[leading[mainAxis]] =
       YGNodeLeadingMargin(node, mainAxis, parentWidth) + relativePositionMain;

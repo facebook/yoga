@@ -719,5 +719,31 @@ namespace Facebook.Yoga
             Assert.AreEqual(40f, root_child0.LayoutHeight);
         }
 
+        [Test]
+        public void Test_position_root_with_rtl_should_position_withoutdirection()
+        {
+            YogaConfig config = new YogaConfig();
+
+            YogaNode root = new YogaNode(config);
+            root.Left = 72;
+            root.Width = 52;
+            root.Height = 52;
+            root.StyleDirection = YogaDirection.LTR;
+            root.CalculateLayout();
+
+            Assert.AreEqual(72f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(52f, root.LayoutWidth);
+            Assert.AreEqual(52f, root.LayoutHeight);
+
+            root.StyleDirection = YogaDirection.RTL;
+            root.CalculateLayout();
+
+            Assert.AreEqual(72f, root.LayoutX);
+            Assert.AreEqual(0f, root.LayoutY);
+            Assert.AreEqual(52f, root.LayoutWidth);
+            Assert.AreEqual(52f, root.LayoutHeight);
+        }
+
     }
 }

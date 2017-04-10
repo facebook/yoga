@@ -703,4 +703,29 @@ public class YGAbsolutePositionTest {
     assertEquals(40f, root_child0.getLayoutHeight(), 0.0f);
   }
 
+  @Test
+  public void test_position_root_with_rtl_should_position_withoutdirection() {
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
+    root.setPosition(YogaEdge.LEFT, 72f);
+    root.setWidth(52f);
+    root.setHeight(52f);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(72f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(52f, root.getLayoutWidth(), 0.0f);
+    assertEquals(52f, root.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(72f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(52f, root.getLayoutWidth(), 0.0f);
+    assertEquals(52f, root.getLayoutHeight(), 0.0f);
+  }
+
 }
