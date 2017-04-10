@@ -2111,6 +2111,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     // either set the dimensions of the node if none already exist or to compute
     // the remaining space left for the flexible children.
     float sizeConsumedOnCurrentLine = 0;
+    float sizeConsumedOnCurrentLineIncludingMinConstraint = 0;
 
     float totalFlexGrowFactors = 0;
     float totalFlexShrinkScaledFactors = 0;
