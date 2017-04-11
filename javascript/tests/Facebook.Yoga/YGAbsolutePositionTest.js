@@ -758,3 +758,32 @@ it("absolute_layout_align_items_and_justify_content_center_and_right_position", 
     config.free();
   }
 });
+it("position_root_with_rtl_should_position_withoutdirection", function () {
+  var config = Yoga.Config.create();
+
+  try {
+    var root = Yoga.Node.create(config);
+    root.setPosition(Yoga.EDGE_LEFT, 72);
+    root.setWidth(52);
+    root.setHeight(52);
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+
+    console.assert(72 === root.getComputedLeft(), "72 === root.getComputedLeft() (" + root.getComputedLeft() + ")");
+    console.assert(0 === root.getComputedTop(), "0 === root.getComputedTop() (" + root.getComputedTop() + ")");
+    console.assert(52 === root.getComputedWidth(), "52 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
+    console.assert(52 === root.getComputedHeight(), "52 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
+
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_RTL);
+
+    console.assert(72 === root.getComputedLeft(), "72 === root.getComputedLeft() (" + root.getComputedLeft() + ")");
+    console.assert(0 === root.getComputedTop(), "0 === root.getComputedTop() (" + root.getComputedTop() + ")");
+    console.assert(52 === root.getComputedWidth(), "52 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
+    console.assert(52 === root.getComputedHeight(), "52 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
+  } finally {
+    if (typeof root !== "undefined") {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});

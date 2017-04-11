@@ -713,3 +713,29 @@ TEST(YogaTest, absolute_layout_align_items_and_justify_content_center_and_right_
 
   YGConfigFree(config);
 }
+
+TEST(YogaTest, position_root_with_rtl_should_position_withoutdirection) {
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPosition(root, YGEdgeLeft, 72);
+  YGNodeStyleSetWidth(root, 52);
+  YGNodeStyleSetHeight(root, 52);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(72, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(52, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(52, YGNodeLayoutGetHeight(root));
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+
+  ASSERT_FLOAT_EQ(72, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(52, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(52, YGNodeLayoutGetHeight(root));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
