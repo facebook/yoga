@@ -6,13 +6,13 @@ apply plugin: 'maven-publish'
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
 
-version = '1.4.0'
+version = '1.4.1'
 group = 'com.facebook.yoga'
 
 // We currently build the native libraries with buck and bundle them together
 // at this point into the AAR
 task buckBuildAndCopy(type: Exec) {
-    commandLine '../scripts/build_natives_for_gradle.sh'
+    commandLine "$rootDir/scripts/build_natives_for_gradle.sh"
 }
 
 android {
