@@ -40,7 +40,7 @@ public class YogaNodeTest {
     child2.setWidth(40);
     child2.setHeight(40);
     child2.setBaselineFunction(new YogaBaselineFunction() {
-        public float baseline(YogaNodeAPI node, float width, float height) {
+        public float baseline(YogaNode node, float width, float height) {
           return 0;
         }
     });
@@ -57,7 +57,7 @@ public class YogaNodeTest {
     final YogaNode node = new YogaNode();
     node.setMeasureFunction(new YogaMeasureFunction() {
         public long measure(
-            YogaNodeAPI node,
+            YogaNode node,
             float width,
             YogaMeasureMode widthMode,
             float height,
@@ -75,7 +75,7 @@ public class YogaNodeTest {
     final YogaNode node = new YogaNode();
     node.setMeasureFunction(new YogaMeasureFunction() {
         public long measure(
-            YogaNodeAPI node,
+            YogaNode node,
             float width,
             YogaMeasureMode widthMode,
             float height,
@@ -93,7 +93,7 @@ public class YogaNodeTest {
     final YogaNode node = new YogaNode();
     node.setMeasureFunction(new YogaMeasureFunction() {
         public long measure(
-            YogaNodeAPI node,
+            YogaNode node,
             float width,
             YogaMeasureMode widthMode,
             float height,
@@ -111,7 +111,7 @@ public class YogaNodeTest {
     final YogaNode node = new YogaNode();
     node.setMeasureFunction(new YogaMeasureFunction() {
         public long measure(
-            YogaNodeAPI node,
+            YogaNode node,
             float width,
             YogaMeasureMode widthMode,
             float height,

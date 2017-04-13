@@ -188,7 +188,7 @@ enum YogaMeasureMode {
 
 interface YogaMeasureFunction {
   long measure(
-      YogaNodeAPI node,
+      YogaNode node,
       float width,
       YogaMeasureMode widthMode,
       float height,

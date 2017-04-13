@@ -37,7 +37,7 @@ import com.facebook.yoga.YogaMeasureFunction;
 import com.facebook.yoga.YogaMeasureMode;
 import com.facebook.yoga.YogaMeasureOutput;
 import com.facebook.yoga.YogaNode;
-import com.facebook.yoga.YogaNodeAPI;
+import com.facebook.yoga.YogaNode;
 import com.facebook.yoga.YogaOverflow;
 import com.facebook.yoga.YogaPositionType;
 import com.facebook.yoga.YogaWrap;
@@ -789,7 +789,7 @@ public class YogaLayout extends ViewGroup {
      * @return A measurement output ({@code YogaMeasureOutput}) for the node
      */
     public long measure(
-        YogaNodeAPI node,
+        YogaNode node,
         float width,
         YogaMeasureMode widthMode,
         float height,
