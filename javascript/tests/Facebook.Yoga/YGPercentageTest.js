@@ -1126,8 +1126,6 @@ it("percent_within_flex_grow", function () {
 it("percentage_container_in_wrapping_container", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_MIN_FLEX_FIX, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
