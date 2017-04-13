@@ -53,8 +53,8 @@ before_install:
     if [[ $TARGET = "js" ]]; then
       wget -O /tmp/emsdk-portable.tar.gz https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz &&
       tar xf /tmp/emsdk-portable.tar.gz -C /tmp/ &&
-      /tmp/emsdk_portable/emsdk install latest >& /dev/null &&
-      /tmp/emsdk_portable/emsdk activate latest
+      /tmp/emsdk-portable/emsdk install latest 2>&1 | grep -v '^x ' &&
+      /tmp/emsdk-portable/emsdk activate latest
     fi
 
   # Android
@@ -77,7 +77,7 @@ before_install:
       cd javascript &&
       npm install &&
       unset CC && unset CXX && unset LINK &&
-      source /tmp/emsdk_portable/emsdk_env.sh &&
+      source /tmp/emsdk-portable/emsdk_env.sh &&
       npm run build:browser
     ) fi
 
