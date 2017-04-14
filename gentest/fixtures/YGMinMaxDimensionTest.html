@@ -30,19 +30,15 @@
   <div style="width: 50px; height: 50px;"></div>
 </div>
 
-<div id="flex_grow_to_min" style="min-height: 100px; max-height: 500px; width: 100px;">
+<div id="flex_grow_to_min" experiments="MinFlexFix" style="min-height: 100px; max-height: 500px; width: 100px;">
   <div style="flex-grow: 1; flex-shrink: 1;"></div>
   <div style="height: 50px;"></div>
 </div>
 
-<div id="flex_grow_skip_child" style="width: 100px; height: 100px; background-color: white; flex-direction: row; align-items: flex-start;">
+<div id="flex_grow_in_at_most_container" experiments="MinFlexFix" style="width: 100px; height: 100px; background-color: white; flex-direction: row; align-items: flex-start;">
   <div style="flex-direction: row;">
-    <div style="height: 100px; flex-grow: 1; flex-basis: 0px;"></div>
+    <div style="flex-grow: 1; flex-basis: 0px;"></div>
   </div>
-</div>
-
-<div id="flex_grow_child" style="flex-direction: row;">
-  <div style="height: 100px; flex-grow: 1; flex-basis: 0px;"></div>
 </div>
 
 <div id="flex_grow_within_max_width" style="width: 200px; height: 100px;">
@@ -63,11 +59,6 @@
 </div>
 
 <div id="flex_grow_within_constrained_min_column" style="min-height: 100px;">
-  <div style="flex-grow:1;"></div>
-  <div style="height: 50px;"></div>
-</div>
-
-<div id="flex_grow_within_constrained_min_max_column" style="min-height: 100px; max-height: 200px">
   <div style="flex-grow:1;"></div>
   <div style="height: 50px;"></div>
 </div>
