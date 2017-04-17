@@ -372,6 +372,10 @@ static void YGAttachNodesFromHierachy(id<YGLayoutEntity> const entity)
     if (!YGNodeHasExactSameChildren(node, subEntitiesToInclude)) {
       YGRemoveAllChildren(node);
       for (int i=0; i<subEntitiesToInclude.count; i++) {
+        if (YGNodeGetParent(subEntitiesToInclude[i].yoga.node)) {
+          YGNodeRemoveChild(YGNodeGetParent(subEntitiesToInclude[i].yoga.node),
+                            subEntitiesToInclude[i].yoga.node);
+        }
         YGNodeInsertChild(node, subEntitiesToInclude[i].yoga.node, i);
       }
     }
