@@ -35,6 +35,11 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
 @interface YGLayout : NSObject
 
 /**
+  Returns a new layout managing the entity passed (weakly referenced)
+ */
+- (instancetype)initWithEntity:(id<YGLayoutEntity>)entity NS_DESIGNATED_INITIALIZER;
+
+/**
   The property that decides if we should include this view when calculating layout. Defaults to YES.
  */
 @property (nonatomic, readwrite, assign, setter=setIncludedInLayout:) BOOL isIncludedInLayout;

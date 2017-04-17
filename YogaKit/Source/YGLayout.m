@@ -7,7 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import "YGLayout+Private.h"
+#import "YGLayout.h"
+#import <yoga/Yoga.h>
 
 #define YG_PROPERTY(type, lowercased_name, capitalized_name)    \
 - (type)lowercased_name                                         \
@@ -100,6 +101,7 @@ static YGConfigRef globalConfig;
 
 @interface YGLayout ()
 
+@property (nonatomic, assign, readonly) YGNodeRef node;
 @property (nonatomic, weak, readonly) id<YGLayoutEntity> entity;
 
 @end
