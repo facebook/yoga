@@ -576,6 +576,20 @@ namespace Facebook.Yoga
             Native.YGNodeRemoveChild(_ygNode, child._ygNode);
         }
 
+        public void AddChild(YogaNode child)
+        {
+            Insert(Count, child);
+        }
+
+        public void RemoveChild(YogaNode child)
+        {
+            int index = IndexOf(child);
+            if (index >= 0)
+            {
+                RemoveAt(IndexOf(child));
+            }
+        }
+
         public void Clear()
         {
             if (_children != null)
