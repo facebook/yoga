@@ -6,12 +6,6 @@ apply plugin: 'maven-publish'
 version = '1.4.2'
 group = 'com.facebook.yoga'
 
-// We currently build the native libraries with buck and bundle them together
-// at this point into the AAR
-task buckBuildAndCopy(type: Exec) {
-    commandLine "$rootDir/scripts/build_natives_for_gradle.sh"
-}
-
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -19,6 +13,22 @@ android {
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
+
+        ndk {
+            abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+        }
+
+        externalNativeBuild {
+            cmake {
+                arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static'
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
+        }
     }
 
     compileOptions {
@@ -35,8 +45,6 @@ android {
         }
     }
 }
-
-preBuild.dependsOn buckBuildAndCopy
 
 dependencies {
     compile 'com.google.code.findbugs:jsr305:3.0.1'
