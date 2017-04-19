@@ -21,7 +21,7 @@ prebuilt_cxx_library(
 
 cxx_library(
     name = "fbjni",
-    srcs = glob(["**/*.cpp"]),
+    srcs = glob(["src/main/cpp/**/*.cpp"]),
     compiler_flags = [
         "-DLOG_TAG=\"libfb\"",
         "-DDISABLE_CPUCAP",
@@ -35,7 +35,7 @@ cxx_library(
         "-Wno-unused-parameter",
         "-std=c++11",
     ],
-    exported_headers = subdir_glob([("include", "**/*.h")]),
+    exported_headers = subdir_glob([("src/main/cpp/include", "**/*.h")]),
     header_namespace = "",
     visibility = ["PUBLIC"],
     deps = [
