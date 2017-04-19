@@ -243,6 +243,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\yoga\Yoga.h" />
+    <ClInclude Include="..\..\yoga\YGEnums.c" />
     <ClInclude Include="..\..\yoga\YGMacros.h" />
     <ClInclude Include="..\..\yoga\YGNodeList.h" />
     <ClInclude Include="resource.h" />
@@ -252,6 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\yoga\Yoga.c" />
+    <ClCompile Include="..\..\yoga\YGEnums.c" />
     <ClCompile Include="..\..\yoga\YGNodeList.c" />
     <ClCompile Include="YGInterop.cpp" />
     <ClCompile Include="dllmain.cpp">
