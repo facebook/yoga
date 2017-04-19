@@ -41,6 +41,15 @@
   </div>
 </div>
 
+<div id="flex_grow_child" style="flex-direction: row;">
+  <div style="height: 100px; flex-grow: 1; flex-basis: 0px;"></div>
+</div>
+
+<div id="flex_grow_within_constrained_min_max_column" style="min-height: 100px; max-height: 200px">
+  <div style="flex-grow:1;"></div>
+  <div style="height: 50px;"></div>
+</div>
+
 <div id="flex_grow_within_max_width" style="width: 200px; height: 100px;">
   <div style="flex-direction: row; max-width: 100px;">
     <div style="height: 20px; flex-grow: 1;"></div>
