@@ -3,9 +3,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'maven-publish'
 
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'
-
 version = '1.4.2'
 group = 'com.facebook.yoga'
 
@@ -16,17 +13,17 @@ task buckBuildAndCopy(type: Exec) {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 19
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility rootProject.targetCompatibilityVersion
+        sourceCompatibility rootProject.sourceCompatibilityVersion
     }
 
     sourceSets {
@@ -42,9 +39,9 @@ android {
 preBuild.dependsOn buckBuildAndCopy
 
 dependencies {
-    compile(name: 'jsr305')
-    compile(name: 'soloader-0.1.0', ext: 'aar')
-    provided(project(':yoga:proguard-annotations'))
+    compile 'com.google.code.findbugs:jsr305:3.0.1'
+    compile 'com.facebook.soloader:soloader:0.2.0'
+    provided project(':yoga:proguard-annotations')
 }
 
 task sourcesJar(type: Jar) {
@@ -65,7 +62,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 ext {
-    bintrayName = "com.facebook.yoga:yoga"
+    bintrayName = 'com.facebook.yoga:yoga'
 }
 
 apply from: rootProject.file('gradle/android-jcenter-install.gradle')

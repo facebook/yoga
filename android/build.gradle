@@ -1,31 +1,28 @@
-apply plugin: "com.jfrog.bintray"
+apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'maven-publish'
-
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'
 
 version = '1.4.1'
 group = 'com.facebook.yoga.android'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 19
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility rootProject.targetCompatibilityVersion
+        sourceCompatibility rootProject.sourceCompatibilityVersion
     }
 }
 
 dependencies {
-    compile 'com.facebook.yoga:yoga:1.4.1'
+    compile project(':yoga')
 }
 
 task sourcesJar(type: Jar) {
@@ -46,7 +43,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 ext {
-    bintrayName = "com.facebook.yoga.android:yoga-layout"
+    bintrayName = 'com.facebook.yoga.android:yoga-layout'
 }
 
 apply from: rootProject.file('gradle/android-jcenter-install.gradle')
