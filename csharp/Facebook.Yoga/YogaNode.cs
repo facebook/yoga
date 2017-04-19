@@ -447,7 +447,7 @@ namespace Facebook.Yoga
             }
         }
 
-        public float StyleAspectRatio
+        public float AspectRatio
         {
             get
             {
