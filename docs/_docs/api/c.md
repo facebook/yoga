@@ -28,7 +28,7 @@ The following functions help manage the children of a node.
 void YGNodeInsertChild(YGNodeRef node, YGNodeRef child, uint32_t index);
 void YGNodeRemoveChild(YGNodeRef node, YGNodeRef child);
 YGNodeRef YGNodeGetChild(YGNodeRef node, uint32_t index);
-uint32_t YGNodeChildCount(YGNodeRef node);
+uint32_t YGNodeGetChildCount(YGNodeRef node);
 ```
 
 ### Style getters & setters
