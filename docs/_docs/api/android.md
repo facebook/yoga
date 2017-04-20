@@ -71,7 +71,7 @@ RTL locales are supported by default.  That is, unless you explicitly set the `y
 
 ## Attributes
 
-The list of all attributes can be found in [attrs.xml](https://github.com/facebook/yoga/blob/master/android/sample/res/com/facebook/samples/yoga/res/values/attrs.xml), but logically map from the Yoga properties.
+The list of all attributes can be found in [attrs.xml](https://github.com/facebook/yoga/blob/master/android/src/main/res/values/attrs.xml), but logically map from the Yoga properties.
 
 ## Auto margins
 
