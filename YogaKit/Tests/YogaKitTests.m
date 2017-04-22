@@ -21,7 +21,8 @@
 - (void)testConfigureLayoutIsNoOpWithNilBlock
 {
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-  XCTAssertNoThrow([view configureLayoutWithBlock:nil]);
+  id block = nil;
+  XCTAssertNoThrow([view configureLayoutWithBlock:block]);
 }
 
 - (void)testConfigureLayoutBlockWorksWithValidBlock
