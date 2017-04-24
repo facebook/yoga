@@ -235,6 +235,20 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
   YGApplyLayoutToViewHierarchy(self.view, preserveOrigin);
 }
 
+- (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin dimensionFlexibility:(YGDimensionFlexibility)dimensionFlexibility
+{
+  CGSize size = self.view.bounds.size;
+  if (dimensionFlexibility & YGDimensionFlexibilityFlexibleWidth) {
+    size.width = YGUndefined;
+  }
+  if (dimensionFlexibility & YGDimensionFlexibilityFlexibleHeigth) {
+    size.height = YGUndefined;
+  }
+  [self calculateLayoutWithSize:size];
+  YGApplyLayoutToViewHierarchy(self.view, NO);
+}
+
+
 - (CGSize)intrinsicSize
 {
   const CGSize constrainedSize = {

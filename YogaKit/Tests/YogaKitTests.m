@@ -154,6 +154,54 @@
   XCTAssertEqual(25, view2.frame.origin.y);
 }
 
+- (void)testContainerWithFlexibleWidthGetsCorrectlySized
+{
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,200)];
+  container.yoga.isEnabled = YES;
+
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  view.yoga.isEnabled = YES;
+  view.yoga.width = 100;
+  view.yoga.height = 100;
+  [container addSubview:view];
+
+  [container.yoga applyLayoutPreservingOrigin:YES dimensionFlexibility:YGDimensionFlexibilityFlexibleWidth];
+  XCTAssertEqual(100, container.frame.size.width);
+  XCTAssertEqual(200, container.frame.size.height);
+}
+
+- (void)testContainerWithFlexibleHeightGetsCorrectlySized
+{
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,200)];
+  container.yoga.isEnabled = YES;
+
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  view.yoga.isEnabled = YES;
+  view.yoga.width = 100;
+  view.yoga.height = 100;
+  [container addSubview:view];
+
+  [container.yoga applyLayoutPreservingOrigin:YES dimensionFlexibility:YGDimensionFlexibilityFlexibleHeigth];
+  XCTAssertEqual(200, container.frame.size.width);
+  XCTAssertEqual(100, container.frame.size.height);
+}
+
+- (void)testContainerWithFlexibleWidthAndHeightGetsCorrectlySized
+{
+  UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0,0,200,200)];
+  container.yoga.isEnabled = YES;
+
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  view.yoga.isEnabled = YES;
+  view.yoga.width = 100;
+  view.yoga.height = 100;
+  [container addSubview:view];
+
+  [container.yoga applyLayoutPreservingOrigin:YES dimensionFlexibility:YGDimensionFlexibilityFlexibleWidth | YGDimensionFlexibilityFlexibleHeigth];
+  XCTAssertEqual(100, container.frame.size.width);
+  XCTAssertEqual(100, container.frame.size.height);
+}
+
 - (void)testMarkingDirtyOnlyWorksOnLeafNodes
 {
   UIView *container = [[UIView alloc] initWithFrame:CGRectZero];

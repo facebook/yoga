@@ -10,6 +10,11 @@
 #import <UIKit/UIKit.h>
 #import <yoga/YGEnums.h>
 
+typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
+  YGDimensionFlexibilityFlexibleWidth = 1 << 0,
+  YGDimensionFlexibilityFlexibleHeigth = 1 << 1,
+};
+
 @interface YGLayout : NSObject
 
 /**
@@ -94,6 +99,13 @@
  */
 - (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin
     NS_SWIFT_NAME(applyLayout(preservingOrigin:));
+
+/**
+ Perform a layout calculation and update the frames of the views in the hierarchy with the results.
+ If the origin is not preserved, the root view's layout results will applied from {0,0}.
+ */
+- (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin dimensionFlexibility:(YGDimensionFlexibility)dimensionFlexibility
+    NS_SWIFT_NAME(applyLayout(preservingOrigin:dimensionFlexibility:));
 
 /**
  Returns the size of the view if no constraints were given. This could equivalent to calling [self
