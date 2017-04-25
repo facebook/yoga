@@ -9,6 +9,7 @@
 
 namespace Facebook.Yoga
 {
+    [Flags]
     public enum YogaPrintOptions
     {
         Layout = 1,
