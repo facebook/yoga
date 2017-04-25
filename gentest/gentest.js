@@ -420,17 +420,33 @@ function getDefaultStyleValue(style) {
   return getComputedStyle(node, null).getPropertyValue(style);
 }
 
+function getExpectation(child, name, nativeValue) {
+  if (!child.hasAttribute('expect-' + name))
+    return nativeValue;
+
+  var match = child.getAttribute('expect-' + name).match(/^([0-9.]+) instead of ([0-9.]+)/);
+
+  if (!match)
+    throw new Error('Invalid syntax for expect-' + name);
+
+  if (nativeValue !== Number(match[2]))
+    throw new Error('Native value doesn\'t match the expectations for expect-' + name + ' (got ' + nativeValue + ' instead of ' + match[2] + ')');
+
+  return Number(match[1]);
+}
+
 function calculateTree(root) {
   var rootLayout = [];
 
   for (var i = 0; i < root.children.length; i++) {
     var child = root.children[i];
+
     rootLayout.push({
       name: child.id !== '' ? child.id : 'INSERT_NAME_HERE',
-      left: child.offsetLeft + child.parentNode.clientLeft,
-      top: child.offsetTop + child.parentNode.clientTop,
-      width: child.offsetWidth,
-      height: child.offsetHeight,
+      left: getExpectation(child, `left`, child.offsetLeft + child.parentNode.clientLeft),
+      top: getExpectation(child, `top`, child.offsetTop + child.parentNode.clientTop),
+      width: getExpectation(child, `width`, child.offsetWidth),
+      height: getExpectation(child, `height`, child.offsetHeight),
       children: calculateTree(child),
       style: getYogaStyle(child),
       declaredStyle: child.style,

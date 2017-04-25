@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'watir-webdriver'
+require 'watir'
 require 'fileutils'
 
 caps = Selenium::WebDriver::Remote::Capabilities.chrome(
@@ -47,8 +47,6 @@ Dir['fixtures/*.html'].each do |file|
   f = File.open("../csharp/tests/Facebook.Yoga/#{name}.cs", 'w')
   f.write eval(logs[2].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
-
-  print logs[4]
 
   f = File.open("../javascript/tests/Facebook.Yoga/#{name}.js", 'w')
   f.write eval(logs[3].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
