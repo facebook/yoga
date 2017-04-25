@@ -223,6 +223,8 @@ for name, values in sorted(ENUMS.items()):
     with open(root + '/csharp/Facebook.Yoga/Yoga%s.cs' % name, 'w') as f:
         f.write(LICENSE)
         f.write('namespace Facebook.Yoga\n{\n')
+        if isinstance(next(iter(values or []), None), tuple):
+            f.write('    [System.Flags]\n')
         f.write('    public enum Yoga%s\n    {\n' % name)
         for value in values:
             if isinstance(value, tuple):
