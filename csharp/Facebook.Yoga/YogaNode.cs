@@ -26,8 +26,8 @@ namespace Facebook.Yoga
 {
     public partial class YogaNode : IEnumerable<YogaNode>
     {
-        private Native.YGNodeHandle _ygNode;
-        private YogaConfig _config;
+        private readonly Native.YGNodeHandle _ygNode;
+        private readonly YogaConfig _config;
         private WeakReference _parent;
         private List<YogaNode> _children;
         private MeasureFunction _measureFunction;
@@ -586,7 +586,7 @@ namespace Facebook.Yoga
             int index = IndexOf(child);
             if (index >= 0)
             {
-                RemoveAt(IndexOf(child));
+                RemoveAt(index);
             }
         }
 
