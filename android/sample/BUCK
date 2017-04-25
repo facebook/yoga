@@ -33,7 +33,3 @@ keystore(
     properties = "debug.keystore.properties",
     store = "debug.keystore",
 )
-
-project_config(
-    src_target = ":sample",
-)

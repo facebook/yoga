@@ -30,7 +30,3 @@ android_resource(
         "PUBLIC",
     ],
 )
-
-project_config(
-    src_target = ":android",
-)
