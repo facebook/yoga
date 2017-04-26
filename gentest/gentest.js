@@ -420,25 +420,46 @@ function getDefaultStyleValue(style) {
   return getComputedStyle(node, null).getPropertyValue(style);
 }
 
-function calculateTree(root) {
+function getRoundedSize(node) {
+  var boundingRect = node.getBoundingClientRect();
+  return {
+    width: Math.round(boundingRect.right) - Math.round(boundingRect.left),
+    height: Math.round(boundingRect.bottom) - Math.round(boundingRect.top)
+  };
+}
+
+function calculateTree(root, roundToPixelGrid) {
   var rootLayout = [];
+
+  // Any occurrence of "Rounding" mark during node tree traverse turns this feature on for whole subtree.
+  if ((root.getAttribute('experiments') || '').split(' ').indexOf('Rounding') != -1) {
+    roundToPixelGrid = true;
+  }
 
   for (var i = 0; i < root.children.length; i++) {
     var child = root.children[i];
-    rootLayout.push({
+    var layout = {
       name: child.id !== '' ? child.id : 'INSERT_NAME_HERE',
       left: child.offsetLeft + child.parentNode.clientLeft,
       top: child.offsetTop + child.parentNode.clientTop,
       width: child.offsetWidth,
       height: child.offsetHeight,
-      children: calculateTree(child),
+      children: calculateTree(child, roundToPixelGrid),
       style: getYogaStyle(child),
       declaredStyle: child.style,
       rawStyle: child.getAttribute('style'),
       experiments: child.getAttribute('experiments')
           ? child.getAttribute('experiments').split(' ')
           : [],
-    });
+    };
+
+    if (roundToPixelGrid) {
+      var size = getRoundedSize(child);
+      layout.width = size.width;
+      layout.height = size.height;
+    }
+
+    rootLayout.push(layout);
   }
 
   return rootLayout;
