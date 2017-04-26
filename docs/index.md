@@ -163,25 +163,25 @@ root.Insert(text, 1);
 <YogaLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    yoga:justify_content="stretch">
+    yoga:yg_justifyContent="stretch">
   <ImageView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      yoga:flex="1"/>
+      yoga:yg_flex="1"/>
   <VirtualYogaLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      yoga:padding_all="20px"
-      yoga:flex_direction="row"
-      yoga:align_items="center">
+      yoga:yg_paddingAll="20px"
+      yoga:yg_flexDirection="row"
+      yoga:yg_alignItems="center">
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        yoga:flex="1"
-        yoga:margin_start="20px"/>
+        yoga:yg_flex="1"
+        yoga:yg_marginStart="20px"/>
   </VirtualYogaLayout>
 </YogaLayout>
 ```

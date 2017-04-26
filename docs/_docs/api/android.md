@@ -20,30 +20,30 @@ There is an easy interface to Yoga called `YogaLayout`.  This is a view group th
     xmlns:yoga="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    yoga:align_items="stretch"
+    yoga:yg_alignItems="stretch"
     >
   <YogaLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/sample_children_background"
-      yoga:margin_horizontal="10dp"
-      yoga:margin_top="5dp"
-      yoga:flex_direction="row"
-      yoga:align_items="center"
+      yoga:yg_marginHorizontal="10dp"
+      yoga:yg_marginTop="5dp"
+      yoga:yg_flexDirection="row"
+      yoga:yg_alignItems="center"
       >
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_launcher"
-        yoga:flex="0"
+        yoga:yg_flex="0"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/child_1_text"
         android:textColor="@color/children_text"
-        yoga:flex="1"
-        yoga:margin_start="8dp"
+        yoga:yg_flex="1"
+        yoga:yg_marginStart="8dp"
         />
   </YogaLayout>
 </YogaLayout>
@@ -59,7 +59,7 @@ compile 'com.facebook.yoga.android:yoga-layout:1.2.0'
 
 ## layout\_width and layout\_height
 
-If either are set to an actual size (in px or dp etc) then this is taken as a default for `yoga:height` or `yoga:width`.  Otherwise they are ignored.
+If either are set to an actual size (in px or dp etc) then this is taken as a default for `yoga:yg_height` or `yoga:ygWidth`.  Otherwise they are ignored.
 
 ## VirtualYogaLayout
 
@@ -67,7 +67,7 @@ Sometimes you will nest `YogaLayout`s within `YogaLayout`s in order to get your 
 
 ## RTL locales
 
-RTL locales are supported by default.  That is, unless you explicitly set the `yoga:direction="ltr|rtl|inherit"` attribute on a view, it will obtain the locale direction _at runtime_.  This means that the layout will rearrange properly, even if the locale changes while your app is running!
+RTL locales are supported by default.  That is, unless you explicitly set the `yoga:yg_direction="ltr|rtl|inherit"` attribute on a view, it will obtain the locale direction At runtime_.  This means that the layout will rearrange properly, even if the locale changes while your app is running!
 
 ## Attributes
 
