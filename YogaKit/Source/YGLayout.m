@@ -245,7 +245,7 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
     size.height = YGUndefined;
   }
   [self calculateLayoutWithSize:size];
-  YGApplyLayoutToViewHierarchy(self.view, NO);
+  YGApplyLayoutToViewHierarchy(self.view, preserveOrigin);
 }
 
 
