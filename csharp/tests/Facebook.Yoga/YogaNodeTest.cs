@@ -249,6 +249,26 @@ namespace Facebook.Yoga
         }
 
         [Test]
+        public void TestPrintOneNode()
+        {
+            YogaNode node = new YogaNode();
+            node.Width = 100;
+            node.Height = 120;
+            node.CalculateLayout();
+            Assert.AreEqual("<div layout=\"width: 100; height: 120; top: 0; left: 0;\" style=\"width: 100px; height: 120px; \" ></div>", node.Print());
+        }
+
+        [Test]
+        public void TestPrintWithLogger()
+        {
+            YogaNode node = new YogaNode(new YogaConfig{Logger = (c, n, l, m) => {}});
+            node.Width = 110;
+            node.Height = 105;
+            node.CalculateLayout();
+            Assert.AreEqual("<div layout=\"width: 110; height: 105; top: 0; left: 0;\" style=\"width: 110px; height: 105px; \" ></div>", node.Print());
+        }
+
+        [Test]
         public void TestPrint()
         {
             YogaNode parent = new YogaNode();
@@ -309,9 +329,10 @@ namespace Facebook.Yoga
             Assert.AreEqual(90.Pt(), node4.MaxHeight);
         }
 
+#if !UNITY_5_4_OR_NEWER
         public static void ForceGC()
         {
-            GC.Collect(GC.MaxGeneration);
+            GC.Collect();
             GC.WaitForPendingFinalizers();
         }
 
@@ -438,6 +459,7 @@ namespace Facebook.Yoga
                 return MeasureOutput.Make(120, 130);
             });
         }
+#endif
 
         [Test]
         public void TestLayoutMargin() {

@@ -90,6 +90,7 @@ ENUMS = {
         'Info',
         'Debug',
         'Verbose',
+        'Fatal',
     ],
     'ExperimentalFeature': [
         # Mimic web flex-basis behavior.

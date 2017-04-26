@@ -41,14 +41,6 @@
 #define YG_ABORT()
 #endif
 
-#ifndef YG_ASSERT
-#define YG_ASSERT(X, message)              \
-  if (!(X)) {                              \
-    YGLog(YGLogLevelError, "%s", message); \
-    YG_ABORT();                            \
-  }
-#endif
-
 #ifdef NS_ENUM
 // Cannot use NSInteger as NSInteger has a different size than int (which is the default type of a
 // enum).
