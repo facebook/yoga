@@ -5,30 +5,44 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-os: osx
+os: 
+  - osx
+  - linux
+
 osx_image: xcode8.2
 language: cpp
 compiler: clang
 
-env:
-  - TARGET=c
-  - TARGET=java
-  - TARGET=net
-  - TARGET=ios
-  - TARGET=js
-  - TARGET=android
+matrix:
+  include:
+  - os: osx
+    env: TARGET=js
+  - os: osx
+    env: TARGET=ios
+  - os: linux
+    env: TARGET=c
+  - os: linux
+    env: TARGET=java
+  - os: osx
+    env: TARGET=net
+  - os: osx
+    env: TARGET=android
 
 before_install:
-  - brew update > /dev/null
-  - brew tap facebook/fb
-  - brew install buck
-
-  # Java
+  # Download and install buck
   - |
-    if [[ $TARGET = "java" ]]; then
-      brew cask install java &&
-      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) &&
-      export PATH=$JAVA_HOME/bin:$PATH
+    if [[ $TRAVIS_OS_NAME = "linux" ]]; then
+      sudo apt-get update && 
+      apt-get install default-jdk ant python git &&
+      git clone https://github.com/facebook/buck.git &&
+      cd buck &&
+      ant &&
+      cd .. &&
+      export PATH=$PATH:buck/bin
+    else
+      brew update > /dev/null &&
+      brew tap facebook/fb &&
+      brew install buck
     fi
 
   # .NET
