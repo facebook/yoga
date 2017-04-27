@@ -19,7 +19,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_width_height() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -60,7 +59,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_position_left_top() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -103,7 +101,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_position_bottom_right() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -146,7 +143,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -202,7 +198,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis_cross() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
@@ -257,7 +252,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis_cross_min_height() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
@@ -312,7 +306,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis_main_max_height() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -370,7 +363,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis_cross_max_height() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
@@ -427,7 +419,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis_main_max_width() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -485,7 +476,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis_cross_max_width() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
@@ -542,7 +532,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis_main_min_width() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -600,7 +589,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_flex_basis_cross_min_width() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
@@ -657,7 +645,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_multiple_nested_with_padding_margin_and_percentage_values() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
@@ -766,7 +753,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_margin_should_calculate_based_only_on_width() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
@@ -824,7 +810,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_padding_should_calculate_based_only_on_width() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);
@@ -882,7 +867,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_absolute_position() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ROUNDING, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(200f);

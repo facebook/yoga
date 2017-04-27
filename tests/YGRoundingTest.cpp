@@ -14,7 +14,6 @@
 
 TEST(YogaTest, rounding_flex_basis_flex_grow_row_width_of_100) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
@@ -83,7 +82,6 @@ TEST(YogaTest, rounding_flex_basis_flex_grow_row_width_of_100) {
 
 TEST(YogaTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
@@ -180,7 +178,6 @@ TEST(YogaTest, rounding_flex_basis_flex_grow_row_prime_number_width) {
 
 TEST(YogaTest, rounding_flex_basis_flex_shrink_row) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
@@ -250,7 +247,6 @@ TEST(YogaTest, rounding_flex_basis_flex_shrink_row) {
 
 TEST(YogaTest, rounding_flex_basis_overrides_main_size) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 100);
@@ -322,7 +318,6 @@ TEST(YogaTest, rounding_flex_basis_overrides_main_size) {
 
 TEST(YogaTest, rounding_total_fractial) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 87.4f);
@@ -394,7 +389,6 @@ TEST(YogaTest, rounding_total_fractial) {
 
 TEST(YogaTest, rounding_total_fractial_nested) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 87.4f);
@@ -500,7 +494,6 @@ TEST(YogaTest, rounding_total_fractial_nested) {
 
 TEST(YogaTest, rounding_fractial_input_1) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 100);
@@ -572,7 +565,6 @@ TEST(YogaTest, rounding_fractial_input_1) {
 
 TEST(YogaTest, rounding_fractial_input_2) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 100);
@@ -644,7 +636,6 @@ TEST(YogaTest, rounding_fractial_input_2) {
 
 TEST(YogaTest, rounding_fractial_input_3) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPosition(root, YGEdgeTop, 0.3f);
@@ -717,7 +708,6 @@ TEST(YogaTest, rounding_fractial_input_3) {
 
 TEST(YogaTest, rounding_fractial_input_4) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPosition(root, YGEdgeTop, 0.7f);
@@ -790,7 +780,6 @@ TEST(YogaTest, rounding_fractial_input_4) {
 
 TEST(YogaTest, rounding_inner_node_controversy_horizontal) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
@@ -876,7 +865,6 @@ TEST(YogaTest, rounding_inner_node_controversy_horizontal) {
 
 TEST(YogaTest, rounding_inner_node_controversy_vertical) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetHeight(root, 320);
@@ -961,7 +949,6 @@ TEST(YogaTest, rounding_inner_node_controversy_vertical) {
 
 TEST(YogaTest, rounding_inner_node_controversy_combined) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);

@@ -92,7 +92,6 @@ ENUMS = {
         'Verbose',
     ],
     'ExperimentalFeature': [
-        'Rounding',
         # Mimic web flex-basis behavior.
         'WebFlexBasis',
         'MinFlexFix'
@@ -145,7 +144,7 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
     f.write('#include "YGMacros.h"\n\n')
     f.write('YG_EXTERN_C_BEGIN\n\n')
     for name, values in sorted(ENUMS.items()):
-        f.write('#define YG%sCount %s\n' % (name, len(values)))        
+        f.write('#define YG%sCount %s\n' % (name, len(values)))
         f.write('typedef YG_ENUM_BEGIN(YG%s) {\n' % name)
         for value in values:
             if isinstance(value, tuple):

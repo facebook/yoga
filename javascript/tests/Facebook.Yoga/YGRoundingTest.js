@@ -14,8 +14,6 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 it("rounding_flex_basis_flex_grow_row_width_of_100", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -86,8 +84,6 @@ it("rounding_flex_basis_flex_grow_row_width_of_100", function () {
 });
 it("rounding_flex_basis_flex_grow_row_prime_number_width", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -188,8 +184,6 @@ it("rounding_flex_basis_flex_grow_row_prime_number_width", function () {
 it("rounding_flex_basis_flex_shrink_row", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -261,8 +255,6 @@ it("rounding_flex_basis_flex_shrink_row", function () {
 });
 it("rounding_flex_basis_overrides_main_size", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -338,8 +330,6 @@ it("rounding_flex_basis_overrides_main_size", function () {
 it("rounding_total_fractial", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(87.4);
@@ -413,8 +403,6 @@ it("rounding_total_fractial", function () {
 });
 it("rounding_total_fractial_nested", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -524,8 +512,6 @@ it("rounding_total_fractial_nested", function () {
 it("rounding_fractial_input_1", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -600,8 +586,6 @@ it("rounding_fractial_input_1", function () {
 it("rounding_fractial_input_2", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -675,8 +659,6 @@ it("rounding_fractial_input_2", function () {
 });
 it("rounding_fractial_input_3", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -753,8 +735,6 @@ it("rounding_fractial_input_3", function () {
 it("rounding_fractial_input_4", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setPosition(Yoga.EDGE_TOP, 0.7);
@@ -829,8 +809,6 @@ it("rounding_fractial_input_4", function () {
 });
 it("rounding_inner_node_controversy_horizontal", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -920,8 +898,6 @@ it("rounding_inner_node_controversy_horizontal", function () {
 it("rounding_inner_node_controversy_vertical", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setHeight(320);
@@ -1008,8 +984,6 @@ it("rounding_inner_node_controversy_vertical", function () {
 });
 it("rounding_inner_node_controversy_combined", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);

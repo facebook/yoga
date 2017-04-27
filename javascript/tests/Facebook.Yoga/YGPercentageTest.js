@@ -14,8 +14,6 @@ var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
 it("percentage_width_height", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -59,8 +57,6 @@ it("percentage_width_height", function () {
 });
 it("percentage_position_left_top", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -108,8 +104,6 @@ it("percentage_position_left_top", function () {
 it("percentage_position_bottom_right", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -155,8 +149,6 @@ it("percentage_position_bottom_right", function () {
 });
 it("percentage_flex_basis", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -217,8 +209,6 @@ it("percentage_flex_basis", function () {
 it("percentage_flex_basis_cross", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -277,8 +267,6 @@ it("percentage_flex_basis_cross", function () {
 it("percentage_flex_basis_cross_min_height", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -336,8 +324,6 @@ it("percentage_flex_basis_cross_min_height", function () {
 });
 it("percentage_flex_basis_main_max_height", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -400,8 +386,6 @@ it("percentage_flex_basis_main_max_height", function () {
 it("percentage_flex_basis_cross_max_height", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -461,8 +445,6 @@ it("percentage_flex_basis_cross_max_height", function () {
 });
 it("percentage_flex_basis_main_max_width", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -525,8 +507,6 @@ it("percentage_flex_basis_main_max_width", function () {
 it("percentage_flex_basis_cross_max_width", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -586,8 +566,6 @@ it("percentage_flex_basis_cross_max_width", function () {
 });
 it("percentage_flex_basis_main_min_width", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -650,8 +628,6 @@ it("percentage_flex_basis_main_min_width", function () {
 it("percentage_flex_basis_cross_min_width", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -711,8 +687,6 @@ it("percentage_flex_basis_cross_min_width", function () {
 });
 it("percentage_multiple_nested_with_padding_margin_and_percentage_values", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);
@@ -826,8 +800,6 @@ it("percentage_multiple_nested_with_padding_margin_and_percentage_values", funct
 it("percentage_margin_should_calculate_based_only_on_width", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -889,8 +861,6 @@ it("percentage_margin_should_calculate_based_only_on_width", function () {
 it("percentage_padding_should_calculate_based_only_on_width", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -951,8 +921,6 @@ it("percentage_padding_should_calculate_based_only_on_width", function () {
 });
 it("percentage_absolute_position", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ROUNDING, true);
 
   try {
     var root = Yoga.Node.create(config);

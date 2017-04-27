@@ -431,11 +431,6 @@ function getRoundedSize(node) {
 function calculateTree(root, roundToPixelGrid) {
   var rootLayout = [];
 
-  // Any occurrence of "Rounding" mark during node tree traverse turns this feature on for whole subtree.
-  if ((root.getAttribute('experiments') || '').split(' ').indexOf('Rounding') != -1) {
-    roundToPixelGrid = true;
-  }
-
   for (var i = 0; i < root.children.length; i++) {
     var child = root.children[i];
     var layout = {
@@ -453,11 +448,9 @@ function calculateTree(root, roundToPixelGrid) {
           : [],
     };
 
-    if (roundToPixelGrid) {
-      var size = getRoundedSize(child);
-      layout.width = size.width;
-      layout.height = size.height;
-    }
+    var size = getRoundedSize(child);
+    layout.width = size.width;
+    layout.height = size.height;
 
     rootLayout.push(layout);
   }

@@ -84,8 +84,8 @@ public class YogaNodeTest {
         }
     });
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-    assertEquals(100.5f, node.getLayoutWidth(), 0.0f);
-    assertEquals(100.5f, node.getLayoutHeight(), 0.0f);
+    assertEquals(101f, node.getLayoutWidth(), 0.01f);
+    assertEquals(101f, node.getLayoutHeight(), 0.01f);
   }
 
   @Test
@@ -102,8 +102,8 @@ public class YogaNodeTest {
         }
     });
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-    assertEquals(Float.MIN_VALUE, node.getLayoutWidth(), 0.0f);
-    assertEquals(Float.MIN_VALUE, node.getLayoutHeight(), 0.0f);
+    assertEquals(Float.MIN_VALUE, node.getLayoutWidth(), 0.01f);
+    assertEquals(Float.MIN_VALUE, node.getLayoutHeight(), 0.01f);
   }
 
   @Test
@@ -120,8 +120,8 @@ public class YogaNodeTest {
         }
     });
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-    assertEquals(Float.MAX_VALUE, node.getLayoutWidth(), 0.0f);
-    assertEquals(Float.MAX_VALUE, node.getLayoutHeight(), 0.0f);
+    assertEquals(Float.MAX_VALUE, node.getLayoutWidth(), 0.01f);
+    assertEquals(Float.MAX_VALUE, node.getLayoutHeight(), 0.01f);
   }
 
   private YogaLogLevel mLogLevel;

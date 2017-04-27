@@ -32,8 +32,6 @@ static YGSize _measureCeil(YGNodeRef node,
 
 TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
-
   const YGNodeRef root = YGNodeNewWithConfig(config);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
@@ -82,8 +80,6 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
 
 TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureRounding, true);
-
   const YGNodeRef root = YGNodeNewWithConfig(config);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
