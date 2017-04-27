@@ -164,6 +164,14 @@ namespace Facebook.Yoga
                 return MeasureOutput.Make(123.4f, 81.7f);
             });
             node.CalculateLayout();
+            Assert.AreEqual(123.0f, node.LayoutWidth);
+            Assert.AreEqual(82.0f, node.LayoutHeight);
+
+            node = new YogaNode(new YogaConfig{PointScaleFactor = 0});
+            node.SetMeasureFunction((_, width, widthMode, height, heightMode) => {
+                return MeasureOutput.Make(123.4f, 81.7f);
+            });
+            node.CalculateLayout();
             Assert.AreEqual(123.4f, node.LayoutWidth);
             Assert.AreEqual(81.7f, node.LayoutHeight);
         }
