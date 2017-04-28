@@ -103,6 +103,7 @@ static YGConfigRef globalConfig;
 {
   globalConfig = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(globalConfig, YGExperimentalFeatureWebFlexBasis, true);
+  YGConfigSetPointScaleFactor(globalConfig, [UIScreen mainScreen].scale);
 }
 
 - (instancetype)initWithView:(UIView*)view
