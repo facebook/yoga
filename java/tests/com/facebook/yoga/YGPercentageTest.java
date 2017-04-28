@@ -1027,7 +1027,6 @@ public class YGPercentageTest {
   @Test
   public void test_percentage_container_in_wrapping_container() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, true);
 
     final YogaNode root = new YogaNode(config);
     root.setJustifyContent(YogaJustify.CENTER);

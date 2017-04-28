@@ -94,7 +94,6 @@ ENUMS = {
     'ExperimentalFeature': [
         # Mimic web flex-basis behavior.
         'WebFlexBasis',
-        'MinFlexFix'
     ],
     'PrintOptions': [
         ('Layout', 1),

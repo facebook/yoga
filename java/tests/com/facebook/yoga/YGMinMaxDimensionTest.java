@@ -357,7 +357,6 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_to_min() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, true);
 
     final YogaNode root = new YogaNode(config);
     root.setWidth(100f);
@@ -412,7 +411,6 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_in_at_most_container() {
     YogaConfig config = new YogaConfig();
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.MIN_FLEX_FIX, true);
 
     final YogaNode root = new YogaNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);

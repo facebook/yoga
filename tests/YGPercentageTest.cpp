@@ -1040,7 +1040,6 @@ TEST(YogaTest, percent_within_flex_grow) {
 
 TEST(YogaTest, percentage_container_in_wrapping_container) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureMinFlexFix, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);

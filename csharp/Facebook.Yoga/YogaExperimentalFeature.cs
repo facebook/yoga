@@ -12,6 +12,5 @@ namespace Facebook.Yoga
     public enum YogaExperimentalFeature
     {
         WebFlexBasis,
-        MinFlexFix,
     }
 }

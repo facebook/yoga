@@ -366,7 +366,6 @@ namespace Facebook.Yoga
         public void Test_flex_grow_to_min()
         {
             YogaConfig config = new YogaConfig();
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.MinFlexFix, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 100;
@@ -422,7 +421,6 @@ namespace Facebook.Yoga
         public void Test_flex_grow_in_at_most_container()
         {
             YogaConfig config = new YogaConfig();
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.MinFlexFix, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;

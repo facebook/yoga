@@ -380,8 +380,6 @@ it("justify_content_overflow_min_max", function () {
 it("flex_grow_to_min", function () {
   var config = Yoga.Config.create();
 
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_MIN_FLEX_FIX, true);
-
   try {
     var root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -439,8 +437,6 @@ it("flex_grow_to_min", function () {
 });
 it("flex_grow_in_at_most_container", function () {
   var config = Yoga.Config.create();
-
-  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_MIN_FLEX_FIX, true);
 
   try {
     var root = Yoga.Node.create(config);

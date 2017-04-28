@@ -359,7 +359,6 @@ TEST(YogaTest, justify_content_overflow_min_max) {
 
 TEST(YogaTest, flex_grow_to_min) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureMinFlexFix, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 100);
@@ -415,7 +414,6 @@ TEST(YogaTest, flex_grow_to_min) {
 
 TEST(YogaTest, flex_grow_in_at_most_container) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureMinFlexFix, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);

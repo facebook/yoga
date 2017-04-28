@@ -1047,7 +1047,6 @@ namespace Facebook.Yoga
         public void Test_percentage_container_in_wrapping_container()
         {
             YogaConfig config = new YogaConfig();
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.MinFlexFix, true);
 
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
