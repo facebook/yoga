@@ -12,6 +12,11 @@ import YogaKit
 
 struct DemoItem {
     let name: String
+    root.backgroundColor = .red
+    root.yoga.isEnabled = true
+    root.yoga.width = YGValue(self.view.bounds.size.width)
+    root.yoga.height = YGValue(self.view.bounds.size.height)
+    root.yoga.alignItems = .center
 }
 
 final class SwiftViewController: UIViewController, IGListAdapterDataSource {

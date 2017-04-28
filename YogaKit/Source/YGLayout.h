@@ -9,6 +9,10 @@
 
 #import <UIKit/UIKit.h>
 #import <yoga/YGEnums.h>
+#import <yoga/Yoga.h>
+
+extern YGValue YGPointValue(CGFloat value) NS_SWIFT_UNAVAILABLE("Use the swift Int and FloatingPoint extensions instead");
+extern YGValue YGPercentValue(CGFloat value) NS_SWIFT_UNAVAILABLE("Use the swift Int and FloatingPoint extensions instead");
 
 typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
   YGDimensionFlexibilityFlexibleWidth = 1 << 0,
@@ -41,34 +45,34 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
 
 @property (nonatomic, readwrite, assign) CGFloat flexGrow;
 @property (nonatomic, readwrite, assign) CGFloat flexShrink;
-@property (nonatomic, readwrite, assign) CGFloat flexBasis;
+@property (nonatomic, readwrite, assign) YGValue flexBasis;
 
-@property (nonatomic, readwrite, assign) CGFloat left;
-@property (nonatomic, readwrite, assign) CGFloat top;
-@property (nonatomic, readwrite, assign) CGFloat right;
-@property (nonatomic, readwrite, assign) CGFloat bottom;
-@property (nonatomic, readwrite, assign) CGFloat start;
-@property (nonatomic, readwrite, assign) CGFloat end;
+@property (nonatomic, readwrite, assign) YGValue left;
+@property (nonatomic, readwrite, assign) YGValue top;
+@property (nonatomic, readwrite, assign) YGValue right;
+@property (nonatomic, readwrite, assign) YGValue bottom;
+@property (nonatomic, readwrite, assign) YGValue start;
+@property (nonatomic, readwrite, assign) YGValue end;
 
-@property (nonatomic, readwrite, assign) CGFloat marginLeft;
-@property (nonatomic, readwrite, assign) CGFloat marginTop;
-@property (nonatomic, readwrite, assign) CGFloat marginRight;
-@property (nonatomic, readwrite, assign) CGFloat marginBottom;
-@property (nonatomic, readwrite, assign) CGFloat marginStart;
-@property (nonatomic, readwrite, assign) CGFloat marginEnd;
-@property (nonatomic, readwrite, assign) CGFloat marginHorizontal;
-@property (nonatomic, readwrite, assign) CGFloat marginVertical;
-@property (nonatomic, readwrite, assign) CGFloat margin;
+@property (nonatomic, readwrite, assign) YGValue marginLeft;
+@property (nonatomic, readwrite, assign) YGValue marginTop;
+@property (nonatomic, readwrite, assign) YGValue marginRight;
+@property (nonatomic, readwrite, assign) YGValue marginBottom;
+@property (nonatomic, readwrite, assign) YGValue marginStart;
+@property (nonatomic, readwrite, assign) YGValue marginEnd;
+@property (nonatomic, readwrite, assign) YGValue marginHorizontal;
+@property (nonatomic, readwrite, assign) YGValue marginVertical;
+@property (nonatomic, readwrite, assign) YGValue margin;
 
-@property (nonatomic, readwrite, assign) CGFloat paddingLeft;
-@property (nonatomic, readwrite, assign) CGFloat paddingTop;
-@property (nonatomic, readwrite, assign) CGFloat paddingRight;
-@property (nonatomic, readwrite, assign) CGFloat paddingBottom;
-@property (nonatomic, readwrite, assign) CGFloat paddingStart;
-@property (nonatomic, readwrite, assign) CGFloat paddingEnd;
-@property (nonatomic, readwrite, assign) CGFloat paddingHorizontal;
-@property (nonatomic, readwrite, assign) CGFloat paddingVertical;
-@property (nonatomic, readwrite, assign) CGFloat padding;
+@property (nonatomic, readwrite, assign) YGValue paddingLeft;
+@property (nonatomic, readwrite, assign) YGValue paddingTop;
+@property (nonatomic, readwrite, assign) YGValue paddingRight;
+@property (nonatomic, readwrite, assign) YGValue paddingBottom;
+@property (nonatomic, readwrite, assign) YGValue paddingStart;
+@property (nonatomic, readwrite, assign) YGValue paddingEnd;
+@property (nonatomic, readwrite, assign) YGValue paddingHorizontal;
+@property (nonatomic, readwrite, assign) YGValue paddingVertical;
+@property (nonatomic, readwrite, assign) YGValue padding;
 
 @property (nonatomic, readwrite, assign) CGFloat borderLeftWidth;
 @property (nonatomic, readwrite, assign) CGFloat borderTopWidth;
@@ -78,12 +82,12 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
 @property (nonatomic, readwrite, assign) CGFloat borderEndWidth;
 @property (nonatomic, readwrite, assign) CGFloat borderWidth;
 
-@property (nonatomic, readwrite, assign) CGFloat width;
-@property (nonatomic, readwrite, assign) CGFloat height;
-@property (nonatomic, readwrite, assign) CGFloat minWidth;
-@property (nonatomic, readwrite, assign) CGFloat minHeight;
-@property (nonatomic, readwrite, assign) CGFloat maxWidth;
-@property (nonatomic, readwrite, assign) CGFloat maxHeight;
+@property (nonatomic, readwrite, assign) YGValue width;
+@property (nonatomic, readwrite, assign) YGValue height;
+@property (nonatomic, readwrite, assign) YGValue minWidth;
+@property (nonatomic, readwrite, assign) YGValue minHeight;
+@property (nonatomic, readwrite, assign) YGValue maxWidth;
+@property (nonatomic, readwrite, assign) YGValue maxHeight;
 
 // Yoga specific properties, not compatible with flexbox specification
 @property (nonatomic, readwrite, assign) CGFloat aspectRatio;
