@@ -29,7 +29,7 @@ final class LayoutInclusionViewController: UIViewController {
         contentView.configureLayout { (layout) in
             layout.isEnabled = true
             layout.height = 300
-            layout.width = self.view.bounds.size.width
+            layout.width = YGValue(self.view.bounds.size.width)
             layout.flexDirection = .row
             layout.justifyContent = .center
             layout.paddingHorizontal = 25

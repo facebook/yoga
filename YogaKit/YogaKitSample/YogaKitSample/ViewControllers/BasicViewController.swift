@@ -17,8 +17,8 @@ final class BasicViewController: UIViewController {
         root.backgroundColor = .white
         root.configureLayout { (layout) in
             layout.isEnabled = true
-            layout.width = containerSize.width
-            layout.height = containerSize.height
+            layout.width = YGValue(containerSize.width)
+            layout.height = YGValue(containerSize.height)
             layout.alignItems = .center
             layout.justifyContent = .center
         }
