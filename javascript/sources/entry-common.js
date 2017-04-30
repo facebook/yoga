@@ -23,7 +23,7 @@ module.exports = function (bind, lib) {
 
         UNDEFINED: NaN
 
-    }, require(`./YGEnums`));
+    }, require('./YGEnums'));
 
     class Layout {
 
