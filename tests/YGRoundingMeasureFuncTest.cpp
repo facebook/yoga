@@ -49,29 +49,29 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetWidth(root_child0));
-  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(11, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(11, YGNodeLayoutGetHeight(root_child0));
 
   YGConfigSetPointScaleFactor(config, 2.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
-  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetWidth(root_child0));
-  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(10.5, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(10.5, YGNodeLayoutGetHeight(root_child0));
 
   YGConfigSetPointScaleFactor(config, 4.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_FLOAT_EQ(10.25f, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(10.25, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10.25, YGNodeLayoutGetHeight(root_child0));
 
   YGConfigSetPointScaleFactor(config, 1.0f / 3.0f);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
-  ASSERT_FLOAT_EQ(9.0, YGNodeLayoutGetWidth(root_child0));
-  ASSERT_FLOAT_EQ(9.0, YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(12.0, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(12.0, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
 
