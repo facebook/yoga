@@ -7,7 +7,7 @@
 
 include_defs("//YOGA_DEFS")
 
-android_library(
+java_library(
     name = "jni",
     srcs = glob(["**/*.java"]),
     proguard_config = "fbjni.pro",
