@@ -10,7 +10,7 @@ package com.facebook.samples.yoga;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +25,7 @@ import com.facebook.yoga.android.YogaViewLayoutFactory;
  * {@code main_layout.xml}) that shows off the awesome functionality of the Yoga layout engine
  * as well as some optimisations on layout systems that it facilitates.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
