@@ -4,7 +4,7 @@ package com.facebook.samples.yoga;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -19,7 +19,7 @@ import android.support.v7.app.ActionBar;
 import com.facebook.samples.yoga.R;
 import com.facebook.yoga.android.YogaViewLayoutFactory;
 
-public class BenchmarkActivity extends ActionBarActivity {
+public class BenchmarkActivity extends AppCompatActivity {
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
