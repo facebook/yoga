@@ -13,5 +13,5 @@ using System.Runtime.InteropServices;
 namespace Facebook.Yoga
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate float YogaBaselineFunc(IntPtr node, float width, float height);
+    public delegate float YogaBaselineFunc(IntPtr unmanagedNodePtr, float width, float height);
 }

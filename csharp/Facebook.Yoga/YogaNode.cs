@@ -10,11 +10,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-using System.Runtime.InteropServices;
-#endif
 #if __IOS__
 using ObjCRuntime;
 #endif
@@ -26,49 +24,26 @@ namespace Facebook.Yoga
 {
     public partial class YogaNode : IEnumerable<YogaNode>
     {
-        private readonly Native.YGNodeHandle _ygNode;
+        private readonly YGNodeHandle _ygNode;
         private readonly YogaConfig _config;
         private WeakReference _parent;
         private List<YogaNode> _children;
         private MeasureFunction _measureFunction;
         private BaselineFunction _baselineFunction;
-        private object _data;
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-        private static YogaMeasureFunc _managedMeasure;
-        private static YogaBaselineFunc _managedBaseline;
-#else
         private YogaMeasureFunc _managedMeasure;
         private YogaBaselineFunc _managedBaseline;
-#endif
+        private object _data;
 
-        public YogaNode()
+        public YogaNode(YogaConfig config = null)
         {
-            YogaLogger.Initialize();
-
-            _ygNode = Native.YGNodeNew();
+            _config = config == null ? YogaConfig.Default : config;
+            _ygNode = Native.YGNodeNewWithConfig(_config.Handle);
             if (_ygNode.IsInvalid)
             {
                 throw new InvalidOperationException("Failed to allocate native memory");
             }
-        }
 
-        public YogaNode(YogaConfig config)
-        {
-            YogaLogger.Initialize();
-
-            if (config != null)
-            {
-                _config = config;
-                _ygNode = Native.YGNodeNewWithConfig(_config.Handle);
-            }
-            else
-            {
-                _ygNode = Native.YGNodeNew();
-            }
-            if (_ygNode.IsInvalid)
-            {
-                throw new InvalidOperationException("Failed to allocate native memory");
-            }
+            _ygNode.SetContext(this);
         }
 
         public YogaNode(YogaNode srcNode)
@@ -83,10 +58,9 @@ namespace Facebook.Yoga
             _baselineFunction = null;
             _data = null;
 
-            Native.YGNodeReset(_ygNode);
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
             _ygNode.ReleaseManaged();
-#endif
+            Native.YGNodeReset(_ygNode);
+            _ygNode.SetContext(this);
         }
 
         public bool IsDirty
@@ -609,38 +583,15 @@ namespace Facebook.Yoga
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
             _measureFunction = measureFunction;
-            if (measureFunction != null)
-            {
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-                _managedMeasure = MeasureInternalAOT;
-                _ygNode.SetContext(this);
-#else
-                _managedMeasure = MeasureInternal;
-#endif
-            }
-            else
-            {
-                _managedMeasure = null;
-            }
+            _managedMeasure = measureFunction != null ? MeasureInternal : (YogaMeasureFunc)null;
             Native.YGNodeSetMeasureFunc(_ygNode, _managedMeasure);
         }
 
         public void SetBaselineFunction(BaselineFunction baselineFunction)
         {
             _baselineFunction = baselineFunction;
-            if (baselineFunction != null)
-            {
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-                _managedBaseline = BaselineInternalAOT;
-                _ygNode.SetContext(this);
-#else
-                _managedBaseline = BaselineInternal;
-#endif
-            }
-            else
-            {
-                _managedBaseline = null;
-            }
+            _managedBaseline =
+                baselineFunction != null ? BaselineInternal : (YogaBaselineFunc)null;
             Native.YGNodeSetBaselineFunc(_ygNode, _managedBaseline);
         }
 
@@ -655,63 +606,46 @@ namespace Facebook.Yoga
 
 #if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaMeasureFunc))]
-        private static YogaSize MeasureInternalAOT(
-            IntPtr ygNodePtr,
-            float width,
-            YogaMeasureMode widthMode,
-            float height,
-            YogaMeasureMode heightMode)
-        {
-            var node = Native.YGNodeHandle.GetManaged(ygNodePtr);
-            return node.MeasureInternal(IntPtr.Zero, width, widthMode, height, heightMode);
-        }
 #endif
-
-        private YogaSize MeasureInternal(
-            IntPtr node,
+        private static YogaSize MeasureInternal(
+            IntPtr unmanagedNodePtr,
             float width,
             YogaMeasureMode widthMode,
             float height,
             YogaMeasureMode heightMode)
         {
-            if (_measureFunction == null)
+            var node = YGNodeHandle.GetManaged(unmanagedNodePtr);
+            if (node == null || node._measureFunction == null)
             {
                 throw new InvalidOperationException("Measure function is not defined.");
             }
-
-            return _measureFunction(this, width, widthMode, height, heightMode);
+            return node._measureFunction(node, width, widthMode, height, heightMode);
         }
 
 #if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaBaselineFunc))]
-        private static float BaselineInternalAOT(
-            IntPtr ygNodePtr,
+#endif
+        private static float BaselineInternal(
+            IntPtr unmanagedNodePtr,
             float width,
             float height)
         {
-            var node = Native.YGNodeHandle.GetManaged(ygNodePtr);
-            return node.BaselineInternal(IntPtr.Zero, width, height);
-        }
-#endif
-
-        private float BaselineInternal(IntPtr node, float width, float height)
-        {
-            if (_baselineFunction == null)
+            var node = YGNodeHandle.GetManaged(unmanagedNodePtr);
+            if (node == null || node._baselineFunction == null)
             {
                 throw new InvalidOperationException("Baseline function is not defined.");
             }
-
-            return _baselineFunction(this, width, height);
+            return node._baselineFunction(node, width, height);
         }
 
         public string Print(YogaPrintOptions options =
             YogaPrintOptions.Layout|YogaPrintOptions.Style|YogaPrintOptions.Children)
         {
             StringBuilder sb = new StringBuilder();
-            YogaLogger.Func orig = YogaLogger.Logger;
-            YogaLogger.Logger = (level, message) => {sb.Append(message);};
+            Logger orig = _config.Logger;
+            _config.Logger = (config, node, level, message) => {sb.Append(message);};
             Native.YGNodePrint(_ygNode, options);
-            YogaLogger.Logger = orig;
+            _config.Logger = orig;
             return sb.ToString();
         }
 

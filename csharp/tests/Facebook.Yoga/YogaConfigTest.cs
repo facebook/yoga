@@ -69,6 +69,7 @@ namespace Facebook.Yoga
             Assert.AreEqual(YogaFlexDirection.Row, node1.FlexDirection);
         }
 
+#if !UNITY_5_4_OR_NEWER
         public static void ForceGC()
         {
             YogaNodeTest.ForceGC();
@@ -132,5 +133,6 @@ namespace Facebook.Yoga
 
             return node;
         }
+#endif
     }
 }

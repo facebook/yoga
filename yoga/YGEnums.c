@@ -137,6 +137,8 @@ const char *YGLogLevelToString(const YGLogLevel value){
       return "debug";
     case YGLogLevelVerbose:
       return "verbose";
+    case YGLogLevelFatal:
+      return "fatal";
   }
   return "unknown";
 }

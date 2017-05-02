@@ -24,5 +24,5 @@ ROOT=`buck root|tail -1`
 DYLIB=`buck targets --show-output $TARGET|tail -1|awk '{print $2}'`
 cp $ROOT/$DYLIB .
 
-mcs -debug -t:library -r:$NUNIT/nunit.framework.dll -out:YogaTest.dll *.cs ../../../csharp/Facebook.Yoga/*cs
+mcs -debug -d:YOGA_ENABLE_GC_TEST -t:library -r:$NUNIT/nunit.framework.dll -out:YogaTest.dll *.cs ../../../csharp/Facebook.Yoga/*cs
 MONO_PATH=$NUNIT mono --arch=64 --debug $NUNIT/nunit-console.exe YogaTest.dll

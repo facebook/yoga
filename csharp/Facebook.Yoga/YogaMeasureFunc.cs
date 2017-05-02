@@ -14,7 +14,7 @@ namespace Facebook.Yoga
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate YogaSize YogaMeasureFunc(
-        IntPtr node,
+        IntPtr unmanagedNodePtr,
         float width,
         YogaMeasureMode widthMode,
         float height,

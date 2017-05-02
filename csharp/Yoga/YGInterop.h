@@ -13,8 +13,13 @@
 
 YG_EXTERN_C_BEGIN
 
-typedef void (*YGInteropLoggerFunc)(YGLogLevel level, const char *message);
+typedef int (*YGInteropLogger)(const void *unmanagedConfigPtr,
+                               const void *unmanagedNodePtr,
+                               YGLogLevel level,
+                               const char *message);
 
-WIN_EXPORT void YGInteropSetLogger(YGInteropLoggerFunc managedFunc);
+WIN_EXPORT YGConfigRef YGConfigGetDefault();
+
+WIN_EXPORT void YGInteropSetLogger(YGInteropLogger managedLogger);
 
 YG_EXTERN_C_END

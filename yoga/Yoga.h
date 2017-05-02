@@ -55,7 +55,7 @@ typedef YGSize (*YGMeasureFunc)(YGNodeRef node,
                                 YGMeasureMode heightMode);
 typedef float (*YGBaselineFunc)(YGNodeRef node, const float width, const float height);
 typedef void (*YGPrintFunc)(YGNodeRef node);
-typedef int (*YGLogger)(YGLogLevel level, const char *format, va_list args);
+typedef int (*YGLogger)(const YGConfigRef config, const YGNodeRef node, YGLogLevel level, const char *format, va_list args);
 
 typedef void *(*YGMalloc)(size_t size);
 typedef void *(*YGCalloc)(size_t count, size_t size);
@@ -218,8 +218,9 @@ YG_NODE_LAYOUT_EDGE_PROPERTY(float, Margin);
 YG_NODE_LAYOUT_EDGE_PROPERTY(float, Border);
 YG_NODE_LAYOUT_EDGE_PROPERTY(float, Padding);
 
-WIN_EXPORT void YGSetLogger(YGLogger logger);
-WIN_EXPORT void YGLog(YGLogLevel level, const char *message, ...);
+WIN_EXPORT void YGSetLogger(const YGConfigRef config, YGLogger logger);
+WIN_EXPORT void YGLog(const YGNodeRef node, YGLogLevel level, const char *message, ...);
+WIN_EXPORT void YGLogWithConfig(const YGConfigRef config, YGLogLevel level, const char *format, ...);
 
 // Set this to number of pixels in 1 point to round calculation results
 // If you want to avoid rounding - set PointScaleFactor to 0
@@ -247,6 +248,10 @@ WIN_EXPORT bool YGConfigIsExperimentalFeatureEnabled(const YGConfigRef config,
 WIN_EXPORT void YGConfigSetUseWebDefaults(const YGConfigRef config, const bool enabled);
 
 WIN_EXPORT bool YGConfigGetUseWebDefaults(const YGConfigRef config);
+
+WIN_EXPORT void YGConfigSetContext(const YGConfigRef config, void * context);
+
+WIN_EXPORT void * YGConfigGetContext(const YGConfigRef config);
 
 WIN_EXPORT void
 YGSetMemoryFuncs(YGMalloc ygmalloc, YGCalloc yccalloc, YGRealloc ygrealloc, YGFree ygfree);
