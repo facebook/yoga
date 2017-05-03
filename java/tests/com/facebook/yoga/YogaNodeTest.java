@@ -124,38 +124,6 @@ public class YogaNodeTest {
     assertEquals(Float.MAX_VALUE, node.getLayoutHeight(), 0.01f);
   }
 
-  private YogaLogLevel mLogLevel;
-  private String mLogMessage;
-
-  @Test
-  public void testLogger() {
-    YogaNode.setLogger(new YogaLogger() {
-        public void log(YogaLogLevel level, String message) {
-          mLogLevel = level;
-          mLogMessage = message;
-        }
-    });
-    YogaNode.jni_YGLog(YogaLogLevel.DEBUG.intValue(), "Hello");
-    assertEquals(YogaLogLevel.DEBUG, mLogLevel);
-    assertEquals("Hello", mLogMessage);
-  }
-
-  @Test
-  public void testUpdateLogger() {
-    YogaNode.setLogger(new YogaLogger() {
-        public void log(YogaLogLevel level, String message) {}
-    });
-    YogaNode.setLogger(new YogaLogger() {
-        public void log(YogaLogLevel level, String message) {
-          mLogLevel = level;
-          mLogMessage = message;
-        }
-    });
-    YogaNode.jni_YGLog(YogaLogLevel.VERBOSE.intValue(), "Flexbox");
-    assertEquals(YogaLogLevel.VERBOSE, mLogLevel);
-    assertEquals("Flexbox", mLogMessage);
-  }
-
   @Test
   public void testCopyStyle() {
     final YogaNode node0 = new YogaNode();

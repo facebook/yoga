@@ -11,6 +11,7 @@
 #include <yoga/Yoga.h>
 
 extern int32_t gNodeInstanceCount;
+extern int32_t gConfigInstanceCount;
 
 static int testMallocCount;
 static int testCallocCount;
@@ -38,7 +39,8 @@ static void testFree(void *ptr) {
 }
 
 TEST(YogaTest, memory_func_default) {
-  gNodeInstanceCount = 0; // Reset YGNode instance count for memory func test
+  gNodeInstanceCount = 0;   // Reset YGNode instance count for memory func test
+  gConfigInstanceCount = 0; // Reset YGConfig instance count for memory func test
   YGSetMemoryFuncs(NULL, NULL, NULL, NULL);
   const YGNodeRef root = YGNodeNew();
   const YGNodeRef root_child0 = YGNodeNew();
@@ -47,7 +49,8 @@ TEST(YogaTest, memory_func_default) {
 }
 
 TEST(YogaTest, memory_func_test_funcs) {
-  gNodeInstanceCount = 0; // Reset YGNode instance count for memory func test
+  gNodeInstanceCount = 0;   // Reset YGNode instance count for memory func test
+  gConfigInstanceCount = 0; // Reset YGConfig instance count for memory func test
   YGSetMemoryFuncs(&testMalloc, &testCalloc, &testRealloc, &testFree);
   const YGNodeRef root = YGNodeNew();
   for (int i = 0; i < 10; i++) {
@@ -64,7 +67,8 @@ TEST(YogaTest, memory_func_test_funcs) {
 
 #if GTEST_HAS_DEATH_TEST
 TEST(YogaDeathTest, memory_func_assert_zero_nodes) {
-  gNodeInstanceCount = 0; // Reset YGNode instance count for memory func test
+  gNodeInstanceCount = 0;   // Reset YGNode instance count for memory func test
+  gConfigInstanceCount = 0; // Reset YGConfig instance count for memory func test
   const YGNodeRef root = YGNodeNew();
   ASSERT_DEATH(YGSetMemoryFuncs(&testMalloc, &testCalloc, &testRealloc, &testFree),
                "Cannot set memory functions: all node must be freed first");
@@ -72,7 +76,8 @@ TEST(YogaDeathTest, memory_func_assert_zero_nodes) {
 }
 
 TEST(YogaDeathTest, memory_func_assert_all_non_null) {
-  gNodeInstanceCount = 0; // Reset YGNode instance count for memory func test
+  gNodeInstanceCount = 0;   // Reset YGNode instance count for memory func test
+  gConfigInstanceCount = 0; // Reset YGConfig instance count for memory func test
   ASSERT_DEATH(YGSetMemoryFuncs(NULL, &testCalloc, &testRealloc, &testFree),
                "Cannot set memory functions: functions must be all NULL or Non-NULL");
 }

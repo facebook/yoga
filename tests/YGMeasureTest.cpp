@@ -26,15 +26,12 @@ static YGSize _measure(YGNodeRef node,
 }
 
 static YGSize _simulate_wrapping_text(YGNodeRef node,
-                       float width,
-                       YGMeasureMode widthMode,
-                       float height,
-                       YGMeasureMode heightMode) {
-  if(widthMode == YGMeasureModeUndefined || width >= 68)
-  {
-    return YGSize{
-      .width = 68, .height = 16
-    };
+                                      float width,
+                                      YGMeasureMode widthMode,
+                                      float height,
+                                      YGMeasureMode heightMode) {
+  if (widthMode == YGMeasureModeUndefined || width >= 68) {
+    return YGSize{.width = 68, .height = 16};
   }
 
   return YGSize{
@@ -196,8 +193,7 @@ TEST(YogaTest, dont_measure_when_min_equals_max_mixed_height_percent) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, measure_enough_size_should_be_in_single_line)
-{
+TEST(YogaTest, measure_enough_size_should_be_in_single_line) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 100);
 
@@ -215,8 +211,7 @@ TEST(YogaTest, measure_enough_size_should_be_in_single_line)
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, measure_not_enough_size_should_wrap)
-{
+TEST(YogaTest, measure_not_enough_size_should_wrap) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 55);
 
@@ -234,8 +229,7 @@ TEST(YogaTest, measure_not_enough_size_should_wrap)
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, measure_zero_space_should_grow)
-{
+TEST(YogaTest, measure_zero_space_should_grow) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetHeight(root, 200);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
@@ -539,7 +533,6 @@ TEST(YogaTest, measure_no_padding) {
   YGConfigFree(config);
 }
 
-
 #if GTEST_HAS_DEATH_TEST
 TEST(YogaDeathTest, cannot_add_child_to_node_with_measure_func) {
   const YGNodeRef root = YGNodeNew();
@@ -570,4 +563,3 @@ TEST(YogaTest, can_nullify_measure_func_on_any_node) {
   ASSERT_TRUE(YGNodeGetMeasureFunc(root) == NULL);
   YGNodeFreeRecursive(root);
 }
-

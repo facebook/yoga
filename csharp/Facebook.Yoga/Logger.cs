@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -9,13 +9,9 @@
 
 namespace Facebook.Yoga
 {
-    public enum YogaLogLevel
-    {
-        Error,
-        Warn,
-        Info,
-        Debug,
-        Verbose,
-        Fatal,
-    }
+    public delegate void Logger(
+        YogaConfig config,
+        YogaNode node,
+        YogaLogLevel level,
+        string message);
 }

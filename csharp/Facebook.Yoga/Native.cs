@@ -26,96 +26,9 @@ namespace Facebook.Yoga
         private const string DllName = "yoga";
 #endif
 
-        internal class YGNodeHandle : SafeHandle
-        {
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-            private GCHandle _managed;
-#endif
-
-            private YGNodeHandle() : base(IntPtr.Zero, true)
-            {
-            }
-
-            public override bool IsInvalid
-            {
-                get
-                {
-                    return this.handle == IntPtr.Zero;
-                }
-            }
-
-            protected override bool ReleaseHandle()
-            {
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-                ReleaseManaged();
-#endif
-                Native.YGNodeFree(this.handle);
-                GC.KeepAlive(this);
-                return true;
-            }
-
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-            public void SetContext(YogaNode node)
-            {
-                if (!_managed.IsAllocated)
-                {
-#if ENABLE_IL2CPP
-                    // Weak causes 'GCHandle value belongs to a different domain' error
-                    _managed = GCHandle.Alloc(node);
-#else
-                    _managed = GCHandle.Alloc(node, GCHandleType.Weak);
-#endif
-                    Native.YGNodeSetContext(this.handle, GCHandle.ToIntPtr(_managed));
-                }
-            }
-
-            public void ReleaseManaged()
-            {
-                if (_managed.IsAllocated)
-                {
-                    _managed.Free();
-                }
-            }
-
-            public static YogaNode GetManaged(IntPtr ygNodePtr)
-            {
-                var node =
-                    GCHandle.FromIntPtr(Native.YGNodeGetContext(ygNodePtr)).Target as YogaNode;
-                if (node == null)
-                {
-                    throw new InvalidOperationException("YogaNode is already deallocated");
-                }
-
-                return node;
-            }
-#endif
-        }
-
-        internal class YGConfigHandle : SafeHandle
-        {
-            private YGConfigHandle() : base(IntPtr.Zero, true)
-            {
-            }
-
-            public override bool IsInvalid
-            {
-                get
-                {
-                    return this.handle == IntPtr.Zero;
-                }
-            }
-
-            protected override bool ReleaseHandle()
-            {
-                Native.YGConfigFree(this.handle);
-                GC.KeepAlive(this);
-                return true;
-            }
-        }
-
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGInteropSetLogger(
-            [MarshalAs(UnmanagedType.FunctionPtr)] YogaLogger.Func func);
+            [MarshalAs(UnmanagedType.FunctionPtr)] YogaLogger logger);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YGNodeHandle YGNodeNew();
@@ -128,6 +41,9 @@ namespace Facebook.Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeReset(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern YGConfigHandle YGConfigGetDefault();
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YGConfigHandle YGConfigNew();
@@ -445,15 +361,19 @@ namespace Facebook.Yoga
 
 #endregion
 
-#region AOT
+#region Context
 
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr YGNodeGetContext(IntPtr node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeSetContext(IntPtr node, IntPtr managed);
-#endif
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr YGConfigGetContext(IntPtr config);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGConfigSetContext(IntPtr config, IntPtr managed);
 
 #endregion
     }

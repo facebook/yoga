@@ -10,48 +10,12 @@
 using System;
 using System.Runtime.InteropServices;
 
-#if __IOS__
-using ObjCRuntime;
-#endif
-#if ENABLE_IL2CPP
-using AOT;
-#endif
-
 namespace Facebook.Yoga
 {
-    internal static class YogaLogger
-    {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void Func(YogaLogLevel level, string message);
-
-        private static bool _initialized;
-        private static Func _managedLogger = LoggerInternal;
-
-        public static Func Logger = null;
-
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
-        [MonoPInvokeCallback(typeof(Func))]
-#endif
-        public static void LoggerInternal(YogaLogLevel level, string message)
-        {
-            if (Logger != null)
-            {
-                Logger(level, message);
-            }
-
-            if (level == YogaLogLevel.Error)
-            {
-                throw new InvalidOperationException(message);
-            }
-        }
-
-        public static void Initialize()
-        {
-            if (!_initialized)
-            {
-                Native.YGInteropSetLogger(_managedLogger);
-                _initialized = true;
-            }
-        }
-    }
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void YogaLogger(
+        IntPtr unmanagedConfigPtr,
+        IntPtr unmanagedNotePtr,
+        YogaLogLevel level,
+        string message);
 }

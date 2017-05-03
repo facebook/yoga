@@ -11,8 +11,10 @@
 #import <yoga/YGEnums.h>
 #import <yoga/Yoga.h>
 
-extern YGValue YGPointValue(CGFloat value) NS_SWIFT_UNAVAILABLE("Use the swift Int and FloatingPoint extensions instead");
-extern YGValue YGPercentValue(CGFloat value) NS_SWIFT_UNAVAILABLE("Use the swift Int and FloatingPoint extensions instead");
+extern YGValue YGPointValue(CGFloat value)
+    NS_SWIFT_UNAVAILABLE("Use the swift Int and FloatingPoint extensions instead");
+extern YGValue YGPercentValue(CGFloat value)
+    NS_SWIFT_UNAVAILABLE("Use the swift Int and FloatingPoint extensions instead");
 
 typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
   YGDimensionFlexibilityFlexibleWidth = 1 << 0,
@@ -108,7 +110,8 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
  Perform a layout calculation and update the frames of the views in the hierarchy with the results.
  If the origin is not preserved, the root view's layout results will applied from {0,0}.
  */
-- (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin dimensionFlexibility:(YGDimensionFlexibility)dimensionFlexibility
+- (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin
+               dimensionFlexibility:(YGDimensionFlexibility)dimensionFlexibility
     NS_SWIFT_NAME(applyLayout(preservingOrigin:dimensionFlexibility:));
 
 /**

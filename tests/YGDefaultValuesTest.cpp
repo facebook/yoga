@@ -92,7 +92,7 @@ TEST(YogaTest, assert_default_values) {
 }
 
 TEST(YogaTest, assert_webdefault_values) {
-  YGConfig * config = YGConfigNew();
+  YGConfig *config = YGConfigNew();
   YGConfigSetUseWebDefaults(config, true);
   const YGNodeRef root = YGNodeNewWithConfig(config);
 
@@ -105,7 +105,7 @@ TEST(YogaTest, assert_webdefault_values) {
 }
 
 TEST(YogaTest, assert_webdefault_values_reset) {
-  YGConfig * config = YGConfigNew();
+  YGConfig *config = YGConfigNew();
   YGConfigSetUseWebDefaults(config, true);
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeReset(root);
