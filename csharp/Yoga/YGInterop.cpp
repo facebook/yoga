@@ -27,5 +27,5 @@ static int unmanagedLogger(const YGConfigRef config,
 
 void YGInteropSetLogger(YGInteropLogger managedLogger) {
   gManagedLogger = managedLogger;
-  YGSetLogger(YGConfigGetDefault(), &unmanagedLogger);
+  YGConfigSetLogger(YGConfigGetDefault(), &unmanagedLogger);
 }
