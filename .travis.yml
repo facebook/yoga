@@ -62,7 +62,7 @@ before_install:
       brew cask install java;
       export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
       export PATH=$JAVA_HOME/bin:$PATH;
-      brew install android-sdk;
+      brew install caskroom/cask/android-sdk;
       export ANDROID_SDK=/usr/local/Cellar/android-sdk/24.4.1_1;
       export ANDROID_HOME=/usr/local/Cellar/android-sdk/24.4.1_1;
       brew install lib32stdc++6 lib32z1;
