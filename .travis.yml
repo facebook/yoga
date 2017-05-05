@@ -20,8 +20,7 @@ env:
 
 before_install:
   - brew update > /dev/null
-  - brew tap facebook/fb
-  - brew install buck
+  - brew install --HEAD facebook/fb/buck
 
   # Java
   - |
