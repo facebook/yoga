@@ -3,8 +3,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'maven-publish'
 
-version = '1.4.2'
-group = 'com.facebook.yoga'
+group = GROUP
+version = VERSION_NAME
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -73,4 +73,4 @@ ext {
     bintrayName = 'com.facebook.yoga:yoga'
 }
 
-apply from: rootProject.file('gradle/android-jcenter-install.gradle')
+apply from: rootProject.file('gradle/release.gradle')

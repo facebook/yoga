@@ -1,0 +1,33 @@
+// Set up everything required for releasing on Bintray
+ext {
+    bintrayRepo = 'maven'
+    bintrayUserOrg = 'facebook'
+    bintrayName = "${GROUP}:${POM_ARTIFACT_ID}"
+    bintrayDescription = POM_DESCRIPTION
+    projectUrl = POM_URL
+    issuesUrl = 'https://github.com/facebook/yoga/issues'
+    scmUrl = POM_SCM_URL
+    scmConnection = POM_SCM_CONNECTION
+    scmDeveloperConnection = POM_SCM_DEV_CONNECTION
+
+    publishedGroupId = GROUP
+    libraryName = 'yoga'
+    artifact = 'yoga'
+
+    developerId = POM_DEVELOPER_ID
+    developerName = POM_DEVELOPER_NAME
+
+    projectLicenses = {
+        license {
+            name = POM_LICENSE_NAME
+            url = POM_LICENSE_URL
+            distribution = POM_LICENSE_DIST
+        }
+    }
+}
+
+// Set up the Android Maven publication (POM etc.)
+apply from: rootProject.file('gradle/android-maven-install.gradle')
+
+// Upload to Bintray
+apply from: rootProject.file('gradle/bintray.gradle')

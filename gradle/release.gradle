@@ -1,0 +1,8 @@
+// Common Android tasks for all releases that generate Javadocs, sources, etc.
+apply from: rootProject.file('gradle/android-tasks.gradle')
+
+// Upload to Bintray
+apply from: rootProject.file('gradle/release-bintray.gradle')
+
+// Upload directly to standard Maven Central (for SNAPSHOTs)
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

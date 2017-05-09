@@ -3,8 +3,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'maven-publish'
 
-version = '1.4.1'
-group = 'com.facebook.yoga.android'
+version = VERSION_NAME
+group = GROUP
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -42,8 +42,4 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-ext {
-    bintrayName = 'com.facebook.yoga.android:yoga-layout'
-}
-
-apply from: rootProject.file('gradle/android-jcenter-install.gradle')
+apply from: rootProject.file('gradle/release.gradle')
