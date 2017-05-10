@@ -8,7 +8,7 @@
 YogaKit is available to install via [CocoaPods](https://cocoapods.org/).
 
 ```
-pod 'YogaKit', '~> 1.3'
+pod 'YogaKit', '~> 1.5'
 ```
 
 ## Getting Started
