@@ -8,7 +8,7 @@ permalink: /docs/api/android/
 To include the java bindings and `.so` libraries, add to your build:
 
 ```java
-compile 'com.facebook.yoga:yoga:1.2.0'
+compile 'com.facebook.yoga:yoga:1.5.0'
 ```
 
 There is an easy interface to Yoga called `YogaLayout`.  This is a view group that lays out its children using Yoga.  We recommend looking at the sample app for details on its usage.  However, as an overview you can simply define XML layouts such as:
@@ -54,7 +54,26 @@ Note that there are some caveats, such as requiring the custom `YogaLayoutViewFa
 To include this in your project, add to your build:
 
 ```java
-compile 'com.facebook.yoga.android:yoga-layout:1.2.0'
+compile 'com.facebook.yoga.android:yoga-layout:1.5.0'
+```
+
+## Snapshot releases
+
+> IMPORTANT: This will break and may set your house on fire. Snapshots are unsigned and automatically published by our CI system. Use them for testing purposes only.
+
+If you want to live on the bleeding edge, you can use the SNAPSHOT releases
+which represent the most recent commit on `master` by adding these targets to
+your gradle config:
+
+```gradle
+repositories {
+  maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+dependencies {
+  compile 'com.facebook.yoga:yoga:1.5.1-SNAPSHOT'
+  compile 'com.facebook.yoga.android:yoga-layout:1.5.1-SNAPSHOT'
+}
 ```
 
 ## layout\_width and layout\_height
