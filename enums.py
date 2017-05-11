@@ -84,6 +84,10 @@ ENUMS = {
         'Vertical',
         'All',
     ],
+    'NodeType': [
+        'Default',
+        'Text',
+    ],
     'LogLevel': [
         'Error',
         'Warn',
