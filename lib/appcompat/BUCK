@@ -9,6 +9,6 @@ include_defs("//YOGA_DEFS")
 
 android_prebuilt_aar(
     name = "appcompat",
-    aar = "appcompat-v7-19.1.0.aar",
+    aar = "appcompat-v7-24.2.1.aar",
     visibility = YOGA_ROOTS,
 )
