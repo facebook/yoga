@@ -276,7 +276,7 @@ TEST(YogaTest, aspect_ratio_with_max_main_defined) {
 
   ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(40, YGNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(40, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
@@ -320,7 +320,7 @@ TEST(YogaTest, aspect_ratio_with_min_main_defined) {
 
   ASSERT_EQ(0, YGNodeLayoutGetLeft(root_child0));
   ASSERT_EQ(0, YGNodeLayoutGetTop(root_child0));
-  ASSERT_EQ(30, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(40, YGNodeLayoutGetWidth(root_child0));
   ASSERT_EQ(40, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
