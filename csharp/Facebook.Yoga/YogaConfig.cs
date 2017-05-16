@@ -69,7 +69,7 @@ namespace Facebook.Yoga
             if (config == null || config._logger == null)
             {
                 // Default logger
-                Console.WriteLine(message);
+                System.Diagnostics.Debug.WriteLine(message);
             }
             else
             {

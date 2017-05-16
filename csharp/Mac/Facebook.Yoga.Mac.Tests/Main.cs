@@ -33,6 +33,9 @@ namespace Facebook.Yoga.Mac.Tests
 
 		}
 
+		[System.Runtime.InteropServices.DllImport("/usr/lib/libSystem.dylib")]
+		static extern void _exit(int exit_code);
+
 		class NSRunLoopIntegration : NSObject, IMainLoopIntegration
 		{
 			public void InitializeToolkit()
@@ -51,7 +54,7 @@ namespace Facebook.Yoga.Mac.Tests
 
 			public void Shutdown()
 			{
-				Environment.Exit(TestRunner.ExitCode);
+                _exit(TestRunner.ExitCode);
 			}
 		}
 	}
