@@ -4,17 +4,17 @@
         <BuildDependsOn>NativeLibraryARMV7;NativeLibraryX86;$(BuildDependsOn)</BuildDependsOn>
     </PropertyGroup>
     <Target Name="NativeLibraryARMV7" Outputs="$(ProjectDir)/lib/armeabi-v7a/libyoga.so">
-        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../Mac/buck-build.sh //csharp:yoganet#android-armv7,shared" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../build-native.sh" />
         <Copy SourceFiles="$(ProjectDir)../../../buck-out/gen/csharp/yoganet#android-armv7,shared/libyoga.so" DestinationFiles="$(ProjectDir)/lib/armeabi-v7a/libyoga.so" SkipUnchangedFiles="true" />
     </Target>
     <!--
     <Target Name="NativeLibraryARM64" Outputs="$(ProjectDir)/lib/arm64-v8a/libyoga.so">
-        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../Mac/buck-build.sh //csharp:yoganet#android-arm64,shared" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../build-native.sh" />
         <Copy SourceFiles="$(ProjectDir)../../../buck-out/gen/csharp/yoganet#android-arm64,shared/libyoga.so" DestinationFiles="$(ProjectDir)/lib/arm64-v8/libyoga.so" SkipUnchangedFiles="true" />
     </Target>
     -->
     <Target Name="NativeLibraryX86" Outputs="$(ProjectDir)/lib/x86/libyoga.so">
-        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../Mac/buck-build.sh //csharp:yoganet#android-x86,shared" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../build-native.sh" />
         <Copy SourceFiles="$(ProjectDir)../../../buck-out/gen/csharp/yoganet#android-x86,shared/libyoga.so" DestinationFiles="$(ProjectDir)/lib/x86/libyoga.so" SkipUnchangedFiles="true" />
     </Target>
 </Project>

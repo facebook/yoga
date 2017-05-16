@@ -4,7 +4,7 @@
         <CompileDependsOn>NativeLibrary;$(CompileDependsOn)</CompileDependsOn>
     </PropertyGroup>
     <Target Name="NativeLibrary" Outputs="$(ProjectDir)libyoga.a">
-        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../Mac/buck-build.sh //csharp:yoganet-ios" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="$(ProjectDir)../../build-native.sh" />
         <Copy SourceFiles="$(ProjectDir)..\..\..\buck-out\gen\csharp\yoganet-ios\libyoga.a" DestinationFiles="$(ProjectDir)libyoga.a" SkipUnchangedFiles="true" />
     </Target>
 </Project>
