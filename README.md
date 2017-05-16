@@ -38,3 +38,26 @@ For the main C implementation of Yoga clang-format is used to ensure a consisten
 
 ## Benchmarks
 Benchmarks are located in `benchmark/YGBenchmark.c` and can be run with `buck run //benchmark:benchmark`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed. Benchmarks are run on every commit in CI.
+
+### Javascript
+Installing through NPM
+```sh
+npm install yoga-layout
+```
+By default this will install the library and try to build for all platforms (node, browser asm, and standalone webpack). You may receive errors if you do not have the required platform development tools already installed. To preset the platform you'd like to build for you can set a .npmrc property first.
+```sh
+npm config set yoga-layout:platform standalone
+```
+This will now only run the standalone webpack build upon install.
+
+## Build Platforms
+
+| name           | description                                     |
+|----------------|-------------------------------------------------|
+| all (default)  | Builds all of these platforms.                  |
+| browser        | Builds asm js browser version.                  |
+| node           | Builds node js version.                         |
+| standalone     | Runs webpack.                                   |
+| none           | Does nothing. You can use the prepackaged libs. |
+
+
