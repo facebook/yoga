@@ -104,7 +104,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\Universal\$(PlatformTarget)\$(Configuration)\</OutDir>
-    <IntDir>obj\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <IntDir>obj\Universal\$(PlatformTarget)\$(Configuration)\</IntDir>
     <TargetName>yoga</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -242,8 +242,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\yoga\YGEnums.h" />
     <ClInclude Include="..\..\yoga\Yoga.h" />
-    <ClInclude Include="..\..\yoga\YGEnums.c" />
     <ClInclude Include="..\..\yoga\YGMacros.h" />
     <ClInclude Include="..\..\yoga\YGNodeList.h" />
     <ClInclude Include="resource.h" />
@@ -252,8 +252,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\yoga\Yoga.c" />
     <ClCompile Include="..\..\yoga\YGEnums.c" />
+    <ClCompile Include="..\..\yoga\Yoga.c" />
     <ClCompile Include="..\..\yoga\YGNodeList.c" />
     <ClCompile Include="YGInterop.cpp" />
     <ClCompile Include="dllmain.cpp">
