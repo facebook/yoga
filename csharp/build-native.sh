@@ -1,17 +1,25 @@
 #!/bin/sh
+cd `dirname "$0"`
 echo $ANDROID_SDK
-if buck --version >/dev/null 2>&1; then true; else
+BUCK_RELEASE=2017.05.09.01
+echo "buck $BUCK_RELEASE"
+BUCK=lib/buck-$BUCK_RELEASE/bin/buck
+if $BUCK --version >/dev/null 2>&1; then true; else
     echo "Building Buck!"
-    mkdir lib
+    BUCK_PATH=buck-$BUCK_RELEASE
+    mkdir -p lib
     cd lib
-    git clone https://github.com/facebook/buck.git --depth 1
-    cd buck
+    rm -f $BUCK_PATH.tar.gz
+    curl -O -J -L https://github.com/facebook/buck/archive/v$BUCK_RELEASE.tar.gz
+    tar xzf $BUCK_PATH.tar.gz
+    cd $BUCK_PATH
     ant
-    cd ..
-    cd ..
+    cd ../..
 fi
-buck build //:yoga
-buck build //csharp:yoganet-ios
-buck build //csharp:yoganet-macosx
-buck build //csharp:yoganet#android-x86,shared
-buck build //csharp:yoganet#android-armv7,shared
+
+$BUCK build \
+    //csharp:yoganet-ios \
+    //csharp:yoganet-macosx \
+    //csharp:yoganet#android-armv7,shared \
+    //csharp:yoganet#android-x86,shared
+
