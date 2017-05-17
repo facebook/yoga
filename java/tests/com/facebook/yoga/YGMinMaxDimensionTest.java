@@ -663,6 +663,200 @@ public class YGMinMaxDimensionTest {
   }
 
   @Test
+  public void test_flex_root_ignored() {
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
+    root.setFlexGrow(1f);
+    root.setWidth(100f);
+    root.setMinHeight(100f);
+    root.setMaxHeight(500f);
+
+    final YogaNode root_child0 = new YogaNode(config);
+    root_child0.setFlexGrow(1f);
+    root_child0.setFlexBasis(200f);
+    root.addChildAt(root_child0, 0);
+
+    final YogaNode root_child1 = new YogaNode(config);
+    root_child1.setHeight(100f);
+    root.addChildAt(root_child1, 1);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(300f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(200f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(200f, root_child1.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(300f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(200f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(200f, root_child1.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
+  public void test_flex_grow_root_minimized() {
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
+    root.setWidth(100f);
+    root.setMinHeight(100f);
+    root.setMaxHeight(500f);
+
+    final YogaNode root_child0 = new YogaNode(config);
+    root_child0.setFlexGrow(1f);
+    root_child0.setMinHeight(100f);
+    root_child0.setMaxHeight(500f);
+    root.addChildAt(root_child0, 0);
+
+    final YogaNode root_child0_child0 = new YogaNode(config);
+    root_child0_child0.setFlexGrow(1f);
+    root_child0_child0.setFlexBasis(200f);
+    root_child0.addChildAt(root_child0_child0, 0);
+
+    final YogaNode root_child0_child1 = new YogaNode(config);
+    root_child0_child1.setHeight(100f);
+    root_child0.addChildAt(root_child0_child1, 1);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(300f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(300f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(200f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child1.getLayoutX(), 0.0f);
+    assertEquals(200f, root_child0_child1.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child1.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root_child0_child1.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(300f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(300f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(200f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child1.getLayoutX(), 0.0f);
+    assertEquals(200f, root_child0_child1.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child1.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root_child0_child1.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
+  public void test_flex_grow_height_maximized() {
+    YogaConfig config = new YogaConfig();
+
+    final YogaNode root = new YogaNode(config);
+    root.setWidth(100f);
+    root.setHeight(500f);
+
+    final YogaNode root_child0 = new YogaNode(config);
+    root_child0.setFlexGrow(1f);
+    root_child0.setMinHeight(100f);
+    root_child0.setMaxHeight(500f);
+    root.addChildAt(root_child0, 0);
+
+    final YogaNode root_child0_child0 = new YogaNode(config);
+    root_child0_child0.setFlexGrow(1f);
+    root_child0_child0.setFlexBasis(200f);
+    root_child0.addChildAt(root_child0_child0, 0);
+
+    final YogaNode root_child0_child1 = new YogaNode(config);
+    root_child0_child1.setHeight(100f);
+    root_child0.addChildAt(root_child0_child1, 1);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(500f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(500f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(400f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child1.getLayoutX(), 0.0f);
+    assertEquals(400f, root_child0_child1.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child1.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root_child0_child1.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(500f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(500f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(400f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child1.getLayoutX(), 0.0f);
+    assertEquals(400f, root_child0_child1.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child1.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root_child0_child1.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
   public void test_flex_grow_within_constrained_min_row() {
     YogaConfig config = new YogaConfig();
 

@@ -62,6 +62,25 @@
   </div>
 </div>
 
+<div id="flex_root_ignored" style="width: 100px; min-height: 100px; max-height:500px;flex-grow:1">
+  <div style="flex-basis:200px; flex-grow:1;"></div>
+  <div style="height:100px; "></div>
+</div>
+
+<div id="flex_grow_root_minimized" style="width: 100px; min-height: 100px; max-height:500px">
+  <div style="min-height: 100px; max-height:500px;flex-grow:1">
+    <div style="flex-basis:200px; flex-grow:1;"></div>
+    <div style="height:100px; "></div>
+  </div>
+</div>
+
+<div id="flex_grow_height_maximized" style="width: 100px; height:500px">
+  <div style="min-height: 100px; max-height:500px;flex-grow:1">
+    <div style="flex-basis:200px; flex-grow:1;"></div>
+    <div style="height:100px; "></div>
+  </div>
+</div>
+
 <div id="flex_grow_within_constrained_min_row" style="min-width: 100px; height:100px; flex-direction: row;">
   <div style="flex-grow:1;"></div>
   <div style="width: 50px;"></div>
