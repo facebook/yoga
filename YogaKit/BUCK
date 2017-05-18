@@ -36,6 +36,7 @@ apple_library(
         "$SDKROOT/System/Library/Frameworks/Foundation.framework",
         "$SDKROOT/System/Library/Frameworks/UIKit.framework",
     ],
+    sdks = (IOS, APPLETVOS),
     visibility = ["PUBLIC"],
     deps = [
         yoga_dep(":yoga"),
