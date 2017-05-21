@@ -121,6 +121,12 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
 @property (nonatomic, readonly, assign) CGSize intrinsicSize;
 
 /**
+  Returns the size of the view based on provided constraints. Pass NaN for an unconstrained dimension.
+ */
+- (CGSize)calculateLayoutWithSize:(CGSize)size
+    NS_SWIFT_NAME(calculateLayout(with:));
+
+/**
  Returns the number of children that are using Flexbox.
  */
 @property (nonatomic, readonly, assign) NSUInteger numberOfChildren;

@@ -271,8 +271,6 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
   return [self calculateLayoutWithSize:constrainedSize];
 }
 
-#pragma mark - Private
-
 - (CGSize)calculateLayoutWithSize:(CGSize)size
 {
   NSAssert([NSThread isMainThread], @"Yoga calculation must be done on main.");
@@ -292,6 +290,8 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
     .height = YGNodeLayoutGetHeight(node),
   };
 }
+
+#pragma mark - Private
 
 static YGSize YGMeasureView(
   YGNodeRef node,
