@@ -30,6 +30,33 @@ ext {
     targetCompatibilityVersion = JavaVersion.VERSION_1_7
 }
 
+// If you have an idea on how to avoid this, please get in touch or
+// answer https://stackoverflow.com/questions/43867014/how-to-use-the-gradle-ndk-build-to-compile-for-the-host-machine.
+task copyNativeLibs(type: Copy, dependsOn: ':buckBuildNative') {
+    from "${rootDir}/buck-out/gen/java/tests#default,shared-library-symlink-tree/"
+    include '*.so'
+    include '*.dylib'
+    into "$buildDir/jniLibs"
+}
+
+task buckBuildNative(type: Exec) {
+    workingDir rootDir
+    environment BUCKVERSION: 'last'
+    commandLine 'buck', 'build', '//java/...'
+}
+
+allprojects {
+    afterEvaluate {
+        tasks.withType(Test) {
+            dependsOn copyNativeLibs
+            def libDir = "${rootDir}/build/jniLibs"
+            systemProperty 'java.library.path', libDir
+            environment 'LD_LIBRARY_PATH', libDir
+            environment 'DYLD_LIBRARY_PATH', libDir
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
