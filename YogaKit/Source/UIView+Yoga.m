@@ -14,12 +14,11 @@
 static const void *kYGYogaAssociatedKey = &kYGYogaAssociatedKey;
 
 @implementation UIView (YogaKit)
-
 - (YGLayout *)yoga
 {
   YGLayout *yoga = objc_getAssociatedObject(self, kYGYogaAssociatedKey);
   if (!yoga) {
-    yoga = [[YGLayout alloc] initWithView:self];
+    yoga = [[YGLayout alloc] initWithEntity:self];
     objc_setAssociatedObject(self, kYGYogaAssociatedKey, yoga, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
 
@@ -33,4 +32,8 @@ static const void *kYGYogaAssociatedKey = &kYGYogaAssociatedKey;
   }
 }
 
+- (NSArray<id<YGLayoutEntity>> *)subEntities
+{
+  return self.subviews;
+}
 @end

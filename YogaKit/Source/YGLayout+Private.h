@@ -14,6 +14,6 @@
 
 @property (nonatomic, assign, readonly) YGNodeRef node;
 
-- (instancetype)initWithView:(UIView *)view;
+- (instancetype)initWithEntity:(id<YGLayoutEntity>)view NS_DESIGNATED_INITIALIZER;
 
 @end

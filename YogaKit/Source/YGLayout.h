@@ -21,6 +21,17 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
   YGDimensionFlexibilityFlexibleHeigth = 1 << 1,
 };
 
+@class YGLayout;
+
+@protocol YGLayoutEntity <NSObject>
+@property (nonatomic, readonly, strong) YGLayout *yoga;
+@property (nonatomic, readonly, strong) NSArray<id<YGLayoutEntity>> *subEntities;
+
+@property (nonatomic) CGRect frame;
+
+- (CGSize)sizeThatFits:(CGSize)fitSize;
+@end
+
 @interface YGLayout : NSObject
 
 /**
@@ -148,4 +159,8 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
  */
 - (void)markDirty;
 
+@end
+
+@interface YGLayoutContainer : YGLayout <YGLayoutEntity>
+@property (nonatomic, readwrite, strong) NSArray<id<YGLayoutEntity>> *subEntities;
 @end

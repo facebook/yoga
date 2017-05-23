@@ -14,12 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^YGLayoutConfigurationBlock)(YGLayout *);
 
-@interface UIView (Yoga)
-
-/**
- The YGLayout that is attached to this view. It is lazily created.
- */
-@property (nonatomic, readonly, strong) YGLayout *yoga;
+@interface UIView (Yoga) <YGLayoutEntity>
 
 /**
  In ObjC land, every time you access `view.yoga.*` you are adding another `objc_msgSend`

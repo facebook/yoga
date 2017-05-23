@@ -8,7 +8,6 @@
  */
 
 #import "YGLayout+Private.h"
-#import "UIView+Yoga.h"
 
 #define YG_PROPERTY(type, lowercased_name, capitalized_name)    \
 - (type)lowercased_name                                         \
@@ -101,7 +100,7 @@ static YGConfigRef globalConfig;
 
 @interface YGLayout ()
 
-@property (nonatomic, weak, readonly) UIView *view;
+@property (nonatomic, weak, readonly) id<YGLayoutEntity> entity;
 
 @end
 
@@ -118,12 +117,17 @@ static YGConfigRef globalConfig;
   YGConfigSetPointScaleFactor(globalConfig, [UIScreen mainScreen].scale);
 }
 
-- (instancetype)initWithView:(UIView*)view
+- (instancetype)init
 {
+  return [self initWithEntity:nil];
+}
+- (instancetype)initWithEntity:(id<YGLayoutEntity>)entity
+{
+  NSParameterAssert(entity);
   if (self = [super init]) {
-    _view = view;
+    _entity = entity;
     _node = YGNodeNewWithConfig(globalConfig);
-    YGNodeSetContext(_node, (__bridge void *) view);
+    YGNodeSetContext(_node, (__bridge void *) entity);
     _isEnabled = NO;
     _isIncludedInLayout = YES;
   }
@@ -152,7 +156,7 @@ static YGConfigRef globalConfig;
   // this *should* be fine. Forgive me Hack Gods.
   const YGNodeRef node = self.node;
   if (YGNodeGetMeasureFunc(node) == NULL) {
-    YGNodeSetMeasureFunc(node, YGMeasureView);
+    YGNodeSetMeasureFunc(node, YGMeasureEntity);
   }
 
   YGNodeMarkDirty(node);
@@ -167,8 +171,8 @@ static YGConfigRef globalConfig;
 {
   NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
   if (self.isEnabled) {
-    for (UIView *subview in self.view.subviews) {
-      YGLayout *const yoga = subview.yoga;
+    for (id<YGLayoutEntity> subEntity in self.entity.subEntities) {
+      YGLayout *const yoga = subEntity.yoga;
       if (yoga.isEnabled && yoga.isIncludedInLayout) {
         return NO;
       }
@@ -238,19 +242,19 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 
 - (void)applyLayout
 {
-  [self calculateLayoutWithSize:self.view.bounds.size];
-  YGApplyLayoutToViewHierarchy(self.view, NO);
+  [self calculateLayoutWithSize:self.entity.frame.size];
+  YGApplyLayoutToHierarchy(self.entity, NO, CGPointZero);
 }
 
 - (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin
 {
-  [self calculateLayoutWithSize:self.view.bounds.size];
-  YGApplyLayoutToViewHierarchy(self.view, preserveOrigin);
+  [self calculateLayoutWithSize:self.entity.frame.size];
+  YGApplyLayoutToHierarchy(self.entity, preserveOrigin, CGPointZero);
 }
 
 - (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin dimensionFlexibility:(YGDimensionFlexibility)dimensionFlexibility
 {
-  CGSize size = self.view.bounds.size;
+  CGSize size = self.entity.frame.size;
   if (dimensionFlexibility & YGDimensionFlexibilityFlexibleWidth) {
     size.width = YGUndefined;
   }
@@ -258,9 +262,8 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
     size.height = YGUndefined;
   }
   [self calculateLayoutWithSize:size];
-  YGApplyLayoutToViewHierarchy(self.view, preserveOrigin);
+  YGApplyLayoutToHierarchy(self.entity, preserveOrigin, CGPointZero);
 }
-
 
 - (CGSize)intrinsicSize
 {
@@ -274,9 +277,9 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 - (CGSize)calculateLayoutWithSize:(CGSize)size
 {
   NSAssert([NSThread isMainThread], @"Yoga calculation must be done on main.");
-  NSAssert(self.isEnabled, @"Yoga is not enabled for this view.");
+  NSAssert(self.isEnabled, @"Yoga is not enabled for %@", self);
 
-  YGAttachNodesFromViewHierachy(self.view);
+  YGAttachNodesFromHierachy(self.entity);
 
   const YGNodeRef node = self.node;
   YGNodeCalculateLayout(
@@ -293,7 +296,7 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 
 #pragma mark - Private
 
-static YGSize YGMeasureView(
+static YGSize YGMeasureEntity(
   YGNodeRef node,
   float width,
   YGMeasureMode widthMode,
@@ -303,8 +306,8 @@ static YGSize YGMeasureView(
   const CGFloat constrainedWidth = (widthMode == YGMeasureModeUndefined) ? CGFLOAT_MAX : width;
   const CGFloat constrainedHeight = (heightMode == YGMeasureModeUndefined) ? CGFLOAT_MAX: height;
 
-  UIView *view = (__bridge UIView*) YGNodeGetContext(node);
-  const CGSize sizeThatFits = [view sizeThatFits:(CGSize) {
+  id<YGLayoutEntity> entity = (__bridge id<YGLayoutEntity>) YGNodeGetContext(node);
+  const CGSize sizeThatFits = [entity sizeThatFits:(CGSize) {
     .width = constrainedWidth,
     .height = constrainedHeight,
   }];
@@ -332,14 +335,14 @@ static CGFloat YGSanitizeMeasurement(
   return result;
 }
 
-static BOOL YGNodeHasExactSameChildren(const YGNodeRef node, NSArray<UIView *> *subviews)
+static BOOL YGNodeHasExactSameChildren(const YGNodeRef node, NSArray<id<YGLayoutEntity>> *subEntities)
 {
-  if (YGNodeGetChildCount(node) != subviews.count) {
+  if (YGNodeGetChildCount(node) != subEntities.count) {
     return NO;
   }
 
-  for (int i=0; i<subviews.count; i++) {
-    if (YGNodeGetChild(node, i) != subviews[i].yoga.node) {
+  for (int i=0; i<subEntities.count; i++) {
+    if (YGNodeGetChild(node, i) != subEntities[i].yoga.node) {
       return NO;
     }
   }
@@ -347,34 +350,34 @@ static BOOL YGNodeHasExactSameChildren(const YGNodeRef node, NSArray<UIView *> *
   return YES;
 }
 
-static void YGAttachNodesFromViewHierachy(UIView *const view)
+static void YGAttachNodesFromHierachy(id<YGLayoutEntity> const entity)
 {
-  YGLayout *const yoga = view.yoga;
+  YGLayout *const yoga = entity.yoga;
   const YGNodeRef node = yoga.node;
 
   // Only leaf nodes should have a measure function
   if (yoga.isLeaf) {
     YGRemoveAllChildren(node);
-    YGNodeSetMeasureFunc(node, YGMeasureView);
+    YGNodeSetMeasureFunc(node, YGMeasureEntity);
   } else {
     YGNodeSetMeasureFunc(node, NULL);
 
-    NSMutableArray<UIView *> *subviewsToInclude = [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
-    for (UIView *subview in view.subviews) {
-      if (subview.yoga.isIncludedInLayout) {
-        [subviewsToInclude addObject:subview];
+    NSMutableArray<id<YGLayoutEntity>> *subEntitiesToInclude = [[NSMutableArray alloc] initWithCapacity:entity.subEntities.count];
+    for (id<YGLayoutEntity> subEntity in entity.subEntities) {
+      if (subEntity.yoga.isIncludedInLayout) {
+        [subEntitiesToInclude addObject:subEntity];
       }
     }
 
-    if (!YGNodeHasExactSameChildren(node, subviewsToInclude)) {
+    if (!YGNodeHasExactSameChildren(node, subEntitiesToInclude)) {
       YGRemoveAllChildren(node);
-      for (int i=0; i<subviewsToInclude.count; i++) {
-        YGNodeInsertChild(node, subviewsToInclude[i].yoga.node, i);
+      for (int i=0; i<subEntitiesToInclude.count; i++) {
+        YGNodeInsertChild(node, subEntitiesToInclude[i].yoga.node, i);
       }
     }
 
-    for (UIView *const subview in subviewsToInclude) {
-      YGAttachNodesFromViewHierachy(subview);
+    for (id<YGLayoutEntity> const subEntity in subEntitiesToInclude) {
+      YGAttachNodesFromHierachy(subEntity);
     }
   }
 }
@@ -401,11 +404,11 @@ static CGFloat YGRoundPixelValue(CGFloat value)
   return roundf(value * scale) / scale;
 }
 
-static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
+static void YGApplyLayoutToHierarchy(id<YGLayoutEntity> entity, BOOL preserveOrigin, CGPoint offset)
 {
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
 
-  const YGLayout *yoga = view.yoga;
+  const YGLayout *yoga = entity.yoga;
 
   if (!yoga.isIncludedInLayout) {
      return;
@@ -413,32 +416,75 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
 
   YGNodeRef node = yoga.node;
   const CGPoint topLeft = {
-    YGNodeLayoutGetLeft(node),
-    YGNodeLayoutGetTop(node),
+    YGNodeLayoutGetLeft(node) + offset.x,
+    YGNodeLayoutGetTop(node) + offset.y,
   };
 
-  const CGPoint bottomRight = {
-    topLeft.x + YGNodeLayoutGetWidth(node),
-    topLeft.y + YGNodeLayoutGetHeight(node),
-  };
-
-  const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
-  view.frame = (CGRect) {
+  const CGPoint origin = preserveOrigin ? entity.frame.origin : CGPointZero;
+  entity.frame = (CGRect) {
     .origin = {
       .x = YGRoundPixelValue(topLeft.x + origin.x),
       .y = YGRoundPixelValue(topLeft.y + origin.y),
     },
     .size = {
-      .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
-      .height = YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y),
+      .width = YGNodeLayoutGetWidth(node),
+      .height = YGNodeLayoutGetHeight(node),
     },
   };
 
   if (!yoga.isLeaf) {
-    for (NSUInteger i=0; i<view.subviews.count; i++) {
-      YGApplyLayoutToViewHierarchy(view.subviews[i], NO);
+    for (NSUInteger i=0; i<entity.subEntities.count; i++) {
+      YGApplyLayoutToHierarchy(entity.subEntities[i],
+                               NO,
+                               [entity conformsToProtocol:@protocol(UICoordinateSpace)] ? CGPointZero : entity.frame.origin);
     }
   }
 }
 
+@end
+
+@implementation YGLayoutContainer
+@synthesize frame=_frame;
+
+- (instancetype)init
+{
+  return [self initWithEntity:self];
+}
+- (instancetype)initWithEntity:(id<YGLayoutEntity>)entity
+{
+  if ((self = [super initWithEntity:entity])) {
+    self.isEnabled = YES;
+  }
+  return self;
+}
+
+- (YGLayout *)yoga
+{
+  return self;
+}
+
+- (CGSize)sizeThatFits:(CGSize)fitSize
+{
+  return CGSizeZero;
+}
+
+- (BOOL)isEnabled
+{
+  if (!super.isEnabled) {
+    return NO;
+  } else {
+    for (id<YGLayoutEntity> subEntity in self.entity.subEntities) {
+      YGLayout *const yoga = subEntity.yoga;
+      if (yoga.isEnabled && yoga.isIncludedInLayout) {
+        return YES;
+      }
+    }
+    return NO;
+  }
+}
+
+- (BOOL)isLeaf
+{
+    return NO;
+}
 @end
