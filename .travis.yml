@@ -114,6 +114,7 @@ script:
   - |
     if [[ $TARGET = "android" ]]; then
       buck build --verbose 0 //android/sample:sample &&
+      ./gradlew testDebugUnit &&
       scripts/publish-snapshot.sh
     fi
 
