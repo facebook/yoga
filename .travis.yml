@@ -66,6 +66,7 @@ before_install:
       brew cask install java;
       export JAVA_HOME=$(/usr/libexec/java_home -v 1.8);
       export PATH=$JAVA_HOME/bin:$PATH;
+      export TERMINAL=dumb;
       source scripts/android-setup.sh && installAndroidSDK
       export ANDROID_SDK=$ANDROID_HOME
     fi
