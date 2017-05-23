@@ -39,6 +39,19 @@ static YGSize _simulate_wrapping_text(YGNodeRef node,
   };
 }
 
+static YGSize _measure_assert_negative(YGNodeRef node,
+                                       float width,
+                                       YGMeasureMode widthMode,
+                                       float height,
+                                       YGMeasureMode heightMode) {
+  EXPECT_GE(width, 0);
+  EXPECT_GE(height, 0);
+  
+  return YGSize{
+    .width = 0, .height = 0,
+  };
+}
+
 TEST(YogaTest, dont_measure_single_grow_shrink_child) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 100);
@@ -562,4 +575,42 @@ TEST(YogaTest, can_nullify_measure_func_on_any_node) {
   YGNodeSetMeasureFunc(root, NULL);
   ASSERT_TRUE(YGNodeGetMeasureFunc(root) == NULL);
   YGNodeFreeRecursive(root);
+}
+
+TEST(YogaTest, cant_call_negative_measure) {
+  const YGConfigRef config = YGConfigNew();
+  
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
+  YGNodeStyleSetWidth(root, 50);
+  YGNodeStyleSetHeight(root, 10);
+  
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeSetMeasureFunc(root_child0, _measure_assert_negative);
+  YGNodeStyleSetMargin(root_child0, YGEdgeTop, 20);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
+}
+
+TEST(YogaTest, cant_call_negative_measure_horizontal) {
+  const YGConfigRef config = YGConfigNew();
+  
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetWidth(root, 10);
+  YGNodeStyleSetHeight(root, 20);
+  
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeSetMeasureFunc(root_child0, _measure_assert_negative);
+  YGNodeStyleSetMargin(root_child0, YGEdgeStart, 20);
+  YGNodeInsertChild(root, root_child0, 0);
+  
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
 }
