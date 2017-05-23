@@ -7,7 +7,7 @@ permalink: /docs/getting-started/
 
 ## Installation
 
-Installation of Yoga is currently a manual process. We have plans on bringing Yoga to the many available package management systems (e.g., [Yarn](https://yarnpkg.com/), [Gradle](https://gradle.org/), [Cocoapods](https://cocoapods.org/)), but we do not have a target date at this time. We would greatly appreciate [community contributions here](https://github.com/facebook/yoga/pulls).
+Installation of Yoga is currently a manual process. We have plans on bringing Yoga to the many available package management systems (e.g., [Yarn](https://yarnpkg.com/), [Gradle](https://gradle.org/)), but we do not have a target date at this time. We would greatly appreciate [community contributions here](https://github.com/facebook/yoga/pulls).
 
 ### Getting the Code
 
