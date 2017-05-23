@@ -25,7 +25,7 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
 
 @protocol YGLayoutEntity <NSObject>
 @property (nonatomic, readonly, strong) YGLayout *yoga;
-@property (nonatomic, readonly, strong) NSArray<id<YGLayoutEntity>> *subEntities;
+@property (nonatomic, readonly, copy) NSArray<id<YGLayoutEntity>> *subEntities;
 
 @property (nonatomic) CGRect frame;
 
@@ -167,5 +167,5 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
 @end
 
 @interface YGLayoutContainer : YGLayout <YGLayoutEntity>
-@property (nonatomic, readwrite, strong) NSArray<id<YGLayoutEntity>> *subEntities;
+@property (nonatomic, readwrite, copy) NSArray<id<YGLayoutEntity>> *subEntities;
 @end
