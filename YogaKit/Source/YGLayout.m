@@ -143,7 +143,7 @@ static YGConfigRef globalConfig;
 
 - (void)markDirty
 {
-  if (self.isDirty || !self.isLeaf) {
+  if (self.isDirty || !self.isLeaf || !self.isEnabled) {
     return;
   }
 
@@ -151,6 +151,10 @@ static YGConfigRef globalConfig;
   // the measure function. Since we already know that this is a leaf,
   // this *should* be fine. Forgive me Hack Gods.
   const YGNodeRef node = self.node;
+    
+  // Child node may be disabled, but not removed
+  if (YGNodeGetChildCount(node) > 0) return;
+    
   if (YGNodeGetMeasureFunc(node) == NULL) {
     YGNodeSetMeasureFunc(node, YGMeasureView);
   }
