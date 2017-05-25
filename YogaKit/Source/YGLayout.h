@@ -18,7 +18,7 @@ extern YGValue YGPercentValue(CGFloat value)
 
 typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
   YGDimensionFlexibilityFlexibleWidth = 1 << 0,
-  YGDimensionFlexibilityFlexibleHeigth = 1 << 1,
+  YGDimensionFlexibilityFlexibleHeight = 1 << 1,
 };
 
 @interface YGLayout : NSObject
