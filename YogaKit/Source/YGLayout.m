@@ -365,7 +365,7 @@ static void YGAttachNodesFromViewHierachy(UIView *const view)
 
     NSMutableArray<UIView *> *subviewsToInclude = [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
     for (UIView *subview in view.subviews) {
-      if (subview.yoga.isIncludedInLayout && subview.yoga.isEnabled) {
+      if (subview.yoga.isIncludedInLayout) {
         [subviewsToInclude addObject:subview];
       }
     }
@@ -411,7 +411,7 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
 
   const YGLayout *yoga = view.yoga;
 
-  if (!yoga.isIncludedInLayout || !yoga.isEnabled) {
+  if (!yoga.isIncludedInLayout) {
      return;
   }
 
