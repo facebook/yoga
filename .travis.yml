@@ -22,7 +22,11 @@ env:
   - TARGET=android
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_d27e803291ff_key -iv $encrypted_d27e803291ff_iv -in scripts/setup-keys.enc -d >> gradle.properties
+  - |
+    if [[ -n "$encrypted_d27e803291ff_iv" ]]; then
+      openssl aes-256-cbc -K $encrypted_d27e803291ff_key -iv $encrypted_d27e803291ff_iv -in scripts/setup-keys.enc -d >> gradle.properties;
+    fi
+
   - brew update > /dev/null
   - brew install --HEAD facebook/fb/buck
 
