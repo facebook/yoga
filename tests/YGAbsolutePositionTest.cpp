@@ -945,7 +945,7 @@ TEST(YogaTest, absolute_layout_in_wrap_reverse_row_container) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, absolute_layout_in_wrap_reverse_column_container2) {
+TEST(YogaTest, absolute_layout_in_wrap_reverse_column_container_flex_end) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
@@ -988,7 +988,7 @@ TEST(YogaTest, absolute_layout_in_wrap_reverse_column_container2) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, absolute_layout_in_wrap_reverse_row_container2) {
+TEST(YogaTest, absolute_layout_in_wrap_reverse_row_container_flex_end) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);

@@ -1001,7 +1001,7 @@ it("absolute_layout_in_wrap_reverse_row_container", function () {
     config.free();
   }
 });
-it("absolute_layout_in_wrap_reverse_column_container2", function () {
+it("absolute_layout_in_wrap_reverse_column_container_flex_end", function () {
   var config = Yoga.Config.create();
 
   try {
@@ -1047,7 +1047,7 @@ it("absolute_layout_in_wrap_reverse_column_container2", function () {
     config.free();
   }
 });
-it("absolute_layout_in_wrap_reverse_row_container2", function () {
+it("absolute_layout_in_wrap_reverse_row_container_flex_end", function () {
   var config = Yoga.Config.create();
 
   try {

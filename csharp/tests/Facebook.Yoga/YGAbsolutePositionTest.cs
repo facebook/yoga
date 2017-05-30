@@ -951,7 +951,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void Test_absolute_layout_in_wrap_reverse_column_container2()
+        public void Test_absolute_layout_in_wrap_reverse_column_container_flex_end()
         {
             YogaConfig config = new YogaConfig();
 
@@ -994,7 +994,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void Test_absolute_layout_in_wrap_reverse_row_container2()
+        public void Test_absolute_layout_in_wrap_reverse_row_container_flex_end()
         {
             YogaConfig config = new YogaConfig();
 

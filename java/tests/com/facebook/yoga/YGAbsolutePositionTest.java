@@ -931,7 +931,7 @@ public class YGAbsolutePositionTest {
   }
 
   @Test
-  public void test_absolute_layout_in_wrap_reverse_column_container2() {
+  public void test_absolute_layout_in_wrap_reverse_column_container_flex_end() {
     YogaConfig config = new YogaConfig();
 
     final YogaNode root = new YogaNode(config);
@@ -973,7 +973,7 @@ public class YGAbsolutePositionTest {
   }
 
   @Test
-  public void test_absolute_layout_in_wrap_reverse_row_container2() {
+  public void test_absolute_layout_in_wrap_reverse_row_container_flex_end() {
     YogaConfig config = new YogaConfig();
 
     final YogaNode root = new YogaNode(config);
