@@ -39,7 +39,7 @@ For the main C implementation of Yoga clang-format is used to ensure a consisten
 ## Benchmarks
 Benchmarks are located in `benchmark/YGBenchmark.c` and can be run with `buck run //benchmark:benchmark`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed. Benchmarks are run on every commit in CI.
 
-### Javascript
+### JavaScript
 Installing through NPM
 ```sh
 npm install yoga-layout
