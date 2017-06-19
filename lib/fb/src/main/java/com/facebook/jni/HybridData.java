@@ -3,7 +3,6 @@
 package com.facebook.jni;
 
 import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.soloader.SoLoader;
 
 /**
  * This object holds a native C++ member for hybrid Java/C++ objects.
@@ -18,10 +17,6 @@ import com.facebook.soloader.SoLoader;
  */
 @DoNotStrip
 public class HybridData {
-
-  static {
-    SoLoader.loadLibrary("fb");
-  }
 
   // Private C++ instance
   @DoNotStrip

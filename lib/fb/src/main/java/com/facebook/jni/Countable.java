@@ -3,7 +3,6 @@
 package com.facebook.jni;
 
 import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.soloader.SoLoader;
 
 /**
  * A Java Object that has native memory allocated corresponding to this instance.
@@ -17,10 +16,6 @@ import com.facebook.soloader.SoLoader;
  */
 @DoNotStrip
 public class Countable {
-
-  static {
-    SoLoader.loadLibrary("fb");
-  }
 
   // Private C++ instance
   @DoNotStrip
