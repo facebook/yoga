@@ -80,6 +80,30 @@ TEST_F(YogaTest_HadOverflowTests, no_overflow_no_wrap_and_flex_children) {
   ASSERT_FALSE(YGNodeLayoutGetHadOverflow(root));
 }
 
+TEST_F(YogaTest_HadOverflowTests, hadOverflow_gets_reset_if_not_logger_valid) {
+  const YGNodeRef child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(child0, 80);
+  YGNodeStyleSetHeight(child0, 40);
+  YGNodeStyleSetMargin(child0, YGEdgeTop, 10);
+  YGNodeStyleSetMargin(child0, YGEdgeBottom, 10);
+  YGNodeInsertChild(root, child0, 0);
+  const YGNodeRef child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(child1, 80);
+  YGNodeStyleSetHeight(child1, 40);
+  YGNodeStyleSetMargin(child1, YGEdgeBottom, 5);
+  YGNodeInsertChild(root, child1, 1);
+
+  YGNodeCalculateLayout(root, 200, 100, YGDirectionLTR);
+
+  ASSERT_TRUE(YGNodeLayoutGetHadOverflow(root));
+
+  YGNodeStyleSetFlexShrink(child1, 1);
+
+  YGNodeCalculateLayout(root, 200, 100, YGDirectionLTR);
+
+  ASSERT_FALSE(YGNodeLayoutGetHadOverflow(root));
+}
+
 TEST_F(YogaTest_HadOverflowTests, spacing_overflow_in_nested_nodes) {
   const YGNodeRef child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(child0, 80);
