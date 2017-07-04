@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    [
+      "replace-require",
+      {
+        "fs": "{}",
+        "path": "{}"
+      }
+    ]
+  ]
+}

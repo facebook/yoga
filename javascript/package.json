@@ -4,8 +4,8 @@
     "description": "Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.",
     "license": "BSD-3-Clause",
     "repository": {
-      "type": "git",
-      "url": "git@github.com:facebook/yoga.git"
+        "type": "git",
+        "url": "git@github.com:facebook/yoga.git"
     },
 
     "main": "./sources/entry-node",
@@ -27,6 +27,7 @@
 
         "build:node": "npm -- run copy-sources && npm -- run node-gyp configure build",
         "build:browser": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1",
+        "postbuild:browser": "babel build/Release/nbind.js --out-file build/Release/nbind.js",
         "build:standalone": "webpack",
         "build:all": "npm -- run build:node && npm -- run build:browser && npm -- run build:standalone",
         "build": "cross-env \"npm --if-present -- run build:$npm_package_config_platform\"",
@@ -54,6 +55,9 @@
 
     "devDependencies": {
 
+        "babel-cli": "^6.24.1",
+        "babel-core": "^6.25.0",
+        "babel-plugin-replace-require": "^0.0.4",
         "cross-env": "^4.0.0",
         "mocha": "^3.2.0",
         "webpack": "^2.2.0-rc.2"
