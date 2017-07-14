@@ -2532,11 +2532,13 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
           // Parent size constraint should have higher priority than flex
           if (YGNodeIsFlex(currentRelativeChild)) {
+            const float previousChildMainSize = childMainSize;
             childCrossSize = fminf(childCrossSize - marginCross, availableInnerCrossDim);
             childMainSize =
                 marginMain + (isMainAxisRow
                                   ? childCrossSize * currentRelativeChild->style.aspectRatio
                                   : childCrossSize / currentRelativeChild->style.aspectRatio);
+            deltaFreeSpace += previousChildMainSize - childMainSize;
           }
 
           childCrossSize += marginCross;
