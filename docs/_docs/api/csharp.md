@@ -8,36 +8,11 @@ permalink: /docs/api/csharp/
 
 ### Lifecycle
 
-Create a `YogaNode` via its default constructor or the static `Create()` builder method and use `Reset` if you want to pool and re-use nodes. The native memory of a `YogaNode` will automatically be freed when the node is garbage collected.
+Create a `YogaNode` via its default constructor and use `Reset` if you want to pool and re-use nodes. The native memory of a `YogaNode` will automatically be freed when the node is garbage collected.
 
 ```csharp
 YogaNode();
 void Reset();
-
-static YogaNode Create(
-  YogaDirection? styleDirection = null,
-  YogaFlexDirection? flexDirection = null,
-  YogaJustify? justifyContent = null,
-  YogaAlign? alignContent = null,
-  YogaAlign? alignItems = null,
-  YogaAlign? alignSelf = null,
-  YogaPositionType? positionType = null,
-  YogaWrap? wrap = null,
-  YogaOverflow? overflow = null,
-  float? flex = null,
-  float? flexGrow = null,
-  float? flexShrink = null,
-  float? flexBasis = null,
-  Spacing position = null,
-  Spacing margin = null,
-  Spacing padding = null,
-  Spacing border = null,
-  float? Width = null,
-  float? Height = null,
-  float? MaxWidth = null,
-  float? MaxHeight = null,
-  float? MinWidth = null,
-  float? MinHeight = null);
 ```
 
 ### Children
@@ -95,6 +70,9 @@ enum YogaAlign
   Center,
   FlexEnd,
   Stretch,
+  Baseline,
+  SpaceBetween,
+  SpaceAround
 }
 
 YogaAlign AlignItems {get, set};
@@ -113,6 +91,7 @@ enum YogaWrap
 {
   NoWrap,
   Wrap,
+  WrapReverse
 }
 
 YogaWrap Wrap {get, set};
@@ -197,17 +176,12 @@ enum YogaMeasureMode
   AtMost,
 }
 
-public delegate long MeasureFunction(
+public delegate YogaSize MeasureFunction(
   YogaNode node,
   float width,
   YogaMeasureMode widthMode,
   float height,
   YogaMeasureMode heightMode);
-
-class MeasureOutput
-{
-  public static long Make(int width, int height);
-}
 
 void SetMeasureFunction(MeasureFunction measureFunction);
 bool IsMeasureDefined();
