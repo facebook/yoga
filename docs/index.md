@@ -124,18 +124,20 @@ root.addChildAt(image, 1);
     <div class="blockContent">
 <div markdown="1" style="width: 700px; max-width: 100%;">
 ```csharp
-YogaNode root = YogaNode.Create(
-  width: 500,
-  height: 300,
-);
+YogaNode root = new YogaNode {
+  Width = 500,
+  Height = 300
+};
 
-YogaNode image = YogaNode.Create(flexGrow: 1);
+YogaNode image = new YogaNode { 
+  FlexGrow = 1 
+};
 
-YogaNode text = YogaNode.Create(
-  width: 300,
-  height: 25,
-  margin: new Spacing(left: 20, top: 20, right: 20, bottom: 20),
-);
+YogaNode text = new YogaNode {
+  Width = 300,
+  Height = 25,
+  Margin = 20
+};
 
 root.Insert(image, 0);
 root.Insert(text, 1);
