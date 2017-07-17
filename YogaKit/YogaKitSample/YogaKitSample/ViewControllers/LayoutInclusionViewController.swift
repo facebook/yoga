@@ -46,14 +46,16 @@ final class LayoutInclusionViewController: UIViewController {
         contentView.addSubview(redView)
 
         disappearingView.backgroundColor = .blue
+        disappearingView.isHidden = true
         disappearingView.configureLayout { (layout) in
             layout.isEnabled = true
             layout.flexGrow = 1
+            layout.isIncludedInLayout = false
         }
         contentView.addSubview(disappearingView)
 
-        button.setTitle("Add Blue View", for: UIControlState.selected)
-        button.setTitle("Remove Blue View", for: UIControlState.normal)
+        button.setTitle("Remove Blue View", for: UIControlState.selected)
+        button.setTitle("Add Blue View", for: UIControlState.normal)
         button.addTarget(self, action: #selector(buttonWasTapped), for: UIControlEvents.touchUpInside)
         button.configureLayout { (layout) in
             layout.isEnabled = true
