@@ -12,6 +12,8 @@ compiler: clang
 cache:
   directories:
     - $HOME/Library/Caches/Homebrew
+    - $HOME/android-sdk
+    - $HOME/android-ndk
 
 env:
   - TARGET=c
@@ -73,6 +75,8 @@ before_install:
       export TERMINAL=dumb;
       source scripts/android-setup.sh && installAndroidSDK
       export ANDROID_SDK=$ANDROID_HOME
+      export ANDROID_NDK_REPOSITORY=$HOME/android-ndk
+      export ANDROID_NDK_HOME=$ANDROID_NDK_REPOSITORY/android-ndk-13b
     fi
 
   # JavaScript

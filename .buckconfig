@@ -1,7 +1,7 @@
 [cxx]
   gtest_dep = //lib/gtest:gtest
 [android]
-  target = android-23
+  target = android-25
 [ndk]
   ndk_version = 13.1.3345770
   compiler = clang
