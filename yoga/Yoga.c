@@ -3168,11 +3168,11 @@ static float YGRoundValueToPixelGrid(const float value,
     // Still remove fractial as fractial could be  extremely small.
     scaledValue = scaledValue - fractial;
   } else if (forceCeil) {
-    scaledValue = scaledValue - fractial + 1.0;
+    scaledValue = scaledValue - fractial + 1.0f;
   } else if (forceFloor) {
     scaledValue = scaledValue - fractial;
   } else {
-    scaledValue = scaledValue - fractial + (fractial >= 0.5f ? 1.0 : 0);
+    scaledValue = scaledValue - fractial + (fractial >= 0.5f ? 1.0f : 0.0f);
   }
   return scaledValue / pointScaleFactor;
 }
