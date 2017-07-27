@@ -376,6 +376,8 @@ static void YGAttachNodesFromViewHierachy(UIView *const view)
     for (UIView *const subview in subviewsToInclude) {
       YGAttachNodesFromViewHierachy(subview);
     }
+
+    [subviewsToInclude release];
   }
 }
 
