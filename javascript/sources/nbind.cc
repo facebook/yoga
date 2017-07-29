@@ -47,6 +47,7 @@ NBIND_CLASS(Config)
     method(destroy);
 
     method(setExperimentalFeatureEnabled);
+    method(setPointScaleFactor);
 
     method(isExperimentalFeatureEnabled);
 }
