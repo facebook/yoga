@@ -306,7 +306,8 @@ static YGSize YGMeasureView(
   UIView *view = (__bridge UIView*) YGNodeGetContext(node);
   CGSize sizeThatFits = CGSizeZero;
 
-  if ([view.subviews count] > 0) {
+  // Fix for https://github.com/facebook/yoga/issues/606
+  if (![view isMemberOfClass:[UIView class]] || [view.subviews count] > 0) {
     sizeThatFits = [view sizeThatFits:(CGSize) {
       .width = constrainedWidth,
       .height = constrainedHeight,
