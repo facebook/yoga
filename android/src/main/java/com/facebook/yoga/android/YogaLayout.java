@@ -147,13 +147,6 @@ public class YogaLayout extends ViewGroup {
 
     super.addView(child, index, params);
 
-    // It is possible that addView is being called as part of a transferal of children, in which
-    // case we already know about the YogaNode and only need the Android View tree to be aware
-    // that we now own this child.  If so, we don't need to do anything further
-    if (mYogaNodes.containsKey(child)) {
-      return;
-    }
-
     YogaNode childNode;
 
     if (child instanceof YogaLayout) {
@@ -174,6 +167,11 @@ public class YogaLayout extends ViewGroup {
 
     mYogaNodes.put(child, childNode);
     mYogaNode.addChildAt(childNode, mYogaNode.getChildCount());
+
+    // From inflator, child comes with parent already but programmatically not.
+    if(childNode.getParent() == null) {
+      mYogaNode.addChildAt(childNode, mYogaNode.getChildCount());
+    }
   }
 
   /**
