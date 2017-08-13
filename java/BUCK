@@ -58,3 +58,11 @@ java_test(
         JUNIT_TARGET,
     ],
 )
+
+java_binary(
+    name = "yoga",
+    deps = [
+        ":java",
+        FBJNI_JAVA_TARGET,
+    ],
+)
