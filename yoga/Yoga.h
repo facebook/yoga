@@ -48,6 +48,20 @@ static const YGValue YGValueAuto = {YGUndefined, YGUnitAuto};
 
 typedef struct YGConfig *YGConfigRef;
 typedef struct YGNode *YGNodeRef;
+
+// 'YGMeasureMode' encapsulates the layout requirements passed from parent to child.
+// Each 'YGMeasureMode' represents a requirement for either the width or the height.
+// A 'YGMeasureMode' is comprised of a size and a mode. There are three possible modes:
+//
+// - YGMeasureModeUndefined:
+//     The parent has not imposed any constraint on the child. It can be whatever size it wants.
+//
+// - YGMeasureModeExactly:
+//     The parent has determined an exact size for the child.
+//     The child is going to be given those bounds regardless of how big it wants to be.
+//
+// - YGMeasureModeAtMost:
+//     The child can be as large as it wants up to the specified size.
 typedef YGSize (*YGMeasureFunc)(YGNodeRef node,
                                 float width,
                                 YGMeasureMode widthMode,
