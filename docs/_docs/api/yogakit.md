@@ -9,7 +9,7 @@ permalink: /docs/api/yogakit/
 
 YogaKit is a Objective-C (and Swift-compatible) wrapper for Yoga. It allows iOS Developers to manage the layout of their views using the power of Yoga.
 
-Layout configuration is done via the [YGLayout](https://github.com/facebook/yoga/blob/master/YogaKit/YGLayout.h) object. YogaKit exposes `YGLayout` via a [category](https://developer.apple.com/library/content/documentation/General/Conceptual/DevPedia-CocoaCore/Category.html) on [UIView](https://developer.apple.com/reference/uikit/uiview).
+Layout configuration is done via the [YGLayout](https://github.com/facebook/yoga/blob/master/YogaKit/Source/YGLayout.h) object. YogaKit exposes `YGLayout` via a [category](https://developer.apple.com/library/content/documentation/General/Conceptual/DevPedia-CocoaCore/Category.html) on [UIView](https://developer.apple.com/reference/uikit/uiview).
 
 ### Lifecycle
 
