@@ -23,7 +23,7 @@ YG_EXTERN_C_END
 
 typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
   YGDimensionFlexibilityFlexibleWidth = 1 << 0,
-  YGDimensionFlexibilityFlexibleHeight = 1 << 1,
+  YGDimensionFlexibilityFlexibleHeigth = 1 << 1,
 };
 
 @interface YGLayout : NSObject
