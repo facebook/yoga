@@ -22,7 +22,7 @@ extern YGValue YGPercentValue(CGFloat value)
 YG_EXTERN_C_END
 
 typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
-  YGDimensionFlexibilityFlexibleWidth = 1 << 0, 
+  YGDimensionFlexibilityFlexibleWidth = 1 << 0,
   YGDimensionFlexibilityFlexibleHeight = 1 << 1,
 };
 
