@@ -614,6 +614,16 @@ public class YogaNode {
     return YogaDirection.fromInt(mLayoutDirection);
   }
 
+  // Fields like mLeft, mWidth etc. in this class is cached values of native C structures
+  // These values will get updated only after complete layout calculation. But in certian
+  // cases (for eg: custom baseline function) we will require new values before complete
+  // layout calculation. This method will update fields in this class with new values from 
+  // native C structures
+  private native void jni_YGNodeTransferLayout(long nativePointer);
+  public void transferLayoutFromNative() {
+    jni_YGNodeTransferLayout(mNativePointer);
+  }
+
   private native void jni_YGNodeSetHasMeasureFunc(long nativePointer, boolean hasMeasureFunc);
   public void setMeasureFunction(YogaMeasureFunction measureFunction) {
     mMeasureFunction = measureFunction;
