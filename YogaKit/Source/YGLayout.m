@@ -102,6 +102,7 @@ static YGConfigRef globalConfig;
 @interface YGLayout ()
 
 @property (nonatomic, weak, readonly) UIView *view;
+@property (nonatomic, assign, readonly) BOOL isUIView;
 
 @end
 
@@ -126,6 +127,7 @@ static YGConfigRef globalConfig;
     YGNodeSetContext(_node, (__bridge void *) view);
     _isEnabled = NO;
     _isIncludedInLayout = YES;
+    _isUIView = [view isMemberOfClass:[UIView class]];
   }
 
   return self;
@@ -307,7 +309,7 @@ static YGSize YGMeasureView(
   CGSize sizeThatFits = CGSizeZero;
 
   // Fix for https://github.com/facebook/yoga/issues/606
-  if (![view isMemberOfClass:[UIView class]] || [view.subviews count] > 0) {
+  if (!view.yoga.isUIView || [view.subviews count] > 0) {
     sizeThatFits = [view sizeThatFits:(CGSize) {
       .width = constrainedWidth,
       .height = constrainedHeight,
