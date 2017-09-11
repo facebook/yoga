@@ -595,12 +595,12 @@ namespace Facebook.Yoga
             Native.YGNodeSetBaselineFunc(_ygNode, _managedBaseline);
         }
 
-        public void CalculateLayout()
+        public void CalculateLayout(float width, float height)
         {
             Native.YGNodeCalculateLayout(
                 _ygNode,
-                YogaConstants.Undefined,
-                YogaConstants.Undefined,
+                width,
+                height,
                 Native.YGNodeStyleGetDirection(_ygNode));
         }
 
