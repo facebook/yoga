@@ -19,7 +19,7 @@
             "ldflags": [
                 "--memory-init-file", "0",
                 "-s", "PRECISE_F32=1",
-                "-s", "TOTAL_MEMORY=134217728"
+                "-s", "ALLOW_MEMORY_GROWTH=1"
             ],
 
 	    "xcode_settings": {
