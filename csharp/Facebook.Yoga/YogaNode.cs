@@ -595,7 +595,9 @@ namespace Facebook.Yoga
             Native.YGNodeSetBaselineFunc(_ygNode, _managedBaseline);
         }
 
-        public void CalculateLayout(float width, float height)
+        public void CalculateLayout(
+            float width = YogaConstants.Undefined, 
+            float height = YogaConstants.Undefined)
         {
             Native.YGNodeCalculateLayout(
                 _ygNode,
