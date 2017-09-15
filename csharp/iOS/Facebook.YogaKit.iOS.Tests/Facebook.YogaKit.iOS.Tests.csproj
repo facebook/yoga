@@ -22,8 +22,6 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchProfiling>true</MtouchProfiling>
-    <MtouchUseSGen>true</MtouchUseSGen>
-    <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <IOSDebuggerPort>17481</IOSDebuggerPort>
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
@@ -39,8 +37,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchUseSGen>true</MtouchUseSGen>
-    <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
@@ -56,8 +52,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchUseSGen>true</MtouchUseSGen>
-    <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
@@ -76,8 +70,6 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchProfiling>true</MtouchProfiling>
-    <MtouchUseSGen>true</MtouchUseSGen>
-    <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
@@ -102,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="UnitTestAppDelegate.cs" />
+    <Compile Include="YogaKitNativeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Facebook.YogaKit.iOS\Facebook.YogaKit.iOS.csproj">
