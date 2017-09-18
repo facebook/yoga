@@ -19,9 +19,17 @@ podspec = Pod::Spec.new do |spec|
   spec.ios.frameworks = 'UIKit'
 
   spec.dependency 'Yoga', '~> 1.6'
-  spec.source_files = 'YogaKit/Source/*.{h,m,swift}'
-  spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h'
-  spec.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
+
+  spec.subspec 'Objc' do |objc|
+    objc.source_files = 'YogaKit/Source/*.{h,m}'
+    objc.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h'
+    objc.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
+  end
+
+  spec.subspec 'Swift' do |swift|
+    swift.source_files = 'YogaKit/Source/*.{swift}'
+  end
+
 end
 
 # See https://github.com/facebook/yoga/pull/366

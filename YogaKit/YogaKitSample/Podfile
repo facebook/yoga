@@ -1,6 +1,9 @@
-use_frameworks!
+platform :ios, '9.0'
 
 target 'YogaKitSample' do
+
+  use_frameworks!
   pod 'YogaKit', :path => '../../YogaKit.podspec'
   pod 'IGListKit', '~> 2.1.0'
+
 end
