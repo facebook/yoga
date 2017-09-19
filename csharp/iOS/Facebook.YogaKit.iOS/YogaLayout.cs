@@ -23,14 +23,21 @@ namespace Facebook.YogaKit
 			height = (float)view.Bounds.Height;
 		}
 
-		static float NativePixelScale => (float)UIScreen.MainScreen.Scale;
+        static float NativePixelScale => (float)UIScreen.MainScreen.Scale;
 
 
 		static void ApplyLayoutToNativeView(UIView view, YogaNode node)
 		{
 			var topLeft = new CGPoint(node.LayoutX, node.LayoutY);
 			var bottomRight = new CGPoint(topLeft.X + node.LayoutWidth, topLeft.Y + node.LayoutHeight);
-			view.Frame = new CGRect(RoundPointValue((float)topLeft.X), RoundPointValue((float)topLeft.Y), RoundPointValue((float)bottomRight.X) - RoundPointValue((float)topLeft.X), RoundPointValue((float)bottomRight.Y) - RoundPointValue((float)topLeft.Y));
+            if (view is UIScrollView scrollView)
+            {
+                scrollView.ContentSize = new CGSize(RoundPointValue((float)bottomRight.X) - RoundPointValue((float)topLeft.X), RoundPointValue((float)bottomRight.Y) - RoundPointValue((float)topLeft.Y));
+            }
+            else
+            {
+                view.Frame = new CGRect(RoundPointValue((float)topLeft.X), RoundPointValue((float)topLeft.Y), RoundPointValue((float)bottomRight.X) - RoundPointValue((float)topLeft.X), RoundPointValue((float)bottomRight.Y) - RoundPointValue((float)topLeft.Y));
+            }
 		}
 
 		bool _disposed;

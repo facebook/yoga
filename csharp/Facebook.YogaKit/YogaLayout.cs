@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 #if __IOS__
 using NativeView = UIKit.UIView;
+using NativeScrollView = UIKit.UIScrollView;
 #endif
 
 namespace Facebook.YogaKit
@@ -699,12 +700,12 @@ namespace Facebook.YogaKit
 		{
 			get
 			{
-				return _node.StyleAspectRatio;
+				return _node.AspectRatio;
 			}
 
 			set
 			{
-				_node.StyleAspectRatio = value;
+				_node.AspectRatio = value;
 			}
 		}
 
@@ -716,6 +717,17 @@ namespace Facebook.YogaKit
 				float width = 0;
 				float height = 0;
 				GetWidthHeightOfNativeView(view, out width, out height);
+                if (view is NativeScrollView)
+                {
+                    if (FlexDirection == YogaFlexDirection.Column || FlexDirection == YogaFlexDirection.ColumnReverse)
+                    {
+                        height = float.NaN;
+                    }
+                    else
+                    {
+                        width = float.NaN;
+                    }
+                }
 				CalculateLayoutWithSize(this, width, height);
 				ApplyLayoutToViewHierarchy(view);
 			}
@@ -743,9 +755,7 @@ namespace Facebook.YogaKit
 
 			var node = layout._node;
 
-			node.Width = width;
-			node.Height = height;
-			node.CalculateLayout();
+			node.CalculateLayout(width, height);
 
 			return new SizeF { Width = node.LayoutWidth, Height = node.LayoutHeight };
 		}
@@ -775,14 +785,14 @@ namespace Facebook.YogaKit
 			float result;
 			if (measureMode == YogaMeasureMode.Exactly)
 			{
-				result = (float)constrainedSize;
+				result = constrainedSize;
 			}
 			else if (measureMode == YogaMeasureMode.AtMost)
 			{
-				result = (float)Math.Min(constrainedSize, measuredSize);
+				result = Math.Min(constrainedSize, measuredSize);
 			}
 			else {
-				result = (float)measuredSize;
+				result = measuredSize;
 			}
 
 			return result;
@@ -820,7 +830,7 @@ namespace Facebook.YogaKit
 				var subviewsToInclude = new List<NativeView>();
 				foreach (var subview in view.Subviews)
 				{
-					if (subview.Yoga().IsIncludeInLayout)
+					if (subview.Yoga().IsEnabled && subview.Yoga().IsIncludeInLayout)
 					{
 						subviewsToInclude.Add(subview);
 					}
@@ -856,7 +866,7 @@ namespace Facebook.YogaKit
 
 		static double RoundPointValue(float value)
 		{
-			float scale = NativePointScale;
+			float scale = NativePixelScale;
 
 			return Math.Round(value * scale) / scale;
 		}
