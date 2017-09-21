@@ -102,6 +102,7 @@ typedef struct YGConfig {
   bool useLegacyStretchBehaviour;
   float pointScaleFactor;
   YGLogger logger;
+  YGNodeClonedFunc cloneNodeCallback;
   void *context;
 } YGConfig;
 
@@ -362,6 +363,16 @@ YGNodeRef YGNodeNew(void) {
   return YGNodeNewWithConfig(&gYGConfigDefaults);
 }
 
+YGNodeRef YGNodeClone(const YGNodeRef oldNode) {
+  const YGNodeRef node = gYGMalloc(sizeof(YGNode));
+  YGAssertWithConfig(oldNode->config, node != NULL, "Could not allocate memory for node");
+  gNodeInstanceCount++;
+
+  memcpy(node, oldNode, sizeof(YGNode));
+  node->parent = NULL;
+  return node;
+}
+
 void YGNodeFree(const YGNodeRef node) {
   if (node->parent) {
     YGNodeListDelete(node->parent->children, node);
@@ -472,6 +483,34 @@ void YGNodeSetBaselineFunc(const YGNodeRef node, YGBaselineFunc baselineFunc) {
 
 YGBaselineFunc YGNodeGetBaselineFunc(const YGNodeRef node) {
   return node->baseline;
+}
+
+void YGCloneChildrenIfNeeded(const YGNodeRef parent) {
+  const uint32_t childCount = YGNodeGetChildCount(parent);
+  if (childCount == 0) {
+    // This is an empty set. Nothing to clone.
+    return;
+  }
+  const YGNodeRef firstChild = YGNodeGetChild(parent, 0);
+  if (firstChild->parent == parent) {
+    // If the first child has this node as its parent, we assume that it is already unique.
+    // We can do this because if we have it has a child, that means that its parent was at some
+    // point cloned which made that subtree immutable.
+    // We also assume that all its sibling are cloned as well.
+    return;
+  }
+  YGNodeClonedFunc cloneNodeCallback = parent->config->cloneNodeCallback;
+  YGNodeListRef newChildren = YGNodeListNew(childCount);
+  for (uint32_t i = 0; i < childCount; i++) {
+    const YGNodeRef oldChild = YGNodeGetChild(parent, i);
+    const YGNodeRef newChild = YGNodeClone(oldChild);
+    YGNodeListInsert(&newChildren, newChild, i);
+    if (cloneNodeCallback) {
+      cloneNodeCallback(oldChild, newChild, parent, i);
+    }
+    newChild->parent = parent;
+  }
+  parent->children = newChildren;
 }
 
 void YGNodeInsertChild(const YGNodeRef node, const YGNodeRef child, const uint32_t index) {
@@ -1909,6 +1948,7 @@ static bool YGNodeFixedSizeSetMeasuredDimensions(const YGNodeRef node,
 static void YGZeroOutLayoutRecursivly(const YGNodeRef node) {
   memset(&(node->layout), 0, sizeof(YGLayout));
   node->hasNewLayout = true;
+  YGCloneChildrenIfNeeded(node);
   const uint32_t childCount = YGNodeGetChildCount(node);
   for (uint32_t i = 0; i < childCount; i++) {
     const YGNodeRef child = YGNodeListGet(node->children, i);
@@ -2081,6 +2121,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                                                              parentHeight)) {
     return;
   }
+
+  // At this point we know we're going to perform work. Ensure that we have a mutable copy of each child.
+  YGCloneChildrenIfNeeded(node);
 
   // Reset layout flags, as they could have changed.
   node->layout.hadOverflow = false;
@@ -3696,6 +3739,14 @@ void YGConfigSetContext(const YGConfigRef config, void *context) {
 
 void *YGConfigGetContext(const YGConfigRef config) {
   return config->context;
+}
+
+void YGConfigSetNodeClonedFunc(const YGConfigRef config, const YGNodeClonedFunc callback) {
+  config->cloneNodeCallback = callback;
+}
+
+YGNodeClonedFunc YGConfigGetNodeClonedFunc(const YGConfigRef config) {
+  return config->cloneNodeCallback;
 }
 
 void YGSetMemoryFuncs(YGMalloc ygmalloc, YGCalloc yccalloc, YGRealloc ygrealloc, YGFree ygfree) {
