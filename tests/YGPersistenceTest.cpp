@@ -143,9 +143,81 @@ TEST(YogaTest, mutating_children_of_a_clone_clones) {
   ASSERT_EQ(2, YGNodeGetChildCount(root3));
   ASSERT_EQ(1, YGNodeGetChildCount(root4));
   ASSERT_NE(YGNodeGetChild(root3, 0), YGNodeGetChild(root4, 0));
-  
+
   YGNodeFreeRecursive(root4);
   YGNodeFreeRecursive(root3);
+  YGNodeFreeRecursive(root2);
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(YogaTest, cloning_two_levels) {
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetFlexBasis(root_child0, 15);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexGrow(root_child1, 1);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexBasis(root_child1_0, 10);
+  YGNodeStyleSetFlexGrow(root_child1_0, 1);
+  YGNodeInsertChild(root_child1, root_child1_0, 0);
+
+  const YGNodeRef root_child1_1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexBasis(root_child1_1, 25);
+  YGNodeInsertChild(root_child1, root_child1_1, 1);
+
+  printf("first run\n");
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  printf("/run\n");
+  
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child1));
+  ASSERT_FLOAT_EQ(35, YGNodeLayoutGetHeight(root_child1_0));
+  ASSERT_FLOAT_EQ(25, YGNodeLayoutGetHeight(root_child1_1));
+
+  const YGNodeRef root2_child0 = YGNodeClone(root_child0);
+  const YGNodeRef root2_child1 = YGNodeClone(root_child1);
+  const YGNodeRef root2 = YGNodeClone(root);
+
+  YGNodeStyleSetFlexGrow(root2_child0, 0);
+  YGNodeStyleSetFlexBasis(root2_child0, 40);
+
+  YGNodeRemoveAllChildren(root2);
+  YGNodeInsertChild(root2, root2_child0, 0);
+  YGNodeInsertChild(root2, root2_child1, 1);
+  ASSERT_EQ(2, YGNodeGetChildCount(root2));
+
+  YGNodeCalculateLayout(root2, YGUndefined, YGUndefined, YGDirectionLTR);
+  
+  // Original root is unchanged
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child1));
+  ASSERT_FLOAT_EQ(35, YGNodeLayoutGetHeight(root_child1_0));
+  ASSERT_FLOAT_EQ(25, YGNodeLayoutGetHeight(root_child1_1));
+
+  // New root has new layout at the top
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetHeight(root2_child0));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root2_child1));
+
+  // The deeper children are untouched.
+  ASSERT_EQ(YGNodeGetChild(root2_child1, 0), root_child1_0);
+  ASSERT_EQ(YGNodeGetChild(root2_child1, 1), root_child1_1);
+
+  // Remove all shared children so that they are not referenced in both trees.
+  // TODO: Solve this with a GC solution.
+  YGNodeRemoveAllChildren(root2_child1);
+
   YGNodeFreeRecursive(root2);
   YGNodeFreeRecursive(root);
 
