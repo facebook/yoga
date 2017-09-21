@@ -108,3 +108,46 @@ TEST(YogaTest, cloning_shared_root) {
 
   YGConfigFree(config);
 }
+
+TEST(YogaTest, mutating_children_of_a_clone_clones) {
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  ASSERT_EQ(0, YGNodeGetChildCount(root));
+
+  const YGNodeRef root2 = YGNodeClone(root);
+  ASSERT_EQ(0, YGNodeGetChildCount(root2));
+
+  const YGNodeRef root2_child0 = YGNodeNewWithConfig(config);
+  YGNodeInsertChild(root2, root2_child0, 0);
+
+  ASSERT_EQ(0, YGNodeGetChildCount(root));
+  ASSERT_EQ(1, YGNodeGetChildCount(root2));
+
+  const YGNodeRef root3 = YGNodeClone(root2);
+  ASSERT_EQ(1, YGNodeGetChildCount(root2));
+  ASSERT_EQ(1, YGNodeGetChildCount(root3));
+  ASSERT_EQ(YGNodeGetChild(root2, 0), YGNodeGetChild(root3, 0));
+
+  const YGNodeRef root3_child1 = YGNodeNewWithConfig(config);
+  YGNodeInsertChild(root3, root3_child1, 1);
+  ASSERT_EQ(1, YGNodeGetChildCount(root2));
+  ASSERT_EQ(2, YGNodeGetChildCount(root3));
+  ASSERT_EQ(root3_child1, YGNodeGetChild(root3, 1));
+  ASSERT_NE(YGNodeGetChild(root2, 0), YGNodeGetChild(root3, 0));
+
+  const YGNodeRef root4 = YGNodeClone(root3);
+  ASSERT_EQ(root3_child1, YGNodeGetChild(root4, 1));
+
+  YGNodeRemoveChild(root4, root3_child1);
+  ASSERT_EQ(2, YGNodeGetChildCount(root3));
+  ASSERT_EQ(1, YGNodeGetChildCount(root4));
+  ASSERT_NE(YGNodeGetChild(root3, 0), YGNodeGetChild(root4, 0));
+  
+  YGNodeFreeRecursive(root4);
+  YGNodeFreeRecursive(root3);
+  YGNodeFreeRecursive(root2);
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}

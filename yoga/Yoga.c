@@ -369,6 +369,12 @@ YGNodeRef YGNodeClone(const YGNodeRef oldNode) {
   gNodeInstanceCount++;
 
   memcpy(node, oldNode, sizeof(YGNode));
+  if (YGNodeGetChildCount(node) == 0) {
+    // If the node list count is zero, we reset it to NULL to indicate that we shouldn't
+    // reuse the children list when we mutate it. If it's non-empty we use the content of the
+    // list to determine whether to fork it.
+    node->children = NULL;
+  }
   node->parent = NULL;
   return node;
 }
@@ -486,6 +492,7 @@ YGBaselineFunc YGNodeGetBaselineFunc(const YGNodeRef node) {
 }
 
 void YGCloneChildrenIfNeeded(const YGNodeRef parent) {
+  // YGNodeRemoveChild has a forked variant of this algorithm optimized for deletions.
   const uint32_t childCount = YGNodeGetChildCount(parent);
   if (childCount == 0) {
     // This is an empty set. Nothing to clone.
@@ -521,17 +528,51 @@ void YGNodeInsertChild(const YGNodeRef node, const YGNodeRef child, const uint32
                    node->measure == NULL,
                    "Cannot add child: Nodes with measure functions cannot have children.");
 
+  YGCloneChildrenIfNeeded(node);
+
   YGNodeListInsert(&node->children, child, index);
   child->parent = node;
   YGNodeMarkDirtyInternal(node);
 }
 
-void YGNodeRemoveChild(const YGNodeRef node, const YGNodeRef child) {
-  if (YGNodeListDelete(node->children, child) != NULL) {
-    child->layout = gYGNodeDefaults.layout; // layout is no longer valid
-    child->parent = NULL;
-    YGNodeMarkDirtyInternal(node);
+void YGNodeRemoveChild(const YGNodeRef parent, const YGNodeRef excludedChild) {
+  // This algorithm is a forked variant from YGCloneChildrenIfNeeded that excludes a child.
+  const uint32_t childCount = YGNodeGetChildCount(parent);
+  if (childCount == 0) {
+    // This is an empty set. Nothing to remove.
+    return;
   }
+  const YGNodeRef firstChild = YGNodeGetChild(parent, 0);
+  if (firstChild->parent == parent) {
+    // If the first child has this node as its parent, we assume that it is already unique.
+    // We can now try to delete a child in this list.
+    if (YGNodeListDelete(parent->children, excludedChild) != NULL) {
+      excludedChild->layout = gYGNodeDefaults.layout; // layout is no longer valid
+      excludedChild->parent = NULL;
+      YGNodeMarkDirtyInternal(parent);
+    }
+    return;
+  }
+  // Otherwise we have to clone the node list except for the child we're trying to delete.
+  YGNodeClonedFunc cloneNodeCallback = parent->config->cloneNodeCallback;
+  YGNodeListRef newChildren = YGNodeListNew(childCount - 1);
+  for (uint32_t i = 0; i < childCount; i++) {
+    const YGNodeRef oldChild = YGNodeGetChild(parent, i);
+    if (excludedChild == oldChild) {
+      // Ignore the deleted child. Don't reset its layout or parent since it is still valid
+      // in the other parent. However, since this parent has now changed, we need to mark it
+      // as dirty.
+      YGNodeMarkDirtyInternal(parent);
+      continue;
+    }
+    const YGNodeRef newChild = YGNodeClone(oldChild);
+    YGNodeListInsert(&newChildren, newChild, i);
+    if (cloneNodeCallback) {
+      cloneNodeCallback(oldChild, newChild, parent, i);
+    }
+    newChild->parent = parent;
+  }
+  parent->children = newChildren;
 }
 
 YGNodeRef YGNodeGetChild(const YGNodeRef node, const uint32_t index) {
