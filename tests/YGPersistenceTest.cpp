@@ -66,7 +66,7 @@ TEST(YogaTest, cloning_shared_root) {
   ASSERT_EQ(2, YGNodeGetChildCount(root2));
   // Relayout with changed input should result in cloned children.
   const YGNodeRef root2_child0 = YGNodeGetChild(root2, 0);
-  const YGNodeRef root2_child1 = YGNodeGetChild(root2, 1);  
+  const YGNodeRef root2_child1 = YGNodeGetChild(root2, 1);
   ASSERT_NE(root_child0, root2_child0);
   ASSERT_NE(root_child1, root2_child1);
 
@@ -177,10 +177,8 @@ TEST(YogaTest, cloning_two_levels) {
   YGNodeStyleSetFlexBasis(root_child1_1, 25);
   YGNodeInsertChild(root_child1, root_child1_1, 1);
 
-  printf("first run\n");
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  printf("/run\n");
-  
+
   ASSERT_FLOAT_EQ(40, YGNodeLayoutGetHeight(root_child0));
   ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child1));
   ASSERT_FLOAT_EQ(35, YGNodeLayoutGetHeight(root_child1_0));
@@ -199,7 +197,7 @@ TEST(YogaTest, cloning_two_levels) {
   ASSERT_EQ(2, YGNodeGetChildCount(root2));
 
   YGNodeCalculateLayout(root2, YGUndefined, YGUndefined, YGDirectionLTR);
-  
+
   // Original root is unchanged
   ASSERT_FLOAT_EQ(40, YGNodeLayoutGetHeight(root_child0));
   ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child1));

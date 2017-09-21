@@ -2186,7 +2186,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
     return;
   }
 
-  // At this point we know we're going to perform work. Ensure that we have a mutable copy of each child.
+  // At this point we know we're going to perform work. Ensure that each child has a mutable copy.
   YGCloneChildrenIfNeeded(node);
 
   // Reset layout flags, as they could have changed.
