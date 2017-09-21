@@ -72,6 +72,13 @@ void YGNodeListInsert(YGNodeListRef *listp, const YGNodeRef node, const uint32_t
   list->items[index] = node;
 }
 
+void YGNodeListRemoveAll(const YGNodeListRef list) {
+  for (uint32_t i = 0; i < list->count; i++) {
+    list->items[i] = NULL;
+  }
+  list->count = 0;
+}
+
 YGNodeRef YGNodeListRemove(const YGNodeListRef list, const uint32_t index) {
   const YGNodeRef removed = list->items[index];
   list->items[index] = NULL;

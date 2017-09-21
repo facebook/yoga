@@ -575,6 +575,29 @@ void YGNodeRemoveChild(const YGNodeRef parent, const YGNodeRef excludedChild) {
   parent->children = newChildren;
 }
 
+void YGNodeRemoveAllChildren(const YGNodeRef parent) {
+  const uint32_t childCount = YGNodeGetChildCount(parent);
+  if (childCount == 0) {
+    // This is an empty set already. Nothing to do.
+    return;
+  }
+  const YGNodeRef firstChild = YGNodeGetChild(parent, 0);
+  if (firstChild->parent == parent) {
+    // If the first child has this node as its parent, we assume that this child set is unique.
+    for (uint32_t i = 0; i < childCount; i++) {
+      const YGNodeRef oldChild = YGNodeGetChild(parent, i);
+      oldChild->layout = gYGNodeDefaults.layout; // layout is no longer valid
+      oldChild->parent = NULL;
+    }
+    YGNodeListRemoveAll(parent->children);
+    YGNodeMarkDirtyInternal(parent);
+    return;
+  }
+  // Otherwise, we are not the owner of the child set. We don't have to do anything to clear it.
+  parent->children = NULL;
+  YGNodeMarkDirtyInternal(parent);
+}
+
 YGNodeRef YGNodeGetChild(const YGNodeRef node, const uint32_t index) {
   return YGNodeListGet(node->children, index);
 }
