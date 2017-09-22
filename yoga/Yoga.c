@@ -369,12 +369,7 @@ YGNodeRef YGNodeClone(const YGNodeRef oldNode) {
   gNodeInstanceCount++;
 
   memcpy(node, oldNode, sizeof(YGNode));
-  if (YGNodeGetChildCount(node) == 0) {
-    // If the node list count is zero, we reset it to NULL to indicate that we shouldn't
-    // reuse the children list when we mutate it. If it's non-empty we use the content of the
-    // list to determine whether to fork it.
-    node->children = NULL;
-  }
+  node->children = YGNodeListClone(oldNode->children);
   node->parent = NULL;
   return node;
 }
@@ -399,6 +394,10 @@ void YGNodeFree(const YGNodeRef node) {
 void YGNodeFreeRecursive(const YGNodeRef root) {
   while (YGNodeGetChildCount(root) > 0) {
     const YGNodeRef child = YGNodeGetChild(root, 0);
+    if (child->parent != root) {
+      // Don't free shared nodes that we don't own.
+      break;
+    }
     YGNodeRemoveChild(root, child);
     YGNodeFreeRecursive(child);
   }
@@ -506,18 +505,17 @@ void YGCloneChildrenIfNeeded(const YGNodeRef parent) {
     // We also assume that all its sibling are cloned as well.
     return;
   }
-  YGNodeClonedFunc cloneNodeCallback = parent->config->cloneNodeCallback;
-  YGNodeListRef newChildren = YGNodeListNew(childCount);
+  const YGNodeClonedFunc cloneNodeCallback = parent->config->cloneNodeCallback;
+  const YGNodeListRef children = parent->children;
   for (uint32_t i = 0; i < childCount; i++) {
-    const YGNodeRef oldChild = YGNodeGetChild(parent, i);
+    const YGNodeRef oldChild = YGNodeListGet(children, i);
     const YGNodeRef newChild = YGNodeClone(oldChild);
-    YGNodeListInsert(&newChildren, newChild, i);
+    YGNodeListReplace(children, i, newChild);
+    newChild->parent = parent;
     if (cloneNodeCallback) {
       cloneNodeCallback(oldChild, newChild, parent, i);
     }
-    newChild->parent = parent;
   }
-  parent->children = newChildren;
 }
 
 void YGNodeInsertChild(const YGNodeRef node, const YGNodeRef child, const uint32_t index) {
@@ -554,10 +552,13 @@ void YGNodeRemoveChild(const YGNodeRef parent, const YGNodeRef excludedChild) {
     return;
   }
   // Otherwise we have to clone the node list except for the child we're trying to delete.
-  YGNodeClonedFunc cloneNodeCallback = parent->config->cloneNodeCallback;
-  YGNodeListRef newChildren = YGNodeListNew(childCount - 1);
+  // We don't want to simply clone all children, because then the host will need to free
+  // the clone of the child that was just deleted.
+  const YGNodeClonedFunc cloneNodeCallback = parent->config->cloneNodeCallback;
+  const YGNodeListRef children = parent->children;
+  uint32_t nextInsertIndex = 0;
   for (uint32_t i = 0; i < childCount; i++) {
-    const YGNodeRef oldChild = YGNodeGetChild(parent, i);
+    const YGNodeRef oldChild = YGNodeListGet(children, i);
     if (excludedChild == oldChild) {
       // Ignore the deleted child. Don't reset its layout or parent since it is still valid
       // in the other parent. However, since this parent has now changed, we need to mark it
@@ -566,13 +567,17 @@ void YGNodeRemoveChild(const YGNodeRef parent, const YGNodeRef excludedChild) {
       continue;
     }
     const YGNodeRef newChild = YGNodeClone(oldChild);
-    YGNodeListInsert(&newChildren, newChild, i);
-    if (cloneNodeCallback) {
-      cloneNodeCallback(oldChild, newChild, parent, i);
-    }
+    YGNodeListReplace(children, nextInsertIndex, newChild);
     newChild->parent = parent;
+    if (cloneNodeCallback) {
+      cloneNodeCallback(oldChild, newChild, parent, nextInsertIndex);
+    }
+    nextInsertIndex++;
   }
-  parent->children = newChildren;
+  while (nextInsertIndex < childCount) {
+    YGNodeListRemove(children, nextInsertIndex);
+    nextInsertIndex++;
+  }
 }
 
 void YGNodeRemoveAllChildren(const YGNodeRef parent) {

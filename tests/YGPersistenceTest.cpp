@@ -212,12 +212,40 @@ TEST(YogaTest, cloning_two_levels) {
   ASSERT_EQ(YGNodeGetChild(root2_child1, 0), root_child1_0);
   ASSERT_EQ(YGNodeGetChild(root2_child1, 1), root_child1_1);
 
-  // Remove all shared children so that they are not referenced in both trees.
-  // TODO: Solve this with a GC solution.
-  YGNodeRemoveAllChildren(root2_child1);
-
   YGNodeFreeRecursive(root2);
   YGNodeFreeRecursive(root);
 
   YGConfigFree(config);
+}
+
+TEST(YogaTest, cloning_and_freeing) {
+  const int32_t initialInstanceCount = YGNodeGetInstanceCount();
+
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeInsertChild(root, root_child0, 0);
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  const YGNodeRef root2 = YGNodeClone(root);
+
+  // Freeing the original root should be safe as long as we don't free its children.
+  YGNodeFree(root);
+
+  YGNodeCalculateLayout(root2, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  YGNodeFreeRecursive(root2);
+
+  YGNodeFree(root_child0);
+  YGNodeFree(root_child1);
+
+  YGConfigFree(config);
+
+  ASSERT_EQ(initialInstanceCount, YGNodeGetInstanceCount());
 }
