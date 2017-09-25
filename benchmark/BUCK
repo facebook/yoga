@@ -10,6 +10,8 @@ include_defs("//YOGA_DEFS")
 cxx_binary(
     name = "benchmark",
     srcs = glob(["*.c"]),
+    headers = subdir_glob([("", "*.h")]),
+    header_namespace = "",
     compiler_flags = [
         "-fno-omit-frame-pointer",
         "-fexceptions",
@@ -18,8 +20,6 @@ cxx_binary(
         "-O3",
         "-std=c11",
     ],
-    header_namespace = "",
-    headers = subdir_glob([("", "*.h")]),
     visibility = ["PUBLIC"],
     deps = [
         yoga_dep(":yoga"),

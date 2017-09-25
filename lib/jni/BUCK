@@ -7,11 +7,11 @@
 
 cxx_library(
     name = "jni",
+    header_namespace = "",
     exported_headers = [
         "jni.h",
         "real/jni.h",
     ],
     force_static = True,
-    header_namespace = "",
     visibility = ["PUBLIC"],
 )

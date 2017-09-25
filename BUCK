@@ -21,9 +21,9 @@ TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ["-std=c++11"
 cxx_library(
     name = "yoga",
     srcs = glob(["yoga/*.c"]),
-    compiler_flags = COMPILER_FLAGS,
-    exported_headers = subdir_glob([("", "yoga/*.h")]),
     header_namespace = "",
+    exported_headers = subdir_glob([("", "yoga/*.h")]),
+    compiler_flags = COMPILER_FLAGS,
     soname = "libyogacore.$(ext)",
     tests = [":YogaTests"],
     visibility = ["PUBLIC"],

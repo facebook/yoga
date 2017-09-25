@@ -10,6 +10,7 @@ include_defs("//YOGA_DEFS")
 cxx_library(
     name = "jni",
     srcs = glob(["jni/*.cpp"]),
+    header_namespace = "",
     compiler_flags = [
         "-fno-omit-frame-pointer",
         "-fexceptions",
@@ -19,7 +20,6 @@ cxx_library(
         "-O3",
         "-std=c++11",
     ],
-    header_namespace = "",
     soname = "libyoga.$(ext)",
     visibility = ["PUBLIC"],
     deps = [

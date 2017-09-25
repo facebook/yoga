@@ -15,13 +15,13 @@ COMPILER_FLAGS = [
 cxx_library(
     name = "gtest",
     srcs = glob(["googletest/googletest/src/*.cc"]),
-    compiler_flags = COMPILER_FLAGS,
+    header_namespace = "",
     exported_headers = subdir_glob([
         ("googletest/googletest/include", "**/*.h"),
         ("googletest/googletest", "src/*.h"),
         ("googletest/googletest", "src/*.cc"),
     ]),
-    header_namespace = "",
+    compiler_flags = COMPILER_FLAGS,
     visibility = YOGA_ROOTS,
     deps = [],
 )
