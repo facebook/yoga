@@ -9,7 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
-#if defined(USE_MODULAR_HEADER)
+#if defined(XCODE_PROJECT_BUILD)
     #import "YGEnums.h"
     #import "Yoga.h"
     #import "YGMacros.h"
