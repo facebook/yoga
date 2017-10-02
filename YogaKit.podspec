@@ -22,6 +22,7 @@ podspec = Pod::Spec.new do |spec|
   spec.source_files = 'YogaKit/Source/*.{h,m,swift}'
   spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h'
   spec.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
+  spec.compiler_flags = '-DUSE_MODULAR_HEADER'
 end
 
 # See https://github.com/facebook/yoga/pull/366

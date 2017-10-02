@@ -8,9 +8,20 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <yoga/YGEnums.h>
-#import <yoga/Yoga.h>
-#import <yoga/YGMacros.h>
+
+#if defined(USE_MODULAR_HEADER)
+    #import "YGEnums.h"
+    #import "Yoga.h"
+    #import "YGMacros.h"
+#elif defined(USE_YOGAKIT_PACKAGE)
+    #import <yogakit/YGEnums.h>
+    #import <yogakit/Yoga.h>
+    #import <yogakit/YGMacros.h>
+#else
+    #import <yoga/YGEnums.h>
+    #import <yoga/Yoga.h>
+    #import <yoga/YGMacros.h>
+#endif
 
 YG_EXTERN_C_BEGIN
 
