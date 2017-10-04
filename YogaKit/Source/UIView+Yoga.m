@@ -13,6 +13,10 @@
 
 static const void *kYGYogaAssociatedKey = &kYGYogaAssociatedKey;
 
+// Allow this category to be used without requiring -ObjC.
+// Any file that imports UIView+Yoga.h will have a link time dependency on this implementation.
+const char YGCategoryUIViewYoga = 'Y';
+
 @implementation UIView (YogaKit)
 
 - (YGLayout *)yoga
