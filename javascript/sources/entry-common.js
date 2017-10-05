@@ -156,8 +156,8 @@ module.exports = function (bind, lib) {
 
             }
 
-            if (!Object.prototype.hasOwnProperty.call(methods, unit))
-                throw new Error(`Failed to execute "${fnName}": Unsupported unit.`);
+            if (!methods[unit])
+                throw new Error(`Failed to execute "${fnName}": Unsupported unit '${value}'`);
 
             if (asNumber !== undefined) {
                 return methods[unit].call(this, ... args, asNumber);
