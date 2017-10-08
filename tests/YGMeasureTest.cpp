@@ -150,6 +150,27 @@ TEST(YogaTest, dont_measure_when_min_equals_max_percentages) {
   YGNodeFreeRecursive(root);
 }
 
+
+TEST(YogaTest, measure_nodes_with_margin_auto_and_stretch) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 500);
+  YGNodeStyleSetHeight(root, 500);
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeSetMeasureFunc(root_child0, _measure);
+  YGNodeStyleSetMarginAuto(root_child0, YGEdgeLeft);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  EXPECT_EQ(490, YGNodeLayoutGetLeft(root_child0));
+  EXPECT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  EXPECT_EQ(10, YGNodeLayoutGetWidth(root_child0));
+  EXPECT_EQ(10, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+}
+
 TEST(YogaTest, dont_measure_when_min_equals_max_mixed_width_percent) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);

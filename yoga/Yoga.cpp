@@ -2293,7 +2293,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                                             availableInnerCrossDim) &&
                    measureModeCrossDim == YGMeasureModeExactly &&
                    !(isNodeFlexWrap && flexBasisOverflows) &&
-                   YGNodeAlignItem(node, currentRelativeChild) == YGAlignStretch) {
+                   YGNodeAlignItem(node, currentRelativeChild) == YGAlignStretch &&
+                   YGMarginLeadingValue(currentRelativeChild, crossAxis)->unit != YGUnitAuto &&
+                   YGMarginTrailingValue(currentRelativeChild, crossAxis)->unit != YGUnitAuto) {
           childCrossSize = availableInnerCrossDim;
           childCrossMeasureMode = YGMeasureModeExactly;
         } else if (!YGNodeIsStyleDimDefined(currentRelativeChild,
@@ -2329,7 +2331,9 @@ static void YGNodelayoutImpl(const YGNodeRef node,
 
         const bool requiresStretchLayout =
             !YGNodeIsStyleDimDefined(currentRelativeChild, crossAxis, availableInnerCrossDim) &&
-            YGNodeAlignItem(node, currentRelativeChild) == YGAlignStretch;
+            YGNodeAlignItem(node, currentRelativeChild) == YGAlignStretch &&
+            YGMarginLeadingValue(currentRelativeChild, crossAxis)->unit != YGUnitAuto &&
+            YGMarginTrailingValue(currentRelativeChild, crossAxis)->unit != YGUnitAuto;
 
         const float childWidth = isMainAxisRow ? childMainSize : childCrossSize;
         const float childHeight = !isMainAxisRow ? childMainSize : childCrossSize;
