@@ -104,6 +104,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifyFlexStart:{value:'YGJustifyFlexStart'},
   YGJustifySpaceAround:{value:'YGJustifySpaceAround'},
   YGJustifySpaceBetween:{value:'YGJustifySpaceBetween'},
+  YGJustifySpaceEvenly:{value:'YGJustifySpaceEvenly'},
 
   YGOverflowHidden:{value:'YGOverflowHidden'},
   YGOverflowVisible:{value:'YGOverflowVisible'},

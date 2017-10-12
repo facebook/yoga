@@ -117,6 +117,7 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifyFlexStart:{value:'YogaJustify.FlexStart'},
   YGJustifySpaceAround:{value:'YogaJustify.SpaceAround'},
   YGJustifySpaceBetween:{value:'YogaJustify.SpaceBetween'},
+  YGJustifySpaceEvenly:{value:'YogaJustify.SpaceEvenly'},
 
   YGOverflowHidden:{value:'YogaOverflow.Hidden'},
   YGOverflowVisible:{value:'YogaOverflow.Visible'},

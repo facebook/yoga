@@ -35,6 +35,7 @@ ENUMS = {
         'FlexEnd',
         'SpaceBetween',
         'SpaceAround',
+        'SpaceEvenly',
     ],
     'Overflow': [
         'Visible',
