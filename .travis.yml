@@ -76,7 +76,7 @@ before_install:
       source scripts/android-setup.sh && installAndroidSDK
       export ANDROID_SDK=$ANDROID_HOME
       export ANDROID_NDK_REPOSITORY=$HOME/android-ndk
-      export ANDROID_NDK_HOME=$ANDROID_NDK_REPOSITORY/android-ndk-r13b
+      export ANDROID_NDK_HOME=$ANDROID_NDK_REPOSITORY/android-ndk-r15c
     fi
 
   # JavaScript

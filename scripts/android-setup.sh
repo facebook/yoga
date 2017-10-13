@@ -1,8 +1,9 @@
 function download() {
+  echo "Downloading '$1' to '$2' ..."
   if hash curl 2>/dev/null; then
-    curl -L -o $2 $1
+    curl --retry 10 -L -o "$2" "$1"
   elif hash wget 2>/dev/null; then
-    wget -O $2 $1
+    wget -O "$2" "$1"
   else
     echo >&2 "No supported download tool installed. Please get either wget or curl."
     exit
