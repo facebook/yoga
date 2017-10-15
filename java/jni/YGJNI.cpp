@@ -42,7 +42,7 @@ static void YGTransferLayoutDirection(YGNodeRef node, alias_ref<jobject> javaNod
   javaNode->setFieldValue(layoutDirectionField, static_cast<jint>(YGNodeLayoutGetDirection(node)));
 }
 
-static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
+static void YGTransferLayoutOutputsRecursiveImpl(YGNodeRef root, bool transferAndResetNewLayoutFlag) {
   if (root->getHasNewLayout()) {
     if (auto obj = YGNodeJobject(root)->lockLocal()) {
       static auto widthField = obj->getClass()->getField<jfloat>("mWidth");
@@ -111,17 +111,27 @@ static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
         obj->setFieldValue(borderBottomField, YGNodeLayoutGetBorder(root, YGEdgeBottom));
       }
 
-      obj->setFieldValue<jboolean>(hasNewLayoutField, true);
       YGTransferLayoutDirection(root, obj);
-      root->setHasNewLayout(false);
+      if(transferAndResetNewLayoutFlag){
+        obj->setFieldValue<jboolean>(hasNewLayoutField, true);
+        root->setHasNewLayout(false);
+      }
 
       for (uint32_t i = 0; i < YGNodeGetChildCount(root); i++) {
-        YGTransferLayoutOutputsRecursive(YGNodeGetChild(root, i));
+        YGTransferLayoutOutputsRecursiveImpl(YGNodeGetChild(root, i), transferAndResetNewLayoutFlag);
       }
     } else {
       YGLog(root, YGLogLevelError, "Java YGNode was GCed during layout calculation\n");
     }
   }
+}
+
+static void YGTransferLayoutOutputsRecursive(YGNodeRef root) {
+  YGTransferLayoutOutputsRecursiveImpl(root, true);
+}
+
+static void YGTransferLayoutOutputsRecursiveForBaseline(YGNodeRef root) {
+  YGTransferLayoutOutputsRecursiveImpl(root, false);
 }
 
 static void YGPrint(YGNodeRef node) {
@@ -136,6 +146,7 @@ static float YGJNIBaselineFunc(YGNodeRef node, float width, float height) {
   if (auto obj = YGNodeJobject(node)->lockLocal()) {
     static auto baselineFunc = findClassStatic("com/facebook/yoga/YogaNode")
                                    ->getMethod<jfloat(jfloat, jfloat)>("baseline");
+    YGTransferLayoutOutputsRecursiveForBaseline(node);
     return baselineFunc(obj, width, height);
   } else {
     return height;
