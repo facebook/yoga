@@ -30,6 +30,10 @@ before_install:
     fi
 
   - brew update > /dev/null
+  - brew remove git  
+  - brew install openssl
+  - brew install --with-openssl curl
+  - brew install --with-brewed-curl --with-brewed-openssl git
   - brew install --HEAD facebook/fb/buck
 
   # Java
