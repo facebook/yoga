@@ -32,6 +32,7 @@ cxx_library(
 java_library(
     name = "java",
     srcs = glob(["com/facebook/yoga/*.java"]),
+    required_for_source_only_abi = True,
     source = "1.7",
     target = "1.7",
     tests = [
