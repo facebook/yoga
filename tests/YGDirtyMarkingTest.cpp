@@ -10,45 +10,6 @@
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
 
-TEST(YogaTest, dirty_child_propogation) {
-  const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
-  YGNodeStyleSetHeight(root, 200);
-  YGNodeStyleSetWidth(root, 500);
-
-  const YGNodeRef child0 = YGNodeNew();
-  YGNodeStyleSetWidth(child0, 30);
-  YGNodeStyleSetHeight(child0, 30);
-  YGNodeInsertChild(root, child0, 0);
-
-  const YGNodeRef child1 = YGNodeNew();
-  YGNodeStyleSetPositionType(child1, YGPositionTypeAbsolute);
-  YGNodeStyleSetPosition(child1, YGEdgeStart, 10);
-  YGNodeStyleSetPosition(child1, YGEdgeTop, 10);
-  YGNodeStyleSetWidth(child1, 10);
-  YGNodeStyleSetHeight(child1, 10);
-
-  YGNodeInsertChild(root, child1, 1);
-
-  const YGNodeRef child1_child0 = YGNodeNew();
-  YGNodeStyleSetWidth(child1_child0, 10);
-  YGNodeStyleSetHeight(child1_child0, 10);
-  YGNodeInsertChild(child1, child1_child0, 0);
-
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-
-  YGNodeStyleSetWidth(child1_child0, 20);
-
-  EXPECT_TRUE(YGNodeIsDirty(child1_child0));
-  EXPECT_TRUE(YGNodeHasDirtyDescendants(child1));
-  EXPECT_TRUE(YGNodeIsDirty(child1));
-  EXPECT_FALSE(YGNodeIsDirty(root));
-  EXPECT_TRUE(YGNodeHasDirtyDescendants(root));
-  EXPECT_FALSE(YGNodeIsDirty(child0));
-  EXPECT_FALSE(YGNodeHasDirtyDescendants(child0));
-
-}
-
 TEST(YogaTest, dirty_propagation) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
