@@ -12,7 +12,7 @@ The `FlexDirection` property controls the direction in which children are laid o
 * `ColumnReverse`
 * `RowReverse`
 
-The `Column` option stacks children horizontally from top to bottom, and the `Row` option stacks children from left to right. The `Reverse` variants of the options reverse the order. If your layout supports right-to-left direction, Yoga will automatically toggle between `Row` and `RowReverse` as necessary.
+The `Column` option stacks children vertically from top to bottom, and the `Row` option stacks children from left to right. The `Reverse` variants of the options reverse the order. If your layout supports right-to-left direction, Yoga will automatically toggle between `Row` and `RowReverse` as necessary.
 
 `FlexDirection` introduces another important aspect of Flexbox, the main and cross axes. This is important as other properties will reference which axis they operate on. Simply put, the main axis follows the `FlexDirection` and the cross axis crosses the main axis at a 90 degree angle.
 
