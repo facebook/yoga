@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    compile project(':yoga')
+    api project(':yoga')
 }
 
 task sourcesJar(type: Jar) {
