@@ -3322,7 +3322,7 @@ float YGRoundValueToPixelGrid(const float value,
     scaledValue = scaledValue - fractial;
   } else {
     // Finally we just round the value
-    scaledValue = scaledValue - fractial + (fractial >= 0.5f ? 1.0f : 0.0f);
+    scaledValue = scaledValue - fractial + (fractial > 0.5f || YGFloatsEqual(fractial, 0.5f) ? 1.0f : 0.0f);
   }
   return scaledValue / pointScaleFactor;
 }
@@ -3503,11 +3503,11 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
     layout->measuredDimensions[YGDimensionHeight] = cachedResults->computedHeight;
 
     if (gPrintChanges && gPrintSkips) {
-      printf("%s%d.{[skipped] ", YGSpacer(gDepth), gDepth);
+      YGLog(node, YGLogLevelVerbose, "%s%d.{[skipped] ", YGSpacer(gDepth), gDepth);
       if (node->print) {
         node->print(node);
       }
-      printf("wm: %s, hm: %s, aw: %f ah: %f => d: (%f, %f) %s\n",
+      YGLog(node, YGLogLevelVerbose, "wm: %s, hm: %s, aw: %f ah: %f => d: (%f, %f) %s\n",
              YGMeasureModeName(widthMeasureMode, performLayout),
              YGMeasureModeName(heightMeasureMode, performLayout),
              availableWidth,
@@ -3518,11 +3518,11 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
     }
   } else {
     if (gPrintChanges) {
-      printf("%s%d.{%s", YGSpacer(gDepth), gDepth, needToVisitNode ? "*" : "");
+      YGLog(node, YGLogLevelVerbose, "%s%d.{%s", YGSpacer(gDepth), gDepth, needToVisitNode ? "*" : "");
       if (node->print) {
         node->print(node);
       }
-      printf("wm: %s, hm: %s, aw: %f ah: %f %s\n",
+      YGLog(node, YGLogLevelVerbose, "wm: %s, hm: %s, aw: %f ah: %f %s\n",
              YGMeasureModeName(widthMeasureMode, performLayout),
              YGMeasureModeName(heightMeasureMode, performLayout),
              availableWidth,
@@ -3542,11 +3542,11 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
                      config);
 
     if (gPrintChanges) {
-      printf("%s%d.}%s", YGSpacer(gDepth), gDepth, needToVisitNode ? "*" : "");
+      YGLog(node, YGLogLevelVerbose, "%s%d.}%s", YGSpacer(gDepth), gDepth, needToVisitNode ? "*" : "");
       if (node->print) {
         node->print(node);
       }
-      printf("wm: %s, hm: %s, d: (%f, %f) %s\n",
+      YGLog(node, YGLogLevelVerbose, "wm: %s, hm: %s, d: (%f, %f) %s\n",
              YGMeasureModeName(widthMeasureMode, performLayout),
              YGMeasureModeName(heightMeasureMode, performLayout),
              layout->measuredDimensions[YGDimensionWidth],
@@ -3559,7 +3559,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
     if (cachedResults == NULL) {
       if (layout->nextCachedMeasurementsIndex == YG_MAX_CACHED_RESULT_COUNT) {
         if (gPrintChanges) {
-          printf("Out of cache entries!\n");
+          YGLog(node, YGLogLevelVerbose, "Out of cache entries!\n");
         }
         layout->nextCachedMeasurementsIndex = 0;
       }
