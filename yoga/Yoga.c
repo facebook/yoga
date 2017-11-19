@@ -827,7 +827,7 @@ static inline const YGValue *YGNodeResolveFlexBasisPtr(const YGNodeRef node) {
 #define YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(type, name, instanceName)        \
   type YGNodeLayoutGet##name(const YGNodeRef node, const YGEdge edge) {        \
     YGAssertWithNode(node,                                                     \
-                     edge < YGEdgeEnd,                                         \
+                     edge <= YGEdgeEnd,                                        \
                      "Cannot get layout properties of multi-edge shorthands"); \
                                                                                \
     if (edge == YGEdgeLeft) {                                                  \
