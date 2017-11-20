@@ -25,9 +25,6 @@ Facebook has a [bounty program](https://www.facebook.com/whitehat/) for the safe
 disclosure of security bugs. In those cases, please go through the process
 outlined on that page and do not file a public issue.
 
-## Coding Style
-* format.sh
-
 ## License
 By contributing to yoga, you agree that your contributions will be licensed
 under its BSD license.

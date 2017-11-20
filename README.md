@@ -33,9 +33,6 @@ You may need to install the latest watir-webdriver gem (`gem install watir-webdr
 ### .NET
 .NET testing is not integrated in buck yet, you might need to set up .NET testing environment. We have a script which to launch C# test on macOS, `csharp/tests/Facebook.Yoga/test_macos.sh`.
 
-## Code style
-For the main C implementation of Yoga clang-format is used to ensure a consistent code style. Please run `bash format.sh` before submitting a pull request. For other languages just try to follow the current code style.
-
 ## Benchmarks
 Benchmarks are located in `benchmark/YGBenchmark.c` and can be run with `buck run //benchmark:benchmark`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed. Benchmarks are run on every commit in CI.
 
@@ -59,5 +56,3 @@ This will now only run the standalone webpack build upon install.
 | node           | Builds node js version.                         |
 | standalone     | Runs webpack.                                   |
 | none           | Does nothing. You can use the prepackaged libs. |
-
-
