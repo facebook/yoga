@@ -9,10 +9,17 @@
 
 #import "YGLayout.h"
 #import <UIKit/UIKit.h>
+#include <os/base.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^YGLayoutConfigurationBlock)(YGLayout *);
+
+// Allow this category to be used without requiring -ObjC.
+// Any file that imports this header will have a link time dependency on UIView+Yoga.m
+extern const char YGCategoryUIViewYoga;
+extern const void * const OS_WEAK YGLinkRequire;
+const void * const OS_WEAK YGLinkRequire = &YGCategoryUIViewYoga;
 
 @interface UIView (Yoga)
 
