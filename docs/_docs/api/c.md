@@ -52,7 +52,7 @@ typedef enum YGFlexDirection {
   YGFlexDirectionRowReverse,
 } YGFlexDirection;
 
-void YGNodeStyleSetFlexDirection(YGNodeRef node, 
+void YGNodeStyleSetFlexDirection(YGNodeRef node,
                                  YGFlexDirection flexDirection);
 YGFlexDirection YGNodeStyleGetFlexDirection(YGNodeRef node);
 
@@ -64,7 +64,7 @@ typedef enum YGJustify {
   YGJustifySpaceAround,
 } YGJustify;
 
-void YGNodeStyleSetJustifyContent(YGNodeRef node, 
+void YGNodeStyleSetJustifyContent(YGNodeRef node,
                                   YGJustify justifyContent);
 YGJustify YGNodeStyleGetJustifyContent(YGNodeRef node);
 
@@ -90,7 +90,7 @@ typedef enum YGPositionType {
   YGPositionTypeAbsolute,
 } YGPositionType;
 
-void YGNodeStyleSetPositionType(YGNodeRef node, 
+void YGNodeStyleSetPositionType(YGNodeRef node,
                                 YGPositionType positionType);
 YGPositionType YGNodeStyleGetPositionType(YGNodeRef node);
 
@@ -173,9 +173,9 @@ float YGNodeStyleGetAspectRatio(YGNodeRef node);
 Once you have set up a tree of nodes with styles you will want to get the result of a layout calculation. Call `YGNodeCalculateLayout` with the desired width and height or `YGUndefined` to perform the layout calculation. Once this function returns the results of the layout calculation is stored on each node. Traverse the tree and retrieve the values from each node.
 
 ```c
-void YGNodeCalculateLayout(YGNodeRef node, 
-                           float availableWidth, 
-                           float availableHeight, 
+void YGNodeCalculateLayout(YGNodeRef node,
+                           float availableWidth,
+                           float availableHeight,
                            YGDirection parentDirection);
 float YGNodeLayoutGetLeft(YGNodeRef node);
 float YGNodeLayoutGetTop(YGNodeRef node);
@@ -255,25 +255,9 @@ typedef enum YGExperimentalFeature {
   // Current experiments
 } YGExperimentalFeature;
 
-void YGSetExperimentalFeatureEnabled(YGExperimentalFeature feature, 
+void YGSetExperimentalFeatureEnabled(YGExperimentalFeature feature,
                                      bool enabled);
 bool YGIsExperimentalFeatureEnabled(YGExperimentalFeature feature);
-```
-
-### Custom allocators
-
-You may want to swap out the allocator used in Yoga. These functions allow that.
-
-```c
-typedef void *(*YGMalloc)(size_t size);
-typedef void *(*YGCalloc)(size_t count, size_t size);
-typedef void *(*YGRealloc)(void *ptr, size_t size);
-typedef void (*YGFree)(void *ptr);
-
-void YGSetMemoryFuncs(YGMalloc cssMalloc, 
-                      YGCalloc cssCalloc, 
-                      YGRealloc cssRealloc, 
-                      YGFree cssFree);
 ```
 
 ### Printing
