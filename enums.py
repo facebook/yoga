@@ -161,7 +161,7 @@ with open(root + '/yoga/YGEnums.h', 'w') as f:
     f.write('YG_EXTERN_C_END\n')
 
 # write out C body for printing
-with open(root + '/yoga/YGEnums.c', 'w') as f:
+with open(root + '/yoga/YGEnums.cpp', 'w') as f:
     f.write(LICENSE)
     f.write('#include "YGEnums.h"\n\n')
     for name, values in sorted(ENUMS.items()):

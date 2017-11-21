@@ -21,8 +21,8 @@ Pod::Spec.new do |spec|
       '-fexceptions',
       '-Wall',
       '-Werror',
-      '-std=c11',
+      '-std=c++1y',
       '-fPIC'
   ]
-  spec.source_files = 'yoga/**/*.{c,h}'
+  spec.source_files = 'yoga/**/*.{c,h,cpp}'
 end

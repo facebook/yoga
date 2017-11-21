@@ -13,14 +13,14 @@ GMOCK_OVERRIDE_FLAGS = [
 ]
 
 COMPILER_FLAGS = LIBRARY_COMPILER_FLAGS + [
-    "-std=c11",
+    "-std=c++1y",
 ]
 
-TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ["-std=c++11"]
+TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ["-std=c++1y"]
 
 cxx_library(
     name = "yoga",
-    srcs = glob(["yoga/*.c"]),
+    srcs = glob(["yoga/*.cpp"]),
     header_namespace = "",
     exported_headers = subdir_glob([("", "yoga/*.h")]),
     compiler_flags = COMPILER_FLAGS,

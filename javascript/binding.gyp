@@ -7,8 +7,8 @@
 	],
 
 	"sources": [
-            "sources/yoga/YGNodeList.c",
-            "sources/yoga/Yoga.c",
+            "sources/yoga/YGNodeList.cpp",
+            "sources/yoga/Yoga.cpp",
             "sources/Config.cc",
             "sources/Node.cc",
             "sources/global.cc",
