@@ -119,6 +119,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifyFlexStart:{value:'Yoga.JUSTIFY_FLEX_START'},
   YGJustifySpaceAround:{value:'Yoga.JUSTIFY_SPACE_AROUND'},
   YGJustifySpaceBetween:{value:'Yoga.JUSTIFY_SPACE_BETWEEN'},
+  YGJustifySpaceEvenly:{value:'Yoga.JUSTIFY_SPACE_EVENLY'},
 
   YGOverflowHidden:{value:'Yoga.OVERFLOW_HIDDEN'},
   YGOverflowVisible:{value:'Yoga.OVERFLOW_VISIBLE'},

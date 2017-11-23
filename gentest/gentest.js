@@ -355,6 +355,7 @@ function justifyValue(e, value) {
     case 'center': return e.YGJustifyCenter;
     case 'space-around': return e.YGJustifySpaceAround;
     case 'space-between': return e.YGJustifySpaceBetween;
+    case 'space-evenly': return e.YGJustifySpaceEvenly;
     case 'flex-start': return e.YGJustifyFlexStart;
     case 'flex-end': return e.YGJustifyFlexEnd;
   }
