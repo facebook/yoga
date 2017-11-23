@@ -41,6 +41,29 @@
   }                                                                                \
 }
 
+#define YG_AUTO_VALUE_PROPERTY(lowercased_name, capitalized_name)                  \
+- (YGValue)lowercased_name                                                         \
+{                                                                                  \
+  return YGNodeStyleGet##capitalized_name(self.node);                              \
+}                                                                                  \
+                                                                                   \
+- (void)set##capitalized_name:(YGValue)lowercased_name                             \
+{                                                                                  \
+  switch (lowercased_name.unit) {                                                  \
+    case YGUnitPoint:                                                              \
+      YGNodeStyleSet##capitalized_name(self.node, lowercased_name.value);          \
+      break;                                                                       \
+    case YGUnitPercent:                                                            \
+      YGNodeStyleSet##capitalized_name##Percent(self.node, lowercased_name.value); \
+      break;                                                                       \
+    case YGUnitAuto:                                                               \
+      YGNodeStyleSet##capitalized_name##Auto(self.node);                           \
+      break;                                                                       \
+    default:                                                                       \
+      NSAssert(NO, @"Not implemented");                                            \
+  }                                                                                \
+}
+
 #define YG_EDGE_PROPERTY_GETTER(type, lowercased_name, capitalized_name, property, edge) \
 - (type)lowercased_name                                                                  \
 {                                                                                        \
@@ -202,7 +225,7 @@ YG_PROPERTY(YGDisplay, display, Display)
 
 YG_PROPERTY(CGFloat, flexGrow, FlexGrow)
 YG_PROPERTY(CGFloat, flexShrink, FlexShrink)
-YG_VALUE_PROPERTY(flexBasis, FlexBasis)
+YG_AUTO_VALUE_PROPERTY(flexBasis, FlexBasis)
 
 YG_VALUE_EDGE_PROPERTY(left, Left, Position, YGEdgeLeft)
 YG_VALUE_EDGE_PROPERTY(top, Top, Position, YGEdgeTop)
