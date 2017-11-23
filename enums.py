@@ -181,7 +181,7 @@ with open(root + '/yoga/YGEnums.cpp', 'w') as f:
 # write out java files
 for name, values in sorted(ENUMS.items()):
     with open(root + '/java/com/facebook/yoga/Yoga%s.java' % name, 'w') as f:
-        f.write(LICENSE)
+        f.write(LICENSE.replace('/**', '/*', 1))
         f.write('package com.facebook.yoga;\n\n')
         f.write('import com.facebook.proguard.annotations.DoNotStrip;\n\n')
         f.write('@DoNotStrip\n')
