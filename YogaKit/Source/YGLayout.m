@@ -411,28 +411,30 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
      return;
   }
 
-  YGNodeRef node = yoga.node;
-  const CGPoint topLeft = {
-    YGNodeLayoutGetLeft(node),
-    YGNodeLayoutGetTop(node),
-  };
-
-  const CGPoint bottomRight = {
-    topLeft.x + YGNodeLayoutGetWidth(node),
-    topLeft.y + YGNodeLayoutGetHeight(node),
-  };
-
-  const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
-  view.frame = (CGRect) {
-    .origin = {
-      .x = YGRoundPixelValue(topLeft.x + origin.x),
-      .y = YGRoundPixelValue(topLeft.y + origin.y),
-    },
-    .size = {
-      .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
-      .height = YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y),
-    },
-  };
+  if (yoga.isEnabled) {
+      YGNodeRef node = yoga.node;
+      const CGPoint topLeft = {
+          YGNodeLayoutGetLeft(node),
+          YGNodeLayoutGetTop(node),
+      };
+      
+      const CGPoint bottomRight = {
+          topLeft.x + YGNodeLayoutGetWidth(node),
+          topLeft.y + YGNodeLayoutGetHeight(node),
+      };
+      
+      const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
+      view.frame = (CGRect) {
+          .origin = {
+              .x = YGRoundPixelValue(topLeft.x + origin.x),
+              .y = YGRoundPixelValue(topLeft.y + origin.y),
+          },
+          .size = {
+              .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
+              .height = YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y),
+          },
+      };
+  }
 
   if (!yoga.isLeaf) {
     for (NSUInteger i=0; i<view.subviews.count; i++) {
