@@ -30,6 +30,9 @@
 - (void)set##capitalized_name:(YGValue)lowercased_name                             \
 {                                                                                  \
   switch (lowercased_name.unit) {                                                  \
+     case YGUnitUndefined:                                                         \
+      YGNodeStyleSet##capitalized_name(self.node, lowercased_name.value);          \
+      break;                                                                       \
     case YGUnitPoint:                                                              \
       YGNodeStyleSet##capitalized_name(self.node, lowercased_name.value);          \
       break;                                                                       \
@@ -84,6 +87,9 @@ YG_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
 - (void)set##objc_capitalized_name:(YGValue)objc_lowercased_name                                 \
 {                                                                                                \
   switch (objc_lowercased_name.unit) {                                                           \
+    case YGUnitUndefined:                                                                        \
+      YGNodeStyleSet##c_name(self.node, edge, objc_lowercased_name.value);                       \
+      break;                                                                                     \
     case YGUnitPoint:                                                                            \
       YGNodeStyleSet##c_name(self.node, edge, objc_lowercased_name.value);                       \
       break;                                                                                     \
@@ -244,8 +250,8 @@ YG_EDGE_PROPERTY(borderStartWidth, BorderStartWidth, Border, YGEdgeStart)
 YG_EDGE_PROPERTY(borderEndWidth, BorderEndWidth, Border, YGEdgeEnd)
 YG_EDGE_PROPERTY(borderWidth, BorderWidth, Border, YGEdgeAll)
 
-YG_VALUE_PROPERTY(width, Width)
-YG_VALUE_PROPERTY(height, Height)
+YG_AUTO_VALUE_PROPERTY(width, Width)
+YG_AUTO_VALUE_PROPERTY(height, Height)
 YG_VALUE_PROPERTY(minWidth, MinWidth)
 YG_VALUE_PROPERTY(minHeight, MinHeight)
 YG_VALUE_PROPERTY(maxWidth, MaxWidth)
