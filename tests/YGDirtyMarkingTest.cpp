@@ -142,3 +142,20 @@ TEST(YogaTest, dirty_node_only_if_children_are_actually_removed) {
 
   YGNodeFreeRecursive(root);
 }
+
+TEST(YogaTest, dirty_node_only_if_undefined_values_gets_set_to_undefined) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 50);
+  YGNodeStyleSetHeight(root, 50);
+  YGNodeStyleSetMinWidth(root, YGUndefined);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  EXPECT_FALSE(YGNodeIsDirty(root));
+
+  YGNodeStyleSetMinWidth(root, YGUndefined);
+
+  EXPECT_FALSE(YGNodeIsDirty(root));
+
+  YGNodeFreeRecursive(root);
+}
