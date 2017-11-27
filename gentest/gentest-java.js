@@ -119,6 +119,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifyFlexStart:{value:'YogaJustify.FLEX_START'},
   YGJustifySpaceAround:{value:'YogaJustify.SPACE_AROUND'},
   YGJustifySpaceBetween:{value:'YogaJustify.SPACE_BETWEEN'},
+  YGJustifySpaceEvenly:{value:'YogaJustify.SPACE_EVENLY'},
 
   YGOverflowHidden:{value:'YogaOverflow.HIDDEN'},
   YGOverflowVisible:{value:'YogaOverflow.VISIBLE'},

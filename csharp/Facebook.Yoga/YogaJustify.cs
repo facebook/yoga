@@ -16,5 +16,6 @@ namespace Facebook.Yoga
         FlexEnd,
         SpaceBetween,
         SpaceAround,
+        SpaceEvenly,
     }
 }
