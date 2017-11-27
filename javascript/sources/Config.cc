@@ -36,6 +36,11 @@ void Config::setExperimentalFeatureEnabled(int feature, bool enabled)
     YGConfigSetExperimentalFeatureEnabled(m_config, static_cast<YGExperimentalFeature>(feature), enabled);
 }
 
+void Config::setPointScaleFactor(float pixelsInPoint)
+{
+    YGConfigSetPointScaleFactor(m_config, pixelsInPoint);
+}
+
 bool Config::isExperimentalFeatureEnabled(int feature) const
 {
     return YGConfigIsExperimentalFeatureEnabled(m_config, static_cast<YGExperimentalFeature>(feature));

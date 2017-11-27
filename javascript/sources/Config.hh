@@ -40,6 +40,7 @@ class Config {
  public: // Setters
 
     void setExperimentalFeatureEnabled(int feature, bool enabled);
+    void setPointScaleFactor(float pixelsInPoint);
  
  public: // Getters
 
