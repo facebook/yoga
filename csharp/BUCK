@@ -5,6 +5,8 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
+load("@xplat//configurations/buck:default_platform_defs", "is_apple_platform")
+
 include_defs("//YOGA_DEFS")
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++11"]
@@ -34,7 +36,7 @@ cxx_library(
     deps = [yoga_dep(":yoga")],
 )
 
-if isdir('/Applications/Xcode.app'):
+if is_apple_platform():
   yoganet_ios_srcs = []
   for arch in [
     'iphonesimulator-x86_64', 'iphonesimulator-i386', 'iphoneos-arm64', 'iphoneos-armv7'
