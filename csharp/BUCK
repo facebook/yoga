@@ -6,8 +6,7 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 load("@xplat//configurations/buck:default_platform_defs", "is_apple_platform")
-
-include_defs("//YOGA_DEFS")
+load("//:YOGA_DEFS", "BASE_COMPILER_FLAGS", "yoga_dep", "cxx_library")
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++11"]
 
