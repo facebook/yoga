@@ -5,7 +5,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs("//YOGA_DEFS")
+load("//:yoga_defs.bzl", "YOGA_ROOTS")
 
 prebuilt_jar(
     name = "android-support",

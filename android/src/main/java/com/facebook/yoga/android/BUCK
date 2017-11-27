@@ -5,7 +5,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs("//YOGA_DEFS")
+load("//:yoga_defs.bzl", "ANDROID_RES_TARGET", "INFER_ANNOTATIONS_TARGET", "JAVA_TARGET", "JSR_305_TARGET", "SOLOADER_TARGET")
 
 android_library(
     name = "android",

@@ -5,7 +5,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs("//YOGA_DEFS")
+load("//:yoga_defs.bzl", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "JSR_305_TARGET")
 
 java_library(
     name = "jni",

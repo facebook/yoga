@@ -1,3 +1,4 @@
+"""Provides macros for working with yoga library."""
 
 YOGA_ROOTS = ['//...']
 JAVA_TARGET = '//java:java'
@@ -38,10 +39,6 @@ LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
   '-fPIC',
 ]
 
+
 def yoga_dep(dep):
   return '//' + dep
-
-with allow_unsafe_import():
-  import os.path
-def isdir(filename):
-  return os.path.isdir(filename)
