@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'watir-webdriver'
+require 'watir'
 require 'fileutils'
 
 caps = Selenium::WebDriver::Remote::Capabilities.chrome(
@@ -10,6 +10,7 @@ caps = Selenium::WebDriver::Remote::Capabilities.chrome(
   }
 )
 browser = Watir::Browser.new(:chrome, :desired_capabilities => caps, :switches => ['--force-device-scale-factor=1', '--window-position=0,0'])
+
 Dir.chdir(File.dirname($0))
 
 Dir['fixtures/*.html'].each do |file|
