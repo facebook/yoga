@@ -635,3 +635,56 @@ TEST(YogaTest, cant_call_negative_measure_horizontal) {
   YGNodeFreeRecursive(root);
   YGConfigFree(config);
 }
+
+static YGSize _measure_90_10(YGNodeRef node,
+  float width,
+  YGMeasureMode widthMode,
+  float height,
+  YGMeasureMode heightMode) {
+
+  return YGSize{
+    .width = 90, .height = 10,
+  };
+}
+
+TEST(YogaTest, percent_with_text_node) {
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetJustifyContent(root, YGJustifySpaceBetween);
+  YGNodeStyleSetAlignItems(root, YGAlignCenter);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 80);
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+
+  YGNodeSetMeasureFunc(root_child1, _measure_90_10);
+  YGNodeStyleSetMaxWidthPercent(root_child1, 50);
+  YGNodeStyleSetPaddingPercent(root_child1, YGEdgeTop, 50);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(80, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(15, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
