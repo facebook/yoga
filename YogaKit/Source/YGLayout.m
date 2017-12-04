@@ -30,11 +30,37 @@
 - (void)set##capitalized_name:(YGValue)lowercased_name                             \
 {                                                                                  \
   switch (lowercased_name.unit) {                                                  \
+     case YGUnitUndefined:                                                         \
+      YGNodeStyleSet##capitalized_name(self.node, lowercased_name.value);          \
+      break;                                                                       \
     case YGUnitPoint:                                                              \
       YGNodeStyleSet##capitalized_name(self.node, lowercased_name.value);          \
       break;                                                                       \
     case YGUnitPercent:                                                            \
       YGNodeStyleSet##capitalized_name##Percent(self.node, lowercased_name.value); \
+      break;                                                                       \
+    default:                                                                       \
+      NSAssert(NO, @"Not implemented");                                            \
+  }                                                                                \
+}
+
+#define YG_AUTO_VALUE_PROPERTY(lowercased_name, capitalized_name)                  \
+- (YGValue)lowercased_name                                                         \
+{                                                                                  \
+  return YGNodeStyleGet##capitalized_name(self.node);                              \
+}                                                                                  \
+                                                                                   \
+- (void)set##capitalized_name:(YGValue)lowercased_name                             \
+{                                                                                  \
+  switch (lowercased_name.unit) {                                                  \
+    case YGUnitPoint:                                                              \
+      YGNodeStyleSet##capitalized_name(self.node, lowercased_name.value);          \
+      break;                                                                       \
+    case YGUnitPercent:                                                            \
+      YGNodeStyleSet##capitalized_name##Percent(self.node, lowercased_name.value); \
+      break;                                                                       \
+    case YGUnitAuto:                                                               \
+      YGNodeStyleSet##capitalized_name##Auto(self.node);                           \
       break;                                                                       \
     default:                                                                       \
       NSAssert(NO, @"Not implemented");                                            \
@@ -61,6 +87,9 @@ YG_EDGE_PROPERTY_SETTER(lowercased_name, capitalized_name, property, edge)
 - (void)set##objc_capitalized_name:(YGValue)objc_lowercased_name                                 \
 {                                                                                                \
   switch (objc_lowercased_name.unit) {                                                           \
+    case YGUnitUndefined:                                                                        \
+      YGNodeStyleSet##c_name(self.node, edge, objc_lowercased_name.value);                       \
+      break;                                                                                     \
     case YGUnitPoint:                                                                            \
       YGNodeStyleSet##c_name(self.node, edge, objc_lowercased_name.value);                       \
       break;                                                                                     \
@@ -202,7 +231,7 @@ YG_PROPERTY(YGDisplay, display, Display)
 
 YG_PROPERTY(CGFloat, flexGrow, FlexGrow)
 YG_PROPERTY(CGFloat, flexShrink, FlexShrink)
-YG_VALUE_PROPERTY(flexBasis, FlexBasis)
+YG_AUTO_VALUE_PROPERTY(flexBasis, FlexBasis)
 
 YG_VALUE_EDGE_PROPERTY(left, Left, Position, YGEdgeLeft)
 YG_VALUE_EDGE_PROPERTY(top, Top, Position, YGEdgeTop)
@@ -221,8 +250,8 @@ YG_EDGE_PROPERTY(borderStartWidth, BorderStartWidth, Border, YGEdgeStart)
 YG_EDGE_PROPERTY(borderEndWidth, BorderEndWidth, Border, YGEdgeEnd)
 YG_EDGE_PROPERTY(borderWidth, BorderWidth, Border, YGEdgeAll)
 
-YG_VALUE_PROPERTY(width, Width)
-YG_VALUE_PROPERTY(height, Height)
+YG_AUTO_VALUE_PROPERTY(width, Width)
+YG_AUTO_VALUE_PROPERTY(height, Height)
 YG_VALUE_PROPERTY(minWidth, MinWidth)
 YG_VALUE_PROPERTY(minHeight, MinHeight)
 YG_VALUE_PROPERTY(maxWidth, MaxWidth)
