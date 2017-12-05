@@ -14,9 +14,12 @@ GMOCK_OVERRIDE_FLAGS = [
 
 COMPILER_FLAGS = LIBRARY_COMPILER_FLAGS + [
     "-std=c++1y",
+    "-Wno-global-constructors",
 ]
 
-TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + ["-std=c++1y"]
+TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + [
+    "-std=c++1y",
+]
 
 cxx_library(
     name = "yoga",

@@ -235,7 +235,8 @@ TEST(YogaTest, cloning_and_freeing) {
 
   const YGNodeRef root2 = YGNodeClone(root);
 
-  // Freeing the original root should be safe as long as we don't free its children.
+  // Freeing the original root should be safe as long as we don't free its
+  // children.
   YGNodeFree(root);
 
   YGNodeCalculateLayout(root2, YGUndefined, YGUndefined, YGDirectionLTR);

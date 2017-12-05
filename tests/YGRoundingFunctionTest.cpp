@@ -8,7 +8,6 @@
  */
 
 #include <gtest/gtest.h>
-
 #include <yoga/Yoga.h>
 #include <yoga/Yoga-internal.h>
 
