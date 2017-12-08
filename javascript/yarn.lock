@@ -231,10 +231,6 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-discard-module-references@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-discard-module-references/-/babel-plugin-discard-module-references-1.1.2.tgz#898007cbeb472cef76ef11e1af485b41d4241747"
-
 babel-plugin-replace-require@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/babel-plugin-replace-require/-/babel-plugin-replace-require-0.0.4.tgz#2afe99c8cfd1a9faf5fa2a807bdb35c30a4970f8"
