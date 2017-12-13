@@ -5,7 +5,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs("//yoga_defs.bzl")
+load("//:yoga_defs.bzl", "LIBRARY_COMPILER_FLAGS", "BASE_COMPILER_FLAGS", "GTEST_TARGET", "yoga_dep", "cxx_library", "cxx_test")
 
 GMOCK_OVERRIDE_FLAGS = [
     # gmock does not mark mocked methods as override, ignore the warnings in tests
@@ -30,7 +30,7 @@ cxx_library(
     soname = "libyogacore.$(ext)",
     tests = [":YogaTests"],
     visibility = ["PUBLIC"],
-    deps = [] if THIS_IS_FBOBJC else [
+    deps = [
         yoga_dep("lib/fb:ndklog"),
     ],
 )

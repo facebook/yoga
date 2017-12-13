@@ -5,7 +5,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-include_defs("//yoga_defs.bzl")
+load("//:yoga_defs.bzl", "yoga_dep", "apple_library", "apple_test")
 
 COMPILER_FLAGS = [
     "-fobjc-arc",
@@ -30,12 +30,19 @@ COMPILER_FLAGS = [
 apple_library(
     name = "YogaKit",
     srcs = glob(["Source/**/*.m"]),
-    exported_headers = glob(["Source/**/*.h"]),
+    exported_headers = subdir_glob(
+        [
+            ("", "Source/**/*.h"),
+            ("Source", "**/*.h"),
+        ],
+        prefix = "YogaKit",
+    ),
     compiler_flags = COMPILER_FLAGS,
     frameworks = [
         "$SDKROOT/System/Library/Frameworks/Foundation.framework",
         "$SDKROOT/System/Library/Frameworks/UIKit.framework",
     ],
+    header_path_prefix = "",
     link_whole = True,
     visibility = ["PUBLIC"],
     deps = [

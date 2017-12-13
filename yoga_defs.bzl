@@ -19,8 +19,6 @@ ANDROID_RES_TARGET = '//android:res'
 ANDROID_SAMPLE_JAVA_TARGET = '//android/sample/java/com/facebook/samples/yoga:yoga'
 ANDROID_SAMPLE_RES_TARGET = '//android/sample:res'
 
-THIS_IS_FBOBJC = False
-
 CXX_LIBRARY_WHITELIST = [
   '//:yoga',
   '//lib/fb:fbjni',
@@ -42,3 +40,68 @@ LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
 
 def yoga_dep(dep):
   return '//' + dep
+
+
+_original_android_aar = android_aar
+def android_aar(*args, **kwargs):
+    _original_android_aar(*args, **kwargs)
+
+
+_original_android_binary = android_binary
+def android_binary(*args, **kwargs):
+  _original_android_binary(*args, **kwargs)
+
+
+_original_android_library = android_library
+def android_library(*args, **kwargs):
+  _original_android_library(*args, **kwargs)
+
+
+_original_android_resource = android_resource
+def android_resource(*args, **kwargs):
+  _original_android_resource(*args, **kwargs)
+
+
+_original_apple_library = apple_library
+def apple_library(*args, **kwargs):
+  _original_apple_library(*args, **kwargs)
+
+
+_original_apple_test = apple_test
+def apple_test(*args, **kwargs):
+  _original_apple_test(*args, **kwargs)
+
+
+_original_cxx_library = cxx_library
+def cxx_library(*args, **kwargs):
+  _original_cxx_library(*args, **kwargs)
+
+
+_original_cxx_test = cxx_test
+def cxx_test(*args, **kwargs):
+  _original_cxx_test(*args, **kwargs)
+
+
+_original_java_binary = java_binary
+def java_binary(*args, **kwargs):
+  _original_java_binary(*args, **kwargs)
+
+
+_original_java_library = java_library
+def java_library(*args, **kwargs):
+  _original_java_library(*args, **kwargs)
+
+
+_original_java_test = java_test
+def java_test(*args, **kwargs):
+    _original_java_test(*args, **kwargs)
+
+
+_original_prebuilt_cxx_library = prebuilt_cxx_library
+def prebuilt_cxx_library(*args, **kwargs):
+    _original_prebuilt_cxx_library(*args, **kwargs)
+
+
+_original_prebuilt_jar = prebuilt_jar
+def prebuilt_jar(*args, **kwargs):
+  _original_prebuilt_jar(*args, **kwargs)
