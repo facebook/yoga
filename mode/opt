@@ -1,0 +1,4 @@
+--config
+cxx.cxxflags=-O3
+--config
+cxx.cflags=-O3
