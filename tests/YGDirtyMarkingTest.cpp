@@ -8,7 +8,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/Yoga.h>
+#include <yoga/YGNode.h>
 
 TEST(YogaTest, dirty_propagation) {
   const YGNodeRef root = YGNodeNew();
@@ -30,15 +30,15 @@ TEST(YogaTest, dirty_propagation) {
 
   YGNodeStyleSetWidth(root_child0, 20);
 
-  EXPECT_TRUE(YGNodeIsDirty(root_child0));
-  EXPECT_FALSE(YGNodeIsDirty(root_child1));
-  EXPECT_TRUE(YGNodeIsDirty(root));
+  EXPECT_TRUE(root_child0->isDirty());
+  EXPECT_FALSE(root_child1->isDirty());
+  EXPECT_TRUE(root->isDirty());
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  EXPECT_FALSE(YGNodeIsDirty(root_child0));
-  EXPECT_FALSE(YGNodeIsDirty(root_child1));
-  EXPECT_FALSE(YGNodeIsDirty(root));
+  EXPECT_FALSE(root_child0->isDirty());
+  EXPECT_FALSE(root_child1->isDirty());
+  EXPECT_FALSE(root->isDirty());
 
   YGNodeFreeRecursive(root);
 }
@@ -63,9 +63,9 @@ TEST(YogaTest, dirty_propagation_only_if_prop_changed) {
 
   YGNodeStyleSetWidth(root_child0, 50);
 
-  EXPECT_FALSE(YGNodeIsDirty(root_child0));
-  EXPECT_FALSE(YGNodeIsDirty(root_child1));
-  EXPECT_FALSE(YGNodeIsDirty(root));
+  EXPECT_FALSE(root_child0->isDirty());
+  EXPECT_FALSE(root_child1->isDirty());
+  EXPECT_FALSE(root->isDirty());
 
   YGNodeFreeRecursive(root);
 }
@@ -133,11 +133,11 @@ TEST(YogaTest, dirty_node_only_if_children_are_actually_removed) {
 
   const YGNodeRef child1 = YGNodeNew();
   YGNodeRemoveChild(root, child1);
-  EXPECT_FALSE(YGNodeIsDirty(root));
+  EXPECT_FALSE(root->isDirty());
   YGNodeFree(child1);
 
   YGNodeRemoveChild(root, child0);
-  EXPECT_TRUE(YGNodeIsDirty(root));
+  EXPECT_TRUE(root->isDirty());
   YGNodeFree(child0);
 
   YGNodeFreeRecursive(root);
@@ -151,11 +151,11 @@ TEST(YogaTest, dirty_node_only_if_undefined_values_gets_set_to_undefined) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  EXPECT_FALSE(YGNodeIsDirty(root));
+  EXPECT_FALSE(root->isDirty());
 
   YGNodeStyleSetMinWidth(root, YGUndefined);
 
-  EXPECT_FALSE(YGNodeIsDirty(root));
+  EXPECT_FALSE(root->isDirty());
 
   YGNodeFreeRecursive(root);
 }
