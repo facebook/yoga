@@ -181,7 +181,9 @@
   view.yoga.height = YGPointValue(100);
   [container addSubview:view];
 
-  [container.yoga applyLayoutPreservingOrigin:YES dimensionFlexibility:YGDimensionFlexibilityFlexibleHeigth];
+  [container.yoga
+      applyLayoutPreservingOrigin:YES
+             dimensionFlexibility:YGDimensionFlexibilityFlexibleHeight];
   XCTAssertEqual(200, container.frame.size.width);
   XCTAssertEqual(100, container.frame.size.height);
 }
@@ -197,7 +199,10 @@
   view.yoga.height = YGPointValue(100);
   [container addSubview:view];
 
-  [container.yoga applyLayoutPreservingOrigin:YES dimensionFlexibility:YGDimensionFlexibilityFlexibleWidth | YGDimensionFlexibilityFlexibleHeigth];
+  [container.yoga
+      applyLayoutPreservingOrigin:YES
+             dimensionFlexibility:YGDimensionFlexibilityFlexibleWidth |
+             YGDimensionFlexibilityFlexibleHeight];
   XCTAssertEqual(100, container.frame.size.width);
   XCTAssertEqual(100, container.frame.size.height);
 }

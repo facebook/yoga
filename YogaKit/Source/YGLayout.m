@@ -283,7 +283,7 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
   if (dimensionFlexibility & YGDimensionFlexibilityFlexibleWidth) {
     size.width = YGUndefined;
   }
-  if (dimensionFlexibility & YGDimensionFlexibilityFlexibleHeigth) {
+  if (dimensionFlexibility & YGDimensionFlexibilityFlexibleHeight) {
     size.height = YGUndefined;
   }
   [self calculateLayoutWithSize:size];
