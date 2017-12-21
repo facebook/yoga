@@ -451,15 +451,26 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
     topLeft.y + YGNodeLayoutGetHeight(node),
   };
 
-  const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
-  view.frame = (CGRect) {
-    .origin = {
-      .x = YGRoundPixelValue(topLeft.x + origin.x),
-      .y = YGRoundPixelValue(topLeft.y + origin.y),
-    },
+  const CGPoint origin = preserveOrigin ? (CGPoint){
+    .x = view.center.x - (view.bounds.size.width / 2),
+    .y = view.center.y - (view.bounds.size.height / 2),
+  } : CGPointZero;
+
+  CGFloat x = topLeft.x + origin.x;
+  CGFloat y = topLeft.y + origin.y;
+  CGFloat width = bottomRight.x - topLeft.x;
+  CGFloat height = bottomRight.y - topLeft.y;
+
+  view.center = (CGPoint) {
+    .x = YGRoundPixelValue(x + (width / 2)),
+    .y = YGRoundPixelValue(y + (height / 2)),
+  };
+
+  view.bounds = (CGRect) {
+    .origin = CGPointZero,
     .size = {
-      .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
-      .height = YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y),
+      .width = YGRoundPixelValue(width),
+      .height = YGRoundPixelValue(height),
     },
   };
 
