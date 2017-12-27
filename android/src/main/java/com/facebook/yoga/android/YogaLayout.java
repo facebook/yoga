@@ -164,7 +164,9 @@ public class YogaLayout extends ViewGroup {
       } else {
         childNode = new YogaNode();
       }
+    }
 
+    if (childNode != null) {
       childNode.setData(child);
       childNode.setMeasureFunction(new ViewMeasureFunction());
     }
