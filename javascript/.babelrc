@@ -1,5 +1,7 @@
 {
+  "presets": ["stage-3", "es2015"],
   "plugins": [
+    "transform-flow-strip-types",
     [
       "replace-require",
       {

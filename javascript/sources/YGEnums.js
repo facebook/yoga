@@ -5,10 +5,12 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @flow
+ * @format
  */
 
-module.exports = {
-
+const CONSTANTS = {
   ALIGN_COUNT: 8,
   ALIGN_AUTO: 0,
   ALIGN_FLEX_START: 1,
@@ -101,5 +103,73 @@ module.exports = {
   WRAP_NO_WRAP: 0,
   WRAP_WRAP: 1,
   WRAP_WRAP_REVERSE: 2,
-
 };
+
+export type Yoga$JustifyContent =
+  | typeof CONSTANTS.JUSTIFY_CENTER
+  | typeof CONSTANTS.JUSTIFY_FLEX_END
+  | typeof CONSTANTS.JUSTIFY_FLEX_START
+  | typeof CONSTANTS.JUSTIFY_SPACE_AROUND
+  | typeof CONSTANTS.JUSTIFY_SPACE_BETWEEN
+  | typeof CONSTANTS.JUSTIFY_SPACE_EVENLY;
+
+export type Yoga$Align =
+  | typeof CONSTANTS.ALIGN_AUTO
+  | typeof CONSTANTS.ALIGN_BASELINE
+  | typeof CONSTANTS.ALIGN_CENTER
+  | typeof CONSTANTS.ALIGN_FLEX_END
+  | typeof CONSTANTS.ALIGN_FLEX_START
+  | typeof CONSTANTS.ALIGN_SPACE_AROUND
+  | typeof CONSTANTS.ALIGN_SPACE_BETWEEN
+  | typeof CONSTANTS.ALIGN_STRETCH;
+
+export type Yoga$FlexDirection =
+  | typeof CONSTANTS.FLEX_DIRECTION_COLUMN
+  | typeof CONSTANTS.FLEX_DIRECTION_COLUMN_REVERSE
+  | typeof CONSTANTS.FLEX_DIRECTION_COUNT
+  | typeof CONSTANTS.FLEX_DIRECTION_ROW
+  | typeof CONSTANTS.FLEX_DIRECTION_ROW_REVERSE;
+
+export type Yoga$Direction =
+  | typeof CONSTANTS.DIRECTION_INHERIT
+  | typeof CONSTANTS.DIRECTION_LTR
+  | typeof CONSTANTS.DIRECTION_RTL;
+
+export type Yoga$FlexWrap =
+  | typeof CONSTANTS.WRAP_NO_WRAP
+  | typeof CONSTANTS.WRAP_WRAP
+  | typeof CONSTANTS.WRAP_WRAP_REVERSE;
+
+export type Yoga$Edge =
+  | typeof CONSTANTS.EDGE_LEFT
+  | typeof CONSTANTS.EDGE_TOP
+  | typeof CONSTANTS.EDGE_RIGHT
+  | typeof CONSTANTS.EDGE_BOTTOM
+  | typeof CONSTANTS.EDGE_START
+  | typeof CONSTANTS.EDGE_END
+  | typeof CONSTANTS.EDGE_HORIZONTAL
+  | typeof CONSTANTS.EDGE_VERTICAL
+  | typeof CONSTANTS.EDGE_ALL;
+
+export type Yoga$Display =
+  | typeof CONSTANTS.DISPLAY_FLEX
+  | typeof CONSTANTS.DISPLAY_NONE;
+
+export type Yoga$Unit =
+  | typeof CONSTANTS.UNIT_AUTO
+  | typeof CONSTANTS.UNIT_PERCENT
+  | typeof CONSTANTS.UNIT_POINT
+  | typeof CONSTANTS.UNIT_UNDEFINED;
+
+export type Yoga$Overflow =
+  | typeof CONSTANTS.OVERFLOW_HIDDEN
+  | typeof CONSTANTS.OVERFLOW_SCROLL
+  | typeof CONSTANTS.OVERFLOW_VISIBLE;
+
+export type Yoga$PositionType =
+  | typeof CONSTANTS.POSITION_TYPE_ABSOLUTE
+  | typeof CONSTANTS.POSITION_TYPE_RELATIVE;
+
+export type Yoga$ExperimentalFeature = typeof CONSTANTS.EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS;
+
+export default CONSTANTS;

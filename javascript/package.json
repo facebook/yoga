@@ -1,65 +1,48 @@
 {
-    "name": "yoga-layout",
-    "version": "1.8.0",
-    "description": "Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.",
-    "license": "BSD-3-Clause",
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:facebook/yoga.git"
-    },
-
-    "main": "./sources/entry-node",
-    "browser": "./sources/entry-browser",
-
-    "config": {
-        "platform": "all"
-    },
-
-    "scripts": {
-
-        "which": "which",
-        "autogypi": "autogypi",
-        "node-gyp": "node-gyp",
-        "emcc-path": "emcc-path",
-
-        "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
-        "copy-sources": "! npm -s -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
-
-        "build:node": "npm -- run copy-sources && npm -- run node-gyp configure build",
-        "build:browser": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1",
-        "postbuild:browser": "babel build/Release/nbind.js --out-file build/Release/nbind.js",
-        "build:standalone": "webpack",
-        "build:all": "npm -- run build:node && npm -- run build:browser && npm -- run build:standalone",
-        "build": "cross-env \"npm --if-present -- run build:$npm_package_config_platform\"",
-
-        "test:node": "TEST_ENTRY=node time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-        "test:browser": "TEST_ENTRY=browser time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-        "test:all": "npm -- run test:node && npm -- run test:browser",
-        "test": "npm -- run test:all",
-
-        "bench": "node tests/run-bench $(find tests/Benchmarks -name '*.js')",
-
-        "install": "npm -- run autogypi && npm -- run build:node",
-
-        "prepare": "npm -- run build:browser"
-
-    },
-
-    "dependencies": {
-
-        "autogypi": "^0.2.2",
-        "nbind": "^0.3.8",
-        "node-gyp": "^3.4.0"
-
-    },
-
-    "devDependencies": {
-
-        "babel-cli": "^6.24.1",
-        "babel-core": "^6.25.0",
-        "babel-plugin-replace-require": "^0.0.4",
-        "cross-env": "^4.0.0",
-        "mocha": "^3.2.0",
-        "webpack": "^2.2.0-rc.2"
-    }
+  "name": "yoga-layout",
+  "version": "1.8.0",
+  "description": "Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:facebook/yoga.git"
+  },
+  "main": "./dist/entry-node",
+  "browser": "./dist/entry-browser",
+  "config": {
+    "platform": "all"
+  },
+  "scripts": {
+    "which": "which",
+    "autogypi": "autogypi",
+    "node-gyp": "node-gyp",
+    "emcc-path": "emcc-path",
+    "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
+    "copy-sources": "! npm -s -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
+    "build:node": "npm -- run copy-sources && npm -- run node-gyp configure build && flow-copy-source sources dist",
+    "build:browser": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1 && babel sources --out-dir dist && flow-copy-source sources dist",
+    "build:all": "npm -- run build:node && npm -- run build:browser",
+    "build": "cross-env \"npm --if-present -- run build:$npm_package_config_platform\"",
+    "test:node": "TEST_ENTRY=node time mocha --compilers js:babel-core/register --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
+    "test:browser": "TEST_ENTRY=browser time mocha --compilers js:babel-core/register --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
+    "test": "npm -- run test:node && npm -- run test:browser",
+    "bench": "node tests/run-bench $(find tests/Benchmarks -name '*.js')",
+    "install": "npm -- run autogypi && npm -- run build:node"
+  },
+  "dependencies": {
+    "autogypi": "^0.2.2",
+    "nbind": "^0.3.8",
+    "node-gyp": "^3.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-plugin-replace-require": "^0.0.4",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^4.0.0",
+    "flow-copy-source": "^1.2.1",
+    "mocha": "^3.2.0"
+  }
 }

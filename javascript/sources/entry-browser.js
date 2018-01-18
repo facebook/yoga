@@ -5,28 +5,51 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @flow
+ * @format
  */
 
-var nbind = require('../build/Release/nbind.js');
+import Yoga from './entry-common';
 
-var ran = false;
-var ret = null;
+const nbind = require('../build/Release/nbind.js');
 
-nbind({}, function (err, result) {
+let ran = false;
+let ret = null;
 
-    if (ran)
-        return;
+nbind({}, function(err, result) {
+  if (ran) {
+    return;
+  }
 
-    ran = true;
+  ran = true;
 
-    if (err)
-        throw err;
+  if (err) {
+    throw err;
+  }
 
-    ret = result;
-
+  ret = result;
 });
 
-if (!ran)
-    throw new Error('Failed to load the yoga module - it needed to be loaded synchronously, but didn\'t');
+if (!ran) {
+  throw new Error(
+    "Failed to load the yoga module - it needed to be loaded synchronously, but didn't",
+  );
+}
 
-module.exports = require('./entry-common')(ret.bind, ret.lib);
+// $FlowFixMe ret will not be null here
+module.exports = Yoga(ret.bind, ret.lib);
+
+export type {
+  Yoga$JustifyContent,
+  Yoga$Align,
+  Yoga$FlexDirection,
+  Yoga$Direction,
+  Yoga$FlexWrap,
+  Yoga$Edge,
+  Yoga$Display,
+  Yoga$Unit,
+  Yoga$Overflow,
+  Yoga$PositionType,
+  Yoga$ExperimentalFeature,
+} from './YGEnums.js';
