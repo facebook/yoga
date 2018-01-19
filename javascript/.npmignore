@@ -3,7 +3,7 @@ node_modules
 *.gypi
 !/final-flags.gypi
 
-/dist
+!/dist
 /build/*
 !/build/Release
 /build/Release/*
