@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
+var Yoga = Yoga || require("../../dist/entry-" + process.env.TEST_ENTRY);
 
 var ITERATIONS = 2000;
 

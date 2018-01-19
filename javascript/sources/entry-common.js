@@ -10,7 +10,7 @@
  * @format
  */
 
-import CONSTANTS from './YGEnums';
+const CONSTANTS = require('./YGEnums');
 import type {
   Yoga$Edge,
   Yoga$FlexWrap,
@@ -230,7 +230,7 @@ type Yoga = {
   ...typeof CONSTANTS,
 };
 
-export default (bind: any, lib: any): Yoga => {
+module.exports = (bind: any, lib: any): Yoga => {
   function patch(prototype, name, fn) {
     let original = prototype[name];
 

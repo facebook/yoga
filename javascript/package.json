@@ -1,6 +1,6 @@
 {
   "name": "yoga-layout",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "description": "Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.",
   "license": "BSD-3-Clause",
   "repository": {
@@ -13,26 +13,23 @@
     "platform": "all"
   },
   "scripts": {
-    "which": "which",
-    "autogypi": "autogypi",
-    "node-gyp": "node-gyp",
-    "emcc-path": "emcc-path",
     "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
-    "copy-sources": "! npm -s -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
-    "build:node": "npm -- run copy-sources && npm -- run node-gyp configure build && flow-copy-source sources dist",
-    "build:browser": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1 && babel sources --out-dir dist && flow-copy-source sources dist",
-    "build:all": "npm -- run build:node && npm -- run build:browser",
-    "build": "cross-env \"npm --if-present -- run build:$npm_package_config_platform\"",
+    "copy-sources": "! npm -s run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
+    "build:node": "npm run copy-sources && autogypi && node-gyp configure build",
+    "build:browser": "npm run copy-sources && autogypi && node-gyp configure build --asmjs=1",
+    "build:all": "npm run build:node && npm run build:browser",
+    "build": "cross-env \"npm --if-present run build:$npm_package_config_platform\"",
     "test:node": "TEST_ENTRY=node time mocha --compilers js:babel-core/register --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
     "test:browser": "TEST_ENTRY=browser time mocha --compilers js:babel-core/register --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-    "test": "npm -- run test:node && npm -- run test:browser",
-    "bench": "node tests/run-bench $(find tests/Benchmarks -name '*.js')",
-    "install": "npm -- run autogypi && npm -- run build:node"
+    "test": "npm run test:node && npm run test:browser",
+    "benchmark": "npm run prepublish && node tests/run-bench $(find tests/Benchmarks -name '*.js')",
+    "install": "npm run build:node",
+    "prepublish": "npm run copy-sources && babel sources --out-dir dist && flow-copy-source sources dist"
   },
   "dependencies": {
     "autogypi": "^0.2.2",
-    "nbind": "^0.3.8",
-    "node-gyp": "^3.4.0"
+    "nbind": "^0.3.14",
+    "node-gyp": "^3.6.2"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

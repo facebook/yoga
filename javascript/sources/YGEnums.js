@@ -172,4 +172,4 @@ export type Yoga$PositionType =
 
 export type Yoga$ExperimentalFeature = typeof CONSTANTS.EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS;
 
-export default CONSTANTS;
+module.exports = CONSTANTS;

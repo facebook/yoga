@@ -10,8 +10,7 @@
  * @format
  */
 
-import Yoga from './entry-common';
-
+const Yoga = require('./entry-common');
 const nbind = require('../build/Release/nbind.js');
 
 let ran = false;

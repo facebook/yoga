@@ -10,7 +10,7 @@
  * @format
  */
 
-import Yoga from './entry-common';
+const Yoga = require('./entry-common');
 const nbind = require('nbind');
 const {bind, lib} = nbind.init(__dirname + '/../');
 module.exports = Yoga(bind, lib);
