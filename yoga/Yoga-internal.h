@@ -161,10 +161,10 @@ typedef struct YGConfig {
 } YGConfig;
 
 #define YG_UNDEFINED_VALUES \
-  { .value = YGUndefined, .unit = YGUnitUndefined }
+  { YGUndefined, YGUnitUndefined }
 
 #define YG_AUTO_VALUES \
-  { .value = YGUndefined, .unit = YGUnitAuto }
+  { YGUndefined, YGUnitAuto }
 
 #define YG_DEFAULT_EDGE_VALUES_UNIT                                            \
   {                                                                            \
@@ -192,21 +192,21 @@ static const float kDefaultFlexShrink = 0.0f;
 static const float kWebDefaultFlexShrink = 1.0f;
 
 static const YGStyle gYGNodeStyleDefaults = {
-    .direction = YGDirectionInherit,
-    .flexDirection = YGFlexDirectionColumn,
-    .justifyContent = YGJustifyFlexStart,
-    .alignContent = YGAlignFlexStart,
-    .alignItems = YGAlignStretch,
-    .alignSelf = YGAlignAuto,
-    .positionType = YGPositionTypeRelative,
-    .flexWrap = YGWrapNoWrap,
-    .overflow = YGOverflowVisible,
-    .display = YGDisplayFlex,
-    .flex = YGUndefined,
-    .flexGrow = YGUndefined,
-    .flexShrink = YGUndefined,
-    .flexBasis = YG_AUTO_VALUES,
-    .margin = {{YG_UNDEFINED_VALUES,
+    YGDirectionInherit,
+    YGFlexDirectionColumn,
+    YGJustifyFlexStart,
+    YGAlignFlexStart,
+    YGAlignStretch,
+    YGAlignAuto,
+    YGPositionTypeRelative,
+    YGWrapNoWrap,
+    YGOverflowVisible,
+    YGDisplayFlex,
+    YGUndefined,
+    YGUndefined,
+    YGUndefined,
+    YG_AUTO_VALUES,
+    {{YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES,
@@ -215,7 +215,7 @@ static const YGStyle gYGNodeStyleDefaults = {
                 YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES}},
-    .position = {{YG_UNDEFINED_VALUES,
+    {{YG_UNDEFINED_VALUES,
                   YG_UNDEFINED_VALUES,
                   YG_UNDEFINED_VALUES,
                   YG_UNDEFINED_VALUES,
@@ -224,7 +224,7 @@ static const YGStyle gYGNodeStyleDefaults = {
                   YG_UNDEFINED_VALUES,
                   YG_UNDEFINED_VALUES,
                   YG_UNDEFINED_VALUES}},
-    .padding = {{YG_UNDEFINED_VALUES,
+    {{YG_UNDEFINED_VALUES,
                  YG_UNDEFINED_VALUES,
                  YG_UNDEFINED_VALUES,
                  YG_UNDEFINED_VALUES,
@@ -233,7 +233,7 @@ static const YGStyle gYGNodeStyleDefaults = {
                  YG_UNDEFINED_VALUES,
                  YG_UNDEFINED_VALUES,
                  YG_UNDEFINED_VALUES}},
-    .border = {{YG_UNDEFINED_VALUES,
+    {{YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES,
@@ -242,35 +242,34 @@ static const YGStyle gYGNodeStyleDefaults = {
                 YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES,
                 YG_UNDEFINED_VALUES}},
-    .dimensions = {{YG_AUTO_VALUES, YG_AUTO_VALUES}},
-    .minDimensions = {{YG_UNDEFINED_VALUES, YG_UNDEFINED_VALUES}},
-    .maxDimensions = {{YG_UNDEFINED_VALUES, YG_UNDEFINED_VALUES}},
-    .aspectRatio = YGUndefined,
+    {{YG_AUTO_VALUES, YG_AUTO_VALUES}},
+    {{YG_UNDEFINED_VALUES, YG_UNDEFINED_VALUES}},
+    {{YG_UNDEFINED_VALUES, YG_UNDEFINED_VALUES}},
+    YGUndefined,
 };
 
 static const YGLayout gYGNodeLayoutDefaults = {
-    .position = {},
-    .dimensions = {{YGUndefined, YGUndefined}},
-    .margin = {},
-    .border = {},
-    .padding = {},
-    .direction = YGDirectionInherit,
-    .computedFlexBasisGeneration = 0,
-    .computedFlexBasis = YGUndefined,
-    .hadOverflow = false,
-    .generationCount = 0,
-    .lastParentDirection = (YGDirection)-1,
-    .nextCachedMeasurementsIndex = 0,
-    .cachedMeasurements = {},
-    .measuredDimensions = {{YGUndefined, YGUndefined}},
-    .cachedLayout =
+    {},
+    {{YGUndefined, YGUndefined}},
+    {},
+    {},
+    {},
+    YGDirectionInherit,
+    0,
+    YGUndefined,
+    false,
+    0,
+    (YGDirection)-1,
+    0,
+    {},
+    {{YGUndefined, YGUndefined}},
         {
-            .availableWidth = 0,
-            .availableHeight = 0,
-            .widthMeasureMode = (YGMeasureMode)-1,
-            .heightMeasureMode = (YGMeasureMode)-1,
-            .computedWidth = -1,
-            .computedHeight = -1,
+            0,
+            0,
+            (YGMeasureMode)-1,
+            (YGMeasureMode)-1,
+            -1,
+            -1,
         },
 };
 
