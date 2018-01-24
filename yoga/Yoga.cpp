@@ -2928,21 +2928,41 @@ float YGRoundValueToPixelGrid(const float value,
                               const bool forceCeil,
                               const bool forceFloor) {
   float scaledValue = value * pointScaleFactor;
-  float fractial = fmodf(scaledValue, 1.0);
-  if (YGFloatsEqual(fractial, 0)) {
-    // First we check if the value is already rounded
-    scaledValue = scaledValue - fractial;
-  } else if (YGFloatsEqual(fractial, 1.0)) {
-    scaledValue = scaledValue - fractial + 1.0;
+  const float fractial = fmodf(scaledValue, 1.0f);
+  const float absoluteFractial = fabs(fractial);
+
+  // 1. Remove any remainder from the scaledValue
+  scaledValue = scaledValue - fractial;
+
+  // 2. Figure out rounding
+  // Note: It is important that the following rounding algorithm
+  //       ensures that both positive and negative values are treated exactly the same.
+  if (YGFloatsEqual(absoluteFractial, 0.0f)) {
+    // Already whole (or close enough), skip rounding
+  } else if (YGFloatsEqual(absoluteFractial, 1.0f)) {
+    // Already whole (or close enough), skip rounding
+    scaledValue += (fractial < 0.0f) ? -1.0f : 1.0f;
   } else if (forceCeil) {
-    // Next we check if we need to use forced rounding
-    scaledValue = scaledValue - fractial + 1.0f;
+    // Force round to upper whole value
+    if (fractial > 0.0f) {
+      scaledValue += 1.0f;
+    }
   } else if (forceFloor) {
-    scaledValue = scaledValue - fractial;
+    // Force round to lower whole value
+    if (fractial < 0.0f) {
+      scaledValue -= 1.0f;
+    }
   } else {
-    // Finally we just round the value
-    scaledValue = scaledValue - fractial +
-        (fractial > 0.5f || YGFloatsEqual(fractial, 0.5f) ? 1.0f : 0.0f);
+    // Round to closest whole value
+    if (fractial > 0.0f) {
+      if (absoluteFractial > 0.5f || YGFloatsEqual(absoluteFractial, 0.5f)) {
+        scaledValue += 1.0f;
+      }
+    } else {
+      if (absoluteFractial > 0.5f && !YGFloatsEqual(absoluteFractial, 0.5f)) {
+        scaledValue -= 1.0f;
+      }
+    }
   }
   return scaledValue / pointScaleFactor;
 }
