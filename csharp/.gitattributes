@@ -1,0 +1,18 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Force Visual Studio project files (mostly XML) to CRLF
+#   This helps avoid conflict which occurs when Xmarian/Mac contributors with AutoCRLF=input (or off)
+#   check in these files as CRLFs, and then Windows contributors with AutoCRLF=true end up checking then
+#   files in as LFs  (due to AutoCRLF=true normalizing CRLF->LF on check-in).
+
+*.sln text eol=crlf
+*.csproj text eol=crlf
+*.vbproj text eol=crlf
+*.fsproj text eol=crlf
+*.pyproj text eol=crlf
+*.dbproj text eol=crlf
+*.vcxproj text eol=crlf
+*.vcxitems text eol=crlf
+*.props text eol=crlf
+*.filters text eol=crlf
