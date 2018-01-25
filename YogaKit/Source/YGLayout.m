@@ -308,7 +308,11 @@ static YGSize YGMeasureView(
   UIView *view = (__bridge UIView*) YGNodeGetContext(node);
   CGSize sizeThatFits = CGSizeZero;
 
-  // Fix for https://github.com/facebook/yoga/issues/606
+  // The default implementation of sizeThatFits: returns the existing size of the view.
+  // That means that if we want to layout an empty UIView, which already has got a frame set,
+  // its measured size should be CGSizeZero, but UIKit returns the existing size.
+  //
+  // See https://github.com/facebook/yoga/issues/606 for more information.
   if (!view.yoga.isUIView || [view.subviews count] > 0) {
     sizeThatFits = [view sizeThatFits:(CGSize) {
       .width = constrainedWidth,
