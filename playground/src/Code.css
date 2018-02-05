@@ -1,0 +1,20 @@
+.Code {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+}
+
+.CodeContainer {
+  overflow: scroll;
+}
+
+.CodeLanguageSelector.ant-radio-group {
+  display: flex;
+  margin: 10px 15px;
+}
+
+.CodeLanguageSelector.ant-radio-group .ant-radio-button-wrapper {
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: center;
+}
