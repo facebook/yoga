@@ -239,6 +239,9 @@ export default class App extends Component<Props, State> {
         <Sidebar visible={Boolean(selectedNodePath) && !this.state.showCode}>
           <Editor
             node={selectedNode}
+            selectedNodeIsRoot={
+              selectedNodePath ? selectedNodePath.length === 0 : false
+            }
             onChangeLayout={this.onChangeLayout}
             onChangeSetting={(key, value) => this.setState({[key]: value})}
             direction={this.state.direction}

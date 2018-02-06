@@ -3,7 +3,9 @@ import yoga from 'yoga-layout';
 import LayoutRecord from './LayoutRecord';
 import PositionRecord from './PositionRecord';
 import type {LayoutRecordT} from './LayoutRecord';
-import type {Yoga$Direction} from 'yoga-layout';
+import type {Yoga$Direction /* Yoga$Node */} from 'yoga-layout';
+
+type Yoga$Node = any;
 
 const enumLookup = {
   flexDirection: {
@@ -53,6 +55,9 @@ const enumLookup = {
   },
 };
 
+const untouchedLayout = LayoutRecord({});
+const untouchedPosition = PositionRecord({});
+
 function keyLookup(key: string): string {
   const keyLookup = {
     flexWrap: 'wrap',
@@ -67,54 +72,51 @@ function getLayoutCode(
   isRoot?: boolean,
 ): string {
   const lines = [];
+  const isFlexbox = node.children.size > 0;
 
-  lines.push(indent + `[CKFlexboxComponent`);
-  lines.push(indent + ` newWithView:kWhiteBackgroundView`);
+  lines.push(
+    indent +
+      `${isRoot ? '' : `.component = \n${indent}`}[${
+        isFlexbox ? 'CKFlexboxComponent' : 'CKComponent'
+      }`,
+  );
+  lines.push(indent + ` newWithView:{}`);
   lines.push(indent + ` size:{${node.width},${node.height}}`);
-  lines.push(indent + ` style:{`);
-  const untouchedLayout = LayoutRecord({});
-  const untouchedPosition = PositionRecord({});
 
-  Object.keys(node.toJSON()).forEach(key => {
-    if (
-      node[key] instanceof PositionRecord &&
-      !node[key].equals(untouchedPosition)
-    ) {
-      lines.push(indent + `\t.${key} = {`);
+  const CKFlexboxComponentStyle = [
+    'direction',
+    'margin',
+    'justifyContent',
+    'alignItems',
+    'alignContent',
+    'wrap',
+    'padding',
+    'border',
+  ];
+  const CKFlexboxComponentChild = [
+    'margin',
+    'padding',
+    'flexGrow',
+    'flexShrink',
+    'flexBasis',
+    'alignSelf',
+    'position',
+  ];
 
-      if (key === 'positionType') {
-        lines.push(
-          indent +
-            `\t.position = ${enumLookup.positionType[node.positionType]},`,
-        );
+  if (isFlexbox) {
+    // render styles
+    lines.push(indent + ` style:{`);
+    indent += '\t';
+    CKFlexboxComponentStyle.forEach(key => {
+      let line = renderKey(node, key, indent);
+      if (line) {
+        lines.push(line);
       }
+    });
+    indent = indent.substr(-1);
+    lines.push(indent + ` }`);
 
-      ['top', 'left', 'right', 'bottom'].forEach(pKey => {
-        if (node[key][pKey]) {
-          lines.push(indent + `\t\t.${pKey} = ${node[key][pKey]},`);
-        }
-      });
-
-      lines.push(indent + `\t},`);
-    } else if (
-      key !== 'children' &&
-      key !== 'width' &&
-      key !== 'height' &&
-      node[key] !== untouchedLayout[key]
-    ) {
-      if (enumLookup[key]) {
-        lines.push(
-          indent +
-            `\t.${keyLookup(key)} = ${enumLookup[key][node.flexDirection]},`,
-        );
-      } else {
-        console.error(`Unknown property ${key}`);
-      }
-    }
-  });
-  lines.push(indent + ` }`);
-
-  if (node.children.size > 0) {
+    // render children
     lines.push(indent + ' children:{');
     lines.push(
       ...node.children
@@ -127,11 +129,49 @@ function getLayoutCode(
             )}\n${indent}\t},`,
         ),
     );
-    lines.push(indent + '}');
+    lines.push(indent + `}]${isRoot ? ';' : ''}`);
+  } else {
+    lines[lines.length - 1] += ']';
+    CKFlexboxComponentChild.forEach(key => {
+      let line = renderKey(node, key, indent);
+      if (line) {
+        lines.push(line);
+      }
+    });
   }
-  lines[lines.length - 1] += `]${isRoot ? ';' : ''}`;
 
   return lines.join('\n');
+}
+
+function renderKey(node: Yoga$Node, key: string, indent: string): ?string {
+  if (
+    node[key] instanceof PositionRecord &&
+    !node[key].equals(untouchedPosition)
+  ) {
+    const lines = [];
+    lines.push(indent + `.${key} = {`);
+
+    if (key === 'position') {
+      lines.push(
+        indent + `\t.type = ${enumLookup.positionType[node.positionType]},`,
+      );
+    }
+
+    ['top', 'left', 'right', 'bottom'].forEach(pKey => {
+      if (node[key][pKey]) {
+        lines.push(indent + `\t.${pKey} = ${node[key][pKey]},`);
+      }
+    });
+
+    lines.push(indent + `},`);
+    return lines.join('\n');
+  } else if (node[key] !== untouchedLayout[key]) {
+    if (enumLookup[key]) {
+      return indent + `.${keyLookup(key)} = ${enumLookup[key][node[key]]},`;
+    } else {
+      console.error(`Unknown property ${key}`);
+    }
+  }
 }
 
 export default function generateCode(

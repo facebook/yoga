@@ -14,6 +14,7 @@ type Props = {
   onChangeLayout: (key: string, value: any) => void,
   onChangeSetting: (key: string, value: any) => void,
   direction: Yoga$Direction,
+  selectedNodeIsRoot: boolean,
   onRemove?: () => void,
   onAdd?: () => void,
 };
@@ -38,8 +39,9 @@ export default class Editor extends Component<Props> {
   };
 
   render() {
-    const {node} = this.props;
+    const {node, selectedNodeIsRoot} = this.props;
     const disabled = !Boolean(node);
+
     return (
       <div className="Editor">
         <Tabs defaultActiveKey="1" className="EditorTabs">
@@ -78,8 +80,7 @@ export default class Editor extends Component<Props> {
                 </h2>
                 <Input
                   type="text"
-                  placeholder="flexGrow"
-                  disabled={disabled}
+                  disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexGrow : ''}
                   onChange={e =>
                     this.props.onChangeLayout('flexGrow', e.target.value)
@@ -96,8 +97,7 @@ export default class Editor extends Component<Props> {
                 </h2>
                 <Input
                   type="text"
-                  placeholder="flexShrink"
-                  disabled={disabled}
+                  disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexShrink : ''}
                   onChange={e =>
                     this.props.onChangeLayout('flexShrink', e.target.value)
@@ -149,7 +149,7 @@ export default class Editor extends Component<Props> {
               </InfoText>
             </h2>
             <YogaEnumSelect
-              disabled={disabled}
+              disabled={disabled || selectedNodeIsRoot}
               property="ALIGN"
               value={node ? node.alignSelf : ''}
               onChange={e => this.props.onChangeLayout('alignSelf', e)}
