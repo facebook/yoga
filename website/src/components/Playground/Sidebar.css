@@ -1,0 +1,52 @@
+.Sidebar {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 350px;
+  background: white;
+  border-left: 1px solid #dddfe2;
+  transform: translateX(100%);
+  transition: 0.2s transform;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.Sidebar.floating {
+  margin: 25px;
+  max-height: calc(100% - 50px);
+  border-radius: 6px;
+  bottom: auto;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: 0.2s all;
+  transition-timing-function: ease-out;
+}
+
+.Sidebar.visible {
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+.Sidebar.floating.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.SidebarClose {
+  text-align: right;
+  padding: 15px;
+  padding-bottom: 0;
+}
+
+.SidebarClose i {
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.SidebarClose i:hover {
+  opacity: 0.6;
+}

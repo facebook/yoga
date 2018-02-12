@@ -1,0 +1,43 @@
+.Toolbar {
+  border-bottom: 1px solid #dddfe2;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+  background: white;
+  height: 50px;
+  padding: 0 10px;
+  padding-bottom: 1px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+}
+
+.Toolbar .logo {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.Toolbar a {
+  margin: 0 15px;
+}
+
+.Toolbar h1 {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  margin-left: 3px;
+  white-space: nowrap;
+}
+
+.Toolbar .ToolbarSpacer {
+  flex-grow: 1;
+}
+
+.Toolbar .ToolbarToggle {
+  font-size: 16px;
+}
+
+.Toolbar .ToolbarToggle i {
+  margin-right: 5px;
+}

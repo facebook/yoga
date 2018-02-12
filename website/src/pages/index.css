@@ -1,0 +1,12 @@
+.IndexPageSection {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.IndexPageSection h1 {
+  line-height: 130%;
+}
+
+.IndexPageSection .button-spacing {
+  margin-right: 10px;
+}

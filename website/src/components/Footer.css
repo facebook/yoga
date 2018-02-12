@@ -1,0 +1,10 @@
+.Footer {
+  background: #1c2126;
+  min-height: 100px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 20px 0;
+}
+
+.Footer a {
+  color: white;
+}
