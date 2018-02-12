@@ -14,25 +14,45 @@ import React from 'react';
 import Page from '../components/Page';
 import Playground from '../components/Playground';
 import DocsSidebar from '../components/DocsSidebar';
-import YogaEnumSelect from '../components/Playground/YogaEnumSelect';
+import EditValue from '../components/Playground/EditValue';
+import Link from 'gatsby-link';
+import {Button, Icon, Row, Col} from 'antd';
 
-export default ({pathContext}) => {
-  return (
-    <Page>
-      <Playground
-        selectedNodePath={[]}
-        showGuides={false}
-        renderSidebar={(layout, onChange) => (
-          <DocsSidebar>
-            <div dangerouslySetInnerHTML={{__html: pathContext.html}} />
-            <YogaEnumSelect
-              property="FLEX_DIRECTION"
-              value={layout.flexDirection}
-              onChange={e => onChange('flexDirection', e)}
-            />
-          </DocsSidebar>
-        )}
-      />
-    </Page>
-  );
-};
+export default ({pathContext}) => (
+  <Page>
+    <Playground
+      selectedNodePath={[]}
+      showGuides={false}
+      renderSidebar={(layout, onChange) => (
+        <DocsSidebar>
+          <Link to="/docs">
+            <Icon type="left-circle-o" /> back to overview
+          </Link>
+          <div dangerouslySetInnerHTML={{__html: pathContext.html}} />
+          {pathContext.frontmatter.editableProperties && (
+            <Row type="flex" align="bottom">
+              <Col span={12}>
+                <h3>Try it out</h3>
+              </Col>
+              <Col span={12}>
+                <Link to="/playground">
+                  <Icon type="export" /> Open in playground
+                </Link>
+              </Col>
+            </Row>
+          )}
+          {(pathContext.frontmatter.editableProperties || []).map(prop => (
+            <div key={prop}>
+              <h4>{prop}</h4>
+              <EditValue
+                property={prop}
+                value={layout[prop]}
+                onChange={e => onChange(prop, e)}
+              />
+            </div>
+          ))}
+        </DocsSidebar>
+      )}
+    />
+  </Page>
+);

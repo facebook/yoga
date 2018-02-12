@@ -1,4 +1,4 @@
-.YogaEnumSelect.ant-radio-group {
+.YogaEnumSelect {
   display: flex;
 }
 
@@ -6,4 +6,9 @@
   flex-grow: 1;
   flex-basis: 0;
   text-align: center;
+}
+
+.YogaEnumSelect .ant-btn {
+  flex-grow: 1;
+  flex-basis: 0;
 }

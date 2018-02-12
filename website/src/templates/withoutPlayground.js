@@ -13,11 +13,16 @@
 import React from 'react';
 import Page from '../components/Page';
 import Padded from '../components/Padded';
+import {Icon} from 'antd';
+import Link from 'gatsby-link';
 
 export default ({pathContext}) => {
   return (
-    <Page>
+    <Page withSpacing>
       <Padded>
+        <Link to="/docs">
+          <Icon type="left-circle-o" /> back to overview
+        </Link>
         <div dangerouslySetInnerHTML={{__html: pathContext.html}} />
       </Padded>
     </Page>

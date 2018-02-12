@@ -11,6 +11,7 @@
     "gatsby-plugin-less": "^1.1.4",
     "gatsby-plugin-react-helmet": "^2.0.3",
     "gatsby-plugin-react-next": "^1.0.8",
+    "gatsby-remark-prismjs": "^1.2.14",
     "gatsby-source-filesystem": "^1.5.18",
     "gatsby-transformer-remark": "^1.7.31",
     "immutable": "^4.0.0-rc.9",
@@ -25,9 +26,7 @@
   "main": "n/a",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "develop": "gatsby develop"
   },
   "devDependencies": {
     "prettier": "^1.10.2"

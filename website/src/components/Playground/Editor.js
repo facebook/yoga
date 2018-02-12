@@ -11,12 +11,11 @@
  */
 
 import React, {Component} from 'react';
-import {Row, Col, Button, Tabs, Input} from 'antd';
-import YogaEnumSelect from './YogaEnumSelect';
+import {Row, Col, Button, Tabs} from 'antd';
+import EditValue from './EditValue';
 import type {LayoutRecordT} from './LayoutRecord';
 import type {Yoga$Direction} from 'yoga-layout';
 import InfoText from './InfoText';
-import YogaPositionEditor from './YogaPositionEditor';
 import './Editor.css';
 const TabPane = Tabs.TabPane;
 
@@ -64,8 +63,8 @@ export default class Editor extends Component<Props> {
                 direction
               </InfoText>
             </h2>
-            <YogaEnumSelect
-              property="DIRECTION"
+            <EditValue
+              property="direction"
               value={this.props.direction}
               onChange={e => this.props.onChangeSetting('direction', e)}
             />
@@ -73,9 +72,9 @@ export default class Editor extends Component<Props> {
               Flex direction
               <InfoText>Defining the direction of the main-axis</InfoText>
             </h2>
-            <YogaEnumSelect
+            <EditValue
               disabled={disabled}
-              property="FLEX_DIRECTION"
+              property="flexDirection"
               value={node ? node.flexDirection : ''}
               onChange={e => this.props.onChangeLayout('flexDirection', e)}
             />
@@ -89,7 +88,7 @@ export default class Editor extends Component<Props> {
                     up, relative to it's siblings
                   </InfoText>
                 </h2>
-                <Input
+                <EditValue
                   type="text"
                   disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexGrow : ''}
@@ -106,7 +105,7 @@ export default class Editor extends Component<Props> {
                     anymore.
                   </InfoText>
                 </h2>
-                <Input
+                <EditValue
                   type="text"
                   disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexShrink : ''}
@@ -123,9 +122,9 @@ export default class Editor extends Component<Props> {
                 Wrapping behaviour when child nodes don't fit into a single line
               </InfoText>
             </h2>
-            <YogaEnumSelect
+            <EditValue
               disabled={disabled}
-              property="WRAP"
+              property="flexWrap"
               value={node ? node.flexWrap : ''}
               onChange={e => this.props.onChangeLayout('flexWrap', e)}
             />
@@ -135,9 +134,9 @@ export default class Editor extends Component<Props> {
               Justify content
               <InfoText>Aligns child nodes along the main-axis</InfoText>
             </h2>
-            <YogaEnumSelect
+            <EditValue
               disabled={disabled}
-              property="JUSTIFY"
+              property="justifyContent"
               value={node ? node.justifyContent : ''}
               onChange={e => this.props.onChangeLayout('justifyContent', e)}
             />
@@ -146,9 +145,9 @@ export default class Editor extends Component<Props> {
               Align items
               <InfoText>Aligns child nodes along the cross-axis</InfoText>
             </h2>
-            <YogaEnumSelect
+            <EditValue
               disabled={disabled}
-              property="ALIGN"
+              property="alignItems"
               value={node ? node.alignItems : ''}
               onChange={e => this.props.onChangeLayout('alignItems', e)}
             />
@@ -159,9 +158,9 @@ export default class Editor extends Component<Props> {
                 Specifies alignment on the cross-axis for the node itself
               </InfoText>
             </h2>
-            <YogaEnumSelect
+            <EditValue
               disabled={disabled || selectedNodeIsRoot}
-              property="ALIGN"
+              property="alignSelf"
               value={node ? node.alignSelf : ''}
               onChange={e => this.props.onChangeLayout('alignSelf', e)}
             />
@@ -172,9 +171,9 @@ export default class Editor extends Component<Props> {
                 Alignment of lines along the cross-axis when wrapping
               </InfoText>
             </h2>
-            <YogaEnumSelect
+            <EditValue
               disabled={disabled}
-              property="ALIGN"
+              property="alignContent"
               value={node ? node.alignContent : ''}
               onChange={e => this.props.onChangeLayout('alignContent', e)}
             />
@@ -186,7 +185,7 @@ export default class Editor extends Component<Props> {
             </h2>
             <Row gutter={15}>
               <Col span={12}>
-                <Input
+                <EditValue
                   type="text"
                   placeholder="width"
                   disabled={disabled}
@@ -197,7 +196,7 @@ export default class Editor extends Component<Props> {
                 />
               </Col>
               <Col span={12}>
-                <Input
+                <EditValue
                   type="text"
                   placeholder="height"
                   disabled={disabled}
@@ -216,7 +215,7 @@ export default class Editor extends Component<Props> {
                 displaying videos
               </InfoText>
             </h2>
-            <Input
+            <EditValue
               type="text"
               placeholder="Aspect ratio"
               disabled={disabled}
@@ -228,7 +227,7 @@ export default class Editor extends Component<Props> {
 
             <h2>Box model</h2>
             {['padding', 'border', 'margin'].map(property => (
-              <YogaPositionEditor
+              <EditValue
                 property={property}
                 key={property}
                 value={node ? node[property] : undefined}
@@ -244,13 +243,13 @@ export default class Editor extends Component<Props> {
               </InfoText>
             </h2>
 
-            <YogaEnumSelect
+            <EditValue
               disabled={disabled}
-              property="POSITION_TYPE"
+              property="positionType"
               value={node ? node.positionType : ''}
               onChange={e => this.props.onChangeLayout('positionType', e)}
             />
-            <YogaPositionEditor
+            <EditValue
               property="position"
               value={node ? node.position : undefined}
               onChange={value => this.props.onChangeLayout('position', value)}

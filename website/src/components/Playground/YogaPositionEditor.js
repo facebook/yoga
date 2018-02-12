@@ -18,11 +18,13 @@ import './YogaPositionEditor.css';
 
 type Props = {
   value: PositionRecordT,
-  property: string,
+  property: 'position' | 'margin' | 'padding' | 'border',
   onChange: (value: PositionRecordT) => void,
 };
 
 export default class YogaPositionEditor extends Component<Props> {
+  static availableProperties = ['position', 'margin', 'padding', 'border'];
+
   static defaultProps = {
     value: PositionRecord(),
   };

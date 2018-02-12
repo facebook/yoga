@@ -12,10 +12,12 @@
 
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: 'Yoga Layout',
   },
   plugins: [
+    // using latest react version
     'gatsby-plugin-react-next',
+    // setting head data like title from within components
     'gatsby-plugin-react-helmet',
     {
       resolve: `gatsby-plugin-less`,
@@ -25,19 +27,35 @@ module.exports = {
         },
       },
     },
+    // plugin for importing antd components
     {
       resolve: 'gatsby-plugin-antd',
       options: {
         style: true,
       },
     },
+    // reading files from the file-system (used for markdown files)
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/docs`,
+        path: `${__dirname}/contents`,
         name: 'markdown-pages',
       },
     },
-    'gatsby-transformer-remark',
+    // parse markdown files, used for content files
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        // code-highlighting in markdown files
+        plugins: [
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: 'language-',
+            },
+          },
+        ],
+      },
+    },
   ],
 };

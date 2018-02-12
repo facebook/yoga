@@ -1,10 +1,10 @@
 ---
-path: "docs/flexDirection"
-title: "Flex Direction"
-hasPlayground: true
+path: "getting-started/litho"
+title: "Litho"
+hasPlayground: false
 ---
 
-## Flex Direction
+## Litho
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec
 sodales libero, sit amet tempus diam. Vivamus finibus vestibulum
@@ -15,3 +15,10 @@ Duis bibendum dapibus quam ac rutrum. Suspendisse potenti. Aliquam
 est sapien, gravida ac turpis iaculis, convallis rutrum justo. Sed
 est augue, pellentesque eleifend mauris non, ultrices aliquam purus.
 Duis sed lorem a lectus feugiat fringilla eu non elit.
+
+```c
+enum {
+  Test
+  Test2
+}
+```

@@ -14,11 +14,13 @@ import React from 'react';
 import Toolbar from './Toolbar';
 import Footer from './Footer';
 import './Page.css';
+require('prismjs/themes/prism.css');
 
 type Props = {|
   children: any,
   title?: string,
   className?: string,
+  withSpacing?: boolean,
 |};
 
 export default (props: Props) => (
@@ -32,7 +34,9 @@ export default (props: Props) => (
       <title>Yoga Layout{props.title ? ` | ${props.title}` : ''}</title>
     </Head> */}
     <Toolbar />
-    <div className="PageContent">{props.children}</div>
+    <div className={`PageContent ${props.withSpacing ? 'withSpacing' : ''}`}>
+      {props.children}
+    </div>
     <Footer />
   </div>
 );

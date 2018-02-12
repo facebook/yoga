@@ -16,8 +16,15 @@ import Page from '../../components/Page';
 import Padded from '../../components/Padded';
 import {Row, Col} from 'antd';
 
-export default () => (
-  <Page>
+const CATEGORY_TITLE = {
+  'getting-started': 'Getting Started',
+  properties: 'Properties',
+  examples: 'Examples',
+  contributing: 'Contributing',
+};
+
+export default ({data}) => (
+  <Page withSpacing>
     <Padded>
       <h1>Documentation</h1>
       <p>
@@ -29,65 +36,41 @@ export default () => (
         nec leo pharetra fermentum.
       </p>
       <Row>
-        <Col md={6} sm={12} xs={24}>
-          <h2>Getting Started</h2>
-          <Link to="">Litho</Link>
-          <br />
-          <Link to="">ComponentKit</Link>
-          <br />
-          <Link to="">React Native</Link>
-          <br />
-          <Link to="">Addin Yoga to a project</Link>
-        </Col>
-        <Col md={6} sm={12} xs={24}>
-          <h2>Properties</h2>
-          <Link to="">Width and height</Link>
-          <br />
-          <Link to="">Max/min width and height</Link>
-          <br />
-          <Link to="docs/flexDirection">Flex direction</Link>
-          <br />
-          <Link to="">Justify content</Link>
-          <br />
-          <Link to="">Align items/self</Link>
-          <br />
-          <Link to="">Flex basis, grow and shrink</Link>
-          <br />
-          <Link to="">Margins, paddings, and borders</Link>
-          <br />
-          <Link to="">Flex wrap</Link>
-          <br />
-          <Link to="">Align content</Link>
-          <br />
-          <Link to="">Absolute layout</Link>
-          <br />
-          <Link to="">Aspect ratio</Link>
-          <br />
-          <Link to="">Layout direction</Link>
-        </Col>
-        <Col md={6} sm={12} xs={24}>
-          <h2>Examples</h2>
-          <Link to="">Overlays</Link>
-          <br />
-          <Link to="">Floating buttons</Link>
-          <br />
-          <Link to="">Flexible text</Link>
-        </Col>
-        <Col md={6} sm={12} xs={24}>
-          <h2>Contributing</h2>
-          <Link to="">Check out the code</Link>
-          <br />
-          <Link to="">Running the test suite</Link>
-          <br />
-          <Link to="">Making a change</Link>
-          <br />
-          <Link to="">Adding a test</Link>
-          <br />
-          <Link to="">Adding documentation</Link>
-          <br />
-          <Link to="">Opening a pull request</Link>
-        </Col>
+        {['getting-started', 'properties', 'examples', 'contributing'].map(
+          category => (
+            <Col md={6} sm={12} xs={24} key={category}>
+              <h2>{CATEGORY_TITLE[category]}</h2>
+              {data.allMarkdownRemark.edges
+                .filter(
+                  ({node}) =>
+                    node.fileAbsolutePath.indexOf(`/${category}/`) > -1,
+                )
+                .map(({node}) => (
+                  <Link key={node.id} to={node.frontmatter.path}>
+                    {node.frontmatter.title}
+                  </Link>
+                ))}
+            </Col>
+          ),
+        )}
       </Row>
     </Padded>
   </Page>
 );
+
+export const query = graphql`
+  query IndexQuery {
+    allMarkdownRemark {
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            path
+          }
+          fileAbsolutePath
+        }
+      }
+    }
+  }
+`;

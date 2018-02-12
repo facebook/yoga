@@ -34,6 +34,7 @@ type Props = {
   showGuides: boolean,
   className?: string,
   height?: string | number,
+  persist?: boolean,
   renderSidebar?: (layoutDefinition: LayoutRecordT, onChange: Function) => any,
 };
 
@@ -53,7 +54,7 @@ export default class Playground extends Component<Props, State> {
 
   static defaultProps = {
     layoutDefinition: LayoutRecord({
-      width: 800,
+      width: 700,
       height: 400,
       justifyContent: yoga.JUSTIFY_SPACE_BETWEEN,
       alignItems: yoga.ALIGN_FLEX_START,
@@ -65,14 +66,15 @@ export default class Playground extends Component<Props, State> {
         bottom: '10',
       }),
       margin: PositionRecord({
-        left: '20',
-        top: '70',
+        left: '30',
+        top: '30',
       }),
     }),
     direction: yoga.DIRECTION_LTR,
     maxDepth: 3,
     showCode: false,
     showGuides: true,
+    persist: false,
   };
 
   state = {
@@ -144,8 +146,9 @@ export default class Playground extends Component<Props, State> {
     const {selectedNodePath, layoutDefinition} = this.state;
     if (selectedNodePath) {
       const index = selectedNodePath.pop();
-      const path = getPath(selectedNodePath).concat('children');
-      const updatedChildren = layoutDefinition.getIn(path).delete(index);
+      const updatedChildren = layoutDefinition
+        .getIn(getPath(selectedNodePath))
+        .delete(index);
       this.modifyAtPath(path, updatedChildren);
       this.setState({selectedNodePath: null});
     }
@@ -154,8 +157,9 @@ export default class Playground extends Component<Props, State> {
   onAdd = () => {
     const {selectedNodePath, layoutDefinition} = this.state;
     if (selectedNodePath) {
-      const path = getPath(selectedNodePath).concat('children');
-      const updatedChildren = layoutDefinition.getIn(path).push(LayoutRecord());
+      const updatedChildren = layoutDefinition
+        .getIn(getPath(selectedNodePath))
+        .push(LayoutRecord());
       this.modifyAtPath(
         path,
         updatedChildren,
@@ -177,9 +181,11 @@ export default class Playground extends Component<Props, State> {
       selectedNodePath,
     });
 
-    window.location.hash = btoa(
-      JSON.stringify(this.removeUnchangedProperties(layoutDefinition)),
-    );
+    if (this.props.persist) {
+      window.location.hash = btoa(
+        JSON.stringify(this.removeUnchangedProperties(layoutDefinition)),
+      );
+    }
   }
 
   removeUnchangedProperties = (node: LayoutRecordT): Object => {
@@ -306,7 +312,7 @@ export default class Playground extends Component<Props, State> {
         <div className={`PlaygroundContainer ${this.props.className || ''}`}>
           <div>
             {this.props.renderSidebar(
-              this.state.layoutDefinition,
+              layoutDefinition.getIn(getPath(selectedNodePath)),
               this.onChangeLayout,
             )}
           </div>

@@ -16,6 +16,6 @@ import Playground from '../components/Playground';
 
 export default () => (
   <Page title="Playground">
-    <Playground height="100%" />
+    <Playground height="100%" selectedNodePath={[]} persist />
   </Page>
 );
