@@ -11,11 +11,13 @@
  */
 
 import React from 'react';
-import Padded from './Padded';
+import Link from 'gatsby-link';
 import './Footer.css';
 
 export default () => (
   <footer className="Footer">
-    <Padded>footer</Padded>
+	<Link to="/docs">Docs</Link>
+	<Link to="/playground">Playground</Link>
+	<a href="https://github.com/facebook/yoga">GitHub</a>
   </footer>
 );

@@ -1,10 +1,17 @@
-.Footer {
-  background: #1c2126;
-  min-height: 100px;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 20px 0;
+footer {
+  display: flex;
+  padding: 20px 15px;
+  padding-left: 87px;
+  z-index: 4;
+  align-items: center;
+  background-color: white;
 }
 
-.Footer a {
-  color: white;
+footer a {
+  margin: 0 15px;
+  color: #606770;
+}
+
+footer a:hover {
+  color: #8FD0C6;
 }
