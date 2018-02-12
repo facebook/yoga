@@ -1,12 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Barlow');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro');
+
 
 html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: #303845;
   font-size: 16px;
+}
+
+code,
+pre {
+  font-family: 'Source Code Pro', monospace;
 }
 
 h1,

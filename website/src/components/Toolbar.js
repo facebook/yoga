@@ -29,12 +29,12 @@ export default class Toolbar extends Component<Props> {
             width="42"
             alt="Yoga logo"
           />
-          <h1>Yoga Layout</h1>
         </Link>
-        <div className="ToolbarSpacer" />
+        
         <Link to="/docs">Docs</Link>
         <Link to="/playground">Playground</Link>
         <a href="https://github.com/facebook/yoga">GitHub</a>
+
         {this.props.onShowCode && (
           <a className="ToolbarToggle" onClick={this.props.onShowCode}>
             <Icon type={'code-o'} />

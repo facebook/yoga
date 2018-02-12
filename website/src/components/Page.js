@@ -25,14 +25,6 @@ type Props = {|
 
 export default (props: Props) => (
   <div className={`Page ${props.className || ''}`}>
-    {/* <Head>
-      <link
-        rel="stylesheet"
-        href="//cdnjs.cloudflare.com/ajax/libs/antd/3.2.0/antd.min.css"
-      />
-      <link href="//fonts.googleapis.com/css?family=Barlow" rel="stylesheet" />
-      <title>Yoga Layout{props.title ? ` | ${props.title}` : ''}</title>
-    </Head> */}
     <Toolbar />
     <div className={`PageContent ${props.withSpacing ? 'withSpacing' : ''}`}>
       {props.children}

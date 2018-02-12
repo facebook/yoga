@@ -1,37 +1,24 @@
 .Toolbar {
-  border-bottom: 1px solid #dddfe2;
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
-  background: white;
-  height: 50px;
-  padding: 0 10px;
-  padding-bottom: 1px;
-  z-index: 4;
   display: flex;
+  padding: 20px 15px;
+  z-index: 4;
   align-items: center;
+  background-color: white;
 }
 
 .Toolbar .logo {
   display: flex;
-  height: 100%;
   align-items: center;
   text-decoration: none;
-  margin-left: 5px;
 }
 
 .Toolbar a {
   margin: 0 15px;
+  color: #606770;
 }
 
-.Toolbar h1 {
-  font-size: 20px;
-  margin: 0;
-  padding: 0;
-  margin-left: 3px;
-  white-space: nowrap;
-}
-
-.Toolbar .ToolbarSpacer {
-  flex-grow: 1;
+.Toolbar a:hover {
+  color: #8FD0C6;
 }
 
 .Toolbar .ToolbarToggle {
