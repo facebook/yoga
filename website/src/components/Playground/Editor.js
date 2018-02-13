@@ -58,10 +58,7 @@ export default class Editor extends Component<Props> {
           <TabPane tab="Flex" key="1">
             <h2>
               Direction
-              <InfoText>
-                The direction property specifies the text direction/writing
-                direction
-              </InfoText>
+              <InfoText doclink="/docs/layout-direction">Defines the direction of which text and items are laid out</InfoText>
             </h2>
             <EditValue
               property="direction"
@@ -70,7 +67,7 @@ export default class Editor extends Component<Props> {
             />
             <h2>
               Flex direction
-              <InfoText>Defining the direction of the main-axis</InfoText>
+              <InfoText doclink="/docs/flex-direction">Defines the direction of the main-axis</InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -83,10 +80,7 @@ export default class Editor extends Component<Props> {
               <Col span={12}>
                 <h2>
                   Flex grow
-                  <InfoText>
-                    Grow factor defined how much space this element should take
-                    up, relative to it's siblings
-                  </InfoText>
+                  <InfoText doclink="/docs/flex">The factor of remaining space should be given to this node</InfoText>
                 </h2>
                 <EditValue
                   type="text"
@@ -99,10 +93,7 @@ export default class Editor extends Component<Props> {
               <Col span={12}>
                 <h2>
                   Flex shrink
-                  <InfoText>
-                    Shrink factor if elements don't fit into the parent node
-                    anymore.
-                  </InfoText>
+                  <InfoText doclink="/docs/flex">The shrink factor of this element if parent has no space left</InfoText>
                 </h2>
                 <EditValue
                   type="text"
@@ -116,9 +107,7 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Flex wrap
-              <InfoText>
-                Wrapping behaviour when child nodes don't fit into a single line
-              </InfoText>
+              <InfoText doclink="/docs/flex-wrap">Wrapping behaviour when child nodes don't fit into a single line</InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -130,7 +119,7 @@ export default class Editor extends Component<Props> {
           <TabPane tab="Alignment" key="2">
             <h2>
               Justify content
-              <InfoText>Aligns child nodes along the main-axis</InfoText>
+              <InfoText doclink="/docs/justify-content">Aligns child nodes along the main-axis</InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -141,7 +130,7 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Align items
-              <InfoText>Aligns child nodes along the cross-axis</InfoText>
+              <InfoText doclink="/docs/align-items">Aligns child nodes along the cross-axis</InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -152,9 +141,7 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Align self
-              <InfoText>
-                Specifies alignment on the cross-axis for the node itself
-              </InfoText>
+              <InfoText doclink="/docs/align-items">Override align items of parent</InfoText>
             </h2>
             <EditValue
               disabled={disabled || selectedNodeIsRoot}
@@ -165,9 +152,7 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Align content
-              <InfoText>
-                Alignment of lines along the cross-axis when wrapping
-              </InfoText>
+              <InfoText doclink="/docs/align-content">Alignment of lines along the cross-axis when wrapping</InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -179,7 +164,7 @@ export default class Editor extends Component<Props> {
           <TabPane tab="Layout" key="3">
             <h2>
               Width &times; height
-              <InfoText>Dimensions of the node</InfoText>
+              <InfoText doclink="/docs/width-height">Dimensions of the node</InfoText>
             </h2>
             <Row gutter={15}>
               <Col span={12}>
@@ -206,10 +191,7 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Aspect ratio
-              <InfoText>
-                Aspect radio is an additon by Yoga which is handy e.g. for nodes
-                displaying videos
-              </InfoText>
+              <InfoText doclink="/docs/aspect-ratio">Width/Height aspect ratio of node</InfoText>
             </h2>
             <EditValue
               type="text"
@@ -231,7 +213,7 @@ export default class Editor extends Component<Props> {
             ))}
             <h2>
               Position
-              <InfoText>
+              <InfoText doclink="/docs/absolute-position">
                 Relative position offsets the node from it's calculated
                 position. Absolute position removes the node from the flexbox
                 flow and positions it at the given position.
