@@ -251,7 +251,7 @@ export default class YogaNode extends Component<Props, State> {
         className={`YogaNode ${isFocused ? 'focused' : ''} ${className || ''} ${
           this.state.visible ? '' : 'invisible'
         }`}
-        style={{left, top, width, height}}
+        style={path.length == 0 ? {width, height} : {left, top, width, height}}
         onDoubleClick={this.onDoubleClick}
         onClick={this.onClick}>
         {label && <div className="label">{label}</div>}

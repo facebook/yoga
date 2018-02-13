@@ -54,21 +54,9 @@ export default class Playground extends Component<Props, State> {
 
   static defaultProps = {
     layoutDefinition: LayoutRecord({
-      width: 700,
-      height: 400,
-      justifyContent: yoga.JUSTIFY_SPACE_BETWEEN,
-      alignItems: yoga.ALIGN_FLEX_START,
-      children: List([LayoutRecord(), LayoutRecord()]),
-      padding: PositionRecord({
-        left: '10',
-        top: '10',
-        right: '10',
-        bottom: '10',
-      }),
-      margin: PositionRecord({
-        left: '30',
-        top: '30',
-      }),
+      width: 500,
+      height: 500,
+      children: List([LayoutRecord(), LayoutRecord(), LayoutRecord()]),
     }),
     direction: yoga.DIRECTION_LTR,
     maxDepth: 3,
@@ -248,13 +236,6 @@ export default class Playground extends Component<Props, State> {
         ref={ref => {
           this._containerRef = ref;
         }}>
-        {/* <Toolbar
-        onShowCode={
-        !this.state.showCode
-        ? () => this.setState({selectedNodePath: null, showCode: true})
-        : undefined
-      }
-    /> */}
         <YogaNode
           layoutDefinition={layoutDefinition}
           selectedNodePath={selectedNodePath}
@@ -296,10 +277,6 @@ export default class Playground extends Component<Props, State> {
           width={500}
           visible={this.state.showCode}
           onClose={() => this.setState({showCode: false})}>
-          {/* <Code
-            layoutDefinition={layoutDefinition}
-            direction={this.state.direction}
-          /> */}
         </Sidebar>
         {this.props.persist && <URLShortener />}
       </div>

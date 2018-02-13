@@ -15,6 +15,7 @@
 }
 
 .Playground {
+  display: flex;
   flex-grow: 1;
   position: relative;
   width: 100%;
@@ -40,4 +41,11 @@
     linear-gradient(#e5e5e5 1px, transparent 1px), #f5f5f5;
   background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px, 100px 100px,
     100px 100px, 100px 100px, 100px 100px;
+}
+
+
+.Playground > .YogaNode {
+  margin: auto;
+  position: static;
+  align-self: center;
 }
