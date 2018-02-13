@@ -1,3 +1,7 @@
+.doc-block, .playground {
+  height: 1vh;
+}
+
 .no-playground .markdown {
   padding-top: 50px;
 }

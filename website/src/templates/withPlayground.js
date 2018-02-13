@@ -20,7 +20,7 @@ import {Button, Icon, Row, Col} from 'antd';
 import './index.css';
 
 export default ({pathContext}) => (
-  <Page className="doc-block">
+  <Page className="doc-block playground">
     <Playground
       selectedNodePath={[]}
       showGuides={false}

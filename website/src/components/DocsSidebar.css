@@ -3,6 +3,7 @@
   width: 350px;
   padding: 20px;
   border-right: 1px solid #dddfe2;
+  overflow: auto;
 }
 
 .DocsSidebar h3  {
