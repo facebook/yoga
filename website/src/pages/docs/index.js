@@ -15,30 +15,33 @@ import Link from 'gatsby-link';
 import Page from '../../components/Page';
 import Padded from '../../components/Padded';
 import {Row, Col} from 'antd';
+import './index.css';
 
 const CATEGORY_TITLE = {
   'getting-started': 'Getting Started',
-  properties: 'Properties',
-  examples: 'Examples',
-  contributing: 'Contributing',
+  'properties': 'Properties',
+  'examples': 'Examples',
+  'contributing': 'Contributing',
 };
 
 export default ({data}) => (
-  <Page withSpacing>
+  <Page className="docs-landing">
     <Padded>
-      <h1>Documentation</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
-        urna in lacus rutrum vehicula. Curabitur vitae dictum ante, sollicitudin
-        sollicitudin tortor. Morbi a vehicula justo. Proin luctus tellus vitae
-        nulla bibendum gravida. Duis varius cursus erat ut tempus. Fusce ex
-        arcu, accumsan et ultricies at, fermentum sit amet lectus. Donec a neque
-        nec leo pharetra fermentum.
-      </p>
+      <Row className="heading">
+        <Col xl={16} lg={16} md={24} sm={24} xs={24}>
+          <h1>Documentation</h1>
+          <p>
+          Welcome to Yoga's documentation page. Below you will find helpfull
+          documentation on how to use yoga. As well as how to contribute to the
+          core library, documentation, and tests. We have also put together a set
+          of examples showing off common layouts and how to user Yoga to achieve them.
+          </p>
+        </Col>
+      </Row>
       <Row>
         {['getting-started', 'properties', 'examples', 'contributing'].map(
           category => (
-            <Col md={6} sm={12} xs={24} key={category}>
+            <Col lg={6} md={12} xs={24} key={category} className="category">
               <h2>{CATEGORY_TITLE[category]}</h2>
               {data.allMarkdownRemark.edges
                 .filter(
