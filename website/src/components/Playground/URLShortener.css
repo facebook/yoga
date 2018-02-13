@@ -1,0 +1,7 @@
+.URLShortener {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  z-index: 4;
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+}

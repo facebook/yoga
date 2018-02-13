@@ -17,7 +17,7 @@ import Editor from './Editor';
 import {List, setIn} from 'immutable';
 import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
-// import Toolbar from './Toolbar';
+import URLShortener from './URLShortener';
 import Code from './Code';
 import Sidebar from './Sidebar';
 import type {LayoutRecordT} from './LayoutRecord';
@@ -301,6 +301,7 @@ export default class Playground extends Component<Props, State> {
             direction={this.state.direction}
           /> */}
         </Sidebar>
+        {this.props.persist && <URLShortener />}
       </div>
     );
 
