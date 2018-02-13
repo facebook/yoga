@@ -45,7 +45,7 @@
   line-height: 200%;
 }
 
-.doc-block p {
+.doc-block p, .doc-block li {
   color: #1C1E21;
   line-height: 180%;
   font-size: 14px;
@@ -54,4 +54,17 @@
 
 .doc-block .prop {
   margin-bottom: 20px;
+}
+
+.doc-block pre {
+  background-color: #f5f5f5 !important;
+  border-radius: 3px;
+  padding: 10px !important;
+}
+
+.doc-block pre, .doc-block code {
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
