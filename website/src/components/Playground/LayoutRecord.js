@@ -14,7 +14,7 @@ import {Record, List} from 'immutable';
 import type {RecordOf} from 'immutable';
 import PositionRecord from './PositionRecord';
 import type {PositionRecordT} from './PositionRecord';
-import yoga from 'yoga-layout';
+import yoga from 'yoga-layout/dist/entry-browser';
 
 import type {
   Yoga$Align,

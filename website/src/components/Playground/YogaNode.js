@@ -11,7 +11,7 @@
  */
 
 import React, {Component} from 'react';
-import yoga, {Node} from 'yoga-layout';
+import yoga, {Node} from 'yoga-layout/dist/entry-browser';
 import PositionGuide from './PositionGuide';
 import PositionRecord from './PositionRecord';
 import type {LayoutRecordT} from './LayoutRecord';

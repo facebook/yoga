@@ -10,7 +10,7 @@
  * @format
  */
 
-import yoga from 'yoga-layout';
+import yoga from 'yoga-layout/dist/entry-browser';
 import LayoutRecord from './LayoutRecord';
 import PositionRecord from './PositionRecord';
 import {JSEnumLookup} from './CodeJavaScript';

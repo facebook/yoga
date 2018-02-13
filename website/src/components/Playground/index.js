@@ -11,7 +11,7 @@
  */
 
 import React, {Component} from 'react';
-import yoga from 'yoga-layout';
+import yoga from 'yoga-layout/dist/entry-browser';
 import YogaNode from './YogaNode';
 import Editor from './Editor';
 import {List, setIn} from 'immutable';
