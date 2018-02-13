@@ -146,9 +146,8 @@ export default class Playground extends Component<Props, State> {
     const {selectedNodePath, layoutDefinition} = this.state;
     if (selectedNodePath) {
       const index = selectedNodePath.pop();
-      const updatedChildren = layoutDefinition
-        .getIn(getPath(selectedNodePath))
-        .delete(index);
+      const path = getPath(selectedNodePath).concat('children');
+      const updatedChildren = layoutDefinition.getIn(path).delete(index);
       this.modifyAtPath(path, updatedChildren);
       this.setState({selectedNodePath: null});
     }
@@ -157,9 +156,8 @@ export default class Playground extends Component<Props, State> {
   onAdd = () => {
     const {selectedNodePath, layoutDefinition} = this.state;
     if (selectedNodePath) {
-      const updatedChildren = layoutDefinition
-        .getIn(getPath(selectedNodePath))
-        .push(LayoutRecord());
+      const path = getPath(selectedNodePath).concat('children');
+      const updatedChildren = layoutDefinition.getIn(path).push(LayoutRecord());
       this.modifyAtPath(
         path,
         updatedChildren,
@@ -173,7 +171,6 @@ export default class Playground extends Component<Props, State> {
     value: any,
     selectedNodePath?: ?Array<number> = this.state.selectedNodePath,
   ) {
-    console.log(setIn);
     // $FlowFixMe
     const layoutDefinition = setIn(this.state.layoutDefinition, path, value);
     this.setState({
