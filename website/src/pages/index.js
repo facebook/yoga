@@ -51,7 +51,7 @@ const HeroSection = () => (
 );
 
 const PlaygroundSection = () => (
-  <Row className="playground">
+  <Row>
     <Col xl={24} lg={0} md={0} sm={0} xs={0}>
       <Playground selectedNodePath={[]} showGuides={false} height={600} />
     </Col>
