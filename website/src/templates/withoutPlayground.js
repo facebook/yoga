@@ -13,17 +13,22 @@
 import React from 'react';
 import Page from '../components/Page';
 import Padded from '../components/Padded';
-import {Icon} from 'antd';
+import {Row, Col} from 'antd';
 import Link from 'gatsby-link';
+import './index.css';
 
 export default ({pathContext}) => {
   return (
-    <Page withSpacing>
+    <Page className="doc-block">
       <Padded>
-        <Link to="/docs">
-          <Icon type="left-circle-o" /> back to overview
+        <Row>
+          <Col xl={16} lg={16} md={24} sm={24} xs={24}>
+            <div className="markdown" dangerouslySetInnerHTML={{__html: pathContext.html}} />
+          </Col>
+        </Row>
+        <Link to="/docs" className="overview">
+          BACK TO OVERVIEW
         </Link>
-        <div dangerouslySetInnerHTML={{__html: pathContext.html}} />
       </Padded>
     </Page>
   );

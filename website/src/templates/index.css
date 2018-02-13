@@ -1,0 +1,37 @@
+.doc-block .markdown {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.doc-block .overview {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.doc-block h1 {
+  color: #1C1E21;
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 110%;
+}
+
+.doc-block h2 {
+  color: #1C1E21;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+.doc-block h3 {
+  color: #1C1E21;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 200%;
+}
+
+.doc-block p {
+  color: #1C1E21;
+  line-height: 180%;
+  font-size: 14px;
+  font-weight: 400;
+}
