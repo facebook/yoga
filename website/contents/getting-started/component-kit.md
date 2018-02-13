@@ -1,7 +1,4 @@
 ---
-path: "getting-started/component-kit"
+path: "https://componentkit.org/docs/getting-started.html"
 title: "ComponentKit"
-hasPlayground: false
 ---
-
-## ComponentKit

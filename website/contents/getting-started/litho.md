@@ -1,7 +1,4 @@
 ---
-path: "getting-started/litho"
+path: "https://fblitho.com/docs/getting-started"
 title: "Litho"
-hasPlayground: false
 ---
-
-## Litho

@@ -1,7 +1,4 @@
 ---
-path: "getting-started/react-native"
+path: "http://facebook.github.io/react-native/docs/getting-started.html"
 title: "React Native"
-hasPlayground: false
 ---
-
-## React Native
