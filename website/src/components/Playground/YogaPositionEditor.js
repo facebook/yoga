@@ -16,10 +16,12 @@ import PositionRecord from './PositionRecord';
 import type {PositionRecordT} from './PositionRecord';
 import './YogaPositionEditor.css';
 
+type Property = 'position' | 'margin' | 'padding' | 'border';
+
 type Props = {
   value: PositionRecordT,
-  property: 'position' | 'margin' | 'padding' | 'border',
-  onChange: (value: PositionRecordT) => void,
+  property: Property,
+  onChange: (property: Property, value: PositionRecordT) => void,
 };
 
 export default class YogaPositionEditor extends Component<Props> {
@@ -36,25 +38,31 @@ export default class YogaPositionEditor extends Component<Props> {
         <Input
           type="text"
           value={value.top}
-          onChange={e => onChange(value.set('top', e.target.value))}
+          onChange={e => onChange(property, value.set('top', e.target.value))}
         />
         <div className="YogaPositionEditorRow">
           <Input
             type="text"
             value={value.left}
-            onChange={e => onChange(value.set('left', e.target.value))}
+            onChange={e =>
+              onChange(property, value.set('left', e.target.value))
+            }
           />
           {property}
           <Input
             type="text"
             value={value.right}
-            onChange={e => onChange(value.set('right', e.target.value))}
+            onChange={e =>
+              onChange(property, value.set('right', e.target.value))
+            }
           />
         </div>
         <Input
           type="text"
           value={value.bottom}
-          onChange={e => onChange(value.set('bottom', e.target.value))}
+          onChange={e =>
+            onChange(property, value.set('bottom', e.target.value))
+          }
         />
       </div>
     );

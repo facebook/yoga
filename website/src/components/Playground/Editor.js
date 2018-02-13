@@ -66,7 +66,7 @@ export default class Editor extends Component<Props> {
             <EditValue
               property="direction"
               value={this.props.direction}
-              onChange={e => this.props.onChangeSetting('direction', e)}
+              onChange={this.props.onChangeSetting}
             />
             <h2>
               Flex direction
@@ -75,8 +75,8 @@ export default class Editor extends Component<Props> {
             <EditValue
               disabled={disabled}
               property="flexDirection"
-              value={node ? node.flexDirection : ''}
-              onChange={e => this.props.onChangeLayout('flexDirection', e)}
+              value={node ? node.flexDirection : undefined}
+              onChange={this.props.onChangeLayout}
             />
 
             <Row gutter={15} style={{marginTop: 30}}>
@@ -90,11 +90,10 @@ export default class Editor extends Component<Props> {
                 </h2>
                 <EditValue
                   type="text"
+                  property="flexGrow"
                   disabled={disabled || selectedNodeIsRoot}
-                  value={node ? node.flexGrow : ''}
-                  onChange={e =>
-                    this.props.onChangeLayout('flexGrow', e.target.value)
-                  }
+                  value={node ? node.flexGrow : undefined}
+                  onChange={this.props.onChangeLayout}
                 />
               </Col>
               <Col span={12}>
@@ -107,11 +106,10 @@ export default class Editor extends Component<Props> {
                 </h2>
                 <EditValue
                   type="text"
+                  property="flexShrink"
                   disabled={disabled || selectedNodeIsRoot}
-                  value={node ? node.flexShrink : ''}
-                  onChange={e =>
-                    this.props.onChangeLayout('flexShrink', e.target.value)
-                  }
+                  value={node ? node.flexShrink : undefined}
+                  onChange={this.props.onChangeLayout}
                 />
               </Col>
             </Row>
@@ -125,8 +123,8 @@ export default class Editor extends Component<Props> {
             <EditValue
               disabled={disabled}
               property="flexWrap"
-              value={node ? node.flexWrap : ''}
-              onChange={e => this.props.onChangeLayout('flexWrap', e)}
+              value={node ? node.flexWrap : undefined}
+              onChange={this.props.onChangeLayout}
             />
           </TabPane>
           <TabPane tab="Alignment" key="2">
@@ -137,8 +135,8 @@ export default class Editor extends Component<Props> {
             <EditValue
               disabled={disabled}
               property="justifyContent"
-              value={node ? node.justifyContent : ''}
-              onChange={e => this.props.onChangeLayout('justifyContent', e)}
+              value={node ? node.justifyContent : undefined}
+              onChange={this.props.onChangeLayout}
             />
 
             <h2>
@@ -148,8 +146,8 @@ export default class Editor extends Component<Props> {
             <EditValue
               disabled={disabled}
               property="alignItems"
-              value={node ? node.alignItems : ''}
-              onChange={e => this.props.onChangeLayout('alignItems', e)}
+              value={node ? node.alignItems : undefined}
+              onChange={this.props.onChangeLayout}
             />
 
             <h2>
@@ -161,8 +159,8 @@ export default class Editor extends Component<Props> {
             <EditValue
               disabled={disabled || selectedNodeIsRoot}
               property="alignSelf"
-              value={node ? node.alignSelf : ''}
-              onChange={e => this.props.onChangeLayout('alignSelf', e)}
+              value={node ? node.alignSelf : undefined}
+              onChange={this.props.onChangeLayout}
             />
 
             <h2>
@@ -174,8 +172,8 @@ export default class Editor extends Component<Props> {
             <EditValue
               disabled={disabled}
               property="alignContent"
-              value={node ? node.alignContent : ''}
-              onChange={e => this.props.onChangeLayout('alignContent', e)}
+              value={node ? node.alignContent : undefined}
+              onChange={this.props.onChangeLayout}
             />
           </TabPane>
           <TabPane tab="Layout" key="3">
@@ -188,22 +186,20 @@ export default class Editor extends Component<Props> {
                 <EditValue
                   type="text"
                   placeholder="width"
+                  property="width"
                   disabled={disabled}
-                  value={node ? node.width : ''}
-                  onChange={e =>
-                    this.props.onChangeLayout('width', e.target.value)
-                  }
+                  value={node ? node.width : undefined}
+                  onChange={this.props.onChangeLayout}
                 />
               </Col>
               <Col span={12}>
                 <EditValue
                   type="text"
                   placeholder="height"
+                  property="height"
                   disabled={disabled}
-                  value={node ? node.height : ''}
-                  onChange={e =>
-                    this.props.onChangeLayout('height', e.target.value)
-                  }
+                  value={node ? node.height : undefined}
+                  onChange={this.props.onChangeLayout}
                 />
               </Col>
             </Row>
@@ -218,11 +214,10 @@ export default class Editor extends Component<Props> {
             <EditValue
               type="text"
               placeholder="Aspect ratio"
+              property="aspectRatio"
               disabled={disabled}
-              value={node ? node.aspectRatio : ''}
-              onChange={e =>
-                this.props.onChangeLayout('aspectRatio', e.target.value)
-              }
+              value={node ? node.aspectRatio : undefined}
+              onChange={this.props.onChangeLayout}
             />
 
             <h2>Box model</h2>
@@ -231,7 +226,7 @@ export default class Editor extends Component<Props> {
                 property={property}
                 key={property}
                 value={node ? node[property] : undefined}
-                onChange={value => this.props.onChangeLayout(property, value)}
+                onChange={this.props.onChangeLayout}
               />
             ))}
             <h2>
@@ -246,13 +241,13 @@ export default class Editor extends Component<Props> {
             <EditValue
               disabled={disabled}
               property="positionType"
-              value={node ? node.positionType : ''}
-              onChange={e => this.props.onChangeLayout('positionType', e)}
+              value={node ? node.positionType : undefined}
+              onChange={this.props.onChangeLayout}
             />
             <EditValue
               property="position"
               value={node ? node.position : undefined}
-              onChange={value => this.props.onChangeLayout('position', value)}
+              onChange={this.props.onChangeLayout}
             />
           </TabPane>
         </Tabs>

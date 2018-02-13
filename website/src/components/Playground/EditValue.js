@@ -15,14 +15,14 @@ import YogaEnumSelect from './YogaEnumSelect';
 import YogaPositionEditor from './YogaPositionEditor';
 import {Input} from 'antd';
 
-type Props<T, S> = {
+type Props<T> = {
   property: string,
   disabled?: boolean,
-  value: string | number,
-  onChange: (value: number) => void,
+  value?: ?T,
+  onChange: (property: string, value: T) => void,
 };
 
-export default (props: Props<T, S>) => {
+export default (props: Props<*>) => {
   if (YogaEnumSelect.availableProperties.indexOf(props.property) > -1) {
     return <YogaEnumSelect {...props} />;
   } else if (
@@ -30,6 +30,12 @@ export default (props: Props<T, S>) => {
   ) {
     return <YogaPositionEditor {...props} />;
   } else {
-    return <Input type="text" {...props} />;
+    return (
+      <Input
+        type="text"
+        {...props}
+        onChange={e => props.onChange(props.property, e.target.value)}
+      />
+    );
   }
 };

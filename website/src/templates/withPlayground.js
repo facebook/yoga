@@ -34,7 +34,7 @@ export default ({pathContext}) => (
               <EditValue
                 property={prop}
                 value={layout[prop]}
-                onChange={e => onChange(prop, e)}
+                onChange={onChange}
               />
             </div>
           ))}

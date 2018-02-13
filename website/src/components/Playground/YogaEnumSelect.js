@@ -28,11 +28,13 @@ const PROPERTY_LOOKUP = {
   flexWrap: 'WRAP',
 };
 
+type Property = $Keys<typeof PROPERTY_LOOKUP>;
+
 type Props = {
-  property: $Keys<typeof PROPERTY_LOOKUP>,
+  property: Property,
   disabled?: boolean,
   value: string | number,
-  onChange: (value: number) => void,
+  onChange: (property: Property, value: number) => void,
 };
 
 export default class YogaEnumSelect extends Component<Props> {
@@ -52,7 +54,7 @@ export default class YogaEnumSelect extends Component<Props> {
   }
 
   handleMenuClick = ({key}: {key: string}) => {
-    this.props.onChange(yoga[key]);
+    this.props.onChange(this.props.property, yoga[key]);
   };
 
   render() {
@@ -85,7 +87,7 @@ export default class YogaEnumSelect extends Component<Props> {
     ) : (
       <RadioGroup
         {...props}
-        onChange={e => this.props.onChange(e.target.value)}
+        onChange={e => this.props.onChange(this.props.property, e.target.value)}
         defaultValue="a"
         className="YogaEnumSelect">
         {this.values.map(({key, value}) => (
