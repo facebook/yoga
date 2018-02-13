@@ -6,3 +6,15 @@ editableProperties: ['aspectRatio']
 ---
 
 ## Aspect Ratio
+
+AspectRatio is a property introduced by Yoga and is not present as a settable
+property in the css flexbox specification. Flexbox does has the notion of
+aspect ratio though for things with intrinsic aspect ratio such as images.
+
+The aspect ratio property in Yoga has the following properties:
+
+- Accepts any floating point value > 0, the default is undefined.
+- Defined as the ratio between the width and the height of a node e.g. if a node has an aspect ratio of 2 then its width is twice the size of its height.
+- Respects the Min and Max dimensions of an item.
+- Has higher priority than FlexGrow
+- If AspectRatio, Width, and Height are set then the cross dimension is overridden.
