@@ -20,6 +20,7 @@ import './index.css';
 import ReactNativeLogo from './logos/reactnative.png';
 import LithoLogo from './logos/litho.png';
 import ComponentKitLogo from './logos/componentkit.png';
+import Link from 'gatsby-link';
 
 const HeroSection = () => (
   <Padded>
@@ -126,6 +127,14 @@ const AboutSectionTwo = () => (
   </Padded>
 );
 
+const Footer = () => (
+  <footer className="Footer">
+  <Link to="/docs">Docs</Link>
+  <Link to="/playground">Playground</Link>
+  <a href="https://github.com/facebook/yoga">GitHub</a>
+  </footer>
+);
+
 export default () => (
   <Page className="landing-page">
     <HeroSection/>
@@ -133,5 +142,6 @@ export default () => (
     <AboutSectionOne/>
     <hr/>
     <AboutSectionTwo/>
+    <Footer/>
   </Page>
 );
