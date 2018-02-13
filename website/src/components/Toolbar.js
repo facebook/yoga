@@ -31,8 +31,8 @@ export default class Toolbar extends Component<Props> {
           />
         </Link>
         
-        <Link to="/docs">Docs</Link>
-        <Link to="/playground">Playground</Link>
+        <Link to="/docs" activeClassName="selected">Documentation</Link>
+        <Link to="/playground" activeClassName="selected">Playground</Link>
         <a href="https://github.com/facebook/yoga">GitHub</a>
 
         {this.props.onShowCode && (

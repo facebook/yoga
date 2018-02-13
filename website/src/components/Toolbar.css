@@ -15,6 +15,11 @@
   background-color: white;
 }
 
+.Toolbar .selected {
+  color: #8FD0C6;
+  text-decoration: underline;
+}
+
 .Toolbar .logo {
   display: flex;
   align-items: center;

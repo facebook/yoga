@@ -17,14 +17,13 @@ require('prismjs/themes/prism.css');
 
 type Props = {|
   children: any,
-  title?: string,
   className?: string,
   withSpacing?: boolean,
 |};
 
 export default (props: Props) => (
   <div className={`Page ${props.className || ''}`}>
-    <Toolbar />
+    <Toolbar/>
     <div className={`PageContent ${props.withSpacing ? 'withSpacing' : ''}`}>
       {props.children}
     </div>

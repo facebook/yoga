@@ -15,7 +15,7 @@ import Page from '../components/Page';
 import Playground from '../components/Playground';
 
 export default () => (
-  <Page title="Playground">
+  <Page>
     <Playground height="100%" selectedNodePath={[]} persist />
   </Page>
 );
