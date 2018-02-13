@@ -49,9 +49,13 @@ export default ({data}) => (
                     node.fileAbsolutePath.indexOf(`/${category}/`) > -1,
                 )
                 .map(({node}) => (
-                  <Link key={node.id} to={node.frontmatter.path}>
-                    {node.frontmatter.title}
-                  </Link>
+                    node.frontmatter.path.startsWith('http')
+                    ? (<a key={node.id} href={node.frontmatter.path}>
+                        {node.frontmatter.title}
+                      </a>)
+                    : (<Link key={node.id} to={node.frontmatter.path}>
+                        {node.frontmatter.title}
+                      </Link>)
                 ))}
             </Col>
           ),
