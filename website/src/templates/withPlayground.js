@@ -17,32 +17,19 @@ import DocsSidebar from '../components/DocsSidebar';
 import EditValue from '../components/Playground/EditValue';
 import Link from 'gatsby-link';
 import {Button, Icon, Row, Col} from 'antd';
+import './index.css';
 
 export default ({pathContext}) => (
-  <Page>
+  <Page className="doc-block">
     <Playground
       selectedNodePath={[]}
       showGuides={false}
       renderSidebar={(layout, onChange) => (
         <DocsSidebar>
-          <Link to="/docs">
-            <Icon type="left-circle-o" /> back to overview
-          </Link>
-          <div dangerouslySetInnerHTML={{__html: pathContext.html}} />
-          {pathContext.frontmatter.editableProperties && (
-            <Row type="flex" align="bottom">
-              <Col span={12}>
-                <h3>Try it out</h3>
-              </Col>
-              <Col span={12}>
-                <Link to="/playground">
-                  <Icon type="export" /> Open in playground
-                </Link>
-              </Col>
-            </Row>
-          )}
+          <div className="markdown" dangerouslySetInnerHTML={{__html: pathContext.html}} />
+          
           {(pathContext.frontmatter.editableProperties || []).map(prop => (
-            <div key={prop}>
+            <div key={prop} className="prop">
               <h4>{prop}</h4>
               <EditValue
                 property={prop}
@@ -51,6 +38,10 @@ export default ({pathContext}) => (
               />
             </div>
           ))}
+          
+          <Link to="/docs" className="overview">
+            BACK TO OVERVIEW
+          </Link>
         </DocsSidebar>
       )}
     />

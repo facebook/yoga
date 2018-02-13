@@ -19,7 +19,7 @@ import './index.css';
 
 export default ({pathContext}) => {
   return (
-    <Page className="doc-block">
+    <Page className="doc-block no-playground">
       <Padded>
         <Row>
           <Col xl={16} lg={16} md={24} sm={24} xs={24}>

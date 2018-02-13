@@ -1,6 +1,9 @@
-.doc-block .markdown {
+.no-playground .markdown {
   padding-top: 50px;
-  padding-bottom: 50px;
+}
+
+.doc-block .markdown {
+  padding-bottom: 20px;
 }
 
 .doc-block .overview {
@@ -34,4 +37,8 @@
   line-height: 180%;
   font-size: 14px;
   font-weight: 400;
+}
+
+.doc-block .prop {
+  margin-bottom: 20px;
 }
