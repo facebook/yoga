@@ -9,10 +9,11 @@
 
 package com.facebook.yoga;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 public class YogaNodeTest {
 
@@ -217,5 +218,33 @@ public class YogaNodeTest {
       assertEquals(YogaUnit.UNDEFINED, node.getPosition(edge).unit);
       assertTrue(YogaConstants.isUndefined(node.getBorder(edge)));
     }
+  }
+
+  @Test
+  public void testNodeClonedLeak() throws Exception {
+    YogaConfig config = new YogaConfig();
+    config.setOnNodeCloned(
+        new YogaNodeClonedFunction() {
+          @Override
+          public void onNodeCloned(
+              YogaNode oldNode, YogaNode newNode, YogaNode parent, int childIndex) {
+            // Do nothing
+          }
+        });
+    config.setOnNodeCloned(null);
+    java.lang.ref.WeakReference<Object> ref = new java.lang.ref.WeakReference<Object>(config);
+    // noinspection UnusedAssignment
+    config = null;
+    // try and free for the next 5 seconds, usually it works after the
+    // first GC attempt.
+    for (int i = 0; i < 50; i++) {
+      System.gc();
+      if (ref.get() == null) {
+        // free successfully
+        return;
+      }
+      Thread.sleep(100);
+    }
+    fail("YogaConfig leaked");
   }
 }
