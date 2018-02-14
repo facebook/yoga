@@ -1,0 +1,4 @@
+# Make sure we never publish ReactNative build to NPM
+bin/
+Generated Files/
+obj/
