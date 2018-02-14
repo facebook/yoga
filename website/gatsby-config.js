@@ -23,7 +23,7 @@ module.exports = {
       resolve: `gatsby-plugin-less`,
       options: {
         theme: {
-          'primary-color': '#95DDCF',
+          'primary-color': '#6BCEBB',
         },
       },
     },

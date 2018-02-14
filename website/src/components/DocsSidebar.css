@@ -10,7 +10,8 @@
  .DocsSidebar {
   height: 100%;
   width: 450px;
-  padding: 20px;
+  padding: 36px;
+  padding-top: 0px;
   border-right: 1px solid #dddfe2;
   overflow: auto;
 }

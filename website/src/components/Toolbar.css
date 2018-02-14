@@ -16,8 +16,7 @@
 }
 
 .Toolbar .selected {
-  color: #8FD0C6;
-  text-decoration: underline;
+  color: #6BCEBB;
 }
 
 .Toolbar .logo {
@@ -29,10 +28,11 @@
 .Toolbar a {
   margin: 0 15px;
   color: #606770;
+  font-weight: 700;
 }
 
 .Toolbar a:hover {
-  color: #8FD0C6;
+  color: #6BCEBB;
 }
 
 .Toolbar .ToolbarToggle {

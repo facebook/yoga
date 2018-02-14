@@ -26,6 +26,7 @@ exports.createPages = ({boundActionCreators, graphql}) => {
               path
               hasPlayground
               initialPlayground
+              redirect
             }
             html
           }
@@ -38,13 +39,15 @@ exports.createPages = ({boundActionCreators, graphql}) => {
     }
 
     result.data.allMarkdownRemark.edges.forEach(({node}) => {
-      createPage({
-        path: node.frontmatter.path,
-        component: node.frontmatter.hasPlayground
-          ? withPlayground
-          : withoutPlayground,
-        context: node,
-      });
+      if (!node.frontmatter.redirect) {
+        createPage({
+          path: node.frontmatter.path,
+          component: node.frontmatter.hasPlayground
+            ? withPlayground
+            : withoutPlayground,
+          context: node,
+        });
+      }
     });
   });
 };

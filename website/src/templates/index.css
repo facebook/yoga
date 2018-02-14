@@ -22,34 +22,44 @@
 .doc-block .overview {
   font-size: 12px;
   font-weight: 600;
+  padding-bottom: 30px;
 }
 
 .doc-block h1 {
-  color: #1C1E21;
+  color: #444950;
   font-size: 48px;
   font-weight: 300;
   line-height: 110%;
 }
 
 .doc-block h2 {
-  color: #1C1E21;
-  font-size: 28px;
+  color: #444950;
+  font-size: 32px;
   font-weight: 400;
   line-height: 120%;
+  margin-top: 30px;
 }
 
 .doc-block h3 {
-  color: #1C1E21;
+  color: #444950;
   font-size: 16px;
   font-weight: 700;
-  line-height: 200%;
+  line-height: 180%;
 }
 
-.doc-block p, .doc-block li {
-  color: #1C1E21;
-  line-height: 180%;
+.doc-block p {
+  color: #444950;
+  line-height: 160%;
   font-size: 14px;
   font-weight: 400;
+}
+
+.doc-block li {
+  color: #444950;
+  line-height: 150%;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 8px;
 }
 
 .doc-block .prop {

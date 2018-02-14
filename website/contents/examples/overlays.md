@@ -1,7 +1,5 @@
 ---
-path: "examples/overlays"
+path: "/playground#eyJ3aWR0aCI6NTAwLCJoZWlnaHQiOjUwMCwiY2hpbGRyZW4iOlt7fSx7fSx7IndpZHRoIjoiIiwiaGVpZ2h0IjoiIiwicG9zaXRpb24iOnsidG9wIjoiMCIsInJpZ2h0IjoiMCIsImJvdHRvbSI6IjAiLCJsZWZ0IjoiMCJ9LCJwb3NpdGlvblR5cGUiOjF9XX0="
 title: "Overlays"
-hasPlayground: false
+redirect: true
 ---
-
-## Overlays

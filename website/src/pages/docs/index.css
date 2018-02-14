@@ -13,17 +13,17 @@
 }
 
 .docs-landing h1 {
-  color: #1C1E21;
+  color: #444950;
   font-size: 48px;
   font-weight: 300;
   line-height: 110%;
 }
 
 .docs-landing p {
-  color: #1C1E21;
+  color: #444950;
   font-size: 16px;
-  font-weight: 300;
-  line-height: 200%;
+  font-weight: 400;
+  line-height: 180%;
 }
 
 .category {
@@ -45,6 +45,6 @@
 }
 
 .category a:hover {
-  color: #8FD0C6;
+  color: #6BCEBB;
   text-decoration: underline;
 }

@@ -34,9 +34,11 @@ const HeroSection = () => (
         Yoga is open source and ready for you to use today.
         </p>
 
-        <Button type="primary" className="button">
-        GET STARTED
-        </Button>
+        <Link to="/docs">
+          <Button type="primary" className="button">
+          LEARN MORE
+          </Button>
+        </Link>
       </Col>
       <Col md={12} sm={0} xs={0}>
         <div className="blueprint blueprint-container">
@@ -62,7 +64,7 @@ const AboutSectionOne = () => (
   <Padded className="about-section">
     <Row>
       <Col xl={16} lg={16} md={24} sm={24} xs={24}>
-        <h1>Foundation of Many Open Source UI Frameworks</h1>
+        <h1>Foundation of Many Open Source&nbsp;UI Frameworks</h1>
         <p>
         There are a large number of open source UI Frameworks which rely on
         Yoga to power their layout. Yoga enables these frameworks to perform
@@ -73,20 +75,20 @@ const AboutSectionOne = () => (
         </p>
       </Col>
     </Row>
-    <Row type="flex" justify="space-around" className="logo-group">
-      <Col lg={8} md={8} sm={12} xs={12} className="logo">
+    <div className="logo-group">
+      <a href="https://fblitho.com" target="_blank" className="logo">
         <img src={LithoLogo}/>
         <h3>Litho</h3>
-      </Col>
-      <Col lg={8} md={8} sm={12} xs={12} className="logo">
+      </a>
+      <a href="https://componentkit.org" target="_blank" className="logo">
         <img src={ComponentKitLogo}/>
         <h3>ComponentKit</h3>
-      </Col>
-      <Col lg={8} md={8} sm={24} xs={24} className="logo">
+      </a>
+      <a href="http://facebook.github.io/react-native/" target="_blank" className="logo">
         <img src={ReactNativeLogo}/>
         <h3>React Native</h3>
-      </Col>
-    </Row>
+      </a>
+    </div>
   </Padded>
 );
 

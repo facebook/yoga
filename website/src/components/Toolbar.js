@@ -12,7 +12,7 @@
 
 import React, {Component} from 'react';
 import Link from 'gatsby-link';
-import {Icon} from 'antd';
+import {Icon, Row, Col} from 'antd';
 import './Toolbar.css';
 
 type Props = {
@@ -32,7 +32,13 @@ export default class Toolbar extends Component<Props> {
         </Link>
         
         <Link to="/docs" activeClassName="selected">Documentation</Link>
-        <Link to="/playground" activeClassName="selected">Playground</Link>
+
+        <Row>
+          <Col xl={24} lg={0} md={0} sm={0} xs={0}>
+            <Link to="/playground" activeClassName="selected">Playground</Link>
+          </Col>
+        </Row>
+
         <a href="https://github.com/facebook/yoga">GitHub</a>
 
         {this.props.onShowCode && (

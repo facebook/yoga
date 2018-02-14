@@ -49,7 +49,7 @@ export default ({data}) => (
                     node.fileAbsolutePath.indexOf(`/${category}/`) > -1,
                 )
                 .map(({node}) => (
-                    node.frontmatter.path.startsWith('http')
+                    node.frontmatter.redirect
                     ? (<a key={node.id} href={node.frontmatter.path}>
                         {node.frontmatter.title}
                       </a>)
@@ -74,6 +74,7 @@ export const query = graphql`
           frontmatter {
             title
             path
+            redirect
           }
           fileAbsolutePath
         }
