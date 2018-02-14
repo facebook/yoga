@@ -25,7 +25,7 @@ import type {Yoga$Direction} from 'yoga-layout';
 import './index.css';
 
 type Props = {
-  layoutDefinition: LayoutRecordT,
+  layoutDefinition: Object,
   direction: Yoga$Direction,
   maxDepth: number,
   maxChildren?: number,
@@ -53,11 +53,11 @@ export default class Playground extends Component<Props, State> {
   _containerRef: ?HTMLElement;
 
   static defaultProps = {
-    layoutDefinition: LayoutRecord({
+    layoutDefinition: {
       width: 500,
       height: 500,
-      children: List([LayoutRecord(), LayoutRecord(), LayoutRecord()]),
-    }),
+      children: [{}, {}, []],
+    },
     direction: yoga.DIRECTION_LTR,
     maxDepth: 3,
     showCode: false,
@@ -65,9 +65,19 @@ export default class Playground extends Component<Props, State> {
     persist: false,
   };
 
+  rehydrate = (node: Object): LayoutRecord => {
+    let record = LayoutRecord(node);
+    record = record.set('padding', PositionRecord(record.padding));
+    record = record.set('border', PositionRecord(record.border));
+    record = record.set('margin', PositionRecord(record.margin));
+    record = record.set('position', PositionRecord(record.position));
+    record = record.set('children', List(record.children.map(this.rehydrate)));
+    return record;
+  };
+
   state = {
     selectedNodePath: this.props.selectedNodePath,
-    layoutDefinition: this.props.layoutDefinition,
+    layoutDefinition: this.rehydrate(this.props.layoutDefinition),
     direction: this.props.direction,
     showCode: false,
   };
@@ -89,16 +99,6 @@ export default class Playground extends Component<Props, State> {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyDown);
   }
-
-  rehydrate = (node: Object): LayoutRecord => {
-    let record = LayoutRecord(node);
-    record = record.set('padding', PositionRecord(record.padding));
-    record = record.set('border', PositionRecord(record.border));
-    record = record.set('margin', PositionRecord(record.margin));
-    record = record.set('position', PositionRecord(record.position));
-    record = record.set('children', List(record.children.map(this.rehydrate)));
-    return record;
-  };
 
   onKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -276,8 +276,8 @@ export default class Playground extends Component<Props, State> {
         <Sidebar
           width={500}
           visible={this.state.showCode}
-          onClose={() => this.setState({showCode: false})}>
-        </Sidebar>
+          onClose={() => this.setState({showCode: false})}
+        />
         {this.props.persist && <URLShortener />}
       </div>
     );

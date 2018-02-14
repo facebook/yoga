@@ -25,6 +25,7 @@ exports.createPages = ({boundActionCreators, graphql}) => {
             frontmatter {
               path
               hasPlayground
+              initialPlayground
             }
             html
           }

@@ -22,16 +22,25 @@ import './index.css';
 type Props = {
   pathContext: {
     html: string,
-    frontmatter: {},
+    frontmatter: {
+      initialPlayground?: string,
+    },
   },
 };
 const REGEX = /<controls prop="([A-Za-z]+)"\s?\/>/gi;
 
 export default class withPlayground extends Component<Props> {
   render() {
+    let layoutDefinition;
+    if (this.props.pathContext.frontmatter.initialPlayground) {
+      layoutDefinition = JSON.parse(
+        atob(this.props.pathContext.frontmatter.initialPlayground),
+      );
+    }
     return (
       <Page className="doc-block playground">
         <Playground
+          layoutDefinition={layoutDefinition}
           selectedNodePath={[]}
           showGuides={false}
           renderSidebar={(layout, onChange) => (

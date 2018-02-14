@@ -110,6 +110,7 @@ export default class YogaNode extends Component<Props, State> {
     root.setJustifyContent(layoutDefinition.justifyContent);
     root.setAlignItems(layoutDefinition.alignItems);
     root.setAlignSelf(layoutDefinition.alignSelf);
+    root.setAlignContent(layoutDefinition.alignContent);
     root.setFlexGrow(layoutDefinition.flexGrow);
     root.setFlexShrink(layoutDefinition.flexShrink);
 
