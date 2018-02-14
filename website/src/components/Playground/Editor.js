@@ -58,7 +58,9 @@ export default class Editor extends Component<Props> {
           <TabPane tab="Flex" key="1">
             <h2>
               Direction
-              <InfoText doclink="/docs/layout-direction">Defines the direction of which text and items are laid out</InfoText>
+              <InfoText doclink="/docs/layout-direction">
+                Defines the direction of which text and items are laid out
+              </InfoText>
             </h2>
             <EditValue
               property="direction"
@@ -67,7 +69,9 @@ export default class Editor extends Component<Props> {
             />
             <h2>
               Flex direction
-              <InfoText doclink="/docs/flex-direction">Defines the direction of the main-axis</InfoText>
+              <InfoText doclink="/docs/flex-direction">
+                Defines the direction of the main-axis
+              </InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -77,10 +81,27 @@ export default class Editor extends Component<Props> {
             />
 
             <Row gutter={15} style={{marginTop: 30}}>
-              <Col span={12}>
+              <Col span={8}>
                 <h2>
-                  Flex grow
-                  <InfoText doclink="/docs/flex">The factor of remaining space should be given to this node</InfoText>
+                  Basis
+                  <InfoText doclink="/docs/flex">
+                    The factor of remaining space should be given to this node
+                  </InfoText>
+                </h2>
+                <EditValue
+                  type="text"
+                  property="flexBasis"
+                  disabled={disabled || selectedNodeIsRoot}
+                  value={node ? node.flexBasis : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+              <Col span={8}>
+                <h2>
+                  Grow
+                  <InfoText doclink="/docs/flex">
+                    The factor of remaining space should be given to this node
+                  </InfoText>
                 </h2>
                 <EditValue
                   type="text"
@@ -90,10 +111,13 @@ export default class Editor extends Component<Props> {
                   onChange={this.props.onChangeLayout}
                 />
               </Col>
-              <Col span={12}>
+              <Col span={8}>
                 <h2>
-                  Flex shrink
-                  <InfoText doclink="/docs/flex">The shrink factor of this element if parent has no space left</InfoText>
+                  Shrink
+                  <InfoText doclink="/docs/flex">
+                    The shrink factor of this element if parent has no space
+                    left
+                  </InfoText>
                 </h2>
                 <EditValue
                   type="text"
@@ -107,7 +131,9 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Flex wrap
-              <InfoText doclink="/docs/flex-wrap">Wrapping behaviour when child nodes don't fit into a single line</InfoText>
+              <InfoText doclink="/docs/flex-wrap">
+                Wrapping behaviour when child nodes don't fit into a single line
+              </InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -119,7 +145,9 @@ export default class Editor extends Component<Props> {
           <TabPane tab="Alignment" key="2">
             <h2>
               Justify content
-              <InfoText doclink="/docs/justify-content">Aligns child nodes along the main-axis</InfoText>
+              <InfoText doclink="/docs/justify-content">
+                Aligns child nodes along the main-axis
+              </InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -130,7 +158,9 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Align items
-              <InfoText doclink="/docs/align-items">Aligns child nodes along the cross-axis</InfoText>
+              <InfoText doclink="/docs/align-items">
+                Aligns child nodes along the cross-axis
+              </InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -141,7 +171,9 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Align self
-              <InfoText doclink="/docs/align-items">Override align items of parent</InfoText>
+              <InfoText doclink="/docs/align-items">
+                Override align items of parent
+              </InfoText>
             </h2>
             <EditValue
               disabled={disabled || selectedNodeIsRoot}
@@ -152,7 +184,9 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Align content
-              <InfoText doclink="/docs/align-content">Alignment of lines along the cross-axis when wrapping</InfoText>
+              <InfoText doclink="/docs/align-content">
+                Alignment of lines along the cross-axis when wrapping
+              </InfoText>
             </h2>
             <EditValue
               disabled={disabled}
@@ -164,13 +198,15 @@ export default class Editor extends Component<Props> {
           <TabPane tab="Layout" key="3">
             <h2>
               Width &times; height
-              <InfoText doclink="/docs/width-height">Dimensions of the node</InfoText>
+              <InfoText doclink="/docs/width-height">
+                Dimensions of the node
+              </InfoText>
             </h2>
             <Row gutter={15}>
               <Col span={12}>
                 <EditValue
                   type="text"
-                  placeholder="width"
+                  placeholder="auto"
                   property="width"
                   disabled={disabled}
                   value={node ? node.width : undefined}
@@ -180,7 +216,7 @@ export default class Editor extends Component<Props> {
               <Col span={12}>
                 <EditValue
                   type="text"
-                  placeholder="height"
+                  placeholder="auto"
                   property="height"
                   disabled={disabled}
                   value={node ? node.height : undefined}
@@ -191,11 +227,13 @@ export default class Editor extends Component<Props> {
 
             <h2>
               Aspect ratio
-              <InfoText doclink="/docs/aspect-ratio">Width/Height aspect ratio of node</InfoText>
+              <InfoText doclink="/docs/aspect-ratio">
+                Width/Height aspect ratio of node
+              </InfoText>
             </h2>
             <EditValue
               type="text"
-              placeholder="Aspect ratio"
+              placeholder="none"
               property="aspectRatio"
               disabled={disabled}
               value={node ? node.aspectRatio : undefined}
@@ -209,6 +247,7 @@ export default class Editor extends Component<Props> {
                 key={property}
                 value={node ? node[property] : undefined}
                 onChange={this.props.onChangeLayout}
+                disabled={property === 'margin' && selectedNodeIsRoot}
               />
             ))}
             <h2>
@@ -221,12 +260,13 @@ export default class Editor extends Component<Props> {
             </h2>
 
             <EditValue
-              disabled={disabled}
+              disabled={disabled || selectedNodeIsRoot}
               property="positionType"
               value={node ? node.positionType : undefined}
               onChange={this.props.onChangeLayout}
             />
             <EditValue
+              disabled={selectedNodeIsRoot}
               property="position"
               value={node ? node.position : undefined}
               onChange={this.props.onChangeLayout}

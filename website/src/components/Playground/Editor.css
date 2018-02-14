@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  border-top: 1px solid #E8E8E8;
 }
 
 .Editor .field {

@@ -21,6 +21,7 @@ type Property = 'position' | 'margin' | 'padding' | 'border';
 type Props = {
   value: PositionRecordT,
   property: Property,
+  disabled?: boolean,
   onChange: (property: Property, value: PositionRecordT) => void,
 };
 
@@ -32,18 +33,22 @@ export default class YogaPositionEditor extends Component<Props> {
   };
 
   render() {
-    const {onChange, value, property} = this.props;
+    const {onChange, value, property, disabled} = this.props;
     return (
       <div className="YogaPositionEditor">
         <Input
           type="text"
           value={value.top}
+          disabled={disabled}
+          placeholder="0"
           onChange={e => onChange(property, value.set('top', e.target.value))}
         />
         <div className="YogaPositionEditorRow">
           <Input
             type="text"
             value={value.left}
+            disabled={disabled}
+            placeholder="0"
             onChange={e =>
               onChange(property, value.set('left', e.target.value))
             }
@@ -52,6 +57,8 @@ export default class YogaPositionEditor extends Component<Props> {
           <Input
             type="text"
             value={value.right}
+            disabled={disabled}
+            placeholder="0"
             onChange={e =>
               onChange(property, value.set('right', e.target.value))
             }
@@ -60,6 +67,8 @@ export default class YogaPositionEditor extends Component<Props> {
         <Input
           type="text"
           value={value.bottom}
+          disabled={disabled}
+          placeholder="0"
           onChange={e =>
             onChange(property, value.set('bottom', e.target.value))
           }

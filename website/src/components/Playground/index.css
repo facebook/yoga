@@ -43,9 +43,30 @@
     100px 100px, 100px 100px, 100px 100px;
 }
 
-
 .Playground > .YogaNode {
   margin: auto;
   position: static;
   align-self: center;
+}
+
+.Playground .Actions {
+  padding: 15px;
+}
+
+.Playground .Actions .ant-btn {
+  width: 100%;
+}
+
+.Playground .NoContent {
+  border-top: 1px solid #E8E8E8;
+  font-size: 18px;
+  padding: 30px 50px;
+  text-align: center;
+  color: #D9D9D9;
+  font-weight: 300;
+  line-height: 130%;
+}
+
+.ant-modal-content {
+  overflow: hidden;
 }

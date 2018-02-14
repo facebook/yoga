@@ -26,11 +26,10 @@ export default class InfoText extends Component<Props> {
       <Popover
         content={
           <div className="InfoText">
-          {
-            [
-            <p>{[...this.props.children]}</p>, 
-            <Link className="docs-link" to={this.props.doclink}>DOCUMENTATION</Link>]
-          }
+            <p>{this.props.children}</p>
+            <Link className="docs-link" to={this.props.doclink}>
+              DOCUMENTATION
+            </Link>
           </div>
         }
         trigger="hover">

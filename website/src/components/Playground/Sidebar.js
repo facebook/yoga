@@ -11,29 +11,17 @@
  */
 
 import React, {Component} from 'react';
-import {Icon} from 'antd';
 import './Sidebar.css';
 
 type Props = {
-  onClose?: () => void,
   width?: number,
   children: any,
-  floating?: boolean,
 };
 
 export default class Sidebar extends Component<Props> {
   render() {
     return (
-      <div
-        className={`Sidebar ${this.props.visible ? 'visible' : ''} ${
-          this.props.floating ? 'floating' : ''
-        }`}
-        style={{width: this.props.width}}>
-        {this.props.onClose && (
-          <div className="SidebarClose">
-            <Icon type="close" onClick={this.props.onClose} />
-          </div>
-        )}
+      <div className="Sidebar" style={{width: this.props.width}}>
         {this.props.children}
       </div>
     );

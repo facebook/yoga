@@ -21,7 +21,7 @@ import type {
   Yoga$JustifyContent,
   Yoga$FlexDirection,
   Yoga$FlexWrap,
-  Yoga$Yoga$PositionType,
+  Yoga$PositionType,
 } from 'yoga-layout';
 
 export type LayoutRecordT = RecordOf<{
@@ -32,17 +32,18 @@ export type LayoutRecordT = RecordOf<{
   border: PositionRecordT,
   margin: PositionRecordT,
   position: PositionRecordT,
-  positionType: Yoga$Yoga$PositionType,
+  positionType: Yoga$PositionType,
   alignItems?: Yoga$Align,
   alignSelf?: Yoga$Align,
   alignContent?: Yoga$Align,
   flexDirection?: Yoga$FlexDirection,
+  flexBasis?: number | 'auto',
   flexGrow?: number,
   flexShrink?: number,
   padding?: number,
   flexWrap?: Yoga$FlexWrap,
   aspectRatio?: number,
-  children?: List<LayoutDefinition>,
+  children?: List<LayoutRecordT>,
 }>;
 
 const r: LayoutRecordT = Record({
@@ -59,6 +60,7 @@ const r: LayoutRecordT = Record({
   position: PositionRecord(),
   positionType: yoga.POSITION_TYPE_RELATIVE,
   flexWrap: yoga.WRAP_NO_WRAP,
+  flexBasis: 'auto',
   flexGrow: 0,
   flexShrink: 1,
   children: List(),

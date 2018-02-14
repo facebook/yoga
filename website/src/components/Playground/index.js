@@ -13,13 +13,14 @@
 import React, {Component} from 'react';
 import yoga from 'yoga-layout/dist/entry-browser';
 import YogaNode from './YogaNode';
+import CodeGenerators from './CodeGenerators';
+import URLShortener from './URLShortener';
 import Editor from './Editor';
 import {List, setIn} from 'immutable';
 import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
-import URLShortener from './URLShortener';
-import Code from './Code';
 import Sidebar from './Sidebar';
+import {Row, Col} from 'antd';
 import type {LayoutRecordT} from './LayoutRecord';
 import type {Yoga$Direction} from 'yoga-layout';
 import './index.css';
@@ -42,7 +43,6 @@ type State = {
   selectedNodePath: ?Array<number>,
   layoutDefinition: LayoutRecordT,
   direction: Yoga$Direction,
-  showCode: boolean,
 };
 
 function getPath(path: Array<number>): Array<mixed> {
@@ -60,7 +60,6 @@ export default class Playground extends Component<Props, State> {
     },
     direction: yoga.DIRECTION_LTR,
     maxDepth: 3,
-    showCode: false,
     showGuides: true,
     persist: false,
   };
@@ -79,7 +78,6 @@ export default class Playground extends Component<Props, State> {
     selectedNodePath: this.props.selectedNodePath,
     layoutDefinition: this.rehydrate(this.props.layoutDefinition),
     direction: this.props.direction,
-    showCode: false,
   };
 
   componentDidMount() {
@@ -118,7 +116,6 @@ export default class Playground extends Component<Props, State> {
       // sidebar may rely on a certain node to be selected
       this.setState({
         selectedNodePath: null,
-        showCode: false,
       });
     }
   }
@@ -211,17 +208,8 @@ export default class Playground extends Component<Props, State> {
     return selectedNode ? selectedNode.children.size : 0;
   };
 
-  onToggleCode = () => {
-    this.setState({
-      selectedNodePath: this.state.showCode
-        ? this.state.selectedNodePath
-        : null,
-      showCode: !this.state.showCode,
-    });
-  };
-
   render() {
-    const {layoutDefinition, selectedNodePath} = this.state;
+    const {layoutDefinition, selectedNodePath, direction} = this.state;
     const {height} = this.props;
 
     const selectedNode: ?LayoutRecordT = selectedNodePath
@@ -239,46 +227,52 @@ export default class Playground extends Component<Props, State> {
         <YogaNode
           layoutDefinition={layoutDefinition}
           selectedNodePath={selectedNodePath}
-          onClick={selectedNodePath =>
-            this.setState({selectedNodePath, showCode: false})
-          }
+          onClick={selectedNodePath => this.setState({selectedNodePath})}
           onDoubleClick={this.onAdd}
-          direction={this.state.direction}
+          direction={direction}
           showGuides={this.props.showGuides}
         />
-        <Sidebar
-          visible={
-            Boolean(selectedNodePath) &&
-            !this.state.showCode &&
-            !this.props.renderSidebar
-          }
-          floating>
-          <Editor
-            node={selectedNode}
-            selectedNodeIsRoot={
-              selectedNodePath ? selectedNodePath.length === 0 : false
-            }
-            onChangeLayout={this.onChangeLayout}
-            onChangeSetting={(key, value) => this.setState({[key]: value})}
-            direction={this.state.direction}
-            onRemove={
-              selectedNodePath && selectedNodePath.length > 0
-                ? this.onRemove
-                : undefined
-            }
-            onAdd={
-              selectedNodePath && selectedNodePath.length < this.props.maxDepth
-                ? this.onAdd
-                : undefined
-            }
-          />
+        <Sidebar>
+          <div className="Actions">
+            <Row gutter={15}>
+              <Col span={12}>
+                <CodeGenerators
+                  layoutDefinition={layoutDefinition}
+                  direction={direction}
+                />
+              </Col>
+              <Col span={12}>
+                <URLShortener />
+              </Col>
+            </Row>
+          </div>
+          {this.state.selectedNodePath ? (
+            <Editor
+              node={selectedNode}
+              selectedNodeIsRoot={
+                selectedNodePath ? selectedNodePath.length === 0 : false
+              }
+              onChangeLayout={this.onChangeLayout}
+              onChangeSetting={(key, value) => this.setState({[key]: value})}
+              direction={direction}
+              onRemove={
+                selectedNodePath && selectedNodePath.length > 0
+                  ? this.onRemove
+                  : undefined
+              }
+              onAdd={
+                selectedNodePath &&
+                selectedNodePath.length < this.props.maxDepth
+                  ? this.onAdd
+                  : undefined
+              }
+            />
+          ) : (
+            <div className="NoContent">
+              Select a node to edit its properties
+            </div>
+          )}
         </Sidebar>
-        <Sidebar
-          width={500}
-          visible={this.state.showCode}
-          onClose={() => this.setState({showCode: false})}
-        />
-        {this.props.persist && <URLShortener />}
       </div>
     );
 
