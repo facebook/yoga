@@ -10,7 +10,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {Component} from 'react';
 import Page from '../components/Page';
 import Playground from '../components/Playground';
 import DocsSidebar from '../components/DocsSidebar';
@@ -19,31 +19,30 @@ import Link from 'gatsby-link';
 import {Button, Icon, Row, Col} from 'antd';
 import './index.css';
 
-export default ({pathContext}) => (
-  <Page className="doc-block playground">
-    <Playground
-      selectedNodePath={[]}
-      showGuides={false}
-      renderSidebar={(layout, onChange) => (
-        <DocsSidebar>
-          <div className="markdown" dangerouslySetInnerHTML={{__html: pathContext.html}} />
-          
-          {(pathContext.frontmatter.editableProperties || []).map(prop => (
-            <div key={prop} className="prop">
-              <h4>{prop}</h4>
-              <EditValue
-                property={prop}
-                value={layout[prop]}
-                onChange={onChange}
-              />
-            </div>
-          ))}
-          
-          <Link to="/docs" className="overview">
-            BACK TO OVERVIEW
-          </Link>
-        </DocsSidebar>
-      )}
-    />
-  </Page>
-);
+type Props = {
+  pathContext: {
+    html: string,
+    frontmatter: {},
+  },
+};
+const REGEX = /<controls prop="([A-Za-z]+)"\s?\/>/gi;
+
+export default class withPlayground extends Component<Props> {
+  render() {
+    return (
+      <Page className="doc-block playground">
+        <Playground
+          selectedNodePath={[]}
+          showGuides={false}
+          renderSidebar={(layout, onChange) => (
+            <DocsSidebar
+              layout={layout}
+              onChange={onChange}
+              markdown={this.props.pathContext.html}
+            />
+          )}
+        />
+      </Page>
+    );
+  }
+}

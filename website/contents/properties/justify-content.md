@@ -2,7 +2,8 @@
 path: "docs/justify-content"
 title: "Justify Content"
 hasPlayground: true
-editableProperties: ['justifyContent']
 ---
 
 ## Justify Content
+
+<controls prop="justifyContent"></controls>

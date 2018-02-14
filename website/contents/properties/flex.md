@@ -2,7 +2,6 @@
 path: "docs/flex"
 title: "Flex Basis, Grow, and Shrink"
 hasPlayground: true
-editableProperties: ['flexGrow', 'flexShrink', 'flexBasis']
 ---
 
 ## Flex Basis, Grow, and Shrink
@@ -16,6 +15,8 @@ distribute any remaining space according to the flex grow values specified by it
 flex grow accepts any floating point value >= 0, with 0 being the default value.
 A container will distribute any remaining space among its children weighted by the child’s flex grow value.
 
+<controls prop="flexGrow"></controls>
+
 ### Flex Shrink
 
 Flex shrink describes how to shrink children along the main axis in the
@@ -27,11 +28,15 @@ These two properties also work well together by allowing children to grow and sh
 flex shrink accepts any floating point value >= 0, with 1 being the default value.
 A container will shrink its children weighted by the child’s flex shrink value.
 
+<controls prop="flexShrink"></controls>
+
 ### Flex Basis
 
 Flex basis is an axis-independent way of providing the default size of an item
 along the main axis. Setting the flex basis of a child is similar to setting the Width of that
 child if its parent is a container with FlexDirection = row or setting the Height of a child
-if its parent is a container with FlexDirection = column. The flex basis of an item is the 
+if its parent is a container with FlexDirection = column. The flex basis of an item is the
 efault size of that item, the size of the item before any flex grow and flex shrink
 calculations are performed.
+
+<controls prop="flexBasis"></controls>

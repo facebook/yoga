@@ -2,7 +2,6 @@
 path: "docs/aspect-ratio"
 title: "Aspect Ratio"
 hasPlayground: true
-editableProperties: ['aspectRatio']
 ---
 
 ## Aspect Ratio
@@ -18,3 +17,5 @@ The aspect ratio property in Yoga has the following properties:
 - Respects the Min and Max dimensions of an item.
 - Has higher priority than FlexGrow
 - If AspectRatio, Width, and Height are set then the cross dimension is overridden.
+
+<controls prop="aspectRatio"></controls>
