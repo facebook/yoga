@@ -20,18 +20,14 @@ export default class Footer extends Component<{}> {
   render() {
     return (
       <div className="Footer">
-        <Link to="/" className="logoOSS">
+        <a href="https://code.facebook.com/projects/" className="logoOSS">
           <FacebookOSSLogo />
           Facebook Open Source
-        </Link>
-        <div className="SocialNetwork">
-          <a href="https://code.facebook.com/projects/">Open Source</a>
-          <a href="https://github.com/facebook/">Github</a>
-          <a href="https://twitter.com/fbOpenSource">Twitter</a>
-        </div>
-        <a href="https://github.com/facebook/yoga">
-          Contribute to this project on Github
         </a>
+        <div className="SocialNetwork">
+          <a href="https://github.com/facebook/yoga">Github</a>
+          <a href="https://twitter.com/yogalayout">Twitter</a>
+        </div>
       </div>
     );
   }

@@ -14,7 +14,8 @@
   align-items: center;
   justify-content: space-between;
   background-color: white;
-  border-top: 1px solid #a6dacf;
+  border-top: 1px solid #6BCEBB;
+  flex-wrap: wrap;
 }
 
 .Footer svg {
@@ -23,17 +24,19 @@
 }
 
 .Footer svg path {
-    fill: #a6dacf;
+    fill: #6BCEBB;
 }
 
 .Footer .logoOSS {
     display: flex;
     align-items: center;
     text-decoration: none;
+    color: #6BCEBB;
 }
 
 .Footer a {
     margin: 0 10px;
+    color: #6BCEBB;
 }
 
 .Footer .SocialNetwork {
