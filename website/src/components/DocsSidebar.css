@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
- .DocsSidebar {
+.DocsSidebar {
   height: 100%;
   width: 450px;
   padding: 36px;
@@ -24,3 +24,14 @@
   margin-top: 10px;
   margin-bottom: 5px;
 }
+
+@media only screen and (max-width: 1200px) {
+  .DocsSidebar {
+    width: 100%;
+    padding: 20px;
+    padding-top: 0px;
+    border: none;
+  }
+}
+
+

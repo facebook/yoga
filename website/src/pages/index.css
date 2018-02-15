@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
- .landing-page .hero {
+.landing-page .hero {
   padding-top: 100px;
   padding-bottom: 100px;
   display: flex;
@@ -145,6 +145,7 @@
   font-size: 14px;
   font-weight: 600;
   margin-top: 20px;
+  text-align: center;
 }
 
 footer {
@@ -163,4 +164,61 @@ footer a {
 
 footer a:hover {
   color: #6BCEBB;
+}
+
+@media only screen and (max-width: 576px) {
+   .landing-page .hero {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .landing-page .hero h3 {
+    font-size: 14px;
+  }
+
+  .landing-page .hero h1 {
+    font-size: 32px;
+    font-weight: 400;
+  }
+
+  .landing-page .hero p {
+    line-height: 160%;
+    font-size: 14px;
+  }
+
+  .landing-page .about-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .landing-page .about-section h1 {
+    font-size: 24px;
+    line-height: 120%;
+  }
+
+  .landing-page .about-section h3 {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .landing-page .about-section p {
+    line-height: 160%;
+    font-size: 14px;
+  }
+
+  .landing-page .logo-group .logo {
+    width: 33%;
+    padding: 20px;
+    margin-right: 0px;
+  }
+
+  .landing-page .logo-group img {
+    height: auto;
+    width: 100%;
+  }
+
+  .landing-page .logo-group .logo h3 {
+    font-size: 10px;
+    margin-top: 10px;
+  }
 }

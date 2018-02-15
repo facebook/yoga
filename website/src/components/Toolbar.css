@@ -42,3 +42,18 @@
 .Toolbar .ToolbarToggle i {
   margin-right: 5px;
 }
+
+@media only screen and (max-width: 576px) {
+  .Toolbar {
+    padding: 10px 5px;
+  }
+
+  .Toolbar a {
+    margin: 0 10px;
+    font-size: 12px;
+  }
+
+  .Toolbar .ToolbarToggle {
+    font-size: 12px;
+  }
+}

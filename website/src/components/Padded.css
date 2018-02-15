@@ -7,10 +7,16 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
- .Padded {
+.Padded {
   width: 100%;
   max-width: 1200px;
   padding: 0 50px;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media only screen and (max-width: 576px) {
+  .Padded {
+    padding: 0 20px;
+  }
 }

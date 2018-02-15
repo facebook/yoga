@@ -78,3 +78,65 @@
   padding-left: 3px;
   padding-right: 3px;
 }
+
+@media only screen and (max-width: 1200px) {
+  .playground .Playground {
+    display: none;
+  }
+
+  .playground controls {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .no-playground .markdown {
+    padding-top: 15px;
+  }
+
+  .doc-block .markdown {
+    padding-bottom: 10px;
+  }
+
+  .doc-block .overview {
+    font-size: 12px;
+    font-weight: 600;
+    padding-bottom: 10px;
+  }
+
+  .doc-block h1 {
+    font-size: 32px;
+    font-weight: 400;
+  }
+
+  .doc-block h2 {
+    font-size: 24px;
+    margin-top: 20px;
+  }
+
+  .doc-block h3 {
+    font-size: 16px;
+  }
+
+  .doc-block p {
+    line-height: 160%;
+    font-size: 14px;
+  }
+
+  .doc-block li {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .doc-block .prop {
+    margin-bottom: 10px;
+  }
+
+  .doc-block pre {
+    padding: 5px !important;
+  }
+
+  .doc-block code {
+    font-size: 12px;
+  }
+}
