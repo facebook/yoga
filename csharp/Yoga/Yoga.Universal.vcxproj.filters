@@ -30,9 +30,6 @@
     <ClInclude Include="..\..\yoga\YGNodeList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="YGInterop.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>

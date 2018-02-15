@@ -27,7 +27,8 @@ namespace Facebook.Yoga
 #endif
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGInteropSetLogger(
+        public static extern void YGConfigSetLogger(
+            YGConfigHandle config,
             [MarshalAs(UnmanagedType.FunctionPtr)] YogaLogger logger);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]

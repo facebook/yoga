@@ -147,7 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>false</CompileAsWinRT>
-   </ClCompile>
+    </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -247,7 +247,6 @@
     <ClInclude Include="..\..\yoga\YGMacros.h" />
     <ClInclude Include="..\..\yoga\YGNodeList.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="YGInterop.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
