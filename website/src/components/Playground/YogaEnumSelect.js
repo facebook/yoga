@@ -57,13 +57,20 @@ export default class YogaEnumSelect extends Component<Props> {
     this.props.onChange(this.props.property, yoga[key]);
   };
 
+  getTitle = (property: string, key: string): string => {
+    const replacer = new RegExp(`^${property}_`);
+    return key
+      .replace(replacer, '')
+      .replace('_', ' ')
+      .toLowerCase();
+  };
+
   render() {
     let {property, ...props} = this.props;
     property = PROPERTY_LOOKUP[property];
     const selected = this.values.find(
       ({key, value}) => value === this.props.value,
     );
-    const replacer = new RegExp(`^${property}_`);
 
     return this.values.length > 3 ? (
       <div className="YogaEnumSelect">
@@ -73,13 +80,13 @@ export default class YogaEnumSelect extends Component<Props> {
             <Menu onClick={this.handleMenuClick}>
               {this.values.map(({key, value}) => (
                 <Menu.Item key={key} value={value}>
-                  {key.replace(replacer, '')}
+                  {this.getTitle(property, key)}
                 </Menu.Item>
               ))}
             </Menu>
           }>
           <Button>
-            {selected ? selected.key.replace(replacer, '') : ''}
+            {selected ? this.getTitle(property, selected.key) : ''}
             <Icon type="down" />
           </Button>
         </Dropdown>
@@ -92,7 +99,7 @@ export default class YogaEnumSelect extends Component<Props> {
         className="YogaEnumSelect">
         {this.values.map(({key, value}) => (
           <RadioButton key={key} value={value}>
-            {key.replace(new RegExp(`^${property}_`), '')}
+            {this.getTitle(property, key)}
           </RadioButton>
         ))}
       </RadioGroup>

@@ -21,3 +21,7 @@
   flex-grow: 1;
   flex-basis: 0;
 }
+
+.YogaEnumSelect .ant-radio-button-wrapper {
+  white-space: nowrap;
+}
