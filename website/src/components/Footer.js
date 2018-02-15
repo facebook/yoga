@@ -25,7 +25,7 @@ export default class Footer extends Component<{}> {
           Facebook Open Source
         </a>
         <div className="SocialNetwork">
-          <a href="https://github.com/facebook/yoga">Github</a>
+          <a href="https://github.com/facebook/yoga">GitHub</a>
           <a href="https://twitter.com/yogalayout">Twitter</a>
         </div>
       </div>
