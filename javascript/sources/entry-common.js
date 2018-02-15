@@ -113,104 +113,105 @@ class Value {
   }
 }
 
-declare class Yoga$Config {
-  isExperimentalFeatureEnabled(feature: Yoga$ExperimentalFeature): boolean;
+export type Yoga$Config = {
+  isExperimentalFeatureEnabled(feature: Yoga$ExperimentalFeature): boolean,
   setExperimentalFeatureEnabled(
     feature: Yoga$ExperimentalFeature,
     enabled: boolean,
-  ): void;
-  setPointScaleFactor(factor: number): void;
-}
-declare class Yoga$Node {
+  ): void,
+  setPointScaleFactor(factor: number): void,
+};
+
+export type Yoga$Node = {
   calculateLayout(
     width?: number,
     height?: number,
     direction?: Yoga$Direction,
-  ): void;
-  copyStyle(node: Yoga$Node): void;
-  free(): void;
-  freeRecursive(): void;
-  getAlignContent(): Yoga$Align;
-  getAlignItems(): Yoga$Align;
-  getAlignSelf(): Yoga$Align;
-  getAspectRatio(): number;
-  getBorder(edge: Yoga$Edge): number;
-  getChild(index: number): Yoga$Node;
-  getChildCount(): number;
-  getComputedBorder(edge: Yoga$Edge): number;
-  getComputedBottom(): number;
-  getComputedHeight(): number;
-  getComputedLayout(): Layout;
-  getComputedLeft(): number;
-  getComputedMargin(edge: Yoga$Edge): number;
-  getComputedPadding(edge: Yoga$Edge): number;
-  getComputedRight(): number;
-  getComputedTop(): number;
-  getComputedWidth(): number;
-  getDisplay(): Yoga$Display;
-  getFlexBasis(): number;
-  getFlexDirection(): Yoga$FlexDirection;
-  getFlexGrow(): number;
-  getFlexShrink(): number;
-  getFlexWrap(): Yoga$FlexWrap;
-  getHeight(): Value;
-  getJustifyContent(): Yoga$JustifyContent;
-  getMargin(edge: Yoga$Edge): Value;
-  getMaxHeight(): Value;
-  getMaxWidth(): Value;
-  getMinHeight(): Value;
-  getMinWidth(): Value;
-  getOverflow(): Yoga$Overflow;
-  getPadding(edge: Yoga$Edge): Value;
-  getParent(): ?Yoga$Node;
-  getPosition(edge: Yoga$Edge): Value;
-  getPositionType(): Yoga$PositionType;
-  getWidth(): Value;
-  insertChild(child: Yoga$Node, index: number): void;
-  isDirty(): boolean;
-  markDirty(): void;
-  removeChild(child: Yoga$Node): void;
-  reset(): void;
-  setAlignContent(alignContent: Yoga$Align): void;
-  setAlignItems(alignItems: Yoga$Align): void;
-  setAlignSelf(alignSelf: Yoga$Align): void;
-  setAspectRatio(aspectRatio: number): void;
-  setBorder(edge: Yoga$Edge, borderWidth: number): void;
-  setDisplay(display: Yoga$Display): void;
-  setFlex(flex: number): void;
-  setFlexBasis(flexBasis: number | string): void;
-  setFlexBasisPercent(flexBasis: number): void;
-  setFlexDirection(flexDirection: Yoga$FlexDirection): void;
-  setFlexGrow(flexGrow: number): void;
-  setFlexShrink(flexShrink: number): void;
-  setFlexWrap(flexWrap: Yoga$FlexWrap): void;
-  setHeight(height: number | string): void;
-  setHeightAuto(): void;
-  setHeightPercent(height: number): void;
-  setJustifyContent(justifyContent: Yoga$JustifyContent): void;
-  setMargin(edge: Yoga$Edge, margin: number): void;
-  setMarginAuto(edge: Yoga$Edge): void;
-  setMarginPercent(edge: Yoga$Edge, margin: number): void;
-  setMaxHeight(maxHeight: number | string): void;
-  setMaxHeightPercent(maxHeight: number): void;
-  setMaxWidth(maxWidth: number | string): void;
-  setMaxWidthPercent(maxWidth: number): void;
-  setMeasureFunc(measureFunc: ?Function): void;
-  setMinHeight(minHeight: number | string): void;
-  setMinHeightPercent(minHeight: number): void;
-  setMinWidth(minWidth: number | string): void;
-  setMinWidthPercent(minWidth: number): void;
-  setOverflow(overflow: Yoga$Overflow): void;
-  setPadding(edge: Yoga$Edge, padding: number | string): void;
-  setPaddingPercent(edge: Yoga$Edge, padding: number): void;
-  setPosition(edge: Yoga$Edge, position: number | string): void;
-  setPositionPercent(edge: Yoga$Edge, position: number): void;
-  setPositionType(positionType: Yoga$PositionType): void;
-  setWidth(width: number | string): void;
-  setWidthAuto(): void;
-  setWidthPercent(width: number): void;
-  unsetMeasureFun(): void;
-}
+  ): void,
+  copyStyle(node: Yoga$Node): void,
+  free(): void,
+  freeRecursive(): void,
+  getAlignContent(): Yoga$Align,
+  getAlignItems(): Yoga$Align,
+  getAlignSelf(): Yoga$Align,
+  getAspectRatio(): number,
+  getBorder(edge: Yoga$Edge): number,
+  getChild(index: number): Yoga$Node,
+  getChildCount(): number,
+  getComputedBorder(edge: Yoga$Edge): number,
+  getComputedBottom(): number,
+  getComputedHeight(): number,
+  getComputedLayout(): Layout,
+  getComputedLeft(): number,
+  getComputedMargin(edge: Yoga$Edge): number,
+  getComputedPadding(edge: Yoga$Edge): number,
+  getComputedRight(): number,
+  getComputedTop(): number,
+  getComputedWidth(): number,
+  getDisplay(): Yoga$Display,
+  getFlexBasis(): number,
+  getFlexDirection(): Yoga$FlexDirection,
+  getFlexGrow(): number,
+  getFlexShrink(): number,
+  getFlexWrap(): Yoga$FlexWrap,
+  getHeight(): Value,
+  getJustifyContent(): Yoga$JustifyContent,
+  getMargin(edge: Yoga$Edge): Value,
+  getMaxHeight(): Value,
+  getMaxWidth(): Value,
+  getMinHeight(): Value,
+  getMinWidth(): Value,
+  getOverflow(): Yoga$Overflow,
+  getPadding(edge: Yoga$Edge): Value,
+  getParent(): ?Yoga$Node,
+  getPosition(edge: Yoga$Edge): Value,
+  getPositionType(): Yoga$PositionType,
+  getWidth(): Value,
+  insertChild(child: Yoga$Node, index: number): void,
+  isDirty(): boolean,
+  markDirty(): void,
+  removeChild(child: Yoga$Node): void,
+  reset(): void,
+  setAlignContent(alignContent: Yoga$Align): void,
+  setAlignItems(alignItems: Yoga$Align): void,
+  setAlignSelf(alignSelf: Yoga$Align): void,
+  setAspectRatio(aspectRatio: number): void,
+  setBorder(edge: Yoga$Edge, borderWidth: number): void,
+  setDisplay(display: Yoga$Display): void,
+  setFlex(flex: number): void,
+  setFlexBasis(flexBasis: number | string): void,
+  setFlexBasisPercent(flexBasis: number): void,
+  setFlexDirection(flexDirection: Yoga$FlexDirection): void,
+  setFlexGrow(flexGrow: number): void,
+  setFlexShrink(flexShrink: number): void,
+  setFlexWrap(flexWrap: Yoga$FlexWrap): void,
+  setHeight(height: number | string): void,
+  setHeightAuto(): void,
+  setHeightPercent(height: number): void,
+  setJustifyContent(justifyContent: Yoga$JustifyContent): void,
+  setMargin(edge: Yoga$Edge, margin: number): void,
+  setMarginAuto(edge: Yoga$Edge): void,
+  setMarginPercent(edge: Yoga$Edge, margin: number): void,
+  setMaxHeight(maxHeight: number | string): void,
+  setMaxHeightPercent(maxHeight: number): void,
+  setMaxWidth(maxWidth: number | string): void,
+  setMaxWidthPercent(maxWidth: number): void,
+  setMeasureFunc(measureFunc: ?Function): void,
+  setMinHeight(minHeight: number | string): void,
+  setMinHeightPercent(minHeight: number): void,
+  setMinWidth(minWidth: number | string): void,
+  setMinWidthPercent(minWidth: number): void,
+  setOverflow(overflow: Yoga$Overflow): void,
+  setPadding(edge: Yoga$Edge, padding: number | string): void,
+  setPaddingPercent(edge: Yoga$Edge, padding: number): void,
+  setPosition(edge: Yoga$Edge, position: number | string): void,
+  setPositionPercent(edge: Yoga$Edge, position: number): void,
+  setPositionType(positionType: Yoga$PositionType): void,
+  setWidth(width: number | string): void,
+  setWidthAuto(): void,
+  setWidthPercent(width: number): void,
+  unsetMeasureFun(): void,
+};
 
 type Yoga = {
   Config: {
@@ -276,6 +277,9 @@ module.exports = (bind: any, lib: any): Yoga => {
             ? CONSTANTS.UNIT_PERCENT
             : CONSTANTS.UNIT_POINT;
         asNumber = parseFloat(value);
+        if (!Number.isNaN(value) && Number.isNaN(asNumber)) {
+          throw new Error(`Invalid value ${value} for ${fnName}`);
+        }
       }
 
       if (!methods[unit])

@@ -1,6 +1,6 @@
 {
   "name": "yoga-layout",
-  "version": "1.9.0",
+  "version": "1.9.3",
   "description": "Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.",
   "license": "BSD-3-Clause",
   "repository": {
@@ -13,6 +13,10 @@
     "platform": "all"
   },
   "scripts": {
+    "which": "which",
+    "autogypi": "autogypi",
+    "node-gyp": "node-gyp",
+    "emcc-path": "emcc-path",
     "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
     "copy-sources": "! npm -s run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
     "build:node": "npm run copy-sources && autogypi && node-gyp configure build",

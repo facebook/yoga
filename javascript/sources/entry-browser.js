@@ -52,3 +52,5 @@ export type {
   Yoga$PositionType,
   Yoga$ExperimentalFeature,
 } from './YGEnums.js';
+
+export type {Yoga$Node, Yoga$Config} from './entry-common';
