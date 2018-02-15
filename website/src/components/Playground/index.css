@@ -49,6 +49,10 @@
   align-self: center;
 }
 
+.Playground.standalone > .YogaNode {
+  transform: translateX(-175px);
+}
+
 .Playground .Actions {
   padding: 15px;
 }

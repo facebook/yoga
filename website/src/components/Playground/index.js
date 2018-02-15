@@ -218,7 +218,7 @@ export default class Playground extends Component<Props, State> {
 
     const playground = (
       <div
-        className="Playground"
+        className={`Playground ${this.props.renderSidebar ? '' : 'standalone'}`}
         onMouseDown={this.onMouseDown}
         style={{height, maxHeight: height}}
         ref={ref => {
@@ -232,47 +232,49 @@ export default class Playground extends Component<Props, State> {
           direction={direction}
           showGuides={this.props.showGuides}
         />
-        <Sidebar>
-          <div className="Actions">
-            <Row gutter={15}>
-              <Col span={12}>
-                <CodeGenerators
-                  layoutDefinition={layoutDefinition}
-                  direction={direction}
-                />
-              </Col>
-              <Col span={12}>
-                <URLShortener />
-              </Col>
-            </Row>
-          </div>
-          {this.state.selectedNodePath ? (
-            <Editor
-              node={selectedNode}
-              selectedNodeIsRoot={
-                selectedNodePath ? selectedNodePath.length === 0 : false
-              }
-              onChangeLayout={this.onChangeLayout}
-              onChangeSetting={(key, value) => this.setState({[key]: value})}
-              direction={direction}
-              onRemove={
-                selectedNodePath && selectedNodePath.length > 0
-                  ? this.onRemove
-                  : undefined
-              }
-              onAdd={
-                selectedNodePath &&
-                selectedNodePath.length < this.props.maxDepth
-                  ? this.onAdd
-                  : undefined
-              }
-            />
-          ) : (
-            <div className="NoContent">
-              Select a node to edit its properties
+        {!this.props.renderSidebar && (
+          <Sidebar>
+            <div className="Actions">
+              <Row gutter={15}>
+                <Col span={12}>
+                  <CodeGenerators
+                    layoutDefinition={layoutDefinition}
+                    direction={direction}
+                  />
+                </Col>
+                <Col span={12}>
+                  <URLShortener />
+                </Col>
+              </Row>
             </div>
-          )}
-        </Sidebar>
+            {this.state.selectedNodePath ? (
+              <Editor
+                node={selectedNode}
+                selectedNodeIsRoot={
+                  selectedNodePath ? selectedNodePath.length === 0 : false
+                }
+                onChangeLayout={this.onChangeLayout}
+                onChangeSetting={(key, value) => this.setState({[key]: value})}
+                direction={direction}
+                onRemove={
+                  selectedNodePath && selectedNodePath.length > 0
+                    ? this.onRemove
+                    : undefined
+                }
+                onAdd={
+                  selectedNodePath &&
+                  selectedNodePath.length < this.props.maxDepth
+                    ? this.onAdd
+                    : undefined
+                }
+              />
+            ) : (
+              <div className="NoContent">
+                Select a node to edit its properties
+              </div>
+            )}
+          </Sidebar>
+        )}
       </div>
     );
 
