@@ -3389,6 +3389,12 @@ gatsby-plugin-antd@^1.0.10:
     antd "^3.1.0"
     babel-plugin-import "^1.6.3"
 
+gatsby-plugin-google-analytics@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-analytics/-/gatsby-plugin-google-analytics-1.0.19.tgz#e9112f01118e0a16eb61f1b39bb0757feba88f2b"
+  dependencies:
+    babel-runtime "^6.26.0"
+
 gatsby-plugin-less@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-less/-/gatsby-plugin-less-1.1.4.tgz#f226e207b8d17e064865ce3f18b712dea71c4570"
