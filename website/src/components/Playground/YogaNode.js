@@ -107,6 +107,10 @@ export default class YogaNode extends Component<Props, State> {
     const root = Node.create();
     root.setWidth(layoutDefinition.width);
     root.setHeight(layoutDefinition.height);
+    root.setMinWidth(layoutDefinition.minWidth);
+    root.setMaxWidth(layoutDefinition.maxWidth);
+    root.setMinHeight(layoutDefinition.minHeight);
+    root.setMaxHeight(layoutDefinition.maxHeight);
     root.setJustifyContent(layoutDefinition.justifyContent);
     root.setAlignItems(layoutDefinition.alignItems);
     root.setAlignSelf(layoutDefinition.alignSelf);
