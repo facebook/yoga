@@ -10,9 +10,12 @@
 package com.facebook.yoga;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.lang.ref.WeakReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Test;
 
 public class YogaNodeTest {
@@ -221,7 +224,61 @@ public class YogaNodeTest {
   }
 
   @Test
-  public void testNodeClonedLeak() throws Exception {
+  public void testCloneNode() throws Exception {
+    YogaConfig config = new YogaConfig();
+    YogaNode root = new YogaNode(config);
+    YogaNode child = new YogaNode(config);
+    YogaNode grandChild = new YogaNode(config);
+    root.addChildAt(child, 0);
+    child.addChildAt(grandChild, 0);
+    child.setFlexDirection(YogaFlexDirection.ROW);
+
+    YogaNode clonedChild = child.clone();
+
+    assertNotSame(clonedChild, child);
+
+    assertEquals(YogaFlexDirection.ROW, child.getFlexDirection());
+    assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
+
+    // Verify the cloning is shallow on the List of children
+    assertEquals(1, child.getChildCount());
+    assertEquals(child.getChildCount(), clonedChild.getChildCount());
+    assertEquals(child.getChildAt(0), clonedChild.getChildAt(0));
+
+    child.removeChildAt(0);
+    assertEquals(0, child.getChildCount());
+    assertEquals(1, clonedChild.getChildCount());
+  }
+
+  @Test
+  public void testCloneNodeListener() throws Exception {
+    final AtomicBoolean onNodeClonedExecuted = new AtomicBoolean(false);
+    YogaConfig config = new YogaConfig();
+    config.setOnNodeCloned(
+        new YogaNodeClonedFunction() {
+          @Override
+          public void onNodeCloned(
+              YogaNode oldNode, YogaNode newNode, YogaNode parent, int childIndex) {
+            onNodeClonedExecuted.set(true);
+          }
+        });
+    YogaNode root = new YogaNode(config);
+    root.setWidth(100f);
+    root.setHeight(100f);
+    YogaNode child0 = new YogaNode(config);
+    root.addChildAt(child0, 0);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    // Force a clone to happen.
+    final YogaNode root2 = root.clone();
+    root2.setWidth(200f);
+    root2.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertTrue(onNodeClonedExecuted.get());
+  }
+
+  @Test
+  public void testOnNodeClonedLeak() throws Exception {
     YogaConfig config = new YogaConfig();
     config.setOnNodeCloned(
         new YogaNodeClonedFunction() {
@@ -232,7 +289,7 @@ public class YogaNodeTest {
           }
         });
     config.setOnNodeCloned(null);
-    java.lang.ref.WeakReference<Object> ref = new java.lang.ref.WeakReference<Object>(config);
+    WeakReference<Object> ref = new WeakReference<Object>(config);
     // noinspection UnusedAssignment
     config = null;
     // try and free for the next 5 seconds, usually it works after the
