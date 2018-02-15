@@ -12,6 +12,7 @@
 
 import React from 'react';
 import Toolbar from './Toolbar';
+import Footer from './Footer';
 import './Page.css';
 require('prismjs/themes/prism.css');
 
@@ -19,13 +20,15 @@ type Props = {|
   children: any,
   className?: string,
   withSpacing?: boolean,
+  shouldShowFooter?: boolean,
 |};
 
 export default (props: Props) => (
   <div className={`Page ${props.className || ''}`}>
-    <Toolbar/>
+    <Toolbar />
     <div className={`PageContent ${props.withSpacing ? 'withSpacing' : ''}`}>
       {props.children}
     </div>
+    {props.shouldShowFooter && <Footer />}
   </div>
 );

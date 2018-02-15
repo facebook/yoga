@@ -19,11 +19,14 @@ import './index.css';
 
 export default ({pathContext}) => {
   return (
-    <Page className="doc-block no-playground">
+    <Page className="doc-block no-playground" shouldShowFooter>
       <Padded>
         <Row>
           <Col xl={16} lg={16} md={24} sm={24} xs={24}>
-            <div className="markdown" dangerouslySetInnerHTML={{__html: pathContext.html}} />
+            <div
+              className="markdown"
+              dangerouslySetInnerHTML={{__html: pathContext.html}}
+            />
           </Col>
         </Row>
         <Link to="/docs" className="overview">

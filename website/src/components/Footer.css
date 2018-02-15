@@ -1,0 +1,43 @@
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+.Footer {
+  display: flex;
+  padding: 10px 15px;
+  z-index: 4;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-top: 1px solid #a6dacf;
+}
+
+.Footer svg {
+    width: 30px;
+    height: 30px;
+}
+
+.Footer svg path {
+    fill: #a6dacf;
+}
+
+.Footer .logoOSS {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.Footer a {
+    margin: 0 10px;
+}
+
+.Footer .SocialNetwork {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}

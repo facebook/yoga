@@ -19,22 +19,23 @@ import './index.css';
 
 const CATEGORY_TITLE = {
   'getting-started': 'Getting Started',
-  'properties': 'Properties',
-  'examples': 'Examples',
-  'contributing': 'Contributing',
+  properties: 'Properties',
+  examples: 'Examples',
+  contributing: 'Contributing',
 };
 
 export default ({data}) => (
-  <Page className="docs-landing">
+  <Page className="docs-landing" shouldShowFooter>
     <Padded>
       <Row className="heading">
         <Col xl={16} lg={16} md={24} sm={24} xs={24}>
           <h1>Documentation</h1>
           <p>
-          Welcome to Yoga's documentation page. Below you will find helpfull
-          documentation on how to use yoga. As well as how to contribute to the
-          core library, documentation, and tests. We have also put together a set
-          of examples showing off common layouts and how to user Yoga to achieve them.
+            Welcome to Yoga's documentation page. Below you will find helpful
+            documentation on how to use yoga. As well as how to contribute to
+            the core library, documentation, and tests. We have also put
+            together a set of examples showing off common layouts and how to
+            user Yoga to achieve them.
           </p>
         </Col>
       </Row>
@@ -48,15 +49,18 @@ export default ({data}) => (
                   ({node}) =>
                     node.fileAbsolutePath.indexOf(`/${category}/`) > -1,
                 )
-                .map(({node}) => (
-                    node.frontmatter.redirect
-                    ? (<a key={node.id} href={node.frontmatter.path}>
+                .map(
+                  ({node}) =>
+                    node.frontmatter.redirect ? (
+                      <a key={node.id} href={node.frontmatter.path}>
                         {node.frontmatter.title}
-                      </a>)
-                    : (<Link key={node.id} to={node.frontmatter.path}>
+                      </a>
+                    ) : (
+                      <Link key={node.id} to={node.frontmatter.path}>
                         {node.frontmatter.title}
-                      </Link>)
-                ))}
+                      </Link>
+                    ),
+                )}
             </Col>
           ),
         )}
