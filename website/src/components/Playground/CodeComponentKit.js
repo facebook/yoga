@@ -64,6 +64,16 @@ function keyLookup(key: string): string {
   return keyLookup[key] || key;
 }
 
+function getValue(value) {
+  if (typeof value === 'string' && /%$/.test(value)) {
+    return `CKRelativeDimension::Percent(${parseFloat(value)})`;
+  } else if (value === 'auto') {
+    return 'CKRelativeDimension::Auto()';
+  } else {
+    return String(parseFloat(value));
+  }
+}
+
 function getLayoutCode(
   node: LayoutRecordT,
   indent: string = '',
@@ -79,7 +89,7 @@ function getLayoutCode(
       }`,
   );
   lines.push(indent + ` newWithView:{}`);
-  lines.push(indent + ` size:{${node.width},${node.height}}`);
+  lines.push(indent + ` size:{${getValue(node.width)},${getValue(node.height)}}`);
 
   const CKFlexboxComponentStyle = [
     'direction',
@@ -157,7 +167,7 @@ function renderKey(node: Yoga$Node, key: string, indent: string): ?string {
 
     ['top', 'left', 'right', 'bottom'].forEach(pKey => {
       if (node[key][pKey]) {
-        lines.push(indent + `\t.${pKey} = ${node[key][pKey]},`);
+        lines.push(indent + `\t.${pKey} = ${getValue(node[key][pKey])},`);
       }
     });
 

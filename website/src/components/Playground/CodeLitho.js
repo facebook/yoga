@@ -44,6 +44,17 @@ function getEnum(yogaEnum: string, value: string | number): string {
   }
 }
 
+function dipOrPercent(value) {
+  console.log(value);
+  return value === 'auto'
+    ? 'Auto'
+    : typeof value === 'string' && /%$/.test(value) ? 'Percent' : 'Dip';
+}
+
+function getValue(value) {
+  return value === 'auto' ? '' : `, ${parseFloat(value)}`;
+}
+
 function getLayoutCode(
   node: LayoutRecordT,
   indent: string = '',
@@ -73,7 +84,7 @@ function getLayoutCode(
         ),
     );
   }
-  const untouchedLayout = LayoutRecord({width: '', height: ''});
+  const untouchedLayout = LayoutRecord();
   const untouchedPosition = PositionRecord({});
   Object.keys(node.toJSON()).forEach(key => {
     if (
@@ -95,8 +106,12 @@ function getLayoutCode(
         lines.push(
           indent +
             (key === 'border'
-              ? `\t\t\t.widthDip(YogaEdge.ALL, ${node[key].top})`
-              : `\t.${key}Dip(YogaEdge.ALL, ${node[key].top})`),
+              ? `\t\t\t.width${dipOrPercent(
+                  node[key].top,
+                )}(YogaEdge.ALL${getValue(node[key].top)})`
+              : `\t.${key}${dipOrPercent(node[key].top)}(YogaEdge.ALL${getValue(
+                  node[key].top,
+                )})`),
         );
         return;
       }
@@ -105,8 +120,12 @@ function getLayoutCode(
         lines.push(
           indent +
             (key === 'border'
-              ? `\t\t\t.widthDip(YogaEdge.VERTICAL, ${node[key].top})`
-              : `\t.${key}Dip(YogaEdge.VERTICAL, ${node[key].top})`),
+              ? `\t\t\t.width${dipOrPercent(
+                  node[key].top,
+                )}(YogaEdge.VERTICAL${getValue(node[key].top)})`
+              : `\t.${key}${dipOrPercent(
+                  node[key].top,
+                )}(YogaEdge.VERTICAL${getValue(node[key].top)})`),
         );
         alreadySet.push('top', 'bottom');
       }
@@ -114,25 +133,34 @@ function getLayoutCode(
         lines.push(
           indent +
             (key === 'border'
-              ? `\t\t\t.widthDip(YogaEdge.HORIZONTAL, ${node[key].left})`
-              : `\t.${key}Dip(YogaEdge.HORIZONTAL, ${node[key].left})`),
+              ? `\t\t\t.width${dipOrPercent(
+                  node[key].left,
+                )}(YogaEdge.HORIZONTAL${getValue(node[key].left)})`
+              : `\t.${key}${dipOrPercent(
+                  node[key].left,
+                )}(YogaEdge.HORIZONTAL${getValue(node[key].left)})`),
         );
         alreadySet.push('left', 'right');
       }
       ['left', 'top', 'right', 'bottom'].forEach((pKey, i) => {
         if (
           node[key][pKey] !== untouchedPosition[pKey] &&
-          alreadySet.indexOf(pKey) === -1
+          alreadySet.indexOf(pKey) === -1 &&
+          node[key][pKey]
         ) {
           lines.push(
             indent +
               (key === 'border'
-                ? `\t\t\t.widthDip(YogaEdge.${pKey.toUpperCase()}, ${
-                    node.border[pKey]
-                  })`
-                : `\t.${key}Dip(YogaEdge.${pKey.toUpperCase()}, ${
-                    node[key][pKey]
-                  })`),
+                ? `\t\t\t.width${dipOrPercent(
+                    node.border[pKey],
+                  )}(YogaEdge.${pKey.toUpperCase()}${getValue(
+                    node.border[pKey],
+                  )})`
+                : `\t.${key}${dipOrPercent(
+                    node[key][pKey],
+                  )}(YogaEdge.${pKey.toUpperCase()}${getValue(
+                    node[key][pKey],
+                  )})`),
           );
         }
       });
@@ -146,9 +174,28 @@ function getLayoutCode(
     } else if (
       key !== 'children' &&
       key !== 'flexDirection' &&
-      node[key] !== untouchedLayout[key]
+      node[key] !== untouchedLayout[key] &&
+      node[key]
     ) {
-      lines.push(indent + `\t.${key}(${getEnum(key, node[key])})`);
+      if (node[key] === 'auto') {
+        lines.push(indent + `\t.${key}Auto(${getEnum(key, node[key])})`);
+      } else if (typeof node[key] === 'string' && /%$/.test(node[key])) {
+        lines.push(indent + `\t.${key}Percent(${parseFloat(node[key])})`);
+      } else if (
+        [
+          'width',
+          'height',
+          'minHeight',
+          'maxHeight',
+          'minWidth',
+          'maxWidth',
+          'flexBasis',
+        ].indexOf(key) > -1
+      ) {
+        lines.push(indent + `\t.${key}Dip(${getEnum(key, node[key])})`);
+      } else {
+        lines.push(indent + `\t.${key}(${getEnum(key, node[key])})`);
+      }
     }
   });
 

@@ -17,6 +17,12 @@ import {JSEnumLookup} from './CodeJavaScript';
 import type {LayoutRecordT} from './LayoutRecord';
 import type {Yoga$Direction} from 'yoga-layout';
 
+function getValue(value) {
+  return typeof value === 'number' || /^\d+$/.test(value)
+    ? String(value)
+    : `'${value}'`;
+}
+
 function getEnum(yogaEnum: string, value: string | number): string {
   const enumValue = Object.keys(yoga)
     .filter(
@@ -33,13 +39,13 @@ function getEnum(yogaEnum: string, value: string | number): string {
           .replace('_', '-')
           .toLowerCase() +
         "'"
-    : String(value);
+    : getValue(value);
 }
 
 function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
   const lines = [];
-  const untouchedLayout = LayoutRecord({width: '', height: ''});
-  const untouchedPosition = PositionRecord({});
+  const untouchedLayout = LayoutRecord();
+  const untouchedPosition = PositionRecord();
   lines.push(indent + '<View style={{');
   lines.push(indent + '  flex: 1,');
   Object.keys(node.toJSON()).forEach(key => {
@@ -51,7 +57,9 @@ function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
         ) {
           lines.push(
             indent +
-              `  border${pKey}Width: ${node.border[pKey.toLowerCase()]},`,
+              `  border${pKey}Width: ${getValue(
+                node.border[pKey.toLowerCase()],
+              )},`,
           );
         }
       });
@@ -72,11 +80,11 @@ function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
       }
       const alreadySet = [];
       if (top !== untouchedPosition.top && top === bottom) {
-        lines.push(indent + `  ${key}Vertical: ${node[key].top},`);
+        lines.push(indent + `  ${key}Vertical: ${getValue(node[key].top)},`);
         alreadySet.push('top', 'bottom');
       }
       if (left !== untouchedPosition.left && left === right) {
-        lines.push(indent + `  ${key}Horizontal: ${node[key].left},`);
+        lines.push(indent + `  ${key}Horizontal: ${getValue(node[key].left)},`);
         alreadySet.push('left', 'right');
       }
       ['left', 'top', 'right', 'bottom'].forEach((pKey, i) => {
@@ -86,13 +94,17 @@ function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
         ) {
           lines.push(
             indent +
-              `  ${key}${pKey[0].toUpperCase()}${pKey.substr(1)}: ${
-                node[key][pKey]
-              },`,
+              `  ${key}${pKey[0].toUpperCase()}${pKey.substr(1)}: ${getValue(
+                node[key][pKey],
+              )},`,
           );
         }
       });
-    } else if (key !== 'children' && node[key] !== untouchedLayout[key]) {
+    } else if (
+      key !== 'children' &&
+      node[key] !== untouchedLayout[key] &&
+      node[key]
+    ) {
       lines.push(indent + `  ${key}: ${getEnum(key, node[key])},`);
     }
   });
