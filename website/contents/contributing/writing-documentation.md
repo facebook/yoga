@@ -29,6 +29,8 @@ initialPlayground: eyJ3aWR0aCI6IjYwMCIsImhlaWdodCI6NTAwLCJjaGlsZHJlbiI6W3t9LHt9L
   pages with playgrounds and contains the initial playground state.
   This base64 string is a reference to the hash (content after #)
   of a [playground](/playground) url.
+ - The `redirect` property allows to redirect to the other page, the path of which is mentioned in the property `path`.
+
 
 Within the markdown of a documentation page which has an associated
 playground you can add controls to let the user play around with the feature
@@ -36,4 +38,15 @@ directly from the documenation page.
 
 ```markdown
 <controls prop="alignContent"></controls>
+```
+
+If you would like to redirect to another page (potentially an external link) the header would look something like this.
+
+```markdown
+---
+path: "/playground#eyJ3aWR0aCI6IjYwMCIsImhlaWdodCI6NTAwLCJjaGlsZHJlbiI6W3t9LHt9LHt9XX0="
+title: "Flex Direction"
+redirect: true
+---
+
 ```
