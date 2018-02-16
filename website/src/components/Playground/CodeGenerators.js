@@ -138,7 +138,7 @@ export default class CodeGenerators extends Component<Props, State> {
           </div>
         )}
       </Modal>,
-      <Dropdown overlay={menu} key="dropdown">
+      <Dropdown overlay={menu} key="dropdown" trigger="click">
         <Button>
           Get Code <Icon type="down" />
         </Button>

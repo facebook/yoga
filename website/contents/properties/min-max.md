@@ -9,7 +9,7 @@ hasPlayground: true
 All the following properties set the maximum and minimum size constraints of an element.
 These properties have higher priority than all other properties and will always be respected.
 Constraints can be specified as either absolute pixel values or as percentages of their
-parent's size. By default all these constraints are undefined.
+parent's size. By default all these constraints are `undefined`.
 
 ### Max Width
 

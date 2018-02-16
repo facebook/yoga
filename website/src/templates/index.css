@@ -41,10 +41,11 @@
 }
 
 .doc-block h3 {
-  color: #444950;
-  font-size: 16px;
-  font-weight: 700;
   line-height: 180%;
+  font-size: 14px;
+  font-weight: 700;
+  color: #444950;
+  text-transform: uppercase;
 }
 
 .doc-block p {

@@ -75,6 +75,7 @@ export default class YogaEnumSelect extends Component<Props> {
     return this.values.length > 3 ? (
       <div className="YogaEnumSelect">
         <Dropdown
+          trigger="click"
           disabled={props.disabled}
           overlay={
             <Menu onClick={this.handleMenuClick}>

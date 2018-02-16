@@ -68,7 +68,7 @@ export default class Editor extends Component<Props> {
               onChange={this.props.onChangeSetting}
             />
             <h2>
-              Flex direction
+              Flex Direction
               <InfoText doclink="/docs/flex-direction">
                 Defines the direction of the main-axis
               </InfoText>
@@ -130,7 +130,7 @@ export default class Editor extends Component<Props> {
             </Row>
 
             <h2>
-              Flex wrap
+              Flex Wrap
               <InfoText doclink="/docs/flex-wrap">
                 Wrapping behaviour when child nodes don't fit into a single line
               </InfoText>
@@ -144,7 +144,7 @@ export default class Editor extends Component<Props> {
           </TabPane>
           <TabPane tab="Alignment" key="2">
             <h2>
-              Justify content
+              Justify Content
               <InfoText doclink="/docs/justify-content">
                 Aligns child nodes along the main-axis
               </InfoText>
@@ -157,7 +157,7 @@ export default class Editor extends Component<Props> {
             />
 
             <h2>
-              Align items
+              Align Items
               <InfoText doclink="/docs/align-items">
                 Aligns child nodes along the cross-axis
               </InfoText>
@@ -170,7 +170,7 @@ export default class Editor extends Component<Props> {
             />
 
             <h2>
-              Align self
+              Align Self
               <InfoText doclink="/docs/align-items">
                 Override align items of parent
               </InfoText>
@@ -183,7 +183,7 @@ export default class Editor extends Component<Props> {
             />
 
             <h2>
-              Align content
+              Align Content
               <InfoText doclink="/docs/align-content">
                 Alignment of lines along the cross-axis when wrapping
               </InfoText>
@@ -197,7 +197,7 @@ export default class Editor extends Component<Props> {
           </TabPane>
           <TabPane tab="Layout" key="3">
             <h2>
-              Width &times; height
+              Width &times; Height
               <InfoText doclink="/docs/width-height">
                 Dimensions of the node
               </InfoText>
@@ -226,7 +226,7 @@ export default class Editor extends Component<Props> {
             </Row>
 
             <h2>
-              Aspect ratio
+              Aspect Ratio
               <InfoText doclink="/docs/aspect-ratio">
                 Width/Height aspect ratio of node
               </InfoText>
@@ -240,7 +240,6 @@ export default class Editor extends Component<Props> {
               onChange={this.props.onChangeLayout}
             />
 
-            <h2>Box model</h2>
             {['padding', 'border', 'margin'].map(property => (
               <EditValue
                 property={property}
@@ -251,7 +250,7 @@ export default class Editor extends Component<Props> {
               />
             ))}
             <h2>
-              Position
+              Position Type
               <InfoText doclink="/docs/absolute-position">
                 Relative position offsets the node from it's calculated
                 position. Absolute position removes the node from the flexbox

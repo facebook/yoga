@@ -1,7 +1,7 @@
 ---
 path: "docs/layout-direction"
 title: "Layout Direction"
-hasPlayground: true
+hasPlayground: false
 ---
 
 ## Layout Direction
@@ -17,7 +17,7 @@ to the `CalculateLayout` call or by setting the direction on the root node.
 **LTR (DEFAULT)** Text and children and laid our from left to right. Margin and
 padding applied the start of an element are applied on the left side.
 
-**RTL (DEFAULT)** Text and children and laid our from right to left. Margin and
+**RTL** Text and children and laid our from right to left. Margin and
 padding applied the start of an element are applied on the right side.
 
 <controls prop="layoutDirection"></controls>

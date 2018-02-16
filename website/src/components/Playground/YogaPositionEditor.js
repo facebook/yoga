@@ -53,7 +53,7 @@ export default class YogaPositionEditor extends Component<Props> {
               onChange(property, value.set('left', e.target.value))
             }
           />
-          {property}
+          {property.toUpperCase()}
           <Input
             type="text"
             value={value.right}
