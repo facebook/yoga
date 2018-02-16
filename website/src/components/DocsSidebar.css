@@ -25,7 +25,7 @@
   margin-bottom: 5px;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 992px) {
   .DocsSidebar {
     width: 100%;
     padding: 20px;

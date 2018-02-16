@@ -34,7 +34,7 @@ export default class Toolbar extends Component<Props> {
         <Link to="/docs" activeClassName="selected">Documentation</Link>
 
         <Row>
-          <Col xl={24} lg={0} md={0} sm={0} xs={0}>
+          <Col lg={24} md={0} sm={0} xs={0}>
             <Link to="/playground" activeClassName="selected">Playground</Link>
           </Col>
         </Row>

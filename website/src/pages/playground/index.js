@@ -18,12 +18,12 @@ import './index.css';
 
 export default () => (
   <Page>
-	<Row className="playground">
-	  <Col xl={24} lg={0} md={0} sm={0} xs={0}>
+	<Row className="playground-page">
+      <Col lg={24} md={0} sm={0} xs={0}>
 	    <Playground height="100%" selectedNodePath={[]} persist />
 	  </Col>
 
-  	  <Col xl={0} xs={24} className="error-container">
+  	  <Col lg={0} xs={24} className="error-container">
 	    <p className="error-text">Sorry! The playground only works on larger displays currently.</p>
 	  </Col>
 	</Row>

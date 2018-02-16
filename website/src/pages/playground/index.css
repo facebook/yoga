@@ -1,16 +1,16 @@
-.playground {
+.playground-page {
   display: flex;
   flex: 1;
 }
 
-.playground .error-container {
+.playground-page .error-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.playground .error-text {
+.playground-page .error-text {
   color: #444950;
   line-height: 180%;
   font-size: 16px;
