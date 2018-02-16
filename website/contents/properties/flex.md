@@ -27,10 +27,10 @@ A container will shrink its children weighted by the child’s flex shrink value
 <controls prop="flexShrink"></controls>
 
 **FLEX BASIS** is an axis-independent way of providing the default size of an item
-along the main axis. Setting the flex basis of a child is similar to setting the Width of that
-child if its parent is a container with FlexDirection = row or setting the Height of a child
-if its parent is a container with FlexDirection = column. The flex basis of an item is the
-efault size of that item, the size of the item before any flex grow and flex shrink
+along the main axis. Setting the flex basis of a child is similar to setting the `width` of that
+child if its parent is a container with `flex direction: row` or setting the `height` of a child
+if its parent is a container with `flex direction: column`. The flex basis of an item is the
+default size of that item, the size of the item before any flex grow and flex shrink
 calculations are performed.
 
 <controls prop="flexBasis"></controls>

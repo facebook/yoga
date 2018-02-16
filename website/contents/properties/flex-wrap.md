@@ -7,15 +7,15 @@ initialPlayground: eyJ3aWR0aCI6NTAwLCJoZWlnaHQiOjUwMCwiYWxpZ25Db250ZW50IjoxLCJmb
 
 ## Flex Wrap
 
-The `flexWrap` property is set on containers and controls what happens when
+The `flex wrap` property is set on containers and controls what happens when
 children overflow the size of the container along the main axis. By default
 children are forced into a single line (which can shrink elements).
 
 If wrapping is allowed items are wrapped into multiple lines along the main
-axis if needed. `WRAP_REVERSE` behaves the same, but the order of the lines is
+axis if needed. `wrap reverse` behaves the same, but the order of the lines is
 reversed.
 
 <controls prop="flexWrap"></controls>
 
-When wrapping lines [alignContent](align-content) can be used to specify how the
+When wrapping lines [`align content`](align-content) can be used to specify how the
 lines are placed in the container.

@@ -7,7 +7,23 @@ initialPlayground: eyJ3aWR0aCI6NTAwLCJoZWlnaHQiOjUwMCwiYWxpZ25Db250ZW50IjoxLCJmb
 
 ## Align Content
 
-The property defines the distribution of lines along the cross-axis. This only
-has effect when items are wrapped to multiple lines (see [flexWrap](flex-wrap)).
+Align content defines the distribution of lines along the cross-axis. This only
+has effect when items are wrapped to multiple lines using [`flex wrap`](flex-wrap).
+
+**FLEX START (DEFAULT)** Align wrapped lines to the start of the container's cross axis.
+
+**FLEX END** Align wrapped lines to the end of the container's cross axis.
+
+**STRETCH** Stretch wrapped lines to match the `height` of the container's cross axis.
+
+**CENTER** Align wrapped lines in the center of the container's cross axis.
+
+**SPACE BETWEEN** Evenly space wrapped lines across the container's main axis, distributing
+remaining space between the lines.
+
+**SPACE AROUND** Evenly space wrapped lines across the container's main axis, distributing
+remaining space around the lines. Compared to `space between` using
+`space around` will result in space being distributed to the begining of
+the first lines and end of the last line.
 
 <controls prop="alignContent"></controls>
