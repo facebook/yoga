@@ -145,7 +145,7 @@ export default class YogaNode extends Component<Props, State> {
         try {
           root[`set${key[0].toUpperCase()}${key.substr(1)}`](
             yoga[`EDGE_${direction.toUpperCase()}`],
-            layoutDefinition[key][direction] || 0,
+            layoutDefinition[key][direction],
           );
         } catch (e) {}
       });

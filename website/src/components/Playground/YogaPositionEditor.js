@@ -38,17 +38,15 @@ export default class YogaPositionEditor extends Component<Props> {
       <div className="YogaPositionEditor">
         <Input
           type="text"
-          value={value.top}
+          value={Number.isNaN(value.top) ? '' : value.top}
           disabled={disabled}
-          placeholder="0"
           onChange={e => onChange(property, value.set('top', e.target.value))}
         />
         <div className="YogaPositionEditorRow">
           <Input
             type="text"
-            value={value.left}
+            value={Number.isNaN(value.left) ? '' : value.left}
             disabled={disabled}
-            placeholder="0"
             onChange={e =>
               onChange(property, value.set('left', e.target.value))
             }
@@ -56,9 +54,8 @@ export default class YogaPositionEditor extends Component<Props> {
           {property.toUpperCase()}
           <Input
             type="text"
-            value={value.right}
+            value={Number.isNaN(value.right) ? '' : value.right}
             disabled={disabled}
-            placeholder="0"
             onChange={e =>
               onChange(property, value.set('right', e.target.value))
             }
@@ -66,9 +63,8 @@ export default class YogaPositionEditor extends Component<Props> {
         </div>
         <Input
           type="text"
-          value={value.bottom}
+          value={Number.isNaN(value.bottom) ? '' : value.bottom}
           disabled={disabled}
-          placeholder="0"
           onChange={e =>
             onChange(property, value.set('bottom', e.target.value))
           }

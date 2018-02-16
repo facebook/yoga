@@ -61,7 +61,12 @@ const r: LayoutRecordT = Record({
   padding: PositionRecord(),
   margin: PositionRecord(),
   border: PositionRecord(),
-  position: PositionRecord(),
+  position: PositionRecord({
+    left: NaN,
+    top: NaN,
+    right: NaN,
+    bottom: NaN,
+  }),
   positionType: yoga.POSITION_TYPE_RELATIVE,
   flexWrap: yoga.WRAP_NO_WRAP,
   flexBasis: 'auto',
