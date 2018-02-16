@@ -36,6 +36,7 @@ export default (props: Props<*>) => {
         {...props}
         onChange={e => props.onChange(props.property, e.target.value)}
         placeholder="undefined"
+        onFocus={e => e.target.select()}
         value={Number.isNaN(props.value) ? '' : props.value}
       />
     );
