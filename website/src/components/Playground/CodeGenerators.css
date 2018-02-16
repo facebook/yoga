@@ -1,0 +1,20 @@
+.CodeGeneratorsTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.CodeGeneratorsTitle a {
+  font-size: 13px;
+  font-weight: normal;
+  margin-right: 20px;
+}
+
+.CodeGeneratorsCopyText {
+  position: absolute;
+  top: -9999em;
+  left: -9999em;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}

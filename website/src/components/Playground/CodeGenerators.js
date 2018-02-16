@@ -11,7 +11,7 @@
  */
 
 import React, {Component} from 'react';
-import {Menu, Button, Row, Col, Dropdown, Icon, Modal} from 'antd';
+import {Menu, Button, Row, Col, Dropdown, Icon, Modal, Tooltip} from 'antd';
 import SyntaxHighlighter, {
   registerLanguage,
 } from 'react-syntax-highlighter/prism-light';
@@ -29,6 +29,8 @@ registerLanguage('jsx', jsx);
 registerLanguage('java', java);
 registerLanguage('objectivec', objectivec);
 
+import './CodeGenerators.css';
+
 import type {LayoutRecordT} from './LayoutRecord';
 import type {Yoga$Direction} from 'yoga-layout';
 
@@ -38,6 +40,7 @@ type Props = {
 };
 type State = {
   showModal: ?string,
+  copied: boolean,
 };
 
 const LANGUAGES = {
@@ -62,9 +65,18 @@ const LANGUAGES = {
 export default class CodeGenerators extends Component<Props, State> {
   state = {
     showModal: null,
+    copied: false,
   };
 
   onClick = ({key}: {key: string}) => this.setState({showModal: key});
+
+  onCopy = () => {
+    if (this._ref) {
+      this._ref.select();
+      document.execCommand('Copy');
+      this.setState({copied: true});
+    }
+  };
 
   render() {
     const {showModal} = this.state;
@@ -77,27 +89,53 @@ export default class CodeGenerators extends Component<Props, State> {
       </Menu>
     );
 
+    const code = showModal
+      ? LANGUAGES[showModal].generator(
+          this.props.layoutDefinition,
+          this.props.direction,
+        )
+      : '';
+
     return [
       <Modal
         key="modal"
-        title={showModal ? LANGUAGES[showModal].title : ''}
+        title={
+          showModal ? (
+            <div className="CodeGeneratorsTitle">
+              {LANGUAGES[showModal].title}
+              <Tooltip
+                title={this.state.copied ? 'Copied!' : 'Click to copy'}
+                onVisibleChange={() => this.setState({copied: false})}>
+                <a onClick={this.onCopy}>copy to clipboard</a>
+              </Tooltip>
+            </div>
+          ) : (
+            ''
+          )
+        }
         visible={Boolean(showModal)}
         footer={null}
         bodyStyle={{padding: 0}}
         onCancel={() => this.setState({showModal: null})}>
         {showModal && (
-          <SyntaxHighlighter
-            language={LANGUAGES[showModal].syntax}
-            style={styles}
-            customStyle={{fontSize: '13px', backgroundColor: 'white'}}
-            lineNumberStyle={{userSelect: 'none', opacity: 0.5}}
-            codeTagProps={{style: {tabSize: 4}}}
-            showLineNumbers>
-            {LANGUAGES[showModal].generator(
-              this.props.layoutDefinition,
-              this.props.direction,
-            )}
-          </SyntaxHighlighter>
+          <div>
+            <textarea
+              className="CodeGeneratorsCopyText"
+              value={code}
+              ref={ref => {
+                this._ref = ref;
+              }}
+            />
+            <SyntaxHighlighter
+              language={LANGUAGES[showModal].syntax}
+              style={styles}
+              customStyle={{fontSize: '13px', backgroundColor: 'white'}}
+              lineNumberStyle={{userSelect: 'none', opacity: 0.5}}
+              codeTagProps={{style: {tabSize: 4}}}
+              showLineNumbers>
+              {code}
+            </SyntaxHighlighter>
+          </div>
         )}
       </Modal>,
       <Dropdown overlay={menu} key="dropdown">
