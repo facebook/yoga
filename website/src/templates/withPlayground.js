@@ -18,6 +18,7 @@ import EditValue from '../components/Playground/EditValue';
 import Link from 'gatsby-link';
 import {Button, Icon, Row, Col} from 'antd';
 import './index.css';
+import atob from 'atob';
 
 type Props = {
   pathContext: {
