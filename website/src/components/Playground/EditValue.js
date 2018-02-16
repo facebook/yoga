@@ -35,6 +35,8 @@ export default (props: Props<*>) => {
         type="text"
         {...props}
         onChange={e => props.onChange(props.property, e.target.value)}
+        placeholder="undefined"
+        value={Number.isNaN(props.value) ? '' : props.value}
       />
     );
   }

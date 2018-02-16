@@ -149,11 +149,7 @@ export default class Playground extends Component<Props, State> {
       const updatedChildren = layoutDefinition
         .getIn(path)
         .push(LayoutRecord({width: 100, height: 100}));
-      this.modifyAtPath(
-        path,
-        updatedChildren,
-        selectedNodePath.concat(updatedChildren.size - 1),
-      );
+      this.modifyAtPath(path, updatedChildren);
     }
   };
 
