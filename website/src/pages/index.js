@@ -23,6 +23,53 @@ import ComponentKitLogo from './logos/componentkit.png';
 import Link from 'gatsby-link';
 import Footer from '../components/Footer';
 
+const playgroundInitialState = {
+  "width":500,
+  "height":500,
+  "alignItems":1,
+  "padding":{
+    "top":"20",
+    "right":"20",
+    "bottom":"20",
+    "left":"20"
+  },
+  "children":[
+    {
+      "width":100,
+      "height":100,
+      "minWidth":null,
+      "maxWidth":null,
+      "minHeight":null,
+      "maxHeight":null
+    },
+    {
+      "width":100,
+      "height":100,
+      "margin":{
+        "right":"20",
+        "left":"20"
+      },
+      "flexGrow":"1",
+      "minWidth":null,
+      "maxWidth":null,
+      "minHeight":null,
+      "maxHeight":null
+    },
+    {
+      "width":100,
+      "height":100,
+      "minWidth":null,
+      "maxWidth":null,
+      "minHeight":null,
+      "maxHeight":null
+    }
+  ],
+  "minWidth":null,
+  "maxWidth":null,
+  "minHeight":null,
+  "maxHeight":null
+};
+
 const HeroSection = () => (
   <Padded>
     <Row className="hero">
@@ -58,7 +105,7 @@ const HeroSection = () => (
 const PlaygroundSection = () => (
   <Row>
     <Col lg={24} md={0} sm={0} xs={0}>
-      <Playground selectedNodePath={[]} showGuides={false} height={601} />
+      <Playground selectedNodePath={[]} showGuides={true} height={601} layoutDefinition={playgroundInitialState} />
     </Col>
   </Row>
 );
