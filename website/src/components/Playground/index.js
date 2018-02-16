@@ -56,7 +56,11 @@ export default class Playground extends Component<Props, State> {
     layoutDefinition: {
       width: 500,
       height: 500,
-      children: [{}, {}, []],
+      children: [
+        {width: 100, height: 100},
+        {width: 100, height: 100},
+        {width: 100, height: 100},
+      ],
     },
     direction: yoga.DIRECTION_LTR,
     maxDepth: 3,
@@ -142,7 +146,9 @@ export default class Playground extends Component<Props, State> {
     const {selectedNodePath, layoutDefinition} = this.state;
     if (selectedNodePath) {
       const path = getPath(selectedNodePath).concat('children');
-      const updatedChildren = layoutDefinition.getIn(path).push(LayoutRecord());
+      const updatedChildren = layoutDefinition
+        .getIn(path)
+        .push(LayoutRecord({width: 100, height: 100}));
       this.modifyAtPath(
         path,
         updatedChildren,

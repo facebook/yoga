@@ -85,7 +85,7 @@ export default class Editor extends Component<Props> {
                 <h2>
                   Basis
                   <InfoText doclink="/docs/flex">
-                    The factor of remaining space should be given to this node
+                    Default size of a node along the main axis
                   </InfoText>
                 </h2>
                 <EditValue
@@ -233,7 +233,7 @@ export default class Editor extends Component<Props> {
             </h2>
             <EditValue
               type="text"
-              placeholder="none"
+              placeholder="auto"
               property="aspectRatio"
               disabled={disabled}
               value={node ? node.aspectRatio : undefined}

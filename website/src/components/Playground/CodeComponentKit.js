@@ -3,11 +3,9 @@ import yoga from 'yoga-layout/dist/entry-browser';
 import LayoutRecord from './LayoutRecord';
 import PositionRecord from './PositionRecord';
 import type {LayoutRecordT} from './LayoutRecord';
-import type {Yoga$Direction /* Yoga$Node */} from 'yoga-layout';
+import type {Yoga$Direction, Yoga$Node} from 'yoga-layout';
 
-type Yoga$Node = any;
-
-const enumLookup = { 
+const enumLookup = {
   flexDirection: {
     [yoga.FLEX_DIRECTION_COLUMN]: 'CKFlexboxDirectionVertical',
     [yoga.FLEX_DIRECTION_ROW]: 'CKFlexboxDirectionHorizontal',

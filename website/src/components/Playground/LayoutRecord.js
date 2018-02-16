@@ -51,8 +51,8 @@ export type LayoutRecordT = RecordOf<{
 }>;
 
 const r: LayoutRecordT = Record({
-  width: 100,
-  height: 100,
+  width: 'auto',
+  height: 'auto',
   justifyContent: yoga.JUSTIFY_FLEX_START,
   alignItems: yoga.ALIGN_STRETCH,
   alignSelf: yoga.ALIGN_AUTO,
@@ -69,10 +69,10 @@ const r: LayoutRecordT = Record({
   flexShrink: 1,
   children: List(),
   aspectRatio: 'auto',
-  minWidth: undefined,
-  maxWidth: undefined,
-  minHeight: undefined,
-  maxHeight: undefined,
+  minWidth: NaN,
+  maxWidth: NaN,
+  minHeight: NaN,
+  maxHeight: NaN,
 });
 
 export default r;

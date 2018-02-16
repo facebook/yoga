@@ -14,12 +14,11 @@ import React, {Component} from 'react';
 import yoga, {Node} from 'yoga-layout/dist/entry-browser';
 import PositionGuide from './PositionGuide';
 import PositionRecord from './PositionRecord';
+import LayoutRecord from './LayoutRecord';
 import type {LayoutRecordT} from './LayoutRecord';
-import type {Yoga$Direction} from 'yoga-layout';
+import type {Yoga$Direction, Yoga$Node} from 'yoga-layout';
 
 import './YogaNode.css';
-
-type Yoga$Node = any;
 
 type ComputedLayout = {|
   left: number,
@@ -105,51 +104,53 @@ export default class YogaNode extends Component<Props, State> {
 
   createYogaNodes = (layoutDefinition: LayoutRecordT): Yoga$Node => {
     const root = Node.create();
-    root.setWidth(layoutDefinition.width);
-    root.setHeight(layoutDefinition.height);
-    root.setMinWidth(layoutDefinition.minWidth);
-    root.setMaxWidth(layoutDefinition.maxWidth);
-    root.setMinHeight(layoutDefinition.minHeight);
-    root.setMaxHeight(layoutDefinition.maxHeight);
-    root.setJustifyContent(layoutDefinition.justifyContent);
-    root.setAlignItems(layoutDefinition.alignItems);
-    root.setAlignSelf(layoutDefinition.alignSelf);
-    root.setAlignContent(layoutDefinition.alignContent);
-    root.setFlexGrow(layoutDefinition.flexGrow);
-    root.setFlexShrink(layoutDefinition.flexShrink);
 
-    root.setPadding(yoga.EDGE_TOP, layoutDefinition.padding.top);
-    root.setPadding(yoga.EDGE_RIGHT, layoutDefinition.padding.right);
-    root.setPadding(yoga.EDGE_BOTTOM, layoutDefinition.padding.bottom);
-    root.setPadding(yoga.EDGE_LEFT, layoutDefinition.padding.left);
+    const defaultLayout = LayoutRecord({});
+    [
+      'width',
+      'height',
+      'minWidth',
+      'maxWidth',
+      'minHeight',
+      'maxHeight',
+      'justifyContent',
+      'alignItems',
+      'alignSelf',
+      'alignContent',
+      'flexGrow',
+      'flexShrink',
+      'positionType',
+      'aspectRatio',
+      'flexWrap',
+      'flexDirection',
+    ].forEach(key => {
+      try {
+        const value =
+          layoutDefinition[key] === ''
+            ? defaultLayout[key]
+            : layoutDefinition[key];
+        root[`set${key[0].toUpperCase()}${key.substr(1)}`](value);
+      } catch (e) {}
+    });
 
-    root.setBorder(yoga.EDGE_TOP, layoutDefinition.border.top);
-    root.setBorder(yoga.EDGE_RIGHT, layoutDefinition.border.right);
-    root.setBorder(yoga.EDGE_BOTTOM, layoutDefinition.border.bottom);
-    root.setBorder(yoga.EDGE_LEFT, layoutDefinition.border.left);
-
-    root.setMargin(yoga.EDGE_TOP, layoutDefinition.margin.top);
-    root.setMargin(yoga.EDGE_RIGHT, layoutDefinition.margin.right);
-    root.setMargin(yoga.EDGE_BOTTOM, layoutDefinition.margin.bottom);
-    root.setMargin(yoga.EDGE_LEFT, layoutDefinition.margin.left);
-
-    root.setPosition(yoga.EDGE_TOP, layoutDefinition.position.top);
-    root.setPosition(yoga.EDGE_RIGHT, layoutDefinition.position.right);
-    root.setPosition(yoga.EDGE_BOTTOM, layoutDefinition.position.bottom);
-    root.setPosition(yoga.EDGE_LEFT, layoutDefinition.position.left);
-
-    root.setPositionType(layoutDefinition.positionType);
+    ['padding', 'margin', 'position', 'border'].forEach(key => {
+      ['top', 'right', 'bottom', 'left'].forEach(direction => {
+        try {
+          root[`set${key[0].toUpperCase()}${key.substr(1)}`](
+            yoga[`EDGE_${direction.toUpperCase()}`],
+            layoutDefinition[key][direction] || 0,
+          );
+        } catch (e) {}
+      });
+    });
 
     root.setDisplay(yoga.DISPLAY_FLEX);
-    root.setAspectRatio(layoutDefinition.aspectRatio);
-    root.setFlexWrap(layoutDefinition.flexWrap);
-    root.setFlexDirection(layoutDefinition.flexDirection);
+
     (layoutDefinition.children || [])
       .map(this.createYogaNodes)
       .forEach((node, i) => {
         root.insertChild(node, i);
       });
-
     return root;
   };
 
