@@ -44,6 +44,7 @@ type Props = {|
 
 type State = {
   visible?: boolean,
+  hovered: boolean,
 };
 
 export default class YogaNode extends Component<Props, State> {
@@ -55,7 +56,9 @@ export default class YogaNode extends Component<Props, State> {
     showGuides: true,
   };
 
-  state = {};
+  state = {
+    hovered: false,
+  };
   computedLayout: ?ComputedLayout;
   rootNode: ?Yoga$Node;
 
@@ -90,6 +93,10 @@ export default class YogaNode extends Component<Props, State> {
       this.rootNode.freeRecursive();
     }
   }
+
+  onMouseMove = e => {
+    this.setState({hovered: e.target === this._ref});
+  };
 
   calculateLayout(props: Props) {
     const root = this.createYogaNodes(props.layoutDefinition);
@@ -180,6 +187,8 @@ export default class YogaNode extends Component<Props, State> {
     }
   };
 
+  onMouseLeave = (e: SyntheticMouseEvent<>) => this.setState({hovered: false});
+
   showPositionGuides({node}: ComputedLayout) {
     const padding = PositionRecord({
       top: node.getComputedPadding(yoga.EDGE_TOP),
@@ -256,9 +265,14 @@ export default class YogaNode extends Component<Props, State> {
       <div
         className={`YogaNode ${isFocused ? 'focused' : ''} ${className || ''} ${
           this.state.visible ? '' : 'invisible'
-        }`}
+        } ${this.state.hovered ? 'hover' : ''}`}
         style={path.length == 0 ? {width, height} : {left, top, width, height}}
         onDoubleClick={this.onDoubleClick}
+        onMouseMove={this.onMouseMove}
+        onMouseLeave={this.onMouseLeave}
+        ref={ref => {
+          this._ref = ref;
+        }}
         onClick={this.onClick}>
         {label && <div className="label">{label}</div>}
         {isFocused &&
