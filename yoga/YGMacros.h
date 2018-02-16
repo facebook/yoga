@@ -19,8 +19,10 @@
 
 #ifdef _WINDLL
 #define WIN_EXPORT __declspec(dllexport)
+#define DINIT(name, value) value
 #else
 #define WIN_EXPORT
+#define DINIT(name, value) .name = value
 #endif
 
 #ifdef WINARMDLL
