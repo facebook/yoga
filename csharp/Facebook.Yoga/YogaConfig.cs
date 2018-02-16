@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2014-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -40,7 +40,7 @@ namespace Facebook.Yoga
             if (_ygConfig == YGConfigHandle.Default)
             {
                 _managedLogger = LoggerInternal;
-                Native.YGInteropSetLogger(_managedLogger);
+                Native.YGConfigSetLogger(_ygConfig, _managedLogger);
             }
         }
 
