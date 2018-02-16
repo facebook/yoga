@@ -32,9 +32,9 @@ const HeroSection = () => (
           Flexible Layouts <br /> with Yoga
         </h1>
         <p>
-          Build flexible layouts on any platform with a highly optimized layout
-          engine designed with speed, size, and ease of use in mind. Yoga is
-          open source and ready for you to use today.
+          Build flexible layouts on any platform with a highly optimized
+          open source layout engine designed with speed, size, and ease
+          of use in mind.
         </p>
 
         <Link to="/docs">
@@ -67,14 +67,14 @@ const AboutSectionOne = () => (
   <Padded className="about-section">
     <Row>
       <Col xl={16} lg={16} md={24} sm={24} xs={24}>
-        <h1>Foundation of Many Open Source&nbsp;UI Frameworks</h1>
+        <h1>Open Source Adoption</h1>
         <p>
-          There are a large number of open source UI Frameworks which rely on
-          Yoga to power their layout. Yoga enables these frameworks to perform
-          layout in a simple and intuitive way across all platforms. This allows
-          engineers across platforms to collaborate more easily. Yoga allows
-          these frameworks to calculate layouts off the main thread to help
-          ensure optimal UI performance.
+          Yoga already powers widely used open source frameworks.
+          It enables these frameworks to offer a simple and intuitive
+          layout API that allows for engineers to collaborate more easily
+          across platforms. Yoga has unlocked exciting features such as
+          calculating layouts off of the main thread to help ensure
+          smooth UI performance.
         </p>
       </Col>
     </Row>
@@ -107,27 +107,25 @@ const AboutSectionTwo = () => (
         <h3>PERFORMANCE</h3>
         <p>
           Yoga was built to be fast and performance will always be one of Yoga's
-          primary goals. We believe that for a layout engine to be able to power
-          any range of applications it needs to be fast and never stand in the
+          primary goals. For a layout engine to be able to power
+          any range of applications, it needs to be fast and never stand in the
           way of a fluid user experience.
         </p>
 
         <h3>CROSS PLATFORM</h3>
         <p>
           Yoga is built with cross platform in mind. To ensure Yoga can be used
-          anywhere we have written is in portable C/C++ and tried to keep both
-          the dependencies and final binary size impact as low as possible. This
-          means you can use Yoga on iOS and Android, sharing knowledge and
-          potentially code between platforms.
+          anywhere, it was written in portable C/C++ and has a low number of
+          dependencies and small binary size. This means Yoga can be used on
+          iOS and Android, sharing knowledge, and potentially code, between platforms.
         </p>
 
         <h3>EASY TO LEARN</h3>
         <p>
-          With Yoga we have focused on making it as easy as possible to pick up
-          and learn. With interactive documentation pages and a fully fledged
-          layout editor we believe that any engineering team can get up to speed
-          in record time. If you are using Yoga with any of the major UI
-          frameworks we even provide generated code from the layout editor.
+          Yoga is easy to pick up and learn. The interactive documentation pages
+          and a fully fledged layout editor makes it easy to play and learn all
+          the features. If used with any of the major UI frameworks the layout
+          editor even provides code generation.
         </p>
       </Col>
     </Row>

@@ -32,10 +32,12 @@ export default ({data}) => (
           <h1>Documentation</h1>
           <p>
             Welcome to Yoga's documentation page. Below you will find helpful
-            documentation on how to use yoga. As well as how to contribute to
-            the core library, documentation, and tests. We have also put
-            together a set of examples showing off common layouts and how to
-            user Yoga to achieve them.
+            documentation covering all the features of the library. Each page
+            comes with an interactive playground for you to explore that feature.
+            The examples section feature some of the most common layouts and
+            how to build them. This is a community projects and contributions 
+            within documentation, code, and tests are more then welcome. 
+            The contributing section below covers how to get started.
           </p>
         </Col>
       </Row>
