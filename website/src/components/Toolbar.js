@@ -13,6 +13,7 @@
 import React, {Component} from 'react';
 import Link from 'gatsby-link';
 import {Icon, Row, Col} from 'antd';
+import logo from '../pages/logos/logo.svg';
 import './Toolbar.css';
 
 type Props = {
@@ -24,18 +25,18 @@ export default class Toolbar extends Component<Props> {
     return (
       <div className="Toolbar">
         <Link to="/" className="logo">
-          <img
-            src="https://facebook.github.io/yoga/static/logo.svg"
-            width="42"
-            alt="Yoga logo"
-          />
+          <img src={logo} width="42" alt="Yoga logo" />
         </Link>
-        
-        <Link to="/docs" activeClassName="selected">Documentation</Link>
+
+        <Link to="/docs" activeClassName="selected">
+          Documentation
+        </Link>
 
         <Row>
           <Col lg={24} md={0} sm={0} xs={0}>
-            <Link to="/playground" activeClassName="selected">Playground</Link>
+            <Link to="/playground" activeClassName="selected">
+              Playground
+            </Link>
           </Col>
         </Row>
 
