@@ -17,7 +17,10 @@ import './index.css';
 
 export default ({pathContext}) => {
   return (
-    <Page className="doc-block no-playground" shouldShowFooter>
+    <Page
+      className="doc-block no-playground"
+      shouldShowFooter
+      title={pathContext.frontmatter.title}>
       <Padded>
         <Row>
           <Col xl={16} lg={16} md={24} sm={24} xs={24}>

@@ -11,11 +11,14 @@
 import React from 'react';
 import Toolbar from './Toolbar';
 import Footer from './Footer';
+import Helmet from 'react-helmet';
+import favicon from '../pages/logos/favicon.png';
 import './Page.css';
 require('prismjs/themes/prism.css');
 
 type Props = {|
   children: any,
+  title?: string,
   className?: string,
   withSpacing?: boolean,
   shouldShowFooter?: boolean,
@@ -23,6 +26,10 @@ type Props = {|
 
 export default (props: Props) => (
   <div className={`Page ${props.className || ''}`}>
+    <Helmet>
+      <title>{`Yoga Layout${props.title ? ` | ${props.title}` : ''}`}</title>
+      <link rel="shortcut icon" type="image/png" href={favicon} />
+    </Helmet>
     <Toolbar />
     <div className={`PageContent ${props.withSpacing ? 'withSpacing' : ''}`}>
       {props.children}

@@ -22,6 +22,7 @@ function getValue(value) {
 }
 
 function getEnum(yogaEnum: string, value: string | number): string {
+  console.log(yogaEnum);
   const enumValue = Object.keys(yoga)
     .filter(
       key =>
@@ -43,14 +44,13 @@ function getEnum(yogaEnum: string, value: string | number): string {
 function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
   const lines = [];
   const untouchedLayout = LayoutRecord();
-  const untouchedPosition = PositionRecord();
   lines.push(indent + '<View style={{');
   lines.push(indent + '  flex: 1,');
   Object.keys(node.toJSON()).forEach(key => {
-    if (key === 'border' && !node.border.equals(untouchedPosition)) {
+    if (key === 'border' && !node.border.equals(untouchedLayout[key])) {
       ['Top', 'Left', 'Right', 'Bottom'].forEach(pKey => {
         if (
-          untouchedPosition[pKey.toLowerCase()] !==
+          untouchedLayout[key][pKey.toLowerCase()] !==
           node.border[pKey.toLowerCase()]
         ) {
           lines.push(
@@ -63,11 +63,12 @@ function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
       });
     } else if (
       node[key] instanceof PositionRecord &&
-      !node[key].equals(untouchedPosition)
+      !node[key].equals(untouchedLayout[key])
     ) {
       const {top, left, right, bottom} = node[key].toJS();
       if (
-        top !== untouchedPosition.top &&
+        top &&
+        top !== untouchedLayout[key].top &&
         top === left &&
         top === right &&
         top === bottom
@@ -77,18 +78,20 @@ function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
         return;
       }
       const alreadySet = [];
-      if (top !== untouchedPosition.top && top === bottom) {
+      if (top && top !== untouchedLayout[key].top && top === bottom) {
         lines.push(indent + `  ${key}Vertical: ${getValue(node[key].top)},`);
         alreadySet.push('top', 'bottom');
       }
-      if (left !== untouchedPosition.left && left === right) {
+      if (left && left !== untouchedLayout[key].left && left === right) {
         lines.push(indent + `  ${key}Horizontal: ${getValue(node[key].left)},`);
         alreadySet.push('left', 'right');
       }
       ['left', 'top', 'right', 'bottom'].forEach((pKey, i) => {
         if (
-          node[key][pKey] !== untouchedPosition[pKey] &&
-          alreadySet.indexOf(pKey) === -1
+          node[key][pKey] !== untouchedLayout[key][pKey] &&
+          alreadySet.indexOf(pKey) === -1 &&
+          node[key][pKey] &&
+          !Number.isNaN(node[key][pKey])
         ) {
           lines.push(
             indent +
@@ -98,6 +101,11 @@ function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
           );
         }
       });
+    } else if (
+      key === 'positionType' &&
+      node[key] === yoga.POSITION_TYPE_ABSOLUTE
+    ) {
+      lines.push(indent + `  position: 'absolute',`);
     } else if (
       key !== 'children' &&
       node[key] !== untouchedLayout[key] &&

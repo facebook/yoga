@@ -37,7 +37,9 @@ export default class withPlayground extends Component<Props> {
       );
     }
     return (
-      <Page className="doc-block playground">
+      <Page
+        className="doc-block playground"
+        title={this.props.pathContext.frontmatter.title}>
         <Playground
           layoutDefinition={layoutDefinition}
           selectedNodePath={[]}

@@ -22,6 +22,7 @@ exports.createPages = ({boundActionCreators, graphql}) => {
           node {
             frontmatter {
               path
+              title
               hasPlayground
               initialPlayground
               redirect

@@ -22,50 +22,50 @@ import Link from 'gatsby-link';
 import Footer from '../components/Footer';
 
 const playgroundInitialState = {
-  "width":500,
-  "height":500,
-  "alignItems":1,
-  "padding":{
-    "top":"20",
-    "right":"20",
-    "bottom":"20",
-    "left":"20"
+  width: 500,
+  height: 500,
+  alignItems: 1,
+  padding: {
+    top: '20',
+    right: '20',
+    bottom: '20',
+    left: '20',
   },
-  "children":[
+  children: [
     {
-      "width":100,
-      "height":100,
-      "minWidth":null,
-      "maxWidth":null,
-      "minHeight":null,
-      "maxHeight":null
+      width: 100,
+      height: 100,
+      minWidth: null,
+      maxWidth: null,
+      minHeight: null,
+      maxHeight: null,
     },
     {
-      "width":100,
-      "height":100,
-      "margin":{
-        "right":"20",
-        "left":"20"
+      width: 100,
+      height: 100,
+      margin: {
+        right: '20',
+        left: '20',
       },
-      "flexGrow":"1",
-      "minWidth":null,
-      "maxWidth":null,
-      "minHeight":null,
-      "maxHeight":null
+      flexGrow: '1',
+      minWidth: null,
+      maxWidth: null,
+      minHeight: null,
+      maxHeight: null,
     },
     {
-      "width":100,
-      "height":100,
-      "minWidth":null,
-      "maxWidth":null,
-      "minHeight":null,
-      "maxHeight":null
-    }
+      width: 100,
+      height: 100,
+      minWidth: null,
+      maxWidth: null,
+      minHeight: null,
+      maxHeight: null,
+    },
   ],
-  "minWidth":null,
-  "maxWidth":null,
-  "minHeight":null,
-  "maxHeight":null
+  minWidth: null,
+  maxWidth: null,
+  minHeight: null,
+  maxHeight: null,
 };
 
 const HeroSection = () => (
@@ -77,9 +77,9 @@ const HeroSection = () => (
           Flexible Layouts <br /> with Yoga
         </h1>
         <p>
-          Build flexible layouts on any platform with a highly optimized
-          open source layout engine designed with speed, size, and ease
-          of use in mind.
+          Build flexible layouts on any platform with a highly optimized open
+          source layout engine designed with speed, size, and ease of use in
+          mind.
         </p>
 
         <Link to="/docs">
@@ -103,7 +103,12 @@ const HeroSection = () => (
 const PlaygroundSection = () => (
   <Row>
     <Col lg={24} md={0} sm={0} xs={0}>
-      <Playground selectedNodePath={[]} showGuides={true} height={601} layoutDefinition={playgroundInitialState} />
+      <Playground
+        selectedNodePath={[]}
+        showGuides={true}
+        height={601}
+        layoutDefinition={playgroundInitialState}
+      />
     </Col>
   </Row>
 );
@@ -114,12 +119,11 @@ const AboutSectionOne = () => (
       <Col xl={16} lg={16} md={24} sm={24} xs={24}>
         <h1>Open Source Adoption</h1>
         <p>
-          Yoga already powers widely used open source frameworks.
-          It enables these frameworks to offer a simple and intuitive
-          layout API that allows for engineers to collaborate more easily
-          across platforms. Yoga has unlocked exciting features such as
-          calculating layouts off of the main thread to help ensure
-          smooth UI performance.
+          Yoga already powers widely used open source frameworks. It enables
+          these frameworks to offer a simple and intuitive layout API that
+          allows for engineers to collaborate more easily across platforms. Yoga
+          has unlocked exciting features such as calculating layouts off of the
+          main thread to help ensure smooth UI performance.
         </p>
       </Col>
     </Row>
@@ -152,17 +156,18 @@ const AboutSectionTwo = () => (
         <h3>PERFORMANCE</h3>
         <p>
           Yoga was built to be fast and performance will always be one of Yoga's
-          primary goals. For a layout engine to be able to power
-          any range of applications, it needs to be fast and never stand in the
-          way of a fluid user experience.
+          primary goals. For a layout engine to be able to power any range of
+          applications, it needs to be fast and never stand in the way of a
+          fluid user experience.
         </p>
 
         <h3>CROSS PLATFORM</h3>
         <p>
           Yoga is built with cross platform in mind. To ensure Yoga can be used
           anywhere, it was written in portable C/C++ and has a low number of
-          dependencies and small binary size. This means Yoga can be used on
-          iOS and Android, sharing knowledge, and potentially code, between platforms.
+          dependencies and small binary size. This means Yoga can be used on iOS
+          and Android, sharing knowledge, and potentially code, between
+          platforms.
         </p>
 
         <h3>EASY TO LEARN</h3>
@@ -178,7 +183,7 @@ const AboutSectionTwo = () => (
 );
 
 export default () => (
-  <Page className="landing-page">
+  <Page className="landing-page" title="A cross-platform layout engine">
     <HeroSection />
     <PlaygroundSection />
     <AboutSectionOne />
