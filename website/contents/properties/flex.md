@@ -1,5 +1,5 @@
 ---
-path: "docs/flex"
+path: "/docs/flex"
 title: "Flex Basis, Grow, and Shrink"
 hasPlayground: true
 ---

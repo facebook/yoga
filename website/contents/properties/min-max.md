@@ -1,5 +1,5 @@
 ---
-path: "docs/min-max"
+path: "/docs/min-max"
 title: "Max / Min Width and Height"
 hasPlayground: true
 ---

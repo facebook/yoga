@@ -1,5 +1,5 @@
 ---
-path: "getting-started/standalone"
+path: "/getting-started/standalone"
 title: "Standalone"
 hasPlayground: false
 ---

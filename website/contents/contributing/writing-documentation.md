@@ -1,5 +1,5 @@
 ---
-path: "contributing/writing-documentation"
+path: "/contributing/writing-documentation"
 title: "Writing Documentation"
 hasPlayground: false
 ---

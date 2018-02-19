@@ -1,5 +1,5 @@
 ---
-path: "docs/margins-paddings-borders"
+path: "/docs/margins-paddings-borders"
 title: "Margins, Paddings, and Borders"
 hasPlayground: true
 ---

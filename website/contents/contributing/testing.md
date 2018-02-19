@@ -1,5 +1,5 @@
 ---
-path: "contributing/testing"
+path: "/contributing/testing"
 title: "Testing"
 hasPlayground: false
 ---

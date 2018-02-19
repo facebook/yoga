@@ -1,5 +1,5 @@
 ---
-path: "docs/justify-content"
+path: "/docs/justify-content"
 title: "Justify Content"
 hasPlayground: true
 ---

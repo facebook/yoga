@@ -1,5 +1,5 @@
 ---
-path: "docs/aspect-ratio"
+path: "/docs/aspect-ratio"
 title: "Aspect Ratio"
 hasPlayground: true
 ---

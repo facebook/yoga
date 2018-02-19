@@ -1,5 +1,5 @@
 ---
-path: "docs/align-items"
+path: "/docs/align-items"
 title: "Align Items / Self"
 hasPlayground: true
 ---
@@ -7,7 +7,7 @@ hasPlayground: true
 ## Align Items
 
 Align items describes how to align children along the cross axis of their container.
-Align items is very similar to [`justify content`](justify-content) but instead of
+Align items is very similar to [`justify content`](/docs/justify-content) but instead of
 applying to the main axis, `align items` applies to the cross axis.
 
 **STRETCH (DEFAULT)** Stretch children of a container to match the `height` of the container's cross axis.

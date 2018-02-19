@@ -1,5 +1,5 @@
 ---
-path: "docs/layout-direction"
+path: "/docs/layout-direction"
 title: "Layout Direction"
 hasPlayground: false
 ---

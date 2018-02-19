@@ -1,5 +1,5 @@
 ---
-path: "docs/absolute-relative-layout"
+path: "/docs/absolute-relative-layout"
 title: "Absolute/Relative Layout"
 hasPlayground: true
 ---

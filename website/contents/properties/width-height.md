@@ -1,5 +1,5 @@
 ---
-path: "docs/width-height"
+path: "/docs/width-height"
 title: "Width and Height"
 hasPlayground: true
 ---
