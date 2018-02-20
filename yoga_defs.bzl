@@ -105,3 +105,8 @@ def prebuilt_cxx_library(*args, **kwargs):
 _original_prebuilt_jar = prebuilt_jar
 def prebuilt_jar(*args, **kwargs):
   _original_prebuilt_jar(*args, **kwargs)
+
+
+def is_apple_platform():
+  return True
+

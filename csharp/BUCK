@@ -3,8 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("@xplat//configurations/buck:default_platform_defs.bzl", "is_apple_platform")
-load("//:yoga_defs.bzl", "BASE_COMPILER_FLAGS", "yoga_dep", "cxx_library")
+load("//:yoga_defs.bzl", "BASE_COMPILER_FLAGS", "yoga_dep", "cxx_library", "is_apple_platform")
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++11"]
 
@@ -36,7 +35,7 @@ cxx_library(
 if is_apple_platform():
   yoganet_ios_srcs = []
   for arch in [
-    'iphonesimulator-x86_64', 'iphonesimulator-i386', 'iphoneos-arm64', 'iphoneos-armv7'
+    'iphonesimulator-x86_64', 'iphoneos-arm64'
   ]:
     name = 'yoganet-' + arch
     yoganet_ios_srcs.append(':' + name)
@@ -64,8 +63,7 @@ if is_apple_platform():
   genrule(
     name = 'yoganet-macosx',
     srcs = [
-      yoga_dep(yoganet_macosx_target % 'x86_64'),
-      yoga_dep(yoganet_macosx_target % 'i386'),
+      yoga_dep(yoganet_macosx_target % 'x86_64')
     ],
     out = 'libyoga.dylib',
     cmd = 'lipo $SRCS -create -output $OUT',

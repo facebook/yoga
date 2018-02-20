@@ -1,7 +1,7 @@
 #!/bin/sh
 cd `dirname "$0"`
 echo $ANDROID_SDK
-BUCK_RELEASE=2017.05.09.01
+BUCK_RELEASE=2018.02.16.01
 echo "buck $BUCK_RELEASE"
 BUCK=lib/buck-$BUCK_RELEASE/bin/buck
 if $BUCK --version >/dev/null 2>&1; then true; else
