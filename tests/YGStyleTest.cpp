@@ -7,6 +7,7 @@
 
 #include <gtest/gtest.h>
 #include <yoga/YGNode.h>
+#include <iostream>
 
 TEST(YogaTest, copy_style_same) {
   const YGNodeRef node0 = YGNodeNew();
