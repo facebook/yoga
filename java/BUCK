@@ -3,7 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "FBJNI_TARGET", "JNI_TARGET", "INFER_ANNOTATIONS_TARGET", "JSR_305_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "JUNIT_TARGET", "FBJNI_JAVA_TARGET", "CXX_LIBRARY_WHITELIST", "yoga_dep", "cxx_library", "java_library", "java_test", "java_binary")
+load("//:yoga_defs.bzl", "FBJNI_TARGET", "JNI_TARGET", "INFER_ANNOTATIONS_TARGET", "JSR_305_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "JUNIT_TARGET", "FBJNI_JAVA_TARGET", "CXX_LIBRARY_WHITELIST", "ANDROID", "yoga_dep", "cxx_library", "java_library", "java_test", "java_binary")
 
 cxx_library(
     name = "jni",
@@ -18,6 +18,7 @@ cxx_library(
         "-O3",
         "-std=c++11",
     ],
+    platforms = ANDROID,
     soname = "libyoga.$(ext)",
     visibility = ["PUBLIC"],
     deps = [

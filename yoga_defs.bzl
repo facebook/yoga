@@ -12,6 +12,7 @@ JNI_TARGET = '//lib/jni:jni'
 FBJNI_TARGET = '//lib/fb:fbjni'
 FBJNI_JAVA_TARGET = '//lib/fb/src/main/java/com/facebook/jni:jni'
 APPCOMPAT_TARGET = '//lib/appcompat:appcompat'
+ANDROID = ''
 ANDROID_SUPPORT_TARGET = '//lib/android-support:android-support'
 ANDROID_TARGET = '//android:android'
 ANDROID_JAVA_TARGET = '//android/src/main/java/com/facebook/yoga/android:android'
@@ -74,6 +75,8 @@ def apple_test(*args, **kwargs):
 
 _original_cxx_library = cxx_library
 def cxx_library(*args, **kwargs):
+  # Currently unused
+  kwargs.pop("platforms", None)
   _original_cxx_library(*args, **kwargs)
 
 
