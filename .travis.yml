@@ -134,3 +134,20 @@ script:
       npm run test:all &&
       npm run bench
     ) fi
+
+before_deploy:
+  - cd website
+  - yarn
+  - yarn build
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  fqdn: yogalayout.com
+  local-dir: public
+  email: yogabot@fb.com
+  name: Yoga-bot
+  keep-history: true
+  on:
+    branch: master
