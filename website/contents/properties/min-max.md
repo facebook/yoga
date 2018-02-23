@@ -23,6 +23,6 @@ parent's size. By default all these constraints are `undefined`.
 
 <controls prop="maxHeight"></controls>
 
-### Min Width
+### Min Height
 
 <controls prop="minHeight"></controls>
