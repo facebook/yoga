@@ -11,7 +11,7 @@ node_js:
 
 install:
 - cd website
-- yarn
+- yarn --ignore-scripts
 - cd ..
 
 script:
