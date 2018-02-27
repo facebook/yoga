@@ -66,7 +66,19 @@ export default class CodeGenerators extends Component<Props, State> {
     copied: false,
   };
 
-  onClick = ({key}: {key: string}) => this.setState({showModal: key});
+  _ref: ?HTMLTextAreaElement;
+
+  onClick = ({key}: {key: string}) => {
+    this.setState({showModal: key});
+    if (window.ga) {
+      window.ga('send', {
+        hitType: 'event',
+        eventCategory: 'CodeGenerators',
+        eventAction: 'show',
+        eventLabel: key,
+      });
+    }
+  };
 
   onCopy = () => {
     if (this._ref) {
