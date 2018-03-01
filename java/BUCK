@@ -28,6 +28,29 @@ cxx_library(
     ],
 )
 
+cxx_library(
+    name = "jniFastMath",
+    srcs = glob(["jni/*.cpp"]),
+    header_namespace = "",
+    compiler_flags = [
+        "-fno-omit-frame-pointer",
+        "-fexceptions",
+        "-fPIC",
+        "-Wall",
+        "-Werror",
+        "-O3",
+        "-std=c++11",
+    ],
+    platforms = ANDROID,
+    soname = "libyogafastmath.$(ext)",
+    visibility = ["PUBLIC"],
+    deps = [
+        FBJNI_TARGET,
+        JNI_TARGET,
+        yoga_dep(":yogafastmath"),
+    ],
+)
+
 java_library(
     name = "java",
     srcs = glob(["com/facebook/yoga/*.java"]),
@@ -40,6 +63,7 @@ java_library(
     visibility = ["PUBLIC"],
     deps = [
         ":jni",
+        ":jniFastMath",
         INFER_ANNOTATIONS_TARGET,
         JSR_305_TARGET,
         PROGRUARD_ANNOTATIONS_TARGET,
