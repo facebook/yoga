@@ -50,7 +50,17 @@ export default class DocsSidebar extends Component<Props> {
           <EditValue
             property={prop}
             value={props.layout[prop]}
-            onChange={props.onChange}
+            onChange={(property, value) => {
+              if (window.ga) {
+                window.ga('send', {
+                  hitType: 'event',
+                  eventCategory: 'DocsSidebar',
+                  eventAction: 'valueChanged',
+                  eventLabel: prop,
+                });
+              }
+              props.onChange(property, value);
+            }}
           />,
           element,
         );

@@ -45,6 +45,14 @@ export default class URLShortener extends Component<{}, State> {
         loading: true,
       },
       () => {
+        if (window.ga) {
+          window.ga('send', {
+            hitType: 'event',
+            eventCategory: 'URLShortener',
+            eventAction: 'created'
+          });
+        }
+
         fetch(`https://www.googleapis.com/urlshortener/v1/url?key=${API_KEY}`, {
           method: 'POST',
           headers: {
