@@ -195,6 +195,7 @@ static YGConfigRef globalConfig;
   NSAssert([NSThread isMainThread], @"This method must be called on the main thread.");
   if (self.isEnabled) {
     for (UIView *subview in self.view.subviews) {
+      if (!subview.isYogaEnabled) { continue; }
       YGLayout *const yoga = subview.yoga;
       if (yoga.isEnabled && yoga.isIncludedInLayout) {
         return NO;
@@ -388,7 +389,7 @@ static void YGAttachNodesFromViewHierachy(UIView *const view)
 
     NSMutableArray<UIView *> *subviewsToInclude = [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
     for (UIView *subview in view.subviews) {
-      if (subview.yoga.isEnabled && subview.yoga.isIncludedInLayout) {
+      if (subview.isYogaEnabled && subview.yoga.isEnabled && subview.yoga.isIncludedInLayout) {
         [subviewsToInclude addObject:subview];
       }
     }
@@ -463,6 +464,7 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
 
   if (!yoga.isLeaf) {
     for (NSUInteger i=0; i<view.subviews.count; i++) {
+      if (!view.subviews[i].isYogaEnabled) { continue; }
       YGApplyLayoutToViewHierarchy(view.subviews[i], NO);
     }
   }
