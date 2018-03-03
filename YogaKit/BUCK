@@ -28,6 +28,7 @@ COMPILER_FLAGS = [
 apple_library(
     name = "YogaKit",
     srcs = glob(["Source/**/*.m"]),
+    header_namespace = "",
     exported_headers = subdir_glob(
         [
             ("", "Source/**/*.h"),
