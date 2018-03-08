@@ -25,4 +25,5 @@ Pod::Spec.new do |spec|
       '-fPIC'
   ]
   spec.source_files = 'yoga/**/*.{c,h,cpp}'
+  spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros}.h'
 end
