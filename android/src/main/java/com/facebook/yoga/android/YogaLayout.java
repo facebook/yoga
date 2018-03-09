@@ -291,6 +291,8 @@ public class YogaLayout extends ViewGroup {
       if (view.getVisibility() == GONE) {
         return;
       }
+      int left = Math.round(xOffset + node.getLayoutX());
+      int top = Math.round(yOffset + node.getLayoutY());
       view.measure(
           View.MeasureSpec.makeMeasureSpec(
               Math.round(node.getLayoutWidth()),
@@ -299,10 +301,10 @@ public class YogaLayout extends ViewGroup {
               Math.round(node.getLayoutHeight()),
               View.MeasureSpec.EXACTLY));
       view.layout(
-          Math.round(xOffset + node.getLayoutX()),
-          Math.round(yOffset + node.getLayoutY()),
-          Math.round(xOffset + node.getLayoutX() + node.getLayoutWidth()),
-          Math.round(yOffset + node.getLayoutY() + node.getLayoutHeight()));
+          left,
+          top,
+          left + view.getMeasuredWidth(),
+          top + view.getMeasuredHeight());
     }
 
     final int childrenCount = node.getChildCount();
