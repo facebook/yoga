@@ -110,21 +110,23 @@ public class YogaNodeTest {
   }
 
   @Test
-  public void testMeasureFloatMax() {
+  public void testMeasureFloatBigNumber() {
     final YogaNode node = new YogaNode();
-    node.setMeasureFunction(new YogaMeasureFunction() {
-        public long measure(
-            YogaNode node,
-            float width,
-            YogaMeasureMode widthMode,
-            float height,
-            YogaMeasureMode heightMode) {
-          return YogaMeasureOutput.make(Float.MAX_VALUE, Float.MAX_VALUE);
-        }
-    });
+    final float bigNumber = (float) 10E5;
+    node.setMeasureFunction(
+        new YogaMeasureFunction() {
+          public long measure(
+              YogaNode node,
+              float width,
+              YogaMeasureMode widthMode,
+              float height,
+              YogaMeasureMode heightMode) {
+            return YogaMeasureOutput.make(bigNumber, bigNumber);
+          }
+        });
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-    assertEquals(Float.MAX_VALUE, node.getLayoutWidth(), 0.01f);
-    assertEquals(Float.MAX_VALUE, node.getLayoutHeight(), 0.01f);
+    assertEquals(bigNumber, node.getLayoutWidth(), 0.01f);
+    assertEquals(bigNumber, node.getLayoutHeight(), 0.01f);
   }
 
   @Test
