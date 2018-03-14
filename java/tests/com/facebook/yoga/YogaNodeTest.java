@@ -8,6 +8,7 @@
 package com.facebook.yoga;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -301,5 +302,28 @@ public class YogaNodeTest {
       Thread.sleep(100);
     }
     fail("YogaConfig leaked");
+  }
+
+  @Test
+  public void testFlagShouldDiffLayoutWithoutLegacyStretchBehaviour() throws Exception {
+    YogaConfig config = new YogaConfig();
+    config.setShouldDiffLayoutWithoutLegacyStretchBehaviour(true);
+    config.setUseLegacyStretchBehaviour(true);
+    YogaNode root = new YogaNode(config);
+    root.setWidth(500);
+    root.setHeight(500);
+    YogaNode root_child0 = new YogaNode(config);
+    root_child0.setAlignItems(YogaAlign.FLEX_START);
+    root.addChildAt(root_child0, 0);
+    YogaNode root_child0_child0 = new YogaNode(config);
+    root_child0_child0.setFlexGrow(1);
+    root_child0_child0.setFlexShrink(1);
+    root_child0.addChildAt(root_child0_child0, 0);
+    YogaNode root_child0_child0_child0 = new YogaNode(config);
+    root_child0_child0_child0.setFlexGrow(1);
+    root_child0_child0_child0.setFlexShrink(1);
+    root_child0_child0.addChildAt(root_child0_child0_child0, 0);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+    assertFalse(root.getDoesLegacyStretchFlagAffectsLayout());
   }
 }
