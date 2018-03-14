@@ -1,9 +1,7 @@
 # Copyright (c) 2014-present, Facebook, Inc.
-# All rights reserved.
 #
-# This source code is licensed under the BSD-style license found in the
-# LICENSE file in the root directory of this source tree. An additional grant
-# of patent rights can be found in the PATENTS file in the same directory.
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 
 load("//:yoga_defs.bzl", "LIBRARY_COMPILER_FLAGS", "BASE_COMPILER_FLAGS", "GTEST_TARGET", "yoga_dep", "cxx_library", "cxx_test")
 
@@ -27,6 +25,20 @@ cxx_library(
     exported_headers = subdir_glob([("", "yoga/*.h")]),
     compiler_flags = COMPILER_FLAGS,
     soname = "libyogacore.$(ext)",
+    tests = [":YogaTests"],
+    visibility = ["PUBLIC"],
+    deps = [
+        yoga_dep("lib/fb:ndklog"),
+    ],
+)
+
+cxx_library(
+    name = "yogafastmath",
+    srcs = glob(["yoga/*.cpp"]),
+    header_namespace = "",
+    exported_headers = subdir_glob([("", "yoga/*.h")]),
+    compiler_flags = COMPILER_FLAGS + ["-ffast-math"],
+    soname = "libyogafastmathcore.$(ext)",
     tests = [":YogaTests"],
     visibility = ["PUBLIC"],
     deps = [

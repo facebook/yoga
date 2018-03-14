@@ -1,16 +1,11 @@
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 package com.facebook.yoga.android;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -23,9 +18,6 @@ import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.util.Log;
-
-import com.facebook.yoga.android.R;
 import com.facebook.yoga.YogaAlign;
 import com.facebook.yoga.YogaConstants;
 import com.facebook.yoga.YogaDirection;
@@ -37,10 +29,11 @@ import com.facebook.yoga.YogaMeasureFunction;
 import com.facebook.yoga.YogaMeasureMode;
 import com.facebook.yoga.YogaMeasureOutput;
 import com.facebook.yoga.YogaNode;
-import com.facebook.yoga.YogaNode;
 import com.facebook.yoga.YogaOverflow;
 import com.facebook.yoga.YogaPositionType;
 import com.facebook.yoga.YogaWrap;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A {@code ViewGroup} based on the Yoga layout engine.
@@ -293,6 +286,8 @@ public class YogaLayout extends ViewGroup {
       if (view.getVisibility() == GONE) {
         return;
       }
+      int left = Math.round(xOffset + node.getLayoutX());
+      int top = Math.round(yOffset + node.getLayoutY());
       view.measure(
           View.MeasureSpec.makeMeasureSpec(
               Math.round(node.getLayoutWidth()),
@@ -300,11 +295,7 @@ public class YogaLayout extends ViewGroup {
           View.MeasureSpec.makeMeasureSpec(
               Math.round(node.getLayoutHeight()),
               View.MeasureSpec.EXACTLY));
-      view.layout(
-          Math.round(xOffset + node.getLayoutX()),
-          Math.round(yOffset + node.getLayoutY()),
-          Math.round(xOffset + node.getLayoutX() + node.getLayoutWidth()),
-          Math.round(yOffset + node.getLayoutY() + node.getLayoutHeight()));
+      view.layout(left, top, left + view.getMeasuredWidth(), top + view.getMeasuredHeight());
     }
 
     final int childrenCount = node.getChildCount();

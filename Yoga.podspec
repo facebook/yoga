@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name = 'Yoga'
   spec.version = '1.7.0'
-  spec.license =  { :type => 'BSD', :file => "LICENSE" }
+  spec.license =  { :type => 'MIT', :file => "LICENSE" }
   spec.homepage = 'https://facebook.github.io/yoga/'
   spec.documentation_url = 'https://facebook.github.io/yoga/docs/api/c/'
 

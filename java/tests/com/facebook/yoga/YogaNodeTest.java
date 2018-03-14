@@ -1,18 +1,20 @@
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 package com.facebook.yoga;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.lang.ref.WeakReference;
+import java.util.concurrent.atomic.AtomicBoolean;
+import org.junit.Test;
 
 public class YogaNodeTest {
 
@@ -217,5 +219,87 @@ public class YogaNodeTest {
       assertEquals(YogaUnit.UNDEFINED, node.getPosition(edge).unit);
       assertTrue(YogaConstants.isUndefined(node.getBorder(edge)));
     }
+  }
+
+  @Test
+  public void testCloneNode() throws Exception {
+    YogaConfig config = new YogaConfig();
+    YogaNode root = new YogaNode(config);
+    YogaNode child = new YogaNode(config);
+    YogaNode grandChild = new YogaNode(config);
+    root.addChildAt(child, 0);
+    child.addChildAt(grandChild, 0);
+    child.setFlexDirection(YogaFlexDirection.ROW);
+
+    YogaNode clonedChild = child.clone();
+
+    assertNotSame(clonedChild, child);
+
+    assertEquals(YogaFlexDirection.ROW, child.getFlexDirection());
+    assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
+
+    // Verify the cloning is shallow on the List of children
+    assertEquals(1, child.getChildCount());
+    assertEquals(child.getChildCount(), clonedChild.getChildCount());
+    assertEquals(child.getChildAt(0), clonedChild.getChildAt(0));
+
+    child.removeChildAt(0);
+    assertEquals(0, child.getChildCount());
+    assertEquals(1, clonedChild.getChildCount());
+  }
+
+  @Test
+  public void testCloneNodeListener() throws Exception {
+    final AtomicBoolean onNodeClonedExecuted = new AtomicBoolean(false);
+    YogaConfig config = new YogaConfig();
+    config.setOnNodeCloned(
+        new YogaNodeClonedFunction() {
+          @Override
+          public void onNodeCloned(
+              YogaNode oldNode, YogaNode newNode, YogaNode parent, int childIndex) {
+            onNodeClonedExecuted.set(true);
+          }
+        });
+    YogaNode root = new YogaNode(config);
+    root.setWidth(100f);
+    root.setHeight(100f);
+    YogaNode child0 = new YogaNode(config);
+    root.addChildAt(child0, 0);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    // Force a clone to happen.
+    final YogaNode root2 = root.clone();
+    root2.setWidth(200f);
+    root2.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertTrue(onNodeClonedExecuted.get());
+  }
+
+  @Test
+  public void testOnNodeClonedLeak() throws Exception {
+    YogaConfig config = new YogaConfig();
+    config.setOnNodeCloned(
+        new YogaNodeClonedFunction() {
+          @Override
+          public void onNodeCloned(
+              YogaNode oldNode, YogaNode newNode, YogaNode parent, int childIndex) {
+            // Do nothing
+          }
+        });
+    config.setOnNodeCloned(null);
+    WeakReference<Object> ref = new WeakReference<Object>(config);
+    // noinspection UnusedAssignment
+    config = null;
+    // try and free for the next 5 seconds, usually it works after the
+    // first GC attempt.
+    for (int i = 0; i < 50; i++) {
+      System.gc();
+      if (ref.get() == null) {
+        // free successfully
+        return;
+      }
+      Thread.sleep(100);
+    }
+    fail("YogaConfig leaked");
   }
 }
