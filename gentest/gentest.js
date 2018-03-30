@@ -411,6 +411,8 @@ function getDefaultStyleValue(style) {
     case 'bottom':
     case 'start':
     case 'end':
+    case 'width':
+    case 'height':
       return 'undefined';
   }
   var node = document.getElementById('default');

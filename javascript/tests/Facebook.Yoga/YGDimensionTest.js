@@ -104,3 +104,59 @@ it("wrap_grandchild", function () {
     config.free();
   }
 });
+it("zero_size_with_child", function () {
+  var config = Yoga.Config.create();
+
+  try {
+    var root = Yoga.Node.create(config);
+
+    var root_child0 = Yoga.Node.create(config);
+    root_child0.setWidth(0);
+    root_child0.setHeight(0);
+    root.insertChild(root_child0, 0);
+
+    var root_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0.setWidth(100);
+    root_child0_child0.setHeight(100);
+    root_child0.insertChild(root_child0_child0, 0);
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+
+    console.assert(0 === root.getComputedLeft(), "0 === root.getComputedLeft() (" + root.getComputedLeft() + ")");
+    console.assert(0 === root.getComputedTop(), "0 === root.getComputedTop() (" + root.getComputedTop() + ")");
+    console.assert(0 === root.getComputedWidth(), "0 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
+    console.assert(0 === root.getComputedHeight(), "0 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
+
+    console.assert(0 === root_child0.getComputedLeft(), "0 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
+    console.assert(0 === root_child0.getComputedTop(), "0 === root_child0.getComputedTop() (" + root_child0.getComputedTop() + ")");
+    console.assert(0 === root_child0.getComputedWidth(), "0 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
+    console.assert(0 === root_child0.getComputedHeight(), "0 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
+
+    console.assert(0 === root_child0_child0.getComputedLeft(), "0 === root_child0_child0.getComputedLeft() (" + root_child0_child0.getComputedLeft() + ")");
+    console.assert(0 === root_child0_child0.getComputedTop(), "0 === root_child0_child0.getComputedTop() (" + root_child0_child0.getComputedTop() + ")");
+    console.assert(100 === root_child0_child0.getComputedWidth(), "100 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
+    console.assert(100 === root_child0_child0.getComputedHeight(), "100 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
+
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_RTL);
+
+    console.assert(0 === root.getComputedLeft(), "0 === root.getComputedLeft() (" + root.getComputedLeft() + ")");
+    console.assert(0 === root.getComputedTop(), "0 === root.getComputedTop() (" + root.getComputedTop() + ")");
+    console.assert(0 === root.getComputedWidth(), "0 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
+    console.assert(0 === root.getComputedHeight(), "0 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
+
+    console.assert(0 === root_child0.getComputedLeft(), "0 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
+    console.assert(0 === root_child0.getComputedTop(), "0 === root_child0.getComputedTop() (" + root_child0.getComputedTop() + ")");
+    console.assert(0 === root_child0.getComputedWidth(), "0 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
+    console.assert(0 === root_child0.getComputedHeight(), "0 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
+
+    console.assert(-100 === root_child0_child0.getComputedLeft(), "-100 === root_child0_child0.getComputedLeft() (" + root_child0_child0.getComputedLeft() + ")");
+    console.assert(0 === root_child0_child0.getComputedTop(), "0 === root_child0_child0.getComputedTop() (" + root_child0_child0.getComputedTop() + ")");
+    console.assert(100 === root_child0_child0.getComputedWidth(), "100 === root_child0_child0.getComputedWidth() (" + root_child0_child0.getComputedWidth() + ")");
+    console.assert(100 === root_child0_child0.getComputedHeight(), "100 === root_child0_child0.getComputedHeight() (" + root_child0_child0.getComputedHeight() + ")");
+  } finally {
+    if (typeof root !== "undefined") {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});
