@@ -255,12 +255,17 @@ public class YogaNodeTest {
   public void testCloneNodeListener() throws Exception {
     final AtomicBoolean onNodeClonedExecuted = new AtomicBoolean(false);
     YogaConfig config = new YogaConfig();
-    config.setOnNodeCloned(
-        new YogaNodeClonedFunction() {
+    config.setOnCloneNode(
+        new YogaNodeCloneFunction() {
           @Override
-          public void onNodeCloned(
-              YogaNode oldNode, YogaNode newNode, YogaNode parent, int childIndex) {
-            onNodeClonedExecuted.set(true);
+          public YogaNode cloneNode(YogaNode oldNode, YogaNode parent, int childIndex) {
+            try {
+              onNodeClonedExecuted.set(true);
+              return oldNode.clone();
+            } catch (CloneNotSupportedException ex) {
+              // DO nothing
+              return null;
+            }
           }
         });
     YogaNode root = new YogaNode(config);
@@ -268,6 +273,7 @@ public class YogaNodeTest {
     root.setHeight(100f);
     YogaNode child0 = new YogaNode(config);
     root.addChildAt(child0, 0);
+    child0.setWidth(50f);
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     // Force a clone to happen.
@@ -276,20 +282,29 @@ public class YogaNodeTest {
     root2.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     assertTrue(onNodeClonedExecuted.get());
+    assertEquals(1, root2.getChildCount());
+    YogaNode clonedNode = root2.getChildAt(0);
+    assertNotSame(child0, clonedNode);
+    assertEquals(child0.getWidth(), clonedNode.getWidth());
+    assertEquals(50f, clonedNode.getWidth().value, 0.01f);
   }
 
   @Test
   public void testOnNodeClonedLeak() throws Exception {
     YogaConfig config = new YogaConfig();
-    config.setOnNodeCloned(
-        new YogaNodeClonedFunction() {
+    config.setOnCloneNode(
+        new YogaNodeCloneFunction() {
           @Override
-          public void onNodeCloned(
-              YogaNode oldNode, YogaNode newNode, YogaNode parent, int childIndex) {
-            // Do nothing
+          public YogaNode cloneNode(YogaNode oldNode, YogaNode parent, int childIndex) {
+            try {
+              return oldNode.clone();
+            } catch (CloneNotSupportedException ex) {
+              // DO nothing
+              return null;
+            }
           }
         });
-    config.setOnNodeCloned(null);
+    config.setOnCloneNode(null);
     WeakReference<Object> ref = new WeakReference<Object>(config);
     // noinspection UnusedAssignment
     config = null;
