@@ -10,6 +10,7 @@ package com.facebook.yoga;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -252,6 +253,48 @@ public class YogaNodeTest {
   }
 
   @Test
+  public void testCloneWithNewChildren() throws Exception {
+    YogaConfig config = new YogaConfig();
+    YogaNode root = new YogaNode(config);
+    YogaNode child = new YogaNode(config);
+    YogaNode grandChild = new YogaNode(config);
+    root.addChildAt(child, 0);
+    child.addChildAt(grandChild, 0);
+    child.setFlexDirection(YogaFlexDirection.ROW);
+
+    YogaNode clonedChild = child.cloneWithNewChildren();
+
+    assertNotSame(clonedChild, child);
+    assertEquals(YogaFlexDirection.ROW, clonedChild.getFlexDirection());
+    assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
+    assertEquals(0, clonedChild.getChildCount());
+    assertEquals(1, child.getChildCount());
+  }
+
+  @Test
+  public void testAddSharedChildCloneWithNewChildren() throws Exception {
+    YogaConfig config = new YogaConfig();
+    YogaNode root = new YogaNode(config);
+    YogaNode child = new YogaNode(config);
+    YogaNode grandChild = new YogaNode(config);
+    root.addChildAt(child, 0);
+    child.addChildAt(grandChild, 0);
+    child.setFlexDirection(YogaFlexDirection.ROW);
+
+    YogaNode clonedChild = child.cloneWithNewChildren();
+
+    assertNotSame(clonedChild, child);
+    assertEquals(YogaFlexDirection.ROW, clonedChild.getFlexDirection());
+    assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
+    assertEquals(0, clonedChild.getChildCount());
+    assertEquals(1, child.getChildCount());
+
+    clonedChild.addSharedChildAt(grandChild, 0);
+    assertEquals(1, clonedChild.getChildCount());
+    assertNull(grandChild.getOwner());
+  }
+
+  @Test
   public void testCloneNodeListener() throws Exception {
     final AtomicBoolean onNodeClonedExecuted = new AtomicBoolean(false);
     YogaConfig config = new YogaConfig();
@@ -259,13 +302,8 @@ public class YogaNodeTest {
         new YogaNodeCloneFunction() {
           @Override
           public YogaNode cloneNode(YogaNode oldNode, YogaNode owner, int childIndex) {
-            try {
-              onNodeClonedExecuted.set(true);
-              return oldNode.clone();
-            } catch (CloneNotSupportedException ex) {
-              // DO nothing
-              return null;
-            }
+            onNodeClonedExecuted.set(true);
+            return oldNode.clone();
           }
         });
     YogaNode root = new YogaNode(config);
@@ -296,12 +334,7 @@ public class YogaNodeTest {
         new YogaNodeCloneFunction() {
           @Override
           public YogaNode cloneNode(YogaNode oldNode, YogaNode owner, int childIndex) {
-            try {
-              return oldNode.clone();
-            } catch (CloneNotSupportedException ex) {
-              // DO nothing
-              return null;
-            }
+            return oldNode.clone();
           }
         });
     config.setOnCloneNode(null);
