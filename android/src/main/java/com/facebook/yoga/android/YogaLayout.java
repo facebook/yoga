@@ -46,14 +46,14 @@ import java.util.Map;
  * <YogaLayout
  *     xmlns:android="http://schemas.android.com/apk/res/android"
  *     xmlns:yoga="http://schemas.android.com/apk/com.facebook.yoga.android"
- *     android:layout_width="match_parent"
- *     android:layout_height="match_parent"
+ *     android:layout_width="match_owner"
+ *     android:layout_height="match_owner"
  *     yoga:flex_direction="row"
  *     yoga:padding_all="10dp"
  *     >
  *     <TextView
- *         android:layout_width="match_parent"
- *         android:layout_height="match_parent"
+ *         android:layout_width="match_owner"
+ *         android:layout_height="match_owner"
  *         android:text="Hello, World!"
  *         yoga:flex="1"
  *         />
@@ -262,11 +262,11 @@ public class YogaLayout extends ViewGroup {
       return;
     }
 
-    final YogaNode parent = node.getParent();
+    final YogaNode owner = node.getOwner();
 
-    for (int i = 0; i < parent.getChildCount(); i++) {
-      if (parent.getChildAt(i).equals(node)) {
-        parent.removeChildAt(i);
+    for (int i = 0; i < owner.getChildCount(); i++) {
+      if (owner.getChildAt(i).equals(node)) {
+        owner.removeChildAt(i);
         break;
       }
     }
@@ -315,7 +315,7 @@ public class YogaLayout extends ViewGroup {
 
   @Override
   protected void onLayout(boolean changed, int l, int t, int r, int b) {
-    // Either we are a root of a tree, or this function is called by our parent's onLayout, in which
+    // Either we are a root of a tree, or this function is called by our owner's onLayout, in which
     // case our r-l and b-t are the size of our node.
     if (!(getParent() instanceof YogaLayout)) {
         createLayout(
@@ -699,7 +699,7 @@ public class YogaLayout extends ViewGroup {
     /**
      * Constructs a set of layout params, given width and height specs.  In this case, we can set
      * the {@code yoga:width} and {@code yoga:height} if we are given them explicitly.  If other
-     * options (such as {@code match_parent} or {@code wrap_content} are given, then the parent
+     * options (such as {@code match_owner} or {@code wrap_content} are given, then the owner
      * LayoutParams will store them, and we deal with them during layout. (see
      * {@link YogaLayout#createLayout})
      *
@@ -773,9 +773,9 @@ public class YogaLayout extends ViewGroup {
      * {@code View}'s measure function.
      *
      * @param node The yoga node to measure
-     * @param width The suggested width from the parent
+     * @param width The suggested width from the owner
      * @param widthMode The type of suggestion for the width
-     * @param height The suggested height from the parent
+     * @param height The suggested height from the owner
      * @param heightMode The type of suggestion for the height
      * @return A measurement output ({@code YogaMeasureOutput}) for the node
      */

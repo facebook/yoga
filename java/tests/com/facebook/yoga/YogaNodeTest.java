@@ -258,7 +258,7 @@ public class YogaNodeTest {
     config.setOnCloneNode(
         new YogaNodeCloneFunction() {
           @Override
-          public YogaNode cloneNode(YogaNode oldNode, YogaNode parent, int childIndex) {
+          public YogaNode cloneNode(YogaNode oldNode, YogaNode owner, int childIndex) {
             try {
               onNodeClonedExecuted.set(true);
               return oldNode.clone();
@@ -295,7 +295,7 @@ public class YogaNodeTest {
     config.setOnCloneNode(
         new YogaNodeCloneFunction() {
           @Override
-          public YogaNode cloneNode(YogaNode oldNode, YogaNode parent, int childIndex) {
+          public YogaNode cloneNode(YogaNode oldNode, YogaNode owner, int childIndex) {
             try {
               return oldNode.clone();
             } catch (CloneNotSupportedException ex) {
