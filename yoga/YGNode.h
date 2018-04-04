@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "YGLayout.h"
 #include "YGStyle.h"
+#include "YGConfig.h"
 #include "Yoga-internal.h"
 
 struct YGNode {

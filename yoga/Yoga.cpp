@@ -41,25 +41,7 @@ static int YGDefaultLog(const YGConfigRef config,
                         va_list args);
 #endif
 
-static YGConfig gYGConfigDefaults = {
-    .experimentalFeatures =
-        {
-            [YGExperimentalFeatureWebFlexBasis] = false,
-        },
-    .useWebDefaults = false,
-    .useLegacyStretchBehaviour = false,
-    .shouldDiffLayoutWithoutLegacyStretchBehaviour = false,
-    .pointScaleFactor = 1.0f,
-#ifdef ANDROID
-    .logger = &YGAndroidLog,
-#else
-    .logger = &YGDefaultLog,
-#endif
-    .cloneNodeCallback = nullptr,
-    .context = nullptr,
-};
-
-const YGValue YGValueZero = {.value = 0, .unit = YGUnitPoint};
+const YGValue YGValueZero = {0, YGUnitPoint};
 const YGValue YGValueUndefined = {YGUndefined, YGUnitUndefined};
 const YGValue YGValueAuto = {YGUndefined, YGUnitAuto};
 
@@ -246,6 +228,13 @@ WIN_EXPORT YGNodeRef YGNodeNewWithConfig(const YGConfigRef config) {
   return node;
 }
 
+
+#ifdef ANDROID
+static YGConfig gYGConfigDefaults(YGAndroidLog);
+#else
+static YGConfig gYGConfigDefaults(YGDefaultLog);
+#endif
+
 YGNodeRef YGNodeNew(void) {
   return YGNodeNewWithConfig(&gYGConfigDefaults);
 }
@@ -369,13 +358,8 @@ YGConfigRef YGConfigGetDefault() {
 }
 
 YGConfigRef YGConfigNew(void) {
-  const YGConfigRef config = (const YGConfigRef)malloc(sizeof(YGConfig));
-  YGAssert(config != nullptr, "Could not allocate memory for config");
-  if (config == nullptr) {
-    abort();
-  }
+  const YGConfigRef config = new YGConfig(gYGConfigDefaults);
   gConfigInstanceCount++;
-  memcpy(config, &gYGConfigDefaults, sizeof(YGConfig));
   return config;
 }
 
@@ -594,8 +578,8 @@ float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
     type, name, paramName, instanceName)                                       \
   void YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {      \
     YGValue value = {                                                          \
-        .value = YGFloatSanitize(paramName),                                   \
-        .unit = YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint, \
+        YGFloatSanitize(paramName),                                   \
+        YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint, \
     };                                                                         \
     if ((node->getStyle().instanceName.value != value.value &&                 \
          value.unit != YGUnitUndefined) ||                                     \
@@ -610,9 +594,8 @@ float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
   void YGNodeStyleSet##name##Percent(                                          \
       const YGNodeRef node, const type paramName) {                            \
     YGValue value = {                                                          \
-        .value = YGFloatSanitize(paramName),                                   \
-        .unit =                                                                \
-            YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPercent,   \
+        YGFloatSanitize(paramName),                                   \
+        YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPercent,   \
     };                                                                         \
     if ((node->getStyle().instanceName.value != value.value &&                 \
          value.unit != YGUnitUndefined) ||                                     \
@@ -629,8 +612,8 @@ float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
     type, name, paramName, instanceName)                                       \
   void YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {      \
     YGValue value = {                                                          \
-        .value = YGFloatSanitize(paramName),                                   \
-        .unit = YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint, \
+        YGFloatSanitize(paramName),                                            \
+        YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint,         \
     };                                                                         \
     if ((node->getStyle().instanceName.value != value.value &&                 \
          value.unit != YGUnitUndefined) ||                                     \
@@ -713,8 +696,8 @@ float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
   void YGNodeStyleSet##name(                                                   \
       const YGNodeRef node, const YGEdge edge, const float paramName) {        \
     YGValue value = {                                                          \
-        .value = YGFloatSanitize(paramName),                                   \
-        .unit = YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint, \
+        YGFloatSanitize(paramName),                                   \
+        YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPoint, \
     };                                                                         \
     if ((node->getStyle().instanceName[edge].value != value.value &&           \
          value.unit != YGUnitUndefined) ||                                     \
@@ -729,9 +712,8 @@ float YGNodeStyleGetFlexShrink(const YGNodeRef node) {
   void YGNodeStyleSet##name##Percent(                                          \
       const YGNodeRef node, const YGEdge edge, const float paramName) {        \
     YGValue value = {                                                          \
-        .value = YGFloatSanitize(paramName),                                   \
-        .unit =                                                                \
-            YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPercent,   \
+        YGFloatSanitize(paramName),                                   \
+        YGFloatIsUndefined(paramName) ? YGUnitUndefined : YGUnitPercent,   \
     };                                                                         \
     if ((node->getStyle().instanceName[edge].value != value.value &&           \
          value.unit != YGUnitUndefined) ||                                     \
@@ -858,8 +840,8 @@ YGValue YGNodeStyleGetFlexBasis(const YGNodeRef node) {
 
 void YGNodeStyleSetFlexBasis(const YGNodeRef node, const float flexBasis) {
   YGValue value = {
-      .value = YGFloatSanitize(flexBasis),
-      .unit = YGFloatIsUndefined(flexBasis) ? YGUnitUndefined : YGUnitPoint,
+      YGFloatSanitize(flexBasis),
+      YGFloatIsUndefined(flexBasis) ? YGUnitUndefined : YGUnitPoint,
   };
   if ((node->getStyle().flexBasis.value != value.value &&
        value.unit != YGUnitUndefined) ||
@@ -906,8 +888,8 @@ void YGNodeStyleSetBorder(
     const YGEdge edge,
     const float border) {
   YGValue value = {
-      .value = YGFloatSanitize(border),
-      .unit = YGFloatIsUndefined(border) ? YGUnitUndefined : YGUnitPoint,
+      YGFloatSanitize(border),
+      YGFloatIsUndefined(border) ? YGUnitUndefined : YGUnitPoint,
   };
   if ((node->getStyle().border[edge].value != value.value &&
        value.unit != YGUnitUndefined) ||
