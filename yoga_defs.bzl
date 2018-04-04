@@ -32,6 +32,7 @@ BASE_COMPILER_FLAGS = [
   '-Wall',
   '-Werror',
   '-O3',
+  '-ffast-math',
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
@@ -112,4 +113,3 @@ def prebuilt_jar(*args, **kwargs):
 
 def is_apple_platform():
   return True
-

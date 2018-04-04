@@ -32,20 +32,6 @@ cxx_library(
     ],
 )
 
-cxx_library(
-    name = "yogafastmath",
-    srcs = glob(["yoga/*.cpp"]),
-    header_namespace = "",
-    exported_headers = subdir_glob([("", "yoga/*.h")]),
-    compiler_flags = COMPILER_FLAGS + ["-ffast-math"],
-    soname = "libyogafastmathcore.$(ext)",
-    tests = [":YogaTests"],
-    visibility = ["PUBLIC"],
-    deps = [
-        yoga_dep("lib/fb:ndklog"),
-    ],
-)
-
 cxx_test(
     name = "YogaTests",
     srcs = glob(["tests/*.cpp"]),
