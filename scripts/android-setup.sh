@@ -1,7 +1,8 @@
+set -e
+
 function download() {
-  echo "Downloading '$1' to '$2' ..."
   if hash curl 2>/dev/null; then
-    curl --retry 10 -L -o "$2" "$1"
+    curl -s -L -o "$2" "$1"
   elif hash wget 2>/dev/null; then
     wget -O "$2" "$1"
   else
@@ -12,38 +13,38 @@ function download() {
 
 function installsdk() {
   PROXY_ARGS=""
-  if [[ ! -z "$https_proxy" ]]; then
-    PROXY_HOST="$(cut -d : "$https_proxy" -f 1,1)"
-    PROXY_PORT="$(cut -d : "$https_proxy" -f 2,2)"
+  if [[ ! -z "$HTTPS_PROXY" ]]; then
+    PROXY_HOST="$(echo $HTTPS_PROXY | cut -d : -f 1,1)"
+    PROXY_PORT="$(echo $HTTPS_PROXY | cut -d : -f 2,2)"
     PROXY_ARGS="--proxy=http --proxy_host=$PROXY_HOST --proxy_port=$PROXY_PORT"
   fi
 
-  yes | "$ANDROID_HOME/tools/bin/sdkmanager" $PROXY_ARGS $@
+  echo y | "$ANDROID_HOME"/tools/bin/sdkmanager $PROXY_ARGS "$@"
 }
 
 function installAndroidSDK {
-  export ANDROID_HOME=$HOME/android-sdk
-  export ANDROID_NDK_REPOSITORY=$HOME/android-ndk
-  export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$PATH"
-
-  if [[ ! -f "$ANDROID_HOME/tools/bin/sdkmanager" ]]; then
+  if [[ ! -d "$HOME/android-sdk" ]]; then
     TMP=/tmp/sdk$$.zip
-    download 'https://dl.google.com/android/repository/sdk-tools-darwin-3859397.zip' $TMP
-    unzip -qod "$ANDROID_HOME" "$TMP"
+    download 'https://dl.google.com/android/repository/tools_r25.2.3-linux.zip' $TMP
+    unzip -qod "$HOME/android-sdk" $TMP
     rm $TMP
   fi
 
+  export ANDROID_NDK_REPOSITORY=$HOME/android-ndk
   if [[ ! -d "$ANDROID_NDK_REPOSITORY/android-ndk-r15c" ]]; then
     TMP=/tmp/ndk$$.zip
     mkdir -p "$ANDROID_NDK_REPOSITORY"
-    download 'https://dl.google.com/android/repository/android-ndk-r15c-darwin-x86_64.zip' $TMP
+    download 'https://dl.google.com/android/repository/android-ndk-r15c-linux-x86_64.zip' $TMP
     unzip -qod "$ANDROID_NDK_REPOSITORY" "$TMP"
     rm $TMP
   fi
 
-  mkdir -p "$ANDROID_HOME/licenses/"
-  echo > "$ANDROID_HOME/licenses/android-sdk-license"
-  echo -n d56f5187479451eabf01fb78af6dfcb131a6481e >> "$ANDROID_HOME/licenses/android-sdk-license"
+  export ANDROID_HOME=$HOME/android-sdk
+  export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$PATH"
 
-  installsdk 'build-tools;26.0.2' 'platform-tools' 'platforms;android-23' 'platforms;android-25' 'extras;android;m2repository'
+  mkdir -p $ANDROID_HOME/licenses/
+  echo > $ANDROID_HOME/licenses/android-sdk-license
+  echo -n d56f5187479451eabf01fb78af6dfcb131a6481e > $ANDROID_HOME/licenses/android-sdk-license
+
+  installsdk 'build-tools;25.0.3' 'build-tools;26.0.2' 'platforms;android-25' 'platforms;android-26' 'ndk-bundle' 'extras;android;m2repository'
 }
