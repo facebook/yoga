@@ -1,6 +1,4 @@
-language: android
-node_js:
-  - "8"
+language: java
 
 env:
   - TARGET: website
