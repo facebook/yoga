@@ -9,6 +9,13 @@ install:
 - yarn --ignore-scripts
 - cd ..
 
+cache:
+  directories:
+    - $HOME/buck
+    - $HOME/android-sdk
+    - $HOME/android-ndk
+    - $HOME/.gradle
+
 before_install:
   - |
     if [[ -n "$encrypted_d27e803291ff_iv" ]]; then
@@ -17,7 +24,7 @@ before_install:
   # Android
   - |
     if [[ $TARGET = "android" ]]; then
-      git clone https://github.com/facebook/buck.git
+      git clone --depth 1 https://github.com/facebook/buck.git
       cd buck
       ant
       cd ..
