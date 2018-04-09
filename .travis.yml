@@ -24,10 +24,11 @@ before_install:
   # Android
   - |
     if [[ $TARGET = "android" ]]; then
+      pushd $HOME
       git clone --depth 1 https://github.com/facebook/buck.git
       cd buck
       ant
-      cd ..
+      popd
       export PATH=$PATH:$HOME/buck/bin/
       buck --version
       export TERMINAL=dumb
