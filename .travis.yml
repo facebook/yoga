@@ -12,9 +12,9 @@ install:
 cache:
   directories:
     - $HOME/buck
-    - $HOME/android-sdk
-    - $HOME/android-ndk
     - $HOME/.gradle
+    # - $HOME/android-sdk
+    # - $HOME/android-ndk
 
 before_install:
   - |
