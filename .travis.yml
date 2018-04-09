@@ -9,6 +9,33 @@ install:
 - yarn --ignore-scripts
 - cd ..
 
+before_install:
+  - |
+    if [[ -n "$encrypted_d27e803291ff_iv" ]]; then
+      openssl aes-256-cbc -K $encrypted_d27e803291ff_key -iv $encrypted_d27e803291ff_iv -in scripts/setup-keys.enc -d >> gradle.properties;
+    fi
+  # Android
+  - |
+    if [[ $TARGET = "android" ]]; then
+      git clone https://github.com/facebook/buck.git
+      cd buck
+      ant
+      cd ..
+      export PATH=$PATH:$HOME/buck/bin/
+      buck --version
+      export TERMINAL=dumb
+      source scripts/android-setup.sh && installAndroidSDK
+      export ANDROID_SDK=$ANDROID_HOME
+      export ANDROID_NDK_REPOSITORY=$HOME/android-ndk
+      export ANDROID_NDK_HOME=$ANDROID_NDK_REPOSITORY/android-ndk-r15c
+    fi
+  # Website
+  - |
+    if [[ $TARGET = "website" ]]; then
+      nvm install 8
+      nvm use 8
+    fi
+
 script:
   # Android
   - |
@@ -23,26 +50,6 @@ script:
       cd ..
     fi
 
-before_install:
-  - |
-    if [[ -n "$encrypted_d27e803291ff_iv" ]]; then
-      openssl aes-256-cbc -K $encrypted_d27e803291ff_key -iv $encrypted_d27e803291ff_iv -in scripts/setup-keys.enc -d >> gradle.properties;
-    fi
-  # Android
-  - |
-    if [[ $TARGET = "android" ]]; then
-      export TERMINAL=dumb;
-      source scripts/android-setup.sh && installAndroidSDK
-      export ANDROID_SDK=$ANDROID_HOME
-      export ANDROID_NDK_REPOSITORY=$HOME/android-ndk
-      export ANDROID_NDK_HOME=$ANDROID_NDK_REPOSITORY/android-ndk-r15c
-    fi
-  # Website
-  - |
-    if [[ $TARGET = "website" ]]; then
-      nvm install 8
-      nvm use 8
-    fi
 
 deploy:
   provider: pages
