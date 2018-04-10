@@ -11,10 +11,10 @@ install:
 
 cache:
   directories:
-    # - $HOME/buck
+    - $HOME/buck
     - $HOME/.gradle
-    # - $HOME/android-sdk
-    # - $HOME/android-ndk
+    - $HOME/android-sdk
+    - $HOME/android-ndk
 
 before_install:
   - |
@@ -45,19 +45,16 @@ before_install:
     fi
 
 script:
-  # Android
   - |
     if [[ $TARGET = "android" ]]; then
       ./gradlew testDebugUnit && scripts/publish-snapshot.sh
     fi
-  # Website
   - |
     if [[ $TARGET = "website" ]]; then
-      cd website
+      pushd website
       yarn build
-      cd ..
+      popd
     fi
-
 
 deploy:
   provider: pages
