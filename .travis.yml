@@ -1,16 +1,58 @@
-language: node_js
-node_js:
-  - "8"
+language: java
+
+env:
+  - TARGET: website
+  - TARGET: android
 
 install:
 - cd website
 - yarn --ignore-scripts
 - cd ..
 
+cache:
+  directories:
+    - $HOME/buck
+    - $HOME/.gradle
+
+before_install:
+  - |
+    if [[ -n "$encrypted_d27e803291ff_iv" ]]; then
+      openssl aes-256-cbc -K $encrypted_d27e803291ff_key -iv $encrypted_d27e803291ff_iv -in scripts/setup-keys.enc -d >> gradle.properties;
+    fi
+  # Android
+  - |
+    if [[ $TARGET = "android" ]]; then
+      pushd $HOME
+      git clone --depth 1 https://github.com/facebook/buck.git
+      cd buck
+      ant
+      popd
+      export PATH=$PATH:$HOME/buck/bin/
+      buck --version
+      export TERMINAL=dumb
+      source scripts/android-setup.sh && installAndroidSDK
+      export ANDROID_SDK=$ANDROID_HOME
+      export ANDROID_NDK_REPOSITORY=$HOME/android-ndk
+      export ANDROID_NDK_HOME=$ANDROID_NDK_REPOSITORY/android-ndk-r15c
+    fi
+  # Website
+  - |
+    if [[ $TARGET = "website" ]]; then
+      nvm install 8
+      nvm use 8
+    fi
+
 script:
-- cd website
-- yarn build
-- cd ..
+  - |
+    if [[ $TARGET = "android" ]]; then
+      ./gradlew testDebugUnit && scripts/publish-snapshot.sh
+    fi
+  - |
+    if [[ $TARGET = "website" ]]; then
+      pushd website
+      yarn build
+      popd
+    fi
 
 deploy:
   provider: pages
@@ -23,3 +65,4 @@ deploy:
   keep-history: true
   on:
     branch: master
+    condition: $TARGET = website
