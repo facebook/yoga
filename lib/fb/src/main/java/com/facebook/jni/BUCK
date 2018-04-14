@@ -3,9 +3,9 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "JSR_305_TARGET", "java_library")
+load("//:yoga_defs.bzl", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "JSR_305_TARGET", "yoga_java_library")
 
-java_library(
+yoga_java_library(
     name = "jni",
     srcs = glob(["**/*.java"]),
     proguard_config = "fbjni.pro",

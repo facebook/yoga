@@ -3,7 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "LIBRARY_COMPILER_FLAGS", "BASE_COMPILER_FLAGS", "GTEST_TARGET", "yoga_dep", "cxx_library", "cxx_test")
+load("//:yoga_defs.bzl", "LIBRARY_COMPILER_FLAGS", "BASE_COMPILER_FLAGS", "GTEST_TARGET", "yoga_dep", "yoga_cxx_library", "yoga_cxx_test")
 
 GMOCK_OVERRIDE_FLAGS = [
     # gmock does not mark mocked methods as override, ignore the warnings in tests
@@ -18,7 +18,7 @@ TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + [
     "-std=c++1y",
 ]
 
-cxx_library(
+yoga_cxx_library(
     name = "yoga",
     srcs = glob(["yoga/*.cpp"]),
     header_namespace = "",
@@ -32,7 +32,7 @@ cxx_library(
     ],
 )
 
-cxx_test(
+yoga_cxx_test(
     name = "YogaTests",
     srcs = glob(["tests/*.cpp"]),
     compiler_flags = TEST_COMPILER_FLAGS,

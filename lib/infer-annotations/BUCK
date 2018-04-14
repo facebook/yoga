@@ -3,14 +3,14 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "YOGA_ROOTS", "prebuilt_jar", "java_library")
+load("//:yoga_defs.bzl", "YOGA_ROOTS", "yoga_prebuilt_jar", "yoga_java_library")
 
-prebuilt_jar(
+yoga_prebuilt_jar(
     name = "infer-annotations-jar",
     binary_jar = "infer-annotations-1.4.jar",
 )
 
-java_library(
+yoga_java_library(
     name = "infer-annotations",
     exported_deps = [
         ":infer-annotations-jar",

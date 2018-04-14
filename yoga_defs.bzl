@@ -21,95 +21,82 @@ ANDROID_SAMPLE_JAVA_TARGET = '//android/sample/java/com/facebook/samples/yoga:yo
 ANDROID_SAMPLE_RES_TARGET = '//android/sample:res'
 
 CXX_LIBRARY_WHITELIST = [
-  '//:yoga',
-  '//lib/fb:fbjni',
-  '//java:jni',
+    '//:yoga',
+    '//lib/fb:fbjni',
+    '//java:jni',
 ]
 
 BASE_COMPILER_FLAGS = [
-  '-fno-omit-frame-pointer',
-  '-fexceptions',
-  '-Wall',
-  '-Werror',
-  '-O3',
-  '-ffast-math',
+    '-fno-omit-frame-pointer',
+    '-fexceptions',
+    '-Wall',
+    '-Werror',
+    '-O3',
+    '-ffast-math',
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
-  '-fPIC',
+    '-fPIC',
 ]
 
 
 def yoga_dep(dep):
-  return '//' + dep
+    return '//' + dep
 
 
-_original_android_aar = android_aar
-def android_aar(*args, **kwargs):
-    _original_android_aar(*args, **kwargs)
+def yoga_android_aar(*args, **kwargs):
+    native.android_aar(*args, **kwargs)
 
 
-_original_android_binary = android_binary
-def android_binary(*args, **kwargs):
-  _original_android_binary(*args, **kwargs)
+def yoga_android_binary(*args, **kwargs):
+    native.android_binary(*args, **kwargs)
 
 
-_original_android_library = android_library
-def android_library(*args, **kwargs):
-  _original_android_library(*args, **kwargs)
+def yoga_android_library(*args, **kwargs):
+    native.android_library(*args, **kwargs)
 
 
-_original_android_resource = android_resource
-def android_resource(*args, **kwargs):
-  _original_android_resource(*args, **kwargs)
+def yoga_android_resource(*args, **kwargs):
+    native.android_resource(*args, **kwargs)
 
 
-_original_apple_library = apple_library
-def apple_library(*args, **kwargs):
-  _original_apple_library(*args, **kwargs)
+def yoga_apple_library(*args, **kwargs):
+    native.apple_library(*args, **kwargs)
 
 
-_original_apple_test = apple_test
-def apple_test(*args, **kwargs):
-  _original_apple_test(*args, **kwargs)
+def yoga_apple_test(*args, **kwargs):
+    native.apple_test(*args, **kwargs)
 
 
-_original_cxx_library = cxx_library
-def cxx_library(*args, **kwargs):
-  # Currently unused
-  kwargs.pop("platforms", None)
-  _original_cxx_library(*args, **kwargs)
+def yoga_cxx_library(*args, **kwargs):
+    # Currently unused
+    kwargs.pop("platforms", None)
+    native.cxx_library(*args, **kwargs)
 
 
-_original_cxx_test = cxx_test
-def cxx_test(*args, **kwargs):
-  _original_cxx_test(*args, **kwargs)
+def yoga_cxx_test(*args, **kwargs):
+    native.cxx_test(*args, **kwargs)
 
 
-_original_java_binary = java_binary
-def java_binary(*args, **kwargs):
-  _original_java_binary(*args, **kwargs)
+def yoga_java_binary(*args, **kwargs):
+    native.java_binary(*args, **kwargs)
 
 
-_original_java_library = java_library
-def java_library(*args, **kwargs):
-  _original_java_library(*args, **kwargs)
+def yoga_java_library(*args, **kwargs):
+    native.java_library(*args, **kwargs)
 
 
-_original_java_test = java_test
-def java_test(*args, **kwargs):
-    _original_java_test(*args, **kwargs)
+def yoga_java_test(*args, **kwargs):
+    native.java_test(*args, **kwargs)
 
 
-_original_prebuilt_cxx_library = prebuilt_cxx_library
-def prebuilt_cxx_library(*args, **kwargs):
-    _original_prebuilt_cxx_library(*args, **kwargs)
+def yoga_prebuilt_cxx_library(*args, **kwargs):
+    native.prebuilt_cxx_library(*args, **kwargs)
 
 
-_original_prebuilt_jar = prebuilt_jar
-def prebuilt_jar(*args, **kwargs):
-  _original_prebuilt_jar(*args, **kwargs)
+def yoga_prebuilt_jar(*args, **kwargs):
+    native.prebuilt_jar(*args, **kwargs)
 
 
 def is_apple_platform():
-  return True
+    return True

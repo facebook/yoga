@@ -3,9 +3,9 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "FBJNI_TARGET", "JNI_TARGET", "INFER_ANNOTATIONS_TARGET", "JSR_305_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "JUNIT_TARGET", "FBJNI_JAVA_TARGET", "CXX_LIBRARY_WHITELIST", "ANDROID", "yoga_dep", "cxx_library", "java_library", "java_test", "java_binary")
+load("//:yoga_defs.bzl", "FBJNI_TARGET", "JNI_TARGET", "INFER_ANNOTATIONS_TARGET", "JSR_305_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "JUNIT_TARGET", "FBJNI_JAVA_TARGET", "CXX_LIBRARY_WHITELIST", "ANDROID", "yoga_dep", "yoga_cxx_library", "yoga_java_library", "yoga_java_test", "yoga_java_binary")
 
-cxx_library(
+yoga_cxx_library(
     name = "jni",
     srcs = glob(["jni/*.cpp"]),
     header_namespace = "",
@@ -28,7 +28,7 @@ cxx_library(
     ],
 )
 
-java_library(
+yoga_java_library(
     name = "java",
     srcs = glob(["com/facebook/yoga/*.java"]),
     required_for_source_only_abi = True,
@@ -47,7 +47,7 @@ java_library(
     ],
 )
 
-java_test(
+yoga_java_test(
     name = "tests",
     srcs = glob(["tests/**/*.java"]),
     cxx_library_whitelist = CXX_LIBRARY_WHITELIST,
@@ -59,7 +59,7 @@ java_test(
     ],
 )
 
-java_binary(
+yoga_java_binary(
     name = "yoga",
     deps = [
         ":java",

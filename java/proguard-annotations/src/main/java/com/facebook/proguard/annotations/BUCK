@@ -3,9 +3,9 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "YOGA_ROOTS", "java_library")
+load("//:yoga_defs.bzl", "YOGA_ROOTS", "yoga_java_library")
 
-java_library(
+yoga_java_library(
     name = "annotations",
     srcs = glob(["*.java"]),
     source = "1.7",

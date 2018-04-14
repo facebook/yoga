@@ -3,9 +3,9 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-include_defs("//yoga_defs.bzl")
+load("//:yoga_defs.bzl", "yoga_prebuilt_cxx_library", "yoga_cxx_library", "YOGA_ROOTS", "FBJNI_JAVA_TARGET", "JNI_TARGET")
 
-prebuilt_cxx_library(
+yoga_prebuilt_cxx_library(
     name = "ndklog",
     exported_platform_linker_flags = [
         (
@@ -17,7 +17,7 @@ prebuilt_cxx_library(
     visibility = YOGA_ROOTS,
 )
 
-cxx_library(
+yoga_cxx_library(
     name = "fbjni",
     srcs = glob(["src/main/cpp/**/*.cpp"]),
     header_namespace = "",

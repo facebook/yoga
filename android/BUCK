@@ -3,9 +3,9 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "ANDROID_JAVA_TARGET", "ANDROID_RES_TARGET", "INFER_ANNOTATIONS_TARGET", "JAVA_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "android_aar", "android_resource")
+load("//:yoga_defs.bzl", "ANDROID_JAVA_TARGET", "ANDROID_RES_TARGET", "INFER_ANNOTATIONS_TARGET", "JAVA_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "yoga_android_aar", "yoga_android_resource")
 
-android_aar(
+yoga_android_aar(
     name = "android",
     manifest_skeleton = "src/main/AndroidManifest.xml",
     visibility = [
@@ -20,7 +20,7 @@ android_aar(
     ],
 )
 
-android_resource(
+yoga_android_resource(
     name = "res",
     package = "com.facebook.yoga.android",
     res = "src/main/res",
