@@ -43,7 +43,7 @@ if is_apple_platform():
       name = name,
       srcs = [
         yoga_dep(':yoga#%s,static' % arch),
-        yoga_dep('YogaKit:YogaKit#%s,static' % arch),
+        yoga_dep('YogaKit:YogaKitApple#%s,static' % arch),
         yoga_dep('csharp:yoganet#%s,static' % arch),
       ],
       out = 'libyoga-%s.a' % arch,

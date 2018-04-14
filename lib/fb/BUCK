@@ -35,6 +35,7 @@ yoga_cxx_library(
         "-Wno-unused-parameter",
         "-std=c++11",
     ],
+    platforms = (ANDROID,),
     visibility = ["PUBLIC"],
     deps = [
         ":ndklog",
