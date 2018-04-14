@@ -42,9 +42,9 @@ if is_apple_platform():
     genrule(
       name = name,
       srcs = [
-        yoga_dep(':yoga#%s,static' % arch),
+        yoga_dep(':yogaApple#%s,static' % arch),
         yoga_dep('YogaKit:YogaKitApple#%s,static' % arch),
-        yoga_dep('csharp:yoganet#%s,static' % arch),
+        yoga_dep('csharp:yoganetApple#%s,static' % arch),
       ],
       out = 'libyoga-%s.a' % arch,
       cmd = 'libtool -static -o $OUT $SRCS',
@@ -59,7 +59,7 @@ if is_apple_platform():
     visibility = ['PUBLIC'],
   )
 
-  yoganet_macosx_target = 'csharp:yoganet#macosx-%s,dynamic'
+  yoganet_macosx_target = 'csharp:yoganetAppleMac#macosx-%s,dynamic'
   genrule(
     name = 'yoganet-macosx',
     srcs = [

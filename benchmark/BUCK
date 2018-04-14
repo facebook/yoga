@@ -3,7 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "yoga_dep")
+load("//:yoga_defs.bzl", "yoga_dep", "ANDROID", "APPLE")
 
 cxx_binary(
     name = "benchmark",
@@ -18,6 +18,7 @@ cxx_binary(
         "-O3",
         "-std=c11",
     ],
+    platforms = (ANDROID, APPLE),
     visibility = ["PUBLIC"],
     deps = [
         yoga_dep(":yoga"),
