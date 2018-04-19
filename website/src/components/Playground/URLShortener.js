@@ -49,7 +49,7 @@ export default class URLShortener extends Component<{}, State> {
           window.ga('send', {
             hitType: 'event',
             eventCategory: 'URLShortener',
-            eventAction: 'created'
+            eventAction: 'created',
           });
         }
 

@@ -46,7 +46,9 @@ function dipOrPercent(value) {
   console.log(value);
   return value === 'auto'
     ? 'Auto'
-    : typeof value === 'string' && /%$/.test(value) ? 'Percent' : 'Dip';
+    : typeof value === 'string' && /%$/.test(value)
+      ? 'Percent'
+      : 'Dip';
 }
 
 function getValue(value) {
