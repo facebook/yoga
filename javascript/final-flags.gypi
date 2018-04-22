@@ -8,9 +8,9 @@
                 "-DNBIND_DUPLICATE_POINTERS"
             ],
 
-	    "xcode_settings": {
-		"OTHER_CPLUSPLUSFLAGS": [ "<@(_cflags_cc)" ]
-	    }
+            "xcode_settings": {
+                "OTHER_CPLUSPLUSFLAGS": [ "<@(_cflags_cc)" ]
+            }
 
         } ],
 
@@ -22,9 +22,9 @@
                 "-s", "TOTAL_MEMORY=134217728"
             ],
 
-	    "xcode_settings": {
-		"OTHER_LDFLAGS": [ "<@(_ldflags)" ]
-	    }
+            "xcode_settings": {
+              "OTHER_LDFLAGS": [ "<@(_ldflags)" ]
+            }
 
         } ]
 
