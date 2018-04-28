@@ -1054,25 +1054,6 @@ static float YGBaseline(const YGNodeRef node) {
   return baseline + baselineChild->getLayout().position[YGEdgeTop];
 }
 
-static bool YGIsBaselineLayout(const YGNodeRef node) {
-  if (YGFlexDirectionIsColumn(node->getStyle().flexDirection)) {
-    return false;
-  }
-  if (node->getStyle().alignItems == YGAlignBaseline) {
-    return true;
-  }
-  const uint32_t childCount = YGNodeGetChildCount(node);
-  for (uint32_t i = 0; i < childCount; i++) {
-    const YGNodeRef child = YGNodeGetChild(node, i);
-    if (child->getStyle().positionType == YGPositionTypeRelative &&
-        child->getStyle().alignSelf == YGAlignBaseline) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 static inline float YGNodeDimWithMargin(const YGNodeRef node,
                                         const YGFlexDirection axis,
                                         const float widthSize) {
@@ -2365,6 +2346,8 @@ static void YGJustifyMainAxis(
   collectedFlexItemsValues.mainDim =
       leadingPaddingAndBorderMain + leadingMainDim;
   collectedFlexItemsValues.crossDim = 0;
+  collectedFlexItemsValues.maxBaselineAscent = 0;
+  float maxBaselineDescent = 0;
 
   for (uint32_t i = startOfLineIndex;
        i < collectedFlexItemsValues.endOfLineIndex;
@@ -2432,9 +2415,26 @@ static void YGJustifyMainAxis(
 
           // The cross dimension is the max of the elements dimension since
           // there can only be one element in that cross dimension.
-          collectedFlexItemsValues.crossDim = YGFloatMax(
-              collectedFlexItemsValues.crossDim,
-              YGNodeDimWithMargin(child, crossAxis, availableInnerWidth));
+          if (YGNodeAlignItem(node, child) == YGAlignBaseline) {
+            const float ascent = YGBaseline(child) +
+                                 YGUnwrapFloatOptional(child->getLeadingMargin(
+                                         YGFlexDirectionColumn, availableInnerWidth));
+            const float descent =
+                    child->getLayout().measuredDimensions[YGDimensionHeight] +
+                    YGUnwrapFloatOptional(child->getMarginForAxis(
+                            YGFlexDirectionColumn, availableInnerWidth)) -
+                    ascent;
+            collectedFlexItemsValues.maxBaselineAscent =
+                    YGFloatMax(collectedFlexItemsValues.maxBaselineAscent, ascent);
+            maxBaselineDescent = YGFloatMax(maxBaselineDescent, descent);
+            collectedFlexItemsValues.crossDim = YGFloatMax(
+                    collectedFlexItemsValues.crossDim,
+                    collectedFlexItemsValues.maxBaselineAscent + maxBaselineDescent);
+          } else {
+            collectedFlexItemsValues.crossDim = YGFloatMax(
+                    collectedFlexItemsValues.crossDim,
+                    YGNodeDimWithMargin(child, crossAxis, availableInnerWidth));
+          }
         }
       } else if (performLayout) {
         child->setLayoutPosition(
@@ -3000,6 +3000,12 @@ static void YGNodelayoutImpl(const YGNodeRef node,
               // No-Op
             } else if (alignItem == YGAlignCenter) {
               leadingCrossDim += remainingCrossDim / 2;
+            } else if (alignItem == YGAlignBaseline) {
+              leadingCrossDim +=
+                      collectedFlexItemsValues.maxBaselineAscent
+                      - YGBaseline(child)
+                      - YGUnwrapFloatOptional(child->getLeadingMargin(
+                        YGFlexDirectionColumn, availableInnerWidth));
             } else {
               leadingCrossDim += remainingCrossDim;
             }
@@ -3019,8 +3025,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   }
 
   // STEP 8: MULTI-LINE CONTENT ALIGNMENT
-  if (performLayout && (lineCount > 1 || YGIsBaselineLayout(node)) &&
-      !YGFloatIsUndefined(availableInnerCrossDim)) {
+  if (performLayout && lineCount > 1 && !YGFloatIsUndefined(availableInnerCrossDim)) {
     const float remainingAlignContentDim = availableInnerCrossDim - totalLineCrossDim;
 
     float crossDimLead = 0;

@@ -50,6 +50,9 @@ struct YGCollectFlexItemsRowValues {
   // The size of the crossDim for the row after considering size, padding,
   // margin and border of flex items. Used for calculating containers crossSize.
   float crossDim;
+  // The position of the baseline from the top of row. This is used to calculate
+  // position of flex items which are part of baseline participants.
+  float maxBaselineAscent;
 };
 
 bool YGValueEqual(const YGValue a, const YGValue b);
