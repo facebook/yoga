@@ -35,6 +35,8 @@ struct YGLayout {
   bool didUseLegacyFlag;
   bool doesLegacyStretchFlagAffectsLayout;
 
+  YGFloatOptional cachedBaseline;
+
   YGLayout();
 
   bool operator==(YGLayout layout) const;

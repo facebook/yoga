@@ -157,6 +157,7 @@ struct YGNode {
   void setAndPropogateUseLegacyFlag(bool useLegacyFlag);
   void setLayoutDoesLegacyFlagAffectsLayout(bool doesLegacyFlagAffectsLayout);
   void setLayoutDidUseLegacyFlag(bool didUseLegacyFlag);
+  void setLayoutCachedBaseline(const YGFloatOptional& cachedBaseline);
   void markDirtyAndPropogateDownwards();
 
   // Other methods

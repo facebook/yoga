@@ -2416,7 +2416,10 @@ static void YGJustifyMainAxis(
           // The cross dimension is the max of the elements dimension since
           // there can only be one element in that cross dimension.
           if (YGNodeAlignItem(node, child) == YGAlignBaseline) {
-            const float ascent = YGBaseline(child) +
+            const float baseline = YGBaseline(child);
+            child->setLayoutCachedBaseline(YGFloatOptional(baseline));
+
+            const float ascent = baseline +
                                  YGUnwrapFloatOptional(child->getLeadingMargin(
                                          YGFlexDirectionColumn, availableInnerWidth));
             const float descent =
@@ -3003,7 +3006,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
             } else if (alignItem == YGAlignBaseline) {
               leadingCrossDim +=
                       collectedFlexItemsValues.maxBaselineAscent
-                      - YGBaseline(child)
+                      - YGUnwrapFloatOptional(child->getLayout().cachedBaseline)
                       - YGUnwrapFloatOptional(child->getLeadingMargin(
                         YGFlexDirectionColumn, availableInnerWidth));
             } else {
@@ -3090,7 +3093,8 @@ static void YGNodelayoutImpl(const YGNodeRef node,
                         crossAxis, availableInnerWidth)));
           }
           if (YGNodeAlignItem(node, child) == YGAlignBaseline) {
-            const float ascent = YGBaseline(child) +
+            const float ascent =
+                YGUnwrapFloatOptional(child->getLayout().cachedBaseline) +
                 YGUnwrapFloatOptional(child->getLeadingMargin(
                     YGFlexDirectionColumn, availableInnerWidth));
             const float descent =
@@ -3193,9 +3197,10 @@ static void YGNodelayoutImpl(const YGNodeRef node,
               }
               case YGAlignBaseline: {
                 child->setLayoutPosition(
-                    currentLead + maxAscentForCurrentLine - YGBaseline(child) +
-                        YGUnwrapFloatOptional(child->getLeadingPosition(
-                            YGFlexDirectionColumn, availableInnerCrossDim)),
+                    currentLead + maxAscentForCurrentLine -
+                    YGUnwrapFloatOptional(child->getLayout().cachedBaseline) +
+                    YGUnwrapFloatOptional(child->getLeadingPosition(
+                      YGFlexDirectionColumn, availableInnerCrossDim)),
                     YGEdgeTop);
 
                 break;

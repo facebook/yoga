@@ -314,6 +314,11 @@ void YGNode::setLayoutComputedFlexBasis(
   layout_.computedFlexBasis = computedFlexBasis;
 }
 
+void YGNode::setLayoutCachedBaseline(
+  const YGFloatOptional& cachedBaseline) {
+  layout_.cachedBaseline = cachedBaseline;
+}
+
 void YGNode::setLayoutPosition(float position, int index) {
   layout_.position[index] = position;
 }

@@ -28,7 +28,8 @@ YGLayout::YGLayout()
       measuredDimensions(kYGDefaultDimensionValues),
       cachedLayout(YGCachedMeasurement()),
       didUseLegacyFlag(false),
-      doesLegacyStretchFlagAffectsLayout(false) {}
+      doesLegacyStretchFlagAffectsLayout(false),
+      cachedBaseline(YGFloatOptional()) {}
 
 bool YGLayout::operator==(YGLayout layout) const {
   bool isEqual = YGFloatArrayEqual(position, layout.position) &&
