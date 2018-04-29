@@ -69,6 +69,11 @@ def yoga_apple_test(*args, **kwargs):
     native.apple_test(*args, **kwargs)
 
 
+def yoga_cxx_binary(*args, **kwargs):
+    kwargs.pop("platforms", None)
+    native.cxx_binary(*args, **kwargs)
+
+
 def yoga_cxx_library(*args, **kwargs):
     # Currently unused
     kwargs.pop("platforms", None)
