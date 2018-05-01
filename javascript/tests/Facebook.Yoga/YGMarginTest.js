@@ -1298,7 +1298,7 @@ it("margin_auto_right", function () {
     config.free();
   }
 });
-it("margin_auto_left_and_right_strech", function () {
+it("margin_auto_left_and_right_stretch", function () {
   var config = Yoga.Config.create();
 
   try {
@@ -1359,7 +1359,7 @@ it("margin_auto_left_and_right_strech", function () {
     config.free();
   }
 });
-it("margin_auto_top_and_bottom_strech", function () {
+it("margin_auto_top_and_bottom_stretch", function () {
   var config = Yoga.Config.create();
 
   try {

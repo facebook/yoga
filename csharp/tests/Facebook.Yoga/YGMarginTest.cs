@@ -1236,7 +1236,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void Test_margin_auto_left_and_right_strech()
+        public void Test_margin_auto_left_and_right_stretch()
         {
             YogaConfig config = new YogaConfig();
 
@@ -1294,7 +1294,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void Test_margin_auto_top_and_bottom_strech()
+        public void Test_margin_auto_top_and_bottom_stretch()
         {
             YogaConfig config = new YogaConfig();
 

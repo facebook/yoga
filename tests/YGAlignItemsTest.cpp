@@ -1880,7 +1880,7 @@ TEST(YogaTest, align_center_should_size_based_on_content) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, align_strech_should_size_based_on_parent) {
+TEST(YogaTest, align_stretch_should_size_based_on_parent) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);

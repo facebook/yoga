@@ -1861,7 +1861,7 @@ public class YGAlignItemsTest {
   }
 
   @Test
-  public void test_align_strech_should_size_based_on_parent() {
+  public void test_align_stretch_should_size_based_on_parent() {
     YogaConfig config = new YogaConfig();
 
     final YogaNode root = new YogaNode(config);

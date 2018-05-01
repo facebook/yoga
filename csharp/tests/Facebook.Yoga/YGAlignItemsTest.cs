@@ -1886,7 +1886,7 @@ namespace Facebook.Yoga
         }
 
         [Test]
-        public void Test_align_strech_should_size_based_on_parent()
+        public void Test_align_stretch_should_size_based_on_parent()
         {
             YogaConfig config = new YogaConfig();
 
