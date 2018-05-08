@@ -178,6 +178,7 @@ export type Yoga$Node = {
   setDisplay(display: Yoga$Display): void,
   setFlex(flex: number): void,
   setFlexBasis(flexBasis: number | string): void,
+  setFlexBasisAuto(): void,
   setFlexBasisPercent(flexBasis: number): void,
   setFlexDirection(flexDirection: Yoga$FlexDirection): void,
   setFlexGrow(flexGrow: number): void,
