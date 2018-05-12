@@ -6,7 +6,7 @@
   "dependencies": {
     "antd": "^3.2.0",
     "atob": "^2.0.3",
-    "gatsby": "^1.9.158",
+    "gatsby": "^1.9.250",
     "gatsby-link": "^1.6.34",
     "gatsby-plugin-antd": "^1.0.10",
     "gatsby-plugin-google-analytics": "^1.0.19",
