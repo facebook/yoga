@@ -89,6 +89,7 @@ export default class Editor extends Component<Props> {
                 <EditValue
                   type="text"
                   property="flexBasis"
+                  placeholder="auto"
                   disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexBasis : undefined}
                   onChange={this.props.onChangeLayout}
@@ -104,6 +105,7 @@ export default class Editor extends Component<Props> {
                 <EditValue
                   type="text"
                   property="flexGrow"
+                  placeholder="0"
                   disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexGrow : undefined}
                   onChange={this.props.onChangeLayout}
@@ -120,6 +122,7 @@ export default class Editor extends Component<Props> {
                 <EditValue
                   type="text"
                   property="flexShrink"
+                  placeholder="1"
                   disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexShrink : undefined}
                   onChange={this.props.onChangeLayout}
@@ -222,6 +225,62 @@ export default class Editor extends Component<Props> {
                 />
               </Col>
             </Row>
+            <h2>
+              Max-Width &times; Max-Height
+              <InfoText doclink="/docs/min-max">
+                Maximum dimensions of the node
+              </InfoText>
+            </h2>
+            <Row gutter={15}>
+              <Col span={12}>
+                <EditValue
+                  type="text"
+                  placeholder="none"
+                  property="maxWidth"
+                  disabled={disabled}
+                  value={node ? node.maxWidth : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+              <Col span={12}>
+                <EditValue
+                  type="text"
+                  placeholder="none"
+                  property="maxHeight"
+                  disabled={disabled}
+                  value={node ? node.maxHeight : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+            </Row>
+            <h2>
+              Min-Width &times; Min-Height
+              <InfoText doclink="/docs/min-max">
+                Minimum dimensions of the node
+              </InfoText>
+            </h2>
+            <Row gutter={15}>
+              <Col span={12}>
+                <EditValue
+                  type="text"
+                  placeholder="0"
+                  property="minWidth"
+                  disabled={disabled}
+                  value={node ? node.minWidth : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+              <Col span={12}>
+                <EditValue
+                  type="text"
+                  placeholder="0"
+                  property="minHeight"
+                  disabled={disabled}
+                  value={node ? node.minHeight : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+            </Row>
 
             <h2>
               Aspect Ratio
@@ -277,7 +336,8 @@ export default class Editor extends Component<Props> {
               icon="plus-circle-o"
               disabled={!Boolean(this.props.onAdd)}
               onClick={this.props.onAdd}
-              type="primary">
+              type="primary"
+            >
               add child node
             </Button>
           </Col>
@@ -286,7 +346,8 @@ export default class Editor extends Component<Props> {
               icon="close-circle-o"
               disabled={!Boolean(this.props.onRemove)}
               onClick={this.props.onRemove}
-              type="danger">
+              type="danger"
+            >
               remove node
             </Button>
           </Col>
