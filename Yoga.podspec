@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = 'Yoga'
-  spec.version = '1.8.0'
+  spec.version = '1.8.1'
   spec.license =  { :type => 'MIT', :file => "LICENSE" }
   spec.homepage = 'https://yogalayout.com/'
   spec.documentation_url = 'https://yogalayout.com/docs'
