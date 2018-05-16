@@ -13,7 +13,7 @@ Pod::Spec.new do |spec|
     :git => 'https://github.com/facebook/yoga.git',
     :tag => '1.8.0',
   }
-  spec.osx.deployment_target  = '10.13'
+  spec.platforms = { :ios => "8.0", :tvos => "10.0" }
   spec.module_name = 'yoga'
   spec.requires_arc = false
   spec.compiler_flags = [
