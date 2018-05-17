@@ -9,6 +9,7 @@
 #include <float.h>
 #include <string.h>
 #include <algorithm>
+#include <atomic>
 #include "Utils.h"
 #include "YGNode.h"
 #include "YGNodePrint.h"
@@ -211,8 +212,8 @@ void YGNodeMarkDirtyAndPropogateToDescendants(const YGNodeRef node) {
   return node->markDirtyAndPropogateDownwards();
 }
 
-int32_t gNodeInstanceCount = 0;
-int32_t gConfigInstanceCount = 0;
+std::atomic<int32_t> gNodeInstanceCount(0);
+std::atomic<int32_t> gConfigInstanceCount(0);
 
 WIN_EXPORT YGNodeRef YGNodeNewWithConfig(const YGConfigRef config) {
   const YGNodeRef node = new YGNode();
@@ -955,7 +956,7 @@ bool YGNodeLayoutGetDidLegacyStretchFlagAffectLayout(const YGNodeRef node) {
   return node->getLayout().doesLegacyStretchFlagAffectsLayout;
 }
 
-uint32_t gCurrentGenerationCount = 0;
+std::atomic<uint32_t> gCurrentGenerationCount(0);
 
 bool YGLayoutNodeInternal(const YGNodeRef node,
                           const float availableWidth,
@@ -3339,7 +3340,7 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   }
 }
 
-uint32_t gDepth = 0;
+std::atomic<uint32_t> gDepth(0);
 bool gPrintTree = false;
 bool gPrintChanges = false;
 bool gPrintSkips = false;
@@ -3605,7 +3606,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
     layout->measuredDimensions[YGDimensionHeight] = cachedResults->computedHeight;
 
     if (gPrintChanges && gPrintSkips) {
-      YGLog(node, YGLogLevelVerbose, "%s%d.{[skipped] ", YGSpacer(gDepth), gDepth);
+      YGLog(node, YGLogLevelVerbose, "%s%d.{[skipped] ", YGSpacer(gDepth), int32_t(gDepth));
       if (node->getPrintFunc() != nullptr) {
         node->getPrintFunc()(node);
       }
@@ -3628,7 +3629,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
           YGLogLevelVerbose,
           "%s%d.{%s",
           YGSpacer(gDepth),
-          gDepth,
+          int32_t(gDepth),
           needToVisitNode ? "*" : "");
       if (node->getPrintFunc() != nullptr) {
         node->getPrintFunc()(node);
@@ -3661,7 +3662,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
           YGLogLevelVerbose,
           "%s%d.}%s",
           YGSpacer(gDepth),
-          gDepth,
+          int32_t(gDepth),
           needToVisitNode ? "*" : "");
       if (node->getPrintFunc() != nullptr) {
         node->getPrintFunc()(node);
