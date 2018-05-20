@@ -28,5 +28,3 @@ direction specified. For `absolute` element though these properties
 specify the offset of the element's side from the same side on the parent.
 
 <controls prop="position"></controls>
-
-테스트
