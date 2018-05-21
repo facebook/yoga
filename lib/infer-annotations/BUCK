@@ -3,7 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "YOGA_ROOTS", "yoga_prebuilt_jar", "yoga_java_library")
+load("//:yoga_defs.bzl", "YOGA_ROOTS", "yoga_java_library", "yoga_prebuilt_jar")
 
 yoga_prebuilt_jar(
     name = "infer-annotations-jar",

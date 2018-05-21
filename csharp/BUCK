@@ -3,7 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "BASE_COMPILER_FLAGS", "yoga_dep", "yoga_cxx_library", "is_apple_platform")
+load("//:yoga_defs.bzl", "BASE_COMPILER_FLAGS", "is_apple_platform", "yoga_cxx_library", "yoga_dep")
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++11"]
 
@@ -33,39 +33,40 @@ yoga_cxx_library(
 )
 
 if is_apple_platform():
-  yoganet_ios_srcs = []
-  for arch in [
-    'iphonesimulator-x86_64', 'iphoneos-arm64'
-  ]:
-    name = 'yoganet-' + arch
-    yoganet_ios_srcs.append(':' + name)
+    yoganet_ios_srcs = []
+    for arch in [
+        "iphonesimulator-x86_64",
+        "iphoneos-arm64",
+    ]:
+        name = "yoganet-" + arch
+        yoganet_ios_srcs.append(":" + name)
+        genrule(
+            name = name,
+            srcs = [
+                yoga_dep(":yogaApple#%s,static" % arch),
+                yoga_dep("YogaKit:YogaKitApple#%s,static" % arch),
+                yoga_dep("csharp:yoganetApple#%s,static" % arch),
+            ],
+            out = "libyoga-%s.a" % arch,
+            cmd = "libtool -static -o $OUT $SRCS",
+            visibility = [yoga_dep("csharp:yoganet-ios")],
+        )
+
     genrule(
-      name = name,
-      srcs = [
-        yoga_dep(':yogaApple#%s,static' % arch),
-        yoga_dep('YogaKit:YogaKitApple#%s,static' % arch),
-        yoga_dep('csharp:yoganetApple#%s,static' % arch),
-      ],
-      out = 'libyoga-%s.a' % arch,
-      cmd = 'libtool -static -o $OUT $SRCS',
-      visibility = [yoga_dep('csharp:yoganet-ios')],
+        name = "yoganet-ios",
+        srcs = yoganet_ios_srcs,
+        out = "libyoga.a",
+        cmd = "lipo $SRCS -create -output $OUT",
+        visibility = ["PUBLIC"],
     )
 
-  genrule(
-    name = 'yoganet-ios',
-    srcs = yoganet_ios_srcs,
-    out = 'libyoga.a',
-    cmd = 'lipo $SRCS -create -output $OUT',
-    visibility = ['PUBLIC'],
-  )
-
-  yoganet_macosx_target = 'csharp:yoganetAppleMac#macosx-%s,dynamic'
-  genrule(
-    name = 'yoganet-macosx',
-    srcs = [
-      yoga_dep(yoganet_macosx_target % 'x86_64')
-    ],
-    out = 'libyoga.dylib',
-    cmd = 'lipo $SRCS -create -output $OUT',
-    visibility = ['PUBLIC'],
-  )
+    yoganet_macosx_target = "csharp:yoganetAppleMac#macosx-%s,dynamic"
+    genrule(
+        name = "yoganet-macosx",
+        srcs = [
+            yoga_dep(yoganet_macosx_target % "x86_64"),
+        ],
+        out = "libyoga.dylib",
+        cmd = "lipo $SRCS -create -output $OUT",
+        visibility = ["PUBLIC"],
+    )
