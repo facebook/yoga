@@ -18,7 +18,7 @@ import {List, setIn} from 'immutable';
 import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
 import Sidebar from './Sidebar';
-import {Row, Col} from 'antd';
+import {Row, Col, Button} from 'antd';
 import type {LayoutRecordT} from './LayoutRecord';
 import type {Yoga$Direction} from 'yoga-layout';
 import './index.css';
@@ -154,7 +154,7 @@ export default class Playground extends Component<Props, State> {
   modifyAtPath(
     path: Array<any>,
     value: any,
-    selectedNodePath?: ?Array<number> = this.state.selectedNodePath,
+    selectedNodePath?: ?Array<number> = this.state.selectedNodePath
   ) {
     // $FlowFixMe
     const layoutDefinition = setIn(this.state.layoutDefinition, path, value);
@@ -164,11 +164,14 @@ export default class Playground extends Component<Props, State> {
     });
 
     if (this.props.persist) {
-      window.location.hash = btoa(
-        JSON.stringify(this.removeUnchangedProperties(layoutDefinition)),
-      );
+      window.location.hash = this.getHash(layoutDefinition);
     }
   }
+
+  getHash = (
+    layoutDefinition: LayoutRecordT = this.state.layoutDefinition
+  ): string =>
+    btoa(JSON.stringify(this.removeUnchangedProperties(layoutDefinition)));
 
   removeUnchangedProperties = (node: LayoutRecordT): Object => {
     const untouchedLayout = LayoutRecord({});
@@ -203,7 +206,7 @@ export default class Playground extends Component<Props, State> {
       this.state.selectedNodePath || []
     ).reduce(
       (node: LayoutRecordT, cv) => node.children.get(cv),
-      this.state.layoutDefinition,
+      this.state.layoutDefinition
     );
     return selectedNode ? selectedNode.children.size : 0;
   };
@@ -223,7 +226,8 @@ export default class Playground extends Component<Props, State> {
         style={{height, maxHeight: height}}
         ref={ref => {
           this._containerRef = ref;
-        }}>
+        }}
+      >
         <YogaNode
           layoutDefinition={layoutDefinition}
           selectedNodePath={selectedNodePath}
@@ -243,7 +247,16 @@ export default class Playground extends Component<Props, State> {
                   />
                 </Col>
                 <Col span={12}>
-                  <URLShortener />
+                  {this.props.persist ? (
+                    <URLShortener />
+                  ) : (
+                    <Button
+                      href={`/playground#${this.getHash()}`}
+                      type="primary"
+                    >
+                      Open Playground
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </div>
@@ -284,7 +297,7 @@ export default class Playground extends Component<Props, State> {
           <div>
             {this.props.renderSidebar(
               layoutDefinition.getIn(getPath(selectedNodePath)),
-              this.onChangeLayout,
+              this.onChangeLayout
             )}
           </div>
           {playground}
