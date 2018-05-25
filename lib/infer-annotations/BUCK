@@ -12,8 +12,8 @@ yoga_prebuilt_jar(
 
 yoga_java_library(
     name = "infer-annotations",
+    visibility = YOGA_ROOTS,
     exported_deps = [
         ":infer-annotations-jar",
     ],
-    visibility = YOGA_ROOTS,
 )

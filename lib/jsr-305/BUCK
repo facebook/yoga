@@ -12,8 +12,8 @@ yoga_prebuilt_jar(
 
 yoga_java_library(
     name = "jsr-305",
+    visibility = YOGA_ROOTS,
     exported_deps = [
         ":jsr305-jar",
     ],
-    visibility = YOGA_ROOTS,
 )

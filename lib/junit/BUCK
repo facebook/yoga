@@ -12,8 +12,8 @@ yoga_prebuilt_jar(
 
 yoga_java_library(
     name = "junit",
+    visibility = YOGA_ROOTS,
     exported_deps = [
         ":junit-jar",
     ],
-    visibility = YOGA_ROOTS,
 )
