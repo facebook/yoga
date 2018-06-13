@@ -68,7 +68,7 @@ public class VirtualYogaLayout extends ViewGroup {
       ((VirtualYogaLayout) child).transferChildren(this);
 
       final YogaNode childNode = ((VirtualYogaLayout) child).getYogaNode();
-      mYogaNode.addChildAt(childNode, mYogaNode.getChildCount());
+      mYogaNode.addChildAt(childNode, index);
 
       return;
     }
@@ -79,7 +79,7 @@ public class VirtualYogaLayout extends ViewGroup {
     node.setData(child);
     node.setMeasureFunction(new YogaLayout.ViewMeasureFunction());
 
-    mYogaNode.addChildAt(node, mYogaNode.getChildCount());
+    mYogaNode.addChildAt(node, index);
 
     addView(child, node);
   }
