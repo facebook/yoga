@@ -139,7 +139,7 @@ function getLayoutCode(
     );
     lines.push(indent + `}]${isRoot ? ';' : ','}`);
   } else {
-    lines[lines.length - 1] += ']';
+    lines[lines.length - 1] += '],';
     CKFlexboxComponentChild.forEach(key => {
       let line = renderKey(node, key, indent);
       if (line) {
