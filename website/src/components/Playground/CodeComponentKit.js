@@ -165,7 +165,7 @@ function renderKey(node: Yoga$Node, key: string, indent: string): ?string {
       );
     }
 
-    ['top', 'left', 'right', 'bottom'].forEach(pKey => {
+    ['top', 'start', 'end', 'bottom'].forEach(pKey => {
       if (node[key][pKey]) {
         lines.push(indent + `\t.${pKey} = ${getValue(node[key][pKey])},`);
       }
