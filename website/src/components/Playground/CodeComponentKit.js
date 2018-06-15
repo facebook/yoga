@@ -137,7 +137,7 @@ function getLayoutCode(
             )}\n${indent}\t},`,
         ),
     );
-    lines.push(indent + `}]${isRoot ? ';' : ''}`);
+    lines.push(indent + `}]${isRoot ? ';' : ','}`);
   } else {
     lines[lines.length - 1] += ']';
     CKFlexboxComponentChild.forEach(key => {
