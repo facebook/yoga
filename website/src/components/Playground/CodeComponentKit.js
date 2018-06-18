@@ -137,9 +137,9 @@ function getLayoutCode(
             )}\n${indent}\t},`,
         ),
     );
-    lines.push(indent + `}]${isRoot ? ';' : ''}`);
+    lines.push(indent + `}]${isRoot ? ';' : ','}`);
   } else {
-    lines[lines.length - 1] += ']';
+    lines[lines.length - 1] += '],';
     CKFlexboxComponentChild.forEach(key => {
       let line = renderKey(node, key, indent);
       if (line) {
@@ -165,7 +165,7 @@ function renderKey(node: Yoga$Node, key: string, indent: string): ?string {
       );
     }
 
-    ['top', 'left', 'right', 'bottom'].forEach(pKey => {
+    ['top', 'start', 'end', 'bottom'].forEach(pKey => {
       if (node[key][pKey]) {
         lines.push(indent + `\t.${pKey} = ${getValue(node[key][pKey])},`);
       }
