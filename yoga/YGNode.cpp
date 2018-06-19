@@ -255,14 +255,17 @@ void YGNode::setNextChild(YGNodeRef nextChild) {
 
 void YGNode::replaceChild(YGNodeRef child, uint32_t index) {
   children_[index] = child;
+  setChildRoot(child);
 }
 
 void YGNode::replaceChild(YGNodeRef oldChild, YGNodeRef newChild) {
   std::replace(children_.begin(), children_.end(), oldChild, newChild);
+  setChildRoot(newChild);
 }
 
 void YGNode::insertChild(YGNodeRef child, uint32_t index) {
   children_.insert(children_.begin() + index, child);
+  setChildRoot(child);
 }
 
 void YGNode::setConfig(YGConfigRef config) {
@@ -769,4 +772,16 @@ bool YGNode::isLayoutTreeEqualToNode(const YGNode& node) const {
     }
   }
   return isLayoutTreeEqual;
+}
+
+YGNodeRef YGNode::getRoot() {
+  if (pRoot == nullptr) pRoot = this;
+  return pRoot;
+}
+
+void YGNode::setChildRoot(YGNodeRef node) {
+  node->pRoot = getRoot();
+  for (auto child: node->children_) {
+    setChildRoot(child);
+  }
 }

@@ -14,6 +14,7 @@
 #include "YGNode.h"
 #include "YGNodePrint.h"
 #include "Yoga-internal.h"
+#include <atomic>
 #ifdef _MSC_VER
 #include <float.h>
 
@@ -212,8 +213,8 @@ void YGNodeMarkDirtyAndPropogateToDescendants(const YGNodeRef node) {
   return node->markDirtyAndPropogateDownwards();
 }
 
-int32_t gNodeInstanceCount = 0;
-int32_t gConfigInstanceCount = 0;
+std::atomic<int32_t> gNodeInstanceCount(0);
+std::atomic<int32_t> gConfigInstanceCount(0);
 
 WIN_EXPORT YGNodeRef YGNodeNewWithConfig(const YGConfigRef config) {
   const YGNodeRef node = new YGNode();
@@ -244,6 +245,7 @@ YGNodeRef YGNodeClone(YGNodeRef oldNode) {
       oldNode->getConfig(),
       node != nullptr,
       "Could not allocate memory for node");
+  oldNode->setChildRoot(node);
   gNodeInstanceCount++;
   node->setOwner(nullptr);
   return node;
@@ -301,8 +303,8 @@ void YGNodeFree(const YGNodeRef node) {
 
 static void YGConfigFreeRecursive(const YGNodeRef root) {
   if (root->getConfig() != nullptr) {
-    gConfigInstanceCount--;
     delete root->getConfig();
+    gConfigInstanceCount--;
   }
   // Delete configs recursively for childrens
   for (uint32_t i = 0; i < root->getChildrenCount(); ++i) {
@@ -960,8 +962,6 @@ bool YGNodeLayoutGetDidLegacyStretchFlagAffectLayout(const YGNodeRef node) {
   return node->getLayout().doesLegacyStretchFlagAffectsLayout;
 }
 
-uint32_t gCurrentGenerationCount = 0;
-
 bool YGLayoutNodeInternal(const YGNodeRef node,
                           const float availableWidth,
                           const float availableHeight,
@@ -1220,8 +1220,7 @@ static void YGNodeComputeFlexBasisForChild(const YGNodeRef node,
     if (child->getLayout().computedFlexBasis.isUndefined() ||
         (YGConfigIsExperimentalFeatureEnabled(
              child->getConfig(), YGExperimentalFeatureWebFlexBasis) &&
-         child->getLayout().computedFlexBasisGeneration !=
-             gCurrentGenerationCount)) {
+         child->getLayout().computedFlexBasisGeneration != node->getRoot()->gCurrentGenerationCount)) {
       const YGFloatOptional& paddingAndBorder = YGFloatOptional(
           YGNodePaddingAndBorderForAxis(child, mainAxis, ownerWidth));
       child->setLayoutComputedFlexBasis(
@@ -1361,7 +1360,7 @@ static void YGNodeComputeFlexBasisForChild(const YGNodeRef node,
         child->getLayout().measuredDimensions[dim[mainAxis]],
         YGNodePaddingAndBorderForAxis(child, mainAxis, ownerWidth))));
   }
-  child->setLayoutComputedFlexBasisGeneration(gCurrentGenerationCount);
+  child->setLayoutComputedFlexBasisGeneration(node->getRoot()->gCurrentGenerationCount);
 }
 
 static void YGNodeAbsoluteLayoutChild(const YGNodeRef node,
@@ -1827,7 +1826,7 @@ static void YGNodeComputeFlexBasisForChildren(
       continue;
     }
     if (child == singleFlexChild) {
-      child->setLayoutComputedFlexBasisGeneration(gCurrentGenerationCount);
+      child->setLayoutComputedFlexBasisGeneration(node->getRoot()->gCurrentGenerationCount);
       child->setLayoutComputedFlexBasis(YGFloatOptional(0));
     } else {
       YGNodeComputeFlexBasisForChild(
@@ -3344,7 +3343,6 @@ static void YGNodelayoutImpl(const YGNodeRef node,
   }
 }
 
-uint32_t gDepth = 0;
 bool gPrintTree = false;
 bool gPrintChanges = false;
 bool gPrintSkips = false;
@@ -3515,10 +3513,10 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
                           const YGConfigRef config) {
   YGLayout* layout = &node->getLayout();
 
-  gDepth++;
+  node->getRoot()->gDepth++;
 
   const bool needToVisitNode =
-      (node->isDirty() && layout->generationCount != gCurrentGenerationCount) ||
+      (node->isDirty() && layout->generationCount != node->getRoot()->gCurrentGenerationCount) ||
       layout->lastOwnerDirection != ownerDirection;
 
   if (needToVisitNode) {
@@ -3610,7 +3608,7 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
     layout->measuredDimensions[YGDimensionHeight] = cachedResults->computedHeight;
 
     if (gPrintChanges && gPrintSkips) {
-      YGLog(node, YGLogLevelVerbose, "%s%d.{[skipped] ", YGSpacer(gDepth), gDepth);
+      YGLog(node, YGLogLevelVerbose, "%s%d.{[skipped] ", YGSpacer(node->getRoot()->gDepth), node->getRoot()->gDepth);
       if (node->getPrintFunc() != nullptr) {
         node->getPrintFunc()(node);
       }
@@ -3632,8 +3630,8 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
           node,
           YGLogLevelVerbose,
           "%s%d.{%s",
-          YGSpacer(gDepth),
-          gDepth,
+          YGSpacer(node->getRoot()->gDepth),
+          node->getRoot()->gDepth,
           needToVisitNode ? "*" : "");
       if (node->getPrintFunc() != nullptr) {
         node->getPrintFunc()(node);
@@ -3665,8 +3663,8 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
           node,
           YGLogLevelVerbose,
           "%s%d.}%s",
-          YGSpacer(gDepth),
-          gDepth,
+          YGSpacer(node->getRoot()->gDepth),
+          node->getRoot()->gDepth,
           needToVisitNode ? "*" : "");
       if (node->getPrintFunc() != nullptr) {
         node->getPrintFunc()(node);
@@ -3723,8 +3721,8 @@ bool YGLayoutNodeInternal(const YGNodeRef node,
     node->setDirty(false);
   }
 
-  gDepth--;
-  layout->generationCount = gCurrentGenerationCount;
+  node->getRoot()->gDepth--;
+  layout->generationCount = node->getRoot()->gCurrentGenerationCount;
   return (needToVisitNode || cachedResults == nullptr);
 }
 
@@ -3820,7 +3818,7 @@ void YGNodeCalculateLayout(
   // all dirty nodes at least once. Subsequent visits will be skipped if the
   // input
   // parameters don't change.
-  gCurrentGenerationCount++;
+  node->getRoot()->gCurrentGenerationCount++;
   node->resolveDimension();
   float width = YGUndefined;
   YGMeasureMode widthMeasureMode = YGMeasureModeUndefined;
@@ -3900,7 +3898,7 @@ void YGNodeCalculateLayout(
     originalNode->resolveDimension();
     // Recursively mark nodes as dirty
     originalNode->markDirtyAndPropogateDownwards();
-    gCurrentGenerationCount++;
+    node->getRoot()->gCurrentGenerationCount++;
     // Rerun the layout, and calculate the diff
     originalNode->setAndPropogateUseLegacyFlag(false);
     if (YGLayoutNodeInternal(
