@@ -183,4 +183,13 @@ struct YGNode {
   bool isNodeFlexible();
   bool didUseLegacyFlag();
   bool isLayoutTreeEqualToNode(const YGNode& node) const;
+
+private:
+  YGNodeRef pRoot = nullptr;
+
+public:
+  uint32_t  gCurrentGenerationCount = 0;
+  uint32_t  gDepth = 0;
+  YGNodeRef getRoot();
+  void setChildRoot(YGNodeRef node);
 };
