@@ -1,8 +1,9 @@
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
+/*
+ *  Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ *  This source code is licensed under the MIT license found in the LICENSE
+ *  file in the root directory of this source tree.
+ *
  */
 
 #include "Yoga.h"
@@ -245,6 +246,9 @@ YGNodeRef YGNodeClone(YGNodeRef oldNode) {
       node != nullptr,
       "Could not allocate memory for node");
   oldNode->setChildRoot(node);
+  for (auto &item : oldNode->getChildren()) {
+    item->setOwner(nullptr);
+  }
   gNodeInstanceCount++;
   node->setOwner(nullptr);
   return node;
