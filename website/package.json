@@ -31,6 +31,6 @@
     "develop": "gatsby develop"
   },
   "devDependencies": {
-    "prettier": "1.13.4"
+    "prettier": "1.13.6"
   }
 }
