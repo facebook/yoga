@@ -4,22 +4,22 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "antd": "^3.2.0",
-    "atob": "^2.0.3",
+    "antd": "^3.6.5",
+    "atob": "^2.1.1",
     "btoa": "^1.2.1",
-    "gatsby": "^1.9.158",
-    "gatsby-link": "^1.6.34",
-    "gatsby-plugin-antd": "^1.0.10",
-    "gatsby-plugin-google-analytics": "^1.0.19",
-    "gatsby-plugin-less": "^1.1.4",
-    "gatsby-plugin-react-helmet": "^2.0.3",
-    "gatsby-plugin-react-next": "^1.0.8",
-    "gatsby-remark-prismjs": "^1.2.14",
-    "gatsby-source-filesystem": "^1.5.18",
-    "gatsby-transformer-remark": "^1.7.31",
+    "gatsby": "^1.9.273",
+    "gatsby-link": "^1.6.45",
+    "gatsby-plugin-antd": "^1.0.12",
+    "gatsby-plugin-google-analytics": "^1.0.31",
+    "gatsby-plugin-less": "^1.1.8",
+    "gatsby-plugin-react-helmet": "^2.0.11",
+    "gatsby-plugin-react-next": "^1.0.11",
+    "gatsby-remark-prismjs": "^2.0.4",
+    "gatsby-source-filesystem": "^1.5.39",
+    "gatsby-transformer-remark": "^1.7.44",
     "immutable": "^4.0.0-rc.9",
     "react-helmet": "^5.2.0",
-    "react-syntax-highlighter": "^7.0.0",
+    "react-syntax-highlighter": "^8.0.0",
     "yoga-layout": "^1.9.3"
   },
   "keywords": [
@@ -32,6 +32,6 @@
     "develop": "gatsby develop"
   },
   "devDependencies": {
-    "prettier": "1.13.6"
+    "prettier": "1.13.7"
   }
 }
