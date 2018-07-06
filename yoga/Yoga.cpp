@@ -246,9 +246,6 @@ YGNodeRef YGNodeClone(YGNodeRef oldNode) {
       node != nullptr,
       "Could not allocate memory for node");
   oldNode->setChildRoot(node);
-  for (auto &item : oldNode->getChildren()) {
-    item->setOwner(nullptr);
-  }
   gNodeInstanceCount++;
   node->setOwner(nullptr);
   return node;

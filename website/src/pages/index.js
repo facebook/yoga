@@ -183,12 +183,14 @@ const AboutSectionTwo = () => (
 );
 
 export default () => (
-  <Page className="landing-page" title="A cross-platform layout engine">
-    <HeroSection />
-    <PlaygroundSection />
-    <AboutSectionOne />
-    <hr />
-    <AboutSectionTwo />
-    <Footer />
-  </Page>
+  <div>
+    <Page className="landing-page" title="A cross-platform layout engine">
+      <HeroSection />
+      <PlaygroundSection />
+      <AboutSectionOne />
+      <hr />
+      <AboutSectionTwo />
+      <Footer />
+    </Page>
+  </div>
 );

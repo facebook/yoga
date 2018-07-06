@@ -19,6 +19,7 @@ import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
 import Sidebar from './Sidebar';
 import {Row, Col, Button} from 'antd';
+import btoa from 'btoa';
 import type {LayoutRecordT} from './LayoutRecord';
 import type {Yoga$Direction} from 'yoga-layout';
 import './index.css';
