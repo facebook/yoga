@@ -7,6 +7,6 @@ load("//:yoga_defs.bzl", "YOGA_ROOTS")
 
 android_prebuilt_aar(
     name = "soloader",
-    aar = "soloader-0.1.0.aar",
+    aar = "soloader-0.5.1.aar",
     visibility = YOGA_ROOTS,
 )
