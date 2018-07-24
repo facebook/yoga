@@ -190,3 +190,43 @@ def yoga_prebuilt_jar(*args, **kwargs):
 
 def is_apple_platform():
     return True
+
+def yoga_apple_binary():
+    if is_apple_platform():
+        yoganet_ios_srcs = []
+        for arch in [
+            "iphonesimulator-x86_64",
+            "iphoneos-arm64",
+        ]:
+            name = "yoganet-" + arch
+            yoganet_ios_srcs.append(":" + name)
+            native.genrule(
+                name = name,
+                srcs = [
+                    yoga_dep(":yogaApple#%s,static" % arch),
+                    yoga_dep("YogaKit:YogaKitApple#%s,static" % arch),
+                    yoga_dep("csharp:yoganetApple#%s,static" % arch),
+                ],
+                out = "libyoga-%s.a" % arch,
+                cmd = "libtool -static -o $OUT $SRCS",
+                visibility = [yoga_dep("csharp:yoganet-ios")],
+            )
+
+        native.genrule(
+            name = "yoganet-ios",
+            srcs = yoganet_ios_srcs,
+            out = "libyoga.a",
+            cmd = "lipo $SRCS -create -output $OUT",
+            visibility = ["PUBLIC"],
+        )
+
+        yoganet_macosx_target = "csharp:yoganetAppleMac#macosx-%s,dynamic"
+        native.genrule(
+            name = "yoganet-macosx",
+            srcs = [
+                yoga_dep(yoganet_macosx_target % "x86_64"),
+            ],
+            out = "libyoga.dylib",
+            cmd = "lipo $SRCS -create -output $OUT",
+            visibility = ["PUBLIC"],
+        )
