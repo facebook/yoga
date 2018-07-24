@@ -34,6 +34,13 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
     __attribute__((unavailable("you are not meant to initialise YGLayout")));
 
 /**
+ Make default init unavailable, as it will not initialise YGNode which is
+ required for the setters and getters of YGLayout's properties to work properly.
+ */
++ (instancetype)new
+    __attribute__((unavailable("you are not meant to initialise YGLayout")));
+
+/**
   The property that decides if we should include this view when calculating
   layout. Defaults to YES.
  */
