@@ -147,7 +147,7 @@ export type Yoga$Node = {
   getComputedTop(): number,
   getComputedWidth(): number,
   getDisplay(): Yoga$Display,
-  getFlexBasis(): number,
+  getFlexBasis(): Value,
   getFlexDirection(): Yoga$FlexDirection,
   getFlexGrow(): number,
   getFlexShrink(): number,
