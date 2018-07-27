@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2015-present, Facebook, Inc.
+ *  Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ *  This source code is licensed under the MIT license found in the LICENSE
+ *  file in the root directory of this source tree.
+ *
  */
-
 #pragma once
 
 #include "Exceptions.h"
@@ -106,8 +106,10 @@ inline NativeMethodWrapper* exceptionWrapJNIMethod(R (*)(alias_ref<C>, Args... a
 
 // registration wrappers for non-static methods, with autoconvertion of arguments.
 
-template<typename M, M method, typename C, typename... Args>
-inline NativeMethodWrapper* exceptionWrapJNIMethod(void (C::*method0)(Args... args)) {
+template <typename M, M method, typename C, typename... Args>
+inline NativeMethodWrapper* exceptionWrapJNIMethod(
+    void (C::*method0)(Args... args)) {
+  (void)method0;
   struct funcWrapper {
     JNI_ENTRY_POINT static void call(JNIEnv* env, jobject obj,
                                      typename Convert<typename std::decay<Args>::type>::jniType... args) {
