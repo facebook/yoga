@@ -61,7 +61,7 @@ for (let [name, results] of testResults) {
 
   for (let [type, result] of results) {
     console.log(
-      `  - ${type}: ${result}ms (${Math.round(result / min * 10000) / 100}%)`,
+      `  - ${type}: ${result}ms (${Math.round((result / min) * 10000) / 100}%)`,
     );
   }
 }

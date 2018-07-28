@@ -18,7 +18,7 @@
     "gatsby-transformer-remark": "^1.7.31",
     "immutable": "^4.0.0-rc.9",
     "react-helmet": "^5.2.0",
-    "react-syntax-highlighter": "^7.0.0",
+    "react-syntax-highlighter": "^8.0.0",
     "yoga-layout": "^1.9.3"
   },
   "keywords": [
@@ -31,6 +31,6 @@
     "develop": "gatsby develop"
   },
   "devDependencies": {
-    "prettier": "1.12.1"
+    "prettier": "1.13.7"
   }
 }

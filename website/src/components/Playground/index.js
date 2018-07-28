@@ -18,7 +18,8 @@ import {List, setIn} from 'immutable';
 import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
 import Sidebar from './Sidebar';
-import {Row, Col} from 'antd';
+import {Row, Col, Button} from 'antd';
+import btoa from 'btoa';
 import type {LayoutRecordT} from './LayoutRecord';
 import type {Yoga$Direction} from 'yoga-layout';
 import './index.css';
@@ -164,11 +165,14 @@ export default class Playground extends Component<Props, State> {
     });
 
     if (this.props.persist) {
-      window.location.hash = btoa(
-        JSON.stringify(this.removeUnchangedProperties(layoutDefinition)),
-      );
+      window.location.hash = this.getHash(layoutDefinition);
     }
   }
+
+  getHash = (
+    layoutDefinition: LayoutRecordT = this.state.layoutDefinition,
+  ): string =>
+    btoa(JSON.stringify(this.removeUnchangedProperties(layoutDefinition)));
 
   removeUnchangedProperties = (node: LayoutRecordT): Object => {
     const untouchedLayout = LayoutRecord({});
@@ -243,7 +247,15 @@ export default class Playground extends Component<Props, State> {
                   />
                 </Col>
                 <Col span={12}>
-                  <URLShortener />
+                  {this.props.persist ? (
+                    <URLShortener />
+                  ) : (
+                    <Button
+                      href={`/playground#${this.getHash()}`}
+                      type="primary">
+                      Open Playground
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </div>

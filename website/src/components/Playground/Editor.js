@@ -336,8 +336,7 @@ export default class Editor extends Component<Props> {
               icon="plus-circle-o"
               disabled={!Boolean(this.props.onAdd)}
               onClick={this.props.onAdd}
-              type="primary"
-            >
+              type="primary">
               add child node
             </Button>
           </Col>
@@ -346,8 +345,7 @@ export default class Editor extends Component<Props> {
               icon="close-circle-o"
               disabled={!Boolean(this.props.onRemove)}
               onClick={this.props.onRemove}
-              type="danger"
-            >
+              type="danger">
               remove node
             </Button>
           </Col>
