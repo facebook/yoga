@@ -9,18 +9,28 @@
 
 package com.facebook.yoga;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+@RunWith(Parameterized.class)
 public class YGDimensionTest {
+  @Parameterized.Parameters(name = "{0}")
+  public static Iterable<TestParametrization.NodeFactory> nodeFactories() {
+    return TestParametrization.nodeFactories();
+  }
+
+  @Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;
+
   @Test
   public void test_wrap_child() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(100f);
     root_child0.setHeight(100f);
     root.addChildAt(root_child0, 0);
@@ -55,12 +65,12 @@ public class YGDimensionTest {
   public void test_wrap_grandchild() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0 = createNode(config);
     root_child0_child0.setWidth(100f);
     root_child0_child0.setHeight(100f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -101,4 +111,7 @@ public class YGDimensionTest {
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
   }
 
+  private YogaNode createNode(YogaConfig config) {
+    return mNodeFactory.create(config);
+  }
 }

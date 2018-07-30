@@ -9,35 +9,45 @@
 
 package com.facebook.yoga;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+@RunWith(Parameterized.class)
 public class YGFlexWrapTest {
+  @Parameterized.Parameters(name = "{0}")
+  public static Iterable<TestParametrization.NodeFactory> nodeFactories() {
+    return TestParametrization.nodeFactories();
+  }
+
+  @Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;
+
   @Test
   public void test_wrap_column() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(30f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(30f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
@@ -102,27 +112,27 @@ public class YGFlexWrapTest {
   public void test_wrap_row() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(30f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(30f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
@@ -187,28 +197,28 @@ public class YGFlexWrapTest {
   public void test_wrap_row_align_items_flex_end() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.FLEX_END);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
@@ -273,28 +283,28 @@ public class YGFlexWrapTest {
   public void test_wrap_row_align_items_center() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignItems(YogaAlign.CENTER);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(30f);
     root.addChildAt(root_child3, 3);
@@ -359,18 +369,18 @@ public class YGFlexWrapTest {
   public void test_flex_wrap_children_with_min_main_overriding_flex_basis() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexBasis(50f);
     root_child0.setMinWidth(55f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setFlexBasis(50f);
     root_child1.setMinWidth(55f);
     root_child1.setHeight(50f);
@@ -416,24 +426,24 @@ public class YGFlexWrapTest {
   public void test_flex_wrap_wrap_to_child_height() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setAlignItems(YogaAlign.FLEX_START);
     root_child0.setWrap(YogaWrap.WRAP);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0 = createNode(config);
     root_child0_child0.setWidth(100f);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child0_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0_child0 = createNode(config);
     root_child0_child0_child0.setWidth(100f);
     root_child0_child0_child0.setHeight(100f);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(100f);
     root_child1.setHeight(100f);
     root.addChildAt(root_child1, 1);
@@ -498,17 +508,17 @@ public class YGFlexWrapTest {
   public void test_flex_wrap_align_stretch_fits_one_row() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWrap(YogaWrap.WRAP);
     root.setWidth(150f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(50f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -552,32 +562,32 @@ public class YGFlexWrapTest {
   public void test_wrap_reverse_row_align_content_flex_start() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(40f);
     root.addChildAt(root_child3, 3);
 
-    final YogaNode root_child4 = new YogaNode(config);
+    final YogaNode root_child4 = createNode(config);
     root_child4.setWidth(30f);
     root_child4.setHeight(50f);
     root.addChildAt(root_child4, 4);
@@ -652,33 +662,33 @@ public class YGFlexWrapTest {
   public void test_wrap_reverse_row_align_content_center() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignContent(YogaAlign.CENTER);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(40f);
     root.addChildAt(root_child3, 3);
 
-    final YogaNode root_child4 = new YogaNode(config);
+    final YogaNode root_child4 = createNode(config);
     root_child4.setWidth(30f);
     root_child4.setHeight(50f);
     root.addChildAt(root_child4, 4);
@@ -753,32 +763,32 @@ public class YGFlexWrapTest {
   public void test_wrap_reverse_row_single_line_different_size() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(300f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(40f);
     root.addChildAt(root_child3, 3);
 
-    final YogaNode root_child4 = new YogaNode(config);
+    final YogaNode root_child4 = createNode(config);
     root_child4.setWidth(30f);
     root_child4.setHeight(50f);
     root.addChildAt(root_child4, 4);
@@ -853,33 +863,33 @@ public class YGFlexWrapTest {
   public void test_wrap_reverse_row_align_content_stretch() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignContent(YogaAlign.STRETCH);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(40f);
     root.addChildAt(root_child3, 3);
 
-    final YogaNode root_child4 = new YogaNode(config);
+    final YogaNode root_child4 = createNode(config);
     root_child4.setWidth(30f);
     root_child4.setHeight(50f);
     root.addChildAt(root_child4, 4);
@@ -954,33 +964,33 @@ public class YGFlexWrapTest {
   public void test_wrap_reverse_row_align_content_space_around() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setAlignContent(YogaAlign.SPACE_AROUND);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(40f);
     root.addChildAt(root_child3, 3);
 
-    final YogaNode root_child4 = new YogaNode(config);
+    final YogaNode root_child4 = createNode(config);
     root_child4.setWidth(30f);
     root_child4.setHeight(50f);
     root.addChildAt(root_child4, 4);
@@ -1055,33 +1065,33 @@ public class YGFlexWrapTest {
   public void test_wrap_reverse_column_fixed_size() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(200f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(30f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(30f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(30f);
     root_child2.setHeight(30f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setWidth(30f);
     root_child3.setHeight(40f);
     root.addChildAt(root_child3, 3);
 
-    final YogaNode root_child4 = new YogaNode(config);
+    final YogaNode root_child4 = createNode(config);
     root_child4.setWidth(30f);
     root_child4.setHeight(50f);
     root.addChildAt(root_child4, 4);
@@ -1156,22 +1166,22 @@ public class YGFlexWrapTest {
   public void test_wrapped_row_within_align_items_center() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setWrap(YogaWrap.WRAP);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0 = createNode(config);
     root_child0_child0.setWidth(150f);
     root_child0_child0.setHeight(80f);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child0_child1 = new YogaNode(config);
+    final YogaNode root_child0_child1 = createNode(config);
     root_child0_child1.setWidth(80f);
     root_child0_child1.setHeight(80f);
     root_child0.addChildAt(root_child0_child1, 1);
@@ -1226,22 +1236,22 @@ public class YGFlexWrapTest {
   public void test_wrapped_row_within_align_items_flex_start() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setWrap(YogaWrap.WRAP);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0 = createNode(config);
     root_child0_child0.setWidth(150f);
     root_child0_child0.setHeight(80f);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child0_child1 = new YogaNode(config);
+    final YogaNode root_child0_child1 = createNode(config);
     root_child0_child1.setWidth(80f);
     root_child0_child1.setHeight(80f);
     root_child0.addChildAt(root_child0_child1, 1);
@@ -1296,22 +1306,22 @@ public class YGFlexWrapTest {
   public void test_wrapped_row_within_align_items_flex_end() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_END);
     root.setWidth(200f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setWrap(YogaWrap.WRAP);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0 = createNode(config);
     root_child0_child0.setWidth(150f);
     root_child0_child0.setHeight(80f);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child0_child1 = new YogaNode(config);
+    final YogaNode root_child0_child1 = createNode(config);
     root_child0_child1.setWidth(80f);
     root_child0_child1.setHeight(80f);
     root_child0.addChildAt(root_child0_child1, 1);
@@ -1366,7 +1376,7 @@ public class YGFlexWrapTest {
   public void test_wrapped_column_max_height() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignContent(YogaAlign.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1374,13 +1384,13 @@ public class YGFlexWrapTest {
     root.setWidth(700f);
     root.setHeight(500f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(100f);
     root_child0.setHeight(500f);
     root_child0.setMaxHeight(200f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setMargin(YogaEdge.LEFT, 20f);
     root_child1.setMargin(YogaEdge.TOP, 20f);
     root_child1.setMargin(YogaEdge.RIGHT, 20f);
@@ -1389,7 +1399,7 @@ public class YGFlexWrapTest {
     root_child1.setHeight(200f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(100f);
     root_child2.setHeight(100f);
     root.addChildAt(root_child2, 2);
@@ -1444,7 +1454,7 @@ public class YGFlexWrapTest {
   public void test_wrapped_column_max_height_flex() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignContent(YogaAlign.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1452,7 +1462,7 @@ public class YGFlexWrapTest {
     root.setWidth(700f);
     root.setHeight(500f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexShrink(1f);
     root_child0.setFlexBasisPercent(0f);
@@ -1461,7 +1471,7 @@ public class YGFlexWrapTest {
     root_child0.setMaxHeight(200f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setFlexGrow(1f);
     root_child1.setFlexShrink(1f);
     root_child1.setFlexBasisPercent(0f);
@@ -1473,7 +1483,7 @@ public class YGFlexWrapTest {
     root_child1.setHeight(200f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setWidth(100f);
     root_child2.setHeight(100f);
     root.addChildAt(root_child2, 2);
@@ -1528,29 +1538,29 @@ public class YGFlexWrapTest {
   public void test_wrap_nodes_with_content_sizing_overflowing_margin() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(500f);
     root.setHeight(500f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setWrap(YogaWrap.WRAP);
     root_child0.setWidth(85f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0 = createNode(config);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child0_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0_child0 = createNode(config);
     root_child0_child0_child0.setWidth(40f);
     root_child0_child0_child0.setHeight(40f);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
 
-    final YogaNode root_child0_child1 = new YogaNode(config);
+    final YogaNode root_child0_child1 = createNode(config);
     root_child0_child1.setMargin(YogaEdge.RIGHT, 10f);
     root_child0.addChildAt(root_child0_child1, 1);
 
-    final YogaNode root_child0_child1_child0 = new YogaNode(config);
+    final YogaNode root_child0_child1_child0 = createNode(config);
     root_child0_child1_child0.setWidth(40f);
     root_child0_child1_child0.setHeight(40f);
     root_child0_child1.addChildAt(root_child0_child1_child0, 0);
@@ -1625,29 +1635,29 @@ public class YGFlexWrapTest {
   public void test_wrap_nodes_with_content_sizing_margin_cross() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(500f);
     root.setHeight(500f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setWrap(YogaWrap.WRAP);
     root_child0.setWidth(70f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0 = createNode(config);
     root_child0.addChildAt(root_child0_child0, 0);
 
-    final YogaNode root_child0_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0_child0 = createNode(config);
     root_child0_child0_child0.setWidth(40f);
     root_child0_child0_child0.setHeight(40f);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
 
-    final YogaNode root_child0_child1 = new YogaNode(config);
+    final YogaNode root_child0_child1 = createNode(config);
     root_child0_child1.setMargin(YogaEdge.TOP, 10f);
     root_child0.addChildAt(root_child0_child1, 1);
 
-    final YogaNode root_child0_child1_child0 = new YogaNode(config);
+    final YogaNode root_child0_child1_child0 = createNode(config);
     root_child0_child1_child0.setWidth(40f);
     root_child0_child1_child0.setHeight(40f);
     root_child0_child1.addChildAt(root_child0_child1_child0, 0);
@@ -1718,4 +1728,7 @@ public class YGFlexWrapTest {
     assertEquals(40f, root_child0_child1_child0.getLayoutHeight(), 0.0f);
   }
 
+  private YogaNode createNode(YogaConfig config) {
+    return mNodeFactory.create(config);
+  }
 }

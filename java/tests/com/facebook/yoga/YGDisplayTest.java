@@ -9,25 +9,35 @@
 
 package com.facebook.yoga;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+@RunWith(Parameterized.class)
 public class YGDisplayTest {
+  @Parameterized.Parameters(name = "{0}")
+  public static Iterable<TestParametrization.NodeFactory> nodeFactories() {
+    return TestParametrization.nodeFactories();
+  }
+
+  @Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;
+
   @Test
   public void test_display_none() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setFlexGrow(1f);
     root_child1.setDisplay(YogaDisplay.NONE);
     root.addChildAt(root_child1, 1);
@@ -72,16 +82,16 @@ public class YGDisplayTest {
   public void test_display_none_fixed_size() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setWidth(20f);
     root_child1.setHeight(20f);
     root_child1.setDisplay(YogaDisplay.NONE);
@@ -127,12 +137,12 @@ public class YGDisplayTest {
   public void test_display_none_with_margin() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setMargin(YogaEdge.LEFT, 10f);
     root_child0.setMargin(YogaEdge.TOP, 10f);
     root_child0.setMargin(YogaEdge.RIGHT, 10f);
@@ -142,7 +152,7 @@ public class YGDisplayTest {
     root_child0.setDisplay(YogaDisplay.NONE);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
     root.setDirection(YogaDirection.LTR);
@@ -186,25 +196,25 @@ public class YGDisplayTest {
   public void test_display_none_with_child() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexShrink(1f);
     root_child0.setFlexBasisPercent(0f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setFlexGrow(1f);
     root_child1.setFlexShrink(1f);
     root_child1.setFlexBasisPercent(0f);
     root_child1.setDisplay(YogaDisplay.NONE);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode(config);
+    final YogaNode root_child1_child0 = createNode(config);
     root_child1_child0.setFlexGrow(1f);
     root_child1_child0.setFlexShrink(1f);
     root_child1_child0.setFlexBasisPercent(0f);
@@ -213,7 +223,7 @@ public class YGDisplayTest {
     root_child1_child0.setMinHeight(0f);
     root_child1.addChildAt(root_child1_child0, 0);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setFlexGrow(1f);
     root_child2.setFlexShrink(1f);
     root_child2.setFlexBasisPercent(0f);
@@ -279,16 +289,16 @@ public class YGDisplayTest {
   public void test_display_none_with_position() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setFlexGrow(1f);
     root_child1.setPosition(YogaEdge.TOP, 10f);
     root_child1.setDisplay(YogaDisplay.NONE);
@@ -330,4 +340,7 @@ public class YGDisplayTest {
     assertEquals(0f, root_child1.getLayoutHeight(), 0.0f);
   }
 
+  private YogaNode createNode(YogaConfig config) {
+    return mNodeFactory.create(config);
+  }
 }

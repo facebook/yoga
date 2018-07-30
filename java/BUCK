@@ -8,6 +8,7 @@ load("//:yoga_defs.bzl", "ANDROID", "CXX_LIBRARY_WHITELIST", "FBJNI_JAVA_TARGET"
 yoga_cxx_library(
     name = "jni",
     srcs = glob(["jni/*.cpp"]),
+    headers = glob(["jni/*.h"]),
     header_namespace = "",
     compiler_flags = [
         "-fno-omit-frame-pointer",

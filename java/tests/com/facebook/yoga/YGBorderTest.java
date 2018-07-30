@@ -9,16 +9,26 @@
 
 package com.facebook.yoga;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+@RunWith(Parameterized.class)
 public class YGBorderTest {
+  @Parameterized.Parameters(name = "{0}")
+  public static Iterable<TestParametrization.NodeFactory> nodeFactories() {
+    return TestParametrization.nodeFactories();
+  }
+
+  @Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;
+
   @Test
   public void test_border_no_size() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
     root.setBorder(YogaEdge.TOP, 10f);
     root.setBorder(YogaEdge.RIGHT, 10f);
@@ -44,13 +54,13 @@ public class YGBorderTest {
   public void test_border_container_match_child() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
     root.setBorder(YogaEdge.TOP, 10f);
     root.setBorder(YogaEdge.RIGHT, 10f);
     root.setBorder(YogaEdge.BOTTOM, 10f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -85,7 +95,7 @@ public class YGBorderTest {
   public void test_border_flex_child() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
     root.setBorder(YogaEdge.TOP, 10f);
     root.setBorder(YogaEdge.RIGHT, 10f);
@@ -93,7 +103,7 @@ public class YGBorderTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setFlexGrow(1f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
@@ -128,7 +138,7 @@ public class YGBorderTest {
   public void test_border_stretch_child() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
     root.setBorder(YogaEdge.TOP, 10f);
     root.setBorder(YogaEdge.RIGHT, 10f);
@@ -136,7 +146,7 @@ public class YGBorderTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
@@ -170,7 +180,7 @@ public class YGBorderTest {
   public void test_border_center_child() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
     root.setBorder(YogaEdge.START, 10f);
@@ -179,7 +189,7 @@ public class YGBorderTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -210,4 +220,7 @@ public class YGBorderTest {
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
   }
 
+  private YogaNode createNode(YogaConfig config) {
+    return mNodeFactory.create(config);
+  }
 }

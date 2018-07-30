@@ -9,20 +9,30 @@
 
 package com.facebook.yoga;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+@RunWith(Parameterized.class)
 public class YGAlignSelfTest {
+  @Parameterized.Parameters(name = "{0}")
+  public static Iterable<TestParametrization.NodeFactory> nodeFactories() {
+    return TestParametrization.nodeFactories();
+  }
+
+  @Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;
+
   @Test
   public void test_align_self_center() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.CENTER);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -58,11 +68,11 @@ public class YGAlignSelfTest {
   public void test_align_self_flex_end() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -98,11 +108,11 @@ public class YGAlignSelfTest {
   public void test_align_self_flex_start() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_START);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -138,12 +148,12 @@ public class YGAlignSelfTest {
   public void test_align_self_flex_end_override_flex_start() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
@@ -179,24 +189,24 @@ public class YGAlignSelfTest {
   public void test_align_self_baseline() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.BASELINE);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setAlignSelf(YogaAlign.BASELINE);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child1_child0 = new YogaNode(config);
+    final YogaNode root_child1_child0 = createNode(config);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);
@@ -247,4 +257,7 @@ public class YGAlignSelfTest {
     assertEquals(10f, root_child1_child0.getLayoutHeight(), 0.0f);
   }
 
+  private YogaNode createNode(YogaConfig config) {
+    return mNodeFactory.create(config);
+  }
 }

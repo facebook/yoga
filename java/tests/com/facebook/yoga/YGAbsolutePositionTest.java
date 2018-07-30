@@ -9,20 +9,30 @@
 
 package com.facebook.yoga;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+@RunWith(Parameterized.class)
 public class YGAbsolutePositionTest {
+  @Parameterized.Parameters(name = "{0}")
+  public static Iterable<TestParametrization.NodeFactory> nodeFactories() {
+    return TestParametrization.nodeFactories();
+  }
+
+  @Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;
+
   @Test
   public void test_absolute_layout_width_height_start_top() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.START, 10f);
     root_child0.setPosition(YogaEdge.TOP, 10f);
@@ -60,11 +70,11 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_width_height_end_bottom() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.END, 10f);
     root_child0.setPosition(YogaEdge.BOTTOM, 10f);
@@ -102,11 +112,11 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_start_top_end_bottom() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.START, 10f);
     root_child0.setPosition(YogaEdge.TOP, 10f);
@@ -144,11 +154,11 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_width_height_start_top_end_bottom() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.START, 10f);
     root_child0.setPosition(YogaEdge.TOP, 10f);
@@ -188,19 +198,19 @@ public class YGAbsolutePositionTest {
   public void test_do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setOverflow(YogaOverflow.HIDDEN);
     root.setWidth(50f);
     root.setHeight(50f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.START, 0f);
     root_child0.setPosition(YogaEdge.TOP, 0f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child0_child0 = new YogaNode(config);
+    final YogaNode root_child0_child0 = createNode(config);
     root_child0_child0.setWidth(100f);
     root_child0_child0.setHeight(100f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -245,7 +255,7 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_within_border() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setMargin(YogaEdge.LEFT, 10f);
     root.setMargin(YogaEdge.TOP, 10f);
     root.setMargin(YogaEdge.RIGHT, 10f);
@@ -261,7 +271,7 @@ public class YGAbsolutePositionTest {
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.LEFT, 0f);
     root_child0.setPosition(YogaEdge.TOP, 0f);
@@ -269,7 +279,7 @@ public class YGAbsolutePositionTest {
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setPositionType(YogaPositionType.ABSOLUTE);
     root_child1.setPosition(YogaEdge.RIGHT, 0f);
     root_child1.setPosition(YogaEdge.BOTTOM, 0f);
@@ -277,7 +287,7 @@ public class YGAbsolutePositionTest {
     root_child1.setHeight(50f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setPositionType(YogaPositionType.ABSOLUTE);
     root_child2.setPosition(YogaEdge.LEFT, 0f);
     root_child2.setPosition(YogaEdge.TOP, 0f);
@@ -289,7 +299,7 @@ public class YGAbsolutePositionTest {
     root_child2.setHeight(50f);
     root.addChildAt(root_child2, 2);
 
-    final YogaNode root_child3 = new YogaNode(config);
+    final YogaNode root_child3 = createNode(config);
     root_child3.setPositionType(YogaPositionType.ABSOLUTE);
     root_child3.setPosition(YogaEdge.RIGHT, 0f);
     root_child3.setPosition(YogaEdge.BOTTOM, 0f);
@@ -361,14 +371,14 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_align_items_and_justify_content_center() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(60f);
     root_child0.setHeight(40f);
@@ -404,14 +414,14 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_align_items_and_justify_content_flex_end() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.FLEX_END);
     root.setAlignItems(YogaAlign.FLEX_END);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(60f);
     root_child0.setHeight(40f);
@@ -447,13 +457,13 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_justify_content_center() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(60f);
     root_child0.setHeight(40f);
@@ -489,13 +499,13 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_align_items_center() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(60f);
     root_child0.setHeight(40f);
@@ -531,12 +541,12 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_align_items_center_on_child_only() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.CENTER);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(60f);
@@ -573,14 +583,14 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_align_items_and_justify_content_center_and_top_position() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.TOP, 10f);
     root_child0.setWidth(60f);
@@ -617,14 +627,14 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_align_items_and_justify_content_center_and_bottom_position() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.BOTTOM, 10f);
     root_child0.setWidth(60f);
@@ -661,14 +671,14 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_align_items_and_justify_content_center_and_left_position() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.LEFT, 5f);
     root_child0.setWidth(60f);
@@ -705,14 +715,14 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_align_items_and_justify_content_center_and_right_position() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
     root.setFlexGrow(1f);
     root.setWidth(110f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPosition(YogaEdge.RIGHT, 5f);
     root_child0.setWidth(60f);
@@ -749,7 +759,7 @@ public class YGAbsolutePositionTest {
   public void test_position_root_with_rtl_should_position_withoutdirection() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setPosition(YogaEdge.LEFT, 72f);
     root.setWidth(52f);
     root.setHeight(52f);
@@ -774,25 +784,25 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_percentage_bottom_based_on_parent_height() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWidth(100f);
     root.setHeight(200f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setPositionPercent(YogaEdge.TOP, 50f);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
-    final YogaNode root_child1 = new YogaNode(config);
+    final YogaNode root_child1 = createNode(config);
     root_child1.setPositionType(YogaPositionType.ABSOLUTE);
     root_child1.setPositionPercent(YogaEdge.BOTTOM, 50f);
     root_child1.setWidth(10f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
-    final YogaNode root_child2 = new YogaNode(config);
+    final YogaNode root_child2 = createNode(config);
     root_child2.setPositionType(YogaPositionType.ABSOLUTE);
     root_child2.setPositionPercent(YogaEdge.TOP, 10f);
     root_child2.setPositionPercent(YogaEdge.BOTTOM, 10f);
@@ -849,12 +859,12 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_in_wrap_reverse_column_container() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(20f);
     root_child0.setHeight(20f);
@@ -890,13 +900,13 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_in_wrap_reverse_row_container() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(20f);
     root_child0.setHeight(20f);
@@ -932,12 +942,12 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_in_wrap_reverse_column_container_flex_end() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(20f);
@@ -974,13 +984,13 @@ public class YGAbsolutePositionTest {
   public void test_absolute_layout_in_wrap_reverse_row_container_flex_end() {
     YogaConfig config = new YogaConfig();
 
-    final YogaNode root = new YogaNode(config);
+    final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
     root.setWrap(YogaWrap.WRAP_REVERSE);
     root.setWidth(100f);
     root.setHeight(100f);
 
-    final YogaNode root_child0 = new YogaNode(config);
+    final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
     root_child0.setPositionType(YogaPositionType.ABSOLUTE);
     root_child0.setWidth(20f);
@@ -1013,4 +1023,7 @@ public class YGAbsolutePositionTest {
     assertEquals(20f, root_child0.getLayoutHeight(), 0.0f);
   }
 
+  private YogaNode createNode(YogaConfig config) {
+    return mNodeFactory.create(config);
+  }
 }
