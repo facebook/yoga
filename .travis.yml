@@ -1,4 +1,11 @@
 language: java
+os: linux
+addons:
+  apt:
+    sources:
+      - llvm-toolchain-trusty-6.0
+    packages:
+      - clang-6.0
 
 env:
   - TARGET: website
