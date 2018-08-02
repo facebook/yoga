@@ -7,7 +7,7 @@ load("//:yoga_defs.bzl", "YOGA_ROOTS", "yoga_java_library", "yoga_prebuilt_jar")
 
 yoga_prebuilt_jar(
     name = "junit-jar",
-    binary_jar = "junit4.jar",
+    binary_jar = "junit-4.12.jar",
 )
 
 yoga_java_library(
