@@ -33,6 +33,7 @@ yoga_cxx_library(
         "-Werror",
         "-Wno-unused-parameter",
         "-std=c++11",
+        "-Wno-error=terminate",
     ],
     platforms = (ANDROID,),
     visibility = ["PUBLIC"],

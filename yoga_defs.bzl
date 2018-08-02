@@ -51,6 +51,7 @@ BASE_COMPILER_FLAGS = [
     "-fexceptions",
     "-Wall",
     "-Werror",
+    "-Wno-error=class-memaccess",
     "-O3",
     "-ffast-math",
 ]
