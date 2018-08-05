@@ -1,5 +1,6 @@
-include ':yoga', ':yogacore', ':yoga-layout', ':yoga:proguard-annotations', ':libfb'
+include ':yoga', ':yogacore', ':yoga-layout', ':yoga:proguard-annotations', ':yoga:stubs', ':libfb'
 project(':yoga').projectDir = file('java')
 project(':yoga:proguard-annotations').projectDir = file('java/proguard-annotations')
+project(':yoga:stubs').projectDir = file('java/stubs')
 project(':yoga-layout').projectDir = file('android')
 project(':libfb').projectDir = file('lib/fb')

@@ -59,6 +59,22 @@ public class TestParametrization {
         public String toString() {
           return "Hybrid";
         }
+      },
+      new NodeFactory() {
+        @Override
+        public YogaNode create() {
+          return new YogaNode(YogaNode.UNSAFE);
+        }
+
+        @Override
+        public YogaNode create(YogaConfig config) {
+          return new YogaNode(YogaNode.UNSAFE, config);
+        }
+
+        @Override
+        public String toString() {
+          return "Unsafe";
+        }
       });
   }
 

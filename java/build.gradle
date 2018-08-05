@@ -52,6 +52,7 @@ android {
 dependencies {
     compileOnly 'com.google.code.findbugs:jsr305:3.0.1'
     compileOnly project(':yoga:proguard-annotations')
+    compileOnly project(':yoga:stubs')
     implementation 'com.facebook.soloader:soloader:0.5.1'
     testImplementation 'junit:junit:4.12'
 }
