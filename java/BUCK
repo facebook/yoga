@@ -30,18 +30,8 @@ yoga_cxx_library(
 )
 
 yoga_java_library(
-    name = "stubs",
-    srcs = glob(["stubs/**/*.java"]),
-    source = "1.7",
-    target = "1.7",
-)
-
-yoga_java_library(
     name = "java",
     srcs = glob(["com/facebook/yoga/*.java"]),
-    provided_deps = [
-        ":stubs",
-    ],
     required_for_source_only_abi = True,
     source = "1.7",
     target = "1.7",
