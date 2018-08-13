@@ -8,7 +8,7 @@ For testing we rely on [gtest](https://github.com/google/googletest) as a submod
 
 For any changes you make you should ensure that all the tests are passing. In case you make any fixes or additions to the library please also add tests for that change to ensure we don't break anything in the future. Tests are located in the `tests` directory. Run the tests by executing `buck test //:yoga`.
 
-Instead of manually writing a test which ensures parity with web implementations of Flexbox you can run `gentest/gentest.rb` to generated a test for you. You can write html which you want to verify in Yoga, in `gentest/fixtures` folder, such as the following.
+Instead of manually writing a test which ensures parity with web implementations of Flexbox you can run `gentest/gentest.rb` to generate a test for you. You can write html which you want to verify in Yoga, in `gentest/fixtures` folder, such as the following.
 
 ```html
 <div id="my_test" style="width: 100px; height: 100px; align-items: center;">
