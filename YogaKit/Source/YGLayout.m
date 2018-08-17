@@ -450,14 +450,18 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
   };
 
   const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
+  
+  const CGPoint frameOrigin = CGPointMake(YGRoundPixelValue(topLeft.x + origin.x), YGRoundPixelValue(topLeft.y + origin.y));
+  const CGSize frameSize = CGSizeMake(YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x), YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y));
+    
   view.frame = (CGRect) {
     .origin = {
-      .x = YGRoundPixelValue(topLeft.x + origin.x),
-      .y = YGRoundPixelValue(topLeft.y + origin.y),
+      .x = isnan(frameOrigin.x) ? 0 : frameOrigin.x,
+      .y = isnan(frameOrigin.y) ? 0 : frameOrigin.y,
     },
     .size = {
-      .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
-      .height = YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y),
+      .width = isnan(frameSize.width) ? 0 : frameSize.width,
+      .height = isnan(frameSize.height) ? 0 : frameSize.height,
     },
   };
 
