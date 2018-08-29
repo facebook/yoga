@@ -2,7 +2,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-load("//:yoga_defs.bzl", "subdir_glob", "yoga_apple_library", "yoga_apple_test", "yoga_dep")
+load("//tools/build_defs/oss:yoga_defs.bzl", "subdir_glob", "yoga_apple_library", "yoga_apple_test", "yoga_dep")
 
 COMPILER_FLAGS = [
     "-fobjc-arc",

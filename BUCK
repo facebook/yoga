@@ -2,7 +2,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-load("//:yoga_defs.bzl", "BASE_COMPILER_FLAGS", "GTEST_TARGET", "LIBRARY_COMPILER_FLAGS", "subdir_glob", "yoga_cxx_library", "yoga_cxx_test", "yoga_dep")
+load("//tools/build_defs/oss:yoga_defs.bzl", "BASE_COMPILER_FLAGS", "GTEST_TARGET", "LIBRARY_COMPILER_FLAGS", "subdir_glob", "yoga_cxx_library", "yoga_cxx_test", "yoga_dep")
 
 GMOCK_OVERRIDE_FLAGS = [
     # gmock does not mark mocked methods as override, ignore the warnings in tests
