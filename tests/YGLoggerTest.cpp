@@ -1,10 +1,10 @@
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
+/*
+ *  Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ *  This source code is licensed under the MIT license found in the LICENSE
+ *  file in the root directory of this source tree.
+ *
  */
-
 #include <gtest/gtest.h>
 #include <stdarg.h>
 #include <yoga/Yoga.h>
@@ -21,6 +21,46 @@ int _unmanagedLogger(const YGConfigRef config,
                    format,
                    args);
 }
+}
+
+TEST(YogaTest, config_print_tree_enabled) {
+  writeBuffer[0] = '\0';
+  const YGConfigRef config = YGConfigNew();
+  YGConfigSetPrintTreeFlag(config, true);
+  YGConfigSetLogger(config, _unmanagedLogger);
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  const YGNodeRef child0 = YGNodeNewWithConfig(config);
+  const YGNodeRef child1 = YGNodeNewWithConfig(config);
+  YGNodeInsertChild(root, child0, 0);
+  YGNodeInsertChild(root, child1, 1);
+  YGNodeCalculateLayout(root, YGUnitUndefined, YGUnitUndefined, YGDirectionLTR);
+  YGConfigSetLogger(config, NULL);
+  YGNodeFreeRecursive(root);
+
+  const char* expected =
+      "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"\" >\n  "
+      "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"\" "
+      "></div>\n  <div layout=\"width: 0; height: 0; top: 0; left: 0;\" "
+      "style=\"\" ></div>\n</div>";
+  ASSERT_STREQ(expected, writeBuffer);
+}
+
+TEST(YogaTest, config_print_tree_disabled) {
+  writeBuffer[0] = '\0';
+  const YGConfigRef config = YGConfigNew();
+  YGConfigSetPrintTreeFlag(config, false);
+  YGConfigSetLogger(config, _unmanagedLogger);
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  const YGNodeRef child0 = YGNodeNewWithConfig(config);
+  const YGNodeRef child1 = YGNodeNewWithConfig(config);
+  YGNodeInsertChild(root, child0, 0);
+  YGNodeInsertChild(root, child1, 1);
+  YGNodeCalculateLayout(root, YGUnitUndefined, YGUnitUndefined, YGDirectionLTR);
+  YGConfigSetLogger(config, NULL);
+  YGNodeFreeRecursive(root);
+
+  const char* expected = "";
+  ASSERT_STREQ(expected, writeBuffer);
 }
 
 TEST(YogaTest, logger_default_node_should_print_no_style_info) {
