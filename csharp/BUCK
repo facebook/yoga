@@ -6,10 +6,9 @@
 load(
     "//tools/build_defs/oss:yoga_defs.bzl",
     "BASE_COMPILER_FLAGS",
-    "is_apple_platform",
+    "yoga_apple_binary",
     "yoga_cxx_library",
     "yoga_dep",
-    "yoga_apple_binary",
 )
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++11"]
