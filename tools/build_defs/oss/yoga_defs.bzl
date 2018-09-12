@@ -60,18 +60,18 @@ LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
 ]
 
 def _paths_join(path, *others):
-  """Joins one or more path components."""
-  result = path
+    """Joins one or more path components."""
+    result = path
 
-  for p in others:
-    if p.startswith("/"):  # absolute
-      result = p
-    elif not result or result.endswith("/"):
-      result += p
-    else:
-      result += "/" + p
+    for p in others:
+        if p.startswith("/"):  # absolute
+            result = p
+        elif not result or result.endswith("/"):
+            result += p
+        else:
+            result += "/" + p
 
-  return result
+    return result
 
 def subdir_glob(glob_specs, exclude = None, prefix = ""):
     """Returns a dict of sub-directory relative paths to full paths.
