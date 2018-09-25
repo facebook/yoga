@@ -13,5 +13,6 @@ yoga_cxx_library(
         "real/jni.h",
     ],
     force_static = True,
+    preprocessor_flags = ["-fmacro-backtrace-limit=0"],
     visibility = ["PUBLIC"],
 )

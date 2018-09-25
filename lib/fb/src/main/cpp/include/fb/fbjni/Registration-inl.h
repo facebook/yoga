@@ -183,7 +183,7 @@ inline std::string makeDescriptor(R (C::*)(Args... args)) {
 
 template <typename R, typename... Args>
 template <R (*func)(Args...)>
-R CriticalMethod<R (*)(Args...)>::call(
+JNI_ENTRY_POINT R CriticalMethod<R (*)(Args...)>::call(
     alias_ref<jclass>,
     Args... args) noexcept {
   static_assert(
