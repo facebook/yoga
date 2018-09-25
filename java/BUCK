@@ -20,6 +20,9 @@ yoga_cxx_library(
         "-std=c++11",
     ],
     platforms = ANDROID,
+    preprocessor_flags = [
+        "-DFBJNI_WITH_FAST_CALLS",
+    ],
     soname = "libyoga.$(ext)",
     visibility = ["PUBLIC"],
     deps = [
