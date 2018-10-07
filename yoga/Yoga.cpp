@@ -1851,7 +1851,7 @@ static bool YGNodeFixedSizeSetMeasuredDimensions(
 }
 
 static void YGZeroOutLayoutRecursivly(const YGNodeRef node) {
-  memset(&(node->getLayout()), 0, sizeof(YGLayout));
+  memset(static_cast<void*>(&(node->getLayout())), 0, sizeof(YGLayout));
   node->setHasNewLayout(true);
   node->cloneChildrenIfNeeded();
   const uint32_t childCount = YGNodeGetChildCount(node);
