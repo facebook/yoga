@@ -290,7 +290,7 @@ namespace Facebook.Yoga.Universal.Tests
         }
 
 #if !UNITY_EDITOR
-    private void ForceGC()
+        private void ForceGC()
         {
             GC.Collect(GC.MaxGeneration);
             GC.WaitForPendingFinalizers();
