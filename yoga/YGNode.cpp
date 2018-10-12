@@ -458,7 +458,7 @@ YGFloatOptional YGNode::getLeadingPadding(
       YGResolveValue(style_.padding[YGEdgeStart], widthSize);
   if (YGFlexDirectionIsRow(axis) &&
       style_.padding[YGEdgeStart].unit != YGUnitUndefined &&
-      !paddingEdgeStart.isUndefined() && paddingEdgeStart.getValue() > 0.0f) {
+      !paddingEdgeStart.isUndefined() && paddingEdgeStart.getValue() >= 0.0f) {
     return paddingEdgeStart;
   }
 
