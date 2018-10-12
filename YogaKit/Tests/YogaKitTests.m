@@ -127,6 +127,15 @@
   XCTAssertEqual(longTextLabelSize.width + textBadgeView.yoga.intrinsicSize.width, containerSize.width);
 }
 
+- (void)testSizeThatFitsEmptyView {
+  UIView* view = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 200, 200)];
+  view.yoga.isEnabled = YES;
+
+  const CGSize viewSize = view.yoga.intrinsicSize;
+  XCTAssertEqual(viewSize.height, 0);
+  XCTAssertEqual(viewSize.width, 0);
+}
+
 - (void)testPreservingOrigin
 {
   UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0,0,50,75)];
