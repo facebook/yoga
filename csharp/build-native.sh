@@ -1,4 +1,12 @@
 #!/bin/sh
+
+#
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+#
+
 cd `dirname "$0"`
 echo $ANDROID_SDK
 BUCK_RELEASE=2018.02.16.01
@@ -22,4 +30,3 @@ $BUCK build \
     //csharp:yoganet-macosx \
     //csharp:yoganet#android-armv7,shared \
     //csharp:yoganet#android-x86,shared
-
