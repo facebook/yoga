@@ -13,8 +13,8 @@ module.exports = {
     title: 'Yoga Layout',
   },
   plugins: [
-    // using latest react version
-    'gatsby-plugin-react-next',
+    // using flow
+    'gatsby-plugin-flow',
     // setting head data like title from within components
     'gatsby-plugin-react-helmet',
     {
@@ -27,7 +27,7 @@ module.exports = {
     },
     // plugin for importing antd components
     {
-      resolve: 'gatsby-plugin-antd',
+      resolve: 'gatsby-plugin-antd-v2',
       options: {
         style: true,
       },
@@ -45,14 +45,12 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         // code-highlighting in markdown files
-        plugins: [
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              classPrefix: 'language-',
-            },
+        plugins: [{
+          resolve: `gatsby-remark-prismjs`,
+          options: {
+            classPrefix: 'language-',
           },
-        ],
+        }, ],
       },
     },
     {
