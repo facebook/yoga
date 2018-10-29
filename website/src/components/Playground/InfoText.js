@@ -10,7 +10,7 @@
 
 import React, {Component} from 'react';
 import {Popover, Icon} from 'antd';
-import Link from 'gatsby-link';
+import {Link} from 'gatsby';
 import './InfoText.css';
 
 type Props = {

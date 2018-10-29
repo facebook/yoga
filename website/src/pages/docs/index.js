@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import Link from 'gatsby-link';
+import {Link, graphql} from 'gatsby';
 import Page from '../../components/Page';
 import Padded from '../../components/Padded';
 import {Row, Col} from 'antd';

@@ -18,7 +18,7 @@ import './index.css';
 import ReactNativeLogo from './logos/reactnative.png';
 import LithoLogo from './logos/litho.png';
 import ComponentKitLogo from './logos/componentkit.png';
-import Link from 'gatsby-link';
+import {Link} from 'gatsby';
 import Footer from '../components/Footer';
 
 const playgroundInitialState = {

@@ -8,6 +8,9 @@
  * @format
  */
 
+/* eslint import/first: 0 */
+/* eslint no-unused-expressions: 0 */
+
 import React, {Component} from 'react';
 import {Menu, Button, Row, Col, Dropdown, Icon, Modal, Tooltip} from 'antd';
 import SyntaxHighlighter, {

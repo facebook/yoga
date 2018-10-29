@@ -9,7 +9,7 @@
  */
 
 import React, {Component} from 'react';
-import Link from 'gatsby-link';
+import {Link} from 'gatsby';
 import {Icon, Row, Col} from 'antd';
 import logo from '../pages/logos/logo.svg';
 import './Toolbar.css';

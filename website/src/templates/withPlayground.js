@@ -13,7 +13,7 @@ import Page from '../components/Page';
 import Playground from '../components/Playground';
 import DocsSidebar from '../components/DocsSidebar';
 import EditValue from '../components/Playground/EditValue';
-import Link from 'gatsby-link';
+import {Link} from 'gatsby';
 import {Button, Icon, Row, Col} from 'antd';
 import './index.css';
 import atob from 'atob';

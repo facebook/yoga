@@ -12,7 +12,7 @@ import React from 'react';
 import Page from '../components/Page';
 import Padded from '../components/Padded';
 import {Row, Col} from 'antd';
-import Link from 'gatsby-link';
+import {Link} from 'gatsby';
 import './index.css';
 
 export default ({pathContext}) => {

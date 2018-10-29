@@ -11,7 +11,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import EditValue from '../components/Playground/EditValue';
-import Link from 'gatsby-link';
+import {Link} from 'gatsby';
 import './DocsSidebar.css';
 import type {LayoutRecordT} from './Playground/LayoutRecord';
 
