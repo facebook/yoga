@@ -45,12 +45,14 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         // code-highlighting in markdown files
-        plugins: [{
-          resolve: `gatsby-remark-prismjs`,
-          options: {
-            classPrefix: 'language-',
+        plugins: [
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: 'language-',
+            },
           },
-        }, ],
+        ],
       },
     },
     {
