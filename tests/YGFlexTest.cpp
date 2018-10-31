@@ -73,14 +73,12 @@ TEST(YogaTest, flex_shrink_flex_grow_row) {
   YGNodeStyleSetHeight(root, 500);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetFlexGrow(root_child0, 0);
   YGNodeStyleSetFlexShrink(root_child0, 1);
   YGNodeStyleSetWidth(root_child0, 500);
   YGNodeStyleSetHeight(root_child0, 100);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetFlexGrow(root_child1, 0);
   YGNodeStyleSetFlexShrink(root_child1, 1);
   YGNodeStyleSetWidth(root_child1, 500);
   YGNodeStyleSetHeight(root_child1, 100);
@@ -101,6 +99,24 @@ TEST(YogaTest, flex_shrink_flex_grow_row) {
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
   ASSERT_FLOAT_EQ(250, YGNodeLayoutGetWidth(root_child1));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child1));
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child1));
+
   YGNodeFreeRecursive(root);
 
   YGConfigFree(config);
@@ -115,7 +131,6 @@ TEST(YogaTest, flex_shrink_flex_grow_child_flex_shrink_other_child) {
   YGNodeStyleSetHeight(root, 500);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetFlexGrow(root_child0, 0);
   YGNodeStyleSetFlexShrink(root_child0, 1);
   YGNodeStyleSetWidth(root_child0, 500);
   YGNodeStyleSetHeight(root_child0, 100);
@@ -143,6 +158,24 @@ TEST(YogaTest, flex_shrink_flex_grow_child_flex_shrink_other_child) {
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
   ASSERT_FLOAT_EQ(250, YGNodeLayoutGetWidth(root_child1));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child1));
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child1));
+
   YGNodeFreeRecursive(root);
 
   YGConfigFree(config);
