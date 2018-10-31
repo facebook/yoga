@@ -3,6 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 load(
     "//tools/build_defs/oss:yoga_defs.bzl",
     "BASE_COMPILER_FLAGS",
@@ -13,14 +14,14 @@ load(
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++11"]
 
-csharp_library(
+fb_native.csharp_library(
     name = "yogalibnet46",
     srcs = glob(["**/*.cs"]),
     dll_name = "Facebook.Yoga.dll",
     framework_ver = "net46",
 )
 
-csharp_library(
+fb_native.csharp_library(
     name = "yogalibnet45",
     srcs = glob(["**/*.cs"]),
     dll_name = "Facebook.Yoga.dll",
