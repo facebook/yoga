@@ -174,6 +174,8 @@ def yoga_cxx_binary(*args, **kwargs):
 def yoga_cxx_library(*args, **kwargs):
     # Currently unused
     kwargs.pop("platforms", None)
+    kwargs.pop("allow_jni_merging", None)
+
     native.cxx_library(*args, **kwargs)
 
 def yoga_cxx_test(*args, **kwargs):
