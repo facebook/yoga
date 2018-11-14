@@ -519,6 +519,19 @@ namespace Facebook.Yoga
             Native.YGNodeSetHasNewLayout(_ygNode, false);
         }
 
+        public bool IsReferenceBaseline
+        {
+            get
+            {
+                return Native.YGNodeIsReferenceBaseline(_ygNode);
+            }
+
+            set
+            {
+                Native.YGNodeSetIsReferenceBaseline(_ygNode, value);
+            }
+        }
+
         public bool ValuesEqual(float f1, float f2)
         {
             if (float.IsNaN(f1) || float.IsNaN(f2))
@@ -594,7 +607,7 @@ namespace Facebook.Yoga
         }
 
         public void CalculateLayout(
-            float width = YogaConstants.Undefined, 
+            float width = YogaConstants.Undefined,
             float height = YogaConstants.Undefined)
         {
             Native.YGNodeCalculateLayout(

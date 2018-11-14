@@ -253,6 +253,10 @@ void Node::setPaddingPercent(int edge, double padding)
     YGNodeStyleSetPaddingPercent(m_node, static_cast<YGEdge>(edge), padding);
 }
 
+void Node::setIsReferenceBaseline(bool isReferenceBaseline) {
+  YGNodeSetIsReferenceBaseline(m_node, isReferenceBaseline);
+}
+
 int Node::getPositionType(void) const
 {
     return YGNodeStyleGetPositionType(m_node);
@@ -366,6 +370,10 @@ double Node::getBorder(int edge) const
 Value Node::getPadding(int edge) const
 {
     return Value::fromYGValue(YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
+}
+
+bool Node::isReferenceBaseline() {
+  return YGNodeIsReferenceBaseline(m_node);
 }
 
 void Node::insertChild(Node * child, unsigned index)

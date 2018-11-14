@@ -5,8 +5,8 @@
  *  file in the root directory of this source tree.
  *
  */
-
 #include <gtest/gtest.h>
+#include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
 static float
@@ -36,6 +36,22 @@ static YGSize _measure2(
       .width = 279,
       .height = 126,
   };
+}
+
+static YGNodeRef createYGNode(
+    YGConfigRef config,
+    YGFlexDirection direction,
+    int width,
+    int height,
+    bool alignBaseline) {
+  const YGNodeRef node = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(node, direction);
+  if (alignBaseline) {
+    YGNodeStyleSetAlignItems(node, YGAlignBaseline);
+  }
+  YGNodeStyleSetWidth(node, width);
+  YGNodeStyleSetHeight(node, height);
+  return node;
 }
 
 // Test case for bug in T32999822
@@ -159,6 +175,676 @@ TEST(YogaTest, align_baseline_with_no_baseline_func_and_no_parent_ht) {
   ASSERT_FLOAT_EQ(30, YGNodeLayoutGetTop(root_child1));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child1));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(YogaTest, align_baseline_parent_using_child_in_column_as_reference) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_with_padding_in_column_as_reference) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeStyleSetPadding(root_child1_child1, YGEdgeLeft, 100);
+  YGNodeStyleSetPadding(root_child1_child1, YGEdgeRight, 100);
+  YGNodeStyleSetPadding(root_child1_child1, YGEdgeTop, 100);
+  YGNodeStyleSetPadding(root_child1_child1, YGEdgeBottom, 100);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_with_padding_using_child_in_column_as_reference) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
+  YGNodeStyleSetPadding(root_child1, YGEdgeLeft, 100);
+  YGNodeStyleSetPadding(root_child1, YGEdgeRight, 100);
+  YGNodeStyleSetPadding(root_child1, YGEdgeTop, 100);
+  YGNodeStyleSetPadding(root_child1, YGEdgeBottom, 100);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(400, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_with_margin_using_child_in_column_as_reference) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
+  YGNodeStyleSetMargin(root_child1, YGEdgeLeft, 100);
+  YGNodeStyleSetMargin(root_child1, YGEdgeRight, 100);
+  YGNodeStyleSetMargin(root_child1, YGEdgeTop, 100);
+  YGNodeStyleSetMargin(root_child1, YGEdgeBottom, 100);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(600, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_with_margin_in_column_as_reference) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeStyleSetMargin(root_child1_child1, YGEdgeLeft, 100);
+  YGNodeStyleSetMargin(root_child1_child1, YGEdgeRight, 100);
+  YGNodeStyleSetMargin(root_child1_child1, YGEdgeTop, 100);
+  YGNodeStyleSetMargin(root_child1_child1, YGEdgeBottom, 100);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(400, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(YogaTest, align_baseline_parent_using_child_in_row_as_reference) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionRow, 500, 800, true);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_with_padding_in_row_as_reference) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionRow, 500, 800, true);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeStyleSetPadding(root_child1_child1, YGEdgeLeft, 100);
+  YGNodeStyleSetPadding(root_child1_child1, YGEdgeRight, 100);
+  YGNodeStyleSetPadding(root_child1_child1, YGEdgeTop, 100);
+  YGNodeStyleSetPadding(root_child1_child1, YGEdgeBottom, 100);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_with_margin_in_row_as_reference) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionRow, 500, 800, true);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeStyleSetMargin(root_child1_child1, YGEdgeLeft, 100);
+  YGNodeStyleSetMargin(root_child1_child1, YGEdgeRight, 100);
+  YGNodeStyleSetMargin(root_child1_child1, YGEdgeTop, 100);
+  YGNodeStyleSetMargin(root_child1_child1, YGEdgeBottom, 100);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(600, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_in_column_as_reference_with_no_baseline_func) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_in_row_as_reference_with_no_baseline_func) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root =
+      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 =
+      createYGNode(config, YGFlexDirectionRow, 500, 800, true);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_in_column_as_reference_with_height_not_specified) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetAlignItems(root, YGAlignBaseline);
+  YGNodeStyleSetWidth(root, 1000);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root_child1, YGFlexDirectionColumn);
+  YGNodeStyleSetWidth(root_child1, 500);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(800, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(700, YGNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_in_row_as_reference_with_height_not_specified) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetAlignItems(root, YGAlignBaseline);
+  YGNodeStyleSetWidth(root, 1000);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root_child1, YGFlexDirectionRow);
+  YGNodeStyleSetWidth(root_child1, 500);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(900, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(400, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_in_column_as_reference_with_no_baseline_func_and_height_not_specified) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetAlignItems(root, YGAlignBaseline);
+  YGNodeStyleSetWidth(root, 1000);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root_child1, YGFlexDirectionColumn);
+  YGNodeStyleSetWidth(root_child1, 500);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(700, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(700, YGNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    align_baseline_parent_using_child_in_row_as_reference_with_no_baseline_func_and_height_not_specified) {
+  YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetAlignItems(root, YGAlignBaseline);
+  YGNodeStyleSetWidth(root, 1000);
+
+  const YGNodeRef root_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root_child1, YGFlexDirectionRow);
+  YGNodeStyleSetWidth(root_child1, 500);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child1_child0 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
+  YGNodeInsertChild(root_child1, root_child1_child0, 0);
+
+  const YGNodeRef root_child1_child1 =
+      createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
+  YGNodeSetIsReferenceBaseline(root_child1_child1, true);
+  YGNodeInsertChild(root_child1, root_child1_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(700, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
+
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child1));
 
   YGNodeFreeRecursive(root);
 

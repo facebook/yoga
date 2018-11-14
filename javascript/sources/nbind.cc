@@ -150,6 +150,9 @@ NBIND_CLASS(Node)
     method(getParent);
     method(getChild);
 
+    method(isReferenceBaseline);
+    method(setIsReferenceBaseline);
+
     method(setMeasureFunc);
     method(unsetMeasureFunc);
 
