@@ -3,7 +3,6 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 load(
     "//tools/build_defs/oss:yoga_defs.bzl",
     "BASE_COMPILER_FLAGS",
@@ -11,6 +10,7 @@ load(
     "yoga_cxx_library",
     "yoga_dep",
 )
+load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 
 COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++11"]
 
