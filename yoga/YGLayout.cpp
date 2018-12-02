@@ -9,7 +9,7 @@
 
 using namespace facebook;
 
-bool YGLayout::operator==(YGLayout layout) const {
+bool YGLayout::operator==(const YGLayout& layout) const {
   bool isEqual = YGFloatArrayEqual(position, layout.position) &&
       YGFloatArrayEqual(dimensions, layout.dimensions) &&
       YGFloatArrayEqual(margin, layout.margin) &&

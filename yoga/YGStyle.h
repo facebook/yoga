@@ -57,7 +57,7 @@ struct YGStyle {
   YGStyle() = default;
   bool operator==(const YGStyle& style);
 
-  bool operator!=(YGStyle style) {
+  bool operator!=(const YGStyle& style) {
     return !(*this == style);
   }
   ~YGStyle() = default;

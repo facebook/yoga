@@ -51,7 +51,7 @@ struct YGCollectFlexItemsRowValues {
   float crossDim;
 };
 
-bool YGValueEqual(const YGValue a, const YGValue b);
+bool YGValueEqual(const YGValue& a, const YGValue& b);
 
 // This custom float equality function returns true if either absolute
 // difference between two floats is less than 0.0001f or both are undefined.

@@ -39,8 +39,8 @@ struct YGLayout {
 
   YGLayout() = default;
 
-  bool operator==(YGLayout layout) const;
-  bool operator!=(YGLayout layout) const {
+  bool operator==(const YGLayout& layout) const;
+  bool operator!=(const YGLayout& layout) const {
     return !(*this == layout);
   }
 };

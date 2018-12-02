@@ -45,17 +45,17 @@ using namespace facebook;
 
 extern const std::array<YGEdge, 4> trailing;
 extern const std::array<YGEdge, 4> leading;
-extern bool YGValueEqual(const YGValue a, const YGValue b);
+extern bool YGValueEqual(const YGValue& a, const YGValue& b);
 extern const YGValue YGValueUndefined;
 extern const YGValue YGValueAuto;
 extern const YGValue YGValueZero;
 
 template <std::size_t size>
 bool YGValueArrayEqual(
-    const std::array<YGValue, size> val1,
-    const std::array<YGValue, size> val2) {
+    const std::array<YGValue, size> &val1,
+    const std::array<YGValue, size> &val2) {
   bool areEqual = true;
-  for (uint32_t i = 0; i < size && areEqual; ++i) {
+  for (std::size_t i = 0; i < size && areEqual; ++i) {
     areEqual = YGValueEqual(val1[i], val2[i]);
   }
   return areEqual;
@@ -78,7 +78,7 @@ struct YGCachedMeasurement {
         computedWidth(-1),
         computedHeight(-1) {}
 
-  bool operator==(YGCachedMeasurement measurement) const {
+  bool operator==(const YGCachedMeasurement& measurement) const {
     bool isEqual = widthMeasureMode == measurement.widthMeasureMode &&
         heightMeasureMode == measurement.heightMeasureMode;
 
@@ -112,7 +112,7 @@ static const float kDefaultFlexShrink = 0.0f;
 static const float kWebDefaultFlexShrink = 1.0f;
 
 extern bool YGFloatsEqual(const float a, const float b);
-extern bool YGValueEqual(const YGValue a, const YGValue b);
+extern bool YGValueEqual(const YGValue& a, const YGValue& b);
 extern const YGValue* YGComputedEdgeValue(
     const std::array<YGValue, YGEdgeCount>& edges,
     const YGEdge edge,

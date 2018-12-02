@@ -15,9 +15,7 @@ namespace yoga {
 typedef std::string string;
 
 static void indent(string* base, uint32_t level) {
-  for (uint32_t i = 0; i < level; ++i) {
-    base->append("  ");
-  }
+  base->append(level * 2, ' ');
 }
 
 static bool areFourValuesEqual(const std::array<YGValue, YGEdgeCount>& four) {
@@ -40,7 +38,7 @@ static void appendFormatedString(string* str, const char* fmt, ...) {
 
 static void appendFloatOptionalIfDefined(
     string* base,
-    const string key,
+    const string& key,
     const YGFloatOptional num) {
   if (!num.isUndefined()) {
     appendFormatedString(base, "%s: %g; ", key.c_str(), num.getValue());
@@ -49,7 +47,7 @@ static void appendFloatOptionalIfDefined(
 
 static void appendNumberIfNotUndefined(
     string* base,
-    const string key,
+    const string& key,
     const YGValue number) {
   if (number.unit != YGUnitUndefined) {
     if (number.unit == YGUnitAuto) {
