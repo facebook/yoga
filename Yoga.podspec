@@ -19,6 +19,7 @@ Pod::Spec.new do |spec|
     :git => 'https://github.com/facebook/yoga.git',
     :tag => spec.version.to_s,
   }
+  spec.platforms = { :ios => "4.3", :osx => "10.7", :tvos => "10.0", :watchos => "2.0" }
   spec.module_name = 'yoga'
   spec.requires_arc = false
   spec.pod_target_xcconfig = {
