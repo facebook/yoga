@@ -58,6 +58,7 @@ BASE_COMPILER_FLAGS = [
     "-Wall",
     "-Werror",
     "-O3",
+    "-ffast-math",
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
