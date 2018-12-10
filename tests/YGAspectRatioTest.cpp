@@ -895,3 +895,26 @@ TEST(YogaTest, aspect_ratio_should_prefer_flexed_dimension) {
 
   YGNodeFreeRecursive(root);
 }
+
+TEST(
+    YogaTest,
+    aspect_ratio_defined_by_cross_stretch_should_not_be_effected_by_margin_on_main_axis) {
+  const YGConfigRef config = YGConfigNew();
+  YGConfigSetUseWebDefaults(config, true);
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root, 200);
+  YGNodeStyleSetHeight(root, 100);
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetMargin(root_child0, YGEdgeStart, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+}
