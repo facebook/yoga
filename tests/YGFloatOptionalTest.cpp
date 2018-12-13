@@ -200,8 +200,8 @@ TEST(YGFloatOptionalTest, YGFloatOptionalMax) {
       YGFloatOptional{1.125f});
 }
 
-TEST(YGFloatOptionalTest, YGUnwrapFloatOptional) {
-  ASSERT_TRUE(YGFloatIsUndefined(YGUnwrapFloatOptional(empty)));
-  ASSERT_EQ(YGUnwrapFloatOptional(zero), 0.0f);
-  ASSERT_EQ(YGUnwrapFloatOptional(YGFloatOptional{123456.78f}), 123456.78f);
+TEST(YGFloatOptionalTest, unwrap) {
+  ASSERT_TRUE(YGFloatIsUndefined(empty.unwrap()));
+  ASSERT_EQ(zero.unwrap(), 0.0f);
+  ASSERT_EQ(YGFloatOptional{123456.78f}.unwrap(), 123456.78f);
 }
