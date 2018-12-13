@@ -10,11 +10,11 @@
 #include <yoga/YGFloatOptional.h>
 #include <yoga/YGValue.h>
 
-static const auto empty = YGFloatOptional{};
-static const auto zero = YGFloatOptional{0.0f};
-static const auto one = YGFloatOptional{1.0f};
-static const auto positive = YGFloatOptional{1234.5f};
-static const auto negative = YGFloatOptional{-9876.5f};
+constexpr auto empty = YGFloatOptional{};
+constexpr auto zero = YGFloatOptional{0.0f};
+constexpr auto one = YGFloatOptional{1.0f};
+constexpr auto positive = YGFloatOptional{1234.5f};
+constexpr auto negative = YGFloatOptional{-9876.5f};
 
 TEST(YGFloatOptional, value) {
   ASSERT_EQ(zero.getValue(), 0.0f);
