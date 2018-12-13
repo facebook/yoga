@@ -17,10 +17,11 @@ constexpr auto positive = YGFloatOptional{1234.5f};
 constexpr auto negative = YGFloatOptional{-9876.5f};
 
 TEST(YGFloatOptional, value) {
-  ASSERT_EQ(zero.getValue(), 0.0f);
-  ASSERT_EQ(one.getValue(), 1.0f);
-  ASSERT_EQ(positive.getValue(), 1234.5f);
-  ASSERT_EQ(negative.getValue(), -9876.5f);
+  ASSERT_TRUE(YGFloatIsUndefined(empty.unwrap()));
+  ASSERT_EQ(zero.unwrap(), 0.0f);
+  ASSERT_EQ(one.unwrap(), 1.0f);
+  ASSERT_EQ(positive.unwrap(), 1234.5f);
+  ASSERT_EQ(negative.unwrap(), -9876.5f);
 
   ASSERT_TRUE(empty.isUndefined());
   ASSERT_FALSE(zero.isUndefined());
@@ -46,11 +47,11 @@ TEST(YGFloatOptional, equality) {
   ASSERT_FALSE(one == positive);
 
   ASSERT_TRUE(positive == positive);
-  ASSERT_TRUE(positive == positive.getValue());
+  ASSERT_TRUE(positive == positive.unwrap());
   ASSERT_FALSE(positive == one);
 
   ASSERT_TRUE(negative == negative);
-  ASSERT_TRUE(negative == negative.getValue());
+  ASSERT_TRUE(negative == negative.unwrap());
   ASSERT_FALSE(negative == zero);
 }
 
@@ -71,11 +72,11 @@ TEST(YGFloatOptional, inequality) {
   ASSERT_TRUE(one != positive);
 
   ASSERT_FALSE(positive != positive);
-  ASSERT_FALSE(positive != positive.getValue());
+  ASSERT_FALSE(positive != positive.unwrap());
   ASSERT_TRUE(positive != one);
 
   ASSERT_FALSE(negative != negative);
-  ASSERT_FALSE(negative != negative.getValue());
+  ASSERT_FALSE(negative != negative.unwrap());
   ASSERT_TRUE(negative != zero);
 }
 
@@ -180,8 +181,8 @@ TEST(YGFloatOptional, less_than_equals) {
 }
 
 TEST(YGFloatOptional, addition) {
-  auto n = negative.getValue();
-  auto p = positive.getValue();
+  auto n = negative.unwrap();
+  auto p = positive.unwrap();
 
   ASSERT_EQ(zero + one, one);
   ASSERT_EQ(negative + positive, YGFloatOptional{n + p});
