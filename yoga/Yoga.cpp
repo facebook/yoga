@@ -3581,8 +3581,7 @@ static const char* YGMeasureModeName(
       "UNDEFINED", "EXACTLY", "AT_MOST"};
   const char* kLayoutModeNames[YGMeasureModeCount] = {"LAY_UNDEFINED",
                                                       "LAY_EXACTLY",
-                                                      "LAY_AT_"
-                                                      "MOST"};
+                                                      "LAY_AT_MOST"};
 
   if (mode >= YGMeasureModeCount) {
     return "";
