@@ -20,6 +20,7 @@ TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + [
 yoga_cxx_library(
     name = "yoga",
     srcs = glob(["yoga/*.cpp"]),
+    headers = subdir_glob([("", "yoga/**/*.h")]),
     header_namespace = "",
     exported_headers = subdir_glob([("", "yoga/*.h")]),
     compiler_flags = COMPILER_FLAGS,
@@ -34,6 +35,7 @@ yoga_cxx_library(
 yoga_cxx_test(
     name = "YogaTests",
     srcs = glob(["tests/*.cpp"]),
+    headers = subdir_glob([("", "yoga/**/*.h")]),
     compiler_flags = TEST_COMPILER_FLAGS,
     contacts = ["emilsj@fb.com"],
     visibility = ["PUBLIC"],
