@@ -4,7 +4,7 @@
 
 YogaLayout is available via jcenter:
 
-    compile 'com.facebook.yoga.android:yoga-layout:1.2.0'
+    implementation 'com.facebook.yoga.android:yoga-layout:1.2.0'
 
 ## Getting Started
 
