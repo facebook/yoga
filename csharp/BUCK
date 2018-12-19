@@ -30,7 +30,7 @@ fb_native.csharp_library(
 
 yoga_cxx_library(
     name = "yoganet",
-    srcs = glob(["Yoga/YGInterop.cpp"]),
+    srcs = ["Yoga/YGInterop.cpp"],
     compiler_flags = COMPILER_FLAGS,
     link_style = "static",
     link_whole = True,
