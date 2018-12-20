@@ -71,18 +71,19 @@ function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
         top !== untouchedLayout[key].top &&
         top === left &&
         top === right &&
-        top === bottom
+        top === bottom &&
+        key !== 'position'
       ) {
         // all edges
         lines.push(indent + `  ${key}: ${node[key].top},`);
         return;
       }
       const alreadySet = [];
-      if (top && top !== untouchedLayout[key].top && top === bottom) {
+      if (top && top !== untouchedLayout[key].top && top === bottom && key !== 'position') {
         lines.push(indent + `  ${key}Vertical: ${getValue(node[key].top)},`);
         alreadySet.push('top', 'bottom');
       }
-      if (left && left !== untouchedLayout[key].left && left === right) {
+      if (left && left !== untouchedLayout[key].left && left === right && key !== 'position') {
         lines.push(indent + `  ${key}Horizontal: ${getValue(node[key].left)},`);
         alreadySet.push('left', 'right');
       }
