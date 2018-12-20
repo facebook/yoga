@@ -96,9 +96,11 @@ function getLayoutCode(node: LayoutRecordT, indent: string = ''): string {
         ) {
           lines.push(
             indent +
-              `  ${key}${pKey[0].toUpperCase()}${pKey.substr(1)}: ${getValue(
-                node[key][pKey],
-              )},`,
+              `  ${
+                key === "position"
+                  ? pKey
+                  : `${key}${pKey[0].toUpperCase()}${pKey.substr(1)}`
+              }: ${getValue(node[key][pKey])},`
           );
         }
       });
