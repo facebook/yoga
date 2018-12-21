@@ -432,6 +432,16 @@ public class YogaNodeTest {
     assertTrue(root.hasNewLayout());
   }
 
+  @Test
+  public void directionIsPassedThrough() {
+    YogaNode root = createNode();
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(root.getLayoutDirection(), YogaDirection.RTL);
+  }
+
   private YogaNode createNode() {
     return mNodeFactory.create();
   }
