@@ -23,6 +23,13 @@ static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode wi
     return ygSize;
 }
 
+static void globalDirtiedFunc(YGNodeRef nodeRef)
+{
+    Node const & node = *reinterpret_cast<Node const *>(YGNodeGetContext(nodeRef));
+
+    node.callDirtiedFunc();
+}
+
 /* static */ Node * Node::createDefault(void)
 {
     return new Node(nullptr);
@@ -427,6 +434,24 @@ void Node::unsetMeasureFunc(void)
 Size Node::callMeasureFunc(double width, int widthMode, double height, int heightMode) const
 {
     return m_measureFunc->call<Size>(width, widthMode, height, heightMode);
+}
+
+void Node::setDirtiedFunc(nbind::cbFunction & dirtiedFunc)
+{
+    m_dirtiedFunc.reset(new nbind::cbFunction(dirtiedFunc));
+
+    YGNodeSetDirtiedFunc(m_node, &globalDirtiedFunc);
+}
+
+void Node::unsetDirtiedFunc(void) {
+    m_dirtiedFunc.reset(nullptr);
+
+    YGNodeSetDirtiedFunc(m_node, nullptr);
+}
+
+void Node::callDirtiedFunc(void) const
+{
+    m_dirtiedFunc->call<void>();
 }
 
 void Node::markDirty(void)

@@ -161,6 +161,15 @@ class Node {
 
     Size callMeasureFunc(double width, int widthMode, double height, int heightMode) const;
 
+ public: // Dirtied func mutators
+
+   void setDirtiedFunc(nbind::cbFunction & dirtiedFunc);
+   void unsetDirtiedFunc(void);
+
+ public: // Dirtied func inspectors
+
+    void callDirtiedFunc(void) const;
+
  public: // Dirtiness accessors
 
     void markDirty(void);
@@ -194,5 +203,5 @@ class Node {
     YGNodeRef m_node;
 
     std::unique_ptr<nbind::cbFunction> m_measureFunc;
-
+    std::unique_ptr<nbind::cbFunction> m_dirtiedFunc;
 };

@@ -155,6 +155,9 @@ NBIND_CLASS(Node)
     method(setMeasureFunc);
     method(unsetMeasureFunc);
 
+    method(setDirtiedFunc);
+    method(unsetDirtiedFunc);
+
     method(markDirty);
     method(isDirty);
 
