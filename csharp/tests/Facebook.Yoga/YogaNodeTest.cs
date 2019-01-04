@@ -259,7 +259,7 @@ namespace Facebook.Yoga
         [Test]
         public void TestPrintWithLogger()
         {
-            YogaNode node = new YogaNode(new YogaConfig{Logger = (c, n, l, m) => {}});
+            YogaNode node = new YogaNode();
             node.Width = 110;
             node.Height = 105;
             node.CalculateLayout();
