@@ -17,7 +17,7 @@ struct YGLayout {
   std::array<float, 6> margin = {};
   std::array<float, 6> border = {};
   std::array<float, 6> padding = {};
-  YGDirection direction : 2;
+  YGDirection direction : 3;
   bool didUseLegacyFlag : 1;
   bool doesLegacyStretchFlagAffectsLayout : 1;
   bool hadOverflow : 1;

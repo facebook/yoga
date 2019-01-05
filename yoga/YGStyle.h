@@ -25,16 +25,16 @@ struct YGStyle {
   using Dimensions = facebook::yoga::detail::Values<2>;
   using Edges = facebook::yoga::detail::Values<YGEdgeCount>;
 
-  YGDirection direction : 2;
-  YGFlexDirection flexDirection : 2;
-  YGJustify justifyContent : 3;
-  YGAlign alignContent : 3;
-  YGAlign alignItems : 3;
-  YGAlign alignSelf : 3;
-  YGPositionType positionType : 1;
-  YGWrap flexWrap : 2;
-  YGOverflow overflow : 2;
-  YGDisplay display : 1;
+  YGDirection direction : 3;
+  YGFlexDirection flexDirection : 3;
+  YGJustify justifyContent : 4;
+  YGAlign alignContent : 4;
+  YGAlign alignItems : 4;
+  YGAlign alignSelf : 4;
+  YGPositionType positionType : 2;
+  YGWrap flexWrap : 3;
+  YGOverflow overflow : 3;
+  YGDisplay display : 2;
   YGFloatOptional flex = {};
   YGFloatOptional flexGrow = {};
   YGFloatOptional flexShrink = {};
