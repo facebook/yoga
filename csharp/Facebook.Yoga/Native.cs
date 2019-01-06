@@ -75,6 +75,14 @@ namespace Facebook.Yoga
         public static extern bool YGConfigGetUseWebDefaults(YGConfigHandle config);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGConfigSetUseLegacyStretchBehaviour(
+            YGConfigHandle config,
+            bool useLegacyStretchBehavior);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool YGConfigGetUseLegacyStretchBehaviour(YGConfigHandle config);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGConfigSetPointScaleFactor(
             YGConfigHandle config,
             float pixelsInPoint);

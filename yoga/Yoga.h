@@ -174,11 +174,11 @@ YGDirtiedFunc YGNodeGetDirtiedFunc(YGNodeRef node);
 void YGNodeSetDirtiedFunc(YGNodeRef node, YGDirtiedFunc dirtiedFunc);
 YGPrintFunc YGNodeGetPrintFunc(YGNodeRef node);
 void YGNodeSetPrintFunc(YGNodeRef node, YGPrintFunc printFunc);
-bool YGNodeGetHasNewLayout(YGNodeRef node);
-void YGNodeSetHasNewLayout(YGNodeRef node, bool hasNewLayout);
+WIN_EXPORT bool YGNodeGetHasNewLayout(YGNodeRef node);
+WIN_EXPORT void YGNodeSetHasNewLayout(YGNodeRef node, bool hasNewLayout);
 YGNodeType YGNodeGetNodeType(YGNodeRef node);
 void YGNodeSetNodeType(YGNodeRef node, YGNodeType nodeType);
-bool YGNodeIsDirty(YGNodeRef node);
+WIN_EXPORT bool YGNodeIsDirty(YGNodeRef node);
 bool YGNodeLayoutGetDidUseLegacyFlag(const YGNodeRef node);
 
 WIN_EXPORT void YGNodeStyleSetDirection(

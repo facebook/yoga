@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -33,47 +33,47 @@
     <RootNamespace>Yoga</RootNamespace>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.14393.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -116,7 +116,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\Universal\$(PlatformTarget)\$(Configuration)\</OutDir>
-    <IntDir>obj\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <IntDir>obj\Universal\$(PlatformTarget)\$(Configuration)\</IntDir>
     <TargetName>yoga</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -242,19 +242,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\yoga\Utils.h" />
+    <ClInclude Include="..\..\yoga\YGConfig.h" />
     <ClInclude Include="..\..\yoga\YGEnums.h" />
-    <ClInclude Include="..\..\yoga\Yoga.h" />
+    <ClInclude Include="..\..\yoga\YGFloatOptional.h" />
+    <ClInclude Include="..\..\yoga\YGLayout.h" />
     <ClInclude Include="..\..\yoga\YGMacros.h" />
-    <ClInclude Include="..\..\yoga\YGNodeList.h" />
+    <ClInclude Include="..\..\yoga\YGNode.h" />
+    <ClInclude Include="..\..\yoga\YGNodePrint.h" />
+    <ClInclude Include="..\..\yoga\YGStyle.h" />
+    <ClInclude Include="..\..\yoga\Yoga-internal.h" />
+    <ClInclude Include="..\..\yoga\Yoga.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="YGInterop.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\yoga\YGEnums.c" />
-    <ClCompile Include="..\..\yoga\Yoga.c" />
-    <ClCompile Include="..\..\yoga\YGNodeList.c" />
+    <ClCompile Include="..\..\yoga\Utils.cpp" />
+    <ClCompile Include="..\..\yoga\YGConfig.cpp" />
+    <ClCompile Include="..\..\yoga\YGEnums.cpp" />
+    <ClCompile Include="..\..\yoga\YGFloatOptional.cpp" />
+    <ClCompile Include="..\..\yoga\YGLayout.cpp" />
+    <ClCompile Include="..\..\yoga\YGNode.cpp" />
+    <ClCompile Include="..\..\yoga\YGNodePrint.cpp" />
+    <ClCompile Include="..\..\yoga\YGStyle.cpp" />
+    <ClCompile Include="..\..\yoga\Yoga.cpp" />
     <ClCompile Include="YGInterop.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
