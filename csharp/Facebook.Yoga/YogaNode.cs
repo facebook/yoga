@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -271,7 +271,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return YogaValue.MarshalValue(Native.YGNodeStyleGetFlexBasis(_ygNode));
+                return Native.YGNodeStyleGetFlexBasis(_ygNode);
             }
 
             set
@@ -295,7 +295,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return YogaValue.MarshalValue(Native.YGNodeStyleGetWidth(_ygNode));
+                return Native.YGNodeStyleGetWidth(_ygNode);
             }
 
             set
@@ -319,7 +319,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return YogaValue.MarshalValue(Native.YGNodeStyleGetHeight(_ygNode));
+                return Native.YGNodeStyleGetHeight(_ygNode);
             }
 
             set
@@ -343,7 +343,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return YogaValue.MarshalValue(Native.YGNodeStyleGetMaxWidth(_ygNode));
+                return Native.YGNodeStyleGetMaxWidth(_ygNode);
             }
 
             set
@@ -363,7 +363,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return YogaValue.MarshalValue(Native.YGNodeStyleGetMaxHeight(_ygNode));
+                return Native.YGNodeStyleGetMaxHeight(_ygNode);
             }
 
             set
@@ -383,7 +383,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return YogaValue.MarshalValue(Native.YGNodeStyleGetMinWidth(_ygNode));
+                return Native.YGNodeStyleGetMinWidth(_ygNode);
             }
 
             set
@@ -403,7 +403,7 @@ namespace Facebook.Yoga
         {
             get
             {
-                return YogaValue.MarshalValue(Native.YGNodeStyleGetMinHeight(_ygNode));
+                return Native.YGNodeStyleGetMinHeight(_ygNode);
             }
 
             set

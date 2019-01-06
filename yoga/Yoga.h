@@ -261,7 +261,7 @@ WIN_EXPORT void YGNodeStyleSetPositionPercent(
     const YGNodeRef node,
     const YGEdge edge,
     const float position);
-WIN_EXPORT WIN_STRUCT(YGValue)
+WIN_EXPORT YGValue
     YGNodeStyleGetPosition(const YGNodeRef node, const YGEdge edge);
 
 WIN_EXPORT void YGNodeStyleSetMargin(
