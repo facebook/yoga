@@ -15,7 +15,7 @@
 #define NUM_REPETITIONS 1000
 
 #define YGBENCHMARKS(BLOCK)                \
-  int main(int argc, char const *argv[]) { \
+  int main(int argc, char const* argv[]) { \
     clock_t __start;                       \
     clock_t __endTimes[NUM_REPETITIONS];   \
     { BLOCK }                              \
@@ -25,14 +25,13 @@
 #define YGBENCHMARK(NAME, BLOCK)                         \
   __start = clock();                                     \
   for (uint32_t __i = 0; __i < NUM_REPETITIONS; __i++) { \
-    { BLOCK }                                            \
-    __endTimes[__i] = clock();                           \
+    {BLOCK} __endTimes[__i] = clock();                   \
   }                                                      \
   __printBenchmarkResult(NAME, __start, __endTimes);
 
-static int __compareDoubles(const void *a, const void *b) {
-  double arg1 = *(const double *) a;
-  double arg2 = *(const double *) b;
+static int __compareDoubles(const void* a, const void* b) {
+  double arg1 = *(const double*) a;
+  double arg2 = *(const double*) b;
 
   if (arg1 < arg2) {
     return -1;
@@ -45,7 +44,10 @@ static int __compareDoubles(const void *a, const void *b) {
   return 0;
 }
 
-static void __printBenchmarkResult(char *name, clock_t start, clock_t *endTimes) {
+static void __printBenchmarkResult(
+    char* name,
+    clock_t start,
+    clock_t* endTimes) {
   double timesInMs[NUM_REPETITIONS];
   double mean = 0;
   clock_t lastEnd = start;
@@ -69,12 +71,12 @@ static void __printBenchmarkResult(char *name, clock_t start, clock_t *endTimes)
   printf("%s: median: %lf ms, stddev: %lf ms\n", name, median, stddev);
 }
 
-
-static YGSize _measure(YGNodeRef node,
-                       float width,
-                       YGMeasureMode widthMode,
-                       float height,
-                       YGMeasureMode heightMode) {
+static YGSize _measure(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
   return (YGSize){
       .width = widthMode == YGMeasureModeUndefined ? 10 : width,
       .height = heightMode == YGMeasureModeUndefined ? 10 : width,
@@ -82,7 +84,6 @@ static YGSize _measure(YGNodeRef node,
 }
 
 YGBENCHMARKS({
-
   YGBENCHMARK("Stack with flex", {
     const YGNodeRef root = YGNodeNew();
     YGNodeStyleSetWidth(root, 100);
@@ -160,7 +161,8 @@ YGBENCHMARKS({
 
           for (uint32_t iiii = 0; iiii < 10; iiii++) {
             const YGNodeRef grandGrandGrandChild = YGNodeNew();
-            YGNodeStyleSetFlexDirection(grandGrandGrandChild, YGFlexDirectionRow);
+            YGNodeStyleSetFlexDirection(
+                grandGrandGrandChild, YGFlexDirectionRow);
             YGNodeStyleSetFlexGrow(grandGrandGrandChild, 1);
             YGNodeStyleSetWidth(grandGrandGrandChild, 10);
             YGNodeStyleSetHeight(grandGrandGrandChild, 10);
@@ -173,5 +175,4 @@ YGBENCHMARKS({
     YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     YGNodeFreeRecursive(root);
   });
-
 });
