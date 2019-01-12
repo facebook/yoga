@@ -187,7 +187,9 @@ class Node {
     double getComputedBorder(int edge) const;
     double getComputedPadding(int edge) const;
 
- private:
+   public:
+    void setIsReferenceBaseline(bool isReferenceBaseline);
+    bool isReferenceBaseline();
 
     YGNodeRef m_node;
 

@@ -386,6 +386,62 @@ public class YogaNodeTest {
     assertFalse(root.getDoesLegacyStretchFlagAffectsLayout());
   }
 
+  @Test
+  public void initiallyHasNewLayout() {
+    YogaNode root = createNode();
+    assertTrue(root.hasNewLayout());
+  }
+
+  @Test
+  public void initialLayoutCanBeMarkedSeen() {
+    YogaNode root = createNode();
+    root.markLayoutSeen();
+    assertFalse(root.hasNewLayout());
+  }
+
+  @Test
+  public void calculatingLayoutMarksLayoutAsUnseen() {
+    YogaNode root = createNode();
+    root.markLayoutSeen();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+    assertTrue(root.hasNewLayout());
+  }
+
+  @Test
+  public void calculatedLayoutCanBeMarkedSeen() {
+    YogaNode root = createNode();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+    root.markLayoutSeen();
+    assertFalse(root.hasNewLayout());
+  }
+
+  @Test
+  public void recalculatingLayoutDoesMarkAsUnseen() {
+    YogaNode root = createNode();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+    root.markLayoutSeen();
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+    assertTrue(root.hasNewLayout());
+  }
+
+  @Test
+  public void resetAlsoResetsLayoutSeen() {
+    YogaNode root = createNode();
+    root.markLayoutSeen();
+    root.reset();
+    assertTrue(root.hasNewLayout());
+  }
+
+  @Test
+  public void directionIsPassedThrough() {
+    YogaNode root = createNode();
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(root.getLayoutDirection(), YogaDirection.RTL);
+  }
+
   private YogaNode createNode() {
     return mNodeFactory.create();
   }

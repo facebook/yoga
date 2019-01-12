@@ -1,3 +1,9 @@
+#
+#  Copyright (c) Facebook, Inc. and its affiliates.
+#
+#  This source code is licensed under the MIT license found in the LICENSE
+#  file in the root directory of this source tree.
+#
 """Provides macros for working with yoga library."""
 
 YOGA_ROOTS = ["//..."]
@@ -52,7 +58,6 @@ BASE_COMPILER_FLAGS = [
     "-Wall",
     "-Werror",
     "-O3",
-    "-ffast-math",
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
@@ -168,6 +173,8 @@ def yoga_cxx_binary(*args, **kwargs):
 def yoga_cxx_library(*args, **kwargs):
     # Currently unused
     kwargs.pop("platforms", None)
+    kwargs.pop("allow_jni_merging", None)
+
     native.cxx_library(*args, **kwargs)
 
 def yoga_cxx_test(*args, **kwargs):

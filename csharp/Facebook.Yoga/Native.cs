@@ -89,6 +89,14 @@ namespace Facebook.Yoga
         public static extern void YGNodeRemoveChild(YGNodeHandle node, YGNodeHandle child);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeSetIsReferenceBaseline(
+            YGNodeHandle node,
+            bool isReferenceBaseline);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool YGNodeIsReferenceBaseline(YGNodeHandle node);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeCalculateLayout(
             YGNodeHandle node,
             float availableWidth,

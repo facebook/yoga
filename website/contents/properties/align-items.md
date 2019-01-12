@@ -18,6 +18,8 @@ applying to the main axis, `align items` applies to the cross axis.
 
 **CENTER** Align children of a container in the center of the container's cross axis.
 
+**BASELINE** Align children of a container along a common baseline. Individual children can be set to be the reference baseline for their parents.
+
 <controls prop="alignItems"></controls>
 
 ## Align Self

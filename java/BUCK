@@ -10,6 +10,7 @@ yoga_cxx_library(
     srcs = glob(["jni/*.cpp"]),
     headers = glob(["jni/*.h"]),
     header_namespace = "",
+    allow_jni_merging = True,
     compiler_flags = [
         "-fno-omit-frame-pointer",
         "-fexceptions",

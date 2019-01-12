@@ -1,10 +1,9 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
-
 #include <yoga/Yoga.h>
 
 #include "./Node.hh"
@@ -149,6 +148,9 @@ NBIND_CLASS(Node)
 
     method(getParent);
     method(getChild);
+
+    method(isReferenceBaseline);
+    method(setIsReferenceBaseline);
 
     method(setMeasureFunc);
     method(unsetMeasureFunc);

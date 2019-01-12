@@ -1,10 +1,9 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
-
 #include <algorithm>
 
 #include <yoga/Yoga.h>
@@ -253,6 +252,10 @@ void Node::setPaddingPercent(int edge, double padding)
     YGNodeStyleSetPaddingPercent(m_node, static_cast<YGEdge>(edge), padding);
 }
 
+void Node::setIsReferenceBaseline(bool isReferenceBaseline) {
+  YGNodeSetIsReferenceBaseline(m_node, isReferenceBaseline);
+}
+
 int Node::getPositionType(void) const
 {
     return YGNodeStyleGetPositionType(m_node);
@@ -366,6 +369,10 @@ double Node::getBorder(int edge) const
 Value Node::getPadding(int edge) const
 {
     return Value::fromYGValue(YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
+}
+
+bool Node::isReferenceBaseline() {
+  return YGNodeIsReferenceBaseline(m_node);
 }
 
 void Node::insertChild(Node * child, unsigned index)

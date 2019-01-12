@@ -42,13 +42,29 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     this.push([
       'package com.facebook.yoga;',
       '',
-      'import org.junit.Test;',
-      '',
       'import static org.junit.Assert.assertEquals;',
       '',
+      'import org.junit.Test;',
+      'import org.junit.runner.RunWith;',
+      'import org.junit.runners.Parameterized;',
+      '',
+      '@RunWith(Parameterized.class)',
       'public class YogaTest {',
     ]);
     this.pushIndent();
+    this.push([
+      '@Parameterized.Parameters(name = "{0}")',
+      'public static Iterable<TestParametrization.NodeFactory> nodeFactories() {',
+    ]);
+    this.pushIndent();
+    this.push('return TestParametrization.nodeFactories();');
+    this.popIndent();
+    this.push('}');
+    this.push([
+      '',
+      '@Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;',
+      '',
+    ]);
   }},
 
   emitTestPrologue:{value:function(name, experiments) {
@@ -64,7 +80,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('final YogaNode ' + nodeName + ' = new YogaNode(config);');
+    this.push('final YogaNode ' + nodeName + ' = createNode(config);');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
@@ -76,6 +92,11 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitEpilogue:{value:function(lines) {
+    this.push('private YogaNode createNode(YogaConfig config) {');
+    this.pushIndent();
+    this.push('return mNodeFactory.create(config);');
+    this.popIndent();
+    this.push('}');
     this.popIndent();
     this.push([
       '}',
