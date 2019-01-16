@@ -32,25 +32,29 @@ typedef struct YGConfig* YGConfigRef;
 
 typedef struct YGNode* YGNodeRef;
 
-typedef YGSize (*YGMeasureFunc)(
+typedef YGSize (WIN_CALLCONV *YGMeasureFunc)(
     YGNodeRef node,
     float width,
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode);
-typedef float (
-    *YGBaselineFunc)(YGNodeRef node, const float width, const float height);
-typedef void (*YGDirtiedFunc)(YGNodeRef node);
-typedef void (*YGPrintFunc)(YGNodeRef node);
-typedef void (*YGNodeCleanupFunc)(YGNodeRef node);
+typedef float (WIN_CALLCONV *YGBaselineFunc)(
+    YGNodeRef node, 
+    const float width, 
+    const float height);
+typedef void (WIN_CALLCONV *YGDirtiedFunc)(YGNodeRef node);
+typedef void (WIN_CALLCONV *YGPrintFunc)(YGNodeRef node);
+typedef void (WIN_CALLCONV *YGNodeCleanupFunc)(YGNodeRef node);
 typedef int (*YGLogger)(
     const YGConfigRef config,
     const YGNodeRef node,
     YGLogLevel level,
     const char* format,
     va_list args);
-typedef YGNodeRef (
-    *YGCloneNodeFunc)(YGNodeRef oldNode, YGNodeRef owner, int childIndex);
+typedef YGNodeRef (WIN_CALLCONV *YGCloneNodeFunc)(
+    YGNodeRef oldNode, 
+    YGNodeRef owner, 
+    int childIndex);
 
 // YGNode
 WIN_EXPORT(YGNodeRef) YGNodeNew(void);
