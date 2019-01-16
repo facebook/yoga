@@ -22,7 +22,7 @@ static int unmanagedLogger(const YGConfigRef config,
   return result;
 }
 
-void YGInteropSetLogger(YGInteropLogger managedLogger) {
+WIN_EXPORT(void) YGInteropSetLogger(YGInteropLogger managedLogger) {
   gManagedLogger = managedLogger;
   YGConfigSetLogger(YGConfigGetDefault(), &unmanagedLogger);
 }

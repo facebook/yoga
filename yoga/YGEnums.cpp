@@ -6,7 +6,7 @@
  */
 #include "YGEnums.h"
 
-const char* YGAlignToString(const YGAlign value) {
+WIN_EXPORT(const char*) YGAlignToString(const YGAlign value) {
   switch (value) {
     case YGAlignAuto:
       return "auto";
@@ -28,7 +28,7 @@ const char* YGAlignToString(const YGAlign value) {
   return "unknown";
 }
 
-const char* YGDimensionToString(const YGDimension value) {
+WIN_EXPORT(const char*) YGDimensionToString(const YGDimension value) {
   switch (value) {
     case YGDimensionWidth:
       return "width";
@@ -38,7 +38,7 @@ const char* YGDimensionToString(const YGDimension value) {
   return "unknown";
 }
 
-const char* YGDirectionToString(const YGDirection value) {
+WIN_EXPORT(const char*) YGDirectionToString(const YGDirection value) {
   switch (value) {
     case YGDirectionInherit:
       return "inherit";
@@ -50,7 +50,7 @@ const char* YGDirectionToString(const YGDirection value) {
   return "unknown";
 }
 
-const char* YGDisplayToString(const YGDisplay value) {
+WIN_EXPORT(const char*) YGDisplayToString(const YGDisplay value) {
   switch (value) {
     case YGDisplayFlex:
       return "flex";
@@ -60,7 +60,7 @@ const char* YGDisplayToString(const YGDisplay value) {
   return "unknown";
 }
 
-const char* YGEdgeToString(const YGEdge value) {
+WIN_EXPORT(const char*) YGEdgeToString(const YGEdge value) {
   switch (value) {
     case YGEdgeLeft:
       return "left";
@@ -84,7 +84,7 @@ const char* YGEdgeToString(const YGEdge value) {
   return "unknown";
 }
 
-const char* YGExperimentalFeatureToString(const YGExperimentalFeature value) {
+WIN_EXPORT(const char*) YGExperimentalFeatureToString(const YGExperimentalFeature value) {
   switch (value) {
     case YGExperimentalFeatureWebFlexBasis:
       return "web-flex-basis";
@@ -92,7 +92,7 @@ const char* YGExperimentalFeatureToString(const YGExperimentalFeature value) {
   return "unknown";
 }
 
-const char* YGFlexDirectionToString(const YGFlexDirection value) {
+WIN_EXPORT(const char*) YGFlexDirectionToString(const YGFlexDirection value) {
   switch (value) {
     case YGFlexDirectionColumn:
       return "column";
@@ -106,7 +106,7 @@ const char* YGFlexDirectionToString(const YGFlexDirection value) {
   return "unknown";
 }
 
-const char* YGJustifyToString(const YGJustify value) {
+WIN_EXPORT(const char*) YGJustifyToString(const YGJustify value) {
   switch (value) {
     case YGJustifyFlexStart:
       return "flex-start";
@@ -124,7 +124,7 @@ const char* YGJustifyToString(const YGJustify value) {
   return "unknown";
 }
 
-const char* YGLogLevelToString(const YGLogLevel value) {
+WIN_EXPORT(const char*) YGLogLevelToString(const YGLogLevel value) {
   switch (value) {
     case YGLogLevelError:
       return "error";
@@ -142,7 +142,7 @@ const char* YGLogLevelToString(const YGLogLevel value) {
   return "unknown";
 }
 
-const char* YGMeasureModeToString(const YGMeasureMode value) {
+WIN_EXPORT(const char*) YGMeasureModeToString(const YGMeasureMode value) {
   switch (value) {
     case YGMeasureModeUndefined:
       return "undefined";
@@ -154,7 +154,7 @@ const char* YGMeasureModeToString(const YGMeasureMode value) {
   return "unknown";
 }
 
-const char* YGNodeTypeToString(const YGNodeType value) {
+WIN_EXPORT(const char*) YGNodeTypeToString(const YGNodeType value) {
   switch (value) {
     case YGNodeTypeDefault:
       return "default";
@@ -164,7 +164,7 @@ const char* YGNodeTypeToString(const YGNodeType value) {
   return "unknown";
 }
 
-const char* YGOverflowToString(const YGOverflow value) {
+WIN_EXPORT(const char*) YGOverflowToString(const YGOverflow value) {
   switch (value) {
     case YGOverflowVisible:
       return "visible";
@@ -176,7 +176,7 @@ const char* YGOverflowToString(const YGOverflow value) {
   return "unknown";
 }
 
-const char* YGPositionTypeToString(const YGPositionType value) {
+WIN_EXPORT(const char*) YGPositionTypeToString(const YGPositionType value) {
   switch (value) {
     case YGPositionTypeRelative:
       return "relative";
@@ -186,7 +186,7 @@ const char* YGPositionTypeToString(const YGPositionType value) {
   return "unknown";
 }
 
-const char* YGPrintOptionsToString(const YGPrintOptions value) {
+WIN_EXPORT(const char*) YGPrintOptionsToString(const YGPrintOptions value) {
   switch (value) {
     case YGPrintOptionsLayout:
       return "layout";
@@ -198,7 +198,7 @@ const char* YGPrintOptionsToString(const YGPrintOptions value) {
   return "unknown";
 }
 
-const char* YGUnitToString(const YGUnit value) {
+WIN_EXPORT(const char*) YGUnitToString(const YGUnit value) {
   switch (value) {
     case YGUnitUndefined:
       return "undefined";
@@ -212,7 +212,7 @@ const char* YGUnitToString(const YGUnit value) {
   return "unknown";
 }
 
-const char* YGWrapToString(const YGWrap value) {
+WIN_EXPORT(const char*) YGWrapToString(const YGWrap value) {
   switch (value) {
     case YGWrapNoWrap:
       return "no-wrap";

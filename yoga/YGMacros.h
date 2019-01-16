@@ -14,10 +14,16 @@
 #define YG_EXTERN_C_END
 #endif
 
-#ifdef _WINDLL
-#define WIN_EXPORT __declspec(dllexport)
+#ifdef YOGA_STDCALL
+#define WIN_CALLCONV __stdcall
 #else
-#define WIN_EXPORT
+#define WIN_CALLCONV
+#endif
+
+#ifdef _WINDLL
+#define WIN_EXPORT(type) __declspec(dllexport) type WIN_CALLCONV
+#else
+#define WIN_EXPORT(type) type
 #endif
 
 #ifdef WINARMDLL
