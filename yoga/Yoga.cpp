@@ -1023,7 +1023,7 @@ bool YGNodeLayoutGetDidLegacyStretchFlagAffectLayout(const YGNodeRef node) {
 
 uint32_t gCurrentGenerationCount = 0;
 
-WIN_EXPORT(bool) YGLayoutNodeInternal(
+extern "C" WIN_EXPORT(bool) YGLayoutNodeInternal(
     const YGNodeRef node,
     const float availableWidth,
     const float availableHeight,
