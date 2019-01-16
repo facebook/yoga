@@ -29,6 +29,18 @@ TEST(YogaTest, compact_value_can_represent_undefined) {
   ASSERT_FALSE(c.isAuto());
 }
 
+TEST(YogaTest, compact_value_manages_infinity_as_undefined) {
+  auto c = CompactValue{
+      YGValue{std::numeric_limits<float>::infinity(), YGUnitUndefined}};
+  YGValue v = c;
+  ASSERT_EQ(v, YGValueUndefined);
+  ASSERT_NE(v, YGValueAuto);
+  ASSERT_NE(v, (YGValue{-1.25, YGUnitPoint}));
+  ASSERT_NE(v, (YGValue{25, YGUnitPercent}));
+  ASSERT_TRUE(c.isUndefined());
+  ASSERT_FALSE(c.isAuto());
+}
+
 TEST(YogaTest, compact_value_can_represent_auto) {
   auto c = CompactValue{YGValue{0, YGUnitAuto}};
   YGValue v = c;
