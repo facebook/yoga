@@ -637,7 +637,8 @@ struct DimensionProp {
 
 #define YG_NODE_STYLE_PROPERTY_SETTER_UNIT_AUTO_IMPL(                      \
     type, name, paramName, instanceName)                                   \
-  WIN_EXPORT(void) YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {  \
+  WIN_EXPORT(void)                                                         \
+  YGNodeStyleSet##name(const YGNodeRef node, const type paramName) {       \
     auto value = detail::CompactValue::ofMaybe<YGUnitPoint>(paramName);    \
     if (node->getStyle().instanceName != value) {                          \
       node->getStyle().instanceName = value;                               \
@@ -645,7 +646,7 @@ struct DimensionProp {
     }                                                                      \
   }                                                                        \
                                                                            \
-  WIN_EXPORT(void) YGNodeStyleSet##name##Percent(                                      \
+  WIN_EXPORT(void) YGNodeStyleSet##name##Percent(                          \
       const YGNodeRef node, const type paramName) {                        \
     auto value = detail::CompactValue::ofMaybe<YGUnitPercent>(paramName);  \
     if (node->getStyle().instanceName != value) {                          \
@@ -654,7 +655,7 @@ struct DimensionProp {
     }                                                                      \
   }                                                                        \
                                                                            \
-  WIN_EXPORT(void) YGNodeStyleSet##name##Auto(const YGNodeRef node) {                  \
+  WIN_EXPORT(void) YGNodeStyleSet##name##Auto(const YGNodeRef node) {      \
     if (node->getStyle().instanceName != detail::CompactValue::ofAuto()) { \
       node->getStyle().instanceName = detail::CompactValue::ofAuto();      \
       node->markDirtyAndPropogate();                                       \
@@ -666,7 +667,7 @@ struct DimensionProp {
   YG_NODE_STYLE_PROPERTY_SETTER_UNIT_AUTO_IMPL(                      \
       float, name, paramName, instanceName)                          \
                                                                      \
-  WIN_EXPORT(type) YGNodeStyleGet##name(const YGNodeRef node) {                  \
+  WIN_EXPORT(type) YGNodeStyleGet##name(const YGNodeRef node) {      \
     YGValue value = node->getStyle().instanceName;                   \
     if (value.unit == YGUnitUndefined || value.unit == YGUnitAuto) { \
       value.value = YGUndefined;                                     \
@@ -675,7 +676,8 @@ struct DimensionProp {
   }
 
 #define YG_NODE_STYLE_EDGE_PROPERTY_UNIT_AUTO_IMPL(type, name, instanceName) \
-  WIN_EXPORT(void) YGNodeStyleSet##name##Auto(const YGNodeRef node, const YGEdge edge) { \
+  WIN_EXPORT(void)                                                           \
+  YGNodeStyleSet##name##Auto(const YGNodeRef node, const YGEdge edge) {      \
     if (node->getStyle().instanceName[edge] !=                               \
         detail::CompactValue::ofAuto()) {                                    \
       node->getStyle().instanceName[edge] = detail::CompactValue::ofAuto();  \
@@ -685,7 +687,7 @@ struct DimensionProp {
 
 #define YG_NODE_STYLE_EDGE_PROPERTY_UNIT_IMPL(                            \
     type, name, paramName, instanceName)                                  \
-  WIN_EXPORT(void) YGNodeStyleSet##name(                                              \
+  WIN_EXPORT(void) YGNodeStyleSet##name(                                  \
       const YGNodeRef node, const YGEdge edge, const float paramName) {   \
     auto value = detail::CompactValue::ofMaybe<YGUnitPoint>(paramName);   \
     if (node->getStyle().instanceName[edge] != value) {                   \
@@ -694,7 +696,7 @@ struct DimensionProp {
     }                                                                     \
   }                                                                       \
                                                                           \
-  WIN_EXPORT(void) YGNodeStyleSet##name##Percent(                                     \
+  WIN_EXPORT(void) YGNodeStyleSet##name##Percent(                         \
       const YGNodeRef node, const YGEdge edge, const float paramName) {   \
     auto value = detail::CompactValue::ofMaybe<YGUnitPercent>(paramName); \
     if (node->getStyle().instanceName[edge] != value) {                   \
@@ -703,7 +705,7 @@ struct DimensionProp {
     }                                                                     \
   }                                                                       \
                                                                           \
-  WIN_EXPORT(WIN_STRUCT(type))                                                        \
+  WIN_EXPORT(WIN_STRUCT(type))                                            \
   YGNodeStyleGet##name(const YGNodeRef node, const YGEdge edge) {         \
     YGValue value = node->getStyle().instanceName[edge];                  \
     if (value.unit == YGUnitUndefined || value.unit == YGUnitAuto) {      \
@@ -713,12 +715,14 @@ struct DimensionProp {
   }
 
 #define YG_NODE_LAYOUT_PROPERTY_IMPL(type, name, instanceName) \
-  WIN_EXPORT(type) YGNodeLayoutGet##name(const YGNodeRef node) {           \
+  WIN_EXPORT(type)                                             \
+  YGNodeLayoutGet##name(const YGNodeRef node) {                \
     return node->getLayout().instanceName;                     \
   }
 
 #define YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(type, name, instanceName) \
-  WIN_EXPORT(type) YGNodeLayoutGet##name(const YGNodeRef node, const YGEdge edge) { \
+  WIN_EXPORT(type)                                                      \
+  YGNodeLayoutGet##name(const YGNodeRef node, const YGEdge edge) {      \
     YGAssertWithNode(                                                   \
         node,                                                           \
         edge <= YGEdgeEnd,                                              \
