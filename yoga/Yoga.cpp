@@ -4226,7 +4226,7 @@ static void YGVLog(
   }
 }
 
-WIN_EXPORT(void) YGLogWithConfig(
+WIN_EXPORT_CDECL(void) YGLogWithConfig(
     const YGConfigRef config,
     YGLogLevel level,
     const char* format,
@@ -4237,7 +4237,7 @@ WIN_EXPORT(void) YGLogWithConfig(
   va_end(args);
 }
 
-WIN_EXPORT(void) YGLog(const YGNodeRef node, YGLogLevel level, const char* format, ...) {
+WIN_EXPORT_CDECL(void) YGLog(const YGNodeRef node, YGLogLevel level, const char* format, ...) {
   va_list args;
   va_start(args, format);
   YGVLog(

@@ -26,6 +26,12 @@
 #define WIN_EXPORT(type) type
 #endif
 
+#if defined(_WINDLL) && !defined(YOGA_STDCALL)
+#define WIN_EXPORT_CDECL(type) __declspec(dllexport) type
+#else
+#define WIN_EXPORT_CDECL(type) type
+#endif
+
 #ifdef WINARMDLL
 #define WIN_STRUCT(type) type*
 #define WIN_STRUCT_REF(value) &value
