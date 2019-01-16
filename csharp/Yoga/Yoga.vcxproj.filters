@@ -74,9 +74,6 @@
     <ClCompile Include="..\..\yoga\YGEnums.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\yoga\YGFloatOptional.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\yoga\YGLayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -93,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\yoga\YGConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\yoga\YGValue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

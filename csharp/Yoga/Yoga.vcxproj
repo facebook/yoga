@@ -246,11 +246,11 @@
     <ClCompile Include="..\..\yoga\Utils.cpp" />
     <ClCompile Include="..\..\yoga\YGConfig.cpp" />
     <ClCompile Include="..\..\yoga\YGEnums.cpp" />
-    <ClCompile Include="..\..\yoga\YGFloatOptional.cpp" />
     <ClCompile Include="..\..\yoga\YGLayout.cpp" />
     <ClCompile Include="..\..\yoga\YGNode.cpp" />
     <ClCompile Include="..\..\yoga\YGNodePrint.cpp" />
     <ClCompile Include="..\..\yoga\YGStyle.cpp" />
+    <ClCompile Include="..\..\yoga\YGValue.cpp" />
     <ClCompile Include="..\..\yoga\Yoga.cpp" />
     <ClCompile Include="YGInterop.cpp" />
     <ClCompile Include="dllmain.cpp">

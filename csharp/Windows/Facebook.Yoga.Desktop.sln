@@ -29,7 +29,6 @@ Global
 		..\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{3aace384-fdec-4d91-a3b2-eeb21b46c9ad}*SharedItemsImports = 4
 		..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems*{4edc82d9-a201-4831-8fe0-98f468f8e4ae}*SharedItemsImports = 13
 		..\Facebook.Yoga\Facebook.Yoga.Shared.projitems*{91c42d32-291d-4b72-90b4-551663d60b8b}*SharedItemsImports = 13
-		..\tests\Facebook.Yoga\Facebook.Yoga.Shared.Tests.projitems*{ac23f444-5545-4196-8b9f-5c1f6b3e7fb3}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
