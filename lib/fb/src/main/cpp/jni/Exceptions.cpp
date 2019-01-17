@@ -219,11 +219,11 @@ void translatePendingCppExceptionToJavaException() noexcept {
     setJavaExceptionAndAbortOnFailure(previous);
   } catch (std::exception& e) {
     FBLOGE("unexpected exception in translatePendingCppExceptionToJavaException: %s", e.what());
-    // rethrow the exception and let the noexcept handling abort.
-    throw;
+    // std::terminate will print the message of the pending exception e
+    std::terminate();
   } catch (...) {
     FBLOGE("unexpected exception in translatePendingCppExceptionToJavaException");
-    throw;
+    std::terminate();
   }
 }
 
