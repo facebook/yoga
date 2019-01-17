@@ -239,8 +239,6 @@ public:
   void setDirty(bool isDirty);
   void setLayoutLastOwnerDirection(YGDirection direction);
   void setLayoutComputedFlexBasis(const YGFloatOptional computedFlexBasis);
-  void setLayoutComputedFlexBasisGeneration(
-      uint32_t computedFlexBasisGeneration);
   void setLayoutMeasuredDimension(float measuredDimension, int index);
   void setLayoutHadOverflow(bool hadOverflow);
   void setLayoutDimension(float dimension, int index);

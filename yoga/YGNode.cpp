@@ -189,11 +189,6 @@ void YGNode::setLayoutPosition(float position, int index) {
   layout_.position[index] = position;
 }
 
-void YGNode::setLayoutComputedFlexBasisGeneration(
-    uint32_t computedFlexBasisGeneration) {
-  layout_.computedFlexBasisGeneration = computedFlexBasisGeneration;
-}
-
 void YGNode::setLayoutMeasuredDimension(float measuredDimension, int index) {
   layout_.measuredDimensions[index] = measuredDimension;
 }
