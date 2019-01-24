@@ -1,9 +1,8 @@
-/*
- *  Copyright (c) Facebook, Inc. and its affiliates.
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- *  This source code is licensed under the MIT license found in the LICENSE
- *  file in the root directory of this source tree.
- *
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
 package com.facebook.yoga;
 
@@ -278,29 +277,6 @@ public class YogaNodeTest {
     assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
     assertEquals(0, clonedChild.getChildCount());
     assertEquals(1, child.getChildCount());
-  }
-
-  @Test
-  public void testAddSharedChildCloneWithNewChildren() throws Exception {
-    YogaConfig config = new YogaConfig();
-    YogaNode root = createNode(config);
-    YogaNode child = createNode(config);
-    YogaNode grandChild = createNode(config);
-    root.addChildAt(child, 0);
-    child.addChildAt(grandChild, 0);
-    child.setFlexDirection(YogaFlexDirection.ROW);
-
-    YogaNode clonedChild = child.cloneWithNewChildren();
-
-    assertNotSame(clonedChild, child);
-    assertEquals(YogaFlexDirection.ROW, clonedChild.getFlexDirection());
-    assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
-    assertEquals(0, clonedChild.getChildCount());
-    assertEquals(1, child.getChildCount());
-
-    clonedChild.addSharedChildAt(grandChild, 0);
-    assertEquals(1, clonedChild.getChildCount());
-    assertNull(grandChild.getOwner());
   }
 
   @Test
