@@ -5,9 +5,9 @@
  * file in the root directory of this source tree.
  */
 #import <UIKit/UIKit.h>
-#import <yoga/YGEnums.h>
-#import <yoga/Yoga.h>
-#import <yoga/YGMacros.h>
+#import <YogaKit/YGEnums.h>
+#import <YogaKit/Yoga.h>
+#import <YogaKit/YGMacros.h>
 
 YG_EXTERN_C_BEGIN
 
