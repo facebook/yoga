@@ -124,3 +124,45 @@ it("dirtied_hierarchy", function() {
   typeof gc !== "undefined" && gc();
   console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
 });
+
+it("dirtied_reset", function() {
+  var root = Yoga.Node.create();
+  root.setAlignItems(Yoga.ALIGN_FLEX_START);
+  root.setWidth(100);
+  root.setHeight(100);
+  root.setMeasureFunc(function() {});
+
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
+
+  let dirtied = 0;
+  root.setDirtiedFunc(function() {
+    dirtied++;
+  });
+
+  console.assert(0 === dirtied, "0 === dirtied");
+
+  // dirtied func MUST be called in case of explicit dirtying.
+  root.markDirty();
+  console.assert(1 === dirtied, "1 === dirtied");
+
+  // recalculate so the root is no longer dirty
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
+
+  root.reset();
+  root.setAlignItems(Yoga.ALIGN_FLEX_START);
+  root.setWidth(100);
+  root.setHeight(100);
+  root.setMeasureFunc(function() {});
+
+  root.markDirty();
+
+  // dirtied func must NOT be called after reset.
+  root.markDirty();
+  console.assert(1 === dirtied, "1 === dirtied");
+
+  if (typeof root !== "undefined")
+    root.freeRecursive();
+
+  typeof gc !== "undefined" && gc();
+  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
+});

@@ -53,6 +53,7 @@ static void globalDirtiedFunc(YGNodeRef nodeRef)
 Node::Node(Config * config)
 : m_node(config != nullptr ? YGNodeNewWithConfig(config->m_config) : YGNodeNew())
 , m_measureFunc(nullptr)
+, m_dirtiedFunc(nullptr)
 {
     YGNodeSetContext(m_node, reinterpret_cast<void *>(this));
 }
@@ -65,6 +66,7 @@ Node::~Node(void)
 void Node::reset(void)
 {
     m_measureFunc.reset(nullptr);
+    m_dirtiedFunc.reset(nullptr);
 
     YGNodeReset(m_node);
 }
