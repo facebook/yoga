@@ -125,6 +125,37 @@ TEST_F(MarkerTest, layout_marker_counts_multi_node_layout) {
       (YGMarkerLayoutData{.layouts = 3, .measures = 4}));
 }
 
+TEST_F(MarkerTest, layout_marker_counts_cache_hits_single_node_layout) {
+  auto root = makeNode();
+  calculateLayout(root);
+
+  calculateLayout(root);
+
+  ASSERT_EQ(
+      markerCookie.end.markerData.layout,
+      (YGMarkerLayoutData{.layouts = 0,
+                          .measures = 0,
+                          .cachedLayouts = 1,
+                          .cachedMeasures = 0}));
+}
+
+TEST_F(MarkerTest, layout_marker_counts_cache_hits_multi_node_layout) {
+  auto root = makeNode();
+  auto childA = addChild(root);
+  auto childB = addChild(root);
+  calculateLayout(root, 987, 654);
+  calculateLayout(root, 123, 456);
+
+  calculateLayout(root, 987, 654);
+
+  ASSERT_EQ(
+      markerCookie.end.markerData.layout,
+      (YGMarkerLayoutData{.layouts = 3,
+                          .measures = 0,
+                          .cachedLayouts = 0,
+                          .cachedMeasures = 4}));
+}
+
 void* MarkerTest::startMarker(
     YGMarker marker,
     YGNodeRef node,
@@ -179,10 +210,14 @@ decltype(MarkerTest::markerCookie) MarkerTest::markerCookie = {};
 } // namespace facebook
 
 bool operator==(const YGMarkerLayoutData& lhs, const YGMarkerLayoutData& rhs) {
-  return lhs.layouts == rhs.layouts && lhs.measures == rhs.measures;
+  return lhs.layouts == rhs.layouts && lhs.measures == rhs.measures &&
+      lhs.cachedLayouts == rhs.cachedLayouts &&
+      lhs.cachedMeasures == rhs.cachedMeasures;
 }
 
 void PrintTo(const YGMarkerLayoutData data, std::ostream* os) {
   *os << "YGMarkerLayoutData{ layouts = " << data.layouts
-      << ", measures = " << data.measures << " }";
+      << ", measures = " << data.measures
+      << ", cachedLayouts = " << data.cachedLayouts
+      << ", cachedMeasures = " << data.cachedMeasures << " }";
 }
