@@ -110,7 +110,7 @@ TEST_F(MarkerTest, layout_marker_counts_single_node_layout) {
 
   ASSERT_EQ(
       markerCookie.end.markerData.layout,
-      (YGMarkerLayoutData{.layouts = 1, .measures = 0}));
+      (YGMarkerLayoutData{.layouts = 1, .measures = 0, .maxMeasureCache = 1}));
 }
 
 TEST_F(MarkerTest, layout_marker_counts_multi_node_layout) {
@@ -122,7 +122,7 @@ TEST_F(MarkerTest, layout_marker_counts_multi_node_layout) {
 
   ASSERT_EQ(
       markerCookie.end.markerData.layout,
-      (YGMarkerLayoutData{.layouts = 3, .measures = 4}));
+      (YGMarkerLayoutData{.layouts = 3, .measures = 4, .maxMeasureCache = 3}));
 }
 
 TEST_F(MarkerTest, layout_marker_counts_cache_hits_single_node_layout) {
@@ -152,8 +152,24 @@ TEST_F(MarkerTest, layout_marker_counts_cache_hits_multi_node_layout) {
       markerCookie.end.markerData.layout,
       (YGMarkerLayoutData{.layouts = 3,
                           .measures = 0,
+                          .maxMeasureCache = 5,
                           .cachedLayouts = 0,
                           .cachedMeasures = 4}));
+}
+
+TEST_F(MarkerTest, layout_marker_has_max_measure_cache) {
+  auto root = makeNode();
+  auto a = addChild(root);
+  auto b = addChild(root);
+  YGNodeStyleSetFlexBasis(a.get(), 10.0f);
+
+  for (auto s : {20, 30, 40}) {
+    calculateLayout(root, s, s);
+  }
+
+  ASSERT_EQ(
+      markerCookie.end.markerData.layout,
+      (YGMarkerLayoutData{.layouts = 3, .measures = 3, .maxMeasureCache = 7}));
 }
 
 void* MarkerTest::startMarker(
@@ -211,6 +227,7 @@ decltype(MarkerTest::markerCookie) MarkerTest::markerCookie = {};
 
 bool operator==(const YGMarkerLayoutData& lhs, const YGMarkerLayoutData& rhs) {
   return lhs.layouts == rhs.layouts && lhs.measures == rhs.measures &&
+      lhs.maxMeasureCache == rhs.maxMeasureCache &&
       lhs.cachedLayouts == rhs.cachedLayouts &&
       lhs.cachedMeasures == rhs.cachedMeasures;
 }
@@ -218,6 +235,7 @@ bool operator==(const YGMarkerLayoutData& lhs, const YGMarkerLayoutData& rhs) {
 void PrintTo(const YGMarkerLayoutData data, std::ostream* os) {
   *os << "YGMarkerLayoutData{ layouts = " << data.layouts
       << ", measures = " << data.measures
+      << ", maxMeasureCache = " << data.maxMeasureCache
       << ", cachedLayouts = " << data.cachedLayouts
       << ", cachedMeasures = " << data.cachedMeasures << " }";
 }
