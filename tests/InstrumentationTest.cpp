@@ -14,6 +14,9 @@
 #include <memory>
 #include <tuple>
 
+bool operator==(const YGMarkerLayoutData&, const YGMarkerLayoutData&);
+void PrintTo(const YGMarkerLayoutData, std::ostream*);
+
 namespace facebook {
 namespace yoga {
 namespace marker {
@@ -44,16 +47,19 @@ struct MarkerTest : public ::testing::Test {
 
   static void* startMarker(YGMarker, YGNodeRef, YGMarkerData);
   static void endMarker(YGMarker, YGNodeRef, YGMarkerData, void*);
-  static uniquePtr<YGConfig> makeConfig();
-  static uniquePtr<YGNode> makeNode(uniquePtr<YGConfig>&);
-  static uniquePtr<YGNode> makeNode(uniquePtr<YGConfig>&, uniquePtr<YGNode>&);
+  uniquePtr<YGNode> makeNode();
+  uniquePtr<YGNode> addChild(uniquePtr<YGNode>& owner);
+  static void calculateLayout(
+      uniquePtr<YGNode>& node,
+      float width = YGUndefined,
+      float height = YGUndefined);
 
   void SetUp() override;
+  uniquePtr<YGConfig> config;
 };
 
 TEST_F(MarkerTest, marker_start_works) {
-  auto config = makeConfig();
-  auto root = makeNode(config);
+  auto root = makeNode();
 
   decltype(MarkerSection<YGMarkerLayout>::data)* dataAddress;
   {
@@ -70,8 +76,7 @@ TEST_F(MarkerTest, marker_start_works) {
 }
 
 TEST_F(MarkerTest, marker_end_works) {
-  auto config = makeConfig();
-  auto root = makeNode(config);
+  auto root = makeNode();
 
   { MarkerSection<YGMarkerLayout> marker{root.get()}; }
 
@@ -90,35 +95,34 @@ TEST_F(MarkerTest, marker_end_works) {
 }
 
 TEST_F(MarkerTest, layout_marker) {
-  auto config = makeConfig();
-  auto root = makeNode(config);
+  auto root = makeNode();
 
-  YGNodeCalculateLayout(root.get(), YGUndefined, YGUndefined, YGDirectionLTR);
+  calculateLayout(root);
 
   ASSERT_EQ(markerCookie.start.marker, YGMarkerLayout);
   ASSERT_EQ(markerCookie.start.node, root.get());
 }
 
 TEST_F(MarkerTest, layout_marker_counts_single_node_layout) {
-  auto config = makeConfig();
-  auto root = makeNode(config);
+  auto root = makeNode();
 
-  YGNodeCalculateLayout(root.get(), YGUndefined, YGUndefined, YGDirectionLTR);
+  calculateLayout(root);
 
-  ASSERT_EQ(markerCookie.end.markerData.layout.layouts, 1);
-  ASSERT_EQ(markerCookie.end.markerData.layout.measures, 0);
+  ASSERT_EQ(
+      markerCookie.end.markerData.layout,
+      (YGMarkerLayoutData{.layouts = 1, .measures = 0}));
 }
 
 TEST_F(MarkerTest, layout_marker_counts_multi_node_layout) {
-  auto config = makeConfig();
-  auto root = makeNode(config);
-  auto childA = makeNode(config, root);
-  auto childB = makeNode(config, root);
+  auto root = makeNode();
+  auto childA = addChild(root);
+  auto childB = addChild(root);
 
-  YGNodeCalculateLayout(root.get(), YGUndefined, YGUndefined, YGDirectionLTR);
+  calculateLayout(root);
 
-  ASSERT_EQ(markerCookie.end.markerData.layout.layouts, 3);
-  ASSERT_EQ(markerCookie.end.markerData.layout.measures, 4);
+  ASSERT_EQ(
+      markerCookie.end.markerData.layout,
+      (YGMarkerLayoutData{.layouts = 3, .measures = 4}));
 }
 
 void* MarkerTest::startMarker(
@@ -142,27 +146,29 @@ void MarkerTest::endMarker(
   };
 }
 
-uniquePtr<YGConfig> MarkerTest::makeConfig() {
-  auto c = uniquePtr<YGConfig>{YGConfigNew(), &YGConfigFree};
-  YGConfigSetMarkerCallbacks(c.get(), {startMarker, endMarker});
-  return c;
-}
-
-uniquePtr<YGNode> MarkerTest::makeNode(uniquePtr<YGConfig>& config) {
+uniquePtr<YGNode> MarkerTest::makeNode() {
   auto n = uniquePtr<YGNode>{YGNodeNewWithConfig(config.get()), &YGNodeFree};
   return n;
 }
 
-uniquePtr<YGNode> MarkerTest::makeNode(
-    uniquePtr<YGConfig>& config,
-    uniquePtr<YGNode>& owner) {
-  auto n = makeNode(config);
+uniquePtr<YGNode> MarkerTest::addChild(uniquePtr<YGNode>& owner) {
+  auto n = makeNode();
   YGNodeInsertChild(owner.get(), n.get(), YGNodeGetChildCount(owner.get()));
   return n;
 }
 
+void MarkerTest::calculateLayout(
+    uniquePtr<YGNode>& node,
+    float width,
+    float height) {
+  YGNodeCalculateLayout(node.get(), width, height, YGDirectionLTR);
+}
+
 void MarkerTest::SetUp() {
   markerCookie = {};
+
+  config = uniquePtr<YGConfig>{YGConfigNew(), &YGConfigFree};
+  YGConfigSetMarkerCallbacks(config.get(), {startMarker, endMarker});
 }
 
 decltype(MarkerTest::markerCookie) MarkerTest::markerCookie = {};
@@ -171,3 +177,12 @@ decltype(MarkerTest::markerCookie) MarkerTest::markerCookie = {};
 } // namespace marker
 } // namespace yoga
 } // namespace facebook
+
+bool operator==(const YGMarkerLayoutData& lhs, const YGMarkerLayoutData& rhs) {
+  return lhs.layouts == rhs.layouts && lhs.measures == rhs.measures;
+}
+
+void PrintTo(const YGMarkerLayoutData data, std::ostream* os) {
+  *os << "YGMarkerLayoutData{ layouts = " << data.layouts
+      << ", measures = " << data.measures << " }";
+}
