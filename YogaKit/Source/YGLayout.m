@@ -229,6 +229,7 @@ YG_PROPERTY(YGWrap, flexWrap, FlexWrap)
 YG_PROPERTY(YGOverflow, overflow, Overflow)
 YG_PROPERTY(YGDisplay, display, Display)
 
+YG_PROPERTY(CGFloat, flex, Flex)
 YG_PROPERTY(CGFloat, flexGrow, FlexGrow)
 YG_PROPERTY(CGFloat, flexShrink, FlexShrink)
 YG_AUTO_VALUE_PROPERTY(flexBasis, FlexBasis)
