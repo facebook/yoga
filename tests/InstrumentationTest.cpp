@@ -85,6 +85,16 @@ TEST_F(MarkerTest, marker_end_works) {
       << "pointer returned by `startMarker` was not passed to `endMarker`";
 }
 
+TEST_F(MarkerTest, layout_marker) {
+  auto config = makeConfig();
+  auto root = makeNode(config);
+
+  YGNodeCalculateLayout(root.get(), YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(markerCookie.start.marker, YGMarkerLayout);
+  ASSERT_EQ(markerCookie.start.node, root.get());
+}
+
 void* MarkerTest::startMarker(
     YGMarker marker,
     YGNodeRef node,
