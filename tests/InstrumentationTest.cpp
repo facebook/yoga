@@ -32,6 +32,9 @@ struct MarkerTest : public ::testing::Test {
   struct EndData {
     Data data;
     void* cookie;
+    union {
+      YGMarkerLayoutData layout;
+    } markerData;
   };
 
   static struct {
@@ -43,6 +46,7 @@ struct MarkerTest : public ::testing::Test {
   static void endMarker(YGMarker, YGNodeRef, YGMarkerData, void*);
   static uniquePtr<YGConfig> makeConfig();
   static uniquePtr<YGNode> makeNode(uniquePtr<YGConfig>&);
+  static uniquePtr<YGNode> makeNode(uniquePtr<YGConfig>&, uniquePtr<YGNode>&);
 
   void SetUp() override;
 };
@@ -95,6 +99,28 @@ TEST_F(MarkerTest, layout_marker) {
   ASSERT_EQ(markerCookie.start.node, root.get());
 }
 
+TEST_F(MarkerTest, layout_marker_counts_single_node_layout) {
+  auto config = makeConfig();
+  auto root = makeNode(config);
+
+  YGNodeCalculateLayout(root.get(), YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(markerCookie.end.markerData.layout.layouts, 1);
+  ASSERT_EQ(markerCookie.end.markerData.layout.measures, 0);
+}
+
+TEST_F(MarkerTest, layout_marker_counts_multi_node_layout) {
+  auto config = makeConfig();
+  auto root = makeNode(config);
+  auto childA = makeNode(config, root);
+  auto childB = makeNode(config, root);
+
+  YGNodeCalculateLayout(root.get(), YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(markerCookie.end.markerData.layout.layouts, 3);
+  ASSERT_EQ(markerCookie.end.markerData.layout.measures, 4);
+}
+
 void* MarkerTest::startMarker(
     YGMarker marker,
     YGNodeRef node,
@@ -108,7 +134,12 @@ void MarkerTest::endMarker(
     YGNodeRef node,
     YGMarkerData data,
     void* id) {
-  markerCookie.end = {{marker, node, data}, id};
+  markerCookie.end = {{marker, node, data}, id, {}};
+  switch (marker) {
+    case YGMarkerLayout:
+      markerCookie.end.markerData.layout = *marker::data<YGMarkerLayout>(data);
+      break;
+  };
 }
 
 uniquePtr<YGConfig> MarkerTest::makeConfig() {
@@ -119,6 +150,14 @@ uniquePtr<YGConfig> MarkerTest::makeConfig() {
 
 uniquePtr<YGNode> MarkerTest::makeNode(uniquePtr<YGConfig>& config) {
   auto n = uniquePtr<YGNode>{YGNodeNewWithConfig(config.get()), &YGNodeFree};
+  return n;
+}
+
+uniquePtr<YGNode> MarkerTest::makeNode(
+    uniquePtr<YGConfig>& config,
+    uniquePtr<YGNode>& owner) {
+  auto n = makeNode(config);
+  YGNodeInsertChild(owner.get(), n.get(), YGNodeGetChildCount(owner.get()));
   return n;
 }
 
