@@ -10,9 +10,11 @@
 #include <yoga/instrumentation.h>
 
 #include <cstring>
+#include <deque>
+#include <exception>
 #include <functional>
 #include <memory>
-#include <tuple>
+#include <string>
 
 bool operator==(const YGMarkerLayoutData&, const YGMarkerLayoutData&);
 void PrintTo(const YGMarkerLayoutData, std::ostream*);
@@ -40,10 +42,14 @@ struct MarkerTest : public ::testing::Test {
     } markerData;
   };
 
-  static struct {
+  struct MarkerCookie {
     Data start;
     EndData end;
-  } markerCookie;
+  };
+
+  // std::deque will keep pointers stable on reallocation, whereas std::vector
+  // does not
+  static std::deque<MarkerCookie> markerCookies;
 
   static void* startMarker(YGMarker, YGNodeRef, YGMarkerData);
   static void endMarker(YGMarker, YGNodeRef, YGMarkerData, void*);
@@ -53,8 +59,11 @@ struct MarkerTest : public ::testing::Test {
       uniquePtr<YGNode>& node,
       float width = YGUndefined,
       float height = YGUndefined);
+  static MarkerCookie& findMarker(YGMarker);
+  static MarkerCookie& findLastMarker(YGMarker);
 
   void SetUp() override;
+  void TearDown() override;
   uniquePtr<YGConfig> config;
 };
 
@@ -66,6 +75,8 @@ TEST_F(MarkerTest, marker_start_works) {
     MarkerSection<YGMarkerLayout> marker{root.get()};
     dataAddress = &marker.data;
   }
+
+  auto& markerCookie = findLastMarker(YGMarkerLayout);
 
   ASSERT_EQ(markerCookie.start.marker, YGMarkerLayout)
       << "wrong marker type passed to `startMarker`";
@@ -79,6 +90,8 @@ TEST_F(MarkerTest, marker_end_works) {
   auto root = makeNode();
 
   { MarkerSection<YGMarkerLayout> marker{root.get()}; }
+
+  auto& markerCookie = findLastMarker(YGMarkerLayout);
 
   ASSERT_EQ(markerCookie.end.data.marker, markerCookie.start.marker)
       << "marker type passed to `endMarker` differs from type passed to "
@@ -99,6 +112,8 @@ TEST_F(MarkerTest, layout_marker) {
 
   calculateLayout(root);
 
+  auto& markerCookie = findLastMarker(YGMarkerLayout);
+
   ASSERT_EQ(markerCookie.start.marker, YGMarkerLayout);
   ASSERT_EQ(markerCookie.start.node, root.get());
 }
@@ -107,6 +122,8 @@ TEST_F(MarkerTest, layout_marker_counts_single_node_layout) {
   auto root = makeNode();
 
   calculateLayout(root);
+
+  auto& markerCookie = findLastMarker(YGMarkerLayout);
 
   ASSERT_EQ(
       markerCookie.end.markerData.layout,
@@ -120,6 +137,8 @@ TEST_F(MarkerTest, layout_marker_counts_multi_node_layout) {
 
   calculateLayout(root);
 
+  auto& markerCookie = findLastMarker(YGMarkerLayout);
+
   ASSERT_EQ(
       markerCookie.end.markerData.layout,
       (YGMarkerLayoutData{.layouts = 3, .measures = 4, .maxMeasureCache = 3}));
@@ -130,6 +149,8 @@ TEST_F(MarkerTest, layout_marker_counts_cache_hits_single_node_layout) {
   calculateLayout(root);
 
   calculateLayout(root);
+
+  auto& markerCookie = findLastMarker(YGMarkerLayout);
 
   ASSERT_EQ(
       markerCookie.end.markerData.layout,
@@ -147,6 +168,8 @@ TEST_F(MarkerTest, layout_marker_counts_cache_hits_multi_node_layout) {
   calculateLayout(root, 123, 456);
 
   calculateLayout(root, 987, 654);
+
+  auto& markerCookie = findLastMarker(YGMarkerLayout);
 
   ASSERT_EQ(
       markerCookie.end.markerData.layout,
@@ -167,6 +190,8 @@ TEST_F(MarkerTest, layout_marker_has_max_measure_cache) {
     calculateLayout(root, s, s);
   }
 
+  auto& markerCookie = findLastMarker(YGMarkerLayout);
+
   ASSERT_EQ(
       markerCookie.end.markerData.layout,
       (YGMarkerLayoutData{.layouts = 3, .measures = 3, .maxMeasureCache = 7}));
@@ -176,8 +201,10 @@ void* MarkerTest::startMarker(
     YGMarker marker,
     YGNodeRef node,
     YGMarkerData data) {
-  markerCookie.start = {marker, node, data};
-  return &markerCookie;
+  markerCookies.emplace_back();
+  MarkerCookie* cookie = &markerCookies.back();
+  cookie->start = {marker, node, data};
+  return cookie;
 }
 
 void MarkerTest::endMarker(
@@ -185,10 +212,11 @@ void MarkerTest::endMarker(
     YGNodeRef node,
     YGMarkerData data,
     void* id) {
-  markerCookie.end = {{marker, node, data}, id, {}};
+  auto cookie = static_cast<MarkerCookie*>(id);
+  cookie->end = {{marker, node, data}, id, {}};
   switch (marker) {
     case YGMarkerLayout:
-      markerCookie.end.markerData.layout = *marker::data<YGMarkerLayout>(data);
+      cookie->end.markerData.layout = *marker::data<YGMarkerLayout>(data);
       break;
   };
 }
@@ -211,14 +239,47 @@ void MarkerTest::calculateLayout(
   YGNodeCalculateLayout(node.get(), width, height, YGDirectionLTR);
 }
 
-void MarkerTest::SetUp() {
-  markerCookie = {};
+namespace {
 
+const char* markerTypeName(YGMarker type) {
+  switch (type) {
+    case YGMarkerLayout:
+      return "YGMarkerLayout";
+  }
+}
+
+template <typename It>
+MarkerTest::MarkerCookie& find(It begin, It end, YGMarker type) {
+  auto result = std::find_if(begin, end, [type](MarkerTest::MarkerCookie& c) {
+    return c.start.marker == type;
+  });
+  if (result == end) {
+    throw std::runtime_error{std::string{"No marker recorded for type: "} +
+                             markerTypeName(type)};
+  }
+  return *result;
+}
+
+} // namespace
+
+MarkerTest::MarkerCookie& MarkerTest::findMarker(YGMarker markerType) {
+  return find(markerCookies.begin(), markerCookies.end(), markerType);
+}
+
+MarkerTest::MarkerCookie& MarkerTest::findLastMarker(YGMarker markerType) {
+  return find(markerCookies.rbegin(), markerCookies.rend(), markerType);
+}
+
+void MarkerTest::SetUp() {
   config = uniquePtr<YGConfig>{YGConfigNew(), &YGConfigFree};
   YGConfigSetMarkerCallbacks(config.get(), {startMarker, endMarker});
 }
 
-decltype(MarkerTest::markerCookie) MarkerTest::markerCookie = {};
+void MarkerTest::TearDown() {
+  markerCookies.resize(0);
+}
+
+decltype(MarkerTest::markerCookies) MarkerTest::markerCookies = {};
 
 } // namespace test
 } // namespace marker
