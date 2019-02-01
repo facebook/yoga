@@ -211,6 +211,21 @@ TEST_F(MarkerTest, measure_functions_get_wrapped) {
       << "have " << markerCookies.size() << " recorded markers";
 }
 
+TEST_F(MarkerTest, baseline_functions_get_wrapped) {
+  auto root = makeNode();
+  auto child = addChild(root);
+  YGNodeSetBaselineFunc(
+      child.get(), [](YGNodeRef, float, float) { return 0.0f; });
+  YGNodeStyleSetFlexDirection(root.get(), YGFlexDirectionRow);
+  YGNodeStyleSetAlignItems(root.get(), YGAlignBaseline);
+
+  calculateLayout(root);
+  auto& markerCookie = findLastMarker(YGMarkerBaselineFn);
+
+  ASSERT_EQ(markerCookie.start.marker, YGMarkerBaselineFn)
+      << "have " << markerCookies.size() << " recorded markers";
+}
+
 void* MarkerTest::startMarker(
     YGMarker marker,
     YGNodeRef node,
@@ -233,6 +248,7 @@ void MarkerTest::endMarker(
       cookie->end.markerData.layout = *marker::data<YGMarkerLayout>(data);
       break;
     case YGMarkerMeasure:
+    case YGMarkerBaselineFn:
       break;
   };
 }
@@ -263,6 +279,8 @@ const char* markerTypeName(YGMarker type) {
       return "YGMarkerLayout";
     case YGMarkerMeasure:
       return "YGMarkerMeasure";
+    case YGMarkerBaselineFn:
+      return "YGMarkerBaselineFn";
   }
 }
 
