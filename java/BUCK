@@ -17,7 +17,7 @@ yoga_cxx_library(
         "-fPIC",
         "-Wall",
         "-Werror",
-        "-O3",
+        "-Os",
         "-std=c++11",
     ],
     platforms = ANDROID,
