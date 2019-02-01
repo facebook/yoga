@@ -197,6 +197,20 @@ TEST_F(MarkerTest, layout_marker_has_max_measure_cache) {
       (YGMarkerLayoutData{.layouts = 3, .measures = 3, .maxMeasureCache = 7}));
 }
 
+TEST_F(MarkerTest, measure_functions_get_wrapped) {
+  auto root = makeNode();
+  YGNodeSetMeasureFunc(
+      root.get(), [](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode) {
+        return YGSize{};
+      });
+
+  calculateLayout(root);
+  auto& markerCookie = findLastMarker(YGMarkerMeasure);
+
+  ASSERT_EQ(markerCookie.start.marker, YGMarkerMeasure)
+      << "have " << markerCookies.size() << " recorded markers";
+}
+
 void* MarkerTest::startMarker(
     YGMarker marker,
     YGNodeRef node,
@@ -217,6 +231,8 @@ void MarkerTest::endMarker(
   switch (marker) {
     case YGMarkerLayout:
       cookie->end.markerData.layout = *marker::data<YGMarkerLayout>(data);
+      break;
+    case YGMarkerMeasure:
       break;
   };
 }
@@ -245,6 +261,8 @@ const char* markerTypeName(YGMarker type) {
   switch (type) {
     case YGMarkerLayout:
       return "YGMarkerLayout";
+    case YGMarkerMeasure:
+      return "YGMarkerMeasure";
   }
 }
 
