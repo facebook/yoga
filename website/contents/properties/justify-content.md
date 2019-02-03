@@ -22,7 +22,7 @@ remaining space between the children.
 
 **SPACE AROUND** Evenly space of children across the container's main axis, distributing
 remaining space around the children. Compared to `space between` using
-`Sspace around` will result in space being distributed to the beginning of
+`space around` will result in space being distributed to the beginning of
 the first child and end of the last child.
 
 <controls prop="justifyContent"></controls>

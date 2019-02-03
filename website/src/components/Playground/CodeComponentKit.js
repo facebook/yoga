@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // @flow
 import yoga from 'yoga-layout/dist/entry-browser';
 import LayoutRecord from './LayoutRecord';
@@ -137,9 +144,9 @@ function getLayoutCode(
             )}\n${indent}\t},`,
         ),
     );
-    lines.push(indent + `}]${isRoot ? ';' : ''}`);
+    lines.push(indent + `}]${isRoot ? ';' : ','}`);
   } else {
-    lines[lines.length - 1] += ']';
+    lines[lines.length - 1] += '],';
     CKFlexboxComponentChild.forEach(key => {
       let line = renderKey(node, key, indent);
       if (line) {
@@ -165,7 +172,7 @@ function renderKey(node: Yoga$Node, key: string, indent: string): ?string {
       );
     }
 
-    ['top', 'left', 'right', 'bottom'].forEach(pKey => {
+    ['top', 'start', 'end', 'bottom'].forEach(pKey => {
       if (node[key][pKey]) {
         lines.push(indent + `\t.${pKey} = ${getValue(node[key][pKey])},`);
       }

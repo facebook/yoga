@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 apply plugin: 'com.android.library'
 
 android {
@@ -9,7 +16,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
 
         ndk {
-            abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
         }
 
         externalNativeBuild {
@@ -26,7 +33,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.facebook.soloader:soloader:0.2.0'
+        implementation 'com.facebook.soloader:soloader:0.5.1'
         compileOnly 'com.google.code.findbugs:jsr305:3.0.1'
         compileOnly project(':yoga:proguard-annotations')
     }

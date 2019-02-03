@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,6 +19,7 @@ import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
 import Sidebar from './Sidebar';
 import {Row, Col, Button} from 'antd';
+import btoa from 'btoa';
 import type {LayoutRecordT} from './LayoutRecord';
 import type {Yoga$Direction} from 'yoga-layout';
 import './index.css';

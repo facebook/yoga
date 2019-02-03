@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -259,7 +259,7 @@ namespace Facebook.Yoga
         [Test]
         public void TestPrintWithLogger()
         {
-            YogaNode node = new YogaNode(new YogaConfig{Logger = (c, n, l, m) => {}});
+            YogaNode node = new YogaNode();
             node.Width = 110;
             node.Height = 105;
             node.CalculateLayout();

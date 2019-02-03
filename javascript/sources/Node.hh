@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -161,6 +161,15 @@ class Node {
 
     Size callMeasureFunc(double width, int widthMode, double height, int heightMode) const;
 
+ public: // Dirtied func mutators
+
+   void setDirtiedFunc(nbind::cbFunction & dirtiedFunc);
+   void unsetDirtiedFunc(void);
+
+ public: // Dirtied func inspectors
+
+    void callDirtiedFunc(void) const;
+
  public: // Dirtiness accessors
 
     void markDirty(void);
@@ -187,10 +196,12 @@ class Node {
     double getComputedBorder(int edge) const;
     double getComputedPadding(int edge) const;
 
- private:
+   public:
+    void setIsReferenceBaseline(bool isReferenceBaseline);
+    bool isReferenceBaseline();
 
     YGNodeRef m_node;
 
     std::unique_ptr<nbind::cbFunction> m_measureFunc;
-
+    std::unique_ptr<nbind::cbFunction> m_dirtiedFunc;
 };

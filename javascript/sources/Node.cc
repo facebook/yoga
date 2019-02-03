@@ -1,10 +1,9 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
-
 #include <algorithm>
 
 #include <yoga/Yoga.h>
@@ -22,6 +21,13 @@ static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode wi
     YGSize ygSize = { static_cast<float>(size.width), static_cast<float>(size.height) };
 
     return ygSize;
+}
+
+static void globalDirtiedFunc(YGNodeRef nodeRef)
+{
+    Node const & node = *reinterpret_cast<Node const *>(YGNodeGetContext(nodeRef));
+
+    node.callDirtiedFunc();
 }
 
 /* static */ Node * Node::createDefault(void)
@@ -47,6 +53,7 @@ static YGSize globalMeasureFunc(YGNodeRef nodeRef, float width, YGMeasureMode wi
 Node::Node(Config * config)
 : m_node(config != nullptr ? YGNodeNewWithConfig(config->m_config) : YGNodeNew())
 , m_measureFunc(nullptr)
+, m_dirtiedFunc(nullptr)
 {
     YGNodeSetContext(m_node, reinterpret_cast<void *>(this));
 }
@@ -59,6 +66,7 @@ Node::~Node(void)
 void Node::reset(void)
 {
     m_measureFunc.reset(nullptr);
+    m_dirtiedFunc.reset(nullptr);
 
     YGNodeReset(m_node);
 }
@@ -253,6 +261,10 @@ void Node::setPaddingPercent(int edge, double padding)
     YGNodeStyleSetPaddingPercent(m_node, static_cast<YGEdge>(edge), padding);
 }
 
+void Node::setIsReferenceBaseline(bool isReferenceBaseline) {
+  YGNodeSetIsReferenceBaseline(m_node, isReferenceBaseline);
+}
+
 int Node::getPositionType(void) const
 {
     return YGNodeStyleGetPositionType(m_node);
@@ -368,6 +380,10 @@ Value Node::getPadding(int edge) const
     return Value::fromYGValue(YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
 }
 
+bool Node::isReferenceBaseline() {
+  return YGNodeIsReferenceBaseline(m_node);
+}
+
 void Node::insertChild(Node * child, unsigned index)
 {
     YGNodeInsertChild(m_node, child->m_node, index);
@@ -420,6 +436,24 @@ void Node::unsetMeasureFunc(void)
 Size Node::callMeasureFunc(double width, int widthMode, double height, int heightMode) const
 {
     return m_measureFunc->call<Size>(width, widthMode, height, heightMode);
+}
+
+void Node::setDirtiedFunc(nbind::cbFunction & dirtiedFunc)
+{
+    m_dirtiedFunc.reset(new nbind::cbFunction(dirtiedFunc));
+
+    YGNodeSetDirtiedFunc(m_node, &globalDirtiedFunc);
+}
+
+void Node::unsetDirtiedFunc(void) {
+    m_dirtiedFunc.reset(nullptr);
+
+    YGNodeSetDirtiedFunc(m_node, nullptr);
+}
+
+void Node::callDirtiedFunc(void) const
+{
+    m_dirtiedFunc->call<void>();
 }
 
 void Node::markDirty(void)
