@@ -57,7 +57,7 @@ BASE_COMPILER_FLAGS = [
     "-fexceptions",
     "-Wall",
     "-Werror",
-    "-O3",
+    "-O2",
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
