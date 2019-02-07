@@ -400,7 +400,7 @@ static void YGAttachNodesFromViewHierachy(UIView *const view)
 
     NSMutableArray<UIView *> *subviewsToInclude = [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
     for (UIView *subview in view.subviews) {
-      if (subview.yoga.isEnabled && subview.yoga.isIncludedInLayout) {
+      if (subview.yoga.isIncludedInLayout) {
         [subviewsToInclude addObject:subview];
       }
     }
