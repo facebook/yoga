@@ -30,9 +30,9 @@ public class YogaNodeTest {
 
   @Test
   public void testInit() {
-    final int refCount = YogaNode.jni_YGNodeGetInstanceCount();
+    final int refCount = YogaNodeJNI.jni_YGNodeGetInstanceCount();
     final YogaNode node = createNode();
-    assertEquals(refCount + 1, YogaNode.jni_YGNodeGetInstanceCount());
+    assertEquals(refCount + 1, YogaNodeJNI.jni_YGNodeGetInstanceCount());
   }
 
   @Test
@@ -243,7 +243,7 @@ public class YogaNodeTest {
     child.addChildAt(grandChild, 0);
     child.setFlexDirection(YogaFlexDirection.ROW);
 
-    YogaNode clonedChild = child.clone();
+    YogaNode clonedChild = ((YogaNodeJNI) child).clone();
 
     assertNotSame(clonedChild, child);
 
@@ -270,7 +270,7 @@ public class YogaNodeTest {
     child.addChildAt(grandChild, 0);
     child.setFlexDirection(YogaFlexDirection.ROW);
 
-    YogaNode clonedChild = child.cloneWithNewChildren();
+    YogaNode clonedChild = ((YogaNodeJNI) child).cloneWithNewChildren();
 
     assertNotSame(clonedChild, child);
     assertEquals(YogaFlexDirection.ROW, clonedChild.getFlexDirection());
@@ -288,7 +288,7 @@ public class YogaNodeTest {
           @Override
           public YogaNode cloneNode(YogaNode oldNode, YogaNode owner, int childIndex) {
             onNodeClonedExecuted.set(true);
-            return oldNode.clone();
+            return ((YogaNodeJNI) oldNode).clone();
           }
         });
     YogaNode root = createNode(config);
@@ -300,7 +300,7 @@ public class YogaNodeTest {
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
     // Force a clone to happen.
-    final YogaNode root2 = root.clone();
+    final YogaNode root2 = ((YogaNodeJNI) root).clone();
     root2.setWidth(200f);
     root2.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 
@@ -319,7 +319,7 @@ public class YogaNodeTest {
         new YogaNodeCloneFunction() {
           @Override
           public YogaNode cloneNode(YogaNode oldNode, YogaNode owner, int childIndex) {
-            return oldNode.clone();
+            return ((YogaNodeJNI) oldNode).clone();
           }
         });
     config.setOnCloneNode(null);
@@ -359,7 +359,7 @@ public class YogaNodeTest {
     root_child0_child0_child0.setFlexShrink(1);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-    assertFalse(root.getDoesLegacyStretchFlagAffectsLayout());
+    assertFalse(((YogaNodeJNI) root).getDoesLegacyStretchFlagAffectsLayout());
   }
 
   @Test
