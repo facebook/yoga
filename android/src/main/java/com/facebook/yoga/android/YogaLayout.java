@@ -78,7 +78,7 @@ public class YogaLayout extends ViewGroup {
   public YogaLayout(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
 
-    mYogaNode = new YogaNode();
+    mYogaNode = YogaNode.create();
     mYogaNodes = new HashMap<>();
 
     mYogaNode.setData(this);
@@ -155,7 +155,7 @@ public class YogaLayout extends ViewGroup {
       if(mYogaNodes.containsKey(child)) {
         childNode = mYogaNodes.get(child);
       } else {
-        childNode = new YogaNode();
+        childNode = YogaNode.create();
       }
 
       childNode.setData(child);
