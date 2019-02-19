@@ -19,7 +19,7 @@ dependencies {
 ### Javascript
 
 The JavaScript bindings for Yoga can be used from node.js and within the browser.
-When using Yoga from node.js the native library is used, in browesers a pure JS
+When using Yoga from node.js the native library is used, in browsers a pure JS
 version is used (cross-compiled using [emscripten](http://kripken.github.io/emscripten-site/)).
 
 ```
