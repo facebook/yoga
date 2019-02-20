@@ -6,6 +6,7 @@
  */
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
+#include <yoga/YGNode.h>
 
 TEST(YogaTest, cloning_shared_root) {
   const YGConfigRef config = YGConfigNew();
@@ -104,7 +105,7 @@ TEST(YogaTest, cloning_shared_root) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, mutating_children_of_a_clone_clones) {
+TEST(YogaTest, mutating_children_of_a_clone_clones_only_after_layout) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
@@ -129,7 +130,7 @@ TEST(YogaTest, mutating_children_of_a_clone_clones) {
   ASSERT_EQ(1, YGNodeGetChildCount(root2));
   ASSERT_EQ(2, YGNodeGetChildCount(root3));
   ASSERT_EQ(root3_child1, YGNodeGetChild(root3, 1));
-  ASSERT_NE(YGNodeGetChild(root2, 0), YGNodeGetChild(root3, 0));
+  ASSERT_EQ(YGNodeGetChild(root2, 0), YGNodeGetChild(root3, 0));
 
   const YGNodeRef root4 = YGNodeClone(root3);
   ASSERT_EQ(root3_child1, YGNodeGetChild(root4, 1));
@@ -137,7 +138,12 @@ TEST(YogaTest, mutating_children_of_a_clone_clones) {
   YGNodeRemoveChild(root4, root3_child1);
   ASSERT_EQ(2, YGNodeGetChildCount(root3));
   ASSERT_EQ(1, YGNodeGetChildCount(root4));
+  ASSERT_EQ(YGNodeGetChild(root3, 0), YGNodeGetChild(root4, 0));
+
+  YGNodeCalculateLayout(root4, YGUndefined, YGUndefined, YGDirectionLTR);
   ASSERT_NE(YGNodeGetChild(root3, 0), YGNodeGetChild(root4, 0));
+  YGNodeCalculateLayout(root3, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_NE(YGNodeGetChild(root2, 0), YGNodeGetChild(root3, 0));
 
   YGNodeFreeRecursive(root4);
   YGNodeFreeRecursive(root3);
@@ -244,4 +250,35 @@ TEST(YogaTest, cloning_and_freeing) {
   YGConfigFree(config);
 
   ASSERT_EQ(initialInstanceCount, YGNodeGetInstanceCount());
+}
+
+TEST(YogaTest, mixed_shared_and_owned_children) {
+  // Don't try this at home!
+
+  YGNodeRef root0 = YGNodeNew();
+  YGNodeRef root1 = YGNodeNew();
+
+  YGNodeRef root0_child0 = YGNodeNew();
+  YGNodeRef root0_child0_0 = YGNodeNew();
+  YGNodeInsertChild(root0, root0_child0, 0);
+  YGNodeInsertChild(root0_child0, root0_child0_0, 0);
+
+  YGNodeRef root1_child0 = YGNodeNew();
+  YGNodeRef root1_child2 = YGNodeNew();
+  YGNodeInsertChild(root1, root1_child0, 0);
+  YGNodeInsertChild(root1, root1_child2, 1);
+
+  auto children = root1->getChildren();
+  children.insert(children.begin() + 1, root0_child0);
+  root1->setChildren(children);
+  auto secondChild = YGNodeGetChild(root1, 1);
+  ASSERT_EQ(secondChild, YGNodeGetChild(root0, 0));
+  ASSERT_EQ(YGNodeGetChild(secondChild, 0), YGNodeGetChild(root0_child0, 0));
+
+  YGNodeCalculateLayout(root1, YGUndefined, YGUndefined, YGDirectionLTR);
+  secondChild = YGNodeGetChild(root1, 1);
+  ASSERT_NE(secondChild, YGNodeGetChild(root0, 0));
+  ASSERT_EQ(YGNodeGetOwner(secondChild), root1);
+  ASSERT_NE(YGNodeGetChild(secondChild, 0), YGNodeGetChild(root0_child0, 0));
+  ASSERT_EQ(YGNodeGetOwner(YGNodeGetChild(secondChild, 0)), secondChild);
 }
