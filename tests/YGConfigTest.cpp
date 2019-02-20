@@ -32,7 +32,7 @@ TEST_F(ConfigCloningTest, uses_values_provided_by_cloning_callback) {
   config->setCloneNodeCallback(cloneNode);
 
   YGNode node{}, owner{};
-  auto clone = config->cloneNode(&node, &owner, 0);
+  auto clone = config->cloneNode(&node, &owner, 0, nullptr);
 
   ASSERT_EQ(clone, &clonedNode);
 }
@@ -43,10 +43,19 @@ TEST_F(
   config->setCloneNodeCallback(doNotClone);
 
   YGNode node{}, owner{};
-  auto clone = config->cloneNode(&node, &owner, 0);
+  auto clone = config->cloneNode(&node, &owner, 0, nullptr);
 
   ASSERT_NE(clone, nullptr);
   YGNodeFree(clone);
+}
+
+TEST_F(ConfigCloningTest, can_clone_with_context) {
+  config->setCloneNodeCallback([](YGNodeRef, YGNodeRef, int, void* context) {
+    return (YGNodeRef) context;
+  });
+
+  YGNode node{}, owner{}, clone{};
+  ASSERT_EQ(config->cloneNode(&node, &owner, 0, &clone), &clone);
 }
 
 void ConfigCloningTest::SetUp() {
