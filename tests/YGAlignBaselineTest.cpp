@@ -200,7 +200,7 @@ TEST(YogaTest, align_baseline_parent_using_child_in_column_as_reference) {
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
 
@@ -245,7 +245,7 @@ TEST(
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeStyleSetPadding(root_child1_child1, YGEdgeLeft, 100);
   YGNodeStyleSetPadding(root_child1_child1, YGEdgeRight, 100);
@@ -298,7 +298,7 @@ TEST(
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
 
@@ -347,7 +347,7 @@ TEST(
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
 
@@ -392,7 +392,7 @@ TEST(
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeStyleSetMargin(root_child1_child1, YGEdgeLeft, 100);
   YGNodeStyleSetMargin(root_child1_child1, YGEdgeRight, 100);
@@ -439,7 +439,7 @@ TEST(YogaTest, align_baseline_parent_using_child_in_row_as_reference) {
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
 
@@ -484,7 +484,7 @@ TEST(
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeStyleSetPadding(root_child1_child1, YGEdgeLeft, 100);
   YGNodeStyleSetPadding(root_child1_child1, YGEdgeRight, 100);
@@ -533,7 +533,7 @@ TEST(
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeStyleSetMargin(root_child1_child1, YGEdgeLeft, 100);
   YGNodeStyleSetMargin(root_child1_child1, YGEdgeRight, 100);
@@ -673,7 +673,7 @@ TEST(
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
 
@@ -724,7 +724,7 @@ TEST(
 
   const YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
-  root_child1_child1->setBaseLineFunc(_baselineFunc);
+  root_child1_child1->setBaselineFunc(_baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
 

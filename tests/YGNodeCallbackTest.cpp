@@ -97,20 +97,20 @@ TEST(YGNode, hasBaselineFunc_initial) {
 
 TEST(YGNode, hasBaselineFunc_with_baseline_fn) {
   auto n = YGNode{};
-  n.setBaseLineFunc([](YGNode*, float, float) { return 0.0f; });
+  n.setBaselineFunc([](YGNode*, float, float) { return 0.0f; });
   ASSERT_TRUE(n.hasBaselineFunc());
 }
 
 TEST(YGNode, baseline_with_baseline_fn) {
   auto n = YGNode{};
-  n.setBaseLineFunc([](YGNode*, float w, float h) { return w + h; });
+  n.setBaselineFunc([](YGNode*, float w, float h) { return w + h; });
 
   ASSERT_EQ(n.baseline(1.25f, 2.5f, nullptr), 3.75f);
 }
 
 TEST(YGNode, baseline_with_context_baseline_fn) {
   auto n = YGNode{};
-  n.setBaseLineFunc([](YGNode*, float w, float h, void* ctx) {
+  n.setBaselineFunc([](YGNode*, float w, float h, void* ctx) {
     return w + h + *(float*) ctx;
   });
 
@@ -120,15 +120,15 @@ TEST(YGNode, baseline_with_context_baseline_fn) {
 
 TEST(YGNode, hasBaselineFunc_after_unset) {
   auto n = YGNode{};
-  n.setBaseLineFunc([](YGNode*, float, float) { return 0.0f; });
+  n.setBaselineFunc([](YGNode*, float, float) { return 0.0f; });
 
-  n.setBaseLineFunc(nullptr);
+  n.setBaselineFunc(nullptr);
   ASSERT_FALSE(n.hasBaselineFunc());
 }
 
 TEST(YGNode, hasBaselineFunc_after_unset_context) {
   auto n = YGNode{};
-  n.setBaseLineFunc([](YGNode*, float, float, void*) { return 0.0f; });
+  n.setBaselineFunc([](YGNode*, float, float, void*) { return 0.0f; });
 
   n.setMeasureFunc(nullptr);
   ASSERT_FALSE(n.hasMeasureFunc());
@@ -136,8 +136,8 @@ TEST(YGNode, hasBaselineFunc_after_unset_context) {
 
 TEST(YGNode, switching_baseline_fn_types) {
   auto n = YGNode{};
-  n.setBaseLineFunc([](YGNode*, float, float, void*) { return 0.0f; });
-  n.setBaseLineFunc([](YGNode*, float, float) { return 1.0f; });
+  n.setBaselineFunc([](YGNode*, float, float, void*) { return 0.0f; });
+  n.setBaselineFunc([](YGNode*, float, float) { return 1.0f; });
   ASSERT_EQ(n.baseline(1, 2, nullptr), 1.0f);
 }
 
