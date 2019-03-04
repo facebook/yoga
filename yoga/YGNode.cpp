@@ -257,7 +257,7 @@ void YGNode::setLayoutPosition(float position, int index) {
 }
 
 void YGNode::setLayoutComputedFlexBasisGeneration(
-    uint32_t computedFlexBasisGeneration) {
+    uint8_t computedFlexBasisGeneration) {
   layout_.computedFlexBasisGeneration = computedFlexBasisGeneration;
 }
 
