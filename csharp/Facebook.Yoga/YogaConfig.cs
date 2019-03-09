@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -114,6 +114,19 @@ namespace Facebook.Yoga
             set
             {
                 Native.YGConfigSetUseWebDefaults(_ygConfig, value);
+            }
+        }
+
+        public bool UseLegacyStretchBehaviour
+        {
+            get
+            {
+                return Native.YGConfigGetUseLegacyStretchBehaviour(_ygConfig);
+            }
+
+            set
+            {
+                Native.YGConfigSetUseLegacyStretchBehaviour(_ygConfig, value);
             }
         }
 

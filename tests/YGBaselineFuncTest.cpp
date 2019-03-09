@@ -34,7 +34,7 @@ TEST(YogaTest, align_baseline_customer_func) {
   const YGNodeRef root_child1_child0 = YGNodeNew();
   root_child1_child0->setContext(&baselineValue);
   YGNodeStyleSetWidth(root_child1_child0, 50);
-  root_child1_child0->setBaseLineFunc(_baseline);
+  root_child1_child0->setBaselineFunc(_baseline);
   YGNodeStyleSetHeight(root_child1_child0, 20);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);

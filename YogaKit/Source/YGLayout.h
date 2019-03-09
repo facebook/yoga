@@ -62,6 +62,7 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
 @property (nonatomic, readwrite, assign) YGOverflow overflow;
 @property (nonatomic, readwrite, assign) YGDisplay display;
 
+@property (nonatomic, readwrite, assign) CGFloat flex;
 @property (nonatomic, readwrite, assign) CGFloat flexGrow;
 @property (nonatomic, readwrite, assign) CGFloat flexShrink;
 @property (nonatomic, readwrite, assign) YGValue flexBasis;

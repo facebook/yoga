@@ -18,6 +18,7 @@ import './index.css';
 import ReactNativeLogo from './logos/reactnative.png';
 import LithoLogo from './logos/litho.png';
 import ComponentKitLogo from './logos/componentkit.png';
+import ReactPDFLogo from './logos/reactpdf.png';
 import Link from 'gatsby-link';
 import Footer from '../components/Footer';
 
@@ -142,6 +143,13 @@ const AboutSectionOne = () => (
         className="logo">
         <img src={ReactNativeLogo} />
         <h3>React Native</h3>
+      </a>
+      <a
+        href="https://react-pdf.org/"
+        target="_blank"
+        className="logo">
+        <img src={ReactPDFLogo} />
+        <h3>React-PDF</h3>
       </a>
     </div>
   </Padded>

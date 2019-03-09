@@ -180,7 +180,7 @@ static YGConfigRef globalConfig;
   // the measure function. Since we already know that this is a leaf,
   // this *should* be fine. Forgive me Hack Gods.
   const YGNodeRef node = self.node;
-  if (YGNodeGetMeasureFunc(node) == NULL) {
+  if (YGNodeHasMeasureFunc(node)) {
     YGNodeSetMeasureFunc(node, YGMeasureView);
   }
 
@@ -229,6 +229,7 @@ YG_PROPERTY(YGWrap, flexWrap, FlexWrap)
 YG_PROPERTY(YGOverflow, overflow, Overflow)
 YG_PROPERTY(YGDisplay, display, Display)
 
+YG_PROPERTY(CGFloat, flex, Flex)
 YG_PROPERTY(CGFloat, flexGrow, FlexGrow)
 YG_PROPERTY(CGFloat, flexShrink, FlexShrink)
 YG_AUTO_VALUE_PROPERTY(flexBasis, FlexBasis)
@@ -424,9 +425,7 @@ static void YGRemoveAllChildren(const YGNodeRef node)
     return;
   }
 
-  while (YGNodeGetChildCount(node) > 0) {
-    YGNodeRemoveChild(node, YGNodeGetChild(node, YGNodeGetChildCount(node) - 1));
-  }
+  YGNodeRemoveAllChildren(node);
 }
 
 static CGFloat YGRoundPixelValue(CGFloat value)

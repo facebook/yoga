@@ -1,9 +1,8 @@
-/*
- *  Copyright (c) Facebook, Inc. and its affiliates.
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- *  This source code is licensed under the MIT license found in the LICENSE
- *  file in the root directory of this source tree.
- *
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
 package com.facebook.yoga;
 
@@ -31,9 +30,9 @@ public class YogaNodeTest {
 
   @Test
   public void testInit() {
-    final int refCount = YogaNode.jni_YGNodeGetInstanceCount();
+    final int refCount = YogaNodeJNI.jni_YGNodeGetInstanceCount();
     final YogaNode node = createNode();
-    assertEquals(refCount + 1, YogaNode.jni_YGNodeGetInstanceCount());
+    assertEquals(refCount + 1, YogaNodeJNI.jni_YGNodeGetInstanceCount());
   }
 
   @Test
@@ -235,135 +234,6 @@ public class YogaNodeTest {
   }
 
   @Test
-  public void testCloneNode() throws Exception {
-    YogaConfig config = new YogaConfig();
-    YogaNode root = createNode(config);
-    YogaNode child = createNode(config);
-    YogaNode grandChild = createNode(config);
-    root.addChildAt(child, 0);
-    child.addChildAt(grandChild, 0);
-    child.setFlexDirection(YogaFlexDirection.ROW);
-
-    YogaNode clonedChild = child.clone();
-
-    assertNotSame(clonedChild, child);
-
-    assertEquals(YogaFlexDirection.ROW, child.getFlexDirection());
-    assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
-
-    // Verify the cloning is shallow on the List of children
-    assertEquals(1, child.getChildCount());
-    assertEquals(child.getChildCount(), clonedChild.getChildCount());
-    assertEquals(child.getChildAt(0), clonedChild.getChildAt(0));
-
-    child.removeChildAt(0);
-    assertEquals(0, child.getChildCount());
-    assertEquals(1, clonedChild.getChildCount());
-  }
-
-  @Test
-  public void testCloneWithNewChildren() throws Exception {
-    YogaConfig config = new YogaConfig();
-    YogaNode root = createNode(config);
-    YogaNode child = createNode(config);
-    YogaNode grandChild = createNode(config);
-    root.addChildAt(child, 0);
-    child.addChildAt(grandChild, 0);
-    child.setFlexDirection(YogaFlexDirection.ROW);
-
-    YogaNode clonedChild = child.cloneWithNewChildren();
-
-    assertNotSame(clonedChild, child);
-    assertEquals(YogaFlexDirection.ROW, clonedChild.getFlexDirection());
-    assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
-    assertEquals(0, clonedChild.getChildCount());
-    assertEquals(1, child.getChildCount());
-  }
-
-  @Test
-  public void testAddSharedChildCloneWithNewChildren() throws Exception {
-    YogaConfig config = new YogaConfig();
-    YogaNode root = createNode(config);
-    YogaNode child = createNode(config);
-    YogaNode grandChild = createNode(config);
-    root.addChildAt(child, 0);
-    child.addChildAt(grandChild, 0);
-    child.setFlexDirection(YogaFlexDirection.ROW);
-
-    YogaNode clonedChild = child.cloneWithNewChildren();
-
-    assertNotSame(clonedChild, child);
-    assertEquals(YogaFlexDirection.ROW, clonedChild.getFlexDirection());
-    assertEquals(child.getFlexDirection(), clonedChild.getFlexDirection());
-    assertEquals(0, clonedChild.getChildCount());
-    assertEquals(1, child.getChildCount());
-
-    clonedChild.addSharedChildAt(grandChild, 0);
-    assertEquals(1, clonedChild.getChildCount());
-    assertNull(grandChild.getOwner());
-  }
-
-  @Test
-  public void testCloneNodeListener() throws Exception {
-    final AtomicBoolean onNodeClonedExecuted = new AtomicBoolean(false);
-    YogaConfig config = new YogaConfig();
-    config.setOnCloneNode(
-        new YogaNodeCloneFunction() {
-          @Override
-          public YogaNode cloneNode(YogaNode oldNode, YogaNode owner, int childIndex) {
-            onNodeClonedExecuted.set(true);
-            return oldNode.clone();
-          }
-        });
-    YogaNode root = createNode(config);
-    root.setWidth(100f);
-    root.setHeight(100f);
-    YogaNode child0 = createNode(config);
-    root.addChildAt(child0, 0);
-    child0.setWidth(50f);
-    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-
-    // Force a clone to happen.
-    final YogaNode root2 = root.clone();
-    root2.setWidth(200f);
-    root2.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-
-    assertTrue(onNodeClonedExecuted.get());
-    assertEquals(1, root2.getChildCount());
-    YogaNode clonedNode = root2.getChildAt(0);
-    assertNotSame(child0, clonedNode);
-    assertEquals(child0.getWidth(), clonedNode.getWidth());
-    assertEquals(50f, clonedNode.getWidth().value, 0.01f);
-  }
-
-  @Test
-  public void testOnNodeClonedLeak() throws Exception {
-    YogaConfig config = new YogaConfig();
-    config.setOnCloneNode(
-        new YogaNodeCloneFunction() {
-          @Override
-          public YogaNode cloneNode(YogaNode oldNode, YogaNode owner, int childIndex) {
-            return oldNode.clone();
-          }
-        });
-    config.setOnCloneNode(null);
-    WeakReference<Object> ref = new WeakReference<Object>(config);
-    // noinspection UnusedAssignment
-    config = null;
-    // try and free for the next 5 seconds, usually it works after the
-    // first GC attempt.
-    for (int i = 0; i < 50; i++) {
-      System.gc();
-      if (ref.get() == null) {
-        // free successfully
-        return;
-      }
-      Thread.sleep(100);
-    }
-    fail("YogaConfig leaked");
-  }
-
-  @Test
   public void testFlagShouldDiffLayoutWithoutLegacyStretchBehaviour() throws Exception {
     YogaConfig config = new YogaConfig();
     config.setShouldDiffLayoutWithoutLegacyStretchBehaviour(true);
@@ -383,7 +253,7 @@ public class YogaNodeTest {
     root_child0_child0_child0.setFlexShrink(1);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-    assertFalse(root.getDoesLegacyStretchFlagAffectsLayout());
+    assertFalse(((YogaNodeJNI) root).getDoesLegacyStretchFlagAffectsLayout());
   }
 
   @Test
