@@ -23,10 +23,12 @@
 #ifdef NS_ENUM
 // Cannot use NSInteger as NSInteger has a different size than int (which is the
 // default type of a enum). Therefor when linking the Yoga C library into obj-c
-// the header is a missmatch for the Yoga ABI.
-#define YG_ENUM_BEGIN(name) NS_ENUM(int, name)
+// the header is a missmatch for the Yoga ABI. We use unsigned here because our
+// enums are wrapped in limited bitfields where we use every single bit - a signed
+// integer would cause compiler warnings.
+#define YG_ENUM_BEGIN(name) NS_ENUM(unsigned, name)
 #define YG_ENUM_END(name)
 #else
-#define YG_ENUM_BEGIN(name) enum name
+#define YG_ENUM_BEGIN(name) enum name: unsigned
 #define YG_ENUM_END(name) name
 #endif
