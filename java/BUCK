@@ -18,7 +18,7 @@ yoga_cxx_library(
         "-Wall",
         "-Werror",
         "-Os",
-        "-std=c++11",
+        "-std=c++14",
     ],
     platforms = ANDROID,
     preprocessor_flags = [
