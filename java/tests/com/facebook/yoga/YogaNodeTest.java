@@ -30,9 +30,9 @@ public class YogaNodeTest {
 
   @Test
   public void testInit() {
-    final int refCount = YogaNodeJNI.jni_YGNodeGetInstanceCount();
+    final int refCount = YogaNodeJNIBase.jni_YGNodeGetInstanceCount();
     final YogaNode node = createNode();
-    assertEquals(refCount + 1, YogaNodeJNI.jni_YGNodeGetInstanceCount());
+    assertEquals(refCount + 1, YogaNodeJNIBase.jni_YGNodeGetInstanceCount());
   }
 
   @Test
@@ -253,7 +253,7 @@ public class YogaNodeTest {
     root_child0_child0_child0.setFlexShrink(1);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-    assertFalse(((YogaNodeJNI) root).getDoesLegacyStretchFlagAffectsLayout());
+    assertFalse(((YogaNodeJNIBase) root).getDoesLegacyStretchFlagAffectsLayout());
   }
 
   @Test
