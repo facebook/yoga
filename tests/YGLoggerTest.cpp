@@ -10,17 +10,19 @@
 
 namespace {
 char writeBuffer[4096];
-int _unmanagedLogger(const YGConfigRef config,
-                     const YGNodeRef node,
-                     YGLogLevel level,
-                     const char *format,
-                     va_list args) {
-  return vsnprintf(writeBuffer + strlen(writeBuffer),
-                   sizeof(writeBuffer) - strlen(writeBuffer),
-                   format,
-                   args);
+int _unmanagedLogger(
+    const YGConfigRef config,
+    const YGNodeRef node,
+    YGLogLevel level,
+    const char* format,
+    va_list args) {
+  return vsnprintf(
+      writeBuffer + strlen(writeBuffer),
+      sizeof(writeBuffer) - strlen(writeBuffer),
+      format,
+      args);
 }
-}
+} // namespace
 
 TEST(YogaTest, config_print_tree_enabled) {
   writeBuffer[0] = '\0';
@@ -68,13 +70,16 @@ TEST(YogaTest, logger_default_node_should_print_no_style_info) {
   YGConfigSetLogger(config, _unmanagedLogger);
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeCalculateLayout(root, YGUnitUndefined, YGUnitUndefined, YGDirectionLTR);
-  YGNodePrint(root,
-              (YGPrintOptions)(YGPrintOptionsLayout | YGPrintOptionsChildren |
-                               YGPrintOptionsStyle));
+  YGNodePrint(
+      root,
+      (YGPrintOptions)(
+          YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
   YGConfigSetLogger(config, NULL);
   YGNodeFree(root);
 
-  const char *expected = "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"\" ></div>";
+  const char* expected =
+      "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"\" "
+      "></div>";
   ASSERT_STREQ(expected, writeBuffer);
 }
 
@@ -90,15 +95,17 @@ TEST(YogaTest, logger_node_with_percentage_absolute_position_and_margin) {
   YGNodeStyleSetMargin(root, YGEdgeRight, 10);
   YGNodeStyleSetMarginAuto(root, YGEdgeLeft);
   YGNodeCalculateLayout(root, YGUnitUndefined, YGUnitUndefined, YGDirectionLTR);
-  YGNodePrint(root,
-              (YGPrintOptions)(YGPrintOptionsLayout | YGPrintOptionsChildren |
-                               YGPrintOptionsStyle));
+  YGNodePrint(
+      root,
+      (YGPrintOptions)(
+          YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
   YGConfigSetLogger(config, NULL);
   YGNodeFree(root);
 
-  const char *expected = "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"flex: 1; "
-                         "margin-left: auto; margin-right: 10px; width: 50%; height: 75%; "
-                         "position: absolute; \" ></div>";
+  const char* expected =
+      "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"flex: 1; "
+      "margin-left: auto; margin-right: 10px; width: 50%; height: 75%; "
+      "position: absolute; \" ></div>";
   ASSERT_STREQ(expected, writeBuffer);
 }
 
@@ -112,15 +119,17 @@ TEST(YogaTest, logger_node_with_children_should_print_indented) {
   YGNodeInsertChild(root, child0, 0);
   YGNodeInsertChild(root, child1, 1);
   YGNodeCalculateLayout(root, YGUnitUndefined, YGUnitUndefined, YGDirectionLTR);
-  YGNodePrint(root,
-              (YGPrintOptions)(YGPrintOptionsLayout | YGPrintOptionsChildren |
-                               YGPrintOptionsStyle));
+  YGNodePrint(
+      root,
+      (YGPrintOptions)(
+          YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
   YGConfigSetLogger(config, NULL);
   YGNodeFreeRecursive(root);
 
-  const char *expected = "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"\" >\n  "
-                         "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"\" "
-                         "></div>\n  <div layout=\"width: 0; height: 0; top: 0; left: 0;\" "
-                         "style=\"\" ></div>\n</div>";
+  const char* expected =
+      "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"\" >\n  "
+      "<div layout=\"width: 0; height: 0; top: 0; left: 0;\" style=\"\" "
+      "></div>\n  <div layout=\"width: 0; height: 0; top: 0; left: 0;\" "
+      "style=\"\" ></div>\n</div>";
   ASSERT_STREQ(expected, writeBuffer);
 }

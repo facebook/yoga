@@ -8,11 +8,12 @@
 #include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
-static YGSize _measure(YGNodeRef node,
-                       float width,
-                       YGMeasureMode widthMode,
-                       float height,
-                       YGMeasureMode heightMode) {
+static YGSize _measure(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
   return YGSize{
       .width = widthMode == YGMeasureModeExactly ? width : 50,
       .height = heightMode == YGMeasureModeExactly ? height : 50,

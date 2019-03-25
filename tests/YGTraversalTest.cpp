@@ -12,21 +12,16 @@ TEST(YogaTest, pre_order_traversal) {
   YGNodeRef const root_child0 = YGNodeNew();
   YGNodeRef const root_child1 = YGNodeNew();
   YGNodeRef const root_child0_child0 = YGNodeNew();
-  
+
   YGNodeSetChildren(root, {root_child0, root_child1});
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
-  
+
   std::vector<YGNodeRef> visited;
-  YGTraversePreOrder(root, [&visited](YGNodeRef node) {
-    visited.push_back(node);
-  });
-  
+  YGTraversePreOrder(
+      root, [&visited](YGNodeRef node) { visited.push_back(node); });
+
   const std::vector<YGNodeRef> expected = {
-    root,
-    root_child0,
-    root_child0_child0,
-    root_child1
-  };
+      root, root_child0, root_child0_child0, root_child1};
   ASSERT_EQ(visited, expected);
 
   YGNodeFreeRecursive(root);

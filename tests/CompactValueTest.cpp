@@ -325,10 +325,10 @@ TEST(YogaTest, can_be_assigned_from_YGValue) {
 
   YGValue v{2.0f, YGUnitPercent};
   c = v;
-  ASSERT_EQ((YGValue)c, v);
+  ASSERT_EQ((YGValue) c, v);
 
   c = YGValue{123, YGUnitPoint};
-  ASSERT_EQ((YGValue)c, (YGValue{123, YGUnitPoint}));
+  ASSERT_EQ((YGValue) c, (YGValue{123, YGUnitPoint}));
 }
 
 TEST(YogaTest, compact_value_bound_representations) {

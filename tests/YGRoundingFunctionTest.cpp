@@ -24,7 +24,8 @@ TEST(YogaTest, rounding_value) {
   ASSERT_FLOAT_EQ(-6.0, YGRoundValueToPixelGrid(-5.999999, 2.0, true, false));
   ASSERT_FLOAT_EQ(-6.0, YGRoundValueToPixelGrid(-5.999999, 2.0, false, true));
 
-  // Test that numbers with fraction are rounded correctly accounting for ceil/floor flags
+  // Test that numbers with fraction are rounded correctly accounting for
+  // ceil/floor flags
   ASSERT_FLOAT_EQ(6.0, YGRoundValueToPixelGrid(6.01, 2.0, false, false));
   ASSERT_FLOAT_EQ(6.5, YGRoundValueToPixelGrid(6.01, 2.0, true, false));
   ASSERT_FLOAT_EQ(6.0, YGRoundValueToPixelGrid(6.01, 2.0, false, true));

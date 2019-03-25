@@ -8,8 +8,10 @@
 #include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
-static float
-_baselineFunc(YGNodeRef node, const float width, const float height) {
+static float _baselineFunc(
+    YGNodeRef node,
+    const float width,
+    const float height) {
   return height / 2;
 }
 

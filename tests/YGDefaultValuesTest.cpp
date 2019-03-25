@@ -89,7 +89,7 @@ TEST(YogaTest, assert_default_values) {
 }
 
 TEST(YogaTest, assert_webdefault_values) {
-  YGConfig *config = YGConfigNew();
+  YGConfig* config = YGConfigNew();
   YGConfigSetUseWebDefaults(config, true);
   const YGNodeRef root = YGNodeNewWithConfig(config);
 
@@ -102,7 +102,7 @@ TEST(YogaTest, assert_webdefault_values) {
 }
 
 TEST(YogaTest, assert_webdefault_values_reset) {
-  YGConfig *config = YGConfigNew();
+  YGConfig* config = YGConfigNew();
   YGConfigSetUseWebDefaults(config, true);
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeReset(root);
@@ -116,7 +116,7 @@ TEST(YogaTest, assert_webdefault_values_reset) {
 }
 
 TEST(YogaTest, assert_legacy_stretch_behaviour) {
-  YGConfig *config = YGConfigNew();
+  YGConfig* config = YGConfigNew();
   YGConfigSetUseLegacyStretchBehaviour(config, true);
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 500);

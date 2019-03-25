@@ -8,7 +8,6 @@
 
 #include "./global.hh"
 
-unsigned getInstanceCount(void)
-{
-    return YGNodeGetInstanceCount();
+unsigned getInstanceCount(void) {
+  return YGNodeGetInstanceCount();
 }
