@@ -28,7 +28,7 @@ podspec = Pod::Spec.new do |spec|
   spec.source_files = 'YogaKit/Source/*.{h,m,swift}'
   spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h'
   spec.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
-  spec.swift_version = '3.0'
+  spec.swift_version = '4.0'
 end
 
 # See https://github.com/facebook/yoga/pull/366
