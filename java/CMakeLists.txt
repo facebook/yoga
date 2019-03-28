@@ -27,7 +27,7 @@ add_compile_options(
     -fno-omit-frame-pointer
     -fexceptions
     -Wall
-    -std=c++11)
+    -std=c++14)
 
 add_library(yoga SHARED jni/YGJNI.cpp jni/YGJTypes.cpp)
 

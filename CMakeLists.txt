@@ -12,4 +12,10 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 file(GLOB yogacore_SRC yoga/*.cpp)
 add_library(yogacore STATIC ${yogacore_SRC})
 
+add_compile_options(
+    -fno-omit-frame-pointer
+    -fexceptions
+    -Wall
+    -std=c++14)
+    
 target_link_libraries(yogacore android log)
