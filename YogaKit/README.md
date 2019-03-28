@@ -12,7 +12,7 @@ pod 'YogaKit', '~> 1.7'
 ```
 
 ## Getting Started
-Checkout the docs [here](https://facebook.github.io/yoga/docs/api/yogakit/).
+Checkout the docs [here](https://yogalayout.com/docs).
 
 We also have a sample project. To try it out, clone this repo and open `YogaKitSample.xcodeproj` in the [YogaKitSample](https://github.com/facebook/yoga/tree/master/YogaKit/YogaKitSample) directory.
 
