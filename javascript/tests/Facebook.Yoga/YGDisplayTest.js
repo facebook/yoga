@@ -215,8 +215,6 @@ it("display_none_with_child", function () {
     root_child1_child0.setFlexShrink(1);
     root_child1_child0.setFlexBasis("0%");
     root_child1_child0.setWidth(20);
-    root_child1_child0.setMinWidth(0);
-    root_child1_child0.setMinHeight(0);
     root_child1.insertChild(root_child1_child0, 0);
 
     var root_child2 = Yoga.Node.create(config);

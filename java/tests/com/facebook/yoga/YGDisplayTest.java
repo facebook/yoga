@@ -218,8 +218,6 @@ public class YGDisplayTest {
     root_child1_child0.setFlexShrink(1f);
     root_child1_child0.setFlexBasisPercent(0f);
     root_child1_child0.setWidth(20f);
-    root_child1_child0.setMinWidth(0f);
-    root_child1_child0.setMinHeight(0f);
     root_child1.addChildAt(root_child1_child0, 0);
 
     final YogaNode root_child2 = createNode(config);

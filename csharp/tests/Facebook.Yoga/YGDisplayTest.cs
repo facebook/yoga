@@ -213,8 +213,6 @@ namespace Facebook.Yoga
             root_child1_child0.FlexShrink = 1;
             root_child1_child0.FlexBasis = 0.Percent();
             root_child1_child0.Width = 20;
-            root_child1_child0.MinWidth = 0;
-            root_child1_child0.MinHeight = 0;
             root_child1.Insert(0, root_child1_child0);
 
             YogaNode root_child2 = new YogaNode(config);

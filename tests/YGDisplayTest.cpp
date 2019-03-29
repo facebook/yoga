@@ -206,8 +206,6 @@ TEST(YogaTest, display_none_with_child) {
   YGNodeStyleSetFlexShrink(root_child1_child0, 1);
   YGNodeStyleSetFlexBasisPercent(root_child1_child0, 0);
   YGNodeStyleSetWidth(root_child1_child0, 20);
-  YGNodeStyleSetMinWidth(root_child1_child0, 0);
-  YGNodeStyleSetMinHeight(root_child1_child0, 0);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
   const YGNodeRef root_child2 = YGNodeNewWithConfig(config);

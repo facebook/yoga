@@ -137,7 +137,7 @@ function checkDefaultValues() {
     {style:'bottom', value:'undefined'},
     {style:'display', value:'flex'},
   ].forEach(function(item) {
-    assert(item.value === getDefaultStyleValue(item.style),
+    assert(isDefaultStyleValue(item.style, item.value),
         item.style + ' should be ' + item.value);
   });
 }
@@ -156,9 +156,11 @@ function setupTestTree(e, parent, node, genericNode, nodeName, parentName, index
          style == 'width' ||
          style == 'height')) {
       continue;
-    }
 
-    if (node.style[style] !== getDefaultStyleValue(style)) {
+
+ var DEFAULT_STYLES = Object.create   }
+
+    if (!isDefaultStyleValue(style, node.style[style])) {
       switch (style) {
         case 'direction':
           e.YGNodeStyleSetDirection(nodeName, directionValue(e, node.style[style]));
@@ -399,21 +401,38 @@ function displayValue(e, value){
   }
 }
 
-function getDefaultStyleValue(style) {
-  if (style == 'position') {
-    return 'relative';
+var DEFAULT_STYLES = new Map();
+
+function isDefaultStyleValue(style, value) {
+  let defaultStyle = DEFAULT_STYLES.get(style);
+  if (defaultStyle == null) {
+    switch (style) {
+      case 'position':
+        defaultStyle = new Set(['relative']);;
+        break;
+
+      case 'left':
+      case 'top':
+      case 'right':
+      case 'bottom':
+      case 'start':
+      case 'end':
+        defaultStyle = new Set(['undefined']);
+        break;
+
+      case 'min-height':
+      case 'min-width':
+        defaultStyle = new Set(['0', '0px', 'auto']);
+        break;
+
+      default:
+        var node = document.getElementById('default');
+        defaultStyle = new Set([getComputedStyle(node, null)[style]]);
+        break;
+    }
+    DEFAULT_STYLES.set(style, defaultStyle);
   }
-  switch (style) {
-    case 'left':
-    case 'top':
-    case 'right':
-    case 'bottom':
-    case 'start':
-    case 'end':
-      return 'undefined';
-  }
-  var node = document.getElementById('default');
-  return getComputedStyle(node, null).getPropertyValue(style);
+  return DEFAULT_STYLES.get(style).has(value);
 }
 
 function getRoundedSize(node) {
