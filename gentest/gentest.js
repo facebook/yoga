@@ -156,9 +156,7 @@ function setupTestTree(e, parent, node, genericNode, nodeName, parentName, index
          style == 'width' ||
          style == 'height')) {
       continue;
-
-
- var DEFAULT_STYLES = Object.create   }
+  }
 
     if (!isDefaultStyleValue(style, node.style[style])) {
       switch (style) {
