@@ -87,12 +87,18 @@ export default class Playground extends Component<Props, State> {
     document.addEventListener('keydown', this.onKeyDown);
 
     // rehydrate
-    if (window.location.hash && window.location.hash.length > 1) {
+    if (window.location.search && window.location.search.length > 1) {
       try {
-        const restoredState = JSON.parse(atob(window.location.hash.substr(1)));
+        const restoredState = JSON.parse(
+          atob(window.location.search.substr(1)),
+        );
         this.setState({layoutDefinition: this.rehydrate(restoredState)});
       } catch (e) {
-        window.location.hash = '';
+        window.history.replaceState(
+          {},
+          null,
+          window.location.origin + window.location.pathname,
+        );
       }
     }
   }
@@ -165,7 +171,14 @@ export default class Playground extends Component<Props, State> {
     });
 
     if (this.props.persist) {
-      window.location.hash = this.getHash(layoutDefinition);
+      window.history.replaceState(
+        {},
+        null,
+        window.location.origin +
+          window.location.pathname +
+          '?' +
+          this.getHash(layoutDefinition),
+      );
     }
   }
 

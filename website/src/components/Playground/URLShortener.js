@@ -28,11 +28,11 @@ export default class URLShortener extends Component<{}, State> {
   };
 
   componentDidMount() {
-    window.addEventListener('hashchange', this.onHashChange);
+    window.addEventListener('popstate', this.onHashChange);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('hashchange', this.onHashChange);
+    window.removeEventListener('popstate', this.onHashChange);
   }
 
   onHashChange = () => {
