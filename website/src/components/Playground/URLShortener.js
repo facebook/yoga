@@ -12,8 +12,6 @@ import React, {Component} from 'react';
 import {Tooltip, notification, Button, Input} from 'antd';
 import './URLShortener.css';
 
-const API_KEY = 'AIzaSyCRvdtNY07SGUokChS8oA9EaYJafFL0zMI';
-
 type State = {
   shortURL: ?string,
   loading: boolean,
@@ -53,19 +51,13 @@ export default class URLShortener extends Component<{}, State> {
           });
         }
 
-        fetch(`https://www.googleapis.com/urlshortener/v1/url?key=${API_KEY}`, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            kind: 'urlshortener#url',
-            longUrl: window.location.href,
-          }),
-        })
-          .then(res => res.json())
-          .then(({id}) => this.setState({shortURL: id, loading: false}))
+        fetch(
+          `https://cors-anywhere.herokuapp.com/tinyurl.com/api-create.php?url=${
+            window.location.href
+          }`,
+        )
+          .then(res => res.text())
+          .then(shortURL => this.setState({shortURL, loading: false}))
           .catch(() => this.setState({shortURL: null, loading: false}));
       },
     );
