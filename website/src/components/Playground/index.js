@@ -264,7 +264,7 @@ export default class Playground extends Component<Props, State> {
                     <URLShortener />
                   ) : (
                     <Button
-                      href={`/playground#${this.getHash()}`}
+                      href={`/playground?${this.getHash()}`}
                       type="primary">
                       Open Playground
                     </Button>
