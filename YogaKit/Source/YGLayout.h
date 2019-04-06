@@ -1,10 +1,9 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
-
 #import <UIKit/UIKit.h>
 #import <yoga/YGEnums.h>
 #import <yoga/Yoga.h>
@@ -34,6 +33,13 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
     __attribute__((unavailable("you are not meant to initialise YGLayout")));
 
 /**
+ Make default init unavailable, as it will not initialise YGNode which is
+ required for the setters and getters of YGLayout's properties to work properly.
+ */
++ (instancetype)new
+    __attribute__((unavailable("you are not meant to initialise YGLayout")));
+
+/**
   The property that decides if we should include this view when calculating
   layout. Defaults to YES.
  */
@@ -56,6 +62,7 @@ typedef NS_OPTIONS(NSInteger, YGDimensionFlexibility) {
 @property (nonatomic, readwrite, assign) YGOverflow overflow;
 @property (nonatomic, readwrite, assign) YGDisplay display;
 
+@property (nonatomic, readwrite, assign) CGFloat flex;
 @property (nonatomic, readwrite, assign) CGFloat flexGrow;
 @property (nonatomic, readwrite, assign) CGFloat flexShrink;
 @property (nonatomic, readwrite, assign) YGValue flexBasis;

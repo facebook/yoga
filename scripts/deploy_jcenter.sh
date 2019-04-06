@@ -1,4 +1,12 @@
 #!/bin/bash
+
+#
+#  Copyright (c) Facebook, Inc. and its affiliates.
+#
+#  This source code is licensed under the MIT license found in the LICENSE
+#  file in the root directory of this source tree.
+#
+
 set -e
 ROOTDIR="$(dirname $0)/.."
 echo -e "\033[1;34m** We can deploy two libraries\n** (1) Java bindings to Yoga\n** (2) Android YogaLayout\n** Which do you want to ship today? \033[0m"

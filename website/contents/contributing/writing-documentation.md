@@ -44,7 +44,7 @@ If you would like to redirect to another page (potentially an external link) the
 
 ```markdown
 ---
-path: "/playground#eyJ3aWR0aCI6IjYwMCIsImhlaWdodCI6NTAwLCJjaGlsZHJlbiI6W3t9LHt9LHt9XX0="
+path: "/playground?eyJ3aWR0aCI6IjYwMCIsImhlaWdodCI6NTAwLCJjaGlsZHJlbiI6W3t9LHt9LHt9XX0="
 title: "Flex Direction"
 redirect: true
 ---

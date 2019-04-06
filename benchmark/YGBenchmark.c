@@ -1,19 +1,82 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
-
-#include "YGBenchmark.h"
+#include <math.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include <yoga/Yoga.h>
 
-static YGSize _measure(YGNodeRef node,
-                       float width,
-                       YGMeasureMode widthMode,
-                       float height,
-                       YGMeasureMode heightMode) {
+#define NUM_REPETITIONS 1000
+
+#define YGBENCHMARKS(BLOCK)                \
+  int main(int argc, char const* argv[]) { \
+    clock_t __start;                       \
+    clock_t __endTimes[NUM_REPETITIONS];   \
+    { BLOCK }                              \
+    return 0;                              \
+  }
+
+#define YGBENCHMARK(NAME, BLOCK)                         \
+  __start = clock();                                     \
+  for (uint32_t __i = 0; __i < NUM_REPETITIONS; __i++) { \
+    {BLOCK} __endTimes[__i] = clock();                   \
+  }                                                      \
+  __printBenchmarkResult(NAME, __start, __endTimes);
+
+static int __compareDoubles(const void* a, const void* b) {
+  double arg1 = *(const double*) a;
+  double arg2 = *(const double*) b;
+
+  if (arg1 < arg2) {
+    return -1;
+  }
+
+  if (arg1 > arg2) {
+    return 1;
+  }
+
+  return 0;
+}
+
+static void __printBenchmarkResult(
+    char* name,
+    clock_t start,
+    clock_t* endTimes) {
+  double timesInMs[NUM_REPETITIONS];
+  double mean = 0;
+  clock_t lastEnd = start;
+  for (uint32_t i = 0; i < NUM_REPETITIONS; i++) {
+    timesInMs[i] = (endTimes[i] - lastEnd) / (double) CLOCKS_PER_SEC * 1000;
+    lastEnd = endTimes[i];
+    mean += timesInMs[i];
+  }
+  mean /= NUM_REPETITIONS;
+
+  qsort(timesInMs, NUM_REPETITIONS, sizeof(double), __compareDoubles);
+  double median = timesInMs[NUM_REPETITIONS / 2];
+
+  double variance = 0;
+  for (uint32_t i = 0; i < NUM_REPETITIONS; i++) {
+    variance += pow(timesInMs[i] - mean, 2);
+  }
+  variance /= NUM_REPETITIONS;
+  double stddev = sqrt(variance);
+
+  printf("%s: median: %lf ms, stddev: %lf ms\n", name, median, stddev);
+}
+
+static YGSize _measure(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
   return (YGSize){
       .width = widthMode == YGMeasureModeUndefined ? 10 : width,
       .height = heightMode == YGMeasureModeUndefined ? 10 : width,
@@ -21,7 +84,6 @@ static YGSize _measure(YGNodeRef node,
 }
 
 YGBENCHMARKS({
-
   YGBENCHMARK("Stack with flex", {
     const YGNodeRef root = YGNodeNew();
     YGNodeStyleSetWidth(root, 100);
@@ -97,9 +159,10 @@ YGBENCHMARKS({
           YGNodeStyleSetHeight(grandGrandChild, 10);
           YGNodeInsertChild(grandChild, grandGrandChild, 0);
 
-          for (uint32_t iii = 0; iii < 10; iii++) {
+          for (uint32_t iiii = 0; iiii < 10; iiii++) {
             const YGNodeRef grandGrandGrandChild = YGNodeNew();
-            YGNodeStyleSetFlexDirection(grandGrandGrandChild, YGFlexDirectionRow);
+            YGNodeStyleSetFlexDirection(
+                grandGrandGrandChild, YGFlexDirectionRow);
             YGNodeStyleSetFlexGrow(grandGrandGrandChild, 1);
             YGNodeStyleSetWidth(grandGrandGrandChild, 10);
             YGNodeStyleSetHeight(grandGrandGrandChild, 10);
@@ -112,5 +175,4 @@ YGBENCHMARKS({
     YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     YGNodeFreeRecursive(root);
   });
-
 });

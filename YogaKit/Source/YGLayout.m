@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -129,6 +129,7 @@ static YGConfigRef globalConfig;
 @interface YGLayout ()
 
 @property (nonatomic, weak, readonly) UIView *view;
+@property(nonatomic, assign, readonly) BOOL isUIView;
 
 @end
 
@@ -153,6 +154,7 @@ static YGConfigRef globalConfig;
     YGNodeSetContext(_node, (__bridge void *) view);
     _isEnabled = NO;
     _isIncludedInLayout = YES;
+    _isUIView = [view isMemberOfClass:[UIView class]];
   }
 
   return self;
@@ -178,7 +180,7 @@ static YGConfigRef globalConfig;
   // the measure function. Since we already know that this is a leaf,
   // this *should* be fine. Forgive me Hack Gods.
   const YGNodeRef node = self.node;
-  if (YGNodeGetMeasureFunc(node) == NULL) {
+  if (YGNodeHasMeasureFunc(node)) {
     YGNodeSetMeasureFunc(node, YGMeasureView);
   }
 
@@ -227,6 +229,7 @@ YG_PROPERTY(YGWrap, flexWrap, FlexWrap)
 YG_PROPERTY(YGOverflow, overflow, Overflow)
 YG_PROPERTY(YGDisplay, display, Display)
 
+YG_PROPERTY(CGFloat, flex, Flex)
 YG_PROPERTY(CGFloat, flexGrow, FlexGrow)
 YG_PROPERTY(CGFloat, flexShrink, FlexShrink)
 YG_AUTO_VALUE_PROPERTY(flexBasis, FlexBasis)
@@ -331,10 +334,20 @@ static YGSize YGMeasureView(
   const CGFloat constrainedHeight = (heightMode == YGMeasureModeUndefined) ? CGFLOAT_MAX: height;
 
   UIView *view = (__bridge UIView*) YGNodeGetContext(node);
-  const CGSize sizeThatFits = [view sizeThatFits:(CGSize) {
-    .width = constrainedWidth,
-    .height = constrainedHeight,
-  }];
+  CGSize sizeThatFits = CGSizeZero;
+
+  // The default implementation of sizeThatFits: returns the existing size of
+  // the view. That means that if we want to layout an empty UIView, which
+  // already has got a frame set, its measured size should be CGSizeZero, but
+  // UIKit returns the existing size.
+  //
+  // See https://github.com/facebook/yoga/issues/606 for more information.
+  if (!view.yoga.isUIView || [view.subviews count] > 0) {
+    sizeThatFits = [view sizeThatFits:(CGSize){
+                                          .width = constrainedWidth,
+                                          .height = constrainedHeight,
+                                      }];
+  }
 
   return (YGSize) {
     .width = YGSanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
@@ -412,9 +425,7 @@ static void YGRemoveAllChildren(const YGNodeRef node)
     return;
   }
 
-  while (YGNodeGetChildCount(node) > 0) {
-    YGNodeRemoveChild(node, YGNodeGetChild(node, YGNodeGetChildCount(node) - 1));
-  }
+  YGNodeRemoveAllChildren(node);
 }
 
 static CGFloat YGRoundPixelValue(CGFloat value)

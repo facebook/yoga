@@ -1,20 +1,20 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
-
 #include <gtest/gtest.h>
 #include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
-static YGSize _measureMax(YGNodeRef node,
-                          float width,
-                          YGMeasureMode widthMode,
-                          float height,
-                          YGMeasureMode heightMode) {
-  int* measureCount = (int*)node->getContext();
+static YGSize _measureMax(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
+  int* measureCount = (int*) node->getContext();
   (*measureCount)++;
 
   return YGSize{
@@ -23,37 +23,40 @@ static YGSize _measureMax(YGNodeRef node,
   };
 }
 
-static YGSize _measureMin(YGNodeRef node,
-                          float width,
-                          YGMeasureMode widthMode,
-                          float height,
-                          YGMeasureMode heightMode) {
-  int* measureCount = (int*)node->getContext();
+static YGSize _measureMin(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
+  int* measureCount = (int*) node->getContext();
   *measureCount = *measureCount + 1;
   return YGSize{
-      .width =
-          widthMode == YGMeasureModeUndefined || (widthMode == YGMeasureModeAtMost && width > 10)
-              ? 10
-              : width,
-      .height =
-          heightMode == YGMeasureModeUndefined || (heightMode == YGMeasureModeAtMost && height > 10)
-              ? 10
-              : height,
+      .width = widthMode == YGMeasureModeUndefined ||
+              (widthMode == YGMeasureModeAtMost && width > 10)
+          ? 10
+          : width,
+      .height = heightMode == YGMeasureModeUndefined ||
+              (heightMode == YGMeasureModeAtMost && height > 10)
+          ? 10
+          : height,
   };
 }
 
-static YGSize _measure_84_49(YGNodeRef node,
-                             float width,
-                             YGMeasureMode widthMode,
-                             float height,
-                             YGMeasureMode heightMode) {
-  int* measureCount = (int*)node->getContext();
+static YGSize _measure_84_49(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
+  int* measureCount = (int*) node->getContext();
   if (measureCount) {
     (*measureCount)++;
   }
 
   return YGSize{
-      .width = 84.f, .height = 49.f,
+      .width = 84.f,
+      .height = 49.f,
   };
 }
 
@@ -150,7 +153,9 @@ TEST(YogaTest, remeasure_with_atmost_computed_width_undefined_height) {
   YGNodeFreeRecursive(root);
 }
 
-TEST(YogaTest, remeasure_with_already_measured_value_smaller_but_still_float_equal) {
+TEST(
+    YogaTest,
+    remeasure_with_already_measured_value_smaller_but_still_float_equal) {
   int measureCount = 0;
 
   const YGNodeRef root = YGNodeNew();

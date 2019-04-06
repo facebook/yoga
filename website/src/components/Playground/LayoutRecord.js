@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,18 +19,22 @@ import type {
   Yoga$JustifyContent,
   Yoga$FlexDirection,
   Yoga$FlexWrap,
-  Yoga$YogaPositionType,
+  Yoga$PositionType,
 } from 'yoga-layout';
 
 export type LayoutRecordT = RecordOf<{
   width?: ?number,
   height?: ?number,
+  minWidth?: ?number,
+  minHeight?: ?number,
+  maxWidth?: ?number,
+  maxHeight?: ?number,
   justifyContent?: Yoga$JustifyContent,
   padding: PositionRecordT,
   border: PositionRecordT,
   margin: PositionRecordT,
   position: PositionRecordT,
-  positionType: Yoga$YogaPositionType,
+  positionType: Yoga$PositionType,
   alignItems?: Yoga$Align,
   alignSelf?: Yoga$Align,
   alignContent?: Yoga$Align,
@@ -51,6 +55,10 @@ export type LayoutRecordT = RecordOf<{
 const r: LayoutRecordT = Record({
   width: 'auto',
   height: 'auto',
+  minWidth: 0,
+  minHeight: 0,
+  maxWidth: 'none',
+  maxHeight: 'none',
   justifyContent: yoga.JUSTIFY_FLEX_START,
   alignItems: yoga.ALIGN_STRETCH,
   alignSelf: yoga.ALIGN_AUTO,

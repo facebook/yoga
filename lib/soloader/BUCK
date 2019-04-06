@@ -1,12 +1,13 @@
-# Copyright (c) 2014-present, Facebook, Inc.
+# Copyright (c) Facebook, Inc. and its affiliates.
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//:yoga_defs.bzl", "YOGA_ROOTS")
+load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
+load("//tools/build_defs/oss:yoga_defs.bzl", "YOGA_ROOTS")
 
-android_prebuilt_aar(
+fb_native.android_prebuilt_aar(
     name = "soloader",
-    aar = "soloader-0.1.0.aar",
+    aar = "soloader-0.5.1.aar",
     visibility = YOGA_ROOTS,
 )

@@ -1,3 +1,12 @@
+#!/bin/bash
+
+#
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+#
+
 set -e
 
 function download() {
@@ -46,5 +55,5 @@ function installAndroidSDK {
   echo > $ANDROID_HOME/licenses/android-sdk-license
   echo -n d56f5187479451eabf01fb78af6dfcb131a6481e > $ANDROID_HOME/licenses/android-sdk-license
 
-  installsdk 'build-tools;25.0.3' 'build-tools;26.0.2' 'platforms;android-25' 'platforms;android-26' 'ndk-bundle' 'extras;android;m2repository'
+  installsdk 'build-tools;25.0.3' 'build-tools;26.0.2' 'platforms;android-25' 'platforms;android-26' 'ndk-bundle' 'extras;android;m2repository' 'cmake;3.6.4111459'
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -18,6 +18,7 @@ import './index.css';
 import ReactNativeLogo from './logos/reactnative.png';
 import LithoLogo from './logos/litho.png';
 import ComponentKitLogo from './logos/componentkit.png';
+import ReactPDFLogo from './logos/reactpdf.png';
 import Link from 'gatsby-link';
 import Footer from '../components/Footer';
 
@@ -143,6 +144,13 @@ const AboutSectionOne = () => (
         <img src={ReactNativeLogo} />
         <h3>React Native</h3>
       </a>
+      <a
+        href="https://react-pdf.org/"
+        target="_blank"
+        className="logo">
+        <img src={ReactPDFLogo} />
+        <h3>React-PDF</h3>
+      </a>
     </div>
   </Padded>
 );
@@ -183,12 +191,14 @@ const AboutSectionTwo = () => (
 );
 
 export default () => (
-  <Page className="landing-page" title="A cross-platform layout engine">
-    <HeroSection />
-    <PlaygroundSection />
-    <AboutSectionOne />
-    <hr />
-    <AboutSectionTwo />
-    <Footer />
-  </Page>
+  <div>
+    <Page className="landing-page" title="A cross-platform layout engine">
+      <HeroSection />
+      <PlaygroundSection />
+      <AboutSectionOne />
+      <hr />
+      <AboutSectionTwo />
+      <Footer />
+    </Page>
+  </div>
 );

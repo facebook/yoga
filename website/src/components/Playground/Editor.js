@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -89,6 +89,7 @@ export default class Editor extends Component<Props> {
                 <EditValue
                   type="text"
                   property="flexBasis"
+                  placeholder="auto"
                   disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexBasis : undefined}
                   onChange={this.props.onChangeLayout}
@@ -104,6 +105,7 @@ export default class Editor extends Component<Props> {
                 <EditValue
                   type="text"
                   property="flexGrow"
+                  placeholder="0"
                   disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexGrow : undefined}
                   onChange={this.props.onChangeLayout}
@@ -120,6 +122,7 @@ export default class Editor extends Component<Props> {
                 <EditValue
                   type="text"
                   property="flexShrink"
+                  placeholder="1"
                   disabled={disabled || selectedNodeIsRoot}
                   value={node ? node.flexShrink : undefined}
                   onChange={this.props.onChangeLayout}
@@ -218,6 +221,62 @@ export default class Editor extends Component<Props> {
                   property="height"
                   disabled={disabled}
                   value={node ? node.height : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+            </Row>
+            <h2>
+              Max-Width &times; Max-Height
+              <InfoText doclink="/docs/min-max">
+                Maximum dimensions of the node
+              </InfoText>
+            </h2>
+            <Row gutter={15}>
+              <Col span={12}>
+                <EditValue
+                  type="text"
+                  placeholder="none"
+                  property="maxWidth"
+                  disabled={disabled}
+                  value={node ? node.maxWidth : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+              <Col span={12}>
+                <EditValue
+                  type="text"
+                  placeholder="none"
+                  property="maxHeight"
+                  disabled={disabled}
+                  value={node ? node.maxHeight : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+            </Row>
+            <h2>
+              Min-Width &times; Min-Height
+              <InfoText doclink="/docs/min-max">
+                Minimum dimensions of the node
+              </InfoText>
+            </h2>
+            <Row gutter={15}>
+              <Col span={12}>
+                <EditValue
+                  type="text"
+                  placeholder="0"
+                  property="minWidth"
+                  disabled={disabled}
+                  value={node ? node.minWidth : undefined}
+                  onChange={this.props.onChangeLayout}
+                />
+              </Col>
+              <Col span={12}>
+                <EditValue
+                  type="text"
+                  placeholder="0"
+                  property="minHeight"
+                  disabled={disabled}
+                  value={node ? node.minHeight : undefined}
                   onChange={this.props.onChangeLayout}
                 />
               </Col>

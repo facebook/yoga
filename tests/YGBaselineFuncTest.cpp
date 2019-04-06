@@ -1,16 +1,15 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
-
 #include <gtest/gtest.h>
 #include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
 static float _baseline(YGNodeRef node, const float width, const float height) {
-  float* baseline = (float*)node->getContext();
+  float* baseline = (float*) node->getContext();
   return *baseline;
 }
 
@@ -35,7 +34,7 @@ TEST(YogaTest, align_baseline_customer_func) {
   const YGNodeRef root_child1_child0 = YGNodeNew();
   root_child1_child0->setContext(&baselineValue);
   YGNodeStyleSetWidth(root_child1_child0, 50);
-  root_child1_child0->setBaseLineFunc(_baseline);
+  root_child1_child0->setBaselineFunc(_baseline);
   YGNodeStyleSetHeight(root_child1_child0, 20);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
