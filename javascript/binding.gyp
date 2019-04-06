@@ -6,15 +6,7 @@
         ],
 
         "sources": [
-            "sources/yoga/Utils.cpp",
-            "sources/yoga/YGConfig.cpp",
-            "sources/yoga/YGEnums.cpp",
-            "sources/yoga/YGFloatOptional.cpp",
-            "sources/yoga/YGLayout.cpp",
-            "sources/yoga/YGNode.cpp",
-            "sources/yoga/YGNodePrint.cpp",
-            "sources/yoga/YGStyle.cpp",
-            "sources/yoga/Yoga.cpp",
+            "<!@(npx shx ls sources/yoga/*.cpp)",
             "sources/Config.cc",
             "sources/Node.cc",
             "sources/global.cc",

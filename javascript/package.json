@@ -34,7 +34,7 @@
     "autogypi": "^0.2.2",
     "nbind": "^0.3.14",
     "node-gyp": "^3.6.2",
-    "shx": "^0.2.2"
+    "shx": "^0.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
