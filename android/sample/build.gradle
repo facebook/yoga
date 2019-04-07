@@ -1,0 +1,30 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.facebook.samples.yoga"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+    }
+
+    compileOptions {
+        targetCompatibility rootProject.targetCompatibilityVersion
+        sourceCompatibility rootProject.sourceCompatibilityVersion
+    }
+}
+
+dependencies {
+  implementation project(':yoga-layout')
+  implementation "com.android.support:appcompat-v7:28.0.0"
+  implementation "com.facebook.soloader:soloader:0.6.0"
+}

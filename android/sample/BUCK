@@ -10,7 +10,7 @@ load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID_RES_TARGET", "ANDROID_SAMP
 yoga_android_binary(
     name = "sample",
     keystore = ":debug_keystore",
-    manifest = "AndroidManifest.xml",
+    manifest = "src/main/AndroidManifest.xml",
     deps = [
         ANDROID_SAMPLE_JAVA_TARGET,
         ANDROID_SAMPLE_RES_TARGET,

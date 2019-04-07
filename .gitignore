@@ -1,3 +1,6 @@
+.idea/
+*.iml
+local.properties
 .DS_STORE
 
 /buck-cache/
