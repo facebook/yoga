@@ -531,12 +531,12 @@ public class YGFlexWrapTest {
     assertEquals(0f, root_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutHeight(), 0.0f);
 
     assertEquals(50f, root_child1.getLayoutX(), 0.0f);
     assertEquals(0f, root_child1.getLayoutY(), 0.0f);
     assertEquals(50f, root_child1.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
+    assertEquals(0f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
@@ -549,12 +549,12 @@ public class YGFlexWrapTest {
     assertEquals(100f, root_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutHeight(), 0.0f);
 
     assertEquals(50f, root_child1.getLayoutX(), 0.0f);
     assertEquals(0f, root_child1.getLayoutY(), 0.0f);
     assertEquals(50f, root_child1.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
+    assertEquals(0f, root_child1.getLayoutHeight(), 0.0f);
   }
 
   @Test

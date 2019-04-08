@@ -529,12 +529,12 @@ namespace Facebook.Yoga
             Assert.AreEqual(0f, root_child0.LayoutX);
             Assert.AreEqual(0f, root_child0.LayoutY);
             Assert.AreEqual(50f, root_child0.LayoutWidth);
-            Assert.AreEqual(100f, root_child0.LayoutHeight);
+            Assert.AreEqual(0f, root_child0.LayoutHeight);
 
             Assert.AreEqual(50f, root_child1.LayoutX);
             Assert.AreEqual(0f, root_child1.LayoutY);
             Assert.AreEqual(50f, root_child1.LayoutWidth);
-            Assert.AreEqual(100f, root_child1.LayoutHeight);
+            Assert.AreEqual(0f, root_child1.LayoutHeight);
 
             root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
@@ -547,12 +547,12 @@ namespace Facebook.Yoga
             Assert.AreEqual(100f, root_child0.LayoutX);
             Assert.AreEqual(0f, root_child0.LayoutY);
             Assert.AreEqual(50f, root_child0.LayoutWidth);
-            Assert.AreEqual(100f, root_child0.LayoutHeight);
+            Assert.AreEqual(0f, root_child0.LayoutHeight);
 
             Assert.AreEqual(50f, root_child1.LayoutX);
             Assert.AreEqual(0f, root_child1.LayoutY);
             Assert.AreEqual(50f, root_child1.LayoutWidth);
-            Assert.AreEqual(100f, root_child1.LayoutHeight);
+            Assert.AreEqual(0f, root_child1.LayoutHeight);
         }
 
         [Test]
