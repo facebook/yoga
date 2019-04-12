@@ -13,3 +13,4 @@ file(GLOB yogacore_SRC yoga/*.cpp)
 add_library(yogacore STATIC ${yogacore_SRC})
 
 target_link_libraries(yogacore android log)
+set_target_properties(yogacore PROPERTIES CXX_STANDARD 11)
