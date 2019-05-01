@@ -8,7 +8,7 @@
 #include <yoga/YGStyle.h>
 #include <yoga/YGValue.h>
 
-#include <initializer_list>
+#include <utility>
 
 #define ACCESSOR_TESTS_1(NAME, X) \
   style.NAME() = X;               \
@@ -29,9 +29,14 @@
 #define ACCESSOR_TESTS_N(a, b, c, d, e, COUNT, ...) ACCESSOR_TESTS_##COUNT
 #define ACCESSOR_TESTS(...) ACCESSOR_TESTS_N(__VA_ARGS__, 5, 4, 3, 2, 1)
 
-#define INDEX_ACCESSOR_TESTS_1(NAME, IDX, X) \
-  style.NAME()[IDX] = X;                     \
-  ASSERT_EQ(style.NAME()[IDX], X);
+#define INDEX_ACCESSOR_TESTS_1(NAME, IDX, X)                           \
+  {                                                                    \
+    style.NAME()[IDX] = X;                                             \
+    ASSERT_EQ(style.NAME()[IDX], X);                                   \
+    auto asArray = decltype(std::declval<const YGStyle&>().NAME()){X}; \
+    style.NAME() = asArray;                                            \
+    ASSERT_EQ(static_cast<decltype(asArray)>(style.NAME()), asArray);  \
+  }
 
 #define INDEX_ACCESSOR_TESTS_2(NAME, IDX, X, Y) \
   INDEX_ACCESSOR_TESTS_1(NAME, IDX, X)          \
