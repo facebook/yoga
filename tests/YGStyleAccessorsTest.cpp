@@ -4,15 +4,29 @@
  * This source code is licensed under the MIT license found in the LICENSE
  * file in the root directory of this source tree.
  */
+#include <cstdint>
+#include <type_traits>
 #include <gtest/gtest.h>
+#include <yoga/YGEnums.h>
 #include <yoga/YGStyle.h>
 #include <yoga/YGValue.h>
 
 #include <utility>
 
+using AssignedProps =
+    std::remove_reference<decltype(YGStyle{}.assignedProps())>::type;
+
+namespace {
+constexpr AssignedProps setBits(int from, int n) {
+  return n > 0 ? (setBits(from, n - 1) | AssignedProps{1ull << (from + n - 1)})
+               : 0;
+}
+} // namespace
+
 #define ACCESSOR_TESTS_1(NAME, X) \
   style.NAME() = X;               \
-  ASSERT_EQ(style.NAME(), X);
+  ASSERT_EQ(style.NAME(), X);     \
+  ASSERT_EQ(style.assignedProps(), AssignedProps{1ull << YGStyle::NAME##Bit});
 #define ACCESSOR_TESTS_2(NAME, X, ...) \
   ACCESSOR_TESTS_1(NAME, X);           \
   ACCESSOR_TESTS_1(NAME, __VA_ARGS__);
@@ -31,11 +45,20 @@
 
 #define INDEX_ACCESSOR_TESTS_1(NAME, IDX, X)                           \
   {                                                                    \
+    auto style = YGStyle{};                                            \
     style.NAME()[IDX] = X;                                             \
     ASSERT_EQ(style.NAME()[IDX], X);                                   \
+    ASSERT_EQ(                                                         \
+        style.assignedProps(),                                         \
+        AssignedProps{1ull << (YGStyle::NAME##Bit + IDX)});            \
     auto asArray = decltype(std::declval<const YGStyle&>().NAME()){X}; \
     style.NAME() = asArray;                                            \
     ASSERT_EQ(static_cast<decltype(asArray)>(style.NAME()), asArray);  \
+    ASSERT_EQ(                                                         \
+        style.assignedProps(),                                         \
+        AssignedProps{setBits(                                         \
+            YGStyle::NAME##Bit,                                        \
+            facebook::yoga::enums::count<decltype(IDX)>())});          \
   }
 
 #define INDEX_ACCESSOR_TESTS_2(NAME, IDX, X, Y) \
@@ -69,8 +92,8 @@
 
 #define INDEX_ACCESSOR_TEST(NAME, DEFAULT_VAL, IDX, ...)      \
   TEST(YGStyle, style_##NAME##_access) {                      \
-    auto style = YGStyle{};                                   \
-    ASSERT_EQ(style.NAME()[IDX], DEFAULT_VAL);                \
+    ASSERT_EQ(YGStyle{}.NAME()[IDX], DEFAULT_VAL);            \
+    ASSERT_EQ(YGStyle{}.assignedProps(), 0);                  \
     INDEX_ACCESSOR_TESTS(__VA_ARGS__)(NAME, IDX, __VA_ARGS__) \
   }
 
@@ -246,6 +269,30 @@ ACCESSOR_TEST(
     YGFloatOptional{9876.5f},
     YGFloatOptional{0.0f},
     YGFloatOptional{});
+
+TEST(YGStyle, set_properties_default_to_0) {
+  ASSERT_EQ(YGStyle{}.assignedProps(), AssignedProps{0});
+}
+
+TEST(YGStyle, set_properties_reflects_all_set_properties) {
+  auto style = YGStyle{};
+
+  style.direction() = YGDirectionRTL;
+  style.justifyContent() = YGJustifySpaceAround;
+  style.flexWrap() = YGWrapWrap;
+  style.padding()[YGEdgeVertical] = YGValue{1, YGUnitPoint};
+  style.minDimensions()[YGDimensionHeight] = YGValue{1, YGUnitPercent};
+  style.aspectRatio() = YGFloatOptional{1.23};
+
+  ASSERT_EQ(
+      style.assignedProps(),
+      AssignedProps{1ull << YGStyle::directionBit |
+                    1ull << YGStyle::justifyContentBit |
+                    1ull << YGStyle::flexWrapBit |
+                    1ull << (YGStyle::paddingBit + YGEdgeVertical) |
+                    1ull << (YGStyle::minDimensionsBit + YGDimensionHeight) |
+                    1ull << YGStyle::aspectRatioBit});
+}
 
 } // namespace yoga
 } // namespace facebook
