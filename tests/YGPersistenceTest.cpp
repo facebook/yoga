@@ -5,8 +5,11 @@
  * file in the root directory of this source tree.
  */
 #include <gtest/gtest.h>
+#include <yoga/testutil/testutil.h>
 #include <yoga/Yoga.h>
 #include <yoga/YGNode.h>
+
+using facebook::yoga::test::TestUtil;
 
 TEST(YogaTest, cloning_shared_root) {
   const YGConfigRef config = YGConfigNew();
@@ -220,7 +223,7 @@ TEST(YogaTest, cloning_two_levels) {
 }
 
 TEST(YogaTest, cloning_and_freeing) {
-  const int32_t initialInstanceCount = YGNodeGetInstanceCount();
+  TestUtil::startCountingNodes();
 
   const YGConfigRef config = YGConfigNew();
 
@@ -249,7 +252,7 @@ TEST(YogaTest, cloning_and_freeing) {
 
   YGConfigFree(config);
 
-  ASSERT_EQ(initialInstanceCount, YGNodeGetInstanceCount());
+  ASSERT_EQ(0, TestUtil::stopCountingNodes());
 }
 
 TEST(YogaTest, mixed_shared_and_owned_children) {

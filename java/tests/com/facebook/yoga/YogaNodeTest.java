@@ -31,9 +31,9 @@ public class YogaNodeTest {
 
   @Test
   public void testInit() {
-    final int refCount = YogaNative.jni_YGNodeGetInstanceCount();
+    TestUtil.startCountingNodes();
     final YogaNode node = createNode();
-    assertEquals(refCount + 1, YogaNative.jni_YGNodeGetInstanceCount());
+    assertEquals(1, TestUtil.stopCountingNodes());
   }
 
   @Test

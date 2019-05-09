@@ -5,10 +5,15 @@
  * file in the root directory of this source tree.
  */
 #include <gtest/gtest.h>
+#include <yoga/testutil/testutil.h>
 #include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
+using facebook::yoga::test::TestUtil;
+
 TEST(YogaTest, assert_layout_trees_are_same) {
+  TestUtil::startCountingNodes();
+
   YGConfig* config = YGConfigNew();
   YGConfigSetUseLegacyStretchBehaviour(config, true);
   const YGNodeRef root1 = YGNodeNewWithConfig(config);
@@ -30,12 +35,12 @@ TEST(YogaTest, assert_layout_trees_are_same) {
   YGNodeInsertChild(root1_child0_child0, root1_child0_child0_child0, 0);
 
   const int32_t cal1_configInstanceCount = YGConfigGetInstanceCount();
-  const int32_t cal1_nodeInstanceCount = YGNodeGetInstanceCount();
+  const int32_t cal1_nodeInstanceCount = TestUtil::nodeCount();
 
   YGNodeCalculateLayout(root1, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(YGConfigGetInstanceCount(), cal1_configInstanceCount);
-  ASSERT_EQ(YGNodeGetInstanceCount(), cal1_nodeInstanceCount);
+  ASSERT_EQ(TestUtil::nodeCount(), cal1_nodeInstanceCount);
 
   const YGNodeRef root2 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root2, 500);
@@ -56,12 +61,12 @@ TEST(YogaTest, assert_layout_trees_are_same) {
   YGNodeInsertChild(root2_child0_child0, root2_child0_child0_child0, 0);
 
   const int32_t cal2_configInstanceCount = YGConfigGetInstanceCount();
-  const int32_t cal2_nodeInstanceCount = YGNodeGetInstanceCount();
+  const int32_t cal2_nodeInstanceCount = TestUtil::nodeCount();
 
   YGNodeCalculateLayout(root2, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(YGConfigGetInstanceCount(), cal2_configInstanceCount);
-  ASSERT_EQ(YGNodeGetInstanceCount(), cal2_nodeInstanceCount);
+  ASSERT_EQ(TestUtil::nodeCount(), cal2_nodeInstanceCount);
 
   ASSERT_TRUE(YGNodeLayoutGetDidUseLegacyFlag(root1));
   ASSERT_TRUE(YGNodeLayoutGetDidUseLegacyFlag(root2));
@@ -70,12 +75,12 @@ TEST(YogaTest, assert_layout_trees_are_same) {
   YGNodeStyleSetAlignItems(root2, YGAlignFlexEnd);
 
   const int32_t cal3_configInstanceCount = YGConfigGetInstanceCount();
-  const int32_t cal3_nodeInstanceCount = YGNodeGetInstanceCount();
+  const int32_t cal3_nodeInstanceCount = TestUtil::nodeCount();
 
   YGNodeCalculateLayout(root2, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_EQ(YGConfigGetInstanceCount(), cal3_configInstanceCount);
-  ASSERT_EQ(YGNodeGetInstanceCount(), cal3_nodeInstanceCount);
+  ASSERT_EQ(TestUtil::stopCountingNodes(), cal3_nodeInstanceCount);
 
   ASSERT_FALSE(root1->isLayoutTreeEqualToNode(*root2));
 
