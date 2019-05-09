@@ -56,6 +56,7 @@ yoga_cxx_test(
     visibility = ["PUBLIC"],
     deps = [
         ":yogaForDebug",
+        yoga_dep("testutil:testutil"),
         GTEST_TARGET,
     ],
 )

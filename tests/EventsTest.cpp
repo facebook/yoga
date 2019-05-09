@@ -8,6 +8,7 @@
 #include <yoga/Yoga.h>
 #include <yoga/events.h>
 #include <yoga/YGNode.h>
+#include <yoga/testutil/testutil.h>
 
 #include <functional>
 #include <memory>
@@ -27,9 +28,12 @@ struct EventArgs {
   }
 };
 
-struct EventTest : public ::testing::Test {
+class EventTest : public ::testing::Test {
+  ScopedEventSubscription subscription = {&EventTest::listen};
+  static void listen(const YGNode&, Event::Type, Event::Data);
+
+public:
   static EventArgs lastEvent;
-  static void SetUpTestCase() noexcept;
 };
 
 TEST_F(EventTest, new_node_has_event) {
@@ -92,23 +96,15 @@ EventArgs createArgs(const YGNode& node, const Event::Data& data) {
 
 } // namespace
 
-void EventTest::SetUpTestCase() noexcept {
-  static bool isSetup = false;
-  if (isSetup) {
-    return;
+void EventTest::listen(const YGNode& node, Event::Type type, Event::Data data) {
+  switch (type) {
+    case Event::NodeAllocation:
+      lastEvent = createArgs<Event::NodeAllocation>(node, data);
+      break;
+    case Event::NodeDeallocation:
+      lastEvent = createArgs<Event::NodeDeallocation>(node, data);
+      break;
   }
-  isSetup = true;
-
-  Event::subscribe([](const YGNode& node, Event::Type type, Event::Data data) {
-    switch (type) {
-      case Event::NodeAllocation:
-        lastEvent = createArgs<Event::NodeAllocation>(node, data);
-        break;
-      case Event::NodeDeallocation:
-        lastEvent = createArgs<Event::NodeDeallocation>(node, data);
-        break;
-    }
-  });
 }
 
 EventArgs EventTest::lastEvent{};

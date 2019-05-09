@@ -1,0 +1,37 @@
+load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "FBJNI_TARGET", "LIBRARY_COMPILER_FLAGS", "SOLOADER_TARGET", "yoga_cxx_library", "yoga_dep", "yoga_java_library")
+
+yoga_cxx_library(
+    name = "testutil",
+    srcs = ["testutil.cpp"],
+    header_namespace = "yoga/testutil",
+    exported_headers = ["testutil.h"],
+    compiler_flags = LIBRARY_COMPILER_FLAGS,
+    soname = "libyoga_testutil.$(ext)",
+    visibility = ["PUBLIC"],
+    deps = [yoga_dep(":yoga")],
+)
+
+yoga_java_library(
+    name = "java",
+    srcs = ["TestUtil.java"],
+    source = "1.7",
+    target = "1.7",
+    visibility = ["PUBLIC"],
+    deps = [
+        ":jni",
+        SOLOADER_TARGET,
+    ],
+)
+
+yoga_cxx_library(
+    name = "jni",
+    srcs = ["jni.cpp"],
+    compiler_flags = LIBRARY_COMPILER_FLAGS,
+    platforms = ANDROID,
+    soname = "libyoga_testutil_jni.$(ext)",
+    visibility = ["PUBLIC"],
+    deps = [
+        ":testutil",
+        FBJNI_TARGET,
+    ],
+)
