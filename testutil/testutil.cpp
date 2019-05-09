@@ -7,7 +7,7 @@
 #include "testutil.h"
 
 #include <yoga/YGNode.h>
-#include <yoga/events.h>
+#include <yoga/event/event.h>
 
 #include <utility>
 

@@ -6,7 +6,7 @@
  */
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
-#include <yoga/events.h>
+#include <yoga/event/event.h>
 #include <yoga/YGNode.h>
 #include <yoga/testutil/testutil.h>
 
