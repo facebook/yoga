@@ -673,10 +673,5 @@ namespace Facebook.Yoga
             return _children != null ? ((IEnumerable<YogaNode>)_children).GetEnumerator() :
                 System.Linq.Enumerable.Empty<YogaNode>().GetEnumerator();
         }
-
-        public static int GetInstanceCount()
-        {
-            return Native.YGNodeGetInstanceCount();
-        }
     }
 }
