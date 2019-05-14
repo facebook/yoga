@@ -9,8 +9,6 @@
 #include <yoga/YGNode.h>
 #include <yoga/event/event.h>
 
-#include <utility>
-
 namespace facebook {
 namespace yoga {
 namespace test {
@@ -48,7 +46,9 @@ int TestUtil::nodeCount() {
 
 int TestUtil::stopCountingNodes() {
   Event::reset();
-  return std::exchange(nodeInstanceCount, 0);
+  auto prev = nodeInstanceCount;
+  nodeInstanceCount = 0;
+  return prev;
 }
 
 ScopedEventSubscription::ScopedEventSubscription(
