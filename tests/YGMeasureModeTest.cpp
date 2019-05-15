@@ -62,7 +62,7 @@ TEST(YogaTest, exactly_measure_stretched_child_column) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
   ASSERT_EQ(YGMeasureModeExactly, constraintList.constraints[0].widthMode);
@@ -91,7 +91,7 @@ TEST(YogaTest, exactly_measure_stretched_child_row) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(YGMeasureModeExactly, constraintList.constraints[0].heightMode);
@@ -118,7 +118,7 @@ TEST(YogaTest, at_most_main_axis_column) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].heightMode);
@@ -146,7 +146,7 @@ TEST(YogaTest, at_most_cross_axis_column) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
   ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].widthMode);
@@ -174,7 +174,7 @@ TEST(YogaTest, at_most_main_axis_row) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
   ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].widthMode);
@@ -203,7 +203,7 @@ TEST(YogaTest, at_most_cross_axis_row) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].heightMode);
@@ -230,7 +230,7 @@ TEST(YogaTest, flex_child) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(2, constraintList.length);
+  ASSERT_EQ(2u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].heightMode);
@@ -261,7 +261,7 @@ TEST(YogaTest, flex_child_with_flex_basis) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].height);
   ASSERT_EQ(YGMeasureModeExactly, constraintList.constraints[0].heightMode);
@@ -290,7 +290,7 @@ TEST(YogaTest, overflow_scroll_column) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_FLOAT_EQ(100, constraintList.constraints[0].width);
   ASSERT_EQ(YGMeasureModeAtMost, constraintList.constraints[0].widthMode);
@@ -323,7 +323,7 @@ TEST(YogaTest, overflow_scroll_row) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  ASSERT_EQ(1, constraintList.length);
+  ASSERT_EQ(1u, constraintList.length);
 
   ASSERT_TRUE(YGFloatIsUndefined(constraintList.constraints[0].width));
   ASSERT_EQ(YGMeasureModeUndefined, constraintList.constraints[0].widthMode);

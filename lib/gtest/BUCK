@@ -9,6 +9,14 @@ COMPILER_FLAGS = [
     "-Wno-missing-prototypes",
 ]
 
+yoga_prebuilt_cxx_library(
+  name = 'pthread',
+  header_only = True,
+  exported_linker_flags = [
+    '-lpthread',
+  ],
+)
+
 yoga_cxx_library(
     name = "gtest",
     srcs = glob(["googletest/googletest/src/*.cc"]),
@@ -20,5 +28,7 @@ yoga_cxx_library(
     ]),
     compiler_flags = COMPILER_FLAGS,
     visibility = YOGA_ROOTS,
-    deps = [],
+    deps = [
+        ':pthread',
+    ],
 )
