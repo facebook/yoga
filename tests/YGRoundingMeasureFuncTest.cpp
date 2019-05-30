@@ -8,33 +8,39 @@
 #include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
-static YGSize _measureFloor(YGNodeRef node,
-                            float width,
-                            YGMeasureMode widthMode,
-                            float height,
-                            YGMeasureMode heightMode) {
+static YGSize _measureFloor(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
   return YGSize{
-      width = 10.2f, height = 10.2f,
+      width = 10.2f,
+      height = 10.2f,
   };
 }
 
-static YGSize _measureCeil(YGNodeRef node,
-                           float width,
-                           YGMeasureMode widthMode,
-                           float height,
-                           YGMeasureMode heightMode) {
+static YGSize _measureCeil(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
   return YGSize{
-      width = 10.5f, height = 10.5f,
+      width = 10.5f,
+      height = 10.5f,
   };
 }
 
-static YGSize _measureFractial(YGNodeRef node,
-  float width,
-  YGMeasureMode widthMode,
-  float height,
-  YGMeasureMode heightMode) {
+static YGSize _measureFractial(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
   return YGSize{
-    width = 0.5f, height = 0.5f,
+      width = 0.5f,
+      height = 0.5f,
   };
 }
 
@@ -106,7 +112,9 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, rounding_feature_with_custom_measure_and_fractial_matching_scale) {
+TEST(
+    YogaTest,
+    rounding_feature_with_custom_measure_and_fractial_matching_scale) {
   const YGConfigRef config = YGConfigNew();
   const YGNodeRef root = YGNodeNewWithConfig(config);
 

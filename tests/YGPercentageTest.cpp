@@ -647,7 +647,9 @@ TEST(YogaTest, percentage_flex_basis_cross_min_width) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, percentage_multiple_nested_with_padding_margin_and_percentage_values) {
+TEST(
+    YogaTest,
+    percentage_multiple_nested_with_padding_margin_and_percentage_values) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);

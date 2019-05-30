@@ -9,20 +9,31 @@ GMOCK_OVERRIDE_FLAGS = [
     "-Wno-inconsistent-missing-override",
 ]
 
-COMPILER_FLAGS = LIBRARY_COMPILER_FLAGS + [
-    "-std=c++1y",
-]
-
 TEST_COMPILER_FLAGS = BASE_COMPILER_FLAGS + GMOCK_OVERRIDE_FLAGS + [
-    "-std=c++1y",
+    "-DDEBUG",
+    "-DYG_ENABLE_EVENTS",
 ]
 
 yoga_cxx_library(
     name = "yoga",
-    srcs = glob(["yoga/*.cpp"]),
+    srcs = glob(["yoga/**/*.cpp"]),
     header_namespace = "",
-    exported_headers = subdir_glob([("", "yoga/*.h")]),
-    compiler_flags = COMPILER_FLAGS,
+    exported_headers = subdir_glob([("", "yoga/**/*.h")]),
+    compiler_flags = LIBRARY_COMPILER_FLAGS,
+    soname = "libyogacore.$(ext)",
+    tests = [":YogaTests"],
+    visibility = ["PUBLIC"],
+    deps = [
+        yoga_dep("lib/fb:ndklog"),
+    ],
+)
+
+yoga_cxx_library(
+    name = "yogaForDebug",
+    srcs = glob(["yoga/**/*.cpp"]),
+    header_namespace = "",
+    exported_headers = subdir_glob([("", "yoga/**/*.h")]),
+    compiler_flags = TEST_COMPILER_FLAGS,
     soname = "libyogacore.$(ext)",
     tests = [":YogaTests"],
     visibility = ["PUBLIC"],
@@ -39,7 +50,8 @@ yoga_cxx_test(
     contacts = ["emilsj@fb.com"],
     visibility = ["PUBLIC"],
     deps = [
-        ":yoga",
+        ":yogaForDebug",
+        yoga_dep("testutil:testutil"),
         GTEST_TARGET,
     ],
 )

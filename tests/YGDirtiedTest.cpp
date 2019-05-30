@@ -8,7 +8,7 @@
 #include <yoga/YGNode.h>
 
 static void _dirtied(YGNodeRef node) {
-  int* dirtiedCount = (int*)node->getContext();
+  int* dirtiedCount = (int*) node->getContext();
   (*dirtiedCount)++;
 }
 

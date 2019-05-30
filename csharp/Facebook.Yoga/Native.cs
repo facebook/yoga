@@ -44,9 +44,6 @@ namespace Facebook.Yoga
         public static extern void YGConfigFree(IntPtr node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int YGNodeGetInstanceCount();
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern int YGConfigGetInstanceCount();
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]

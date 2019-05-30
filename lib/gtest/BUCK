@@ -5,7 +5,7 @@
 load("//tools/build_defs/oss:yoga_defs.bzl", "YOGA_ROOTS", "subdir_glob", "yoga_cxx_library")
 
 COMPILER_FLAGS = [
-    "-std=c++11",
+    "-std=c++14",
     "-Wno-missing-prototypes",
 ]
 

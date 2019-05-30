@@ -9,7 +9,8 @@
 
 // This test isn't correct from the Flexbox standard standpoint,
 // because percentages are calculated with parent constraints.
-// However, we need to make sure we fail gracefully in this case, not returning NaN
+// However, we need to make sure we fail gracefully in this case, not returning
+// NaN
 TEST(YogaTest, percent_absolute_position_infinite_height) {
   const YGConfigRef config = YGConfigNew();
 

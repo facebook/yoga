@@ -4,11 +4,10 @@
  * This source code is licensed under the MIT license found in the LICENSE
  * file in the root directory of this source tree.
  */
-#include <yoga/Yoga.h>
+package com.facebook.yoga;
 
-#include "./global.hh"
+public interface YogaEventListener {
 
-unsigned getInstanceCount(void)
-{
-    return YGNodeGetInstanceCount();
+  void onLayoutPassEnd(YogaNode node);
+
 }

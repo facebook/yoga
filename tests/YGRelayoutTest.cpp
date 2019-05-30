@@ -9,7 +9,8 @@
 
 TEST(YogaTest, dont_cache_computed_flex_basis_between_layouts) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureWebFlexBasis, true);
+  YGConfigSetExperimentalFeatureEnabled(
+      config, YGExperimentalFeatureWebFlexBasis, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetHeightPercent(root, 100);

@@ -58,6 +58,7 @@ BASE_COMPILER_FLAGS = [
     "-Wall",
     "-Werror",
     "-O2",
+    "-std=c++11",
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
@@ -147,6 +148,9 @@ def _single_subdir_glob(dirpath, glob_pattern, exclude = None, prefix = None):
 
 def yoga_dep(dep):
     return "//" + dep
+
+def yoga_cxx_lib(lib):
+    return yoga_dep(lib)
 
 def yoga_android_aar(*args, **kwargs):
     native.android_aar(*args, **kwargs)
