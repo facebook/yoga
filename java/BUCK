@@ -13,8 +13,8 @@ CXX_LIBRARY_WHITELIST_FOR_TESTS = CXX_LIBRARY_WHITELIST + [
 yoga_cxx_library(
     name = "jni",
     srcs = glob(["jni/*.cpp"]),
-    headers = glob(["jni/*.h"]),
-    header_namespace = "",
+    header_namespace = "yoga/java",
+    exported_headers = glob(["jni/*.h"]),
     allow_jni_merging = True,
     compiler_flags = [
         "-fno-omit-frame-pointer",
