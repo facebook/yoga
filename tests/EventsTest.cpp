@@ -131,6 +131,8 @@ void EventTest::listen(const YGNode& node, Event::Type type, Event::Data data) {
       break;
     case Event::LayoutPassEnd:
       break;
+    case Event::NodeMeasure:
+      break;
   }
 }
 
