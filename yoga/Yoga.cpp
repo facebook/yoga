@@ -3943,9 +3943,6 @@ static void YGRoundToPixelGrid(
   const float absoluteNodeLeft = absoluteLeft + nodeLeft;
   const float absoluteNodeTop = absoluteTop + nodeTop;
 
-  const float absoluteNodeRight = absoluteNodeLeft + nodeWidth;
-  const float absoluteNodeBottom = absoluteNodeTop + nodeHeight;
-
   // If a node has a custom measure function we never want to round down its
   // size as this could lead to unwanted text truncation.
   const bool textRounding = node->getNodeType() == YGNodeTypeText;
@@ -3970,22 +3967,18 @@ static void YGRoundToPixelGrid(
 
   node->setLayoutDimension(
       YGRoundValueToPixelGrid(
-          absoluteNodeRight,
+          nodeWidth,
           pointScaleFactor,
           (textRounding && hasFractionalWidth),
-          (textRounding && !hasFractionalWidth)) -
-          YGRoundValueToPixelGrid(
-              absoluteNodeLeft, pointScaleFactor, false, textRounding),
+          (textRounding && !hasFractionalWidth)),
       YGDimensionWidth);
 
   node->setLayoutDimension(
       YGRoundValueToPixelGrid(
-          absoluteNodeBottom,
+          nodeHeight,
           pointScaleFactor,
           (textRounding && hasFractionalHeight),
-          (textRounding && !hasFractionalHeight)) -
-          YGRoundValueToPixelGrid(
-              absoluteNodeTop, pointScaleFactor, false, textRounding),
+          (textRounding && !hasFractionalHeight)),
       YGDimensionHeight);
 
   const uint32_t childCount = YGNodeGetChildCount(node);
