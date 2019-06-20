@@ -15,6 +15,7 @@ using namespace facebook::jni;
 void initialize_xplatinit();
 void initialize_fbjni();
 
+#ifndef __ANDROID__
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
   return facebook::jni::initialize(vm, [] {
     initialize_fbjni();
@@ -26,3 +27,4 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
 #endif
   });
 }
+#endif
