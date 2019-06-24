@@ -96,11 +96,17 @@ TEST_F(EventTest, layout_events) {
 
   YGNodeCalculateLayout(root, 123, 456, YGDirectionLTR);
 
-  ASSERT_EQ(events[2].node, root);
+  ASSERT_EQ(events[2].node, child);
   ASSERT_EQ(events[2].type, Event::NodeLayout);
 
   ASSERT_EQ(events[3].node, child);
   ASSERT_EQ(events[3].type, Event::NodeLayout);
+
+  ASSERT_EQ(events[4].node, child);
+  ASSERT_EQ(events[4].type, Event::NodeLayout);
+
+  ASSERT_EQ(events[5].node, root);
+  ASSERT_EQ(events[5].type, Event::NodeLayout);
 
   YGNodeFreeRecursive(root);
 }
