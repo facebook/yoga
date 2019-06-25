@@ -38,6 +38,7 @@ yoga_cxx_library(
     tests = [":YogaTests"],
     visibility = ["PUBLIC"],
     deps = [
+        ":yoga",
         yoga_dep("lib/fb:ndklog"),
     ],
 )
