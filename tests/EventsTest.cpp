@@ -134,10 +134,9 @@ void EventTest::listen(const YGNode& node, Event::Type type, Event::Data data) {
       events.push_back(createArgs<Event::NodeLayout>(node, data));
       break;
     case Event::LayoutPassStart:
-      break;
     case Event::LayoutPassEnd:
-      break;
-    case Event::NodeMeasure:
+    case Event::MeasureCallbackStart:
+    case Event::MeasureCallbackEnd:
       break;
   }
 }
