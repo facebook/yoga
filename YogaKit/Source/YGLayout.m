@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
+#import "YGLayout.h"
 #import "YGLayout+Private.h"
 #import "UIView+Yoga.h"
 
@@ -114,15 +114,19 @@ YG_VALUE_EDGE_PROPERTY(lowercased_name##Horizontal, capitalized_name##Horizontal
 YG_VALUE_EDGE_PROPERTY(lowercased_name##Vertical, capitalized_name##Vertical, capitalized_name, YGEdgeVertical)       \
 YG_VALUE_EDGE_PROPERTY(lowercased_name, capitalized_name, capitalized_name, YGEdgeAll)
 
+YG_EXTERN_C_BEGIN
+
 YGValue YGPointValue(CGFloat value)
 {
-  return (YGValue) { .value = value, .unit = YGUnitPoint };
+  return (YGValue) { .value = (float)value, .unit = YGUnitPoint };
 }
 
 YGValue YGPercentValue(CGFloat value)
 {
-  return (YGValue) { .value = value, .unit = YGUnitPercent };
+  return (YGValue) { .value = (float)value, .unit = YGUnitPercent };
 }
+
+YG_EXTERN_C_END
 
 static YGConfigRef globalConfig;
 
@@ -143,7 +147,13 @@ static YGConfigRef globalConfig;
 {
   globalConfig = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(globalConfig, YGExperimentalFeatureWebFlexBasis, true);
-  YGConfigSetPointScaleFactor(globalConfig, [UIScreen mainScreen].scale);
+  YGConfigSetPointScaleFactor(globalConfig, kScaleFactor);
+}
+
+- (NSString *)debugDescription {
+    return [NSString stringWithFormat:@"<%@: %p, isEnabled:%ld, isIncludedInLayout:%ld, isUIView:<bool:%ld, %@: %p>>",
+            NSStringFromClass(self.class), self, (long)self.isEnabled, (long)self.isIncludedInLayout,
+            (long)self.isUIView, NSStringFromClass(self.view.class), self.view];
 }
 
 - (instancetype)initWithView:(UIView*)view
@@ -343,15 +353,23 @@ static YGSize YGMeasureView(
   //
   // See https://github.com/facebook/yoga/issues/606 for more information.
   if (!view.yoga.isUIView || [view.subviews count] > 0) {
+#if TARGET_OS_OSX
+    CGSize fittingSize = view.fittingSize;
+    sizeThatFits = (CGSize){
+                       .width = MIN(constrainedWidth, fittingSize.width),
+                       .height = MIN(constrainedHeight, fittingSize.height)
+                   };
+#else
     sizeThatFits = [view sizeThatFits:(CGSize){
                                           .width = constrainedWidth,
                                           .height = constrainedHeight,
                                       }];
+#endif
   }
 
   return (YGSize) {
-    .width = YGSanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
-    .height = YGSanitizeMeasurement(constrainedHeight, sizeThatFits.height, heightMode),
+    .width = (float)YGSanitizeMeasurement(constrainedWidth, sizeThatFits.width, widthMode),
+    .height = (float)YGSanitizeMeasurement(constrainedHeight, sizeThatFits.height, heightMode),
   };
 }
 
@@ -433,10 +451,10 @@ static CGFloat YGRoundPixelValue(CGFloat value)
   static CGFloat scale;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^(){
-    scale = [UIScreen mainScreen].scale;
+    scale = kScaleFactor;
   });
 
-  return roundf(value * scale) / scale;
+  return round(value * scale) / scale;
 }
 
 static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
@@ -461,16 +479,22 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
   };
 
   const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
-  view.frame = (CGRect) {
+  CGRect frame = (CGRect) {
     .origin = {
       .x = YGRoundPixelValue(topLeft.x + origin.x),
       .y = YGRoundPixelValue(topLeft.y + origin.y),
     },
     .size = {
-      .width = YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x),
-      .height = YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y),
+      .width = MAX(0, YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x)),
+      .height = MAX(0, YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y)),
     },
   };
+#if TARGET_OS_OSX
+  if (!view.superview.isFlipped && view.superview.yoga.isEnabled) {
+    frame.origin.y = YGNodeLayoutGetHeight(view.superview.yoga.node) - CGRectGetMaxY(frame);
+  }
+#endif
+  view.frame = frame;
 
   if (!yoga.isLeaf) {
     for (NSUInteger i=0; i<view.subviews.count; i++) {

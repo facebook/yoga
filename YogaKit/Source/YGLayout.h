@@ -4,10 +4,20 @@
  * This source code is licensed under the MIT license found in the LICENSE
  * file in the root directory of this source tree.
  */
-#import <UIKit/UIKit.h>
-#import <yoga/YGEnums.h>
-#import <yoga/Yoga.h>
-#import <yoga/YGMacros.h>
+
+#import <TargetConditionals.h>
+#if TARGET_OS_OSX
+#   import <AppKit/AppKit.h>
+#   define UIView NSView
+#   define kScaleFactor NSScreen.mainScreen.backingScaleFactor
+#else
+#   import <UIKit/UIKit.h>
+#   define kScaleFactor UIScreen.mainScreen.scale
+#endif
+
+#import <YogaKit/YGEnums.h>
+#import <YogaKit/Yoga.h>
+#import <YogaKit/YGMacros.h>
 
 YG_EXTERN_C_BEGIN
 
