@@ -282,6 +282,7 @@ const char* markerTypeName(YGMarker type) {
     case YGMarkerBaselineFn:
       return "YGMarkerBaselineFn";
   }
+  return "";
 }
 
 template <typename It>

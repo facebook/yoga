@@ -2,12 +2,20 @@
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-load("//tools/build_defs/oss:yoga_defs.bzl", "YOGA_ROOTS", "subdir_glob", "yoga_cxx_library")
+load("//tools/build_defs/oss:yoga_defs.bzl", "YOGA_ROOTS", "subdir_glob", "yoga_cxx_library", "yoga_prebuilt_cxx_library")
 
 COMPILER_FLAGS = [
     "-std=c++14",
     "-Wno-missing-prototypes",
 ]
+
+yoga_prebuilt_cxx_library(
+    name = "pthread",
+    exported_linker_flags = [
+        "-lpthread",
+    ],
+    header_only = True,
+)
 
 yoga_cxx_library(
     name = "gtest",
@@ -20,5 +28,7 @@ yoga_cxx_library(
     ]),
     compiler_flags = COMPILER_FLAGS,
     visibility = YOGA_ROOTS,
-    deps = [],
+    deps = [
+        ":pthread",
+    ],
 )
