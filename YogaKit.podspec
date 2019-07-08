@@ -6,7 +6,7 @@
 #
 podspec = Pod::Spec.new do |spec|
   spec.name = 'YogaKit'
-  spec.version = '1.14.0'
+  spec.version = '1.14.1'
   spec.license =  { :type => 'MIT', :file => "LICENSE" }
   spec.homepage = 'https://facebook.github.io/yoga/'
   spec.documentation_url = 'https://facebook.github.io/yoga/docs/'
@@ -17,17 +17,23 @@ podspec = Pod::Spec.new do |spec|
   spec.authors = 'Facebook'
   spec.source = {
     :git => 'https://github.com/facebook/yoga.git',
-    :tag => spec.version.to_s,
+    :branch => "master",
   }
 
-  spec.platform = :ios
+  spec.platform = { :ios => "8.0", :osx => "10.9", :tvos => "9.0" }
+  spec.module_name = 'YogaKit'
+  spec.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES'
+  }
   spec.ios.deployment_target = '8.0'
-  spec.ios.frameworks = 'UIKit'
-  spec.dependency 'Yoga', '~> 1.14'
-  spec.source_files = 'YogaKit/Source/*.{h,m,swift}'
-  spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h'
+  spec.osx.deployment_target = '10.9'
+  spec.tvos.deployment_target = '9.0'
+  spec.pod_target_xcconfig = { 'HEADER_SEARCH_PATHS' => '"${SRCROOT}/YogaKit"' }
+  spec.source_files = 'YogaKit/Source/*.{h,m,swift}', 'yoga/**/*.{c,h,cpp}'
+  spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h', 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
   spec.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
-  spec.swift_version = '4.0'
+  spec.swift_version = '5.0'
+  spec.static_framework = true
 end
 
 # See https://github.com/facebook/yoga/pull/366
