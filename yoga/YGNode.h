@@ -27,7 +27,7 @@ private:
   bool hasNewLayout_ : 1;
   bool isReferenceBaseline_ : 1;
   bool isDirty_ : 1;
-  YGNodeType nodeType_ : 1;
+  YGNodeType nodeType_ = {};
   bool measureUsesContext_ : 1;
   bool baselineUsesContext_ : 1;
   bool printUsesContext_ : 1;
