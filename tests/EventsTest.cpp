@@ -248,6 +248,40 @@ TEST_F(EventTest, layout_events_has_max_measure_cache) {
   ASSERT_EQ(layoutData.maxMeasureCache, 7);
 }
 
+TEST_F(EventTest, measure_functions_get_wrapped) {
+  auto root = YGNodeNew();
+  YGNodeSetMeasureFunc(
+      root, [](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode) {
+        return YGSize{};
+      });
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(events[2].node, root);
+  ASSERT_EQ(events[2].type, Event::MeasureCallbackStart);
+
+  ASSERT_EQ(events[events.size() - 1].node, root);
+  ASSERT_EQ(events[events.size() - 1].type, Event::LayoutPassEnd);
+}
+
+TEST_F(EventTest, baseline_functions_get_wrapped) {
+  auto root = YGNodeNew();
+  auto child = YGNodeNew();
+  YGNodeInsertChild(root, child, 0);
+
+  YGNodeSetBaselineFunc(child, [](YGNodeRef, float, float) { return 0.0f; });
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetAlignItems(root, YGAlignBaseline);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(events[5].node, child);
+  ASSERT_EQ(events[5].type, Event::NodeBaselineStart);
+
+  ASSERT_EQ(events[events.size() - 1].node, root);
+  ASSERT_EQ(events[events.size() - 1].type, Event::LayoutPassEnd);
+}
+
 namespace {
 
 template <Event::Type E>
@@ -298,10 +332,16 @@ void EventTest::listen(const YGNode& node, Event::Type type, Event::Data data) {
     }
 
     case Event::MeasureCallbackStart:
+      events.push_back(createArgs<Event::MeasureCallbackStart>(node, data));
+      break;
     case Event::MeasureCallbackEnd:
+      events.push_back(createArgs<Event::MeasureCallbackEnd>(node, data));
       break;
     case Event::NodeBaselineStart:
+      events.push_back(createArgs<Event::NodeBaselineStart>(node, data));
+      break;
     case Event::NodeBaselineEnd:
+      events.push_back(createArgs<Event::NodeBaselineEnd>(node, data));
       break;
   }
 }
