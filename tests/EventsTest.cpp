@@ -300,6 +300,9 @@ void EventTest::listen(const YGNode& node, Event::Type type, Event::Data data) {
     case Event::MeasureCallbackStart:
     case Event::MeasureCallbackEnd:
       break;
+    case Event::NodeBaselineStart:
+    case Event::NodeBaselineEnd:
+      break;
   }
 }
 
