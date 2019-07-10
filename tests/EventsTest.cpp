@@ -134,6 +134,120 @@ TEST_F(EventTest, layout_events) {
   YGNodeFreeRecursive(root);
 }
 
+TEST_F(EventTest, layout_events_single_node) {
+  auto root = YGNodeNew();
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(events[1].node, root);
+  ASSERT_EQ(events[1].type, Event::LayoutPassStart);
+
+  ASSERT_EQ(events[2].node, root);
+  ASSERT_EQ(events[2].type, Event::NodeLayout);
+
+  ASSERT_EQ(events[3].node, root);
+  ASSERT_EQ(events[3].type, Event::LayoutPassEnd);
+
+  YGMarkerLayoutData layoutData =
+      events[3].eventTestData<Event::LayoutPassEnd>().layoutData;
+
+  ASSERT_EQ(layoutData.layouts, 1);
+  ASSERT_EQ(layoutData.measures, 0);
+  ASSERT_EQ(layoutData.maxMeasureCache, 1);
+}
+
+TEST_F(EventTest, layout_events_counts_multi_node_layout) {
+  auto root = YGNodeNew();
+  auto childA = YGNodeNew();
+  YGNodeInsertChild(root, childA, 0);
+  auto childB = YGNodeNew();
+  YGNodeInsertChild(root, childB, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(events[3].node, root);
+  ASSERT_EQ(events[3].type, Event::LayoutPassStart);
+
+  ASSERT_EQ(events[11].node, root);
+  ASSERT_EQ(events[11].type, Event::LayoutPassEnd);
+
+  YGMarkerLayoutData layoutData =
+      events[11].eventTestData<Event::LayoutPassEnd>().layoutData;
+
+  ASSERT_EQ(layoutData.layouts, 3);
+  ASSERT_EQ(layoutData.measures, 4);
+  ASSERT_EQ(layoutData.maxMeasureCache, 3);
+}
+
+TEST_F(EventTest, layout_events_counts_cache_hits_single_node_layout) {
+  auto root = YGNodeNew();
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(events[4].node, root);
+  ASSERT_EQ(events[4].type, Event::LayoutPassStart);
+
+  ASSERT_EQ(events[6].node, root);
+  ASSERT_EQ(events[6].type, Event::LayoutPassEnd);
+
+  YGMarkerLayoutData layoutData =
+      events[6].eventTestData<Event::LayoutPassEnd>().layoutData;
+
+  ASSERT_EQ(layoutData.layouts, 0);
+  ASSERT_EQ(layoutData.measures, 0);
+  ASSERT_EQ(layoutData.cachedLayouts, 1);
+  ASSERT_EQ(layoutData.cachedMeasures, 0);
+}
+
+TEST_F(EventTest, layout_events_counts_cache_hits_multi_node_layout) {
+  auto root = YGNodeNew();
+  auto childA = YGNodeNew();
+  YGNodeInsertChild(root, childA, 0);
+  auto childB = YGNodeNew();
+  YGNodeInsertChild(root, childB, 1);
+
+  YGNodeCalculateLayout(root, 987, 654, YGDirectionLTR);
+  YGNodeCalculateLayout(root, 123, 456, YGDirectionLTR);
+
+  YGNodeCalculateLayout(root, 987, 654, YGDirectionLTR);
+
+  ASSERT_EQ(lastEvent().node, root);
+  ASSERT_EQ(lastEvent().type, Event::LayoutPassEnd);
+
+  YGMarkerLayoutData layoutData =
+      lastEvent().eventTestData<Event::LayoutPassEnd>().layoutData;
+
+  ASSERT_EQ(layoutData.layouts, 3);
+  ASSERT_EQ(layoutData.measures, 0);
+  ASSERT_EQ(layoutData.maxMeasureCache, 5);
+  ASSERT_EQ(layoutData.cachedLayouts, 0);
+  ASSERT_EQ(layoutData.cachedMeasures, 4);
+}
+
+TEST_F(EventTest, layout_events_has_max_measure_cache) {
+  auto root = YGNodeNew();
+  auto a = YGNodeNew();
+  YGNodeInsertChild(root, a, 0);
+  auto b = YGNodeNew();
+  YGNodeInsertChild(root, b, 1);
+  YGNodeStyleSetFlexBasis(a, 10.0f);
+
+  for (auto s : {20, 30, 40}) {
+    YGNodeCalculateLayout(root, s, s, YGDirectionLTR);
+  }
+
+  ASSERT_EQ(lastEvent().node, root);
+  ASSERT_EQ(lastEvent().type, Event::LayoutPassEnd);
+
+  YGMarkerLayoutData layoutData =
+      lastEvent().eventTestData<Event::LayoutPassEnd>().layoutData;
+
+  ASSERT_EQ(layoutData.layouts, 3);
+  ASSERT_EQ(layoutData.measures, 3);
+  ASSERT_EQ(layoutData.maxMeasureCache, 7);
+}
+
 namespace {
 
 template <Event::Type E>
@@ -182,6 +296,7 @@ void EventTest::listen(const YGNode& node, Event::Type type, Event::Data data) {
           node, data, {eventData.layoutContext, *eventData.layoutData}));
       break;
     }
+
     case Event::MeasureCallbackStart:
     case Event::MeasureCallbackEnd:
       break;
