@@ -14,19 +14,36 @@
 #include <functional>
 #include <memory>
 #include <vector>
+#include <yoga/YGEnums.h>
+#include <yoga/YGMarker.h>
 
 namespace facebook {
 namespace yoga {
 namespace test {
 
+template <Event::Type E>
+struct TypedEventTestData {};
+
+template <>
+struct TypedEventTestData<Event::LayoutPassEnd> {
+  void* layoutContext;
+  YGMarkerLayoutData layoutData;
+};
+
 struct EventArgs {
   const YGNode* node;
   Event::Type type;
   std::unique_ptr<void, std::function<void(void*)>> dataPtr;
+  std::unique_ptr<void, std::function<void(void*)>> eventTestDataPtr;
 
   template <Event::Type E>
   const Event::TypedData<E>& data() {
     return *static_cast<Event::TypedData<E>*>(dataPtr.get());
+  }
+
+  template <Event::Type E>
+  const TypedEventTestData<E>& eventTestData() {
+    return *static_cast<TypedEventTestData<E>*>(eventTestDataPtr.get());
   }
 };
 
@@ -96,8 +113,8 @@ TEST_F(EventTest, layout_events) {
 
   YGNodeCalculateLayout(root, 123, 456, YGDirectionLTR);
 
-  ASSERT_EQ(events[2].node, child);
-  ASSERT_EQ(events[2].type, Event::NodeLayout);
+  ASSERT_EQ(events[2].node, root);
+  ASSERT_EQ(events[2].type, Event::LayoutPassStart);
 
   ASSERT_EQ(events[3].node, child);
   ASSERT_EQ(events[3].type, Event::NodeLayout);
@@ -105,8 +122,14 @@ TEST_F(EventTest, layout_events) {
   ASSERT_EQ(events[4].node, child);
   ASSERT_EQ(events[4].type, Event::NodeLayout);
 
-  ASSERT_EQ(events[5].node, root);
+  ASSERT_EQ(events[5].node, child);
   ASSERT_EQ(events[5].type, Event::NodeLayout);
+
+  ASSERT_EQ(events[6].node, root);
+  ASSERT_EQ(events[6].type, Event::NodeLayout);
+
+  ASSERT_EQ(events[7].node, root);
+  ASSERT_EQ(events[7].type, Event::LayoutPassEnd);
 
   YGNodeFreeRecursive(root);
 }
@@ -114,10 +137,27 @@ TEST_F(EventTest, layout_events) {
 namespace {
 
 template <Event::Type E>
-EventArgs createArgs(const YGNode& node, const Event::Data& data) {
+EventArgs createArgs(const YGNode& node, const Event::Data data) {
   using Data = Event::TypedData<E>;
   auto deleteData = [](void* x) { delete static_cast<Data*>(x); };
-  return {&node, E, {new Data{data.get<E>()}, deleteData}};
+
+  return {&node, E, {new Data{(data.get<E>())}, deleteData}};
+}
+
+template <Event::Type E>
+EventArgs createArgs(
+    const YGNode& node,
+    const Event::Data data,
+    TypedEventTestData<E> eventTestData) {
+  using EventTestData = TypedEventTestData<E>;
+  auto deleteEventTestData = [](void* x) {
+    delete static_cast<EventTestData*>(x);
+  };
+
+  EventArgs args = createArgs<E>(node, data);
+  args.eventTestDataPtr = {new EventTestData{eventTestData},
+                           deleteEventTestData};
+  return args;
 }
 
 } // namespace
@@ -134,7 +174,14 @@ void EventTest::listen(const YGNode& node, Event::Type type, Event::Data data) {
       events.push_back(createArgs<Event::NodeLayout>(node, data));
       break;
     case Event::LayoutPassStart:
-    case Event::LayoutPassEnd:
+      events.push_back(createArgs<Event::LayoutPassStart>(node, data));
+      break;
+    case Event::LayoutPassEnd: {
+      auto& eventData = data.get<Event::LayoutPassEnd>();
+      events.push_back(createArgs<Event::LayoutPassEnd>(
+          node, data, {eventData.layoutContext, *eventData.layoutData}));
+      break;
+    }
     case Event::MeasureCallbackStart:
     case Event::MeasureCallbackEnd:
       break;
