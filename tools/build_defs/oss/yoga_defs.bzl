@@ -191,6 +191,7 @@ def yoga_java_library(*args, **kwargs):
     native.java_library(*args, **kwargs)
 
 def yoga_java_test(*args, **kwargs):
+    kwargs["deps"] = kwargs.get("deps", []) + ["//lib/hamcrest:hamcrest"]
     native.java_test(*args, **kwargs)
 
 def yoga_prebuilt_cxx_library(*args, **kwargs):
