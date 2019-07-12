@@ -59,6 +59,7 @@ BASE_COMPILER_FLAGS = [
     "-Werror",
     "-O2",
     "-std=c++11",
+    "-DYG_ENABLE_EVENTS",
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
