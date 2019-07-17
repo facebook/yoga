@@ -26,6 +26,7 @@ yoga_java_library(
 yoga_cxx_library(
     name = "jni",
     srcs = ["jni.cpp"],
+    allow_jni_merging = False,
     compiler_flags = LIBRARY_COMPILER_FLAGS,
     platforms = ANDROID,
     soname = "libyoga_testutil_jni.$(ext)",
