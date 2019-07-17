@@ -35,6 +35,7 @@ yoga_cxx_library(
         "-std=c++11",
     ],
     platforms = (ANDROID,),
+    soname = "libfbjni.$(ext)",
     visibility = ["PUBLIC"],
     deps = [
         ":ndklog",
