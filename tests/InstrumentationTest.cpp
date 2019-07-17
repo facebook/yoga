@@ -67,35 +67,6 @@ struct MarkerTest : public ::testing::Test {
   uniquePtr<YGConfig> config;
 };
 
-TEST_F(MarkerTest, measure_functions_get_wrapped) {
-  auto root = makeNode();
-  YGNodeSetMeasureFunc(
-      root.get(), [](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode) {
-        return YGSize{};
-      });
-
-  calculateLayout(root);
-  auto& markerCookie = findLastMarker(YGMarkerMeasure);
-
-  ASSERT_EQ(markerCookie.start.marker, YGMarkerMeasure)
-      << "have " << markerCookies.size() << " recorded markers";
-}
-
-TEST_F(MarkerTest, baseline_functions_get_wrapped) {
-  auto root = makeNode();
-  auto child = addChild(root);
-  YGNodeSetBaselineFunc(
-      child.get(), [](YGNodeRef, float, float) { return 0.0f; });
-  YGNodeStyleSetFlexDirection(root.get(), YGFlexDirectionRow);
-  YGNodeStyleSetAlignItems(root.get(), YGAlignBaseline);
-
-  calculateLayout(root);
-  auto& markerCookie = findLastMarker(YGMarkerBaselineFn);
-
-  ASSERT_EQ(markerCookie.start.marker, YGMarkerBaselineFn)
-      << "have " << markerCookies.size() << " recorded markers";
-}
-
 void* MarkerTest::startMarker(
     YGMarker marker,
     YGNodeRef node,
@@ -113,11 +84,6 @@ void MarkerTest::endMarker(
     void* id) {
   auto cookie = static_cast<MarkerCookie*>(id);
   cookie->end = {{marker, node, data}, id, {}};
-  switch (marker) {
-    case YGMarkerMeasure:
-    case YGMarkerBaselineFn:
-      break;
-  };
 }
 
 uniquePtr<YGNode> MarkerTest::makeNode() {
@@ -141,12 +107,6 @@ void MarkerTest::calculateLayout(
 namespace {
 
 const char* markerTypeName(YGMarker type) {
-  switch (type) {
-    case YGMarkerMeasure:
-      return "YGMarkerMeasure";
-    case YGMarkerBaselineFn:
-      return "YGMarkerBaselineFn";
-  }
   return "";
 }
 
