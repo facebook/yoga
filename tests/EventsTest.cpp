@@ -15,7 +15,6 @@
 #include <memory>
 #include <vector>
 #include <yoga/YGEnums.h>
-#include <yoga/YGMarker.h>
 
 namespace facebook {
 namespace yoga {
@@ -27,7 +26,7 @@ struct TypedEventTestData {};
 template <>
 struct TypedEventTestData<Event::LayoutPassEnd> {
   void* layoutContext;
-  YGMarkerLayoutData layoutData;
+  LayoutData layoutData;
 };
 
 struct EventArgs {
@@ -147,7 +146,7 @@ TEST_F(EventTest, layout_events_single_node) {
   ASSERT_EQ(events[3].node, root);
   ASSERT_EQ(events[3].type, Event::LayoutPassEnd);
 
-  YGMarkerLayoutData layoutData =
+  LayoutData layoutData =
       events[3].eventTestData<Event::LayoutPassEnd>().layoutData;
 
   ASSERT_EQ(layoutData.layouts, 1);
@@ -170,7 +169,7 @@ TEST_F(EventTest, layout_events_counts_multi_node_layout) {
   ASSERT_EQ(events[11].node, root);
   ASSERT_EQ(events[11].type, Event::LayoutPassEnd);
 
-  YGMarkerLayoutData layoutData =
+  LayoutData layoutData =
       events[11].eventTestData<Event::LayoutPassEnd>().layoutData;
 
   ASSERT_EQ(layoutData.layouts, 3);
@@ -191,7 +190,7 @@ TEST_F(EventTest, layout_events_counts_cache_hits_single_node_layout) {
   ASSERT_EQ(events[6].node, root);
   ASSERT_EQ(events[6].type, Event::LayoutPassEnd);
 
-  YGMarkerLayoutData layoutData =
+  LayoutData layoutData =
       events[6].eventTestData<Event::LayoutPassEnd>().layoutData;
 
   ASSERT_EQ(layoutData.layouts, 0);
@@ -215,7 +214,7 @@ TEST_F(EventTest, layout_events_counts_cache_hits_multi_node_layout) {
   ASSERT_EQ(lastEvent().node, root);
   ASSERT_EQ(lastEvent().type, Event::LayoutPassEnd);
 
-  YGMarkerLayoutData layoutData =
+  LayoutData layoutData =
       lastEvent().eventTestData<Event::LayoutPassEnd>().layoutData;
 
   ASSERT_EQ(layoutData.layouts, 3);
@@ -240,7 +239,7 @@ TEST_F(EventTest, layout_events_has_max_measure_cache) {
   ASSERT_EQ(lastEvent().node, root);
   ASSERT_EQ(lastEvent().type, Event::LayoutPassEnd);
 
-  YGMarkerLayoutData layoutData =
+  LayoutData layoutData =
       lastEvent().eventTestData<Event::LayoutPassEnd>().layoutData;
 
   ASSERT_EQ(layoutData.layouts, 3);
