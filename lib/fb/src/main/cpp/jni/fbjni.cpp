@@ -4,36 +4,35 @@
  * This source code is licensed under the MIT license found in the LICENSE
  * file in the root directory of this source tree.
  */
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 
 #include <mutex>
 #include <vector>
-#include <jni/LocalString.h>
-#include <fb/log.h>
+
+#include <fbjni/detail/utf8.h>
 
 namespace facebook {
 namespace jni {
 
 jint initialize(JavaVM* vm, std::function<void()>&& init_fn) noexcept {
-  static std::once_flag flag{};
   // TODO (t7832883): DTRT when we have exception pointers
   static auto error_msg = std::string{"Failed to initialize fbjni"};
-  static auto error_occured = false;
-
-  std::call_once(flag, [vm] {
-    try {
-      Environment::initialize(vm);
-    } catch (std::exception& ex) {
-      error_occured = true;
+  static bool error_occured = [vm] {
+      bool retVal = false;
       try {
-        error_msg = std::string{"Failed to initialize fbjni: "} + ex.what();
+        Environment::initialize(vm);
+      } catch (std::exception& ex) {
+        retVal = true;
+        try {
+          error_msg = std::string{"Failed to initialize fbjni: "} + ex.what();
+        } catch (...) {
+          // Ignore, we already have a fall back message
+        }
       } catch (...) {
-        // Ignore, we already have a fall back message
+        retVal = true;
       }
-    } catch (...) {
-      error_occured = true;
-    }
-  });
+      return retVal;
+    }();
 
   try {
     if (error_occured) {
@@ -42,7 +41,7 @@ jint initialize(JavaVM* vm, std::function<void()>&& init_fn) noexcept {
 
     init_fn();
   } catch (const std::exception& e) {
-    FBLOGE("error %s", e.what());
+    FBJNI_LOGE("error %s", e.what());
     translatePendingCppExceptionToJavaException();
   } catch (...) {
     translatePendingCppExceptionToJavaException();
@@ -52,43 +51,54 @@ jint initialize(JavaVM* vm, std::function<void()>&& init_fn) noexcept {
   return JNI_VERSION_1_6;
 }
 
-alias_ref<JClass> findClassStatic(const char* name) {
-  const auto env = internal::getEnv();
+namespace detail {
+
+jclass findClass(JNIEnv* env, const char* name) {
   if (!env) {
     throw std::runtime_error("Unable to retrieve JNIEnv*.");
   }
-  auto cls = env->FindClass(name);
+  jclass cls = env->FindClass(name);
   FACEBOOK_JNI_THROW_EXCEPTION_IF(!cls);
-  auto leaking_ref = (jclass)env->NewGlobalRef(cls);
-  FACEBOOK_JNI_THROW_EXCEPTION_IF(!leaking_ref);
-  return wrap_alias(leaking_ref);
+  return cls;
+}
+
 }
 
 local_ref<JClass> findClassLocal(const char* name) {
-  const auto env = internal::getEnv();
-  if (!env) {
-    throw std::runtime_error("Unable to retrieve JNIEnv*.");
-  }
-  auto cls = env->FindClass(name);
-  FACEBOOK_JNI_THROW_EXCEPTION_IF(!cls);
-  return adopt_local(cls);
+  return adopt_local(detail::findClass(detail::currentOrNull(), name));
+}
+
+alias_ref<JClass> findClassStatic(const char* name) {
+  JNIEnv* env = detail::currentOrNull();
+  auto cls = adopt_local(detail::findClass(env, name));
+  auto leaking_ref = (jclass)env->NewGlobalRef(cls.get());
+  FACEBOOK_JNI_THROW_EXCEPTION_IF(!leaking_ref);
+  return wrap_alias(leaking_ref);
 }
 
 
 // jstring /////////////////////////////////////////////////////////////////////////////////////////
 
 std::string JString::toStdString() const {
-  const auto env = internal::getEnv();
+  const auto env = Environment::current();
   auto utf16String = JStringUtf16Extractor(env, self());
-  auto length = env->GetStringLength(self());
-  return detail::utf16toUTF8(utf16String, length);
+  return detail::utf16toUTF8(utf16String.chars(), utf16String.length());
+}
+
+std::u16string JString::toU16String() const {
+  const auto env = Environment::current();
+  auto utf16String = JStringUtf16Extractor(env, self());
+  if (!utf16String.chars() || utf16String.length() == 0) {
+    return {};
+  }
+  return std::u16string(reinterpret_cast<const char16_t*>(utf16String.chars()), utf16String.length());
 }
 
 local_ref<JString> make_jstring(const char* utf8) {
   if (!utf8) {
     return {};
   }
-  const auto env = internal::getEnv();
+  const auto env = Environment::current();
   size_t len;
   size_t modlen = detail::modifiedLength(reinterpret_cast<const uint8_t*>(utf8), &len);
   jstring result;
@@ -111,6 +121,18 @@ local_ref<JString> make_jstring(const char* utf8) {
   return adopt_local(result);
 }
 
+local_ref<JString> make_jstring(const std::u16string& utf16) {
+  if (utf16.empty()) {
+    return {};
+  }
+  const auto env = Environment::current();
+  static_assert(
+      sizeof(jchar) == sizeof(std::u16string::value_type),
+      "Expecting jchar to be the same size as std::u16string::CharT");
+  jstring result = env->NewString(reinterpret_cast<const jchar*>(utf16.c_str()), utf16.size());
+  FACEBOOK_JNI_THROW_PENDING_EXCEPTION();
+  return adopt_local(result);
+}
 
 // JniPrimitiveArrayFunctions //////////////////////////////////////////////////////////////////////
 
@@ -119,50 +141,44 @@ local_ref<JString> make_jstring(const char* utf8) {
 #define DEFINE_PRIMITIVE_METHODS(TYPE, NAME, SMALLNAME)                        \
                                                                                \
 template<>                                                                     \
-FBEXPORT                                                                       \
 TYPE* JPrimitiveArray<TYPE ## Array>::getElements(jboolean* isCopy) {          \
-  auto env = internal::getEnv();                                               \
+  auto env = Environment::current();                                           \
   TYPE* res =  env->Get ## NAME ## ArrayElements(self(), isCopy);              \
   FACEBOOK_JNI_THROW_PENDING_EXCEPTION();                                      \
   return res;                                                                  \
 }                                                                              \
                                                                                \
 template<>                                                                     \
-FBEXPORT                                                                       \
 void JPrimitiveArray<TYPE ## Array>::releaseElements(                          \
     TYPE* elements, jint mode) {                                               \
-  auto env = internal::getEnv();                                               \
+  auto env = Environment::current();                                           \
   env->Release ## NAME ## ArrayElements(self(), elements, mode);               \
   FACEBOOK_JNI_THROW_PENDING_EXCEPTION();                                      \
 }                                                                              \
                                                                                \
 template<>                                                                     \
-FBEXPORT                                                                       \
 void JPrimitiveArray<TYPE ## Array>::getRegion(                                \
     jsize start, jsize length, TYPE* buf) {                                    \
-  auto env = internal::getEnv();                                               \
+  auto env = Environment::current();                                           \
   env->Get ## NAME ## ArrayRegion(self(), start, length, buf);                 \
   FACEBOOK_JNI_THROW_PENDING_EXCEPTION();                                      \
 }                                                                              \
                                                                                \
 template<>                                                                     \
-FBEXPORT                                                                       \
 void JPrimitiveArray<TYPE ## Array>::setRegion(                                \
     jsize start, jsize length, const TYPE* elements) {                         \
-  auto env = internal::getEnv();                                               \
+  auto env = Environment::current();                                           \
   env->Set ## NAME ## ArrayRegion(self(), start, length, elements);            \
   FACEBOOK_JNI_THROW_PENDING_EXCEPTION();                                      \
 }                                                                              \
                                                                                \
-FBEXPORT                                                                       \
 local_ref<TYPE ## Array> make_ ## SMALLNAME ## _array(jsize size) {            \
-  auto array = internal::getEnv()->New ## NAME ## Array(size);                 \
+  auto array = Environment::current()->New ## NAME ## Array(size);             \
   FACEBOOK_JNI_THROW_EXCEPTION_IF(!array);                                     \
   return adopt_local(array);                                                   \
 }                                                                              \
                                                                                \
 template<>                                                                     \
-FBEXPORT                                                                       \
 local_ref<TYPE ## Array> JArray ## NAME::newArray(size_t count) {              \
   return make_ ## SMALLNAME ## _array(count);                                  \
 }                                                                              \
@@ -178,13 +194,37 @@ DEFINE_PRIMITIVE_METHODS(jfloat, Float, float)
 DEFINE_PRIMITIVE_METHODS(jdouble, Double, double)
 #pragma pop_macro("DEFINE_PRIMITIVE_METHODS")
 
+namespace detail {
+
+detail::BaseHybridClass* HybridDestructor::getNativePointer() {
+  static auto pointerField = javaClassStatic()->getField<jlong>("mNativePointer");
+  auto* value = reinterpret_cast<detail::BaseHybridClass*>(getFieldValue(pointerField));
+  if (!value) {
+    throwNewJavaException("java/lang/NullPointerException", "java.lang.NullPointerException");
+  }
+  return value;
+}
+
+void HybridDestructor::setNativePointer(
+    std::unique_ptr<detail::BaseHybridClass> new_value) {
+  static auto pointerField = javaClassStatic()->getField<jlong>("mNativePointer");
+  auto old_value = std::unique_ptr<detail::BaseHybridClass>(
+    reinterpret_cast<detail::BaseHybridClass*>(getFieldValue(pointerField)));
+  if (new_value && old_value) {
+    FBJNI_LOGF("Attempt to set C++ native pointer twice");
+  }
+  setFieldValue(pointerField, reinterpret_cast<jlong>(new_value.release()));
+}
+
+}
+
 // Internal debug /////////////////////////////////////////////////////////////////////////////////
 
 namespace internal {
 
-FBEXPORT ReferenceStats g_reference_stats;
+ReferenceStats g_reference_stats;
 
-FBEXPORT void facebook::jni::internal::ReferenceStats::reset() noexcept {
+void facebook::jni::internal::ReferenceStats::reset() noexcept {
   locals_deleted = globals_deleted = weaks_deleted = 0;
 }
 

@@ -8,15 +8,5 @@ package com.facebook.jni;
 
 import com.facebook.jni.annotations.DoNotStrip;
 
-/** A Runnable that has a native run implementation. */
 @DoNotStrip
-public class NativeRunnable implements Runnable {
-
-  private final HybridData mHybridData;
-
-  private NativeRunnable(HybridData hybridData) {
-    mHybridData = hybridData;
-  }
-
-  public native void run();
-}
+public abstract class HybridClassBase extends HybridData {}

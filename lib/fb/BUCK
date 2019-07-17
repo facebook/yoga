@@ -32,6 +32,7 @@ yoga_cxx_library(
         "-Wall",
         "-Werror",
         "-Wno-unused-parameter",
+        "-Wno-unused-variable",
         "-std=c++11",
     ],
     platforms = (ANDROID,),
