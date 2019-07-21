@@ -59,6 +59,7 @@ BASE_COMPILER_FLAGS = [
     "-Werror",
     "-O2",
     "-std=c++11",
+    "-DYG_ENABLE_EVENTS",
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
@@ -191,6 +192,7 @@ def yoga_java_library(*args, **kwargs):
     native.java_library(*args, **kwargs)
 
 def yoga_java_test(*args, **kwargs):
+    kwargs["deps"] = kwargs.get("deps", []) + ["//lib/hamcrest:hamcrest"]
     native.java_test(*args, **kwargs)
 
 def yoga_prebuilt_cxx_library(*args, **kwargs):

@@ -9,7 +9,6 @@
 #include <functional>
 #include <vector>
 #include <yoga/YGEnums.h>
-#include <yoga/YGMarker.h>
 
 struct YGConfig;
 struct YGNode;
@@ -17,12 +16,33 @@ struct YGNode;
 namespace facebook {
 namespace yoga {
 
-enum LayoutType : int {
+enum struct LayoutType : int {
   kLayout = 0,
   kMeasure = 1,
   kCachedLayout = 2,
   kCachedMeasure = 3
 };
+
+struct LayoutData {
+  int layouts;
+  int measures;
+  int maxMeasureCache;
+  int cachedLayouts;
+  int cachedMeasures;
+  int measureCallbacks;
+};
+
+enum struct LayoutPassReason : int {
+  kInitial = 0,
+  kMeasureChild = 1,
+  kAbsMeasureChild = 2,
+  kFlex = 3,
+  kAbsLayout = 4,
+  kStretch = 5,
+  kMultilineStretch = 6
+};
+
+const char* LayoutPassReasonToString(const LayoutPassReason value);
 
 struct Event {
   enum Type {
@@ -33,6 +53,8 @@ struct Event {
     LayoutPassEnd,
     MeasureCallbackStart,
     MeasureCallbackEnd,
+    NodeBaselineStart,
+    NodeBaselineEnd,
   };
   class Data;
   using Subscriber = void(const YGNode&, Type, Data);
@@ -92,7 +114,7 @@ struct Event::TypedData<Event::LayoutPassStart> {
 template <>
 struct Event::TypedData<Event::LayoutPassEnd> {
   void* layoutContext;
-  YGMarkerLayoutData* layoutData;
+  LayoutData* layoutData;
 };
 
 template <>
@@ -104,6 +126,7 @@ struct Event::TypedData<Event::MeasureCallbackEnd> {
   YGMeasureMode heightMeasureMode;
   float measuredWidth;
   float measuredHeight;
+  const LayoutPassReason reason;
 };
 
 template <>

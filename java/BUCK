@@ -50,6 +50,7 @@ yoga_java_library(
     visibility = ["PUBLIC"],
     deps = [
         ":jni",
+        FBJNI_JAVA_TARGET,
         INFER_ANNOTATIONS_TARGET,
         JSR_305_TARGET,
         PROGRUARD_ANNOTATIONS_TARGET,
