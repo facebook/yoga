@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7393BBCE22E40E8F003EB8C3 /* experiments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7393BBCB22E40E8F003EB8C3 /* experiments.cpp */; };
+		7393BBCF22E40E8F003EB8C3 /* experiments-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 7393BBCC22E40E8F003EB8C3 /* experiments-inl.h */; };
+		7393BBD022E40E8F003EB8C3 /* experiments.h in Headers */ = {isa = PBXBuildFile; fileRef = 7393BBCD22E40E8F003EB8C3 /* experiments.h */; };
 		73E948DA22CCCC4500A4EA99 /* YogaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E948D822CCCC4500A4EA99 /* YogaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		73E948E722CCCD0900A4EA99 /* YGLayout+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E948E122CCCD0900A4EA99 /* YGLayout+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		73E948E822CCCD0900A4EA99 /* YGLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E948E222CCCD0900A4EA99 /* YGLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -44,6 +47,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7393BBCB22E40E8F003EB8C3 /* experiments.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = experiments.cpp; sourceTree = "<group>"; };
+		7393BBCC22E40E8F003EB8C3 /* experiments-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "experiments-inl.h"; sourceTree = "<group>"; };
+		7393BBCD22E40E8F003EB8C3 /* experiments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = experiments.h; sourceTree = "<group>"; };
 		73E948D522CCCC4500A4EA99 /* YogaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YogaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73E948D822CCCC4500A4EA99 /* YogaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YogaKit.h; sourceTree = "<group>"; };
 		73E948E122CCCD0900A4EA99 /* YGLayout+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YGLayout+Private.h"; sourceTree = "<group>"; };
@@ -92,6 +98,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7393BBCA22E40E8F003EB8C3 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				7393BBCB22E40E8F003EB8C3 /* experiments.cpp */,
+				7393BBCC22E40E8F003EB8C3 /* experiments-inl.h */,
+				7393BBCD22E40E8F003EB8C3 /* experiments.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
 		73E948CB22CCCC4500A4EA99 = {
 			isa = PBXGroup;
 			children = (
@@ -134,8 +150,9 @@
 		73E948ED22CCCD2200A4EA99 /* yoga */ = {
 			isa = PBXGroup;
 			children = (
-				73E948F022CCCD2200A4EA99 /* CompactValue.h */,
 				73E9490922CCCD2200A4EA99 /* event */,
+				7393BBCA22E40E8F003EB8C3 /* internal */,
+				73E948F022CCCD2200A4EA99 /* CompactValue.h */,
 				73E9490422CCCD2200A4EA99 /* instrumentation.h */,
 				73E948F322CCCD2200A4EA99 /* log.cpp */,
 				73E9490122CCCD2200A4EA99 /* log.h */,
@@ -189,7 +206,9 @@
 				73E9491B22CCCD2200A4EA99 /* Yoga.h in Headers */,
 				73E948E722CCCD0900A4EA99 /* YGLayout+Private.h in Headers */,
 				73E9490D22CCCD2200A4EA99 /* Utils.h in Headers */,
+				7393BBD022E40E8F003EB8C3 /* experiments.h in Headers */,
 				73E9492722CCCD2200A4EA99 /* event.h in Headers */,
+				7393BBCF22E40E8F003EB8C3 /* experiments-inl.h in Headers */,
 				73E948DA22CCCC4500A4EA99 /* YogaKit.h in Headers */,
 				73E9491322CCCD2200A4EA99 /* YGNodePrint.h in Headers */,
 				73E9490E22CCCD2200A4EA99 /* CompactValue.h in Headers */,
@@ -276,6 +295,7 @@
 				73E9492822CCCD2200A4EA99 /* event.cpp in Sources */,
 				73E948EB22CCCD0900A4EA99 /* UIView+Yoga.m in Sources */,
 				73E9492022CCCD2200A4EA99 /* YGValue.cpp in Sources */,
+				7393BBCE22E40E8F003EB8C3 /* experiments.cpp in Sources */,
 				73E9491E22CCCD2200A4EA99 /* YGEnums.cpp in Sources */,
 				73E9492522CCCD2200A4EA99 /* YGNode.cpp in Sources */,
 				73E9491122CCCD2200A4EA99 /* log.cpp in Sources */,
