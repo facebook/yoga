@@ -350,9 +350,6 @@ module.exports = (bind: any, lib: any): Yoga => {
     Layout: bind('Layout', Layout),
     Size: bind('Size', Size),
     Value: bind('Value', Value),
-    getInstanceCount(...args) {
-      return lib.getInstanceCount(...args);
-    },
     ...CONSTANTS,
   };
 };

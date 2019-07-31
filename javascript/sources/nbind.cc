@@ -11,13 +11,8 @@
 #include "./Size.hh"
 #include "./Value.hh"
 #include "./Config.hh"
-#include "./global.hh"
 
 #include <nbind/nbind.h>
-
-NBIND_GLOBAL() {
-  function(getInstanceCount);
-}
 
 NBIND_CLASS(Size) {
   construct<>();
