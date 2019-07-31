@@ -7,6 +7,7 @@
 
     	"sources": [
             "<!@(ls -1 sources/yoga/*.cpp)",
+            "<!@(ls -1 sources/yoga/*/*.cpp)",
             "sources/Config.cc",
             "sources/Node.cc",
             "sources/global.cc",
