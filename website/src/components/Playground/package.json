@@ -1,0 +1,19 @@
+{
+  "name": "yoga-playground",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Daniel Büchele",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack && cp ../../../node_modules/antd/dist/antd.min.css dist/antd.min.css"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-flow-strip-types": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.1.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "webpack": "^4.38.0"
+  }
+}

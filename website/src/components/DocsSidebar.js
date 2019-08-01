@@ -10,10 +10,10 @@
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import EditValue from '../components/Playground/EditValue';
+import EditValue from '../components/Playground/src/EditValue';
 import Link from 'gatsby-link';
 import './DocsSidebar.css';
-import type {LayoutRecordT} from './Playground/LayoutRecord';
+import type {LayoutRecordT} from './Playground/src/LayoutRecord';
 
 const TAG_PATTERN = /<controls prop="([A-Za-z]+)"><\/controls>/gi;
 
