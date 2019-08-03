@@ -12,7 +12,7 @@ import {Button} from 'antd';
 import React from 'react';
 import Page from '../components/Page';
 import Padded from '../components/Padded';
-import Playground from '../components/Playground';
+import Playground from '../components/Playground/src';
 import {Row, Col} from 'antd';
 import './index.css';
 import ReactNativeLogo from './logos/reactnative.png';
@@ -144,10 +144,7 @@ const AboutSectionOne = () => (
         <img src={ReactNativeLogo} />
         <h3>React Native</h3>
       </a>
-      <a
-        href="https://react-pdf.org/"
-        target="_blank"
-        className="logo">
+      <a href="https://react-pdf.org/" target="_blank" className="logo">
         <img src={ReactPDFLogo} />
         <h3>React-PDF</h3>
       </a>

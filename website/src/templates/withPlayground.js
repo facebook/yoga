@@ -10,9 +10,9 @@
 
 import React, {Component} from 'react';
 import Page from '../components/Page';
-import Playground from '../components/Playground';
+import Playground from '../components/Playground/src';
 import DocsSidebar from '../components/DocsSidebar';
-import EditValue from '../components/Playground/EditValue';
+import EditValue from '../components/Playground/src/EditValue';
 import Link from 'gatsby-link';
 import {Button, Icon, Row, Col} from 'antd';
 import './index.css';

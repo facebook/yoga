@@ -27,5 +27,5 @@ it("dont_measure_single_grow_shrink_child", function () {
     root.freeRecursive();
 
   (typeof gc !== "undefined") && gc();
-  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
+  // TODO Add event support in js and check instace allocation and de allocation using that
 });

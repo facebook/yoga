@@ -1645,6 +1645,13 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(
         layoutContext);
 
     layoutMarkerData.measureCallbacks += 1;
+    if (reason == LayoutPassReason::kMeasureChild) {
+      layoutMarkerData.measureChildMeasureCallbacks += 1;
+    } else if (reason == LayoutPassReason::kFlexMeasure) {
+      layoutMarkerData.flexMeasureMeasureCallbacks += 1;
+    } else if (reason == LayoutPassReason::kAbsMeasureChild) {
+      layoutMarkerData.absMeasureChildMeasureCallbacks += 1;
+    }
 
     Event::publish<Event::MeasureCallbackEnd>(
         node,
@@ -2185,6 +2192,7 @@ static float YGDistributeFreeSpaceSecondPass(
     const YGMeasureMode childHeightMeasureMode =
         !isMainAxisRow ? childMainMeasureMode : childCrossMeasureMode;
 
+    const bool isLayoutPass = performLayout && !requiresStretchLayout;
     // Recursively call the layout algorithm for this child with the updated
     // main size.
     YGLayoutNodeInternal(
@@ -2196,8 +2204,9 @@ static float YGDistributeFreeSpaceSecondPass(
         childHeightMeasureMode,
         availableInnerWidth,
         availableInnerHeight,
-        performLayout && !requiresStretchLayout,
-        LayoutPassReason::kFlex,
+        isLayoutPass,
+        isLayoutPass ? LayoutPassReason::kFlexLayout
+                     : LayoutPassReason::kFlexMeasure,
         config,
         layoutMarkerData,
         layoutContext,
