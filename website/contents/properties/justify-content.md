@@ -25,4 +25,6 @@ remaining space around the children. Compared to `space between` using
 `space around` will result in space being distributed to the beginning of
 the first child and end of the last child.
 
+**SPACE EVENLY** Evenly distributed within the alignment container along the main axis. The spacing between each pair of adjacent items, the main-start edge and the first item, and the main-end edge and the last item, are all exactly the same.
+
 <controls prop="justifyContent"></controls>

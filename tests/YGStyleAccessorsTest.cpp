@@ -11,22 +11,9 @@
 #include <yoga/YGStyle.h>
 #include <yoga/YGValue.h>
 
-#include <utility>
-
-using AssignedProps =
-    std::remove_reference<decltype(YGStyle{}.assignedProps())>::type;
-
-namespace {
-constexpr AssignedProps setBits(int from, int n) {
-  return n > 0 ? (setBits(from, n - 1) | AssignedProps{1ull << (from + n - 1)})
-               : 0;
-}
-} // namespace
-
 #define ACCESSOR_TESTS_1(NAME, X) \
   style.NAME() = X;               \
-  ASSERT_EQ(style.NAME(), X);     \
-  ASSERT_EQ(style.assignedProps(), AssignedProps{1ull << YGStyle::NAME##Bit});
+  ASSERT_EQ(style.NAME(), X);
 #define ACCESSOR_TESTS_2(NAME, X, ...) \
   ACCESSOR_TESTS_1(NAME, X);           \
   ACCESSOR_TESTS_1(NAME, __VA_ARGS__);
@@ -48,17 +35,9 @@ constexpr AssignedProps setBits(int from, int n) {
     auto style = YGStyle{};                                            \
     style.NAME()[IDX] = X;                                             \
     ASSERT_EQ(style.NAME()[IDX], X);                                   \
-    ASSERT_EQ(                                                         \
-        style.assignedProps(),                                         \
-        AssignedProps{1ull << (YGStyle::NAME##Bit + IDX)});            \
     auto asArray = decltype(std::declval<const YGStyle&>().NAME()){X}; \
     style.NAME() = asArray;                                            \
     ASSERT_EQ(static_cast<decltype(asArray)>(style.NAME()), asArray);  \
-    ASSERT_EQ(                                                         \
-        style.assignedProps(),                                         \
-        AssignedProps{setBits(                                         \
-            YGStyle::NAME##Bit,                                        \
-            facebook::yoga::enums::count<decltype(IDX)>())});          \
   }
 
 #define INDEX_ACCESSOR_TESTS_2(NAME, IDX, X, Y) \
@@ -93,7 +72,6 @@ constexpr AssignedProps setBits(int from, int n) {
 #define INDEX_ACCESSOR_TEST(NAME, DEFAULT_VAL, IDX, ...)      \
   TEST(YGStyle, style_##NAME##_access) {                      \
     ASSERT_EQ(YGStyle{}.NAME()[IDX], DEFAULT_VAL);            \
-    ASSERT_EQ(YGStyle{}.assignedProps(), 0);                  \
     INDEX_ACCESSOR_TESTS(__VA_ARGS__)(NAME, IDX, __VA_ARGS__) \
   }
 
@@ -269,123 +247,6 @@ ACCESSOR_TEST(
     YGFloatOptional{9876.5f},
     YGFloatOptional{0.0f},
     YGFloatOptional{});
-
-TEST(YGStyle, set_properties_default_to_0) {
-  ASSERT_EQ(YGStyle{}.assignedProps(), AssignedProps{0});
-}
-
-TEST(YGStyle, set_properties_reflects_all_set_properties) {
-  auto style = YGStyle{};
-
-  style.direction() = YGDirectionRTL;
-  style.justifyContent() = YGJustifySpaceAround;
-  style.flexWrap() = YGWrapWrap;
-  style.padding()[YGEdgeVertical] = YGValue{1, YGUnitPoint};
-  style.minDimensions()[YGDimensionHeight] = YGValue{1, YGUnitPercent};
-  style.aspectRatio() = YGFloatOptional{1.23};
-
-  ASSERT_EQ(
-      style.assignedProps(),
-      AssignedProps{1ull << YGStyle::directionBit |
-                    1ull << YGStyle::justifyContentBit |
-                    1ull << YGStyle::flexWrapBit |
-                    1ull << (YGStyle::paddingBit + YGEdgeVertical) |
-                    1ull << (YGStyle::minDimensionsBit + YGDimensionHeight) |
-                    1ull << YGStyle::aspectRatioBit});
-}
-
-TEST(YGStyle, directionBit) {
-  constexpr auto directionBit = YGStyle::directionBit;
-  ASSERT_EQ(directionBit, 0);
-}
-TEST(YGStyle, flexDirectionBit) {
-  constexpr auto flexDirectionBit = YGStyle::flexDirectionBit;
-  ASSERT_EQ(flexDirectionBit, 1);
-}
-TEST(YGStyle, justifyContentBit) {
-  constexpr auto justifyContentBit = YGStyle::justifyContentBit;
-  ASSERT_EQ(justifyContentBit, 2);
-}
-TEST(YGStyle, alignContentBit) {
-  constexpr auto alignContentBit = YGStyle::alignContentBit;
-  ASSERT_EQ(alignContentBit, 3);
-}
-TEST(YGStyle, alignItemsBit) {
-  constexpr auto alignItemsBit = YGStyle::alignItemsBit;
-  ASSERT_EQ(alignItemsBit, 4);
-}
-TEST(YGStyle, alignSelfBit) {
-  constexpr auto alignSelfBit = YGStyle::alignSelfBit;
-  ASSERT_EQ(alignSelfBit, 5);
-}
-TEST(YGStyle, positionTypeBit) {
-  constexpr auto positionTypeBit = YGStyle::positionTypeBit;
-  ASSERT_EQ(positionTypeBit, 6);
-}
-TEST(YGStyle, flexWrapBit) {
-  constexpr auto flexWrapBit = YGStyle::flexWrapBit;
-  ASSERT_EQ(flexWrapBit, 7);
-}
-TEST(YGStyle, overflowBit) {
-  constexpr auto overflowBit = YGStyle::overflowBit;
-  ASSERT_EQ(overflowBit, 8);
-}
-TEST(YGStyle, displayBit) {
-  constexpr auto displayBit = YGStyle::displayBit;
-  ASSERT_EQ(displayBit, 9);
-}
-TEST(YGStyle, flexBit) {
-  constexpr auto flexBit = YGStyle::flexBit;
-  ASSERT_EQ(flexBit, 10);
-}
-TEST(YGStyle, flexGrowBit) {
-  constexpr auto flexGrowBit = YGStyle::flexGrowBit;
-  ASSERT_EQ(flexGrowBit, 11);
-}
-TEST(YGStyle, flexShrinkBit) {
-  constexpr auto flexShrinkBit = YGStyle::flexShrinkBit;
-  ASSERT_EQ(flexShrinkBit, 12);
-}
-TEST(YGStyle, flexBasisBit) {
-  constexpr auto flexBasisBit = YGStyle::flexBasisBit;
-  ASSERT_EQ(flexBasisBit, 13);
-}
-TEST(YGStyle, marginBit) {
-  constexpr auto marginBit = YGStyle::marginBit;
-  ASSERT_EQ(marginBit, 14);
-}
-TEST(YGStyle, positionBit) {
-  constexpr auto positionBit = YGStyle::positionBit;
-  ASSERT_EQ(positionBit, 23);
-}
-TEST(YGStyle, paddingBit) {
-  constexpr auto paddingBit = YGStyle::paddingBit;
-  ASSERT_EQ(paddingBit, 32);
-}
-TEST(YGStyle, borderBit) {
-  constexpr auto borderBit = YGStyle::borderBit;
-  ASSERT_EQ(borderBit, 41);
-}
-TEST(YGStyle, dimensionsBit) {
-  constexpr auto dimensionsBit = YGStyle::dimensionsBit;
-  ASSERT_EQ(dimensionsBit, 50);
-}
-TEST(YGStyle, maxDimensionsBit) {
-  constexpr auto maxDimensionsBit = YGStyle::maxDimensionsBit;
-  ASSERT_EQ(maxDimensionsBit, 52);
-}
-TEST(YGStyle, minDimensionsBit) {
-  constexpr auto minDimensionsBit = YGStyle::minDimensionsBit;
-  ASSERT_EQ(minDimensionsBit, 54);
-}
-TEST(YGStyle, aspectRatioBit) {
-  constexpr auto aspectRatioBit = YGStyle::aspectRatioBit;
-  ASSERT_EQ(aspectRatioBit, 56);
-}
-TEST(YGStyle, numStyles) {
-  constexpr auto numStyles = YGStyle::numStyles;
-  ASSERT_EQ(numStyles, 57);
-}
 
 } // namespace yoga
 } // namespace facebook

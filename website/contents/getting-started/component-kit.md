@@ -1,5 +1,5 @@
 ---
-path: "https://componentkit.org/docs/getting-started.html"
+path: "https://componentkit.org/docs/getting-started/"
 title: "ComponentKit"
 redirect: true
 ---
