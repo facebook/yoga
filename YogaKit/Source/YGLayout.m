@@ -477,8 +477,15 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
     topLeft.x + YGNodeLayoutGetWidth(node),
     topLeft.y + YGNodeLayoutGetHeight(node),
   };
-
+#if TARGET_OS_OSX
   const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
+#else
+  const CGPoint origin = preserveOrigin ? (CGPoint) {
+                                            .x = (CGFloat)(view.center.x - CGRectGetWidth(view.bounds) * 0.5),
+                                            .y = (CGFloat)(view.center.y - CGRectGetHeight(view.bounds) * 0.5)
+                                          }
+                                        : CGPointZero;
+#endif
   CGRect frame = (CGRect) {
     .origin = {
       .x = YGRoundPixelValue(topLeft.x + origin.x),
@@ -493,8 +500,20 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
   if (!view.superview.isFlipped && view.superview.yoga.isEnabled) {
     frame.origin.y = YGNodeLayoutGetHeight(view.superview.yoga.node) - CGRectGetMaxY(frame);
   }
-#endif
+
   view.frame = frame;
+#else
+  view.bounds = (CGRect) {
+    .origin = view.bounds.origin,
+    .size = frame.size
+  };
+
+  view.center = (CGPoint) {
+    .x = (CGFloat)(CGRectGetMinX(frame) + CGRectGetWidth(frame) * 0.5),
+    .y = (CGFloat)(CGRectGetMinY(frame) + CGRectGetHeight(frame) * 0.5)
+  };
+#endif
+
 
   if (!yoga.isLeaf) {
     for (NSUInteger i=0; i<view.subviews.count; i++) {

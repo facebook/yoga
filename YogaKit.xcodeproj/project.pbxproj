@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		738F492A22FE5E770004175A /* Bitfield.h in Headers */ = {isa = PBXBuildFile; fileRef = 738F492922FE5E760004175A /* Bitfield.h */; };
 		7393BBCE22E40E8F003EB8C3 /* experiments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7393BBCB22E40E8F003EB8C3 /* experiments.cpp */; };
 		7393BBCF22E40E8F003EB8C3 /* experiments-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 7393BBCC22E40E8F003EB8C3 /* experiments-inl.h */; };
 		7393BBD022E40E8F003EB8C3 /* experiments.h in Headers */ = {isa = PBXBuildFile; fileRef = 7393BBCD22E40E8F003EB8C3 /* experiments.h */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		738F492922FE5E760004175A /* Bitfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bitfield.h; sourceTree = "<group>"; };
 		7393BBCB22E40E8F003EB8C3 /* experiments.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = experiments.cpp; sourceTree = "<group>"; };
 		7393BBCC22E40E8F003EB8C3 /* experiments-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "experiments-inl.h"; sourceTree = "<group>"; };
 		7393BBCD22E40E8F003EB8C3 /* experiments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = experiments.h; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				73E9490922CCCD2200A4EA99 /* event */,
 				7393BBCA22E40E8F003EB8C3 /* internal */,
+				738F492922FE5E760004175A /* Bitfield.h */,
 				73E948F022CCCD2200A4EA99 /* CompactValue.h */,
 				73E9490422CCCD2200A4EA99 /* instrumentation.h */,
 				73E948F322CCCD2200A4EA99 /* log.cpp */,
@@ -209,6 +212,7 @@
 				7393BBD022E40E8F003EB8C3 /* experiments.h in Headers */,
 				73E9492722CCCD2200A4EA99 /* event.h in Headers */,
 				7393BBCF22E40E8F003EB8C3 /* experiments-inl.h in Headers */,
+				738F492A22FE5E770004175A /* Bitfield.h in Headers */,
 				73E948DA22CCCC4500A4EA99 /* YogaKit.h in Headers */,
 				73E9491322CCCD2200A4EA99 /* YGNodePrint.h in Headers */,
 				73E9490E22CCCD2200A4EA99 /* CompactValue.h in Headers */,
@@ -342,7 +346,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -362,12 +365,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -406,7 +412,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -420,11 +425,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -452,19 +460,16 @@
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				HEADER_SEARCH_PATHS = "${SRCROOT}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
-				TVOS_DEPLOYMENT_TARGET = 9.0;
 				"VALID_ARCHS[sdk=appletvos*]" = arm64;
 				"VALID_ARCHS[sdk=appletvsimulator*]" = x86_64;
 				"VALID_ARCHS[sdk=iphoneos*]" = "arm64e arm64 armv7s armv7";
@@ -491,19 +496,16 @@
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				HEADER_SEARCH_PATHS = "${SRCROOT}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
-				TVOS_DEPLOYMENT_TARGET = 9.0;
 				"VALID_ARCHS[sdk=appletvos*]" = arm64;
 				"VALID_ARCHS[sdk=appletvsimulator*]" = x86_64;
 				"VALID_ARCHS[sdk=iphoneos*]" = "arm64e arm64 armv7s armv7";
