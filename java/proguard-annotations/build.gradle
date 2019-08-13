@@ -6,3 +6,4 @@
  */
 
 apply plugin: 'java'
+apply from: rootProject.file('gradle/release.gradle')
