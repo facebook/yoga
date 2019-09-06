@@ -153,6 +153,11 @@ def yoga_dep(dep):
 def yoga_cxx_lib(lib):
     return yoga_dep(lib)
 
+CXX_LIBRARY_WHITELIST_FOR_TESTS = CXX_LIBRARY_WHITELIST + [
+    yoga_cxx_lib("testutil:jni"),
+    yoga_cxx_lib("testutil:testutil"),
+]
+
 def yoga_android_aar(*args, **kwargs):
     native.android_aar(*args, **kwargs)
 
