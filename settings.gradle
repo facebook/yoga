@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-include ':yoga', ':yogacore', ':yoga-layout', ':yoga:proguard-annotations', ':libfb'
+include ':yoga', ':yogacore', ':yoga-layout', ':yoga:proguard-annotations', ':libfb', ':testutil'
 project(':yoga').projectDir = file('java')
 project(':yoga:proguard-annotations').projectDir = file('java/proguard-annotations')
 project(':yoga-layout').projectDir = file('android')
 project(':libfb').projectDir = file('lib/fb')
+project(':testutil').projectDir = file('testutil')
