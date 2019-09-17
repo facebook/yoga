@@ -3,7 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID_JAVA_TARGET", "ANDROID_RES_TARGET", "INFER_ANNOTATIONS_TARGET", "JAVA_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "yoga_android_aar", "yoga_android_resource")
+load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID_JAVA_TARGET", "ANDROID_RES_TARGET", "JAVA_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "yoga_android_aar", "yoga_android_resource")
 
 yoga_android_aar(
     name = "android",
@@ -14,7 +14,6 @@ yoga_android_aar(
     deps = [
         ANDROID_JAVA_TARGET,
         ANDROID_RES_TARGET,
-        INFER_ANNOTATIONS_TARGET,
         JAVA_TARGET,
         PROGRUARD_ANNOTATIONS_TARGET,
     ],

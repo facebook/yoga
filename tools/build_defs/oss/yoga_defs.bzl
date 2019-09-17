@@ -10,8 +10,6 @@ YOGA_ROOTS = ["//..."]
 
 JAVA_TARGET = "//java:java"
 
-INFER_ANNOTATIONS_TARGET = "//lib/infer-annotations:infer-annotations"
-
 JSR_305_TARGET = "//lib/jsr-305:jsr-305"
 
 JUNIT_TARGET = "//lib/junit:junit"
