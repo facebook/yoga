@@ -14,12 +14,12 @@ public class TestParametrization {
     NodeFactory nodeFactory = new NodeFactory() {
       @Override
       public YogaNode create() {
-        return YogaNode.create();
+        return YogaNodeFactory.create();
       }
 
       @Override
       public YogaNode create(YogaConfig config) {
-        return YogaNode.create(config);
+        return YogaNodeFactory.create(config);
       }
 
       @Override
