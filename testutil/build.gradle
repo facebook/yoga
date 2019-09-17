@@ -29,12 +29,11 @@ android {
     externalNativeBuild {
         cmake {
             path 'src/main/cpp/CMakeLists.txt'
+            version '3.6.0-rc2'
         }
     }
 
     dependencies {
         implementation 'com.facebook.soloader:soloader:0.5.1'
-        implementation 'com.google.code.findbugs:jsr305:3.0.1'
-        implementation project(':yoga:proguard-annotations')
     }
 }

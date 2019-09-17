@@ -20,6 +20,7 @@ add_compile_options(
 file(GLOB fb_SRC
     *.cpp
     jni/*.cpp
+    jni/detail/*.cpp
     lyra/*.cpp)
 
 add_library(fb SHARED
