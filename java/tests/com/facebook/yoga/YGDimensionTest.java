@@ -25,7 +25,7 @@ public class YGDimensionTest {
 
   @Test
   public void test_wrap_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
 
@@ -62,7 +62,7 @@ public class YGDimensionTest {
 
   @Test
   public void test_wrap_grandchild() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
 

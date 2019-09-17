@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 public class YogaLoggerTest {
   @Test
   public void testLoggerLeak() throws Exception {
-    final YogaConfig config = new YogaConfig();
+    final YogaConfig config = YogaConfigFactory.create();
     YogaLogger logger = new YogaLogger() {
       @Override
       public void log(YogaNode yogaNode, YogaLogLevel level, String message) {

@@ -72,7 +72,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('public void test_' + name + '() {');
     this.pushIndent();
 
-    this.push("YogaConfig config = new YogaConfig();")
+    this.push("YogaConfig config = YogaConfigFactory.create();")
     for (var i in experiments) {
       this.push('config.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
     }

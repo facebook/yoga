@@ -25,7 +25,7 @@ public class YGSizeOverflowTest {
 
   @Test
   public void test_nested_overflowing_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -77,7 +77,7 @@ public class YGSizeOverflowTest {
 
   @Test
   public void test_nested_overflowing_child_in_constraint_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -131,7 +131,7 @@ public class YGSizeOverflowTest {
 
   @Test
   public void test_parent_wrap_child_size_overflowing_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);

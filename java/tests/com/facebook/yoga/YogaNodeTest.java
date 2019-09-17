@@ -204,7 +204,7 @@ public class YogaNodeTest {
 
   @Test
   public void testUseWebDefaults() {
-    final YogaConfig config = new YogaConfig();
+    final YogaConfig config = YogaConfigFactory.create();
     config.setUseWebDefaults(true);
     final YogaNode node = createNode(config);
     assertEquals(YogaFlexDirection.ROW, node.getFlexDirection());
@@ -236,7 +236,7 @@ public class YogaNodeTest {
 
   @Test
   public void testFlagShouldDiffLayoutWithoutLegacyStretchBehaviour() throws Exception {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     config.setShouldDiffLayoutWithoutLegacyStretchBehaviour(true);
     config.setUseLegacyStretchBehaviour(true);
     YogaNode root = createNode(config);
@@ -315,7 +315,7 @@ public class YogaNodeTest {
 
   @Test
   public void testResetApiShouldResetAllLayoutOutputs() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     config.setShouldDiffLayoutWithoutLegacyStretchBehaviour(true);
     config.setUseLegacyStretchBehaviour(true);
     YogaNode node = createNode(config);

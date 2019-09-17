@@ -25,7 +25,7 @@ public class YGAndroidNewsFeed {
 
   @Test
   public void test_android_news_feed() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignContent(YogaAlign.STRETCH);

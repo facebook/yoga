@@ -25,7 +25,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_basis_flex_grow_column() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -78,7 +78,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_shrink_flex_grow_row() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -135,7 +135,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_shrink_flex_grow_child_flex_shrink_other_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -193,7 +193,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_basis_flex_grow_row() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -247,7 +247,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_basis_flex_shrink_column() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -300,7 +300,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_basis_flex_shrink_row() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -354,7 +354,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_shrink_to_zero() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setHeight(75f);
@@ -423,7 +423,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_basis_overrides_main_size() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -493,7 +493,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_grow_shrink_at_most() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -545,7 +545,7 @@ public class YGFlexTest {
 
   @Test
   public void test_flex_grow_less_than_factor_one() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
