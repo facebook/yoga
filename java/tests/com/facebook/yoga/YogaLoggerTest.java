@@ -17,7 +17,7 @@ public class YogaLoggerTest {
     final YogaConfig config = YogaConfigFactory.create();
     YogaLogger logger = new YogaLogger() {
       @Override
-      public void log(YogaNode yogaNode, YogaLogLevel level, String message) {
+      public void log(YogaLogLevel level, String message) {
       }
     };
     config.setLogger(logger);
