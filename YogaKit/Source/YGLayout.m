@@ -441,10 +441,14 @@ static CGFloat YGRoundPixelValue(CGFloat value)
 static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
 {
   NSCAssert([NSThread isMainThread], @"Framesetting should only be done on the main thread.");
-
+  
+  if (!view.isYogaEnabled) {
+    return;
+  }
+  
   const YGLayout *yoga = view.yoga;
 
-  if (!yoga.isIncludedInLayout) {
+  if (!yoga.isEnabled || !yoga.isIncludedInLayout) {
      return;
   }
 
