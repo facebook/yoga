@@ -22,11 +22,32 @@
   XCTAssertNoThrow([view configureLayoutWithBlock:block]);
 }
 
+- (void)testConfigureContainerLayoutIsNoOpWithNilBlock
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  id block = nil;
+  XCTAssertNoThrow([view configureLayoutWithContainerBlock:block]);
+}
+
 - (void)testConfigureLayoutBlockWorksWithValidBlock
 {
   UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
   [view configureLayoutWithBlock:^(YGLayout *layout){
     XCTAssertNotNil(layout);
+    layout.isEnabled = YES;
+    layout.width = YGPointValue(25);
+  }];
+
+  XCTAssertTrue(view.yoga.isEnabled);
+  XCTAssertEqual(view.yoga.width.value, 25);
+}
+
+- (void)testConfigureContainerLayoutBlockWorksWithValidBlock
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+  [view configureLayoutWithContainerBlock:^(YGLayout *layout, UIView *container){
+    XCTAssertNotNil(layout);
+    XCTAssertTrue(view == container);
     layout.isEnabled = YES;
     layout.width = YGPointValue(25);
   }];

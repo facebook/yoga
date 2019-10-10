@@ -10,6 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^YGLayoutConfigurationBlock)(YGLayout *layout);
+typedef void (^YGLayoutContainerConfigurationBlock)(YGLayout *layout, UIView *container);
 
 @interface UIView (Yoga)
 
@@ -29,6 +30,14 @@ typedef void (^YGLayoutConfigurationBlock)(YGLayout *layout);
  */
 - (void)configureLayoutWithBlock:(YGLayoutConfigurationBlock)block
     NS_SWIFT_NAME(configureLayout(block:));
+
+/**
+ In ObjC land, every time you access `view.yoga.*` you are adding another `objc_msgSend`
+ to your code. If you plan on making multiple changes to YGLayout, it's more performant
+ to use this method, which uses a single objc_msgSend call.
+ */
+- (void)configureLayoutWithContainerBlock:(YGLayoutContainerConfigurationBlock)block
+    NS_SWIFT_NAME(configureLayout(containerBlock:));
 
 @end
 

@@ -35,4 +35,11 @@ static const void *kYGYogaAssociatedKey = &kYGYogaAssociatedKey;
   }
 }
 
+- (void)configureLayoutWithContainerBlock:(YGLayoutContainerConfigurationBlock)block
+{
+  if (block != nil) {
+    block(self.yoga, self);
+  }
+}
+
 @end
