@@ -469,7 +469,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				"VALID_ARCHS[sdk=appletvos*]" = arm64;
 				"VALID_ARCHS[sdk=appletvsimulator*]" = x86_64;
 				"VALID_ARCHS[sdk=iphoneos*]" = "arm64e arm64 armv7s armv7";
@@ -505,7 +506,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				"VALID_ARCHS[sdk=appletvos*]" = arm64;
 				"VALID_ARCHS[sdk=appletvsimulator*]" = x86_64;
 				"VALID_ARCHS[sdk=iphoneos*]" = "arm64e arm64 armv7s armv7";
