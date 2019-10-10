@@ -23,7 +23,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputLayoutDirection() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.LAYOUT_DIRECTION, YogaDirection.LTR.intValue()};
     root.setStyleInputs(arr, 2);
@@ -33,7 +33,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputFlexDirection() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.FLEX_DIRECTION, YogaFlexDirection.ROW.intValue()};
     root.setStyleInputs(arr, 2);
@@ -42,7 +42,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputFlex() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.FLEX, 5f};
     root.setStyleInputs(arr, 2);
@@ -51,7 +51,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputFlexGrow() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.FLEX_GROW, 5f};
     root.setStyleInputs(arr, 2);
@@ -60,7 +60,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputFlexShrink() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.FLEX_SHRINK, 5f};
     root.setStyleInputs(arr, 2);
@@ -69,7 +69,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputFlexBasis() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.FLEX_BASIS, 5f};
     root.setStyleInputs(arr, 2);
@@ -78,7 +78,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputFlexBasisPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.FLEX_BASIS_PERCENT, 5f};
     root.setStyleInputs(arr, 2);
@@ -87,7 +87,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputFlexBasisAuto() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.FLEX_BASIS_AUTO};
     root.setStyleInputs(arr, 1);
@@ -96,7 +96,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputFlexWrap() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.FLEX_WRAP, YogaWrap.WRAP.intValue()};
     root.setStyleInputs(arr, 2);
@@ -105,7 +105,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputWidth() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.WIDTH, 50f};
     root.setStyleInputs(arr, 2);
@@ -114,7 +114,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputWidthPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.WIDTH_PERCENT, 5f};
     root.setStyleInputs(arr, 2);
@@ -123,7 +123,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputWidthAuto() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.WIDTH_AUTO};
     root.setStyleInputs(arr, 1);
@@ -132,7 +132,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMinWidth() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MIN_WIDTH, 50f};
     root.setStyleInputs(arr, 2);
@@ -141,7 +141,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMinWidthPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MIN_WIDTH_PERCENT, 5f};
     root.setStyleInputs(arr, 2);
@@ -150,7 +150,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMaxWidth() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MAX_WIDTH, 50f};
     root.setStyleInputs(arr, 2);
@@ -159,7 +159,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMaxWidthPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MAX_WIDTH_PERCENT, 5f};
     root.setStyleInputs(arr, 2);
@@ -168,7 +168,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputHeight() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.HEIGHT, 50f};
     root.setStyleInputs(arr, 2);
@@ -177,7 +177,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputHeightPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.HEIGHT_PERCENT, 5f};
     root.setStyleInputs(arr, 2);
@@ -186,7 +186,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputHeightAuto() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.HEIGHT_AUTO};
     root.setStyleInputs(arr, 1);
@@ -195,7 +195,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMinHeight() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MIN_HEIGHT, 50f};
     root.setStyleInputs(arr, 2);
@@ -204,7 +204,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMinHeightPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MIN_HEIGHT_PERCENT, 5f};
     root.setStyleInputs(arr, 2);
@@ -213,7 +213,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMaxHeight() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MAX_HEIGHT, 50f};
     root.setStyleInputs(arr, 2);
@@ -222,7 +222,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMaxHeightPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MAX_HEIGHT_PERCENT, 5f};
     root.setStyleInputs(arr, 2);
@@ -231,7 +231,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputJustiyContent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.JUSTIFY_CONTENT, YogaJustify.CENTER.intValue()};
     root.setStyleInputs(arr, 2);
@@ -240,7 +240,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputAlignItems() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.ALIGN_ITEMS, YogaAlign.BASELINE.intValue()};
     root.setStyleInputs(arr, 2);
@@ -249,7 +249,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputAlignSelf() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.ALIGN_SELF, YogaAlign.BASELINE.intValue()};
     root.setStyleInputs(arr, 2);
@@ -258,7 +258,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputAlignContent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.ALIGN_CONTENT, YogaAlign.BASELINE.intValue()};
     root.setStyleInputs(arr, 2);
@@ -267,7 +267,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputPositionType() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.POSITION_TYPE, YogaPositionType.ABSOLUTE.intValue()};
     root.setStyleInputs(arr, 2);
@@ -276,7 +276,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputAspectRatio() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.ASPECT_RATIO, 2f};
     root.setStyleInputs(arr, 2);
@@ -285,7 +285,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputOverflow() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.OVERFLOW, YogaOverflow.HIDDEN.intValue()};
     root.setStyleInputs(arr, 2);
@@ -294,7 +294,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputDisplay() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.DISPLAY, YogaDisplay.NONE.intValue()};
     root.setStyleInputs(arr, 2);
@@ -303,7 +303,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMargin() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MARGIN, YogaEdge.LEFT.intValue(), 12f};
     root.setStyleInputs(arr, 3);
@@ -312,7 +312,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMarginPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MARGIN_PERCENT, YogaEdge.LEFT.intValue(), 12f};
     root.setStyleInputs(arr, 3);
@@ -321,7 +321,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputMarginAuto() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.MARGIN_AUTO, YogaEdge.LEFT.intValue()};
     root.setStyleInputs(arr, 2);
@@ -330,7 +330,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputPadding() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.PADDING, YogaEdge.LEFT.intValue(), 12f};
     root.setStyleInputs(arr, 3);
@@ -339,7 +339,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputPaddingPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.PADDING_PERCENT, YogaEdge.LEFT.intValue(), 12f};
     root.setStyleInputs(arr, 3);
@@ -348,7 +348,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputBorder() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.BORDER, YogaEdge.LEFT.intValue(), 12f};
     root.setStyleInputs(arr, 3);
@@ -357,7 +357,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputPosition() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.POSITION, YogaEdge.LEFT.intValue(), 12f};
     root.setStyleInputs(arr, 3);
@@ -366,7 +366,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputPositionPercent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.POSITION_PERCENT, YogaEdge.LEFT.intValue(), 12f};
     root.setStyleInputs(arr, 3);
@@ -375,7 +375,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputIsReferenceBaseline() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     float[] arr = new float[]{YogaStyleInputs.IS_REFERENCE_BASELINE, 1f};
     root.setStyleInputs(arr, 2);
@@ -384,7 +384,7 @@ public class BatchingAPITests {
 
   @Test
   public void testStyleInputs() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
     final YogaNode root = createNode(config);
     int count = 0;
     float[] arr = new float[100];

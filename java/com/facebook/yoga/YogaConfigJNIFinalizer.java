@@ -6,17 +6,13 @@
  */
 package com.facebook.yoga;
 
-public class YogaNodeJNIFinalizer extends YogaNodeJNIBase {
-  public YogaNodeJNIFinalizer() {
+public class YogaConfigJNIFinalizer extends YogaConfigJNIBase {
+  public YogaConfigJNIFinalizer() {
     super();
   }
 
-  public YogaNodeJNIFinalizer(boolean useVanillaJNI) {
+  public YogaConfigJNIFinalizer(boolean useVanillaJNI) {
     super(useVanillaJNI);
-  }
-
-  public YogaNodeJNIFinalizer(YogaConfig config) {
-    super(config);
   }
 
   @Override
@@ -33,9 +29,9 @@ public class YogaNodeJNIFinalizer extends YogaNodeJNIBase {
       long nativePointer = mNativePointer;
       mNativePointer = 0;
       if (useVanillaJNI)
-        YogaNative.jni_YGNodeFreeJNI(nativePointer);
+        YogaNative.jni_YGConfigFreeJNI(nativePointer);
       else
-        YogaNative.jni_YGNodeFree(nativePointer);
+        YogaNative.jni_YGConfigFree(nativePointer);
     }
   }
 }

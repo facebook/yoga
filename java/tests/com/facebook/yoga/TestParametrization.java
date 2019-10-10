@@ -14,12 +14,12 @@ public class TestParametrization {
     NodeFactory nodeFactory = new NodeFactory() {
       @Override
       public YogaNode create() {
-        return YogaNode.create();
+        return YogaNodeFactory.create();
       }
 
       @Override
       public YogaNode create(YogaConfig config) {
-        return YogaNode.create(config);
+        return YogaNodeFactory.create(config);
       }
 
       @Override
@@ -27,7 +27,25 @@ public class TestParametrization {
         return "JNI";
       }
     };
-    return Arrays.asList(nodeFactory);
+
+    NodeFactory nodeFactoryUsingVanillaJNI = new NodeFactory() {
+      @Override
+      public YogaNode create() {
+        return YogaNodeFactory.create(true);
+      }
+
+      @Override
+      public YogaNode create(YogaConfig config) {
+        config.setUseVanillaJNI(true);
+        return YogaNodeFactory.create(config);
+      }
+
+      @Override
+      public String toString() {
+        return "VanillaJNI";
+      }
+    };
+    return Arrays.asList(nodeFactory, nodeFactoryUsingVanillaJNI);
   }
 
 

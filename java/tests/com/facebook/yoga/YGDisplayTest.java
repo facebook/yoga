@@ -25,7 +25,7 @@ public class YGDisplayTest {
 
   @Test
   public void test_display_none() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -79,7 +79,7 @@ public class YGDisplayTest {
 
   @Test
   public void test_display_none_fixed_size() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -134,7 +134,7 @@ public class YGDisplayTest {
 
   @Test
   public void test_display_none_with_margin() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -193,7 +193,7 @@ public class YGDisplayTest {
 
   @Test
   public void test_display_none_with_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -284,7 +284,7 @@ public class YGDisplayTest {
 
   @Test
   public void test_display_none_with_position() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);

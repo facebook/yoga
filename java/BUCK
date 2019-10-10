@@ -3,11 +3,17 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "CXX_LIBRARY_WHITELIST", "FBJNI_JAVA_TARGET", "FBJNI_TARGET", "INFER_ANNOTATIONS_TARGET", "JNI_TARGET", "JSR_305_TARGET", "JUNIT_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "yoga_cxx_lib", "yoga_cxx_library", "yoga_dep", "yoga_java_binary", "yoga_java_library", "yoga_java_test")
+load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "CXX_LIBRARY_WHITELIST", "FBJNI_JAVA_TARGET", "FBJNI_TARGET", "JNI_TARGET", "JSR_305_TARGET", "JUNIT_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "yoga_cxx_lib", "yoga_cxx_library", "yoga_dep", "yoga_java_binary", "yoga_java_library", "yoga_java_test")
 
 CXX_LIBRARY_WHITELIST_FOR_TESTS = CXX_LIBRARY_WHITELIST + [
     yoga_cxx_lib("testutil:jni"),
     yoga_cxx_lib("testutil:testutil"),
+]
+
+YOGA_JAVA_IMPLEMENTATION_FILES = [
+    "com/facebook/yoga/*JNI*.java",
+    "com/facebook/yoga/*Factory.java",
+    "com/facebook/yoga/YogaNative.java",
 ]
 
 yoga_cxx_library(
@@ -39,8 +45,39 @@ yoga_cxx_library(
 )
 
 yoga_java_library(
+    name = "java-interface",
+    srcs = glob(
+        ["com/facebook/yoga/*.java"],
+        exclude = YOGA_JAVA_IMPLEMENTATION_FILES,
+    ),
+    required_for_source_only_abi = True,
+    source = "1.7",
+    target = "1.7",
+    visibility = ["PUBLIC"],
+    deps = [
+        JSR_305_TARGET,
+        PROGRUARD_ANNOTATIONS_TARGET,
+    ],
+)
+
+yoga_java_library(
+    name = "java-impl",
+    srcs = glob(YOGA_JAVA_IMPLEMENTATION_FILES),
+    required_for_source_only_abi = True,
+    source = "1.7",
+    target = "1.7",
+    deps = [
+        ":java-interface",
+        ":jni",
+        FBJNI_JAVA_TARGET,
+        JSR_305_TARGET,
+        PROGRUARD_ANNOTATIONS_TARGET,
+        SOLOADER_TARGET,
+    ],
+)
+
+yoga_java_library(
     name = "java",
-    srcs = glob(["com/facebook/yoga/*.java"]),
     required_for_source_only_abi = True,
     source = "1.7",
     target = "1.7",
@@ -48,13 +85,9 @@ yoga_java_library(
         yoga_dep("java:tests"),
     ],
     visibility = ["PUBLIC"],
-    deps = [
-        ":jni",
-        FBJNI_JAVA_TARGET,
-        INFER_ANNOTATIONS_TARGET,
-        JSR_305_TARGET,
-        PROGRUARD_ANNOTATIONS_TARGET,
-        SOLOADER_TARGET,
+    exported_deps = [
+        ":java-impl",
+        ":java-interface",
     ],
 )
 

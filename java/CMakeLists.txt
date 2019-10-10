@@ -29,7 +29,10 @@ add_compile_options(
     -Wall
     -std=c++11)
 
-add_library(yoga SHARED jni/YGJNI.cpp jni/YGJTypes.cpp)
+file(GLOB jni_SRC
+        jni/*.cpp)
+
+add_library(yoga SHARED ${jni_SRC})
 
 target_include_directories(yoga PRIVATE
     ${libfb_DIR}/include

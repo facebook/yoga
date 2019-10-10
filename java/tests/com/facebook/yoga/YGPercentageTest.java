@@ -25,7 +25,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_width_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -65,7 +65,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_position_left_top() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -107,7 +107,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_position_bottom_right() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -149,7 +149,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -204,7 +204,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis_cross() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -258,7 +258,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis_cross_min_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -312,7 +312,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis_main_max_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -369,7 +369,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis_cross_max_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -425,7 +425,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis_main_max_width() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -482,7 +482,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis_cross_max_width() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -538,7 +538,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis_main_min_width() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -595,7 +595,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_flex_basis_cross_min_width() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -651,7 +651,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_multiple_nested_with_padding_margin_and_percentage_values() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -759,7 +759,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_margin_should_calculate_based_only_on_width() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -816,7 +816,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_padding_should_calculate_based_only_on_width() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -873,7 +873,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_absolute_position() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -915,7 +915,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_width_height_undefined_parent_size() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
 
@@ -952,7 +952,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percent_within_flex_grow() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1033,7 +1033,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percentage_container_in_wrapping_container() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1118,7 +1118,7 @@ public class YGPercentageTest {
 
   @Test
   public void test_percent_absolute_position() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(60f);

@@ -32,7 +32,7 @@ public class YGAlignBaselineTest {
 
   @Test
   public void test_align_baseline_parent_using_child_in_column_as_reference() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createYGNode(config, YogaFlexDirection.ROW, 1000f, 1000f, true);
 
@@ -69,7 +69,7 @@ public class YGAlignBaselineTest {
 
   @Test
   public void test_align_baseline_parent_using_child_in_row_as_reference() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createYGNode(config, YogaFlexDirection.ROW, 1000f, 1000f, true);
 
