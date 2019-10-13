@@ -68,7 +68,7 @@ final class ExamplesViewController: UIViewController, IGListAdapterDataSource, I
         return models as [IGListDiffable]
     }
 
-    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
+    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController & IGListSectionType {
         let sizeBlock: IGListSingleSectionCellSizeBlock = { (model, context) in
             return CGSize(width: (context?.containerSize.width)!, height: 75.0)
         }
