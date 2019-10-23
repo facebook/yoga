@@ -1,9 +1,10 @@
 /*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the LICENSE
- * file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
+
 #include "corefunctions.h"
 #include "macros.h"
 
@@ -61,12 +62,16 @@ void logErrorMessageAndDie(const char* message) {
 }
 
 void assertNoPendingJniException(JNIEnv* env) {
-  // This method cannot call any other method of the library, since other
-  // methods of the library use it to check for exceptions too
-  if (env->ExceptionCheck()) {
-    env->ExceptionDescribe();
-    logErrorMessageAndDie("Aborting due to pending Java exception in JNI");
+  if (env->ExceptionCheck() == JNI_FALSE) {
+    return;
   }
+
+  auto throwable = env->ExceptionOccurred();
+  if (!throwable) {
+    logErrorMessageAndDie("Unable to get pending JNI exception.");
+  }
+  env->ExceptionClear();
+  throw throwable;
 }
 
 } // namespace vanillajni

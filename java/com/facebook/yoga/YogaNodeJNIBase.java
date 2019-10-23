@@ -1,9 +1,10 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the LICENSE
- * file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
+
 package com.facebook.yoga;
 
 import com.facebook.proguard.annotations.DoNotStrip;
@@ -610,7 +611,10 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
 
   public void setMeasureFunction(YogaMeasureFunction measureFunction) {
     mMeasureFunction = measureFunction;
-    YogaNative.jni_YGNodeSetHasMeasureFunc(mNativePointer, measureFunction != null);
+    if (useVanillaJNI)
+      YogaNative.jni_YGNodeSetHasMeasureFuncJNI(mNativePointer, measureFunction != null);
+    else
+      YogaNative.jni_YGNodeSetHasMeasureFunc(mNativePointer, measureFunction != null);
   }
 
   // Implementation Note: Why this method needs to stay final
@@ -634,7 +638,10 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
 
   public void setBaselineFunction(YogaBaselineFunction baselineFunction) {
     mBaselineFunction = baselineFunction;
-    YogaNative.jni_YGNodeSetHasBaselineFunc(mNativePointer, baselineFunction != null);
+    if (useVanillaJNI)
+      YogaNative.jni_YGNodeSetHasBaselineFuncJNI(mNativePointer, baselineFunction != null);
+    else
+      YogaNative.jni_YGNodeSetHasBaselineFunc(mNativePointer, baselineFunction != null);
   }
 
   @DoNotStrip

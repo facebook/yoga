@@ -1,4 +1,9 @@
 #!/bin/sh
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
 if mcs --version >/dev/null 2>&1 && mono --version >/dev/null 2>&1; then true; else
   echo "ERROR: Need to install Mono (brew install mono, or http://www.mono-project.com/download/)"
   exit 1
