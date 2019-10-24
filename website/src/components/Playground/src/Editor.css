@@ -51,6 +51,7 @@
 }
 
 .Editor .ant-tabs-tabpane {
+  max-height: calc(100vh - 300px);
   overflow-y: scroll;
   padding: 15px;
 }
