@@ -25,6 +25,8 @@ add_compile_options(
     -fno-omit-frame-pointer
     -fexceptions
     -fvisibility=hidden
+    -ffunction-sections
+    -fdata-sections
     -Wall
     -std=c++11)
 
@@ -37,4 +39,4 @@ target_include_directories(yoga PRIVATE
     ${libfb_DIR}/include
     ${yogacore_DIR})
 
-target_link_libraries(yoga yogacore fb)
+target_link_libraries(yoga -Wl,--gc-sections yogacore fb)

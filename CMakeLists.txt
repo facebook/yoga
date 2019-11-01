@@ -11,6 +11,8 @@ add_compile_options(
     -fno-omit-frame-pointer
     -fexceptions
     -fvisibility=hidden
+    -ffunction-sections
+    -fdata-sections
     -Wall
     -std=c++11)
 

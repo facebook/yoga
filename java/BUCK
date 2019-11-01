@@ -26,6 +26,8 @@ yoga_cxx_library(
         "-fno-omit-frame-pointer",
         "-fexceptions",
         "-fvisibility=hidden",
+        "-ffunction-sections",
+        "-fdata-sections",
         "-fPIC",
         "-Wall",
         "-Werror",
