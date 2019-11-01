@@ -24,6 +24,7 @@ add_subdirectory(${yogacore_DIR} ${yogacore_build_DIR})
 add_compile_options(
     -fno-omit-frame-pointer
     -fexceptions
+    -fvisibility=hidden
     -Wall
     -std=c++11)
 

@@ -25,6 +25,7 @@ yoga_cxx_library(
     compiler_flags = [
         "-fno-omit-frame-pointer",
         "-fexceptions",
+        "-fvisibility=hidden",
         "-fPIC",
         "-Wall",
         "-Werror",

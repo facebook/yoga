@@ -12,12 +12,20 @@
 #include <type_traits>
 #include <utility>
 
+#ifndef YOGA_EXPORT
+#ifdef _MSC_VER
+#define YOGA_EXPORT
+#else
+#define YOGA_EXPORT __attribute__((visibility("default")))
+#endif
+#endif
+
 namespace facebook {
 namespace yoga {
 
 namespace detail {
 
-class FreeList {
+class YOGA_EXPORT FreeList {
   std::stack<void*> free_;
   void* getRaw();
 
@@ -72,7 +80,7 @@ public:
 ///    std::accumulate(counters.begin(), counters.end(), 0);
 ///
 template <typename T, void (*ReturnPolicy)(T&) = nullptr>
-class SingleWriterValueList {
+class YOGA_EXPORT SingleWriterValueList {
   std::forward_list<T> values_{};
   std::mutex acquireMutex_{};
   detail::FreeList freeValuesList_{};
