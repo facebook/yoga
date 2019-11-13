@@ -15,7 +15,7 @@ namespace facebook {
 namespace yoga {
 namespace test {
 
-struct TestUtil {
+struct YOGA_EXPORT TestUtil {
   static void startCountingNodes();
   static int nodeCount();
   static int stopCountingNodes();

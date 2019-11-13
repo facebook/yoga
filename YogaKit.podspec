@@ -5,7 +5,7 @@
 
 podspec = Pod::Spec.new do |spec|
   spec.name = 'YogaKit'
-  spec.version = '1.16.1'
+  spec.version = '1.18.1'
   spec.license =  { :type => 'MIT', :file => "LICENSE" }
   spec.homepage = 'https://facebook.github.io/yoga/'
   spec.documentation_url = 'https://facebook.github.io/yoga/docs/'
@@ -31,7 +31,7 @@ podspec = Pod::Spec.new do |spec|
   spec.source_files = 'YogaKit/Source/*.{h,m,swift}', 'yoga/**/*.{c,h,cpp}'
   spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h', 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
   spec.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
-  spec.swift_version = '5.0'
+  spec.swift_version = '5.1'
   spec.static_framework = true
 end
 

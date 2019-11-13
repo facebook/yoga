@@ -53,6 +53,9 @@ CXX_LIBRARY_WHITELIST = [
 BASE_COMPILER_FLAGS = [
     "-fno-omit-frame-pointer",
     "-fexceptions",
+    "-fvisibility=hidden",
+    "-ffunction-sections",
+    "-fdata-sections",
     "-Wall",
     "-Werror",
     "-O2",
