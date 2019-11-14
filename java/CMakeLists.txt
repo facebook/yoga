@@ -9,7 +9,6 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 
 # configure import libs
 set(yogacore_DIR ${CMAKE_SOURCE_DIR}/..)
-
 set(build_DIR ${CMAKE_SOURCE_DIR}/build)
 
 set(yogacore_build_DIR ${build_DIR}/yogacore/${ANDROID_ABI})
@@ -30,9 +29,12 @@ add_compile_options(
 file(GLOB jni_SRC
         jni/*.cpp)
 
+file(GLOB yogajni_version_script
+        yogajni.version)
+
 add_library(yoga SHARED ${jni_SRC})
 
 target_include_directories(yoga PRIVATE
     ${yogacore_DIR})
 
-target_link_libraries(yoga -Wl,--gc-sections yogacore)
+target_link_libraries(yoga -Wl,--gc-sections,--version-script=${yogajni_version_script} yogacore)
