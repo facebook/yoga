@@ -10,7 +10,7 @@
   "main": "./dist/entry-node",
   "browser": "./dist/entry-browser",
   "config": {
-    "platform": "all"
+    "platform": "node"
   },
   "scripts": {
     "which": "which",
@@ -27,7 +27,7 @@
     "test:browser": "TEST_ENTRY=browser time mocha --compilers js:babel-core/register --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
     "test": "npm run test:node && npm run test:browser",
     "benchmark": "npm run prepublish && node tests/run-bench $(find tests/Benchmarks -name '*.js')",
-    "install": "npm run build:node",
+    "install": "npm run build",
     "prepublish": "npm run copy-sources && babel sources --out-dir dist && flow-copy-source sources dist"
   },
   "dependencies": {
