@@ -751,4 +751,29 @@
   XCTAssertEqual(view.yoga.borderEndWidth, 7);
 }
 
+- (void)testLayoutWithYogaNotEnabled
+{
+    UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0,0,50,75)];
+    container.yoga.isEnabled = YES;
+
+    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+    view.yoga.isEnabled = YES;
+    view.yoga.flexBasis = YGPointValue(0);
+    view.yoga.flexGrow = 1;
+    [container addSubview:view];
+    
+    UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(10, 20, 30, 40)];
+    [container addSubview:view2];
+
+    [container.yoga applyLayoutPreservingOrigin:YES];
+    
+    XCTAssertEqual(50, view.frame.size.width);
+    XCTAssertEqual(75, view.frame.size.height);
+    
+    XCTAssertEqual(10, view2.frame.origin.x);
+    XCTAssertEqual(20, view2.frame.origin.y);
+    XCTAssertEqual(30, view2.frame.size.width);
+    XCTAssertEqual(40, view2.frame.size.height);
+}
+
 @end

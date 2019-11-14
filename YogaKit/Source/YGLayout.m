@@ -445,7 +445,7 @@ static void YGApplyLayoutToViewHierarchy(UIView *view, BOOL preserveOrigin)
 
   const YGLayout *yoga = view.yoga;
 
-  if (!yoga.isIncludedInLayout) {
+  if (!yoga.isEnabled || !yoga.isIncludedInLayout) {
      return;
   }
 
