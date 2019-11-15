@@ -686,9 +686,9 @@ TEST(YogaTest, percent_with_text_node) {
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetHeight(root_child0));
 
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child1));
-  ASSERT_FLOAT_EQ(15, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetTop(root_child1));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child1));
-  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child1));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child1));
 
   YGNodeFreeRecursive(root);
 
