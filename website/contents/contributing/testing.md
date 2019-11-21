@@ -7,8 +7,8 @@ hasPlayground: false
 # Testing
 
 Yoga tries to be as close as possible to chrome in its flexbox behaviour.
-To ensure this most of Yoga's test suite is automatically generateded from
-running the corresponding layout in chrome using a webdriver which then generates 
+To ensure this most of Yoga's test suite is automatically generated from
+running the corresponding layout in chrome using a webdriver which then generates
 C++ test which asserts that Yoga will produce matching outputs for that layout.
 
 ## Running the Test Suite
