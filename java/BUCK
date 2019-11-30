@@ -3,7 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "CXX_LIBRARY_WHITELIST", "FBJNI_JAVA_TARGET", "FBJNI_TARGET", "JNI_TARGET", "JSR_305_TARGET", "JUNIT_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "yoga_cxx_lib", "yoga_cxx_library", "yoga_dep", "yoga_java_binary", "yoga_java_library", "yoga_java_test")
+load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "CXX_LIBRARY_WHITELIST", "JNI_TARGET", "JSR_305_TARGET", "JUNIT_TARGET", "PROGRUARD_ANNOTATIONS_TARGET", "SOLOADER_TARGET", "YOGA_ROOTS", "yoga_cxx_lib", "yoga_cxx_library", "yoga_dep", "yoga_java_binary", "yoga_java_library", "yoga_java_test", "yoga_prebuilt_cxx_library")
 
 CXX_LIBRARY_WHITELIST_FOR_TESTS = CXX_LIBRARY_WHITELIST + [
     yoga_cxx_lib("testutil:jni"),
@@ -15,6 +15,18 @@ YOGA_JAVA_IMPLEMENTATION_FILES = [
     "com/facebook/yoga/*Factory.java",
     "com/facebook/yoga/YogaNative.java",
 ]
+
+yoga_prebuilt_cxx_library(
+    name = "ndklog",
+    exported_platform_linker_flags = [
+        (
+            "^android.*",
+            ["-llog"],
+        ),
+    ],
+    header_only = True,
+    visibility = YOGA_ROOTS,
+)
 
 yoga_cxx_library(
     name = "jni",
@@ -41,9 +53,9 @@ yoga_cxx_library(
     soname = "libyoga.$(ext)",
     visibility = ["PUBLIC"],
     deps = [
-        FBJNI_TARGET,
         JNI_TARGET,
         yoga_dep(":yoga"),
+        ":ndklog",
     ],
 )
 
@@ -72,7 +84,6 @@ yoga_java_library(
     deps = [
         ":java-interface",
         ":jni",
-        FBJNI_JAVA_TARGET,
         JSR_305_TARGET,
         PROGRUARD_ANNOTATIONS_TARGET,
         SOLOADER_TARGET,
@@ -111,6 +122,5 @@ yoga_java_binary(
     name = "yoga",
     deps = [
         ":java",
-        FBJNI_JAVA_TARGET,
     ],
 )
