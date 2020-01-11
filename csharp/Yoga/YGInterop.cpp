@@ -23,7 +23,7 @@ static int unmanagedLogger(const YGConfigRef config,
   return result;
 }
 
-void YGInteropSetLogger(YGInteropLogger managedLogger) {
+YOGA_EXPORT void YGInteropSetLogger(YGInteropLogger managedLogger) {
   gManagedLogger = managedLogger;
   YGConfigSetLogger(YGConfigGetDefault(), &unmanagedLogger);
 }
