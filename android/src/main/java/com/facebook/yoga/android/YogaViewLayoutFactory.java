@@ -31,7 +31,9 @@ public class YogaViewLayoutFactory implements LayoutInflater.Factory {
     return sYogaViewLayoutFactory;
   }
 
-  YogaViewLayoutFactory() {}
+  YogaViewLayoutFactory() {
+    /* DO NOTHING */
+  }
 
   /**
    * Hook for inflating from a LayoutInflater.  This hook replaces the cumbersome
