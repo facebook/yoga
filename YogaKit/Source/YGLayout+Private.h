@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import "YGLayout.h"
 #import <yoga/Yoga.h>
+#import "YGLayout.h"
 
 @interface YGLayout ()
 
-@property (nonatomic, assign, readonly) YGNodeRef node;
+@property(nonatomic, assign, readonly) YGNodeRef node;
 
-- (instancetype)initWithView:(UIView *)view;
+- (instancetype)initWithView:(UIView*)view;
 
 @end
