@@ -110,7 +110,7 @@ static void appendEdgeIfNotUndefined(
       YGComputedEdgeValue(edges, edge, detail::CompactValue::ofUndefined()));
 }
 
-void YGNodeToString(
+void __cdecl YGNodeToString(
     std::string& str,
     YGNodeRef node,
     YGPrintOptions options,

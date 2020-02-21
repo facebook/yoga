@@ -48,7 +48,7 @@ struct LayoutData {
       measureCallbackReasonsCount;
 };
 
-const char* LayoutPassReasonToString(const LayoutPassReason value);
+const char* __cdecl LayoutPassReasonToString(const LayoutPassReason value);
 
 struct YOGA_EXPORT Event {
   enum Type {
@@ -63,7 +63,7 @@ struct YOGA_EXPORT Event {
     NodeBaselineEnd,
   };
   class Data;
-  using Subscriber = void(const YGNode&, Type, Data);
+  using Subscriber = void __cdecl (const YGNode&, Type, Data);
   using Subscribers = std::vector<std::function<Subscriber>>;
 
   template <Type E>

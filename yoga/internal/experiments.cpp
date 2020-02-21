@@ -18,15 +18,15 @@ std::bitset<sizeof(int)> enabledExperiments = 0;
 
 } // namespace detail
 
-void enable(Experiment experiment) {
+void __cdecl enable(Experiment experiment) {
   detail::enabledExperiments.set(static_cast<size_t>(experiment));
 }
 
-void disable(Experiment experiment) {
+void __cdecl disable(Experiment experiment) {
   detail::enabledExperiments.reset(static_cast<size_t>(experiment));
 }
 
-bool toggle(Experiment experiment) {
+bool __cdecl toggle(Experiment experiment) {
   auto bit = static_cast<size_t>(experiment);
   auto previousState = detail::enabledExperiments.test(bit);
   detail::enabledExperiments.flip(bit);

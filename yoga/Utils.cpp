@@ -9,7 +9,7 @@
 
 using namespace facebook;
 
-YGFlexDirection YGFlexDirectionCross(
+YGFlexDirection __cdecl YGFlexDirectionCross(
     const YGFlexDirection flexDirection,
     const YGDirection direction) {
   return YGFlexDirectionIsColumn(flexDirection)
@@ -17,14 +17,14 @@ YGFlexDirection YGFlexDirectionCross(
       : YGFlexDirectionColumn;
 }
 
-float YGFloatMax(const float a, const float b) {
+float __cdecl YGFloatMax(const float a, const float b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
     return fmaxf(a, b);
   }
   return yoga::isUndefined(a) ? b : a;
 }
 
-float YGFloatMin(const float a, const float b) {
+float __cdecl YGFloatMin(const float a, const float b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
     return fminf(a, b);
   }
@@ -32,7 +32,7 @@ float YGFloatMin(const float a, const float b) {
   return yoga::isUndefined(a) ? b : a;
 }
 
-bool YGValueEqual(const YGValue& a, const YGValue& b) {
+bool __cdecl YGValueEqual(const YGValue& a, const YGValue& b) {
   if (a.unit != b.unit) {
     return false;
   }
@@ -45,18 +45,18 @@ bool YGValueEqual(const YGValue& a, const YGValue& b) {
   return fabs(a.value - b.value) < 0.0001f;
 }
 
-bool YGFloatsEqual(const float a, const float b) {
+bool __cdecl YGFloatsEqual(const float a, const float b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
     return fabs(a - b) < 0.0001f;
   }
   return yoga::isUndefined(a) && yoga::isUndefined(b);
 }
 
-float YGFloatSanitize(const float val) {
+float __cdecl YGFloatSanitize(const float val) {
   return yoga::isUndefined(val) ? 0 : val;
 }
 
-YGFloatOptional YGFloatOptionalMax(YGFloatOptional op1, YGFloatOptional op2) {
+YGFloatOptional __cdecl YGFloatOptionalMax(YGFloatOptional op1, YGFloatOptional op2) {
   if (op1 >= op2) {
     return op1;
   }

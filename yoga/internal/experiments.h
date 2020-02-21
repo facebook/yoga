@@ -17,9 +17,9 @@ enum struct Experiment : size_t {
   kDoubleMeasureCallbacks,
 };
 
-void enable(Experiment);
-void disable(Experiment);
-bool toggle(Experiment);
+void __cdecl enable(Experiment);
+void __cdecl disable(Experiment);
+bool __cdecl toggle(Experiment);
 
 } // namespace internal
 } // namespace yoga

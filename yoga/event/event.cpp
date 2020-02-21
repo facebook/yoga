@@ -13,7 +13,7 @@
 namespace facebook {
 namespace yoga {
 
-const char* LayoutPassReasonToString(const LayoutPassReason value) {
+const char* __cdecl LayoutPassReasonToString(const LayoutPassReason value) {
   switch (value) {
     case LayoutPassReason::kInitial:
       return "initial";

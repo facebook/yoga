@@ -17,7 +17,7 @@ using YGVector = std::vector<YGNodeRef>;
 
 YG_EXTERN_C_BEGIN
 
-void YGNodeCalculateLayoutWithContext(
+void __cdecl YGNodeCalculateLayoutWithContext(
     YGNodeRef node,
     float availableWidth,
     float availableHeight,
@@ -29,7 +29,7 @@ YG_EXTERN_C_END
 namespace facebook {
 namespace yoga {
 
-inline bool isUndefined(float value) {
+inline bool __cdecl isUndefined(float value) {
   return std::isnan(value);
 }
 
@@ -143,8 +143,8 @@ static const float kDefaultFlexGrow = 0.0f;
 static const float kDefaultFlexShrink = 0.0f;
 static const float kWebDefaultFlexShrink = 1.0f;
 
-extern bool YGFloatsEqual(const float a, const float b);
-extern facebook::yoga::detail::CompactValue YGComputedEdgeValue(
+extern bool __cdecl YGFloatsEqual(const float a, const float b);
+extern facebook::yoga::detail::CompactValue __cdecl YGComputedEdgeValue(
     const facebook::yoga::detail::Values<
         facebook::yoga::enums::count<YGEdge>()>& edges,
     YGEdge edge,

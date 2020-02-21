@@ -16,44 +16,44 @@ namespace yoga {
 
 namespace detail {
 
-constexpr size_t log2ceilFn(size_t n) {
+constexpr size_t __cdecl log2ceilFn(size_t n) {
   return n < 1 ? 0 : (1 + log2ceilFn(n / 2));
 }
 
-constexpr int mask(size_t bitWidth, size_t index) {
+constexpr int __cdecl mask(size_t bitWidth, size_t index) {
   return ((1 << bitWidth) - 1) << index;
 }
 
 // The number of bits necessary to represent enums defined with YG_ENUM_SEQ_DECL
 template <typename Enum>
-constexpr size_t bitWidthFn() {
+constexpr size_t __cdecl bitWidthFn() {
   static_assert(
       enums::count<Enum>() > 0, "Enums must have at least one entries");
   return log2ceilFn(enums::count<Enum>() - 1);
 }
 
 template <typename Enum>
-constexpr Enum getEnumData(int flags, size_t index) {
+constexpr Enum __cdecl getEnumData(int flags, size_t index) {
   return static_cast<Enum>((flags & mask(bitWidthFn<Enum>(), index)) >> index);
 }
 
 template <typename Enum>
-void setEnumData(uint32_t& flags, size_t index, int newValue) {
+void __cdecl setEnumData(uint32_t& flags, size_t index, int newValue) {
   flags = (flags & ~mask(bitWidthFn<Enum>(), index)) |
       ((newValue << index) & (mask(bitWidthFn<Enum>(), index)));
 }
 
 template <typename Enum>
-void setEnumData(uint8_t& flags, size_t index, int newValue) {
+void __cdecl setEnumData(uint8_t& flags, size_t index, int newValue) {
   flags = (flags & ~mask(bitWidthFn<Enum>(), index)) |
       ((newValue << index) & (mask(bitWidthFn<Enum>(), index)));
 }
 
-constexpr bool getBooleanData(int flags, size_t index) {
+constexpr bool __cdecl getBooleanData(int flags, size_t index) {
   return (flags >> index) & 1;
 }
 
-inline void setBooleanData(uint8_t& flags, size_t index, bool value) {
+inline void __cdecl setBooleanData(uint8_t& flags, size_t index, bool value) {
   if (value) {
     flags |= 1 << index;
   } else {

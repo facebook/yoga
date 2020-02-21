@@ -53,8 +53,8 @@ struct YGCollectFlexItemsRowValues {
   float crossDim;
 };
 
-bool YGValueEqual(const YGValue& a, const YGValue& b);
-inline bool YGValueEqual(
+bool __cdecl YGValueEqual(const YGValue& a, const YGValue& b);
+inline bool __cdecl YGValueEqual(
     facebook::yoga::detail::CompactValue a,
     facebook::yoga::detail::CompactValue b) {
   return YGValueEqual((YGValue) a, (YGValue) b);
@@ -62,21 +62,21 @@ inline bool YGValueEqual(
 
 // This custom float equality function returns true if either absolute
 // difference between two floats is less than 0.0001f or both are undefined.
-bool YGFloatsEqual(const float a, const float b);
+bool __cdecl YGFloatsEqual(const float a, const float b);
 
-float YGFloatMax(const float a, const float b);
+float __cdecl YGFloatMax(const float a, const float b);
 
-YGFloatOptional YGFloatOptionalMax(
+YGFloatOptional __cdecl YGFloatOptionalMax(
     const YGFloatOptional op1,
     const YGFloatOptional op2);
 
-float YGFloatMin(const float a, const float b);
+float __cdecl YGFloatMin(const float a, const float b);
 
 // This custom float comparison function compares the array of float with
 // YGFloatsEqual, as the default float comparison operator will not work(Look
 // at the comments of YGFloatsEqual function).
 template <std::size_t size>
-bool YGFloatArrayEqual(
+bool __cdecl YGFloatArrayEqual(
     const std::array<float, size>& val1,
     const std::array<float, size>& val2) {
   bool areEqual = true;
@@ -87,18 +87,18 @@ bool YGFloatArrayEqual(
 }
 
 // This function returns 0 if YGFloatIsUndefined(val) is true and val otherwise
-float YGFloatSanitize(const float val);
+float __cdecl YGFloatSanitize(const float val);
 
-YGFlexDirection YGFlexDirectionCross(
+YGFlexDirection __cdecl YGFlexDirectionCross(
     const YGFlexDirection flexDirection,
     const YGDirection direction);
 
-inline bool YGFlexDirectionIsRow(const YGFlexDirection flexDirection) {
+inline bool __cdecl YGFlexDirectionIsRow(const YGFlexDirection flexDirection) {
   return flexDirection == YGFlexDirectionRow ||
       flexDirection == YGFlexDirectionRowReverse;
 }
 
-inline YGFloatOptional YGResolveValue(
+inline YGFloatOptional __cdecl YGResolveValue(
     const YGValue value,
     const float ownerSize) {
   switch (value.unit) {
@@ -111,18 +111,18 @@ inline YGFloatOptional YGResolveValue(
   }
 }
 
-inline YGFloatOptional YGResolveValue(
+inline YGFloatOptional __cdecl YGResolveValue(
     yoga::detail::CompactValue value,
     float ownerSize) {
   return YGResolveValue((YGValue) value, ownerSize);
 }
 
-inline bool YGFlexDirectionIsColumn(const YGFlexDirection flexDirection) {
+inline bool __cdecl YGFlexDirectionIsColumn(const YGFlexDirection flexDirection) {
   return flexDirection == YGFlexDirectionColumn ||
       flexDirection == YGFlexDirectionColumnReverse;
 }
 
-inline YGFlexDirection YGResolveFlexDirection(
+inline YGFlexDirection __cdecl YGResolveFlexDirection(
     const YGFlexDirection flexDirection,
     const YGDirection direction) {
   if (direction == YGDirectionRTL) {
@@ -136,7 +136,7 @@ inline YGFlexDirection YGResolveFlexDirection(
   return flexDirection;
 }
 
-inline YGFloatOptional YGResolveValueMargin(
+inline YGFloatOptional __cdecl YGResolveValueMargin(
     yoga::detail::CompactValue value,
     const float ownerSize) {
   return value.isAuto() ? YGFloatOptional{0} : YGResolveValue(value, ownerSize);

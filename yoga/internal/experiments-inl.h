@@ -19,11 +19,11 @@ namespace detail {
 extern std::bitset<sizeof(int)> enabledExperiments;
 } // namespace detail
 
-inline bool isEnabled(Experiment experiment) {
+inline bool __cdecl isEnabled(Experiment experiment) {
   return detail::enabledExperiments.test(static_cast<size_t>(experiment));
 }
 
-inline void disableAllExperiments() {
+inline void __cdecl disableAllExperiments() {
   detail::enabledExperiments = 0;
 }
 

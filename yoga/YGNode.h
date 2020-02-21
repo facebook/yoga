@@ -16,13 +16,13 @@
 #include "YGMacros.h"
 #include "Yoga-internal.h"
 
-YGConfigRef YGConfigGetDefault();
+YGConfigRef __cdecl YGConfigGetDefault();
 
 struct YOGA_EXPORT YGNode {
   using MeasureWithContextFn =
-      YGSize (*)(YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*);
-  using BaselineWithContextFn = float (*)(YGNode*, float, float, void*);
-  using PrintWithContextFn = void (*)(YGNode*, void*);
+      YGSize (__cdecl *)(YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*);
+  using BaselineWithContextFn = float (__cdecl *)(YGNode*, float, float, void*);
+  using PrintWithContextFn = void (__cdecl *)(YGNode*, void*);
 
 private:
   static constexpr size_t hasNewLayout_ = 0;
