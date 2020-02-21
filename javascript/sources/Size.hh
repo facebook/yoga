@@ -18,7 +18,5 @@ struct Size {
 
   Size(double width, double height) : width(width), height(height) {}
 
-  void toJS(nbind::cbOutput expose) const {
-    expose(width, height);
-  }
+  void toJS(nbind::cbOutput expose) const { expose(width, height); }
 };

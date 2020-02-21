@@ -51,7 +51,8 @@
 }
 
 .Editor .ant-tabs-tabpane {
-  overflow-y: scroll;
+  overflow-y: auto;
+  height: 45vh;
   padding: 15px;
 }
 
