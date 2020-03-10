@@ -42,6 +42,8 @@ yoga_apple_library(
     ],
     header_path_prefix = "",
     link_whole = True,
+    modular = True,
+    module_name = "YogaKit",
     visibility = ["PUBLIC"],
     deps = [
         yoga_dep(":yoga"),
