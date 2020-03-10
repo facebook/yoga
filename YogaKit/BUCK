@@ -37,6 +37,7 @@ yoga_apple_library(
     ),
     compiler_flags = COMPILER_FLAGS,
     frameworks = [
+        "$SDKROOT/System/Library/Frameworks/CoreGraphics.framework",
         "$SDKROOT/System/Library/Frameworks/Foundation.framework",
         "$SDKROOT/System/Library/Frameworks/UIKit.framework",
     ],
