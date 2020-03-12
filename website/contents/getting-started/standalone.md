@@ -12,7 +12,7 @@ Adding Yoga to a project is as simple as adding the dependency to your package m
 
 ```groovy
 dependencies {
-	compile 'com.facebook.yoga.android:yoga-layout:x.x.x'
+	implementation 'com.facebook.yoga.android:yoga-layout:x.x.x'
 }
 ```
 
