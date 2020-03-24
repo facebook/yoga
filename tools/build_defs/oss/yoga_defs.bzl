@@ -14,7 +14,7 @@ JSR_305_TARGET = "//lib/jsr-305:jsr-305"
 
 JUNIT_TARGET = "//lib/junit:junit"
 
-PROGRUARD_ANNOTATIONS_TARGET = "//java/proguard-annotations/src/main/java/com/facebook/proguard/annotations:annotations"
+PROGUARD_ANNOTATIONS_TARGET = "//java/proguard-annotations/src/main/java/com/facebook/proguard/annotations:annotations"
 
 SOLOADER_TARGET = "//lib/soloader:soloader"
 
