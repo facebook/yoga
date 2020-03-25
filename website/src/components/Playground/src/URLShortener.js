@@ -52,9 +52,7 @@ export default class URLShortener extends Component<{}, State> {
         }
 
         fetch(
-          `https://cors-anywhere.herokuapp.com/tinyurl.com/api-create.php?url=${
-            window.location.href
-          }`,
+          `https://cors-anywhere.herokuapp.com/tinyurl.com/api-create.php?url=${window.location.href}`,
         )
           .then(res => res.text())
           .then(shortURL => this.setState({shortURL, loading: false}))
