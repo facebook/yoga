@@ -11,6 +11,18 @@ yoga_cxx_library(
     deps = [yoga_dep(":yoga")],
 )
 
+yoga_cxx_library(
+    name = "testutil-jni",
+    srcs = ["src/main/cpp/testutil/testutil.cpp"],
+    header_namespace = "",
+    exported_headers = subdir_glob([("src/main/cpp/include", "yoga/testutil/testutil.h")]),
+    compiler_flags = LIBRARY_COMPILER_FLAGS,
+    platforms = ANDROID,
+    soname = "libyoga_testutil.$(ext)",
+    visibility = ["PUBLIC"],
+    deps = [yoga_dep("java:jni")],
+)
+
 yoga_java_library(
     name = "java",
     srcs = ["src/main/java/com/facebook/yoga/TestUtil.java"],
@@ -32,7 +44,7 @@ yoga_cxx_library(
     soname = "libyoga_testutil_jni.$(ext)",
     visibility = ["PUBLIC"],
     deps = [
-        ":testutil",
+        ":testutil-jni",
         FBJNI_TARGET,
     ],
 )

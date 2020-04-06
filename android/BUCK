@@ -7,6 +7,7 @@ load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID_JAVA_TARGET", "ANDROID_RES
 
 yoga_android_aar(
     name = "android",
+    enable_relinker = True,
     manifest_skeleton = "src/main/AndroidManifest.xml",
     visibility = [
         "PUBLIC",
