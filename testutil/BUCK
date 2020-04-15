@@ -20,7 +20,10 @@ yoga_cxx_library(
     platforms = ANDROID,
     soname = "libyoga_testutil.$(ext)",
     visibility = ["PUBLIC"],
-    deps = [yoga_dep("java:jni")],
+    deps = [
+        yoga_dep("java:jni"),
+        yoga_dep(":yoga"),
+    ],
 )
 
 yoga_java_library(
