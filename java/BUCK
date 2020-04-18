@@ -7,7 +7,7 @@ load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "CXX_LIBRARY_WHITELIST",
 
 CXX_LIBRARY_WHITELIST_FOR_TESTS = CXX_LIBRARY_WHITELIST + [
     yoga_cxx_lib("testutil:jni"),
-    yoga_cxx_lib("testutil:testutil"),
+    yoga_cxx_lib("testutil:testutil-jni"),
 ]
 
 YOGA_JAVA_IMPLEMENTATION_FILES = [
@@ -54,7 +54,7 @@ yoga_cxx_library(
     visibility = ["PUBLIC"],
     deps = [
         JNI_TARGET,
-        yoga_dep(":yoga"),
+        yoga_dep(":yoga-static"),
         ":ndklog",
     ],
 )
