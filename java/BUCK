@@ -54,7 +54,7 @@ yoga_cxx_library(
     visibility = ["PUBLIC"],
     deps = [
         JNI_TARGET,
-        yoga_dep(":yoga"),
+        yoga_dep(":yoga-static"),
         ":ndklog",
     ],
 )
