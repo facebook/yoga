@@ -1669,6 +1669,7 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(
     const YGMeasureMode heightMeasureMode,
     const float ownerWidth,
     const float ownerHeight,
+    const YGConfigRef config,
     LayoutData& layoutMarkerData,
     void* const layoutContext,
     const LayoutPassReason reason) {
@@ -1695,17 +1696,9 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(
       : YGFloatMax(
             0, availableHeight - marginAxisColumn - paddingAndBorderAxisColumn);
 
-#ifdef YOGA_CALL_MEASURE_CALLBACK_ON_ALL_NODES
-  const YGSize measuredSize = node->measure(
-      innerWidth,
-      widthMeasureMode,
-      innerHeight,
-      heightMeasureMode,
-      layoutContext);
-#endif
-
   if (widthMeasureMode == YGMeasureModeExactly &&
-      heightMeasureMode == YGMeasureModeExactly) {
+      heightMeasureMode == YGMeasureModeExactly &&
+      !config->callMeasureCallbackOnAllNodes) {
     // Don't bother sizing the text if both dimensions are already defined.
     node->setLayoutMeasuredDimension(
         YGNodeBoundAxis(
@@ -1726,15 +1719,12 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(
   } else {
     Event::publish<Event::MeasureCallbackStart>(node);
 
-#ifndef YOGA_CALL_MEASURE_CALLBACK_ON_ALL_NODES
-    // Measure the text under the current constraints.
     const YGSize measuredSize = node->measure(
         innerWidth,
         widthMeasureMode,
         innerHeight,
         heightMeasureMode,
         layoutContext);
-#endif
 
     layoutMarkerData.measureCallbacks += 1;
     layoutMarkerData.measureCallbackReasonsCount[static_cast<size_t>(reason)] +=
@@ -2824,6 +2814,7 @@ static void YGNodelayoutImpl(
         heightMeasureMode,
         ownerWidth,
         ownerHeight,
+        config,
         layoutMarkerData,
         layoutContext,
         reason);
