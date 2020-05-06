@@ -5,14 +5,12 @@ on: [push, pull_request]
 jobs:
   website:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 8
+      - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 8.x
+          node-version: 12.x
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
         working-directory: website
