@@ -4380,6 +4380,12 @@ YOGA_EXPORT void YGConfigSetUseLegacyStretchBehaviour(
   config->useLegacyStretchBehaviour = useLegacyStretchBehaviour;
 }
 
+YOGA_EXPORT void YGConfigSetCallMeasureCallbackOnAllNodes(
+    YGConfigRef config,
+    bool callMeasureCallbackOnAllNodes) {
+  config->callMeasureCallbackOnAllNodes = callMeasureCallbackOnAllNodes;
+}
+
 bool YGConfigGetUseWebDefaults(const YGConfigRef config) {
   return config->useWebDefaults;
 }

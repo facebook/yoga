@@ -78,6 +78,31 @@ TEST(YogaTest, dont_measure_single_grow_shrink_child) {
   YGNodeFreeRecursive(root);
 }
 
+TEST(YogaTest, measure_single_grow_shrink_child_if_config_override) {
+  const YGConfigRef config = YGConfigNew();
+  YGConfigSetCallMeasureCallbackOnAllNodes(config, true);
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  int measureCount = 0;
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  root_child0->setContext(&measureCount);
+  root_child0->setMeasureFunc(_measure);
+  YGNodeStyleSetFlexGrow(root_child0, 1);
+  YGNodeStyleSetFlexShrink(root_child0, 1);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
+}
+
 TEST(YogaTest, measure_absolute_child_with_no_constraints) {
   const YGNodeRef root = YGNodeNew();
 
@@ -125,6 +150,38 @@ TEST(YogaTest, dont_measure_when_min_equals_max) {
   ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
+}
+
+TEST(YogaTest, measure_when_min_equals_max_if_config_override) {
+  const YGConfigRef config = YGConfigNew();
+  YGConfigSetCallMeasureCallbackOnAllNodes(config, true);
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  int measureCount = 0;
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  root_child0->setContext(&measureCount);
+  root_child0->setMeasureFunc(_measure);
+  YGNodeStyleSetMinWidth(root_child0, 10);
+  YGNodeStyleSetMaxWidth(root_child0, 10);
+  YGNodeStyleSetMinHeight(root_child0, 10);
+  YGNodeStyleSetMaxHeight(root_child0, 10);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
 }
 
 TEST(YogaTest, dont_measure_when_min_equals_max_percentages) {
