@@ -30,8 +30,6 @@ jobs:
           user_email: 'yogabot@fb.com'
   android:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
