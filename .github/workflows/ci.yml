@@ -37,8 +37,8 @@ jobs:
           if [[ -n "$encrypted_d27e803291ff_iv" ]]; then
             openssl aes-256-cbc -K $encrypted_d27e803291ff_key -iv $encrypted_d27e803291ff_iv -in scripts/setup-keys.enc -d >> gradle.properties;
           fi
-          apt-get update
-          apt-get install -y ninja-build
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
           pushd $HOME
           git clone --depth 1 https://github.com/facebook/buck.git
           cd buck
