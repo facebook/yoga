@@ -14,14 +14,14 @@ set -e
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 IS_SNAPSHOT="$(grep 'VERSION_NAME=[0-9\.]\+-SNAPSHOT' "$BASEDIR/gradle.properties")"
 
-if [ "$TRAVIS_REPO_SLUG" != "facebook/yoga" ]; then
-  echo >&2 "Skipping repository. Expected project to be 'facebook/yoga', but was '$TRAVIS_REPO_SLUG'."
+if [ "$GITHUB_REPOSITORY" != "facebook/yoga" ]; then
+  echo >&2 "Skipping repository. Expected project to be 'facebook/yoga', but was '$GITHUB_REPOSITORY'."
   exit
-elif [ "$TRAVIS_BRANCH" != "master" ]; then
-  echo >&2 "Skipping build. Expected branch name to be 'master', but was '$TRAVIS_BRANCH'."
+elif [ "$GITHUB_REF" != "refs/heads/master" ]; then
+  echo >&2 "Skipping build. Expected ref name to be 'refs/heads/master', but was '$GITHUB_REF'."
   exit
-elif [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-  echo >&2 "Skipping build. Only considering non-PR builds, but URL was '$TRAVIS_PULL_REQUEST'."
+elif [ "$GITHUB_EVENT_NAME" != "push" ]; then
+  echo >&2 "Skipping build. Only considering push builds, but event was '$GITHUB_EVENT_NAME'."
   exit
 elif [ "$IS_SNAPSHOT" == "" ]; then
   echo >&2 "Skipping build. Given build doesn't appear to be a SNAPSHOT release."
