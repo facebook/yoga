@@ -1,0 +1,56 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8.x
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+        working-directory: website
+      - name: Build
+        run: yarn build
+        working-directory: website
+      - name: Deploy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: website/public
+          cname: yogalayout.com
+          keep_files: true
+          user_name: 'Yoga-bot'
+          user_email: 'yogabot@fb.com'
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          if [[ -n "$encrypted_d27e803291ff_iv" ]]; then
+            openssl aes-256-cbc -K $encrypted_d27e803291ff_key -iv $encrypted_d27e803291ff_iv -in scripts/setup-keys.enc -d >> gradle.properties;
+          fi
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+          pushd $HOME
+          git clone --depth 1 https://github.com/facebook/buck.git
+          cd buck
+          ant
+          popd
+          echo "::set-env name=PATH::$PATH:$HOME/buck/bin/"
+          export PATH=$PATH:$HOME/buck/bin/
+          buck --version
+          export TERMINAL=dumb
+          source scripts/android-setup.sh && installAndroidSDK
+          echo "::set-env name=ANDROID_SDK::$ANDROID_HOME"
+          echo "::set-env name=ANDROID_NDK_REPOSITORY::$HOME/android-ndk"
+          echo "::set-env name=ANDROID_NDK_HOME::$ANDROID_NDK_REPOSITORY/android-ndk-r15c"
+      - name: Build
+        run: ./gradlew testDebugUnit && scripts/publish-snapshot.sh
