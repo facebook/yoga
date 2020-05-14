@@ -34,8 +34,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          if [[ -n "$encrypted_d27e803291ff_iv" ]]; then
-            openssl aes-256-cbc -K $encrypted_d27e803291ff_key -iv $encrypted_d27e803291ff_iv -in scripts/setup-keys.enc -d >> gradle.properties;
+          if [[ -n "${{ secrets.encrypted_d27e803291ff_iv }}" ]]; then
+            openssl aes-256-cbc -K ${{ secrets.encrypted_d27e803291ff_key }} -iv {{ secrets.encrypted_d27e803291ff_iv }} -in scripts/setup-keys.enc -d >> gradle.properties;
           fi
           sudo apt-get update
           sudo apt-get install -y ninja-build
