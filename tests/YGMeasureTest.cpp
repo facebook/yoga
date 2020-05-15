@@ -580,7 +580,11 @@ TEST(YogaDeathTest, cannot_add_child_to_node_with_measure_func) {
   root->setMeasureFunc(_measure);
 
   const YGNodeRef root_child0 = YGNodeNew();
+#if defined(__cpp_exceptions)
   ASSERT_THROW(YGNodeInsertChild(root, root_child0, 0), std::logic_error);
+#else  // !defined(__cpp_exceptions)
+  ASSERT_DEATH(YGNodeInsertChild(root, root_child0, 0), "Cannot add child.*");
+#endif  // defined(__cpp_exceptions)
   YGNodeFree(root_child0);
   YGNodeFreeRecursive(root);
 }
@@ -589,7 +593,11 @@ TEST(YogaDeathTest, cannot_add_nonnull_measure_func_to_non_leaf_node) {
   const YGNodeRef root = YGNodeNew();
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeInsertChild(root, root_child0, 0);
+#if defined(__cpp_exceptions)
   ASSERT_THROW(root->setMeasureFunc(_measure), std::logic_error);
+#else  // !defined(__cpp_exceptions)
+  ASSERT_DEATH(root->setMeasureFunc(_measure), "Cannot set measure function.*");
+#endif  // defined(__cpp_exceptions)
   YGNodeFreeRecursive(root);
 }
 
