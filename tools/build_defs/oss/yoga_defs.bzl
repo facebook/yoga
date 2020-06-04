@@ -202,6 +202,9 @@ def yoga_prebuilt_cxx_library(*args, **kwargs):
 def yoga_prebuilt_jar(*args, **kwargs):
     native.prebuilt_jar(*args, **kwargs)
 
+def yoga_prebuilt_aar(*args, **kwargs):
+    native.android_prebuilt_aar(*args, **kwargs)
+
 def is_apple_platform():
     return True
 
