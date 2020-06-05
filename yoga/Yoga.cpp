@@ -1719,6 +1719,7 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(
   } else {
     Event::publish<Event::MeasureCallbackStart>(node);
 
+    // Measure the text under the current constraints.
     const YGSize measuredSize = node->measure(
         innerWidth,
         widthMeasureMode,
