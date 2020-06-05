@@ -1669,7 +1669,6 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(
     const YGMeasureMode heightMeasureMode,
     const float ownerWidth,
     const float ownerHeight,
-    const YGConfigRef config,
     LayoutData& layoutMarkerData,
     void* const layoutContext,
     const LayoutPassReason reason) {
@@ -1698,7 +1697,8 @@ static void YGNodeWithMeasureFuncSetMeasuredDimensions(
 
   if (widthMeasureMode == YGMeasureModeExactly &&
       heightMeasureMode == YGMeasureModeExactly &&
-      !config->callMeasureCallbackOnAllNodes) {
+      !YGConfigIsExperimentalFeatureEnabled(
+          node->getConfig(), YGExperimentalFeatureCallMeasureCallbackOnAllNodes)) {
     // Don't bother sizing the text if both dimensions are already defined.
     node->setLayoutMeasuredDimension(
         YGNodeBoundAxis(
@@ -2814,7 +2814,6 @@ static void YGNodelayoutImpl(
         heightMeasureMode,
         ownerWidth,
         ownerHeight,
-        config,
         layoutMarkerData,
         layoutContext,
         reason);
@@ -4378,12 +4377,6 @@ YOGA_EXPORT void YGConfigSetUseLegacyStretchBehaviour(
     const YGConfigRef config,
     const bool useLegacyStretchBehaviour) {
   config->useLegacyStretchBehaviour = useLegacyStretchBehaviour;
-}
-
-YOGA_EXPORT void YGConfigSetCallMeasureCallbackOnAllNodes(
-    YGConfigRef config,
-    bool callMeasureCallbackOnAllNodes) {
-  config->callMeasureCallbackOnAllNodes = callMeasureCallbackOnAllNodes;
 }
 
 bool YGConfigGetUseWebDefaults(const YGConfigRef config) {

@@ -89,6 +89,8 @@ const char* YGExperimentalFeatureToString(const YGExperimentalFeature value) {
   switch (value) {
     case YGExperimentalFeatureWebFlexBasis:
       return "web-flex-basis";
+    case YGExperimentalFeatureCallMeasureCallbackOnAllNodes:
+      return "call-measure-callback-on-all-nodes";
   }
   return "unknown";
 }

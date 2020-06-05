@@ -87,7 +87,10 @@ YG_ENUM_SEQ_DECL(
     YGEdgeVertical,
     YGEdgeAll)
 
-YG_ENUM_SEQ_DECL(YGExperimentalFeature, YGExperimentalFeatureWebFlexBasis)
+YG_ENUM_SEQ_DECL(
+    YGExperimentalFeature,
+    YGExperimentalFeatureWebFlexBasis,
+    YGExperimentalFeatureCallMeasureCallbackOnAllNodes)
 
 YG_ENUM_SEQ_DECL(
     YGFlexDirection,

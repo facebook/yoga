@@ -80,7 +80,8 @@ TEST(YogaTest, dont_measure_single_grow_shrink_child) {
 
 TEST(YogaTest, measure_single_grow_shrink_child_if_config_override) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetCallMeasureCallbackOnAllNodes(config, true);
+  YGConfigSetExperimentalFeatureEnabled(
+      config, YGExperimentalFeatureCallMeasureCallbackOnAllNodes, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 100);
@@ -154,7 +155,8 @@ TEST(YogaTest, dont_measure_when_min_equals_max) {
 
 TEST(YogaTest, measure_when_min_equals_max_if_config_override) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetCallMeasureCallbackOnAllNodes(config, true);
+  YGConfigSetExperimentalFeatureEnabled(
+      config, YGExperimentalFeatureCallMeasureCallbackOnAllNodes, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);

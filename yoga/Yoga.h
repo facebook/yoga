@@ -322,10 +322,6 @@ WIN_EXPORT void YGConfigSetUseLegacyStretchBehaviour(
     YGConfigRef config,
     bool useLegacyStretchBehaviour);
 
-WIN_EXPORT void YGConfigSetCallMeasureCallbackOnAllNodes(
-    YGConfigRef config,
-    bool callMeasureCallbackOnAllNodes);
-
 // YGConfig
 WIN_EXPORT YGConfigRef YGConfigNew(void);
 WIN_EXPORT void YGConfigFree(YGConfigRef config);
