@@ -17,7 +17,7 @@ caps = Selenium::WebDriver::Remote::Capabilities.chrome(
   }
 )
 
-browser =  Selenium::WebDriver.for(:chrome, :desired_capabilities => caps, :switches => ['--force-device-scale-factor=1', '--window-position=0,0'])
+browser =  Selenium::WebDriver.for(:chrome, :desired_capabilities => caps, :switches => ['--force-device-scale-factor=1', '--window-position=0,0', '--headless' , '--disable-gpu'])
 
 Dir.chdir(File.dirname($0))
 
