@@ -3279,9 +3279,7 @@ static void YGNodelayoutImpl(
         case YGAlignSpaceAround:
           if (availableInnerCrossDim > totalLineCrossDim) {
             currentLead += remainingAlignContentDim / (2 * lineCount);
-            if (lineCount > 1) {
-              crossDimLead = remainingAlignContentDim / lineCount;
-            }
+            crossDimLead = remainingAlignContentDim / lineCount;
           } else {
             currentLead += remainingAlignContentDim / 2;
           }
@@ -3345,7 +3343,8 @@ static void YGNodelayoutImpl(
         }
       }
       endIndex = ii;
-      lineHeight += crossDimLead;
+
+      const float lineHeightWithCrossDimLead = lineHeight + crossDimLead;
 
       if (performLayout) {
         for (ii = startIndex; ii < endIndex; ii++) {
@@ -3397,14 +3396,14 @@ static void YGNodelayoutImpl(
                              .measuredDimensions[YGDimensionWidth] +
                          child->getMarginForAxis(mainAxis, availableInnerWidth)
                              .unwrap())
-                      : lineHeight;
+                      : lineHeightWithCrossDimLead;
 
                   const float childHeight = !isMainAxisRow
                       ? (child->getLayout()
                              .measuredDimensions[YGDimensionHeight] +
                          child->getMarginForAxis(crossAxis, availableInnerWidth)
                              .unwrap())
-                      : lineHeight;
+                      : lineHeightWithCrossDimLead;
 
                   if (!(YGFloatsEqual(
                             childWidth,
@@ -3454,7 +3453,7 @@ static void YGNodelayoutImpl(
           }
         }
       }
-      currentLead += lineHeight;
+      currentLead += lineHeightWithCrossDimLead;
     }
   }
 
