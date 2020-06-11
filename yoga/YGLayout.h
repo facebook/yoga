@@ -38,6 +38,9 @@ public:
   uint32_t generationCount = 0;
   YGDirection lastOwnerDirection = YGDirectionInherit;
 
+  bool lastOwnerHadUndefinedHeight = false;
+  bool lastOwnerHadUndefinedWidth = false;
+
   uint32_t nextCachedMeasurementsIndex = 0;
   std::array<YGCachedMeasurement, YG_MAX_CACHED_RESULT_COUNT>
       cachedMeasurements = {};
