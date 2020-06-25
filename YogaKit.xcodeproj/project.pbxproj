@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		151DA21E24A43D57008CA6AC /* BitUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 151DA21D24A43D57008CA6AC /* BitUtils.h */; };
 		7393BBCE22E40E8F003EB8C3 /* experiments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7393BBCB22E40E8F003EB8C3 /* experiments.cpp */; };
 		7393BBCF22E40E8F003EB8C3 /* experiments-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 7393BBCC22E40E8F003EB8C3 /* experiments-inl.h */; };
 		7393BBD022E40E8F003EB8C3 /* experiments.h in Headers */ = {isa = PBXBuildFile; fileRef = 7393BBCD22E40E8F003EB8C3 /* experiments.h */; };
@@ -38,7 +39,6 @@
 		73E9491F22CCCD2200A4EA99 /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E9490122CCCD2200A4EA99 /* log.h */; };
 		73E9492022CCCD2200A4EA99 /* YGValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73E9490222CCCD2200A4EA99 /* YGValue.cpp */; };
 		73E9492122CCCD2200A4EA99 /* YGConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E9490322CCCD2200A4EA99 /* YGConfig.h */; };
-		73E9492222CCCD2200A4EA99 /* instrumentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E9490422CCCD2200A4EA99 /* instrumentation.h */; };
 		73E9492422CCCD2200A4EA99 /* YGConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73E9490622CCCD2200A4EA99 /* YGConfig.cpp */; };
 		73E9492522CCCD2200A4EA99 /* YGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73E9490722CCCD2200A4EA99 /* YGNode.cpp */; };
 		73E9492622CCCD2200A4EA99 /* YGValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 73E9490822CCCD2200A4EA99 /* YGValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -47,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		151DA21D24A43D57008CA6AC /* BitUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitUtils.h; sourceTree = "<group>"; };
 		7393BBCB22E40E8F003EB8C3 /* experiments.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = experiments.cpp; sourceTree = "<group>"; };
 		7393BBCC22E40E8F003EB8C3 /* experiments-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "experiments-inl.h"; sourceTree = "<group>"; };
 		7393BBCD22E40E8F003EB8C3 /* experiments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = experiments.h; sourceTree = "<group>"; };
@@ -79,7 +80,6 @@
 		73E9490122CCCD2200A4EA99 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		73E9490222CCCD2200A4EA99 /* YGValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YGValue.cpp; sourceTree = "<group>"; };
 		73E9490322CCCD2200A4EA99 /* YGConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGConfig.h; sourceTree = "<group>"; };
-		73E9490422CCCD2200A4EA99 /* instrumentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = instrumentation.h; sourceTree = "<group>"; };
 		73E9490622CCCD2200A4EA99 /* YGConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YGConfig.cpp; sourceTree = "<group>"; };
 		73E9490722CCCD2200A4EA99 /* YGNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = YGNode.cpp; sourceTree = "<group>"; };
 		73E9490822CCCD2200A4EA99 /* YGValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGValue.h; sourceTree = "<group>"; };
@@ -152,8 +152,8 @@
 			children = (
 				73E9490922CCCD2200A4EA99 /* event */,
 				7393BBCA22E40E8F003EB8C3 /* internal */,
+				151DA21D24A43D57008CA6AC /* BitUtils.h */,
 				73E948F022CCCD2200A4EA99 /* CompactValue.h */,
-				73E9490422CCCD2200A4EA99 /* instrumentation.h */,
 				73E948F322CCCD2200A4EA99 /* log.cpp */,
 				73E9490122CCCD2200A4EA99 /* log.h */,
 				73E948F422CCCD2200A4EA99 /* Utils.cpp */,
@@ -201,6 +201,7 @@
 				73E9491422CCCD2200A4EA99 /* YGEnums.h in Headers */,
 				73E948E822CCCD0900A4EA99 /* YGLayout.h in Headers */,
 				73E9491722CCCD2200A4EA99 /* YGMacros.h in Headers */,
+				151DA21E24A43D57008CA6AC /* BitUtils.h in Headers */,
 				73E9492622CCCD2200A4EA99 /* YGValue.h in Headers */,
 				73E948E922CCCD0900A4EA99 /* UIView+Yoga.h in Headers */,
 				73E9491B22CCCD2200A4EA99 /* Yoga.h in Headers */,
@@ -216,7 +217,6 @@
 				73E9492122CCCD2200A4EA99 /* YGConfig.h in Headers */,
 				73E9490C22CCCD2200A4EA99 /* YGFloatOptional.h in Headers */,
 				73E9491F22CCCD2200A4EA99 /* log.h in Headers */,
-				73E9492222CCCD2200A4EA99 /* instrumentation.h in Headers */,
 				73E9490F22CCCD2200A4EA99 /* Yoga-internal.h in Headers */,
 				73E9491022CCCD2200A4EA99 /* YGLayout.h in Headers */,
 			);
