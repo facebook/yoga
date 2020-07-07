@@ -2590,7 +2590,8 @@ static void YGJustifyMainAxis(
       // We need to do that only for relative elements. Absolute elements do not
       // take part in that phase.
       if (childStyle.positionType() == YGPositionTypeRelative) {
-        if (child->marginLeadingValue(mainAxis).unit == YGUnitAuto) {
+        if (child->marginLeadingValue(mainAxis).unit == YGUnitAuto 
+          && collectedFlexItemsValues.remainingFreeSpace > 0.0f) {
           collectedFlexItemsValues.mainDim +=
               collectedFlexItemsValues.remainingFreeSpace /
               numberOfAutoMarginsOnCurrentLine;
@@ -2603,7 +2604,8 @@ static void YGJustifyMainAxis(
               pos[mainAxis]);
         }
 
-        if (child->marginTrailingValue(mainAxis).unit == YGUnitAuto) {
+        if (child->marginTrailingValue(mainAxis).unit == YGUnitAuto
+          && collectedFlexItemsValues.remainingFreeSpace > 0.0f) {
           collectedFlexItemsValues.mainDim +=
               collectedFlexItemsValues.remainingFreeSpace /
               numberOfAutoMarginsOnCurrentLine;
