@@ -13,7 +13,7 @@ let package = Package(
     products: [
         .library(
             name: "YogaKit", 
-            type: .static,
+            //type: .dynamic,
             targets: ["YogaKit"]
         )
     ],
@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "YogaKit",
             path: "yoga",
-            exclude: [],
+            //exclude: [],
             sources: ["./"],
             publicHeadersPath: "include",
             cSettings: [ 

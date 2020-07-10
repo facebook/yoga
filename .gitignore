@@ -1,5 +1,6 @@
 .DS_STORE
 
+*.xcodeproj
 
 /buck-cache/
 /buck-out/
