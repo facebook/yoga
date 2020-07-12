@@ -385,10 +385,6 @@ void YGNodeInsertChild(
     const YGNodeRef node,
     const YGNodeRef child,
     const uint32_t index) {
-  YGAssertWithNode(
-      node,
-      child->getOwner() == nullptr,
-      "Child already has a owner, it must be removed first.");
 
   YGAssertWithNode(
       node,
