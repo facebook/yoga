@@ -33,4 +33,9 @@ typedef void (^YGLayoutConfigurationBlock)(YGLayout* layout);
 
 @end
 
+
+@interface UIView (YogaKitAutoApplyLayout)
+
+@end
+
 NS_ASSUME_NONNULL_END

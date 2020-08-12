@@ -47,7 +47,5 @@ final class BasicViewController: UIViewController {
             layout.alignSelf = .flexStart
         }
         root.addSubview(child3)
-
-        root.yoga.applyLayout(preservingOrigin: true)
     }
 }

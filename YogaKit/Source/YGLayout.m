@@ -167,6 +167,7 @@ static YGConfigRef globalConfig;
 
 @property(nonatomic, weak, readonly) UIView* view;
 @property(nonatomic, assign, readonly) BOOL isUIView;
+@property(nonatomic, assign) BOOL isApplingLayout;
 
 @end
 
@@ -302,11 +303,19 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 }
 
 - (void)applyLayout {
+  if (self.isApplingLayout) {
+    return;
+  }
+
   [self calculateLayoutWithSize:self.view.bounds.size];
   YGApplyLayoutToViewHierarchy(self.view, NO);
 }
 
 - (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin {
+  if (self.isApplingLayout) {
+    return;
+  }
+
   [self calculateLayoutWithSize:self.view.bounds.size];
   YGApplyLayoutToViewHierarchy(self.view, preserveOrigin);
 }
@@ -314,6 +323,10 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 - (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin
                dimensionFlexibility:
                    (YGDimensionFlexibility)dimensionFlexibility {
+  if (self.isApplingLayout) {
+    return;
+  }
+
   CGSize size = self.view.bounds.size;
   if (dimensionFlexibility & YGDimensionFlexibilityFlexibleWidth) {
     size.width = YGUndefined;
@@ -481,9 +494,15 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
 
   const YGLayout* yoga = view.yoga;
 
+  if (yoga.isApplingLayout) {
+    return;
+  }
+
   if (!yoga.isIncludedInLayout) {
     return;
   }
+
+  yoga.isApplingLayout = YES;
 
   YGNodeRef node = yoga.node;
   const CGPoint topLeft = {
@@ -538,6 +557,8 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
       YGApplyLayoutToViewHierarchy(view.subviews[i], NO);
     }
   }
+
+  yoga.isApplingLayout = NO;
 }
 
 @end

@@ -61,8 +61,6 @@ final class LayoutInclusionViewController: UIViewController {
             layout.alignSelf = .center
         }
         root.addSubview(button)
-
-        root.yoga.applyLayout(preservingOrigin: false)
     }
 
     // MARK - UIButton Action
