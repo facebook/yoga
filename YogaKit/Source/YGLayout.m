@@ -492,6 +492,10 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
       [NSThread isMainThread],
       @"Framesetting should only be done on the main thread.");
 
+  if (!view.isYogaEnabled || !view.yoga.isEnabled) {
+    return;
+  }
+
   const YGLayout* yoga = view.yoga;
 
   if (yoga.isApplingLayout) {
