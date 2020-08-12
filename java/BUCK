@@ -110,6 +110,7 @@ yoga_java_library(
 yoga_java_test(
     name = "tests",
     srcs = glob(["tests/**/*.java"]),
+    contacts = ["oncall+yoga@xmail.facebook.com"],
     cxx_library_whitelist = CXX_LIBRARY_WHITELIST_FOR_TESTS,
     use_cxx_libraries = True,
     visibility = ["PUBLIC"],

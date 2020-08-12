@@ -10,7 +10,8 @@
 #include <functional>
 #include <vector>
 #include <array>
-#include "../YGEnums.h"
+#include <yoga/YGEnums.h>
+#include <stdint.h>
 
 struct YGConfig;
 struct YGNode;
