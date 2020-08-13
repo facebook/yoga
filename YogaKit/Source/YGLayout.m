@@ -503,7 +503,12 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
       topLeft.y + YGNodeLayoutGetHeight(node),
   };
 
-  const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
+  // use bounds/center and not frame if non-identity transform.
+  const CGPoint origin = preserveOrigin ? (CGPoint) {
+                                            .x = view.center.x - CGRectGetWidth(view.bounds) * 0.5,
+                                            .y = view.center.y - CGRectGetHeight(view.bounds) * 0.5
+                                          }
+                                        : CGPointZero;
   CGRect frame = (CGRect){
       .origin =
           {
@@ -519,7 +524,6 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
           },
   };
 
-  // use bounds/center and not frame if non-identity transform.
   view.bounds = (CGRect) {
     .origin = view.bounds.origin,
     .size = frame.size
