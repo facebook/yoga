@@ -156,7 +156,27 @@ YGValue YGPercentValue(CGFloat value) {
   return (YGValue){.value = value, .unit = YGUnitPercent};
 }
 
-static YGConfigRef globalConfig;
+static CGFloat YGScaleFactor() {
+  static CGFloat scale;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^() {
+    scale = [UIScreen mainScreen].scale;
+  });
+
+  return scale;
+}
+
+static YGConfigRef YGGlobalConfig() {
+  static YGConfigRef globalConfig;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^() {
+    globalConfig = YGConfigNew();
+    YGConfigSetExperimentalFeatureEnabled(globalConfig, YGExperimentalFeatureWebFlexBasis, true);
+    YGConfigSetPointScaleFactor(globalConfig, YGScaleFactor());
+  });
+
+  return globalConfig;
+}
 
 @interface YGLayout ()
 
@@ -172,17 +192,10 @@ static YGConfigRef globalConfig;
 @synthesize isIncludedInLayout = _isIncludedInLayout;
 @synthesize node = _node;
 
-+ (void)initialize {
-  globalConfig = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(
-      globalConfig, YGExperimentalFeatureWebFlexBasis, true);
-  YGConfigSetPointScaleFactor(globalConfig, [UIScreen mainScreen].scale);
-}
-
 - (instancetype)initWithView:(UIView*)view {
   if (self = [super init]) {
     _view = view;
-    _node = YGNodeNewWithConfig(globalConfig);
+    _node = YGNodeNewWithConfig(YGGlobalConfig());
     YGNodeSetContext(_node, (__bridge void*)view);
     _isEnabled = NO;
     _isIncludedInLayout = YES;
@@ -462,11 +475,7 @@ static void YGRemoveAllChildren(const YGNodeRef node) {
 }
 
 static CGFloat YGRoundPixelValue(CGFloat value) {
-  static CGFloat scale;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^() {
-    scale = [UIScreen mainScreen].scale;
-  });
+  CGFloat scale = YGScaleFactor();
 
   return ceil(value * scale) / scale; // Pixel-align
 }
