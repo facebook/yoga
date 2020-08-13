@@ -1,8 +1,11 @@
 platform :ios, '9.0'
 use_frameworks!
 
-target 'YogaKitSample' do
-  pod 'Yoga', :path => '../../Yoga.podspec'
-  pod 'YogaKit', :path => '../../YogaKit.podspec'
-  pod 'IGListKit', '~> 4.0.0'
+targetsArray = ['YogaKitSample', 'YogaKitSampleTests']
+targetsArray.each do |t|
+  target t do
+    pod 'Yoga', :path => '../../Yoga.podspec'
+    pod 'YogaKit', :path => '../../YogaKit.podspec'
+    pod 'IGListKit', '~> 4.0.0'
+  end
 end

@@ -468,7 +468,7 @@ static CGFloat YGRoundPixelValue(CGFloat value) {
     scale = [UIScreen mainScreen].scale;
   });
 
-  return roundf(value * scale) / scale;
+  return ceil(value * scale) / scale; // Pixel-align
 }
 
 static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
@@ -513,15 +513,13 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
   CGRect frame = (CGRect){
       .origin =
           {
-              .x = YGRoundPixelValue(topLeft.x + origin.x),
-              .y = YGRoundPixelValue(topLeft.y + origin.y),
+              .x = topLeft.x + origin.x,
+              .y = topLeft.y + origin.y,
           },
       .size =
           {
-              .width = MAX(YGRoundPixelValue(bottomRight.x) -
-                  YGRoundPixelValue(topLeft.x), 0),
-              .height = MAX(YGRoundPixelValue(bottomRight.y) -
-                  YGRoundPixelValue(topLeft.y), 0),
+              .width = MAX(YGRoundPixelValue(bottomRight.x - topLeft.x), 0),
+              .height = MAX(YGRoundPixelValue(bottomRight.y - topLeft.y), 0),
           },
   };
 

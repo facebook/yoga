@@ -43,7 +43,7 @@ static void YogaSwizzleInstanceMethod(Class cls, SEL originalSelector, SEL swizz
 @implementation UIView (YogaKitAutoApplyLayout)
 
 + (void)load {
-    static dispatch_once_t onceToken = 0;
+    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         YogaSwizzleInstanceMethod(self, @selector(initWithFrame:), @selector(_yoga_initWithFrame:));
         YogaSwizzleInstanceMethod(self, @selector(setFrame:), @selector(_yoga_setFrame:));
