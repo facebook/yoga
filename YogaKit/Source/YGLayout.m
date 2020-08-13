@@ -527,14 +527,14 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
           },
       .size =
           {
-              .width = MAX(YGRoundPixelValue(bottomRight.x - topLeft.x), 0),
-              .height = MAX(YGRoundPixelValue(bottomRight.y - topLeft.y), 0),
+              .width = MAX(bottomRight.x - topLeft.x, 0),
+              .height = MAX(bottomRight.y - topLeft.y, 0),
           },
   };
 
   view.bounds = (CGRect) {
     .origin = view.bounds.origin,
-    .size = frame.size
+    .size = CGSizeMake(YGRoundPixelValue(CGRectGetWidth(frame)), YGRoundPixelValue(CGRectGetHeight(frame)))
   };
 
   view.center = (CGPoint) {
