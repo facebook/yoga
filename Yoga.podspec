@@ -19,7 +19,7 @@ Pod::Spec.new do |spec|
     :tag => spec.version.to_s,
   }
   spec.platforms = { :ios => "8.0", :osx => "10.7", :tvos => "9.0", :watchos => "2.0" }
-  spec.module_name = 'yoga'
+  spec.module_name = 'Yoga'
   spec.requires_arc = false
   spec.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES'
