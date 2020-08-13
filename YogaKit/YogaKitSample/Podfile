@@ -1,11 +1,21 @@
-platform :ios, '9.0'
+
 use_frameworks!
 
-targetsArray = ['YogaKitSample', 'YogaKitSampleTests']
-targetsArray.each do |t|
-  target t do
+target 'YogaKitSample' do
+    platform :ios, '9.0'
     pod 'Yoga', :path => '../../Yoga.podspec'
     pod 'YogaKit', :path => '../../YogaKit.podspec'
     pod 'IGListKit', '~> 4.0.0'
-  end
+end
+
+target 'YogaKitSampleTests' do
+    platform :ios, '9.0'
+    pod 'Yoga', :path => '../../Yoga.podspec'
+    pod 'YogaKit', :path => '../../YogaKit.podspec'
+end
+
+target 'YogaKitTVSample' do
+    platform :tvos, '9.0'
+    pod 'Yoga', :path => '../../Yoga.podspec'
+    pod 'YogaKit', :path => '../../YogaKit.podspec'
 end
