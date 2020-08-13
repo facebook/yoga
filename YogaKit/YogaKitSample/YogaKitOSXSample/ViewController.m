@@ -1,6 +1,6 @@
 //
 //  ViewController.m
-//  YogaKitTVSample
+//  YogaKitOSXSample
 //
 //  Created by lvv on 2020/8/13.
 //  Copyright © 2020 facebook. All rights reserved.
@@ -9,25 +9,23 @@
 #import "ViewController.h"
 @import YogaKit;
 
-@interface ViewController ()
-
-@end
-
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    UIView *root = self.view;
-    root.backgroundColor = UIColor.whiteColor;
+    
+    NSView *root = self.view;
+    root.wantsLayer = YES;
+    root.layer.backgroundColor = NSColor.whiteColor.CGColor;
     [root configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
         layout.alignItems = YGAlignCenter;
         layout.justifyContent = YGJustifyCenter;
     }];
 
-    UIView *child1 = [[UIView alloc] init];
-    child1.backgroundColor = UIColor.blueColor;
+    NSView *child1 = [[NSView alloc] init];
+    child1.wantsLayer = YES;
+    child1.layer.backgroundColor = NSColor.blueColor.CGColor;
     [child1 configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
         layout.width = YGPointValue(100);
@@ -36,8 +34,9 @@
     }];
     [root addSubview:child1];
 
-    UIView *child2 = [[UIView alloc] init];
-    child2.backgroundColor = UIColor.greenColor;
+    NSView *child2 = [[NSView alloc] init];
+    child2.wantsLayer = YES;
+    child2.layer.backgroundColor = NSColor.greenColor.CGColor;
     [child2 configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
         layout.alignSelf = YGAlignFlexEnd;
@@ -46,8 +45,9 @@
     }];
     [root addSubview:child2];
 
-    UIView *child3 = [[UIView alloc] init];
-    child3.backgroundColor = UIColor.yellowColor;
+    NSView *child3 = [[NSView alloc] init];
+    child3.wantsLayer = YES;
+    child3.layer.backgroundColor = NSColor.yellowColor.CGColor;
     [child3 configureLayoutWithBlock:^(YGLayout * _Nonnull layout) {
         layout.isEnabled = YES;
         layout.alignSelf = YGAlignFlexStart;
@@ -56,5 +56,13 @@
     }];
     [root addSubview:child3];
 }
+
+
+- (void)setRepresentedObject:(id)representedObject {
+    [super setRepresentedObject:representedObject];
+
+    // Update the view, if already loaded.
+}
+
 
 @end

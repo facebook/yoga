@@ -160,7 +160,11 @@ static CGFloat YGScaleFactor() {
   static CGFloat scale;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^() {
+#if TARGET_OS_OSX
+    scale = [NSScreen mainScreen].backingScaleFactor;
+#else
     scale = [UIScreen mainScreen].scale;
+#endif
   });
 
   return scale;
@@ -388,10 +392,18 @@ static YGSize YGMeasureView(
   //
   // See https://github.com/facebook/yoga/issues/606 for more information.
   if (!view.yoga.isUIView || [view.subviews count] > 0) {
+#if TARGET_OS_OSX
+    CGSize fittingSize = view.fittingSize;
+    sizeThatFits = (CGSize){
+      .width = MIN(constrainedWidth, fittingSize.width),
+      .height = MIN(constrainedHeight, fittingSize.height)
+    };
+#else
     sizeThatFits = [view sizeThatFits:(CGSize){
                                           .width = constrainedWidth,
                                           .height = constrainedHeight,
                                       }];
+#endif
   }
 
   return (YGSize){
@@ -513,12 +525,17 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
       topLeft.y + YGNodeLayoutGetHeight(node),
   };
 
+#if TARGET_OS_OSX
+  const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
+#else
   // use bounds/center and not frame if non-identity transform.
   const CGPoint origin = preserveOrigin ? (CGPoint) {
                                             .x = view.center.x - CGRectGetWidth(view.bounds) * 0.5,
                                             .y = view.center.y - CGRectGetHeight(view.bounds) * 0.5
                                           }
                                         : CGPointZero;
+#endif
+
   CGRect frame = (CGRect){
       .origin =
           {
@@ -532,6 +549,16 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
           },
   };
 
+#if TARGET_OS_OSX
+  if (!view.superview.isFlipped && view.superview.isYogaEnabled && view.superview.yoga.isEnabled) {
+    frame.origin.y = YGNodeLayoutGetHeight(view.superview.yoga.node) - CGRectGetMaxY(frame);
+  }
+
+  view.frame = (CGRect) {
+    .origin = CGPointMake(YGRoundPixelValue(frame.origin.x), YGRoundPixelValue(frame.origin.y)),
+    .size = CGSizeMake(YGRoundPixelValue(frame.size.width), YGRoundPixelValue(frame.size.height))
+  };
+#else
   view.bounds = (CGRect) {
     .origin = view.bounds.origin,
     .size = CGSizeMake(YGRoundPixelValue(CGRectGetWidth(frame)), YGRoundPixelValue(CGRectGetHeight(frame)))
@@ -541,6 +568,7 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
     .x = YGRoundPixelValue(CGRectGetMinX(frame) + CGRectGetWidth(frame) * 0.5),
     .y = YGRoundPixelValue(CGRectGetMinY(frame) + CGRectGetHeight(frame) * 0.5)
   };
+#endif
 
   if (!yoga.isLeaf) {
     for (NSUInteger i = 0; i < view.subviews.count; i++) {

@@ -19,3 +19,9 @@ target 'YogaKitTVSample' do
     pod 'Yoga', :path => '../../Yoga.podspec'
     pod 'YogaKit', :path => '../../YogaKit.podspec'
 end
+
+target 'YogaKitOSXSample' do
+    platform :osx, '10.10'
+    pod 'Yoga', :path => '../../Yoga.podspec'
+    pod 'YogaKit', :path => '../../YogaKit.podspec'
+end

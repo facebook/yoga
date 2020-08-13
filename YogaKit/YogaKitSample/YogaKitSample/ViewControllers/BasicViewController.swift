@@ -10,14 +10,11 @@ import YogaKit
 
 final class BasicViewController: UIViewController {
     override func viewDidLoad() {
-        let containerSize = self.view.bounds.size
 
         let root = self.view!
         root.backgroundColor = .white
         root.configureLayout { (layout) in
             layout.isEnabled = true
-            layout.width = YGValue(containerSize.width)
-            layout.height = YGValue(containerSize.height)
             layout.alignItems = .center
             layout.justifyContent = .center
         }

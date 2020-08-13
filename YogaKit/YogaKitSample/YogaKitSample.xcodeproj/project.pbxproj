@@ -12,6 +12,14 @@
 		13687D871DF87D2400E7C260 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13687D861DF87D2400E7C260 /* Foundation.framework */; };
 		151960FA24E5314C00F7BF06 /* YogaKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 151960F924E5314C00F7BF06 /* YogaKitTests.m */; };
 		151960FC24E532B700F7BF06 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151960FB24E532B700F7BF06 /* dummy.swift */; };
+		15865F3524E56F7800345BD7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 15865F3424E56F7800345BD7 /* AppDelegate.m */; };
+		15865F3824E56F7800345BD7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15865F3724E56F7800345BD7 /* ViewController.m */; };
+		15865F3A24E56F7800345BD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15865F3924E56F7800345BD7 /* Assets.xcassets */; };
+		15865F3D24E56F7800345BD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15865F3B24E56F7800345BD7 /* Main.storyboard */; };
+		15865F4024E56F7800345BD7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15865F3F24E56F7800345BD7 /* main.m */; };
+		15865F4624E5747800345BD7 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15865F4524E5747800345BD7 /* libc++.tbd */; };
+		15865F4824E5748900345BD7 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15865F4724E5748900345BD7 /* dummy.swift */; };
+		1593D6D3BEDCC3E520D136F4 /* Pods_YogaKitOSXSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C318BAE128876A3592EA4EE7 /* Pods_YogaKitOSXSample.framework */; };
 		15A7CB5995C9DAB1C8803834 /* Pods_YogaKitSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80A931E90C7F3088CB86822 /* Pods_YogaKitSample.framework */; };
 		15E1C33C24E568410086A4E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E1C33B24E568410086A4E6 /* AppDelegate.m */; };
 		15E1C33F24E568410086A4E6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E1C33E24E568410086A4E6 /* ViewController.m */; };
@@ -64,6 +72,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		130B3C3D7B95A7F1337972B2 /* Pods-YogaKitOSXSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaKitOSXSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-YogaKitOSXSample/Pods-YogaKitOSXSample.release.xcconfig"; sourceTree = "<group>"; };
 		13687D431DF8748400E7C260 /* YogaKitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YogaKitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13687D521DF8748400E7C260 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13687D571DF8748400E7C260 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +81,19 @@
 		151960EF24E530E700F7BF06 /* YogaKitSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YogaKitSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		151960F924E5314C00F7BF06 /* YogaKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YogaKitTests.m; path = ../../Tests/YogaKitTests.m; sourceTree = "<group>"; };
 		151960FB24E532B700F7BF06 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
+		15865F3124E56F7800345BD7 /* YogaKitOSXSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YogaKitOSXSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		15865F3324E56F7800345BD7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		15865F3424E56F7800345BD7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		15865F3624E56F7800345BD7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		15865F3724E56F7800345BD7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		15865F3924E56F7800345BD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		15865F3C24E56F7800345BD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		15865F3E24E56F7800345BD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15865F3F24E56F7800345BD7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		15865F4124E56F7800345BD7 /* YogaKitOSXSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YogaKitOSXSample.entitlements; sourceTree = "<group>"; };
+		15865F4524E5747800345BD7 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
+		15865F4724E5748900345BD7 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
+		15865F4924E577BE00345BD7 /* YogaKitSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YogaKitSample.entitlements; sourceTree = "<group>"; };
 		15E1C33824E568410086A4E6 /* YogaKitTVSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YogaKitTVSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15E1C33A24E568410086A4E6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		15E1C33B24E568410086A4E6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -93,9 +115,11 @@
 		51E1DF9045F526AA9E84841F /* Pods-YogaKitTVSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaKitTVSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-YogaKitTVSample/Pods-YogaKitTVSample.release.xcconfig"; sourceTree = "<group>"; };
 		5D4F0C780E18ECECE25B2319 /* Pods-YogaKitTVSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaKitTVSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YogaKitTVSample/Pods-YogaKitTVSample.debug.xcconfig"; sourceTree = "<group>"; };
 		638A94471E1F06D100A726AD /* ExamplesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamplesViewController.swift; sourceTree = "<group>"; };
+		6D7F92331FB484D6ED42C5E9 /* Pods-YogaKitOSXSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaKitOSXSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YogaKitOSXSample/Pods-YogaKitOSXSample.debug.xcconfig"; sourceTree = "<group>"; };
 		82F0896A88112E957EF37C7F /* Pods-YogaKitSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaKitSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-YogaKitSample/Pods-YogaKitSample.release.xcconfig"; sourceTree = "<group>"; };
 		8925233409AB43504C102C31 /* Pods_YogaKitTVSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YogaKitTVSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26128CF4F9CAE93983FF74F /* Pods-YogaKitSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaKitSampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YogaKitSampleTests/Pods-YogaKitSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C318BAE128876A3592EA4EE7 /* Pods_YogaKitOSXSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YogaKitOSXSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C80A931E90C7F3088CB86822 /* Pods_YogaKitSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YogaKitSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF607399A6E2DE06593D1FA8 /* Pods-YogaKitSampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaKitSampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YogaKitSampleTests/Pods-YogaKitSampleTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +143,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		15865F2E24E56F7800345BD7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15865F4624E5747800345BD7 /* libc++.tbd in Frameworks */,
+				1593D6D3BEDCC3E520D136F4 /* Pods_YogaKitOSXSample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15E1C33524E568410086A4E6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,6 +170,7 @@
 				13687D451DF8748400E7C260 /* YogaKitSample */,
 				151960F024E530E700F7BF06 /* YogaKitSampleTests */,
 				15E1C33924E568410086A4E6 /* YogaKitTVSample */,
+				15865F3224E56F7800345BD7 /* YogaKitOSXSample */,
 				13687D441DF8748400E7C260 /* Products */,
 				13687D831DF87D1E00E7C260 /* Frameworks */,
 				E1C759E3C8E84821213ECE8D /* Pods */,
@@ -149,6 +183,7 @@
 				13687D431DF8748400E7C260 /* YogaKitSample.app */,
 				151960EF24E530E700F7BF06 /* YogaKitSampleTests.xctest */,
 				15E1C33824E568410086A4E6 /* YogaKitTVSample.app */,
+				15865F3124E56F7800345BD7 /* YogaKitOSXSample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -156,6 +191,7 @@
 		13687D451DF8748400E7C260 /* YogaKitSample */ = {
 			isa = PBXGroup;
 			children = (
+				15865F4924E577BE00345BD7 /* YogaKitSample.entitlements */,
 				40BD9F4E1E47902F002790A9 /* Views */,
 				40BD9F481E4784B3002790A9 /* ViewControllers */,
 				638A94471E1F06D100A726AD /* ExamplesViewController.swift */,
@@ -170,11 +206,13 @@
 			isa = PBXGroup;
 			children = (
 				15E1C35024E56AB60086A4E6 /* libc++.tbd */,
+				15865F4524E5747800345BD7 /* libc++.tbd */,
 				13687D861DF87D2400E7C260 /* Foundation.framework */,
 				13687D841DF87D1E00E7C260 /* UIKit.framework */,
 				C80A931E90C7F3088CB86822 /* Pods_YogaKitSample.framework */,
 				4BB0C63590A97352D30E310E /* Pods_YogaKitSampleTests.framework */,
 				8925233409AB43504C102C31 /* Pods_YogaKitTVSample.framework */,
+				C318BAE128876A3592EA4EE7 /* Pods_YogaKitOSXSample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -186,6 +224,23 @@
 				151960FB24E532B700F7BF06 /* dummy.swift */,
 			);
 			path = YogaKitSampleTests;
+			sourceTree = "<group>";
+		};
+		15865F3224E56F7800345BD7 /* YogaKitOSXSample */ = {
+			isa = PBXGroup;
+			children = (
+				15865F3324E56F7800345BD7 /* AppDelegate.h */,
+				15865F3424E56F7800345BD7 /* AppDelegate.m */,
+				15865F3624E56F7800345BD7 /* ViewController.h */,
+				15865F3724E56F7800345BD7 /* ViewController.m */,
+				15865F3924E56F7800345BD7 /* Assets.xcassets */,
+				15865F3B24E56F7800345BD7 /* Main.storyboard */,
+				15865F3E24E56F7800345BD7 /* Info.plist */,
+				15865F3F24E56F7800345BD7 /* main.m */,
+				15865F4724E5748900345BD7 /* dummy.swift */,
+				15865F4124E56F7800345BD7 /* YogaKitOSXSample.entitlements */,
+			);
+			path = YogaKitOSXSample;
 			sourceTree = "<group>";
 		};
 		15E1C33924E568410086A4E6 /* YogaKitTVSample */ = {
@@ -231,6 +286,8 @@
 				FF607399A6E2DE06593D1FA8 /* Pods-YogaKitSampleTests.release.xcconfig */,
 				5D4F0C780E18ECECE25B2319 /* Pods-YogaKitTVSample.debug.xcconfig */,
 				51E1DF9045F526AA9E84841F /* Pods-YogaKitTVSample.release.xcconfig */,
+				6D7F92331FB484D6ED42C5E9 /* Pods-YogaKitOSXSample.debug.xcconfig */,
+				130B3C3D7B95A7F1337972B2 /* Pods-YogaKitOSXSample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -278,6 +335,24 @@
 			productReference = 151960EF24E530E700F7BF06 /* YogaKitSampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		15865F3024E56F7800345BD7 /* YogaKitOSXSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15865F4424E56F7800345BD7 /* Build configuration list for PBXNativeTarget "YogaKitOSXSample" */;
+			buildPhases = (
+				48411F57309F483CDA923BEA /* [CP] Check Pods Manifest.lock */,
+				15865F2D24E56F7800345BD7 /* Sources */,
+				15865F2E24E56F7800345BD7 /* Frameworks */,
+				15865F2F24E56F7800345BD7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YogaKitOSXSample;
+			productName = YogaKitOSXSample;
+			productReference = 15865F3124E56F7800345BD7 /* YogaKitOSXSample.app */;
+			productType = "com.apple.product-type.application";
+		};
 		15E1C33724E568410086A4E6 /* YogaKitTVSample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15E1C34D24E568420086A4E6 /* Build configuration list for PBXNativeTarget "YogaKitTVSample" */;
@@ -307,6 +382,7 @@
 				TargetAttributes = {
 					13687D421DF8748300E7C260 = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = J29VN6AP39;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -315,6 +391,11 @@
 						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 13687D421DF8748300E7C260;
+					};
+					15865F3024E56F7800345BD7 = {
+						CreatedOnToolsVersion = 11.6;
+						LastSwiftMigration = 1160;
+						ProvisioningStyle = Automatic;
 					};
 					15E1C33724E568410086A4E6 = {
 						CreatedOnToolsVersion = 11.6;
@@ -340,6 +421,7 @@
 				13687D421DF8748300E7C260 /* YogaKitSample */,
 				151960EE24E530E700F7BF06 /* YogaKitSampleTests */,
 				15E1C33724E568410086A4E6 /* YogaKitTVSample */,
+				15865F3024E56F7800345BD7 /* YogaKitOSXSample */,
 			);
 		};
 /* End PBXProject section */
@@ -360,6 +442,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		15865F2F24E56F7800345BD7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15865F3A24E56F7800345BD7 /* Assets.xcassets in Resources */,
+				15865F3D24E56F7800345BD7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15E1C33624E568410086A4E6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,6 +464,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		48411F57309F483CDA923BEA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YogaKitOSXSample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		513B543F92B2E4F4D1EE1CE7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,6 +592,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		15865F2D24E56F7800345BD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15865F3824E56F7800345BD7 /* ViewController.m in Sources */,
+				15865F4024E56F7800345BD7 /* main.m in Sources */,
+				15865F4824E5748900345BD7 /* dummy.swift in Sources */,
+				15865F3524E56F7800345BD7 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		15E1C33424E568410086A4E6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -501,6 +625,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		15865F3B24E56F7800345BD7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15865F3C24E56F7800345BD7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		15E1C34024E568410086A4E6 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -616,14 +748,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = YogaKitSample/YogaKitSample.entitlements;
+				DEVELOPMENT_TEAM = J29VN6AP39;
 				INFOPLIST_FILE = YogaKitSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKitSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -633,13 +769,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = YogaKitSample/YogaKitSample.entitlements;
+				DEVELOPMENT_TEAM = J29VN6AP39;
 				INFOPLIST_FILE = YogaKitSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKitSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -704,6 +844,74 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YogaKitSample.app/YogaKitSample";
+			};
+			name = Release;
+		};
+		15865F4224E56F7800345BD7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D7F92331FB484D6ED42C5E9 /* Pods-YogaKitOSXSample.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = YogaKitOSXSample/YogaKitOSXSample.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = YogaKitOSXSample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKitOSXSample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		15865F4324E56F7800345BD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 130B3C3D7B95A7F1337972B2 /* Pods-YogaKitOSXSample.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = YogaKitOSXSample/YogaKitOSXSample.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = YogaKitOSXSample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.YogaKitOSXSample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -799,6 +1007,15 @@
 			buildConfigurations = (
 				151960F724E530E700F7BF06 /* Debug */,
 				151960F824E530E700F7BF06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15865F4424E56F7800345BD7 /* Build configuration list for PBXNativeTarget "YogaKitOSXSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15865F4224E56F7800345BD7 /* Debug */,
+				15865F4324E56F7800345BD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

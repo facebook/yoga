@@ -43,47 +43,75 @@ static void YogaSwizzleInstanceMethod(Class cls, SEL originalSelector, SEL swizz
 @implementation UIView (YogaKitAutoApplyLayout)
 
 + (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        YogaSwizzleInstanceMethod(self, @selector(initWithFrame:), @selector(_yoga_initWithFrame:));
-        YogaSwizzleInstanceMethod(self, @selector(setFrame:), @selector(_yoga_setFrame:));
-        YogaSwizzleInstanceMethod(self, @selector(setBounds:), @selector(_yoga_setBounds:));
-    });
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    YogaSwizzleInstanceMethod(self, @selector(initWithFrame:), @selector(_yoga_initWithFrame:));
+    YogaSwizzleInstanceMethod(self, @selector(setFrame:), @selector(_yoga_setFrame:));
+    YogaSwizzleInstanceMethod(self, @selector(setBounds:), @selector(_yoga_setBounds:));
+#if TARGET_OS_OSX
+    YogaSwizzleInstanceMethod(self, @selector(setFrameSize:), @selector(_yoga_setFrameSize:));
+    YogaSwizzleInstanceMethod(self, @selector(setBoundsSize:), @selector(_yoga_setBoundsSize:));
+#endif
+  });
 }
 
 - (CGSize)_yoga_boundsSize {
-    NSValue *value = (NSValue *)objc_getAssociatedObject(self, kYGBoundsSizeAssociatedKey);
+  NSValue *value = (NSValue *)objc_getAssociatedObject(self, kYGBoundsSizeAssociatedKey);
 
-    return value ? value.CGSizeValue : CGSizeMake(YGUndefined, YGUndefined);
+  return value ?
+#if TARGET_OS_OSX
+            value.sizeValue
+#else
+            value.CGSizeValue
+#endif
+            : CGSizeMake(YGUndefined, YGUndefined);
 }
 
 - (void)set_yoga_boundsSize:(CGSize)size {
-    objc_setAssociatedObject(self,
-                             kYGBoundsSizeAssociatedKey,
-                             [NSValue valueWithCGSize:size],
-                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self,
+                            kYGBoundsSizeAssociatedKey,
+#if TARGET_OS_OSX
+                            [NSValue valueWithSize:size]
+#else
+                            [NSValue valueWithCGSize:size]
+#endif
+                             , OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (instancetype)_yoga_initWithFrame:(CGRect)frame {
-    id _self = [self _yoga_initWithFrame:frame];
-    if (_self) {
-        [self _yoga_applyLayout];
-    }
+  id _self = [self _yoga_initWithFrame:frame];
+  if (_self) {
+    [self _yoga_applyLayout];
+  }
 
-    return _self;
+  return _self;
 }
 
 - (void)_yoga_setFrame:(CGRect)frame {
-    [self _yoga_setFrame:frame];
+  [self _yoga_setFrame:frame];
 
-    [self _yoga_applyLayout];
+  [self _yoga_applyLayout];
 }
 
 - (void)_yoga_setBounds:(CGRect)bounds {
-    [self _yoga_setBounds:bounds];
+  [self _yoga_setBounds:bounds];
 
-    [self _yoga_applyLayout];
+  [self _yoga_applyLayout];
 }
+
+#if TARGET_OS_OSX
+- (void)_yoga_setFrameSize:(NSSize)newSize {
+  [self _yoga_setFrameSize:newSize];
+
+  [self _yoga_applyLayout];
+}
+
+- (void)_yoga_setBoundsSize:(NSSize)newSize {
+  [self _yoga_setBoundsSize:newSize];
+
+  [self _yoga_applyLayout];
+}
+#endif
 
 - (void)_yoga_applyLayout {
     if (self.isYogaEnabled && self.yoga.isEnabled) {
