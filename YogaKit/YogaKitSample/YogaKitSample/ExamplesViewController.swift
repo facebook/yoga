@@ -18,12 +18,12 @@ private final class ExampleModel {
     }
 }
 
-extension ExampleModel: IGListDiffable {
+extension ExampleModel: ListDiffable {
     fileprivate func diffIdentifier() -> NSObjectProtocol {
         return title as NSString
     }
 
-    fileprivate func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
+    fileprivate func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         guard let otherObj = object as? ExampleModel else { return false }
 
         return (title == otherObj.title) &&
@@ -31,11 +31,11 @@ extension ExampleModel: IGListDiffable {
     }
 }
 
-final class ExamplesViewController: UIViewController, IGListAdapterDataSource, IGListSingleSectionControllerDelegate {
-    private lazy var adapter: IGListAdapter = {
-        return IGListAdapter(updater: IGListAdapterUpdater(), viewController: self, workingRangeSize: 0)
+final class ExamplesViewController: UIViewController, ListAdapterDataSource, ListSingleSectionControllerDelegate {
+    private lazy var adapter: ListAdapter = {
+        return ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 0)
     }()
-    private let collectionView = IGListCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let collectionView = ListCollectionView(frame: .zero)
 
 
     // Update this to array to create more examples.
@@ -47,6 +47,7 @@ final class ExamplesViewController: UIViewController, IGListAdapterDataSource, I
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Examples"
+        collectionView.backgroundColor = .clear
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
         adapter.dataSource = self
@@ -59,16 +60,16 @@ final class ExamplesViewController: UIViewController, IGListAdapterDataSource, I
 
     //MARK: IGListAdapterDataSource
 
-    func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-        return models as [IGListDiffable]
+    func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        return models as [ListDiffable]
     }
 
-    func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
-        let sizeBlock: IGListSingleSectionCellSizeBlock = { (model, context) in
+    func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        let sizeBlock: ListSingleSectionCellSizeBlock = { (model, context) in
             return CGSize(width: (context?.containerSize.width)!, height: 75.0)
         }
 
-        let configureBlock: IGListSingleSectionCellConfigureBlock = { (model, cell) in
+        let configureBlock: ListSingleSectionCellConfigureBlock = { (model, cell) in
             guard let m = model as? ExampleModel, let c = cell as? SingleLabelCollectionCell else {
                 return
             }
@@ -76,18 +77,18 @@ final class ExamplesViewController: UIViewController, IGListAdapterDataSource, I
             c.label.text = m.title
         }
 
-        let sectionController = IGListSingleSectionController(cellClass: SingleLabelCollectionCell.self,
+        let sectionController = ListSingleSectionController(cellClass: SingleLabelCollectionCell.self,
                                                               configureBlock: configureBlock,
                                                               sizeBlock: sizeBlock)
         sectionController.selectionDelegate = self
         return sectionController
     }
 
-    func emptyView(for listAdapter: IGListAdapter) -> UIView? { return nil }
+    func emptyView(for listAdapter: ListAdapter) -> UIView? { return nil }
 
     //MARK: IGListSingleSectionControllerDelegate
 
-    func didSelect(_ sectionController: IGListSingleSectionController) {
+    func didSelect(_ sectionController: ListSingleSectionController, with object: Any) {
         let section = adapter.section(for: sectionController)
         let model = models[section]
 

@@ -162,6 +162,7 @@ static YGConfigRef globalConfig;
 
 @property(nonatomic, weak, readonly) UIView* view;
 @property(nonatomic, assign, readonly) BOOL isUIView;
+@property(nonatomic, assign) BOOL isApplingLayout;
 
 @end
 
@@ -292,11 +293,19 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 }
 
 - (void)applyLayout {
+  if (self.isApplingLayout) {
+    return;
+  }
+
   [self calculateLayoutWithSize:self.view.bounds.size];
   YGApplyLayoutToViewHierarchy(self.view, NO);
 }
 
 - (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin {
+  if (self.isApplingLayout) {
+    return;
+  }
+
   [self calculateLayoutWithSize:self.view.bounds.size];
   YGApplyLayoutToViewHierarchy(self.view, preserveOrigin);
 }
@@ -304,6 +313,10 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 - (void)applyLayoutPreservingOrigin:(BOOL)preserveOrigin
                dimensionFlexibility:
                    (YGDimensionFlexibility)dimensionFlexibility {
+  if (self.isApplingLayout) {
+    return;
+  }
+
   CGSize size = self.view.bounds.size;
   if (dimensionFlexibility & YGDimensionFlexibilityFlexibleWidth) {
     size.width = YGUndefined;
@@ -463,11 +476,21 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
       [NSThread isMainThread],
       @"Framesetting should only be done on the main thread.");
 
+  if (!view.isYogaEnabled || !view.yoga.isEnabled) {
+    return;
+  }
+
   const YGLayout* yoga = view.yoga;
+
+  if (yoga.isApplingLayout) {
+    return;
+  }
 
   if (!yoga.isIncludedInLayout) {
     return;
   }
+
+  yoga.isApplingLayout = YES;
 
   YGNodeRef node = yoga.node;
   const CGPoint topLeft = {
@@ -481,7 +504,7 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
   };
 
   const CGPoint origin = preserveOrigin ? view.frame.origin : CGPointZero;
-  view.frame = (CGRect){
+  CGRect frame = (CGRect){
       .origin =
           {
               .x = YGRoundPixelValue(topLeft.x + origin.x),
@@ -489,11 +512,22 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
           },
       .size =
           {
-              .width = YGRoundPixelValue(bottomRight.x) -
-                  YGRoundPixelValue(topLeft.x),
-              .height = YGRoundPixelValue(bottomRight.y) -
-                  YGRoundPixelValue(topLeft.y),
+              .width = MAX(YGRoundPixelValue(bottomRight.x) -
+                  YGRoundPixelValue(topLeft.x), 0),
+              .height = MAX(YGRoundPixelValue(bottomRight.y) -
+                  YGRoundPixelValue(topLeft.y), 0),
           },
+  };
+
+  // use bounds/center and not frame if non-identity transform.
+  view.bounds = (CGRect) {
+    .origin = view.bounds.origin,
+    .size = frame.size
+  };
+
+  view.center = (CGPoint) {
+    .x = YGRoundPixelValue(CGRectGetMinX(frame) + CGRectGetWidth(frame) * 0.5),
+    .y = YGRoundPixelValue(CGRectGetMinY(frame) + CGRectGetHeight(frame) * 0.5)
   };
 
   if (!yoga.isLeaf) {
@@ -501,6 +535,8 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
       YGApplyLayoutToViewHierarchy(view.subviews[i], NO);
     }
   }
+
+  yoga.isApplingLayout = NO;
 }
 
 @end

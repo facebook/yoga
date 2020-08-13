@@ -42,7 +42,6 @@ final class SingleLabelCollectionCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        contentView.yoga.applyLayout(preservingOrigin: false)
         label.frame = contentView.bounds
     }
 }

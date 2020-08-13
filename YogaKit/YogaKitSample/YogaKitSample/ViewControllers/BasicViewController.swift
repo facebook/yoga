@@ -32,22 +32,24 @@ final class BasicViewController: UIViewController {
         }
         root.addSubview(child1)
 
-        let child2 = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        let child2 = UIView()
         child2.backgroundColor = .green
         child2.configureLayout { (layout) in
             layout.isEnabled = true
             layout.alignSelf = .flexEnd
+            layout.width = 200
+            layout.height = 200
         }
         root.addSubview(child2)
 
-        let child3 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let child3 = UIView()
         child3.backgroundColor = .yellow
         child3.configureLayout { (layout) in
             layout.isEnabled = true
             layout.alignSelf = .flexStart
+            layout.width = 100
+            layout.height = 100
         }
         root.addSubview(child3)
-
-        root.yoga.applyLayout(preservingOrigin: true)
     }
 }

@@ -23,7 +23,7 @@ podspec = Pod::Spec.new do |spec|
   spec.ios.deployment_target = '8.0'
   spec.ios.frameworks = 'UIKit'
   spec.module_name = 'YogaKit'
-  spec.dependency 'Yoga', '~> 1.14'
+  spec.dependency 'Yoga', '~> 1.14.1'
   # Fixes the bug related the xcode 11 not able to find swift related frameworks.
   # https://github.com/Carthage/Carthage/issues/2825
   # https://twitter.com/krzyzanowskim/status/1151549874653081601?s=21
@@ -32,6 +32,7 @@ podspec = Pod::Spec.new do |spec|
   spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h'
   spec.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
   spec.swift_version = '5.1'
+  spec.static_framework = true
 end
 
 # See https://github.com/facebook/yoga/pull/366
