@@ -1,14 +1,29 @@
 <p align="center">
   <img src="logo.png" alt="logo" width="15%" />
 </p>
+
 <h1 align="center">
   Yoga
 </h1>
+
 <p align="center">
   Build flexible layouts on any platform with a highly optimized open source layout engine designed with speed, size, and ease of use in mind.
 </p>
 
-[![CocoaPods](https://img.shields.io/cocoapods/v/YogaKit.svg)](http://cocoapods.org/pods/YogaKit) [![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout) [![bintray](https://img.shields.io/bintray/v/facebook/maven/com.facebook.yoga:yoga.svg)](https://bintray.com/facebook/maven/com.facebook.yoga%3Ayoga/_latestVersion) [![NuGet](https://img.shields.io/nuget/v/Facebook.Yoga.svg)](https://www.nuget.org/packages/Facebook.Yoga)
+<p align="center">
+  <a href="http://cocoapods.org/pods/YogaKit">
+    <img src="https://img.shields.io/cocoapods/v/YogaKit.svg" alt="CocoaPods" />
+  </a>
+  <a href="https://www.npmjs.com/package/yoga-layout">
+    <img src="https://img.shields.io/npm/v/yoga-layout.svg" alt="npm" />
+  </a>
+  <a href="https://bintray.com/facebook/maven/com.facebook.yoga%3Ayoga/_latestVersion">
+    <img src="https://img.shields.io/bintray/v/facebook/maven/com.facebook.yoga:yoga.svg" alt="bintray" />
+  </a>
+  <a href="https://www.nuget.org/packages/Facebook.Yoga">
+    <img src="https://img.shields.io/nuget/v/Facebook.Yoga.svg" alt="NuGet" />
+  </a>
+</p>
 
 ## Building
 Yoga builds with [buck](https://buckbuild.com). Make sure you install buck before contributing to Yoga. Yoga's main implementation is in C++, with bindings to supported languages and frameworks. When making changes to Yoga please ensure the changes are also propagated to these bindings when applicable.
