@@ -243,9 +243,11 @@ static YGConfigRef YGGlobalConfig() {
       @"This method must be called on the main thread.");
   if (self.isEnabled) {
     for (UIView* subview in self.view.subviews) {
-      YGLayout* const yoga = subview.yoga;
-      if (yoga.isEnabled && yoga.isIncludedInLayout) {
-        return NO;
+      if (subview.isYogaEnabled) {
+        YGLayout* const yoga = subview.yoga;
+        if (yoga.isEnabled && yoga.isIncludedInLayout) {
+          return NO;
+        }
       }
     }
   }
@@ -460,7 +462,7 @@ static void YGAttachNodesFromViewHierachy(UIView* const view) {
     NSMutableArray<UIView*>* subviewsToInclude =
         [[NSMutableArray alloc] initWithCapacity:view.subviews.count];
     for (UIView* subview in view.subviews) {
-      if (subview.yoga.isEnabled && subview.yoga.isIncludedInLayout) {
+      if (subview.isYogaEnabled && subview.yoga.isEnabled && subview.yoga.isIncludedInLayout) {
         [subviewsToInclude addObject:subview];
       }
     }
@@ -484,11 +486,6 @@ static void YGRemoveAllChildren(const YGNodeRef node) {
   }
 
   YGNodeRemoveAllChildren(node);
-}
-
-static CGFloat YGRoundPixelValue(CGFloat value) {
-  CGFloat scale = YGScaleFactor();
-  return round(value * scale) / scale;
 }
 
 static CGFloat YGAlignPixelValue(CGFloat value) {
@@ -559,7 +556,7 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
   }
 
   view.frame = (CGRect) {
-    .origin = CGPointMake(YGRoundPixelValue(frame.origin.x), YGRoundPixelValue(frame.origin.y)),
+    .origin = frame.origin,
     .size = CGSizeMake(YGAlignPixelValue(frame.size.width), YGAlignPixelValue(frame.size.height))
   };
 #else
@@ -569,8 +566,8 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
   };
 
   view.center = (CGPoint) {
-    .x = YGRoundPixelValue(CGRectGetMinX(frame) + CGRectGetWidth(frame) * 0.5),
-    .y = YGRoundPixelValue(CGRectGetMinY(frame) + CGRectGetHeight(frame) * 0.5)
+    .x = CGRectGetMinX(frame) + CGRectGetWidth(frame) * 0.5,
+    .y = CGRectGetMinY(frame) + CGRectGetHeight(frame) * 0.5
   };
 #endif
 
