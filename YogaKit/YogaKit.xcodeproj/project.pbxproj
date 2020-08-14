@@ -545,14 +545,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"ARCHS[sdk=appletvos*]" = (
-					arm64,
-					armv7,
-				);
-				"ARCHS[sdk=appletvsimulator*]" = (
-					i386,
-					x86_64,
-				);
+				"ARCHS[sdk=appletvos*]" = arm64;
+				"ARCHS[sdk=appletvsimulator*]" = x86_64;
 				"ARCHS[sdk=iphoneos*]" = (
 					arm64,
 					armv7,
@@ -630,10 +624,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"ARCHS[sdk=appletvos*]" = (
-					arm64,
-					armv7,
-				);
+				"ARCHS[sdk=appletvos*]" = arm64;
 				"ARCHS[sdk=iphoneos*]" = (
 					arm64,
 					armv7,
