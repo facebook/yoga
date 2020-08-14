@@ -8,12 +8,6 @@ target 'YogaKitSample' do
     pod 'IGListKit', '~> 4.0.0'
 end
 
-target 'YogaKitSampleTests' do
-    platform :ios, '9.0'
-    pod 'Yoga', :path => '../../Yoga.podspec'
-    pod 'YogaKit', :path => '../../YogaKit.podspec'
-end
-
 target 'YogaKitTVSample' do
     platform :tvos, '9.0'
     pod 'Yoga', :path => '../../Yoga.podspec'
