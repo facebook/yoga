@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		153D326F24E654A300EDDBEA /* Yoga-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 153D326E24E6549A00EDDBEA /* Yoga-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		153D327124E654EF00EDDBEA /* YGLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D327024E654EF00EDDBEA /* YGLayoutExtensions.swift */; };
 		15865F6624E583F000345BD7 /* YGLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 15865F5F24E583F000345BD7 /* YGLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		15865F6724E583F000345BD7 /* UIView+Yoga.h in Headers */ = {isa = PBXBuildFile; fileRef = 15865F6024E583F000345BD7 /* UIView+Yoga.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		15865F6824E583F000345BD7 /* YGLayout+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 15865F6124E583F000345BD7 /* YGLayout+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -57,6 +59,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		153D326D24E6549A00EDDBEA /* Yoga.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = Yoga.modulemap; sourceTree = "<group>"; };
+		153D326E24E6549A00EDDBEA /* Yoga-umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yoga-umbrella.h"; sourceTree = "<group>"; };
+		153D327024E654EF00EDDBEA /* YGLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YGLayoutExtensions.swift; sourceTree = "<group>"; };
 		15865F5424E5834E00345BD7 /* YogaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YogaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15865F5F24E583F000345BD7 /* YGLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGLayout.h; sourceTree = "<group>"; };
 		15865F6024E583F000345BD7 /* UIView+Yoga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Yoga.h"; sourceTree = "<group>"; };
@@ -116,11 +121,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		153D326C24E6545A00EDDBEA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				153D326E24E6549A00EDDBEA /* Yoga-umbrella.h */,
+				153D326D24E6549A00EDDBEA /* Yoga.modulemap */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		15865F4A24E5834E00345BD7 = {
 			isa = PBXGroup;
 			children = (
 				15865F5624E5834E00345BD7 /* YogaKit */,
 				15865FFF24E58BD800345BD7 /* Yoga */,
+				153D326C24E6545A00EDDBEA /* Supporting Files */,
 				15865F5524E5834E00345BD7 /* Products */,
 				15865FB824E584FF00345BD7 /* Frameworks */,
 			);
@@ -138,6 +153,7 @@
 		15865F5624E5834E00345BD7 /* YogaKit */ = {
 			isa = PBXGroup;
 			children = (
+				153D327024E654EF00EDDBEA /* YGLayoutExtensions.swift */,
 				15865F6024E583F000345BD7 /* UIView+Yoga.h */,
 				15865F6324E583F000345BD7 /* UIView+Yoga.m */,
 				15865F5F24E583F000345BD7 /* YGLayout.h */,
@@ -234,6 +250,7 @@
 				1586603D24E58C3700345BD7 /* YGMacros.h in Headers */,
 				1586604324E58C3700345BD7 /* YGValue.h in Headers */,
 				1586604024E58C3700345BD7 /* YGStyle.h in Headers */,
+				153D326F24E654A300EDDBEA /* Yoga-umbrella.h in Headers */,
 				1586603124E58C3700345BD7 /* BitUtils.h in Headers */,
 				1586603024E58C3700345BD7 /* Utils.h in Headers */,
 				1586602B24E58C3700345BD7 /* experiments-inl.h in Headers */,
@@ -348,6 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				153D327124E654EF00EDDBEA /* YGLayoutExtensions.swift in Sources */,
 				15865F6A24E583F000345BD7 /* UIView+Yoga.m in Sources */,
 				15865F6924E583F000345BD7 /* YGLayout.m in Sources */,
 			);
@@ -457,6 +475,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				TARGETED_DEVICE_FAMILY = "1,2,3,6";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "i386 x86_64 arm64 armv7 arm64e armv7s";
@@ -525,6 +544,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvsimulator appletvos";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				TARGETED_DEVICE_FAMILY = "1,2,3,6";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -597,6 +617,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "${SRCROOT}/Yoga.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.Yoga;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -618,6 +639,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "${SRCROOT}/Yoga.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.facebook.Yoga;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
