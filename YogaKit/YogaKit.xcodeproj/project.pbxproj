@@ -39,12 +39,12 @@
 		1586603D24E58C3700345BD7 /* YGMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586601F24E58C3700345BD7 /* YGMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1586603E24E58C3700345BD7 /* YGEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586602024E58C3700345BD7 /* YGEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1586603F24E58C3700345BD7 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1586602124E58C3700345BD7 /* log.cpp */; };
-		1586604024E58C3700345BD7 /* YGStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586602224E58C3700345BD7 /* YGStyle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1586604024E58C3700345BD7 /* YGStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586602224E58C3700345BD7 /* YGStyle.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1586604124E58C3700345BD7 /* Yoga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1586602324E58C3700345BD7 /* Yoga.cpp */; };
 		1586604224E58C3700345BD7 /* Yoga-internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586602424E58C3700345BD7 /* Yoga-internal.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1586604324E58C3700345BD7 /* YGValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586602524E58C3700345BD7 /* YGValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1586604424E58C3700345BD7 /* YGLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586602624E58C3700345BD7 /* YGLayout.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		1586604524E58C3700345BD7 /* YGNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586602724E58C3700345BD7 /* YGNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1586604524E58C3700345BD7 /* YGNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1586602724E58C3700345BD7 /* YGNode.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1586604624E58C3700345BD7 /* YGEnums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1586602824E58C3700345BD7 /* YGEnums.cpp */; };
 /* End PBXBuildFile section */
 
@@ -244,13 +244,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1586604524E58C3700345BD7 /* YGNode.h in Headers */,
 				1586603E24E58C3700345BD7 /* YGEnums.h in Headers */,
 				1586603A24E58C3700345BD7 /* Yoga.h in Headers */,
 				1586603D24E58C3700345BD7 /* YGMacros.h in Headers */,
 				1586604324E58C3700345BD7 /* YGValue.h in Headers */,
-				1586604024E58C3700345BD7 /* YGStyle.h in Headers */,
 				153D326F24E654A300EDDBEA /* Yoga-umbrella.h in Headers */,
+				1586604524E58C3700345BD7 /* YGNode.h in Headers */,
+				1586604024E58C3700345BD7 /* YGStyle.h in Headers */,
 				1586603124E58C3700345BD7 /* BitUtils.h in Headers */,
 				1586603024E58C3700345BD7 /* Utils.h in Headers */,
 				1586602B24E58C3700345BD7 /* experiments-inl.h in Headers */,
