@@ -360,6 +360,7 @@ WIN_EXPORT float YGRoundValueToPixelGrid(
 YG_EXTERN_C_END
 
 #ifdef __cplusplus
+YG_EXTERN_CXX_BEGIN
 
 #include <functional>
 #include <vector>
@@ -371,4 +372,5 @@ void YGTraversePreOrder(
 
 void YGNodeSetChildren(YGNodeRef owner, const std::vector<YGNodeRef>& children);
 
+YG_EXTERN_C_END
 #endif

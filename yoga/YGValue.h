@@ -15,8 +15,10 @@
 #define COMPILING_WITH_CLANG_ON_WINDOWS
 #endif
 #if defined(COMPILING_WITH_CLANG_ON_WINDOWS)
+YG_EXTERN_CXX_BEGIN
 #include <limits>
 constexpr float YGUndefined = std::numeric_limits<float>::quiet_NaN();
+YG_EXTERN_C_END
 #else
 YG_EXTERN_C_BEGIN
 
@@ -44,6 +46,7 @@ YG_EXTERN_C_END
 #undef COMPILING_WITH_CLANG_ON_WINDOWS
 
 #ifdef __cplusplus
+YG_EXTERN_CXX_BEGIN
 
 inline bool operator==(const YGValue& lhs, const YGValue& rhs) {
   if (lhs.unit != rhs.unit) {
@@ -92,4 +95,5 @@ inline YGValue operator"" _percent(unsigned long long value) {
 } // namespace yoga
 } // namespace facebook
 
+YG_EXTERN_C_END
 #endif

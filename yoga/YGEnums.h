@@ -10,6 +10,7 @@
 #include "YGMacros.h"
 
 #ifdef __cplusplus
+YG_EXTERN_CXX_BEGIN
 namespace facebook {
 namespace yoga {
 namespace enums {
@@ -27,6 +28,7 @@ constexpr int n() {
 } // namespace enums
 } // namespace yoga
 } // namespace facebook
+YG_EXTERN_C_END
 #endif
 
 #define YG_ENUM_DECL(NAME, ...)                               \
@@ -37,6 +39,7 @@ constexpr int n() {
 #define YG_ENUM_SEQ_DECL(NAME, ...)  \
   YG_ENUM_DECL(NAME, __VA_ARGS__)    \
   YG_EXTERN_C_END                    \
+  YG_EXTERN_CXX_BEGIN                \
   namespace facebook {               \
   namespace yoga {                   \
   namespace enums {                  \
@@ -47,6 +50,7 @@ constexpr int n() {
   }                                  \
   }                                  \
   }                                  \
+  YG_EXTERN_C_END                    \
   YG_EXTERN_C_BEGIN
 #else
 #define YG_ENUM_SEQ_DECL YG_ENUM_DECL
