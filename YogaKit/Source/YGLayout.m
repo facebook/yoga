@@ -149,11 +149,11 @@
       lowercased_name, capitalized_name, capitalized_name, YGEdgeAll)
 
 YGValue YGPointValue(CGFloat value) {
-  return (YGValue){.value = value, .unit = YGUnitPoint};
+  return (YGValue){.value = (float)value, .unit = YGUnitPoint};
 }
 
 YGValue YGPercentValue(CGFloat value) {
-  return (YGValue){.value = value, .unit = YGUnitPercent};
+  return (YGValue){.value = (float)value, .unit = YGUnitPercent};
 }
 
 static CGFloat YGScaleFactor() {
@@ -407,9 +407,9 @@ static YGSize YGMeasureView(
   }
 
   return (YGSize){
-      .width = YGSanitizeMeasurement(
+      .width = (float)YGSanitizeMeasurement(
           constrainedWidth, sizeThatFits.width, widthMode),
-      .height = YGSanitizeMeasurement(
+      .height = (float)YGSanitizeMeasurement(
           constrainedHeight, sizeThatFits.height, heightMode),
   };
 }
