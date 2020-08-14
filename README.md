@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="logo" width="20%" />
+  <img src="logo.png" alt="logo" width="15%" />
 </p>
 <h1 align="center">
   Yoga
