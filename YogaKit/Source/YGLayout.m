@@ -491,6 +491,11 @@ static CGFloat YGRoundPixelValue(CGFloat value) {
   return round(value * scale) / scale;
 }
 
+static CGFloat YGAlignPixelValue(CGFloat value) {
+    CGFloat scale = YGScaleFactor();
+    return ceil(value * scale) / scale;
+}
+
 static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
   NSCAssert(
       [NSThread isMainThread],
@@ -555,12 +560,12 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
 
   view.frame = (CGRect) {
     .origin = CGPointMake(YGRoundPixelValue(frame.origin.x), YGRoundPixelValue(frame.origin.y)),
-    .size = CGSizeMake(YGRoundPixelValue(frame.size.width), YGRoundPixelValue(frame.size.height))
+    .size = CGSizeMake(YGAlignPixelValue(frame.size.width), YGAlignPixelValue(frame.size.height))
   };
 #else
   view.bounds = (CGRect) {
     .origin = view.bounds.origin,
-    .size = CGSizeMake(YGRoundPixelValue(CGRectGetWidth(frame)), YGRoundPixelValue(CGRectGetHeight(frame)))
+    .size = CGSizeMake(YGAlignPixelValue(CGRectGetWidth(frame)), YGAlignPixelValue(CGRectGetHeight(frame)))
   };
 
   view.center = (CGPoint) {
