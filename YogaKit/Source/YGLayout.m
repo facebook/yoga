@@ -488,8 +488,7 @@ static void YGRemoveAllChildren(const YGNodeRef node) {
 
 static CGFloat YGRoundPixelValue(CGFloat value) {
   CGFloat scale = YGScaleFactor();
-
-  return ceil(value * scale) / scale; // Pixel-align
+  return round(value * scale) / scale;
 }
 
 static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
