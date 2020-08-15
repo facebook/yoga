@@ -646,9 +646,9 @@ static void YGTransferLayoutDirection(YGNodeRef node, jobject javaNode) {
 
 static YGSize YGJNIMeasureFunc(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode,
     void* layoutContext) {
   if (auto obj = YGNodeJobject(node, layoutContext)) {
@@ -694,10 +694,10 @@ static void jni_YGNodeSetHasMeasureFuncJNI(
       ->setMeasureFunc(hasMeasureFunc ? YGJNIMeasureFunc : nullptr);
 }
 
-static float YGJNIBaselineFunc(
+static YGFloat YGJNIBaselineFunc(
     YGNodeRef node,
-    float width,
-    float height,
+    YGFloat width,
+    YGFloat height,
     void* layoutContext) {
   if (auto obj = YGNodeJobject(node, layoutContext)) {
     JNIEnv* env = getCurrentEnv();
