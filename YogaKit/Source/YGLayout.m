@@ -149,11 +149,11 @@
       lowercased_name, capitalized_name, capitalized_name, YGEdgeAll)
 
 YGValue YGPointValue(CGFloat value) {
-  return (YGValue){.value = (float)value, .unit = YGUnitPoint};
+  return (YGValue){.value = (YGFloat)value, .unit = YGUnitPoint};
 }
 
 YGValue YGPercentValue(CGFloat value) {
-  return (YGValue){.value = (float)value, .unit = YGUnitPercent};
+  return (YGValue){.value = (YGFloat)value, .unit = YGUnitPercent};
 }
 
 static CGFloat YGScaleFactor() {

@@ -17,7 +17,7 @@
 #if defined(COMPILING_WITH_CLANG_ON_WINDOWS)
 YG_EXTERN_CXX_BEGIN
 #include <limits>
-constexpr float YGUndefined = std::numeric_limits<float>::quiet_NaN();
+constexpr YGFloat YGUndefined = std::numeric_limits<YGFloat>::quiet_NaN();
 YG_EXTERN_C_END
 #else
 YG_EXTERN_C_BEGIN
@@ -32,7 +32,7 @@ static const uint32_t __nan = 0x7fc00000;
 #endif
 
 typedef struct YGValue {
-  float value;
+  YGFloat value;
   YGUnit unit;
 } YGValue;
 
@@ -78,14 +78,14 @@ namespace yoga {
 namespace literals {
 
 inline YGValue operator"" _pt(long double value) {
-  return YGValue{static_cast<float>(value), YGUnitPoint};
+  return YGValue{static_cast<YGFloat>(value), YGUnitPoint};
 }
 inline YGValue operator"" _pt(unsigned long long value) {
   return operator"" _pt(static_cast<long double>(value));
 }
 
 inline YGValue operator"" _percent(long double value) {
-  return YGValue{static_cast<float>(value), YGUnitPercent};
+  return YGValue{static_cast<YGFloat>(value), YGUnitPercent};
 }
 inline YGValue operator"" _percent(unsigned long long value) {
   return operator"" _percent(static_cast<long double>(value));
