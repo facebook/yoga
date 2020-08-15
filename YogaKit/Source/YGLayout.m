@@ -488,9 +488,14 @@ static void YGRemoveAllChildren(const YGNodeRef node) {
   YGNodeRemoveAllChildren(node);
 }
 
-static CGFloat YGAlignPixelValue(CGFloat value) {
+static inline CGPoint YGRoundPixelPosition(CGPoint p) {
     CGFloat scale = YGScaleFactor();
-    return ceil(value * scale) / scale;
+    return (CGPoint) { .x = round(p.x * scale) / scale, .y = round(p.y * scale) / scale };
+}
+
+static inline CGSize YGAlignPixelSize(CGSize s) {
+    CGFloat scale = YGScaleFactor();
+    return (CGSize) { .width = ceil(s.width * scale) / scale, .height = ceil(s.height * scale) / scale };
 }
 
 static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
@@ -537,17 +542,9 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
                                         : CGPointZero;
 #endif
 
-  CGRect frame = (CGRect){
-      .origin =
-          {
-              .x = topLeft.x + origin.x,
-              .y = topLeft.y + origin.y,
-          },
-      .size =
-          {
-              .width = MAX(bottomRight.x - topLeft.x, 0),
-              .height = MAX(bottomRight.y - topLeft.y, 0),
-          },
+  CGRect frame = (CGRect) {
+    .origin = (CGPoint) { .x = topLeft.x + origin.x, .y = topLeft.y + origin.y, },
+    .size = (CGSize) { .width = MAX(bottomRight.x - topLeft.x, 0), .height = MAX(bottomRight.y - topLeft.y, 0), }
   };
 
 #if TARGET_OS_OSX
@@ -556,19 +553,19 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
   }
 
   view.frame = (CGRect) {
-    .origin = frame.origin,
-    .size = CGSizeMake(YGAlignPixelValue(frame.size.width), YGAlignPixelValue(frame.size.height))
+    .origin = YGRoundPixelPosition(frame.origin),
+    .size = YGAlignPixelSize(frame.size)
   };
 #else
   view.bounds = (CGRect) {
     .origin = view.bounds.origin,
-    .size = CGSizeMake(YGAlignPixelValue(CGRectGetWidth(frame)), YGAlignPixelValue(CGRectGetHeight(frame)))
+    .size = YGAlignPixelSize(frame.size)
   };
 
-  view.center = (CGPoint) {
-    .x = (CGFloat)(CGRectGetMinX(frame) + CGRectGetWidth(frame) * 0.5),
-    .y = (CGFloat)(CGRectGetMinY(frame) + CGRectGetHeight(frame) * 0.5)
-  };
+  view.center = YGRoundPixelPosition((CGPoint) {
+    .x = CGRectGetMinX(frame) + CGRectGetWidth(frame) * 0.5,
+    .y = CGRectGetMinY(frame) + CGRectGetHeight(frame) * 0.5
+  });
 #endif
 
   if (!yoga.isLeaf) {
