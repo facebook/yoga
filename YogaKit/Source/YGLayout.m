@@ -375,9 +375,9 @@ YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 
 static YGSize YGMeasureView(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
   const CGFloat constrainedWidth =
       (widthMode == YGMeasureModeUndefined) ? CGFLOAT_MAX : width;
@@ -409,9 +409,9 @@ static YGSize YGMeasureView(
   }
 
   return (YGSize){
-      .width = (float)YGSanitizeMeasurement(
+      .width = (YGFloat)YGSanitizeMeasurement(
           constrainedWidth, sizeThatFits.width, widthMode),
-      .height = (float)YGSanitizeMeasurement(
+      .height = (YGFloat)YGSanitizeMeasurement(
           constrainedHeight, sizeThatFits.height, heightMode),
   };
 }
@@ -488,11 +488,6 @@ static void YGRemoveAllChildren(const YGNodeRef node) {
   YGNodeRemoveAllChildren(node);
 }
 
-static inline CGPoint YGRoundPixelPosition(CGPoint p) {
-    CGFloat scale = YGScaleFactor();
-    return (CGPoint) { .x = round(p.x * scale) / scale, .y = round(p.y * scale) / scale };
-}
-
 static inline CGSize YGAlignPixelSize(CGSize s) {
     CGFloat scale = YGScaleFactor();
     return (CGSize) { .width = ceil(s.width * scale) / scale, .height = ceil(s.height * scale) / scale };
@@ -553,7 +548,7 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
   }
 
   view.frame = (CGRect) {
-    .origin = YGRoundPixelPosition(frame.origin),
+    .origin = frame.origin,
     .size = YGAlignPixelSize(frame.size)
   };
 #else
@@ -562,10 +557,10 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
     .size = YGAlignPixelSize(frame.size)
   };
 
-  view.center = YGRoundPixelPosition((CGPoint) {
-    .x = CGRectGetMinX(frame) + CGRectGetWidth(frame) * 0.5,
-    .y = CGRectGetMinY(frame) + CGRectGetHeight(frame) * 0.5
-  });
+  view.center = (CGPoint) {
+    .x = CGRectGetMidX(frame),
+    .y = CGRectGetMidY(frame)
+  };
 #endif
 
   if (!yoga.isLeaf) {

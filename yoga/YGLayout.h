@@ -13,11 +13,11 @@
 using namespace facebook::yoga;
 
 struct YGLayout {
-  std::array<float, 4> position = {};
-  std::array<float, 2> dimensions = {{YGUndefined, YGUndefined}};
-  std::array<float, 4> margin = {};
-  std::array<float, 4> border = {};
-  std::array<float, 4> padding = {};
+  std::array<YGFloat, 4> position = {};
+  std::array<YGFloat, 2> dimensions = {{YGUndefined, YGUndefined}};
+  std::array<YGFloat, 4> margin = {};
+  std::array<YGFloat, 4> border = {};
+  std::array<YGFloat, 4> padding = {};
 
 private:
   static constexpr size_t directionOffset = 0;
@@ -41,7 +41,7 @@ public:
   uint32_t nextCachedMeasurementsIndex = 0;
   std::array<YGCachedMeasurement, YG_MAX_CACHED_RESULT_COUNT>
       cachedMeasurements = {};
-  std::array<float, 2> measuredDimensions = {{YGUndefined, YGUndefined}};
+  std::array<YGFloat, 2> measuredDimensions = {{YGUndefined, YGUndefined}};
 
   YGCachedMeasurement cachedLayout = YGCachedMeasurement();
 

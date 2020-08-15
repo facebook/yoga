@@ -23,8 +23,8 @@ YGConfigRef YGConfigGetDefault();
 
 struct YOGA_EXPORT YGNode {
   using MeasureWithContextFn =
-      YGSize (*)(YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*);
-  using BaselineWithContextFn = float (*)(YGNode*, float, float, void*);
+      YGSize (*)(YGNode*, YGFloat, YGMeasureMode, YGFloat, YGMeasureMode, void*);
+  using BaselineWithContextFn = YGFloat (*)(YGNode*, YGFloat, YGFloat, void*);
   using PrintWithContextFn = void (*)(YGNode*, void*);
 
 private:
@@ -64,7 +64,7 @@ private:
 
   YGFloatOptional relativePosition(
       const YGFlexDirection axis,
-      const float axisSize) const;
+      const YGFloat axisSize) const;
 
   void setMeasureFunc(decltype(measure_));
   void setBaselineFunc(decltype(baseline_));
@@ -124,13 +124,13 @@ public:
 
   bool hasMeasureFunc() const noexcept { return measure_.noContext != nullptr; }
 
-  YGSize measure(float, YGMeasureMode, float, YGMeasureMode, void*);
+  YGSize measure(YGFloat, YGMeasureMode, YGFloat, YGMeasureMode, void*);
 
   bool hasBaselineFunc() const noexcept {
     return baseline_.noContext != nullptr;
   }
 
-  float baseline(float width, float height, void* layoutContext);
+  YGFloat baseline(YGFloat width, YGFloat height, void* layoutContext);
 
   YGDirtiedFunc getDirtied() const { return dirtied_; }
 
@@ -196,35 +196,35 @@ public:
   // Methods related to positions, margin, padding and border
   YGFloatOptional getLeadingPosition(
       const YGFlexDirection axis,
-      const float axisSize) const;
+      const YGFloat axisSize) const;
   bool isLeadingPositionDefined(const YGFlexDirection axis) const;
   bool isTrailingPosDefined(const YGFlexDirection axis) const;
   YGFloatOptional getTrailingPosition(
       const YGFlexDirection axis,
-      const float axisSize) const;
+      const YGFloat axisSize) const;
   YGFloatOptional getLeadingMargin(
       const YGFlexDirection axis,
-      const float widthSize) const;
+      const YGFloat widthSize) const;
   YGFloatOptional getTrailingMargin(
       const YGFlexDirection axis,
-      const float widthSize) const;
-  float getLeadingBorder(const YGFlexDirection flexDirection) const;
-  float getTrailingBorder(const YGFlexDirection flexDirection) const;
+      const YGFloat widthSize) const;
+  YGFloat getLeadingBorder(const YGFlexDirection flexDirection) const;
+  YGFloat getTrailingBorder(const YGFlexDirection flexDirection) const;
   YGFloatOptional getLeadingPadding(
       const YGFlexDirection axis,
-      const float widthSize) const;
+      const YGFloat widthSize) const;
   YGFloatOptional getTrailingPadding(
       const YGFlexDirection axis,
-      const float widthSize) const;
+      const YGFloat widthSize) const;
   YGFloatOptional getLeadingPaddingAndBorder(
       const YGFlexDirection axis,
-      const float widthSize) const;
+      const YGFloat widthSize) const;
   YGFloatOptional getTrailingPaddingAndBorder(
       const YGFlexDirection axis,
-      const float widthSize) const;
+      const YGFloat widthSize) const;
   YGFloatOptional getMarginForAxis(
       const YGFlexDirection axis,
-      const float widthSize) const;
+      const YGFloat widthSize) const;
   // Setters
 
   void setContext(void* context) { context_ = context; }
@@ -292,19 +292,19 @@ public:
   void setLayoutComputedFlexBasis(const YGFloatOptional computedFlexBasis);
   void setLayoutComputedFlexBasisGeneration(
       uint32_t computedFlexBasisGeneration);
-  void setLayoutMeasuredDimension(float measuredDimension, int index);
+  void setLayoutMeasuredDimension(YGFloat measuredDimension, int index);
   void setLayoutHadOverflow(bool hadOverflow);
-  void setLayoutDimension(float dimension, int index);
+  void setLayoutDimension(YGFloat dimension, int index);
   void setLayoutDirection(YGDirection direction);
-  void setLayoutMargin(float margin, int index);
-  void setLayoutBorder(float border, int index);
-  void setLayoutPadding(float padding, int index);
-  void setLayoutPosition(float position, int index);
+  void setLayoutMargin(YGFloat margin, int index);
+  void setLayoutBorder(YGFloat border, int index);
+  void setLayoutPadding(YGFloat padding, int index);
+  void setLayoutPosition(YGFloat position, int index);
   void setPosition(
       const YGDirection direction,
-      const float mainSize,
-      const float crossSize,
-      const float ownerWidth);
+      const YGFloat mainSize,
+      const YGFloat crossSize,
+      const YGFloat ownerWidth);
   void setLayoutDoesLegacyFlagAffectsLayout(bool doesLegacyFlagAffectsLayout);
   void setLayoutDidUseLegacyFlag(bool didUseLegacyFlag);
   void markDirtyAndPropogateDownwards();
@@ -326,8 +326,8 @@ public:
 
   void cloneChildrenIfNeeded(void*);
   void markDirtyAndPropogate();
-  float resolveFlexGrow() const;
-  float resolveFlexShrink() const;
+  YGFloat resolveFlexGrow() const;
+  YGFloat resolveFlexShrink() const;
   bool isNodeFlexible();
   bool didUseLegacyFlag();
   bool isLayoutTreeEqualToNode(const YGNode& node) const;

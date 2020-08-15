@@ -127,12 +127,12 @@ struct Event::TypedData<Event::LayoutPassEnd> {
 template <>
 struct Event::TypedData<Event::MeasureCallbackEnd> {
   void* layoutContext;
-  float width;
+  YGFloat width;
   YGMeasureMode widthMeasureMode;
-  float height;
+  YGFloat height;
   YGMeasureMode heightMeasureMode;
-  float measuredWidth;
-  float measuredHeight;
+  YGFloat measuredWidth;
+  YGFloat measuredHeight;
   const LayoutPassReason reason;
 };
 

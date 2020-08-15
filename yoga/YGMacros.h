@@ -7,6 +7,21 @@
 
 #pragma once
 
+#if defined(__LP64__) && __LP64__
+# define YGFLOAT_TYPE double
+# define YGFLOAT_IS_DOUBLE 1
+# define YGFLOAT_MIN DBL_MIN
+# define YGFLOAT_MAX DBL_MAX
+#else
+# define YGFLOAT_TYPE float
+# define YGFLOAT_IS_DOUBLE 0
+# define YGFLOAT_MIN FLT_MIN
+# define YGFLOAT_MAX FLT_MAX
+#endif
+
+typedef YGFLOAT_TYPE YGFloat;
+#define YGFLOAT_DEFINED 1
+
 #ifdef __cplusplus
 #define YG_EXTERN_CXX_BEGIN extern "C++" {
 #define YG_EXTERN_C_BEGIN extern "C" {
