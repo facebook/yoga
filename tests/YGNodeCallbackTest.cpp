@@ -22,7 +22,7 @@ TEST(YGNode, hasMeasureFunc_initial) {
 
 TEST(YGNode, hasMeasureFunc_with_measure_fn) {
   auto n = YGNode{};
-  n.setMeasureFunc([](YGNode*, float, YGMeasureMode, float, YGMeasureMode) {
+  n.setMeasureFunc([](YGNode*, YGFloat, YGMeasureMode, YGFloat, YGMeasureMode) {
     return YGSize{};
   });
   ASSERT_TRUE(n.hasMeasureFunc());
@@ -32,7 +32,7 @@ TEST(YGNode, measure_with_measure_fn) {
   auto n = YGNode{};
 
   n.setMeasureFunc(
-      [](YGNode*, float w, YGMeasureMode wm, float h, YGMeasureMode hm) {
+      [](YGNode*, YGFloat w, YGMeasureMode wm, YGFloat h, YGMeasureMode hm) {
         return YGSize{w * wm, h / hm};
       });
 
@@ -44,7 +44,7 @@ TEST(YGNode, measure_with_measure_fn) {
 TEST(YGNode, measure_with_context_measure_fn) {
   auto n = YGNode{};
   n.setMeasureFunc(
-      [](YGNode*, float, YGMeasureMode, float, YGMeasureMode, void* ctx) {
+      [](YGNode*, YGFloat, YGMeasureMode, YGFloat, YGMeasureMode, void* ctx) {
         return *(YGSize*) ctx;
       });
 
@@ -57,11 +57,11 @@ TEST(YGNode, measure_with_context_measure_fn) {
 TEST(YGNode, switching_measure_fn_types) {
   auto n = YGNode{};
   n.setMeasureFunc(
-      [](YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*) {
+      [](YGNode*, YGFloat, YGMeasureMode, YGFloat, YGMeasureMode, void*) {
         return YGSize{};
       });
   n.setMeasureFunc(
-      [](YGNode*, float w, YGMeasureMode wm, float h, YGMeasureMode hm) {
+      [](YGNode*, YGFloat w, YGMeasureMode wm, YGFloat h, YGMeasureMode hm) {
         return YGSize{w * wm, h / hm};
       });
 
@@ -72,7 +72,7 @@ TEST(YGNode, switching_measure_fn_types) {
 
 TEST(YGNode, hasMeasureFunc_after_unset) {
   auto n = YGNode{};
-  n.setMeasureFunc([](YGNode*, float, YGMeasureMode, float, YGMeasureMode) {
+  n.setMeasureFunc([](YGNode*, YGFloat, YGMeasureMode, YGFloat, YGMeasureMode) {
     return YGSize{};
   });
 
@@ -83,7 +83,7 @@ TEST(YGNode, hasMeasureFunc_after_unset) {
 TEST(YGNode, hasMeasureFunc_after_unset_context) {
   auto n = YGNode{};
   n.setMeasureFunc(
-      [](YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*) {
+      [](YGNode*, YGFloat, YGMeasureMode, YGFloat, YGMeasureMode, void*) {
         return YGSize{};
       });
 
@@ -98,20 +98,20 @@ TEST(YGNode, hasBaselineFunc_initial) {
 
 TEST(YGNode, hasBaselineFunc_with_baseline_fn) {
   auto n = YGNode{};
-  n.setBaselineFunc([](YGNode*, float, float) { return 0.0f; });
+  n.setBaselineFunc([](YGNode*, YGFloat, YGFloat) { return 0.0; });
   ASSERT_TRUE(n.hasBaselineFunc());
 }
 
 TEST(YGNode, baseline_with_baseline_fn) {
   auto n = YGNode{};
-  n.setBaselineFunc([](YGNode*, float w, float h) { return w + h; });
+  n.setBaselineFunc([](YGNode*, YGFloat w, YGFloat h) { return w + h; });
 
   ASSERT_EQ(n.baseline(1.25f, 2.5f, nullptr), 3.75f);
 }
 
 TEST(YGNode, baseline_with_context_baseline_fn) {
   auto n = YGNode{};
-  n.setBaselineFunc([](YGNode*, float w, float h, void* ctx) {
+  n.setBaselineFunc([](YGNode*, YGFloat w, YGFloat h, void* ctx) {
     return w + h + *(float*) ctx;
   });
 
@@ -121,7 +121,7 @@ TEST(YGNode, baseline_with_context_baseline_fn) {
 
 TEST(YGNode, hasBaselineFunc_after_unset) {
   auto n = YGNode{};
-  n.setBaselineFunc([](YGNode*, float, float) { return 0.0f; });
+  n.setBaselineFunc([](YGNode*, YGFloat, YGFloat) { return 0.0; });
 
   n.setBaselineFunc(nullptr);
   ASSERT_FALSE(n.hasBaselineFunc());
@@ -129,7 +129,7 @@ TEST(YGNode, hasBaselineFunc_after_unset) {
 
 TEST(YGNode, hasBaselineFunc_after_unset_context) {
   auto n = YGNode{};
-  n.setBaselineFunc([](YGNode*, float, float, void*) { return 0.0f; });
+  n.setBaselineFunc([](YGNode*, YGFloat, YGFloat, void*) { return 0.0; });
 
   n.setMeasureFunc(nullptr);
   ASSERT_FALSE(n.hasMeasureFunc());
@@ -137,8 +137,8 @@ TEST(YGNode, hasBaselineFunc_after_unset_context) {
 
 TEST(YGNode, switching_baseline_fn_types) {
   auto n = YGNode{};
-  n.setBaselineFunc([](YGNode*, float, float, void*) { return 0.0f; });
-  n.setBaselineFunc([](YGNode*, float, float) { return 1.0f; });
+  n.setBaselineFunc([](YGNode*, YGFloat, YGFloat, void*) { return 0.0; });
+  n.setBaselineFunc([](YGNode*, YGFloat, YGFloat) { return 1.0; });
   ASSERT_EQ(n.baseline(1, 2, nullptr), 1.0f);
 }
 

@@ -11,9 +11,9 @@
 
 static YGSize _measure(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
   int* measureCount = (int*) node->getContext();
   if (measureCount) {
@@ -28,9 +28,9 @@ static YGSize _measure(
 
 static YGSize _simulate_wrapping_text(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
   if (widthMode == YGMeasureModeUndefined || width >= 68) {
     return YGSize{.width = 68, .height = 16};
@@ -44,9 +44,9 @@ static YGSize _simulate_wrapping_text(
 
 static YGSize _measure_assert_negative(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
   EXPECT_GE(width, 0);
   EXPECT_GE(height, 0);
@@ -643,9 +643,9 @@ TEST(YogaTest, cant_call_negative_measure_horizontal) {
 
 static YGSize _measure_90_10(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
 
   return YGSize{
@@ -656,9 +656,9 @@ static YGSize _measure_90_10(
 
 static YGSize _measure_100_100(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
 
   return YGSize{

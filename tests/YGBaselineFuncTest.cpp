@@ -9,8 +9,8 @@
 #include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
-static float _baseline(YGNodeRef node, const float width, const float height) {
-  float* baseline = (float*) node->getContext();
+static YGFloat _baseline(YGNodeRef node, const YGFloat width, const YGFloat height) {
+  YGFloat* baseline = (YGFloat*) node->getContext();
   return *baseline;
 }
 
@@ -31,7 +31,7 @@ TEST(YogaTest, align_baseline_customer_func) {
   YGNodeStyleSetHeight(root_child1, 20);
   YGNodeInsertChild(root, root_child1, 1);
 
-  float baselineValue = 10;
+  YGFloat baselineValue = 10;
   const YGNodeRef root_child1_child0 = YGNodeNew();
   root_child1_child0->setContext(&baselineValue);
   YGNodeStyleSetWidth(root_child1_child0, 50);

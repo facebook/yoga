@@ -11,9 +11,9 @@
 
 static YGSize _measureFloor(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
   return YGSize{
       width = 10.2f,
@@ -23,9 +23,9 @@ static YGSize _measureFloor(
 
 static YGSize _measureCeil(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
   return YGSize{
       width = 10.5f,
@@ -35,9 +35,9 @@ static YGSize _measureCeil(
 
 static YGSize _measureFractial(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
   return YGSize{
       width = 0.5f,

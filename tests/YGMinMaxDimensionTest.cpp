@@ -1298,9 +1298,9 @@ TEST(YogaTest, min_max_percent_no_width_height) {
 
 static YGSize _measureCk_test_label_shrink_based_on_height(
     YGNodeRef node,
-    float width,
+    YGFloat width,
     YGMeasureMode widthMode,
-    float height,
+    YGFloat height,
     YGMeasureMode heightMode) {
 
   if (heightMode == YGMeasureModeAtMost) {
