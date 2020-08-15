@@ -27,6 +27,7 @@
 		15E1C34A24E568420086A4E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E1C34924E568420086A4E6 /* main.m */; };
 		15E1C34F24E56A8A0086A4E6 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1C34E24E56A8A0086A4E6 /* dummy.swift */; };
 		15E1C35124E56AB60086A4E6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E1C35024E56AB60086A4E6 /* libc++.tbd */; };
+		15F7301F24E7C097000108AD /* AutoLayoutMixedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F7301E24E7C097000108AD /* AutoLayoutMixedViewController.swift */; };
 		40BD9F461E477A09002790A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD9F451E477A09002790A9 /* AppDelegate.swift */; };
 		40BD9F4B1E47850C002790A9 /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD9F4A1E47850C002790A9 /* BasicViewController.swift */; };
 		40BD9F501E479079002790A9 /* SingleLabelCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD9F4F1E479079002790A9 /* SingleLabelCollectionCell.swift */; };
@@ -90,6 +91,7 @@
 		15E1C34924E568420086A4E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		15E1C34E24E56A8A0086A4E6 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		15E1C35024E56AB60086A4E6 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS13.4.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
+		15F7301E24E7C097000108AD /* AutoLayoutMixedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutMixedViewController.swift; sourceTree = "<group>"; };
 		1D2FF4D5FCA6A8C54A4074A3 /* Pods-YogaKitSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YogaKitSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YogaKitSample/Pods-YogaKitSample.debug.xcconfig"; sourceTree = "<group>"; };
 		40BD9F451E477A09002790A9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40BD9F4A1E47850C002790A9 /* BasicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicViewController.swift; path = ViewControllers/BasicViewController.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			children = (
 				40BD9F4A1E47850C002790A9 /* BasicViewController.swift */,
 				40BD9F511E479173002790A9 /* LayoutInclusionViewController.swift */,
+				15F7301E24E7C097000108AD /* AutoLayoutMixedViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				638A94481E1F06D100A726AD /* ExamplesViewController.swift in Sources */,
 				40BD9F4B1E47850C002790A9 /* BasicViewController.swift in Sources */,
 				40BD9F461E477A09002790A9 /* AppDelegate.swift in Sources */,
+				15F7301F24E7C097000108AD /* AutoLayoutMixedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
