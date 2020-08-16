@@ -14,7 +14,7 @@
 #include <limits>
 
 static_assert(
-    std::numeric_limits<YGFloat>::is_iec559,
+    std::numeric_limits<float>::is_iec559,
     "facebook::yoga::detail::CompactValue only works with IEEE754 floats");
 
 #ifdef YOGA_COMPACT_VALUE_TEST
@@ -49,7 +49,7 @@ public:
   static constexpr auto UPPER_BOUND_PERCENT = 18446742974197923840.0f;
 
   template <YGUnit Unit>
-  static CompactValue of(YGFloat value) noexcept {
+  static CompactValue of(float value) noexcept {
     if (value == 0.0f || (value < LOWER_BOUND && value > -LOWER_BOUND)) {
       constexpr auto zero =
           Unit == YGUnitPercent ? ZERO_BITS_PERCENT : ZERO_BITS_POINT;
@@ -70,7 +70,7 @@ public:
   }
 
   template <YGUnit Unit>
-  static CompactValue ofMaybe(YGFloat value) noexcept {
+  static CompactValue ofMaybe(float value) noexcept {
     return std::isnan(value) || std::isinf(value) ? ofUndefined()
                                                   : of<Unit>(value);
   }
@@ -88,7 +88,7 @@ public:
   }
 
   constexpr CompactValue() noexcept
-      : payload_(std::numeric_limits<YGFloat>::quiet_NaN()) {}
+      : payload_(std::numeric_limits<float>::quiet_NaN()) {}
 
   CompactValue(const YGValue& x) noexcept : payload_(uint32_t{0}) {
     switch (x.unit) {
@@ -143,7 +143,7 @@ private:
     uint32_t repr;
     Payload() = delete;
     constexpr Payload(uint32_t r) : repr(r) {}
-    constexpr Payload(YGFloat v) : value(v) {}
+    constexpr Payload(float v) : value(v) {}
   };
 
   static constexpr uint32_t BIAS = 0x20000000;
@@ -163,13 +163,13 @@ private:
 };
 
 template <>
-CompactValue CompactValue::of<YGUnitUndefined>(YGFloat) noexcept = delete;
+CompactValue CompactValue::of<YGUnitUndefined>(float) noexcept = delete;
 template <>
-CompactValue CompactValue::of<YGUnitAuto>(YGFloat) noexcept = delete;
+CompactValue CompactValue::of<YGUnitAuto>(float) noexcept = delete;
 template <>
-CompactValue CompactValue::ofMaybe<YGUnitUndefined>(YGFloat) noexcept = delete;
+CompactValue CompactValue::ofMaybe<YGUnitUndefined>(float) noexcept = delete;
 template <>
-CompactValue CompactValue::ofMaybe<YGUnitAuto>(YGFloat) noexcept = delete;
+CompactValue CompactValue::ofMaybe<YGUnitAuto>(float) noexcept = delete;
 
 constexpr bool operator==(CompactValue a, CompactValue b) noexcept {
   return a.payload_.repr == b.payload_.repr;
