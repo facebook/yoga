@@ -1606,7 +1606,8 @@ static void YGNodeAbsoluteLayoutChild(
         node->getLayout().measuredDimensions[dim[mainAxis]] -
             child->getLayout().measuredDimensions[dim[mainAxis]] -
             node->getTrailingBorder(mainAxis) -
-            child->getTrailingMargin(mainAxis, width).unwrap() -
+            child->getTrailingMargin(mainAxis, isMainAxisRow ? width : height)
+                .unwrap() -
             child->getTrailingPosition(mainAxis, isMainAxisRow ? width : height)
                 .unwrap(),
         leading[mainAxis]);
@@ -1625,6 +1626,19 @@ static void YGNodeAbsoluteLayoutChild(
         (node->getLayout().measuredDimensions[dim[mainAxis]] -
          child->getLayout().measuredDimensions[dim[mainAxis]]),
         leading[mainAxis]);
+  } else if (child->isLeadingPositionDefined(mainAxis)) {
+    child->setLayoutPosition(
+        child->getLeadingPosition(
+                 mainAxis, node->getLayout().measuredDimensions[dim[mainAxis]])
+                .unwrap() +
+            node->getLeadingBorder(mainAxis) +
+            child
+                ->getLeadingMargin(
+                    mainAxis,
+                    node->getLayout().measuredDimensions[dim[mainAxis]])
+                .unwrap()
+        ,
+        leading[mainAxis]);
   }
 
   if (child->isTrailingPosDefined(crossAxis) &&
@@ -1633,7 +1647,8 @@ static void YGNodeAbsoluteLayoutChild(
         node->getLayout().measuredDimensions[dim[crossAxis]] -
             child->getLayout().measuredDimensions[dim[crossAxis]] -
             node->getTrailingBorder(crossAxis) -
-            child->getTrailingMargin(crossAxis, width).unwrap() -
+            child->getTrailingMargin(crossAxis, isMainAxisRow ? height : width)
+                .unwrap() -
             child
                 ->getTrailingPosition(crossAxis, isMainAxisRow ? height : width)
                 .unwrap(),
@@ -1654,6 +1669,19 @@ static void YGNodeAbsoluteLayoutChild(
     child->setLayoutPosition(
         (node->getLayout().measuredDimensions[dim[crossAxis]] -
          child->getLayout().measuredDimensions[dim[crossAxis]]),
+        leading[crossAxis]);
+  } else if (child->isLeadingPositionDefined(crossAxis)) {
+    child->setLayoutPosition(
+        child->getLeadingPosition(
+                 crossAxis,
+                 node->getLayout().measuredDimensions[dim[crossAxis]])
+                .unwrap() +
+            node->getLeadingBorder(crossAxis) +
+            child
+                ->getLeadingMargin(
+                    crossAxis,
+                    node->getLayout().measuredDimensions[dim[crossAxis]])
+                .unwrap(),
         leading[crossAxis]);
   }
 }
@@ -3563,9 +3591,9 @@ static void YGNodelayoutImpl(
       YGNodeAbsoluteLayoutChild(
           node,
           child,
-          availableInnerWidth,
+          node->getLayout().measuredDimensions[YGDimensionWidth],
           isMainAxisRow ? measureModeMainDim : measureModeCrossDim,
-          availableInnerHeight,
+          node->getLayout().measuredDimensions[YGDimensionHeight],
           direction,
           config,
           layoutMarkerData,

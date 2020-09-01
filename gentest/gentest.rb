@@ -4,16 +4,24 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-require 'watir'
+require 'selenium-webdriver'
 require 'fileutils'
 
 caps = Selenium::WebDriver::Remote::Capabilities.chrome(
-  "loggingPrefs"=>{
+  "goog:loggingPrefs"=> {
     "browser"=>"ALL",
-    "performance"=>"ALL"
+    "performance"=>"ALL",
+  },
+  "chromeOptions" => {
+    "w3c"=> "false"
   }
 )
-browser = Watir::Browser.new(:chrome, :desired_capabilities => caps, :switches => ['--force-device-scale-factor=1', '--window-position=0,0'])
+
+browser =  Selenium::WebDriver.for(:chrome, :desired_capabilities => caps,
+  :switches => ['--force-device-scale-factor=1',
+    '--window-position=0,0',
+    '--headless',
+    '--disable-gpu'])
 
 Dir.chdir(File.dirname($0))
 
@@ -38,8 +46,8 @@ Dir['fixtures/*.html'].each do |file|
   f.close
   FileUtils.copy('test.html', "#{name}.html") if $DEBUG
 
-  browser.goto('file://' + Dir.pwd + '/test.html')
-  logs = browser.driver.manage.logs.get(:browser)
+  browser.get('file://' + Dir.pwd + '/test.html')
+  logs = browser.manage.logs.get(:browser)
 
   f = File.open("../tests/#{name}.cpp", 'w')
   f.write eval(logs[0].message.sub(/^[^"]*/, ''))
