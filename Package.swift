@@ -19,18 +19,19 @@ let package = Package(
             name: "yoga",
             dependencies: [],
 			path: "./yoga",
-			publicHeadersPath: "./yoga",
+//			publicHeadersPath: "./yoga",
 			cxxSettings: [
 				.headerSearchPath("../"),
-				.unsafeFlags([
-					"-fno-omit-frame-pointer",
-					"-fexceptions",
-					"-Wall",
-					"-Werror",
-					"-std=c++1y",
-					"-fPIC",
-				])
+//				.unsafeFlags([
+//					"-fno-omit-frame-pointer",
+//					"-fexceptions",
+//					"-Wall",
+//					"-Werror",
+//					"-std=c++1y",
+//					"-fPIC",
+//				])
 			]
 		)
-    ]
+    ],
+    cxxLanguageStandard: .cxx11
 )
