@@ -11,6 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "yoga",
+            type: .dynamic,
             targets: ["yoga"]
 		),
     ],
@@ -30,8 +31,12 @@ let package = Package(
 //					"-std=c++1y",
 //					"-fPIC",
 //				])
-			]
+			],
+            linkerSettings: [
+                .linkedFramework("Foundation"),
+                .linkedFramework("UIKit", .when(platforms: [.iOS])),
+            ]
 		)
     ],
-    cxxLanguageStandard: .cxx11
+    cxxLanguageStandard: .cxx14
 )
