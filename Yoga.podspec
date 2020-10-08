@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |spec|
   spec.name = 'Yoga'
-  spec.version = '1.14.0'
+  spec.version = '1.18.0'
   spec.license =  { :type => 'MIT', :file => "LICENSE" }
   spec.homepage = 'https://yogalayout.com/'
   spec.documentation_url = 'https://yogalayout.com/docs'
@@ -33,6 +33,7 @@ Pod::Spec.new do |spec|
       '-fPIC'
   ]
   spec.source_files = 'yoga/**/*.{c,h,cpp}'
+  spec.exclude_files = 'yoga/include'
   spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGNode,YGStyle,YGValue}.h'
 
 end
