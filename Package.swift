@@ -20,22 +20,12 @@ let package = Package(
             name: "yoga",
             dependencies: [],
 			path: "./yoga",
-//			publicHeadersPath: "./yoga",
 			cxxSettings: [
 				.headerSearchPath("../"),
-//				.unsafeFlags([
-//					"-fno-omit-frame-pointer",
-//					"-fexceptions",
-//					"-Wall",
-//					"-Werror",
-//					"-std=c++1y",
-//					"-fPIC",
-//				])
 			],
-            linkerSettings: [
-                .linkedFramework("Foundation"),
-                .linkedFramework("UIKit", .when(platforms: [.iOS])),
-            ]
+      linkerSettings: [
+        .linkedFramework("Foundation"),
+      ]
 		)
     ],
     cxxLanguageStandard: .cxx14
