@@ -8,6 +8,7 @@
 #pragma once
 
 #ifdef __OBJC__
+
 #import <Foundation/Foundation.h>
 
 #include "../YGEnums.h"
@@ -16,4 +17,5 @@
 #include "../YGStyle.h"
 #include "../YGValue.h"
 #include "../Yoga.h"
+
 #endif

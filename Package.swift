@@ -19,7 +19,7 @@ let package = Package(
             name: "yoga",
             dependencies: [],
             path: "./yoga",
-            publicHeadersPath: "./apple-public",
+            publicHeadersPath: "./swiftpm-support",
             cxxSettings: [
                 .headerSearchPath("../"),
             ],
