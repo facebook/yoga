@@ -33,7 +33,6 @@ Pod::Spec.new do |spec|
       '-fPIC'
   ]
   spec.source_files = 'yoga/**/*.{c,h,cpp}'
-  spec.exclude_files = 'yoga/include/*.h'
-  spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGNode,YGStyle,YGValue}.h'
+  spec.public_header_files = 'yoga/apple-public/umbrella.h'
 
 end

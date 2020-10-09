@@ -11,7 +11,6 @@ let package = Package(
     products: [
         .library(
             name: "yoga",
-            type: .dynamic,
             targets: ["yoga"]
         ),
     ],
@@ -20,6 +19,7 @@ let package = Package(
             name: "yoga",
             dependencies: [],
             path: "./yoga",
+            publicHeadersPath: "./apple-public",
             cxxSettings: [
                 .headerSearchPath("../"),
             ],

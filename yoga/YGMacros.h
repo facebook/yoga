@@ -7,16 +7,6 @@
 
 #pragma once
 
-
-#ifdef __OBJC__
-#import <Foundation/Foundation.h>
-#endif
-
-
-
-
-
-
 #ifdef __cplusplus
 #define YG_EXTERN_C_BEGIN extern "C" {
 #define YG_EXTERN_C_END }
