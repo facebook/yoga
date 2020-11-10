@@ -24,7 +24,7 @@ function getEnum(yogaEnum: string, value: string | number): string {
     position: 'Position',
     flexWrap: 'Wrap',
     positionType: 'PositionType',
-    direction: 'Driection',
+    direction: 'Direction',
   };
 
   if (!enumLookup[yogaEnum]) {
