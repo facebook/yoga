@@ -10,3 +10,6 @@
 types_first=false
 
 [strict]
+
+[version]
+^0.140.0
