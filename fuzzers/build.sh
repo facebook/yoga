@@ -33,7 +33,6 @@ $CXX $CXXFLAGS \
     ../fuzzers/main.cpp genfiles/yoga.pb.cc ../yoga/*.cpp ../yoga/internal/*.cpp ../yoga/event/*.cpp \
     -I genfiles -I .. -I../yoga \
     -I ../libprotobuf-mutator/ -I ../LPM/external.protobuf/include \
-    ./libyogacore.a \
     ../LPM/src/libfuzzer/libprotobuf-mutator-libfuzzer.a \
     ../LPM/src/libprotobuf-mutator.a \
     ../LPM/external.protobuf/lib/libprotobuf.a -lstdc++ \
