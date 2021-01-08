@@ -23,8 +23,6 @@ fi
 rm -rf build
 mkdir -p build
 cd build
-cmake ..  -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_CXX_FLAGS="$CXXFLAGS -fsanitize=address"
-make
 
 rm -rf genfiles && mkdir genfiles && ../LPM/external.protobuf/bin/protoc ../fuzzers/yoga.proto \
   --cpp_out=genfiles --proto_path=../fuzzers
@@ -32,7 +30,7 @@ $CXX $CXXFLAGS \
     -g   -fno-omit-frame-pointer -fexceptions \
     -fvisibility=hidden -ffunction-sections -fdata-sections \
     -Wall -fsanitize=address,fuzzer \
-    ../fuzzers/main.cpp genfiles/yoga.pb.cc \
+    ../fuzzers/main.cpp genfiles/yoga.pb.cc ../yoga/*.cpp ../yoga/internal/*.cpp ../yoga/event/*.cpp \
     -I genfiles -I .. -I../yoga \
     -I ../libprotobuf-mutator/ -I ../LPM/external.protobuf/include \
     ./libyogacore.a \
