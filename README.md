@@ -23,6 +23,12 @@ You may need to install the latest watir-webdriver gem (`gem install watir-webdr
 ### .NET
 .NET testing is not integrated in buck yet, you might need to set up .NET testing environment. We have a script which to launch C# test on macOS, `csharp/tests/Facebook.Yoga/test_macos.sh`.
 
+### Fuzzing
+We have a script to build the fuzzer target `fuzzers/build.sh`. 
+```shell
+CXX=clang++ ./fuzzers/build.sh
+```
+
 ## Benchmarks
 Benchmarks are located in `benchmark/YGBenchmark.c` and can be run with `buck run //benchmark:benchmark`. If you think your change has affected performance please run this before and after your change to validate that nothing has regressed. Benchmarks are run on every commit in CI.
 
