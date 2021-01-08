@@ -1,0 +1,326 @@
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+syntax = "proto2";
+
+package yoga_proto;
+
+message YogaParseAPI {
+  required int32 settings = 1;
+  repeated Node yoga_roots = 2;
+}
+
+
+message Node {
+  repeated Node children = 1;
+  repeated Action actions = 2;
+}
+
+message Action {
+  oneof action {
+    NodeSetIsReferenceBaseline nodeSetIsReferenceBaseline = 1;
+    NodeCalculateLayout nodeCalculateLayout = 2;
+    NodeMarkDirty nodeMarkDirty = 3;
+    NodeMarkDirtyAndPropogateToDescendants nodeMarkDirtyAndPropogateToDescendants = 4;
+    NodePrint nodePrint = 5;
+    NodeCopyStyle nodeCopyStyle = 6;
+    NodeSetHasNewLayout nodeSetHasNewLayout = 7;
+    NodeStyleSetDirection nodeStyleSetDirection = 8;
+    NodeStyleSetFlexDirection nodeStyleSetFlexDirection = 9;
+    NodeStyleSetJustifyContent nodeStyleSetJustifyContent = 10;
+    NodeStyleSetAlignContent nodeStyleSetAlignContent = 11;
+    NodeStyleSetAlignItems nodeStyleSetAlignItems = 12;
+    NodeStyleSetAlignSelf nodeStyleSetAlignSelf = 13;
+    NodeStyleSetPositionType nodeStyleSetPositionType = 14;
+    NodeStyleSetFlexWrap nodeStyleSetFlexWrap = 15;
+    NodeStyleSetOverflow nodeStyleSetOverflow = 16;
+    NodeStyleSetDisplay nodeStyleSetDisplay = 17;
+    NodeStyleSetFlex nodeStyleSetFlex = 18;
+    NodeStyleSetFlexGrow nodeStyleSetFlexGrow = 19;
+    NodeStyleSetFlexShrink nodeStyleSetFlexShrink = 20;
+    NodeStyleSetFlexBasis nodeStyleSetFlexBasis = 21;
+    NodeStyleSetFlexBasisPercent nodeStyleSetFlexBasisPercent = 22;
+    NodeStyleSetFlexBasisAuto nodeStyleSetFlexBasisAuto = 23;
+    NodeStyleSetPosition nodeStyleSetPosition = 24;
+    NodeStyleSetPositionPercent nodeStyleSetPositionPercent = 25;
+    NodeStyleSetMargin nodeStyleSetMargin = 26;
+    NodeStyleSetMarginPercent nodeStyleSetMarginPercent = 27;
+    NodeStyleSetMarginAuto nodeStyleSetMarginAuto = 28;
+    NodeStyleSetPadding nodeStyleSetPadding = 29;
+    NodeStyleSetPaddingPercent nodeStyleSetPaddingPercent = 30;
+    NodeStyleSetBorder nodeStyleSetBorder = 31;
+    NodeStyleSetWidth nodeStyleSetWidth = 32;
+    NodeStyleSetWidthPercent nodeStyleSetWidthPercent = 33;
+    NodeStyleSetWidthAuto nodeStyleSetWidthAuto = 34;
+    NodeStyleSetHeight nodeStyleSetHeight = 35;
+    NodeStyleSetHeightPercent nodeStyleSetHeightPercent = 36;
+    NodeStyleSetHeightAuto nodeStyleSetHeightAuto = 37;
+    NodeStyleSetMinWidth nodeStyleSetMinWidth = 38;
+    NodeStyleSetMinWidthPercent nodeStyleSetMinWidthPercent = 39;
+    NodeStyleSetMinHeight nodeStyleSetMinHeight = 40;
+    NodeStyleSetMinHeightPercent nodeStyleSetMinHeightPercent = 41;
+    NodeStyleSetMaxWidth nodeStyleSetMaxWidth = 42;
+    NodeStyleSetMaxWidthPercent nodeStyleSetMaxWidthPercent = 43;
+    NodeStyleSetMaxHeight nodeStyleSetMaxHeight = 44;
+    NodeStyleSetMaxHeightPercent nodeStyleSetMaxHeightPercent = 45;
+    NodeStyleSetAspectRatio nodeStyleSetAspectRatio = 46;
+
+  }
+}
+
+message NodeSetIsReferenceBaseline {
+  required bool isReferenceBaseline = 1;
+}
+message NodeCalculateLayout {
+  required float availableWidth = 1;
+  required float availableHeight = 2;
+  required Direction ownerDirection = 3;
+}
+message NodeMarkDirty {
+}
+message NodeMarkDirtyAndPropogateToDescendants {
+}
+message NodePrint {
+  required PrintOptions options = 1;
+}
+message NodeCopyStyle {
+}
+
+message NodeSetHasNewLayout {
+  required bool hasNewLayout = 1;
+}
+message NodeStyleSetDirection {
+  required Direction direction = 1;
+}
+message NodeStyleSetFlexDirection {
+  required FlexDirection flexDirection = 1;
+}
+message NodeStyleSetJustifyContent {
+  required Justify justifyContent = 1;
+}
+message NodeStyleSetAlignContent {
+  required Align alignContent = 1;
+}
+message NodeStyleSetAlignItems {
+  required Align alignItems = 1;
+}
+message NodeStyleSetAlignSelf {
+  required Align alignSelf = 1;
+}
+message NodeStyleSetPositionType {
+  required PositionType positionType = 1;
+}
+message NodeStyleSetFlexWrap {
+  required Wrap flexWrap = 1;
+}
+message NodeStyleSetOverflow {
+  required Overflow overflow = 1;
+}
+message NodeStyleSetDisplay {
+  required Display display = 1;
+}
+message NodeStyleSetFlex {
+  required float flex = 1;
+}
+message NodeStyleSetFlexGrow {
+  required float flexGrow = 1;
+}
+message NodeStyleSetFlexShrink {
+  required float flexShrink = 1;
+}
+message NodeStyleSetFlexBasis {
+  required float flexBasis = 1;
+}
+message NodeStyleSetFlexBasisPercent {
+  required float flexBasis = 1;
+}
+message NodeStyleSetFlexBasisAuto {
+}
+message NodeStyleSetPosition {
+  required Edge edge = 1;
+  required float position = 2;
+}
+message NodeStyleSetPositionPercent {
+  required Edge edge = 1;
+  required float position = 2;
+}
+message NodeStyleSetMargin {
+  required Edge edge = 1;
+  required float margin = 2;
+}
+message NodeStyleSetMarginPercent {
+  required Edge edge = 1;
+  required float margin = 2;
+}
+message NodeStyleSetMarginAuto {
+  required Edge edge = 1;
+}
+message NodeStyleSetPadding {
+  required Edge edge = 1;
+  required float padding = 2;
+}
+message NodeStyleSetPaddingPercent {
+  required Edge edge = 1;
+  required float padding = 2;
+}
+message NodeStyleSetBorder {
+  required Edge edge = 1;
+  required float border = 2;
+}
+message NodeStyleSetWidth {
+  required float width = 1;
+}
+message NodeStyleSetWidthPercent {
+  required float width = 1;
+}
+message NodeStyleSetWidthAuto {
+}
+message NodeStyleSetHeight {
+  required float height = 1;
+}
+message NodeStyleSetHeightPercent {
+  required float height = 1;
+}
+message NodeStyleSetHeightAuto {
+}
+message NodeStyleSetMinWidth {
+  required float minWidth = 1;
+}
+message NodeStyleSetMinWidthPercent {
+  required float minWidth = 1;
+}
+message NodeStyleSetMinHeight {
+  required float minHeight = 1;
+}
+message NodeStyleSetMinHeightPercent {
+  required float minHeight = 1;
+}
+message NodeStyleSetMaxWidth {
+  required float maxWidth = 1;
+}
+message NodeStyleSetMaxWidthPercent {
+  required float maxWidth = 1;
+}
+message NodeStyleSetMaxHeight {
+  required float maxHeight = 1;
+}
+message NodeStyleSetMaxHeightPercent {
+  required float maxHeight = 1;
+}
+message NodeStyleSetAspectRatio {
+  required float aspectRatio = 1;
+}
+
+enum Align {
+  AlignAuto = 1;
+  AlignFlexStart = 2;
+  AlignCenter = 3;
+  AlignFlexEnd = 4;
+  AlignStretch = 5;
+  AlignBaseline = 6;
+  AlignSpaceBetween = 7;
+  AlignSpaceAround = 8;
+}
+
+enum Dimension {
+  DimensionWidth = 1;
+  DimensionHeight = 2;
+}
+
+enum Direction {
+  DirectionInherit = 1;
+  DirectionLTR = 2;
+  DirectionRTL = 3;
+}
+
+enum Display {
+    DisplayFlex = 1;
+    DisplayNone = 2;
+}
+
+enum Edge {
+    EdgeLeft = 1;
+    EdgeTop = 2;
+    EdgeRight = 3;
+    EdgeBottom = 4;
+    EdgeStart = 5;
+    EdgeEnd = 6;
+    EdgeHorizontal = 7;
+    EdgeVertical = 8;
+    EdgeAll = 9;
+}
+
+enum ExperimentalFeature {
+    ExperimentalFeatureWebFlexBasis = 1;
+}
+
+enum FlexDirection {
+  FlexDirectionColumn = 1;
+  FlexDirectionColumnReverse = 2;
+  FlexDirectionRow = 3;
+  FlexDirectionRowReverse = 4;
+}
+
+enum Justify {
+  JustifyFlexStart = 1;
+  JustifyCenter = 2;
+  JustifyFlexEnd = 3;
+  JustifySpaceBetween = 4;
+  JustifySpaceAround = 5;
+  JustifySpaceEvenly = 6;
+}
+
+enum LogLevel {
+  LogLevelError = 1;
+  LogLevelWarn = 2;
+  LogLevelInfo = 3;
+  LogLevelDebug = 4;
+  LogLevelVerbose = 5;
+  LogLevelFatal = 6;
+}
+
+enum MeasureMode {
+  MeasureModeUndefined = 1;
+  MeasureModeExactly = 2;
+  MeasureModeAtMost = 3;
+}
+
+enum NodeType {
+  NodeTypeDefault = 1;
+  NodeTypeText = 2;
+}
+
+enum Overflow {
+  OverflowVisible = 1;
+  OverflowHidden = 2;
+  OverflowScroll = 3;
+}
+
+enum PositionType {
+  PositionTypeStatic = 1;
+  PositionTypeRelative = 2;
+  PositionTypeAbsolute = 3;
+}
+
+enum PrintOptions {
+  PrintOptionsLayout = 1;
+  PrintOptionsStyle = 2;
+  PrintOptionsChildren = 3;
+}
+
+enum Unit {
+  UnitUndefined = 1;
+  UnitPoint = 2;
+  UnitPercent = 3;
+  UnitAuto = 4;
+}
+
+enum Wrap {
+  WrapNoWrap = 1;
+  WrapWrap = 2;
+  WrapWrapReverse = 3;
+}
