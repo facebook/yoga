@@ -21,7 +21,7 @@ flex shrink is very similar to flex grow and can be thought of in the same way i
 any overflowing size is considered to be negative remaining space.
 These two properties also work well together by allowing children to grow and shrink as needed.
 
-Flex shrink accepts any floating point value >= 0, with 1 being the default value.
+Flex shrink accepts any floating point value >= 0, with 1 being the default value on the most of platforms.
 A container will shrink its children weighted by the child’s flex shrink value.
 
 <controls prop="flexShrink"></controls>
