@@ -36,7 +36,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -48,7 +48,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -62,13 +62,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -227,6 +227,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\yoga\event\event.h" />
+    <ClInclude Include="..\..\yoga\log.h" />
     <ClInclude Include="..\..\yoga\Utils.h" />
     <ClInclude Include="..\..\yoga\YGConfig.h" />
     <ClInclude Include="..\..\yoga\YGEnums.h" />
@@ -236,6 +238,7 @@
     <ClInclude Include="..\..\yoga\YGNode.h" />
     <ClInclude Include="..\..\yoga\YGNodePrint.h" />
     <ClInclude Include="..\..\yoga\YGStyle.h" />
+    <ClInclude Include="..\..\yoga\YGValue.h" />
     <ClInclude Include="..\..\yoga\Yoga-internal.h" />
     <ClInclude Include="..\..\yoga\Yoga.h" />
     <ClInclude Include="resource.h" />
@@ -243,14 +246,16 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\yoga\event\event.cpp" />
+    <ClCompile Include="..\..\yoga\log.cpp" />
     <ClCompile Include="..\..\yoga\Utils.cpp" />
     <ClCompile Include="..\..\yoga\YGConfig.cpp" />
     <ClCompile Include="..\..\yoga\YGEnums.cpp" />
-    <ClCompile Include="..\..\yoga\YGFloatOptional.cpp" />
     <ClCompile Include="..\..\yoga\YGLayout.cpp" />
     <ClCompile Include="..\..\yoga\YGNode.cpp" />
     <ClCompile Include="..\..\yoga\YGNodePrint.cpp" />
     <ClCompile Include="..\..\yoga\YGStyle.cpp" />
+    <ClCompile Include="..\..\yoga\YGValue.cpp" />
     <ClCompile Include="..\..\yoga\Yoga.cpp" />
     <ClCompile Include="YGInterop.cpp" />
     <ClCompile Include="dllmain.cpp">

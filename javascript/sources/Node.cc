@@ -23,8 +23,8 @@ static YGSize globalMeasureFunc(
   Node const& node = *reinterpret_cast<Node const*>(YGNodeGetContext(nodeRef));
 
   Size size = node.callMeasureFunc(width, widthMode, height, heightMode);
-  YGSize ygSize = {static_cast<float>(size.width),
-                   static_cast<float>(size.height)};
+  YGSize ygSize = {
+      static_cast<float>(size.width), static_cast<float>(size.height)};
 
   return ygSize;
 }
