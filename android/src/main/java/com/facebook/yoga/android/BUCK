@@ -8,6 +8,7 @@ load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID_RES_TARGET", "INFER_ANNOTA
 yoga_android_library(
     name = "android",
     srcs = glob(["**/*.java"]),
+    autoglob = False,
     visibility = [
         "PUBLIC",
     ],
