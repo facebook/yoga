@@ -3407,6 +3407,8 @@ static void YGNodelayoutImpl(
               case YGAlignAuto:
               case YGAlignSpaceBetween:
               case YGAlignSpaceAround:
+              case YGAlignBaslineFirst:
+              case YGAlignBaslineLast:
                 break;
             }
           }

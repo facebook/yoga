@@ -63,7 +63,9 @@ YG_ENUM_SEQ_DECL(
     YGAlignStretch,
     YGAlignBaseline,
     YGAlignSpaceBetween,
-    YGAlignSpaceAround);
+    YGAlignSpaceAround,
+    YGAlignBaslineFirst,
+    YGAlignBaslineLast);
 
 YG_ENUM_SEQ_DECL(YGDimension, YGDimensionWidth, YGDimensionHeight)
 

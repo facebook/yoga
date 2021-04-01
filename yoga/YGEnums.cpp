@@ -25,6 +25,10 @@ const char* YGAlignToString(const YGAlign value) {
       return "space-between";
     case YGAlignSpaceAround:
       return "space-around";
+    case YGAlignBaslineFirst:
+      return "baseline-first";
+    case YGAlignBaslineLast:
+      return "baseline-last";
   }
   return "unknown";
 }
