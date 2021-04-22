@@ -6,9 +6,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <yoga/YGEnums.h>
-#import <yoga/YGMacros.h>
-#import <yoga/Yoga.h>
+@import yoga;
 
 YG_EXTERN_C_BEGIN
 

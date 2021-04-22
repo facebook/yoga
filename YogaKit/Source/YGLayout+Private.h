@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#if SWIFT_PACKAGE
+#import "../Yoga.h"
+#else
 #import <yoga/Yoga.h>
+#endif
 #import "YGLayout.h"
 
 @interface YGLayout ()

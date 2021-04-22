@@ -28,7 +28,7 @@ podspec = Pod::Spec.new do |spec|
   # https://github.com/Carthage/Carthage/issues/2825
   # https://twitter.com/krzyzanowskim/status/1151549874653081601?s=21
   spec.pod_target_xcconfig = {"LD_VERIFY_BITCODE": "NO"}
-  spec.source_files = 'YogaKit/Source/*.{h,m,swift}'
+  spec.source_files = 'YogaKit/Source/*.{h,m}', 'YogaKit/Source/swift/YGLayoutExtensions.swift'
   spec.public_header_files = 'YogaKit/Source/{YGLayout,UIView+Yoga}.h'
   spec.private_header_files = 'YogaKit/Source/YGLayout+Private.h'
   spec.swift_version = '5.1'

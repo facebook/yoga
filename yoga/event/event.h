@@ -10,7 +10,11 @@
 #include <functional>
 #include <vector>
 #include <array>
+#if SWIFT_PACKAGE
+#include "../YGEnums.h"
+#else
 #include <yoga/YGEnums.h>
+#endif
 #include <stdint.h>
 
 struct YGConfig;

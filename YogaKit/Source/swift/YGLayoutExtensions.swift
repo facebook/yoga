@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import yoga;
+import yoga
+
 postfix operator %
 
 extension Int {
