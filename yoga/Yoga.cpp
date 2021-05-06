@@ -106,6 +106,13 @@ static int YGDefaultLog(
 #undef YG_UNUSED
 #endif
 
+YOGA_EXPORT YGSize YGCreateSize(float width, float height) {
+    struct YGSize size;
+    size.width = width;
+    size.height = height;
+    return size;
+}
+
 static inline bool YGDoubleIsUndefined(const double value) {
   return facebook::yoga::isUndefined(value);
 }

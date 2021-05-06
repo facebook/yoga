@@ -52,6 +52,7 @@ typedef int (*YGLogger)(
     va_list args);
 typedef YGNodeRef (
     *YGCloneNodeFunc)(YGNodeRef oldNode, YGNodeRef owner, int childIndex);
+WIN_EXPORT YGSize YGCreateSize(float width, float height);
 
 // YGNode
 WIN_EXPORT YGNodeRef YGNodeNew(void);
