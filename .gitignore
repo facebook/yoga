@@ -65,3 +65,9 @@ Carthage/Build
 .gradle
 # NDK/CMake
 .externalNativeBuild
+
+
+**/.idea/*
+**/.cxx/*
+local.properties
+Gemfile.lock

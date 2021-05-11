@@ -1,0 +1,19 @@
+###
+###  Android
+###
+
+platform :android do
+
+  desc "Deploy current code to stage"
+  lane :deploy_to_stage do
+    gradle(task: "assemble")
+    gradle(task: "uploadArchives --no-daemon --no-parallel")
+      gradle(task: "closeAndReleaseRepository")
+  end
+
+  desc "Deploy current code to production"
+  lane :deploy_to_production do
+    sh "bash ./release/maven_signing.sh"
+    deploy_to_stage
+  end
+end

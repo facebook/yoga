@@ -6,8 +6,7 @@
  */
 
 apply plugin: 'java'
+apply from: new File('./../../maven-publish.gradle')
 
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
-
-apply from: rootProject.file('gradle/release.gradle')
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'

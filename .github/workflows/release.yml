@@ -1,0 +1,36 @@
+name: Beagle Release
+
+on:
+  workflow_run:
+    workflows: [ "Beagle Yoga Release" ]
+    types:
+      - completed
+jobs:
+  generate-release:
+    name: Generate release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Read secrets from AWS Secrets Manager into environment variables
+        uses: abhilash1in/aws-secrets-manager-action@v1.0.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+          secrets: |
+            beagle/core/*
+          parse-json: true
+      - name: Install Fastlane
+        run: bundle install
+      - name: Deploy new version
+        env:
+          REPO_TOKEN: ${{ env.BEAGLE_CORE_GITHUB_GITHUB_TOKEN }}
+          NAME_REPO_TOKEN: ${{ env.BEAGLE_CORE_GITHUB_GITHUB_USER }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ env.BEAGLE_CORE_ARTIFACT_SONATYPE_NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ env.BEAGLE_CORE_ARTIFACT_SONATYPE_NEXUS_PASSWORD }}
+          GPG_KEY_CONTENTS: ${{ env.BEAGLE_CORE_ARTIFACT_GPG_KEY_CONTENTS }}
+          ORG_GRADLE_PROJECT_SIGNINGKEYID: ${{ env.BEAGLE_CORE_ARTIFACT_ORG_GRADLE_PROJECT_SIGNINGKEYID }}
+          ORG_GRADLE_PROJECT_SIGNINGPASSWORD: ${{ env.BEAGLE_CORE_ARTIFACT_ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+          GITHUB_USER: ${{ env.BEAGLE_CORE_GITHUB_GITHUB_USER }}
+          GITHUB_TOKEN: ${{ env.BEAGLE_CORE_GITHUB_GITHUB_TOKEN }}
+        run: bundle exec fastlane android deploy_to_production

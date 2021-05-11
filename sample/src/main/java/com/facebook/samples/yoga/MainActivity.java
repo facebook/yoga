@@ -9,13 +9,13 @@ package com.facebook.samples.yoga;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Menu;
 
-import com.facebook.samples.yoga.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.facebook.soloader.SoLoader;
 import com.facebook.yoga.android.YogaViewLayoutFactory;
 

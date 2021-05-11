@@ -8,64 +8,62 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    repositories {
-        google()
-        jcenter()
-        maven { url 'https://maven.google.com/' }
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://maven.google.com/' }
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:4.2.0'
+    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.15.1'
+    // NOTE: Do not place your application dependencies here; they belong
+    // in the individual module build.gradle files
+  }
 }
 
 allprojects {
   repositories {
     google()
-    jcenter()
+    mavenCentral()
   }
 }
 
 ext {
-    minSdkVersion = 14
-    targetSdkVersion = 25
-    compileSdkVersion = 26
-    buildToolsVersion = '28.0.3'
-    sourceCompatibilityVersion = JavaVersion.VERSION_1_7
-    targetCompatibilityVersion = JavaVersion.VERSION_1_7
+  minSdkVersion = 19
+  targetSdkVersion = 30
+  compileSdkVersion = 30
+  buildToolsVersion = '30.0.3'
+  sourceCompatibilityVersion = JavaVersion.VERSION_1_8
+  targetCompatibilityVersion = JavaVersion.VERSION_1_8
 }
 
 // If you have an idea on how to avoid this, please get in touch or
 // answer https://stackoverflow.com/questions/43867014/how-to-use-the-gradle-ndk-build-to-compile-for-the-host-machine.
 task copyNativeLibs(type: Copy, dependsOn: ':buckBuildNative') {
-    from "${rootDir}/buck-out/gen/java/tests#default,shared-library-symlink-tree/"
-    include '*.so'
-    include '*.dylib'
-    into "$buildDir/jniLibs"
+  from "${rootDir}/buck-out/gen/java/tests#default,shared-library-symlink-tree/"
+  include '*.so'
+  include '*.dylib'
+  into "$buildDir/jniLibs"
 }
 
 task buckBuildNative(type: Exec) {
-    workingDir rootDir
-    environment BUCKVERSION: 'last'
-    commandLine 'buck', 'build', '//java/...'
+  workingDir rootDir
+  environment BUCKVERSION: 'last'
+  commandLine 'buck', 'build', '//java/...'
 }
 
 allprojects {
-    afterEvaluate {
-        tasks.withType(Test) {
-            dependsOn copyNativeLibs
-            def libDir = "${rootDir}/build/jniLibs"
-            systemProperty 'java.library.path', libDir
-            environment 'LD_LIBRARY_PATH', libDir
-            environment 'DYLD_LIBRARY_PATH', libDir
-        }
+  afterEvaluate {
+    tasks.withType(Test) {
+      dependsOn copyNativeLibs
+      def libDir = "${rootDir}/build/jniLibs"
+      systemProperty 'java.library.path', libDir
+      environment 'LD_LIBRARY_PATH', libDir
+      environment 'DYLD_LIBRARY_PATH', libDir
     }
+  }
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
 }

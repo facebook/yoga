@@ -10,7 +10,6 @@ package com.facebook.samples.yoga;
 
 import java.util.Random;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,8 @@ import android.widget.TextView;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 
-import com.facebook.samples.yoga.R;
+import androidx.fragment.app.Fragment;
+
 import com.facebook.yoga.android.YogaLayout;
 
 public class BenchmarkFragment extends Fragment implements AdapterView.OnItemSelectedListener {
