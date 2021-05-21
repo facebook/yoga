@@ -5,17 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'maven-publish'
-
-group = GROUP
-version = VERSION_NAME
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
+    ndkVersion rootProject.ndkVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
@@ -35,7 +30,6 @@ android {
     externalNativeBuild {
         cmake {
             path 'CMakeLists.txt'
-            version '3.6.0-rc2'
         }
     }
 
@@ -64,26 +58,3 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation project(':testutil')
 }
-
-task sourcesJar(type: Jar) {
-    classifier = 'source'
-    from android.sourceSets.main.java.srcDirs
-}
-
-task javadoc(type: Javadoc) {
-    failOnError false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-ext {
-    bintrayName = 'com.facebook.yoga:yoga'
-}
-
-apply from: rootProject.file('gradle/release.gradle')
