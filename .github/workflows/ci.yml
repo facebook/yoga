@@ -44,13 +44,8 @@ jobs:
           cd buck
           ant
           popd
-          echo "::set-env name=PATH::$PATH:$HOME/buck/bin/"
+          echo "$HOME/buck/bin" >> $GITHUB_PATH
           export PATH=$PATH:$HOME/buck/bin/
           buck --version
-          export TERMINAL=dumb
-          source scripts/android-setup.sh && installAndroidSDK
-          echo "::set-env name=ANDROID_SDK::$ANDROID_HOME"
-          echo "::set-env name=ANDROID_NDK_REPOSITORY::$HOME/android-ndk"
-          echo "::set-env name=ANDROID_NDK_HOME::$ANDROID_NDK_REPOSITORY/android-ndk-r15c"
       - name: Build
         run: ./gradlew testDebugUnit && scripts/publish-snapshot.sh
