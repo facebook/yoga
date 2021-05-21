@@ -58,3 +58,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation project(':testutil')
 }
+
+apply plugin: 'com.vanniktech.maven.publish'
