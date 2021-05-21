@@ -52,9 +52,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.code.findbugs:jsr305:3.0.1'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation project(':yoga:proguard-annotations')
-    implementation 'com.facebook.soloader:soloader:0.5.1'
+    implementation 'com.facebook.soloader:soloader:0.10.1'
     testImplementation 'junit:junit:4.12'
     testImplementation project(':testutil')
 }
+
+apply plugin: 'com.vanniktech.maven.publish'
