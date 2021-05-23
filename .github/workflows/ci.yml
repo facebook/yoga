@@ -55,4 +55,4 @@ jobs:
           buck --version
       - name: Build
         # TODO: Run the tests here again. They're currently crashing the JVM in GitHub Actions for some reason.
-        run: ./gradlew :yoga-layout:assembleDebug && scripts/publish-snapshot.sh
+        run: ./gradlew :yoga-layout:assembleDebug
