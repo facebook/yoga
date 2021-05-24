@@ -35,7 +35,7 @@ jobs:
       - name: set up JDK 1.8
         uses: actions/setup-java@v2
         with:
-          distribution: 'zulu'
+          distribution: 'adopt'
           java-version: '11'
       - name: Install NDK 21
         run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;21.0.6113669" "ndk;20.0.5594570" --sdk_root=${ANDROID_SDK_ROOT}
