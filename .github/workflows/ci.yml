@@ -33,9 +33,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: set up JDK 1.8
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
-          java-version: 1.8
+          distribution: 'zulu'
+          java-version: '11'
       - name: Install NDK 21
         run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;21.0.6113669" "ndk;20.0.5594570" --sdk_root=${ANDROID_SDK_ROOT}
       - name: Install dependencies
@@ -54,5 +55,6 @@ jobs:
           export PATH=$PATH:$HOME/buck/bin/
           buck --version
       - name: Build
-        # TODO: Run the tests here again. They're currently crashing the JVM in GitHub Actions for some reason.
         run: ./gradlew :yoga-layout:assembleDebug
+      - name: Test
+        run: ./gradlew testDebugUnit
