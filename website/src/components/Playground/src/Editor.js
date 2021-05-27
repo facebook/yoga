@@ -196,7 +196,7 @@ export default class Editor extends Component<Props> {
               onChange={this.props.onChangeLayout}
             />
           </TabPane>
-          <TabPane tab="Layout" key="3">
+          <TabPane tab="Layout" key="3" className="ant-tabs-tabpane">
             <h2>
               Width &times; Height
               <InfoText doclink="/docs/width-height">

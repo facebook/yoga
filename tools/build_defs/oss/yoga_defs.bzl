@@ -14,7 +14,7 @@ JSR_305_TARGET = "//lib/jsr-305:jsr-305"
 
 JUNIT_TARGET = "//lib/junit:junit"
 
-PROGRUARD_ANNOTATIONS_TARGET = "//java/proguard-annotations/src/main/java/com/facebook/proguard/annotations:annotations"
+PROGUARD_ANNOTATIONS_TARGET = "//java/proguard-annotations/src/main/java/com/facebook/proguard/annotations:annotations"
 
 SOLOADER_TARGET = "//lib/soloader:soloader"
 
@@ -201,6 +201,9 @@ def yoga_prebuilt_cxx_library(*args, **kwargs):
 
 def yoga_prebuilt_jar(*args, **kwargs):
     native.prebuilt_jar(*args, **kwargs)
+
+def yoga_prebuilt_aar(*args, **kwargs):
+    native.android_prebuilt_aar(*args, **kwargs)
 
 def is_apple_platform():
     return True

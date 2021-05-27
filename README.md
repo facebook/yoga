@@ -46,3 +46,29 @@ This will now only run the standalone webpack build upon install.
 | node           | Builds node js version.                         |
 | standalone     | Runs webpack.                                   |
 | none           | Does nothing. You can use the prepackaged libs. |
+
+## Maintainer Release Guide
+
+To publish a new release, follow these steps:
+
+1. Ensure you have your GPG key set up and your [OSS Sonatype](https://oss.sonatype.org/) credentials handy.
+2. Add the follow entries to either your local `gradle.properties` (don't forget to revert) or your global `~/.gradle/gradle.properties`:
+
+```
+# You get these from https://oss.sonatype.org/#profile;User%20Token
+mavenCentralRepositoryUsername=<username>
+mavenCentralRepositoryPassword=<password>
+
+# You can get the keyId (in GPG 1.4 format) by running `gpg1 --list-keys`.
+signing.secretKeyRingFile=</path/to/secring.gpg>
+signing.keyId=<key_id>
+signing.password=<key_password>
+```
+
+3. Change the `VERSION_NAME` in `gradle.properties` to a non-SNAPSHOT release.
+4. Commit and land the version change.
+5. Run `./gradlew publishToMaven`.
+6. Run `./gradlew closeAndReleaseRepository`.
+7. Change the `VERSION_NAME` in `gradle.properties` back to a new SNAPSHOT release.
+8. Commit and land the version change.
+9. Celebrate! You've made a release!

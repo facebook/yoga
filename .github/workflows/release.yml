@@ -1,0 +1,32 @@
+name: Publish
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Install dependencies
+      run: source scripts/android-setup.sh && installAndroidSDK
+    - name: Write GPG Sec Ring
+      run: echo '${{ secrets.GPG_KEY_CONTENTS }}' | base64 -d > /tmp/secring.gpg
+    - name: Update gradle.properties
+      run: echo -e "signing.secretKeyRingFile=/tmp/secring.gpg\nsigning.keyId=${{ secrets.SIGNING_KEY_ID }}\nsigning.password=${{ secrets.SIGNING_PASSWORD }}\nmavenCentralPassword=${{ secrets.SONATYPE_NEXUS_PASSWORD }}\nmavenCentralUsername=${{ secrets.SONATYPE_NEXUS_USERNAME }}" >> gradle.properties
+    - name: Upload Android Archives
+      run: ./gradlew :yoga:assembleRelease publish --info
+    - name: Release and close
+      run: ./gradlew closeAndReleaseRepository
+    - name: Clean secrets
+      if: always()
+      run: rm /tmp/secring.gpg
