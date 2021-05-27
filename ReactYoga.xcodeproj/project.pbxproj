@@ -191,7 +191,6 @@
 		27595AD71E575C7800CCE2B1 /* SampleCxxModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D92B0D41E03699D0018521A /* SampleCxxModule.h */; };
 		27595AD81E575C7800CCE2B1 /* SystraceSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D92B0D51E03699D0018521A /* SystraceSection.h */; };
 		2D0EB9F32021067800CAF88A /* RCTUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F1EFDA4E201F660F00EE6E4C /* RCTUIUtils.m */; };
-		2D16E68E1FA4FD3900B85C8A /* RCTTVNavigationEventEmitter.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 3D0B842D1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.h */; };
 		2D1D83CE1F74E2DA00615550 /* libdouble-conversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D383D621EBD27B9005632C8 /* libdouble-conversion.a */; };
 		2D3B5E931D9B087300451313 /* RCTErrorInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCA8A41D3591E700450C31 /* RCTErrorInfo.m */; };
 		2D3B5E941D9B087900451313 /* RCTBundleURLProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EFE4ED1CF6EB3900A1DE13 /* RCTBundleURLProvider.m */; };
@@ -269,8 +268,6 @@
 		3D0B842A1EC0B49400B2BD8E /* RCTTVRemoteHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0B84281EC0B49400B2BD8E /* RCTTVRemoteHandler.h */; };
 		3D0B842B1EC0B49400B2BD8E /* RCTTVRemoteHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B84291EC0B49400B2BD8E /* RCTTVRemoteHandler.m */; };
 		3D0B842C1EC0B4EA00B2BD8E /* RCTTVView.m in Sources */ = {isa = PBXBuildFile; fileRef = 130443D71E401AD800D93A67 /* RCTTVView.m */; };
-		3D0B842F1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0B842D1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.h */; };
-		3D0B84301EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B842E1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.m */; };
 		3D0E378A1F1CC40000DCAC9F /* RCTWebSocketModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0E37891F1CC40000DCAC9F /* RCTWebSocketModule.h */; };
 		3D0E378E1F1CC59100DCAC9F /* RCTWebSocketModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D0E37891F1CC40000DCAC9F /* RCTWebSocketModule.h */; };
 		3D0E378F1F1CC5CF00DCAC9F /* RCTWebSocketModule.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 3D0E37891F1CC40000DCAC9F /* RCTWebSocketModule.h */; };
@@ -1275,7 +1272,6 @@
 				594F0A471FD233BD007FBE96 /* RCTSurfaceView.h in Copy Headers */,
 				594F0A481FD233BD007FBE96 /* RCTSurfaceHostingView.h in Copy Headers */,
 				594F0A491FD233BD007FBE96 /* RCTSurfaceSizeMeasureMode.h in Copy Headers */,
-				2D16E68E1FA4FD3900B85C8A /* RCTTVNavigationEventEmitter.h in Copy Headers */,
 				59500D481F71C67600B122B7 /* RCTUIManagerUtils.h in Copy Headers */,
 				3D0E37901F1CC5E100DCAC9F /* RCTWebSocketModule.h in Copy Headers */,
 				5960C1BF1F0804F50066FD5B /* RCTLayoutAnimation.h in Copy Headers */,
@@ -1876,8 +1872,6 @@
 		39C50FFA2046EE3500CEE534 /* RCTVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTVersion.m; sourceTree = "<group>"; };
 		3D0B84281EC0B49400B2BD8E /* RCTTVRemoteHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTTVRemoteHandler.h; sourceTree = "<group>"; };
 		3D0B84291EC0B49400B2BD8E /* RCTTVRemoteHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTTVRemoteHandler.m; sourceTree = "<group>"; };
-		3D0B842D1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTTVNavigationEventEmitter.h; sourceTree = "<group>"; };
-		3D0B842E1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTTVNavigationEventEmitter.m; sourceTree = "<group>"; };
 		3D0E37891F1CC40000DCAC9F /* RCTWebSocketModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTWebSocketModule.h; path = WebSocket/RCTWebSocketModule.h; sourceTree = "<group>"; };
 		3D1E68D81CABD13900DD7465 /* RCTDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTDisplayLink.h; sourceTree = "<group>"; };
 		3D1E68D91CABD13900DD7465 /* RCTDisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTDisplayLink.m; sourceTree = "<group>"; };
@@ -2346,8 +2340,6 @@
 				0EEEA8DE2239002200A8C82D /* RCTSurfacePresenterStub.m */,
 				13B07FED1A69327A00A75B9A /* RCTTiming.h */,
 				13B07FEE1A69327A00A75B9A /* RCTTiming.m */,
-				3D0B842D1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.h */,
-				3D0B842E1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.m */,
 				13E067481A70F434002CDEE1 /* RCTUIManager.h */,
 				13E067491A70F434002CDEE1 /* RCTUIManager.m */,
 				59EB6DB91EBD6FC90072A5E7 /* RCTUIManagerObserverCoordinator.h */,
@@ -2945,7 +2937,6 @@
 				3D302F311DF828F800D6DDAE /* RCTBundleURLProvider.h in Headers */,
 				3D302F321DF828F800D6DDAE /* RCTConvert.h in Headers */,
 				3D302F331DF828F800D6DDAE /* RCTDefines.h in Headers */,
-				3D0B842F1EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.h in Headers */,
 				3D302F341DF828F800D6DDAE /* RCTDisplayLink.h in Headers */,
 				3D302F351DF828F800D6DDAE /* RCTErrorCustomizer.h in Headers */,
 				3D302F361DF828F800D6DDAE /* RCTErrorInfo.h in Headers */,
@@ -3994,7 +3985,6 @@
 				2D3B5EC81D9B095800451313 /* RCTActivityIndicatorViewManager.m in Sources */,
 				3DCD185D1DF978E7007FE5A1 /* RCTReloadCommand.m in Sources */,
 				130443DB1E401ADD00D93A67 /* RCTConvert+Transform.m in Sources */,
-				3D0B84301EC0B51200B2BD8E /* RCTTVNavigationEventEmitter.m in Sources */,
 				2D3B5EC61D9B095000451313 /* RCTProfileTrampoline-x86_64.S in Sources */,
 				2D3B5EA61D9B08CA00451313 /* RCTTouchEvent.m in Sources */,
 				2D8C2E331DA40441000EE098 /* RCTMultipartStreamReader.m in Sources */,

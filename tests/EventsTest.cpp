@@ -303,8 +303,8 @@ EventArgs createArgs(
   };
 
   EventArgs args = createArgs<E>(node, data);
-  args.eventTestDataPtr = {new EventTestData{eventTestData},
-                           deleteEventTestData};
+  args.eventTestDataPtr = {
+      new EventTestData{eventTestData}, deleteEventTestData};
   return args;
 }
 

@@ -61,14 +61,19 @@ DEFINE_CALL_METHOD_FOR_PRIMITIVE_INTERFACE(void, Void);
 DEFINE_CALL_METHOD_FOR_PRIMITIVE_INTERFACE(jlong, Long);
 DEFINE_CALL_METHOD_FOR_PRIMITIVE_INTERFACE(jfloat, Float);
 
-ScopedLocalRef<jobject>
-callStaticObjectMethod(JNIEnv* env, jclass clazz, jmethodID methodId, ...);
+ScopedLocalRef<jobject> callStaticObjectMethod(
+    JNIEnv* env,
+    jclass clazz,
+    jmethodID methodId,
+    ...);
 
 /**
  * Given a local or a global reference, this method creates a new global
  * reference out of it. If any error happens, aborts the process.
  */
 ScopedGlobalRef<jobject> newGlobalRef(JNIEnv* env, jobject obj);
+
+ScopedGlobalRef<jthrowable> newGlobalRef(JNIEnv* env, jthrowable obj);
 } // namespace vanillajni
 } // namespace yoga
 } // namespace facebook

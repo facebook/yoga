@@ -49,17 +49,16 @@ export default ({data}) => (
                   ({node}) =>
                     node.fileAbsolutePath.indexOf(`/${category}/`) > -1,
                 )
-                .map(
-                  ({node}) =>
-                    node.frontmatter.redirect ? (
-                      <a key={node.id} href={node.frontmatter.path}>
-                        {node.frontmatter.title}
-                      </a>
-                    ) : (
-                      <Link key={node.id} to={node.frontmatter.path}>
-                        {node.frontmatter.title}
-                      </Link>
-                    ),
+                .map(({node}) =>
+                  node.frontmatter.redirect ? (
+                    <a key={node.id} href={node.frontmatter.path}>
+                      {node.frontmatter.title}
+                    </a>
+                  ) : (
+                    <Link key={node.id} to={node.frontmatter.path}>
+                      {node.frontmatter.title}
+                    </Link>
+                  ),
                 )}
             </Col>
           ),
