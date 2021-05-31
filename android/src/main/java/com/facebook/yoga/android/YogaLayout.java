@@ -167,9 +167,65 @@ public class YogaLayout extends ViewGroup {
     applyLayoutParams(lp, childNode, child);
 
     mYogaNodes.put(child, childNode);
-    mYogaNode.addChildAt(childNode, mYogaNode.getChildCount());
+    if (child.getVisibility() == GONE) {
+      //The current state is not displayed, record the position that should be added, not join the NodeTree
+      child.setTag(R.id.yoga_child_position, mYogaNode.getChildCount());
+    } else {
+      mYogaNode.addChildAt(childNode, mYogaNode.getChildCount());
+    }
+  }
+  /**
+   * set Yoga's child view Gone or VISIBLE
+   * @param child the yogaLayout's child view
+   * @param value Gone or VISIBLE
+   */
+  public void setChildVisibility(View child, int value) {
+    child.setVisibility(value);
+    YogaNode childNode = mYogaNodes.get(child); //get yogaNode with view
+    Object object = child.getTag(R.id.yoga_child_position); //the node index should be
+    if (value == VISIBLE) {
+      //If you want to display, the node tree cannot include the current node.
+      // Including the current node means that it has been displayed
+      if (object != null && mYogaNode.indexOf(childNode) == -1) {
+        int index = (int) object;
+        if (index < mYogaNode.getChildCount()) {
+          mYogaNode.addChildAt(mYogaNodes.get(child), index);
+        } else {
+          mYogaNode.addChildAt(mYogaNodes.get(child), mYogaNode.getChildCount());
+        }
+        reCalculate(mYogaNode);
+      }
+    } else if (value == GONE) {
+      //If you want to hide, the previous state should be displayed,
+      // then the current node is already included in the node tree,
+      // and the current position is taken out
+      int childIndex = mYogaNode.indexOf(childNode);
+      if (childIndex != -1) {
+        //remove the child view's node
+        mYogaNode.removeChildAt(childIndex);
+        //save the child view's node position
+        child.setTag(R.id.yoga_child_position, childIndex);
+        reCalculate(mYogaNode);
+      }
+    }
+
   }
 
+  /**
+   * Recursive recalculation
+   */
+  private void reCalculate(YogaNode node){
+    //reset width and height
+    node.setWidth(Float.NaN);
+    node.setHeight(Float.NaN);
+    if(node.getOwner()!=null){
+      //Recursive it
+      reCalculate(node.getOwner());
+    }else{
+      //Only the outermost layer needs to be recalculated
+      node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+    }
+  }
   /**
    * Adds a view to this {@code ViewGroup} with an already given {@code YogaNode}.  Use
    * this function if you already have a Yoga node (and perhaps tree) associated with the view you
