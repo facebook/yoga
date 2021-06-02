@@ -1,0 +1,13 @@
+# Miscellaneous
+*.lock
+.DS_Store
+
+# IntelliJ related
+*.iml
+!.idea/copyright/
+
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.pub/
+build/

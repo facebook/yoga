@@ -10,7 +10,7 @@
 #include <functional>
 #include <vector>
 #include <array>
-#if SWIFT_PACKAGE
+#if SWIFT_PACKAGE || IS_FLUTTER_ANDROID
 #include "../YGEnums.h"
 #else
 #include <yoga/YGEnums.h>

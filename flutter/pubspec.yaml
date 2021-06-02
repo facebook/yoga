@@ -1,0 +1,26 @@
+name: yoga_engine
+description: A plugin that uses yoga to implements flexbox layout in Flutter.
+version: 0.0.1+1
+homepage: https://usebeagle.io/
+
+environment:
+  sdk: ">=2.13.0 <3.0.0"
+  flutter: ">=2.2.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  pedantic: ^1.11.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: br.com.zup.yoga_engine
+        pluginClass: YogaEnginePlugin
+      ios:
+        pluginClass: YogaEnginePlugin
