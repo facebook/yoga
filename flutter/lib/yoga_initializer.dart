@@ -14,38 +14,22 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+import 'dart:ffi';
 
-void main() {
-  runApp(MyApp());
+import 'package:get_it/get_it.dart';
+
+import 'ffi/mapper.dart';
+import 'ffi/utils.dart';
+
+class Yoga {
+  static void init() {
+    _setupServiceLocator();
+  }
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
+final serviceLocator = GetIt.instance;
 
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Text('Running on: '),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+void _setupServiceLocator() {
+  serviceLocator.registerSingleton<DynamicLibrary>(loadYoga());
+  serviceLocator.registerSingleton<Mapper>(serviceLocator.get());
 }
