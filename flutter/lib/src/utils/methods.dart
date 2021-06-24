@@ -18,6 +18,7 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/rendering.dart';
 import 'package:yoga_engine/src/ffi/mapper.dart';
 
 import '../../yoga_engine.dart';
@@ -56,15 +57,19 @@ YGSize measureFunc(
           : height;
 
   final renderObject = helper.getRenderBoxFromNode(node);
+  final constraints = BoxConstraints.loose(
+    Size(constrainedWidth, constrainedHeight),
+  );
+  final renderObjectSize = renderObject?.getDryLayout(constraints);
 
   final sanitizedWidth = _sanitizeMeasurement(
     constrainedWidth,
-    renderObject?.getMaxIntrinsicWidth(constrainedWidth) ?? 0,
+    renderObjectSize?.width ?? 0,
     widthMeasureMode,
   );
   final sanitizedHeight = _sanitizeMeasurement(
     constrainedHeight,
-    renderObject?.getMaxIntrinsicHeight(constrainedHeight) ?? 0,
+    renderObjectSize?.height ?? 0,
     heightMeasureMode,
   );
 
