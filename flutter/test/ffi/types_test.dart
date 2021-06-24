@@ -17,7 +17,7 @@
 import 'dart:ffi';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:yoga_engine/ffi/types.dart';
+import 'package:yoga_engine/src/ffi/types.dart';
 
 void main() {
 

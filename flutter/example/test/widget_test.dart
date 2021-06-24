@@ -14,30 +14,21 @@
  * limitations under the License.
  */
 
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:yoga_engine/yoga_engine.dart';
 import 'package:yoga_engine_example/main.dart';
 
 void main() {
-  testWidgets('Verify Platform version', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Verify example', (WidgetTester tester) async {
+    Yoga.init();
     await tester.pumpWidget(MyApp());
 
-    // Verify that platform version is retrieved.
     expect(
       find.byWidgetPredicate(
-        (Widget widget) => widget is Text &&
-                           widget.data!.startsWith('Running on:'),
+        (Widget widget) => widget is Text && widget.data!.startsWith('Child'),
       ),
-      findsOneWidget,
+      findsNWidgets(2),
     );
   });
 }

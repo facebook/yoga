@@ -17,10 +17,10 @@
 import 'dart:ffi';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:yoga_engine/ffi/mapper.dart';
-import 'package:yoga_engine/ffi/types.dart';
-import 'package:yoga_engine/ffi/utils.dart';
-import 'package:yoga_engine/yoga_initializer.dart';
+import 'package:yoga_engine/src/ffi/mapper.dart';
+import 'package:yoga_engine/src/ffi/types.dart';
+import 'package:yoga_engine/src/utils/methods.dart';
+import 'package:yoga_engine/src/yoga_initializer.dart';
 
 void main() {
   serviceLocator.registerSingleton<DynamicLibrary>(loadYoga());
@@ -270,10 +270,10 @@ void main() {
     group('When yGNodeSetChildren is called', () {
       test('Then should set the given children', () {
         // Given
-        final ygNode = mapper.yGNodeNew();
-        final ygChild1 = mapper.yGNodeNew();
-        final ygChild2 = mapper.yGNodeNew();
-        final ygChildren = [ygChild1, ygChild2];
+        // final ygNode = mapper.yGNodeNew();
+        // final ygChild1 = mapper.yGNodeNew();
+        // final ygChild2 = mapper.yGNodeNew();
+        // final ygChildren = [ygChild1, ygChild2];
 
         // When
         // final result = mapper.yGNodeSetChildren(ygNode, ygChildren, 2);

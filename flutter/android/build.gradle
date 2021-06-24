@@ -58,7 +58,3 @@ android {
   ndkVersion '22.1.7171670'
   buildToolsVersion '30.0.3'
 }
-
-dependencies {
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-}
