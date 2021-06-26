@@ -168,14 +168,14 @@ class RenderYoga extends RenderBox
     }
   }
 
-  _iterateOverYogaNodes(RenderBox child, NodeProperties nodePropertiesLeaf) {
+  _iterateOverYogaNodes(RenderObject child, NodeProperties nodePropertiesLeaf) {
     int index = 0;
     child.visitChildren((innerChild) {
       if (innerChild is RenderYoga) {
         nodePropertiesLeaf.insertChildAt(innerChild.nodeProperties, index);
         _attachNodesFromWidgetsHierarchy(innerChild);
       } else {
-        _iterateOverYogaNodes(innerChild as RenderBox, nodePropertiesLeaf);
+        _iterateOverYogaNodes(innerChild, nodePropertiesLeaf);
       }
       index++;
     });
