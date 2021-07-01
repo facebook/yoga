@@ -65,4 +65,3 @@ YogaLayout(
 - `YogaLayout` widgets can only have children of `YogaLayout` or `YogaNode` types.
 - `YogaNode` widgets can have any type of child, except themselves.
 - `YogaNode` widgets cannot be placed outside `YogaLayout`.
-- When a `YogaLayout` is placed inside a `YogaNode`, this must have the property `isLeaf = false`.

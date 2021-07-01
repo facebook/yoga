@@ -26,29 +26,25 @@ import 'package:yoga_engine/src/utils/node_helper.dart';
 import '../yoga_initializer.dart';
 
 class YogaParentData extends ContainerBoxParentData<RenderBox> {
-  bool? isLeaf;
   NodeProperties? nodeProperties;
 
   @override
-  String toString() => '${super.toString()}; '
-      'nodeProperties=$nodeProperties; '
-      'isLeaf=$isLeaf';
+  String toString() => '${super.toString()}; nodeProperties=$nodeProperties';
 }
 
 /// Class responsible to measure any flutter widget by the NodeProperties.
 /// This can only be placed inside a YogaLayout widget and cannot have another
 /// YogaNode as a direct child.
-/// Pass false to isLeaf property when this class is not placed at the end of
-/// the widget tree.
+/// Use this class to wrap around any flutter widget. The yoga will be able
+/// to calculate the layout size and the children offsets,
+/// given this wrapped widget's size.
 class YogaNode extends ParentDataWidget<YogaParentData> {
   const YogaNode({
     Key? key,
-    this.isLeaf = true,
     required this.nodeProperties,
     required Widget child,
   }) : super(key: key, child: child);
 
-  final bool isLeaf;
   final NodeProperties nodeProperties;
 
   @override
@@ -56,11 +52,6 @@ class YogaNode extends ParentDataWidget<YogaParentData> {
     assert(renderObject.parentData is YogaParentData);
     final parentData = renderObject.parentData! as YogaParentData;
     bool needsLayout = false;
-
-    if (parentData.isLeaf != isLeaf) {
-      parentData.isLeaf = isLeaf;
-      needsLayout = true;
-    }
 
     if (parentData.nodeProperties != nodeProperties) {
       parentData.nodeProperties = nodeProperties;
@@ -79,7 +70,6 @@ class YogaNode extends ParentDataWidget<YogaParentData> {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty('isLeaf', isLeaf.toString()));
     properties.add(StringProperty('nodeProperties', nodeProperties.toString()));
   }
 }
@@ -115,22 +105,33 @@ class RenderYoga extends RenderBox
     }
   }
 
-  bool _isLeaf(YogaParentData yogaParentData) {
-    return yogaParentData.isLeaf ?? false;
-  }
-
   NodeProperties _getNodeProperties(YogaParentData yogaParentData) {
     return yogaParentData.nodeProperties!;
+  }
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) {
+    if (!nodeProperties.isCalculated()) {
+      _attachNodesFromWidgetsHierarchy(this);
+      nodeProperties.calculateLayout(YGUndefined, YGUndefined);
+    }
+    return Size(
+      nodeProperties.getLayoutWidth(),
+      nodeProperties.getLayoutHeight(),
+    );
   }
 
   @override
   void performLayout() {
     if (!nodeProperties.isCalculated()) {
       _attachNodesFromWidgetsHierarchy(this);
-      nodeProperties.calculateLayout(
-        constraints.maxWidth.floorToDouble(),
-        constraints.maxHeight.floorToDouble(),
-      );
+      final maxWidth = constraints.maxWidth.isInfinite
+          ? YGUndefined
+          : constraints.maxWidth.floorToDouble();
+      final maxHeight = constraints.maxHeight.isInfinite
+          ? YGUndefined
+          : constraints.maxHeight.floorToDouble();
+      nodeProperties.calculateLayout(maxWidth, maxHeight);
     }
     _applyLayoutToWidgetsHierarchy(getChildrenAsList());
 
@@ -156,29 +157,16 @@ class RenderYoga extends RenderBox
           throw FlutterError('To use YogaLayout, you must declare every child '
               'inside a YogaNode or YogaLayout component');
         }());
-        final yogaNodeLeaf = _getNodeProperties(yogaParentData);
-        renderYoga.nodeProperties.insertChildAt(yogaNodeLeaf, i);
-        if (_isLeaf(yogaParentData)) {
-          _helper.setRenderBoxToNode(child, yogaNodeLeaf.node);
-          yogaNodeLeaf.setMeasureFunc();
-        } else {
-          _iterateOverYogaNodes(child, yogaNodeLeaf);
-        }
+        final childYogaNode = _getNodeProperties(yogaParentData);
+        renderYoga.nodeProperties.insertChildAt(childYogaNode, i);
+        _setMeasureFunction(child, childYogaNode);
       }
     }
   }
 
-  _iterateOverYogaNodes(RenderObject child, NodeProperties nodePropertiesLeaf) {
-    int index = 0;
-    child.visitChildren((innerChild) {
-      if (innerChild is RenderYoga) {
-        nodePropertiesLeaf.insertChildAt(innerChild.nodeProperties, index);
-        _attachNodesFromWidgetsHierarchy(innerChild);
-      } else {
-        _iterateOverYogaNodes(innerChild, nodePropertiesLeaf);
-      }
-      index++;
-    });
+  void _setMeasureFunction(RenderBox child, NodeProperties childYogaNode) {
+    _helper.setRenderBoxToNode(child, childYogaNode.node);
+    childYogaNode.setMeasureFunc();
   }
 
   void _applyLayoutToWidgetsHierarchy(List<RenderBox> children) {
@@ -196,21 +184,12 @@ class RenderYoga extends RenderBox
         _helper.getTop(node),
       );
       late BoxConstraints childConstraints;
-      if (yogaParentData.isLeaf != null && yogaParentData.isLeaf!) {
-        childConstraints = BoxConstraints.tight(
-          Size(
-            _helper.getLayoutWidth(node),
-            _helper.getLayoutHeight(node),
-          ),
-        );
-      } else {
-        childConstraints = BoxConstraints.loose(
-          Size(
-            _helper.getLayoutWidth(node),
-            _helper.getLayoutHeight(node),
-          ),
-        );
-      }
+      childConstraints = BoxConstraints.tight(
+        Size(
+          _helper.getLayoutWidth(node),
+          _helper.getLayoutHeight(node),
+        ),
+      );
       child.layout(childConstraints, parentUsesSize: true);
       _helper.removeNodeReference(node);
     }

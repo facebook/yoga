@@ -25,8 +25,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     NodeProperties child1 = NodeProperties();
-    child1.setWidth(50);
-    child1.setHeight(50);
 
     NodeProperties child2 = NodeProperties();
 
@@ -61,7 +59,6 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               YogaNode(
-                isLeaf: false,
                 nodeProperties: child2,
                 child: ColoredBox(
                   color: Colors.pink,
