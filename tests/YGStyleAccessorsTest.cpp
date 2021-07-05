@@ -156,22 +156,22 @@ ACCESSOR_TEST(display, YGDisplayFlex, YGDisplayNone, YGDisplayFlex)
 ACCESSOR_TEST(
     flex,
     YGFloatOptional{},
-    YGFloatOptional{123.45f},
-    YGFloatOptional{-9.87f},
+    YGFloatOptional{123.45},
+    YGFloatOptional{-9.87},
     YGFloatOptional{})
 
 ACCESSOR_TEST(
     flexGrow,
     YGFloatOptional{},
-    YGFloatOptional{123.45f},
-    YGFloatOptional{-9.87f},
+    YGFloatOptional{123.45},
+    YGFloatOptional{-9.87},
     YGFloatOptional{})
 
 ACCESSOR_TEST(
     flexShrink,
     YGFloatOptional{},
-    YGFloatOptional{123.45f},
-    YGFloatOptional{-9.87f},
+    YGFloatOptional{123.45},
+    YGFloatOptional{-9.87},
     YGFloatOptional{})
 
 ACCESSOR_TEST(
@@ -179,8 +179,8 @@ ACCESSOR_TEST(
     CompactValue::ofAuto(),
     CompactValue::ofUndefined(),
     CompactValue::ofAuto(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
+    CompactValue::of<YGUnitPoint>(7777.77),
+    CompactValue::of<YGUnitPercent>(-100.0))
 
 INDEX_ACCESSOR_TEST(
     position,
@@ -188,8 +188,8 @@ INDEX_ACCESSOR_TEST(
     YGEdgeBottom,
     CompactValue::ofAuto(),
     CompactValue::ofUndefined(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
+    CompactValue::of<YGUnitPoint>(7777.77),
+    CompactValue::of<YGUnitPercent>(-100.0))
 
 INDEX_ACCESSOR_TEST(
     margin,
@@ -197,22 +197,22 @@ INDEX_ACCESSOR_TEST(
     YGEdgeTop,
     CompactValue::ofAuto(),
     CompactValue::ofUndefined(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
+    CompactValue::of<YGUnitPoint>(7777.77),
+    CompactValue::of<YGUnitPercent>(-100.0))
 
 INDEX_ACCESSOR_TEST(
     padding,
     CompactValue::ofUndefined(),
     YGEdgeAll,
-    CompactValue::of<YGUnitPoint>(7777.77f),
+    CompactValue::of<YGUnitPoint>(7777.77),
     CompactValue::ofUndefined(),
-    CompactValue::of<YGUnitPercent>(-100.0f))
+    CompactValue::of<YGUnitPercent>(-100.0))
 
 INDEX_ACCESSOR_TEST(
     border,
     CompactValue::ofUndefined(),
     YGEdgeHorizontal,
-    CompactValue::of<YGUnitPoint>(-7777.77f),
+    CompactValue::of<YGUnitPoint>(-7777.77),
     CompactValue::ofUndefined())
 
 INDEX_ACCESSOR_TEST(
@@ -221,8 +221,8 @@ INDEX_ACCESSOR_TEST(
     YGDimensionWidth,
     CompactValue::ofUndefined(),
     CompactValue::ofAuto(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
+    CompactValue::of<YGUnitPoint>(7777.77),
+    CompactValue::of<YGUnitPercent>(-100.0))
 
 INDEX_ACCESSOR_TEST(
     minDimensions,
@@ -230,8 +230,8 @@ INDEX_ACCESSOR_TEST(
     YGDimensionHeight,
     CompactValue::ofAuto(),
     CompactValue::ofUndefined(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
+    CompactValue::of<YGUnitPoint>(7777.77),
+    CompactValue::of<YGUnitPercent>(-100.0))
 
 INDEX_ACCESSOR_TEST(
     maxDimensions,
@@ -239,15 +239,15 @@ INDEX_ACCESSOR_TEST(
     YGDimensionHeight,
     CompactValue::ofAuto(),
     CompactValue::ofUndefined(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
+    CompactValue::of<YGUnitPoint>(7777.77),
+    CompactValue::of<YGUnitPercent>(-100.0))
 
 ACCESSOR_TEST(
     aspectRatio,
     YGFloatOptional{},
-    YGFloatOptional{-123.45f},
-    YGFloatOptional{9876.5f},
-    YGFloatOptional{0.0f},
+    YGFloatOptional{-123.45},
+    YGFloatOptional{9876.5},
+    YGFloatOptional{0.0},
     YGFloatOptional{});
 
 } // namespace yoga

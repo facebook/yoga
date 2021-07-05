@@ -96,7 +96,7 @@ TEST(YogaTest, assert_webdefault_values) {
 
   ASSERT_EQ(YGFlexDirectionRow, YGNodeStyleGetFlexDirection(root));
   ASSERT_EQ(YGAlignStretch, YGNodeStyleGetAlignContent(root));
-  ASSERT_FLOAT_EQ(1.0f, YGNodeStyleGetFlexShrink(root));
+  ASSERT_FLOAT_EQ(1.0, YGNodeStyleGetFlexShrink(root));
 
   YGNodeFreeRecursive(root);
   YGConfigFree(config);
@@ -110,7 +110,7 @@ TEST(YogaTest, assert_webdefault_values_reset) {
 
   ASSERT_EQ(YGFlexDirectionRow, YGNodeStyleGetFlexDirection(root));
   ASSERT_EQ(YGAlignStretch, YGNodeStyleGetAlignContent(root));
-  ASSERT_FLOAT_EQ(1.0f, YGNodeStyleGetFlexShrink(root));
+  ASSERT_FLOAT_EQ(1.0, YGNodeStyleGetFlexShrink(root));
 
   YGNodeFreeRecursive(root);
   YGConfigFree(config);

@@ -231,7 +231,7 @@ TEST_F(EventTest, layout_events_has_max_measure_cache) {
   YGNodeInsertChild(root, a, 0);
   auto b = YGNodeNew();
   YGNodeInsertChild(root, b, 1);
-  YGNodeStyleSetFlexBasis(a, 10.0f);
+  YGNodeStyleSetFlexBasis(a, 10.0);
 
   for (auto s : {20, 30, 40}) {
     YGNodeCalculateLayout(root, s, s, YGDirectionLTR);
@@ -251,7 +251,7 @@ TEST_F(EventTest, layout_events_has_max_measure_cache) {
 TEST_F(EventTest, measure_functions_get_wrapped) {
   auto root = YGNodeNew();
   YGNodeSetMeasureFunc(
-      root, [](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode) {
+      root, [](YGNodeRef, double, YGMeasureMode, double, YGMeasureMode) {
         return YGSize{};
       });
 
@@ -269,7 +269,7 @@ TEST_F(EventTest, baseline_functions_get_wrapped) {
   auto child = YGNodeNew();
   YGNodeInsertChild(root, child, 0);
 
-  YGNodeSetBaselineFunc(child, [](YGNodeRef, float, float) { return 0.0f; });
+  YGNodeSetBaselineFunc(child, [](YGNodeRef, double, double) { return 0.0; });
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
 

@@ -11,37 +11,37 @@
 
 static YGSize _measureFloor(
     YGNodeRef node,
-    float width,
+    double width,
     YGMeasureMode widthMode,
-    float height,
+    double height,
     YGMeasureMode heightMode) {
   return YGSize{
-      width = 10.2f,
-      height = 10.2f,
+      width = 10.2,
+      height = 10.2,
   };
 }
 
 static YGSize _measureCeil(
     YGNodeRef node,
-    float width,
+    double width,
     YGMeasureMode widthMode,
-    float height,
+    double height,
     YGMeasureMode heightMode) {
   return YGSize{
-      width = 10.5f,
-      height = 10.5f,
+      width = 10.5,
+      height = 10.5,
   };
 }
 
 static YGSize _measureFractial(
     YGNodeRef node,
-    float width,
+    double width,
     YGMeasureMode widthMode,
-    float height,
+    double height,
     YGMeasureMode heightMode) {
   return YGSize{
-      width = 0.5f,
-      height = 0.5f,
+      width = 0.5,
+      height = 0.5,
   };
 }
 
@@ -53,35 +53,35 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
   root_child0->setMeasureFunc(_measureFloor);
   YGNodeInsertChild(root, root_child0, 0);
 
-  YGConfigSetPointScaleFactor(config, 0.0f);
+  YGConfigSetPointScaleFactor(config, 0.0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(10.2, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10.2, YGNodeLayoutGetHeight(root_child0));
 
-  YGConfigSetPointScaleFactor(config, 1.0f);
+  YGConfigSetPointScaleFactor(config, 1.0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(11, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(11, YGNodeLayoutGetHeight(root_child0));
 
-  YGConfigSetPointScaleFactor(config, 2.0f);
+  YGConfigSetPointScaleFactor(config, 2.0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
   ASSERT_FLOAT_EQ(10.5, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10.5, YGNodeLayoutGetHeight(root_child0));
 
-  YGConfigSetPointScaleFactor(config, 4.0f);
+  YGConfigSetPointScaleFactor(config, 4.0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   ASSERT_FLOAT_EQ(10.25, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(10.25, YGNodeLayoutGetHeight(root_child0));
 
-  YGConfigSetPointScaleFactor(config, 1.0f / 3.0f);
+  YGConfigSetPointScaleFactor(config, 1.0 / 3.0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
@@ -101,7 +101,7 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
   root_child0->setMeasureFunc(_measureCeil);
   YGNodeInsertChild(root, root_child0, 0);
 
-  YGConfigSetPointScaleFactor(config, 1.0f);
+  YGConfigSetPointScaleFactor(config, 1.0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
@@ -124,7 +124,7 @@ TEST(
   root_child0->setMeasureFunc(_measureFractial);
   YGNodeInsertChild(root, root_child0, 0);
 
-  YGConfigSetPointScaleFactor(config, 2.0f);
+  YGConfigSetPointScaleFactor(config, 2.0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 

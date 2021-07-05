@@ -12,17 +12,17 @@
 #include <yoga/YGValue.h>
 
 constexpr auto empty = YGFloatOptional{};
-constexpr auto zero = YGFloatOptional{0.0f};
-constexpr auto one = YGFloatOptional{1.0f};
-constexpr auto positive = YGFloatOptional{1234.5f};
-constexpr auto negative = YGFloatOptional{-9876.5f};
+constexpr auto zero = YGFloatOptional{0.0};
+constexpr auto one = YGFloatOptional{1.0};
+constexpr auto positive = YGFloatOptional{1234.5};
+constexpr auto negative = YGFloatOptional{-9876.5};
 
 TEST(YGFloatOptional, value) {
   ASSERT_TRUE(YGFloatIsUndefined(empty.unwrap()));
-  ASSERT_EQ(zero.unwrap(), 0.0f);
-  ASSERT_EQ(one.unwrap(), 1.0f);
-  ASSERT_EQ(positive.unwrap(), 1234.5f);
-  ASSERT_EQ(negative.unwrap(), -9876.5f);
+  ASSERT_EQ(zero.unwrap(), 0.0);
+  ASSERT_EQ(one.unwrap(), 1.0);
+  ASSERT_EQ(positive.unwrap(), 1234.5);
+  ASSERT_EQ(negative.unwrap(), -9876.5);
 
   ASSERT_TRUE(empty.isUndefined());
   ASSERT_FALSE(zero.isUndefined());
@@ -36,15 +36,15 @@ TEST(YGFloatOptional, equality) {
   ASSERT_TRUE(empty == YGUndefined);
   ASSERT_FALSE(empty == zero);
   ASSERT_FALSE(empty == negative);
-  ASSERT_FALSE(empty == 12.3f);
+  ASSERT_FALSE(empty == 12.3);
 
   ASSERT_TRUE(zero == zero);
-  ASSERT_TRUE(zero == 0.0f);
+  ASSERT_TRUE(zero == 0.0);
   ASSERT_FALSE(zero == positive);
-  ASSERT_FALSE(zero == -5555.5f);
+  ASSERT_FALSE(zero == -5555.5);
 
   ASSERT_TRUE(one == one);
-  ASSERT_TRUE(one == 1.0f);
+  ASSERT_TRUE(one == 1.0);
   ASSERT_FALSE(one == positive);
 
   ASSERT_TRUE(positive == positive);
@@ -61,15 +61,15 @@ TEST(YGFloatOptional, inequality) {
   ASSERT_FALSE(empty != YGUndefined);
   ASSERT_TRUE(empty != zero);
   ASSERT_TRUE(empty != negative);
-  ASSERT_TRUE(empty != 12.3f);
+  ASSERT_TRUE(empty != 12.3);
 
   ASSERT_FALSE(zero != zero);
-  ASSERT_FALSE(zero != 0.0f);
+  ASSERT_FALSE(zero != 0.0);
   ASSERT_TRUE(zero != positive);
-  ASSERT_TRUE(zero != -5555.5f);
+  ASSERT_TRUE(zero != -5555.5);
 
   ASSERT_FALSE(one != one);
-  ASSERT_FALSE(one != 1.0f);
+  ASSERT_FALSE(one != 1.0);
   ASSERT_TRUE(one != positive);
 
   ASSERT_FALSE(positive != positive);
@@ -198,12 +198,12 @@ TEST(YGFloatOptionalTest, YGFloatOptionalMax) {
   ASSERT_EQ(YGFloatOptionalMax(negative, empty), negative);
   ASSERT_EQ(YGFloatOptionalMax(negative, YGFloatOptional{-INFINITY}), negative);
   ASSERT_EQ(
-      YGFloatOptionalMax(YGFloatOptional{1.0f}, YGFloatOptional{1.125f}),
-      YGFloatOptional{1.125f});
+      YGFloatOptionalMax(YGFloatOptional{1.0}, YGFloatOptional{1.125}),
+      YGFloatOptional{1.125});
 }
 
 TEST(YGFloatOptionalTest, unwrap) {
   ASSERT_TRUE(YGFloatIsUndefined(empty.unwrap()));
-  ASSERT_EQ(zero.unwrap(), 0.0f);
-  ASSERT_EQ(YGFloatOptional{123456.78f}.unwrap(), 123456.78f);
+  ASSERT_EQ(zero.unwrap(), 0.0);
+  ASSERT_EQ(YGFloatOptional{123456.78}.unwrap(), 123456.78);
 }

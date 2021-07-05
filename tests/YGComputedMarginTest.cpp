@@ -37,7 +37,7 @@ TEST(YogaTest, margin_side_overrides_horizontal_and_vertical) {
        YGEdgeLeft,
        YGEdgeRight}};
 
-  for (float edgeValue = 0; edgeValue < 2; ++edgeValue) {
+  for (double edgeValue = 0; edgeValue < 2; ++edgeValue) {
     for (const auto& edge : edges) {
       YGEdge horizontalOrVertical = edge == YGEdgeTop || edge == YGEdgeBottom
           ? YGEdgeVertical
@@ -67,7 +67,7 @@ TEST(YogaTest, margin_side_overrides_all) {
        YGEdgeLeft,
        YGEdgeRight}};
 
-  for (float edgeValue = 0; edgeValue < 2; ++edgeValue) {
+  for (double edgeValue = 0; edgeValue < 2; ++edgeValue) {
     for (const auto& edge : edges) {
       const YGNodeRef root = YGNodeNew();
       YGNodeStyleSetWidth(root, 100);
@@ -87,7 +87,7 @@ TEST(YogaTest, margin_side_overrides_all) {
 TEST(YogaTest, margin_horizontal_and_vertical_overrides_all) {
   const std::array<YGEdge, 2> directions = {{YGEdgeHorizontal, YGEdgeVertical}};
 
-  for (float directionValue = 0; directionValue < 2; ++directionValue) {
+  for (double directionValue = 0; directionValue < 2; ++directionValue) {
     for (const auto& direction : directions) {
       const YGNodeRef root = YGNodeNew();
       YGNodeStyleSetWidth(root, 100);

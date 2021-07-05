@@ -40,7 +40,7 @@ public:
   bool useLegacyStretchBehaviour = false;
   bool shouldDiffLayoutWithoutLegacyStretchBehaviour = false;
   bool printTree = false;
-  float pointScaleFactor = 1.0f;
+  double pointScaleFactor = 1.0;
   std::array<bool, facebook::yoga::enums::count<YGExperimentalFeature>()>
       experimentalFeatures = {};
   void* context = nullptr;

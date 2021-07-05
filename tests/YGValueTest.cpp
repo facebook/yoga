@@ -10,14 +10,14 @@
 #include <yoga/YGValue.h>
 
 TEST(YGValue, supports_equality) {
-  ASSERT_EQ((YGValue{12.5f, YGUnitPercent}), (YGValue{12.5f, YGUnitPercent}));
-  ASSERT_NE((YGValue{12.5f, YGUnitPercent}), (YGValue{56.7f, YGUnitPercent}));
-  ASSERT_NE((YGValue{12.5f, YGUnitPercent}), (YGValue{12.5f, YGUnitPoint}));
-  ASSERT_NE((YGValue{12.5f, YGUnitPercent}), (YGValue{12.5f, YGUnitAuto}));
-  ASSERT_NE((YGValue{12.5f, YGUnitPercent}), (YGValue{12.5f, YGUnitUndefined}));
+  ASSERT_EQ((YGValue{12.5, YGUnitPercent}), (YGValue{12.5, YGUnitPercent}));
+  ASSERT_NE((YGValue{12.5, YGUnitPercent}), (YGValue{56.7, YGUnitPercent}));
+  ASSERT_NE((YGValue{12.5, YGUnitPercent}), (YGValue{12.5, YGUnitPoint}));
+  ASSERT_NE((YGValue{12.5, YGUnitPercent}), (YGValue{12.5, YGUnitAuto}));
+  ASSERT_NE((YGValue{12.5, YGUnitPercent}), (YGValue{12.5, YGUnitUndefined}));
 
   ASSERT_EQ(
-      (YGValue{12.5f, YGUnitUndefined}),
+      (YGValue{12.5, YGUnitUndefined}),
       (YGValue{YGUndefined, YGUnitUndefined}));
   ASSERT_EQ((YGValue{0, YGUnitAuto}), (YGValue{-1, YGUnitAuto}));
 }

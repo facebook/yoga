@@ -11,9 +11,9 @@
 
 static YGSize _measureMax(
     YGNodeRef node,
-    float width,
+    double width,
     YGMeasureMode widthMode,
-    float height,
+    double height,
     YGMeasureMode heightMode) {
   int* measureCount = (int*) node->getContext();
   (*measureCount)++;
@@ -26,9 +26,9 @@ static YGSize _measureMax(
 
 static YGSize _measureMin(
     YGNodeRef node,
-    float width,
+    double width,
     YGMeasureMode widthMode,
-    float height,
+    double height,
     YGMeasureMode heightMode) {
   int* measureCount = (int*) node->getContext();
   *measureCount = *measureCount + 1;
@@ -46,9 +46,9 @@ static YGSize _measureMin(
 
 static YGSize _measure_84_49(
     YGNodeRef node,
-    float width,
+    double width,
     YGMeasureMode widthMode,
-    float height,
+    double height,
     YGMeasureMode heightMode) {
   int* measureCount = (int*) node->getContext();
   if (measureCount) {
@@ -56,8 +56,8 @@ static YGSize _measure_84_49(
   }
 
   return YGSize{
-      .width = 84.f,
-      .height = 49.f,
+      .width = 84,
+      .height = 49,
   };
 }
 
@@ -160,12 +160,12 @@ TEST(
   int measureCount = 0;
 
   const YGNodeRef root = YGNodeNew();
-  YGNodeStyleSetWidth(root, 288.f);
-  YGNodeStyleSetHeight(root, 288.f);
+  YGNodeStyleSetWidth(root, 288);
+  YGNodeStyleSetHeight(root, 288);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeStyleSetPadding(root_child0, YGEdgeAll, 2.88f);
+  YGNodeStyleSetPadding(root_child0, YGEdgeAll, 2.88);
   YGNodeStyleSetFlexDirection(root_child0, YGFlexDirectionRow);
   YGNodeInsertChild(root, root_child0, 0);
 

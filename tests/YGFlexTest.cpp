@@ -546,16 +546,16 @@ TEST(YogaTest, flex_grow_less_than_factor_one) {
   YGNodeStyleSetHeight(root, 500);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetFlexGrow(root_child0, 0.2f);
+  YGNodeStyleSetFlexGrow(root_child0, 0.2);
   YGNodeStyleSetFlexBasis(root_child0, 40);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetFlexGrow(root_child1, 0.2f);
+  YGNodeStyleSetFlexGrow(root_child1, 0.2);
   YGNodeInsertChild(root, root_child1, 1);
 
   const YGNodeRef root_child2 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetFlexGrow(root_child2, 0.4f);
+  YGNodeStyleSetFlexGrow(root_child2, 0.4);
   YGNodeInsertChild(root, root_child2, 2);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 

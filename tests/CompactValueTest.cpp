@@ -13,14 +13,14 @@
 
 using facebook::yoga::detail::CompactValue;
 
-const auto tooSmall = nextafterf(CompactValue::LOWER_BOUND, -INFINITY);
+const auto tooSmall = nextafter(CompactValue::LOWER_BOUND, -INFINITY);
 const auto tooLargePoints =
-    nextafterf(CompactValue::UPPER_BOUND_POINT, INFINITY);
+    nextafter(CompactValue::UPPER_BOUND_POINT, INFINITY);
 const auto tooLargePercent =
-    nextafterf(CompactValue::UPPER_BOUND_PERCENT, INFINITY);
+    nextafter(CompactValue::UPPER_BOUND_PERCENT, INFINITY);
 
 TEST(YogaTest, compact_value_can_represent_undefined) {
-  auto c = CompactValue{YGValue{12.5f, YGUnitUndefined}};
+  auto c = CompactValue{YGValue{12.5, YGUnitUndefined}};
   YGValue v = c;
   ASSERT_EQ(v, YGValueUndefined);
   ASSERT_NE(v, YGValueAuto);
@@ -32,7 +32,7 @@ TEST(YogaTest, compact_value_can_represent_undefined) {
 
 TEST(YogaTest, compact_value_manages_infinity_as_undefined) {
   auto c = CompactValue{
-      YGValue{std::numeric_limits<float>::infinity(), YGUnitUndefined}};
+      YGValue{std::numeric_limits<double>::infinity(), YGUnitUndefined}};
   YGValue v = c;
   ASSERT_EQ(v, YGValueUndefined);
   ASSERT_NE(v, YGValueAuto);
@@ -299,23 +299,23 @@ TEST(YogaTest, dedicated_unit_factories) {
   ASSERT_EQ(CompactValue::ofUndefined(), CompactValue(YGValueUndefined));
   ASSERT_EQ(CompactValue::ofAuto(), CompactValue(YGValueAuto));
   ASSERT_EQ(
-      CompactValue::of<YGUnitPoint>(-9876.5f),
-      CompactValue(YGValue{-9876.5f, YGUnitPoint}));
+      CompactValue::of<YGUnitPoint>(-9876.5),
+      CompactValue(YGValue{-9876.5, YGUnitPoint}));
   ASSERT_EQ(
-      CompactValue::of<YGUnitPercent>(123.456f),
-      CompactValue(YGValue{123.456f, YGUnitPercent}));
+      CompactValue::of<YGUnitPercent>(123.456),
+      CompactValue(YGValue{123.456, YGUnitPercent}));
 }
 
 TEST(YogaTest, dedicated_unit_maybe_factories) {
   ASSERT_EQ(
-      CompactValue::ofMaybe<YGUnitPoint>(-9876.5f),
-      CompactValue(YGValue{-9876.5f, YGUnitPoint}));
+      CompactValue::ofMaybe<YGUnitPoint>(-9876.5),
+      CompactValue(YGValue{-9876.5, YGUnitPoint}));
   ASSERT_EQ(
       CompactValue::ofMaybe<YGUnitPoint>(YGUndefined),
       CompactValue(YGValueUndefined));
   ASSERT_EQ(
-      CompactValue::ofMaybe<YGUnitPercent>(123.456f),
-      CompactValue(YGValue{123.456f, YGUnitPercent}));
+      CompactValue::ofMaybe<YGUnitPercent>(123.456),
+      CompactValue(YGValue{123.456, YGUnitPercent}));
   ASSERT_EQ(
       CompactValue::ofMaybe<YGUnitPercent>(YGUndefined),
       CompactValue(YGValueUndefined));
@@ -324,7 +324,7 @@ TEST(YogaTest, dedicated_unit_maybe_factories) {
 TEST(YogaTest, can_be_assigned_from_YGValue) {
   CompactValue c{};
 
-  YGValue v{2.0f, YGUnitPercent};
+  YGValue v{2.0, YGUnitPercent};
   c = v;
   ASSERT_EQ((YGValue) c, v);
 
@@ -335,28 +335,28 @@ TEST(YogaTest, can_be_assigned_from_YGValue) {
 TEST(YogaTest, compact_value_bound_representations) {
   ASSERT_EQ(
       CompactValue::of<YGUnitPoint>(CompactValue::LOWER_BOUND).repr(),
-      uint32_t{0});
+      uint64_t{0});
   ASSERT_EQ(
       CompactValue::of<YGUnitPoint>(CompactValue::UPPER_BOUND_POINT).repr(),
-      uint32_t{0x3fffffff});
+      uint64_t{0x3fffffffffffffff});
   ASSERT_EQ(
       CompactValue::of<YGUnitPercent>(CompactValue::LOWER_BOUND).repr(),
-      uint32_t{0x40000000});
+      uint64_t{0x4000000000000000});
   ASSERT_EQ(
       CompactValue::of<YGUnitPercent>(CompactValue::UPPER_BOUND_PERCENT).repr(),
-      uint32_t{0x7f7fffff});
+      uint64_t{0x7f7fffffffffffff});
 
   ASSERT_EQ(
       CompactValue::of<YGUnitPoint>(-CompactValue::LOWER_BOUND).repr(),
-      uint32_t{0x80000000});
+      uint64_t{0x8000000000000000});
   ASSERT_EQ(
       CompactValue::of<YGUnitPoint>(-CompactValue::UPPER_BOUND_POINT).repr(),
-      uint32_t{0xbfffffff});
+      uint64_t{0xbfffffffffffffff});
   ASSERT_EQ(
       CompactValue::of<YGUnitPercent>(-CompactValue::LOWER_BOUND).repr(),
-      uint32_t{0xc0000000});
+      uint64_t{0xc000000000000000});
   ASSERT_EQ(
       CompactValue::of<YGUnitPercent>(-CompactValue::UPPER_BOUND_PERCENT)
           .repr(),
-      uint32_t{0xff7fffff});
+      uint64_t{0xff7fffffffffffff});
 }
