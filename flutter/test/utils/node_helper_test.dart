@@ -32,7 +32,6 @@ void main() {
   serviceLocator.registerSingleton<NodeHelper>(_nodeHelper);
 
   group('Given a NodeHelper', () {
-
     group('When setRenderBoxToNode is called', () {
       test('Then should set the renderBox to the given node', () {
         // Given

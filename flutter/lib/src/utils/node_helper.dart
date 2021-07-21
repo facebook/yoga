@@ -22,7 +22,6 @@ import 'package:yoga_engine/src/ffi/mapper.dart';
 import '../../yoga_engine.dart';
 
 class NodeHelper {
-
   final Mapper _mapper;
 
   NodeHelper(Mapper mapper) : _mapper = mapper;

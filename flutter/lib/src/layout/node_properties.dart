@@ -371,6 +371,6 @@ class NodeProperties {
 
   bool isCalculated() {
     return !_mapper.yGNodeLayoutGetWidth(_node).isNaN &&
-    !_mapper.yGNodeLayoutGetHeight(_node).isNaN;
+        !_mapper.yGNodeLayoutGetHeight(_node).isNaN;
   }
 }

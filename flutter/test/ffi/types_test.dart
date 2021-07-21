@@ -20,7 +20,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yoga_engine/src/ffi/types.dart';
 
 void main() {
-
   group('Given a yoga type', () {
     group('When YGConfig', () {
       test('Then should be Opaque', () {
