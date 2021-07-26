@@ -60,16 +60,25 @@ YGSize measureFunc(
   final constraints = BoxConstraints.loose(
     Size(constrainedWidth, constrainedHeight),
   );
-  final renderObjectSize = renderObject?.getDryLayout(constraints);
+  double objectWidth;
+  double objectHeight;
+  if (renderObject is RenderMouseRegion) {
+    objectWidth = renderObject.getMaxIntrinsicWidth(constrainedWidth);
+    objectHeight = renderObject.getMaxIntrinsicHeight(constrainedHeight);
+  } else {
+    final renderObjectSize = renderObject?.getDryLayout(constraints);
+    objectWidth = renderObjectSize?.width ?? 0;
+    objectHeight = renderObjectSize?.height ?? 0;
+  }
 
   final sanitizedWidth = _sanitizeMeasurement(
     constrainedWidth,
-    renderObjectSize?.width ?? 0,
+    objectWidth,
     widthMeasureMode,
   );
   final sanitizedHeight = _sanitizeMeasurement(
     constrainedHeight,
-    renderObjectSize?.height ?? 0,
+    objectHeight,
     heightMeasureMode,
   );
 
