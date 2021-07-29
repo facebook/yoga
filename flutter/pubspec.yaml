@@ -1,6 +1,6 @@
 name: yoga_engine
 description: A plugin that uses yoga to implements flexbox layout in Flutter.
-version: 0.0.3
+version: 0.0.5
 homepage: https://github.com/ZupIT/yoga/tree/master/flutter
 
 environment:

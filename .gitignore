@@ -71,3 +71,6 @@ Carthage/Build
 **/.cxx/*
 local.properties
 Gemfile.lock
+
+# Flutter dependency yoga to Android
+**/.deps/*

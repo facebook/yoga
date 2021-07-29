@@ -35,6 +35,22 @@ rootProject.allprojects {
     google()
     mavenCentral()
   }
+  afterEvaluate {
+    project.tasks.preBuild {
+      dependsOn "copyDependencies"
+    }
+    project.tasks.clean {
+      dependsOn "deleteDependencies"
+    }
+    project.tasks.register('copyDependencies', Copy) {
+      println("Build dir yoga $buildDir")
+      from '../../yoga'
+      into "$buildDir/../.deps/yoga"
+    }
+    project.tasks.register('deleteDependencies', Delete) {
+      delete "$buildDir/../.deps"
+    }
+  }
 }
 
 apply plugin: 'com.android.library'
@@ -49,4 +65,15 @@ android {
   defaultConfig {
     minSdkVersion 19
   }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+      version "3.18.1"
+    }
+  }
+}
+
+dependencies {
+  implementation 'com.android.support:support-annotations:28.0.0'
 }

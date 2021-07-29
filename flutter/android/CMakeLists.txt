@@ -34,7 +34,7 @@ add_compile_options(
     -Wall
     -std=c++11)
 
-file(GLOB_RECURSE yogacore_SRC ../../yoga/*.cpp)
+file(GLOB_RECURSE yogacore_SRC .deps/yoga/*.cpp)
 add_library(yogacore SHARED ${yogacore_SRC})
 
 target_include_directories(yogacore PUBLIC .)
