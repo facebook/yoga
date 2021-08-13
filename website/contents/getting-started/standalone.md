@@ -27,7 +27,7 @@ $> yarn add yoga-layout
 ```
 
 This is an example on how to use Yoga in JavaScript, for a full API reference,
-have a look at the [flow-type definitions](https://github.com/facebook/yoga/blob/master/javascript/sources/entry-common.js#L123).
+have a look at the [flow-type definitions](https://github.com/facebook/yoga/blob/main/javascript/sources/entry-common.js#L123).
 
 ```js
 import yoga, {Node} from 'yoga-layout';
