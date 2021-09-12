@@ -10,11 +10,11 @@ import YogaKit
 
 final class BasicViewController: UIViewController {
     override func viewDidLoad() {
+        super.viewDidLoad()
         let containerSize = self.view.bounds.size
 
-        let root = self.view!
-        root.backgroundColor = .white
-        root.configureLayout { (layout) in
+        view.backgroundColor = UIColor.systemBackground
+        view.configureLayout { (layout) in
             layout.isEnabled = true
             layout.width = YGValue(containerSize.width)
             layout.height = YGValue(containerSize.height)
@@ -30,24 +30,29 @@ final class BasicViewController: UIViewController {
             layout.height = 10
             layout.marginBottom = 25
         }
-        root.addSubview(child1)
+        view.addSubview(child1)
 
         let child2 = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         child2.backgroundColor = .green
         child2.configureLayout { (layout) in
             layout.isEnabled = true
             layout.alignSelf = .flexEnd
+            layout.width = 200
+            layout.height = 200
         }
-        root.addSubview(child2)
+        view.addSubview(child2)
 
         let child3 = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         child3.backgroundColor = .yellow
         child3.configureLayout { (layout) in
             layout.isEnabled = true
             layout.alignSelf = .flexStart
-        }
-        root.addSubview(child3)
+            layout.width = 100
+            layout.height = 100
 
-        root.yoga.applyLayout(preservingOrigin: true)
+        }
+        view.addSubview(child3)
+
+        view.yoga.applyLayout(preservingOrigin: true)
     }
 }
