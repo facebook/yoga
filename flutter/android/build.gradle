@@ -45,10 +45,10 @@ rootProject.allprojects {
     project.tasks.register('copyDependencies', Copy) {
       println("Build dir yoga $buildDir")
       from '../../yoga'
-      into "$buildDir/../.deps/yoga"
+      into "$buildDir/../deps/yoga"
     }
     project.tasks.register('deleteDependencies', Delete) {
-      delete "$buildDir/../.deps"
+      delete "$buildDir/../deps"
     }
   }
 }

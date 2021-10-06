@@ -1,3 +1,11 @@
+## 0.0.7
+
+* Fixing gitignore publish error
+
+## 0.0.6
+
+* Fixing Constraints Validation
+
 ## 0.0.5
 
 * Change android .gitignore
