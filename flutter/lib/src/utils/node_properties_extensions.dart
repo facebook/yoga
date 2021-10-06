@@ -21,15 +21,19 @@ extension NodePropertiesExtensions on NodeProperties {
   /// Flutter uses floating points but yoga rounds the sizes. This method sanitizes the diff
   /// Needed to avoid the error crashing on [debugAssertDoesMeetConstraints].
   double getSanitizedWidth(double maxWidth) {
-    final widthDiff = maxWidth - getLayoutWidth();
-    return (widthDiff > 0 && widthDiff < 1) ? widthDiff + getLayoutWidth() : getLayoutWidth();
+    return _getSanitizedValue(getLayoutWidth(), maxWidth);
   }
 
   /// Sanitizes the diference between flutter sizes and yoga height
   /// Flutter uses floating points but yoga rounds the sizes. This method sanitizes the diff
   /// Needed to avoid the error crashing on [debugAssertDoesMeetConstraints].
   double getSanitizedHeight(double maxHeight) {
-    final heightDiff = maxHeight - getLayoutHeight();
-    return (heightDiff > 0 && heightDiff < 1) ? heightDiff + getLayoutHeight() : getLayoutHeight();
+    return _getSanitizedValue(getLayoutHeight(), maxHeight);
+  }
+
+  /// Sanitizes the diff between flutter sizes and yoga
+  double _getSanitizedValue(double value, double maxValue) {
+    final valueDiff = maxValue - value;
+    return (valueDiff > 0 && valueDiff < 1) ? valueDiff + value : value;
   }
 }
