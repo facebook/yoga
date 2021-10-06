@@ -117,8 +117,8 @@ class RenderYoga extends RenderBox
       nodeProperties.calculateLayout(YGUndefined, YGUndefined);
     }
     return Size(
-      nodeProperties.getLayoutWidth(),
-      nodeProperties.getLayoutHeight(),
+      nodeProperties.getSanitizedWidth(constraints.maxWidth),
+      nodeProperties.getSanitizedHeight(constraints.maxHeight),
     );
   }
 
@@ -137,8 +137,8 @@ class RenderYoga extends RenderBox
     _applyLayoutToWidgetsHierarchy(getChildrenAsList());
 
     size = Size(
-        nodeProperties.getSanitizedWidth(constraints.maxWidth),
-        nodeProperties.getSanitizedHeight(constraints.maxHeight),
+      nodeProperties.getSanitizedWidth(constraints.maxWidth),
+      nodeProperties.getSanitizedHeight(constraints.maxHeight),
     );
   }
 
