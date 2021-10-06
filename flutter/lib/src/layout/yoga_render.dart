@@ -22,6 +22,7 @@ import 'package:flutter/widgets.dart';
 import 'package:yoga_engine/src/ffi/types.dart';
 import 'package:yoga_engine/src/layout/node_properties.dart';
 import 'package:yoga_engine/src/utils/node_helper.dart';
+import 'package:yoga_engine/src/utils/node_properties_extensions.dart';
 
 import '../yoga_initializer.dart';
 
@@ -116,8 +117,8 @@ class RenderYoga extends RenderBox
       nodeProperties.calculateLayout(YGUndefined, YGUndefined);
     }
     return Size(
-      nodeProperties.getLayoutWidth(),
-      nodeProperties.getLayoutHeight(),
+      nodeProperties.getSanitizedWidth(constraints.maxWidth),
+      nodeProperties.getSanitizedHeight(constraints.maxHeight),
     );
   }
 
@@ -136,8 +137,8 @@ class RenderYoga extends RenderBox
     _applyLayoutToWidgetsHierarchy(getChildrenAsList());
 
     size = Size(
-      nodeProperties.getLayoutWidth(),
-      nodeProperties.getLayoutHeight(),
+      nodeProperties.getSanitizedWidth(constraints.maxWidth),
+      nodeProperties.getSanitizedHeight(constraints.maxHeight),
     );
   }
 
