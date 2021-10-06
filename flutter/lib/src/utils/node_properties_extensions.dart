@@ -17,14 +17,14 @@
 import 'package:yoga_engine/src/layout/node_properties.dart';
 
 extension NodePropertiesExtensions on NodeProperties {
-  /// Sanitizes the diference between flutter sizes and yoga width
+  /// Sanitizes the difference between flutter sizes and yoga width
   /// Flutter uses floating points but yoga rounds the sizes. This method sanitizes the diff
   /// Needed to avoid the error crashing on [debugAssertDoesMeetConstraints].
   double getSanitizedWidth(double maxWidth) {
     return _getSanitizedValue(getLayoutWidth(), maxWidth);
   }
 
-  /// Sanitizes the diference between flutter sizes and yoga height
+  /// Sanitizes the difference between flutter sizes and yoga height
   /// Flutter uses floating points but yoga rounds the sizes. This method sanitizes the diff
   /// Needed to avoid the error crashing on [debugAssertDoesMeetConstraints].
   double getSanitizedHeight(double maxHeight) {
