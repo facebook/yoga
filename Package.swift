@@ -27,20 +27,20 @@ let package = Package(
         .target(
             name: "YogaKit",
             dependencies: ["Yoga"],
-            path: ".",
-            exclude: ["YogaKit/Source/YGLayoutExtensions.swift"],
-            sources: ["YogaKit/Source"],
-            publicHeadersPath: "YogaKit/Source",
+            path: "YogaKit",
+            exclude: ["Source/YGLayoutExtensions.swift"],
+            sources: ["Source"],
+            publicHeadersPath: "Source/modulemap",
             cSettings: [
-                .headerSearchPath(".")
+                .headerSearchPath("..")
             ]),
         .target(
             name: "Yoga",
-            path: ".",
-            sources: ["yoga"],
-            publicHeadersPath: "yoga/include",
+            path: "yoga",
+            sources: ["."],
+            publicHeadersPath: "modulemap",
             cSettings: [
-                .headerSearchPath(".")
+                .headerSearchPath("..")
             ])
     ],
     cLanguageStandard: .gnu11,

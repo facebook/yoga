@@ -14,7 +14,7 @@
 #import <UIKit/UIKit.h>
 #endif
 
-#import "YGLayout.h"
+#import "YogaKit.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
