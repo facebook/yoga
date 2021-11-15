@@ -42,6 +42,7 @@ yoga_apple_library(
         "$SDKROOT/System/Library/Frameworks/UIKit.framework",
     ],
     header_path_prefix = "",
+    labels = ["skip_module_validation"],
     link_whole = True,
     modular = True,
     module_name = "YogaKit",

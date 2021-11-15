@@ -2,7 +2,8 @@
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "JNI_TARGET", "YOGA_ROOTS", "subdir_glob", "yoga_cxx_library", "yoga_prebuilt_cxx_library")
+load("@fbsource//tools/build_defs:platform_defs.bzl", "ANDROID", "APPLE", "CXX", "FBCODE", "WINDOWS")
+load("//tools/build_defs/oss:yoga_defs.bzl", "JNI_TARGET", "YOGA_ROOTS", "subdir_glob", "yoga_cxx_library", "yoga_prebuilt_cxx_library")
 
 yoga_prebuilt_cxx_library(
     name = "ndklog",
@@ -13,6 +14,7 @@ yoga_prebuilt_cxx_library(
         ),
     ],
     header_only = True,
+    platforms = (ANDROID, APPLE, CXX, FBCODE, WINDOWS),
     visibility = YOGA_ROOTS,
 )
 
