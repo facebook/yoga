@@ -36,6 +36,7 @@ const root = Node.create();
 root.setWidth(500);
 root.setHeight(300);
 root.setJustifyContent(yoga.JUSTIFY_CENTER);
+root.setFlexDirection(yoga.FLEX_DIRECTION_ROW);
 
 const node1 = Node.create();
 node1.setWidth(100);
