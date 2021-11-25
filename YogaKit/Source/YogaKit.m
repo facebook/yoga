@@ -157,11 +157,20 @@ YGValue YGPercentValue(CGFloat value) {
 }
 
 static YGConfigRef globalConfig;
+
+static CGFloat scaleFactor(void) {
+    static CGFloat scaleFactor = 1;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
 #if TARGET_OS_OSX
-NS_INLINE CGFloat scaleFactor() { return [NSScreen mainScreen].backingScaleFactor; }
+        scaleFactor = [NSScreen mainScreen].backingScaleFactor;
 #else
-NS_INLINE CGFloat scaleFactor() { return [UIScreen mainScreen].scale; }
+        scaleFactor = [UIScreen mainScreen].scale;
 #endif
+    });
+
+    return scaleFactor;
+}
 
 @interface YGLayout ()
 
