@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import <objc/runtime.h>
 #import "UIView+Yoga.h"
 #import "YGLayout+Private.h"
+@import ObjectiveC;
 
 static const void* kYGYogaAssociatedKey = &kYGYogaAssociatedKey;
 

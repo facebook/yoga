@@ -8,10 +8,10 @@
 #import <TargetConditionals.h>
 
 #if TARGET_OS_OSX
-#import <AppKit/AppKit.h>
+@import AppKit;
 #define UIView NSView
 #else
-#import <UIKit/UIKit.h>
+@import UIKit;
 #endif
 
 #import "YogaKit.h"

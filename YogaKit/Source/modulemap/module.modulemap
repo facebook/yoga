@@ -1,4 +1,5 @@
 module YogaKit {
-    umbrella header "YogaKit-umbrella.h"
+    header "../YogaKit.h"
+    header "../UIView+Yoga.h"
     export *
 }

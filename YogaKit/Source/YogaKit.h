@@ -8,9 +8,9 @@
 #import <TargetConditionals.h>
 
 #if TARGET_OS_OSX
-#import <AppKit/AppKit.h>
+@import AppKit;
 #else
-#import <UIKit/UIKit.h>
+@import UIKit;
 #endif
 
 #import "../../yoga/YGEnums.h"

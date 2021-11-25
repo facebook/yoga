@@ -1,4 +1,7 @@
 module Yoga [extern_c] {
-    umbrella header "Yoga-umbrella.h"
+    header "../Yoga.h"
+    header "../YGValue.h"
+    header "../YGMacros.h"
+    header "../YGEnums.h"
     export *
 }
