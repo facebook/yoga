@@ -46,6 +46,7 @@ yoga_apple_library(
     link_whole = True,
     modular = True,
     module_name = "YogaKit",
+    use_submodules = False,
     visibility = ["PUBLIC"],
     deps = [
         yoga_dep(":yoga"),
