@@ -70,6 +70,7 @@ NBIND_CLASS(Node) {
   method(setFlex);
   method(setFlexBasis);
   method(setFlexBasisPercent);
+  method(setFlexBasisAuto);
   method(setFlexGrow);
   method(setFlexShrink);
 
