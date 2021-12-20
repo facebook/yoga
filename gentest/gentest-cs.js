@@ -105,6 +105,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'Start'},
   YGEdgeTop:{value:'Top'},
 
+  YGGapColumn:{value:'Column'},
+  YGGapRow:{value:'Row'},
+
   YGFlexDirectionColumn:{value:'YogaFlexDirection.Column'},
   YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.ColumnReverse'},
   YGFlexDirectionRow:{value:'YogaFlexDirection.Row'},
@@ -250,5 +253,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.Width = ' + toCsUnitValue(value) + ';');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push(nodeName + '.' + gap + 'Gap' + ' = ' + toCsUnitValue(value) + ';');
   }},
 });

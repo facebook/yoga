@@ -18,6 +18,7 @@ export type {
   Yoga$FlexDirection,
   Yoga$Direction,
   Yoga$FlexWrap,
+  Yoga$Gap,
   Yoga$Edge,
   Yoga$Display,
   Yoga$Unit,

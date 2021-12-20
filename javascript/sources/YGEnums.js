@@ -52,6 +52,11 @@ const CONSTANTS = {
   FLEX_DIRECTION_ROW: 2,
   FLEX_DIRECTION_ROW_REVERSE: 3,
 
+  GAP_COUNT: 3,
+  GAP_COLUMN: 0,
+  GAP_ROW: 1,
+  GAP_ALL: 2,
+
   JUSTIFY_COUNT: 6,
   JUSTIFY_FLEX_START: 0,
   JUSTIFY_CENTER: 1,
@@ -128,6 +133,12 @@ export type Yoga$FlexDirection =
   | typeof CONSTANTS.FLEX_DIRECTION_ROW
   | typeof CONSTANTS.FLEX_DIRECTION_ROW_REVERSE;
 
+export type Yoga$Gap =
+  | typeof CONSTANTS.GAP_COUNT
+  | typeof CONSTANTS.GAP_COLUMN
+  | typeof CONSTANTS.GAP_ROW
+  | typeof CONSTANTS.GAP_ALL;
+
 export type Yoga$Direction =
   | typeof CONSTANTS.DIRECTION_INHERIT
   | typeof CONSTANTS.DIRECTION_LTR
@@ -168,6 +179,7 @@ export type Yoga$PositionType =
   | typeof CONSTANTS.POSITION_TYPE_ABSOLUTE
   | typeof CONSTANTS.POSITION_TYPE_RELATIVE;
 
-export type Yoga$ExperimentalFeature = typeof CONSTANTS.EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS;
+export type Yoga$ExperimentalFeature =
+  typeof CONSTANTS.EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS;
 
 module.exports = CONSTANTS;

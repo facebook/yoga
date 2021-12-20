@@ -11,7 +11,7 @@ browser = Watir::Browser.new(:chrome, "goog:loggingPrefs" => {
     "browser" => "ALL",
     "performance" => "ALL"
   },
-  "chromeOptions" => {
+  "goog:chromeOptions" => {
     "w3c" => "false"
   },
   :switches => ['--force-device-scale-factor=1', '--window-position=0,0'])

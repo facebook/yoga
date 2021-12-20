@@ -14,6 +14,7 @@ import type {
   Yoga$FlexWrap,
   Yoga$Align,
   Yoga$FlexDirection,
+  Yoga$Gap,
   Yoga$Direction,
   Yoga$PositionType,
   Yoga$Overflow,
@@ -154,6 +155,7 @@ export type Yoga$Node = {
   getFlexWrap(): Yoga$FlexWrap,
   getHeight(): Value,
   getJustifyContent(): Yoga$JustifyContent,
+  getGap(gapDirection: Yoga$Gap): Value,
   getMargin(edge: Yoga$Edge): Value,
   getMaxHeight(): Value,
   getMaxWidth(): Value,
@@ -187,6 +189,7 @@ export type Yoga$Node = {
   setHeightAuto(): void,
   setHeightPercent(height: number): void,
   setJustifyContent(justifyContent: Yoga$JustifyContent): void,
+  setGap(gapDirection: Yoga$Gap, gap: number): void,
   setMargin(edge: Yoga$Edge, margin: number): void,
   setMarginAuto(edge: Yoga$Edge): void,
   setMarginPercent(edge: Yoga$Edge, margin: number): void,
@@ -249,6 +252,7 @@ module.exports = (bind: any, lib: any): Yoga => {
     'setMaxWidth',
     'setMaxHeight',
     'setPadding',
+    'setGap',
   ]) {
     let methods = {
       [CONSTANTS.UNIT_POINT]: lib.Node.prototype[fnName],

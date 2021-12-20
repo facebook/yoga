@@ -83,6 +83,30 @@ CompactValue YGNode::computeEdgeValueForColumn(
   }
 }
 
+CompactValue YGNode::computeRowGap(
+    const YGStyle::Gaps& gaps,
+    CompactValue defaultValue) {
+  if (!gaps[YGGapRow].isUndefined()) {
+    return gaps[YGGapRow];
+  } else if (!gaps[YGGapAll].isUndefined()) {
+    return gaps[YGGapAll];
+  } else {
+    return defaultValue;
+  }
+}
+
+CompactValue YGNode::computeColumnGap(
+    const YGStyle::Gaps& gaps,
+    CompactValue defaultValue) {
+  if (!gaps[YGGapColumn].isUndefined()) {
+    return gaps[YGGapColumn];
+  } else if (!gaps[YGGapAll].isUndefined()) {
+    return gaps[YGGapAll];
+  } else {
+    return defaultValue;
+  }
+}
+
 YGFloatOptional YGNode::getLeadingPosition(
     const YGFlexDirection axis,
     const float axisSize) const {
@@ -161,6 +185,15 @@ YGFloatOptional YGNode::getMarginForAxis(
     const YGFlexDirection axis,
     const float widthSize) const {
   return getLeadingMargin(axis, widthSize) + getTrailingMargin(axis, widthSize);
+}
+
+YGFloatOptional YGNode::getGapForAxis(
+    const YGFlexDirection axis,
+    const float widthSize) const {
+  auto gap = YGFlexDirectionIsRow(axis)
+      ? computeColumnGap(style_.gap(), CompactValue::ofZero())
+      : computeRowGap(style_.gap(), CompactValue::ofZero());
+  return YGResolveValue(gap, widthSize);
 }
 
 YGSize YGNode::measure(

@@ -47,6 +47,11 @@ ENUMS = {
         "Vertical",
         "All",
     ],
+    "Gap": [
+        "Column",
+        "Row",
+        "All",
+    ],
     "NodeType": ["Default", "Text"],
     "LogLevel": ["Error", "Warn", "Info", "Debug", "Verbose", "Fatal"],
     "ExperimentalFeature": [
@@ -134,8 +139,8 @@ for name, values in sorted(ENUMS.items()):
     with open(root + "/java/com/facebook/yoga/Yoga%s.java" % name, "w") as f:
         f.write(LICENSE.replace("/**", "/*", 1))
         f.write("package com.facebook.yoga;\n\n")
-        f.write("import com.facebook.proguard.annotations.DoNotStrip;\n\n")
-        f.write("@DoNotStrip\n")
+        # f.write("import com.facebook.proguard.annotations.DoNotStrip;\n\n")
+        # f.write("@DoNotStrip\n")
         f.write("public enum Yoga%s {\n" % name)
         if len(values) > 0:
             for value in values:
@@ -150,7 +155,7 @@ for name, values in sorted(ENUMS.items()):
         else:
             f.write("__EMPTY(-1);")
         f.write("\n")
-        f.write("  private int mIntValue;\n")
+        f.write("  private final int mIntValue;\n")
         f.write("\n")
         f.write("  Yoga%s(int intValue) {\n" % name)
         f.write("    mIntValue = intValue;\n")

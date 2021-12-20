@@ -160,6 +160,12 @@ function setupTestTree(e, parent, node, genericNode, nodeName, parentName, index
 
     if (!isDefaultStyleValue(style, node.style[style])) {
       switch (style) {
+        case 'column-gap':
+          e.YGNodeStyleSetGap(nodeName, e.YGGapColumn, pointValue(e, node.style[style]));
+          break;
+        case 'row-gap':
+          e.YGNodeStyleSetGap(nodeName, e.YGGapRow, pointValue(e, node.style[style]));
+          break;
         case 'direction':
           e.YGNodeStyleSetDirection(nodeName, directionValue(e, node.style[style]));
           break;
@@ -507,6 +513,8 @@ function getYogaStyle(node) {
     'height',
     'min-height',
     'max-height',
+    'column-gap',
+    'row-gap',
     'display',
   ].reduce(function(map, key) {
     map[key] = node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
