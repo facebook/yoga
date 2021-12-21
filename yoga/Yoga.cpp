@@ -3247,7 +3247,7 @@ static void YGNodelayoutImpl(
   // STEP 8: MULTI-LINE CONTENT ALIGNMENT
   // currentLead stores the size of the cross dim
   if (performLayout && (isNodeFlexWrap || YGIsBaselineLayout(node))) {
-    float crossDimLead = crossAxisGap;
+    float crossDimLead = 0;
     float currentLead = leadingPaddingAndBorderCross;
     if (!YGFloatIsUndefined(availableInnerCrossDim)) {
       const float remainingAlignContentDim =
@@ -3261,14 +3261,14 @@ static void YGNodelayoutImpl(
           break;
         case YGAlignStretch:
           if (availableInnerCrossDim > totalLineCrossDim) {
-            crossDimLead += remainingAlignContentDim / lineCount;
+            crossDimLead = remainingAlignContentDim / lineCount;
           }
           break;
         case YGAlignSpaceAround:
           if (availableInnerCrossDim > totalLineCrossDim) {
             currentLead += remainingAlignContentDim / (2 * lineCount);
             if (lineCount > 1) {
-              crossDimLead += remainingAlignContentDim / lineCount;
+              crossDimLead = remainingAlignContentDim / lineCount;
             }
           } else {
             currentLead += remainingAlignContentDim / 2;
@@ -3276,7 +3276,7 @@ static void YGNodelayoutImpl(
           break;
         case YGAlignSpaceBetween:
           if (availableInnerCrossDim > totalLineCrossDim && lineCount > 1) {
-            crossDimLead += remainingAlignContentDim / (lineCount - 1);
+            crossDimLead = remainingAlignContentDim / (lineCount - 1);
           }
           break;
         case YGAlignAuto:
@@ -3334,7 +3334,8 @@ static void YGNodelayoutImpl(
       }
       endIndex = ii;
       lineHeight += crossDimLead;
-
+      currentLead += i != 0 ? crossAxisGap : 0;
+        
       if (performLayout) {
         for (ii = startIndex; ii < endIndex; ii++) {
           const YGNodeRef child = node->getChild(ii);
