@@ -1450,3 +1450,237 @@ it("column_gap_wrap_align_space_around", function () {
     config.free();
   }
 });
+it("row_gap_align_items_stretch", function () {
+  var config = Yoga.Config.create();
+
+  try {
+    var root = Yoga.Node.create(config);
+    root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
+    root.setAlignContent(Yoga.ALIGN_STRETCH);
+    root.setFlexWrap(Yoga.WRAP_WRAP);
+    root.setWidth(100);
+    root.setHeight(200);
+    root.setGap(Yoga.GAP_COLUMN, 10);
+    root.setGap(Yoga.GAP_ROW, 20);
+
+    var root_child0 = Yoga.Node.create(config);
+    root_child0.setWidth(20);
+    root.insertChild(root_child0, 0);
+
+    var root_child1 = Yoga.Node.create(config);
+    root_child1.setWidth(20);
+    root.insertChild(root_child1, 1);
+
+    var root_child2 = Yoga.Node.create(config);
+    root_child2.setWidth(20);
+    root.insertChild(root_child2, 2);
+
+    var root_child3 = Yoga.Node.create(config);
+    root_child3.setWidth(20);
+    root.insertChild(root_child3, 3);
+
+    var root_child4 = Yoga.Node.create(config);
+    root_child4.setWidth(20);
+    root.insertChild(root_child4, 4);
+
+    var root_child5 = Yoga.Node.create(config);
+    root_child5.setWidth(20);
+    root.insertChild(root_child5, 5);
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+
+    console.assert(0 === root.getComputedLeft(), "0 === root.getComputedLeft() (" + root.getComputedLeft() + ")");
+    console.assert(0 === root.getComputedTop(), "0 === root.getComputedTop() (" + root.getComputedTop() + ")");
+    console.assert(100 === root.getComputedWidth(), "100 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
+    console.assert(200 === root.getComputedHeight(), "200 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
+
+    console.assert(0 === root_child0.getComputedLeft(), "0 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
+    console.assert(0 === root_child0.getComputedTop(), "0 === root_child0.getComputedTop() (" + root_child0.getComputedTop() + ")");
+    console.assert(20 === root_child0.getComputedWidth(), "20 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
+    console.assert(90 === root_child0.getComputedHeight(), "90 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
+
+    console.assert(30 === root_child1.getComputedLeft(), "30 === root_child1.getComputedLeft() (" + root_child1.getComputedLeft() + ")");
+    console.assert(0 === root_child1.getComputedTop(), "0 === root_child1.getComputedTop() (" + root_child1.getComputedTop() + ")");
+    console.assert(20 === root_child1.getComputedWidth(), "20 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
+    console.assert(90 === root_child1.getComputedHeight(), "90 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
+
+    console.assert(60 === root_child2.getComputedLeft(), "60 === root_child2.getComputedLeft() (" + root_child2.getComputedLeft() + ")");
+    console.assert(0 === root_child2.getComputedTop(), "0 === root_child2.getComputedTop() (" + root_child2.getComputedTop() + ")");
+    console.assert(20 === root_child2.getComputedWidth(), "20 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
+    console.assert(90 === root_child2.getComputedHeight(), "90 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
+
+    console.assert(0 === root_child3.getComputedLeft(), "0 === root_child3.getComputedLeft() (" + root_child3.getComputedLeft() + ")");
+    console.assert(110 === root_child3.getComputedTop(), "110 === root_child3.getComputedTop() (" + root_child3.getComputedTop() + ")");
+    console.assert(20 === root_child3.getComputedWidth(), "20 === root_child3.getComputedWidth() (" + root_child3.getComputedWidth() + ")");
+    console.assert(90 === root_child3.getComputedHeight(), "90 === root_child3.getComputedHeight() (" + root_child3.getComputedHeight() + ")");
+
+    console.assert(30 === root_child4.getComputedLeft(), "30 === root_child4.getComputedLeft() (" + root_child4.getComputedLeft() + ")");
+    console.assert(110 === root_child4.getComputedTop(), "110 === root_child4.getComputedTop() (" + root_child4.getComputedTop() + ")");
+    console.assert(20 === root_child4.getComputedWidth(), "20 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
+    console.assert(90 === root_child4.getComputedHeight(), "90 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
+
+    console.assert(60 === root_child5.getComputedLeft(), "60 === root_child5.getComputedLeft() (" + root_child5.getComputedLeft() + ")");
+    console.assert(110 === root_child5.getComputedTop(), "110 === root_child5.getComputedTop() (" + root_child5.getComputedTop() + ")");
+    console.assert(20 === root_child5.getComputedWidth(), "20 === root_child5.getComputedWidth() (" + root_child5.getComputedWidth() + ")");
+    console.assert(90 === root_child5.getComputedHeight(), "90 === root_child5.getComputedHeight() (" + root_child5.getComputedHeight() + ")");
+
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_RTL);
+
+    console.assert(0 === root.getComputedLeft(), "0 === root.getComputedLeft() (" + root.getComputedLeft() + ")");
+    console.assert(0 === root.getComputedTop(), "0 === root.getComputedTop() (" + root.getComputedTop() + ")");
+    console.assert(100 === root.getComputedWidth(), "100 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
+    console.assert(200 === root.getComputedHeight(), "200 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
+
+    console.assert(80 === root_child0.getComputedLeft(), "80 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
+    console.assert(0 === root_child0.getComputedTop(), "0 === root_child0.getComputedTop() (" + root_child0.getComputedTop() + ")");
+    console.assert(20 === root_child0.getComputedWidth(), "20 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
+    console.assert(90 === root_child0.getComputedHeight(), "90 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
+
+    console.assert(50 === root_child1.getComputedLeft(), "50 === root_child1.getComputedLeft() (" + root_child1.getComputedLeft() + ")");
+    console.assert(0 === root_child1.getComputedTop(), "0 === root_child1.getComputedTop() (" + root_child1.getComputedTop() + ")");
+    console.assert(20 === root_child1.getComputedWidth(), "20 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
+    console.assert(90 === root_child1.getComputedHeight(), "90 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
+
+    console.assert(20 === root_child2.getComputedLeft(), "20 === root_child2.getComputedLeft() (" + root_child2.getComputedLeft() + ")");
+    console.assert(0 === root_child2.getComputedTop(), "0 === root_child2.getComputedTop() (" + root_child2.getComputedTop() + ")");
+    console.assert(20 === root_child2.getComputedWidth(), "20 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
+    console.assert(90 === root_child2.getComputedHeight(), "90 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
+
+    console.assert(80 === root_child3.getComputedLeft(), "80 === root_child3.getComputedLeft() (" + root_child3.getComputedLeft() + ")");
+    console.assert(110 === root_child3.getComputedTop(), "110 === root_child3.getComputedTop() (" + root_child3.getComputedTop() + ")");
+    console.assert(20 === root_child3.getComputedWidth(), "20 === root_child3.getComputedWidth() (" + root_child3.getComputedWidth() + ")");
+    console.assert(90 === root_child3.getComputedHeight(), "90 === root_child3.getComputedHeight() (" + root_child3.getComputedHeight() + ")");
+
+    console.assert(50 === root_child4.getComputedLeft(), "50 === root_child4.getComputedLeft() (" + root_child4.getComputedLeft() + ")");
+    console.assert(110 === root_child4.getComputedTop(), "110 === root_child4.getComputedTop() (" + root_child4.getComputedTop() + ")");
+    console.assert(20 === root_child4.getComputedWidth(), "20 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
+    console.assert(90 === root_child4.getComputedHeight(), "90 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
+
+    console.assert(20 === root_child5.getComputedLeft(), "20 === root_child5.getComputedLeft() (" + root_child5.getComputedLeft() + ")");
+    console.assert(110 === root_child5.getComputedTop(), "110 === root_child5.getComputedTop() (" + root_child5.getComputedTop() + ")");
+    console.assert(20 === root_child5.getComputedWidth(), "20 === root_child5.getComputedWidth() (" + root_child5.getComputedWidth() + ")");
+    console.assert(90 === root_child5.getComputedHeight(), "90 === root_child5.getComputedHeight() (" + root_child5.getComputedHeight() + ")");
+  } finally {
+    if (typeof root !== "undefined") {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});
+it("row_gap_align_items_end", function () {
+  var config = Yoga.Config.create();
+
+  try {
+    var root = Yoga.Node.create(config);
+    root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
+    root.setAlignItems(Yoga.ALIGN_FLEX_END);
+    root.setFlexWrap(Yoga.WRAP_WRAP);
+    root.setWidth(100);
+    root.setHeight(200);
+    root.setGap(Yoga.GAP_COLUMN, 10);
+    root.setGap(Yoga.GAP_ROW, 20);
+
+    var root_child0 = Yoga.Node.create(config);
+    root_child0.setWidth(20);
+    root.insertChild(root_child0, 0);
+
+    var root_child1 = Yoga.Node.create(config);
+    root_child1.setWidth(20);
+    root.insertChild(root_child1, 1);
+
+    var root_child2 = Yoga.Node.create(config);
+    root_child2.setWidth(20);
+    root.insertChild(root_child2, 2);
+
+    var root_child3 = Yoga.Node.create(config);
+    root_child3.setWidth(20);
+    root.insertChild(root_child3, 3);
+
+    var root_child4 = Yoga.Node.create(config);
+    root_child4.setWidth(20);
+    root.insertChild(root_child4, 4);
+
+    var root_child5 = Yoga.Node.create(config);
+    root_child5.setWidth(20);
+    root.insertChild(root_child5, 5);
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+
+    console.assert(0 === root.getComputedLeft(), "0 === root.getComputedLeft() (" + root.getComputedLeft() + ")");
+    console.assert(0 === root.getComputedTop(), "0 === root.getComputedTop() (" + root.getComputedTop() + ")");
+    console.assert(100 === root.getComputedWidth(), "100 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
+    console.assert(200 === root.getComputedHeight(), "200 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
+
+    console.assert(0 === root_child0.getComputedLeft(), "0 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
+    console.assert(0 === root_child0.getComputedTop(), "0 === root_child0.getComputedTop() (" + root_child0.getComputedTop() + ")");
+    console.assert(20 === root_child0.getComputedWidth(), "20 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
+    console.assert(0 === root_child0.getComputedHeight(), "0 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
+
+    console.assert(30 === root_child1.getComputedLeft(), "30 === root_child1.getComputedLeft() (" + root_child1.getComputedLeft() + ")");
+    console.assert(0 === root_child1.getComputedTop(), "0 === root_child1.getComputedTop() (" + root_child1.getComputedTop() + ")");
+    console.assert(20 === root_child1.getComputedWidth(), "20 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
+    console.assert(0 === root_child1.getComputedHeight(), "0 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
+
+    console.assert(60 === root_child2.getComputedLeft(), "60 === root_child2.getComputedLeft() (" + root_child2.getComputedLeft() + ")");
+    console.assert(0 === root_child2.getComputedTop(), "0 === root_child2.getComputedTop() (" + root_child2.getComputedTop() + ")");
+    console.assert(20 === root_child2.getComputedWidth(), "20 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
+    console.assert(0 === root_child2.getComputedHeight(), "0 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
+
+    console.assert(0 === root_child3.getComputedLeft(), "0 === root_child3.getComputedLeft() (" + root_child3.getComputedLeft() + ")");
+    console.assert(20 === root_child3.getComputedTop(), "20 === root_child3.getComputedTop() (" + root_child3.getComputedTop() + ")");
+    console.assert(20 === root_child3.getComputedWidth(), "20 === root_child3.getComputedWidth() (" + root_child3.getComputedWidth() + ")");
+    console.assert(0 === root_child3.getComputedHeight(), "0 === root_child3.getComputedHeight() (" + root_child3.getComputedHeight() + ")");
+
+    console.assert(30 === root_child4.getComputedLeft(), "30 === root_child4.getComputedLeft() (" + root_child4.getComputedLeft() + ")");
+    console.assert(20 === root_child4.getComputedTop(), "20 === root_child4.getComputedTop() (" + root_child4.getComputedTop() + ")");
+    console.assert(20 === root_child4.getComputedWidth(), "20 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
+    console.assert(0 === root_child4.getComputedHeight(), "0 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
+
+    console.assert(60 === root_child5.getComputedLeft(), "60 === root_child5.getComputedLeft() (" + root_child5.getComputedLeft() + ")");
+    console.assert(20 === root_child5.getComputedTop(), "20 === root_child5.getComputedTop() (" + root_child5.getComputedTop() + ")");
+    console.assert(20 === root_child5.getComputedWidth(), "20 === root_child5.getComputedWidth() (" + root_child5.getComputedWidth() + ")");
+    console.assert(0 === root_child5.getComputedHeight(), "0 === root_child5.getComputedHeight() (" + root_child5.getComputedHeight() + ")");
+
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_RTL);
+
+    console.assert(0 === root.getComputedLeft(), "0 === root.getComputedLeft() (" + root.getComputedLeft() + ")");
+    console.assert(0 === root.getComputedTop(), "0 === root.getComputedTop() (" + root.getComputedTop() + ")");
+    console.assert(100 === root.getComputedWidth(), "100 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
+    console.assert(200 === root.getComputedHeight(), "200 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
+
+    console.assert(80 === root_child0.getComputedLeft(), "80 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
+    console.assert(0 === root_child0.getComputedTop(), "0 === root_child0.getComputedTop() (" + root_child0.getComputedTop() + ")");
+    console.assert(20 === root_child0.getComputedWidth(), "20 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
+    console.assert(0 === root_child0.getComputedHeight(), "0 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
+
+    console.assert(50 === root_child1.getComputedLeft(), "50 === root_child1.getComputedLeft() (" + root_child1.getComputedLeft() + ")");
+    console.assert(0 === root_child1.getComputedTop(), "0 === root_child1.getComputedTop() (" + root_child1.getComputedTop() + ")");
+    console.assert(20 === root_child1.getComputedWidth(), "20 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
+    console.assert(0 === root_child1.getComputedHeight(), "0 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
+
+    console.assert(20 === root_child2.getComputedLeft(), "20 === root_child2.getComputedLeft() (" + root_child2.getComputedLeft() + ")");
+    console.assert(0 === root_child2.getComputedTop(), "0 === root_child2.getComputedTop() (" + root_child2.getComputedTop() + ")");
+    console.assert(20 === root_child2.getComputedWidth(), "20 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
+    console.assert(0 === root_child2.getComputedHeight(), "0 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
+
+    console.assert(80 === root_child3.getComputedLeft(), "80 === root_child3.getComputedLeft() (" + root_child3.getComputedLeft() + ")");
+    console.assert(20 === root_child3.getComputedTop(), "20 === root_child3.getComputedTop() (" + root_child3.getComputedTop() + ")");
+    console.assert(20 === root_child3.getComputedWidth(), "20 === root_child3.getComputedWidth() (" + root_child3.getComputedWidth() + ")");
+    console.assert(0 === root_child3.getComputedHeight(), "0 === root_child3.getComputedHeight() (" + root_child3.getComputedHeight() + ")");
+
+    console.assert(50 === root_child4.getComputedLeft(), "50 === root_child4.getComputedLeft() (" + root_child4.getComputedLeft() + ")");
+    console.assert(20 === root_child4.getComputedTop(), "20 === root_child4.getComputedTop() (" + root_child4.getComputedTop() + ")");
+    console.assert(20 === root_child4.getComputedWidth(), "20 === root_child4.getComputedWidth() (" + root_child4.getComputedWidth() + ")");
+    console.assert(0 === root_child4.getComputedHeight(), "0 === root_child4.getComputedHeight() (" + root_child4.getComputedHeight() + ")");
+
+    console.assert(20 === root_child5.getComputedLeft(), "20 === root_child5.getComputedLeft() (" + root_child5.getComputedLeft() + ")");
+    console.assert(20 === root_child5.getComputedTop(), "20 === root_child5.getComputedTop() (" + root_child5.getComputedTop() + ")");
+    console.assert(20 === root_child5.getComputedWidth(), "20 === root_child5.getComputedWidth() (" + root_child5.getComputedWidth() + ")");
+    console.assert(0 === root_child5.getComputedHeight(), "0 === root_child5.getComputedHeight() (" + root_child5.getComputedHeight() + ")");
+  } finally {
+    if (typeof root !== "undefined") {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});
