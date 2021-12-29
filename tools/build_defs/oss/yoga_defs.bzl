@@ -61,6 +61,9 @@ BASE_COMPILER_FLAGS = [
     "-O2",
     "-std=c++11",
     "-DYG_ENABLE_EVENTS",
+    # Suppressions
+    "-Wno-error=enum-float-conversion",
+    "-Wno-error=implicit-float-conversion",
 ]
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
