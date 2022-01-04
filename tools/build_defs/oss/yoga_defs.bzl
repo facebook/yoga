@@ -50,6 +50,11 @@ CXX_LIBRARY_WHITELIST = [
     "//java:jni",
 ]
 
+SUPPRESSION_FLAGS = [
+    "-Wno-error=enum-float-conversion",
+    "-Wno-error=implicit-float-conversion",
+]
+
 BASE_COMPILER_FLAGS = [
     "-fno-omit-frame-pointer",
     "-fexceptions",
@@ -61,10 +66,7 @@ BASE_COMPILER_FLAGS = [
     "-O2",
     "-std=c++11",
     "-DYG_ENABLE_EVENTS",
-    # Suppressions
-    "-Wno-error=enum-float-conversion",
-    "-Wno-error=implicit-float-conversion",
-]
+] + SUPPRESSION_FLAGS
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
     "-fPIC",
