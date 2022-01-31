@@ -29,7 +29,7 @@ typedef struct YGSize {
   float height;
 } YGSize;
 
-typedef void* (*YGAllocatorAllocateFunc)(size_t size);
+typedef void* (*YGAllocatorAllocateFunc)(size_t alignment, size_t size);
 typedef void (*YGAllocatorFreeFunc)(void* memory);
 
 typedef struct YGConfig* YGConfigRef;
@@ -60,7 +60,7 @@ typedef YGNodeRef (
 WIN_EXPORT void YGSetAllocationCallbacks(YGAllocatorAllocateFunc allocFunc, YGAllocatorFreeFunc freeFunc);
 WIN_EXPORT void YGGetAllocationCallbacks(YGAllocatorAllocateFunc* allocFunc, YGAllocatorFreeFunc* freeFunc);
 
-WIN_EXPORT void* YGMemoryAllocate(size_t size);
+WIN_EXPORT void* YGMemoryAllocate(size_t alignment, size_t size);
 WIN_EXPORT void YGMemoryFree(void* memory);
 
 // YGNode
@@ -378,7 +378,7 @@ YG_EXTERN_C_END
 // cast nor pass in the size of the allocated chunk of memory explicitly.
 template<typename T, typename... A>
 T* YGAllocate(A&&... arguments) {
-  auto* memory = reinterpret_cast<T*>(YGMemoryAllocate(sizeof(T)));
+  auto* memory = reinterpret_cast<T*>(YGMemoryAllocate(sizeof(T), alignof(T)));
   new(memory) T(std::forward<A>(arguments)...);
   return memory;
 }

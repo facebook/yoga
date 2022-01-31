@@ -11,7 +11,7 @@
 #include <string.h>
 #include <algorithm>
 #include <atomic>
-#include <memory>
+#include <malloc.h>
 #include "Utils.h"
 #include "YGNode.h"
 #include "YGNodePrint.h"
@@ -106,8 +106,24 @@ static int YGDefaultLog(
 #undef YG_UNUSED
 #endif
 
-static YGAllocatorAllocateFunc gAllocatorAllocateFunc = &malloc;
-static YGAllocatorFreeFunc gAllocatorFreeFunc = &free;
+#ifdef _MSC_VER
+#define YG_ALLOC_ALIGNED ([](size_t a, size_t s) -> void* { \
+  return _aligned_malloc(s, a);                             \
+})
+#define YG_FREE_ALIGNED ([](void* m) -> void {              \
+  _aligned_free(m);                                         \
+})
+#else
+#define YG_ALLOC_ALIGNED ([](size_t a, size_t s) -> void* { \
+  return aligned_alloc(a, s);                               \
+})
+#define YG_FREE_ALIGNED ([](void* m) -> void {              \
+  free(m);                                                  \
+})
+#endif
+
+static YGAllocatorAllocateFunc gAllocatorAllocateFunc = YG_ALLOC_ALIGNED;
+static YGAllocatorFreeFunc gAllocatorFreeFunc = YG_FREE_ALIGNED;
 
 YOGA_EXPORT void YGSetAllocationCallbacks(
     YGAllocatorAllocateFunc allocFunc,
@@ -127,8 +143,8 @@ YOGA_EXPORT void YGGetAllocationCallbacks(
   }
 }
 
-YOGA_EXPORT void* YGMemoryAllocate(size_t size) {
-  return gAllocatorAllocateFunc(size);
+YOGA_EXPORT void* YGMemoryAllocate(size_t alignment, size_t size) {
+  return gAllocatorAllocateFunc(alignment, size);
 }
 
 YOGA_EXPORT void YGMemoryFree(void* memory) {
