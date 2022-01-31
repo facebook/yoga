@@ -29,6 +29,9 @@ typedef struct YGSize {
   float height;
 } YGSize;
 
+typedef void* (*YGAllocatorAllocateFunc)(size_t size);
+typedef void (*YGAllocatorFreeFunc)(void* memory);
+
 typedef struct YGConfig* YGConfigRef;
 
 typedef struct YGNode* YGNodeRef;
@@ -52,6 +55,13 @@ typedef int (*YGLogger)(
     va_list args);
 typedef YGNodeRef (
     *YGCloneNodeFunc)(YGNodeRef oldNode, YGNodeRef owner, int childIndex);
+
+// Memory allocation
+WIN_EXPORT void YGSetAllocationCallbacks(YGAllocatorAllocateFunc allocFunc, YGAllocatorFreeFunc freeFunc);
+WIN_EXPORT void YGGetAllocationCallbacks(YGAllocatorAllocateFunc* allocFunc, YGAllocatorFreeFunc* freeFunc);
+
+WIN_EXPORT void* YGMemoryAllocate(size_t size);
+WIN_EXPORT void YGMemoryFree(void* memory);
 
 // YGNode
 WIN_EXPORT YGNodeRef YGNodeNew(void);
@@ -363,6 +373,21 @@ YG_EXTERN_C_END
 
 #include <functional>
 #include <vector>
+#include <type_traits>
+
+// Templated delegates for YGMemoryAllocate & YGMemoryFree, so we don't have to
+// cast nor pass in the size of the allocated chunk of memory explicitly.
+template<typename T, typename... A>
+T* YGAllocate(A&&... arguments) {
+  auto* memory = reinterpret_cast<T*>(YGMemoryAllocate(sizeof(T)));
+  new(memory) T(std::forward<A>(arguments)...);
+  return memory;
+}
+template<typename T>
+void YGFree(T* memory) {
+  memory->~T();
+  YGMemoryFree(memory);
+}
 
 // Calls f on each node in the tree including the given node argument.
 void YGTraversePreOrder(

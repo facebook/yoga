@@ -106,6 +106,35 @@ static int YGDefaultLog(
 #undef YG_UNUSED
 #endif
 
+static YGAllocatorAllocateFunc gAllocatorAllocateFunc = &malloc;
+static YGAllocatorFreeFunc gAllocatorFreeFunc = &free;
+
+YOGA_EXPORT void YGSetAllocationCallbacks(
+    YGAllocatorAllocateFunc allocFunc,
+    YGAllocatorFreeFunc freeFunc) {
+  gAllocatorAllocateFunc = allocFunc;
+  gAllocatorFreeFunc = freeFunc;
+}
+
+YOGA_EXPORT void YGGetAllocationCallbacks(
+    YGAllocatorAllocateFunc* allocFunc,
+    YGAllocatorFreeFunc* freeFunc) {
+  if(allocFunc != nullptr) {
+    *allocFunc = gAllocatorAllocateFunc;
+  }
+  if(freeFunc != nullptr) {
+    *freeFunc = gAllocatorFreeFunc;
+  }
+}
+
+YOGA_EXPORT void* YGMemoryAllocate(size_t size) {
+  return gAllocatorAllocateFunc(size);
+}
+
+YOGA_EXPORT void YGMemoryFree(void* memory) {
+  gAllocatorFreeFunc(memory);
+}
+
 static inline bool YGDoubleIsUndefined(const double value) {
   return facebook::yoga::isUndefined(value);
 }
@@ -192,7 +221,7 @@ YOGA_EXPORT void YGNodeMarkDirtyAndPropogateToDescendants(
 int32_t gConfigInstanceCount = 0;
 
 YOGA_EXPORT WIN_EXPORT YGNodeRef YGNodeNewWithConfig(const YGConfigRef config) {
-  const YGNodeRef node = new YGNode{config};
+  const YGNodeRef node = YGAllocate<YGNode>(config);
   YGAssertWithConfig(
       config, node != nullptr, "Could not allocate memory for node");
   Event::publish<Event::NodeAllocation>(node, {config});
@@ -210,7 +239,7 @@ YOGA_EXPORT YGNodeRef YGNodeNew(void) {
 }
 
 YOGA_EXPORT YGNodeRef YGNodeClone(YGNodeRef oldNode) {
-  YGNodeRef node = new YGNode(*oldNode);
+  YGNodeRef node = YGAllocate<YGNode>(*oldNode);
   YGAssertWithConfig(
       oldNode->getConfig(),
       node != nullptr,
@@ -221,7 +250,7 @@ YOGA_EXPORT YGNodeRef YGNodeClone(YGNodeRef oldNode) {
 }
 
 static YGConfigRef YGConfigClone(const YGConfig& oldConfig) {
-  const YGConfigRef config = new YGConfig(oldConfig);
+  const YGConfigRef config = YGAllocate<YGConfig>(oldConfig);
   YGAssert(config != nullptr, "Could not allocate memory for config");
   gConfigInstanceCount++;
   return config;
@@ -229,7 +258,7 @@ static YGConfigRef YGConfigClone(const YGConfig& oldConfig) {
 
 static YGNodeRef YGNodeDeepClone(YGNodeRef oldNode) {
   auto config = YGConfigClone(*oldNode->getConfig());
-  auto node = new YGNode{*oldNode, config};
+  auto node = YGAllocate<YGNode>(*oldNode, config);
   node->setOwner(nullptr);
   Event::publish<Event::NodeAllocation>(node, {node->getConfig()});
 
@@ -260,13 +289,13 @@ YOGA_EXPORT void YGNodeFree(const YGNodeRef node) {
 
   node->clearChildren();
   Event::publish<Event::NodeDeallocation>(node, {node->getConfig()});
-  delete node;
+  YGFree(node);
 }
 
 static void YGConfigFreeRecursive(const YGNodeRef root) {
   if (root->getConfig() != nullptr) {
     gConfigInstanceCount--;
-    delete root->getConfig();
+    YGFree(root->getConfig());
   }
   // Delete configs recursively for childrens
   for (auto* child : root->getChildren()) {
@@ -308,16 +337,16 @@ int32_t YGConfigGetInstanceCount(void) {
 
 YOGA_EXPORT YGConfigRef YGConfigNew(void) {
 #ifdef ANDROID
-  const YGConfigRef config = new YGConfig(YGAndroidLog);
+  const YGConfigRef config = YGAllocate<YGConfig>(YGAndroidLog);
 #else
-  const YGConfigRef config = new YGConfig(YGDefaultLog);
+  const YGConfigRef config = YGAllocate<YGConfig>(YGDefaultLog);
 #endif
   gConfigInstanceCount++;
   return config;
 }
 
 YOGA_EXPORT void YGConfigFree(const YGConfigRef config) {
-  delete config;
+  YGFree(config);
   gConfigInstanceCount--;
 }
 
