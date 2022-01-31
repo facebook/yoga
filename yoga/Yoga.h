@@ -373,7 +373,6 @@ YG_EXTERN_C_END
 
 #include <functional>
 #include <vector>
-#include <type_traits>
 
 // Templated delegates for YGMemoryAllocate & YGMemoryFree, so we don't have to
 // cast nor pass in the size of the allocated chunk of memory explicitly.
