@@ -1,4 +1,4 @@
-load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "FBJNI_TARGET", "LIBRARY_COMPILER_FLAGS", "SOLOADER_TARGET", "subdir_glob", "yoga_cxx_library", "yoga_dep", "yoga_java_library")
+load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID", "CXX", "FBJNI_TARGET", "LIBRARY_COMPILER_FLAGS", "SOLOADER_TARGET", "subdir_glob", "yoga_cxx_library", "yoga_dep", "yoga_java_library")
 
 yoga_cxx_library(
     name = "testutil",
@@ -17,7 +17,7 @@ yoga_cxx_library(
     header_namespace = "",
     exported_headers = subdir_glob([("src/main/cpp/include", "yoga/testutil/testutil.h")]),
     compiler_flags = LIBRARY_COMPILER_FLAGS,
-    platforms = ANDROID,
+    platforms = (CXX, ANDROID),
     soname = "libyoga_testutil.$(ext)",
     visibility = ["PUBLIC"],
     deps = [
@@ -43,7 +43,7 @@ yoga_cxx_library(
     srcs = ["src/main/cpp/jni/jni.cpp"],
     allow_jni_merging = False,
     compiler_flags = LIBRARY_COMPILER_FLAGS,
-    platforms = ANDROID,
+    platforms = (CXX, ANDROID),
     soname = "libyoga_testutil_jni.$(ext)",
     visibility = ["PUBLIC"],
     deps = [
