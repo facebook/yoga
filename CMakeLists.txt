@@ -14,6 +14,7 @@ add_compile_options(
     -fvisibility=hidden
     -ffunction-sections
     -fdata-sections
+    -fPIC
     -Wall
     -std=c++11)
 
