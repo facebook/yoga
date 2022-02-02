@@ -11,7 +11,6 @@
 #include <string.h>
 #include <algorithm>
 #include <atomic>
-#include <malloc.h>
 #include "Utils.h"
 #include "YGNode.h"
 #include "YGNodePrint.h"
