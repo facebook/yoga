@@ -65,3 +65,7 @@ Carthage/Build
 .gradle
 # NDK/CMake
 .externalNativeBuild
+
+# Cmakes
+cmake*
+.idea

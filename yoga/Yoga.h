@@ -134,20 +134,20 @@ WIN_EXPORT void YGNodeCopyStyle(YGNodeRef dstNode, YGNodeRef srcNode);
 
 WIN_EXPORT void* YGNodeGetContext(YGNodeRef node);
 WIN_EXPORT void YGNodeSetContext(YGNodeRef node, void* context);
-void YGConfigSetPrintTreeFlag(YGConfigRef config, bool enabled);
-bool YGNodeHasMeasureFunc(YGNodeRef node);
+WIN_EXPORT void YGConfigSetPrintTreeFlag(YGConfigRef config, bool enabled);
+WIN_EXPORT bool YGNodeHasMeasureFunc(YGNodeRef node);
 WIN_EXPORT void YGNodeSetMeasureFunc(YGNodeRef node, YGMeasureFunc measureFunc);
-bool YGNodeHasBaselineFunc(YGNodeRef node);
-void YGNodeSetBaselineFunc(YGNodeRef node, YGBaselineFunc baselineFunc);
-YGDirtiedFunc YGNodeGetDirtiedFunc(YGNodeRef node);
-void YGNodeSetDirtiedFunc(YGNodeRef node, YGDirtiedFunc dirtiedFunc);
-void YGNodeSetPrintFunc(YGNodeRef node, YGPrintFunc printFunc);
+WIN_EXPORT bool YGNodeHasBaselineFunc(YGNodeRef node);
+WIN_EXPORT void YGNodeSetBaselineFunc(YGNodeRef node, YGBaselineFunc baselineFunc);
+WIN_EXPORT YGDirtiedFunc YGNodeGetDirtiedFunc(YGNodeRef node);
+WIN_EXPORT void YGNodeSetDirtiedFunc(YGNodeRef node, YGDirtiedFunc dirtiedFunc);
+WIN_EXPORT void YGNodeSetPrintFunc(YGNodeRef node, YGPrintFunc printFunc);
 WIN_EXPORT bool YGNodeGetHasNewLayout(YGNodeRef node);
 WIN_EXPORT void YGNodeSetHasNewLayout(YGNodeRef node, bool hasNewLayout);
-YGNodeType YGNodeGetNodeType(YGNodeRef node);
-void YGNodeSetNodeType(YGNodeRef node, YGNodeType nodeType);
+WIN_EXPORT YGNodeType YGNodeGetNodeType(YGNodeRef node);
+WIN_EXPORT void YGNodeSetNodeType(YGNodeRef node, YGNodeType nodeType);
 WIN_EXPORT bool YGNodeIsDirty(YGNodeRef node);
-bool YGNodeLayoutGetDidUseLegacyFlag(YGNodeRef node);
+WIN_EXPORT bool YGNodeLayoutGetDidUseLegacyFlag(YGNodeRef node);
 
 WIN_EXPORT void YGNodeStyleSetDirection(YGNodeRef node, YGDirection direction);
 WIN_EXPORT YGDirection YGNodeStyleGetDirection(YGNodeConstRef node);
@@ -284,7 +284,7 @@ WIN_EXPORT float YGNodeLayoutGetWidth(YGNodeRef node);
 WIN_EXPORT float YGNodeLayoutGetHeight(YGNodeRef node);
 WIN_EXPORT YGDirection YGNodeLayoutGetDirection(YGNodeRef node);
 WIN_EXPORT bool YGNodeLayoutGetHadOverflow(YGNodeRef node);
-bool YGNodeLayoutGetDidLegacyStretchFlagAffectLayout(YGNodeRef node);
+WIN_EXPORT bool YGNodeLayoutGetDidLegacyStretchFlagAffectLayout(YGNodeRef node);
 
 // Get the computed values for these nodes after performing layout. If they were
 // set using point values then the returned value will be the same as
@@ -309,7 +309,7 @@ WIN_EXPORT void YGAssertWithConfig(
 WIN_EXPORT void YGConfigSetPointScaleFactor(
     YGConfigRef config,
     float pixelsInPoint);
-void YGConfigSetShouldDiffLayoutWithoutLegacyStretchBehaviour(
+WIN_EXPORT void YGConfigSetShouldDiffLayoutWithoutLegacyStretchBehaviour(
     YGConfigRef config,
     bool shouldDiffLayout);
 
@@ -365,10 +365,10 @@ YG_EXTERN_C_END
 #include <vector>
 
 // Calls f on each node in the tree including the given node argument.
-void YGTraversePreOrder(
+WIN_EXPORT void YGTraversePreOrder(
     YGNodeRef node,
     std::function<void(YGNodeRef node)>&& f);
 
-void YGNodeSetChildren(YGNodeRef owner, const std::vector<YGNodeRef>& children);
+WIN_EXPORT void YGNodeSetChildren(YGNodeRef owner, const std::vector<YGNodeRef>& children);
 
 #endif
