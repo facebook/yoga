@@ -4324,7 +4324,7 @@ YOGA_EXPORT void YGConfigSetExperimentalFeatureEnabled(
   config->experimentalFeatures[feature] = enabled;
 }
 
-YOGA_EXPORT inline bool YGConfigIsExperimentalFeatureEnabled(
+YOGA_EXPORT bool YGConfigIsExperimentalFeatureEnabled(
     const YGConfigRef config,
     const YGExperimentalFeature feature) {
   return config->experimentalFeatures[feature];
