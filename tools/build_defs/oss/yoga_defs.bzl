@@ -210,6 +210,11 @@ def yoga_prebuilt_cxx_library(*args, **kwargs):
     native.prebuilt_cxx_library(*args, **kwargs)
 
 def yoga_prebuilt_jar(*args, **kwargs):
+    native.alias(
+        name = kwargs["name"] + "Android",
+        actual = ":" + kwargs["name"],
+        visibility = kwargs.get("visibility") or ["PUBLIC"],
+    )
     native.prebuilt_jar(*args, **kwargs)
 
 def yoga_prebuilt_aar(*args, **kwargs):
