@@ -169,6 +169,11 @@ def yoga_android_library(*args, **kwargs):
     native.android_library(*args, **kwargs)
 
 def yoga_android_resource(*args, **kwargs):
+    native.alias(
+        name = kwargs["name"] + "Android",
+        actual = ":" + kwargs["name"],
+        visibility = kwargs.get("visibility") or ["PUBLIC"],
+    )
     native.android_resource(*args, **kwargs)
 
 def yoga_apple_library(*args, **kwargs):
