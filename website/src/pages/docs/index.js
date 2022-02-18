@@ -37,6 +37,17 @@ export default ({data}) => (
             contributions within documentation, code, and tests are more than
             welcome. The contributing section below covers how to get started.
           </p>
+          <br/>
+          <h1>Watch Brief Introductory Video</h1>
+          <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/tHgoA6zBib0"
+              title="Explain Like I'm 5: Yoga"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
         </Col>
       </Row>
       <Row>
