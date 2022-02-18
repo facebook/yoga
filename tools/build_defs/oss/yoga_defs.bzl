@@ -44,6 +44,8 @@ ANDROID_SAMPLE_JAVA_TARGET = "//android/sample/java/com/facebook/samples/yoga:yo
 
 ANDROID_SAMPLE_RES_TARGET = "//android/sample:res"
 
+CXX = ""
+
 CXX_LIBRARY_WHITELIST = [
     "//:yoga",
     "//lib/fb:fbjni",
