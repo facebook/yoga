@@ -73,7 +73,7 @@ YG_ENUM_SEQ_DECL(
     YGDirectionLTR,
     YGDirectionRTL)
 
-YG_ENUM_SEQ_DECL(YGDisplay, YGDisplayFlex, YGDisplayNone)
+YG_ENUM_SEQ_DECL(YGDisplay, YGDisplayFlex, YGDisplayBlock, YGDisplayNone)
 
 YG_ENUM_SEQ_DECL(
     YGEdge,
