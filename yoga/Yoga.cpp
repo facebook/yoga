@@ -3216,7 +3216,7 @@ static void YGNodelayoutImpl(
 
   // STEP 8: MULTI-LINE CONTENT ALIGNMENT
   // currentLead stores the size of the cross dim
-  if (performLayout && (isNodeFlexWrap || YGIsBaselineLayout(node))) {
+  if (performLayout && ((isNodeFlexWrap && lineCount > 1) || YGIsBaselineLayout(node))) {
     float crossDimLead = 0;
     float currentLead = leadingPaddingAndBorderCross;
     if (!YGFloatIsUndefined(availableInnerCrossDim)) {
