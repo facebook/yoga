@@ -75,5 +75,10 @@ YGFloatOptional YGFloatOptionalMax(YGFloatOptional op1, YGFloatOptional op2) {
 }
 
 void throwLogicalErrorWithMessage(const char* message) {
+#ifdef __cpp_exceptions
   throw std::logic_error(message);
+#else
+  printf("std::exception: %s\n", message);
+  abort();
+#endif
 }
