@@ -187,6 +187,9 @@ WIN_EXPORT YGOverflow YGNodeStyleGetOverflow(YGNodeConstRef node);
 WIN_EXPORT void YGNodeStyleSetDisplay(YGNodeRef node, YGDisplay display);
 WIN_EXPORT YGDisplay YGNodeStyleGetDisplay(YGNodeConstRef node);
 
+WIN_EXPORT void YGNodeStyleSetDisplayInline(YGNodeRef node, float displayInline);
+WIN_EXPORT float YGNodeStyleGetDisplayInline(YGNodeConstRef node);
+
 WIN_EXPORT void YGNodeStyleSetFlex(YGNodeRef node, float flex);
 WIN_EXPORT float YGNodeStyleGetFlex(YGNodeConstRef node);
 

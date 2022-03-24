@@ -108,6 +108,7 @@ private:
   YGFloatOptional flex_ = {};
   YGFloatOptional flexGrow_ = {};
   YGFloatOptional flexShrink_ = {};
+  YGFloatOptional displayInline_ = YGFloatOptional(0.f);
   CompactValue flexBasis_ = CompactValue::ofAuto();
   Edges margin_ = {};
   Edges position_ = {};
@@ -185,6 +186,9 @@ public:
     return facebook::yoga::detail::getEnumData<YGDisplay>(flags, displayOffset);
   }
   BitfieldRef<YGDisplay> display() { return {*this, displayOffset}; }
+  
+  YGFloatOptional displayInline() const { return displayInline_; }
+  Ref<YGFloatOptional, &YGStyle::displayInline_> displayInline() { return {*this}; }
 
   YGFloatOptional flex() const { return flex_; }
   Ref<YGFloatOptional, &YGStyle::flex_> flex() { return {*this}; }

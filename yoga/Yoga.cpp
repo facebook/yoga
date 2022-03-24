@@ -655,6 +655,20 @@ YOGA_EXPORT YGDisplay YGNodeStyleGetDisplay(const YGNodeConstRef node) {
 }
 
 // TODO(T26792433): Change the API to accept YGFloatOptional.
+YOGA_EXPORT void YGNodeStyleSetDisplayInline(
+    const YGNodeRef node,
+    const float displayInline) {
+  updateStyle<MSVC_HINT(displayInline)>(
+      node, &YGStyle::displayInline, YGFloatOptional{displayInline});
+}
+
+YOGA_EXPORT float YGNodeStyleGetDisplayInline(const YGNodeConstRef node) {
+  return node->getStyle().displayInline().isUndefined()
+      ? YGUndefined
+      : node->getStyle().displayInline().unwrap();
+}
+
+// TODO(T26792433): Change the API to accept YGFloatOptional.
 YOGA_EXPORT void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   updateStyle<MSVC_HINT(flex)>(node, &YGStyle::flex, YGFloatOptional{flex});
 }

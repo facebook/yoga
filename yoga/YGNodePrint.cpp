@@ -176,8 +176,13 @@ void YGNodeToString(
           str, "overflow: %s; ", YGOverflowToString(style.overflow()));
     }
 
-    if (style.display() != YGNode().getStyle().display()) {
-      appendFormatedString(
+    if (style.display() != YGNode().getStyle().display()
+        || style.displayInline() != YGNode().getStyle().displayInline()) {
+      if (style.displayInline())
+        appendFormatedString(
+          str, "display: inline-%s; ", YGDisplayToString(style.display()));
+      else
+        appendFormatedString(
           str, "display: %s; ", YGDisplayToString(style.display()));
     }
     appendEdges(str, "margin", style.margin());

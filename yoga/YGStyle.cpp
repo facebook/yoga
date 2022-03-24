@@ -51,6 +51,13 @@ bool operator==(const YGStyle& lhs, const YGStyle& rhs) {
     areNonFloatValuesEqual =
         areNonFloatValuesEqual && lhs.aspectRatio() == rhs.aspectRatio();
   }
+  
+  areNonFloatValuesEqual = areNonFloatValuesEqual &&
+      lhs.displayInline().isUndefined() == rhs.displayInline().isUndefined();
+  if (areNonFloatValuesEqual && !rhs.displayInline().isUndefined()) {
+    areNonFloatValuesEqual =
+        areNonFloatValuesEqual && lhs.displayInline() == rhs.displayInline();
+  }
 
   return areNonFloatValuesEqual;
 }
