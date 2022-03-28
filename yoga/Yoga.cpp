@@ -4147,11 +4147,6 @@ static void YGNodeBlockImpl(
           paddingAndBorderAxisCross;
     }
 
-    // If there's no flex wrap, the cross dimension is defined by the container.
-    if (!isNodeFlexWrap && measureModeCrossDim == YGMeasureModeExactly) {
-      collectedFlexItemsValues.crossDim = availableInnerCrossDim;
-    }
-
     // Clamp to the min/max size specified on the container.
     collectedFlexItemsValues.crossDim =
         YGNodeBoundAxis(
