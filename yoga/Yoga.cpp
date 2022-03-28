@@ -2224,17 +2224,17 @@ static float YGDistributeFreeSpaceSecondPass(
                          .unwrap();
     float updatedMainSize = childFlexBasis;
 
+    // If this is taken up by a non-inline block element, use block-formatting rules instead of flex
     if (collectedFlexItemsValues.isBlockNonInline)
     {
+      // Initialise child size as its preferred width
       float childSize = childFlexBasis;
       
-      if (collectedFlexItemsValues.sizeConsumedOnCurrentLine > 0)
-        printf("here\n");
-      
-      if (!node->isDisplayInline() && measureModeMainDim == YGMeasureModeExactly)
+      // If the row dimension is being measured exactly (not "at most") then the block element fills the line
+      if (measureModeMainDim == YGMeasureModeExactly)
         childSize += collectedFlexItemsValues.remainingFreeSpace;
       
-      // Just set size within min max constraints?
+      // Set child size while respecting constraints
       updatedMainSize = YGNodeBoundAxis(
           currentRelativeChild,
           mainAxis,
