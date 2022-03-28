@@ -4084,14 +4084,6 @@ static void YGNodeBlockImpl(
           -collectedFlexItemsValues.sizeConsumedOnCurrentLine;
     }
     
-    if (collectedFlexItemsValues.isBlockNonInline)
-    {
-      if (collectedFlexItemsValues.sizeConsumedOnCurrentLine > 0)
-      {
-        printf("widthMode: %s heightMode: %s\n", YGMeasureModeToString(widthMeasureMode), YGMeasureModeToString(heightMeasureMode));
-        printf("mainMode: %s crossMode: %s\n", YGMeasureModeToString(measureModeMainDim), YGMeasureModeToString(measureModeCrossDim));
-      }
-    }
     if (!canSkipFlex) {
       YGResolveFlexibleLength(
           node,
