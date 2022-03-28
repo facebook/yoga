@@ -1246,6 +1246,8 @@ static void YGConstrainMaxSizeForMode(
   }
 }
 
+// Finds the flex basis of a child from its style
+// Uses provided width and height for cross axis if the child is set to stretch
 static void YGNodeComputeFlexBasisForChild(
     const YGNodeRef node,
     const YGNodeRef child,
@@ -1272,6 +1274,7 @@ static void YGNodeComputeFlexBasisForChild(
   YGMeasureMode childWidthMeasureMode;
   YGMeasureMode childHeightMeasureMode;
 
+  // Establish whether the node's style specifies values for flex-basis or fixed size
   const YGFloatOptional resolvedFlexBasis =
       YGResolveValue(child->resolveFlexBasisPtr(), mainAxisownerSize);
   const bool isRowStyleDimDefined =
@@ -1279,6 +1282,7 @@ static void YGNodeComputeFlexBasisForChild(
   const bool isColumnStyleDimDefined =
       YGNodeIsStyleDimDefined(child, YGFlexDirectionColumn, ownerHeight);
 
+  // If flex-basis is specified in the node style, use that
   if (!resolvedFlexBasis.isUndefined() && !YGFloatIsUndefined(mainAxisSize)) {
     if (child->getLayout().computedFlexBasis.isUndefined() ||
         (YGConfigIsExperimentalFeatureEnabled(
@@ -1289,7 +1293,10 @@ static void YGNodeComputeFlexBasisForChild(
       child->setLayoutComputedFlexBasis(
           YGFloatOptionalMax(resolvedFlexBasis, paddingAndBorder));
     }
-  } else if (isMainAxisRow && isRowStyleDimDefined) {
+  }
+  // Otherwise, if the row or column dimensions are specified in the node style,
+  // and relevant for the given flex direction, use one of those...
+  else if (isMainAxisRow && isRowStyleDimDefined) {
     // The width is definite, so use that as the flex basis.
     const YGFloatOptional paddingAndBorder = YGFloatOptional(
         YGNodePaddingAndBorderForAxis(child, YGFlexDirectionRow, ownerWidth));
@@ -1307,7 +1314,9 @@ static void YGNodeComputeFlexBasisForChild(
         YGResolveValue(
             child->getResolvedDimensions()[YGDimensionHeight], ownerHeight),
         paddingAndBorder));
-  } else {
+  }
+  // Otherwise, we need to keep looking...
+  else {
     // Compute the flex basis and hypothetical main size (i.e. the clamped flex
     // basis).
     childWidth = YGUndefined;
@@ -1315,11 +1324,15 @@ static void YGNodeComputeFlexBasisForChild(
     childWidthMeasureMode = YGMeasureModeUndefined;
     childHeightMeasureMode = YGMeasureModeUndefined;
 
+    // Get total row and column margins
     auto marginRow =
         child->getMarginForAxis(YGFlexDirectionRow, ownerWidth).unwrap();
     auto marginColumn =
         child->getMarginForAxis(YGFlexDirectionColumn, ownerWidth).unwrap();
 
+    // If the width/height dimensions are defined in the node's style, resolve them
+    // This converts any percentage units to float based on the owner's size
+    // Note the child measure mode is then set to 'exactly'
     if (isRowStyleDimDefined) {
       childWidth =
           YGResolveValue(
@@ -1336,9 +1349,11 @@ static void YGNodeComputeFlexBasisForChild(
           marginColumn;
       childHeightMeasureMode = YGMeasureModeExactly;
     }
+    
+    // If the main axis will not be affected by any scroll overflow, set the max cross axis size equal to the parent...
 
-    // The W3C spec doesn't say anything about the 'overflow' property, but all
-    // major browsers appear to implement the following logic.
+    // (Yoga: "The W3C spec doesn't say anything about the 'overflow' property, but all
+    // major browsers appear to implement the following logic.")
     if ((!isMainAxisRow && node->getStyle().overflow() == YGOverflowScroll) ||
         node->getStyle().overflow() != YGOverflowScroll) {
       if (YGFloatIsUndefined(childWidth) && !YGFloatIsUndefined(width)) {
@@ -1355,6 +1370,8 @@ static void YGNodeComputeFlexBasisForChild(
       }
     }
 
+    // If the node has a set aspect ratio, and the cross axis is already defined
+    // calculate the main axis based on the ratio
     const auto& childStyle = child->getStyle();
     if (!childStyle.aspectRatio().isUndefined()) {
       if (!isMainAxisRow && childWidthMeasureMode == YGMeasureModeExactly) {
@@ -1370,7 +1387,7 @@ static void YGNodeComputeFlexBasisForChild(
     }
 
     // If child has no defined size in the cross axis and is set to stretch, set
-    // the cross axis to be measured exactly with the available inner width
+    // the cross axis to be measured exactly with the available size
 
     const bool hasExactWidth =
         !YGFloatIsUndefined(width) && widthMode == YGMeasureModeExactly;
@@ -1404,7 +1421,8 @@ static void YGNodeComputeFlexBasisForChild(
         childWidthMeasureMode = YGMeasureModeExactly;
       }
     }
-
+    
+    // Ensure computed values are within the node's max dimensions
     YGConstrainMaxSizeForMode(
         child,
         YGFlexDirectionRow,
@@ -1941,6 +1959,8 @@ static float YGNodeComputeFlexBasisForChildren(
       child->setLayoutComputedFlexBasisGeneration(generationCount);
       child->setLayoutComputedFlexBasis(YGFloatOptional(0));
     } else {
+      // Finds the flex basis of a child from its style
+      // Uses provided width and height for cross axis if the child is set to stretch
       YGNodeComputeFlexBasisForChild(
           node,
           child,
@@ -1981,8 +2001,10 @@ static YGCollectFlexItemsRowValues YGCalculateCollectFlexItemsRowValues(
     const uint32_t lineCount) {
   YGCollectFlexItemsRowValues flexAlgoRowMeasurement = {};
   flexAlgoRowMeasurement.relativeChildren.reserve(node->getChildren().size());
-
+  
+  flexAlgoRowMeasurement.isBlockNonInline = false;
   float sizeConsumedOnCurrentLineIncludingMinConstraint = 0;
+  
   const YGFlexDirection mainAxis = YGResolveFlexDirection(
       node->getStyle().flexDirection(), node->resolveDirection(ownerDirection));
   const bool isNodeFlexWrap = node->getStyle().flexWrap() != YGWrapNoWrap;
@@ -2050,6 +2072,119 @@ static YGCollectFlexItemsRowValues YGCalculateCollectFlexItemsRowValues(
   return flexAlgoRowMeasurement;
 }
 
+// This function assumes that all the children of node have their
+// computedFlexBasis properly computed(To do this use
+// YGNodeComputeFlexBasisForChildren function). This function calculates
+// YGCollectFlexItemsRowMeasurement
+static YGCollectFlexItemsRowValues YGCalculateCollectBlockItemsRowValues(
+    const YGNodeRef& node,
+    const YGDirection ownerDirection,
+    const float mainAxisownerSize,
+    const float availableInnerWidth,
+    const float availableInnerMainDim,
+    const uint32_t startOfLineIndex,
+    const uint32_t lineCount) {
+  // Struct to hold the results of this process
+  YGCollectFlexItemsRowValues flexAlgoRowMeasurement = {};
+  flexAlgoRowMeasurement.relativeChildren.reserve(node->getChildren().size());
+  
+  // We need to track whether the line holds a single, non-inline block element - set to false intially
+  flexAlgoRowMeasurement.isBlockNonInline = false;
+
+  // Main axis size consumed for each line
+  float sizeConsumedOnCurrentLineIncludingMinConstraint = 0;
+  
+  // Force main axis to row
+  // This is needed for inline elements - non-inline elements will each take up a full row
+  const YGFlexDirection mainAxis = YGFlexDirectionRow;
+  // Force wrapping on
+  const bool isNodeFlexWrap = true;
+
+  // Add items to the current line until it's full or we run out of items.
+  // (Remember non-inline items take up a full row in block formatting)
+  uint32_t endOfLineIndex = startOfLineIndex;
+  for (; endOfLineIndex < node->getChildren().size(); endOfLineIndex++) {
+    // Fetch next child and check if it should be added
+    const YGNodeRef child = node->getChild(endOfLineIndex);
+    if (child->getStyle().display() == YGDisplayNone ||
+        child->getStyle().positionType() == YGPositionTypeAbsolute) {
+      continue;
+    }
+    
+    child->setLineIndex(lineCount);
+    const float childMarginMainAxis =
+        child->getMarginForAxis(mainAxis, availableInnerWidth).unwrap();
+    const float flexBasisWithMinAndMaxConstraints =
+        YGNodeBoundAxisWithinMinAndMax(
+            child,
+            mainAxis,
+            child->getLayout().computedFlexBasis,
+            mainAxisownerSize)
+            .unwrap();
+    
+    // If this is not an inline child, it will take up a whole line, so force certain properties
+    if (!child->isDisplayInline())
+    {
+      // If there are already items on this row, move onto the next line
+      if (flexAlgoRowMeasurement.itemsOnLine > 0)
+        break;
+      
+      // Otherwise, ensure this child takes up the whole line, then break
+      sizeConsumedOnCurrentLineIncludingMinConstraint = availableInnerMainDim;
+      flexAlgoRowMeasurement.sizeConsumedOnCurrentLine = flexBasisWithMinAndMaxConstraints;
+      flexAlgoRowMeasurement.isBlockNonInline = true;
+      flexAlgoRowMeasurement.itemsOnLine = 1;
+      flexAlgoRowMeasurement.totalFlexGrowFactors += child->resolveFlexGrow();
+      flexAlgoRowMeasurement.totalFlexShrinkScaledFactors = 1;
+      flexAlgoRowMeasurement.relativeChildren.push_back(child);
+      endOfLineIndex++;
+      break;
+    }
+
+    // If this is a multi-line flow and this item pushes us over the available
+    // size, we've hit the end of the current line. Break out of the loop and
+    // lay out the current line.
+    if (sizeConsumedOnCurrentLineIncludingMinConstraint +
+                flexBasisWithMinAndMaxConstraints + childMarginMainAxis >
+            availableInnerMainDim &&
+        isNodeFlexWrap && flexAlgoRowMeasurement.itemsOnLine > 0) {
+      break;
+    }
+
+    sizeConsumedOnCurrentLineIncludingMinConstraint +=
+        flexBasisWithMinAndMaxConstraints + childMarginMainAxis;
+    flexAlgoRowMeasurement.sizeConsumedOnCurrentLine +=
+        flexBasisWithMinAndMaxConstraints + childMarginMainAxis;
+    flexAlgoRowMeasurement.itemsOnLine++;
+
+    if (child->isNodeFlexible()) {
+      flexAlgoRowMeasurement.totalFlexGrowFactors += child->resolveFlexGrow();
+
+      // Unlike the grow factor, the shrink factor is scaled relative to the
+      // child dimension.
+      flexAlgoRowMeasurement.totalFlexShrinkScaledFactors +=
+          -child->resolveFlexShrink() *
+          child->getLayout().computedFlexBasis.unwrap();
+    }
+
+    flexAlgoRowMeasurement.relativeChildren.push_back(child);
+  }
+
+  // The total flex factor needs to be floored to 1.
+  if (flexAlgoRowMeasurement.totalFlexGrowFactors > 0 &&
+      flexAlgoRowMeasurement.totalFlexGrowFactors < 1) {
+    flexAlgoRowMeasurement.totalFlexGrowFactors = 1;
+  }
+
+  // The total flex shrink factor needs to be floored to 1.
+  if (flexAlgoRowMeasurement.totalFlexShrinkScaledFactors > 0 &&
+      flexAlgoRowMeasurement.totalFlexShrinkScaledFactors < 1) {
+    flexAlgoRowMeasurement.totalFlexShrinkScaledFactors = 1;
+  }
+  flexAlgoRowMeasurement.endOfLineIndex = endOfLineIndex;
+  return flexAlgoRowMeasurement;
+}
+
 // It distributes the free space to the flexible items and ensures that the size
 // of the flex items abide the min and max constraints. At the end of this
 // function the child nodes would have proper size. Prior using this function
@@ -2065,6 +2200,7 @@ static float YGDistributeFreeSpaceSecondPass(
     const float availableInnerWidth,
     const float availableInnerHeight,
     const bool flexBasisOverflows,
+    const YGMeasureMode measureModeMainDim,
     const YGMeasureMode measureModeCrossDim,
     const bool performLayout,
     const YGConfigRef config,
@@ -2088,7 +2224,25 @@ static float YGDistributeFreeSpaceSecondPass(
                          .unwrap();
     float updatedMainSize = childFlexBasis;
 
-    if (!YGFloatIsUndefined(collectedFlexItemsValues.remainingFreeSpace) &&
+    if (collectedFlexItemsValues.isBlockNonInline)
+    {
+      float childSize = childFlexBasis;
+      
+      if (collectedFlexItemsValues.sizeConsumedOnCurrentLine > 0)
+        printf("here\n");
+      
+      if (!node->isDisplayInline() && measureModeMainDim == YGMeasureModeExactly)
+        childSize += collectedFlexItemsValues.remainingFreeSpace;
+      
+      // Just set size within min max constraints?
+      updatedMainSize = YGNodeBoundAxis(
+          currentRelativeChild,
+          mainAxis,
+          childSize,
+          availableInnerMainDim,
+          availableInnerWidth);
+    }
+    else if (!YGFloatIsUndefined(collectedFlexItemsValues.remainingFreeSpace) &&
         collectedFlexItemsValues.remainingFreeSpace < 0) {
       flexShrinkScaledFactor =
           -currentRelativeChild->resolveFlexShrink() * childFlexBasis;
@@ -2369,6 +2523,7 @@ static void YGResolveFlexibleLength(
     const float availableInnerWidth,
     const float availableInnerHeight,
     const bool flexBasisOverflows,
+    const YGMeasureMode measureModeMainDim,
     const YGMeasureMode measureModeCrossDim,
     const bool performLayout,
     const YGConfigRef config,
@@ -2397,6 +2552,7 @@ static void YGResolveFlexibleLength(
       availableInnerWidth,
       availableInnerHeight,
       flexBasisOverflows,
+      measureModeMainDim,
       measureModeCrossDim,
       performLayout,
       config,
@@ -3009,6 +3165,7 @@ static void YGNodelayoutImpl(
           availableInnerWidth,
           availableInnerHeight,
           flexBasisOverflows,
+          measureModeMainDim,
           measureModeCrossDim,
           performLayout,
           config,
@@ -3608,7 +3765,7 @@ static void YGNodelayoutImpl(
 //
 // Different to flex implementation:
 //    Node is forced to a row flex direction, which will be used to establish a
-//    block formatting context within it. The context supports the following children:
+//    block formatting context within it. The context supports the following types of children:
 //      block, inline-block, flex, inline-flex
 //    Any non-inline children with take up a full row of this node.
 //    Inline children will be slotted into the current row, as long as their flex basis
@@ -3677,12 +3834,14 @@ static void YGNodeBlockImpl(
   const float marginAxisRow = marginRowLeading + marginRowTrailing;
   const float marginAxisColumn = marginColumnLeading + marginColumnTrailing;
 
+  // Apply border given the resolved directions
   node->setLayoutBorder(node->getLeadingBorder(flexRowDirection), startEdge);
   node->setLayoutBorder(node->getTrailingBorder(flexRowDirection), endEdge);
   node->setLayoutBorder(node->getLeadingBorder(flexColumnDirection), YGEdgeTop);
   node->setLayoutBorder(
       node->getTrailingBorder(flexColumnDirection), YGEdgeBottom);
 
+  // Apply padding given the resolved directions
   node->setLayoutPadding(
       node->getLeadingPadding(flexRowDirection, ownerWidth).unwrap(),
       startEdge);
@@ -3695,21 +3854,9 @@ static void YGNodeBlockImpl(
       node->getTrailingPadding(flexColumnDirection, ownerWidth).unwrap(),
       YGEdgeBottom);
 
-  if (node->hasMeasureFunc()) {
-    YGNodeWithMeasureFuncSetMeasuredDimensions(
-        node,
-        availableWidth - marginAxisRow,
-        availableHeight - marginAxisColumn,
-        widthMeasureMode,
-        heightMeasureMode,
-        ownerWidth,
-        ownerHeight,
-        layoutMarkerData,
-        layoutContext,
-        reason);
-    return;
-  }
-
+  // For nodes with no children, the following function will use
+  // any size values that were provided in the node style,
+  // or the minimum size as indicated by the padding and border sizes.
   const uint32_t childCount = YGNodeGetChildCount(node);
   if (childCount == 0) {
     YGNodeEmptyContainerSetMeasuredDimensions(
@@ -3723,8 +3870,8 @@ static void YGNodeBlockImpl(
     return;
   }
 
-  // If we're not being asked to perform a full layout we can skip the algorithm
-  // if we already know the size
+  // If we're not being asked to perform a full layout we can skip the algorithm if we already know the available size
+  // (This checks whether the available width and height are both exact, or the width/height is at most <= 0)
   if (!performLayout &&
       YGNodeFixedSizeSetMeasuredDimensions(
           node,
@@ -3744,12 +3891,15 @@ static void YGNodeBlockImpl(
   node->setLayoutHadOverflow(false);
 
   // STEP 1: CALCULATE VALUES FOR REMAINDER OF ALGORITHM
-  const YGFlexDirection mainAxis =
-      YGResolveFlexDirection(node->getStyle().flexDirection(), direction);
-  const YGFlexDirection crossAxis = YGFlexDirectionCross(mainAxis, direction);
-  const bool isMainAxisRow = YGFlexDirectionIsRow(mainAxis);
-  const bool isNodeFlexWrap = node->getStyle().flexWrap() != YGWrapNoWrap;
+  
+  // Force a row flex direction
+  const YGFlexDirection mainAxis = YGFlexDirectionRow;
+  const YGFlexDirection crossAxis = YGFlexDirectionColumn;
+  const bool isMainAxisRow = true;
+  const bool isNodeFlexWrap = true;
 
+  // Resolve dimensions given the known flex direction of this node...
+  
   const float mainAxisownerSize = isMainAxisRow ? ownerWidth : ownerHeight;
   const float crossAxisownerSize = isMainAxisRow ? ownerHeight : ownerWidth;
 
@@ -3773,6 +3923,7 @@ static void YGNodeBlockImpl(
       isMainAxisRow ? paddingAndBorderAxisCross : paddingAndBorderAxisMain;
 
   // STEP 2: DETERMINE AVAILABLE SIZE IN MAIN AND CROSS DIRECTIONS
+  // This is done as normal...
 
   float availableInnerWidth = YGNodeCalculateAvailableInnerDim(
       node,
@@ -3793,6 +3944,10 @@ static void YGNodeBlockImpl(
       isMainAxisRow ? availableInnerHeight : availableInnerWidth;
 
   // STEP 3: DETERMINE FLEX BASIS FOR EACH ITEM
+  
+  // TODO: Need to work out at what point a block container’s parent needs to know the container’s flex-basis
+  // I think this is deduced from the following steps - YGNodeComputeFlexBasisForChild() says "measure the child"
+  // when it calls YGLayoutNodeInternal()
 
   float totalOuterFlexBasis = YGNodeComputeFlexBasisForChildren(
       node,
@@ -3831,9 +3986,12 @@ static void YGNodeBlockImpl(
   // Max main dimension of all the lines.
   float maxLineMainDim = 0;
   YGCollectFlexItemsRowValues collectedFlexItemsValues;
+  
+  // Iterate across rows/lines until all the children have been collected into them
+  // At the end of each loop: startOfLineIndex = endOfLineIndex
   for (; endOfLineIndex < childCount;
        lineCount++, startOfLineIndex = endOfLineIndex) {
-    collectedFlexItemsValues = YGCalculateCollectFlexItemsRowValues(
+    collectedFlexItemsValues = YGCalculateCollectBlockItemsRowValues(
         node,
         ownerDirection,
         mainAxisownerSize,
@@ -3851,7 +4009,7 @@ static void YGNodeBlockImpl(
     // STEP 5: RESOLVING FLEXIBLE LENGTHS ON MAIN AXIS
     // Calculate the remaining available space that needs to be allocated. If
     // the main dimension size isn't known, it is computed based on the line
-    // length, so there's no more space left to distribute.
+    // length so that there's no more space left to distribute.
 
     bool sizeBasedOnContent = false;
     // If we don't measure with exact main dimension we want to ensure we don't
@@ -3879,6 +4037,7 @@ static void YGNodeBlockImpl(
       const float maxInnerMainDim =
           isMainAxisRow ? maxInnerWidth : maxInnerHeight;
 
+      // Calculate how much space is left on the main axis, given the size of the current line
       if (!YGFloatIsUndefined(minInnerMainDim) &&
           collectedFlexItemsValues.sizeConsumedOnCurrentLine <
               minInnerMainDim) {
@@ -3905,7 +4064,11 @@ static void YGNodeBlockImpl(
         if (node->getConfig()->useLegacyStretchBehaviour) {
           node->setLayoutDidUseLegacyFlag(true);
         }
-        sizeBasedOnContent = !node->getConfig()->useLegacyStretchBehaviour;
+        
+        if (collectedFlexItemsValues.isBlockNonInline)
+          sizeBasedOnContent = false;
+        else
+          sizeBasedOnContent = !node->getConfig()->useLegacyStretchBehaviour;
       }
     }
 
@@ -3920,7 +4083,15 @@ static void YGNodeBlockImpl(
       collectedFlexItemsValues.remainingFreeSpace =
           -collectedFlexItemsValues.sizeConsumedOnCurrentLine;
     }
-
+    
+    if (collectedFlexItemsValues.isBlockNonInline)
+    {
+      if (collectedFlexItemsValues.sizeConsumedOnCurrentLine > 0)
+      {
+        printf("widthMode: %s heightMode: %s\n", YGMeasureModeToString(widthMeasureMode), YGMeasureModeToString(heightMeasureMode));
+        printf("mainMode: %s crossMode: %s\n", YGMeasureModeToString(measureModeMainDim), YGMeasureModeToString(measureModeCrossDim));
+      }
+    }
     if (!canSkipFlex) {
       YGResolveFlexibleLength(
           node,
@@ -3933,6 +4104,7 @@ static void YGNodeBlockImpl(
           availableInnerWidth,
           availableInnerHeight,
           flexBasisOverflows,
+          measureModeMainDim,
           measureModeCrossDim,
           performLayout,
           config,
@@ -4852,7 +5024,9 @@ bool YGLayoutNodeInternal(
           LayoutPassReasonToString(reason));
     }
     
-    if (node->getStyle().display() == YGDisplayBlock)
+    // If the node is set to block formatting, and it is not a leaf node
+    // with a measure function, go to the block implementation
+    if (node->isDisplayBlock() && !node->hasMeasureFunc())
       YGNodeBlockImpl(
         node,
         availableWidth,
@@ -4869,7 +5043,7 @@ bool YGLayoutNodeInternal(
         depth,
         generationCount,
         reason);
-    else
+    else // Otherwise, use the normal flex algorithm
       YGNodelayoutImpl(
         node,
         availableWidth,

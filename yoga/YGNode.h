@@ -339,6 +339,8 @@ public:
   void markDirtyAndPropogate();
   float resolveFlexGrow() const;
   float resolveFlexShrink() const;
+  bool isDisplayBlock() const;
+  bool isDisplayInline() const;
   bool isNodeFlexible();
   bool didUseLegacyFlag();
   bool isLayoutTreeEqualToNode(const YGNode& node) const;

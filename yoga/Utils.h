@@ -38,6 +38,7 @@
 
 struct YGCollectFlexItemsRowValues {
   uint32_t itemsOnLine;
+  bool isBlockNonInline;
   float sizeConsumedOnCurrentLine;
   float totalFlexGrowFactors;
   float totalFlexShrinkScaledFactors;

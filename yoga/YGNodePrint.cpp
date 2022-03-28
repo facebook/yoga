@@ -178,7 +178,7 @@ void YGNodeToString(
 
     if (style.display() != YGNode().getStyle().display()
         || style.displayInline() != YGNode().getStyle().displayInline()) {
-      if (style.displayInline())
+      if (style.displayInline().unwrap() > 0.5f) //TODO: convert to bool properly
         appendFormatedString(
           str, "display: inline-%s; ", YGDisplayToString(style.display()));
       else

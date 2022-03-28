@@ -462,6 +462,17 @@ float YGNode::resolveFlexShrink() const {
       : kDefaultFlexShrink;
 }
 
+bool YGNode::isDisplayBlock() const {
+  return style_.display() == YGDisplayBlock;
+}
+
+bool YGNode::isDisplayInline() const {
+  if (style_.displayInline().isUndefined()) {
+    return false;
+  }
+  return style_.displayInline().unwrap() > 0.5f;
+}
+
 bool YGNode::isNodeFlexible() {
   return (
       (style_.positionType() != YGPositionTypeAbsolute) &&

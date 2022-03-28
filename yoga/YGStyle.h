@@ -77,6 +77,7 @@ public:
   };
 
   YGStyle() {
+    display() = YGDisplayBlock;
     alignContent() = YGAlignFlexStart;
     alignItems() = YGAlignStretch;
   }
