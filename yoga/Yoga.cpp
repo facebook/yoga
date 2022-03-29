@@ -2130,7 +2130,6 @@ static YGCollectFlexItemsRowValues YGCalculateCollectBlockItemsRowValues(
         break;
       
       // Otherwise, ensure this child takes up the whole line, then break
-      sizeConsumedOnCurrentLineIncludingMinConstraint = availableInnerMainDim;
       flexAlgoRowMeasurement.sizeConsumedOnCurrentLine = flexBasisWithMinAndMaxConstraints;
       flexAlgoRowMeasurement.isBlockNonInline = true;
       flexAlgoRowMeasurement.itemsOnLine = 1;
@@ -3967,10 +3966,7 @@ static void YGNodeBlockImpl(
   const bool flexBasisOverflows = measureModeMainDim == YGMeasureModeUndefined
       ? false
       : totalOuterFlexBasis > availableInnerMainDim;
-  if (isNodeFlexWrap && flexBasisOverflows &&
-      measureModeMainDim == YGMeasureModeAtMost) {
-    measureModeMainDim = YGMeasureModeExactly;
-  }
+
   // STEP 4: COLLECT FLEX ITEMS INTO FLEX LINES
 
   // Indexes of children that represent the first and last items in the line.
@@ -4245,9 +4241,11 @@ static void YGNodeBlockImpl(
               const float childHeight =
                   !isMainAxisRow ? childMainSize : childCrossSize;
 
-              auto alignContent = node->getStyle().alignContent();
-              auto crossAxisDoesNotGrow =
-                  alignContent != YGAlignStretch && isNodeFlexWrap;
+              // For block formatting, force "flex-start" alignment and a non-growing cross axis
+              // This means elements will be stacked from top to bottom and the vertical axis won't stretch
+              auto alignContent = YGAlignFlexStart;
+              auto crossAxisDoesNotGrow = true;
+                      
               const YGMeasureMode childWidthMeasureMode =
                   YGFloatIsUndefined(childWidth) ||
                       (!isMainAxisRow && crossAxisDoesNotGrow)
@@ -4316,42 +4314,7 @@ static void YGNodeBlockImpl(
   if (performLayout && (isNodeFlexWrap || YGIsBaselineLayout(node))) {
     float crossDimLead = 0;
     float currentLead = leadingPaddingAndBorderCross;
-    if (!YGFloatIsUndefined(availableInnerCrossDim)) {
-      const float remainingAlignContentDim =
-          availableInnerCrossDim - totalLineCrossDim;
-      switch (node->getStyle().alignContent()) {
-        case YGAlignFlexEnd:
-          currentLead += remainingAlignContentDim;
-          break;
-        case YGAlignCenter:
-          currentLead += remainingAlignContentDim / 2;
-          break;
-        case YGAlignStretch:
-          if (availableInnerCrossDim > totalLineCrossDim) {
-            crossDimLead = remainingAlignContentDim / lineCount;
-          }
-          break;
-        case YGAlignSpaceAround:
-          if (availableInnerCrossDim > totalLineCrossDim) {
-            currentLead += remainingAlignContentDim / (2 * lineCount);
-            if (lineCount > 1) {
-              crossDimLead = remainingAlignContentDim / lineCount;
-            }
-          } else {
-            currentLead += remainingAlignContentDim / 2;
-          }
-          break;
-        case YGAlignSpaceBetween:
-          if (availableInnerCrossDim > totalLineCrossDim && lineCount > 1) {
-            crossDimLead = remainingAlignContentDim / (lineCount - 1);
-          }
-          break;
-        case YGAlignAuto:
-        case YGAlignFlexStart:
-        case YGAlignBaseline:
-          break;
-      }
-    }
+    
     uint32_t endIndex = 0;
     for (uint32_t i = 0; i < lineCount; i++) {
       const uint32_t startIndex = endIndex;
