@@ -13,6 +13,7 @@ bool operator==(const YGStyle& lhs, const YGStyle& rhs) {
   bool areNonFloatValuesEqual = lhs.direction() == rhs.direction() &&
       lhs.flexDirection() == rhs.flexDirection() &&
       lhs.justifyContent() == rhs.justifyContent() &&
+      lhs.textAlign() == rhs.textAlign() &&
       lhs.alignContent() == rhs.alignContent() &&
       lhs.alignItems() == rhs.alignItems() &&
       lhs.alignSelf() == rhs.alignSelf() &&

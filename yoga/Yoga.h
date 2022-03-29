@@ -162,6 +162,11 @@ WIN_EXPORT void YGNodeStyleSetJustifyContent(
     YGJustify justifyContent);
 WIN_EXPORT YGJustify YGNodeStyleGetJustifyContent(YGNodeConstRef node);
 
+WIN_EXPORT void YGNodeStyleSetTextAlign(
+    YGNodeRef node,
+    YGAlignText textAlign);
+WIN_EXPORT YGAlignText YGNodeStyleGetTextAlign(YGNodeConstRef node);
+
 WIN_EXPORT void YGNodeStyleSetAlignContent(
     YGNodeRef node,
     YGAlign alignContent);

@@ -65,6 +65,12 @@ YG_ENUM_SEQ_DECL(
     YGAlignSpaceBetween,
     YGAlignSpaceAround);
 
+YG_ENUM_SEQ_DECL(
+    YGAlignText,
+    YGAlignTextLeft,
+    YGAlignTextRight,
+    YGAlignTextCenter);
+
 YG_ENUM_SEQ_DECL(YGDimension, YGDimensionWidth, YGDimensionHeight)
 
 YG_ENUM_SEQ_DECL(

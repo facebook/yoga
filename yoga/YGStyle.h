@@ -78,6 +78,7 @@ public:
 
   YGStyle() {
     display() = YGDisplayBlock;
+    textAlign() = YGAlignTextLeft;
     alignContent() = YGAlignFlexStart;
     alignItems() = YGAlignStretch;
   }
@@ -89,8 +90,10 @@ private:
       directionOffset + facebook::yoga::detail::bitWidthFn<YGDirection>();
   static constexpr size_t justifyContentOffset = flexdirectionOffset +
       facebook::yoga::detail::bitWidthFn<YGFlexDirection>();
+  static constexpr size_t textAlignOffset =
+      justifyContentOffset + facebook::yoga::detail::bitWidthFn<YGAlignText>();
   static constexpr size_t alignContentOffset =
-      justifyContentOffset + facebook::yoga::detail::bitWidthFn<YGJustify>();
+      textAlignOffset + facebook::yoga::detail::bitWidthFn<YGJustify>();
   static constexpr size_t alignItemsOffset =
       alignContentOffset + facebook::yoga::detail::bitWidthFn<YGAlign>();
   static constexpr size_t alignSelfOffset =
@@ -146,7 +149,13 @@ public:
   BitfieldRef<YGJustify> justifyContent() {
     return {*this, justifyContentOffset};
   }
-
+  
+  YGAlignText textAlign() const {
+    return facebook::yoga::detail::getEnumData<YGAlignText>(
+        flags, textAlignOffset);
+  }
+  BitfieldRef<YGAlignText> textAlign() { return {*this, textAlignOffset}; }
+  
   YGAlign alignContent() const {
     return facebook::yoga::detail::getEnumData<YGAlign>(
         flags, alignContentOffset);

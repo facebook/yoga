@@ -588,6 +588,16 @@ YOGA_EXPORT YGJustify YGNodeStyleGetJustifyContent(const YGNodeConstRef node) {
   return node->getStyle().justifyContent();
 }
 
+YOGA_EXPORT void YGNodeStyleSetTextAlign(
+    const YGNodeRef node,
+    const YGAlignText textAlign) {
+  updateStyle<MSVC_HINT(textAlign)>(
+      node, &YGStyle::textAlign, textAlign);
+}
+YOGA_EXPORT YGAlignText YGNodeStyleGetTextAlign(const YGNodeConstRef node) {
+  return node->getStyle().textAlign();
+}
+
 YOGA_EXPORT void YGNodeStyleSetAlignContent(
     const YGNodeRef node,
     const YGAlign alignContent) {
@@ -2632,7 +2642,23 @@ static void YGJustifyMainAxis(
   // each two elements.
   float leadingMainDim = 0;
   float betweenMainDim = 0;
-  const YGJustify justifyContent = node->getStyle().justifyContent();
+  YGJustify justifyContent = node->getStyle().justifyContent();
+  
+  // In block formatting, text-align should define the same behaviour as justify-content at this point
+  if (node->isDisplayBlock())
+  {
+    switch (node->getStyle().textAlign()) {
+      case YGAlignTextLeft:
+        justifyContent = YGJustifyFlexStart;
+        break;
+      case YGAlignTextRight:
+        justifyContent = YGJustifyFlexEnd;
+        break;
+      case YGAlignTextCenter:
+        justifyContent = YGJustifyCenter;
+        break;
+    }
+  }
 
   if (numberOfAutoMarginsOnCurrentLine == 0) {
     switch (justifyContent) {

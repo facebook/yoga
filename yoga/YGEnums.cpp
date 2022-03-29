@@ -7,6 +7,18 @@
 
 #include "YGEnums.h"
 
+const char* YGAlignTextToString(const YGAlignText value) {
+  switch (value) {
+    case YGAlignTextLeft:
+      return "left";
+    case YGAlignTextRight:
+      return "right";
+    case YGAlignTextCenter:
+      return "center";
+  }
+  return "unknown";
+}
+
 const char* YGAlignToString(const YGAlign value) {
   switch (value) {
     case YGAlignAuto:

@@ -153,6 +153,10 @@ void YGNodeToString(
       appendFormatedString(
           str, "align-items: %s; ", YGAlignToString(style.alignItems()));
     }
+    if (style.textAlign() != YGNode().getStyle().textAlign()) {
+      appendFormatedString(
+          str, "text-align: %s; ", YGAlignTextToString(style.textAlign()));
+    }
     if (style.alignContent() != YGNode().getStyle().alignContent()) {
       appendFormatedString(
           str, "align-content: %s; ", YGAlignToString(style.alignContent()));
