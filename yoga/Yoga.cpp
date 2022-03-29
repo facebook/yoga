@@ -4398,7 +4398,7 @@ static void YGNodeBlockImpl(
             continue;
           }
           if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
-            switch (YGNodeAlignItem(node, child)) {
+            switch (YGAlignCenter) { // TODO: use a new verticalAlign property to position items here
               case YGAlignFlexStart: {
                 child->setLayoutPosition(
                     currentLead +
