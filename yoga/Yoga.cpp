@@ -4337,7 +4337,14 @@ static void YGNodeBlockImpl(
 
   // STEP 8: MULTI-LINE CONTENT ALIGNMENT
   // currentLead stores the size of the cross dim
-  if (performLayout && (isNodeFlexWrap || YGIsBaselineLayout(node))) {
+  
+  // For determining collapsed margins
+  float maxTopMargin = 0;
+  float maxBottomMargin = 0;
+  float maxBottomMarginPrev = 0;
+  float collapseTotal = 0;
+  
+  if (isNodeFlexWrap || YGIsBaselineLayout(node)) {
     float crossDimLead = 0;
     float currentLead = leadingPaddingAndBorderCross;
     
@@ -4386,10 +4393,16 @@ static void YGNodeBlockImpl(
             lineHeight = YGFloatMax(
                 lineHeight, maxAscentForCurrentLine + maxDescentForCurrentLine);
           }
+          
+          maxTopMargin = YGFloatMax(maxTopMargin, child->getLeadingMargin(crossAxis, availableInnerWidth).unwrap());
+          maxBottomMargin = YGFloatMax(maxBottomMargin, child->getTrailingMargin(crossAxis, availableInnerWidth).unwrap());
         }
       }
       endIndex = ii;
       lineHeight += crossDimLead;
+      
+      float collapsedMarginOffset = YGFloatMin(maxBottomMarginPrev, maxTopMargin);
+      collapseTotal += collapsedMarginOffset;
 
       if (performLayout) {
         for (ii = startIndex; ii < endIndex; ii++) {
@@ -4398,7 +4411,8 @@ static void YGNodeBlockImpl(
             continue;
           }
           if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
-            switch (YGAlignCenter) { // TODO: use a new verticalAlign property to position items here
+            switch (YGAlignCenter) { // TODO: implement vertical-align property to position items here
+                                     // note collapsedMarginOffset is only applied for YGAlignCenter so far
               case YGAlignFlexStart: {
                 child->setLayoutPosition(
                     currentLead +
@@ -4421,7 +4435,7 @@ static void YGNodeBlockImpl(
                     child->getLayout().measuredDimensions[dim[crossAxis]];
 
                 child->setLayoutPosition(
-                    currentLead + (lineHeight - childHeight) / 2,
+                    (currentLead + (lineHeight - childHeight) / 2) - collapseTotal,
                     pos[crossAxis]);
                 break;
               }
@@ -4499,7 +4513,10 @@ static void YGNodeBlockImpl(
         }
       }
       currentLead += lineHeight;
+      maxBottomMarginPrev = maxBottomMargin;
     }
+    
+    totalLineCrossDim -= collapseTotal;
   }
 
   // STEP 9: COMPUTING FINAL DIMENSIONS
