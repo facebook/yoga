@@ -1311,19 +1311,19 @@ static void YGNodeComputeFlexBasisForChild(
     const YGFloatOptional paddingAndBorder = YGFloatOptional(
         YGNodePaddingAndBorderForAxis(child, YGFlexDirectionRow, ownerWidth));
 
-    child->setLayoutComputedFlexBasis(YGFloatOptionalMax(
+    child->setLayoutComputedFlexBasis(
         YGResolveValue(
-            child->getResolvedDimensions()[YGDimensionWidth], ownerWidth),
-        paddingAndBorder));
+            child->getResolvedDimensions()[YGDimensionWidth], ownerWidth) +
+        paddingAndBorder);
   } else if (!isMainAxisRow && isColumnStyleDimDefined) {
     // The height is definite, so use that as the flex basis.
     const YGFloatOptional paddingAndBorder =
         YGFloatOptional(YGNodePaddingAndBorderForAxis(
             child, YGFlexDirectionColumn, ownerWidth));
-    child->setLayoutComputedFlexBasis(YGFloatOptionalMax(
+    child->setLayoutComputedFlexBasis(
         YGResolveValue(
-            child->getResolvedDimensions()[YGDimensionHeight], ownerHeight),
-        paddingAndBorder));
+            child->getResolvedDimensions()[YGDimensionHeight], ownerHeight) +
+        paddingAndBorder);
   }
   // Otherwise, we need to keep looking...
   else {
