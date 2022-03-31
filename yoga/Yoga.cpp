@@ -4007,20 +4007,28 @@ static void YGNodeBlockImpl(
 
   // Max main dimension of all the lines.
   float maxLineMainDim = 0;
-  YGCollectFlexItemsRowValues collectedFlexItemsValues;
+  
+  // Store flex line results for later
+  // TODO: At the moment, we only use isBlockNonInline for collapsing margins, could just store a vector<bool>?
+  std::vector<YGCollectFlexItemsRowValues> collectedRows;
+  collectedRows.reserve(childCount);
   
   // Iterate across rows/lines until all the children have been collected into them
   // At the end of each loop: startOfLineIndex = endOfLineIndex
   for (; endOfLineIndex < childCount;
        lineCount++, startOfLineIndex = endOfLineIndex) {
-    collectedFlexItemsValues = YGCalculateCollectBlockItemsRowValues(
+    
+    collectedRows.push_back(YGCalculateCollectBlockItemsRowValues(
         node,
         ownerDirection,
         mainAxisownerSize,
         availableInnerWidth,
         availableInnerMainDim,
         startOfLineIndex,
-        lineCount);
+        lineCount));
+    
+    YGCollectFlexItemsRowValues& collectedFlexItemsValues = collectedRows.back();
+    
     endOfLineIndex = collectedFlexItemsValues.endOfLineIndex;
 
     // If we don't need to measure the cross axis, we can skip the entire flex
@@ -4338,20 +4346,24 @@ static void YGNodeBlockImpl(
   // STEP 8: MULTI-LINE CONTENT ALIGNMENT
   // currentLead stores the size of the cross dim
   
-  // For determining collapsed margins
-  float maxTopMargin = 0;
-  float maxBottomMargin = 0;
-  float maxBottomMarginPrev = 0;
-  float collapseTotal = 0;
-  
   if (isNodeFlexWrap || YGIsBaselineLayout(node)) {
     float crossDimLead = 0;
     float currentLead = leadingPaddingAndBorderCross;
+    
+    // For determining collapsed margins
+    float topMargin = 0;
+    float bottomMargin = 0;
+    float bottomMarginPrev = 0;
+    float collapsedMarginOffset = 0;
+    bool thisShouldCollapse = false;
+    bool prevShouldCollapse = false;
     
     uint32_t endIndex = 0;
     for (uint32_t i = 0; i < lineCount; i++) {
       const uint32_t startIndex = endIndex;
       uint32_t ii;
+      
+      thisShouldCollapse = collectedRows.at(i).isBlockNonInline;
 
       // compute the line's height and find the endIndex
       float lineHeight = 0;
@@ -4394,15 +4406,33 @@ static void YGNodeBlockImpl(
                 lineHeight, maxAscentForCurrentLine + maxDescentForCurrentLine);
           }
           
-          maxTopMargin = YGFloatMax(maxTopMargin, child->getLeadingMargin(crossAxis, availableInnerWidth).unwrap());
-          maxBottomMargin = YGFloatMax(maxBottomMargin, child->getTrailingMargin(crossAxis, availableInnerWidth).unwrap());
+          topMargin = child->getLeadingMargin(crossAxis, availableInnerWidth).unwrap();
+          bottomMargin = child->getTrailingMargin(crossAxis, availableInnerWidth).unwrap();
         }
       }
       endIndex = ii;
       lineHeight += crossDimLead;
       
-      float collapsedMarginOffset = YGFloatMin(maxBottomMarginPrev, maxTopMargin);
-      collapseTotal += collapsedMarginOffset;
+      if (prevShouldCollapse && thisShouldCollapse)
+      {
+        float collapsedMargin = 0.f;
+        
+        // The margin of greater magnitude gets used as the final margin
+        // (Margins of opposing polarity just get added together as normal)
+        
+        if (bottomMarginPrev > 0 && topMargin > 0)
+          collapsedMargin = YGFloatMax(bottomMarginPrev, topMargin);
+        
+        if (bottomMarginPrev < 0 && topMargin < 0)
+          collapsedMargin = YGFloatMin(bottomMarginPrev, topMargin);
+        
+        if (collapsedMargin != 0.f)
+        {
+          // We need to shift this line up by the difference between the normal margin and the collapsed margin
+          float totalMargin = bottomMarginPrev + topMargin;
+          collapsedMarginOffset += totalMargin - collapsedMargin;
+        }
+      }
 
       if (performLayout) {
         for (ii = startIndex; ii < endIndex; ii++) {
@@ -4411,112 +4441,119 @@ static void YGNodeBlockImpl(
             continue;
           }
           if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
-            switch (YGAlignCenter) { // TODO: implement vertical-align property to position items here
-                                     // note collapsedMarginOffset is only applied for YGAlignCenter so far
-              case YGAlignFlexStart: {
-                child->setLayoutPosition(
-                    currentLead +
-                        child->getLeadingMargin(crossAxis, availableInnerWidth)
-                            .unwrap(),
-                    pos[crossAxis]);
-                break;
-              }
-              case YGAlignFlexEnd: {
-                child->setLayoutPosition(
-                    currentLead + lineHeight -
-                        child->getTrailingMargin(crossAxis, availableInnerWidth)
-                            .unwrap() -
-                        child->getLayout().measuredDimensions[dim[crossAxis]],
-                    pos[crossAxis]);
-                break;
-              }
-              case YGAlignCenter: {
-                float childHeight =
-                    child->getLayout().measuredDimensions[dim[crossAxis]];
-
-                child->setLayoutPosition(
-                    (currentLead + (lineHeight - childHeight) / 2) - collapseTotal,
-                    pos[crossAxis]);
-                break;
-              }
-              case YGAlignStretch: {
-                child->setLayoutPosition(
-                    currentLead +
-                        child->getLeadingMargin(crossAxis, availableInnerWidth)
-                            .unwrap(),
-                    pos[crossAxis]);
-
-                // Remeasure child with the line height as it as been only
-                // measured with the owners height yet.
-                if (!YGNodeIsStyleDimDefined(
-                        child, crossAxis, availableInnerCrossDim)) {
-                  const float childWidth = isMainAxisRow
-                      ? (child->getLayout()
-                             .measuredDimensions[YGDimensionWidth] +
-                         child->getMarginForAxis(mainAxis, availableInnerWidth)
-                             .unwrap())
-                      : lineHeight;
-
-                  const float childHeight = !isMainAxisRow
-                      ? (child->getLayout()
-                             .measuredDimensions[YGDimensionHeight] +
-                         child->getMarginForAxis(crossAxis, availableInnerWidth)
-                             .unwrap())
-                      : lineHeight;
-
-                  if (!(YGFloatsEqual(
-                            childWidth,
-                            child->getLayout()
-                                .measuredDimensions[YGDimensionWidth]) &&
-                        YGFloatsEqual(
-                            childHeight,
-                            child->getLayout()
-                                .measuredDimensions[YGDimensionHeight]))) {
-                    YGLayoutNodeInternal(
-                        child,
-                        childWidth,
-                        childHeight,
-                        direction,
-                        YGMeasureModeExactly,
-                        YGMeasureModeExactly,
-                        availableInnerWidth,
-                        availableInnerHeight,
-                        true,
-                        LayoutPassReason::kMultilineStretch,
-                        config,
-                        layoutMarkerData,
-                        layoutContext,
-                        depth,
-                        generationCount);
-                  }
-                }
-                break;
-              }
-              case YGAlignBaseline: {
-                child->setLayoutPosition(
-                    currentLead + maxAscentForCurrentLine -
-                        YGBaseline(child, layoutContext) +
-                        child
-                            ->getLeadingPosition(
-                                YGFlexDirectionColumn, availableInnerCrossDim)
-                            .unwrap(),
-                    YGEdgeTop);
-
-                break;
-              }
-              case YGAlignAuto:
-              case YGAlignSpaceBetween:
-              case YGAlignSpaceAround:
-                break;
-            }
+            
+            float childHeight = child->getLayout().dimensions[dim[crossAxis]];
+            
+            float childLeadingPosition = currentLead + child->getLeadingMargin(crossAxis, availableInnerWidth).unwrap() - collapsedMarginOffset;
+              
+            child->setLayoutPosition(childLeadingPosition, pos[crossAxis]);
+            
+//            switch (YGAlignCenter) { // TODO: implement vertical-align property to position items
+//              case YGAlignFlexStart: {
+//                child->setLayoutPosition(
+//                    currentLead +
+//                        child->getLeadingMargin(crossAxis, availableInnerWidth)
+//                            .unwrap(),
+//                    pos[crossAxis]);
+//                break;
+//              }
+//              case YGAlignFlexEnd: {
+//                child->setLayoutPosition(
+//                    currentLead + lineHeight -
+//                        child->getTrailingMargin(crossAxis, availableInnerWidth)
+//                            .unwrap() -
+//                        child->getLayout().measuredDimensions[dim[crossAxis]],
+//                    pos[crossAxis]);
+//                break;
+//              }
+//              case YGAlignCenter: {
+//                float childHeight =
+//                    child->getLayout().measuredDimensions[dim[crossAxis]];
+//
+//                child->setLayoutPosition(
+//                    (currentLead + (lineHeight - childHeight) / 2) - collapsedMarginOffset,
+//                    pos[crossAxis]);
+//                break;
+//              }
+//              case YGAlignStretch: {
+//                child->setLayoutPosition(
+//                    currentLead +
+//                        child->getLeadingMargin(crossAxis, availableInnerWidth)
+//                            .unwrap(),
+//                    pos[crossAxis]);
+//
+//                // Remeasure child with the line height as it as been only
+//                // measured with the owners height yet.
+//                if (!YGNodeIsStyleDimDefined(
+//                        child, crossAxis, availableInnerCrossDim)) {
+//                  const float childWidth = isMainAxisRow
+//                      ? (child->getLayout()
+//                             .measuredDimensions[YGDimensionWidth] +
+//                         child->getMarginForAxis(mainAxis, availableInnerWidth)
+//                             .unwrap())
+//                      : lineHeight;
+//
+//                  const float childHeight = !isMainAxisRow
+//                      ? (child->getLayout()
+//                             .measuredDimensions[YGDimensionHeight] +
+//                         child->getMarginForAxis(crossAxis, availableInnerWidth)
+//                             .unwrap())
+//                      : lineHeight;
+//
+//                  if (!(YGFloatsEqual(
+//                            childWidth,
+//                            child->getLayout()
+//                                .measuredDimensions[YGDimensionWidth]) &&
+//                        YGFloatsEqual(
+//                            childHeight,
+//                            child->getLayout()
+//                                .measuredDimensions[YGDimensionHeight]))) {
+//                    YGLayoutNodeInternal(
+//                        child,
+//                        childWidth,
+//                        childHeight,
+//                        direction,
+//                        YGMeasureModeExactly,
+//                        YGMeasureModeExactly,
+//                        availableInnerWidth,
+//                        availableInnerHeight,
+//                        true,
+//                        LayoutPassReason::kMultilineStretch,
+//                        config,
+//                        layoutMarkerData,
+//                        layoutContext,
+//                        depth,
+//                        generationCount);
+//                  }
+//                }
+//                break;
+//              }
+//              case YGAlignBaseline: {
+//                child->setLayoutPosition(
+//                    currentLead + maxAscentForCurrentLine -
+//                        YGBaseline(child, layoutContext) +
+//                        child
+//                            ->getLeadingPosition(
+//                                YGFlexDirectionColumn, availableInnerCrossDim)
+//                            .unwrap(),
+//                    YGEdgeTop);
+//
+//                break;
+//              }
+//              case YGAlignAuto:
+//              case YGAlignSpaceBetween:
+//              case YGAlignSpaceAround:
+//                break;
+//            }
           }
         }
       }
       currentLead += lineHeight;
-      maxBottomMarginPrev = maxBottomMargin;
+      bottomMarginPrev = bottomMargin;
+      prevShouldCollapse = thisShouldCollapse;
     }
     
-    totalLineCrossDim -= collapseTotal;
+    totalLineCrossDim -= collapsedMarginOffset;
   }
 
   // STEP 9: COMPUTING FINAL DIMENSIONS
