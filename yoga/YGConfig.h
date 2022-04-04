@@ -36,6 +36,7 @@ private:
   bool loggerUsesContext_;
 
 public:
+  bool enableBlockFormatting = false;
   bool useWebDefaults = false;
   bool useLegacyStretchBehaviour = false;
   bool shouldDiffLayoutWithoutLegacyStretchBehaviour = false;

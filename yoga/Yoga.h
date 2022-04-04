@@ -349,6 +349,9 @@ WIN_EXPORT bool YGConfigIsExperimentalFeatureEnabled(
 WIN_EXPORT void YGConfigSetUseWebDefaults(YGConfigRef config, bool enabled);
 WIN_EXPORT bool YGConfigGetUseWebDefaults(YGConfigRef config);
 
+WIN_EXPORT void YGConfigSetEnableBlockFormatting(YGConfigRef config, bool enabled);
+WIN_EXPORT bool YGConfigGetEnableBlockFormatting(YGConfigRef config);
+
 WIN_EXPORT void YGConfigSetCloneNodeFunc(
     YGConfigRef config,
     YGCloneNodeFunc callback);

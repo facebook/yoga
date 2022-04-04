@@ -5056,7 +5056,7 @@ bool YGLayoutNodeInternal(
     
     // If the node is set to block formatting, and it is not a leaf node
     // with a measure function, go to the block implementation
-    if (node->isDisplayBlock() && !node->hasMeasureFunc())
+    if (node->getConfig()->enableBlockFormatting && node->isDisplayBlock() && !node->hasMeasureFunc())
       YGNodeBlockImpl(
         node,
         availableWidth,
@@ -5490,20 +5490,30 @@ inline bool YGConfigIsExperimentalFeatureEnabled(
   return config->experimentalFeatures[feature];
 }
 
-YOGA_EXPORT void YGConfigSetUseWebDefaults(
-    const YGConfigRef config,
-    const bool enabled) {
-  config->useWebDefaults = enabled;
-}
-
 YOGA_EXPORT void YGConfigSetUseLegacyStretchBehaviour(
     const YGConfigRef config,
     const bool useLegacyStretchBehaviour) {
   config->useLegacyStretchBehaviour = useLegacyStretchBehaviour;
 }
 
+YOGA_EXPORT void YGConfigSetUseWebDefaults(
+    const YGConfigRef config,
+    const bool enabled) {
+  config->useWebDefaults = enabled;
+}
+
 bool YGConfigGetUseWebDefaults(const YGConfigRef config) {
   return config->useWebDefaults;
+}
+
+YOGA_EXPORT void YGConfigSetEnableBlockFormatting(
+    const YGConfigRef config,
+    const bool enabled) {
+  config->enableBlockFormatting = enabled;
+}
+
+bool YGConfigGetEnableBlockFormatting(const YGConfigRef config) {
+  return config->enableBlockFormatting;
 }
 
 YOGA_EXPORT void YGConfigSetContext(const YGConfigRef config, void* context) {
