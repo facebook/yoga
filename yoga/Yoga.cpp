@@ -1148,6 +1148,15 @@ static inline float YGNodeDimWithMargin(
           .unwrap();
 }
 
+// Returns the node's greater margin for the specified axis
+static inline float YGNodeGreaterMarginForAxis(
+    const YGNodeRef node,
+    const YGFlexDirection axis,
+    const float widthSize) {
+  return YGFloatMax(node->getLeadingMargin(axis, widthSize).unwrap(),
+                    node->getTrailingMargin(axis, widthSize).unwrap());
+}
+
 static inline bool YGNodeIsStyleDimDefined(
     const YGNodeRef node,
     const YGFlexDirection axis,
@@ -2786,9 +2795,18 @@ static void YGJustifyMainAxis(
             // The cross dimension is the max of the elements dimension since
             // there can only be one element in that cross dimension in the case
             // when the items are not baseline aligned
+            
+            float childCrossAxis = YGNodeDimWithMargin(child, crossAxis, availableInnerWidth);
+            
+            // If this is a block formatting context, and the child has an inner height of 0,
+            // its margin collapse meaning the greater margin is used as the overall height
+            if (node->isDisplayBlock())
+              if (child->getLayout().measuredDimensions[dim[crossAxis]] == 0)
+                childCrossAxis = YGNodeGreaterMarginForAxis(child, crossAxis, availableInnerWidth);
+            
             collectedFlexItemsValues.crossDim = YGFloatMax(
                 collectedFlexItemsValues.crossDim,
-                YGNodeDimWithMargin(child, crossAxis, availableInnerWidth));
+                childCrossAxis);
           }
         }
       } else if (performLayout) {
@@ -4347,7 +4365,6 @@ static void YGNodeBlockImpl(
   // currentLead stores the size of the cross dim
   
   if (isNodeFlexWrap || YGIsBaselineLayout(node)) {
-    float crossDimLead = 0;
     float currentLead = leadingPaddingAndBorderCross;
     
     // For determining collapsed margins
@@ -4367,6 +4384,7 @@ static void YGNodeBlockImpl(
 
       // compute the line's height and find the endIndex
       float lineHeight = 0;
+      float lineHeightInner = 0;
       float maxAscentForCurrentLine = 0;
       float maxDescentForCurrentLine = 0;
       for (ii = startIndex; ii < childCount; ii++) {
@@ -4384,6 +4402,10 @@ static void YGNodeBlockImpl(
                 child->getLayout().measuredDimensions[dim[crossAxis]] +
                     child->getMarginForAxis(crossAxis, availableInnerWidth)
                         .unwrap());
+            
+            lineHeightInner = YGFloatMax(
+                lineHeightInner,
+                child->getLayout().measuredDimensions[dim[crossAxis]]);
           }
           if (YGNodeAlignItem(node, child) == YGAlignBaseline) {
             const float ascent = YGBaseline(child, layoutContext) +
@@ -4404,6 +4426,7 @@ static void YGNodeBlockImpl(
                 YGFloatMax(maxDescentForCurrentLine, descent);
             lineHeight = YGFloatMax(
                 lineHeight, maxAscentForCurrentLine + maxDescentForCurrentLine);
+            lineHeightInner = lineHeight;
           }
           
           topMargin = child->getLeadingMargin(crossAxis, availableInnerWidth).unwrap();
@@ -4411,7 +4434,9 @@ static void YGNodeBlockImpl(
         }
       }
       endIndex = ii;
-      lineHeight += crossDimLead;
+      
+      if (lineHeightInner == 0)
+        lineHeight = YGFloatMax(topMargin, bottomMargin);
       
       if (prevShouldCollapse && thisShouldCollapse)
       {
@@ -4548,9 +4573,13 @@ static void YGNodeBlockImpl(
           }
         }
       }
-      currentLead += lineHeight;
-      bottomMarginPrev = bottomMargin;
-      prevShouldCollapse = thisShouldCollapse;
+      
+      if (lineHeight != 0)
+      {
+        currentLead += lineHeight;
+        bottomMarginPrev = bottomMargin;
+        prevShouldCollapse = thisShouldCollapse;
+      }
     }
     
     totalLineCrossDim -= collapsedMarginOffset;
