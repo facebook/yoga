@@ -138,7 +138,8 @@ YG_ENUM_SEQ_DECL(
     YGPositionType,
     YGPositionTypeStatic,
     YGPositionTypeRelative,
-    YGPositionTypeAbsolute)
+    YGPositionTypeAbsolute,
+    YGPositionTypeFixed)
 
 YG_ENUM_DECL(
     YGPrintOptions,

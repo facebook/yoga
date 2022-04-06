@@ -1097,7 +1097,7 @@ static float YGBaseline(const YGNodeRef node, void* layoutContext) {
     if (child->getLineIndex() > 0) {
       break;
     }
-    if (child->getStyle().positionType() == YGPositionTypeAbsolute) {
+    if (child->isPositionTypeExcluded()) {
       continue;
     }
     if (YGNodeAlignItem(node, child) == YGAlignBaseline ||
@@ -1129,7 +1129,7 @@ static bool YGIsBaselineLayout(const YGNodeRef node) {
   const uint32_t childCount = YGNodeGetChildCount(node);
   for (uint32_t i = 0; i < childCount; i++) {
     const YGNodeRef child = YGNodeGetChild(node, i);
-    if (child->getStyle().positionType() != YGPositionTypeAbsolute &&
+    if (!child->isPositionTypeExcluded() &&
         child->getStyle().alignSelf() == YGAlignBaseline) {
       return true;
     }
@@ -2031,7 +2031,7 @@ static float YGNodeComputeFlexBasisForChildren(
           childDirection, mainDim, crossDim, availableInnerWidth);
     }
 
-    if (child->getStyle().positionType() == YGPositionTypeAbsolute) {
+    if (child->isPositionTypeExcluded()) {
       continue;
     }
     if (child == singleFlexChild) {
@@ -2093,7 +2093,7 @@ static YGCollectFlexItemsRowValues YGCalculateCollectFlexItemsRowValues(
   for (; endOfLineIndex < node->getChildren().size(); endOfLineIndex++) {
     const YGNodeRef child = node->getChild(endOfLineIndex);
     if (child->getStyle().display() == YGDisplayNone ||
-        child->getStyle().positionType() == YGPositionTypeAbsolute) {
+        child->isPositionTypeExcluded()) {
       continue;
     }
     child->setLineIndex(lineCount);
@@ -2186,7 +2186,7 @@ static YGCollectFlexItemsRowValues YGCalculateCollectBlockItemsRowValues(
     // Fetch next child and check if it should be added
     const YGNodeRef child = node->getChild(endOfLineIndex);
     if (child->getStyle().display() == YGDisplayNone ||
-        child->getStyle().positionType() == YGPositionTypeAbsolute) {
+        child->isPositionTypeExcluded()) {
       continue;
     }
     
@@ -2696,7 +2696,7 @@ static void YGJustifyMainAxis(
        i < collectedFlexItemsValues.endOfLineIndex;
        i++) {
     const YGNodeRef child = node->getChild(i);
-    if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
+    if (!child->isPositionTypeExcluded()) {
       if (child->marginLeadingValue(mainAxis).unit == YGUnitAuto) {
         numberOfAutoMarginsOnCurrentLine++;
       }
@@ -2779,7 +2779,8 @@ static void YGJustifyMainAxis(
     if (childStyle.display() == YGDisplayNone) {
       continue;
     }
-    if (childStyle.positionType() == YGPositionTypeAbsolute &&
+    if ((childStyle.positionType() == YGPositionTypeAbsolute ||
+        childStyle.positionType() == YGPositionTypeAbsolute) &&
         child->isLeadingPositionDefined(mainAxis)) {
       if (performLayout) {
         // In case the child is position absolute and has left/top being
@@ -2796,7 +2797,8 @@ static void YGJustifyMainAxis(
       // Now that we placed the element, we need to update the variables.
       // We need to do that only for relative elements. Absolute elements do not
       // take part in that phase.
-      if (childStyle.positionType() != YGPositionTypeAbsolute) {
+      if (childStyle.positionType() != YGPositionTypeAbsolute &&
+          childStyle.positionType() != YGPositionTypeFixed) {
         if (child->marginLeadingValue(mainAxis).unit == YGUnitAuto) {
           collectedFlexItemsValues.mainDim +=
               collectedFlexItemsValues.remainingFreeSpace /
@@ -3342,7 +3344,7 @@ static void YGNodelayoutImpl(
         if (child->getStyle().display() == YGDisplayNone) {
           continue;
         }
-        if (child->getStyle().positionType() == YGPositionTypeAbsolute) {
+        if (child->isPositionTypeExcluded()) {
           // If the child is absolutely positioned and has a
           // top/left/bottom/right set, override all the previously computed
           // positions to set it correctly.
@@ -3543,7 +3545,7 @@ static void YGNodelayoutImpl(
         if (child->getStyle().display() == YGDisplayNone) {
           continue;
         }
-        if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
+        if (!child->isPositionTypeExcluded()) {
           if (child->getLineIndex() != i) {
             break;
           }
@@ -3585,7 +3587,7 @@ static void YGNodelayoutImpl(
           if (child->getStyle().display() == YGDisplayNone) {
             continue;
           }
-          if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
+          if (!child->isPositionTypeExcluded()) {
             switch (YGNodeAlignItem(node, child)) {
               case YGAlignFlexStart: {
                 child->setLayoutPosition(
@@ -3776,7 +3778,7 @@ static void YGNodelayoutImpl(
   if (performLayout && node->getStyle().flexWrap() == YGWrapWrapReverse) {
     for (uint32_t i = 0; i < childCount; i++) {
       const YGNodeRef child = YGNodeGetChild(node, i);
-      if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
+      if (!child->isPositionTypeExcluded()) {
         child->setLayoutPosition(
             node->getLayout().measuredDimensions[dim[crossAxis]] -
                 child->getLayout().position[pos[crossAxis]] -
@@ -3790,7 +3792,7 @@ static void YGNodelayoutImpl(
     // STEP 10: SIZING AND POSITIONING ABSOLUTE CHILDREN
     for (auto child : node->getChildren()) {
       if (child->getStyle().display() == YGDisplayNone ||
-          child->getStyle().positionType() != YGPositionTypeAbsolute) {
+          !child->isPositionTypeExcluded()) {
         continue;
       }
       YGNodeAbsoluteLayoutChild(
@@ -4281,7 +4283,7 @@ static void YGNodeBlockImpl(
         if (child->getStyle().display() == YGDisplayNone) {
           continue;
         }
-        if (child->getStyle().positionType() == YGPositionTypeAbsolute) {
+        if (child->isPositionTypeExcluded()) {
           // If the child is absolutely positioned and has a
           // top/left/bottom/right set, override all the previously computed
           // positions to set it correctly.
@@ -4460,7 +4462,7 @@ static void YGNodeBlockImpl(
         if (child->getStyle().display() == YGDisplayNone) {
           continue;
         }
-        if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
+        if (!child->isPositionTypeExcluded()) {
           if (child->getLineIndex() != i) {
             break;
           }
@@ -4533,7 +4535,7 @@ static void YGNodeBlockImpl(
           if (child->getStyle().display() == YGDisplayNone) {
             continue;
           }
-          if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
+          if (!child->isPositionTypeExcluded()) {
             
             float childHeight = child->getLayout().dimensions[dim[crossAxis]];
             
@@ -4739,7 +4741,7 @@ static void YGNodeBlockImpl(
   if (performLayout && node->getStyle().flexWrap() == YGWrapWrapReverse) {
     for (uint32_t i = 0; i < childCount; i++) {
       const YGNodeRef child = YGNodeGetChild(node, i);
-      if (child->getStyle().positionType() != YGPositionTypeAbsolute) {
+      if (!child->isPositionTypeExcluded()) {
         child->setLayoutPosition(
             node->getLayout().measuredDimensions[dim[crossAxis]] -
                 child->getLayout().position[pos[crossAxis]] -
@@ -4753,7 +4755,7 @@ static void YGNodeBlockImpl(
     // STEP 10: SIZING AND POSITIONING ABSOLUTE CHILDREN
     for (auto child : node->getChildren()) {
       if (child->getStyle().display() == YGDisplayNone ||
-          child->getStyle().positionType() != YGPositionTypeAbsolute) {
+          !child->isPositionTypeExcluded()) {
         continue;
       }
       YGNodeAbsoluteLayoutChild(

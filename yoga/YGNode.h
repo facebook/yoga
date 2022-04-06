@@ -344,6 +344,7 @@ public:
   void markDirtyAndPropogate();
   float resolveFlexGrow() const;
   float resolveFlexShrink() const;
+  bool isPositionTypeExcluded() const;
   bool isDisplayBlock() const;
   bool isDisplayInline() const;
   bool isNodeFlexible();

@@ -199,6 +199,8 @@ const char* YGPositionTypeToString(const YGPositionType value) {
       return "relative";
     case YGPositionTypeAbsolute:
       return "absolute";
+    case YGPositionTypeFixed:
+      return "fixed";
   }
   return "unknown";
 }
