@@ -2209,7 +2209,7 @@ static YGCollectFlexItemsRowValues YGCalculateCollectBlockItemsRowValues(
         break;
       
       // Otherwise, ensure this child takes up the whole line, then break
-      flexAlgoRowMeasurement.sizeConsumedOnCurrentLine = flexBasisWithMinAndMaxConstraints;
+      flexAlgoRowMeasurement.sizeConsumedOnCurrentLine = flexBasisWithMinAndMaxConstraints + childMarginMainAxis;
       flexAlgoRowMeasurement.isBlockNonInline = true;
       flexAlgoRowMeasurement.itemsOnLine = 1;
       flexAlgoRowMeasurement.totalFlexGrowFactors += child->resolveFlexGrow();
