@@ -58,6 +58,7 @@ private:
   uint32_t lineIndex_ = 0;
   YGNodeRef owner_ = nullptr;
   YGVector children_ = {};
+  YGVector relativeAbsChildren_ = {};
   YGConfigRef config_;
   std::array<YGValue, 2> resolvedDimensions_ = {
       {YGValueUndefined, YGValueUndefined}};
@@ -160,6 +161,8 @@ public:
   YGNodeRef getParent() const { return getOwner(); }
 
   const YGVector& getChildren() const { return children_; }
+  
+  const YGVector& getRelativeAbsChildren() const { return relativeAbsChildren_; }
 
   // Applies a callback to all children, after cloning them if they are not
   // owned.
@@ -293,6 +296,8 @@ public:
   void setOwner(YGNodeRef owner) { owner_ = owner; }
 
   void setChildren(const YGVector& children) { children_ = children; }
+  
+  void addRelativeAbsChild(YGNodeRef child) { relativeAbsChildren_.push_back(child); }
 
   // TODO: rvalue override for setChildren
 

@@ -1681,6 +1681,66 @@ static void YGNodeAbsoluteLayoutChild(
          child->getLayout().measuredDimensions[dim[crossAxis]]),
         leading[crossAxis]);
   }
+  
+  // Store the child's newly computed position, for reference when offsetting later
+  child->getLayout().positionBeforeOffset[YGEdgeLeft] = child->getLayout().position[YGEdgeLeft];
+  child->getLayout().positionBeforeOffset[YGEdgeTop] = child->getLayout().position[YGEdgeTop];
+  
+  // Find the ancestral node that the child should be positioned relative to
+  // Statically positioned ('normal') nodes are skipped, meaning the child
+  // should be positioned relative to the first ancestor with position: absolute, realative or fixed (i.e. the viewport)
+  
+  YGNodeRef ancestor = node, nextAncestor;
+  
+  while (ancestor->getStyle().positionType() == YGPositionTypeStatic)
+  {
+    nextAncestor = ancestor->getParent();
+    
+    if (!nextAncestor)
+      break;
+    
+    ancestor = nextAncestor;
+  }
+  
+  // Give the ancestor a reference to the child, so it can be re-positioned later (once the ancestor's position is set)
+  ancestor->addRelativeAbsChild(child);
+}
+
+static void YGNodeOffsetAbsoluteChild(
+    const YGNodeRef parent,
+    const YGNodeRef child) {
+  
+  // Statically positioned ('normal') nodes are skipped, meaning the child
+  // should be positioned relative to the first ancestor with position: absolute, realative or fixed (i.e. the viewport)
+  
+  // We need to find the total difference in position between the parent and the ancestor,
+  // which will be used to offset the child
+  
+  YGNodeRef ancestor = parent, nextAncestor;
+  
+  float leftOffset = 0;
+  float topOffset = 0;
+  
+  while (ancestor->getStyle().positionType() == YGPositionTypeStatic)
+  {
+    leftOffset += ancestor->getLayout().position[YGEdgeLeft];
+    topOffset += ancestor->getLayout().position[YGEdgeTop];
+    
+    nextAncestor = ancestor->getParent();
+    
+    if (!nextAncestor)
+      break;
+    
+    ancestor = nextAncestor;
+  }
+  
+  // Apply the offset
+  
+  const double childLeft = child->getLayout().positionBeforeOffset[YGEdgeLeft];
+  const double childTop = child->getLayout().positionBeforeOffset[YGEdgeTop];
+  
+  child->setLayoutPosition(childLeft - leftOffset, YGEdgeLeft);
+  child->setLayoutPosition(childTop - topOffset, YGEdgeTop);
 }
 
 static void YGNodeWithMeasureFuncSetMeasuredDimensions(
@@ -3746,6 +3806,14 @@ static void YGNodelayoutImpl(
           depth,
           generationCount);
     }
+    
+    // Absolute/fixed nodes that offset relative to this node may not be direct children.
+    // Those that are not direct children have already been positioned by their parent,
+    // but now that THIS node's position is finalised, theirs needs offsetting to account for the difference
+    for (auto child : node->getRelativeAbsChildren()) {
+      YGNodeRef parent = child->getParent();
+      YGNodeOffsetAbsoluteChild(parent, child);
+    }
 
     // STEP 11: SETTING TRAILING POSITIONS FOR CHILDREN
     const bool needsMainTrailingPos = mainAxis == YGFlexDirectionRowReverse ||
@@ -4700,6 +4768,14 @@ static void YGNodeBlockImpl(
           layoutContext,
           depth,
           generationCount);
+    }
+    
+    // Absolute/fixed nodes that offset relative to this node may not be direct children.
+    // Those that are not direct children have already been positioned by their parent,
+    // but now that THIS node's position is finalised, theirs needs offsetting to account for the difference
+    for (auto child : node->getRelativeAbsChildren()) {
+      YGNodeRef parent = child->getParent();
+      YGNodeOffsetAbsoluteChild(parent, child);
     }
 
     // STEP 11: SETTING TRAILING POSITIONS FOR CHILDREN

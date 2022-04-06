@@ -12,6 +12,7 @@ using namespace facebook;
 
 bool YGLayout::operator==(YGLayout layout) const {
   bool isEqual = YGFloatArrayEqual(position, layout.position) &&
+      YGFloatArrayEqual(positionBeforeOffset, layout.positionBeforeOffset) &&
       YGFloatArrayEqual(dimensions, layout.dimensions) &&
       YGFloatArrayEqual(margin, layout.margin) &&
       YGFloatArrayEqual(border, layout.border) &&

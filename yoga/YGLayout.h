@@ -14,6 +14,7 @@ using namespace facebook::yoga;
 
 struct YGLayout {
   std::array<float, 4> position = {};
+  std::array<float, 4> positionBeforeOffset = {};
   std::array<float, 2> dimensions = {{YGUndefined, YGUndefined}};
   std::array<float, 4> margin = {};
   std::array<float, 4> border = {};
