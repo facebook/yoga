@@ -1692,7 +1692,8 @@ static void YGNodeAbsoluteLayoutChild(
   
   YGNodeRef ancestor = node, nextAncestor;
   
-  while (ancestor->getStyle().positionType() == YGPositionTypeStatic)
+  while ((ancestor->getStyle().positionType() == YGPositionTypeStatic && child->getStyle().positionType() != YGPositionTypeFixed) ||
+         child->getStyle().positionType() == YGPositionTypeFixed)
   {
     nextAncestor = ancestor->getParent();
     
@@ -1721,7 +1722,8 @@ static void YGNodeOffsetAbsoluteChild(
   float leftOffset = 0;
   float topOffset = 0;
   
-  while (ancestor->getStyle().positionType() == YGPositionTypeStatic)
+  while ((ancestor->getStyle().positionType() == YGPositionTypeStatic && child->getStyle().positionType() != YGPositionTypeFixed) ||
+         child->getStyle().positionType() == YGPositionTypeFixed)
   {
     leftOffset += ancestor->getLayout().position[YGEdgeLeft];
     topOffset += ancestor->getLayout().position[YGEdgeTop];
