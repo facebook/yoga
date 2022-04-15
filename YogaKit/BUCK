@@ -46,6 +46,11 @@ yoga_apple_library(
     link_whole = True,
     modular = True,
     module_name = "YogaKit",
+    sdk_modules = [
+        "CoreGraphics",
+        "Foundation",
+        "UIKit",
+    ],
     use_submodules = False,
     visibility = ["PUBLIC"],
     deps = [
