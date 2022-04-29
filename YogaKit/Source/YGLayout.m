@@ -489,10 +489,8 @@ static void YGApplyLayoutToViewHierarchy(UIView* view, BOOL preserveOrigin) {
           },
       .size =
           {
-              .width = YGRoundPixelValue(bottomRight.x) -
-                  YGRoundPixelValue(topLeft.x),
-              .height = YGRoundPixelValue(bottomRight.y) -
-                  YGRoundPixelValue(topLeft.y),
+              .width = MAX(0, YGRoundPixelValue(bottomRight.x) - YGRoundPixelValue(topLeft.x)),
+              .height = MAX(0, YGRoundPixelValue(bottomRight.y) - YGRoundPixelValue(topLeft.y)),
           },
   };
 
