@@ -430,7 +430,13 @@ static void YGAttachNodesFromViewHierachy(UIView* const view) {
     if (!YGNodeHasExactSameChildren(node, subviewsToInclude)) {
       YGRemoveAllChildren(node);
       for (int i = 0; i < subviewsToInclude.count; i++) {
-        YGNodeInsertChild(node, subviewsToInclude[i].yoga.node, i);
+          // should remove from owner if node has one owner
+          const YGNodeRef child = subviewsToInclude[i].yoga.node;
+          YGNodeRef owner = YGNodeGetOwner(child);
+          if (owner) {
+              YGNodeRemoveChild(owner, child);
+          }
+        YGNodeInsertChild(node, child, i);
       }
     }
 
