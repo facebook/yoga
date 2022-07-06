@@ -9,6 +9,7 @@ yoga_android_library(
     name = "android",
     srcs = glob(["**/*.java"]),
     autoglob = False,
+    language = "JAVA",
     visibility = [
         "PUBLIC",
     ],
