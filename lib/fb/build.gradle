@@ -33,7 +33,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.facebook.soloader:soloader:0.10.1'
+        implementation 'com.facebook.soloader:soloader:0.10.4'
         implementation 'com.google.code.findbugs:jsr305:3.0.2'
         implementation project(':yoga:proguard-annotations')
     }
