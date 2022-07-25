@@ -11,6 +11,8 @@
 
 #ifdef __cpp_lib_bit_cast
 #include <bit>
+#else
+#include <cstring>
 #endif
 #include "YGValue.h"
 #include "YGMacros.h"
@@ -169,7 +171,7 @@ private:
 
   static float asFloat(uint32_t u) {
 #ifdef __cpp_lib_bit_cast
-    return std::bit_cast<float>(data);
+    return std::bit_cast<float>(u);
 #else
     float f;
     static_assert(sizeof(f) == sizeof(u), "uint32_t and float must have the same size");
