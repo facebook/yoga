@@ -2070,7 +2070,7 @@ static float YGDistributeFreeSpaceSecondPass(
                          currentRelativeChild,
                          mainAxis,
                          currentRelativeChild->getLayout().computedFlexBasis,
-                         mainAxisownerSize)
+                         availableInnerMainDim)
                          .unwrap();
     float updatedMainSize = childFlexBasis;
 
@@ -2256,7 +2256,7 @@ static void YGDistributeFreeSpaceFirstPass(
             currentRelativeChild,
             mainAxis,
             currentRelativeChild->getLayout().computedFlexBasis,
-            mainAxisownerSize)
+            availableInnerMainDim)
             .unwrap();
 
     if (collectedFlexItemsValues.remainingFreeSpace < 0) {
