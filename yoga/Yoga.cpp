@@ -2599,7 +2599,7 @@ static void YGJustifyMainAxis(
       } else if (performLayout) {
         child->setLayoutPosition(
             childLayout.position[pos[mainAxis]] +
-                node->getLeadingBorder(mainAxis) + leadingMainDim,
+                node->getLeadingPadding(mainAxis, ownerWidth).unwrap() + leadingMainDim,
             pos[mainAxis]);
       }
     }
@@ -3522,9 +3522,9 @@ static void YGNodelayoutImpl(
       YGNodeAbsoluteLayoutChild(
           node,
           child,
-          availableInnerWidth,
+          availableWidth,
           isMainAxisRow ? measureModeMainDim : measureModeCrossDim,
-          availableInnerHeight,
+          availableHeight,
           direction,
           config,
           layoutMarkerData,
