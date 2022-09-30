@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,16 +8,17 @@
  * @format
  */
 
+
 const CONSTANTS = require('./YGEnums');
 import type {
   Yoga$Edge,
-  Yoga$FlexWrap,
+  Yoga$Wrap,
   Yoga$Align,
   Yoga$FlexDirection,
   Yoga$Direction,
   Yoga$PositionType,
   Yoga$Overflow,
-  Yoga$JustifyContent,
+  Yoga$Justify,
   Yoga$Display,
   Yoga$ExperimentalFeature,
 } from './YGEnums';
@@ -151,9 +152,9 @@ export type Yoga$Node = {
   getFlexDirection(): Yoga$FlexDirection,
   getFlexGrow(): number,
   getFlexShrink(): number,
-  getFlexWrap(): Yoga$FlexWrap,
+  getFlexWrap(): Yoga$Wrap,
   getHeight(): Value,
-  getJustifyContent(): Yoga$JustifyContent,
+  getJustifyContent(): Yoga$Justify,
   getMargin(edge: Yoga$Edge): Value,
   getMaxHeight(): Value,
   getMaxWidth(): Value,
@@ -182,11 +183,11 @@ export type Yoga$Node = {
   setFlexDirection(flexDirection: Yoga$FlexDirection): void,
   setFlexGrow(flexGrow: number): void,
   setFlexShrink(flexShrink: number): void,
-  setFlexWrap(flexWrap: Yoga$FlexWrap): void,
+  setFlexWrap(flexWrap: Yoga$Wrap): void,
   setHeight(height: number | string): void,
   setHeightAuto(): void,
   setHeightPercent(height: number): void,
-  setJustifyContent(justifyContent: Yoga$JustifyContent): void,
+  setJustifyContent(justifyContent: Yoga$Justify): void,
   setMargin(edge: Yoga$Edge, margin: number): void,
   setMarginAuto(edge: Yoga$Edge): void,
   setMarginPercent(edge: Yoga$Edge, margin: number): void,
