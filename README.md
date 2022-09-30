@@ -18,7 +18,7 @@ Instead of manually writing a test which ensures parity with web implementations
 
 Run `gentest/gentest.rb` to generate test code and re-run `buck test //:yoga` to validate the behavior. One test case will be generated for every root `div` in the input html.
 
-You may need to install the latest watir-webdriver gem (`gem install watir-webdriver`) and [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) to run `gentest/gentest.rb` Ruby script.
+You should run `bundle install` in the `gentest` directory to install dependencies for the `gentest/gentest.rb` Ruby script.
 
 ### .NET
 .NET testing is not integrated in buck yet, you might need to set up .NET testing environment. We have a script which to launch C# test on macOS, `csharp/tests/Facebook.Yoga/test_macos.sh`.
