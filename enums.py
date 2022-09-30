@@ -54,6 +54,7 @@ ENUMS = {
         "WebFlexBasis"
     ],
     "PrintOptions": [("Layout", 1), ("Style", 2), ("Children", 4)],
+    "Gutter": ["Column", "Row", "All"],
 }
 
 # Generated Java enums used to emit @DoNotStrip, but D17519844 removed them
