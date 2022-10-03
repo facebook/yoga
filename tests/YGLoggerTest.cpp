@@ -73,8 +73,7 @@ TEST(YogaTest, logger_default_node_should_print_no_style_info) {
   YGNodeCalculateLayout(root, YGUnitUndefined, YGUnitUndefined, YGDirectionLTR);
   YGNodePrint(
       root,
-      (YGPrintOptions)(
-          YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
+      (YGPrintOptions) (YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
   YGConfigSetLogger(config, NULL);
   YGNodeFree(root);
 
@@ -98,8 +97,7 @@ TEST(YogaTest, logger_node_with_percentage_absolute_position_and_margin) {
   YGNodeCalculateLayout(root, YGUnitUndefined, YGUnitUndefined, YGDirectionLTR);
   YGNodePrint(
       root,
-      (YGPrintOptions)(
-          YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
+      (YGPrintOptions) (YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
   YGConfigSetLogger(config, NULL);
   YGNodeFree(root);
 
@@ -122,8 +120,7 @@ TEST(YogaTest, logger_node_with_children_should_print_indented) {
   YGNodeCalculateLayout(root, YGUnitUndefined, YGUnitUndefined, YGDirectionLTR);
   YGNodePrint(
       root,
-      (YGPrintOptions)(
-          YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
+      (YGPrintOptions) (YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
   YGConfigSetLogger(config, NULL);
   YGNodeFreeRecursive(root);
 

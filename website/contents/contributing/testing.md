@@ -8,7 +8,7 @@ hasPlayground: false
 
 Yoga tries to be as close as possible to chrome in its flexbox behaviour.
 To ensure this most of Yoga's test suite is automatically generateded from
-running the corresponding layout in chrome using a webdriver which then generates 
+running the corresponding layout in chrome using a webdriver which then generates
 C++ test which asserts that Yoga will produce matching outputs for that layout.
 
 ## Running the Test Suite
@@ -34,12 +34,10 @@ Run `gentest/gentest.rb` to generate test code and re-run `buck test //:yoga`
 to validate the behavior. One test case will be generated for every root `div`
 in the input html with the string in the `id` corresponding to the test name.
 
-You may need to install the latest watir gem (`gem install watir`) and
-[ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) to
-run `gentest/gentest.rb` Ruby script.
+You should run `bundle install` in the `gentest` directory to install dependencies for the `gentest/gentest.rb` Ruby script.
 
 ## Manual test
 
 For some aspects of Yoga we cannot generate a test using the test generation
-infrastructure described earlier. For these cases we manually write a test in 
-the `/tests` directory.	
+infrastructure described earlier. For these cases we manually write a test in
+the `/tests` directory.
