@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -13,39 +13,31 @@
 
 class Config {
 
-    friend class Node;
+  friend class Node;
 
- public:
+public:
+  static Config* create(void);
 
-    static Config * create(void);
+  static void destroy(Config* config);
 
-    static void destroy(Config * config);
+private:
+  Config(void);
 
- private:
+public:
+  ~Config(void);
 
-    Config(void);
+public: // Prevent accidental copy
+  Config(Config const&) = delete;
 
- public:
+  Config const& operator=(Config const&) = delete;
 
-    ~Config(void);
+public: // Setters
+  void setExperimentalFeatureEnabled(int feature, bool enabled);
+  void setPointScaleFactor(float pixelsInPoint);
 
- public: // Prevent accidental copy
+public: // Getters
+  bool isExperimentalFeatureEnabled(int feature) const;
 
-    Config(Config const &) = delete;
-
-    Config const & operator=(Config const &) = delete;
-
- public: // Setters
-
-    void setExperimentalFeatureEnabled(int feature, bool enabled);
-    void setPointScaleFactor(float pixelsInPoint);
- 
- public: // Getters
-
-    bool isExperimentalFeatureEnabled(int feature) const;
-
- private:
-
-    YGConfigRef m_config;
-
+private:
+  YGConfigRef m_config;
 };

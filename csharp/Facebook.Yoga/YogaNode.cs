@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -672,11 +672,6 @@ namespace Facebook.Yoga
         {
             return _children != null ? ((IEnumerable<YogaNode>)_children).GetEnumerator() :
                 System.Linq.Enumerable.Empty<YogaNode>().GetEnumerator();
-        }
-
-        public static int GetInstanceCount()
-        {
-            return Native.YGNodeGetInstanceCount();
         }
     }
 }

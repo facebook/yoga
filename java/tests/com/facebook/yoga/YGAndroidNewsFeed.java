@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGAndroidNewsFeed {
 
   @Test
   public void test_android_news_feed() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignContent(YogaAlign.STRETCH);
@@ -60,8 +60,7 @@ public class YGAndroidNewsFeed {
     root_child0_child0_child0_child0_child0_child0.setAlignContent(YogaAlign.STRETCH);
     root_child0_child0_child0_child0_child0_child0.setWidth(120f);
     root_child0_child0_child0_child0_child0_child0.setHeight(120f);
-    root_child0_child0_child0_child0_child0.addChildAt(
-        root_child0_child0_child0_child0_child0_child0, 0);
+    root_child0_child0_child0_child0_child0.addChildAt(root_child0_child0_child0_child0_child0_child0, 0);
 
     final YogaNode root_child0_child0_child0_child0_child1 = createNode(config);
     root_child0_child0_child0_child0_child1.setAlignContent(YogaAlign.STRETCH);
@@ -77,14 +76,12 @@ public class YGAndroidNewsFeed {
     root_child0_child0_child0_child0_child1_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0_child0_child0_child0_child1_child0.setAlignContent(YogaAlign.STRETCH);
     root_child0_child0_child0_child0_child1_child0.setFlexShrink(1f);
-    root_child0_child0_child0_child0_child1.addChildAt(
-        root_child0_child0_child0_child0_child1_child0, 0);
+    root_child0_child0_child0_child0_child1.addChildAt(root_child0_child0_child0_child0_child1_child0, 0);
 
     final YogaNode root_child0_child0_child0_child0_child1_child1 = createNode(config);
     root_child0_child0_child0_child0_child1_child1.setAlignContent(YogaAlign.STRETCH);
     root_child0_child0_child0_child0_child1_child1.setFlexShrink(1f);
-    root_child0_child0_child0_child0_child1.addChildAt(
-        root_child0_child0_child0_child0_child1_child1, 1);
+    root_child0_child0_child0_child0_child1.addChildAt(root_child0_child0_child0_child0_child1_child1, 1);
 
     final YogaNode root_child0_child0_child1 = createNode(config);
     root_child0_child0_child1.setAlignContent(YogaAlign.STRETCH);
@@ -107,8 +104,7 @@ public class YGAndroidNewsFeed {
     root_child0_child0_child1_child0_child0_child0.setAlignContent(YogaAlign.STRETCH);
     root_child0_child0_child1_child0_child0_child0.setWidth(72f);
     root_child0_child0_child1_child0_child0_child0.setHeight(72f);
-    root_child0_child0_child1_child0_child0.addChildAt(
-        root_child0_child0_child1_child0_child0_child0, 0);
+    root_child0_child0_child1_child0_child0.addChildAt(root_child0_child0_child1_child0_child0_child0, 0);
 
     final YogaNode root_child0_child0_child1_child0_child1 = createNode(config);
     root_child0_child0_child1_child0_child1.setAlignContent(YogaAlign.STRETCH);
@@ -124,14 +120,12 @@ public class YGAndroidNewsFeed {
     root_child0_child0_child1_child0_child1_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0_child0_child1_child0_child1_child0.setAlignContent(YogaAlign.STRETCH);
     root_child0_child0_child1_child0_child1_child0.setFlexShrink(1f);
-    root_child0_child0_child1_child0_child1.addChildAt(
-        root_child0_child0_child1_child0_child1_child0, 0);
+    root_child0_child0_child1_child0_child1.addChildAt(root_child0_child0_child1_child0_child1_child0, 0);
 
     final YogaNode root_child0_child0_child1_child0_child1_child1 = createNode(config);
     root_child0_child0_child1_child0_child1_child1.setAlignContent(YogaAlign.STRETCH);
     root_child0_child0_child1_child0_child1_child1.setFlexShrink(1f);
-    root_child0_child0_child1_child0_child1.addChildAt(
-        root_child0_child0_child1_child0_child1_child1, 1);
+    root_child0_child0_child1_child0_child1.addChildAt(root_child0_child0_child1_child0_child1_child1, 1);
     root.setDirection(YogaDirection.LTR);
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
 

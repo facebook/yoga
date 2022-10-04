@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_column() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP);
@@ -110,7 +110,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_row() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -195,7 +195,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_row_align_items_flex_end() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -281,7 +281,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_row_align_items_center() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -367,7 +367,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_flex_wrap_children_with_min_main_overriding_flex_basis() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -424,7 +424,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_flex_wrap_wrap_to_child_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
 
@@ -506,7 +506,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_flex_wrap_align_stretch_fits_one_row() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -532,12 +532,12 @@ public class YGFlexWrapTest {
     assertEquals(0f, root_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutHeight(), 0.0f);
 
     assertEquals(50f, root_child1.getLayoutX(), 0.0f);
     assertEquals(0f, root_child1.getLayoutY(), 0.0f);
     assertEquals(50f, root_child1.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
+    assertEquals(0f, root_child1.getLayoutHeight(), 0.0f);
 
     root.setDirection(YogaDirection.RTL);
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
@@ -550,17 +550,17 @@ public class YGFlexWrapTest {
     assertEquals(100f, root_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutHeight(), 0.0f);
 
     assertEquals(50f, root_child1.getLayoutX(), 0.0f);
     assertEquals(0f, root_child1.getLayoutY(), 0.0f);
     assertEquals(50f, root_child1.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root_child1.getLayoutHeight(), 0.0f);
+    assertEquals(0f, root_child1.getLayoutHeight(), 0.0f);
   }
 
   @Test
   public void test_wrap_reverse_row_align_content_flex_start() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -660,7 +660,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_reverse_row_align_content_center() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -761,7 +761,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_reverse_row_single_line_different_size() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -861,7 +861,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_reverse_row_align_content_stretch() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -962,7 +962,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_reverse_row_align_content_space_around() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1063,7 +1063,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_reverse_column_fixed_size() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1164,7 +1164,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrapped_row_within_align_items_center() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1234,7 +1234,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrapped_row_within_align_items_flex_start() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
@@ -1304,7 +1304,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrapped_row_within_align_items_flex_end() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_END);
@@ -1374,7 +1374,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrapped_column_max_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1452,7 +1452,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrapped_column_max_height_flex() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1536,7 +1536,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_nodes_with_content_sizing_overflowing_margin() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(500f);
@@ -1633,7 +1633,7 @@ public class YGFlexWrapTest {
 
   @Test
   public void test_wrap_nodes_with_content_sizing_margin_cross() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(500f);

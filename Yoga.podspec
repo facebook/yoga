@@ -1,12 +1,12 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
 #
-#  Copyright (c) Facebook, Inc. and its affiliates.
-#
-#  This source code is licensed under the MIT license found in the LICENSE
-#  file in the root directory of this source tree.
-#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
+
 Pod::Spec.new do |spec|
   spec.name = 'Yoga'
-  spec.version = '1.12.0-pre.1'
+  spec.version = '1.14.0'
   spec.license =  { :type => 'MIT', :file => "LICENSE" }
   spec.homepage = 'https://yogalayout.com/'
   spec.documentation_url = 'https://yogalayout.com/docs'
@@ -19,7 +19,7 @@ Pod::Spec.new do |spec|
     :git => 'https://github.com/facebook/yoga.git',
     :tag => spec.version.to_s,
   }
-  spec.platforms = { :ios => "4.3", :osx => "10.7", :tvos => "10.0", :watchos => "2.0" }
+  spec.platforms = { :ios => "8.0", :osx => "10.7", :tvos => "10.0", :watchos => "2.0" }
   spec.module_name = 'yoga'
   spec.requires_arc = false
   spec.pod_target_xcconfig = {
@@ -34,6 +34,6 @@ Pod::Spec.new do |spec|
       '-fPIC'
   ]
   spec.source_files = 'yoga/**/*.{c,h,cpp}'
-  spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
+  spec.public_header_files = 'yoga/*.h'
 
 end

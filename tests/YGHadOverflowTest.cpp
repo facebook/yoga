@@ -1,9 +1,10 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the LICENSE
- * file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
+
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
 
@@ -29,7 +30,9 @@ protected:
   YGConfigRef config;
 };
 
-TEST_F(YogaTest_HadOverflowTests, children_overflow_no_wrap_and_no_flex_children) {
+TEST_F(
+    YogaTest_HadOverflowTests,
+    children_overflow_no_wrap_and_no_flex_children) {
   const YGNodeRef child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(child0, 80);
   YGNodeStyleSetHeight(child0, 40);
@@ -47,7 +50,9 @@ TEST_F(YogaTest_HadOverflowTests, children_overflow_no_wrap_and_no_flex_children
   ASSERT_TRUE(YGNodeLayoutGetHadOverflow(root));
 }
 
-TEST_F(YogaTest_HadOverflowTests, spacing_overflow_no_wrap_and_no_flex_children) {
+TEST_F(
+    YogaTest_HadOverflowTests,
+    spacing_overflow_no_wrap_and_no_flex_children) {
   const YGNodeRef child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(child0, 80);
   YGNodeStyleSetHeight(child0, 40);

@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_flex_start() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -127,7 +127,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_flex_start_without_height_on_children() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP);
@@ -224,7 +224,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_flex_start_with_flex() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP);
@@ -327,7 +327,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_flex_end() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignContent(YogaAlign.FLEX_END);
@@ -367,39 +367,6 @@ public class YGAlignContentTest {
     assertEquals(100f, root.getLayoutWidth(), 0.0f);
     assertEquals(100f, root.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
-    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
-    assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
-    assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
-
-    assertEquals(0f, root_child1.getLayoutX(), 0.0f);
-    assertEquals(10f, root_child1.getLayoutY(), 0.0f);
-    assertEquals(50f, root_child1.getLayoutWidth(), 0.0f);
-    assertEquals(10f, root_child1.getLayoutHeight(), 0.0f);
-
-    assertEquals(0f, root_child2.getLayoutX(), 0.0f);
-    assertEquals(20f, root_child2.getLayoutY(), 0.0f);
-    assertEquals(50f, root_child2.getLayoutWidth(), 0.0f);
-    assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
-
-    assertEquals(0f, root_child3.getLayoutX(), 0.0f);
-    assertEquals(30f, root_child3.getLayoutY(), 0.0f);
-    assertEquals(50f, root_child3.getLayoutWidth(), 0.0f);
-    assertEquals(10f, root_child3.getLayoutHeight(), 0.0f);
-
-    assertEquals(0f, root_child4.getLayoutX(), 0.0f);
-    assertEquals(40f, root_child4.getLayoutY(), 0.0f);
-    assertEquals(50f, root_child4.getLayoutWidth(), 0.0f);
-    assertEquals(10f, root_child4.getLayoutHeight(), 0.0f);
-
-    root.setDirection(YogaDirection.RTL);
-    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-
-    assertEquals(0f, root.getLayoutX(), 0.0f);
-    assertEquals(0f, root.getLayoutY(), 0.0f);
-    assertEquals(100f, root.getLayoutWidth(), 0.0f);
-    assertEquals(100f, root.getLayoutHeight(), 0.0f);
-
     assertEquals(50f, root_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
@@ -424,11 +391,44 @@ public class YGAlignContentTest {
     assertEquals(40f, root_child4.getLayoutY(), 0.0f);
     assertEquals(50f, root_child4.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child4.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(10f, root_child1.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(10f, root_child1.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child2.getLayoutX(), 0.0f);
+    assertEquals(20f, root_child2.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child2.getLayoutWidth(), 0.0f);
+    assertEquals(10f, root_child2.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child3.getLayoutX(), 0.0f);
+    assertEquals(30f, root_child3.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child3.getLayoutWidth(), 0.0f);
+    assertEquals(10f, root_child3.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child4.getLayoutX(), 0.0f);
+    assertEquals(40f, root_child4.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child4.getLayoutWidth(), 0.0f);
+    assertEquals(10f, root_child4.getLayoutHeight(), 0.0f);
   }
 
   @Test
   public void test_align_content_stretch() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignContent(YogaAlign.STRETCH);
@@ -524,7 +524,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_spacebetween() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -626,7 +626,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_spacearound() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -728,7 +728,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -825,7 +825,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_children() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -938,7 +938,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_flex() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1041,7 +1041,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_flex_no_shrink() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1143,7 +1143,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_margin() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1248,7 +1248,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_padding() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1353,7 +1353,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_single_row() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1408,7 +1408,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_fixed_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1506,7 +1506,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_max_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1604,7 +1604,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_row_with_min_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1702,7 +1702,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_column() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignContent(YogaAlign.STRETCH);
@@ -1817,7 +1817,7 @@ public class YGAlignContentTest {
 
   @Test
   public void test_align_content_stretch_is_not_overriding_align_items() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignContent(YogaAlign.STRETCH);

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.facebook.yoga.YogaNode;
+import com.facebook.yoga.YogaNodeFactory;
 
 /**
  * Much like a {@link YogaLayout}, except this class does not render itself (the container) to the
@@ -33,7 +34,7 @@ public class VirtualYogaLayout extends ViewGroup {
 
   final private List<View> mChildren = new LinkedList<>();
   final private Map<View, YogaNode> mYogaNodes = new HashMap<>();
-  final private YogaNode mYogaNode = YogaNode.create();
+  final private YogaNode mYogaNode = YogaNodeFactory.create();
 
   public VirtualYogaLayout(Context context) {
     super(context);
@@ -73,7 +74,7 @@ public class VirtualYogaLayout extends ViewGroup {
       return;
     }
 
-    YogaNode node = YogaNode.create();
+    YogaNode node = YogaNodeFactory.create();
     YogaLayout.LayoutParams lp = new YogaLayout.LayoutParams(params);
     YogaLayout.applyLayoutParams(lp, node, child);
     node.setData(child);

@@ -1,15 +1,17 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
- * This source code is licensed under the MIT license found in the LICENSE
- * file in the root directory of this source tree.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
+
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
 
 // This test isn't correct from the Flexbox standard standpoint,
 // because percentages are calculated with parent constraints.
-// However, we need to make sure we fail gracefully in this case, not returning NaN
+// However, we need to make sure we fail gracefully in this case, not returning
+// NaN
 TEST(YogaTest, percent_absolute_position_infinite_height) {
   const YGConfigRef config = YGConfigNew();
 

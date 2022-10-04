@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the LICENSE
@@ -20,12 +20,8 @@ struct ConfigCloningTest : public ::testing::Test {
   void TearDown() override;
 
   static YGNode clonedNode;
-  static YGNodeRef cloneNode(YGNodeRef, YGNodeRef, int) {
-    return &clonedNode;
-  }
-  static YGNodeRef doNotClone(YGNodeRef, YGNodeRef, int) {
-    return nullptr;
-  }
+  static YGNodeRef cloneNode(YGNodeRef, YGNodeRef, int) { return &clonedNode; }
+  static YGNodeRef doNotClone(YGNodeRef, YGNodeRef, int) { return nullptr; }
 };
 
 TEST_F(ConfigCloningTest, uses_values_provided_by_cloning_callback) {

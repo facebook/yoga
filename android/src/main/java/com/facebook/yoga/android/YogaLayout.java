@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -29,6 +29,7 @@ import com.facebook.yoga.YogaMeasureFunction;
 import com.facebook.yoga.YogaMeasureMode;
 import com.facebook.yoga.YogaMeasureOutput;
 import com.facebook.yoga.YogaNode;
+import com.facebook.yoga.YogaNodeFactory;
 import com.facebook.yoga.YogaOverflow;
 import com.facebook.yoga.YogaPositionType;
 import com.facebook.yoga.YogaWrap;
@@ -78,7 +79,7 @@ public class YogaLayout extends ViewGroup {
   public YogaLayout(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
 
-    mYogaNode = YogaNode.create();
+    mYogaNode = YogaNodeFactory.create();
     mYogaNodes = new HashMap<>();
 
     mYogaNode.setData(this);
@@ -155,7 +156,7 @@ public class YogaLayout extends ViewGroup {
       if(mYogaNodes.containsKey(child)) {
         childNode = mYogaNodes.get(child);
       } else {
-        childNode = YogaNode.create();
+        childNode = YogaNodeFactory.create();
       }
 
       childNode.setData(child);

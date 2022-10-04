@@ -1,10 +1,10 @@
 /*
- *  Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- *  This source code is licensed under the MIT license found in the LICENSE
- *  file in the root directory of this source tree.
- *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
+
 package com.facebook.yoga;
 
 import static org.junit.Assert.assertEquals;
@@ -191,7 +191,7 @@ public class YogaNodeStylePropertiesTest {
   public void testPositionTypeDefault() {
     final YogaNode node = createNode();
 
-    assertEquals(YogaPositionType.RELATIVE, node.getPositionType());
+    assertEquals(YogaPositionType.STATIC, node.getPositionType());
   }
 
   @Test
@@ -395,6 +395,21 @@ public class YogaNodeStylePropertiesTest {
 
       node.setMarginPercent(edge, 5);
       assertEquals(new YogaValue(5, YogaUnit.PERCENT), node.getMargin(edge));
+
+      node.setMarginAuto(edge);
+      assertEquals(YogaValue.AUTO, node.getMargin(edge));
+    }
+  }
+
+  @Test
+  public void testNegativeMarginAssignment() {
+    final YogaNode node = createNode();
+    for (YogaEdge edge : YogaEdge.values()) {
+      node.setMargin(edge, -25);
+      assertEquals(new YogaValue(-25, YogaUnit.POINT), node.getMargin(edge));
+
+      node.setMarginPercent(edge, -5);
+      assertEquals(new YogaValue(-5, YogaUnit.PERCENT), node.getMargin(edge));
 
       node.setMarginAuto(edge);
       assertEquals(YogaValue.AUTO, node.getMargin(edge));

@@ -1,0 +1,19 @@
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
+load("//tools/build_defs/oss:yoga_defs.bzl", "YOGA_ROOTS", "yoga_java_library", "yoga_prebuilt_jar")
+
+yoga_prebuilt_jar(
+    name = "hamcrest-jar",
+    binary_jar = "hamcrest-2.1.jar",
+)
+
+yoga_java_library(
+    name = "hamcrest",
+    visibility = YOGA_ROOTS,
+    exported_deps = [
+        ":hamcrest-jar",
+    ],
+)

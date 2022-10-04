@@ -1,10 +1,10 @@
 /*
- *  Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- *  This source code is licensed under the MIT license found in the LICENSE
- *  file in the root directory of this source tree.
- *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
+
 package com.facebook.yoga;
 
 import java.util.Arrays;
@@ -15,12 +15,12 @@ public class TestParametrization {
     NodeFactory nodeFactory = new NodeFactory() {
       @Override
       public YogaNode create() {
-        return YogaNode.create();
+        return YogaNodeFactory.create();
       }
 
       @Override
       public YogaNode create(YogaConfig config) {
-        return YogaNode.create(config);
+        return YogaNodeFactory.create(config);
       }
 
       @Override

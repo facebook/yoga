@@ -33,7 +33,7 @@ export default ({data}) => (
             documentation covering all the features of the library. Each page
             comes with an interactive playground for you to explore that
             feature. The examples section showcases some of the most common
-            layouts and how to build them. This is a community projects and
+            layouts and how to build them. This is a community project and
             contributions within documentation, code, and tests are more than
             welcome. The contributing section below covers how to get started.
           </p>
@@ -49,17 +49,16 @@ export default ({data}) => (
                   ({node}) =>
                     node.fileAbsolutePath.indexOf(`/${category}/`) > -1,
                 )
-                .map(
-                  ({node}) =>
-                    node.frontmatter.redirect ? (
-                      <a key={node.id} href={node.frontmatter.path}>
-                        {node.frontmatter.title}
-                      </a>
-                    ) : (
-                      <Link key={node.id} to={node.frontmatter.path}>
-                        {node.frontmatter.title}
-                      </Link>
-                    ),
+                .map(({node}) =>
+                  node.frontmatter.redirect ? (
+                    <a key={node.id} href={node.frontmatter.path}>
+                      {node.frontmatter.title}
+                    </a>
+                  ) : (
+                    <Link key={node.id} to={node.frontmatter.path}>
+                      {node.frontmatter.title}
+                    </Link>
+                  ),
                 )}
             </Col>
           ),

@@ -10,7 +10,7 @@
 
 import React from 'react';
 import Page from '../../components/Page';
-import Playground from '../../components/Playground';
+import Playground from '../../components/Playground/src';
 import {Row, Col} from 'antd';
 import './index.css';
 

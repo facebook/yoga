@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGSizeOverflowTest {
 
   @Test
   public void test_nested_overflowing_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -78,7 +78,7 @@ public class YGSizeOverflowTest {
 
   @Test
   public void test_nested_overflowing_child_in_constraint_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -132,7 +132,7 @@ public class YGSizeOverflowTest {
 
   @Test
   public void test_parent_wrap_child_size_overflowing_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);

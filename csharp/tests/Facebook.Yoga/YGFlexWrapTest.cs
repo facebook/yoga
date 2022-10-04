@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -530,12 +530,12 @@ namespace Facebook.Yoga
             Assert.AreEqual(0f, root_child0.LayoutX);
             Assert.AreEqual(0f, root_child0.LayoutY);
             Assert.AreEqual(50f, root_child0.LayoutWidth);
-            Assert.AreEqual(100f, root_child0.LayoutHeight);
+            Assert.AreEqual(0f, root_child0.LayoutHeight);
 
             Assert.AreEqual(50f, root_child1.LayoutX);
             Assert.AreEqual(0f, root_child1.LayoutY);
             Assert.AreEqual(50f, root_child1.LayoutWidth);
-            Assert.AreEqual(100f, root_child1.LayoutHeight);
+            Assert.AreEqual(0f, root_child1.LayoutHeight);
 
             root.StyleDirection = YogaDirection.RTL;
             root.CalculateLayout();
@@ -548,12 +548,12 @@ namespace Facebook.Yoga
             Assert.AreEqual(100f, root_child0.LayoutX);
             Assert.AreEqual(0f, root_child0.LayoutY);
             Assert.AreEqual(50f, root_child0.LayoutWidth);
-            Assert.AreEqual(100f, root_child0.LayoutHeight);
+            Assert.AreEqual(0f, root_child0.LayoutHeight);
 
             Assert.AreEqual(50f, root_child1.LayoutX);
             Assert.AreEqual(0f, root_child1.LayoutY);
             Assert.AreEqual(50f, root_child1.LayoutWidth);
-            Assert.AreEqual(100f, root_child1.LayoutHeight);
+            Assert.AreEqual(0f, root_child1.LayoutHeight);
         }
 
         [Test]

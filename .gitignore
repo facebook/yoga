@@ -5,7 +5,7 @@
 /.buckconfig.local
 /.buckd
 /gentest/test.html
-.buckversion
+.buck-java11
 
 # Jekyll
 /.sass-cache/

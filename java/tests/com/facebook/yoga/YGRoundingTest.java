@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_flex_basis_flex_grow_row_width_of_100() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -93,7 +93,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_flex_basis_flex_grow_row_prime_number_width() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -188,7 +188,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_flex_basis_flex_shrink_row() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -256,7 +256,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_flex_basis_overrides_main_size() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -326,7 +326,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_total_fractial() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(87.4f);
@@ -396,7 +396,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_total_fractial_nested() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(87.4f);
@@ -500,7 +500,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_fractial_input_1() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -570,7 +570,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_fractial_input_2() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -640,7 +640,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_fractial_input_3() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setPosition(YogaEdge.TOP, 0.3f);
@@ -711,7 +711,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_fractial_input_4() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setPosition(YogaEdge.TOP, 0.7f);
@@ -782,7 +782,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_inner_node_controversy_horizontal() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -866,7 +866,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_inner_node_controversy_vertical() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setHeight(320f);
@@ -949,7 +949,7 @@ public class YGRoundingTest {
 
   @Test
   public void test_rounding_inner_node_controversy_combined() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);

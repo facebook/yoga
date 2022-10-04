@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_stretch() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -64,7 +64,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_center() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -104,7 +104,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_flex_start() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
@@ -144,7 +144,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_flex_end() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_END);
@@ -184,7 +184,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -240,7 +240,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -311,7 +311,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_multiline() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -429,7 +429,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_multiline_override() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -549,7 +549,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_multiline_no_override_on_secondline() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -668,7 +668,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_top() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -740,7 +740,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_top2() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -812,7 +812,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_double_nested_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -898,7 +898,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_column() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.BASELINE);
@@ -953,7 +953,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_margin() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1032,7 +1032,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_child_padding() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1111,7 +1111,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_multiline() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1228,7 +1228,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_multiline_column() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.BASELINE);
@@ -1344,7 +1344,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_multiline_column2() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.BASELINE);
@@ -1460,7 +1460,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_baseline_multiline_row_and_column() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1577,7 +1577,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_center_child_with_margin_bigger_than_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1634,7 +1634,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_flex_end_child_with_margin_bigger_than_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1691,7 +1691,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_center_child_without_margin_bigger_than_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1746,7 +1746,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_items_flex_end_child_without_margin_bigger_than_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1801,7 +1801,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_center_should_size_based_on_content() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1872,7 +1872,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_strech_should_size_based_on_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setMargin(YogaEdge.TOP, 20f);
@@ -1942,7 +1942,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_flex_start_with_shrinking_children() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(500f);
@@ -2010,7 +2010,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_flex_start_with_stretching_children() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(500f);
@@ -2077,7 +2077,7 @@ public class YGAlignItemsTest {
 
   @Test
   public void test_align_flex_start_with_shrinking_children_with_stretch() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(500f);

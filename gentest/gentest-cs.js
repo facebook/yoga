@@ -120,8 +120,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGOverflowHidden:{value:'YogaOverflow.Hidden'},
   YGOverflowVisible:{value:'YogaOverflow.Visible'},
 
-  YGPositionTypeAbsolute:{value:'YogaPositionType.Absolute'},
+  YGPositionTypeAbsolute:{value:'YogaPositionType.Static'},
   YGPositionTypeRelative:{value:'YogaPositionType.Relative'},
+  YGPositionTypeAbsolute:{value:'YogaPositionType.Absolute'},
 
   YGUndefined:{value:'YogaConstants.Undefined'},
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -38,11 +38,11 @@ if (!ran) {
 module.exports = Yoga(ret.bind, ret.lib);
 
 export type {
-  Yoga$JustifyContent,
+  Yoga$Justify,
   Yoga$Align,
   Yoga$FlexDirection,
   Yoga$Direction,
-  Yoga$FlexWrap,
+  Yoga$Wrap,
   Yoga$Edge,
   Yoga$Display,
   Yoga$Unit,

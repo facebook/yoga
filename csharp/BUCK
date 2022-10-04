@@ -12,7 +12,7 @@ load(
     "yoga_dep",
 )
 
-COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++14"]
+COMPILER_FLAGS = BASE_COMPILER_FLAGS + ["-std=c++11"]
 
 fb_native.csharp_library(
     name = "yogalibnet46",

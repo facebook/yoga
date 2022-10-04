@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGBorderTest {
 
   @Test
   public void test_border_no_size() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
@@ -52,7 +52,7 @@ public class YGBorderTest {
 
   @Test
   public void test_border_container_match_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
@@ -93,7 +93,7 @@ public class YGBorderTest {
 
   @Test
   public void test_border_flex_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
@@ -136,7 +136,7 @@ public class YGBorderTest {
 
   @Test
   public void test_border_stretch_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
@@ -178,7 +178,7 @@ public class YGBorderTest {
 
   @Test
   public void test_border_center_child() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);

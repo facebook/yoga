@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_width_height_start_top() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -68,7 +68,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_width_height_end_bottom() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -110,7 +110,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_start_top_end_bottom() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -152,7 +152,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_width_height_start_top_end_bottom() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -196,7 +196,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -253,7 +253,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_within_border() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setMargin(YogaEdge.LEFT, 10f);
@@ -369,7 +369,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_align_items_and_justify_content_center() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -412,7 +412,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_align_items_and_justify_content_flex_end() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.FLEX_END);
@@ -455,7 +455,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_justify_content_center() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -497,7 +497,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_align_items_center() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -539,7 +539,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_align_items_center_on_child_only() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexGrow(1f);
@@ -581,7 +581,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_align_items_and_justify_content_center_and_top_position() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -625,7 +625,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_align_items_and_justify_content_center_and_bottom_position() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -669,7 +669,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_align_items_and_justify_content_center_and_left_position() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -713,7 +713,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_align_items_and_justify_content_center_and_right_position() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -757,7 +757,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_position_root_with_rtl_should_position_withoutdirection() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setPosition(YogaEdge.LEFT, 72f);
@@ -782,7 +782,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_percentage_bottom_based_on_parent_height() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -857,7 +857,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_in_wrap_reverse_column_container() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP_REVERSE);
@@ -898,7 +898,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_in_wrap_reverse_row_container() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -940,7 +940,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_in_wrap_reverse_column_container_flex_end() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP_REVERSE);
@@ -982,7 +982,7 @@ public class YGAbsolutePositionTest {
 
   @Test
   public void test_absolute_layout_in_wrap_reverse_row_container_flex_end() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);

@@ -34,7 +34,7 @@ it("dirtied", function() {
     root.freeRecursive();
 
   typeof gc !== "undefined" && gc();
-  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
+  // TODO Add event support in js and check instace allocation and de allocation using that
 });
 
 it("dirtied_propagation", function() {
@@ -75,7 +75,7 @@ it("dirtied_propagation", function() {
     root.freeRecursive();
 
   typeof gc !== "undefined" && gc();
-  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
+  // TODO Add event support in js and check instace allocation and de allocation using that
 });
 
 it("dirtied_hierarchy", function() {
@@ -122,7 +122,7 @@ it("dirtied_hierarchy", function() {
     root.freeRecursive();
 
   typeof gc !== "undefined" && gc();
-  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
+  // TODO Add event support in js and check instace allocation and de allocation using that
 });
 
 it("dirtied_reset", function() {
@@ -164,5 +164,5 @@ it("dirtied_reset", function() {
     root.freeRecursive();
 
   typeof gc !== "undefined" && gc();
-  console.assert(0 === Yoga.getInstanceCount(), "0 === Yoga.getInstanceCount() (" + Yoga.getInstanceCount() + ")");
+  // TODO Add event support in js and check instace allocation and de allocation using that
 });

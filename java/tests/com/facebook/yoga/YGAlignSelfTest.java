@@ -1,5 +1,5 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_center() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -66,7 +66,7 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_end() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -106,7 +106,7 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_start() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -146,7 +146,7 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_flex_end_override_flex_start() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
@@ -187,7 +187,7 @@ public class YGAlignSelfTest {
 
   @Test
   public void test_align_self_baseline() {
-    YogaConfig config = new YogaConfig();
+    YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);

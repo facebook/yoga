@@ -1,0 +1,30 @@
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+load("//tools/build_defs/oss:yoga_defs.bzl", "GTEST_TARGET", "LIBRARY_COMPILER_FLAGS", "yoga_cxx_library", "yoga_cxx_test")
+
+_TESTS = glob(["*Test.cpp"])
+
+yoga_cxx_library(
+    name = "util",
+    srcs = glob(
+        ["*.cpp"],
+        exclude = _TESTS,
+    ),
+    header_namespace = "yoga/util",
+    exported_headers = glob(["*.h"]),
+    compiler_flags = LIBRARY_COMPILER_FLAGS,
+    tests = [":test"],
+    visibility = ["PUBLIC"],
+)
+
+yoga_cxx_test(
+    name = "test",
+    srcs = _TESTS,
+    compiler_flags = LIBRARY_COMPILER_FLAGS,
+    deps = [
+        ":util",
+        GTEST_TARGET,
+    ],
+)
