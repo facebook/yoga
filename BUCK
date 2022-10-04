@@ -41,6 +41,20 @@ yoga_cxx_library(
 )
 
 yoga_cxx_library(
+    name = "yoga-static",
+    srcs = glob(["yoga/**/*.cpp"]),
+    compiler_flags = LIBRARY_COMPILER_FLAGS,
+    preferred_linkage = "static",
+    public_include_directories = ["."],
+    raw_headers = glob(["yoga/**/*.h"]),
+    tests = [":YogaTests"],
+    visibility = ["PUBLIC"],
+    deps = [
+        ":ndklog",
+    ],
+)
+
+yoga_cxx_library(
     name = "yogaForDebug",
     srcs = glob(["yoga/**/*.cpp"]),
     compiler_flags = TEST_COMPILER_FLAGS,

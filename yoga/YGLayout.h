@@ -1,11 +1,14 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 #pragma once
+
+#ifdef __cplusplus
+
 #include "BitUtils.h"
 #include "YGFloatOptional.h"
 #include "Yoga-internal.h"
@@ -36,7 +39,7 @@ public:
   // Instead of recomputing the entire layout every single time, we cache some
   // information to break early when nothing changed
   uint32_t generationCount = 0;
-  YGDirection lastOwnerDirection = (YGDirection) -1;
+  YGDirection lastOwnerDirection = YGDirectionInherit;
 
   uint32_t nextCachedMeasurementsIndex = 0;
   std::array<YGCachedMeasurement, YG_MAX_CACHED_RESULT_COUNT>
@@ -85,3 +88,5 @@ public:
   bool operator==(YGLayout layout) const;
   bool operator!=(YGLayout layout) const { return !(*this == layout); }
 };
+
+#endif

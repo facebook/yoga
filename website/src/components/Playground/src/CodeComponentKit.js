@@ -73,9 +73,9 @@ function keyLookup(key: string): string {
 
 function getValue(value) {
   if (typeof value === 'string' && /%$/.test(value)) {
-    return `CKRelativeDimension::Percent(${parseFloat(value)})`;
+    return `RCRelativeDimension::Percent(${parseFloat(value)})`;
   } else if (value === 'auto') {
-    return 'CKRelativeDimension::Auto()';
+    return 'RCRelativeDimension::Auto()';
   } else {
     return String(parseFloat(value));
   }

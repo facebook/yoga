@@ -32,6 +32,9 @@
     "develop": "gatsby develop"
   },
   "devDependencies": {
-    "prettier": "1.17.0"
+    "prettier": "1.19.1"
+  },
+  "resolutions": {
+    "nbind": "https://github.com/charto/nbind.git#fe3abe0"
   }
 }

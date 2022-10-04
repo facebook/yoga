@@ -8,6 +8,8 @@ load("//tools/build_defs/oss:yoga_defs.bzl", "ANDROID_JAVA_TARGET", "ANDROID_SAM
 yoga_android_library(
     name = "yoga",
     srcs = glob(["**/*.java"]),
+    autoglob = False,
+    language = "JAVA",
     visibility = [
         "PUBLIC",
     ],

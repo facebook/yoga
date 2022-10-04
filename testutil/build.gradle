@@ -1,9 +1,10 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 
 apply plugin: 'com.android.library'
 
@@ -29,11 +30,10 @@ android {
     externalNativeBuild {
         cmake {
             path 'src/main/cpp/CMakeLists.txt'
-            version '3.6.0-rc2'
         }
     }
 
     dependencies {
-        implementation 'com.facebook.soloader:soloader:0.5.1'
+        implementation 'com.facebook.soloader:soloader:0.10.4'
     }
 }

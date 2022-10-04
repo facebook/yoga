@@ -14,7 +14,7 @@ JSR_305_TARGET = "//lib/jsr-305:jsr-305"
 
 JUNIT_TARGET = "//lib/junit:junit"
 
-PROGRUARD_ANNOTATIONS_TARGET = "//java/proguard-annotations/src/main/java/com/facebook/proguard/annotations:annotations"
+PROGUARD_ANNOTATIONS_TARGET = "//java/proguard-annotations/src/main/java/com/facebook/proguard/annotations:annotations"
 
 SOLOADER_TARGET = "//lib/soloader:soloader"
 
@@ -50,6 +50,11 @@ CXX_LIBRARY_WHITELIST = [
     "//java:jni",
 ]
 
+SUPPRESSION_FLAGS = [
+    "-Wno-enum-float-conversion",
+    "-Wno-implicit-float-conversion",
+]
+
 BASE_COMPILER_FLAGS = [
     "-fno-omit-frame-pointer",
     "-fexceptions",
@@ -61,7 +66,7 @@ BASE_COMPILER_FLAGS = [
     "-O2",
     "-std=c++11",
     "-DYG_ENABLE_EVENTS",
-]
+] + SUPPRESSION_FLAGS
 
 LIBRARY_COMPILER_FLAGS = BASE_COMPILER_FLAGS + [
     "-fPIC",
@@ -164,6 +169,11 @@ def yoga_android_library(*args, **kwargs):
     native.android_library(*args, **kwargs)
 
 def yoga_android_resource(*args, **kwargs):
+    native.alias(
+        name = kwargs["name"] + "Android",
+        actual = ":" + kwargs["name"],
+        visibility = kwargs.get("visibility") or ["PUBLIC"],
+    )
     native.android_resource(*args, **kwargs)
 
 def yoga_apple_library(*args, **kwargs):
@@ -200,7 +210,15 @@ def yoga_prebuilt_cxx_library(*args, **kwargs):
     native.prebuilt_cxx_library(*args, **kwargs)
 
 def yoga_prebuilt_jar(*args, **kwargs):
+    native.alias(
+        name = kwargs["name"] + "Android",
+        actual = ":" + kwargs["name"],
+        visibility = kwargs.get("visibility") or ["PUBLIC"],
+    )
     native.prebuilt_jar(*args, **kwargs)
+
+def yoga_prebuilt_aar(*args, **kwargs):
+    native.android_prebuilt_aar(*args, **kwargs)
 
 def is_apple_platform():
     return True

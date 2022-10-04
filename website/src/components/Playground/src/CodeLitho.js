@@ -24,7 +24,7 @@ function getEnum(yogaEnum: string, value: string | number): string {
     position: 'Position',
     flexWrap: 'Wrap',
     positionType: 'PositionType',
-    direction: 'Driection',
+    direction: 'Direction',
   };
 
   if (!enumLookup[yogaEnum]) {
@@ -47,8 +47,8 @@ function dipOrPercent(value) {
   return value === 'auto'
     ? 'Auto'
     : typeof value === 'string' && /%$/.test(value)
-      ? 'Percent'
-      : 'Dip';
+    ? 'Percent'
+    : 'Dip';
 }
 
 function getValue(value) {
