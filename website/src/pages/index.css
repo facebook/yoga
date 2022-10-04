@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -43,54 +43,54 @@
 }
 
 .landing-page .hero .blueprint {
-	border-style: dashed;
-    border-color: #444950;
-    border-width: 1px;
+  border-style: dashed;
+  border-color: #444950;
+  border-width: 1px;
 }
 
 .landing-page .hero .blueprint-container {
-	position: relative;
-	margin: auto;
-	height: 300px;
-	width: 300px;
+  position: relative;
+  margin: auto;
+  height: 300px;
+  width: 300px;
 }
 
 .landing-page .hero .blueprint-avatar {
-	position: absolute;
-	left: 15px;
-	top: 15px;
-	height: 50px;
-	width: 50px;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  height: 50px;
+  width: 50px;
 }
 
 .landing-page .hero .blueprint-title {
-	position: absolute;
-	left: 80px;
-	top: 20px;
-	height: 15px;
-	width: 150px;
+  position: absolute;
+  left: 80px;
+  top: 20px;
+  height: 15px;
+  width: 150px;
 }
 
 .landing-page .hero .blueprint-subtitle {
-	position: absolute;
-	left: 80px;
-	top: 40px;
-	height: 15px;
-	width: 80px;
+  position: absolute;
+  left: 80px;
+  top: 40px;
+  height: 15px;
+  width: 80px;
 }
 
 .landing-page .hero .blueprint-content {
-	position: absolute;
-	left: 15px;
-	right: 15px;
-	bottom: 15px;
-	top: 80px;
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  top: 80px;
 }
 
 .landing-page hr {
-	width: 100%;
-	height: 1px;
-	background-color: #BEC3C9;
+  width: 100%;
+  height: 1px;
+  background-color: #BEC3C9;
   border-width: 0px;
 }
 

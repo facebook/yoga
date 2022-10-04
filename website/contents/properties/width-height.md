@@ -13,7 +13,7 @@ Both `width` and `height` can take following values:
 
 **AUTO** Is the default Value, Yoga calculates the width/height for the element based
 on its content, whether that is other children, text, or an image.
- 
+
 **PIXELS** Defines the width/height in absolute pixels. Depending on other properties set on
 the Yoga node this may or may not be the final dimension of the node.
 
@@ -24,4 +24,3 @@ the Yoga node this may or may not be the final dimension of the node.
 
 ### Height
 <controls prop="height"></controls>
-
