@@ -308,7 +308,7 @@ export default class Editor extends Component<Props> {
             ))}
             <h2>
               Position Type
-              <InfoText doclink="/docs/absolute-position">
+              <InfoText doclink="/docs/absolute-relative-layout">
                 Relative position offsets the node from it's calculated
                 position. Absolute position removes the node from the flexbox
                 flow and positions it at the given position.
