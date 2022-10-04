@@ -6944,10 +6944,9 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-nbind@^0.3.14:
+nbind@^0.3.14, "nbind@https://github.com/charto/nbind.git#fe3abe0":
   version "0.3.15"
-  resolved "https://registry.yarnpkg.com/nbind/-/nbind-0.3.15.tgz#20c74d77d54e28627ab8268c2767f7e40aef8c53"
-  integrity sha512-TrKLNRj5D8wZRJb7XmUNbA1W3iTigAEpm3qaGig5bEWY/iCT2IQBgBc2EUGO59FbRIGhx5hB/McVwqxlSGScVw==
+  resolved "https://github.com/charto/nbind.git#fe3abe05462d1b7559e0933e7f83802e8f05af27"
   dependencies:
     emscripten-library-decorator "~0.2.2"
     mkdirp "~0.5.1"
