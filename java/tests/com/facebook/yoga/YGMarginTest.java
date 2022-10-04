@@ -1222,7 +1222,7 @@ public class YGMarginTest {
   }
 
   @Test
-  public void test_margin_auto_left_and_right_strech() {
+  public void test_margin_auto_left_and_right_stretch() {
     YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
@@ -1279,7 +1279,7 @@ public class YGMarginTest {
   }
 
   @Test
-  public void test_margin_auto_top_and_bottom_strech() {
+  public void test_margin_auto_top_and_bottom_stretch() {
     YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);

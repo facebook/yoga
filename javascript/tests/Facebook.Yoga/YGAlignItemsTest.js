@@ -1951,7 +1951,7 @@ it("align_center_should_size_based_on_content", function () {
     config.free();
   }
 });
-it("align_strech_should_size_based_on_parent", function () {
+it("align_stretch_should_size_based_on_parent", function () {
   var config = Yoga.Config.create();
 
   try {

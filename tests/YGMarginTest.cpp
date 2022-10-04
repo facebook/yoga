@@ -1231,7 +1231,7 @@ TEST(YogaTest, margin_auto_right) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, margin_auto_left_and_right_strech) {
+TEST(YogaTest, margin_auto_left_and_right_stretch) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
@@ -1289,7 +1289,7 @@ TEST(YogaTest, margin_auto_left_and_right_strech) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, margin_auto_top_and_bottom_strech) {
+TEST(YogaTest, margin_auto_top_and_bottom_stretch) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
