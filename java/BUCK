@@ -121,6 +121,7 @@ yoga_java_test(
 
 yoga_java_binary(
     name = "yoga",
+    visibility = ["PUBLIC"],
     deps = [
         ":java",
     ],
