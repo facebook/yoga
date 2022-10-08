@@ -37,7 +37,7 @@ yoga_cxx_library(
         "-Wno-unused-variable",
         "-std=c++11",
     ],
-    platforms = (ANDROID,),
+    platforms = (CXX, ANDROID),
     soname = "libfbjni.$(ext)",
     visibility = ["PUBLIC"],
     deps = [

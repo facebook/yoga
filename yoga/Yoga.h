@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -318,6 +318,7 @@ void YGConfigSetShouldDiffLayoutWithoutLegacyStretchBehaviour(
 // resulted in implicit behaviour similar to align-self: stretch; Because this
 // was such a long-standing bug we must allow legacy users to switch back to
 // this behaviour.
+WIN_EXPORT bool YGConfigGetUseLegacyStretchBehaviour(YGConfigRef config);
 WIN_EXPORT void YGConfigSetUseLegacyStretchBehaviour(
     YGConfigRef config,
     bool useLegacyStretchBehaviour);

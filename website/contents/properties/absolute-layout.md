@@ -15,9 +15,9 @@ based on the values of `top`, `right`, `bottom`, and `left`.
 The offset does not affect the position of any sibling or parent elements.
 
 **ABSOLUTE** When positioned absolutely an element doesn't take
-part in the normal layout flow. It is instead laid out independent 
+part in the normal layout flow. It is instead laid out independent
 of its siblings. The position is determined based on the
-`top`, `right`, `bottom`, and `left` values. 
+`top`, `right`, `bottom`, and `left` values.
 
 <controls prop="positionType"></controls>
 

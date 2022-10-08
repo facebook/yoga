@@ -1,9 +1,10 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 
 apply plugin: 'com.android.library'
 
@@ -54,7 +55,7 @@ android {
 dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation project(':yoga:proguard-annotations')
-    implementation 'com.facebook.soloader:soloader:0.10.1'
+    implementation 'com.facebook.soloader:soloader:0.10.4'
     testImplementation 'junit:junit:4.12'
     testImplementation project(':testutil')
 }
