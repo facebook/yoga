@@ -31,4 +31,5 @@ TEST(YogaTest, reset_layout_when_child_removed) {
   ASSERT_TRUE(YGFloatIsUndefined(YGNodeLayoutGetHeight(root_child0)));
 
   YGNodeFreeRecursive(root);
+  YGNodeFreeRecursive(root_child0);
 }
