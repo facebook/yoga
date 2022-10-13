@@ -128,6 +128,10 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'YogaEdge.START'},
   YGEdgeTop:{value:'YogaEdge.TOP'},
 
+  YGGutterAll:{value:'YogaGutter.ALL'},
+  YGGutterColumn:{value:'YogaGutter.COLUMN'},
+  YGGutterRow:{value:'YogaGutter.ROW'},
+
   YGFlexDirectionColumn:{value:'YogaFlexDirection.COLUMN'},
   YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.COLUMN_REVERSE'},
   YGFlexDirectionRow:{value:'YogaFlexDirection.ROW'},
@@ -279,5 +283,9 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.setWidth' + toMethodName(value) + '(' + toValueJava(value) + 'f);');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push(nodeName + '.setGap' + toMethodName(value) + '(' + gap + ', ' + toValueJava(value) + 'f);');
   }},
 });

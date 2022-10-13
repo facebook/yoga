@@ -107,6 +107,10 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'Yoga.EDGE_START'},
   YGEdgeTop:{value:'Yoga.EDGE_TOP'},
 
+  YGGutterAll:{value:'Yoga.GUTTER_ALL'},
+  YGGutterColumn:{value:'Yoga.GUTTER_COLUMN'},
+  YGGutterRow:{value:'Yoga.GUTTER_ROW'},
+
   YGFlexDirectionColumn:{value:'Yoga.FLEX_DIRECTION_COLUMN'},
   YGFlexDirectionColumnReverse:{value:'Yoga.FLEX_DIRECTION_COLUMN_REVERSE'},
   YGFlexDirectionRow:{value:'Yoga.FLEX_DIRECTION_ROW'},
@@ -250,5 +254,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.setWidth(' + toValueJavascript(value) + ');');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push(nodeName + '.setGap('+ toValueJavascript(gap) + ', ' + toValueJavascript(value) + ');');
   }},
 });

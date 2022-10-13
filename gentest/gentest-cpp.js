@@ -92,6 +92,10 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'YGEdgeStart'},
   YGEdgeTop:{value:'YGEdgeTop'},
 
+  YGGutterAll:{value:'YGGutterAll'},
+  YGGutterColumn:{value:'YGGutterColumn'},
+  YGGutterRow:{value:'YGGutterRow'},
+
   YGFlexDirectionColumn:{value:'YGFlexDirectionColumn'},
   YGFlexDirectionColumnReverse:{value:'YGFlexDirectionColumnReverse'},
   YGFlexDirectionRow:{value:'YGFlexDirectionRow'},
@@ -241,5 +245,9 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push('YGNodeStyleSetWidth' + toFunctionName(value) + '(' + nodeName + ', ' + toValueCpp(value) + ');');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push('YGNodeStyleSetGap' + toFunctionName(value) + '(' + nodeName + ', ' + gap + ', ' + toValueCpp(value) + ');');
   }},
 });
