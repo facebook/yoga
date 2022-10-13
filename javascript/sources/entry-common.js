@@ -180,6 +180,7 @@ export type Yoga$Node = {
   setFlex(flex: number): void,
   setFlexBasis(flexBasis: number | string): void,
   setFlexBasisPercent(flexBasis: number): void,
+  setFlexBasisAuto(): void,
   setFlexDirection(flexDirection: Yoga$FlexDirection): void,
   setFlexGrow(flexGrow: number): void,
   setFlexShrink(flexShrink: number): void,
