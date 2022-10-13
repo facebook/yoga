@@ -293,6 +293,12 @@ namespace Facebook.Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGNodeStyleGetAspectRatio(YGNodeHandle node);
 
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGutter gutter, float gapLength);
+
+        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        public static extern float YGNodeStyleGetGap(YGNodeHandle node, YogaGutter gutter);
+
 #endregion
 
 #region YG_NODE_STYLE_EDGE_PROPERTY

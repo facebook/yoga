@@ -95,6 +95,8 @@ public: // Style setters
   void setPadding(int edge, double padding);
   void setPaddingPercent(int edge, double padding);
 
+  void setGap(int gutter, double gapLength);
+
 public: // Style getters
   int getPositionType(void) const;
   Value getPosition(int edge) const;
@@ -129,6 +131,8 @@ public: // Style getters
   double getBorder(int edge) const;
 
   Value getPadding(int edge) const;
+
+  Value getGap(int gutter);
 
 public: // Tree hierarchy mutators
   void insertChild(Node* child, unsigned index);

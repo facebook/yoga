@@ -232,6 +232,10 @@ void Node::setIsReferenceBaseline(bool isReferenceBaseline) {
   YGNodeSetIsReferenceBaseline(m_node, isReferenceBaseline);
 }
 
+void Node::setGap(int gutter, double gapLength) {
+  YGNodeStyleSetGap(m_node, static_cast<YGGutter>(gutter), gapLength);
+}
+
 int Node::getPositionType(void) const {
   return YGNodeStyleGetPositionType(m_node);
 }
@@ -325,6 +329,11 @@ double Node::getBorder(int edge) const {
 Value Node::getPadding(int edge) const {
   return Value::fromYGValue(
       YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
+}
+
+Value Node::getGap(int gutter, ) {
+  return Value::fromYGValue(
+      YGNodeStyleGetGap(m_node, static_cast<YGGutter>(gutter)));
 }
 
 bool Node::isReferenceBaseline() {

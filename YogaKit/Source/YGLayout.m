@@ -285,6 +285,10 @@ YG_VALUE_PROPERTY(maxWidth, MaxWidth)
 YG_VALUE_PROPERTY(maxHeight, MaxHeight)
 YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
 
+YG_EDGE_PROPERTY(columnGap, ColumnGap, Gap, YGGutterColumn)
+YG_EDGE_PROPERTY(rowGap, RowGap, Gap, YGGutterRow)
+YG_EDGE_PROPERTY(gap, Gap, Gap, YGGutterAll)
+
 #pragma mark - Layout and Sizing
 
 - (YGDirection)resolvedDirection {

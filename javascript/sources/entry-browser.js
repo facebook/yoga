@@ -43,6 +43,7 @@ export type {
   Yoga$FlexDirection,
   Yoga$Direction,
   Yoga$Wrap,
+  Yoga$Gutter,
   Yoga$Edge,
   Yoga$Display,
   Yoga$Unit,
