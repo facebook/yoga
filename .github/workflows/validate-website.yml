@@ -9,4 +9,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-website
+
+      - name: Setup
+        uses: ./.github/actions/setup-website
+
+      - name: yarn build
+        run: yarn build
+        working-directory: website

@@ -12,8 +12,3 @@ runs:
       shell: bash
       run: yarn install --frozen-lockfile
       working-directory: website
-
-    - name: yarn build
-      shell: bash
-      run: yarn build
-      working-directory: website

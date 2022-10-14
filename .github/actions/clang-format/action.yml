@@ -7,8 +7,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: clang-format ${{ inputs.directory }}
-      uses: jidicula/clang-format-action@v4.9.0
-      with:
-        clang-format-version: '12' # This should be roughly in sync with Arcanist
-        check-path: ${{ inputs.directory }}
+    - name: Install
+      shell: bash
+      run: sudo apt install clang-format-12 # This should be roughly in sync with Arcanist
+
+    - name: clang-format
+      shell: bash
+      run: clang-format-12
+      workingDirectory: ${{ inputs.directory }}
