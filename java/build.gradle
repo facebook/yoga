@@ -8,8 +8,6 @@
 
 apply plugin: 'com.android.library'
 
-// TODO Proguard consumers
-
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -46,10 +44,6 @@ android {
             java.srcDir 'com'
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']
-        }
-
-        test {
-            java.srcDir 'tests'
         }
     }
 }

@@ -1,4 +1,0 @@
-Language: ObjC
-
-# Yoga enums are conditionally compiled to NS_ENUM, forcing YGMacros.h to be interpreted as Objective C.
-DisableFormat: true

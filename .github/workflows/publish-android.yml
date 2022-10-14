@@ -25,14 +25,7 @@ jobs:
         run: echo '${{ secrets.GPG_KEY_CONTENTS }}' | base64 -d > /tmp/secring.gpg
 
       - name: Update gradle.properties
-        working-directory: ./target
         run: |
-            if [ -z "${{ inputs.version }}" ]; then
-              echo "VERSION_NAME=${{ inputs.version }}" >> gradle.properties
-            else
-              version = `echo "${{ github.ref }}" | sed -E 's/v(.+)/\1/'`
-              echo "VERSION_NAME=$version" >> gradle.properties
-            fi
             echo "signing.secretKeyRingFile=/tmp/secring.gpg" >> gradle.properties
             echo "signing.keyId=${{ secrets.SIGNING_KEY_ID }}" >> gradle.properties
             echo "signing.password=${{ secrets.SIGNING_PASSWORD }}" >> gradle.properties
@@ -40,10 +33,7 @@ jobs:
             echo "mavenCentralUsername=${{ secrets.SONATYPE_NEXUS_USERNAME }}" >> gradle.properties
 
       - name: Upload Android archives
-        working-directory: ./target
-
         run: ./gradlew :yoga:assembleRelease publish --info
 
       - name: Publish release
-        working-directory: ./target
         run: ./gradlew closeAndReleaseRepository
