@@ -25,8 +25,8 @@ jobs:
         uses: ./.github/actions/setup-apple
 
       - name: pod install
-        run: pod install
         workingDirectory: ./YogaKit/YogaKitSample
+        run: pod install
 
   clang-format:
     name: Clang Format
