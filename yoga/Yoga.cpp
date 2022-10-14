@@ -21,7 +21,7 @@
 #include <float.h>
 
 /* define fmaxf if < VC12 */
-#if _MSC_VER < 1800
+#if _MSC_VER <   1800
 __forceinline const float fmaxf(const float a, const float b) {
   return (a > b) ? a : b;
 }
