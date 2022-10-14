@@ -29,3 +29,15 @@ jobs:
       - name: pod install
         working-directory: ./YogaKit/YogaKitSample
         run: pod install
+
+  clang-format:
+    name: Clang Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: clang-format
+        uses: ./.github/actions/clang-format
+        with:
+          directory: ./YogaKit
