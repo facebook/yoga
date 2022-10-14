@@ -1,0 +1,47 @@
+name: Publish Android artifacts
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish as'
+        required: true
+
+jobs:
+  publish:
+    name: Upload to Maven Central
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-android
+
+      - name: Write GPG secret keyring
+        run: echo '${{ secrets.GPG_KEY_CONTENTS }}' | base64 -d > /tmp/secring.gpg
+
+      - name: Update gradle.properties
+        workingDirectory: ./target
+        run: |
+            if [ -z "${{ inputs.version }}" ]; then
+              echo "VERSION_NAME=${{ inputs.version }}" >> gradle.properties
+            else
+              version = `echo "${{ github.ref }}" | sed -E 's/v(.+)/\1/'`
+              echo "VERSION_NAME=$version" >> gradle.properties
+            fi
+            echo "signing.secretKeyRingFile=/tmp/secring.gpg" >> gradle.properties
+            echo "signing.keyId=${{ secrets.SIGNING_KEY_ID }}" >> gradle.properties
+            echo "signing.password=${{ secrets.SIGNING_PASSWORD }}" >> gradle.properties
+            echo "nmavenCentralPassword=${{ secrets.SONATYPE_NEXUS_PASSWORD }}" >> gradle.properties
+            echo "mavenCentralUsername=${{ secrets.SONATYPE_NEXUS_USERNAME }}" >> gradle.properties
+
+      - name: Upload Android archives
+        workingDirectory: ./target
+
+        run: ./gradlew :yoga:assembleRelease publish --info
+
+      - name: Publish release
+        workingDirectory: ./target
+        run: ./gradlew closeAndReleaseRepository

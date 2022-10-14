@@ -1,0 +1,26 @@
+name: Publish Website artifcats
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Push to GitHub Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-website
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: website/public
+          cname: yogalayout.com
+          keep_files: true
+          user_name: 'Yoga-bot'
+          user_email: 'yogabot@fb.com'

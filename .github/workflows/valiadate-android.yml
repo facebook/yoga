@@ -1,0 +1,38 @@
+name: Android
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    name: Build (${{ matrix.mode }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mode: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-android
+
+      - name: Build
+        run: ./gradlew assemble${{ matrix.mode }}
+
+  test:
+    name: Unit Tests (${{ matrix.mode }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mode: [Debug]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-android
+
+      - name: Build
+        run: ./gradlew assemble${{ matrix.mode }}
+
+      - name: List
+        run: ls -R -l /home/runner/work/yoga/yoga/java
+
+      - name: Run Java unit tests
+        run: ./gradlew :yoga:test${{ matrix.mode }}UnitTest --info

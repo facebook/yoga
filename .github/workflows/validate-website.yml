@@ -1,0 +1,12 @@
+name: Website
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-website
