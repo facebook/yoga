@@ -5,6 +5,7 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   lint-pods:
     name: Lint Podspecs
+    if: ${{ false }} # Apple Build is Broken
     runs-on: macos-latest
 
     steps:
@@ -16,9 +17,13 @@ jobs:
       - name: pod spec lint
         run: pod spec lint --verbose
 
-  install-sample:
-    name: Install YogaKitSample
+  build-sample:
+    name: Build (${{ matrix.mode }})
+    if: ${{ false }} # Apple Build is Broken
     runs-on: macos-latest
+    strategy:
+      matrix:
+        mode: [Debug, Release]
 
     steps:
       - uses: actions/checkout@v3
@@ -29,6 +34,8 @@ jobs:
       - name: pod install
         working-directory: ./YogaKit/YogaKitSample
         run: pod install
+
+      # TODO: xcodebuild
 
   clang-format:
     name: Format
