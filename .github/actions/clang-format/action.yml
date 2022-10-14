@@ -20,4 +20,5 @@ runs:
       shell: bash
       run: |
         shopt -s globstar
-        clang-format-${{ inputs.version }} --dry-run --Werror **/*.cpp **/*.h **/*.m **/*.mm
+        shopt -s nullglob
+        clang-format-${{ inputs.version }} --dry-run --Werror **/*.cpp **/*. **/*.m **/*.mm
