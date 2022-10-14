@@ -31,7 +31,7 @@ jobs:
         run: pod install
 
   clang-format:
-    name: Clang Format
+    name: Format
     runs-on: ubuntu-latest
 
     steps:
