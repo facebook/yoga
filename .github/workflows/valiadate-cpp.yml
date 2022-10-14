@@ -1,0 +1,16 @@
+name: C++
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  clang-format:
+    name: Clang Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: clang-format
+        uses: ./.github/actions/clang-format
+        with:
+          directory: ./yoga
