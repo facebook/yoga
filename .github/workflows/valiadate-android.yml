@@ -12,7 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-android
+
+      - name: Setup
+        uses: ./.github/actions/setup-android
 
       - name: Build
         run: ./gradlew assemble${{ matrix.mode }}

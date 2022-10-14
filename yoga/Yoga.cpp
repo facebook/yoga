@@ -340,8 +340,8 @@ YOGA_EXPORT bool YGNodeIsReferenceBaseline(YGNodeRef node) {
 
 YOGA_EXPORT void YGNodeInsertChild(
     const YGNodeRef owner,
-    const    YGNodeRef child,
-    const uint32_t     index) {
+    const YGNodeRef child,
+    const uint32_t index) {
   YGAssertWithNode(
       owner,
       child->getOwner() == nullptr,
@@ -361,14 +361,9 @@ YOGA_EXPORT void YGNodeSwapChild(
     const YGNodeRef owner,
     const YGNodeRef child,
     const uint32_t index) {
-
-
-
-
-
   owner->replaceChild(child, index);
   child->setOwner(owner);
-   }
+}
 
 YOGA_EXPORT void YGNodeRemoveChild(
     const YGNodeRef owner,
