@@ -1,0 +1,14 @@
+name: Clang Format
+inputs:
+  directory:
+    description: Directory to Lint
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: clang-format ${{ inputs.directory }}
+      uses: jidicula/clang-format-action@v4.9.0
+      with:
+        clang-format-version: '12' # This should be roughly in sync with Arcanist
+        check-path: ${{ inputs.directory }}

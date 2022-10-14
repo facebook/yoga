@@ -1,0 +1,27 @@
+name: Apple
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  lint-pods:
+    name: Lint Podspecs
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-apple
+
+      - name: pod spec lint
+        run: pod spec lint --verbose
+
+  clang-format:
+    name: Clang Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: clang-format
+        uses: ./.github/actions/clang-format
+        with:
+          directory: ./YogaKit
