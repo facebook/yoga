@@ -107,7 +107,7 @@ root = os.path.dirname(os.path.abspath(__file__))
 with open(root + "/yoga/YGEnums.h", "w") as f:
     f.write(get_license("cpp"))
     f.write("#pragma once\n")
-    f.write("// clang-format: off\n\n")
+    f.write("// clang-format off\n\n")
     f.write('#include "YGMacros.h"\n\n')
 
     f.write('YG_EXTERN_C_BEGIN\n\n')
