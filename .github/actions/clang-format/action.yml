@@ -12,5 +12,6 @@ runs:
       run: sudo apt install clang-format-12 # This should be roughly in sync with Arcanist
 
     - name: clang-format
+      working-directory: ${{ inputs.directory }}
       shell: bash
-      run: clang-format-12 ${{ inputs.directory }}
+      run: clang-format-12 .

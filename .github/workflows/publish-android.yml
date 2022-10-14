@@ -25,7 +25,7 @@ jobs:
         run: echo '${{ secrets.GPG_KEY_CONTENTS }}' | base64 -d > /tmp/secring.gpg
 
       - name: Update gradle.properties
-        workingDirectory: ./target
+        working-directory: ./target
         run: |
             if [ -z "${{ inputs.version }}" ]; then
               echo "VERSION_NAME=${{ inputs.version }}" >> gradle.properties
@@ -40,10 +40,10 @@ jobs:
             echo "mavenCentralUsername=${{ secrets.SONATYPE_NEXUS_USERNAME }}" >> gradle.properties
 
       - name: Upload Android archives
-        workingDirectory: ./target
+        working-directory: ./target
 
         run: ./gradlew :yoga:assembleRelease publish --info
 
       - name: Publish release
-        workingDirectory: ./target
+        working-directory: ./target
         run: ./gradlew closeAndReleaseRepository
