@@ -18,4 +18,6 @@ runs:
     - name: clang-format
       working-directory: ${{ inputs.directory }}
       shell: bash
-      run: clang-format-${{ inputs.version }} --dry-run --Werror **/*.cpp # Yoga's config doesn't support ObjC
+      run: |
+        shopt -s globstar
+        clang-format-${{ inputs.version }} --dry-run --Werror **/*.cpp
