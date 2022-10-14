@@ -13,7 +13,7 @@ runs:
   steps:
     - name: Install
       shell: bash
-      run: sudo apt-get install clang-format-${{ inputs.version }}
+      run: sudo apt-get install -y clang-format-${{ inputs.version }}
 
     - name: clang-format
       working-directory: ${{ inputs.directory }}
