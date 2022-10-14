@@ -13,5 +13,4 @@ runs:
 
     - name: clang-format
       shell: bash
-      run: clang-format-12
-      workingDirectory: ${{ inputs.directory }}
+      run: clang-format-12 ${{ inputs.directory }}
