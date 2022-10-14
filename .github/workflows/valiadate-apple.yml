@@ -4,7 +4,7 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   lint-pods:
-    name: Lint Podspecs
+    name: Lint
     if: ${{ false }} # Apple Build is Broken
     runs-on: macos-latest
 
