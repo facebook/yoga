@@ -20,4 +20,4 @@ runs:
       shell: bash
       run: |
         shopt -s globstar
-        clang-format-${{ inputs.version }} --dry-run --Werror **/*.cpp
+        clang-format-${{ inputs.version }} --dry-run --Werror **/*.cpp **/*.h
