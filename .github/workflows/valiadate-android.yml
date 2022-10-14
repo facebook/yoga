@@ -16,3 +16,13 @@ jobs:
 
       - name: Build
         run: ./gradlew assemble${{ matrix.mode }}
+
+  format:
+    name: Build (${{ matrix.mode }})
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: google-java-format
+        run: npx --yes google-java-format -i --glob=java/**/*.java
