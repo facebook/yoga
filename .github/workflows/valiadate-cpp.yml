@@ -4,7 +4,7 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   clang-format:
-    name: Clang Format
+    name: Format
     runs-on: ubuntu-latest
 
     steps:

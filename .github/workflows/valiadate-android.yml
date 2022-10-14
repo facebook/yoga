@@ -18,7 +18,7 @@ jobs:
         run: ./gradlew assemble${{ matrix.mode }}
 
   format:
-    name: Build (${{ matrix.mode }})
+    name: Format
     runs-on: ubuntu-latest
 
     steps:

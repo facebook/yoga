@@ -3,15 +3,19 @@ inputs:
   directory:
     description: Directory to Lint
     required: true
+  version:
+    description: LLVM version to use # Should be kept roughly in sync with arcanist
+    required: false
+    default: 12
 
 runs:
   using: "composite"
   steps:
     - name: Install
       shell: bash
-      run: sudo apt install clang-format-12 # This should be roughly in sync with Arcanist
+      run: sudo apt install clang-format-${{ inputs.version }}
 
     - name: clang-format
       working-directory: ${{ inputs.directory }}
       shell: bash
-      run: clang-format-12 **/*.h **/*.cpp **/*.m **/*.mm
+      run: clang-format-${{ inputs.version }} --Werror **/*.h **/*.cpp # Yoga's config doesn't support ObjC
