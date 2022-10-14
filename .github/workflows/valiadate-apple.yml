@@ -21,6 +21,8 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Setup
         uses: ./.github/actions/setup-apple
 

@@ -13,9 +13,9 @@ runs:
   steps:
     - name: Install
       shell: bash
-      run: sudo apt install clang-format-${{ inputs.version }}
+      run: sudo apt-get install clang-format-${{ inputs.version }}
 
     - name: clang-format
       working-directory: ${{ inputs.directory }}
       shell: bash
-      run: clang-format-${{ inputs.version }} --dry-run --Werror **/*.h **/*.cpp # Yoga's config doesn't support ObjC
+      run: clang-format-${{ inputs.version }} --dry-run --Werror yoga.cpp # Yoga's config doesn't support ObjC
