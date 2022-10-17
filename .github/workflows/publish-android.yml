@@ -5,10 +5,6 @@ on:
     types:
       - created
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to publish as'
-        required: true
 
 jobs:
   publish:
