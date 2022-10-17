@@ -12,6 +12,6 @@ runs:
       shell: bash
       run: echo "y" | /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;21.3.6528147" --sdk_root=${ANDROID_SDK_ROOT}
 
-    - name: Install Ninja
-      shell: bash
-      run: sudo apt-get install -y ninja-build
+    # - name: Install Ninja
+    #   shell: bash
+    #   run: sudo apt-get install -y ninja-build
