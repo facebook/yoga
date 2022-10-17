@@ -1,4 +1,4 @@
-name: Publish Android artifacts
+name: Android
 
 on:
   release:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   publish:
-    name: Upload to Maven Central
+    name: Publish to Maven Central
     runs-on: ubuntu-latest
 
     steps:
@@ -21,19 +21,13 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-android
 
-      - name: Write GPG secret keyring
-        run: echo '${{ secrets.GPG_KEY_CONTENTS }}' | base64 -d > /tmp/secring.gpg
-
-      - name: Update gradle.properties
+      - name: Publish and release
         run: |
-            echo "signing.secretKeyRingFile=/tmp/secring.gpg" >> gradle.properties
-            echo "signing.keyId=${{ secrets.SIGNING_KEY_ID }}" >> gradle.properties
-            echo "signing.password=${{ secrets.SIGNING_PASSWORD }}" >> gradle.properties
-            echo "nmavenCentralPassword=${{ secrets.SONATYPE_NEXUS_PASSWORD }}" >> gradle.properties
-            echo "mavenCentralUsername=${{ secrets.SONATYPE_NEXUS_USERNAME }}" >> gradle.properties
-
-      - name: Upload Android archives
-        run: ./gradlew :yoga:assembleRelease publish --info
-
-      - name: Publish release
-        run: ./gradlew closeAndReleaseRepository
+          ./gradlew :yoga:assembleRelease publish --info
+          ./gradlew closeAndReleaseRepository
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}

@@ -1,4 +1,4 @@
-name: Publish Website artifcats
+name: Website
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   publish:
-    name: Push to GitHub Pages
+    name: Publish to GitHub Pages
     runs-on: ubuntu-latest
 
     steps:
