@@ -1,0 +1,14 @@
+name: Setup Website envirionment
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install NodeJS 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: yarn install
+      shell: bash
+      run: yarn install --frozen-lockfile
+      working-directory: website

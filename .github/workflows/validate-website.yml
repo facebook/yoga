@@ -1,0 +1,18 @@
+name: Website
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-website
+
+      - name: yarn build
+        run: yarn build
+        working-directory: website
