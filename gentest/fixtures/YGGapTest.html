@@ -1,19 +1,25 @@
-<div id="column_gap_flexable" style="flex-direction: row; width: 80px; height: 100px; column-gap: 10px; row-gap: 20px;">
+<div id="column_gap_flexible" style="flex-direction: row; width: 80px; height: 100px; column-gap: 10px; row-gap: 20px;">
   <div style="flex: 1;"></div>
   <div style="flex: 1;"></div>
   <div style="flex: 1;"></div>
 </div>
 
-<div id="column_gap_inflexbale" style="flex-direction: row; width: 80px; height: 100px; column-gap: 10px;">
+<div id="column_gap_inflexible" style="flex-direction: row; width: 80px; height: 100px; column-gap: 10px;">
   <div style="width: 20px;"></div>
   <div style="width: 20px;"></div>
   <div style="width: 20px;"></div>
 </div>
 
-<div id="column_gap_mixed_flexable" style="flex-direction: row; width: 80px; height: 100px; column-gap: 10px;">
+<div id="column_gap_mixed_flexible" style="flex-direction: row; width: 80px; height: 100px; column-gap: 10px;">
   <div style="width: 20px;"></div>
   <div style="flex: 1;"></div>
   <div style="width: 20px;"></div>
+</div>
+
+<div id="column_gap_child_margins" style="flex-direction: row; width: 80px; height: 100px; column-gap: 10px;">
+  <div style="flex: 1; margin-inline: 2px;"></div>
+  <div style="flex: 1; margin-inline: 10px;"></div>
+  <div style="flex: 1; margin-inline: 15px;"></div>
 </div>
 
 <div id="column_row_gap_wrapping" style="flex-direction: row; flex-wrap: wrap; width: 80px; column-gap: 10px; row-gap: 20px;">
@@ -133,4 +139,16 @@
   <div style="width: 20px;"></div>
   <div style="width: 20px;"></div>
   <div style="width: 20px;"></div>
+</div>
+
+<div id="row_gap_column_child_margins" style="flex-direction: column; width: 100px; height: 200px; row-gap: 10px;">
+  <div style="flex: 1; margin-block: 2px;"></div>
+  <div style="flex: 1; margin-block: 10px;"></div>
+  <div style="flex: 1; margin-block: 15px;"></div>
+</div>
+
+<div id="row_gap_row_wrap_child_margins" style="flex-direction: row; flex-wrap: wrap; width: 100px; height: 200px; row-gap: 10px;">
+  <div style="width: 60px; margin-block: 2px;"></div>
+  <div style="width: 60px; margin-block: 10px;"></div>
+  <div style="width: 60px; margin-block: 15px;"></div>
 </div>
