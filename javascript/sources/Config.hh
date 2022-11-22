@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <nbind/api.h>
-#include <nbind/BindDefiner.h>
 #include <yoga/Yoga.h>
 
 class Config {

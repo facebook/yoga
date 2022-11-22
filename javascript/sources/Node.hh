@@ -9,14 +9,40 @@
 
 #include <memory>
 
-#include <nbind/api.h>
-#include <nbind/BindDefiner.h>
+#include <emscripten/bind.h>
 #include <yoga/Yoga.h>
 
 #include "./Layout.hh"
 #include "./Size.hh"
 #include "./Value.hh"
 #include "./Config.hh"
+
+struct MeasureCallback {
+  virtual Size measure(float width,
+      int widthMode,
+      float height,
+      int heightMode) = 0;
+};
+
+struct MeasureCallbackWrapper : public emscripten::wrapper<MeasureCallback> {
+  EMSCRIPTEN_WRAPPER(MeasureCallbackWrapper);
+  Size measure(float width, int widthMode, float height, int heightMode)
+  {
+    return call<Size>("measure", width, widthMode, height, heightMode);
+  }
+};
+
+struct DirtiedCallback {
+  virtual void dirtied() = 0;
+};
+
+struct DirtiedCallbackWrapper : public emscripten::wrapper<DirtiedCallback> {
+  EMSCRIPTEN_WRAPPER(DirtiedCallbackWrapper);
+  void dirtied()
+  {
+    return call<void>("dirtied");
+  }
+};
 
 class Node {
 
@@ -131,8 +157,8 @@ public: // Style getters
   double getBorder(int edge) const;
 
   Value getPadding(int edge) const;
-
-  Value getGap(int gutter);
+  
+  float getGap(int gutter);
 
 public: // Tree hierarchy mutators
   void insertChild(Node* child, unsigned index);
@@ -148,7 +174,7 @@ public: // Tree hierarchy inspectors
   Node* getChild(unsigned index);
 
 public: // Measure func mutators
-  void setMeasureFunc(nbind::cbFunction& measureFunc);
+  void setMeasureFunc(MeasureCallback *measureFunc);
   void unsetMeasureFunc(void);
 
 public: // Measure func inspectors
@@ -159,7 +185,7 @@ public: // Measure func inspectors
       int heightMode) const;
 
 public: // Dirtied func mutators
-  void setDirtiedFunc(nbind::cbFunction& dirtiedFunc);
+  void setDirtiedFunc(DirtiedCallback *dirtiedFunc);
   void unsetDirtiedFunc(void);
 
 public: // Dirtied func inspectors
@@ -194,6 +220,6 @@ public:
 
   YGNodeRef m_node;
 
-  std::unique_ptr<nbind::cbFunction> m_measureFunc;
-  std::unique_ptr<nbind::cbFunction> m_dirtiedFunc;
+  std::unique_ptr<MeasureCallback> m_measureFunc;
+  std::unique_ptr<DirtiedCallback> m_dirtiedFunc;
 };

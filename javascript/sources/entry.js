@@ -234,7 +234,7 @@ type Yoga = {
   ...typeof CONSTANTS,
 };
 
-module.exports = (bind: any, lib: any): Yoga => {
+module.exports = (lib: any): Yoga => {
   function patch(prototype, name, fn) {
     let original = prototype[name];
 
@@ -298,6 +298,22 @@ module.exports = (bind: any, lib: any): Yoga => {
     });
   }
 
+  function wrapMeasureFunction(measureFunction) {
+    return lib.MeasureCallback.implement({ measure: measureFunction })
+  }
+
+  patch(lib.Node.prototype, 'setMeasureFunc', function (original, measureFunc) {
+    original.call(this, wrapMeasureFunction(measureFunc))
+  })
+
+  function wrapDirtiedFunc(dirtiedFunction) {
+    return lib.DirtiedCallback.implement({ dirtied: dirtiedFunction })
+  }
+
+  patch(lib.Node.prototype, 'setDirtiedFunc', function (original, dirtiedFunc) {
+    original.call(this, wrapDirtiedFunc(dirtiedFunc))
+  })
+
   patch(lib.Config.prototype, 'free', function() {
     // Since we handle the memory allocation ourselves (via lib.Config.create),
     // we also need to handle the deallocation
@@ -352,9 +368,9 @@ module.exports = (bind: any, lib: any): Yoga => {
   return {
     Config: lib.Config,
     Node: lib.Node,
-    Layout: bind('Layout', Layout),
-    Size: bind('Size', Size),
-    Value: bind('Value', Value),
+    Layout: Layout,
+    Size: Size,
+    Value: Value,
     ...CONSTANTS,
   };
 };

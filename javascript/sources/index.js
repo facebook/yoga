@@ -8,34 +8,11 @@
  * @format
  */
 
-const Yoga = require('./entry-common');
-const nbind = require('../build/Release/nbind.js');
-
-let ran = false;
-let ret = null;
-
-nbind({}, function(err, result) {
-  if (ran) {
-    return;
-  }
-
-  ran = true;
-
-  if (err) {
-    throw err;
-  }
-
-  ret = result;
-});
-
-if (!ran) {
-  throw new Error(
-    "Failed to load the yoga module - it needed to be loaded synchronously, but didn't",
-  );
-}
+const entry = require('./entry');
+const yoga = require('./asm');
 
 // $FlowFixMe ret will not be null here
-module.exports = Yoga(ret.bind, ret.lib);
+module.exports = entry(yoga());
 
 export type {
   Yoga$Justify,
@@ -52,4 +29,4 @@ export type {
   Yoga$ExperimentalFeature,
 } from './YGEnums.js';
 
-export type {Yoga$Node, Yoga$Config} from './entry-common';
+export type {Yoga$Node, Yoga$Config} from './entry';

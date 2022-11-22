@@ -242,7 +242,7 @@ int Node::getPositionType(void) const {
 
 Value Node::getPosition(int edge) const {
   return Value::fromYGValue(
-      YGNodeStyleGetPosition(m_node, static_cast<YGEdge>(edge)));
+    YGNodeStyleGetPosition(m_node, static_cast<YGEdge>(edge)));
 }
 
 int Node::getAlignContent(void) const {
@@ -271,7 +271,7 @@ int Node::getJustifyContent(void) const {
 
 Value Node::getMargin(int edge) const {
   return Value::fromYGValue(
-      YGNodeStyleGetMargin(m_node, static_cast<YGEdge>(edge)));
+    YGNodeStyleGetMargin(m_node, static_cast<YGEdge>(edge)));
 }
 
 int Node::getOverflow(void) const {
@@ -328,12 +328,11 @@ double Node::getBorder(int edge) const {
 
 Value Node::getPadding(int edge) const {
   return Value::fromYGValue(
-      YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
+    YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
 }
 
-Value Node::getGap(int gutter, ) {
-  return Value::fromYGValue(
-      YGNodeStyleGetGap(m_node, static_cast<YGGutter>(gutter)));
+float Node::getGap(int gutter) {
+  return YGNodeStyleGetGap(m_node, static_cast<YGGutter>(gutter));
 }
 
 bool Node::isReferenceBaseline() {
@@ -370,8 +369,8 @@ Node* Node::getChild(unsigned index) {
   return Node::fromYGNode(nodePtr);
 }
 
-void Node::setMeasureFunc(nbind::cbFunction& measureFunc) {
-  m_measureFunc.reset(new nbind::cbFunction(measureFunc));
+void Node::setMeasureFunc(MeasureCallback *measureFunc) {
+  m_measureFunc.reset(measureFunc);
 
   YGNodeSetMeasureFunc(m_node, &globalMeasureFunc);
 }
@@ -387,11 +386,11 @@ Size Node::callMeasureFunc(
     int widthMode,
     double height,
     int heightMode) const {
-  return m_measureFunc->call<Size>(width, widthMode, height, heightMode);
+  return m_measureFunc->measure(width, widthMode, height, heightMode);
 }
 
-void Node::setDirtiedFunc(nbind::cbFunction& dirtiedFunc) {
-  m_dirtiedFunc.reset(new nbind::cbFunction(dirtiedFunc));
+void Node::setDirtiedFunc(DirtiedCallback *dirtiedFunc) {
+  m_dirtiedFunc.reset(dirtiedFunc);
 
   YGNodeSetDirtiedFunc(m_node, &globalDirtiedFunc);
 }
@@ -403,7 +402,7 @@ void Node::unsetDirtiedFunc(void) {
 }
 
 void Node::callDirtiedFunc(void) const {
-  m_dirtiedFunc->call<void>();
+  m_dirtiedFunc->dirtied();
 }
 
 void Node::markDirty(void) {

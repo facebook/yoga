@@ -19,7 +19,5 @@ struct Value {
 
   Value(void) : unit(YGUnitUndefined), value(0.0) {}
 
-  Value(int unit, double value) : unit(unit), value(value) {}
-
-  void toJS(nbind::cbOutput expose) const { expose(unit, value); }
+  Value(int unit, double value) : unit(unit), value(value) {} 
 };
