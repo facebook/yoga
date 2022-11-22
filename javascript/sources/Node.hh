@@ -157,7 +157,7 @@ public: // Style getters
   double getBorder(int edge) const;
 
   Value getPadding(int edge) const;
-  
+
   float getGap(int gutter);
 
 public: // Tree hierarchy mutators

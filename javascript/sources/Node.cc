@@ -242,7 +242,7 @@ int Node::getPositionType(void) const {
 
 Value Node::getPosition(int edge) const {
   return Value::fromYGValue(
-    YGNodeStyleGetPosition(m_node, static_cast<YGEdge>(edge)));
+      YGNodeStyleGetPosition(m_node, static_cast<YGEdge>(edge)));
 }
 
 int Node::getAlignContent(void) const {
@@ -271,7 +271,7 @@ int Node::getJustifyContent(void) const {
 
 Value Node::getMargin(int edge) const {
   return Value::fromYGValue(
-    YGNodeStyleGetMargin(m_node, static_cast<YGEdge>(edge)));
+      YGNodeStyleGetMargin(m_node, static_cast<YGEdge>(edge)));
 }
 
 int Node::getOverflow(void) const {
@@ -328,7 +328,7 @@ double Node::getBorder(int edge) const {
 
 Value Node::getPadding(int edge) const {
   return Value::fromYGValue(
-    YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
+      YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
 }
 
 float Node::getGap(int gutter) {

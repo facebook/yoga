@@ -17,4 +17,3 @@ struct Layout {
   double width;
   double height;
 };
-
