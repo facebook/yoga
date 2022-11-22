@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);
+var Yoga = Yoga || require("../../dist");
 
 it("align_baseline_parent_using_child_in_column_as_reference", function () {
   var config = Yoga.Config.create();

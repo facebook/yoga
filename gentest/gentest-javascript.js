@@ -33,7 +33,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue:{value:function() {
     this.push([
-      'var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);',
+      'var Yoga = Yoga || require("../../dist");',
       ''
     ]);
   }},
