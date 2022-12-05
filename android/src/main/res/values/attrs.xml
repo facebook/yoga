@@ -130,9 +130,14 @@
     <attr name="yg_positionAll" format="dimension|string"/>
 
     <attr name="yg_positionType" format="enum">
+      <!-- "static" is a reserved keyword
       <enum name="static" value="0"/>
+      -->
       <enum name="relative" value="1"/>
       <enum name="absolute" value="2"/>
+      <enum name="position_static" value="0"/>
+      <enum name="position_relative" value="1"/>
+      <enum name="position_absolute" value="2"/>
     </attr>
 
     <attr name="yg_width" format="dimension|string"/>
