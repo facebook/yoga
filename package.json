@@ -1,0 +1,11 @@
+{
+  "name": "yoga-repo",
+  "private": true,
+  "workspaces": [
+    "*",
+    "website/src/components/*"
+  ],
+  "resolutions": {
+    "nbind": "https://github.com/charto/nbind.git#fe3abe0"
+  }
+}

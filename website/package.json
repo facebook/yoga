@@ -33,8 +33,5 @@
   },
   "devDependencies": {
     "prettier": "1.19.1"
-  },
-  "resolutions": {
-    "nbind": "https://github.com/charto/nbind.git#fe3abe0"
   }
 }

@@ -331,9 +331,8 @@ Value Node::getPadding(int edge) const {
       YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
 }
 
-Value Node::getGap(int gutter, ) {
-  return Value::fromYGValue(
-      YGNodeStyleGetGap(m_node, static_cast<YGGutter>(gutter)));
+double Node::getGap(int gutter) {
+  return YGNodeStyleGetGap(m_node, static_cast<YGGutter>(gutter));
 }
 
 bool Node::isReferenceBaseline() {

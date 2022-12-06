@@ -132,7 +132,7 @@ public: // Style getters
 
   Value getPadding(int edge) const;
 
-  Value getGap(int gutter);
+  double getGap(int gutter);
 
 public: // Tree hierarchy mutators
   void insertChild(Node* child, unsigned index);
