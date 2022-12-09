@@ -2566,6 +2566,10 @@ static void YGJustifyMainAxis(
               collectedFlexItemsValues.remainingFreeSpace /
               numberOfAutoMarginsOnCurrentLine;
         }
+        
+        if (i != startOfLineIndex) {
+          collectedFlexItemsValues.mainDim += betweenMainDim;
+        }
 
         if (performLayout) {
           child->setLayoutPosition(
@@ -2585,14 +2589,14 @@ static void YGJustifyMainAxis(
           // If we skipped the flex step, then we can't rely on the measuredDims
           // because they weren't computed. This means we can't call
           // YGNodeDimWithMargin.
-          collectedFlexItemsValues.mainDim += betweenMainDim +
+          collectedFlexItemsValues.mainDim +=
               child->getMarginForAxis(mainAxis, availableInnerWidth).unwrap() +
               childLayout.computedFlexBasis.unwrap();
           collectedFlexItemsValues.crossDim = availableInnerCrossDim;
         } else {
           // The main dimension is the sum of all the elements dimension plus
           // the spacing.
-          collectedFlexItemsValues.mainDim += betweenMainDim +
+          collectedFlexItemsValues.mainDim +=
               YGNodeDimWithMargin(child, mainAxis, availableInnerWidth);
 
           if (isNodeBaselineLayout) {
