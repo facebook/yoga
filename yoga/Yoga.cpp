@@ -2540,6 +2540,9 @@ static void YGJustifyMainAxis(
     const YGNodeRef child = node->getChild(i);
     const YGStyle& childStyle = child->getStyle();
     const YGLayout childLayout = child->getLayout();
+    const bool isLastChild = i == collectedFlexItemsValues.endOfLineIndex - 1;
+    // remove the gap if it is the last element of the line
+    betweenMainDim -= isLastChild ? gap : 0;
     if (childStyle.display() == YGDisplayNone) {
       continue;
     }
