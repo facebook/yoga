@@ -2543,7 +2543,7 @@ static void YGJustifyMainAxis(
     const bool isLastChild = i == collectedFlexItemsValues.endOfLineIndex - 1;
     // remove the gap if it is the last element of the line
     if (isLastChild) {
-        betweenMainDim -= gap;
+      betweenMainDim -= gap;
     }
     if (childStyle.display() == YGDisplayNone) {
       continue;
