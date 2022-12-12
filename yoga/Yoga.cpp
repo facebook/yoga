@@ -2566,7 +2566,7 @@ static void YGJustifyMainAxis(
               collectedFlexItemsValues.remainingFreeSpace /
               numberOfAutoMarginsOnCurrentLine;
         }
-        
+
         if (i != startOfLineIndex) {
           collectedFlexItemsValues.mainDim += betweenMainDim;
         }
