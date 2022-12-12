@@ -3,7 +3,7 @@ CC=emcc
 all: clean dir asm
 
 asm:
-	$(CC) sources/yoga/*.cpp sources/*.cc \
+	$(CC) sources/yoga/*.cpp sources/yoga/**/*.cpp sources/*.cc \
 		--bind \
 		-Isources \
 		-g0 \
@@ -18,14 +18,13 @@ asm:
 		-s DYNAMIC_EXECUTION=0 \
 		-s TEXTDECODER=0 \
 		-s ENVIRONMENT='web' \
-		-s ERROR_ON_UNDEFINED_SYMBOLS=0 \
 		-s FILESYSTEM=0 \
 		-s MALLOC="emmalloc" \
 		-s EXPORT_NAME="yoga" \
 		-o dist/asm.js
 
 clean:
-	rm -rf dist 
+	rm -rf dist
 
 dir:
 	mkdir -p dist
