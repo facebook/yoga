@@ -17,14 +17,17 @@
 #include "./Value.hh"
 #include "./Config.hh"
 
-struct MeasureCallback {
+class MeasureCallback {
+public:
+  virtual ~MeasureCallback() {}
   virtual Size measure(float width,
       int widthMode,
       float height,
       int heightMode) = 0;
 };
 
-struct MeasureCallbackWrapper : public emscripten::wrapper<MeasureCallback> {
+class MeasureCallbackWrapper : public emscripten::wrapper<MeasureCallback> {
+public:
   EMSCRIPTEN_WRAPPER(MeasureCallbackWrapper);
   Size measure(float width, int widthMode, float height, int heightMode)
   {
@@ -32,11 +35,14 @@ struct MeasureCallbackWrapper : public emscripten::wrapper<MeasureCallback> {
   }
 };
 
-struct DirtiedCallback {
+class DirtiedCallback {
+public:
+  virtual ~DirtiedCallback() {}
   virtual void dirtied() = 0;
 };
 
-struct DirtiedCallbackWrapper : public emscripten::wrapper<DirtiedCallback> {
+class DirtiedCallbackWrapper : public emscripten::wrapper<DirtiedCallback> {
+public:
   EMSCRIPTEN_WRAPPER(DirtiedCallbackWrapper);
   void dirtied()
   {
