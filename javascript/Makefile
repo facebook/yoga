@@ -8,6 +8,7 @@ asm:
 		-Isources \
 		-g0 \
 		-Os \
+		-flto \
 		--closure 1 \
 		--memory-init-file 0 \
 		-s WASM=0 \
