@@ -19,3 +19,8 @@ jobs:
         uses: ./.github/actions/clang-format
         with:
           directory: ./yoga
+
+      - name: clang-format (JavaScript Bindings)
+        uses: ./.github/actions/clang-format
+        with:
+          directory: ./javascript

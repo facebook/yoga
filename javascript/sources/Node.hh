@@ -20,7 +20,8 @@
 class MeasureCallback {
 public:
   virtual ~MeasureCallback() {}
-  virtual Size measure(float width,
+  virtual Size measure(
+      float width,
       int widthMode,
       float height,
       int heightMode) = 0;
@@ -29,8 +30,7 @@ public:
 class MeasureCallbackWrapper : public emscripten::wrapper<MeasureCallback> {
 public:
   EMSCRIPTEN_WRAPPER(MeasureCallbackWrapper);
-  Size measure(float width, int widthMode, float height, int heightMode)
-  {
+  Size measure(float width, int widthMode, float height, int heightMode) {
     return call<Size>("measure", width, widthMode, height, heightMode);
   }
 };
@@ -44,10 +44,7 @@ public:
 class DirtiedCallbackWrapper : public emscripten::wrapper<DirtiedCallback> {
 public:
   EMSCRIPTEN_WRAPPER(DirtiedCallbackWrapper);
-  void dirtied()
-  {
-    return call<void>("dirtied");
-  }
+  void dirtied() { return call<void>("dirtied"); }
 };
 
 class Node {
@@ -180,7 +177,7 @@ public: // Tree hierarchy inspectors
   Node* getChild(unsigned index);
 
 public: // Measure func mutators
-  void setMeasureFunc(MeasureCallback *measureFunc);
+  void setMeasureFunc(MeasureCallback* measureFunc);
   void unsetMeasureFunc(void);
 
 public: // Measure func inspectors
@@ -191,7 +188,7 @@ public: // Measure func inspectors
       int heightMode) const;
 
 public: // Dirtied func mutators
-  void setDirtiedFunc(DirtiedCallback *dirtiedFunc);
+  void setDirtiedFunc(DirtiedCallback* dirtiedFunc);
   void unsetDirtiedFunc(void);
 
 public: // Dirtied func inspectors

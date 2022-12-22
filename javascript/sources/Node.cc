@@ -369,7 +369,7 @@ Node* Node::getChild(unsigned index) {
   return Node::fromYGNode(nodePtr);
 }
 
-void Node::setMeasureFunc(MeasureCallback *measureFunc) {
+void Node::setMeasureFunc(MeasureCallback* measureFunc) {
   m_measureFunc.reset(measureFunc);
 
   YGNodeSetMeasureFunc(m_node, &globalMeasureFunc);
@@ -389,7 +389,7 @@ Size Node::callMeasureFunc(
   return m_measureFunc->measure(width, widthMode, height, heightMode);
 }
 
-void Node::setDirtiedFunc(DirtiedCallback *dirtiedFunc) {
+void Node::setDirtiedFunc(DirtiedCallback* dirtiedFunc) {
   m_dirtiedFunc.reset(dirtiedFunc);
 
   YGNodeSetDirtiedFunc(m_node, &globalDirtiedFunc);
