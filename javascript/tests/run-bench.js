@@ -21,12 +21,12 @@ let testFiles = process.argv.slice(2).map(file => {
 
 let testResults = new Map();
 
-for (let type of [`asm`]) {
+for (let type of ['asm', 'wasm']) {
   for (let file of testFiles) {
     vm.runInNewContext(
       file,
       Object.assign(Object.create(global), {
-        Yoga: require('../dist'),
+        Yoga: require(type === 'asm' ? '../dist/index.asm' : '../dist/index.wasm'),
         YGBENCHMARK: function(name, fn) {
           let testEntry = testResults.get(name);
 
