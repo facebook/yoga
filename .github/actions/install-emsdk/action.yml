@@ -19,4 +19,5 @@ runs:
       run: |
         ./emsdk install ${{ inputs.version }}
         ./emsdk activate ${{ inputs.version }}
-        source $RUNNER_TEMP/emsdk/emsdk_env.sh
+        echo $RUNNER_TEMP/emsdk >> $GITHUB_PATH
+        echo $RUNNER_TEMP/emsdk/upstream/emscripten >> $GITHUB_PATH
