@@ -31,12 +31,7 @@ function toJavascriptUpper(symbol) {
 JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   constructor:{value:JavascriptEmitter},
 
-  emitPrologue:{value:function() {
-    this.push([
-      'var Yoga = Yoga || require("../..");',
-      ''
-    ]);
-  }},
+  emitPrologue:{value:function() {}},
 
   emitTestPrologue:{value:function(name, experiments) {
     this.push('it(' + JSON.stringify(name) + ', function () {');

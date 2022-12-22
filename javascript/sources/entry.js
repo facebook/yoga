@@ -76,7 +76,7 @@ class Size {
     expose(this.width, this.height);
   }
 
-  toString() {
+  toString() {s
     return `<Size#${this.width}x${this.height}>`;
   }
 }
@@ -216,6 +216,10 @@ export type Yoga$Node = {
   unsetMeasureFun(): void,
 };
 
+type YogaConstructor = {
+  initialize: () => Promise<Yoga>;
+}
+
 type Yoga = {
   Config: {
     create(): Yoga$Config,
@@ -234,7 +238,7 @@ type Yoga = {
   ...typeof CONSTANTS,
 };
 
-module.exports = (lib: any): Yoga => {
+function wrapLib(lib: any): Yoga {
   function patch(prototype, name, fn) {
     let original = prototype[name];
 
@@ -374,3 +378,7 @@ module.exports = (lib: any): Yoga => {
     ...CONSTANTS,
   };
 };
+
+module.exports = (libPromise: any) => ({
+  initialize: () => libPromise.then(wrapLib)
+}: YogaConstructor);

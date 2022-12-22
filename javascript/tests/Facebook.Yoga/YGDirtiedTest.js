@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-var Yoga = Yoga || require("../..");
-
 it("dirtied", function() {
   var root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);

@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-var Yoga = Yoga || require("../..");
-
 it("padding_start", function () {
   var root = Yoga.Node.create();
   root.setWidth(100);

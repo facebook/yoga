@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-var Yoga = Yoga || require("../..");
-
 it("measure_once_single_flexible_child", function () {
   var root = Yoga.Node.create();
   root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
