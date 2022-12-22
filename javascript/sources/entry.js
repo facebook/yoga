@@ -76,7 +76,7 @@ class Size {
     expose(this.width, this.height);
   }
 
-  toString() {s
+  toString() {
     return `<Size#${this.width}x${this.height}>`;
   }
 }
