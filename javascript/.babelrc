@@ -1,13 +1,8 @@
 {
-  "presets": ["stage-3", "es2015"],
+  "presets": [
+    ["@babel/preset-env", {"targets": "defaults"}]
+  ],
   "plugins": [
-    "transform-flow-strip-types",
-    [
-      "replace-require",
-      {
-        "fs": "{}",
-        "path": "{}"
-      }
-    ]
+    "@babel/plugin-transform-flow-strip-types"
   ]
 }

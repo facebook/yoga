@@ -15,7 +15,7 @@ import type {
   Yoga$Wrap,
   Yoga$Align,
   Yoga$FlexDirection,
-  Yoga$Gap,
+  Yoga$Gutter,
   Yoga$Direction,
   Yoga$PositionType,
   Yoga$Overflow,

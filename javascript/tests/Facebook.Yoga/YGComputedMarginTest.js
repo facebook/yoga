@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-var Yoga = Yoga || require("../../dist");
+var Yoga = Yoga || require("../..");
 
 it("margin_start", function () {
   var root = Yoga.Node.create();
