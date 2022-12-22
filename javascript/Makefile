@@ -8,6 +8,7 @@ asm:
 		-Isources \
 		-g0 \
 		-Os \
+		-std=c++14 \
 		-flto \
 		-fno-rtti \
 		-DEMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0 \
