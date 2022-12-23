@@ -8,7 +8,6 @@
  * @format
  */
 
-
 const CONSTANTS = require('./YGEnums');
 import type {
   Yoga$Edge,
@@ -238,7 +237,7 @@ type Yoga = {
   ...typeof CONSTANTS,
 };
 
-function wrapLib(lib: any): Yoga {
+module.exports = function wrapLib(lib: any): Yoga {
   function patch(prototype, name, fn) {
     let original = prototype[name];
 
@@ -378,7 +377,3 @@ function wrapLib(lib: any): Yoga {
     ...CONSTANTS,
   };
 };
-
-module.exports = (libPromise: any) => ({
-  initialize: () => libPromise.then(wrapLib)
-}: YogaConstructor);

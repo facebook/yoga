@@ -11,19 +11,31 @@
     ".": {
       "browser": "./dist/index.wasm.js",
       "node": "./dist/index.wasm.js",
-      "react-native": "./dist/index.asm.js",
-      "default": "./dist/index.asm.js"
+      "react-native": "./dist/index.asmjs.js",
+      "default": "./dist/index.asmjs.js"
+    },
+    "./sync": {
+      "browser": "./dist/sync.asmks.js",
+      "node": "./dist/sync.wasm.js",
+      "react-native": "./dist/sync.asmjs.js",
+      "default": "./dist/sync.asmjs.js"
     }
   },
+  "files": [
+    "dist/**",
+    "sources/**"
+  ],
   "scripts": {
-    "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
-    "copy-sources": "! npm -s run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
-    "build": "npm run copy-sources && make && npm run build:js",
-    "test": "yarn test:asm && yarn test:wasm",
-    "test:asm": "jest",
+    "build": "yarn build:native && yarn build:js",
+    "build:native": "yarn build:project && cmake --build build",
+    "build:project": "which ninja && emcmake cmake -S . -B build -G Ninja || emcmake cmake -S . -B build",
+    "build:js": "babel sources --source-maps --out-dir dist && flow-copy-source sources dist",
+    "test": "yarn test:asmjs && yarn test:asmjs-sync && yarn test:wasm && yarn test:wasm-sync",
+    "test:asmjs": "jest",
+    "test:asmjs-sync": "SYNC=1 jest",
     "test:wasm": "WASM=1 jest",
-    "benchmark": "npm run build && node tests/run-bench $(find tests/Benchmarks -name '*.js')",
-    "build:js": "babel sources --source-maps --out-dir dist && flow-copy-source sources dist"
+    "test:wasm-sync": "WASM=1 SYNC=1 jest",
+    "benchmark": "node tests/run-bench $(find tests/Benchmarks -name '*.js')"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

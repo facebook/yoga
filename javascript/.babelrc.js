@@ -8,7 +8,10 @@
  */
 
 module.exports = {
-  setupFiles: ["./jest.setup.js", "./tests/tools.js"],
-  testRegex: '/tests/Facebook.Yoga/.*\\.js$',
-  watchman: false,
-}
+  "presets": [
+    ["@babel/preset-env", {"targets": "defaults"}]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-flow-strip-types"
+  ]
+};

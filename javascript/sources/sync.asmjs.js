@@ -4,11 +4,14 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * @flow
  * @format
  */
 
-module.exports = {
-  setupFiles: ["./jest.setup.js", "./tests/tools.js"],
-  testRegex: '/tests/Facebook.Yoga/.*\\.js$',
-  watchman: false,
-}
+const wrapLib = require('./entry');
+const loadYoga = require('./asmjs-sync');
+
+module.exports = wrapLib(loadYoga());
+
+export type * from './YGEnums.js';
+export type * from './entry';

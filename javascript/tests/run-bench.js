@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -21,12 +22,12 @@ let testFiles = process.argv.slice(2).map(file => {
 
 let testResults = new Map();
 
-for (let type of ['asm', 'wasm']) {
+for (let type of ['asmjs', 'wasm']) {
   for (let file of testFiles) {
     vm.runInNewContext(
       file,
       Object.assign(Object.create(global), {
-        Yoga: require(type === 'asm' ? '../dist/index.asm' : '../dist/index.wasm'),
+        Yoga: require(type === 'asmjs' ? '../dist/sync.asmjs' : '../dist/sync.wasm'),
         YGBENCHMARK: function(name, fn) {
           let testEntry = testResults.get(name);
 

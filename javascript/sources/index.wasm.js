@@ -8,10 +8,14 @@
  * @format
  */
 
-const entry = require('./entry');
-const yoga = require('./wasm');
+const wrapLib = require('./entry');
+const loadYoga = require('./wasm-async');
 
-module.exports = entry(yoga());
+module.exports = {
+load: () => {
+    return loadYoga().then(wrapLib);
+}
+}
 
 export type * from './YGEnums.js';
 export type * from './entry';
