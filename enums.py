@@ -224,9 +224,7 @@ for name, values in sorted(ENUMS.items()):
 # write out javascript file
 with open(root + "/javascript/sources/YGEnums.js", "w") as f:
     f.write(get_license("js"))
-    f.write("// @flow\n")
-    f.write("// @format\n")
-    f.write("const CONSTANTS = {\n")
+    f.write("module.exports = {\n")
     items = sorted(ENUMS.items())
     for name, values in items:
         f.write("  %s_COUNT: %s,\n" % (to_java_upper(name), len(values)))
@@ -248,12 +246,32 @@ with open(root + "/javascript/sources/YGEnums.js", "w") as f:
             f.write("\n")
     f.write("};\n")
 
+with open(root + "/javascript/sources/YGEnums.d.ts", "w") as f:
+    f.write(get_license("js"))
+
     for name, values in sorted(ENUMS.items()):
-        f.write("export type Yoga${} =\n".format(name))
+        base = 0
+        for value in values:
+            if isinstance(value, tuple):
+                f.write(
+                    "export const %s_%s: %d;\n"
+                    % (to_java_upper(name), to_java_upper(value[0]), value[1])
+                )
+                base = value[1] + 1
+            else:
+                f.write(
+                    "export const %s_%s: %d;\n" % (to_java_upper(name), to_java_upper(value), base)
+                )
+                base += 1
+
+        f.write("\n")
+
+    for name, values in sorted(ENUMS.items()):
+        f.write("export type {} =\n".format(name))
         for value in values:
             unpackedValue = value[0] if isinstance(value, tuple) else value
             f.write(
-                "  | typeof CONSTANTS.{}_{}".format(
+                "  | typeof {}_{}".format(
                     to_java_upper(name), to_java_upper(unpackedValue)
                 )
             )
@@ -263,4 +281,3 @@ with open(root + "/javascript/sources/YGEnums.js", "w") as f:
                 f.write("\n")
 
         f.write("\n")
-    f.write("module.exports = CONSTANTS;\n")
