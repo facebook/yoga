@@ -8,6 +8,6 @@
  */
 
 const wrapAsm = require('./wrapAsm');
-const loadYoga = require('./wasm-sync');
+const loadAsm = require('./wasm-sync');
 
-module.exports = wrapAsm(loadYoga());
+module.exports = wrapAsm(loadAsm());

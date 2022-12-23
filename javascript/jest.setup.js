@@ -13,8 +13,8 @@ module.exports = async () => {
   } else if (process.env['SYNC']) {
     global.Yoga = require("./dist/sync.asmjs");
   } else if (process.env['WASM']) {
-    global.Yoga = await require("./dist/index.wasm").load();
+    global.Yoga = await require("./dist/index.wasm").loadYoga();
   } else {
-    global.Yoga = await require("./dist/index.asmjs").load();
+    global.Yoga = await require("./dist/index.asmjs").loadYoga();
   }
 }

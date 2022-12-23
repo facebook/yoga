@@ -12,4 +12,4 @@ import type {Yoga} from './wrapAsm';
 export * from './YGEnums';
 export * from './wrapAsm';
 
-export function load(): Promise<Yoga>;
+export function loadYoga(): Promise<Yoga>;

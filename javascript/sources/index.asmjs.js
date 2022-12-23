@@ -8,9 +8,9 @@
  */
 
 const wrapAsm = require('./wrapAsm');
-const loadYoga = require('./asmjs-async');
+const loadAsm = require('./asmjs-async');
 
 module.exports = {
-  load: () => loadYoga().then(wrapAsm),
+  loadYoga: () => loadAsm().then(wrapAsm),
   ...require('./YGEnums'),
 }
