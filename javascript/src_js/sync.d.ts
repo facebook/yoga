@@ -7,10 +7,10 @@
  * @format
  */
 
-const wrapAsm = require('./wrapAsm');
-const loadAsm = require('./asmjs-async');
+import type {Yoga} from './wrapAsm';
 
-module.exports = {
-  loadYoga: () => loadAsm().then(wrapAsm),
-  ...require('./YGEnums'),
-}
+export * from './generated/YGEnums';
+export * from './wrapAsm';
+
+declare const yoga: Yoga;
+export default yoga;

@@ -10,7 +10,7 @@ project(yoga)
 file(GLOB SOURCES
     ../yoga/*.cpp
     ../yoga/**/*.cpp
-    sources/*.cc)
+    src_native/*.cc)
 
 include_directories(..)
 
@@ -49,7 +49,7 @@ link_libraries(embind)
 
 add_library(yogaObjLib OBJECT ${SOURCES})
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dist)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dist/build)
 
 add_executable(asmjs-sync $<TARGET_OBJECTS:yogaObjLib>)
 target_link_options(asmjs-sync PUBLIC

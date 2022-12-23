@@ -7,7 +7,5 @@
  * @format
  */
 
-const wrapAsm = require('./wrapAsm');
-const loadAsm = require('./wasm-sync');
-
-module.exports = wrapAsm(loadAsm());
+// Fallback for when the export map is not followed
+module.exports = require('./variants/asmjs-async');

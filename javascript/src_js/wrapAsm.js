@@ -7,7 +7,7 @@
  * @format
  */
 
-const CONSTANTS = require('./YGEnums');
+const CONSTANTS = require('./generated/YGEnums');
 
 module.exports = (lib) => {
   function patch(prototype, name, fn) {

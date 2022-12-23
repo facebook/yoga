@@ -7,10 +7,5 @@
  * @format
  */
 
-const wrapAsm = require('./wrapAsm');
-const loadAsm = require('./wasm-async');
-
-module.exports = {
-  loadYoga: () => loadAsm().then(wrapAsm),
-  ...require('./YGEnums'),
-}
+const asm = require('../build/asmjs-sync');
+module.exports = require("../entrySync")(asm);

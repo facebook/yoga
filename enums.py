@@ -222,7 +222,7 @@ for name, values in sorted(ENUMS.items()):
         f.write("}\n")
 
 # write out javascript file
-with open(root + "/javascript/sources/YGEnums.js", "w") as f:
+with open(root + "/javascript/src_js/generated/YGEnums.js", "w") as f:
     f.write(get_license("js"))
     f.write("module.exports = {\n")
     items = sorted(ENUMS.items())
@@ -243,7 +243,7 @@ with open(root + "/javascript/sources/YGEnums.js", "w") as f:
             f.write("\n")
     f.write("};\n")
 
-with open(root + "/javascript/sources/YGEnums.d.ts", "w") as f:
+with open(root + "/javascript/src_js/generated/YGEnums.d.ts", "w") as f:
     f.write(get_license("js"))
 
     for name, values in sorted(ENUMS.items()):

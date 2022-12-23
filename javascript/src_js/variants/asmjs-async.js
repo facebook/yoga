@@ -7,9 +7,5 @@
  * @format
  */
 
-import type {Yoga} from './wrapAsm';
-
-export * from './YGEnums';
-export * from './wrapAsm';
-
-export function loadYoga(): Promise<Yoga>;
+const asm = require('../build/asmjs-async');
+module.exports = require("../entryAsync")(asm);

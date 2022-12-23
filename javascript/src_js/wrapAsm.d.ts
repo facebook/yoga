@@ -7,7 +7,7 @@
  * @format
  */
 
- import type {
+import type {
   Edge,
   Wrap,
   Align,
@@ -19,9 +19,9 @@
   Justify,
   Display,
   ExperimentalFeature,
-} from './YGEnums';
+} from './generated/YGEnums';
 
-import type * as YGEnums from './YGEnums';
+import type * as YGEnums from './generated/YGEnums';
 
 type Layout = {
   left: number;

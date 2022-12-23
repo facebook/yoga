@@ -7,10 +7,5 @@
  * @format
  */
 
- import type {Yoga} from './wrapAsm';
-
- export * from './YGEnums';
- export * from './wrapAsm';
-
- declare const yoga: Yoga;
- export default yoga;
+const asm = require('../build/wasm-async');
+module.exports = require("../entryAsync")(asm);
