@@ -12,7 +12,8 @@ runs:
       uses: ./.github/actions/install-emsdk
 
     - name: Install ninja
-      uses: sudo apt-get install -y ninja-build
+      shell: bash
+      run: sudo apt-get install -y ninja-build
 
     - name: yarn install
       shell: bash
