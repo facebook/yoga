@@ -8,11 +8,11 @@
  */
 
 module.exports = async () => {
-  if (process.env['SYNC'] && process.env['WASM']) {
+  if (process.env['SYNC'] == true && process.env['WASM'] == true) {
     global.Yoga = require("./dist/sync.wasm");
-  } else if (process.env['SYNC']) {
+  } else if (process.env['SYNC'] == true) {
     global.Yoga = require("./dist/sync.asmjs");
-  } else if (process.env['WASM']) {
+  } else if (process.env['WASM'] == true) {
     global.Yoga = await require("./dist/index.wasm").loadYoga();
   } else {
     global.Yoga = await require("./dist/index.asmjs").loadYoga();

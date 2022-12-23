@@ -25,3 +25,7 @@ jobs:
       - name: yarn test
         run: yarn test
         working-directory: javascript
+
+      - name: yarn benchmark
+        run: yarn benchmark
+        working-directory: javascript

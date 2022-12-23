@@ -230,17 +230,14 @@ with open(root + "/javascript/sources/YGEnums.js", "w") as f:
         f.write("  %s_COUNT: %s,\n" % (to_java_upper(name), len(values)))
         base = 0
         for value in values:
-            if isinstance(value, tuple):
-                f.write(
-                    "  %s_%s: %d,\n"
-                    % (to_java_upper(name), to_java_upper(value[0]), value[1])
-                )
-                base = value[1] + 1
-            else:
-                f.write(
-                    "  %s_%s: %d,\n" % (to_java_upper(name), to_java_upper(value), base)
-                )
-                base += 1
+            value_arg = value[0] if isinstance(value, tuple) else value
+            ordinal_arg = value[1] if isinstance(value, tuple) else base
+
+            f.write(
+                "  %s_%s: %d,\n"
+                % (to_java_upper(name), to_java_upper(value_arg), ordinal_arg)
+            )
+            base = ordinal_arg + 1
 
         if name != items[-1][0]:
             f.write("\n")
@@ -252,18 +249,21 @@ with open(root + "/javascript/sources/YGEnums.d.ts", "w") as f:
     for name, values in sorted(ENUMS.items()):
         base = 0
         for value in values:
-            if isinstance(value, tuple):
-                f.write(
-                    "export const %s_%s: %d;\n"
-                    % (to_java_upper(name), to_java_upper(value[0]), value[1])
+            value_arg = value[0] if isinstance(value, tuple) else value
+            ordinal_arg = value[1] if isinstance(value, tuple) else base
+
+            f.write(
+                (
+                    "type {name}_{value} = {ordinal} & ['{name}']\n"
+                    + "export const {name}_{value}: {name}_{value};\n\n"
+                ).format(
+                    name=to_java_upper(name),
+                    value=to_java_upper(value_arg),
+                    ordinal=ordinal_arg,
                 )
-                base = value[1] + 1
-            else:
-                f.write(
-                    "export const %s_%s: %d;\n"
-                    % (to_java_upper(name), to_java_upper(value), base)
-                )
-                base += 1
+            )
+
+            base = ordinal_arg + 1
 
         f.write("\n")
 

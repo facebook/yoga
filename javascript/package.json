@@ -31,9 +31,9 @@
     "build:native-project": "which ninja && emcmake cmake -S . -B build -G Ninja || emcmake cmake -S . -B build",
     "build:js": "babel sources --source-maps --out-dir dist && cp -r sources/*.d.ts dist",
     "test": "yarn test:asmjs && yarn test:asmjs-sync && yarn test:wasm && yarn test:wasm-sync",
-    "test:asmjs": "jest",
-    "test:asmjs-sync": "SYNC=1 jest",
-    "test:wasm": "WASM=1 jest",
+    "test:asmjs": "WASM=0 SYNC=0 jest",
+    "test:asmjs-sync": "WASM=0 SYNC=1 jest",
+    "test:wasm": "WASM=1 SYNC=0 jest",
     "test:wasm-sync": "WASM=1 SYNC=1 jest",
     "benchmark": "node tests/run-bench $(find tests/Benchmarks -name '*.js')"
   },
