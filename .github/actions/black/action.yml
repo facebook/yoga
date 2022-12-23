@@ -1,0 +1,25 @@
+name: Black Formatter
+inputs:
+  directory:
+    description: Directory to Lint
+    required: true
+  version:
+    description: pypi version of "black" to use
+    required: false
+    default: 22.3.0
+
+runs:
+  using: "composite"
+  steps:
+    - name: Ensure supported Python selected
+      uses: actions/setup-python@v4
+      with:
+        python-version: '>=3.6.2'
+
+    - name: pip install
+      shell: bash
+      run: pip install black==${{ inputs.version }}
+
+    - name: black
+      shell: bash
+      run: black --check ${{ inputs.directory }}

@@ -260,7 +260,8 @@ with open(root + "/javascript/sources/YGEnums.d.ts", "w") as f:
                 base = value[1] + 1
             else:
                 f.write(
-                    "export const %s_%s: %d;\n" % (to_java_upper(name), to_java_upper(value), base)
+                    "export const %s_%s: %d;\n"
+                    % (to_java_upper(name), to_java_upper(value), base)
                 )
                 base += 1
 
