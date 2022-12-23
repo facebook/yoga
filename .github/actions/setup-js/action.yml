@@ -11,6 +11,9 @@ runs:
     - name: Install emsdk
       uses: ./.github/actions/install-emsdk
 
+    - name: Install ninja
+      uses: sudo apt-get install -y ninja-build
+
     - name: yarn install
       shell: bash
       run: yarn install --frozen-lockfile
