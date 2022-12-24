@@ -52,6 +52,7 @@ import { loadYoga } from "yoga-layout/entrypoint/wasm-async";
 
 ### Requirements
 
+1. Emscripten SDK
 1. CMake >= 3.13
 1. (Optional) ninja, for faster builds
 
