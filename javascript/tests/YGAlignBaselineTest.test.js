@@ -5,11 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-it("align_baseline_parent_using_child_in_column_as_reference", function () {
+test("align_baseline_parent_using_child_in_column_as_reference", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(1000);
     root.setHeight(1000);
@@ -42,34 +43,17 @@ it("align_baseline_parent_using_child_in_column_as_reference", function () {
 
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
 
-    console.assert(0 === root_child0.getComputedLeft(),
-        "0 === root_child0.getComputedLeft() (" +
-        root_child0.getComputedLeft() + ")");
-    console.assert(100 === root_child0.getComputedTop(),
-        "100 === root_child0.getComputedTop() (" +
-        root_child0.getComputedTop() + ")");
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(100);
 
-    console.assert(500 === root_child1.getComputedLeft(),
-        "500 === root_child1.getComputedLeft() (" +
-        root_child1.getComputedLeft() + ")");
-    console.assert(0 === root_child1.getComputedTop(),
-        "0 === root_child1.getComputedTop() (" +
-        root_child1.getComputedTop() + ")");
+    expect(root_child1.getComputedLeft()).toBe(500);
+    expect(root_child1.getComputedTop()).toBe(0);
 
-    console.assert(0 === root_child1_child0.getComputedLeft(),
-        "0 === root_child1_child0.getComputedLeft() (" +
-        root_child1_child0.getComputedLeft() + ")");
-    console.assert(0 === root_child1_child0.getComputedTop(),
-        "0 === root_child1_child0.getComputedTop() (" +
-        root_child1_child0.getComputedTop() + ")");
+    expect(root_child1_child0.getComputedLeft()).toBe(0);
+    expect(root_child1_child0.getComputedTop()).toBe(0);
 
-    console.assert(0 === root_child1_child1.getComputedLeft(),
-        "0 === root_child1_child1.getComputedLeft() (" +
-        root_child1_child1.getComputedLeft() + ")");
-    console.assert(300 === root_child1_child1.getComputedTop(),
-        "300 === root_child1_child1.getComputedTop() (" +
-        root_child1_child1.getComputedTop() + ")");
-
+    expect(root_child1_child1.getComputedLeft()).toBe(0);
+    expect(root_child1_child1.getComputedTop()).toBe(300);
   } finally {
     if (typeof root !== "undefined") {
       root.freeRecursive();
@@ -79,11 +63,12 @@ it("align_baseline_parent_using_child_in_column_as_reference", function () {
   }
 });
 
-it("align_baseline_parent_using_child_in_row_as_reference", function () {
+test("align_baseline_parent_using_child_in_row_as_reference", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(1000);
     root.setHeight(1000);
@@ -116,34 +101,17 @@ it("align_baseline_parent_using_child_in_row_as_reference", function () {
 
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
 
-    console.assert(0 === root_child0.getComputedLeft(),
-        "0 === root_child0.getComputedLeft() (" +
-        root_child0.getComputedLeft() + ")");
-    console.assert(0 === root_child0.getComputedTop(),
-        "0 === root_child0.getComputedTop() (" +
-        root_child0.getComputedTop() + ")");
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(0);
 
-    console.assert(500 === root_child1.getComputedLeft(),
-        "500 === root_child1.getComputedLeft() (" +
-        root_child1.getComputedLeft() + ")");
-    console.assert(200 === root_child1.getComputedTop(),
-        "200 === root_child1.getComputedTop() (" +
-        root_child1.getComputedTop() + ")");
+    expect(root_child1.getComputedLeft()).toBe(500);
+    expect(root_child1.getComputedTop()).toBe(200);
 
-    console.assert(0 === root_child1_child0.getComputedLeft(),
-        "0 === root_child1_child0.getComputedLeft() (" +
-        root_child1_child0.getComputedLeft() + ")");
-    console.assert(0 === root_child1_child0.getComputedTop(),
-        "0 === root_child1_child0.getComputedTop() (" +
-        root_child1_child0.getComputedTop() + ")");
+    expect(root_child1_child0.getComputedLeft()).toBe(0);
+    expect(root_child1_child0.getComputedTop()).toBe(0);
 
-    console.assert(500 === root_child1_child1.getComputedLeft(),
-        "500 === root_child1_child1.getComputedLeft() (" +
-        root_child1_child1.getComputedLeft() + ")");
-    console.assert(0 === root_child1_child1.getComputedTop(),
-        "0 === root_child1_child1.getComputedTop() (" +
-        root_child1_child1.getComputedTop() + ")");
-
+    expect(root_child1_child1.getComputedLeft()).toBe(500);
+    expect(root_child1_child1.getComputedTop()).toBe(0);
   } finally {
     if (typeof root !== "undefined") {
       root.freeRecursive();

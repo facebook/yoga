@@ -9,9 +9,10 @@
 
 test("flex_direction_column_no_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
 
     const root_child0 = Yoga.Node.create(config);
@@ -78,9 +79,10 @@ test("flex_direction_column_no_height", function () {
 });
 test("flex_direction_row_no_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setHeight(100);
 
@@ -148,9 +150,10 @@ test("flex_direction_row_no_width", function () {
 });
 test("flex_direction_column", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
@@ -218,9 +221,10 @@ test("flex_direction_column", function () {
 });
 test("flex_direction_row", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
@@ -289,9 +293,10 @@ test("flex_direction_row", function () {
 });
 test("flex_direction_column_reverse", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_COLUMN_REVERSE);
     root.setWidth(100);
     root.setHeight(100);
@@ -360,9 +365,10 @@ test("flex_direction_column_reverse", function () {
 });
 test("flex_direction_row_reverse", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW_REVERSE);
     root.setWidth(100);
     root.setHeight(100);

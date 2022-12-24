@@ -9,9 +9,10 @@
 
 test("rounding_flex_basis_flex_grow_row_width_of_100", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
@@ -80,9 +81,10 @@ test("rounding_flex_basis_flex_grow_row_width_of_100", function () {
 });
 test("rounding_flex_basis_flex_grow_row_prime_number_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(113);
     root.setHeight(100);
@@ -179,9 +181,10 @@ test("rounding_flex_basis_flex_grow_row_prime_number_width", function () {
 });
 test("rounding_flex_basis_flex_shrink_row", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(101);
     root.setHeight(100);
@@ -251,9 +254,10 @@ test("rounding_flex_basis_flex_shrink_row", function () {
 });
 test("rounding_flex_basis_overrides_main_size", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(113);
 
@@ -325,9 +329,10 @@ test("rounding_flex_basis_overrides_main_size", function () {
 });
 test("rounding_total_fractial", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(87.4);
     root.setHeight(113.4);
 
@@ -399,9 +404,10 @@ test("rounding_total_fractial", function () {
 });
 test("rounding_total_fractial_nested", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(87.4);
     root.setHeight(113.4);
 
@@ -507,9 +513,10 @@ test("rounding_total_fractial_nested", function () {
 });
 test("rounding_fractial_input_1", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(113.4);
 
@@ -581,9 +588,10 @@ test("rounding_fractial_input_1", function () {
 });
 test("rounding_fractial_input_2", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(113.6);
 
@@ -655,9 +663,10 @@ test("rounding_fractial_input_2", function () {
 });
 test("rounding_fractial_input_3", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setPosition(Yoga.EDGE_TOP, 0.3);
     root.setWidth(100);
     root.setHeight(113.4);
@@ -730,9 +739,10 @@ test("rounding_fractial_input_3", function () {
 });
 test("rounding_fractial_input_4", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setPosition(Yoga.EDGE_TOP, 0.7);
     root.setWidth(100);
     root.setHeight(113.4);
@@ -805,9 +815,10 @@ test("rounding_fractial_input_4", function () {
 });
 test("rounding_inner_node_controversy_horizontal", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(320);
 
@@ -893,9 +904,10 @@ test("rounding_inner_node_controversy_horizontal", function () {
 });
 test("rounding_inner_node_controversy_vertical", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setHeight(320);
 
     const root_child0 = Yoga.Node.create(config);
@@ -980,9 +992,10 @@ test("rounding_inner_node_controversy_vertical", function () {
 });
 test("rounding_inner_node_controversy_combined", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(640);
     root.setHeight(320);

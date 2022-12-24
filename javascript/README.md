@@ -24,6 +24,19 @@ const node = Yoga.Node.create();
 node.setAlignContent(ALIGN_CENTER);
 ```
 
+Objects created by `Yoga.<>.create()` are not automatically garbage collected and should be freed once they are no longer in use.
+
+```ts
+// Free a config
+config.free();
+
+// Free a tree of Nodes
+node.freeRecursive();
+
+// Free a single Node
+node.free();
+```
+
 ## Selecting WebAssembly or asm.js
 
 For better performance and smaller packages, WebAssembly is preferred to asm.js where available. `yoga-layout` tries to provide the right default using [export maps](https://webpack.js.org/guides/package-exports/#conditional-syntax) so that platforms which can take advantage of WebAssembly use it by default.

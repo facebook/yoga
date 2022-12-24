@@ -9,9 +9,10 @@
 
 test("display_none", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
@@ -67,9 +68,10 @@ test("display_none", function () {
 });
 test("display_none_fixed_size", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
@@ -126,9 +128,10 @@ test("display_none_fixed_size", function () {
 });
 test("display_none_with_margin", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
@@ -189,9 +192,10 @@ test("display_none_with_margin", function () {
 });
 test("display_none_with_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
@@ -284,9 +288,10 @@ test("display_none_with_child", function () {
 });
 test("display_none_with_position", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
@@ -343,9 +348,10 @@ test("display_none_with_position", function () {
 });
 test("display_none_with_position_absolute", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 

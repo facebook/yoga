@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-it("measure_once_single_flexible_child", function () {
+test("measure_once_single_flexible_child", function () {
   const root = Yoga.Node.create();
   root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
@@ -21,11 +21,7 @@ it("measure_once_single_flexible_child", function () {
 
   root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
 
-  console.assert(1 === measureCounter.get(), "1 === measureCounter.get()");
+  expect(measureCounter.get()).toBe(1);
 
-  if (typeof root !== "undefined")
-    root.freeRecursive();
-
-  (typeof gc !== "undefined") && gc();
-  // TODO Add event support in js and check instace allocation and de allocation using that
+  root.freeRecursive();
 });

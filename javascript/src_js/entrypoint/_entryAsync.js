@@ -7,9 +7,9 @@
  * @format
  */
 
-const wrapAsm = require('../wrapAsm');
+const wrapAsm = require("../wrapAsm");
 
 module.exports = (loadAsm) => ({
   loadYoga: () => loadAsm().then(wrapAsm),
-  ...require('../generated/YGEnums'),
+  ...require("../generated/YGEnums"),
 });

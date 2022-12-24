@@ -33,9 +33,10 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   emitPrologue:{value:function() {}},
 
   emitTestPrologue:{value:function(name, experiments) {
-    this.push('it(' + JSON.stringify(name) + ', function () {');
+    this.push('test(' + JSON.stringify(name) + ', function () {');
     this.pushIndent();
     this.push('const config = Yoga.Config.create();');
+    this.push('let root;');
     this.push('');
 
     if (experiments.length > 0) {
@@ -50,7 +51,11 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('const ' + nodeName + ' = Yoga.Node.create(config);');
+    if (nodeName === 'root') {
+      this.push(`root = Yoga.Node.create(config);`);
+    } else {
+      this.push(`const ${nodeName} = Yoga.Node.create(config);`);
+    }
   }},
 
   emitTestEpilogue:{value:function(experiments) {
@@ -78,7 +83,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   AssertEQ:{value:function(v0, v1) {
-    this.push('console.assert(' + v0 + ' === ' + v1 + ', "' + v0 + ' === ' + v1 + ' (" + ' + v1 + ' + ")");');
+    this.push(`expect(${v1}).toBe(${v0});`);
   }},
 
   YGAlignAuto:{value:'Yoga.ALIGN_AUTO'},

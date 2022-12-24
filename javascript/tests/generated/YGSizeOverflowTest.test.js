@@ -9,9 +9,10 @@
 
 test("nested_overflowing_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
@@ -65,9 +66,10 @@ test("nested_overflowing_child", function () {
 });
 test("nested_overflowing_child_in_constraint_parent", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
@@ -123,9 +125,10 @@ test("nested_overflowing_child_in_constraint_parent", function () {
 });
 test("parent_wrap_child_size_overflowing_parent", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 

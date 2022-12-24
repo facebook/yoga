@@ -9,9 +9,10 @@
 
 test("wrap_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setWidth(100);
@@ -50,9 +51,10 @@ test("wrap_child", function () {
 });
 test("wrap_grandchild", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
 
     const root_child0 = Yoga.Node.create(config);
     root.insertChild(root_child0, 0);

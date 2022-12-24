@@ -9,9 +9,10 @@
 
 test("max_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(100);
 
@@ -52,9 +53,10 @@ test("max_width", function () {
 });
 test("max_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(100);
     root.setHeight(100);
@@ -96,9 +98,10 @@ test("max_height", function () {
 });
 test("justify_content_min_max", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setWidth(100);
     root.setMinHeight(100);
@@ -141,9 +144,10 @@ test("justify_content_min_max", function () {
 });
 test("align_items_min_max", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setMinWidth(100);
     root.setMaxWidth(200);
@@ -186,9 +190,10 @@ test("align_items_min_max", function () {
 });
 test("justify_content_overflow_min_max", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setMinHeight(100);
     root.setMaxHeight(110);
@@ -260,9 +265,10 @@ test("justify_content_overflow_min_max", function () {
 });
 test("flex_grow_to_min", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setMinHeight(100);
     root.setMaxHeight(500);
@@ -318,9 +324,10 @@ test("flex_grow_to_min", function () {
 });
 test("flex_grow_in_at_most_container", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setAlignItems(Yoga.ALIGN_FLEX_START);
     root.setWidth(100);
@@ -377,9 +384,10 @@ test("flex_grow_in_at_most_container", function () {
 });
 test("flex_grow_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
 
     const root_child0 = Yoga.Node.create(config);
@@ -420,9 +428,10 @@ test("flex_grow_child", function () {
 });
 test("flex_grow_within_constrained_min_max_column", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setMinHeight(100);
     root.setMaxHeight(200);
 
@@ -476,9 +485,10 @@ test("flex_grow_within_constrained_min_max_column", function () {
 });
 test("flex_grow_within_max_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(100);
 
@@ -534,9 +544,10 @@ test("flex_grow_within_max_width", function () {
 });
 test("flex_grow_within_constrained_max_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(100);
 
@@ -592,9 +603,10 @@ test("flex_grow_within_constrained_max_width", function () {
 });
 test("flex_root_ignored", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexGrow(1);
     root.setWidth(100);
     root.setMinHeight(100);
@@ -651,9 +663,10 @@ test("flex_root_ignored", function () {
 });
 test("flex_grow_root_minimized", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setMinHeight(100);
     root.setMaxHeight(500);
@@ -725,9 +738,10 @@ test("flex_grow_root_minimized", function () {
 });
 test("flex_grow_height_maximized", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setHeight(500);
 
@@ -798,9 +812,10 @@ test("flex_grow_height_maximized", function () {
 });
 test("flex_grow_within_constrained_min_row", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setMinWidth(100);
     root.setHeight(100);
@@ -855,9 +870,10 @@ test("flex_grow_within_constrained_min_row", function () {
 });
 test("flex_grow_within_constrained_min_column", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setMinHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
@@ -910,9 +926,10 @@ test("flex_grow_within_constrained_min_column", function () {
 });
 test("flex_grow_within_constrained_max_row", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
 
     const root_child0 = Yoga.Node.create(config);
@@ -982,9 +999,10 @@ test("flex_grow_within_constrained_max_row", function () {
 });
 test("flex_grow_within_constrained_max_column", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(100);
     root.setMaxHeight(100);
 
@@ -1039,9 +1057,10 @@ test("flex_grow_within_constrained_max_column", function () {
 });
 test("child_min_max_width_flexing", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(120);
     root.setHeight(50);
@@ -1100,9 +1119,10 @@ test("child_min_max_width_flexing", function () {
 });
 test("min_width_overrides_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(50);
     root.setMinWidth(100);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -1128,9 +1148,10 @@ test("min_width_overrides_width", function () {
 });
 test("max_width_overrides_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setMaxWidth(100);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -1156,9 +1177,10 @@ test("max_width_overrides_width", function () {
 });
 test("min_height_overrides_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setHeight(50);
     root.setMinHeight(100);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -1184,9 +1206,10 @@ test("min_height_overrides_height", function () {
 });
 test("max_height_overrides_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setHeight(200);
     root.setMaxHeight(100);
     root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
@@ -1212,9 +1235,10 @@ test("max_height_overrides_height", function () {
 });
 test("min_max_percent_no_width_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_START);
     root.setWidth(100);
     root.setHeight(100);

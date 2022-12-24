@@ -9,9 +9,10 @@
 
 test("wrap_column", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexWrap(Yoga.WRAP_WRAP);
     root.setHeight(100);
 
@@ -97,9 +98,10 @@ test("wrap_column", function () {
 });
 test("wrap_row", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setFlexWrap(Yoga.WRAP_WRAP);
     root.setWidth(100);
@@ -186,9 +188,10 @@ test("wrap_row", function () {
 });
 test("wrap_row_align_items_flex_end", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setAlignItems(Yoga.ALIGN_FLEX_END);
     root.setFlexWrap(Yoga.WRAP_WRAP);
@@ -276,9 +279,10 @@ test("wrap_row_align_items_flex_end", function () {
 });
 test("wrap_row_align_items_center", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setFlexWrap(Yoga.WRAP_WRAP);
@@ -366,9 +370,10 @@ test("wrap_row_align_items_center", function () {
 });
 test("flex_wrap_children_with_min_main_overriding_flex_basis", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setFlexWrap(Yoga.WRAP_WRAP);
     root.setWidth(100);
@@ -427,9 +432,10 @@ test("flex_wrap_children_with_min_main_overriding_flex_basis", function () {
 });
 test("flex_wrap_wrap_to_child_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -513,9 +519,10 @@ test("flex_wrap_wrap_to_child_height", function () {
 });
 test("flex_wrap_align_stretch_fits_one_row", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setFlexWrap(Yoga.WRAP_WRAP);
     root.setWidth(150);
@@ -571,9 +578,10 @@ test("flex_wrap_align_stretch_fits_one_row", function () {
 });
 test("wrap_reverse_row_align_content_flex_start", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setFlexWrap(Yoga.WRAP_WRAP_REVERSE);
     root.setWidth(100);
@@ -675,9 +683,10 @@ test("wrap_reverse_row_align_content_flex_start", function () {
 });
 test("wrap_reverse_row_align_content_center", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setAlignContent(Yoga.ALIGN_CENTER);
     root.setFlexWrap(Yoga.WRAP_WRAP_REVERSE);
@@ -780,9 +789,10 @@ test("wrap_reverse_row_align_content_center", function () {
 });
 test("wrap_reverse_row_single_line_different_size", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setFlexWrap(Yoga.WRAP_WRAP_REVERSE);
     root.setWidth(300);
@@ -884,9 +894,10 @@ test("wrap_reverse_row_single_line_different_size", function () {
 });
 test("wrap_reverse_row_align_content_stretch", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setAlignContent(Yoga.ALIGN_STRETCH);
     root.setFlexWrap(Yoga.WRAP_WRAP_REVERSE);
@@ -989,9 +1000,10 @@ test("wrap_reverse_row_align_content_stretch", function () {
 });
 test("wrap_reverse_row_align_content_space_around", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setAlignContent(Yoga.ALIGN_SPACE_AROUND);
     root.setFlexWrap(Yoga.WRAP_WRAP_REVERSE);
@@ -1094,9 +1106,10 @@ test("wrap_reverse_row_align_content_space_around", function () {
 });
 test("wrap_reverse_column_fixed_size", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setFlexWrap(Yoga.WRAP_WRAP_REVERSE);
     root.setWidth(200);
@@ -1199,9 +1212,10 @@ test("wrap_reverse_column_fixed_size", function () {
 });
 test("wrapped_row_within_align_items_center", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
     root.setHeight(200);
@@ -1273,9 +1287,10 @@ test("wrapped_row_within_align_items_center", function () {
 });
 test("wrapped_row_within_align_items_flex_start", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_START);
     root.setWidth(200);
     root.setHeight(200);
@@ -1347,9 +1362,10 @@ test("wrapped_row_within_align_items_flex_start", function () {
 });
 test("wrapped_row_within_align_items_flex_end", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_END);
     root.setWidth(200);
     root.setHeight(200);
@@ -1421,9 +1437,10 @@ test("wrapped_row_within_align_items_flex_end", function () {
 });
 test("wrapped_column_max_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setAlignContent(Yoga.ALIGN_CENTER);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -1503,9 +1520,10 @@ test("wrapped_column_max_height", function () {
 });
 test("wrapped_column_max_height_flex", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setAlignContent(Yoga.ALIGN_CENTER);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -1591,9 +1609,10 @@ test("wrapped_column_max_height_flex", function () {
 });
 test("wrap_nodes_with_content_sizing_overflowing_margin", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(500);
     root.setHeight(500);
 
@@ -1692,9 +1711,10 @@ test("wrap_nodes_with_content_sizing_overflowing_margin", function () {
 });
 test("wrap_nodes_with_content_sizing_margin_cross", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(500);
     root.setHeight(500);
 

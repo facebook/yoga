@@ -16,19 +16,21 @@ let vm = require(`vm`);
 let WARMUP_ITERATIONS = 3;
 let BENCHMARK_ITERATIONS = 10;
 
-let testFiles = process.argv.slice(2).map(file => {
+let testFiles = process.argv.slice(2).map((file) => {
   return fs.readFileSync(file).toString();
 });
 
 let testResults = new Map();
 
-for (let type of ['asmjs', 'wasm']) {
+for (let type of ["asmjs", "wasm"]) {
   for (let file of testFiles) {
     vm.runInNewContext(
       file,
       Object.assign(Object.create(global), {
-        Yoga: require(type === 'asmjs' ? '../dist/entrypoint/asmjs-sync' : '../dist/entrypoint/wasm-sync'),
-        YGBENCHMARK: function(name, fn) {
+        Yoga: require(type === "asmjs"
+          ? "../dist/entrypoint/asmjs-sync"
+          : "../dist/entrypoint/wasm-sync"),
+        YGBENCHMARK: function (name, fn) {
           let testEntry = testResults.get(name);
 
           if (testEntry === undefined)
@@ -44,13 +46,13 @@ for (let type of ['asmjs', 'wasm']) {
 
           testEntry.set(type, (end - start) / BENCHMARK_ITERATIONS);
         },
-      }),
+      })
     );
   }
 }
 
 console.log(
-  `Note: those tests are independants; there is no time relation to be expected between them`,
+  `Note: those tests are independants; there is no time relation to be expected between them`
 );
 
 for (let [name, results] of testResults) {
@@ -62,7 +64,7 @@ for (let [name, results] of testResults) {
 
   for (let [type, result] of results) {
     console.log(
-      `  - ${type}: ${result}ms (${Math.round((result / min) * 10000) / 100}%)`,
+      `  - ${type}: ${result}ms (${Math.round((result / min) * 10000) / 100}%)`
     );
   }
 }

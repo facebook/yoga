@@ -8,10 +8,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build + Test
+  benchmark:
+    name: Benchmark
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: yarn benchmark
+        run: yarn benchmark
+        working-directory: javascript
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -22,10 +34,28 @@ jobs:
         run: yarn build
         working-directory: javascript
 
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
       - name: yarn test
         run: yarn test
         working-directory: javascript
 
-      - name: yarn benchmark
-        run: yarn benchmark
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: yarn lint
+        run: yarn lint
         working-directory: javascript

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-it("margin_start", function () {
+test("margin_start", function () {
   const root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);
@@ -13,17 +13,13 @@ it("margin_start", function () {
 
   root.calculateLayout(100, 100, Yoga.DIRECTION_LTR);
 
-  console.assert(10 === root.getComputedMargin(Yoga.EDGE_LEFT), "10 === root.getComputedMargin(Yoga.EDGE_LEFT)");
-  console.assert(0 === root.getComputedMargin(Yoga.EDGE_RIGHT), "0 === root.getComputedMargin(Yoga.EDGE_RIGHT)");
+  expect(root.getComputedMargin(Yoga.EDGE_LEFT)).toBe(10);
+  expect(root.getComputedMargin(Yoga.EDGE_RIGHT)).toBe(0);
 
   root.calculateLayout(100, 100, Yoga.DIRECTION_RTL);
 
-  console.assert(0 === root.getComputedMargin(Yoga.EDGE_LEFT), "0 === root.getComputedMargin(Yoga.EDGE_LEFT)");
-  console.assert(10 === root.getComputedMargin(Yoga.EDGE_RIGHT), "10 === root.getComputedMargin(Yoga.EDGE_RIGHT)");
+  expect(root.getComputedMargin(Yoga.EDGE_LEFT)).toBe(0);
+  expect(root.getComputedMargin(Yoga.EDGE_RIGHT)).toBe(10);
 
-  if (typeof root !== "undefined")
-    root.freeRecursive();
-
-  (typeof gc !== "undefined") && gc();
-  // TODO Add event support in js and check instace allocation and de allocation using that
+  root.freeRecursive();
 });

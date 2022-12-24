@@ -8,13 +8,13 @@
  */
 
 module.exports = async () => {
-  if (process.env['SYNC'] == true && process.env['WASM'] == true) {
+  if (process.env["SYNC"] == true && process.env["WASM"] == true) {
     global.Yoga = require("./dist/entrypoint/wasm-sync");
-  } else if (process.env['SYNC'] == true) {
+  } else if (process.env["SYNC"] == true) {
     global.Yoga = require("./dist/entrypoint/asmjs-sync");
-  } else if (process.env['WASM'] == true) {
+  } else if (process.env["WASM"] == true) {
     global.Yoga = await require("./dist/entrypoint/wasm-async").loadYoga();
   } else {
     global.Yoga = await require("./dist/entrypoint/asmjs-async").loadYoga();
   }
-}
+};

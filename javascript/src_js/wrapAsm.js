@@ -7,28 +7,28 @@
  * @format
  */
 
-const CONSTANTS = require('./generated/YGEnums');
+const CONSTANTS = require("./generated/YGEnums");
 
 module.exports = (lib) => {
   function patch(prototype, name, fn) {
     let original = prototype[name];
 
-    prototype[name] = function(...args) {
+    prototype[name] = function (...args) {
       return fn.call(this, original, ...args);
     };
   }
 
   for (let fnName of [
-    'setPosition',
-    'setMargin',
-    'setFlexBasis',
-    'setWidth',
-    'setHeight',
-    'setMinWidth',
-    'setMinHeight',
-    'setMaxWidth',
-    'setMaxHeight',
-    'setPadding',
+    "setPosition",
+    "setMargin",
+    "setFlexBasis",
+    "setWidth",
+    "setHeight",
+    "setMinWidth",
+    "setMinHeight",
+    "setMaxWidth",
+    "setMaxHeight",
+    "setPadding",
   ]) {
     let methods = {
       [CONSTANTS.UNIT_POINT]: lib.Node.prototype[fnName],
@@ -36,22 +36,22 @@ module.exports = (lib) => {
       [CONSTANTS.UNIT_AUTO]: lib.Node.prototype[`${fnName}Auto`],
     };
 
-    patch(lib.Node.prototype, fnName, function(original, ...args) {
+    patch(lib.Node.prototype, fnName, function (original, ...args) {
       // We patch all these functions to add support for the following calls:
       // .setWidth(100) / .setWidth("100%") / .setWidth(.getWidth()) / .setWidth("auto")
 
       let value = args.pop();
       let unit, asNumber;
 
-      if (value === 'auto') {
+      if (value === "auto") {
         unit = CONSTANTS.UNIT_AUTO;
         asNumber = undefined;
-      } else if (typeof value === 'object') {
+      } else if (typeof value === "object") {
         unit = value.unit;
         asNumber = value.valueOf();
       } else {
         unit =
-          typeof value === 'string' && value.endsWith('%')
+          typeof value === "string" && value.endsWith("%")
             ? CONSTANTS.UNIT_PERCENT
             : CONSTANTS.UNIT_POINT;
         asNumber = parseFloat(value);
@@ -62,7 +62,7 @@ module.exports = (lib) => {
 
       if (!methods[unit])
         throw new Error(
-          `Failed to execute "${fnName}": Unsupported unit '${value}'`,
+          `Failed to execute "${fnName}": Unsupported unit '${value}'`
         );
 
       if (asNumber !== undefined) {
@@ -74,68 +74,70 @@ module.exports = (lib) => {
   }
 
   function wrapMeasureFunction(measureFunction) {
-    return lib.MeasureCallback.implement({ measure: measureFunction })
+    return lib.MeasureCallback.implement({ measure: measureFunction });
   }
 
-  patch(lib.Node.prototype, 'setMeasureFunc', function (original, measureFunc) {
-    original.call(this, wrapMeasureFunction(measureFunc))
-  })
+  patch(lib.Node.prototype, "setMeasureFunc", function (original, measureFunc) {
+    original.call(this, wrapMeasureFunction(measureFunc));
+  });
 
   function wrapDirtiedFunc(dirtiedFunction) {
-    return lib.DirtiedCallback.implement({ dirtied: dirtiedFunction })
+    return lib.DirtiedCallback.implement({ dirtied: dirtiedFunction });
   }
 
-  patch(lib.Node.prototype, 'setDirtiedFunc', function (original, dirtiedFunc) {
-    original.call(this, wrapDirtiedFunc(dirtiedFunc))
-  })
+  patch(lib.Node.prototype, "setDirtiedFunc", function (original, dirtiedFunc) {
+    original.call(this, wrapDirtiedFunc(dirtiedFunc));
+  });
 
-  patch(lib.Config.prototype, 'free', function() {
+  patch(lib.Config.prototype, "free", function () {
     // Since we handle the memory allocation ourselves (via lib.Config.create),
     // we also need to handle the deallocation
     lib.Config.destroy(this);
   });
 
-  patch(lib.Node, 'create', function(_, config) {
+  patch(lib.Node, "create", function (_, config) {
     // We decide the constructor we want to call depending on the parameters
     return config
       ? lib.Node.createWithConfig(config)
       : lib.Node.createDefault();
   });
 
-  patch(lib.Node.prototype, 'free', function() {
+  patch(lib.Node.prototype, "free", function () {
     // Since we handle the memory allocation ourselves (via lib.Node.create),
     // we also need to handle the deallocation
     lib.Node.destroy(this);
   });
 
-  patch(lib.Node.prototype, 'freeRecursive', function() {
+  patch(lib.Node.prototype, "freeRecursive", function () {
     for (let t = 0, T = this.getChildCount(); t < T; ++t) {
       this.getChild(0).freeRecursive();
     }
     this.free();
   });
 
-  patch(lib.Node.prototype, 'setMeasureFunc', function(original, measureFunc) {
+  patch(lib.Node.prototype, "setMeasureFunc", function (original, measureFunc) {
     // This patch is just a convenience patch, since it helps write more
     // idiomatic source code (such as .setMeasureFunc(null))
     if (measureFunc) {
-      return original.call(this, (...args) =>
-        measureFunc(...args),
-      );
+      return original.call(this, (...args) => measureFunc(...args));
     } else {
       return this.unsetMeasureFunc();
     }
   });
 
-  patch(lib.Node.prototype, 'calculateLayout', function(
-    original,
-    width = NaN,
-    height = NaN,
-    direction = CONSTANTS.DIRECTION_LTR,
-  ) {
-    // Just a small patch to add support for the function default parameters
-    return original.call(this, width, height, direction);
-  });
+  patch(
+    lib.Node.prototype,
+    "calculateLayout",
+    function (
+      original,
+      width = NaN,
+      height = NaN,
+      direction = CONSTANTS.DIRECTION_LTR
+    ) {
+      // Just a small patch to add support for the function default parameters
+      return original.call(this, width, height, direction);
+    }
+  );
 
   return {
     Config: lib.Config,

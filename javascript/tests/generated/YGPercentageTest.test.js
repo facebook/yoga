@@ -9,9 +9,10 @@
 
 test("percentage_width_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(200);
     root.setHeight(200);
@@ -53,9 +54,10 @@ test("percentage_width_height", function () {
 });
 test("percentage_position_left_top", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(400);
     root.setHeight(400);
@@ -99,9 +101,10 @@ test("percentage_position_left_top", function () {
 });
 test("percentage_position_bottom_right", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(500);
     root.setHeight(500);
@@ -145,9 +148,10 @@ test("percentage_position_bottom_right", function () {
 });
 test("percentage_flex_basis", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(200);
     root.setHeight(200);
@@ -204,9 +208,10 @@ test("percentage_flex_basis", function () {
 });
 test("percentage_flex_basis_cross", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(200);
 
@@ -262,9 +267,10 @@ test("percentage_flex_basis_cross", function () {
 });
 test("percentage_flex_basis_main_max_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(200);
     root.setHeight(200);
@@ -323,9 +329,10 @@ test("percentage_flex_basis_main_max_height", function () {
 });
 test("percentage_flex_basis_cross_max_height", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(200);
 
@@ -383,9 +390,10 @@ test("percentage_flex_basis_cross_max_height", function () {
 });
 test("percentage_flex_basis_main_max_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(200);
     root.setHeight(200);
@@ -444,9 +452,10 @@ test("percentage_flex_basis_main_max_width", function () {
 });
 test("percentage_flex_basis_cross_max_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(200);
 
@@ -504,9 +513,10 @@ test("percentage_flex_basis_cross_max_width", function () {
 });
 test("percentage_flex_basis_main_min_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(200);
     root.setHeight(200);
@@ -565,9 +575,10 @@ test("percentage_flex_basis_main_min_width", function () {
 });
 test("percentage_flex_basis_cross_min_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(200);
 
@@ -625,9 +636,10 @@ test("percentage_flex_basis_cross_min_width", function () {
 });
 test("percentage_multiple_nested_with_padding_margin_and_percentage_values", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(200);
 
@@ -737,9 +749,10 @@ test("percentage_multiple_nested_with_padding_margin_and_percentage_values", fun
 });
 test("percentage_margin_should_calculate_based_only_on_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(100);
 
@@ -798,9 +811,10 @@ test("percentage_margin_should_calculate_based_only_on_width", function () {
 });
 test("percentage_padding_should_calculate_based_only_on_width", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(100);
 
@@ -859,9 +873,10 @@ test("percentage_padding_should_calculate_based_only_on_width", function () {
 });
 test("percentage_absolute_position", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(200);
     root.setHeight(100);
 
@@ -905,9 +920,10 @@ test("percentage_absolute_position", function () {
 });
 test("percentage_width_height_undefined_parent_size", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setWidth("50%");
@@ -946,9 +962,10 @@ test("percentage_width_height_undefined_parent_size", function () {
 });
 test("percent_within_flex_grow", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
     root.setWidth(350);
     root.setHeight(100);
@@ -1031,9 +1048,10 @@ test("percent_within_flex_grow", function () {
 });
 test("percentage_container_in_wrapping_container", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setWidth(200);
@@ -1120,9 +1138,10 @@ test("percentage_container_in_wrapping_container", function () {
 });
 test("percent_absolute_position", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setWidth(60);
     root.setHeight(50);
 

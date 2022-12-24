@@ -8,7 +8,7 @@
 const ITERATIONS = 2000;
 const YGBENCHMARK = global.YGBENCHMARK ?? global.test;
 
-YGBENCHMARK("Stack with flex", function() {
+YGBENCHMARK("Stack with flex", function () {
   var root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);
@@ -26,7 +26,7 @@ YGBENCHMARK("Stack with flex", function() {
   root.freeRecursive();
 });
 
-YGBENCHMARK("Align stretch in undefined axis", function() {
+YGBENCHMARK("Align stretch in undefined axis", function () {
   var root = Yoga.Node.create();
 
   var measureCounter = getMeasureCounter(Yoga);
@@ -42,7 +42,7 @@ YGBENCHMARK("Align stretch in undefined axis", function() {
   root.freeRecursive();
 });
 
-YGBENCHMARK("Nested flex", function() {
+YGBENCHMARK("Nested flex", function () {
   var root = Yoga.Node.create();
 
   var measureCounter = getMeasureCounter(Yoga);
@@ -66,7 +66,7 @@ YGBENCHMARK("Nested flex", function() {
   root.freeRecursive();
 });
 
-YGBENCHMARK("Huge nested layout", function() {
+YGBENCHMARK("Huge nested layout", function () {
   var root = Yoga.Node.create();
 
   var iterations = Math.pow(ITERATIONS, 1 / 4);

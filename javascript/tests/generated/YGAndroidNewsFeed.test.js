@@ -9,9 +9,10 @@
 
 test("android_news_feed", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setAlignContent(Yoga.ALIGN_STRETCH);
     root.setWidth(1080);
 

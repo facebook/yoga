@@ -9,9 +9,10 @@
 
 test("padding_no_size", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
     root.setPadding(Yoga.EDGE_TOP, 10);
     root.setPadding(Yoga.EDGE_RIGHT, 10);
@@ -39,9 +40,10 @@ test("padding_no_size", function () {
 });
 test("padding_container_match_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
     root.setPadding(Yoga.EDGE_TOP, 10);
     root.setPadding(Yoga.EDGE_RIGHT, 10);
@@ -84,9 +86,10 @@ test("padding_container_match_child", function () {
 });
 test("padding_flex_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
     root.setPadding(Yoga.EDGE_TOP, 10);
     root.setPadding(Yoga.EDGE_RIGHT, 10);
@@ -131,9 +134,10 @@ test("padding_flex_child", function () {
 });
 test("padding_stretch_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
     root.setPadding(Yoga.EDGE_TOP, 10);
     root.setPadding(Yoga.EDGE_RIGHT, 10);
@@ -177,9 +181,10 @@ test("padding_stretch_child", function () {
 });
 test("padding_center_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setPadding(Yoga.EDGE_START, 10);
@@ -225,9 +230,10 @@ test("padding_center_child", function () {
 });
 test("child_with_padding_align_end", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
     root.setAlignItems(Yoga.ALIGN_FLEX_END);
     root.setWidth(200);

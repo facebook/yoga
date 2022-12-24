@@ -9,9 +9,10 @@
 
 test("border_no_size", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
     root.setBorder(Yoga.EDGE_TOP, 10);
     root.setBorder(Yoga.EDGE_RIGHT, 10);
@@ -39,9 +40,10 @@ test("border_no_size", function () {
 });
 test("border_container_match_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
     root.setBorder(Yoga.EDGE_TOP, 10);
     root.setBorder(Yoga.EDGE_RIGHT, 10);
@@ -84,9 +86,10 @@ test("border_container_match_child", function () {
 });
 test("border_flex_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
     root.setBorder(Yoga.EDGE_TOP, 10);
     root.setBorder(Yoga.EDGE_RIGHT, 10);
@@ -131,9 +134,10 @@ test("border_flex_child", function () {
 });
 test("border_stretch_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
     root.setBorder(Yoga.EDGE_TOP, 10);
     root.setBorder(Yoga.EDGE_RIGHT, 10);
@@ -177,9 +181,10 @@ test("border_stretch_child", function () {
 });
 test("border_center_child", function () {
   const config = Yoga.Config.create();
+  let root;
 
   try {
-    const root = Yoga.Node.create(config);
+    root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setAlignItems(Yoga.ALIGN_CENTER);
     root.setBorder(Yoga.EDGE_START, 10);
