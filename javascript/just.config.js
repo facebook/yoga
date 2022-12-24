@@ -19,25 +19,19 @@ const glob = require("glob");
 const which = require("which");
 
 const cmake = which.sync("cmake");
-const encmake = which.sync("emcmake");
+const emcmake = which.sync("emcmake");
 const ninja = which.sync("ninja", { nothrow: true });
 const node = which.sync("node");
 const npx = which.sync("npx");
 
-task(
-  "copy-dts",
-  copyTask({
-    paths: ["./src_js/**/*.d.ts"],
-    dest: "./dist",
-  })
-);
+task("copy-dts", copyTask({ paths: ["./src_js/**/*.d.ts"], dest: "./dist" }));
 
 task("babel", () =>
   spawn(npx, ["babel", "src_js", "--source-maps", "--out-dir", "dist"])
 );
 
 task("cmake-generate", () =>
-  spawn(encmake, [
+  spawn(emcmake, [
     "cmake",
     "-S",
     ".",
@@ -47,7 +41,15 @@ task("cmake-generate", () =>
   ])
 );
 
-task("prepare", parallel("copy-dts", "babel", "cmake-generate"));
+function prepareTask() {
+  return parallel("cmake-generate", "copy-dts", "babel");
+}
+
+function runBenchTask() {
+  const files = glob.sync("./tests/Benchmarks/**/*.js");
+  return () =>
+    spawn(node, ["./tests/run-bench.js", ...files], { stdio: "inherit" });
+}
 
 function cmakeBuildTask(targets) {
   return () =>
@@ -58,57 +60,35 @@ function cmakeBuildTask(targets) {
     );
 }
 
+function buildFlavor(flavor, env) {
+  task(`cmake-build:${flavor}`, cmakeBuildTask([flavor]));
+  task(`jest:${flavor}`, jestTask({ env }));
+  task(
+    `test:${flavor}`,
+    series(prepareTask(), `cmake-build:${flavor}`, `jest:${flavor}`)
+  );
+}
+
+buildFlavor("asmjs-async", { WASM: 0, SYNC: 0 });
+buildFlavor("asmjs-sync", { WASM: 0, SYNC: 1 });
+buildFlavor("wasm-async", { WASM: 1, SYNC: 0 });
+buildFlavor("wasm-sync", { WASM: 1, SYNC: 1 });
+
 task("cmake-build:all", cmakeBuildTask());
 task("cmake-build:async", cmakeBuildTask(["asmjs-async", "wasm-async"]));
 task("cmake-build:sync", cmakeBuildTask(["asmjs-sync", "wasm-sync"]));
-task("cmake-build:asmjs-async", cmakeBuildTask(["asmjs-async"]));
-task("cmake-build:asmjs-sync", cmakeBuildTask(["asmjs-sync"]));
-task("cmake-build:wasm-async", cmakeBuildTask(["wasm-async"]));
-task("cmake-build:wasm-sync", cmakeBuildTask(["wasm-sync"]));
 
-task("jest:asmjs-async", jestTask({ env: { WASM: false, SYNC: false } }));
-task("jest:asmjs-sync", jestTask({ env: { WASM: false, SYNC: true } }));
-task("jest:wasm-async", jestTask({ env: { WASM: true, SYNC: false } }));
-task("jest:wasm-sync", jestTask({ env: { WASM: true, SYNC: true } }));
-
-task(
-  "test:asmjs-async",
-  series("prepare", "cmake-build:asmjs-async", "jest:asmjs-async")
-);
-task(
-  "test:asmjs-sync",
-  series("prepare", "cmake-build:asmjs-sync", "jest:asmjs-sync")
-);
-task(
-  "test:wasm-async",
-  series("prepare", "cmake-build:wasm-async", "jest:wasm-async")
-);
-task(
-  "test:wasm-sync",
-  series("prepare", "cmake-build:wasm-sync", "jest:wasm-sync")
-);
-
-task("run-bench", () =>
-  spawn(
-    node,
-    ["./tests/run-bench.js", ...glob.sync("./tests/Benchmarks/**/*.js")],
-    { stdio: "inherit" }
-  )
-);
-
-task("build", series("prepare", "cmake-build:all"));
+task("build", series(prepareTask(), "cmake-build:all"));
 
 task(
   "test",
   series(
-    "prepare",
-    series(
-      series("cmake-build:asmjs-async", "jest:asmjs-async"),
-      series("cmake-build:asmjs-sync", "jest:asmjs-sync"),
-      series("cmake-build:wasm-async", "jest:wasm-async"),
-      series("cmake-build:wasm-sync", "jest:wasm-sync")
-    )
+    prepareTask(),
+    series("cmake-build:asmjs-async", "jest:asmjs-async"),
+    series("cmake-build:asmjs-sync", "jest:asmjs-sync"),
+    series("cmake-build:wasm-async", "jest:wasm-async"),
+    series("cmake-build:wasm-sync", "jest:wasm-sync")
   )
 );
 
-task("benchmark", series("prepare", "cmake-build:sync", "run-bench"));
+task("benchmark", series(prepareTask(), "cmake-build:sync", runBenchTask()));
