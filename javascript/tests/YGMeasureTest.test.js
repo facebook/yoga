@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-test("dont_measure_single_grow_shrink_child", function () {
+test("dont_measure_single_grow_shrink_child", () => {
   const root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);

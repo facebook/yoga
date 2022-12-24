@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-test("dirtied", function () {
+test("dirtied", () => {
   const root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
@@ -14,11 +14,11 @@ test("dirtied", function () {
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   let dirtied = 0;
-  root.setDirtiedFunc(function () {
+  root.setDirtiedFunc(() => {
     dirtied++;
   });
   // only nodes with a measure function can be marked dirty
-  root.setMeasureFunc(function () {});
+  root.setMeasureFunc(() => {});
 
   expect(dirtied).toBe(0);
 
@@ -33,7 +33,7 @@ test("dirtied", function () {
   root.freeRecursive();
 });
 
-test("dirtied_propagation", function () {
+test("dirtied_propagation", () => {
   const root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
@@ -43,7 +43,7 @@ test("dirtied_propagation", function () {
   root_child0.setAlignItems(Yoga.ALIGN_FLEX_START);
   root_child0.setWidth(50);
   root_child0.setHeight(20);
-  root_child0.setMeasureFunc(function () {});
+  root_child0.setMeasureFunc(() => {});
   root.insertChild(root_child0, 0);
 
   const root_child1 = Yoga.Node.create();
@@ -55,7 +55,7 @@ test("dirtied_propagation", function () {
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   let dirtied = 0;
-  root.setDirtiedFunc(function () {
+  root.setDirtiedFunc(() => {
     dirtied++;
   });
 
@@ -72,7 +72,7 @@ test("dirtied_propagation", function () {
   root.freeRecursive();
 });
 
-test("dirtied_hierarchy", function () {
+test("dirtied_hierarchy", () => {
   const root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
@@ -82,20 +82,20 @@ test("dirtied_hierarchy", function () {
   root_child0.setAlignItems(Yoga.ALIGN_FLEX_START);
   root_child0.setWidth(50);
   root_child0.setHeight(20);
-  root_child0.setMeasureFunc(function () {});
+  root_child0.setMeasureFunc(() => {});
   root.insertChild(root_child0, 0);
 
   const root_child1 = Yoga.Node.create();
   root_child1.setAlignItems(Yoga.ALIGN_FLEX_START);
   root_child1.setWidth(50);
   root_child1.setHeight(20);
-  root_child1.setMeasureFunc(function () {});
+  root_child1.setMeasureFunc(() => {});
   root.insertChild(root_child1, 0);
 
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   let dirtied = 0;
-  root_child0.setDirtiedFunc(function () {
+  root_child0.setDirtiedFunc(() => {
     dirtied++;
   });
 
@@ -115,17 +115,17 @@ test("dirtied_hierarchy", function () {
   root.freeRecursive();
 });
 
-test("dirtied_reset", function () {
+test("dirtied_reset", () => {
   const root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
   root.setHeight(100);
-  root.setMeasureFunc(function () {});
+  root.setMeasureFunc(() => {});
 
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   let dirtied = 0;
-  root.setDirtiedFunc(function () {
+  root.setDirtiedFunc(() => {
     dirtied++;
   });
 
@@ -142,7 +142,7 @@ test("dirtied_reset", function () {
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
   root.setHeight(100);
-  root.setMeasureFunc(function () {});
+  root.setMeasureFunc(() => {});
 
   root.markDirty();
 

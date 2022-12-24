@@ -11,14 +11,14 @@ const CONSTANTS = require("./generated/YGEnums");
 
 module.exports = (lib) => {
   function patch(prototype, name, fn) {
-    let original = prototype[name];
+    const original = prototype[name];
 
     prototype[name] = function (...args) {
       return fn.call(this, original, ...args);
     };
   }
 
-  for (let fnName of [
+  for (const fnName of [
     "setPosition",
     "setMargin",
     "setFlexBasis",
@@ -30,7 +30,7 @@ module.exports = (lib) => {
     "setMaxHeight",
     "setPadding",
   ]) {
-    let methods = {
+    const methods = {
       [CONSTANTS.UNIT_POINT]: lib.Node.prototype[fnName],
       [CONSTANTS.UNIT_PERCENT]: lib.Node.prototype[`${fnName}Percent`],
       [CONSTANTS.UNIT_AUTO]: lib.Node.prototype[`${fnName}Auto`],
@@ -40,7 +40,7 @@ module.exports = (lib) => {
       // We patch all these functions to add support for the following calls:
       // .setWidth(100) / .setWidth("100%") / .setWidth(.getWidth()) / .setWidth("auto")
 
-      let value = args.pop();
+      const value = args.pop();
       let unit, asNumber;
 
       if (value === "auto") {
@@ -95,7 +95,7 @@ module.exports = (lib) => {
     lib.Config.destroy(this);
   });
 
-  patch(lib.Node, "create", function (_, config) {
+  patch(lib.Node, "create", (_, config) => {
     // We decide the constructor we want to call depending on the parameters
     return config
       ? lib.Node.createWithConfig(config)

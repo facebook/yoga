@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-test("border_start", function () {
+test("border_start", () => {
   const root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);

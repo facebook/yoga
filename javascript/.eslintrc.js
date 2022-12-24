@@ -8,17 +8,25 @@
  */
 
 module.exports = {
+  ignorePatterns: ["dist/**"],
+  parser: "@babel/eslint-parser",
   extends: [
     "eslint:recommended",
     "plugin:jest/recommended",
     "plugin:prettier/recommended",
   ],
-  parser: "@babel/eslint-parser",
+  rules: {
+    "no-var": "error",
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "prefer-object-spread": "error",
+    "prefer-spread": "error",
+    "require-await": "error",
+  },
   env: {
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: ["dist/**"],
   overrides: [
     {
       files: ["jest.*", "tests/**"],

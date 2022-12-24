@@ -16,7 +16,10 @@ include_directories(..)
 
 set(CXX_STANDARD, 11)
 
-set(EMCC_FLAGS
+add_compile_definitions(
+    EMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0)
+
+set(COMPILE_OPTIONS
     -flto
     -fno-exceptions
     -fno-rtti
@@ -24,13 +27,10 @@ set(EMCC_FLAGS
     -Os
     "SHELL:-s STRICT=1")
 
-add_compile_options(
-    ${EMCC_FLAGS}
-    -DEMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0
-    -std=c++11)
+add_compile_options(${COMPILE_OPTIONS})
 
 add_link_options(
-    ${EMCC_FLAGS}
+    ${COMPILE_OPTIONS}
     --closure 1
     --memory-init-file 0
     --no-entry

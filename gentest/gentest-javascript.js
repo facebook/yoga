@@ -33,7 +33,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   emitPrologue:{value:function() {}},
 
   emitTestPrologue:{value:function(name, experiments) {
-    this.push('test(' + JSON.stringify(name) + ', function () {');
+    this.push('test(' + JSON.stringify(name) + ', () => {');
     this.pushIndent();
     this.push('const config = Yoga.Config.create();');
     this.push('let root;');

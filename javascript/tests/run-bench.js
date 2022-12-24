@@ -10,20 +10,20 @@
 
 require(`./tools`);
 
-let fs = require(`fs`);
-let vm = require(`vm`);
+const fs = require(`fs`);
+const vm = require(`vm`);
 
-let WARMUP_ITERATIONS = 3;
-let BENCHMARK_ITERATIONS = 10;
+const WARMUP_ITERATIONS = 3;
+const BENCHMARK_ITERATIONS = 10;
 
-let testFiles = process.argv.slice(2).map((file) => {
+const testFiles = process.argv.slice(2).map((file) => {
   return fs.readFileSync(file).toString();
 });
 
-let testResults = new Map();
+const testResults = new Map();
 
-for (let type of ["asmjs", "wasm"]) {
-  for (let file of testFiles) {
+for (const type of ["asmjs", "wasm"]) {
+  for (const file of testFiles) {
     vm.runInNewContext(
       file,
       Object.assign(Object.create(global), {
@@ -38,11 +38,11 @@ for (let type of ["asmjs", "wasm"]) {
 
           for (let t = 0; t < WARMUP_ITERATIONS; ++t) fn();
 
-          let start = Date.now();
+          const start = Date.now();
 
           for (let t = 0; t < BENCHMARK_ITERATIONS; ++t) fn();
 
-          let end = Date.now();
+          const end = Date.now();
 
           testEntry.set(type, (end - start) / BENCHMARK_ITERATIONS);
         },
@@ -55,14 +55,14 @@ console.log(
   `Note: those tests are independants; there is no time relation to be expected between them`
 );
 
-for (let [name, results] of testResults) {
+for (const [name, results] of testResults) {
   console.log();
 
-  let min = Math.min(Infinity, ...results.values());
+  const min = Math.min(Infinity, ...results.values());
 
   console.log(name);
 
-  for (let [type, result] of results) {
+  for (const [type, result] of results) {
     console.log(
       `  - ${type}: ${result}ms (${Math.round((result / min) * 10000) / 100}%)`
     );

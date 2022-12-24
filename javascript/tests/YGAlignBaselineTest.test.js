@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-test("align_baseline_parent_using_child_in_column_as_reference", function () {
+test("align_baseline_parent_using_child_in_column_as_reference", () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -63,7 +63,7 @@ test("align_baseline_parent_using_child_in_column_as_reference", function () {
   }
 });
 
-test("align_baseline_parent_using_child_in_row_as_reference", function () {
+test("align_baseline_parent_using_child_in_row_as_reference", () => {
   const config = Yoga.Config.create();
   let root;
 
