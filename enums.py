@@ -227,7 +227,6 @@ with open(root + "/javascript/src_js/generated/YGEnums.js", "w") as f:
     f.write("module.exports = {\n")
     items = sorted(ENUMS.items())
     for name, values in items:
-        f.write("  %s_COUNT: %s,\n" % (to_java_upper(name), len(values)))
         base = 0
         for value in values:
             value_arg = value[0] if isinstance(value, tuple) else value
