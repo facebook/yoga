@@ -1,6 +1,6 @@
 # yoga-layout
 
-This package provides JavaScript bindings for the Yoga layout engine as either WebAssembly (for browsers, Node) or asm.js (other clients or clients unable to read package export maps).
+This package provides prebuilt JavaScript bindings for the Yoga layout engine. Both WebAssembly and asm.js variants are packaged, with the optimal loaded based on platform.
 
 ## Usage
 
@@ -23,3 +23,30 @@ import Yoga, { ALIGN_CENTER } from "yoga-layout/sync";
 const node = Yoga.Node.create();
 node.setAlignContent(ALIGN_CENTER);
 ```
+
+## Selecting WebAssembly or asm.js
+
+For better performance and smaller packages, WebAssembly is preferred to asm.js where available. `yoga-layout` tries to provide the right default using [export maps](https://webpack.js.org/guides/package-exports/#conditional-syntax) so that platforms which can take advantage of WebAssembly use it by default.
+
+A specific entrypoint may be specified on platforms which do not understand export conditions.
+
+```ts
+import { loadYoga } from "yoga-layout/entrypoint/wasm-async";
+```
+
+
+## Contributing
+
+`yoga-layout` may be locally built by running the following set of commands. The build requires that some dependencies be installed first.
+
+```bash
+git clone https://github.com/facebook/yoga.git
+cd yoga/javascript
+yarn install
+yarn build
+```
+
+### Requirements
+
+1. CMake >= 3.13
+1. (Optional) ninja, for faster builds

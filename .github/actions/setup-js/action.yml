@@ -17,5 +17,5 @@ runs:
 
     - name: yarn install
       shell: bash
-      run: yarn install --frozen-lockfile --ignore-scripts
+      run: yarn install --frozen-lockfile
       working-directory: javascript

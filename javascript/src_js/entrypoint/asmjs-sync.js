@@ -8,4 +8,4 @@
  */
 
 const asm = require('../build/asmjs-sync');
-module.exports = require("../entrySync")(asm);
+module.exports = require("./entrySync")(asm);

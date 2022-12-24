@@ -1,7 +1,7 @@
 {
   "name": "yoga-layout",
-  "version": "1.9.3",
-  "description": "Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.",
+  "version": "2.0.0-beta.1",
+  "description": "JavaScript bindings for the Yoga layout engine",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,14 +11,14 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "browser": "./dist/variants/wasm-async.js",
-      "node": "./dist/variants/wasm-async.js",
-      "default": "./dist/variants/asmjs-async.js"
+      "browser": "./dist/entrypoint/wasm-async.js",
+      "node": "./dist/entrypoint/wasm-async.js",
+      "default": "./dist/entrypoint/asmjs-async.js"
     },
     "./sync": {
-      "browser": "./dist/variants/asmjs-sync.js",
-      "node": "./dist/variants/wasm-sync.js",
-      "default": "./dist/variants/asmjs-sync.js"
+      "browser": "./dist/entrypoint/asmjs-sync.js",
+      "node": "./dist/entrypoint/wasm-sync.js",
+      "default": "./dist/entrypoint/asmjs-sync.js"
     }
   },
   "files": [
@@ -32,7 +32,6 @@
     "build:copy-dts": "cd src_js && find . -name '*.d.ts' | cpio -pdm ../dist",
     "build:js": "babel src_js --source-maps --out-dir dist && yarn build:copy-dts",
     "build:native": "yarn build:configure && cmake --build build",
-    "postinstall": "yarn build",
     "test": "yarn test:asmjs && yarn test:asmjs-sync && yarn test:wasm && yarn test:wasm-sync",
     "test:asmjs": "WASM=0 SYNC=0 jest",
     "test:asmjs-sync": "WASM=0 SYNC=1 jest",

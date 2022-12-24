@@ -9,12 +9,12 @@
 
 module.exports = async () => {
   if (process.env['SYNC'] == true && process.env['WASM'] == true) {
-    global.Yoga = require("./dist/variants/wasm-sync");
+    global.Yoga = require("./dist/entrypoint/wasm-sync");
   } else if (process.env['SYNC'] == true) {
-    global.Yoga = require("./dist/variants/asmjs-sync");
+    global.Yoga = require("./dist/entrypoint/asmjs-sync");
   } else if (process.env['WASM'] == true) {
-    global.Yoga = await require("./dist/variants/wasm-async").loadYoga();
+    global.Yoga = await require("./dist/entrypoint/wasm-async").loadYoga();
   } else {
-    global.Yoga = await require("./dist/variants/asmjs-async").loadYoga();
+    global.Yoga = await require("./dist/entrypoint/asmjs-async").loadYoga();
   }
 }

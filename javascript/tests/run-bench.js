@@ -27,7 +27,7 @@ for (let type of ['asmjs', 'wasm']) {
     vm.runInNewContext(
       file,
       Object.assign(Object.create(global), {
-        Yoga: require(type === 'asmjs' ? '../dist/variants/asmjs-sync' : '../dist/variants/wasm-sync'),
+        Yoga: require(type === 'asmjs' ? '../dist/entrypoint/asmjs-sync' : '../dist/entrypoint/wasm-sync'),
         YGBENCHMARK: function(name, fn) {
           let testEntry = testResults.get(name);
 
