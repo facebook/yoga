@@ -6,13 +6,13 @@
  */
 
 it("dont_measure_single_grow_shrink_child", function () {
-  var root = Yoga.Node.create();
+  const root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);
 
-  var measureCounter = getMeasureCounter(Yoga, null, 100, 100);
+  const measureCounter = getMeasureCounter(Yoga, null, 100, 100);
 
-  var root_child0 = Yoga.Node.create();
+  const root_child0 = Yoga.Node.create();
   root_child0.setMeasureFunc(measureCounter.inc);
   root_child0.setFlexGrow(1);
   root_child0.setFlexShrink(1);

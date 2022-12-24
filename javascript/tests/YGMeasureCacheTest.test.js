@@ -6,15 +6,15 @@
  */
 
 it("measure_once_single_flexible_child", function () {
-  var root = Yoga.Node.create();
+  const root = Yoga.Node.create();
   root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
   root.setHeight(100);
 
-  var measureCounter = getMeasureCounterMax(Yoga);
+  const measureCounter = getMeasureCounterMax(Yoga);
 
-  var root_child0 = Yoga.Node.create();
+  const root_child0 = Yoga.Node.create();
   root_child0.setMeasureFunc(measureCounter.inc);
   root_child0.setFlexGrow(1);
   root.insertChild(root_child0, 0);

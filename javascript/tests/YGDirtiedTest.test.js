@@ -6,7 +6,7 @@
  */
 
 it("dirtied", function() {
-  var root = Yoga.Node.create();
+  const root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
   root.setHeight(100);
@@ -36,19 +36,19 @@ it("dirtied", function() {
 });
 
 it("dirtied_propagation", function() {
-  var root = Yoga.Node.create();
+  const root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
   root.setHeight(100);
 
-  var root_child0 = Yoga.Node.create();
+  const root_child0 = Yoga.Node.create();
   root_child0.setAlignItems(Yoga.ALIGN_FLEX_START);
   root_child0.setWidth(50);
   root_child0.setHeight(20);
   root_child0.setMeasureFunc(function() {});
   root.insertChild(root_child0, 0);
 
-  var root_child1 = Yoga.Node.create();
+  const root_child1 = Yoga.Node.create();
   root_child1.setAlignItems(Yoga.ALIGN_FLEX_START);
   root_child1.setWidth(50);
   root_child1.setHeight(20);
@@ -77,19 +77,19 @@ it("dirtied_propagation", function() {
 });
 
 it("dirtied_hierarchy", function() {
-  var root = Yoga.Node.create();
+  const root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
   root.setHeight(100);
 
-  var root_child0 = Yoga.Node.create();
+  const root_child0 = Yoga.Node.create();
   root_child0.setAlignItems(Yoga.ALIGN_FLEX_START);
   root_child0.setWidth(50);
   root_child0.setHeight(20);
   root_child0.setMeasureFunc(function() {});
   root.insertChild(root_child0, 0);
 
-  var root_child1 = Yoga.Node.create();
+  const root_child1 = Yoga.Node.create();
   root_child1.setAlignItems(Yoga.ALIGN_FLEX_START);
   root_child1.setWidth(50);
   root_child1.setHeight(20);
@@ -124,7 +124,7 @@ it("dirtied_hierarchy", function() {
 });
 
 it("dirtied_reset", function() {
-  var root = Yoga.Node.create();
+  const root = Yoga.Node.create();
   root.setAlignItems(Yoga.ALIGN_FLEX_START);
   root.setWidth(100);
   root.setHeight(100);

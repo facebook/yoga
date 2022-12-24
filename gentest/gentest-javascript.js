@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-var JavascriptEmitter = function() {
+const JavascriptEmitter = function() {
   Emitter.call(this, 'js', '  ');
 };
 
@@ -17,9 +17,8 @@ function toValueJavascript(value) {
 }
 
 function toJavascriptUpper(symbol) {
-  var out = '';
-  for (var i = 0; i < symbol.length; i++) {
-    var c = symbol[i];
+  let out = '';
+  for (const c of symbol) {
     if (c == c.toUpperCase() && i != 0 && symbol[i - 1] != symbol[i - 1].toUpperCase()) {
       out += '_';
     }
@@ -36,11 +35,11 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   emitTestPrologue:{value:function(name, experiments) {
     this.push('it(' + JSON.stringify(name) + ', function () {');
     this.pushIndent();
-    this.push('var config = Yoga.Config.create();');
+    this.push('const config = Yoga.Config.create();');
     this.push('');
 
     if (experiments.length > 0) {
-      for (var i in experiments) {
+      for (const i in experiments) {
         this.push('config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', true);');
       }
       this.push('');
@@ -51,7 +50,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('var ' + nodeName + ' = Yoga.Node.create(config);');
+    this.push('const ' + nodeName + ' = Yoga.Node.create(config);');
   }},
 
   emitTestEpilogue:{value:function(experiments) {

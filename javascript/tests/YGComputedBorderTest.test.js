@@ -6,7 +6,7 @@
  */
 
 it("border_start", function () {
-  var root = Yoga.Node.create();
+  const root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);
   root.setBorder(Yoga.EDGE_START, 10);
