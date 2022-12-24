@@ -32,9 +32,13 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
           "setExperimentalFeatureEnabled",
           &Config::setExperimentalFeatureEnabled)
       .function("setPointScaleFactor", &Config::setPointScaleFactor)
+      .function("setUseLegacyStretchBehaviour", &Config::setUseLegacyStretchBehaviour)
+      .function("setUseWebDefaults", &Config::setUseWebDefaults)
       .function(
           "isExperimentalFeatureEnabled",
-          &Config::isExperimentalFeatureEnabled);
+          &Config::isExperimentalFeatureEnabled)
+      .function("useLegacyStretchBehaviour", &Config::useLegacyStretchBehaviour)
+      .function("useWebDefaults", &Config::useWebDefaults);
 
   value_object<Layout>("Layout")
       .field("left", &Layout::left)

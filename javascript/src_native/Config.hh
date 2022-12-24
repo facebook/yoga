@@ -32,9 +32,13 @@ public: // Prevent accidental copy
 public: // Setters
   void setExperimentalFeatureEnabled(int feature, bool enabled);
   void setPointScaleFactor(float pixelsInPoint);
+  void setUseLegacyStretchBehaviour(bool useLegacyStretchBehaviour);
+  void setUseWebDefaults(bool useWebDefaults);
 
 public: // Getters
   bool isExperimentalFeatureEnabled(int feature) const;
+  bool useLegacyStretchBehaviour();
+  bool useWebDefaults();
 
 private:
   YGConfigRef m_config;

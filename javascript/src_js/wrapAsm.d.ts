@@ -43,19 +43,25 @@ type Value = {
 }
 
 export type Config = {
+  free(): void;
   isExperimentalFeatureEnabled(feature: ExperimentalFeature): boolean,
   setExperimentalFeatureEnabled(
     feature: ExperimentalFeature,
     enabled: boolean,
   ): void,
   setPointScaleFactor(factor: number): void,
+  useLegacyStretchBehaviour(): boolean,
+  setUseLegacyStretchBehaviour(useLegacyStretchBehaviour: boolean): void,
+  useWebDefaults(): boolean,
+  setUseWebDefaults(useWebDefaults): void,
 };
 
 export type MeasureFunction = (
-    width: number,
-    widthMode: number,
-    height: number,
-    heightMode: number) => Size;
+  width: number,
+  widthMode: number,
+  height: number,
+  heightMode: number
+) => Size;
 
 export type Node = {
   calculateLayout(

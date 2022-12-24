@@ -32,7 +32,23 @@ void Config::setPointScaleFactor(float pixelsInPoint) {
   YGConfigSetPointScaleFactor(m_config, pixelsInPoint);
 }
 
+void Config::setUseLegacyStretchBehaviour(bool useLegacyStretchBehaviour) {
+  YGConfigSetUseLegacyStretchBehaviour(m_config, useLegacyStretchBehaviour);
+}
+
+void Config::setUseWebDefaults(bool useWebDefaults) {
+  YGConfigSetUseWebDefaults(m_config, useWebDefaults);
+}
+
 bool Config::isExperimentalFeatureEnabled(int feature) const {
   return YGConfigIsExperimentalFeatureEnabled(
       m_config, static_cast<YGExperimentalFeature>(feature));
+}
+
+bool Config::useLegacyStretchBehaviour() {
+  return YGConfigGetUseLegacyStretchBehaviour(m_config);
+}
+
+bool Config::useWebDefaults() {
+  return YGConfigGetUseWebDefaults(m_config);
 }
