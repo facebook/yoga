@@ -6,7 +6,6 @@
  */
 
 const ITERATIONS = 2000;
-const YGBENCHMARK = global.YGBENCHMARK ?? global.test;
 
 YGBENCHMARK("Stack with flex", () => {
   const root = Yoga.Node.create();

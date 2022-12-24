@@ -29,7 +29,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["jest.*", "tests/**"],
+      files: ["jest.*", "just.config.js", "tests/**"],
       env: {
         node: true,
       },
@@ -38,6 +38,7 @@ module.exports = {
         getMeasureCounterMax: "writable",
         getMeasureCounterMin: "writable",
         Yoga: "writable",
+        YGBENCHMARK: "writable",
       },
     },
   ],

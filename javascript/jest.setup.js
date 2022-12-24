@@ -18,3 +18,7 @@ module.exports = async () => {
     global.Yoga = await require("./dist/entrypoint/asmjs-async").loadYoga();
   }
 };
+
+Object.defineProperty(global, "YGBENCHMARK", {
+  get: () => global.test,
+});
