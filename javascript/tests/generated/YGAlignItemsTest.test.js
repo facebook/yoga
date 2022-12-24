@@ -1361,7 +1361,7 @@ it("align_baseline_multiline_column", function () {
     console.assert(50 === root_child0.getComputedWidth(), "50 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(50 === root_child0.getComputedHeight(), "50 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    console.assert(70 === root_child1.getComputedLeft(), "70 === root_child1.getComputedLeft() (" + root_child1.getComputedLeft() + ")");
+    console.assert(50 === root_child1.getComputedLeft(), "50 === root_child1.getComputedLeft() (" + root_child1.getComputedLeft() + ")");
     console.assert(50 === root_child1.getComputedTop(), "50 === root_child1.getComputedTop() (" + root_child1.getComputedTop() + ")");
     console.assert(30 === root_child1.getComputedWidth(), "30 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(50 === root_child1.getComputedHeight(), "50 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
@@ -1371,7 +1371,7 @@ it("align_baseline_multiline_column", function () {
     console.assert(20 === root_child1_child0.getComputedWidth(), "20 === root_child1_child0.getComputedWidth() (" + root_child1_child0.getComputedWidth() + ")");
     console.assert(20 === root_child1_child0.getComputedHeight(), "20 === root_child1_child0.getComputedHeight() (" + root_child1_child0.getComputedHeight() + ")");
 
-    console.assert(10 === root_child2.getComputedLeft(), "10 === root_child2.getComputedLeft() (" + root_child2.getComputedLeft() + ")");
+    console.assert(0 === root_child2.getComputedLeft(), "0 === root_child2.getComputedLeft() (" + root_child2.getComputedLeft() + ")");
     console.assert(0 === root_child2.getComputedTop(), "0 === root_child2.getComputedTop() (" + root_child2.getComputedTop() + ")");
     console.assert(40 === root_child2.getComputedWidth(), "40 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(70 === root_child2.getComputedHeight(), "70 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");
@@ -1481,7 +1481,7 @@ it("align_baseline_multiline_column2", function () {
     console.assert(50 === root_child0.getComputedWidth(), "50 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(50 === root_child0.getComputedHeight(), "50 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
 
-    console.assert(70 === root_child1.getComputedLeft(), "70 === root_child1.getComputedLeft() (" + root_child1.getComputedLeft() + ")");
+    console.assert(50 === root_child1.getComputedLeft(), "50 === root_child1.getComputedLeft() (" + root_child1.getComputedLeft() + ")");
     console.assert(50 === root_child1.getComputedTop(), "50 === root_child1.getComputedTop() (" + root_child1.getComputedTop() + ")");
     console.assert(30 === root_child1.getComputedWidth(), "30 === root_child1.getComputedWidth() (" + root_child1.getComputedWidth() + ")");
     console.assert(50 === root_child1.getComputedHeight(), "50 === root_child1.getComputedHeight() (" + root_child1.getComputedHeight() + ")");
@@ -1491,7 +1491,7 @@ it("align_baseline_multiline_column2", function () {
     console.assert(20 === root_child1_child0.getComputedWidth(), "20 === root_child1_child0.getComputedWidth() (" + root_child1_child0.getComputedWidth() + ")");
     console.assert(20 === root_child1_child0.getComputedHeight(), "20 === root_child1_child0.getComputedHeight() (" + root_child1_child0.getComputedHeight() + ")");
 
-    console.assert(10 === root_child2.getComputedLeft(), "10 === root_child2.getComputedLeft() (" + root_child2.getComputedLeft() + ")");
+    console.assert(0 === root_child2.getComputedLeft(), "0 === root_child2.getComputedLeft() (" + root_child2.getComputedLeft() + ")");
     console.assert(0 === root_child2.getComputedTop(), "0 === root_child2.getComputedTop() (" + root_child2.getComputedTop() + ")");
     console.assert(40 === root_child2.getComputedWidth(), "40 === root_child2.getComputedWidth() (" + root_child2.getComputedWidth() + ")");
     console.assert(70 === root_child2.getComputedHeight(), "70 === root_child2.getComputedHeight() (" + root_child2.getComputedHeight() + ")");

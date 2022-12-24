@@ -8,4 +8,4 @@
  */
 
 const asm = require('../build/wasm-sync');
-module.exports = require("./entrySync")(asm);
+module.exports = require("./_entrySync")(asm);

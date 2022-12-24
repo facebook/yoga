@@ -26,17 +26,17 @@
     "src_js/**"
   ],
   "scripts": {
-    "benchmark": "node tests/run-bench $(find tests/Benchmarks -name '*.js')",
-    "build": "yarn build:native && yarn build:js",
+    "benchmark": "yarn build && node tests/run-bench $(find tests/benchmarks -name '*.js')",
+    "build": "yarn build:js && yarn build:native",
     "build:configure": "which ninja && emcmake cmake -S . -B build -G Ninja || emcmake cmake -S . -B build",
     "build:copy-dts": "cd src_js && find . -name '*.d.ts' | cpio -pdm ../dist",
     "build:js": "babel src_js --source-maps --out-dir dist && yarn build:copy-dts",
     "build:native": "yarn build:configure && cmake --build build",
-    "test": "yarn test:asmjs && yarn test:asmjs-sync && yarn test:wasm && yarn test:wasm-sync",
-    "test:asmjs": "WASM=0 SYNC=0 jest",
-    "test:asmjs-sync": "WASM=0 SYNC=1 jest",
-    "test:wasm": "WASM=1 SYNC=0 jest",
-    "test:wasm-sync": "WASM=1 SYNC=1 jest"
+    "test": "yarn test:asmjs-async && yarn test:asmjs-sync && yarn test:wasm-async && yarn test:wasm-sync",
+    "test:asmjs-async": "yarn build --target asmjs-async && WASM=0 SYNC=0 jest",
+    "test:asmjs-sync": "yarn build --target asmjs-sync && WASM=0 SYNC=1 jest",
+    "test:wasm-async": "yarn build --target wasm-async && WASM=1 SYNC=0 jest",
+    "test:wasm-sync": "yarn build --target wasm-sync && WASM=1 SYNC=1 jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

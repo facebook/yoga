@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-var Yoga = Yoga || require("../../dist/entry-" + process.env.TEST_ENTRY);
-
-var ITERATIONS = 2000;
+const ITERATIONS = 2000;
+const YGBENCHMARK = global.YGBENCHMARK ?? global.test;
 
 YGBENCHMARK("Stack with flex", function() {
   var root = Yoga.Node.create();

@@ -37,7 +37,12 @@ import { loadYoga } from "yoga-layout/entrypoint/wasm-async";
 
 ## Contributing
 
-`yoga-layout` may be locally built by running the following set of commands. The build requires that some dependencies be installed first.
+### Requirements
+
+1. CMake >= 3.13
+1. (Optional) ninja, for faster builds
+
+### Building
 
 ```bash
 git clone https://github.com/facebook/yoga.git
@@ -46,7 +51,12 @@ yarn install
 yarn build
 ```
 
-### Requirements
+### Testing
 
-1. CMake >= 3.13
-1. (Optional) ninja, for faster builds
+```bash
+# Build and test all entrypoints
+yarn test
+
+# Build and test a specific entrypoint
+yarn test:asmjs-sync
+```

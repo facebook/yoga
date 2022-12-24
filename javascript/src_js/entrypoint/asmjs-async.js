@@ -8,4 +8,4 @@
  */
 
 const asm = require('../build/asmjs-async');
-module.exports = require("./entryAsync")(asm);
+module.exports = require("./_entryAsync")(asm);

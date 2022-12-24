@@ -9,6 +9,6 @@
 
 module.exports = {
   setupFiles: ["./jest.setup.js", "./tests/tools.js"],
-  testRegex: '/tests/Facebook.Yoga/.*\\.js$',
+  testRegex: '/tests/.*\\.test\\.js$',
   watchman: false,
 }
