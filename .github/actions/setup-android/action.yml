@@ -6,7 +6,8 @@ runs:
     - name: Select Java Version
       uses: actions/setup-java@v2
       with:
-        java-version: 1.8
+        distribution: temurin
+        java-version: 8
 
     - name: Install NDK 21
       shell: bash
