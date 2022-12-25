@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build [${{ matrix.mode }}][${{ matrix.os }}]
+    name: Build [${{ matrix.os }}][${{ matrix.mode }}]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
