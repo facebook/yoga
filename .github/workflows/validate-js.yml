@@ -12,8 +12,11 @@ env:
 
 jobs:
   benchmark:
-    name: Benchmark
-    runs-on: ubuntu-latest
+    name: Benchmark [${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
 
@@ -25,8 +28,11 @@ jobs:
         working-directory: javascript
 
   build:
-    name: Build
-    runs-on: ubuntu-latest
+    name: Build [${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
 
@@ -38,8 +44,11 @@ jobs:
         working-directory: javascript
 
   test:
-    name: Test
-    runs-on: ubuntu-latest
+    name: Test [${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
 
