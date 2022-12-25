@@ -8,7 +8,3 @@ runs:
       with:
         distribution: temurin
         java-version: 8
-
-    - name: Install NDK 21
-      shell: bash
-      run: echo "y" | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;21.3.6528147"
