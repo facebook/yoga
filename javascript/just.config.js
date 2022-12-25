@@ -8,82 +8,58 @@
  */
 
 const {
+  argv,
   copyTask,
+  eslintTask,
+  logger,
   jestTask,
+  option,
   parallel,
   series,
   spawn,
   task,
 } = require("just-scripts");
+
 const glob = require("glob");
 const which = require("which");
 
-const cmake = which.sync("cmake");
-const emcmake = which.sync("emcmake");
-const ninja = which.sync("ninja", { nothrow: true });
-const node = which.sync("node");
-const npx = which.sync("npx");
+const node = process.execPath;
 
-task("copy-dts", copyTask({ paths: ["./src_js/**/*.d.ts"], dest: "./dist" }));
+option("fix");
 
-task("babel", () =>
-  spawn(npx, ["babel", "src_js", "--source-maps", "--out-dir", "dist"])
+task(
+  "prepare-for-build",
+  parallel(
+    babelTransformTask({ paths: ["src_js"], dest: "dist" }),
+    copyTask({ paths: ["src_js/**/*.d.ts"], dest: "dist" }),
+    emcmakeGenerateTask()
+  )
 );
 
-task("cmake-generate", () =>
-  spawn(emcmake, [
-    "cmake",
-    "-S",
-    ".",
-    "-B",
-    "build",
-    ...(ninja ? ["-G", "Ninja"] : []),
-  ])
-);
-
-function prepareTask() {
-  return parallel("cmake-generate", "copy-dts", "babel");
-}
-
-function runBenchTask() {
-  const files = glob.sync("./tests/Benchmarks/**/*.js");
-  return () =>
-    spawn(node, ["./tests/run-bench.js", ...files], { stdio: "inherit" });
-}
-
-function cmakeBuildTask(targets) {
-  return () =>
-    spawn(
-      cmake,
-      ["--build", "build", ...(targets ? ["--target", ...targets] : [])],
-      { stdio: "inherit" }
-    );
-}
-
-function buildFlavor(flavor, env) {
+function defineFlavor(flavor, env) {
   task(`cmake-build:${flavor}`, cmakeBuildTask([flavor]));
   task(`jest:${flavor}`, jestTask({ env }));
   task(
     `test:${flavor}`,
-    series(prepareTask(), `cmake-build:${flavor}`, `jest:${flavor}`)
+    series("prepare-for-build", `cmake-build:${flavor}`, `jest:${flavor}`)
   );
 }
 
-buildFlavor("asmjs-async", { WASM: 0, SYNC: 0 });
-buildFlavor("asmjs-sync", { WASM: 0, SYNC: 1 });
-buildFlavor("wasm-async", { WASM: 1, SYNC: 0 });
-buildFlavor("wasm-sync", { WASM: 1, SYNC: 1 });
+defineFlavor("asmjs-async", { WASM: 0, SYNC: 0 });
+defineFlavor("asmjs-sync", { WASM: 0, SYNC: 1 });
+defineFlavor("wasm-async", { WASM: 1, SYNC: 0 });
+defineFlavor("wasm-sync", { WASM: 1, SYNC: 1 });
 
 task("cmake-build:all", cmakeBuildTask());
 task("cmake-build:async", cmakeBuildTask(["asmjs-async", "wasm-async"]));
 task("cmake-build:sync", cmakeBuildTask(["asmjs-sync", "wasm-sync"]));
 
-task("build", series(prepareTask(), "cmake-build:all"));
+task("build", series("prepare-for-build", "cmake-build:all"));
 
 task(
   "test",
   series(
-    prepareTask(),
+    "prepare-for-build",
     series("cmake-build:asmjs-async", "jest:asmjs-async"),
     series("cmake-build:asmjs-sync", "jest:asmjs-sync"),
     series("cmake-build:wasm-async", "jest:wasm-async"),
@@ -91,4 +67,77 @@ task(
   )
 );
 
-task("benchmark", series(prepareTask(), "cmake-build:sync", runBenchTask()));
+task(
+  "benchmark",
+  series("prepare-for-build", "cmake-build:sync", runBenchTask())
+);
+
+task(
+  "lint",
+  series(eslintTask({ fix: argv().fix }), clangFormatTask({ fix: argv().fix }))
+);
+
+function babelTransformTask(opts) {
+  return () => {
+    const args = [...opts.paths, "--source-maps", "--out-dir", opts.dest];
+    logger.info(`Transforming [${opts.paths.join(",")}] to '${opts.dest}'`);
+
+    return spawn(node, [require.resolve("@babel/cli/bin/babel"), ...args]);
+  };
+}
+
+function runBenchTask() {
+  return () => {
+    const files = glob.sync("./tests/Benchmarks/**/*.js");
+    const args = ["./tests/run-bench.js", ...files];
+    logger.info(args.join(" "));
+
+    return spawn(node, args, { stdio: "inherit" });
+  };
+}
+
+function emcmakeGenerateTask() {
+  return () => {
+    const emcmake = which.sync("emcmake");
+    const ninja = which.sync("ninja", { nothrow: true });
+    const args = [
+      "cmake",
+      "-S",
+      ".",
+      "-B",
+      "build",
+      ...(ninja ? ["-G", "Ninja"] : []),
+    ];
+    logger.info(["encmake", ...args].join(" "));
+
+    return spawn(emcmake, args);
+  };
+}
+
+function cmakeBuildTask(targets) {
+  return () => {
+    const cmake = which.sync("cmake");
+    const args = [
+      "--build",
+      "build",
+      ...(targets ? ["--target", ...targets] : []),
+    ];
+    logger.info(["cmake", ...args].join(" "));
+
+    return spawn(cmake, args, { stdio: "inherit" });
+  };
+}
+
+function clangFormatTask(opts) {
+  return () => {
+    const args = [
+      ...(opts.fix ? ["-i"] : ["--dry-run", "--Werror"]),
+      ...glob.sync("**/*.{h,hh,hpp,c,cpp,cc,m,mm}"),
+    ];
+    logger.info(["clang-format", ...args].join(" "));
+
+    return spawn(node, [require.resolve("clang-format"), ...args], {
+      stdio: "inherit",
+    });
+  };
+}

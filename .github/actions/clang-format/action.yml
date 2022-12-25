@@ -19,6 +19,6 @@ runs:
       working-directory: ${{ inputs.directory }}
       shell: bash
       run: |
-        shopt -s globstar
+        shopt -s extglob
         shopt -s nullglob
-        clang-format-${{ inputs.version }} --dry-run --Werror **/*.cpp **/*.cc **/*.h **/*.hh **/*.m **/*.mm
+        clang-format-${{ inputs.version }} --dry-run --Werror **/*.{h,hh,hpp,c,cpp,cc,m,mm}

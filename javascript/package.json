@@ -28,8 +28,8 @@
   "scripts": {
     "benchmark": "just benchmark",
     "build": "just build",
-    "lint": "eslint .",
-    "lint:fix": "yarn lint --fix",
+    "lint": "just lint",
+    "lint:fix": "just lint --fix",
     "test": "just test",
     "test:asmjs-async": "just test:asmjs-async",
     "test:asmjs-sync": "just test:asmjs-sync",
@@ -41,6 +41,7 @@
     "@babel/core": "^7.20.7",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-env": "^7.20.2",
+    "clang-format": "^1.8.0",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^27.1.7",
