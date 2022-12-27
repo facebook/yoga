@@ -11,13 +11,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-#if __IOS__
-using ObjCRuntime;
-#endif
-#if ENABLE_IL2CPP
-using AOT;
-#endif
-
 namespace Facebook.Yoga
 {
     public partial class YogaNode : IEnumerable<YogaNode>
@@ -656,9 +649,7 @@ namespace Facebook.Yoga
                 Native.YGNodeStyleGetDirection(_ygNode));
         }
 
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaMeasureFunc))]
-#endif
         private static YogaSize MeasureInternal(
             IntPtr unmanagedNodePtr,
             float width,
@@ -674,9 +665,7 @@ namespace Facebook.Yoga
             return node._measureFunction(node, width, widthMode, height, heightMode);
         }
 
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaBaselineFunc))]
-#endif
         private static float BaselineInternal(
             IntPtr unmanagedNodePtr,
             float width,

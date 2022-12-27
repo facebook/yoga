@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0-ios</TargetFramework>
+    <UseMaui>True</UseMaui>
+    <SingleProject>True</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../Facebook.YogaKit/Facebook.YogaKit.csproj " />
+    <ProjectReference Include="../../Facebook.Yoga/Facebook.Yoga.csproj " />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit.Maui.Runner" Version="1.16.0" />
+  </ItemGroup>
+</Project>

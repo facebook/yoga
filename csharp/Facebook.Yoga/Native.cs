@@ -12,7 +12,9 @@ namespace Facebook.Yoga
 {
     internal static class Native
     {
-#if (UNITY_IOS && !UNITY_EDITOR) || __IOS__
+        // Unity package references work via embedded source with their custom package format,
+        // so these Unity-specific defines will work.
+#if (UNITY_IOS && !UNITY_EDITOR) || IOS
         private const string DllName = "__Internal";
 #else
         private const string DllName = "yoga";

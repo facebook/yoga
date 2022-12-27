@@ -9,10 +9,6 @@ using System;
 using Facebook.Yoga;
 using System.Collections.Generic;
 using System.Drawing;
-#if __IOS__
-using NativeView = UIKit.UIView;
-using NativeScrollView = UIKit.UIScrollView;
-#endif
 
 namespace Facebook.YogaKit
 {
@@ -899,7 +895,12 @@ namespace Facebook.YogaKit
 			}
 		}
 
+		private static float NativePixelScale => GetNativePixelScale();
 
+		private static partial void MeasureNativeView(NativeView view, float constrainedWidth, float constrainedHeight, out float sizeThatFitsWidth, out float sizeThatFitsHeight);
+		private static partial void GetWidthHeightOfNativeView(NativeView view, out float width, out float height);
+		private static partial float GetNativePixelScale();
+		private static partial void ApplyLayoutToNativeView(NativeView view, YogaNode node);
 	}
 }
 

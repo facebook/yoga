@@ -8,13 +8,6 @@
 using System;
 using System.Runtime.InteropServices;
 
-#if __IOS__
-using ObjCRuntime;
-#endif
-#if ENABLE_IL2CPP
-using AOT;
-#endif
-
 namespace Facebook.Yoga
 {
     public class YogaConfig
@@ -54,9 +47,7 @@ namespace Facebook.Yoga
             }
         }
 
-#if (UNITY_IOS && !UNITY_EDITOR) || ENABLE_IL2CPP || __IOS__
         [MonoPInvokeCallback(typeof(YogaLogger))]
-#endif
         private static void LoggerInternal(
             IntPtr unmanagedConfigPtr,
             IntPtr unmanagedNodePtr,
