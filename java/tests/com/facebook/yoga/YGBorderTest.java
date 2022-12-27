@@ -183,8 +183,6 @@ public class YGBorderTest {
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
-    root.setBorder(YogaEdge.START, 10f);
-    root.setBorder(YogaEdge.END, 20f);
     root.setBorder(YogaEdge.BOTTOM, 20f);
     root.setWidth(100f);
     root.setHeight(100f);
@@ -201,7 +199,7 @@ public class YGBorderTest {
     assertEquals(100f, root.getLayoutWidth(), 0.0f);
     assertEquals(100f, root.getLayoutHeight(), 0.0f);
 
-    assertEquals(40f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(45f, root_child0.getLayoutX(), 0.0f);
     assertEquals(35f, root_child0.getLayoutY(), 0.0f);
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);
@@ -214,7 +212,7 @@ public class YGBorderTest {
     assertEquals(100f, root.getLayoutWidth(), 0.0f);
     assertEquals(100f, root.getLayoutHeight(), 0.0f);
 
-    assertEquals(50f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(45f, root_child0.getLayoutX(), 0.0f);
     assertEquals(35f, root_child0.getLayoutY(), 0.0f);
     assertEquals(10f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(10f, root_child0.getLayoutHeight(), 0.0f);

@@ -59,6 +59,13 @@
   <div style="flex-grow: 4; flex-basis: 15%; min-width: 20%;"></div>
 </div>
 
+<div id="percentage_main_max_height" style="width: 71px;">
+  <div style="align-items: flex-start; height: 151px;">
+    <div style="flex-basis: 15px;"></div>
+    <div style="flex-basis: 48px; max-height: 33%;"></div>
+  </div>
+</div>
+
 <div id="percentage_multiple_nested_with_padding_margin_and_percentage_values" style="width: 200px; height: 200px; flex-direction: column;">
   <div style="flex-grow: 1; flex-basis: 10%; min-width: 60%; margin: 5px; padding: 3px;">
     <div style="width: 50%; margin: 5px; padding: 3%;">
@@ -91,14 +98,14 @@
 <div id="percent_within_flex_grow" style="flex-direction:row; width: 350px; height: 100px; align-items: stretch; ">
   <div style="width:100px;"></div>
   <div style="flex-grow: 1;">
-      <div style="width:100%;"></div>
+    <div style="width:100%;"></div>
   </div>
   <div style="width: 100px;"></div>
 </div>
 
 <div id="percentage_container_in_wrapping_container" style="align-items: center; width: 200px; height: 200px; justify-content: center;">
   <div>
-    <div style="alignItems: center; flex-direction: row; justify-content: center; width: 100%;">
+    <div style="align-items: center; flex-direction: row; justify-content: center; width: 100%;">
       <div style="width: 50px; height: 50px;"></div>
       <div style="width: 50px; height: 50px;"></div>
     </div>
@@ -110,4 +117,14 @@
     <div style="width: 100%;"></div>
     <div style="width: 100%;"></div>
   </div>
+</div>
+
+<div id="percentage_different_width_height" style="width: 200px; height: 300px; flex-direction: row;">
+  <div style="height: 30%; flex-grow: 1"></div>
+  <div style="height: 30%;"></div>
+</div>
+
+<div id="percentage_different_width_height_column" style="width: 200px; height: 300px; flex-direction: column;">
+  <div style="flex-grow: 1"></div>
+  <div style="height: 30%;"></div>
 </div>
