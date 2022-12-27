@@ -2,8 +2,22 @@
   <div style="height: 10px; max-width: 50px;"></div>
 </div>
 
+<div id="min_width_larger_than_width" style="width: 100px; height: 100px;">
+  <div style="width: 25px; min-width: 50px;"></div>
+</div>
+
+<div id="min_height_larger_than_height" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="height: 25px; min-height: 50px;"></div>
+</div>
+
 <div id="max_height" style="width: 100px; height: 100px; flex-direction: row;">
   <div style="width: 10px; max-height: 50px;"></div>
+</div>
+
+<div id="min_height_with_nested_fixed_height" style="width: 320px; min-height: 44px; flex-direction: row; padding-left: 16px; padding-right: 16px;">
+  <div style="min-height: 28px; align-self: flex-start; flex-shrink: 0; margin-bottom: 9px; margin-top: 8px;">
+    <div style="width: 40px; height: 40px;"></div>
+  </div>
 </div>
 
 <!-- Chrome and Yoga disagree on the correct output -->
@@ -28,6 +42,11 @@
 
 <div id="align_items_min_max" style="max-width: 200px; min-width: 100px; height: 100px; align-items: center;">
   <div style="width: 60px; height: 60px;"></div>
+</div>
+
+<div id="align_items_center_min_max_with_padding"
+  style="flex-direction: row; max-width: 320px; min-width: 320px; min-height: 72px; max-height: 504px; align-items: center; padding-top: 8px; padding-bottom: 8px;">
+  <div style="width: 62px; height: 62px;"></div>
 </div>
 
 <div id="justify_content_overflow_min_max" style="min-height: 100px; max-height: 110px; justify-content: center;">
@@ -128,5 +147,24 @@
 
 <div id="min_max_percent_no_width_height" style="width: 100px; height: 100px; align-items: flex-start;">
   <div style="min-width: 10%; max-width: 10%; min-height: 10%; max-height: 10%;">
+  </div>
+</div>
+
+<div id="min_max_percent_different_width_height" style="width: 100px; height: 200px; align-items: flex-start;">
+  <div style="min-width: 10%; max-width: 10%; min-height: 10%; max-height: 10%;">
+  </div>
+</div>
+
+<div id="undefined_height_with_min_max" style="width: 320px; min-height: 0px;">
+  <div style="min-height: 0px; max-height: 100px;"></div>
+</div>
+
+<div id="undefined_width_with_min_max" style="height: 50px;">
+  <div style="min-width: 0px; max-width: 100px;"></div>
+</div>
+
+<div id="undefined_width_with_min_max_row" style="height: 50px; flex-direction: row;">
+  <div style="min-width: 60px; max-width: 300px;">
+    <div style="width: 30px; height: 20px;"></div>
   </div>
 </div>

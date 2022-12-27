@@ -1872,6 +1872,88 @@ public class YGAlignContentTest {
     assertEquals(10f, root_child0_child0.getLayoutHeight(), 0.0f);
   }
 
+  @Test
+  public void test_align_content_not_stretch_with_align_items_stretch() {
+    YogaConfig config = YogaConfigFactory.create();
+
+    final YogaNode root = createNode(config);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setWrap(YogaWrap.WRAP);
+    root.setWidth(328f);
+    root.setHeight(52f);
+
+    final YogaNode root_child0 = createNode(config);
+    root.addChildAt(root_child0, 0);
+
+    final YogaNode root_child0_child0 = createNode(config);
+    root_child0_child0.setWidth(272f);
+    root_child0_child0.setHeight(44f);
+    root_child0.addChildAt(root_child0_child0, 0);
+
+    final YogaNode root_child1 = createNode(config);
+    root.addChildAt(root_child1, 1);
+
+    final YogaNode root_child1_child0 = createNode(config);
+    root_child1_child0.setWidth(56f);
+    root_child1_child0.setHeight(44f);
+    root_child1.addChildAt(root_child1_child0, 0);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(328f, root.getLayoutWidth(), 0.0f);
+    assertEquals(52f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(272f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(272f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(272f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child1.getLayoutY(), 0.0f);
+    assertEquals(56f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child1.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child1_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child1_child0.getLayoutY(), 0.0f);
+    assertEquals(56f, root_child1_child0.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child1_child0.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(328f, root.getLayoutWidth(), 0.0f);
+    assertEquals(52f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(56f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(272f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(272f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child1.getLayoutY(), 0.0f);
+    assertEquals(56f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child1.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child1_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child1_child0.getLayoutY(), 0.0f);
+    assertEquals(56f, root_child1_child0.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child1_child0.getLayoutHeight(), 0.0f);
+  }
+
   private YogaNode createNode(YogaConfig config) {
     return mNodeFactory.create(config);
   }

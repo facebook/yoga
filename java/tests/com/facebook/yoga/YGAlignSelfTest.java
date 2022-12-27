@@ -65,6 +65,62 @@ public class YGAlignSelfTest {
   }
 
   @Test
+  public void test_align_self_center_undefined_max_height() {
+    YogaConfig config = YogaConfigFactory.create();
+
+    final YogaNode root = createNode(config);
+    root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setWidth(280f);
+    root.setMinHeight(52f);
+
+    final YogaNode root_child0 = createNode(config);
+    root_child0.setWidth(240f);
+    root_child0.setHeight(44f);
+    root.addChildAt(root_child0, 0);
+
+    final YogaNode root_child1 = createNode(config);
+    root_child1.setAlignSelf(YogaAlign.CENTER);
+    root_child1.setWidth(40f);
+    root_child1.setHeight(56f);
+    root.addChildAt(root_child1, 1);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(280f, root.getLayoutWidth(), 0.0f);
+    assertEquals(56f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(240f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(240f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child1.getLayoutY(), 0.0f);
+    assertEquals(40f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(56f, root_child1.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(280f, root.getLayoutWidth(), 0.0f);
+    assertEquals(56f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(40f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(240f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(44f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(0f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child1.getLayoutY(), 0.0f);
+    assertEquals(40f, root_child1.getLayoutWidth(), 0.0f);
+    assertEquals(56f, root_child1.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
   public void test_align_self_flex_end() {
     YogaConfig config = YogaConfigFactory.create();
 

@@ -179,8 +179,6 @@ namespace Facebook.Yoga
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
             root.AlignItems = YogaAlign.Center;
-            root.PaddingStart = 10;
-            root.PaddingEnd = 20;
             root.PaddingBottom = 20;
             root.Width = 100;
             root.Height = 100;
@@ -197,7 +195,7 @@ namespace Facebook.Yoga
             Assert.AreEqual(100f, root.LayoutWidth);
             Assert.AreEqual(100f, root.LayoutHeight);
 
-            Assert.AreEqual(40f, root_child0.LayoutX);
+            Assert.AreEqual(45f, root_child0.LayoutX);
             Assert.AreEqual(35f, root_child0.LayoutY);
             Assert.AreEqual(10f, root_child0.LayoutWidth);
             Assert.AreEqual(10f, root_child0.LayoutHeight);
@@ -210,7 +208,7 @@ namespace Facebook.Yoga
             Assert.AreEqual(100f, root.LayoutWidth);
             Assert.AreEqual(100f, root.LayoutHeight);
 
-            Assert.AreEqual(50f, root_child0.LayoutX);
+            Assert.AreEqual(45f, root_child0.LayoutX);
             Assert.AreEqual(35f, root_child0.LayoutY);
             Assert.AreEqual(10f, root_child0.LayoutWidth);
             Assert.AreEqual(10f, root_child0.LayoutHeight);

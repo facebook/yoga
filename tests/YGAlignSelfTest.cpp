@@ -52,6 +52,63 @@ TEST(YogaTest, align_self_center) {
   YGConfigFree(config);
 }
 
+TEST(YogaTest, align_self_center_undefined_max_height) {
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetWidth(root, 280);
+  YGNodeStyleSetMinHeight(root, 52);
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child0, 240);
+  YGNodeStyleSetHeight(root_child0, 44);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetAlignSelf(root_child1, YGAlignCenter);
+  YGNodeStyleSetWidth(root_child1, 40);
+  YGNodeStyleSetHeight(root_child1, 56);
+  YGNodeInsertChild(root, root_child1, 1);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(280, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(56, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(240, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(44, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(240, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(56, YGNodeLayoutGetHeight(root_child1));
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(280, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(56, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(240, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(44, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(56, YGNodeLayoutGetHeight(root_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
 TEST(YogaTest, align_self_flex_end) {
   const YGConfigRef config = YGConfigNew();
 

@@ -184,8 +184,6 @@ it("border_center_child", function () {
     var root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
     root.setAlignItems(Yoga.ALIGN_CENTER);
-    root.setBorder(Yoga.EDGE_START, 10);
-    root.setBorder(Yoga.EDGE_END, 20);
     root.setBorder(Yoga.EDGE_BOTTOM, 20);
     root.setWidth(100);
     root.setHeight(100);
@@ -201,7 +199,7 @@ it("border_center_child", function () {
     console.assert(100 === root.getComputedWidth(), "100 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
     console.assert(100 === root.getComputedHeight(), "100 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
 
-    console.assert(40 === root_child0.getComputedLeft(), "40 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
+    console.assert(45 === root_child0.getComputedLeft(), "45 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
     console.assert(35 === root_child0.getComputedTop(), "35 === root_child0.getComputedTop() (" + root_child0.getComputedTop() + ")");
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
@@ -213,7 +211,7 @@ it("border_center_child", function () {
     console.assert(100 === root.getComputedWidth(), "100 === root.getComputedWidth() (" + root.getComputedWidth() + ")");
     console.assert(100 === root.getComputedHeight(), "100 === root.getComputedHeight() (" + root.getComputedHeight() + ")");
 
-    console.assert(50 === root_child0.getComputedLeft(), "50 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
+    console.assert(45 === root_child0.getComputedLeft(), "45 === root_child0.getComputedLeft() (" + root_child0.getComputedLeft() + ")");
     console.assert(35 === root_child0.getComputedTop(), "35 === root_child0.getComputedTop() (" + root_child0.getComputedTop() + ")");
     console.assert(10 === root_child0.getComputedWidth(), "10 === root_child0.getComputedWidth() (" + root_child0.getComputedWidth() + ")");
     console.assert(10 === root_child0.getComputedHeight(), "10 === root_child0.getComputedHeight() (" + root_child0.getComputedHeight() + ")");
