@@ -42,7 +42,7 @@ Dir['fixtures/*.html'].each do |file|
   browser.goto('file://' + Dir.pwd + '/test.html')
   logs = browser.driver.logs.get(:browser)
 
-  f = File.open("../tests/#{name}.cpp", 'w')
+  f = File.open("../tests/generated/#{name}.cpp", 'w')
   f.write eval(logs[0].message.sub(/^[^"]*/, ''))
   f.close
 

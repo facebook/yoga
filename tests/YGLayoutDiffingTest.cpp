@@ -6,9 +6,10 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/testutil/testutil.h>
 #include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
+
+#include "util/TestUtil.h"
 
 using facebook::yoga::test::TestUtil;
 
