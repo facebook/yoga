@@ -9,11 +9,12 @@ on:
 
 jobs:
   build:
-    name: Build (${{ matrix.mode }})
-    runs-on: ubuntu-latest
+    name: Build [${{ matrix.os }}][${{ matrix.mode }}]
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         mode: [Debug, Release]
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v3

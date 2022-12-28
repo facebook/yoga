@@ -56,7 +56,7 @@ Dir['fixtures/*.html'].each do |file|
 
   print logs[4]
 
-  f = File.open("../javascript/tests/Facebook.Yoga/#{name}.js", 'w')
+  f = File.open("../javascript/tests/generated/#{name}.test.js", 'w')
   f.write eval(logs[3].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
 end
