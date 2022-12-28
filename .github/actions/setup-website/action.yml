@@ -3,11 +3,15 @@ name: Setup Website envirionment
 runs:
   using: "composite"
   steps:
-    - name: Install NodeJS 12
+    # TODO: Update to latest when website is moved to the workspace version of
+    # yoga-layout
+    - name: Install Node
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
 
+    # TODO: the website should be in a yarn workspace with the library, but the
+    # current version of gatsby is incompatible with hoisting.
     - name: yarn install
       shell: bash
       run: yarn install --frozen-lockfile

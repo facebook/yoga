@@ -18,7 +18,6 @@ runs:
     - name: clang-format
       working-directory: ${{ inputs.directory }}
       shell: bash
-      run: |
-        shopt -s globstar
-        shopt -s nullglob
-        clang-format-${{ inputs.version }} --dry-run --Werror **/*.cpp **/*.h **/*.m **/*.mm
+      env:
+        BASHOPTS: extglob:nullglob
+      run: clang-format-${{ inputs.version }} --dry-run --Werror **/*.{h,hh,hpp,c,cpp,cc,m,mm}

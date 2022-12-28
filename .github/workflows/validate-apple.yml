@@ -10,7 +10,6 @@ on:
 jobs:
   lint-pods:
     name: Lint
-    if: ${{ false }} # Apple Build is Broken
     runs-on: macos-latest
 
     steps:
@@ -21,10 +20,10 @@ jobs:
 
       - name: pod spec lint
         run: pod spec lint --verbose
+        continue-on-error: true # Apple Build is Broken
 
   build-sample:
-    name: Build (${{ matrix.mode }})
-    if: ${{ false }} # Apple Build is Broken
+    name: Build [${{ matrix.mode }}]
     runs-on: macos-latest
     strategy:
       matrix:
@@ -37,8 +36,9 @@ jobs:
         uses: ./.github/actions/setup-apple
 
       - name: pod install
-        working-directory: ./YogaKit/YogaKitSample
         run: pod install
+        working-directory: ./YogaKit/YogaKitSample
+        continue-on-error: true # Apple Build is Broken
 
       # TODO: xcodebuild
 
