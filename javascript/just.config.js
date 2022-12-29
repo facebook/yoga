@@ -108,7 +108,7 @@ function emcmakeGenerateTask() {
       "build",
       ...(ninja ? ["-G", "Ninja"] : []),
     ];
-    logger.info(["encmake", ...args].join(" "));
+    logger.info(["emcmake", ...args].join(" "));
 
     return spawn(emcmake, args);
   };
