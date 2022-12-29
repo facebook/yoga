@@ -11,6 +11,8 @@ test("wrap_column", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexWrap(Yoga.WRAP_WRAP);
@@ -99,6 +101,8 @@ test("wrap_column", () => {
 test("wrap_row", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -189,6 +193,8 @@ test("wrap_row", () => {
 test("wrap_row_align_items_flex_end", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -281,6 +287,8 @@ test("wrap_row_align_items_center", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -372,6 +380,8 @@ test("flex_wrap_children_with_min_main_overriding_flex_basis", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -433,6 +443,8 @@ test("flex_wrap_children_with_min_main_overriding_flex_basis", () => {
 test("flex_wrap_wrap_to_child_height", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -521,6 +533,8 @@ test("flex_wrap_align_stretch_fits_one_row", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -579,6 +593,8 @@ test("flex_wrap_align_stretch_fits_one_row", () => {
 test("wrap_reverse_row_align_content_flex_start", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -684,6 +700,8 @@ test("wrap_reverse_row_align_content_flex_start", () => {
 test("wrap_reverse_row_align_content_center", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -791,6 +809,8 @@ test("wrap_reverse_row_single_line_different_size", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -895,6 +915,8 @@ test("wrap_reverse_row_single_line_different_size", () => {
 test("wrap_reverse_row_align_content_stretch", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1002,6 +1024,8 @@ test("wrap_reverse_row_align_content_space_around", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -1107,6 +1131,8 @@ test("wrap_reverse_row_align_content_space_around", () => {
 test("wrap_reverse_column_fixed_size", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1214,6 +1240,8 @@ test("wrapped_row_within_align_items_center", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -1288,6 +1316,8 @@ test("wrapped_row_within_align_items_center", () => {
 test("wrapped_row_within_align_items_flex_start", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1364,6 +1394,8 @@ test("wrapped_row_within_align_items_flex_end", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_FLEX_END);
@@ -1438,6 +1470,8 @@ test("wrapped_row_within_align_items_flex_end", () => {
 test("wrapped_column_max_height", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1521,6 +1555,8 @@ test("wrapped_column_max_height", () => {
 test("wrapped_column_max_height_flex", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1610,6 +1646,8 @@ test("wrapped_column_max_height_flex", () => {
 test("wrap_nodes_with_content_sizing_overflowing_margin", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1712,6 +1750,8 @@ test("wrap_nodes_with_content_sizing_overflowing_margin", () => {
 test("wrap_nodes_with_content_sizing_margin_cross", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);

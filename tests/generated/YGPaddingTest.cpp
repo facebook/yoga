@@ -13,6 +13,7 @@
 
 TEST(YogaTest, padding_no_size) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
@@ -40,6 +41,7 @@ TEST(YogaTest, padding_no_size) {
 
 TEST(YogaTest, padding_container_match_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
@@ -82,6 +84,7 @@ TEST(YogaTest, padding_container_match_child) {
 
 TEST(YogaTest, padding_flex_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
@@ -126,6 +129,7 @@ TEST(YogaTest, padding_flex_child) {
 
 TEST(YogaTest, padding_stretch_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
@@ -169,6 +173,7 @@ TEST(YogaTest, padding_stretch_child) {
 
 TEST(YogaTest, padding_center_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
@@ -214,6 +219,7 @@ TEST(YogaTest, padding_center_child) {
 
 TEST(YogaTest, child_with_padding_align_end) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyFlexEnd);

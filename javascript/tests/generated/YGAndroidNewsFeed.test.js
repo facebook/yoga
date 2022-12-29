@@ -11,6 +11,8 @@ test("android_news_feed", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setAlignContent(Yoga.ALIGN_STRETCH);

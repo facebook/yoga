@@ -50,8 +50,11 @@ ENUMS = {
     "NodeType": ["Default", "Text"],
     "LogLevel": ["Error", "Warn", "Info", "Debug", "Verbose", "Fatal"],
     "ExperimentalFeature": [
-        # Mimic web flex-basis behavior.
-        "WebFlexBasis"
+        # Mimic web flex-basis behavior (experiment may be broken)
+        "WebFlexBasis",
+
+        # Conformance fix: https://github.com/facebook/yoga/pull/1028
+        "AbsolutePercentageAgainstPaddingEdge",
     ],
     "PrintOptions": [("Layout", 1), ("Style", 2), ("Children", 4)],
     "Gutter": ["Column", "Row", "All"],

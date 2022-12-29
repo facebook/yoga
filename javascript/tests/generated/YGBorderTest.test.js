@@ -11,6 +11,8 @@ test("border_no_size", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
@@ -41,6 +43,8 @@ test("border_no_size", () => {
 test("border_container_match_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -87,6 +91,8 @@ test("border_container_match_child", () => {
 test("border_flex_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -136,6 +142,8 @@ test("border_stretch_child", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setBorder(Yoga.EDGE_LEFT, 10);
@@ -182,6 +190,8 @@ test("border_stretch_child", () => {
 test("border_center_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);

@@ -11,6 +11,8 @@ test("nested_overflowing_child", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -67,6 +69,8 @@ test("nested_overflowing_child", () => {
 test("nested_overflowing_child_in_constraint_parent", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -126,6 +130,8 @@ test("nested_overflowing_child_in_constraint_parent", () => {
 test("parent_wrap_child_size_overflowing_parent", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);

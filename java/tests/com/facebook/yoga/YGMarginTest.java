@@ -27,6 +27,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_start() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -67,6 +68,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_top() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -106,6 +108,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_end() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -147,6 +150,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_bottom() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.FLEX_END);
@@ -187,6 +191,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_and_flex_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -228,6 +233,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_and_flex_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -268,6 +274,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_and_stretch_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -309,6 +316,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_and_stretch_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -349,6 +357,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_with_sibling_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -403,6 +412,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_with_sibling_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -456,6 +466,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_bottom() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -512,6 +523,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_top() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -568,6 +580,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_bottom_and_top() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -625,6 +638,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_bottom_and_top_justify_center() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -682,6 +696,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_mutiple_children_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -754,6 +769,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_mutiple_children_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -827,6 +843,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left_and_right_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -885,6 +902,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left_and_right() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -941,6 +959,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_start_and_end_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -999,6 +1018,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_start_and_end() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -1055,6 +1075,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left_and_right_column_and_center() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1112,6 +1133,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1168,6 +1190,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_right() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1224,6 +1247,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left_and_right_stretch() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1281,6 +1305,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_top_and_bottom_stretch() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -1337,6 +1362,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_should_not_be_part_of_max_height() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(250f);
@@ -1378,6 +1404,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_should_not_be_part_of_max_width() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(250f);
@@ -1419,6 +1446,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left_right_child_bigger_than_parent() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1461,6 +1489,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left_child_bigger_than_parent() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1502,6 +1531,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_fix_left_auto_right_child_bigger_than_parent() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1544,6 +1574,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left_fix_right_child_bigger_than_parent() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1586,6 +1617,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_top_stretching_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1643,6 +1675,7 @@ public class YGMarginTest {
   @Test
   public void test_margin_auto_left_stretching_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);

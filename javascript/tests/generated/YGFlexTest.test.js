@@ -11,6 +11,8 @@ test("flex_basis_flex_grow_column", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -68,6 +70,8 @@ test("flex_basis_flex_grow_column", () => {
 test("flex_shrink_flex_grow_row", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -130,6 +134,8 @@ test("flex_shrink_flex_grow_row", () => {
 test("flex_shrink_flex_grow_child_flex_shrink_other_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -194,6 +200,8 @@ test("flex_basis_flex_grow_row", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -253,6 +261,8 @@ test("flex_basis_flex_shrink_column", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -310,6 +320,8 @@ test("flex_basis_flex_shrink_column", () => {
 test("flex_basis_flex_shrink_row", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -369,6 +381,8 @@ test("flex_basis_flex_shrink_row", () => {
 test("flex_shrink_to_zero", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -443,6 +457,8 @@ test("flex_shrink_to_zero", () => {
 test("flex_basis_overrides_main_size", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -519,6 +535,8 @@ test("flex_grow_shrink_at_most", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -575,6 +593,8 @@ test("flex_grow_shrink_at_most", () => {
 test("flex_grow_less_than_factor_one", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);

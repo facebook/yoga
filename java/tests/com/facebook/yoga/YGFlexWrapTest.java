@@ -27,6 +27,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWrap(YogaWrap.WRAP);
@@ -111,6 +112,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -196,6 +198,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_row_align_items_flex_end() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -282,6 +285,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_row_align_items_center() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -368,6 +372,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_flex_wrap_children_with_min_main_overriding_flex_basis() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -425,6 +430,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_flex_wrap_wrap_to_child_height() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
 
@@ -507,6 +513,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_flex_wrap_align_stretch_fits_one_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -561,6 +568,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_reverse_row_align_content_flex_start() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -661,6 +669,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_reverse_row_align_content_center() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -762,6 +771,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_reverse_row_single_line_different_size() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -862,6 +872,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_reverse_row_align_content_stretch() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -963,6 +974,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_reverse_row_align_content_space_around() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1064,6 +1076,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_reverse_column_fixed_size() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1165,6 +1178,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrapped_row_within_align_items_center() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -1235,6 +1249,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrapped_row_within_align_items_flex_start() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
@@ -1305,6 +1320,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrapped_row_within_align_items_flex_end() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_END);
@@ -1375,6 +1391,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrapped_column_max_height() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1453,6 +1470,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrapped_column_max_height_flex() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -1537,6 +1555,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_nodes_with_content_sizing_overflowing_margin() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(500f);
@@ -1634,6 +1653,7 @@ public class YGFlexWrapTest {
   @Test
   public void test_wrap_nodes_with_content_sizing_margin_cross() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(500f);

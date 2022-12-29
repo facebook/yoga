@@ -472,7 +472,7 @@ function calculateTree(root, roundToPixelGrid) {
       rawStyle: child.getAttribute('style'),
       experiments: child.getAttribute('experiments')
           ? child.getAttribute('experiments').split(' ')
-          : [],
+          : ['AbsolutePercentageAgainstPaddingEdge'],
     };
 
     var size = getRoundedSize(child);

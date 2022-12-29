@@ -19,6 +19,7 @@ namespace Facebook.Yoga
         public void Test_padding_no_size()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.PaddingLeft = 10;
@@ -46,6 +47,7 @@ namespace Facebook.Yoga
         public void Test_padding_container_match_child()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.PaddingLeft = 10;
@@ -88,6 +90,7 @@ namespace Facebook.Yoga
         public void Test_padding_flex_child()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.PaddingLeft = 10;
@@ -132,6 +135,7 @@ namespace Facebook.Yoga
         public void Test_padding_stretch_child()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.PaddingLeft = 10;
@@ -175,6 +179,7 @@ namespace Facebook.Yoga
         public void Test_padding_center_child()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
@@ -220,6 +225,7 @@ namespace Facebook.Yoga
         public void Test_child_with_padding_align_end()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.FlexEnd;

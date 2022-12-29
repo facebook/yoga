@@ -11,6 +11,8 @@ test("padding_no_size", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
@@ -41,6 +43,8 @@ test("padding_no_size", () => {
 test("padding_container_match_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -87,6 +91,8 @@ test("padding_container_match_child", () => {
 test("padding_flex_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -136,6 +142,8 @@ test("padding_stretch_child", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setPadding(Yoga.EDGE_LEFT, 10);
@@ -182,6 +190,8 @@ test("padding_stretch_child", () => {
 test("padding_center_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -231,6 +241,8 @@ test("padding_center_child", () => {
 test("child_with_padding_align_end", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
   try {
     root = Yoga.Node.create(config);

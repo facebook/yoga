@@ -19,6 +19,7 @@ namespace Facebook.Yoga
         public void Test_percentage_width_height()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
@@ -60,6 +61,7 @@ namespace Facebook.Yoga
         public void Test_percentage_position_left_top()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
@@ -103,6 +105,7 @@ namespace Facebook.Yoga
         public void Test_percentage_position_bottom_right()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
@@ -146,6 +149,7 @@ namespace Facebook.Yoga
         public void Test_percentage_flex_basis()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
@@ -202,6 +206,7 @@ namespace Facebook.Yoga
         public void Test_percentage_flex_basis_cross()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 200;
@@ -257,6 +262,7 @@ namespace Facebook.Yoga
         public void Test_percentage_flex_basis_main_max_height()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
@@ -315,6 +321,7 @@ namespace Facebook.Yoga
         public void Test_percentage_flex_basis_cross_max_height()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 200;
@@ -372,6 +379,7 @@ namespace Facebook.Yoga
         public void Test_percentage_flex_basis_main_max_width()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
@@ -430,6 +438,7 @@ namespace Facebook.Yoga
         public void Test_percentage_flex_basis_cross_max_width()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 200;
@@ -487,6 +496,7 @@ namespace Facebook.Yoga
         public void Test_percentage_flex_basis_main_min_width()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
@@ -545,6 +555,7 @@ namespace Facebook.Yoga
         public void Test_percentage_flex_basis_cross_min_width()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 200;
@@ -602,6 +613,7 @@ namespace Facebook.Yoga
         public void Test_percentage_multiple_nested_with_padding_margin_and_percentage_values()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 200;
@@ -711,6 +723,7 @@ namespace Facebook.Yoga
         public void Test_percentage_margin_should_calculate_based_only_on_width()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 200;
@@ -769,6 +782,7 @@ namespace Facebook.Yoga
         public void Test_percentage_padding_should_calculate_based_only_on_width()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 200;
@@ -827,6 +841,7 @@ namespace Facebook.Yoga
         public void Test_percentage_absolute_position()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 200;
@@ -870,6 +885,7 @@ namespace Facebook.Yoga
         public void Test_percentage_width_height_undefined_parent_size()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
 
@@ -908,6 +924,7 @@ namespace Facebook.Yoga
         public void Test_percent_within_flex_grow()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.FlexDirection = YogaFlexDirection.Row;
@@ -990,6 +1007,7 @@ namespace Facebook.Yoga
         public void Test_percentage_container_in_wrapping_container()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.JustifyContent = YogaJustify.Center;
@@ -1076,6 +1094,7 @@ namespace Facebook.Yoga
         public void Test_percent_absolute_position()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 60;

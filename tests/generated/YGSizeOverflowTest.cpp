@@ -13,6 +13,7 @@
 
 TEST(YogaTest, nested_overflowing_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 100);
@@ -66,6 +67,7 @@ TEST(YogaTest, nested_overflowing_child) {
 
 TEST(YogaTest, nested_overflowing_child_in_constraint_parent) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 100);
@@ -121,6 +123,7 @@ TEST(YogaTest, nested_overflowing_child_in_constraint_parent) {
 
 TEST(YogaTest, parent_wrap_child_size_overflowing_parent) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 100);

@@ -91,6 +91,8 @@ const char* YGExperimentalFeatureToString(const YGExperimentalFeature value) {
   switch (value) {
     case YGExperimentalFeatureWebFlexBasis:
       return "web-flex-basis";
+    case YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge:
+      return "absolute-percentage-against-padding-edge";
   }
   return "unknown";
 }

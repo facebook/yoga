@@ -27,6 +27,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_max_width() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -66,6 +67,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_max_height() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -106,6 +108,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_justify_content_min_max() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -147,6 +150,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_align_items_min_max() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.CENTER);
@@ -188,6 +192,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_justify_content_overflow_min_max() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -258,6 +263,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_to_min() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -312,6 +318,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_in_at_most_container() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -367,6 +374,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -406,6 +414,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_constrained_min_max_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setMinHeight(100f);
@@ -458,6 +467,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_max_width() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -512,6 +522,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_constrained_max_width() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -566,6 +577,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_root_ignored() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexGrow(1f);
@@ -621,6 +633,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_root_minimized() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -691,6 +704,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_height_maximized() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -760,6 +774,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_constrained_min_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -813,6 +828,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_constrained_min_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setMinHeight(100f);
@@ -864,6 +880,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_constrained_max_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -932,6 +949,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_flex_grow_within_constrained_max_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -985,6 +1003,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_child_min_max_width_flexing() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -1042,6 +1061,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_min_width_overrides_width() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(50f);
@@ -1066,6 +1086,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_max_width_overrides_width() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(200f);
@@ -1090,6 +1111,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_min_height_overrides_height() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setHeight(50f);
@@ -1114,6 +1136,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_max_height_overrides_height() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setHeight(200f);
@@ -1138,6 +1161,7 @@ public class YGMinMaxDimensionTest {
   @Test
   public void test_min_max_percent_no_width_height() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
     root.setAlignItems(YogaAlign.FLEX_START);
