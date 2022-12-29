@@ -1622,7 +1622,7 @@ static void YGNodeAbsoluteLayoutChild(
          child->getLayout().measuredDimensions[dim[mainAxis]]),
         leading[mainAxis]);
   } else if (
-      node->YGConfigIsExperimentalFeatureEnabled(
+      YGConfigIsExperimentalFeatureEnabled(
           node->getConfig(),
           YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge) &&
       child->isLeadingPositionDefined(mainAxis)) {
