@@ -3,6 +3,20 @@
 ## Building
 Yoga builds with [buck](https://buckbuild.com). Make sure you install buck before contributing to Yoga. Yoga's main implementation is in C++, with bindings to supported languages and frameworks. When making changes to Yoga please ensure the changes are also propagated to these bindings when applicable.
 
+Alternatively, you can build and install Yoga using [vcpkg](https://github.com/Microsoft/vcpkg/) dependency manager:
+
+```sh
+git clone https://github.com/Microsoft/vcpkg.git
+cd vcpkg
+./bootstrap-vcpkg.sh
+./vcpkg integrate install
+./vcpkg install yoga
+```
+
+The Yoga port in vcpkg is kept up to date by Microsoft team members and community contributors.
+
+If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
+
 ## Testing
 For testing we rely on [gtest](https://github.com/google/googletest) as a submodule. After cloning Yoga run `git submodule init` followed by `git submodule update`.
 
@@ -18,7 +32,7 @@ Instead of manually writing a test which ensures parity with web implementations
 
 Run `gentest/gentest.rb` to generate test code and re-run `buck test //:yoga` to validate the behavior. One test case will be generated for every root `div` in the input html.
 
-You may need to install the latest watir-webdriver gem (`gem install watir-webdriver`) and [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) to run `gentest/gentest.rb` Ruby script.
+You should run `bundle install` in the `gentest` directory to install dependencies for the `gentest/gentest.rb` Ruby script.
 
 ### .NET
 .NET testing is not integrated in buck yet, you might need to set up .NET testing environment. We have a script which to launch C# test on macOS, `csharp/tests/Facebook.Yoga/test_macos.sh`.
@@ -49,26 +63,8 @@ This will now only run the standalone webpack build upon install.
 
 ## Maintainer Release Guide
 
-To publish a new release, follow these steps:
+Release artifacts are published automatically when a new GitHub release is
+created. The publishing workflows may also be executed manually, given a Git
+Tag, to re-attempt publish.
 
-1. Ensure you have your GPG key set up and your [OSS Sonatype](https://oss.sonatype.org/) credentials handy.
-2. Add the follow entries to either your local `gradle.properties` (don't forget to revert) or your global `~/.gradle/gradle.properties`:
-
-```
-# You get these from https://oss.sonatype.org/#profile;User%20Token
-mavenCentralRepositoryUsername=<username>
-mavenCentralRepositoryPassword=<password>
-
-# You can get the keyId (in GPG 1.4 format) by running `gpg1 --list-keys`.
-signing.secretKeyRingFile=</path/to/secring.gpg>
-signing.keyId=<key_id>
-signing.password=<key_password>
-```
-
-3. Change the `VERSION_NAME` in `gradle.properties` to a non-SNAPSHOT release.
-4. Commit and land the version change.
-5. Run `./gradlew publishToMaven`.
-6. Run `./gradlew closeAndReleaseRepository`.
-7. Change the `VERSION_NAME` in `gradle.properties` back to a new SNAPSHOT release.
-8. Commit and land the version change.
-9. Celebrate! You've made a release!
+NPM and NuGet packages are not currently published.

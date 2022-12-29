@@ -1,0 +1,27 @@
+name: Setup JavaScript envirionment
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 18.x
+
+    - name: Install emsdk
+      uses: ./.github/actions/install-emsdk
+
+    - name: Install ninja (Linux)
+      if: ${{ runner.os == 'Linux' }}
+      shell: bash
+      run: sudo apt-get install -y ninja-build
+
+    - name: Install ninja (Windows)
+      if: ${{ runner.os == 'Windows' }}
+      shell: powershell
+      run: choco install ninja
+
+    - name: yarn install
+      shell: bash
+      run: yarn install --frozen-lockfile
+      working-directory: javascript

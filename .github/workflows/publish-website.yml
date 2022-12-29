@@ -1,0 +1,32 @@
+name: Website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish to GitHub Pages
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-website
+
+      - name: yarn build
+        run: yarn build
+        working-directory: website
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: website/public
+          cname: yogalayout.com
+          keep_files: true
+          user_name: 'Yoga-bot'
+          user_email: 'yogabot@fb.com'

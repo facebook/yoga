@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+gem 'watir', '~>6.19.0'
+gem 'webdrivers', '~> 5.2.0'

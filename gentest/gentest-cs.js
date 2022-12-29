@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -104,6 +104,10 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeRight:{value:'Right'},
   YGEdgeStart:{value:'Start'},
   YGEdgeTop:{value:'Top'},
+
+  YGGutterAll:{value:''},
+  YGGutterColumn:{value:'Column'},
+  YGGutterRow:{value:'Row'},
 
   YGFlexDirectionColumn:{value:'YogaFlexDirection.Column'},
   YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.ColumnReverse'},
@@ -250,5 +254,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.Width = ' + toCsUnitValue(value) + ';');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push(nodeName + '.' + gap + 'Gap' + ' = ' + toCsUnitValue(value) + ';');
   }},
 });

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -91,6 +91,10 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeRight:{value:'YGEdgeRight'},
   YGEdgeStart:{value:'YGEdgeStart'},
   YGEdgeTop:{value:'YGEdgeTop'},
+
+  YGGutterAll:{value:'YGGutterAll'},
+  YGGutterColumn:{value:'YGGutterColumn'},
+  YGGutterRow:{value:'YGGutterRow'},
 
   YGFlexDirectionColumn:{value:'YGFlexDirectionColumn'},
   YGFlexDirectionColumnReverse:{value:'YGFlexDirectionColumnReverse'},
@@ -241,5 +245,9 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push('YGNodeStyleSetWidth' + toFunctionName(value) + '(' + nodeName + ', ' + toValueCpp(value) + ');');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push('YGNodeStyleSetGap' + toFunctionName(value) + '(' + nodeName + ', ' + gap + ', ' + toValueCpp(value) + ');');
   }},
 });

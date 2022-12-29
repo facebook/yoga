@@ -1,0 +1,26 @@
+name: Android
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build [${{ matrix.os }}][${{ matrix.mode }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        mode: [Debug, Release]
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-android
+
+      - name: Build
+        run: ./gradlew assemble${{ matrix.mode }} --stacktrace
