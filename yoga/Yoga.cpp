@@ -1622,8 +1622,9 @@ static void YGNodeAbsoluteLayoutChild(
          child->getLayout().measuredDimensions[dim[mainAxis]]),
         leading[mainAxis]);
   } else if (
-      YGConfigIsExperimentalFeatureEnabled(
-          node, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge) &&
+      node->YGConfigIsExperimentalFeatureEnabled(
+          node->getConfig(),
+          YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge) &&
       child->isLeadingPositionDefined(mainAxis)) {
     child->setLayoutPosition(
         child->getLeadingPosition(
@@ -1669,7 +1670,8 @@ static void YGNodeAbsoluteLayoutChild(
         leading[crossAxis]);
   } else if (
       YGConfigIsExperimentalFeatureEnabled(
-          node, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge) &&
+          node->getConfig(),
+          YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge) &&
       child->isLeadingPositionDefined(crossAxis)) {
     child->setLayoutPosition(
         child->getLeadingPosition(
@@ -3603,12 +3605,14 @@ static void YGNodelayoutImpl(
           node,
           child,
           YGConfigIsExperimentalFeatureEnabled(
-              node, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge)
+              node->getConfig(),
+              YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge)
               ? node->getLayout().measuredDimensions[YGDimensionWidth]
               : availableInnerWidth,
           isMainAxisRow ? measureModeMainDim : measureModeCrossDim,
           YGConfigIsExperimentalFeatureEnabled(
-              node, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge)
+              node->getConfig(),
+              YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge)
               ? node->getLayout().measuredDimensions[YGDimensionHeight]
               : availableInnerHeight,
           direction,
