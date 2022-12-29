@@ -32,9 +32,7 @@ public class YogaNodeTest {
 
   @Test
   public void testInit() {
-    TestUtil.startCountingNodes();
     final YogaNode node = createNode();
-    assertEquals(1, TestUtil.stopCountingNodes());
   }
 
   @Test

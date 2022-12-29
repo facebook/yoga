@@ -6,16 +6,17 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/Yoga.h>
 #include <yoga/event/event.h>
+#include <yoga/Yoga.h>
+#include <yoga/YGEnums.h>
 #include <yoga/YGNode.h>
-#include <yoga/testutil/testutil.h>
 
 #include <algorithm>
 #include <functional>
 #include <memory>
 #include <vector>
-#include <yoga/YGEnums.h>
+
+#include "util/TestUtil.h"
 
 namespace facebook {
 namespace yoga {

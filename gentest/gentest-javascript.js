@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-var JavascriptEmitter = function() {
+const JavascriptEmitter = function() {
   Emitter.call(this, 'js', '  ');
 };
 
@@ -17,9 +17,8 @@ function toValueJavascript(value) {
 }
 
 function toJavascriptUpper(symbol) {
-  var out = '';
-  for (var i = 0; i < symbol.length; i++) {
-    var c = symbol[i];
+  let out = '';
+  for (const c of symbol) {
     if (c == c.toUpperCase() && i != 0 && symbol[i - 1] != symbol[i - 1].toUpperCase()) {
       out += '_';
     }
@@ -31,21 +30,17 @@ function toJavascriptUpper(symbol) {
 JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   constructor:{value:JavascriptEmitter},
 
-  emitPrologue:{value:function() {
-    this.push([
-      'var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);',
-      ''
-    ]);
-  }},
+  emitPrologue:{value:function() {}},
 
   emitTestPrologue:{value:function(name, experiments) {
-    this.push('it(' + JSON.stringify(name) + ', function () {');
+    this.push('test(' + JSON.stringify(name) + ', () => {');
     this.pushIndent();
-    this.push('var config = Yoga.Config.create();');
+    this.push('const config = Yoga.Config.create();');
+    this.push('let root;');
     this.push('');
 
     if (experiments.length > 0) {
-      for (var i in experiments) {
+      for (const i in experiments) {
         this.push('config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', true);');
       }
       this.push('');
@@ -56,7 +51,11 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('var ' + nodeName + ' = Yoga.Node.create(config);');
+    if (nodeName === 'root') {
+      this.push(`root = Yoga.Node.create(config);`);
+    } else {
+      this.push(`const ${nodeName} = Yoga.Node.create(config);`);
+    }
   }},
 
   emitTestEpilogue:{value:function(experiments) {
@@ -84,7 +83,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   AssertEQ:{value:function(v0, v1) {
-    this.push('console.assert(' + v0 + ' === ' + v1 + ', "' + v0 + ' === ' + v1 + ' (" + ' + v1 + ' + ")");');
+    this.push(`expect(${v1}).toBe(${v0});`);
   }},
 
   YGAlignAuto:{value:'Yoga.ALIGN_AUTO'},

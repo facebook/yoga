@@ -3,11 +3,8 @@ name: Setup Android envirionment
 runs:
   using: "composite"
   steps:
-    - name: Install JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Select Java Version
+      uses: actions/setup-java@v2
       with:
-        java-version: 1.8
-
-    - name: Install NDK 21
-      shell: bash
-      run: echo "y" | /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;21.3.6528147" --sdk_root=${ANDROID_SDK_ROOT}
+        distribution: temurin
+        java-version: 8
