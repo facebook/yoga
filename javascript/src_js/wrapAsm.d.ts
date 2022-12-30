@@ -8,17 +8,19 @@
  */
 
 import type {
-  Edge,
-  Wrap,
   Align,
+  Direction,
+  Display,
+  Edge,
+  ExperimentalFeature,
   FlexDirection,
   Gutter,
-  Direction,
-  PositionType,
-  Overflow,
   Justify,
-  Display,
-  ExperimentalFeature,
+  MeasureMode,
+  Overflow,
+  PositionType,
+  Unit,
+  Wrap,
 } from './generated/YGEnums';
 
 import type * as YGEnums from './generated/YGEnums';
@@ -38,7 +40,7 @@ type Size = {
 }
 
 type Value = {
-  unit: number;
+  unit: Unit;
   value: number;
 }
 
@@ -53,14 +55,14 @@ export type Config = {
   useLegacyStretchBehaviour(): boolean,
   setUseLegacyStretchBehaviour(useLegacyStretchBehaviour: boolean): void,
   useWebDefaults(): boolean,
-  setUseWebDefaults(useWebDefaults): void,
+  setUseWebDefaults(useWebDefaults: boolean): void,
 };
 
 export type MeasureFunction = (
   width: number,
-  widthMode: number,
+  widthMode: MeasureMode,
   height: number,
-  heightMode: number
+  heightMode: MeasureMode
 ) => Size;
 
 export type Node = {
