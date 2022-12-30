@@ -37,7 +37,7 @@ task(
 );
 
 function defineFlavor(flavor, env) {
-  task(`cmake-build:${flavor}`, cmakeBuildTask([flavor]));
+  task(`cmake-build:${flavor}`, cmakeBuildTask({ targets: [flavor] }));
   task(`jest:${flavor}`, jestTask({ env }));
   task(
     `test:${flavor}`,
@@ -51,8 +51,14 @@ defineFlavor("wasm-async", { WASM: 1, SYNC: 0 });
 defineFlavor("wasm-sync", { WASM: 1, SYNC: 1 });
 
 task("cmake-build:all", cmakeBuildTask());
-task("cmake-build:async", cmakeBuildTask(["asmjs-async", "wasm-async"]));
-task("cmake-build:sync", cmakeBuildTask(["asmjs-sync", "wasm-sync"]));
+task(
+  "cmake-build:async",
+  cmakeBuildTask({ targets: ["asmjs-async", "wasm-async"] })
+);
+task(
+  "cmake-build:sync",
+  cmakeBuildTask({ targets: ["asmjs-sync", "wasm-sync"] })
+);
 
 task("build", series("prepare-for-build", "cmake-build:all"));
 
@@ -114,13 +120,13 @@ function emcmakeGenerateTask() {
   };
 }
 
-function cmakeBuildTask(targets) {
+function cmakeBuildTask(opts) {
   return () => {
     const cmake = which.sync("cmake");
     const args = [
       "--build",
       "build",
-      ...(targets ? ["--target", ...targets] : []),
+      ...(opts?.targets ? ["--target", ...opts.targets] : []),
     ];
     logger.info(["cmake", ...args].join(" "));
 
