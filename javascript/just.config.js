@@ -9,6 +9,7 @@
 
 const {
   argv,
+  cleanTask,
   copyTask,
   eslintTask,
   logger,
@@ -26,6 +27,8 @@ const which = require("which");
 const node = process.execPath;
 
 option("fix");
+
+task("clean", cleanTask({paths: ['build', 'dist']}));
 
 task(
   "prepare-for-build",

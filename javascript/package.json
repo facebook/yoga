@@ -28,6 +28,7 @@
   "scripts": {
     "benchmark": "just benchmark",
     "build": "just build",
+    "clean": "just clean",
     "lint": "just lint",
     "lint:fix": "just lint --fix",
     "test": "just test",
