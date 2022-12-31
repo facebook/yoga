@@ -8,6 +8,19 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    name: Test [${{ matrix.os }}][${{ matrix.mode }}]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+
+      - name: Build and test
+        run: ./build_and_test ${{ matrix.mode }}
+
   clang-format:
     name: Format
     runs-on: ubuntu-latest

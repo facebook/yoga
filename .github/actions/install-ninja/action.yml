@@ -1,0 +1,14 @@
+name: Install Ninja
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install ninja (Linux)
+      if: ${{ runner.os == 'Linux' }}
+      shell: bash
+      run: sudo apt-get install -y ninja-build
+
+    - name: Install ninja (Windows)
+      if: ${{ runner.os == 'Windows' }}
+      shell: powershell
+      run: choco install ninja

@@ -1,0 +1,7 @@
+name: Setup C++ envirionment
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Ninja
+      uses: ./.github/actions/install-ninja

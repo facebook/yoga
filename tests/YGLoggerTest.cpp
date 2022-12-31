@@ -65,6 +65,8 @@ TEST(YogaTest, config_print_tree_disabled) {
   ASSERT_STREQ(expected, writeBuffer);
 }
 
+#if DEBUG
+
 TEST(YogaTest, logger_default_node_should_print_no_style_info) {
   writeBuffer[0] = '\0';
   const YGConfigRef config = YGConfigNew();
@@ -131,3 +133,5 @@ TEST(YogaTest, logger_node_with_children_should_print_indented) {
       "style=\"\" ></div>\n</div>";
   ASSERT_STREQ(expected, writeBuffer);
 }
+
+#endif

@@ -18,8 +18,8 @@
   <variable name="app_label" value="Yoga Sample App"/>
 
   <uses-sdk
-    android:minSdkVersion="15"
-    android:targetSdkVersion="19"
+    android:minSdkVersion="21"
+    android:targetSdkVersion="33"
     />
 
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
