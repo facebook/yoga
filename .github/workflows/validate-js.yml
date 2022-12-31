@@ -12,11 +12,8 @@ env:
 
 jobs:
   benchmark:
-    name: Benchmark [${{ matrix.os }}]
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    name: Benchmark
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 

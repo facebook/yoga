@@ -3,7 +3,7 @@
 @REM This source code is licensed under the MIT license found in the
 @REM LICENSE file in the root directory of this source tree.
 
-@REM @echo off
+@echo off
 SETLOCAL
 
 cd "%0\..\tests"
@@ -25,4 +25,4 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 cmake --build build
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-.\build\yogatests
+.\build\yogatests.exe

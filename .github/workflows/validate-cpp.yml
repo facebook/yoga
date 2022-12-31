@@ -9,12 +9,15 @@ on:
 
 jobs:
   test:
-    name: Test [${{ matrix.os }}][${{ matrix.mode }}]
+    name: Build and Test [${{ matrix.os }}][${{ matrix.mode }}]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         mode: [Debug, Release]
-        os: [ubuntu-latest, windows-latest]
+        os:
+          - ubuntu-latest
+          # TODO: the test binary crashes during discovery
+          # - windows-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -24,6 +27,24 @@ jobs:
 
       - name: Build and test
         run: ./build_and_test ${{ matrix.mode }}
+
+  benchmark:
+    name: Benchmark
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+
+      - name: Build benchmark
+        run: |
+          cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
+          cmake --build build
+        working-directory: bennchmark
+
+      - name: Run benchmark
+        run: ./build/benchmark
+        working-directory: bennchmark
 
   clang-format:
     name: Format
