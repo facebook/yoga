@@ -14,10 +14,8 @@ jobs:
     strategy:
       matrix:
         mode: [Debug, Release]
-        os:
-          - ubuntu-latest
-          # TODO: the test binary crashes during discovery
-          # - windows-latest
+        # TODO: windows-latest has a crash in the test runner during discovery
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
