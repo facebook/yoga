@@ -32,7 +32,6 @@ add_compile_options(
     -fexceptions
     # Enable warnings and warnings as errors
     -Wall
-    -Wpedantic
     -Werror
     # Disable RTTI
     $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
