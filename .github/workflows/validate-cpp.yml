@@ -20,12 +20,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Setup
-        if: ${{ runner.os != 'Windows' }}
         uses: ./.github/actions/setup-cpp
-
-      - name: Setup VS Developer Command Prompt
-        if: ${{ runner.os == 'Windows' }}
-        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Unit tests
         run: ./unit_tests ${{ matrix.mode }}

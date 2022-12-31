@@ -57,7 +57,7 @@ TEST(YogaTest, consistent_rounding_during_repeated_layouts) {
   YGConfigSetPointScaleFactor(config, 2);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
-  YGNodeStyleSetMargin(root, YGEdgeTop, -1.49);
+  YGNodeStyleSetMargin(root, YGEdgeTop, -1.49f);
   YGNodeStyleSetWidth(root, 500);
   YGNodeStyleSetHeight(root, 500);
 
@@ -70,7 +70,7 @@ TEST(YogaTest, consistent_rounding_during_repeated_layouts) {
 
   for (int i = 0; i < 5; i++) {
     // Dirty the tree so YGRoundToPixelGrid runs again
-    YGNodeStyleSetMargin(root, YGEdgeLeft, i + 1);
+    YGNodeStyleSetMargin(root, YGEdgeLeft, (float) (i + 1));
 
     YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(node1));
