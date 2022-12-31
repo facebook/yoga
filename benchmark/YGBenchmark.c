@@ -176,4 +176,4 @@ YGBENCHMARKS({
     YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     YGNodeFreeRecursive(root);
   });
-});
+})
