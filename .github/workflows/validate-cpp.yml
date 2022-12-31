@@ -23,8 +23,8 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-cpp
 
-      - name: Build and test
-        run: ./build_and_test ${{ matrix.mode }}
+      - name: Unit tests
+        run: ./unit_tests ${{ matrix.mode }}
 
   benchmark:
     name: Benchmark [${{ matrix.os }}]
