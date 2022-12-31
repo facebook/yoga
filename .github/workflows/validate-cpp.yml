@@ -11,6 +11,10 @@ jobs:
   test:
     name: Test [${{ matrix.os }}][${{ matrix.mode }}]
     runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        mode: [Debug, Release]
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v3
