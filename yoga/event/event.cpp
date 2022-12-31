@@ -71,15 +71,15 @@ void Event::reset() {
 }
 
 void Event::subscribe(std::function<Subscriber>&& subscriber) {
-  // push(new Node{std::move(subscriber)});
+  push(new Node{std::move(subscriber)});
 }
 
 void Event::publish(const YGNode& node, Type eventType, const Data& eventData) {
-  // for (auto subscriber = subscribers.load(std::memory_order_relaxed);
-  //      subscriber != nullptr;
-  //      subscriber = subscriber->next) {
-  //   subscriber->subscriber(node, eventType, eventData);
-  // }
+  for (auto subscriber = subscribers.load(std::memory_order_relaxed);
+       subscriber != nullptr;
+       subscriber = subscriber->next) {
+    subscriber->subscriber(node, eventType, eventData);
+  }
 }
 
 } // namespace yoga
