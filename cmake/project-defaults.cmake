@@ -4,7 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+# set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 add_compile_definitions($<$<CONFIG:DEBUG>:DEBUG>)
 
@@ -32,6 +32,7 @@ add_compile_options(
     -fexceptions
     # Enable warnings and warnings as errors
     -Wall
+    -Wpedantic
     -Werror
     # Disable RTTI
     $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>

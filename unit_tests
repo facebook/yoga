@@ -14,7 +14,6 @@ fi
 
 if which ninja; then
   set -e
-  echo cmake -B build -S . -D CMAKE_BUILD_TYPE=$build_type -G Ninja
   cmake -B build -S . -D CMAKE_BUILD_TYPE=$build_type -G Ninja
 else
   set -e
