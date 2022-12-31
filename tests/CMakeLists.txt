@@ -21,7 +21,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 # "For Windows: Prevent overriding the parent project's compiler/linker settings"
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+# set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 add_subdirectory(${YOGA_ROOT}/yoga ${CMAKE_CURRENT_BINARY_DIR}/yoga)
 
