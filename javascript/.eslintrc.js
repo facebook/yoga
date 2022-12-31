@@ -8,6 +8,7 @@
  */
 
 module.exports = {
+  root: true,
   ignorePatterns: ["dist/**", "**/*.d.ts"],
   parser: "@babel/eslint-parser",
   extends: [
