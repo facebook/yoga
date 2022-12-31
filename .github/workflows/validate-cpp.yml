@@ -40,11 +40,11 @@ jobs:
         run: |
           cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
           cmake --build build
-        working-directory: bennchmark
+        working-directory: benchmark
 
       - name: Run benchmark
         run: ./build/benchmark
-        working-directory: bennchmark
+        working-directory: benchmark
 
   clang-format:
     name: Format
