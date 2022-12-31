@@ -19,7 +19,7 @@ add_compile_options(
     /W3
     /WX
     # Disable RTTI
-    /GR[-]
+    $<$<COMPILE_LANGUAGE:CXX>:/GR->
     # Use /O2 (Maximize Speed)
     $<$<CONFIG:RELEASE>:/O2>)
 
@@ -34,7 +34,7 @@ add_compile_options(
     -Wall
     -Werror
     # Disable RTTI
-    -fno-rtti
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
     # Use -Os (-O2 + size savings)
     $<$<CONFIG:RELEASE>:-Os>
     # Enable separate sections per function/data item
@@ -42,8 +42,8 @@ add_compile_options(
     $<$<CONFIG:RELEASE>:-fdata-sections>)
 
 add_link_options(
-    # Discard unused sections in release
-    $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:Clang>:-Wl,--gc-sections>>
+    # Discard unused sections
+    $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:Clang,GNU>:-Wl,--gc-sections>>
     $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:AppleClang>:-Wl,-dead_strip>>)
 
 endif()

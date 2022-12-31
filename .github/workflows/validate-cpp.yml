@@ -27,8 +27,11 @@ jobs:
         run: ./build_and_test ${{ matrix.mode }}
 
   benchmark:
-    name: Benchmark
-    runs-on: ubuntu-latest
+    name: Benchmark [${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v3
