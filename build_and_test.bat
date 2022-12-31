@@ -16,9 +16,9 @@ if "%1" == "" (
 
 where ninja
 if errorlevel 1 (
-  cmake -B build -S . -D CMAKE_BUILD_TYPE=$build_type
+  cmake -B build -S . -D CMAKE_BUILD_TYPE=%build_type%
 ) else  (
-  cmake -B build -S . -D CMAKE_BUILD_TYPE=$build_type -G Ninja
+  cmake -B build -S . -D CMAKE_BUILD_TYPE=%build_type% -G Ninja
 )
 if %errorlevel% neq 0 exit /b %errorlevel%
 
