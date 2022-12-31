@@ -20,7 +20,9 @@ if errorlevel 1 (
 ) else  (
   cmake -B build -S . -D CMAKE_BUILD_TYPE=$build_type
 )
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 cmake --build build
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 ./build/yogatests

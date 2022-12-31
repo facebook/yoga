@@ -9,6 +9,8 @@
 #include <stdarg.h>
 #include <yoga/Yoga.h>
 
+#if DEBUG
+
 namespace {
 char writeBuffer[4096];
 int _unmanagedLogger(
@@ -64,8 +66,6 @@ TEST(YogaTest, config_print_tree_disabled) {
   const char* expected = "";
   ASSERT_STREQ(expected, writeBuffer);
 }
-
-#if DEBUG
 
 TEST(YogaTest, logger_default_node_should_print_no_style_info) {
   writeBuffer[0] = '\0';

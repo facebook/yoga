@@ -43,6 +43,7 @@ add_compile_options(
 
 add_link_options(
     # Discard unused sections in release
-    $<$<CONFIG:RELEASE>:--gc-sections>)
+    $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:Clang>:-Wl,--gc-sections>>
+    $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:AppleClang>:-Wl,-dead_strip>>)
 
 endif()
