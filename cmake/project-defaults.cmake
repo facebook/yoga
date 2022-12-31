@@ -4,24 +4,26 @@
 # LICENSE file in the root directory of this source tree.
 
 set(CMAKE_CXX_STANDARD 14)
-# set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 add_compile_definitions($<$<CONFIG:DEBUG>:DEBUG>)
 
 if(MSVC)
 
 add_compile_options(
-    # Don't omit frame pointers (e.g. for crash dumps)
-    /Oy-
-    # "Standard C++ exception handling" (C++ stack unwinding including extern c)
-    /EHsc
-    # Enable warnings and warnings as errors
-    /W3
-    /WX
-    # Disable RTTI
-    $<$<COMPILE_LANGUAGE:CXX>:/GR->
-    # Use /O2 (Maximize Speed)
-    $<$<CONFIG:RELEASE>:/O2>)
+    # # Don't omit frame pointers (e.g. for crash dumps)
+    # /Oy-
+    # # "Standard C++ exception handling" (C++ stack unwinding including extern c)
+    # /EHsc
+    # # Enable warnings and warnings as errors
+    # /W3
+    # /WX
+    # # Disable RTTI
+    # $<$<COMPILE_LANGUAGE:CXX>:/GR->
+    # # Use /O2 (Maximize Speed)
+    # $<$<CONFIG:RELEASE>:/O2>
+
+    )
 
 else()
 
