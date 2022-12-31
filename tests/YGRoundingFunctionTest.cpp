@@ -48,7 +48,7 @@ static YGSize measureText(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  return (YGSize){.width = 10, .height = 10};
+  return YGSize{10, 10};
 }
 
 // Regression test for https://github.com/facebook/yoga/issues/824

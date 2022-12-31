@@ -38,8 +38,8 @@ static YGSize _measure(
   constraintList->length = currentIndex + 1;
 
   return YGSize{
-      .width = widthMode == YGMeasureModeUndefined ? 10 : width,
-      .height = heightMode == YGMeasureModeUndefined ? 10 : width,
+      widthMode == YGMeasureModeUndefined ? 10 : width,
+      heightMode == YGMeasureModeUndefined ? 10 : width,
   };
 }
 
