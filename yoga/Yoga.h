@@ -138,7 +138,7 @@ void YGConfigSetPrintTreeFlag(YGConfigRef config, bool enabled);
 bool YGNodeHasMeasureFunc(YGNodeRef node);
 WIN_EXPORT void YGNodeSetMeasureFunc(YGNodeRef node, YGMeasureFunc measureFunc);
 bool YGNodeHasBaselineFunc(YGNodeRef node);
-void YGNodeSetBaselineFunc(YGNodeRef node, YGBaselineFunc baselineFunc);
+WIN_EXPORT void YGNodeSetBaselineFunc(YGNodeRef node, YGBaselineFunc baselineFunc);
 YGDirtiedFunc YGNodeGetDirtiedFunc(YGNodeRef node);
 void YGNodeSetDirtiedFunc(YGNodeRef node, YGDirtiedFunc dirtiedFunc);
 void YGNodeSetPrintFunc(YGNodeRef node, YGPrintFunc printFunc);
