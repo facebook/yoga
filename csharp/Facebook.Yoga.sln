@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga", "Facebook.Yoga\Facebook.Yoga.csproj", "{D325BFF5-51DC-447C-A46D-71595C7AA6FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.YogaKit", "Facebook.YogaKit\Facebook.YogaKit.csproj", "{A8C105BF-461A-45AD-ABA2-1A2CA02B167F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8FA7CD20-A6A3-439A-BBB4-6A921BD4E47E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.Yoga.Tests", "tests\Facebook.Yoga.Tests\Facebook.Yoga.Tests.csproj", "{AF45EB2B-1C5B-4903-A320-38BF260F6C10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facebook.YogaKit.Tests", "tests\Facebook.YogaKit.Tests\Facebook.YogaKit.Tests.csproj", "{7ED2BFDF-F8AD-46AA-9B4A-94167DB8065E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D325BFF5-51DC-447C-A46D-71595C7AA6FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D325BFF5-51DC-447C-A46D-71595C7AA6FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D325BFF5-51DC-447C-A46D-71595C7AA6FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D325BFF5-51DC-447C-A46D-71595C7AA6FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8C105BF-461A-45AD-ABA2-1A2CA02B167F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8C105BF-461A-45AD-ABA2-1A2CA02B167F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8C105BF-461A-45AD-ABA2-1A2CA02B167F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8C105BF-461A-45AD-ABA2-1A2CA02B167F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF45EB2B-1C5B-4903-A320-38BF260F6C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF45EB2B-1C5B-4903-A320-38BF260F6C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF45EB2B-1C5B-4903-A320-38BF260F6C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF45EB2B-1C5B-4903-A320-38BF260F6C10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ED2BFDF-F8AD-46AA-9B4A-94167DB8065E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ED2BFDF-F8AD-46AA-9B4A-94167DB8065E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ED2BFDF-F8AD-46AA-9B4A-94167DB8065E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ED2BFDF-F8AD-46AA-9B4A-94167DB8065E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF45EB2B-1C5B-4903-A320-38BF260F6C10} = {8FA7CD20-A6A3-439A-BBB4-6A921BD4E47E}
+		{7ED2BFDF-F8AD-46AA-9B4A-94167DB8065E} = {8FA7CD20-A6A3-439A-BBB4-6A921BD4E47E}
+	EndGlobalSection
+EndGlobal
