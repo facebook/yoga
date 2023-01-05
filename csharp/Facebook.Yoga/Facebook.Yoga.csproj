@@ -1,5 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0-ios</TargetFrameworks>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="NuGetizer" Version="0.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SupportedRid Include="win-x64" />
+    <PackageFile Include="@(SupportedRid->'Facebook.Yoga.Native.%(Identity)')" PackFolder="Dependency" Version="$(Version)" />
+  </ItemGroup>
 </Project>

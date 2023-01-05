@@ -10,6 +10,11 @@
   <ItemGroup>
     <ProjectReference Include="../../Facebook.YogaKit/Facebook.YogaKit.csproj " />
     <ProjectReference Include="../../Facebook.Yoga/Facebook.Yoga.csproj " />
+    <ProjectReference Include="../Yoga/Facebook.Yoga.Native.msbuildproj"
+                      Pack="false"
+                      Targets="BuildNative"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Content" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

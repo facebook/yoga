@@ -270,3 +270,6 @@ __pycache__/
 
 # local buck build
 lib/
+
+binnative/
+*.binlog

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <PackageId>Facebook.Yoga.Native.$(RuntimeIdentifier)</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NuGetizer" Version="0.9.1" />
+  </ItemGroup>
+
+  <Target Name="BuildNative" BeforeTargets="CoreBuild" Returns="@(NativeFileFullPath)">
+    <Exec Command="cmake -S . -B build -DCMAKE_INSTALL_PREFIX=binnative &amp;&amp; cmake --build build --target install --config $(Configuration)" />
+    
+    <ItemGroup>
+      <NativeFile Include="binnative/*yoga*" />
+      <NativeFileFullPath Include="@(NativeFile->Metadata('FullPath'))" />
+      <PackageFile Include="@(NativeFile)" PackagePath="runtimes/$(RuntimeIdentifier)/native/" />
+    </ItemGroup>
+  </Target>
+</Project>
