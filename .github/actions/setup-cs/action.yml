@@ -1,0 +1,13 @@
+name: Setup C# envirionment
+
+runs:
+  using: "composite"
+  steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      
+      - name: Restore Workloads
+        run: dotnet workload restore
+        working-directory: csharp
