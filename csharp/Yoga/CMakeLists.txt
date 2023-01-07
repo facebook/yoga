@@ -3,7 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.14)
 
 project(yoga)
 
@@ -52,9 +52,6 @@ if (MSVC)
     list(APPEND SOURCES Yoga.rc)
 endif()
 
-file(GLOB yogajni_version_script
-        yogajni.version)
-
 add_library(yoga SHARED ${SOURCES})
 
 target_include_directories(yoga PRIVATE
@@ -63,7 +60,10 @@ target_include_directories(yoga PRIVATE
 target_link_libraries(yoga yogacore)
 
 if (NOT MSVC)
-    target_link_libraries(yoga -Wl,--gc-sections)
+    target_link_options(yoga PRIVATE
+    # Discard unused sections
+    $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:Clang,GNU>:-Wl,--gc-sections>>
+    $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:AppleClang>:-Wl,-dead_strip>>)
 endif()
 
 install(TARGETS yoga DESTINATION .)
