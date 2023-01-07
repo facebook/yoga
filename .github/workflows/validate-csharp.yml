@@ -7,9 +7,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  FORCE_COLOR: 3
-
 jobs:
   test:
     name: Test [${{ matrix.os }}]
@@ -27,6 +24,7 @@ jobs:
       
       - name: Restore Workloads
         run: dotnet workload restore
+        working-directory: csharp
 
       - name: dotnet test Facebook.Yoga.Tests
         run: dotnet test
@@ -54,7 +52,7 @@ jobs:
         working-directory: csharp
 
   build-native:
-    name: Build Native Components [${{ matrix.os }}]
+    name: Build Native Components [${{ matrix.os }}][${{ matrix.rid }}]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
