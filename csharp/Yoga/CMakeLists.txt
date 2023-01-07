@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 3.14)
 project(yoga)
 
 set(CMAKE_VERBOSE_MAKEFILE on)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # configure import libs
 add_compile_definitions($<$<CONFIG:Debug>:DEBUG>)
@@ -37,7 +38,6 @@ if (MSVC)
         $<$<CONFIG:RELEASE>:/O2>)
 else()
     add_compile_options(
-        -fPIC
         -fno-omit-frame-pointer
         -fexceptions
         -fvisibility=hidden
