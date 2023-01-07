@@ -24,6 +24,9 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
+      
+      - name: Restore Workloads
+        run: dotnet workload restore
 
       - name: dotnet test Facebook.Yoga.Tests
         run: dotnet test
@@ -38,13 +41,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup
-        uses: ./.github/actions/setup-js
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
+      
+      - name: Restore Workloads
+        run: dotnet workload restore
 
       - name: dotnet pack
         run: dotnet pack -c Release
@@ -63,9 +66,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup
-        uses: ./.github/actions/setup-js
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -73,5 +73,5 @@ jobs:
 
       - name: Build Native Components
         run: dotnet build -c Release -r ${{ matrix.rid }}
-        working-directory: csharp/
+        working-directory: csharp/Yoga
 
