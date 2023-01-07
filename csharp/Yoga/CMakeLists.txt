@@ -37,6 +37,7 @@ if (MSVC)
         $<$<CONFIG:RELEASE>:/O2>)
 else()
     add_compile_options(
+        -fPIC
         -fno-omit-frame-pointer
         -fexceptions
         -fvisibility=hidden
