@@ -4,6 +4,7 @@
     <IsPackable>true</IsPackable>
     <PackageId>Facebook.Yoga.Native.$(RuntimeIdentifier)</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NuGetizer" Version="0.9.1" />
