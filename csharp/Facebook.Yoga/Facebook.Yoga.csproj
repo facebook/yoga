@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <SupportedRid Include="win-x64;linux-x64" />
+    <SupportedRid Include="win-x64;linux-x64;osx-x64" />
     <PackageFile Include="@(SupportedRid->'Facebook.Yoga.Native.%(Identity)')" PackFolder="Dependency" Version="$(Version)" />
   </ItemGroup>
 </Project>
