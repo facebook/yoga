@@ -7,6 +7,9 @@
 
 using System;
 using System.Runtime.InteropServices;
+#if NET6_0
+using System.Runtime.Versioning;
+#endif
 
 namespace Facebook.Yoga
 {
@@ -14,10 +17,34 @@ namespace Facebook.Yoga
     {
         // Unity package references work via embedded source with their custom package format,
         // so these Unity-specific defines will work.
-#if (UNITY_IOS && !UNITY_EDITOR) || IOS
+        // Static linking for iOS is handled with a DllImportResolver.
+#if (UNITY_IOS && !UNITY_EDITOR)
         private const string DllName = "__Internal";
 #else
         private const string DllName = "yoga";
+#endif
+
+#if NET6_0
+        static Native()
+        {
+            // On iOS, the yoga runtime symbols are linked statically and loaded globally.
+            // As a result, the module handle for the global module (dlopen(NULL)) is the correct one to use.
+            // We'd use NativeLibrary.GetMainProgramHandle, but that was only introduced in .NET 7.
+            if (OperatingSystem.IsIOS())
+            {
+                NativeLibrary.SetDllImportResolver(typeof(Native).Assembly, (libName, assembly, searchPath) =>
+                {
+                    if (libName == DllName)
+                    {
+                        return dlopen(IntPtr.Zero);
+                    }
+                    return IntPtr.Zero;
+                });
+
+                [DllImport("System")]
+                static extern IntPtr dlopen(IntPtr name);
+            }
+        }
 #endif
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
