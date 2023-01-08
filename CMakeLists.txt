@@ -14,7 +14,7 @@ add_compile_options(
     -ffunction-sections
     -fdata-sections
     -Wall
-    -std=c++11)
+    -std=c++14)
 
 file(GLOB_RECURSE yogacore_SRC yoga/*.cpp)
 add_library(yogacore STATIC ${yogacore_SRC})
@@ -28,7 +28,7 @@ if (ANDROID)
     target_link_libraries(yogacore android log)
 endif()
 
-set_target_properties(yogacore PROPERTIES CXX_STANDARD 11)
+set_target_properties(yogacore PROPERTIES CXX_STANDARD 14)
 
 # cmake install config
 include(GNUInstallDirs)
