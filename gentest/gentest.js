@@ -5,6 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const DEFAULT_EXPERIMENTS = [
+  'AbsolutePercentageAgainstPaddingEdge',
+  'FixAbsoluteTrailingColumnMargin',
+];
+
 window.onload = function() {
   checkDefaultValues();
 
@@ -472,7 +477,7 @@ function calculateTree(root, roundToPixelGrid) {
       rawStyle: child.getAttribute('style'),
       experiments: child.getAttribute('experiments')
           ? child.getAttribute('experiments').split(' ')
-          : [],
+          : DEFAULT_EXPERIMENTS,
     };
 
     var size = getRoundedSize(child);

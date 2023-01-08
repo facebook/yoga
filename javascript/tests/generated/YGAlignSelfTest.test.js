@@ -11,6 +11,9 @@ test("align_self_center", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -55,6 +58,9 @@ test("align_self_center", () => {
 test("align_self_flex_end", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -101,6 +107,9 @@ test("align_self_flex_start", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -145,6 +154,9 @@ test("align_self_flex_start", () => {
 test("align_self_flex_end_override_flex_start", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -191,6 +203,9 @@ test("align_self_flex_end_override_flex_start", () => {
 test("align_self_baseline", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);

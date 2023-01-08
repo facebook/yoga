@@ -19,6 +19,8 @@ namespace Facebook.Yoga
         public void Test_android_news_feed()
         {
             YogaConfig config = new YogaConfig();
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
+            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
             YogaNode root = new YogaNode(config);
             root.AlignContent = YogaAlign.Stretch;

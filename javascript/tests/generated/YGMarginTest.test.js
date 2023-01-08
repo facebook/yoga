@@ -11,6 +11,9 @@ test("margin_start", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -56,6 +59,9 @@ test("margin_top", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -99,6 +105,9 @@ test("margin_top", () => {
 test("margin_end", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -146,6 +155,9 @@ test("margin_bottom", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_FLEX_END);
@@ -190,6 +202,9 @@ test("margin_bottom", () => {
 test("margin_and_flex_row", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -237,6 +252,9 @@ test("margin_and_flex_column", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -281,6 +299,9 @@ test("margin_and_flex_column", () => {
 test("margin_and_stretch_row", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -328,6 +349,9 @@ test("margin_and_stretch_column", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -372,6 +396,9 @@ test("margin_and_stretch_column", () => {
 test("margin_with_sibling_row", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -432,6 +459,9 @@ test("margin_with_sibling_column", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -489,6 +519,9 @@ test("margin_with_sibling_column", () => {
 test("margin_auto_bottom", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -551,6 +584,9 @@ test("margin_auto_top", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -611,6 +647,9 @@ test("margin_auto_top", () => {
 test("margin_auto_bottom_and_top", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -674,6 +713,9 @@ test("margin_auto_bottom_and_top_justify_center", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -735,6 +777,9 @@ test("margin_auto_bottom_and_top_justify_center", () => {
 test("margin_auto_mutiple_children_column", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -812,6 +857,9 @@ test("margin_auto_mutiple_children_column", () => {
 test("margin_auto_mutiple_children_row", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -891,6 +939,9 @@ test("margin_auto_left_and_right_column", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -954,6 +1005,9 @@ test("margin_auto_left_and_right", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -1014,6 +1068,9 @@ test("margin_auto_left_and_right", () => {
 test("margin_auto_start_and_end_column", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1078,6 +1135,9 @@ test("margin_auto_start_and_end", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -1138,6 +1198,9 @@ test("margin_auto_start_and_end", () => {
 test("margin_auto_left_and_right_column_and_center", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1201,6 +1264,9 @@ test("margin_auto_left", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -1262,6 +1328,9 @@ test("margin_auto_right", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setAlignItems(Yoga.ALIGN_CENTER);
@@ -1322,6 +1391,9 @@ test("margin_auto_right", () => {
 test("margin_auto_left_and_right_stretch", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1385,6 +1457,9 @@ test("margin_auto_top_and_bottom_stretch", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(200);
@@ -1446,6 +1521,9 @@ test("margin_should_not_be_part_of_max_height", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(250);
@@ -1492,6 +1570,9 @@ test("margin_should_not_be_part_of_max_width", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(250);
@@ -1537,6 +1618,9 @@ test("margin_should_not_be_part_of_max_width", () => {
 test("margin_auto_left_right_child_bigger_than_parent", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1585,6 +1669,9 @@ test("margin_auto_left_child_bigger_than_parent", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1630,6 +1717,9 @@ test("margin_auto_left_child_bigger_than_parent", () => {
 test("margin_fix_left_auto_right_child_bigger_than_parent", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1678,6 +1768,9 @@ test("margin_auto_left_fix_right_child_bigger_than_parent", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -1724,6 +1817,9 @@ test("margin_auto_left_fix_right_child_bigger_than_parent", () => {
 test("margin_auto_top_stretching_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1786,6 +1882,9 @@ test("margin_auto_top_stretching_child", () => {
 test("margin_auto_left_stretching_child", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
