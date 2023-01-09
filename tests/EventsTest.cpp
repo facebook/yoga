@@ -234,7 +234,7 @@ TEST_F(EventTest, layout_events_has_max_measure_cache) {
   YGNodeInsertChild(root, b, 1);
   YGNodeStyleSetFlexBasis(a, 10.0f);
 
-  for (auto s : {20, 30, 40}) {
+  for (auto s : {20.0f, 30.0f, 40.0f}) {
     YGNodeCalculateLayout(root, s, s, YGDirectionLTR);
   }
 
