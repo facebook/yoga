@@ -24,7 +24,7 @@ add_compile_options(
     -ffunction-sections
     -fdata-sections
     -Wall
-    -std=c++11)
+    -std=c++14)
 
 file(GLOB jni_SRC
         jni/*.cpp)

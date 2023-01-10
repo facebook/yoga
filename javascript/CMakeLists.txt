@@ -14,7 +14,7 @@ file(GLOB SOURCES
 
 include_directories(..)
 
-set(CXX_STANDARD, 11)
+set(CXX_STANDARD, 14)
 
 add_compile_definitions(
     EMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0)
