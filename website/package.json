@@ -16,7 +16,7 @@
     "gatsby-plugin-react-next": "^1.0.11",
     "gatsby-remark-prismjs": "^2.0.4",
     "gatsby-source-filesystem": "^1.5.39",
-    "gatsby-transformer-remark": "^1.7.44",
+    "gatsby-transformer-remark": "^5.25.1",
     "immutable": "^4.0.0-rc.9",
     "react-helmet": "^5.2.0",
     "react-syntax-highlighter": "^8.0.0",
