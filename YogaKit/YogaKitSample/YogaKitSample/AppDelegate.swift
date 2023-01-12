@@ -10,17 +10,17 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
+  var window: UIWindow?
 
-    func applicationDidFinishLaunching(_ application: UIApplication) {
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        if let window = self.window {
-            let navigationController = UINavigationController(rootViewController: ExamplesViewController())
-            navigationController.navigationBar.isTranslucent = false
+  func applicationDidFinishLaunching(_ application: UIApplication) {
+    self.window = UIWindow(frame: UIScreen.main.bounds)
+    if let window = self.window {
+      let navigationController = UINavigationController(rootViewController: ExamplesViewController())
+      navigationController.navigationBar.isTranslucent = false
 
-            window.rootViewController = navigationController
-            window.backgroundColor = .white
-            window.makeKeyAndVisible()
-        }
+      window.rootViewController = navigationController
+      window.backgroundColor = .white
+      window.makeKeyAndVisible()
     }
+  }
 }
