@@ -320,11 +320,15 @@ YG_EDGE_PROPERTY(gap, Gap, Gap, YGGutterAll)
 }
 
 - (CGSize)intrinsicSize {
-  const CGSize constrainedSize = {
+  CGSize constrainedSize = {
       .width = YGUndefined,
       .height = YGUndefined,
   };
-  return [self calculateLayoutWithSize:constrainedSize];
+  constrainedSize = [self calculateLayoutWithSize:constrainedSize];
+  return (CGSize){
+      .width = YGRoundPixelValue(constrainedSize.width),
+      .height = YGRoundPixelValue(constrainedSize.height),
+  };
 }
 
 - (CGSize)calculateLayoutWithSize:(CGSize)size {
