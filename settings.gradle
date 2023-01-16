@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-include ':yoga', ':yoga-layout', ':yoga:proguard-annotations'
+include ':yoga', ':yoga-layout'
 project(':yoga').projectDir = file('java')
-project(':yoga:proguard-annotations').projectDir = file('java/proguard-annotations')
 project(':yoga-layout').projectDir = file('android')
