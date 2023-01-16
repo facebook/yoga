@@ -162,7 +162,7 @@ for name, values in sorted(ENUMS.items()):
         f.write(get_license("java"))
         f.write("package com.facebook.yoga;\n\n")
         if name in DO_NOT_STRIP:
-            f.write("import com.facebook.proguard.annotations.DoNotStrip;\n\n")
+            f.write("import com.facebook.yoga.annotations.DoNotStrip;\n\n")
             f.write("@DoNotStrip\n")
         f.write("public enum Yoga%s {\n" % name)
         if len(values) > 0:
