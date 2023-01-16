@@ -7,6 +7,9 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  GTEST_COLOR: 1
+
 jobs:
   test:
     name: Build and Test [${{ matrix.os }}][${{ matrix.mode }}]
