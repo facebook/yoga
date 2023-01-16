@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "ms-vscode.cpptools",
+    "EditorConfig.EditorConfig",
+    "dbaeumer.vscode-eslint",
+  ]
+}
