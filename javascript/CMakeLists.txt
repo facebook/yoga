@@ -7,14 +7,14 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_VERBOSE_MAKEFILE on)
 project(yoga)
 
-file(GLOB SOURCES
+file(GLOB SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/**/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src_native/*.cc)
 
 include_directories(..)
 
-set(CXX_STANDARD, 14)
+set(CMAKE_CXX_STANDARD 14)
 
 add_compile_definitions(
     EMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0)

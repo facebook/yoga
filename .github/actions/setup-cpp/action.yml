@@ -1,0 +1,12 @@
+name: Setup C++ envirionment
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Ninja
+      if: ${{ runner.os != 'Windows' }}
+      uses: ./.github/actions/install-ninja
+
+    - name: Setup VS Developer Command Prompt
+      if: ${{ runner.os == 'Windows' }}
+      uses: ilammy/msvc-dev-cmd@v1
