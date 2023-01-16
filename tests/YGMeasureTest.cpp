@@ -20,10 +20,7 @@ static YGSize _measure(
     (*measureCount)++;
   }
 
-  return YGSize{
-      .width = 10,
-      .height = 10,
-  };
+  return YGSize{10, 10};
 }
 
 static YGSize _simulate_wrapping_text(
@@ -33,13 +30,10 @@ static YGSize _simulate_wrapping_text(
     float height,
     YGMeasureMode heightMode) {
   if (widthMode == YGMeasureModeUndefined || width >= 68) {
-    return YGSize{.width = 68, .height = 16};
+    return YGSize{68, 16};
   }
 
-  return YGSize{
-      .width = 50,
-      .height = 32,
-  };
+  return YGSize{50, 32};
 }
 
 static YGSize _measure_assert_negative(
@@ -51,10 +45,7 @@ static YGSize _measure_assert_negative(
   EXPECT_GE(width, 0);
   EXPECT_GE(height, 0);
 
-  return YGSize{
-      .width = 0,
-      .height = 0,
-  };
+  return YGSize{0, 0};
 }
 
 TEST(YogaTest, dont_measure_single_grow_shrink_child) {
@@ -656,10 +647,7 @@ static YGSize _measure_90_10(
     float height,
     YGMeasureMode heightMode) {
 
-  return YGSize{
-      .width = 90,
-      .height = 10,
-  };
+  return YGSize{90, 10};
 }
 
 static YGSize _measure_100_100(
@@ -669,10 +657,7 @@ static YGSize _measure_100_100(
     float height,
     YGMeasureMode heightMode) {
 
-  return YGSize{
-      .width = 100,
-      .height = 100,
-  };
+  return YGSize{100, 100};
 }
 
 TEST(YogaTest, percent_with_text_node) {

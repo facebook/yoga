@@ -1,4 +1,0 @@
---config
-cxx.cxxflags=-O3 -DNDEBUG
---config
-cxx.cflags=-O3 -DNDEBUG
