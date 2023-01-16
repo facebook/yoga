@@ -13,6 +13,8 @@
 
 TEST(YogaTest, border_no_size) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureFixAbsoluteTrailingColumnMargin, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
@@ -40,6 +42,8 @@ TEST(YogaTest, border_no_size) {
 
 TEST(YogaTest, border_container_match_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureFixAbsoluteTrailingColumnMargin, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
@@ -82,6 +86,8 @@ TEST(YogaTest, border_container_match_child) {
 
 TEST(YogaTest, border_flex_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureFixAbsoluteTrailingColumnMargin, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
@@ -126,6 +132,8 @@ TEST(YogaTest, border_flex_child) {
 
 TEST(YogaTest, border_stretch_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureFixAbsoluteTrailingColumnMargin, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
@@ -169,6 +177,8 @@ TEST(YogaTest, border_stretch_child) {
 
 TEST(YogaTest, border_center_child) {
   const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureFixAbsoluteTrailingColumnMargin, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);

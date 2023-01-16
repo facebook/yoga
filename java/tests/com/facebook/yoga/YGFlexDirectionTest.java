@@ -27,6 +27,8 @@ public class YGFlexDirectionTest {
   @Test
   public void test_flex_direction_column_no_height() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -92,6 +94,8 @@ public class YGFlexDirectionTest {
   @Test
   public void test_flex_direction_row_no_width() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -158,6 +162,8 @@ public class YGFlexDirectionTest {
   @Test
   public void test_flex_direction_column() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setWidth(100f);
@@ -224,6 +230,8 @@ public class YGFlexDirectionTest {
   @Test
   public void test_flex_direction_row() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
@@ -291,6 +299,8 @@ public class YGFlexDirectionTest {
   @Test
   public void test_flex_direction_column_reverse() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.COLUMN_REVERSE);
@@ -358,6 +368,8 @@ public class YGFlexDirectionTest {
   @Test
   public void test_flex_direction_row_reverse() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW_REVERSE);

@@ -18,7 +18,8 @@ function toValueJavascript(value) {
 
 function toJavascriptUpper(symbol) {
   let out = '';
-  for (const c of symbol) {
+  for (let i = 0; i < symbol.length; i++) {
+    const c = symbol.charAt(i);
     if (c == c.toUpperCase() && i != 0 && symbol[i - 1] != symbol[i - 1].toUpperCase()) {
       out += '_';
     }
@@ -40,8 +41,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('');
 
     if (experiments.length > 0) {
-      for (const i in experiments) {
-        this.push('config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', true);');
+      for (const experiment of experiments) {
+        this.push('config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiment) + ', true);');
       }
       this.push('');
     }

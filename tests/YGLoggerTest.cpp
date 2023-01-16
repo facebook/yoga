@@ -9,6 +9,8 @@
 #include <stdarg.h>
 #include <yoga/Yoga.h>
 
+#if DEBUG
+
 namespace {
 char writeBuffer[4096];
 int _unmanagedLogger(
@@ -131,3 +133,5 @@ TEST(YogaTest, logger_node_with_children_should_print_indented) {
       "style=\"\" ></div>\n</div>";
   ASSERT_STREQ(expected, writeBuffer);
 }
+
+#endif

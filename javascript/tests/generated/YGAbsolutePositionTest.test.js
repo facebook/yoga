@@ -11,6 +11,9 @@ test("absolute_layout_width_height_start_top", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -57,6 +60,9 @@ test("absolute_layout_width_height_start_top", () => {
 test("absolute_layout_width_height_end_bottom", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -105,6 +111,9 @@ test("absolute_layout_start_top_end_bottom", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -151,6 +160,9 @@ test("absolute_layout_start_top_end_bottom", () => {
 test("absolute_layout_width_height_start_top_end_bottom", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -200,6 +212,9 @@ test("absolute_layout_width_height_start_top_end_bottom", () => {
 test("do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -262,6 +277,9 @@ test("do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_pare
 test("absolute_layout_within_border", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -384,6 +402,9 @@ test("absolute_layout_align_items_and_justify_content_center", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -431,6 +452,9 @@ test("absolute_layout_align_items_and_justify_content_center", () => {
 test("absolute_layout_align_items_and_justify_content_flex_end", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -480,6 +504,9 @@ test("absolute_layout_justify_content_center", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -526,6 +553,9 @@ test("absolute_layout_justify_content_center", () => {
 test("absolute_layout_align_items_center", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -574,6 +604,9 @@ test("absolute_layout_align_items_center_on_child_only", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexGrow(1);
@@ -620,6 +653,9 @@ test("absolute_layout_align_items_center_on_child_only", () => {
 test("absolute_layout_align_items_and_justify_content_center_and_top_position", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -670,6 +706,9 @@ test("absolute_layout_align_items_and_justify_content_center_and_bottom_position
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -718,6 +757,9 @@ test("absolute_layout_align_items_and_justify_content_center_and_bottom_position
 test("absolute_layout_align_items_and_justify_content_center_and_left_position", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -768,6 +810,9 @@ test("absolute_layout_align_items_and_justify_content_center_and_right_position"
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Yoga.JUSTIFY_CENTER);
@@ -817,6 +862,9 @@ test("position_root_with_rtl_should_position_withoutdirection", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setPosition(Yoga.EDGE_LEFT, 72);
@@ -846,6 +894,9 @@ test("position_root_with_rtl_should_position_withoutdirection", () => {
 test("absolute_layout_percentage_bottom_based_on_parent_height", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -927,6 +978,9 @@ test("absolute_layout_in_wrap_reverse_column_container", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexWrap(Yoga.WRAP_WRAP_REVERSE);
@@ -972,6 +1026,9 @@ test("absolute_layout_in_wrap_reverse_column_container", () => {
 test("absolute_layout_in_wrap_reverse_row_container", () => {
   const config = Yoga.Config.create();
   let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1020,6 +1077,9 @@ test("absolute_layout_in_wrap_reverse_column_container_flex_end", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexWrap(Yoga.WRAP_WRAP_REVERSE);
@@ -1067,6 +1127,9 @@ test("absolute_layout_in_wrap_reverse_row_container_flex_end", () => {
   const config = Yoga.Config.create();
   let root;
 
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
@@ -1103,6 +1166,171 @@ test("absolute_layout_in_wrap_reverse_row_container_flex_end", () => {
     expect(root_child0.getComputedTop()).toBe(0);
     expect(root_child0.getComputedWidth()).toBe(20);
     expect(root_child0.getComputedHeight()).toBe(20);
+  } finally {
+    if (typeof root !== "undefined") {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});
+test("percent_absolute_position_infinite_height", () => {
+  const config = Yoga.Config.create();
+  let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
+  try {
+    root = Yoga.Node.create(config);
+    root.setWidth(300);
+
+    const root_child0 = Yoga.Node.create(config);
+    root_child0.setWidth(300);
+    root.insertChild(root_child0, 0);
+
+    const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(Yoga.POSITION_TYPE_ABSOLUTE);
+    root_child1.setPosition(Yoga.EDGE_LEFT, "20%");
+    root_child1.setPosition(Yoga.EDGE_TOP, "20%");
+    root_child1.setWidth("20%");
+    root_child1.setHeight("20%");
+    root.insertChild(root_child1, 1);
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(300);
+    expect(root.getComputedHeight()).toBe(0);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(0);
+    expect(root_child0.getComputedWidth()).toBe(300);
+    expect(root_child0.getComputedHeight()).toBe(0);
+
+    expect(root_child1.getComputedLeft()).toBe(60);
+    expect(root_child1.getComputedTop()).toBe(0);
+    expect(root_child1.getComputedWidth()).toBe(60);
+    expect(root_child1.getComputedHeight()).toBe(0);
+
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_RTL);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(300);
+    expect(root.getComputedHeight()).toBe(0);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(0);
+    expect(root_child0.getComputedWidth()).toBe(300);
+    expect(root_child0.getComputedHeight()).toBe(0);
+
+    expect(root_child1.getComputedLeft()).toBe(60);
+    expect(root_child1.getComputedTop()).toBe(0);
+    expect(root_child1.getComputedWidth()).toBe(60);
+    expect(root_child1.getComputedHeight()).toBe(0);
+  } finally {
+    if (typeof root !== "undefined") {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});
+test("absolute_layout_percentage_height_based_on_padded_parent", () => {
+  const config = Yoga.Config.create();
+  let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
+  try {
+    root = Yoga.Node.create(config);
+    root.setPadding(Yoga.EDGE_TOP, 10);
+    root.setBorder(Yoga.EDGE_TOP, 10);
+    root.setWidth(100);
+    root.setHeight(100);
+
+    const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(Yoga.POSITION_TYPE_ABSOLUTE);
+    root_child0.setWidth(100);
+    root_child0.setHeight("50%");
+    root.insertChild(root_child0, 0);
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(100);
+    expect(root.getComputedHeight()).toBe(100);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(10);
+    expect(root_child0.getComputedWidth()).toBe(100);
+    expect(root_child0.getComputedHeight()).toBe(50);
+
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_RTL);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(100);
+    expect(root.getComputedHeight()).toBe(100);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(10);
+    expect(root_child0.getComputedWidth()).toBe(100);
+    expect(root_child0.getComputedHeight()).toBe(50);
+  } finally {
+    if (typeof root !== "undefined") {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});
+test("absolute_layout_percentage_height_based_on_padded_parent_and_align_items_center", () => {
+  const config = Yoga.Config.create();
+  let root;
+
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+  config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
+
+  try {
+    root = Yoga.Node.create(config);
+    root.setJustifyContent(Yoga.JUSTIFY_CENTER);
+    root.setAlignItems(Yoga.ALIGN_CENTER);
+    root.setPadding(Yoga.EDGE_TOP, 20);
+    root.setPadding(Yoga.EDGE_BOTTOM, 20);
+    root.setWidth(100);
+    root.setHeight(100);
+
+    const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(Yoga.POSITION_TYPE_ABSOLUTE);
+    root_child0.setWidth(100);
+    root_child0.setHeight("50%");
+    root.insertChild(root_child0, 0);
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(100);
+    expect(root.getComputedHeight()).toBe(100);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(25);
+    expect(root_child0.getComputedWidth()).toBe(100);
+    expect(root_child0.getComputedHeight()).toBe(50);
+
+    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_RTL);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(100);
+    expect(root.getComputedHeight()).toBe(100);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(25);
+    expect(root_child0.getComputedWidth()).toBe(100);
+    expect(root_child0.getComputedHeight()).toBe(50);
   } finally {
     if (typeof root !== "undefined") {
       root.freeRecursive();

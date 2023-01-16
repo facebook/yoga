@@ -27,6 +27,8 @@ public class YGPaddingTest {
   @Test
   public void test_padding_no_size() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setPadding(YogaEdge.LEFT, 10);
@@ -53,6 +55,8 @@ public class YGPaddingTest {
   @Test
   public void test_padding_container_match_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setPadding(YogaEdge.LEFT, 10);
@@ -94,6 +98,8 @@ public class YGPaddingTest {
   @Test
   public void test_padding_flex_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setPadding(YogaEdge.LEFT, 10);
@@ -137,6 +143,8 @@ public class YGPaddingTest {
   @Test
   public void test_padding_stretch_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setPadding(YogaEdge.LEFT, 10);
@@ -179,6 +187,8 @@ public class YGPaddingTest {
   @Test
   public void test_padding_center_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
@@ -223,6 +233,8 @@ public class YGPaddingTest {
   @Test
   public void test_child_with_padding_align_end() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.FLEX_END);

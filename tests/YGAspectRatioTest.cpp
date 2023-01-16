@@ -16,8 +16,8 @@ static YGSize _measure(
     float height,
     YGMeasureMode heightMode) {
   return YGSize{
-      .width = widthMode == YGMeasureModeExactly ? width : 50,
-      .height = heightMode == YGMeasureModeExactly ? height : 50,
+      widthMode == YGMeasureModeExactly ? width : 50,
+      heightMode == YGMeasureModeExactly ? height : 50,
   };
 }
 

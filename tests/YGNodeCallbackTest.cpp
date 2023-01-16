@@ -48,7 +48,7 @@ TEST(YGNode, measure_with_context_measure_fn) {
         return *(YGSize*) ctx;
       });
 
-  auto result = YGSize{123.4, -56.7};
+  auto result = YGSize{123.4f, -56.7f};
   ASSERT_EQ(
       n.measure(0, YGMeasureModeUndefined, 0, YGMeasureModeUndefined, &result),
       result);

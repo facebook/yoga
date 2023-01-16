@@ -12,7 +12,8 @@
 /_site/
 
 # Visual studio code
-.vscode
+!.vscode
+
 *.pdb
 *.tlog
 *.obj

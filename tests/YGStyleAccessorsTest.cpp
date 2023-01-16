@@ -81,6 +81,9 @@ namespace yoga {
 
 using CompactValue = detail::CompactValue;
 
+// TODO: MSVC doesn't like the macros
+#ifndef _MSC_VER
+
 ACCESSOR_TEST(
     direction,
     YGDirectionInherit,
@@ -249,6 +252,8 @@ ACCESSOR_TEST(
     YGFloatOptional{9876.5f},
     YGFloatOptional{0.0f},
     YGFloatOptional{});
+
+#endif
 
 } // namespace yoga
 } // namespace facebook

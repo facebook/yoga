@@ -27,6 +27,8 @@ public class YGBorderTest {
   @Test
   public void test_border_no_size() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
@@ -53,6 +55,8 @@ public class YGBorderTest {
   @Test
   public void test_border_container_match_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
@@ -94,6 +98,8 @@ public class YGBorderTest {
   @Test
   public void test_border_flex_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
@@ -137,6 +143,8 @@ public class YGBorderTest {
   @Test
   public void test_border_stretch_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setBorder(YogaEdge.LEFT, 10f);
@@ -179,6 +187,8 @@ public class YGBorderTest {
   @Test
   public void test_border_center_child() {
     YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
