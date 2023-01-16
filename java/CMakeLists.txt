@@ -1,40 +1,22 @@
-# Copyright (c) Facebook, Inc. and its affiliates.
+# Copyright (c) Meta Platforms, Inc. and affiliates.
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-cmake_minimum_required(VERSION 3.4.1)
-
+cmake_minimum_required(VERSION 3.13)
+project(yogajni)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
-# configure import libs
-set(yogacore_DIR ${CMAKE_SOURCE_DIR}/..)
-set(build_DIR ${CMAKE_SOURCE_DIR}/build)
+set(YOGA_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
+include(${YOGA_ROOT}/cmake/project-defaults.cmake)
 
-set(yogacore_build_DIR ${build_DIR}/yogacore/${ANDROID_ABI})
+add_subdirectory(${YOGA_ROOT}/yoga ${CMAKE_CURRENT_BINARY_DIR}/yoga)
 
-file(MAKE_DIRECTORY ${build_DIR})
+file(GLOB SOURCES CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/jni/*.cpp)
+file(GLOB VERSION_SCRIPT CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/yogajni.version)
 
-add_subdirectory(${yogacore_DIR} ${yogacore_build_DIR})
-
-add_compile_options(
-    -fno-omit-frame-pointer
-    -fexceptions
-    -fvisibility=hidden
-    -ffunction-sections
-    -fdata-sections
-    -Wall
-    -std=c++11)
-
-file(GLOB jni_SRC
-        jni/*.cpp)
-
-file(GLOB yogajni_version_script
-        yogajni.version)
-
-add_library(yoga SHARED ${jni_SRC})
-
-target_include_directories(yoga PRIVATE
-    ${yogacore_DIR})
-
-target_link_libraries(yoga -Wl,--gc-sections,--version-script=${yogajni_version_script} yogacore)
+add_library(yoga SHARED ${SOURCES})
+target_link_libraries(yoga yogacore)
+target_link_options(yoga PRIVATE -Wl,--version-script=${VERSION_SCRIPT})

@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-var JavascriptEmitter = function() {
+const JavascriptEmitter = function() {
   Emitter.call(this, 'js', '  ');
 };
 
@@ -17,9 +17,9 @@ function toValueJavascript(value) {
 }
 
 function toJavascriptUpper(symbol) {
-  var out = '';
-  for (var i = 0; i < symbol.length; i++) {
-    var c = symbol[i];
+  let out = '';
+  for (let i = 0; i < symbol.length; i++) {
+    const c = symbol.charAt(i);
     if (c == c.toUpperCase() && i != 0 && symbol[i - 1] != symbol[i - 1].toUpperCase()) {
       out += '_';
     }
@@ -31,22 +31,18 @@ function toJavascriptUpper(symbol) {
 JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   constructor:{value:JavascriptEmitter},
 
-  emitPrologue:{value:function() {
-    this.push([
-      'var Yoga = Yoga || require("../../sources/entry-" + process.env.TEST_ENTRY);',
-      ''
-    ]);
-  }},
+  emitPrologue:{value:function() {}},
 
   emitTestPrologue:{value:function(name, experiments) {
-    this.push('it(' + JSON.stringify(name) + ', function () {');
+    this.push('test(' + JSON.stringify(name) + ', () => {');
     this.pushIndent();
-    this.push('var config = Yoga.Config.create();');
+    this.push('const config = Yoga.Config.create();');
+    this.push('let root;');
     this.push('');
 
     if (experiments.length > 0) {
-      for (var i in experiments) {
-        this.push('config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiments[i]) + ', true);');
+      for (const experiment of experiments) {
+        this.push('config.setExperimentalFeatureEnabled(Yoga.EXPERIMENTAL_FEATURE_' + toJavascriptUpper(experiment) + ', true);');
       }
       this.push('');
     }
@@ -56,7 +52,11 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('var ' + nodeName + ' = Yoga.Node.create(config);');
+    if (nodeName === 'root') {
+      this.push(`root = Yoga.Node.create(config);`);
+    } else {
+      this.push(`const ${nodeName} = Yoga.Node.create(config);`);
+    }
   }},
 
   emitTestEpilogue:{value:function(experiments) {
@@ -84,7 +84,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   AssertEQ:{value:function(v0, v1) {
-    this.push('console.assert(' + v0 + ' === ' + v1 + ', "' + v0 + ' === ' + v1 + ' (" + ' + v1 + ' + ")");');
+    this.push(`expect(${v1}).toBe(${v0});`);
   }},
 
   YGAlignAuto:{value:'Yoga.ALIGN_AUTO'},
@@ -106,6 +106,10 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeRight:{value:'Yoga.EDGE_RIGHT'},
   YGEdgeStart:{value:'Yoga.EDGE_START'},
   YGEdgeTop:{value:'Yoga.EDGE_TOP'},
+
+  YGGutterAll:{value:'Yoga.GUTTER_ALL'},
+  YGGutterColumn:{value:'Yoga.GUTTER_COLUMN'},
+  YGGutterRow:{value:'Yoga.GUTTER_ROW'},
 
   YGFlexDirectionColumn:{value:'Yoga.FLEX_DIRECTION_COLUMN'},
   YGFlexDirectionColumnReverse:{value:'Yoga.FLEX_DIRECTION_COLUMN_REVERSE'},
@@ -250,5 +254,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.setWidth(' + toValueJavascript(value) + ');');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push(nodeName + '.setGap('+ toValueJavascript(gap) + ', ' + toValueJavascript(value) + ');');
   }},
 });

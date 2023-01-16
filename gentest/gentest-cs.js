@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -105,6 +105,10 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'Start'},
   YGEdgeTop:{value:'Top'},
 
+  YGGutterAll:{value:''},
+  YGGutterColumn:{value:'Column'},
+  YGGutterRow:{value:'Row'},
+
   YGFlexDirectionColumn:{value:'YogaFlexDirection.Column'},
   YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.ColumnReverse'},
   YGFlexDirectionRow:{value:'YogaFlexDirection.Row'},
@@ -120,8 +124,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGOverflowHidden:{value:'YogaOverflow.Hidden'},
   YGOverflowVisible:{value:'YogaOverflow.Visible'},
 
-  YGPositionTypeAbsolute:{value:'YogaPositionType.Absolute'},
+  YGPositionTypeAbsolute:{value:'YogaPositionType.Static'},
   YGPositionTypeRelative:{value:'YogaPositionType.Relative'},
+  YGPositionTypeAbsolute:{value:'YogaPositionType.Absolute'},
 
   YGUndefined:{value:'YogaConstants.Undefined'},
 
@@ -249,5 +254,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.Width = ' + toCsUnitValue(value) + ';');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push(nodeName + '.' + gap + 'Gap' + ' = ' + toCsUnitValue(value) + ';');
   }},
 });

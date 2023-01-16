@@ -1,19 +1,20 @@
 #!/usr/bin/env ruby
-# Copyright (c) Facebook, Inc. and its affiliates.
+# Copyright (c) Meta Platforms, Inc. and affiliates.
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
 require 'watir'
+require 'webdrivers'
 require 'fileutils'
 
-caps = Selenium::WebDriver::Remote::Capabilities.chrome(
-  "loggingPrefs"=>{
-    "browser"=>"ALL",
-    "performance"=>"ALL"
-  }
-)
-browser = Watir::Browser.new(:chrome, :desired_capabilities => caps, :switches => ['--force-device-scale-factor=1', '--window-position=0,0'])
+browser = Watir::Browser.new(:chrome, options: {
+  "goog:loggingPrefs" => {
+    "browser" => "ALL",
+    "performance" => "ALL"
+  },
+  args: ['--force-device-scale-factor=1', '--window-position=0,0']
+})
 
 Dir.chdir(File.dirname($0))
 
@@ -39,9 +40,9 @@ Dir['fixtures/*.html'].each do |file|
   FileUtils.copy('test.html', "#{name}.html") if $DEBUG
 
   browser.goto('file://' + Dir.pwd + '/test.html')
-  logs = browser.driver.manage.logs.get(:browser)
+  logs = browser.driver.logs.get(:browser)
 
-  f = File.open("../tests/#{name}.cpp", 'w')
+  f = File.open("../tests/generated/#{name}.cpp", 'w')
   f.write eval(logs[0].message.sub(/^[^"]*/, ''))
   f.close
 
@@ -55,7 +56,7 @@ Dir['fixtures/*.html'].each do |file|
 
   print logs[4]
 
-  f = File.open("../javascript/tests/Facebook.Yoga/#{name}.js", 'w')
+  f = File.open("../javascript/tests/generated/#{name}.test.js", 'w')
   f.write eval(logs[3].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
 end

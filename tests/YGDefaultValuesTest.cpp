@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,7 +20,7 @@ TEST(YogaTest, assert_default_values) {
   ASSERT_EQ(YGAlignFlexStart, YGNodeStyleGetAlignContent(root));
   ASSERT_EQ(YGAlignStretch, YGNodeStyleGetAlignItems(root));
   ASSERT_EQ(YGAlignAuto, YGNodeStyleGetAlignSelf(root));
-  ASSERT_EQ(YGPositionTypeRelative, YGNodeStyleGetPositionType(root));
+  ASSERT_EQ(YGPositionTypeStatic, YGNodeStyleGetPositionType(root));
   ASSERT_EQ(YGWrapNoWrap, YGNodeStyleGetFlexWrap(root));
   ASSERT_EQ(YGOverflowVisible, YGNodeStyleGetOverflow(root));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexGrow(root));

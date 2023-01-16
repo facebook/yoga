@@ -12,7 +12,7 @@ Adding Yoga to a project is as simple as adding the dependency to your package m
 
 ```groovy
 dependencies {
-	compile 'com.facebook.yoga.android:yoga-layout:x.x.x'
+  implementation 'com.facebook.yoga.android:yoga-layout:x.x.x'
 }
 ```
 
@@ -27,7 +27,7 @@ $> yarn add yoga-layout
 ```
 
 This is an example on how to use Yoga in JavaScript, for a full API reference,
-have a look at the [flow-type definitions](https://github.com/facebook/yoga/blob/master/javascript/sources/entry-common.js#L123).
+have a look at the [flow-type definitions](https://github.com/facebook/yoga/blob/main/javascript/sources/entry-common.js#L123).
 
 ```js
 import yoga, {Node} from 'yoga-layout';
@@ -36,6 +36,7 @@ const root = Node.create();
 root.setWidth(500);
 root.setHeight(300);
 root.setJustifyContent(yoga.JUSTIFY_CENTER);
+root.setFlexDirection(yoga.FLEX_DIRECTION_ROW);
 
 const node1 = Node.create();
 node1.setWidth(100);

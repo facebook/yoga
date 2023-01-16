@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -284,6 +284,10 @@ YG_VALUE_PROPERTY(minHeight, MinHeight)
 YG_VALUE_PROPERTY(maxWidth, MaxWidth)
 YG_VALUE_PROPERTY(maxHeight, MaxHeight)
 YG_PROPERTY(CGFloat, aspectRatio, AspectRatio)
+
+YG_EDGE_PROPERTY(columnGap, ColumnGap, Gap, YGGutterColumn)
+YG_EDGE_PROPERTY(rowGap, RowGap, Gap, YGGutterRow)
+YG_EDGE_PROPERTY(gap, Gap, Gap, YGGutterAll)
 
 #pragma mark - Layout and Sizing
 

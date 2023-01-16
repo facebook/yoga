@@ -12,11 +12,10 @@ pod 'YogaKit', '~> 1.7'
 ```
 
 ## Getting Started
-Checkout the docs [here](https://facebook.github.io/yoga/docs/api/yogakit/).
 
-We also have a sample project. To try it out, clone this repo and open `YogaKitSample.xcodeproj` in the [YogaKitSample](https://github.com/facebook/yoga/tree/master/YogaKit/YogaKitSample) directory.
+We have a sample project. To try it out, clone this repo and open `YogaKitSample.xcodeproj` in the [YogaKitSample](https://github.com/facebook/yoga/tree/main/YogaKit/YogaKitSample) directory.
 
 ## Contributing
 We welcome all pull-requests! At Facebook we sync the open source version of `YogaKit` daily, so we're always testing the latest changes.
 
-See the [CONTRIBUTING.md](https://github.com/facebook/yoga/blob/master/CONTRIBUTING.md) file for how to help out.
+See the [CONTRIBUTING.md](https://github.com/facebook/yoga/blob/main/CONTRIBUTING.md) file for how to help out.

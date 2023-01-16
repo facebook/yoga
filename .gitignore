@@ -5,14 +5,15 @@
 /.buckconfig.local
 /.buckd
 /gentest/test.html
-.buckversion
+.buck-java11
 
 # Jekyll
 /.sass-cache/
 /_site/
 
 # Visual studio code
-.vscode
+!.vscode
+
 *.pdb
 *.tlog
 *.obj
@@ -63,5 +64,7 @@ Carthage/Build
 
 # Gradle
 .gradle
+
 # NDK/CMake
+.cxx
 .externalNativeBuild

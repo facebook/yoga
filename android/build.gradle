@@ -1,21 +1,18 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'maven-publish'
-
-version = VERSION_NAME
-group = GROUP
 
 android {
+    namespace 'com.facebook.yoga.android'
+
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
+    ndkVersion rootProject.ndkVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
@@ -32,21 +29,10 @@ dependencies {
     api project(':yoga')
 }
 
-task sourcesJar(type: Jar) {
-    classifier = 'source'
-    from android.sourceSets.main.java.srcDirs
+// We don't build Javadoc at this time as we can't disable "BUCK" files
+// from mistakenly getting parsed as Java.
+tasks.withType(Javadoc).all {
+  enabled = false
 }
 
-task javadoc(type: Javadoc) {
-    failOnError false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-apply from: rootProject.file('gradle/release.gradle')
+apply plugin: 'com.vanniktech.maven.publish'

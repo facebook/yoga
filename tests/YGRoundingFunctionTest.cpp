@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -48,7 +48,7 @@ static YGSize measureText(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  return (YGSize){.width = 10, .height = 10};
+  return YGSize{10, 10};
 }
 
 // Regression test for https://github.com/facebook/yoga/issues/824
@@ -57,7 +57,7 @@ TEST(YogaTest, consistent_rounding_during_repeated_layouts) {
   YGConfigSetPointScaleFactor(config, 2);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
-  YGNodeStyleSetMargin(root, YGEdgeTop, -1.49);
+  YGNodeStyleSetMargin(root, YGEdgeTop, -1.49f);
   YGNodeStyleSetWidth(root, 500);
   YGNodeStyleSetHeight(root, 500);
 
@@ -70,7 +70,7 @@ TEST(YogaTest, consistent_rounding_during_repeated_layouts) {
 
   for (int i = 0; i < 5; i++) {
     // Dirty the tree so YGRoundToPixelGrid runs again
-    YGNodeStyleSetMargin(root, YGEdgeLeft, i + 1);
+    YGNodeStyleSetMargin(root, YGEdgeLeft, (float) (i + 1));
 
     YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(node1));

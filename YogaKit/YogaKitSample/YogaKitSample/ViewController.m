@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -28,17 +28,19 @@
 
   UIView* child2 = [UIView new];
   child2.backgroundColor = [UIColor greenColor];
-  child2.frame = (CGRect){.size = {
-                              .width = 200,
-                              .height = 100,
-                          }};
+  child2.frame = (CGRect){
+      .size = {
+          .width = 200,
+          .height = 100,
+      }};
 
   UIView* child3 = [UIView new];
   child3.backgroundColor = [UIColor yellowColor];
-  child3.frame = (CGRect){.size = {
-                              .width = 100,
-                              .height = 100,
-                          }};
+  child3.frame = (CGRect){
+      .size = {
+          .width = 100,
+          .height = 100,
+      }};
 
   [child2 addSubview:child3];
   [root addSubview:child1];

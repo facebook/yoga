@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,10 +20,7 @@ static YGSize _measure(
     (*measureCount)++;
   }
 
-  return YGSize{
-      .width = 10,
-      .height = 10,
-  };
+  return YGSize{10, 10};
 }
 
 static YGSize _simulate_wrapping_text(
@@ -33,13 +30,10 @@ static YGSize _simulate_wrapping_text(
     float height,
     YGMeasureMode heightMode) {
   if (widthMode == YGMeasureModeUndefined || width >= 68) {
-    return YGSize{.width = 68, .height = 16};
+    return YGSize{68, 16};
   }
 
-  return YGSize{
-      .width = 50,
-      .height = 32,
-  };
+  return YGSize{50, 32};
 }
 
 static YGSize _measure_assert_negative(
@@ -51,10 +45,7 @@ static YGSize _measure_assert_negative(
   EXPECT_GE(width, 0);
   EXPECT_GE(height, 0);
 
-  return YGSize{
-      .width = 0,
-      .height = 0,
-  };
+  return YGSize{0, 0};
 }
 
 TEST(YogaTest, dont_measure_single_grow_shrink_child) {
@@ -580,7 +571,11 @@ TEST(YogaDeathTest, cannot_add_child_to_node_with_measure_func) {
   root->setMeasureFunc(_measure);
 
   const YGNodeRef root_child0 = YGNodeNew();
+#if defined(__cpp_exceptions)
   ASSERT_THROW(YGNodeInsertChild(root, root_child0, 0), std::logic_error);
+#else // !defined(__cpp_exceptions)
+  ASSERT_DEATH(YGNodeInsertChild(root, root_child0, 0), "Cannot add child.*");
+#endif // defined(__cpp_exceptions)
   YGNodeFree(root_child0);
   YGNodeFreeRecursive(root);
 }
@@ -589,7 +584,11 @@ TEST(YogaDeathTest, cannot_add_nonnull_measure_func_to_non_leaf_node) {
   const YGNodeRef root = YGNodeNew();
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeInsertChild(root, root_child0, 0);
+#if defined(__cpp_exceptions)
   ASSERT_THROW(root->setMeasureFunc(_measure), std::logic_error);
+#else // !defined(__cpp_exceptions)
+  ASSERT_DEATH(root->setMeasureFunc(_measure), "Cannot set measure function.*");
+#endif // defined(__cpp_exceptions)
   YGNodeFreeRecursive(root);
 }
 
@@ -648,10 +647,7 @@ static YGSize _measure_90_10(
     float height,
     YGMeasureMode heightMode) {
 
-  return YGSize{
-      .width = 90,
-      .height = 10,
-  };
+  return YGSize{90, 10};
 }
 
 static YGSize _measure_100_100(
@@ -661,10 +657,7 @@ static YGSize _measure_100_100(
     float height,
     YGMeasureMode heightMode) {
 
-  return YGSize{
-      .width = 100,
-      .height = 100,
-  };
+  return YGSize{100, 100};
 }
 
 TEST(YogaTest, percent_with_text_node) {

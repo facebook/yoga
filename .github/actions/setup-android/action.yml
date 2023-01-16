@@ -1,0 +1,10 @@
+name: Setup Android envirionment
+
+runs:
+  using: "composite"
+  steps:
+    - name: Select Java Version
+      uses: actions/setup-java@v2
+      with:
+        distribution: temurin
+        java-version: 11

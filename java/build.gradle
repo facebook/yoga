@@ -1,41 +1,35 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'maven-publish'
 
-group = GROUP
-version = VERSION_NAME
+apply plugin: 'com.android.library'
 
 android {
+    namespace 'com.facebook.yoga'
+
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
+    ndkVersion rootProject.ndkVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
 
+        consumerProguardFiles 'proguard-rules.pro'
+
         ndk {
             abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
-        }
-
-        externalNativeBuild {
-            cmake {
-                arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static'
-            }
         }
     }
 
     externalNativeBuild {
         cmake {
+            version rootProject.cmakeVersion
             path 'CMakeLists.txt'
-            version '3.6.0-rc2'
         }
     }
 
@@ -50,40 +44,13 @@ android {
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']
         }
-
-        test {
-            java.srcDirs 'tests'
-        }
     }
 }
 
 dependencies {
-    implementation 'com.google.code.findbugs:jsr305:3.0.1'
-    implementation project(':yoga:proguard-annotations')
-    implementation 'com.facebook.soloader:soloader:0.5.1'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'com.facebook.soloader:soloader:0.10.4'
     testImplementation 'junit:junit:4.12'
-    testImplementation project(':testutil')
 }
 
-task sourcesJar(type: Jar) {
-    classifier = 'source'
-    from android.sourceSets.main.java.srcDirs
-}
-
-task javadoc(type: Javadoc) {
-    failOnError false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-ext {
-    bintrayName = 'com.facebook.yoga:yoga'
-}
-
-apply from: rootProject.file('gradle/release.gradle')
+apply plugin: 'com.vanniktech.maven.publish'

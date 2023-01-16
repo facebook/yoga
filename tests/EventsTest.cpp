@@ -1,21 +1,22 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 #include <gtest/gtest.h>
-#include <yoga/Yoga.h>
 #include <yoga/event/event.h>
+#include <yoga/Yoga.h>
+#include <yoga/YGEnums.h>
 #include <yoga/YGNode.h>
-#include <yoga/testutil/testutil.h>
 
 #include <algorithm>
 #include <functional>
 #include <memory>
 #include <vector>
-#include <yoga/YGEnums.h>
+
+#include "util/TestUtil.h"
 
 namespace facebook {
 namespace yoga {
@@ -233,7 +234,7 @@ TEST_F(EventTest, layout_events_has_max_measure_cache) {
   YGNodeInsertChild(root, b, 1);
   YGNodeStyleSetFlexBasis(a, 10.0f);
 
-  for (auto s : {20, 30, 40}) {
+  for (auto s : {20.0f, 30.0f, 40.0f}) {
     YGNodeCalculateLayout(root, s, s, YGDirectionLTR);
   }
 
@@ -303,8 +304,8 @@ EventArgs createArgs(
   };
 
   EventArgs args = createArgs<E>(node, data);
-  args.eventTestDataPtr = {new EventTestData{eventTestData},
-                           deleteEventTestData};
+  args.eventTestDataPtr = {
+      new EventTestData{eventTestData}, deleteEventTestData};
   return args;
 }
 

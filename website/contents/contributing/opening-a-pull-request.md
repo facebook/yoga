@@ -43,11 +43,10 @@ made your change see the [testing documentation](/contributing/testing) for more
 |-- lib                   # Yoga external dependencies. Be thoughtful adding any new ones
 |-- tests                 # Yoga's C++ test suite. Both manaul and generated tests
 |-- gentest
-|   |-- fixtures          # html fixtures for generated tests    
-|-- java         
+|   |-- fixtures          # html fixtures for generated tests
+|-- java
 |   |-- com/facebook/yoga # Java binding code
 |   |-- jni               # JNI binding code
-|-- yogacore              # Android bindings without View support
 |-- android               # Android View bindings
 |-- YogaKit               # iOS UIView bindings
 |-- javascript            # emscripten / javascript bindings

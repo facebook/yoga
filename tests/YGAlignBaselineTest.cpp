@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,10 +22,7 @@ static YGSize _measure1(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  return YGSize{
-      .width = 42,
-      .height = 50,
-  };
+  return YGSize{42, 50};
 }
 
 static YGSize _measure2(
@@ -34,10 +31,7 @@ static YGSize _measure2(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  return YGSize{
-      .width = 279,
-      .height = 126,
-  };
+  return YGSize{279, 126};
 }
 
 static YGNodeRef createYGNode(
@@ -51,8 +45,8 @@ static YGNodeRef createYGNode(
   if (alignBaseline) {
     YGNodeStyleSetAlignItems(node, YGAlignBaseline);
   }
-  YGNodeStyleSetWidth(node, width);
-  YGNodeStyleSetHeight(node, height);
+  YGNodeStyleSetWidth(node, (float) width);
+  YGNodeStyleSetHeight(node, (float) height);
   return node;
 }
 

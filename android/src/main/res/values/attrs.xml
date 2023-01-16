@@ -2,7 +2,7 @@
 
 <!--
   Copyright (c) Facebook, Inc. and its affiliates.
-  
+
   This source code is licensed under the MIT license found in the
   LICENSE file in the root directory of this source tree.
 -->
@@ -130,8 +130,14 @@
     <attr name="yg_positionAll" format="dimension|string"/>
 
     <attr name="yg_positionType" format="enum">
-      <enum name="relative" value="0"/>
-      <enum name="absolute" value="1"/>
+      <!-- "static" is a reserved keyword
+      <enum name="static" value="0"/>
+      -->
+      <enum name="relative" value="1"/>
+      <enum name="absolute" value="2"/>
+      <enum name="position_static" value="0"/>
+      <enum name="position_relative" value="1"/>
+      <enum name="position_absolute" value="2"/>
     </attr>
 
     <attr name="yg_width" format="dimension|string"/>

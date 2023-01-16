@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -38,15 +38,15 @@ static YGSize _measure(
   constraintList->length = currentIndex + 1;
 
   return YGSize{
-      .width = widthMode == YGMeasureModeUndefined ? 10 : width,
-      .height = heightMode == YGMeasureModeUndefined ? 10 : width,
+      widthMode == YGMeasureModeUndefined ? 10 : width,
+      heightMode == YGMeasureModeUndefined ? 10 : width,
   };
 }
 
 TEST(YogaTest, exactly_measure_stretched_child_column) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -74,8 +74,8 @@ TEST(YogaTest, exactly_measure_stretched_child_column) {
 
 TEST(YogaTest, exactly_measure_stretched_child_row) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -103,8 +103,8 @@ TEST(YogaTest, exactly_measure_stretched_child_row) {
 
 TEST(YogaTest, at_most_main_axis_column) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -130,8 +130,8 @@ TEST(YogaTest, at_most_main_axis_column) {
 
 TEST(YogaTest, at_most_cross_axis_column) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -158,8 +158,8 @@ TEST(YogaTest, at_most_cross_axis_column) {
 
 TEST(YogaTest, at_most_main_axis_row) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -186,8 +186,8 @@ TEST(YogaTest, at_most_main_axis_row) {
 
 TEST(YogaTest, at_most_cross_axis_row) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -215,8 +215,8 @@ TEST(YogaTest, at_most_cross_axis_row) {
 
 TEST(YogaTest, flex_child) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -245,8 +245,8 @@ TEST(YogaTest, flex_child) {
 
 TEST(YogaTest, flex_child_with_flex_basis) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -273,8 +273,8 @@ TEST(YogaTest, flex_child_with_flex_basis) {
 
 TEST(YogaTest, overflow_scroll_column) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -305,8 +305,8 @@ TEST(YogaTest, overflow_scroll_column) {
 
 TEST(YogaTest, overflow_scroll_row) {
   struct _MeasureConstraintList constraintList = _MeasureConstraintList{
-      .length = 0,
-      .constraints = (struct _MeasureConstraint*) malloc(
+      0,
+      (struct _MeasureConstraint*) malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
