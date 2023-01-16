@@ -8,6 +8,8 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'com.facebook.yoga.android'
+
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
     ndkVersion rootProject.ndkVersion
