@@ -3701,12 +3701,12 @@ YOGA_EXPORT float YGRoundValueToPixelGrid(
     scaledValue = scaledValue - fractial + 1.0;
   } else if (forceCeil) {
     // Next we check if we need to use forced rounding
-    scaledValue = ceilf(scaledValue);
+    scaledValue = ceil(scaledValue);
   } else if (forceFloor) {
-    scaledValue = floorf(scaledValue);
+    scaledValue = floor(scaledValue);
   } else {
     // Finally we just round the value
-    scaledValue = roundf(scaledValue);
+    scaledValue = round(scaledValue);
   }
   return (YGDoubleIsUndefined(scaledValue) ||
           YGDoubleIsUndefined(pointScaleFactor))
