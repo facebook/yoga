@@ -1,10 +1,8 @@
 /**
- * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 function toValueJava(value) {
@@ -44,13 +42,29 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     this.push([
       'package com.facebook.yoga;',
       '',
-      'import org.junit.Test;',
-      '',
       'import static org.junit.Assert.assertEquals;',
       '',
+      'import org.junit.Test;',
+      'import org.junit.runner.RunWith;',
+      'import org.junit.runners.Parameterized;',
+      '',
+      '@RunWith(Parameterized.class)',
       'public class YogaTest {',
     ]);
     this.pushIndent();
+    this.push([
+      '@Parameterized.Parameters(name = "{0}")',
+      'public static Iterable<TestParametrization.NodeFactory> nodeFactories() {',
+    ]);
+    this.pushIndent();
+    this.push('return TestParametrization.nodeFactories();');
+    this.popIndent();
+    this.push('}');
+    this.push([
+      '',
+      '@Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;',
+      '',
+    ]);
   }},
 
   emitTestPrologue:{value:function(name, experiments) {
@@ -58,7 +72,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('public void test_' + name + '() {');
     this.pushIndent();
 
-    this.push("YogaConfig config = new YogaConfig();")
+    this.push("YogaConfig config = YogaConfigFactory.create();")
     for (var i in experiments) {
       this.push('config.setExperimentalFeatureEnabled(YogaExperimentalFeature.' + toJavaUpper(experiments[i]) +', true);');
     }
@@ -66,7 +80,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitTestTreePrologue:{value:function(nodeName) {
-    this.push('final YogaNode ' + nodeName + ' = new YogaNode(config);');
+    this.push('final YogaNode ' + nodeName + ' = createNode(config);');
   }},
 
   emitTestEpilogue:{value:function(experiments) {
@@ -78,6 +92,11 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   }},
 
   emitEpilogue:{value:function(lines) {
+    this.push('private YogaNode createNode(YogaConfig config) {');
+    this.pushIndent();
+    this.push('return mNodeFactory.create(config);');
+    this.popIndent();
+    this.push('}');
     this.popIndent();
     this.push([
       '}',
@@ -108,6 +127,10 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeRight:{value:'YogaEdge.RIGHT'},
   YGEdgeStart:{value:'YogaEdge.START'},
   YGEdgeTop:{value:'YogaEdge.TOP'},
+
+  YGGutterAll:{value:'YogaGutter.ALL'},
+  YGGutterColumn:{value:'YogaGutter.COLUMN'},
+  YGGutterRow:{value:'YogaGutter.ROW'},
 
   YGFlexDirectionColumn:{value:'YogaFlexDirection.COLUMN'},
   YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.COLUMN_REVERSE'},
@@ -260,5 +283,9 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetWidth:{value:function(nodeName, value) {
     this.push(nodeName + '.setWidth' + toMethodName(value) + '(' + toValueJava(value) + 'f);');
+  }},
+
+  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
+    this.push(nodeName + '.setGap' + toMethodName(value) + '(' + gap + ', ' + toValueJava(value) + 'f);');
   }},
 });

@@ -1,0 +1,62 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Source+Code+Pro');
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #303845;
+  font-size: 16px;
+}
+
+code,
+pre {
+  font-family: 'Source Code Pro', monospace;
+}
+
+h1,
+h2 {
+  font-weight: 500;
+}
+
+.gatsby-highlight pre[class*="language-"] {
+  background: none;
+  padding: 0;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.Page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.PageContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.PageContent.withSpacing {
+  padding-top: 35px;
+}
+
+.Page .ant-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 11px;
+  padding-right: 11px;
+}
+
+.Page .ant-dropdown-trigger .anticon {
+  margin-top: 3px;
+}

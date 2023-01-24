@@ -1,0 +1,222 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.landing-page .hero {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.landing-page .hero h3 {
+  color: #BEC3C9;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 200%;
+}
+
+.landing-page .hero h1 {
+  color: #444950;
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 110%;
+}
+
+.landing-page .hero p {
+  color: #444950;
+  line-height: 180%;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 1.5em;
+}
+
+.landing-page .hero .button {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 30px;
+  height: auto;
+}
+
+.landing-page .hero .blueprint {
+  border-style: dashed;
+  border-color: #444950;
+  border-width: 1px;
+}
+
+.landing-page .hero .blueprint-container {
+  position: relative;
+  margin: auto;
+  height: 300px;
+  width: 300px;
+}
+
+.landing-page .hero .blueprint-avatar {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  height: 50px;
+  width: 50px;
+}
+
+.landing-page .hero .blueprint-title {
+  position: absolute;
+  left: 80px;
+  top: 20px;
+  height: 15px;
+  width: 150px;
+}
+
+.landing-page .hero .blueprint-subtitle {
+  position: absolute;
+  left: 80px;
+  top: 40px;
+  height: 15px;
+  width: 80px;
+}
+
+.landing-page .hero .blueprint-content {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  top: 80px;
+}
+
+.landing-page hr {
+  width: 100%;
+  height: 1px;
+  background-color: #BEC3C9;
+  border-width: 0px;
+}
+
+.landing-page .about-section {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.landing-page .about-section h1 {
+  color: #444950;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+.landing-page .about-section h3 {
+  color: #6BCEBB;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 50px;
+}
+
+.landing-page .about-section p {
+  color: #444950;
+  line-height: 180%;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.landing-page .logo-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.landing-page .logo-group .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.landing-page .logo-group img {
+  height: 130px;
+}
+
+.landing-page .logo-group .logo h3 {
+  color: #606770;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 20px;
+  text-align: center;
+}
+
+footer {
+  display: flex;
+  padding: 20px 15px;
+  padding-left: 87px;
+  z-index: 4;
+  align-items: center;
+  background-color: white;
+}
+
+footer a {
+  margin: 0 15px;
+  color: #606770;
+}
+
+footer a:hover {
+  color: #6BCEBB;
+}
+
+@media only screen and (max-width: 576px) {
+   .landing-page .hero {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .landing-page .hero h3 {
+    font-size: 14px;
+  }
+
+  .landing-page .hero h1 {
+    font-size: 32px;
+    font-weight: 400;
+  }
+
+  .landing-page .hero p {
+    line-height: 160%;
+    font-size: 14px;
+  }
+
+  .landing-page .about-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .landing-page .about-section h1 {
+    font-size: 24px;
+    line-height: 120%;
+  }
+
+  .landing-page .about-section h3 {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .landing-page .about-section p {
+    line-height: 160%;
+    font-size: 14px;
+  }
+
+  .landing-page .logo-group .logo {
+    width: 33%;
+    padding: 20px;
+    margin-right: 0px;
+  }
+
+  .landing-page .logo-group img {
+    height: auto;
+    width: 100%;
+  }
+
+  .landing-page .logo-group .logo h3 {
+    font-size: 10px;
+    margin-top: 10px;
+  }
+}

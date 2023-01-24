@@ -1,0 +1,63 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.Footer {
+  display: flex;
+  padding: 20px 15px;
+  z-index: 4;
+  align-items: center;
+  background-color: white;
+}
+
+.Footer svg {
+  width: 30px;
+  height: 30px;
+}
+
+.Footer svg path {
+  fill: #606770;
+}
+
+.Footer .logoOSS {
+  display: flex;
+  align-items: center;
+  color: #606770;
+}
+
+.Footer .logoOSS svg {
+  margin-right: 20px;
+}
+
+.Footer a {
+  margin: 0 15px;
+  color: #606770;
+  font-weight: 700;
+}
+
+.Footer a:hover {
+  color: #6BCEBB;
+}
+
+.Footer .SocialNetwork {
+  display: flex;
+  margin-left: auto;
+}
+
+@media only screen and (max-width: 576px) {
+  .Footer {
+    padding: 10px 5px;
+  }
+
+  .Footer .logoOSS svg {
+    margin-right: 10px;
+  }
+
+  .Footer a {
+    margin: 0 10px;
+    font-size: 12px;
+  }
+}

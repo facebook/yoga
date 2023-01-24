@@ -1,23 +1,23 @@
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 #include <gtest/gtest.h>
+#include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
-static YGSize _measure(YGNodeRef node,
-                       float width,
-                       YGMeasureMode widthMode,
-                       float height,
-                       YGMeasureMode heightMode) {
+static YGSize _measure(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
   return YGSize{
-      .width = widthMode == YGMeasureModeExactly ? width : 50,
-      .height = heightMode == YGMeasureModeExactly ? height : 50,
+      widthMode == YGMeasureModeExactly ? width : 50,
+      heightMode == YGMeasureModeExactly ? height : 50,
   };
 }
 
@@ -449,7 +449,7 @@ TEST(YogaTest, aspect_ratio_with_measure_func) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  YGNodeSetMeasureFunc(root_child0, _measure);
+  root_child0->setMeasureFunc(_measure);
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -767,6 +767,31 @@ TEST(YogaTest, aspect_ratio_defined_cross_with_margin) {
   YGNodeStyleSetAspectRatio(root_child0, 1);
   YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 10);
   YGNodeStyleSetMargin(root_child0, YGEdgeRight, 10);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(50, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(50, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+}
+
+TEST(YogaTest, aspect_ratio_defined_cross_with_main_margin) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignCenter);
+  YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetAspectRatio(root_child0, 1);
+  YGNodeStyleSetMargin(root_child0, YGEdgeTop, 10);
+  YGNodeStyleSetMargin(root_child0, YGEdgeBottom, 10);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);

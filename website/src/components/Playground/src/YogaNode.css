@@ -1,0 +1,57 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+ .YogaNode {
+  background: white;
+  position: absolute;
+  transform: scale(1);
+  box-shadow: inset 0 0 0px 1px rgba(48, 56, 69, 0.2);
+  transition: 0.2s all, 0s outline, 0s box-shadow;
+  cursor: pointer;
+}
+
+.YogaNode.hover {
+  background-color: #F0FFF9;
+}
+
+.YogaNode .YogaNode {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.YogaNode .YogaNode.hover{
+  background: rgba(240, 255, 249, 0.7);
+}
+
+.YogaNode:focus {
+  outline: 0;
+}
+
+.YogaNode.focused {
+  box-shadow: 0 0 0 2px #68CFBB, 0 0 15px rgba(0, 0, 0, 0.2),
+    inset 0 0 0px 1px rgba(255, 255, 255, 0.2);
+  z-index: 2;
+}
+
+.YogaNode.invisible {
+  transform: scale(0);
+}
+
+.YogaNode .label {
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}

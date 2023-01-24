@@ -1,4 +1,11 @@
-﻿using System;
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+using System;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Facebook.Yoga;
 
@@ -206,8 +213,8 @@ namespace Facebook.Yoga.Universal.Tests
                 return MeasureOutput.Make(123.4f, 81.7f);
             });
             node.CalculateLayout();
-            Assert.AreEqual(123, node.LayoutWidth);
-            Assert.AreEqual(81, node.LayoutHeight);
+            Assert.AreEqual(124, node.LayoutWidth);
+            Assert.AreEqual(82, node.LayoutHeight);
         }
 
         [TestMethod]
@@ -268,7 +275,12 @@ namespace Facebook.Yoga.Universal.Tests
             parent.Insert(0, child0);
             parent.Insert(0, child1);
             parent.CalculateLayout();
-            Assert.AreEqual(parent.Print(), "{layout: {width: 100, height: 120, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 100, height: 120, children: [\n  {layout: {width: 35, height: 45, top: 0, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 35, height: 45, },\n  {layout: {width: 30, height: 40, top: 45, left: 0}, flexDirection: 'column', alignItems: 'stretch', flexGrow: 0, flexShrink: 0, overflow: 'visible', width: 30, height: 40, },\n]},\n");
+            Assert.AreEqual(parent.Print(),
+              "<div layout=\"width: 100; height: 120; top: 0; left: 0;\" style=\"width: 100px; height: 120px; \" >\n" +
+              "  <div layout=\"width: 35; height: 45; top: 0; left: 0;\" style=\"width: 35px; height: 45px; \" ></div>\n" +
+              "  <div layout=\"width: 30; height: 40; top: 45; left: 0;\" style=\"width: 30px; height: 40px; \" ></div>\n" +
+              "</div>"
+            );
         }
 
         [TestMethod]

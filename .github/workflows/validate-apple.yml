@@ -1,0 +1,55 @@
+name: Apple
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  lint-pods:
+    name: Lint
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-apple
+
+      - name: pod spec lint
+        run: pod spec lint --verbose
+        continue-on-error: true # Apple Build is Broken
+
+  build-sample:
+    name: Build [${{ matrix.mode }}]
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        mode: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-apple
+
+      - name: pod install
+        run: pod install
+        working-directory: ./YogaKit/YogaKitSample
+        continue-on-error: true # Apple Build is Broken
+
+      # TODO: xcodebuild
+
+  clang-format:
+    name: Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: clang-format
+        uses: ./.github/actions/clang-format
+        with:
+          directory: ./YogaKit

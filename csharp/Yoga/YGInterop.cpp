@@ -1,21 +1,20 @@
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 #include "YGInterop.h"
 
 static YGInteropLogger gManagedLogger;
 
-static int unmanagedLogger(const YGConfigRef config,
-                           const YGNodeRef node,
-                           YGLogLevel level,
-                           const char *format,
-                           va_list args) {
+static int unmanagedLogger(
+    const YGConfigRef config,
+    const YGNodeRef node,
+    YGLogLevel level,
+    const char* format,
+    va_list args) {
   int result = 0;
   if (gManagedLogger) {
     char message[8192];
@@ -25,7 +24,7 @@ static int unmanagedLogger(const YGConfigRef config,
   return result;
 }
 
-void YGInteropSetLogger(YGInteropLogger managedLogger) {
+YOGA_EXPORT void YGInteropSetLogger(YGInteropLogger managedLogger) {
   gManagedLogger = managedLogger;
   YGConfigSetLogger(YGConfigGetDefault(), &unmanagedLogger);
 }

@@ -1,0 +1,28 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.playground-page {
+  display: flex;
+  flex: 1;
+}
+
+@media (max-width: 991px) {
+  .playground-page .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.playground-page .error-text {
+  color: #444950;
+  line-height: 180%;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+}

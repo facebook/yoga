@@ -1,10 +1,8 @@
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 #include <gtest/gtest.h>
@@ -13,7 +11,7 @@
 TEST(YogaTest, assert_default_values) {
   const YGNodeRef root = YGNodeNew();
 
-  ASSERT_EQ(0, YGNodeGetChildCount(root));
+  ASSERT_EQ(0u, YGNodeGetChildCount(root));
   ASSERT_EQ(NULL, YGNodeGetChild(root, 1));
 
   ASSERT_EQ(YGDirectionInherit, YGNodeStyleGetDirection(root));
@@ -22,7 +20,7 @@ TEST(YogaTest, assert_default_values) {
   ASSERT_EQ(YGAlignFlexStart, YGNodeStyleGetAlignContent(root));
   ASSERT_EQ(YGAlignStretch, YGNodeStyleGetAlignItems(root));
   ASSERT_EQ(YGAlignAuto, YGNodeStyleGetAlignSelf(root));
-  ASSERT_EQ(YGPositionTypeRelative, YGNodeStyleGetPositionType(root));
+  ASSERT_EQ(YGPositionTypeStatic, YGNodeStyleGetPositionType(root));
   ASSERT_EQ(YGWrapNoWrap, YGNodeStyleGetFlexWrap(root));
   ASSERT_EQ(YGOverflowVisible, YGNodeStyleGetOverflow(root));
   ASSERT_FLOAT_EQ(0, YGNodeStyleGetFlexGrow(root));
@@ -92,7 +90,7 @@ TEST(YogaTest, assert_default_values) {
 }
 
 TEST(YogaTest, assert_webdefault_values) {
-  YGConfig *config = YGConfigNew();
+  YGConfig* config = YGConfigNew();
   YGConfigSetUseWebDefaults(config, true);
   const YGNodeRef root = YGNodeNewWithConfig(config);
 
@@ -105,7 +103,7 @@ TEST(YogaTest, assert_webdefault_values) {
 }
 
 TEST(YogaTest, assert_webdefault_values_reset) {
-  YGConfig *config = YGConfigNew();
+  YGConfig* config = YGConfigNew();
   YGConfigSetUseWebDefaults(config, true);
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeReset(root);
@@ -119,7 +117,7 @@ TEST(YogaTest, assert_webdefault_values_reset) {
 }
 
 TEST(YogaTest, assert_legacy_stretch_behaviour) {
-  YGConfig *config = YGConfigNew();
+  YGConfig* config = YGConfigNew();
   YGConfigSetUseLegacyStretchBehaviour(config, true);
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 500);

@@ -1,65 +1,56 @@
 {
-    "name": "yoga-layout",
-    "version": "1.8.0",
-    "description": "Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.",
-    "license": "BSD-3-Clause",
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:facebook/yoga.git"
+  "name": "yoga-layout",
+  "version": "2.0.0-beta.1",
+  "description": "JavaScript bindings for the Yoga layout engine",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:facebook/yoga.git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/entrypoint/wasm-async.js",
+      "node": "./dist/entrypoint/wasm-async.js",
+      "default": "./dist/entrypoint/asmjs-async.js"
     },
-
-    "main": "./sources/entry-node",
-    "browser": "./sources/entry-browser",
-
-    "config": {
-        "platform": "all"
-    },
-
-    "scripts": {
-
-        "which": "which",
-        "autogypi": "autogypi",
-        "node-gyp": "node-gyp",
-        "emcc-path": "emcc-path",
-
-        "is-monolithic": "test \"$(basename \"$(pwd)\")\" = javascript",
-        "copy-sources": "! npm -s -- run is-monolithic || (rsync -r --checksum --delete ../yoga/ sources/yoga/)",
-
-        "build:node": "npm -- run copy-sources && npm -- run node-gyp configure build",
-        "build:browser": "npm -- run copy-sources && npm -- run node-gyp configure build --asmjs=1",
-        "postbuild:browser": "babel build/Release/nbind.js --out-file build/Release/nbind.js",
-        "build:standalone": "webpack",
-        "build:all": "npm -- run build:node && npm -- run build:browser && npm -- run build:standalone",
-        "build": "cross-env \"npm --if-present -- run build:$npm_package_config_platform\"",
-
-        "test:node": "TEST_ENTRY=node time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-        "test:browser": "TEST_ENTRY=browser time mocha --expose-gc -r tests/tools.js tests/Facebook.Yoga/**/*.js",
-        "test:all": "npm -- run test:node && npm -- run test:browser",
-        "test": "npm -- run test:all",
-
-        "bench": "node tests/run-bench $(find tests/Benchmarks -name '*.js')",
-
-        "install": "npm -- run autogypi && npm -- run build:node",
-
-        "prepare": "npm -- run build:browser"
-
-    },
-
-    "dependencies": {
-
-        "autogypi": "^0.2.2",
-        "nbind": "^0.3.8",
-        "node-gyp": "^3.4.0"
-
-    },
-
-    "devDependencies": {
-
-        "babel-cli": "^6.24.1",
-        "babel-core": "^6.25.0",
-        "babel-plugin-replace-require": "^0.0.4",
-        "cross-env": "^4.0.0",
-        "mocha": "^3.2.0",
-        "webpack": "^2.2.0-rc.2"
+    "./sync": {
+      "browser": "./dist/entrypoint/asmjs-sync.js",
+      "node": "./dist/entrypoint/wasm-sync.js",
+      "default": "./dist/entrypoint/asmjs-sync.js"
     }
+  },
+  "files": [
+    "dist/**",
+    "src_js/**"
+  ],
+  "scripts": {
+    "benchmark": "just benchmark",
+    "build": "just build",
+    "clean": "just clean",
+    "lint": "just lint",
+    "lint:fix": "just lint --fix",
+    "test": "just test",
+    "test:asmjs-async": "just test:asmjs-async",
+    "test:asmjs-sync": "just test:asmjs-sync",
+    "test:wasm-async": "just test:wasm-async",
+    "test:wasm-sync": "just test:wasm-sync"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.7",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/preset-env": "^7.20.2",
+    "clang-format": "^1.8.0",
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^27.1.7",
+    "eslint-plugin-prettier": "^4.2.1",
+    "glob": "^8.0.3",
+    "jest": "^29.3.1",
+    "just-scripts": "^2.1.0",
+    "prettier": "^2.4.1",
+    "which": "^3.0.0"
+  }
 }

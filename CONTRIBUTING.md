@@ -4,11 +4,11 @@ possible.
 
 ## Code of Conduct
 
-Facebook has adopted a Code of Conduct that we expect project participants to adhere to. Please [read the full text](https://code.facebook.com/pages/876921332402685/open-source-code-of-conduct) so that you can understand what actions will and will not be tolerated.
+Facebook has adopted a Code of Conduct that we expect project participants to adhere to. Please [read the full text](https://code.fb.com/codeofconduct/) so that you can understand what actions will and will not be tolerated.
 
 ## Pull Requests
 We actively welcome your pull requests.
-1. Fork the repo and create your branch from `master`.
+1. Fork the repo and create your branch from `main`.
 2. If you've added code that should be tested, add tests
 3. If you've changed APIs, update the documentation.
 4. Ensure the test suite passes.
@@ -31,4 +31,4 @@ outlined on that page and do not file a public issue.
 
 ## License
 By contributing to yoga, you agree that your contributions will be licensed
-under its BSD license.
+under its MIT license.

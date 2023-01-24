@@ -1,16 +1,11 @@
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 package com.facebook.yoga.android;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -23,9 +18,6 @@ import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.util.Log;
-
-import com.facebook.yoga.android.R;
 import com.facebook.yoga.YogaAlign;
 import com.facebook.yoga.YogaConstants;
 import com.facebook.yoga.YogaDirection;
@@ -37,10 +29,12 @@ import com.facebook.yoga.YogaMeasureFunction;
 import com.facebook.yoga.YogaMeasureMode;
 import com.facebook.yoga.YogaMeasureOutput;
 import com.facebook.yoga.YogaNode;
-import com.facebook.yoga.YogaNode;
+import com.facebook.yoga.YogaNodeFactory;
 import com.facebook.yoga.YogaOverflow;
 import com.facebook.yoga.YogaPositionType;
 import com.facebook.yoga.YogaWrap;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A {@code ViewGroup} based on the Yoga layout engine.
@@ -53,14 +47,14 @@ import com.facebook.yoga.YogaWrap;
  * <YogaLayout
  *     xmlns:android="http://schemas.android.com/apk/res/android"
  *     xmlns:yoga="http://schemas.android.com/apk/com.facebook.yoga.android"
- *     android:layout_width="match_parent"
- *     android:layout_height="match_parent"
+ *     android:layout_width="match_owner"
+ *     android:layout_height="match_owner"
  *     yoga:flex_direction="row"
  *     yoga:padding_all="10dp"
  *     >
  *     <TextView
- *         android:layout_width="match_parent"
- *         android:layout_height="match_parent"
+ *         android:layout_width="match_owner"
+ *         android:layout_height="match_owner"
  *         android:text="Hello, World!"
  *         yoga:flex="1"
  *         />
@@ -85,7 +79,7 @@ public class YogaLayout extends ViewGroup {
   public YogaLayout(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
 
-    mYogaNode = new YogaNode();
+    mYogaNode = YogaNodeFactory.create();
     mYogaNodes = new HashMap<>();
 
     mYogaNode.setData(this);
@@ -162,7 +156,7 @@ public class YogaLayout extends ViewGroup {
       if(mYogaNodes.containsKey(child)) {
         childNode = mYogaNodes.get(child);
       } else {
-        childNode = new YogaNode();
+        childNode = YogaNodeFactory.create();
       }
 
       childNode.setData(child);
@@ -269,11 +263,11 @@ public class YogaLayout extends ViewGroup {
       return;
     }
 
-    final YogaNode parent = node.getParent();
+    final YogaNode owner = node.getOwner();
 
-    for (int i = 0; i < parent.getChildCount(); i++) {
-      if (parent.getChildAt(i).equals(node)) {
-        parent.removeChildAt(i);
+    for (int i = 0; i < owner.getChildCount(); i++) {
+      if (owner.getChildAt(i).equals(node)) {
+        owner.removeChildAt(i);
         break;
       }
     }
@@ -293,6 +287,8 @@ public class YogaLayout extends ViewGroup {
       if (view.getVisibility() == GONE) {
         return;
       }
+      int left = Math.round(xOffset + node.getLayoutX());
+      int top = Math.round(yOffset + node.getLayoutY());
       view.measure(
           View.MeasureSpec.makeMeasureSpec(
               Math.round(node.getLayoutWidth()),
@@ -300,11 +296,7 @@ public class YogaLayout extends ViewGroup {
           View.MeasureSpec.makeMeasureSpec(
               Math.round(node.getLayoutHeight()),
               View.MeasureSpec.EXACTLY));
-      view.layout(
-          Math.round(xOffset + node.getLayoutX()),
-          Math.round(yOffset + node.getLayoutY()),
-          Math.round(xOffset + node.getLayoutX() + node.getLayoutWidth()),
-          Math.round(yOffset + node.getLayoutY() + node.getLayoutHeight()));
+      view.layout(left, top, left + view.getMeasuredWidth(), top + view.getMeasuredHeight());
     }
 
     final int childrenCount = node.getChildCount();
@@ -324,7 +316,7 @@ public class YogaLayout extends ViewGroup {
 
   @Override
   protected void onLayout(boolean changed, int l, int t, int r, int b) {
-    // Either we are a root of a tree, or this function is called by our parent's onLayout, in which
+    // Either we are a root of a tree, or this function is called by our owner's onLayout, in which
     // case our r-l and b-t are the size of our node.
     if (!(getParent() instanceof YogaLayout)) {
         createLayout(
@@ -708,7 +700,7 @@ public class YogaLayout extends ViewGroup {
     /**
      * Constructs a set of layout params, given width and height specs.  In this case, we can set
      * the {@code yoga:width} and {@code yoga:height} if we are given them explicitly.  If other
-     * options (such as {@code match_parent} or {@code wrap_content} are given, then the parent
+     * options (such as {@code match_owner} or {@code wrap_content} are given, then the owner
      * LayoutParams will store them, and we deal with them during layout. (see
      * {@link YogaLayout#createLayout})
      *
@@ -782,9 +774,9 @@ public class YogaLayout extends ViewGroup {
      * {@code View}'s measure function.
      *
      * @param node The yoga node to measure
-     * @param width The suggested width from the parent
+     * @param width The suggested width from the owner
      * @param widthMode The type of suggestion for the width
-     * @param height The suggested height from the parent
+     * @param height The suggested height from the owner
      * @param heightMode The type of suggestion for the height
      * @return A measurement output ({@code YogaMeasureOutput}) for the node
      */

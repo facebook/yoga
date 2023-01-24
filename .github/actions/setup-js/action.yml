@@ -1,0 +1,20 @@
+name: Setup JavaScript envirionment
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 18.x
+
+    - name: Install emsdk
+      uses: ./.github/actions/install-emsdk
+
+    - name: Install Ninja
+      uses: ./.github/actions/install-ninja
+
+    - name: yarn install
+      shell: bash
+      run: yarn install --frozen-lockfile
+      working-directory: javascript

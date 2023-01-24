@@ -1,10 +1,8 @@
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- * All rights reserved.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 using NUnit.Framework;
@@ -261,7 +259,7 @@ namespace Facebook.Yoga
         [Test]
         public void TestPrintWithLogger()
         {
-            YogaNode node = new YogaNode(new YogaConfig{Logger = (c, n, l, m) => {}});
+            YogaNode node = new YogaNode();
             node.Width = 110;
             node.Height = 105;
             node.CalculateLayout();

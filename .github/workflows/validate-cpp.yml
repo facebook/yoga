@@ -1,0 +1,64 @@
+name: C++
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  GTEST_COLOR: 1
+
+jobs:
+  test:
+    name: Build and Test [${{ matrix.os }}][${{ matrix.mode }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        mode: [Debug, Release]
+        os: [ubuntu-latest] # TODO: fix issues building GTest Binary with MSVC in GitHub Actions
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+
+      - name: Unit tests
+        run: ./unit_tests ${{ matrix.mode }}
+
+  benchmark:
+    name: Benchmark [${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+
+      - name: Build benchmark
+        run: |
+          cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
+          cmake --build build
+        working-directory: benchmark
+
+      - name: Run benchmark
+        run: ./build/benchmark
+        working-directory: benchmark
+
+  clang-format:
+    name: Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: clang-format
+        uses: ./.github/actions/clang-format
+        with:
+          directory: ./yoga
