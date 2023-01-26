@@ -51,5 +51,14 @@ test("dont_fail_with_incomplete_measure_dimensions", () => {
   expect(widthOnlyCallback.get()).toBe(1);
   expect(emptyCallback.get()).toBe(1);
 
+  expect(node1.getComputedWidth()).toBe(100);
+  expect(node1.getComputedHeight()).toBe(10);
+
+  expect(node2.getComputedWidth()).toBe(100);
+  expect(node2.getComputedHeight()).toBe(0);
+
+  expect(node3.getComputedWidth()).toBe(100);
+  expect(node3.getComputedHeight()).toBe(0);
+
   root.freeRecursive();
 });
