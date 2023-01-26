@@ -42,8 +42,8 @@ test("dont_fail_with_incomplete_measure_dimensions", () => {
   root.insertChild(node3, root.getChildCount());
 
   node1.setMeasureFunc(heightOnlyCallback.inc);
-  node1.setMeasureFunc(widthOnlyCallback.inc);
-  node1.setMeasureFunc(emptyCallback.inc);
+  node2.setMeasureFunc(widthOnlyCallback.inc);
+  node3.setMeasureFunc(emptyCallback.inc);
 
   root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
 
