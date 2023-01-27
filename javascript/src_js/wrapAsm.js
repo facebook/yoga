@@ -74,11 +74,25 @@ module.exports = (lib) => {
   }
 
   function wrapMeasureFunction(measureFunction) {
-    return lib.MeasureCallback.implement({ measure: measureFunction });
+    return lib.MeasureCallback.implement({
+      measure: (...args) => {
+        const { width, height } = measureFunction(...args);
+        return {
+          width: width ?? NaN,
+          height: height ?? NaN,
+        };
+      },
+    });
   }
 
   patch(lib.Node.prototype, "setMeasureFunc", function (original, measureFunc) {
-    original.call(this, wrapMeasureFunction(measureFunc));
+    // This patch is just a convenience patch, since it helps write more
+    // idiomatic source code (such as .setMeasureFunc(null))
+    if (measureFunc) {
+      return original.call(this, wrapMeasureFunction(measureFunc));
+    } else {
+      return this.unsetMeasureFunc();
+    }
   });
 
   function wrapDirtiedFunc(dirtiedFunction) {
@@ -113,16 +127,6 @@ module.exports = (lib) => {
       this.getChild(0).freeRecursive();
     }
     this.free();
-  });
-
-  patch(lib.Node.prototype, "setMeasureFunc", function (original, measureFunc) {
-    // This patch is just a convenience patch, since it helps write more
-    // idiomatic source code (such as .setMeasureFunc(null))
-    if (measureFunc) {
-      return original.call(this, (...args) => measureFunc(...args));
-    } else {
-      return this.unsetMeasureFunc();
-    }
   });
 
   patch(
