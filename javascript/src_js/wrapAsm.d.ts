@@ -92,7 +92,7 @@ export type Node = {
   getComputedTop(): number,
   getComputedWidth(): number,
   getDisplay(): Display,
-  getFlexBasis(): number,
+  getFlexBasis(): Value,
   getFlexDirection(): FlexDirection,
   getFlexGrow(): number,
   getFlexShrink(): number,
