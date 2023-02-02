@@ -80,3 +80,26 @@ TEST(YogaTest, consistent_rounding_during_repeated_layouts) {
 
   YGConfigFree(config);
 }
+
+// Regression test for https://github.com/facebook/yoga/issues/683
+TEST(YogaTest, negative_value_rounding) {
+  const YGConfigRef config = YGConfigNew();
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  const YGNodeRef child = YGNodeNewWithConfig(config);
+
+  YGNodeInsertChild(root, child, 0);
+
+  YGNodeStyleSetWidth(child, 10);
+  YGNodeStyleSetHeight(child, 10);
+  YGNodeStyleSetPosition(root, YGEdgeLeft, -0.75f);
+  YGNodeStyleSetPosition(root, YGEdgeTop, -0.75f);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(YGNodeLayoutGetWidth(child), 10);
+  ASSERT_FLOAT_EQ(YGNodeLayoutGetHeight(child), 10);
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
