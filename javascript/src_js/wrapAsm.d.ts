@@ -21,9 +21,9 @@ import type {
   PositionType,
   Unit,
   Wrap,
-} from './generated/YGEnums';
+} from './generated/YGEnums.js';
 
-import type * as YGEnums from './generated/YGEnums';
+import type * as YGEnums from './generated/YGEnums.js';
 
 type Layout = {
   left: number;
@@ -156,7 +156,7 @@ export type Node = {
   setWidth(width: number | string): void,
   setWidthAuto(): void,
   setWidthPercent(width: number): void,
-  unsetMeasureFun(): void,
+  unsetMeasureFunc(): void,
 };
 
 export type Yoga = {

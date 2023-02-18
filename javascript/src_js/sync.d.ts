@@ -7,10 +7,10 @@
  * @format
  */
 
-import type {Yoga} from './wrapAsm';
+import type {Yoga} from './wrapAsm.js';
 
-export * from './generated/YGEnums';
-export * from './wrapAsm';
+export * from './generated/YGEnums.js';
+export * from './wrapAsm.js';
 
 declare const yoga: Yoga;
 export default yoga;
