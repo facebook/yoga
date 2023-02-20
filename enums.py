@@ -228,7 +228,6 @@ for name, values in sorted(ENUMS.items()):
 # write out javascript file
 with open(root + "/javascript/src_js/generated/YGEnums.js", "w") as f:
     f.write(get_license("js"))
-    f.write("module.exports = {\n")
     items = sorted(ENUMS.items())
     for name, values in items:
         base = 0
@@ -237,14 +236,13 @@ with open(root + "/javascript/src_js/generated/YGEnums.js", "w") as f:
             ordinal_arg = value[1] if isinstance(value, tuple) else base
 
             f.write(
-                "  %s_%s: %d,\n"
+                "exports.%s_%s = %d;\n"
                 % (to_java_upper(name), to_java_upper(value_arg), ordinal_arg)
             )
             base = ordinal_arg + 1
 
         if name != items[-1][0]:
             f.write("\n")
-    f.write("};\n")
 
 with open(root + "/javascript/src_js/generated/YGEnums.d.ts", "w") as f:
     f.write(get_license("js"))
