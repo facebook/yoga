@@ -156,7 +156,7 @@ export type Node = {
   setWidth(width: number | string): void,
   setWidthAuto(): void,
   setWidthPercent(width: number): void,
-  unsetMeasureFun(): void,
+  unsetMeasureFunc(): void,
 };
 
 export type Yoga = {
