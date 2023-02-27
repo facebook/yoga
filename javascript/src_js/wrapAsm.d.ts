@@ -135,7 +135,7 @@ export type Node = {
   setHeightPercent(height: number): void,
   setJustifyContent(justifyContent: Justify): void,
   setGap(gutter: Gutter, gapLength: number): Value,
-  setMargin(edge: Edge, margin: number): void,
+  setMargin(edge: Edge, margin: number | string): void,
   setMarginAuto(edge: Edge): void,
   setMarginPercent(edge: Edge, margin: number): void,
   setMaxHeight(maxHeight: number | string): void,
