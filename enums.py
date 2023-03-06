@@ -285,3 +285,22 @@ with open(root + "/javascript/src_js/generated/YGEnums.d.ts", "w") as f:
                 f.write("\n")
 
         f.write("\n")
+
+# write out pybind11 attributes
+with open(root + "/python/src/YGEnums.h", "w") as f:
+    f.write(get_license("cpp"))
+    items = sorted(ENUMS.items())
+    for name, values in items:
+        base = 0
+        for value in values:
+            value_arg = value[0] if isinstance(value, tuple) else value
+            ordinal_arg = value[1] if isinstance(value, tuple) else base
+
+            f.write(
+                "m.attr(\"%s_%s\") = %d;\n"
+                % (to_java_upper(name), to_java_upper(value_arg), ordinal_arg)
+            )
+            base = ordinal_arg + 1
+
+        if name != items[-1][0]:
+            f.write("\n")
