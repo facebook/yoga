@@ -68,3 +68,7 @@ Carthage/Build
 # NDK/CMake
 .cxx
 .externalNativeBuild
+
+# Python
+*.egg-info/
+*.whl
