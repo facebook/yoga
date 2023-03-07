@@ -72,3 +72,4 @@ Carthage/Build
 # Python
 *.egg-info/
 *.whl
+__pycache__
