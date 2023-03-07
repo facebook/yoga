@@ -89,6 +89,7 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
       .function("setFlex", &Node::setFlex)
       .function("setFlexBasis", &Node::setFlexBasis)
       .function("setFlexBasisPercent", &Node::setFlexBasisPercent)
+      .function("setFlexBasisAuto", &Node::setFlexBasisAuto)
       .function("setFlexGrow", &Node::setFlexGrow)
       .function("setFlexShrink", &Node::setFlexShrink)
 

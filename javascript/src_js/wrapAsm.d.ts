@@ -92,7 +92,7 @@ export type Node = {
   getComputedTop(): number,
   getComputedWidth(): number,
   getDisplay(): Display,
-  getFlexBasis(): number,
+  getFlexBasis(): Value,
   getFlexDirection(): FlexDirection,
   getFlexGrow(): number,
   getFlexShrink(): number,
@@ -135,7 +135,7 @@ export type Node = {
   setHeightPercent(height: number): void,
   setJustifyContent(justifyContent: Justify): void,
   setGap(gutter: Gutter, gapLength: number): Value,
-  setMargin(edge: Edge, margin: number): void,
+  setMargin(edge: Edge, margin: number | string): void,
   setMarginAuto(edge: Edge): void,
   setMarginPercent(edge: Edge, margin: number): void,
   setMaxHeight(maxHeight: number | string): void,
@@ -156,7 +156,7 @@ export type Node = {
   setWidth(width: number | string): void,
   setWidthAuto(): void,
   setWidthPercent(width: number): void,
-  unsetMeasureFun(): void,
+  unsetMeasureFunc(): void,
 };
 
 export type Yoga = {
