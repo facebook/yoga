@@ -1303,7 +1303,7 @@ def test_align_baseline_multiline_column():
     assert root_child0.get_computed_width() == 50
     assert root_child0.get_computed_height() == 50
 
-    assert root_child1.get_computed_left() == 50
+    assert root_child1.get_computed_left() == 70
     assert root_child1.get_computed_top() == 50
     assert root_child1.get_computed_width() == 30
     assert root_child1.get_computed_height() == 50
@@ -1313,7 +1313,7 @@ def test_align_baseline_multiline_column():
     assert root_child1_child0.get_computed_width() == 20
     assert root_child1_child0.get_computed_height() == 20
 
-    assert root_child2.get_computed_left() == 0
+    assert root_child2.get_computed_left() == 10
     assert root_child2.get_computed_top() == 0
     assert root_child2.get_computed_width() == 40
     assert root_child2.get_computed_height() == 70
@@ -1419,7 +1419,7 @@ def test_align_baseline_multiline_column2():
     assert root_child0.get_computed_width() == 50
     assert root_child0.get_computed_height() == 50
 
-    assert root_child1.get_computed_left() == 50
+    assert root_child1.get_computed_left() == 70
     assert root_child1.get_computed_top() == 50
     assert root_child1.get_computed_width() == 30
     assert root_child1.get_computed_height() == 50
@@ -1429,7 +1429,7 @@ def test_align_baseline_multiline_column2():
     assert root_child1_child0.get_computed_width() == 20
     assert root_child1_child0.get_computed_height() == 20
 
-    assert root_child2.get_computed_left() == 0
+    assert root_child2.get_computed_left() == 10
     assert root_child2.get_computed_top() == 0
     assert root_child2.get_computed_width() == 40
     assert root_child2.get_computed_height() == 70
