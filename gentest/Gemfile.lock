@@ -2,11 +2,11 @@ GEM
   remote: https://rubygems.org/
   specs:
     childprocess (4.1.0)
-    mini_portile2 (2.8.0)
-    nokogiri (1.13.10)
+    mini_portile2 (2.8.1)
+    nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    racc (1.6.1)
+    racc (1.6.2)
     regexp_parser (2.6.0)
     rexml (3.2.5)
     rubyzip (2.3.2)
