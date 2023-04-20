@@ -23,11 +23,11 @@ TEST(YogaTest, set_children_adds_children_to_parent) {
   YGNodeRef const root_child0 = YGNodeNew();
   YGNodeRef const root_child1 = YGNodeNew();
 
-  YGNodeSetChildren(root, {root_child0, root_child1});
+  YGNodeRef children[] = {root_child0, root_child1};
+  YGNodeSetChildren(root, children, 2);
 
-  const std::vector<YGNodeRef> children = getChildren(root);
   const std::vector<YGNodeRef> expectedChildren = {root_child0, root_child1};
-  ASSERT_EQ(children, expectedChildren);
+  ASSERT_EQ(getChildren(root), expectedChildren);
 
   const std::vector<YGNodeRef> owners = {
       YGNodeGetOwner(root_child0), YGNodeGetOwner(root_child1)};
@@ -42,12 +42,12 @@ TEST(YogaTest, set_children_to_empty_removes_old_children) {
   YGNodeRef const root_child0 = YGNodeNew();
   YGNodeRef const root_child1 = YGNodeNew();
 
-  YGNodeSetChildren(root, {root_child0, root_child1});
-  YGNodeSetChildren(root, {});
+  YGNodeRef children[] = {root_child0, root_child1};
+  YGNodeSetChildren(root, children, 2);
+  YGNodeSetChildren(root, nullptr, 0);
 
-  const std::vector<YGNodeRef> children = getChildren(root);
   const std::vector<YGNodeRef> expectedChildren = {};
-  ASSERT_EQ(children, expectedChildren);
+  ASSERT_EQ(getChildren(root), expectedChildren);
 
   const std::vector<YGNodeRef> owners = {
       YGNodeGetOwner(root_child0), YGNodeGetOwner(root_child1)};
@@ -62,16 +62,17 @@ TEST(YogaTest, set_children_replaces_non_common_children) {
   YGNodeRef const root_child0 = YGNodeNew();
   YGNodeRef const root_child1 = YGNodeNew();
 
-  YGNodeSetChildren(root, {root_child0, root_child1});
+  YGNodeRef children1[] = {root_child0, root_child1};
+  YGNodeSetChildren(root, children1, 2);
 
   YGNodeRef const root_child2 = YGNodeNew();
   YGNodeRef const root_child3 = YGNodeNew();
 
-  YGNodeSetChildren(root, {root_child2, root_child3});
+  YGNodeRef children2[] = {root_child2, root_child3};
+  YGNodeSetChildren(root, children2, 2);
 
-  const std::vector<YGNodeRef> children = getChildren(root);
   const std::vector<YGNodeRef> expectedChildren = {root_child2, root_child3};
-  ASSERT_EQ(children, expectedChildren);
+  ASSERT_EQ(getChildren(root), expectedChildren);
 
   const std::vector<YGNodeRef> owners = {
       YGNodeGetOwner(root_child0), YGNodeGetOwner(root_child1)};
@@ -89,16 +90,17 @@ TEST(YogaTest, set_children_keeps_and_reorders_common_children) {
   YGNodeRef const root_child1 = YGNodeNew();
   YGNodeRef const root_child2 = YGNodeNew();
 
-  YGNodeSetChildren(root, {root_child0, root_child1, root_child2});
+  YGNodeRef children1[] = {root_child0, root_child1, root_child2};
+  YGNodeSetChildren(root, children1, 3);
 
   YGNodeRef const root_child3 = YGNodeNew();
 
-  YGNodeSetChildren(root, {root_child2, root_child1, root_child3});
+  YGNodeRef children2[] = {root_child2, root_child1, root_child3};
+  YGNodeSetChildren(root, children2, 3);
 
-  const std::vector<YGNodeRef> children = getChildren(root);
   const std::vector<YGNodeRef> expectedChildren = {
       root_child2, root_child1, root_child3};
-  ASSERT_EQ(children, expectedChildren);
+  ASSERT_EQ(getChildren(root), expectedChildren);
 
   const std::vector<YGNodeRef> owners = {
       YGNodeGetOwner(root_child0),
