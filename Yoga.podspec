@@ -33,7 +33,7 @@ Pod::Spec.new do |spec|
       '-std=c++14',
       '-fPIC'
   ]
-  spec.source_files = 'yoga/**/*.{c,h,cpp}'
-  spec.public_header_files = 'yoga/*.h'
+  spec.source_files = 'yoga/**/*.{h,cpp}'
+  spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
 
 end
