@@ -7,5 +7,5 @@
  * @format
  */
 
-const asm = require("../build/asmjs-sync");
+const asm = require("../../asm/asmjs-sync");
 module.exports = require("./_entrySync")(asm);

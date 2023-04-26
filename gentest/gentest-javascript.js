@@ -31,7 +31,10 @@ function toJavascriptUpper(symbol) {
 JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   constructor:{value:JavascriptEmitter},
 
-  emitPrologue:{value:function() {}},
+  emitPrologue:{value:function() {
+    this.push('import { Yoga } from "../tools/globals";')
+    this.push('');
+  }},
 
   emitTestPrologue:{value:function(name, experiments) {
     this.push('test(' + JSON.stringify(name) + ', () => {');
@@ -135,13 +138,13 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGWrapWrap:{value:'Yoga.WRAP_WRAP'},
   YGWrapWrapReverse:{value: 'Yoga.WRAP_WRAP_REVERSE'},
 
-  YGUndefined:{value:'Yoga.UNDEFINED'},
+  YGUndefined:{value:'undefined'},
 
   YGDisplayFlex:{value:'Yoga.DISPLAY_FLEX'},
   YGDisplayNone:{value:'Yoga.DISPLAY_NONE'},
 
   YGNodeCalculateLayout:{value:function(node, dir, experiments) {
-    this.push(node + '.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, ' + dir + ');');
+    this.push(node + '.calculateLayout(undefined, undefined, ' + dir + ');');
   }},
 
   YGNodeInsertChild:{value:function(parentName, nodeName, index) {

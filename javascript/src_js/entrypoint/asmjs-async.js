@@ -7,5 +7,5 @@
  * @format
  */
 
-const asm = require("../build/asmjs-async");
+const asm = require("../../asm/asmjs-async");
 module.exports = require("./_entryAsync")(asm);

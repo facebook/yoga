@@ -19,9 +19,14 @@
       "browser": "./dist/entrypoint/asmjs-sync.js",
       "node": "./dist/entrypoint/wasm-sync.js",
       "default": "./dist/entrypoint/asmjs-sync.js"
-    }
+    },
+    "./asmjs-async": "./dist/entrypoint/asmjs-async.js",
+    "./asmjs-sync": "./dist/entrypoint/asmjs-sync.js",
+    "./wasm-async": "./dist/entrypoint/wasm-async.js",
+    "./wasm-sync": "./dist/entrypoint/wasm-sync.js"
   },
   "files": [
+    "asm/**",
     "dist/**",
     "src_js/**"
   ],
@@ -42,6 +47,13 @@
     "@babel/core": "^7.20.7",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.4",
+    "@types/glob": "^8.1.0",
+    "@types/jest": "^29.5.1",
+    "@types/node": "^16.18.25",
+    "@types/which": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "clang-format": "^1.8.0",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
@@ -51,6 +63,8 @@
     "jest": "^29.3.1",
     "just-scripts": "^2.1.0",
     "prettier": "^2.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "5.0.4",
     "which": "^3.0.0"
   }
 }

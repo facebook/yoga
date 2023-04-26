@@ -7,5 +7,5 @@
  * @format
  */
 
-const asm = require("../build/wasm-sync");
+const asm = require("../../asm/wasm-sync");
 module.exports = require("./_entrySync")(asm);

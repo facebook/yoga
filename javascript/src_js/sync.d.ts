@@ -9,8 +9,8 @@
 
 import type { Yoga } from "./wrapAsm";
 
-export * from "./generated/YGEnums";
-export * from "./wrapAsm";
+export type * from "./generated/YGEnums";
+export type * from "./wrapAsm";
 
 declare const yoga: Yoga;
 export default yoga;
