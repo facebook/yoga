@@ -12,6 +12,7 @@ import type {
   Direction,
   Display,
   Edge,
+  Errata,
   ExperimentalFeature,
   FlexDirection,
   Gutter,
@@ -52,8 +53,20 @@ export type Config = {
     enabled: boolean
   ): void;
   setPointScaleFactor(factor: number): void;
+  /**
+   * @deprecated Please use "getErrata()"
+   */
   useLegacyStretchBehaviour(): boolean;
+  /**
+   * @deprecated "setUseLegacyStretchBehaviour" will be removed in the next
+   * release. Usage should be replaced with "setErrata(ERRATA_ALL)" to opt out
+   * of all future breaking conformance fixes, or
+   * "setErrata(ERRATA_STRETCH_FLEX_BASIS)" to opt out of the specific
+   * conformance fix previously disabled by "UseLegacyStretchBehaviour".
+   */
   setUseLegacyStretchBehaviour(useLegacyStretchBehaviour: boolean): void;
+  getErrata(): Errata,
+  setErrata(errata: Errata): void,
   useWebDefaults(): boolean;
   setUseWebDefaults(useWebDefaults: boolean): void;
 };

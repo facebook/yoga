@@ -36,6 +36,10 @@ void Config::setUseLegacyStretchBehaviour(bool useLegacyStretchBehaviour) {
   YGConfigSetUseLegacyStretchBehaviour(m_config, useLegacyStretchBehaviour);
 }
 
+void Config::setErrata(int errata) {
+  YGConfigSetErrata(m_config, static_cast<YGErrata>(errata));
+}
+
 void Config::setUseWebDefaults(bool useWebDefaults) {
   YGConfigSetUseWebDefaults(m_config, useWebDefaults);
 }
@@ -45,10 +49,14 @@ bool Config::isExperimentalFeatureEnabled(int feature) const {
       m_config, static_cast<YGExperimentalFeature>(feature));
 }
 
-bool Config::useLegacyStretchBehaviour() {
+bool Config::useLegacyStretchBehaviour() const {
   return YGConfigGetUseLegacyStretchBehaviour(m_config);
 }
 
-bool Config::useWebDefaults() {
+int Config::getErrata() const {
+  return static_cast<int>(YGConfigGetErrata(m_config));
+}
+
+bool Config::useWebDefaults() const {
   return YGConfigGetUseWebDefaults(m_config);
 }
