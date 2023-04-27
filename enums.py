@@ -57,7 +57,11 @@ ENUMS = {
         # Conformance fix: https://github.com/facebook/yoga/pull/1028
         "FixAbsoluteTrailingColumnMargin",
     ],
-    "PrintOptions": [("Layout", 1), ("Style", 2), ("Children", 4)],
+    "PrintOptions": [
+        ("Layout", 1 << 0),
+        ("Style", 1 << 1),
+        ("Children", 1 << 2),
+    ],
     "Gutter": ["Column", "Row", "All"],
     # Known incorrect behavior which can be enabled for compatibility
     "Errata": [
@@ -79,7 +83,7 @@ ENUMS = {
 # well?
 DO_NOT_STRIP = ["LogLevel"]
 
-BITSET_ENUMS = ["Errata"]
+BITSET_ENUMS = ["PrintOptions", "Errata"]
 
 
 def get_license(ext):
