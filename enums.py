@@ -59,12 +59,27 @@ ENUMS = {
     ],
     "PrintOptions": [("Layout", 1), ("Style", 2), ("Children", 4)],
     "Gutter": ["Column", "Row", "All"],
+    # Known incorrect behavior which can be enabled for compatibility
+    "Errata": [
+        # Default: Standards conformant mode
+        ("None", 0),
+        # Allows main-axis flex basis to be stretched without flexGrow being
+        # set (previously referred to as "UseLegacyStretchBehaviour")
+        ("StretchFlexBasis", 1 << 0),
+        # Enable all incorrect behavior (preserve compatibility)
+        ("All", 0x7FFFFFFF),
+        # Enable all errata except for "StretchFlexBasis" (Defaults behavior
+        # before Yoga 2.0)
+        ("Classic", 0x7FFFFFFF & (~(1 << 0))),
+    ],
 }
 
 # Generated Java enums used to emit @DoNotStrip, but D17519844 removed them
 # manually from all but YogaLogLevel. TODO: Is it safe to remove from it as
 # well?
 DO_NOT_STRIP = ["LogLevel"]
+
+BITSET_ENUMS = ["Errata"]
 
 
 def get_license(ext):
@@ -132,6 +147,8 @@ with open(root + "/yoga/YGEnums.h", "w") as f:
                 f.write(")\n")
             else:
                 f.write(",\n")
+        if name in BITSET_ENUMS:
+            f.write("YG_DEFINE_ENUM_FLAG_OPERATORS(YG%s)\n" % name)
         f.write("\n")
     f.write("YG_EXTERN_C_END\n")
 
