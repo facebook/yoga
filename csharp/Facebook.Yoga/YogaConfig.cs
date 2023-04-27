@@ -117,8 +117,12 @@ namespace Facebook.Yoga
             }
         }
 
-        public bool UseLegacyStretchBehaviour
-        {
+        [ObsoleteAttribute("\"UseLegacyStretchBehaviour\" will be removed in the next release. " +
+          "Usage should be replaced with \"Errata\" set to \"YogaErrata.All\" to opt out of all " +
+          "future breaking conformance fixes, or \"YogaErrata.StretchFlexBasis\" toopt out of " +
+          "the specific conformance fix previously disabled by \"UseLegacyStretchBehaviour\".",
+          true /*error*/)]
+        public bool UseLegacyStretchBehaviour {
             get
             {
                 return Native.YGConfigGetUseLegacyStretchBehaviour(_ygConfig);
@@ -127,6 +131,19 @@ namespace Facebook.Yoga
             set
             {
                 Native.YGConfigSetUseLegacyStretchBehaviour(_ygConfig, value);
+            }
+        }
+
+        public YogaErrata Errata
+        {
+            get
+            {
+                return Native.YGConfigGetErrata(_ygConfig);
+            }
+
+            set
+            {
+                Native.YGConfigSetErrata(_ygConfig, value);
             }
         }
 
