@@ -175,6 +175,7 @@ static YGConfigRef globalConfig;
   globalConfig = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(
       globalConfig, YGExperimentalFeatureWebFlexBasis, true);
+  YGConfigSetErrata(globalConfig, YGErrataClassic);
   YGConfigSetPointScaleFactor(globalConfig, [UIScreen mainScreen].scale);
 }
 
