@@ -19,6 +19,7 @@ const {
   series,
   spawn,
   task,
+  tscTask,
 } = require("just-scripts");
 
 const glob = require("glob");
@@ -83,7 +84,11 @@ task(
 
 task(
   "lint",
-  series(eslintTask({ fix: argv().fix }), clangFormatTask({ fix: argv().fix }))
+  parallel(
+    clangFormatTask({ fix: argv().fix }),
+    eslintTask({ fix: argv().fix }),
+    tscTask()
+  )
 );
 
 function babelTransformTask(opts) {

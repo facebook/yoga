@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "yoga-layout": ["src_js"]
+    }
+  },
+  "ts-node": {
+    "transpileOnly": true
+  }
+}
