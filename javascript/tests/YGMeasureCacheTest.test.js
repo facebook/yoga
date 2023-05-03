@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { getMeasureCounterMax } from "./tools/MeasureCounter";
+
 test("measure_once_single_flexible_child", () => {
   const root = Yoga.Node.create();
   root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);

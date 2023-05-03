@@ -7,7 +7,19 @@
  * @format
  */
 
-global.getMeasureCounter = function (Yoga, cb, staticWidth, staticHeight) {
+import type { MeasureFunction } from "yoga-layout";
+import { Yoga } from "./globals";
+
+export type MeasureCounter = {
+  inc: MeasureFunction;
+  get: () => number;
+};
+
+export function getMeasureCounter(
+  cb?: MeasureFunction | null,
+  staticWidth = 0,
+  staticHeight = 0
+): MeasureCounter {
   let counter = 0;
 
   return {
@@ -23,10 +35,10 @@ global.getMeasureCounter = function (Yoga, cb, staticWidth, staticHeight) {
       return counter;
     },
   };
-};
+}
 
-global.getMeasureCounterMax = function (Yoga) {
-  return getMeasureCounter(Yoga, (width, widthMode, height, heightMode) => {
+export function getMeasureCounterMax(): MeasureCounter {
+  return getMeasureCounter((width, widthMode, height, heightMode) => {
     const measuredWidth =
       widthMode === Yoga.MEASURE_MODE_UNDEFINED ? 10 : width;
     const measuredHeight =
@@ -34,10 +46,10 @@ global.getMeasureCounterMax = function (Yoga) {
 
     return { width: measuredWidth, height: measuredHeight };
   });
-};
+}
 
-global.getMeasureCounterMin = function (Yoga) {
-  return getMeasureCounter(Yoga, (width, widthMode, height, heightMode) => {
+export function getMeasureCounterMin(): MeasureCounter {
+  return getMeasureCounter((width, widthMode, height, heightMode) => {
     const measuredWidth =
       widthMode === Yoga.MEASURE_MODE_UNDEFINED ||
       (widthMode == Yoga.MEASURE_MODE_AT_MOST && width > 10)
@@ -51,4 +63,4 @@ global.getMeasureCounterMin = function (Yoga) {
 
     return { width: measuredWidth, height: measuredHeight };
   });
-};
+}
