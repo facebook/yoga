@@ -65,11 +65,13 @@ export type Config = {
    * conformance fix previously disabled by "UseLegacyStretchBehaviour".
    */
   setUseLegacyStretchBehaviour(useLegacyStretchBehaviour: boolean): void;
-  getErrata(): Errata,
-  setErrata(errata: Errata): void,
+  getErrata(): Errata;
+  setErrata(errata: Errata): void;
   useWebDefaults(): boolean;
   setUseWebDefaults(useWebDefaults: boolean): void;
 };
+
+export type DirtiedFunction = (node: Node) => void;
 
 export type MeasureFunction = (
   width: number,
@@ -122,6 +124,7 @@ export type Node = {
   getWidth(): Value;
   insertChild(child: Node, index: number): void;
   isDirty(): boolean;
+  isReferenceBaseline(): boolean;
   markDirty(): void;
   removeChild(child: Node): void;
   reset(): void;
@@ -140,6 +143,7 @@ export type Node = {
   setFlexShrink(flexShrink: number): void;
   setFlexWrap(flexWrap: Wrap): void;
   setHeight(height: number | "auto" | `${number}%`): void;
+  setIsReferenceBaseline(isReferenceBaseline: boolean): void;
   setHeightAuto(): void;
   setHeightPercent(height: number): void;
   setJustifyContent(justifyContent: Justify): void;
@@ -151,6 +155,7 @@ export type Node = {
   setMaxHeightPercent(maxHeight: number): void;
   setMaxWidth(maxWidth: number | `${number}%`): void;
   setMaxWidthPercent(maxWidth: number): void;
+  setDirtiedFunc(dirtiedFunc: DirtiedFunction | null): void;
   setMeasureFunc(measureFunc: MeasureFunction | null): void;
   setMinHeight(minHeight: number | `${number}%`): void;
   setMinHeightPercent(minHeight: number): void;
@@ -165,19 +170,20 @@ export type Node = {
   setWidth(width: number | "auto" | `${number}%`): void;
   setWidthAuto(): void;
   setWidthPercent(width: number): void;
+  unsetDirtiedFunc(): void;
   unsetMeasureFunc(): void;
 };
 
 export type Yoga = {
   Config: {
     create(): Config;
-    destroy(config: Config): any;
+    destroy(config: Config): void;
   };
   Node: {
-    create(): Node;
+    create(config?: Config): Node;
     createDefault(): Node;
     createWithConfig(config: Config): Node;
-    destroy(node: Node): any;
+    destroy(node: Node): void;
   };
 } & typeof YGEnums;
 
