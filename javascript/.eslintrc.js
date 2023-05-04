@@ -7,15 +7,13 @@
  * @format
  */
 
+const path = require("path");
+
 module.exports = {
   root: true,
-  ignorePatterns: ["dist/**", "**/*.d.ts"],
-  parser: "@babel/eslint-parser",
-  extends: [
-    "eslint:recommended",
-    "plugin:jest/recommended",
-    "plugin:prettier/recommended",
-  ],
+  ignorePatterns: ["dist/**", "tests/generated/**"],
+  extends: ["eslint:recommended", "plugin:prettier/recommended"],
+  plugins: ["prettier"],
   rules: {
     "no-var": "error",
     "prefer-arrow-callback": "error",
@@ -26,14 +24,42 @@ module.exports = {
   },
   env: {
     commonjs: true,
-    es6: true,
+    es2018: true,
   },
   overrides: [
     {
-      files: ["jest.*", "just.config.js", "tests/**"],
+      files: ["**/*.js"],
+      parser: "@babel/eslint-parser",
+      parserOptions: {
+        babelOptions: {
+          configFile: path.join(__dirname, ".babelrc.js"),
+        },
+      },
+    },
+    {
+      files: ["**/*.ts"],
+      extends: ["plugin:@typescript-eslint/recommended"],
+      parser: "@typescript-eslint/parser",
+      parserOptions: {
+        project: path.join(__dirname, "tsconfig.json"),
+      },
+      plugins: ["@typescript-eslint"],
+      rules: {
+        "@typescript-eslint/no-var-requires": "off",
+      },
+    },
+    {
+      files: ["**/.eslintrc.js", "**/just.config.js"],
       env: {
         node: true,
       },
+    },
+    {
+      files: ["jest.*", "tests/**"],
+      env: {
+        node: true,
+      },
+      extends: ["plugin:jest/recommended"],
       globals: {
         getMeasureCounter: "writable",
         getMeasureCounterMax: "writable",
