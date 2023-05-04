@@ -130,7 +130,7 @@ root = os.path.dirname(os.path.abspath(__file__))
 with open(root + "/yoga/YGEnums.h", "w") as f:
     f.write(get_license("cpp"))
     f.write("#pragma once\n")
-    f.write('#include "YGMacros.h"\n\n')
+    f.write("#include <yoga/YGMacros.h>\n\n")
     f.write("// clang-format off\n\n\n")
 
     f.write("YG_EXTERN_C_BEGIN\n\n")
@@ -159,7 +159,7 @@ with open(root + "/yoga/YGEnums.h", "w") as f:
 # write out C body for printing
 with open(root + "/yoga/YGEnums.cpp", "w") as f:
     f.write(get_license("cpp"))
-    f.write('#include "YGEnums.h"\n\n')
+    f.write("#include <yoga/YGEnums.h>\n\n")
     items = sorted(ENUMS.items())
     for name, values in items:
         f.write("const char* YG%sToString(const YG%s value) {\n" % (name, name))
