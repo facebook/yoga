@@ -5,12 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { getMeasureCounter } from "./tools/MeasureCounter";
+
 test("dont_measure_single_grow_shrink_child", () => {
   const root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);
 
-  const measureCounter = getMeasureCounter(Yoga, null, 100, 100);
+  const measureCounter = getMeasureCounter(null, 100, 100);
 
   const root_child0 = Yoga.Node.create();
   root_child0.setMeasureFunc(measureCounter.inc);
@@ -25,9 +27,9 @@ test("dont_measure_single_grow_shrink_child", () => {
 });
 
 test("dont_fail_with_incomplete_measure_dimensions", () => {
-  const heightOnlyCallback = getMeasureCounter(Yoga, () => ({ height: 10 }));
-  const widthOnlyCallback = getMeasureCounter(Yoga, () => ({ width: 10 }));
-  const emptyCallback = getMeasureCounter(Yoga, () => ({}));
+  const heightOnlyCallback = getMeasureCounter(() => ({ height: 10 }));
+  const widthOnlyCallback = getMeasureCounter(() => ({ width: 10 }));
+  const emptyCallback = getMeasureCounter(() => ({}));
 
   const root = Yoga.Node.create();
   root.setWidth(100);

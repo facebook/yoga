@@ -7,8 +7,11 @@
  * @format
  */
 
-module.exports = {
-  setupFiles: ["./jest.setup.js", "./tests/tools.js"],
-  testRegex: "/tests/.*\\.test\\.js$",
-  watchman: false,
+import type { Config } from "jest";
+
+const config: Config = {
+  setupFiles: ["./jest.setup.ts"],
+  testRegex: "/tests/.*\\.test\\.[jt]s$",
 };
+
+export default config;

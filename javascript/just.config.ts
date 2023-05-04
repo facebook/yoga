@@ -7,7 +7,7 @@
  * @format
  */
 
-const {
+import {
   argv,
   cleanTask,
   copyTask,
@@ -20,10 +20,11 @@ const {
   spawn,
   task,
   tscTask,
-} = require("just-scripts");
+} from "just-scripts";
 
-const glob = require("glob");
-const which = require("which");
+import glob from "glob";
+import path from "path";
+import which from "which";
 
 const node = process.execPath;
 
@@ -40,19 +41,22 @@ task(
   )
 );
 
-function defineFlavor(flavor, env) {
+function defineFlavor(flavor: string, env: NodeJS.ProcessEnv) {
   task(`cmake-build:${flavor}`, cmakeBuildTask({ targets: [flavor] }));
-  task(`jest:${flavor}`, jestTask({ env }));
+  task(
+    `jest:${flavor}`,
+    jestTask({ config: path.join(__dirname, "jest.config.ts"), env })
+  );
   task(
     `test:${flavor}`,
     series("prepare-for-build", `cmake-build:${flavor}`, `jest:${flavor}`)
   );
 }
 
-defineFlavor("asmjs-async", { WASM: 0, SYNC: 0 });
-defineFlavor("asmjs-sync", { WASM: 0, SYNC: 1 });
-defineFlavor("wasm-async", { WASM: 1, SYNC: 0 });
-defineFlavor("wasm-sync", { WASM: 1, SYNC: 1 });
+defineFlavor("asmjs-async", { WASM: "0", SYNC: "0" });
+defineFlavor("asmjs-sync", { WASM: "0", SYNC: "1" });
+defineFlavor("wasm-async", { WASM: "1", SYNC: "0" });
+defineFlavor("wasm-sync", { WASM: "1", SYNC: "1" });
 
 task("cmake-build:all", cmakeBuildTask());
 task(
@@ -85,13 +89,18 @@ task(
 task(
   "lint",
   parallel(
-    clangFormatTask({ fix: argv().fix }),
-    eslintTask({ fix: argv().fix }),
-    tscTask()
+    tscTask(),
+    series(
+      eslintTask({ fix: argv().fix }),
+      clangFormatTask({ fix: argv().fix })
+    )
   )
 );
 
-function babelTransformTask(opts) {
+function babelTransformTask(opts: {
+  paths: ReadonlyArray<string>;
+  dest: string;
+}) {
   return () => {
     const args = [...opts.paths, "--source-maps", "--out-dir", opts.dest];
     logger.info(`Transforming [${opts.paths.join(",")}] to '${opts.dest}'`);
@@ -102,11 +111,14 @@ function babelTransformTask(opts) {
 
 function runBenchTask() {
   return () => {
-    const files = glob.sync("./tests/Benchmarks/**/*.js");
-    const args = ["./tests/run-bench.js", ...files];
+    const files = glob.sync("./tests/Benchmarks/**/*");
+    const args = ["./tests/bin/run-bench.ts", ...files];
     logger.info(args.join(" "));
 
-    return spawn(node, args, { stdio: "inherit" });
+    return spawn(node, args, {
+      stdio: "inherit",
+      env: { NODE_OPTIONS: "-r ts-node/register" },
+    });
   };
 }
 
@@ -128,7 +140,7 @@ function emcmakeGenerateTask() {
   };
 }
 
-function cmakeBuildTask(opts) {
+function cmakeBuildTask(opts?: { targets?: ReadonlyArray<string> }) {
   return () => {
     const cmake = which.sync("cmake");
     const args = [
@@ -142,10 +154,10 @@ function cmakeBuildTask(opts) {
   };
 }
 
-function clangFormatTask(opts) {
+function clangFormatTask(opts?: { fix?: boolean }) {
   return () => {
     const args = [
-      ...(opts.fix ? ["-i"] : ["--dry-run", "--Werror"]),
+      ...(opts?.fix ? ["-i"] : ["--dry-run", "--Werror"]),
       ...glob.sync("**/*.{h,hh,hpp,c,cpp,cc,m,mm}"),
     ];
     logger.info(["clang-format", ...args].join(" "));

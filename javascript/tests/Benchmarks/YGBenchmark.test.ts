@@ -5,6 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { getMeasureCounter } from "../tools/MeasureCounter";
+import { Yoga, YGBENCHMARK } from "../tools/globals";
+
 const ITERATIONS = 2000;
 
 YGBENCHMARK("Stack with flex", () => {
@@ -12,7 +15,7 @@ YGBENCHMARK("Stack with flex", () => {
   root.setWidth(100);
   root.setHeight(100);
 
-  const measureCounter = getMeasureCounter(Yoga);
+  const measureCounter = getMeasureCounter();
 
   for (let i = 0; i < ITERATIONS; i++) {
     const child = Yoga.Node.create();
@@ -21,14 +24,14 @@ YGBENCHMARK("Stack with flex", () => {
     root.insertChild(child, 0);
   }
 
-  root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
   root.freeRecursive();
 });
 
 YGBENCHMARK("Align stretch in undefined axis", () => {
   const root = Yoga.Node.create();
 
-  const measureCounter = getMeasureCounter(Yoga);
+  const measureCounter = getMeasureCounter();
 
   for (let i = 0; i < ITERATIONS; i++) {
     const child = Yoga.Node.create();
@@ -37,14 +40,14 @@ YGBENCHMARK("Align stretch in undefined axis", () => {
     root.insertChild(child, 0);
   }
 
-  root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
   root.freeRecursive();
 });
 
 YGBENCHMARK("Nested flex", () => {
   const root = Yoga.Node.create();
 
-  const measureCounter = getMeasureCounter(Yoga);
+  const measureCounter = getMeasureCounter();
 
   const iterations = Math.pow(ITERATIONS, 1 / 2);
 
@@ -61,7 +64,7 @@ YGBENCHMARK("Nested flex", () => {
     }
   }
 
-  root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
   root.freeRecursive();
 });
 
@@ -104,6 +107,6 @@ YGBENCHMARK("Huge nested layout", () => {
     }
   }
 
-  root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
   root.freeRecursive();
 });
