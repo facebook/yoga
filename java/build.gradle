@@ -45,6 +45,13 @@ android {
             res.srcDirs = ['res']
         }
     }
+
+    publishing {
+        multipleVariants {
+            withSourcesJar()
+            includeBuildTypeValues('debug', 'release')
+        }
+    }
 }
 
 dependencies {
@@ -52,5 +59,3 @@ dependencies {
     implementation 'com.facebook.soloader:soloader:0.10.4'
     testImplementation 'junit:junit:4.12'
 }
-
-apply plugin: 'com.vanniktech.maven.publish'

@@ -23,6 +23,13 @@ android {
         targetCompatibility rootProject.targetCompatibilityVersion
         sourceCompatibility rootProject.sourceCompatibilityVersion
     }
+
+    publishing {
+        multipleVariants {
+            withSourcesJar()
+            includeBuildTypeValues('debug', 'release')
+        }
+    }
 }
 
 dependencies {
@@ -34,5 +41,3 @@ dependencies {
 tasks.withType(Javadoc).all {
   enabled = false
 }
-
-apply plugin: 'com.vanniktech.maven.publish'
