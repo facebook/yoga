@@ -68,6 +68,99 @@ TEST(YogaTest, dirty_propagation_only_if_prop_changed) {
   YGNodeFreeRecursive(root);
 }
 
+TEST(YogaTest, dirty_propagation_changing_layout_config) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, 20);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child1, 50);
+  YGNodeStyleSetHeight(root_child1, 20);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child0_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0_child0, 25);
+  YGNodeStyleSetHeight(root_child0_child0, 20);
+  YGNodeInsertChild(root, root_child0_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  EXPECT_FALSE(root->isDirty());
+  EXPECT_FALSE(root_child0->isDirty());
+  EXPECT_FALSE(root_child1->isDirty());
+  EXPECT_FALSE(root_child0_child0->isDirty());
+
+  YGConfigRef newConfig = YGConfigNew();
+  YGConfigSetErrata(newConfig, YGErrataStretchFlexBasis);
+  YGNodeSetConfig(root_child0, newConfig);
+
+  EXPECT_TRUE(root->isDirty());
+  EXPECT_TRUE(root_child0->isDirty());
+  EXPECT_FALSE(root_child1->isDirty());
+  EXPECT_FALSE(root_child0_child0->isDirty());
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  EXPECT_FALSE(root->isDirty());
+  EXPECT_FALSE(root_child0->isDirty());
+  EXPECT_FALSE(root_child1->isDirty());
+  EXPECT_FALSE(root_child0_child0->isDirty());
+
+  YGConfigFree(newConfig);
+  YGNodeFreeRecursive(root);
+}
+
+TEST(YogaTest, dirty_propagation_changing_benign_config) {
+  const YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetHeight(root_child0, 20);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child1, 50);
+  YGNodeStyleSetHeight(root_child1, 20);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child0_child0 = YGNodeNew();
+  YGNodeStyleSetWidth(root_child0_child0, 25);
+  YGNodeStyleSetHeight(root_child0_child0, 20);
+  YGNodeInsertChild(root, root_child0_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  EXPECT_FALSE(root->isDirty());
+  EXPECT_FALSE(root_child0->isDirty());
+  EXPECT_FALSE(root_child1->isDirty());
+  EXPECT_FALSE(root_child0_child0->isDirty());
+
+  YGConfigRef newConfig = YGConfigNew();
+  YGConfigSetLogger(
+      newConfig,
+      [](const YGConfigRef, const YGNodeRef, YGLogLevel, const char*, va_list) {
+        return 0;
+      });
+  YGNodeSetConfig(root_child0, newConfig);
+
+  EXPECT_FALSE(root->isDirty());
+  EXPECT_FALSE(root_child0->isDirty());
+  EXPECT_FALSE(root_child1->isDirty());
+  EXPECT_FALSE(root_child0_child0->isDirty());
+
+  YGConfigFree(newConfig);
+  YGNodeFreeRecursive(root);
+}
+
 TEST(YogaTest, dirty_mark_all_children_as_dirty_when_display_changes) {
   const YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
