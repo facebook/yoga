@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.13)
 project(yoga-all)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/project-defaults.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/yoga/cmake/project-defaults.cmake)
 
 add_subdirectory(yoga)
 add_subdirectory(tests)
@@ -25,14 +25,14 @@ install(TARGETS yogacore EXPORT yoga-targets
 
 # install header files
 install(DIRECTORY
-    "${CMAKE_CURRENT_LIST_DIR}/yoga"
+    "${CMAKE_CURRENT_LIST_DIR}/yoga/include"
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     FILES_MATCHING PATTERN "*.h"
 )
 
 # install target config
 install(EXPORT yoga-targets
-    FILE yogaTargets.cmake
+    FILE yoga-targets.cmake
     NAMESPACE yoga::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/yoga
 )
@@ -40,7 +40,7 @@ install(EXPORT yoga-targets
 
 # generate config file
 configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/yoga-config.cmake.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/yoga/cmake/yoga-config.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/yogaConfig.cmake
     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/yoga
 )

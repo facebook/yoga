@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <yoga/event/event.h>
+#include <yoga/Event.h>
 
 #include <functional>
 

@@ -9,7 +9,7 @@ project(benchmark)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
 set(YOGA_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
-include(${YOGA_ROOT}/cmake/project-defaults.cmake)
+include(${YOGA_ROOT}/yoga/cmake/project-defaults.cmake)
 
 add_subdirectory(${YOGA_ROOT}/yoga ${CMAKE_CURRENT_BINARY_DIR}/yoga)
 

@@ -12,7 +12,7 @@ include(FetchContent)
 include(GoogleTest)
 
 set(YOGA_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
-include(${YOGA_ROOT}/cmake/project-defaults.cmake)
+include(${YOGA_ROOT}/yoga/cmake/project-defaults.cmake)
 
 # Fetch GTest
 cmake_policy(SET CMP0135 NEW)
@@ -32,5 +32,8 @@ enable_testing()
 
 add_executable(yogatests ${SOURCES})
 target_link_libraries(yogatests yogacore GTest::gtest_main)
+
+# Allow tests to use private headers
+target_include_directories(yogatests PRIVATE ${YOGA_ROOT})
 
 gtest_discover_tests(yogatests)

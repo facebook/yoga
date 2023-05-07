@@ -7,8 +7,8 @@
 
 #include "TestUtil.h"
 
+#include <yoga/Event.h>
 #include <yoga/YGNode.h>
-#include <yoga/event/event.h>
 
 namespace facebook {
 namespace yoga {

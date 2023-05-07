@@ -13,7 +13,6 @@ android {
 
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
-    ndkVersion rootProject.ndkVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
@@ -28,7 +27,6 @@ android {
 
     externalNativeBuild {
         cmake {
-            version rootProject.cmakeVersion
             path 'CMakeLists.txt'
         }
     }

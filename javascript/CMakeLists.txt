@@ -12,7 +12,9 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/**/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src_native/*.cc)
 
-include_directories(..)
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
+    ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/include)
 
 set(CMAKE_CXX_STANDARD 14)
 
