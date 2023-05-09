@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { getMeasureCounter } from "../tools/MeasureCounter";
-import { Yoga, YGBENCHMARK } from "../tools/globals";
+import {getMeasureCounter} from '../tools/MeasureCounter';
+import {Yoga, YGBENCHMARK} from '../tools/globals';
 
 const ITERATIONS = 2000;
 
-YGBENCHMARK("Stack with flex", () => {
+YGBENCHMARK('Stack with flex', () => {
   const root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);
@@ -28,7 +28,7 @@ YGBENCHMARK("Stack with flex", () => {
   root.freeRecursive();
 });
 
-YGBENCHMARK("Align stretch in undefined axis", () => {
+YGBENCHMARK('Align stretch in undefined axis', () => {
   const root = Yoga.Node.create();
 
   const measureCounter = getMeasureCounter();
@@ -44,7 +44,7 @@ YGBENCHMARK("Align stretch in undefined axis", () => {
   root.freeRecursive();
 });
 
-YGBENCHMARK("Nested flex", () => {
+YGBENCHMARK('Nested flex', () => {
   const root = Yoga.Node.create();
 
   const measureCounter = getMeasureCounter();
@@ -68,7 +68,7 @@ YGBENCHMARK("Nested flex", () => {
   root.freeRecursive();
 });
 
-YGBENCHMARK("Huge nested layout", () => {
+YGBENCHMARK('Huge nested layout', () => {
   const root = Yoga.Node.create();
 
   const iterations = Math.pow(ITERATIONS, 1 / 4);

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Yoga } from "./tools/globals";
+import {Yoga} from './tools/globals';
 
-test("errata_all_contains_example_errata", () => {
+test('errata_all_contains_example_errata', () => {
   const config = Yoga.Config.create();
   config.setErrata(Yoga.ERRATA_ALL);
 
@@ -17,7 +17,7 @@ test("errata_all_contains_example_errata", () => {
   config.free();
 });
 
-test("errata_none_omits_example_errata", () => {
+test('errata_none_omits_example_errata', () => {
   const config = Yoga.Config.create();
   config.setErrata(Yoga.ERRATA_NONE);
 
@@ -27,7 +27,7 @@ test("errata_none_omits_example_errata", () => {
   config.free();
 });
 
-test("errata_is_settable", () => {
+test('errata_is_settable', () => {
   const config = Yoga.Config.create();
 
   config.setErrata(Yoga.ERRATA_ALL);

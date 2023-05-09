@@ -7,11 +7,11 @@
  * @format
  */
 
-import type { Config } from "jest";
+import type {Config} from 'jest';
 
 const config: Config = {
-  setupFiles: ["./jest.setup.ts"],
-  testRegex: "/tests/.*\\.test\\.[jt]s$",
+  setupFiles: ['./jest.setup.ts'],
+  testRegex: '/tests/.*\\.test\\.[jt]s$',
 };
 
 export default config;

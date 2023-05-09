@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { Yoga } from "yoga-layout";
+import type {Yoga} from 'yoga-layout';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -24,4 +24,4 @@ if (globalThis.YGBENCHMARK === undefined) {
 const yoga = globalThis.Yoga;
 const benchmark = globalThis.YGBENCHMARK;
 
-export { yoga as Yoga, benchmark as YGBENCHMARK };
+export {yoga as Yoga, benchmark as YGBENCHMARK};

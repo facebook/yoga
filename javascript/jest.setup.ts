@@ -8,17 +8,17 @@
  */
 
 module.exports = async () => {
-  if (process.env["SYNC"] === "1" && process.env["WASM"] === "1") {
-    globalThis.Yoga = require("./dist/entrypoint/wasm-sync");
-  } else if (process.env["SYNC"] === "1") {
-    globalThis.Yoga = require("./dist/entrypoint/asmjs-sync");
-  } else if (process.env["WASM"] === "1") {
-    globalThis.Yoga = await require("./dist/entrypoint/wasm-async").loadYoga();
+  if (process.env['SYNC'] === '1' && process.env['WASM'] === '1') {
+    globalThis.Yoga = require('./dist/entrypoint/wasm-sync');
+  } else if (process.env['SYNC'] === '1') {
+    globalThis.Yoga = require('./dist/entrypoint/asmjs-sync');
+  } else if (process.env['WASM'] === '1') {
+    globalThis.Yoga = await require('./dist/entrypoint/wasm-async').loadYoga();
   } else {
-    globalThis.Yoga = await require("./dist/entrypoint/asmjs-async").loadYoga();
+    globalThis.Yoga = await require('./dist/entrypoint/asmjs-async').loadYoga();
   }
 };
 
-Object.defineProperty(globalThis, "YGBENCHMARK", {
+Object.defineProperty(globalThis, 'YGBENCHMARK', {
   get: () => globalThis.test,
 });

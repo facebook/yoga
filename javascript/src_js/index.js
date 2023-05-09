@@ -8,4 +8,4 @@
  */
 
 // Fallback for when the export map is not followed
-module.exports = require("./entrypoint/asmjs-async");
+module.exports = require('./entrypoint/asmjs-async');

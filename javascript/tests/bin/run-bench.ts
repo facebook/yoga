@@ -8,7 +8,7 @@
  * @format
  */
 
-import path from "path";
+import path from 'path';
 
 const WARMUP_ITERATIONS = 3;
 const BENCHMARK_ITERATIONS = 10;
@@ -17,10 +17,10 @@ const testFiles = process.argv.slice(2);
 
 const testResults = new Map<string, Map<string, number>>();
 
-for (const type of ["asmjs", "wasm"]) {
-  globalThis.Yoga = require(type === "asmjs"
-    ? "../../dist/entrypoint/asmjs-sync"
-    : "../../dist/entrypoint/wasm-sync");
+for (const type of ['asmjs', 'wasm']) {
+  globalThis.Yoga = require(type === 'asmjs'
+    ? '../../dist/entrypoint/asmjs-sync'
+    : '../../dist/entrypoint/wasm-sync');
 
   for (const file of testFiles) {
     globalThis.YGBENCHMARK = (name: string, fn: () => void) => {
@@ -42,14 +42,14 @@ for (const type of ["asmjs", "wasm"]) {
 
     const modulePath = path.resolve(file);
 
-    delete require.cache[require.resolve("../tools/globals")];
+    delete require.cache[require.resolve('../tools/globals')];
     delete require.cache[modulePath];
     require(modulePath);
   }
 }
 
 console.log(
-  `Note: those tests are independants; there is no time relation to be expected between them`
+  `Note: those tests are independants; there is no time relation to be expected between them`,
 );
 
 for (const [name, results] of testResults) {
@@ -61,7 +61,7 @@ for (const [name, results] of testResults) {
 
   for (const [type, result] of results) {
     console.log(
-      `  - ${type}: ${result}ms (${Math.round((result / min) * 10000) / 100}%)`
+      `  - ${type}: ${result}ms (${Math.round((result / min) * 10000) / 100}%)`,
     );
   }
 }

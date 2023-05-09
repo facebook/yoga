@@ -7,9 +7,9 @@
  * @format
  */
 
-const CONSTANTS = require("./generated/YGEnums");
+const CONSTANTS = require('./generated/YGEnums');
 
-module.exports = (lib) => {
+module.exports = lib => {
   function patch(prototype, name, fn) {
     const original = prototype[name];
 
@@ -19,16 +19,16 @@ module.exports = (lib) => {
   }
 
   for (const fnName of [
-    "setPosition",
-    "setMargin",
-    "setFlexBasis",
-    "setWidth",
-    "setHeight",
-    "setMinWidth",
-    "setMinHeight",
-    "setMaxWidth",
-    "setMaxHeight",
-    "setPadding",
+    'setPosition',
+    'setMargin',
+    'setFlexBasis',
+    'setWidth',
+    'setHeight',
+    'setMinWidth',
+    'setMinHeight',
+    'setMaxWidth',
+    'setMaxHeight',
+    'setPadding',
   ]) {
     const methods = {
       [CONSTANTS.UNIT_POINT]: lib.Node.prototype[fnName],
@@ -43,15 +43,15 @@ module.exports = (lib) => {
       const value = args.pop();
       let unit, asNumber;
 
-      if (value === "auto") {
+      if (value === 'auto') {
         unit = CONSTANTS.UNIT_AUTO;
         asNumber = undefined;
-      } else if (typeof value === "object") {
+      } else if (typeof value === 'object') {
         unit = value.unit;
         asNumber = value.valueOf();
       } else {
         unit =
-          typeof value === "string" && value.endsWith("%")
+          typeof value === 'string' && value.endsWith('%')
             ? CONSTANTS.UNIT_PERCENT
             : CONSTANTS.UNIT_POINT;
         asNumber = parseFloat(value);
@@ -62,7 +62,7 @@ module.exports = (lib) => {
 
       if (!methods[unit])
         throw new Error(
-          `Failed to execute "${fnName}": Unsupported unit '${value}'`
+          `Failed to execute "${fnName}": Unsupported unit '${value}'`,
         );
 
       if (asNumber !== undefined) {
@@ -76,7 +76,7 @@ module.exports = (lib) => {
   function wrapMeasureFunction(measureFunction) {
     return lib.MeasureCallback.implement({
       measure: (...args) => {
-        const { width, height } = measureFunction(...args);
+        const {width, height} = measureFunction(...args);
         return {
           width: width ?? NaN,
           height: height ?? NaN,
@@ -85,7 +85,7 @@ module.exports = (lib) => {
     });
   }
 
-  patch(lib.Node.prototype, "setMeasureFunc", function (original, measureFunc) {
+  patch(lib.Node.prototype, 'setMeasureFunc', function (original, measureFunc) {
     // This patch is just a convenience patch, since it helps write more
     // idiomatic source code (such as .setMeasureFunc(null))
     if (measureFunc) {
@@ -96,33 +96,33 @@ module.exports = (lib) => {
   });
 
   function wrapDirtiedFunc(dirtiedFunction) {
-    return lib.DirtiedCallback.implement({ dirtied: dirtiedFunction });
+    return lib.DirtiedCallback.implement({dirtied: dirtiedFunction});
   }
 
-  patch(lib.Node.prototype, "setDirtiedFunc", function (original, dirtiedFunc) {
+  patch(lib.Node.prototype, 'setDirtiedFunc', function (original, dirtiedFunc) {
     original.call(this, wrapDirtiedFunc(dirtiedFunc));
   });
 
-  patch(lib.Config.prototype, "free", function () {
+  patch(lib.Config.prototype, 'free', function () {
     // Since we handle the memory allocation ourselves (via lib.Config.create),
     // we also need to handle the deallocation
     lib.Config.destroy(this);
   });
 
-  patch(lib.Node, "create", (_, config) => {
+  patch(lib.Node, 'create', (_, config) => {
     // We decide the constructor we want to call depending on the parameters
     return config
       ? lib.Node.createWithConfig(config)
       : lib.Node.createDefault();
   });
 
-  patch(lib.Node.prototype, "free", function () {
+  patch(lib.Node.prototype, 'free', function () {
     // Since we handle the memory allocation ourselves (via lib.Node.create),
     // we also need to handle the deallocation
     lib.Node.destroy(this);
   });
 
-  patch(lib.Node.prototype, "freeRecursive", function () {
+  patch(lib.Node.prototype, 'freeRecursive', function () {
     for (let t = 0, T = this.getChildCount(); t < T; ++t) {
       this.getChild(0).freeRecursive();
     }
@@ -131,16 +131,16 @@ module.exports = (lib) => {
 
   patch(
     lib.Node.prototype,
-    "calculateLayout",
+    'calculateLayout',
     function (
       original,
       width = NaN,
       height = NaN,
-      direction = CONSTANTS.DIRECTION_LTR
+      direction = CONSTANTS.DIRECTION_LTR,
     ) {
       // Just a small patch to add support for the function default parameters
       return original.call(this, width, height, direction);
-    }
+    },
   );
 
   return {

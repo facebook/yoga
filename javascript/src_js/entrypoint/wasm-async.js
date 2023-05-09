@@ -7,5 +7,5 @@
  * @format
  */
 
-const asm = require("../build/wasm-async");
-module.exports = require("./_entryAsync")(asm);
+const asm = require('../build/wasm-async');
+module.exports = require('./_entryAsync')(asm);

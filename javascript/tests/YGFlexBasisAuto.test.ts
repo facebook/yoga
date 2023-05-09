@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Yoga } from "./tools/globals";
+import {Yoga} from './tools/globals';
 
-test("flex_basis_auto", () => {
+test('flex_basis_auto', () => {
   const root = Yoga.Node.create();
 
   expect(root.getFlexBasis().unit).toBe(Yoga.UNIT_AUTO);

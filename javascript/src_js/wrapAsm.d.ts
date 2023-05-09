@@ -22,9 +22,9 @@ import type {
   PositionType,
   Unit,
   Wrap,
-} from "./generated/YGEnums";
+} from './generated/YGEnums';
 
-import type * as YGEnums from "./generated/YGEnums";
+import type * as YGEnums from './generated/YGEnums';
 
 type Layout = {
   left: number;
@@ -50,7 +50,7 @@ export type Config = {
   isExperimentalFeatureEnabled(feature: ExperimentalFeature): boolean;
   setExperimentalFeatureEnabled(
     feature: ExperimentalFeature,
-    enabled: boolean
+    enabled: boolean,
   ): void;
   setPointScaleFactor(factor: number): void;
   /**
@@ -77,7 +77,7 @@ export type MeasureFunction = (
   width: number,
   widthMode: MeasureMode,
   height: number,
-  heightMode: MeasureMode
+  heightMode: MeasureMode,
 ) => Size;
 
 export type Node = {
@@ -135,20 +135,20 @@ export type Node = {
   setBorder(edge: Edge, borderWidth: number): void;
   setDisplay(display: Display): void;
   setFlex(flex: number): void;
-  setFlexBasis(flexBasis: number | "auto" | `${number}%`): void;
+  setFlexBasis(flexBasis: number | 'auto' | `${number}%`): void;
   setFlexBasisPercent(flexBasis: number): void;
   setFlexBasisAuto(): void;
   setFlexDirection(flexDirection: FlexDirection): void;
   setFlexGrow(flexGrow: number): void;
   setFlexShrink(flexShrink: number): void;
   setFlexWrap(flexWrap: Wrap): void;
-  setHeight(height: number | "auto" | `${number}%`): void;
+  setHeight(height: number | 'auto' | `${number}%`): void;
   setIsReferenceBaseline(isReferenceBaseline: boolean): void;
   setHeightAuto(): void;
   setHeightPercent(height: number): void;
   setJustifyContent(justifyContent: Justify): void;
   setGap(gutter: Gutter, gapLength: number): Value;
-  setMargin(edge: Edge, margin: number | "auto" | `${number}%`): void;
+  setMargin(edge: Edge, margin: number | 'auto' | `${number}%`): void;
   setMarginAuto(edge: Edge): void;
   setMarginPercent(edge: Edge, margin: number): void;
   setMaxHeight(maxHeight: number | `${number}%`): void;
@@ -167,7 +167,7 @@ export type Node = {
   setPosition(edge: Edge, position: number | `${number}%`): void;
   setPositionPercent(edge: Edge, position: number): void;
   setPositionType(positionType: PositionType): void;
-  setWidth(width: number | "auto" | `${number}%`): void;
+  setWidth(width: number | 'auto' | `${number}%`): void;
   setWidthAuto(): void;
   setWidthPercent(width: number): void;
   unsetDirtiedFunc(): void;

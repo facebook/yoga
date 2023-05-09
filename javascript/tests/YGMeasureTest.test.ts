@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Yoga } from "./tools/globals";
-import { getMeasureCounter } from "./tools/MeasureCounter";
+import {Yoga} from './tools/globals';
+import {getMeasureCounter} from './tools/MeasureCounter';
 
-test("dont_measure_single_grow_shrink_child", () => {
+test('dont_measure_single_grow_shrink_child', () => {
   const root = Yoga.Node.create();
   root.setWidth(100);
   root.setHeight(100);
@@ -27,11 +27,11 @@ test("dont_measure_single_grow_shrink_child", () => {
   root.freeRecursive();
 });
 
-test("dont_fail_with_incomplete_measure_dimensions", () => {
+test('dont_fail_with_incomplete_measure_dimensions', () => {
   // @ts-expect-error Testing bad usage
-  const heightOnlyCallback = getMeasureCounter(() => ({ height: 10 }));
+  const heightOnlyCallback = getMeasureCounter(() => ({height: 10}));
   // @ts-expect-error Testing bad usage
-  const widthOnlyCallback = getMeasureCounter(() => ({ width: 10 }));
+  const widthOnlyCallback = getMeasureCounter(() => ({width: 10}));
   // @ts-expect-error Testing bad usage
   const emptyCallback = getMeasureCounter(() => ({}));
 

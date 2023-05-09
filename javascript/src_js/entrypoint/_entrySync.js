@@ -7,5 +7,5 @@
  * @format
  */
 
-const wrapAsm = require("../wrapAsm");
-module.exports = (asm) => wrapAsm(asm());
+const wrapAsm = require('../wrapAsm');
+module.exports = asm => wrapAsm(asm());

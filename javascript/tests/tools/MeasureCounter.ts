@@ -7,8 +7,8 @@
  * @format
  */
 
-import type { MeasureFunction } from "yoga-layout";
-import { Yoga } from "./globals";
+import type {MeasureFunction} from 'yoga-layout';
+import {Yoga} from './globals';
 
 export type MeasureCounter = {
   inc: MeasureFunction;
@@ -18,7 +18,7 @@ export type MeasureCounter = {
 export function getMeasureCounter(
   cb?: MeasureFunction | null,
   staticWidth = 0,
-  staticHeight = 0
+  staticHeight = 0,
 ): MeasureCounter {
   let counter = 0;
 
@@ -28,7 +28,7 @@ export function getMeasureCounter(
 
       return cb
         ? cb(width, widthMode, height, heightMode)
-        : { width: staticWidth, height: staticHeight };
+        : {width: staticWidth, height: staticHeight};
     },
 
     get: function () {
@@ -44,7 +44,7 @@ export function getMeasureCounterMax(): MeasureCounter {
     const measuredHeight =
       heightMode === Yoga.MEASURE_MODE_UNDEFINED ? 10 : height;
 
-    return { width: measuredWidth, height: measuredHeight };
+    return {width: measuredWidth, height: measuredHeight};
   });
 }
 
@@ -61,6 +61,6 @@ export function getMeasureCounterMin(): MeasureCounter {
         ? 10
         : height;
 
-    return { width: measuredWidth, height: measuredHeight };
+    return {width: measuredWidth, height: measuredHeight};
   });
 }
