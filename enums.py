@@ -247,7 +247,7 @@ for name, values in sorted(ENUMS.items()):
         f.write("}\n")
 
 # write out javascript file
-with open(root + "/javascript/src_js/generated/YGEnums.js", "w") as f:
+with open(root + "/javascript/src/generated/YGEnums.js", "w") as f:
     f.write(get_license("js"))
     items = sorted(ENUMS.items())
     for name, values in items:
@@ -265,7 +265,7 @@ with open(root + "/javascript/src_js/generated/YGEnums.js", "w") as f:
         if name != items[-1][0]:
             f.write("\n")
 
-with open(root + "/javascript/src_js/generated/YGEnums.d.ts", "w") as f:
+with open(root + "/javascript/src/generated/YGEnums.d.ts", "w") as f:
     f.write(get_license("js"))
 
     for name, values in sorted(ENUMS.items()):
@@ -277,7 +277,7 @@ with open(root + "/javascript/src_js/generated/YGEnums.d.ts", "w") as f:
             f.write(
                 (
                     "type {name}_{value} = {ordinal} & ['{name}']\n"
-                    + "export const {name}_{value}: {name}_{value};\n\n"
+                    + "export declare const {name}_{value}: {name}_{value};\n\n"
                 ).format(
                     name=to_java_upper(name),
                     value=to_java_upper(value_arg),

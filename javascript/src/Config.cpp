@@ -7,7 +7,7 @@
 
 #include <yoga/Yoga.h>
 
-#include "./Config.hh"
+#include "./Config.h"
 
 /* static */ Config* Config::create(void) {
   return new Config();

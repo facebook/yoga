@@ -12,10 +12,10 @@
 #include <emscripten/bind.h>
 #include <yoga/Yoga.h>
 
-#include "./Layout.hh"
-#include "./Size.hh"
-#include "./Value.hh"
-#include "./Config.hh"
+#include "./Layout.h"
+#include "./Size.h"
+#include "./Value.h"
+#include "./Config.h"
 
 class MeasureCallback {
 public:

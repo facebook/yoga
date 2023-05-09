@@ -10,7 +10,6 @@
 import {
   argv,
   cleanTask,
-  copyTask,
   eslintTask,
   logger,
   jestTask,
@@ -32,15 +31,6 @@ option('fix');
 
 task('clean', cleanTask({paths: ['build', 'dist']}));
 
-task(
-  'prepare-for-build',
-  parallel(
-    babelTransformTask({paths: ['src_js'], dest: 'dist'}),
-    copyTask({paths: ['src_js/**/*.d.ts'], dest: 'dist'}),
-    emcmakeGenerateTask(),
-  ),
-);
-
 function defineFlavor(flavor: string, env: NodeJS.ProcessEnv) {
   task(`cmake-build:${flavor}`, cmakeBuildTask({targets: [flavor]}));
   task(
@@ -49,7 +39,7 @@ function defineFlavor(flavor: string, env: NodeJS.ProcessEnv) {
   );
   task(
     `test:${flavor}`,
-    series('prepare-for-build', `cmake-build:${flavor}`, `jest:${flavor}`),
+    series(emcmakeGenerateTask(), `cmake-build:${flavor}`, `jest:${flavor}`),
   );
 }
 
@@ -68,12 +58,12 @@ task(
   cmakeBuildTask({targets: ['asmjs-sync', 'wasm-sync']}),
 );
 
-task('build', series('prepare-for-build', 'cmake-build:all'));
+task('build', series(emcmakeGenerateTask(), 'cmake-build:all'));
 
 task(
   'test',
   series(
-    'prepare-for-build',
+    emcmakeGenerateTask(),
     series('cmake-build:asmjs-async', 'jest:asmjs-async'),
     series('cmake-build:asmjs-sync', 'jest:asmjs-sync'),
     series('cmake-build:wasm-async', 'jest:wasm-async'),
@@ -83,26 +73,41 @@ task(
 
 task(
   'benchmark',
-  series('prepare-for-build', 'cmake-build:sync', runBenchTask()),
+  series(emcmakeGenerateTask(), 'cmake-build:sync', runBenchTask()),
 );
 
 task(
   'lint',
   parallel(
-    tscTask(),
+    tscTask({noEmit: true}),
     series(eslintTask({fix: argv().fix}), clangFormatTask({fix: argv().fix})),
   ),
 );
 
-function babelTransformTask(opts: {
-  paths: ReadonlyArray<string>;
-  dest: string;
-}) {
-  return () => {
-    const args = [...opts.paths, '--source-maps', '--out-dir', opts.dest];
-    logger.info(`Transforming [${opts.paths.join(',')}] to '${opts.dest}'`);
+task(
+  'prepublish',
+  parallel(
+    'build',
+    tscTask({emitDeclarationOnly: true}),
+    babelTransformTask({dir: 'src'}),
+  ),
+);
 
-    return spawn(node, [require.resolve('@babel/cli/bin/babel'), ...args]);
+function babelTransformTask(opts: {dir: string}) {
+  return () => {
+    const args = [
+      opts.dir,
+      '--source-maps',
+      '--out-dir',
+      opts.dir,
+      '--extensions',
+      '.js,.ts',
+    ];
+    logger.info(`Transforming "${path.resolve(opts.dir)}"`);
+
+    return spawn(node, [require.resolve('@babel/cli/bin/babel'), ...args], {
+      cwd: __dirname,
+    });
   };
 }
 

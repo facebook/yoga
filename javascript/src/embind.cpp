@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include "./Node.hh"
-#include "./Layout.hh"
-#include "./Size.hh"
-#include "./Value.hh"
-#include "./Config.hh"
+#include "./Node.h"
+#include "./Layout.h"
+#include "./Size.h"
+#include "./Value.h"
+#include "./Config.h"
 
 #include <yoga/Yoga.h>
 #include <emscripten/bind.h>

@@ -9,10 +9,10 @@
 
 #include <yoga/Yoga.h>
 
-#include "./Node.hh"
-#include "./Layout.hh"
-#include "./Size.hh"
-#include "./Config.hh"
+#include "./Node.h"
+#include "./Layout.h"
+#include "./Size.h"
+#include "./Config.h"
 
 static YGSize globalMeasureFunc(
     YGNodeRef nodeRef,

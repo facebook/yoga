@@ -10,7 +10,7 @@ project(yoga)
 file(GLOB SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/**/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src_native/*.cc)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
 include_directories(..)
 
