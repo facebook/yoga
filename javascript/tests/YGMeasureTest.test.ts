@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Yoga } from "./tools/globals";
 import { getMeasureCounter } from "./tools/MeasureCounter";
 
 test("dont_measure_single_grow_shrink_child", () => {
@@ -19,7 +20,7 @@ test("dont_measure_single_grow_shrink_child", () => {
   root_child0.setFlexGrow(1);
   root_child0.setFlexShrink(1);
   root.insertChild(root_child0, 0);
-  root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   expect(measureCounter.get()).toBe(0);
 
@@ -27,8 +28,11 @@ test("dont_measure_single_grow_shrink_child", () => {
 });
 
 test("dont_fail_with_incomplete_measure_dimensions", () => {
+  // @ts-expect-error Testing bad usage
   const heightOnlyCallback = getMeasureCounter(() => ({ height: 10 }));
+  // @ts-expect-error Testing bad usage
   const widthOnlyCallback = getMeasureCounter(() => ({ width: 10 }));
+  // @ts-expect-error Testing bad usage
   const emptyCallback = getMeasureCounter(() => ({}));
 
   const root = Yoga.Node.create();
@@ -47,7 +51,7 @@ test("dont_fail_with_incomplete_measure_dimensions", () => {
   node2.setMeasureFunc(widthOnlyCallback.inc);
   node3.setMeasureFunc(emptyCallback.inc);
 
-  root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   expect(heightOnlyCallback.get()).toBe(1);
   expect(widthOnlyCallback.get()).toBe(1);

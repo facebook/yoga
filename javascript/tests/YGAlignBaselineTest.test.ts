@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Yoga } from "./tools/globals";
+
 test("align_baseline_parent_using_child_in_column_as_reference", () => {
   const config = Yoga.Config.create();
   let root;
@@ -41,7 +43,7 @@ test("align_baseline_parent_using_child_in_column_as_reference", () => {
     root_child1_child1.setIsReferenceBaseline(true);
     root_child1.insertChild(root_child1_child1, 1);
 
-    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+    root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
     expect(root_child0.getComputedLeft()).toBe(0);
     expect(root_child0.getComputedTop()).toBe(100);
@@ -99,7 +101,7 @@ test("align_baseline_parent_using_child_in_row_as_reference", () => {
     root_child1_child1.setIsReferenceBaseline(true);
     root_child1.insertChild(root_child1_child1, 1);
 
-    root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+    root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
     expect(root_child0.getComputedLeft()).toBe(0);
     expect(root_child0.getComputedTop()).toBe(0);

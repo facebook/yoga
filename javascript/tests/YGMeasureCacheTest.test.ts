@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Yoga } from "./tools/globals";
+
 import { getMeasureCounterMax } from "./tools/MeasureCounter";
 
 test("measure_once_single_flexible_child", () => {
@@ -14,14 +16,14 @@ test("measure_once_single_flexible_child", () => {
   root.setWidth(100);
   root.setHeight(100);
 
-  const measureCounter = getMeasureCounterMax(Yoga);
+  const measureCounter = getMeasureCounterMax();
 
   const root_child0 = Yoga.Node.create();
   root_child0.setMeasureFunc(measureCounter.inc);
   root_child0.setFlexGrow(1);
   root.insertChild(root_child0, 0);
 
-  root.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, Yoga.DIRECTION_LTR);
+  root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   expect(measureCounter.get()).toBe(1);
 

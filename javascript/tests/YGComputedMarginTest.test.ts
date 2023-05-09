@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Yoga } from "./tools/globals";
+
 test("margin_start", () => {
   const root = Yoga.Node.create();
   root.setWidth(100);
