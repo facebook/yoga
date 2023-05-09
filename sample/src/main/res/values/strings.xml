@@ -30,4 +30,6 @@
       name="child_5_text"
       description="Placeholder text for the fifth element in the layout"
       >Who are you?</string>
+  <string name="home">Home</string>
+  <string name="benchmark">Benchmark</string>
 </resources>

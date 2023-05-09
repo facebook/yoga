@@ -5,17 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-package com.facebook.samples.yoga;
+package com.facebook.yoga.sample;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.Math;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.text.DateFormat;
 import java.util.Date;
 
 import android.content.Context;

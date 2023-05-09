@@ -5,22 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-package com.facebook.samples.yoga;
+package com.facebook.yoga.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Menu;
 
-import com.facebook.samples.yoga.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.facebook.soloader.SoLoader;
 import com.facebook.yoga.android.YogaViewLayoutFactory;
 
 /**
- * An activity to show off Yoga in Android.  This activity shows a simple layout (defined in
+ * An activity to show off Yoga in Android. This activity shows a simple layout (defined in
  * {@code main_layout.xml}) that shows off the awesome functionality of the Yoga layout engine
  * as well as some optimisations on layout systems that it facilitates.
  */
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     // There is only one option
     Intent intent = new Intent(this, BenchmarkActivity.class);
     startActivity(intent);

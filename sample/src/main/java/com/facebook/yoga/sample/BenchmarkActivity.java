@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-package com.facebook.samples.yoga;
+package com.facebook.yoga.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Menu;
-import android.support.v7.app.ActionBar;
 
-import com.facebook.samples.yoga.R;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
 import com.facebook.yoga.android.YogaViewLayoutFactory;
 
 public class BenchmarkActivity extends AppCompatActivity {
@@ -33,21 +33,24 @@ public class BenchmarkActivity extends AppCompatActivity {
 
     setContentView(R.layout.benchmark_select_layout);
 
-    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+    ViewPager viewPager = findViewById(R.id.viewpager);
     viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
 
     final ActionBar actionBar = getSupportActionBar();
     actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
     ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+      @Override
       public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setCurrentItem(tab.getPosition());
       }
 
+      @Override
       public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
       }
 
+      @Override
       public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
       }
     };

@@ -5,40 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-package com.facebook.samples.yoga;
+package com.facebook.yoga.sample;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Button;
 import android.view.ViewGroup;
-import android.util.Log;
-import com.facebook.samples.yoga.R;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class BenchmarkInflate extends BenchmarkFragment {
 
   @Override
-  public View onCreateView(
-    LayoutInflater inflater,
-    ViewGroup container,
-    Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
 
-    Button b = (Button) rootLayout.findViewById(R.id.btn);
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        startBenchmark();
-      }
-    });
+    Button b = rootLayout.findViewById(R.id.btn);
+    b.setOnClickListener(v -> startBenchmark());
 
     return rootLayout;
   }
 
   protected void startBenchmark() {
     LayoutInflater inflater = LayoutInflater.from(getActivity());
-    TextView textView = (TextView) rootLayout.findViewById(R.id.text);
+    TextView textView = rootLayout.findViewById(R.id.text);
 
     final int ITERATIONS = 500;
 
@@ -57,14 +48,14 @@ public class BenchmarkInflate extends BenchmarkFragment {
     }
 
     textView.setText(
-        yogaInflationAggregator.toString()+
-            "\n"+
-            linearInflationAggregator.toString());
+            yogaInflationAggregator.toString() +
+                    "\n" +
+                    linearInflationAggregator.toString());
     Log.i(
-      "YogaLayoutBenchmark",
-      yogaInflationAggregator.toString()+
-        "\n"+
-        linearInflationAggregator.toString());
+            "YogaLayoutBenchmark",
+            yogaInflationAggregator.toString() +
+                    "\n" +
+                    linearInflationAggregator.toString());
     rootLayout.invalidate();
   }
 }

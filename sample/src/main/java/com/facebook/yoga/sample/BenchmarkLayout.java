@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-package com.facebook.samples.yoga;
+package com.facebook.yoga.sample;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,34 +14,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import com.facebook.samples.yoga.R;
-
-import java.util.Random;
 
 public class BenchmarkLayout extends BenchmarkFragment {
 
   @Override
   public View onCreateView(
-    LayoutInflater inflater,
-    ViewGroup container,
-    Bundle savedInstanceState) {
+          LayoutInflater inflater,
+          ViewGroup container,
+          Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
 
-    Button b = (Button) rootLayout.findViewById(R.id.btn);
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        startBenchmark();
-      }
-    });
+    Button b = rootLayout.findViewById(R.id.btn);
+    b.setOnClickListener(v -> startBenchmark());
 
     return rootLayout;
   }
 
   protected void startBenchmark() {
     LayoutInflater inflater = LayoutInflater.from(getActivity());
-    TextView textView = (TextView) rootLayout.findViewById(R.id.text);
-    Random random = new Random();
+    TextView textView = rootLayout.findViewById(R.id.text);
 
     final int ITERATIONS = 500;
 
@@ -53,11 +44,11 @@ public class BenchmarkLayout extends BenchmarkFragment {
       randomizeText(yogaView);
       randomizeText(linearView);
       yogaView.measure(
-          View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY),
-          View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY));
+              View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY),
+              View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY));
       linearView.measure(
-          View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY),
-          View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY));
+              View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY),
+              View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.EXACTLY));
       yogaInflationAggregator.startTrace();
       yogaView.layout(0, 0, yogaView.getMeasuredWidth(), yogaView.getMeasuredHeight());
       yogaInflationAggregator.endTrace();
@@ -67,13 +58,13 @@ public class BenchmarkLayout extends BenchmarkFragment {
     }
 
     textView.setText(
-        yogaInflationAggregator.toString()+
-            "\n"+
-            linearInflationAggregator.toString());
+            yogaInflationAggregator +
+                    "\n" +
+                    linearInflationAggregator);
     Log.i(
-      "YogaLayoutBenchmark",
-      yogaInflationAggregator.toString()+
-        "\n"+
-        linearInflationAggregator.toString());
+            "YogaLayoutBenchmark",
+            yogaInflationAggregator +
+                    "\n" +
+                    linearInflationAggregator);
   }
 }
