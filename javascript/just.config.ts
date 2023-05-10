@@ -21,6 +21,8 @@ import {
   tscTask,
 } from 'just-scripts';
 
+import {readFile, writeFile} from 'fs/promises';
+
 import glob from 'glob';
 import path from 'path';
 import which from 'which';
@@ -84,14 +86,37 @@ task(
   ),
 );
 
+task('prepack-package-json', async () => {
+  const packageJsonPath = path.join(__dirname, 'package.json');
+  const packageJsonContents = await readFile(packageJsonPath);
+  const packageJson = JSON.parse(packageJsonContents.toString('utf-8'));
+
+  recursiveReplace(packageJson, /(.\/src\/.*)\.ts/, '$1.js');
+  await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+});
+
 task(
-  'prepublish',
-  parallel(
-    'build',
-    tscTask({emitDeclarationOnly: true}),
+  'prepack',
+  series(
+    parallel('build', tscTask({emitDeclarationOnly: true})),
     babelTransformTask({dir: 'src'}),
+    'prepack-package-json',
   ),
 );
+
+function recursiveReplace(
+  obj: Record<string, unknown>,
+  pattern: RegExp,
+  replacement: string,
+) {
+  for (const [key, value] of Object.entries(obj)) {
+    if (typeof value === 'string') {
+      obj[key] = value.replace(pattern, replacement);
+    } else if (typeof value === 'object' && value != null) {
+      recursiveReplace(value as Record<string, unknown>, pattern, replacement);
+    }
+  }
+}
 
 function babelTransformTask(opts: {dir: string}) {
   return () => {

@@ -7,22 +7,24 @@
     "type": "git",
     "url": "git@github.com:facebook/yoga.git"
   },
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
   "exports": {
     ".": {
-      "browser": "./src/entrypoint/wasm-async.js",
-      "node": "./src/entrypoint/wasm-async.js",
-      "default": "./src/entrypoint/asmjs-async.js"
+      "browser": "./src/entrypoint/wasm-async.ts",
+      "node": "./src/entrypoint/wasm-async.ts",
+      "default": "./src/entrypoint/asmjs-async.ts"
     },
     "./sync": {
-      "browser": "./src/entrypoint/asmjs-sync.js",
-      "node": "./src/entrypoint/wasm-sync.js",
-      "default": "./src/entrypoint/asmjs-sync.js"
-    }
+      "browser": "./src/entrypoint/asmjs-sync.ts",
+      "node": "./src/entrypoint/wasm-sync.ts",
+      "default": "./src/entrypoint/asmjs-sync.ts"
+    },
+    "./asmjs-async": "./src/entrypoint/asmjs-async.ts",
+    "./asmjs-sync": "./src/entrypoint/asmjs-sync.ts",
+    "./wasm-async": "./src/entrypoint/wasm-async.ts",
+    "./wasm-sync": "./src/entrypoint/wasm-sync.ts"
   },
   "files": [
-    "dist/**",
+    "binaries/**",
     "src/**"
   ],
   "scripts": {
@@ -31,7 +33,7 @@
     "clean": "just clean",
     "lint": "just lint",
     "lint:fix": "just lint --fix",
-    "prepublish": "just prepublish",
+    "prepack": "just prepack",
     "test": "just test",
     "test:asmjs-async": "just test:asmjs-async",
     "test:asmjs-sync": "just test:asmjs-sync",

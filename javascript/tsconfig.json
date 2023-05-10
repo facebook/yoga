@@ -6,8 +6,11 @@
     "declaration": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    // TODO: moduleResolution: "nodenext" is buggy with this if the absolute
+    // path contains any capital letters
+    "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
+    "moduleResolution": "nodenext",
     "paths": {
       "yoga-layout": ["src"]
     }
