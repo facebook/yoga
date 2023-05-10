@@ -7,20 +7,20 @@
  * @format
  */
 
-const path = require("path");
+const path = require('path');
 
 module.exports = {
   root: true,
-  ignorePatterns: ["dist/**", "tests/generated/**"],
-  extends: ["eslint:recommended", "plugin:prettier/recommended"],
-  plugins: ["prettier"],
+  ignorePatterns: ['dist/**', 'tests/generated/**'],
+  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  plugins: ['prettier'],
   rules: {
-    "no-var": "error",
-    "prefer-arrow-callback": "error",
-    "prefer-const": "error",
-    "prefer-object-spread": "error",
-    "prefer-spread": "error",
-    "require-await": "error",
+    'no-var': 'error',
+    'prefer-arrow-callback': 'error',
+    'prefer-const': 'error',
+    'prefer-object-spread': 'error',
+    'prefer-spread': 'error',
+    'require-await': 'error',
   },
   env: {
     commonjs: true,
@@ -28,44 +28,44 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["**/*.js"],
-      parser: "@babel/eslint-parser",
+      files: ['**/*.js'],
+      parser: '@babel/eslint-parser',
       parserOptions: {
         babelOptions: {
-          configFile: path.join(__dirname, ".babelrc.js"),
+          configFile: path.join(__dirname, '.babelrc.js'),
         },
       },
     },
     {
-      files: ["**/*.ts"],
-      extends: ["plugin:@typescript-eslint/recommended"],
-      parser: "@typescript-eslint/parser",
+      files: ['**/*.ts'],
+      extends: ['plugin:@typescript-eslint/recommended'],
+      parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: path.join(__dirname, "tsconfig.json"),
+        project: path.join(__dirname, 'tsconfig.json'),
       },
-      plugins: ["@typescript-eslint"],
+      plugins: ['@typescript-eslint'],
       rules: {
-        "@typescript-eslint/no-var-requires": "off",
+        '@typescript-eslint/no-var-requires': 'off',
       },
     },
     {
-      files: ["**/.eslintrc.js", "**/just.config.js"],
+      files: ['**/.eslintrc.js', '**/just.config.js'],
       env: {
         node: true,
       },
     },
     {
-      files: ["jest.*", "tests/**"],
+      files: ['jest.*', 'tests/**'],
       env: {
         node: true,
       },
-      extends: ["plugin:jest/recommended"],
+      extends: ['plugin:jest/recommended'],
       globals: {
-        getMeasureCounter: "writable",
-        getMeasureCounterMax: "writable",
-        getMeasureCounterMin: "writable",
-        Yoga: "writable",
-        YGBENCHMARK: "writable",
+        getMeasureCounter: 'writable',
+        getMeasureCounterMax: 'writable',
+        getMeasureCounterMin: 'writable',
+        Yoga: 'writable',
+        YGBENCHMARK: 'writable',
       },
     },
   ],

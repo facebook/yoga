@@ -10,6 +10,9 @@
 
 import path from 'path';
 
+import YogaAsmjs from 'yoga-layout/asmjs-sync';
+import YogaWasm from 'yoga-layout/wasm-sync';
+
 const WARMUP_ITERATIONS = 3;
 const BENCHMARK_ITERATIONS = 10;
 
@@ -18,9 +21,7 @@ const testFiles = process.argv.slice(2);
 const testResults = new Map<string, Map<string, number>>();
 
 for (const type of ['asmjs', 'wasm']) {
-  globalThis.Yoga = require(type === 'asmjs'
-    ? '../../dist/entrypoint/asmjs-sync'
-    : '../../dist/entrypoint/wasm-sync');
+  globalThis.Yoga = type === 'asmjs' ? YogaAsmjs : YogaWasm;
 
   for (const file of testFiles) {
     globalThis.YGBENCHMARK = (name: string, fn: () => void) => {

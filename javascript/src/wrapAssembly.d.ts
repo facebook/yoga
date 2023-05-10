@@ -187,5 +187,5 @@ export type Yoga = {
   };
 } & typeof YGEnums;
 
-declare const wrapAsm: () => Yoga;
+declare const wrapAsm: (assembly: unknown) => Yoga;
 export default wrapAsm;

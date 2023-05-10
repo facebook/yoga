@@ -44,7 +44,7 @@ For better performance and smaller packages, WebAssembly is preferred to asm.js 
 A specific entrypoint may be specified on platforms which do not understand export conditions.
 
 ```ts
-import {loadYoga} from 'yoga-layout/dist/entrypoint/wasm-async';
+import {loadYoga} from 'yoga-layout/wasm-async';
 ```
 
 
