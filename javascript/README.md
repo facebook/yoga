@@ -7,21 +7,21 @@ This package provides prebuilt JavaScript bindings for the Yoga layout engine. B
 The default entrypoint provides an asynchronous loader function to return a Yoga instance.
 
 ```ts
-import { loadYoga, ALIGN_CENTER } from "yoga-layout";
+import {loadYoga, Align} from 'yoga-layout';
 
 const Yoga = await loadYoga();
 
 const node = Yoga.Node.create();
-node.setAlignContent(ALIGN_CENTER);
+node.setAlignContent(Align.Center);
 ```
 
 An alternative synchronous API is provided for compatibility, but requires using asm.js in browsers instead of WebAssembly, leading to worse performance and larger assets.
 
 ```ts
-import Yoga, { ALIGN_CENTER } from "yoga-layout/sync";
+import Yoga, {Align} from 'yoga-layout/sync';
 
 const node = Yoga.Node.create();
-node.setAlignContent(ALIGN_CENTER);
+node.setAlignContent(Align.Center);
 ```
 
 Objects created by `Yoga.<>.create()` are not automatically garbage collected and should be freed once they are no longer in use.
@@ -44,7 +44,7 @@ For better performance and smaller packages, WebAssembly is preferred to asm.js 
 A specific entrypoint may be specified on platforms which do not understand export conditions.
 
 ```ts
-import { loadYoga } from "yoga-layout/dist/entrypoint/wasm-async";
+import {loadYoga} from 'yoga-layout/dist/entrypoint/wasm-async';
 ```
 
 
