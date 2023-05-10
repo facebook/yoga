@@ -7,7 +7,7 @@
  * @format
  */
 
-const CONSTANTS = require('./generated/YGEnums');
+import YGEnums, {Unit, Direction} from './generated/YGEnums';
 
 module.exports = lib => {
   function patch(prototype, name, fn) {
@@ -31,9 +31,9 @@ module.exports = lib => {
     'setPadding',
   ]) {
     const methods = {
-      [CONSTANTS.UNIT_POINT]: lib.Node.prototype[fnName],
-      [CONSTANTS.UNIT_PERCENT]: lib.Node.prototype[`${fnName}Percent`],
-      [CONSTANTS.UNIT_AUTO]: lib.Node.prototype[`${fnName}Auto`],
+      [Unit.Point]: lib.Node.prototype[fnName],
+      [Unit.Percent]: lib.Node.prototype[`${fnName}Percent`],
+      [Unit.Auto]: lib.Node.prototype[`${fnName}Auto`],
     };
 
     patch(lib.Node.prototype, fnName, function (original, ...args) {
@@ -44,7 +44,7 @@ module.exports = lib => {
       let unit, asNumber;
 
       if (value === 'auto') {
-        unit = CONSTANTS.UNIT_AUTO;
+        unit = Unit.Auto;
         asNumber = undefined;
       } else if (typeof value === 'object') {
         unit = value.unit;
@@ -52,8 +52,8 @@ module.exports = lib => {
       } else {
         unit =
           typeof value === 'string' && value.endsWith('%')
-            ? CONSTANTS.UNIT_PERCENT
-            : CONSTANTS.UNIT_POINT;
+            ? Unit.Percent
+            : Unit.Point;
         asNumber = parseFloat(value);
         if (!Number.isNaN(value) && Number.isNaN(asNumber)) {
           throw new Error(`Invalid value ${value} for ${fnName}`);
@@ -132,12 +132,7 @@ module.exports = lib => {
   patch(
     lib.Node.prototype,
     'calculateLayout',
-    function (
-      original,
-      width = NaN,
-      height = NaN,
-      direction = CONSTANTS.DIRECTION_LTR,
-    ) {
+    function (original, width = NaN, height = NaN, direction = Direction.LTR) {
       // Just a small patch to add support for the function default parameters
       return original.call(this, width, height, direction);
     },
@@ -146,6 +141,6 @@ module.exports = lib => {
   return {
     Config: lib.Config,
     Node: lib.Node,
-    ...CONSTANTS,
+    ...YGEnums,
   };
 };
