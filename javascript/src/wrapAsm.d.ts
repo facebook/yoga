@@ -24,7 +24,7 @@ import type {
   Wrap,
 } from './generated/YGEnums';
 
-import type * as YGEnums from './generated/YGEnums';
+import YGEnums from './generated/YGEnums';
 
 type Layout = {
   left: number;
