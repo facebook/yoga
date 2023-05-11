@@ -46,10 +46,10 @@ static YGSize _measureMin(
 
 static YGSize _measure_84_49(
     YGNodeRef node,
-    float width,
-    YGMeasureMode widthMode,
-    float height,
-    YGMeasureMode heightMode) {
+    float /*width*/,
+    YGMeasureMode /*widthMode*/,
+    float /*height*/,
+    YGMeasureMode /*heightMode*/) {
   int* measureCount = (int*) node->getContext();
   if (measureCount) {
     (*measureCount)++;
