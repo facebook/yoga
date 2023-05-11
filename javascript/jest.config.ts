@@ -12,6 +12,16 @@ import type {Config} from 'jest';
 const config: Config = {
   setupFiles: ['./jest.setup.ts'],
   testRegex: '/tests/.*\\.test\\.[jt]s$',
+  moduleNameMapper: {
+    'yoga-layout':
+      process.env['SYNC'] === '1' && process.env['WASM'] === '1'
+        ? 'yoga-layout/wasm-sync'
+        : process.env['SYNC'] === '1'
+        ? 'yoga-layout/asmjs-sync'
+        : process.env['WASM'] === '1'
+        ? 'yoga-layout/wasm-async'
+        : 'yoga-layout/asmjs-async',
+  },
 };
 
 export default config;

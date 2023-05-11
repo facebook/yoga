@@ -8,15 +8,8 @@
  */
 
 module.exports = async () => {
-  if (process.env['SYNC'] === '1' && process.env['WASM'] === '1') {
-    globalThis.Yoga = require('yoga-layout/wasm-sync').default;
-  } else if (process.env['SYNC'] === '1') {
-    globalThis.Yoga = require('yoga-layout/asmjs-sync').default;
-  } else if (process.env['WASM'] === '1') {
-    globalThis.Yoga = await require('yoga-layout/wasm-async').loadYoga();
-  } else {
-    globalThis.Yoga = await require('yoga-layout/asmjs-async').loadYoga();
-  }
+  const {loadYoga, default: Yoga} = require('yoga-layout');
+  globalThis.Yoga = Yoga ? Yoga : await loadYoga();
 };
 
 Object.defineProperty(globalThis, 'YGBENCHMARK', {
