@@ -45,8 +45,11 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
     this.pushIndent();
   }},
 
-  emitTestPrologue:{value:function(name, experiments) {
+  emitTestPrologue:{value:function(name, experiments, disabled) {
     this.push('[Test]');
+    if (disabled) {
+      this.push('[Ignore]');
+    }
     this.push('public void Test_' + name + '()');
     this.push('{');
     this.pushIndent();

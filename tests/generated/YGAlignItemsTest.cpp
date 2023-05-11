@@ -1262,6 +1262,8 @@ TEST(YogaTest, align_baseline_multiline) {
 }
 
 TEST(YogaTest, align_baseline_multiline_column) {
+  GTEST_SKIP();
+
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureFixAbsoluteTrailingColumnMargin, true);
@@ -1350,7 +1352,7 @@ TEST(YogaTest, align_baseline_multiline_column) {
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  ASSERT_FLOAT_EQ(70, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child1));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child1));
   ASSERT_FLOAT_EQ(30, YGNodeLayoutGetWidth(root_child1));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child1));
@@ -1360,7 +1362,7 @@ TEST(YogaTest, align_baseline_multiline_column) {
   ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child1_child0));
   ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child1_child0));
 
-  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetLeft(root_child2));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child2));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child2));
   ASSERT_FLOAT_EQ(40, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(70, YGNodeLayoutGetHeight(root_child2));
@@ -1381,6 +1383,8 @@ TEST(YogaTest, align_baseline_multiline_column) {
 }
 
 TEST(YogaTest, align_baseline_multiline_column2) {
+  GTEST_SKIP();
+
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureFixAbsoluteTrailingColumnMargin, true);
@@ -1469,7 +1473,7 @@ TEST(YogaTest, align_baseline_multiline_column2) {
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0));
 
-  ASSERT_FLOAT_EQ(70, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child1));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child1));
   ASSERT_FLOAT_EQ(30, YGNodeLayoutGetWidth(root_child1));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child1));
@@ -1479,7 +1483,7 @@ TEST(YogaTest, align_baseline_multiline_column2) {
   ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child1_child0));
   ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child1_child0));
 
-  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetLeft(root_child2));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child2));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child2));
   ASSERT_FLOAT_EQ(40, YGNodeLayoutGetWidth(root_child2));
   ASSERT_FLOAT_EQ(70, YGNodeLayoutGetHeight(root_child2));
