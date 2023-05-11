@@ -33,8 +33,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue:{value:function() {}},
 
-  emitTestPrologue:{value:function(name, experiments) {
-    this.push('test(' + JSON.stringify(name) + ', () => {');
+  emitTestPrologue:{value:function(name, experiments, ignore) {
+    const testFn = ignore ? `test.skip` : 'test';
+    this.push(`${testFn}('${name}', () => {`);
     this.pushIndent();
     this.push('const config = Yoga.Config.create();');
     this.push('let root;');
@@ -64,7 +65,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     this.push('} finally {');
     this.pushIndent();
 
-    this.push('if (typeof root !== "undefined") {');
+    this.push('if (typeof root !== \'undefined\') {');
     this.pushIndent();
     this.push('root.freeRecursive();');
     this.popIndent();
@@ -135,13 +136,13 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGWrapWrap:{value:'Yoga.WRAP_WRAP'},
   YGWrapWrapReverse:{value: 'Yoga.WRAP_WRAP_REVERSE'},
 
-  YGUndefined:{value:'Yoga.UNDEFINED'},
+  YGUndefined:{value:'undefined'},
 
   YGDisplayFlex:{value:'Yoga.DISPLAY_FLEX'},
   YGDisplayNone:{value:'Yoga.DISPLAY_NONE'},
 
   YGNodeCalculateLayout:{value:function(node, dir, experiments) {
-    this.push(node + '.calculateLayout(Yoga.UNDEFINED, Yoga.UNDEFINED, ' + dir + ');');
+    this.push(node + '.calculateLayout(undefined, undefined, ' + dir + ');');
   }},
 
   YGNodeInsertChild:{value:function(parentName, nodeName, index) {

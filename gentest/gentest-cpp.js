@@ -34,9 +34,14 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     ]);
   }},
 
-  emitTestPrologue:{value:function(name, experiments) {
+  emitTestPrologue:{value:function(name, experiments, disabled) {
     this.push('TEST(YogaTest, ' + name + ') {');
     this.pushIndent();
+
+    if (disabled) {
+      this.push('GTEST_SKIP();');
+      this.push('');
+    }
 
     this.push('const YGConfigRef config = YGConfigNew();')
     for (var i in experiments) {
