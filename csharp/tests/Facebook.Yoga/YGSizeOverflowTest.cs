@@ -19,8 +19,6 @@ namespace Facebook.Yoga
         public void Test_nested_overflowing_child()
         {
             YogaConfig config = new YogaConfig();
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 100;
@@ -74,8 +72,6 @@ namespace Facebook.Yoga
         public void Test_nested_overflowing_child_in_constraint_parent()
         {
             YogaConfig config = new YogaConfig();
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 100;
@@ -131,8 +127,6 @@ namespace Facebook.Yoga
         public void Test_parent_wrap_child_size_overflowing_parent()
         {
             YogaConfig config = new YogaConfig();
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-            config.SetExperimentalFeatureEnabled(YogaExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
             YogaNode root = new YogaNode(config);
             root.Width = 100;

@@ -29,9 +29,6 @@ test('flex_direction_column_no_height', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -101,9 +98,6 @@ test('flex_direction_column_no_height', () => {
 test('flex_direction_row_no_width', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -176,9 +170,6 @@ test('flex_direction_column', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -249,9 +240,6 @@ test('flex_direction_column', () => {
 test('flex_direction_row', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -325,9 +313,6 @@ test('flex_direction_column_reverse', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.ColumnReverse);
@@ -399,9 +384,6 @@ test('flex_direction_column_reverse', () => {
 test('flex_direction_row_reverse', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);

@@ -108,15 +108,15 @@ public:
     return static_cast<YGNodeType>(flags_.nodeType);
   }
 
-  bool hasMeasureFunc() const noexcept { return measure_.noContext != nullptr; }
+  bool hasMeasureFunc() const { return measure_.noContext != nullptr; }
 
   YGSize measure(float, YGMeasureMode, float, YGMeasureMode, void*);
 
-  bool hasBaselineFunc() const noexcept {
-    return baseline_.noContext != nullptr;
-  }
+  bool hasBaselineFunc() const { return baseline_.noContext != nullptr; }
 
   float baseline(float width, float height, void* layoutContext);
+
+  bool hasErrata(YGErrata errata) const { return config_->hasErrata(errata); }
 
   YGDirtiedFunc getDirtied() const { return dirtied_; }
 

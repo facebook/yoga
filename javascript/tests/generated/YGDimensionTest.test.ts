@@ -29,9 +29,6 @@ test('wrap_child', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
 
@@ -73,9 +70,6 @@ test('wrap_child', () => {
 test('wrap_grandchild', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);

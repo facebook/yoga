@@ -5,11 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const DEFAULT_EXPERIMENTS = [
-  'AbsolutePercentageAgainstPaddingEdge',
-  'FixAbsoluteTrailingColumnMargin',
-];
-
 window.onload = function() {
   checkDefaultValues();
 
@@ -479,9 +474,7 @@ function calculateTree(root, roundToPixelGrid) {
       style: getYogaStyle(child),
       declaredStyle: child.style,
       rawStyle: child.getAttribute('style'),
-      experiments: child.dataset.experiments
-          ? child.dataset.experiments.split(' ')
-          : DEFAULT_EXPERIMENTS,
+      experiments: child.dataset?.experiments?.split(' ') ?? '',
       disabled: child.dataset.disabled === 'true',
     };
 

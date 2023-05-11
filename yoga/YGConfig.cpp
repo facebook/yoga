@@ -63,6 +63,10 @@ YGErrata YGConfig::getErrata() const {
   return errata_;
 }
 
+bool YGConfig::hasErrata(YGErrata errata) const {
+  return (errata_ & errata) != YGErrataNone;
+}
+
 void YGConfig::setPointScaleFactor(float pointScaleFactor) {
   pointScaleFactor_ = pointScaleFactor;
 }

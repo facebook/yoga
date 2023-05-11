@@ -14,6 +14,7 @@ namespace Facebook.Yoga
     {
         None = 0,
         StretchFlexBasis = 1,
+        PercentAbsoluteOmitsPadding = 2,
         All = 2147483647,
         Classic = 2147483646,
     }

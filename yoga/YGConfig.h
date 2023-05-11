@@ -68,6 +68,7 @@ struct YOGA_EXPORT YGConfig {
 
   void setErrata(YGErrata errata);
   YGErrata getErrata() const;
+  bool hasErrata(YGErrata errata) const;
 
   void setPointScaleFactor(float pointScaleFactor);
   float getPointScaleFactor() const;

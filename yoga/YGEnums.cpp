@@ -93,6 +93,8 @@ const char* YGErrataToString(const YGErrata value) {
       return "none";
     case YGErrataStretchFlexBasis:
       return "stretch-flex-basis";
+    case YGErrataPercentAbsoluteOmitsPadding:
+      return "absolute-percentage-uses-content-edge";
     case YGErrataAll:
       return "all";
     case YGErrataClassic:

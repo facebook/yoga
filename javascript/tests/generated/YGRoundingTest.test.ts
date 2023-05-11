@@ -29,9 +29,6 @@ test('rounding_flex_basis_flex_grow_row_width_of_100', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
@@ -103,9 +100,6 @@ test('rounding_flex_basis_flex_grow_row_width_of_100', () => {
 test('rounding_flex_basis_flex_grow_row_prime_number_width', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -207,9 +201,6 @@ test('rounding_flex_basis_flex_shrink_row', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
@@ -282,9 +273,6 @@ test('rounding_flex_basis_flex_shrink_row', () => {
 test('rounding_flex_basis_overrides_main_size', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -361,9 +349,6 @@ test('rounding_total_fractial', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setWidth(87.4);
@@ -438,9 +423,6 @@ test('rounding_total_fractial', () => {
 test('rounding_total_fractial_nested', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -551,9 +533,6 @@ test('rounding_fractial_input_1', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -629,9 +608,6 @@ test('rounding_fractial_input_2', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setWidth(100);
@@ -706,9 +682,6 @@ test('rounding_fractial_input_2', () => {
 test('rounding_fractial_input_3', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -786,9 +759,6 @@ test('rounding_fractial_input_4', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setPosition(Edge.Top, 0.7);
@@ -864,9 +834,6 @@ test('rounding_fractial_input_4', () => {
 test('rounding_inner_node_controversy_horizontal', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -957,9 +924,6 @@ test('rounding_inner_node_controversy_vertical', () => {
   const config = Yoga.Config.create();
   let root;
 
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
-
   try {
     root = Yoga.Node.create(config);
     root.setHeight(320);
@@ -1047,9 +1011,6 @@ test('rounding_inner_node_controversy_vertical', () => {
 test('rounding_inner_node_controversy_combined', () => {
   const config = Yoga.Config.create();
   let root;
-
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);

@@ -68,6 +68,9 @@ ENUMS = {
         # Allows main-axis flex basis to be stretched without flexGrow being
         # set (previously referred to as "UseLegacyStretchBehaviour")
         ("StretchFlexBasis", 1 << 0),
+        # Calculate percentage values under `position: "absolute" ` against the
+        # content box instead of padding box
+        ("PercentAbsoluteOmitsPadding", 1 << 1),
         # Enable all incorrect behavior (preserve compatibility)
         ("All", 0x7FFFFFFF),
         # Enable all errata except for "StretchFlexBasis" (Defaults behavior
