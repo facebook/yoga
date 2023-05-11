@@ -44,6 +44,7 @@
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.7",
     "@babel/eslint-parser": "^7.19.1",
+    "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.4",
     "@types/glob": "^8.1.0",

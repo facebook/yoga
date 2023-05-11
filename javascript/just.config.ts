@@ -139,13 +139,25 @@ function babelTransformTask(opts: {dir: string}) {
 function runBenchTask() {
   return () => {
     const files = glob.sync('./tests/Benchmarks/**/*');
-    const args = ['./tests/bin/run-bench.ts', ...files];
-    logger.info(args.join(' '));
 
-    return spawn(node, args, {
-      stdio: 'inherit',
-      env: {NODE_OPTIONS: '-r ts-node/register'},
-    });
+    const args = [
+      '--extensions',
+      '.js,.ts',
+      '--config-file',
+      path.join(__dirname, '.babelrc.js'),
+      '--',
+      './tests/bin/run-bench.ts',
+      ...files,
+    ];
+    logger.info(['babel-node', ...args].join(' '));
+
+    return spawn(
+      node,
+      [require.resolve('@babel/node/bin/babel-node'), ...args],
+      {
+        stdio: 'inherit',
+      },
+    );
   };
 }
 
