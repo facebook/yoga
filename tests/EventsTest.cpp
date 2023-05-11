@@ -290,7 +290,7 @@ EventArgs createArgs(const YGNode& node, const Event::Data data) {
   using Data = Event::TypedData<E>;
   auto deleteData = [](void* x) { delete static_cast<Data*>(x); };
 
-  return {&node, E, {new Data{(data.get<E>())}, deleteData}};
+  return {&node, E, {new Data{(data.get<E>())}, deleteData}, nullptr};
 }
 
 template <Event::Type E>
