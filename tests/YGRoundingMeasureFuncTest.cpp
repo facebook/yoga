@@ -10,11 +10,11 @@
 #include <yoga/Yoga.h>
 
 static YGSize _measureFloor(
-    YGNodeRef node,
+    YGNodeRef /*node*/,
     float width,
-    YGMeasureMode widthMode,
+    YGMeasureMode /*widthMode*/,
     float height,
-    YGMeasureMode heightMode) {
+    YGMeasureMode /*heightMode*/) {
   return YGSize{
       width = 10.2f,
       height = 10.2f,
@@ -22,11 +22,11 @@ static YGSize _measureFloor(
 }
 
 static YGSize _measureCeil(
-    YGNodeRef node,
+    YGNodeRef /*node*/,
     float width,
-    YGMeasureMode widthMode,
+    YGMeasureMode /*widthMode*/,
     float height,
-    YGMeasureMode heightMode) {
+    YGMeasureMode /*heightMode*/) {
   return YGSize{
       width = 10.5f,
       height = 10.5f,
@@ -34,11 +34,11 @@ static YGSize _measureCeil(
 }
 
 static YGSize _measureFractial(
-    YGNodeRef node,
+    YGNodeRef /*node*/,
     float width,
-    YGMeasureMode widthMode,
+    YGMeasureMode /*widthMode*/,
     float height,
-    YGMeasureMode heightMode) {
+    YGMeasureMode /*heightMode*/) {
   return YGSize{
       width = 0.5f,
       height = 0.5f,

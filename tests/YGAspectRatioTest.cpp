@@ -10,7 +10,7 @@
 #include <yoga/Yoga.h>
 
 static YGSize _measure(
-    YGNodeRef node,
+    YGNodeRef /*node*/,
     float width,
     YGMeasureMode widthMode,
     float height,
