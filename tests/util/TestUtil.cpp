@@ -19,9 +19,9 @@ int nodeInstanceCount = 0;
 namespace {
 
 void yogaEventSubscriber(
-    const YGNode& node,
+    const YGNode& /*node*/,
     Event::Type eventType,
-    const Event::Data& eventData) {
+    const Event::Data& /*eventData*/) {
 
   switch (eventType) {
     case Event::NodeAllocation:
