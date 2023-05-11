@@ -44,6 +44,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
       '',
       'import static org.junit.Assert.assertEquals;',
       '',
+      'import org.junit.Ignore;',
       'import org.junit.Test;',
       'import org.junit.runner.RunWith;',
       'import org.junit.runners.Parameterized;',
@@ -67,8 +68,11 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     ]);
   }},
 
-  emitTestPrologue:{value:function(name, experiments) {
+  emitTestPrologue:{value:function(name, experiments, disabled) {
     this.push('@Test');
+    if (disabled) {
+      this.push('@Ignore');
+    }
     this.push('public void test_' + name + '() {');
     this.pushIndent();
 

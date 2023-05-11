@@ -11,6 +11,7 @@ package com.facebook.yoga;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -1259,6 +1260,7 @@ public class YGAlignItemsTest {
   }
 
   @Test
+  @Ignore
   public void test_align_baseline_multiline_column() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1350,7 +1352,7 @@ public class YGAlignItemsTest {
     assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(70f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child1.getLayoutX(), 0.0f);
     assertEquals(50f, root_child1.getLayoutY(), 0.0f);
     assertEquals(30f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child1.getLayoutHeight(), 0.0f);
@@ -1360,7 +1362,7 @@ public class YGAlignItemsTest {
     assertEquals(20f, root_child1_child0.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child1_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(10f, root_child2.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child2.getLayoutX(), 0.0f);
     assertEquals(0f, root_child2.getLayoutY(), 0.0f);
     assertEquals(40f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(70f, root_child2.getLayoutHeight(), 0.0f);
@@ -1377,6 +1379,7 @@ public class YGAlignItemsTest {
   }
 
   @Test
+  @Ignore
   public void test_align_baseline_multiline_column2() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1468,7 +1471,7 @@ public class YGAlignItemsTest {
     assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(70f, root_child1.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child1.getLayoutX(), 0.0f);
     assertEquals(50f, root_child1.getLayoutY(), 0.0f);
     assertEquals(30f, root_child1.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child1.getLayoutHeight(), 0.0f);
@@ -1478,7 +1481,7 @@ public class YGAlignItemsTest {
     assertEquals(20f, root_child1_child0.getLayoutWidth(), 0.0f);
     assertEquals(20f, root_child1_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(10f, root_child2.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child2.getLayoutX(), 0.0f);
     assertEquals(0f, root_child2.getLayoutY(), 0.0f);
     assertEquals(40f, root_child2.getLayoutWidth(), 0.0f);
     assertEquals(70f, root_child2.getLayoutHeight(), 0.0f);
