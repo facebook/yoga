@@ -4,7 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.13...3.26)
 project(tests)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
@@ -15,7 +15,6 @@ set(YOGA_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
 include(${YOGA_ROOT}/cmake/project-defaults.cmake)
 
 # Fetch GTest
-cmake_policy(SET CMP0135 NEW)
 FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
