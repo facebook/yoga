@@ -28,8 +28,7 @@ allprojects {
 
 ext {
     buildToolsVersion = "33.0.0"
-    ndkVersion = "23.1.7779620" // Corresponds to AGP 7.3
-    cmakeVersion = "3.18.1+"
+    ndkVersion = "23.1.7779620"
     minSdkVersion = 21
     compileSdkVersion = 33
     targetSdkVersion = 33
