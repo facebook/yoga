@@ -8,13 +8,34 @@
 plugins {
     id("com.android.library") version "8.0.1" apply false
     id("com.android.application") version "8.0.1" apply false
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 allprojects {
-  repositories {
-    google()
-    mavenCentral()
-  }
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+group = "com.facebook.yoga"
+
+if (project.hasProperty("USE_SNAPSHOT") && project.property("USE_SNAPSHOT").toBoolean()) {
+    version = getProperty("VERSION_NAME") + "-SNAPSHOT"
+} else {
+    version = getProperty("VERSION_NAME")
+}
+
+def sonatypeUsername = findProperty("SONATYPE_USERNAME")?.toString()
+def sonatypePassword = findProperty("SONATYPE_PASSWORD")?.toString()
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            username.set(sonatypeUsername)
+            password.set(sonatypePassword)
+        }
+    }
 }
 
 ext {

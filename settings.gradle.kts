@@ -17,6 +17,8 @@ plugins { id("com.gradle.enterprise").version("3.7.1") }
 
 include(":sample", ":yoga", ":yoga-layout")
 
+includeBuild("build-logic")
+
 project(":yoga").projectDir = file("java")
 
 project(":yoga-layout").projectDir = file("android")
