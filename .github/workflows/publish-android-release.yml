@@ -1,4 +1,4 @@
-name: Android
+name: Publish Android Release
 
 on:
   release:
