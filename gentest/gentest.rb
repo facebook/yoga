@@ -50,14 +50,10 @@ Dir['fixtures/*.html'].each do |file|
   f.write eval(logs[1].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
 
-  f = File.open("../csharp/tests/Facebook.Yoga/#{name}.cs", 'w')
-  f.write eval(logs[2].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
-  f.close
-
-  print logs[4]
+  print logs[3]
 
   f = File.open("../javascript/tests/generated/#{name}.test.ts", 'w')
-  f.write eval(logs[3].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
+  f.write eval(logs[2].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
 end
 File.delete('test.html')
