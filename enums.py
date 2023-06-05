@@ -222,22 +222,6 @@ for name, values in sorted(ENUMS.items()):
         f.write("  }\n")
         f.write("}\n")
 
-# write out csharp files
-for name, values in sorted(ENUMS.items()):
-    with open(root + "/csharp/Facebook.Yoga/Yoga%s.cs" % name, "w") as f:
-        f.write(get_license("cs"))
-        f.write("namespace Facebook.Yoga\n{\n")
-        if isinstance(next(iter(values or []), None), tuple):
-            f.write("    [System.Flags]\n")
-        f.write("    public enum Yoga%s\n    {\n" % name)
-        for value in values:
-            if isinstance(value, tuple):
-                f.write("        %s = %d,\n" % (value[0], value[1]))
-            else:
-                f.write("        %s,\n" % value)
-        f.write("    }\n")
-        f.write("}\n")
-
 # write out TypeScript file
 with open(root + "/javascript/src/generated/YGEnums.ts", "w") as f:
     f.write(get_license("js"))

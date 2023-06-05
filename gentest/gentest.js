@@ -28,13 +28,6 @@ window.onload = function() {
       document.body.children[2]);
 
   printTest(
-      new CSEmitter(),
-      'cs',
-      document.body.children[0],
-      document.body.children[1],
-      document.body.children[2]);
-
-  printTest(
       new JavascriptEmitter(),
       'js',
       document.body.children[0],
