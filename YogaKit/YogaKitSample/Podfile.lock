@@ -1,26 +1,33 @@
 PODS:
-  - IGListKit (2.1.0):
-    - IGListKit/Default (= 2.1.0)
-  - IGListKit/Default (2.1.0):
-    - IGListKit/Diffing
-  - IGListKit/Diffing (2.1.0)
-  - Yoga (1.7.0)
-  - YogaKit (1.7.0):
-    - Yoga (~> 1.7)
+  - IGListDiffKit (4.0.0)
+  - IGListKit (4.0.0):
+    - IGListDiffKit (= 4.0.0)
+  - Yoga (2.0.0-beta.1)
+  - YogaKit (2.0.0-beta.1):
+    - Yoga (~> 2.0.0-beta.1)
 
 DEPENDENCIES:
-  - IGListKit (~> 2.1.0)
+  - IGListKit (~> 4.0.0)
+  - Yoga (from `../../Yoga.podspec`)
   - YogaKit (from `../../YogaKit.podspec`)
 
+SPEC REPOS:
+  trunk:
+    - IGListDiffKit
+    - IGListKit
+
 EXTERNAL SOURCES:
+  Yoga:
+    :path: "../../Yoga.podspec"
   YogaKit:
-    :path: ../../YogaKit.podspec
+    :path: "../../YogaKit.podspec"
 
 SPEC CHECKSUMS:
-  IGListKit: b826c68ef7a4ae1626c09d4d3e1ea7a169e6c36e
-  Yoga: 2ed1d7accfef3610a67f58c0cf101a0662137f2c
-  YogaKit: 31576530e8fcae3175469719ec3212397403330b
+  IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
+  IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
+  Yoga: 090c6851e548d085d6211b5466b57ba8f4013a90
+  YogaKit: 5ae1939cd7516fdf6c343abb4b4aa381c9911ccf
 
-PODFILE CHECKSUM: 216f8e7127767709e0e43f3711208d238fa5c404
+PODFILE CHECKSUM: e5d9841ef739884db00a29f2d529d16bf247a4ca
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.12.1

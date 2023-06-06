@@ -14,6 +14,7 @@ final class LayoutInclusionViewController: UIViewController {
     private let contentView: UIView = UIView(frame: .zero)
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         let root = self.view!
         root.backgroundColor = .white
         root.configureLayout { (layout) in
@@ -51,9 +52,9 @@ final class LayoutInclusionViewController: UIViewController {
         }
         contentView.addSubview(disappearingView)
 
-        button.setTitle("Add Blue View", for: UIControlState.selected)
-        button.setTitle("Remove Blue View", for: UIControlState.normal)
-        button.addTarget(self, action: #selector(buttonWasTapped), for: UIControlEvents.touchUpInside)
+        button.setTitle("Add Blue View", for: .selected)
+        button.setTitle("Remove Blue View", for: .normal)
+        button.addTarget(self, action: #selector(buttonWasTapped), for: .touchUpInside)
         button.configureLayout { (layout) in
             layout.isEnabled = true
             layout.height = 300
@@ -66,7 +67,7 @@ final class LayoutInclusionViewController: UIViewController {
     }
 
     // MARK - UIButton Action
-    func buttonWasTapped() {
+    @objc func buttonWasTapped() {
         button.isSelected = !button.isSelected
 
         button.isUserInteractionEnabled = false

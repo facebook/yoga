@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint-pods:
-    name: Lint
+    name: Lint pod
     runs-on: macos-latest
 
     steps:
@@ -18,12 +18,11 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-apple
 
-      - name: pod spec lint
-        run: pod spec lint --verbose
-        continue-on-error: true # Apple Build is Broken
+      - name: pod lib lint
+        run: pod lib lint --verbose --include-podspecs=**/*.podspec
 
   build-sample:
-    name: Build [${{ matrix.mode }}]
+    name: Build sample [${{ matrix.mode }}]
     runs-on: macos-latest
     strategy:
       matrix:
@@ -38,9 +37,10 @@ jobs:
       - name: pod install
         run: pod install
         working-directory: ./YogaKit/YogaKitSample
-        continue-on-error: true # Apple Build is Broken
 
-      # TODO: xcodebuild
+      - name: xcodebuild YogaKitSample.xcworkspace
+        run: xcodebuild -workspace YogaKitSample.xcworkspace -scheme YogaKitSample
+        working-directory: ./YogaKit/YogaKitSample
 
   clang-format:
     name: Format
