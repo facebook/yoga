@@ -6,7 +6,7 @@
 
 Pod::Spec.new do |spec|
   spec.name = 'Yoga'
-  spec.version = '1.14.0'
+  spec.version = '2.0.0-beta.1'
   spec.license =  { :type => 'MIT', :file => "LICENSE" }
   spec.homepage = 'https://yogalayout.com/'
   spec.documentation_url = 'https://yogalayout.com/docs'
@@ -17,9 +17,11 @@ Pod::Spec.new do |spec|
   spec.authors = 'Facebook'
   spec.source = {
     :git => 'https://github.com/facebook/yoga.git',
-    :tag => spec.version.to_s,
+    :tag => "v#{spec.version.to_s}",
   }
-  spec.platforms = { :ios => "8.0", :osx => "10.7", :tvos => "10.0", :watchos => "2.0" }
+
+  spec.ios.deployment_target = "13.4"
+
   spec.module_name = 'yoga'
   spec.requires_arc = false
   spec.pod_target_xcconfig = {
@@ -36,5 +38,5 @@ Pod::Spec.new do |spec|
   ]
   spec.source_files = 'yoga/**/*.{h,cpp}'
   spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
-
+  spec.swift_version = '5.1'
 end
