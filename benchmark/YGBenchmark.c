@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -17,6 +17,8 @@
 
 #define YGBENCHMARKS(BLOCK)                \
   int main(int argc, char const* argv[]) { \
+    (void) argc;                           \
+    (void) argv;                           \
     clock_t __start;                       \
     clock_t __endTimes[NUM_REPETITIONS];   \
     { BLOCK }                              \
@@ -78,9 +80,10 @@ static YGSize _measure(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
+  (void) node;
   return (YGSize){
       .width = widthMode == YGMeasureModeUndefined ? 10 : width,
-      .height = heightMode == YGMeasureModeUndefined ? 10 : width,
+      .height = heightMode == YGMeasureModeUndefined ? 10 : height,
   };
 }
 

@@ -2,21 +2,12 @@
 
 <!--
   Copyright (c) Facebook, Inc. and its affiliates.
-  
+
   This source code is licensed under the MIT license found in the
   LICENSE file in the root directory of this source tree.
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.facebook.yoga.android"
-          android:versionCode="1"
-          android:versionName="1.0"
-          >
-
-  <uses-sdk
-    android:minSdkVersion="15"
-    android:targetSdkVersion="21"
-    />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
   <application/>
 

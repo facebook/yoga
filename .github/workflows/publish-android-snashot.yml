@@ -1,0 +1,36 @@
+name: Publish Android Snapshot
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish Snapshot
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-android
+
+      - name: Publish to Maven Local
+        run: ./gradlew publishToMavenLocal
+        env:
+          ORG_GRADLE_PROJECT_USE_SNAPSHOT: true
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: 'snapshot-artifacts'
+          path: '~/.m2/repository/'
+
+      - name: Publish to the Snapshot Repository
+        run: ./gradlew publishToSonatype
+        env:
+          ORG_GRADLE_PROJECT_NEXUS_USERNAME: ${{ secrets.ORG_GRADLE_PROJECT_NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_NEXUS_PASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_NEXUS_PASSWORD }}
+          ORG_GRADLE_PROJECT_USE_SNAPSHOT: true

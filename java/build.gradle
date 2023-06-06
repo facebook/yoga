@@ -1,13 +1,18 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-apply plugin: 'com.android.library'
+plugins {
+    id("com.android.library")
+    id("publish")
+}
 
 android {
+    namespace 'com.facebook.yoga'
+
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
     ndkVersion rootProject.ndkVersion
@@ -16,14 +21,10 @@ android {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
 
+        consumerProguardFiles 'proguard-rules.pro'
+
         ndk {
             abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
-        }
-
-        externalNativeBuild {
-            cmake {
-                arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static'
-            }
         }
     }
 
@@ -44,19 +45,18 @@ android {
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']
         }
+    }
 
-        test {
-            java.srcDirs 'tests'
+    publishing {
+        multipleVariants {
+            withSourcesJar()
+            includeBuildTypeValues('debug', 'release')
         }
     }
 }
 
 dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    implementation project(':yoga:proguard-annotations')
-    implementation 'com.facebook.soloader:soloader:0.10.1'
+    implementation 'com.facebook.soloader:soloader:0.10.4'
     testImplementation 'junit:junit:4.12'
-    testImplementation project(':testutil')
 }
-
-apply plugin: 'com.vanniktech.maven.publish'

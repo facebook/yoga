@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,7 +7,7 @@
 
 package com.facebook.yoga;
 
-import com.facebook.proguard.annotations.DoNotStrip;
+import com.facebook.yoga.annotations.DoNotStrip;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -19,7 +19,6 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
   private static final byte MARGIN = 1;
   private static final byte PADDING = 2;
   private static final byte BORDER = 4;
-  private static final byte DOES_LEGACY_STRETCH_BEHAVIOUR = 8;
   private static final byte HAS_NEW_LAYOUT = 16;
 
   private static final byte LAYOUT_EDGE_SET_FLAG_INDEX = 0;
@@ -156,7 +155,7 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
 
   private void clearChildren() {
     mChildren = null;
-    YogaNative.jni_YGNodeClearChildrenJNI(mNativePointer);
+    YogaNative.jni_YGNodeRemoveAllChildrenJNI(mNativePointer);
   }
 
   public YogaNodeJNIBase removeChildAt(int i) {
@@ -233,7 +232,7 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
   }
 
   public void dirtyAllDescendants() {
-    YogaNative.jni_YGNodeMarkDirtyAndPropogateToDescendantsJNI(mNativePointer);
+    YogaNative.jni_YGNodeMarkDirtyAndPropagateToDescendantsJNI(mNativePointer);
   }
 
   public boolean isDirty() {
@@ -606,12 +605,6 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
     return arr != null ? arr[LAYOUT_HEIGHT_INDEX] : 0;
   }
 
-  public boolean getDoesLegacyStretchFlagAffectsLayout() {
-    return arr != null
-        && (((int) arr[LAYOUT_EDGE_SET_FLAG_INDEX] & DOES_LEGACY_STRETCH_BEHAVIOUR)
-            == DOES_LEGACY_STRETCH_BEHAVIOUR);
-  }
-
   @Override
   public float getLayoutMargin(YogaEdge edge) {
     if (arr != null && ((int) arr[LAYOUT_EDGE_SET_FLAG_INDEX] & MARGIN) == MARGIN) {
@@ -724,5 +717,15 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
       arr[LAYOUT_EDGE_SET_FLAG_INDEX] = ((int) arr[LAYOUT_EDGE_SET_FLAG_INDEX]) & ~(HAS_NEW_LAYOUT);
     }
     mHasNewLayout = false;
+  }
+
+  @Override
+  public float getGap(YogaGutter gutter) {
+    return YogaNative.jni_YGNodeStyleGetGapJNI(mNativePointer, gutter.intValue());
+  }
+
+  @Override
+  public void setGap(YogaGutter gutter, float gapLength) {
+    YogaNative.jni_YGNodeStyleSetGapJNI(mNativePointer, gutter.intValue(), gapLength);
   }
 }

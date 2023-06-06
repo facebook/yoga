@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,6 +7,7 @@
  * @flow
  * @format
  */
+
 
 import {Record, List} from 'immutable';
 import type {RecordOf} from 'immutable';
@@ -16,9 +17,9 @@ import yoga from 'yoga-layout/dist/entry-browser';
 
 import type {
   Yoga$Align,
-  Yoga$JustifyContent,
+  Yoga$Justify,
   Yoga$FlexDirection,
-  Yoga$FlexWrap,
+  Yoga$Wrap,
   Yoga$PositionType,
 } from 'yoga-layout';
 
@@ -29,7 +30,7 @@ export type LayoutRecordT = RecordOf<{
   minHeight?: ?number,
   maxWidth?: ?number,
   maxHeight?: ?number,
-  justifyContent?: Yoga$JustifyContent,
+  justifyContent?: Yoga$Justify,
   padding: PositionRecordT,
   border: PositionRecordT,
   margin: PositionRecordT,
@@ -43,7 +44,7 @@ export type LayoutRecordT = RecordOf<{
   flexGrow?: number,
   flexShrink?: number,
   padding?: number,
-  flexWrap?: Yoga$FlexWrap,
+  flexWrap?: Yoga$Wrap,
   aspectRatio?: number,
   children?: List<LayoutRecordT>,
   minWidth?: number,

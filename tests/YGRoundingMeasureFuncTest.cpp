@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,11 +10,11 @@
 #include <yoga/Yoga.h>
 
 static YGSize _measureFloor(
-    YGNodeRef node,
+    YGNodeRef /*node*/,
     float width,
-    YGMeasureMode widthMode,
+    YGMeasureMode /*widthMode*/,
     float height,
-    YGMeasureMode heightMode) {
+    YGMeasureMode /*heightMode*/) {
   return YGSize{
       width = 10.2f,
       height = 10.2f,
@@ -22,11 +22,11 @@ static YGSize _measureFloor(
 }
 
 static YGSize _measureCeil(
-    YGNodeRef node,
+    YGNodeRef /*node*/,
     float width,
-    YGMeasureMode widthMode,
+    YGMeasureMode /*widthMode*/,
     float height,
-    YGMeasureMode heightMode) {
+    YGMeasureMode /*heightMode*/) {
   return YGSize{
       width = 10.5f,
       height = 10.5f,
@@ -34,11 +34,11 @@ static YGSize _measureCeil(
 }
 
 static YGSize _measureFractial(
-    YGNodeRef node,
+    YGNodeRef /*node*/,
     float width,
-    YGMeasureMode widthMode,
+    YGMeasureMode /*widthMode*/,
     float height,
-    YGMeasureMode heightMode) {
+    YGMeasureMode /*heightMode*/) {
   return YGSize{
       width = 0.5f,
       height = 0.5f,
@@ -57,8 +57,8 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
 
-  ASSERT_FLOAT_EQ(10.2, YGNodeLayoutGetWidth(root_child0));
-  ASSERT_FLOAT_EQ(10.2, YGNodeLayoutGetHeight(root_child0));
+  ASSERT_FLOAT_EQ(10.2f, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(10.2f, YGNodeLayoutGetHeight(root_child0));
 
   YGConfigSetPointScaleFactor(config, 1.0f);
 

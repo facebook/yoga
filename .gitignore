@@ -12,7 +12,8 @@
 /_site/
 
 # Visual studio code
-.vscode
+!.vscode
+
 *.pdb
 *.tlog
 *.obj
@@ -63,5 +64,8 @@ Carthage/Build
 
 # Gradle
 .gradle
+local.properties
+
 # NDK/CMake
+.cxx
 .externalNativeBuild

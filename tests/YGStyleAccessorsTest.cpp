@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -80,6 +80,9 @@ namespace facebook {
 namespace yoga {
 
 using CompactValue = detail::CompactValue;
+
+// TODO: MSVC doesn't like the macros
+#ifndef _MSC_VER
 
 ACCESSOR_TEST(
     direction,
@@ -249,6 +252,8 @@ ACCESSOR_TEST(
     YGFloatOptional{9876.5f},
     YGFloatOptional{0.0f},
     YGFloatOptional{});
+
+#endif
 
 } // namespace yoga
 } // namespace facebook

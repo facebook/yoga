@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -80,7 +80,7 @@ struct YOGA_EXPORT Event {
     template <Type E>
     const TypedData<E>& get() const {
       return *static_cast<const TypedData<E>*>(data_);
-    };
+    }
   };
 
   static void reset();
@@ -89,9 +89,7 @@ struct YOGA_EXPORT Event {
 
   template <Type E>
   static void publish(const YGNode& node, const TypedData<E>& eventData = {}) {
-#ifdef YG_ENABLE_EVENTS
     publish(node, E, Data{eventData});
-#endif
   }
 
   template <Type E>

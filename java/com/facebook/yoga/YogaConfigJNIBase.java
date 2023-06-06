@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -52,15 +52,12 @@ public abstract class YogaConfigJNIBase extends YogaConfig {
     YogaNative.jni_YGConfigSetUseLegacyStretchBehaviourJNI(mNativePointer, useLegacyStretchBehaviour);
   }
 
-  /**
-   * If this flag is set then yoga would diff the layout without legacy flag and would set a bool in
-   * YogaNode(mDoesLegacyStretchFlagAffectsLayout) with true if the layouts were different and false
-   * if not
-   */
-  public void setShouldDiffLayoutWithoutLegacyStretchBehaviour(
-      boolean shouldDiffLayoutWithoutLegacyStretchBehaviour) {
-      YogaNative.jni_YGConfigSetShouldDiffLayoutWithoutLegacyStretchBehaviourJNI(
-          mNativePointer, shouldDiffLayoutWithoutLegacyStretchBehaviour);
+  public void setErrata(YogaErrata errata) {
+    YogaNative.jni_YGConfigSetErrataJNI(mNativePointer, errata.intValue());
+  }
+
+  public YogaErrata getErrata() {
+    return YogaErrata.fromInt(YogaNative.jni_YGConfigGetErrataJNI(mNativePointer));
   }
 
   public void setLogger(YogaLogger logger) {

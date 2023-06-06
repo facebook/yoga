@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -118,7 +118,7 @@ TEST(YogaTest, assert_webdefault_values_reset) {
 
 TEST(YogaTest, assert_legacy_stretch_behaviour) {
   YGConfig* config = YGConfigNew();
-  YGConfigSetUseLegacyStretchBehaviour(config, true);
+  YGConfigSetErrata(config, YGErrataStretchFlexBasis);
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 500);
   YGNodeStyleSetHeight(root, 500);

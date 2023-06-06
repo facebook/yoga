@@ -1,9 +1,11 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+#include <yoga/Yoga.h>
 
 const short int LAYOUT_EDGE_SET_FLAG_INDEX = 0;
 const short int LAYOUT_WIDTH_INDEX = 1;
@@ -17,7 +19,6 @@ const short int LAYOUT_BORDER_START_INDEX = 14;
 
 namespace {
 
-const int DOES_LEGACY_STRETCH_BEHAVIOUR = 8;
 const int HAS_NEW_LAYOUT = 16;
 
 union YGNodeContext {
@@ -37,14 +38,14 @@ public:
 
   YGNodeEdges(YGNodeRef node) {
     auto context = YGNodeContext{};
-    context.asVoidPtr = node->getContext();
+    context.asVoidPtr = YGNodeGetContext(node);
     edges_ = context.edgesSet;
   }
 
   void setOn(YGNodeRef node) {
     auto context = YGNodeContext{};
     context.edgesSet = edges_;
-    node->setContext(context.asVoidPtr);
+    YGNodeSetContext(node, context.asVoidPtr);
   }
 
   bool has(Edge edge) { return (edges_ & edge) == edge; }

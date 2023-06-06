@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -61,11 +61,11 @@ TEST(YogaTest, dirtied_propagation) {
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` MUST be called for the first time.
-  root_child0->markDirtyAndPropogate();
+  root_child0->markDirtyAndPropagate();
   ASSERT_EQ(1, dirtiedCount);
 
   // `_dirtied` must NOT be called for the second time.
-  root_child0->markDirtyAndPropogate();
+  root_child0->markDirtyAndPropagate();
   ASSERT_EQ(1, dirtiedCount);
 }
 
@@ -94,14 +94,14 @@ TEST(YogaTest, dirtied_hierarchy) {
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` must NOT be called for descendants.
-  root->markDirtyAndPropogate();
+  root->markDirtyAndPropagate();
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` must NOT be called for the sibling node.
-  root_child1->markDirtyAndPropogate();
+  root_child1->markDirtyAndPropagate();
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` MUST be called in case of explicit dirtying.
-  root_child0->markDirtyAndPropogate();
+  root_child0->markDirtyAndPropagate();
   ASSERT_EQ(1, dirtiedCount);
 }

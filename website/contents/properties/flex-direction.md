@@ -8,7 +8,7 @@ hasPlayground: true
 
 Flex direction controls the direction in which children of a node are laid out.
 This is also referred to as the main axis. The main axis is the direction in
-which children are laid out. The cross axis the the axis perpendicular to the
+which children are laid out. The cross axis is the axis perpendicular to the
 main axis, or the axis which wrapping lines are laid out in.
 
 **ROW (DEFAULT)** Align children from left to right. If [wrapping](/docs/flex-wrap) is enabled then

@@ -1,11 +1,12 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 #pragma once
+
 #include "YGNode.h"
 #include "Yoga-internal.h"
 #include "CompactValue.h"
@@ -24,10 +25,10 @@
 //   the remaining space left for the flexible children.
 //
 // - totalFlexGrowFactors: total flex grow factors of flex items which are to be
-//   layed in the current line
+//   laid in the current line
 //
 // - totalFlexShrinkFactors: total flex shrink factors of flex items which are
-//   to be layed in the current line
+//   to be laid in the current line
 //
 // - endOfLineIndex: Its the end index of the last flex item which was examined
 //   and it may or may not be part of the current line(as it may be absolutely
@@ -114,7 +115,7 @@ inline YGFloatOptional YGResolveValue(
 }
 
 inline YGFloatOptional YGResolveValue(
-    yoga::detail::CompactValue value,
+    facebook::yoga::detail::CompactValue value,
     float ownerSize) {
   return YGResolveValue((YGValue) value, ownerSize);
 }
@@ -139,9 +140,7 @@ inline YGFlexDirection YGResolveFlexDirection(
 }
 
 inline YGFloatOptional YGResolveValueMargin(
-    yoga::detail::CompactValue value,
+    facebook::yoga::detail::CompactValue value,
     const float ownerSize) {
   return value.isAuto() ? YGFloatOptional{0} : YGResolveValue(value, ownerSize);
 }
-
-void throwLogicalErrorWithMessage(const char* message);

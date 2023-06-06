@@ -1,7 +1,8 @@
-# Copyright (c) Facebook, Inc. and its affiliates.
+# Copyright (c) Meta Platforms, Inc. and affiliates.
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
+
 
 Pod::Spec.new do |spec|
   spec.name = 'Yoga'
@@ -29,10 +30,11 @@ Pod::Spec.new do |spec|
       '-fexceptions',
       '-Wall',
       '-Werror',
-      '-std=c++1y',
+      '-Wextra',
+      '-std=c++14',
       '-fPIC'
   ]
-  spec.source_files = 'yoga/**/*.{c,h,cpp}'
-  spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGNode,YGStyle,YGValue}.h'
+  spec.source_files = 'yoga/**/*.{h,cpp}'
+  spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
 
 end

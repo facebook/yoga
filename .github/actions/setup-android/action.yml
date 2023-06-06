@@ -1,0 +1,12 @@
+name: Setup Android environment
+
+runs:
+  using: "composite"
+  steps:
+    - name: Select Java Version
+      uses: actions/setup-java@v2
+      with:
+        distribution: zulu
+        java-version: 17
+    - name: Configure Gradle Caches
+      uses: gradle/gradle-build-action@v2

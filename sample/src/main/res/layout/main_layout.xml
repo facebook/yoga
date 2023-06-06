@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+  Copyright 2014-present, Facebook, Inc.
+  All rights reserved.
+
+  This source code is licensed under the license found in the
+  LICENSE-examples file in the root directory of this source tree.
+-->
+
+<YogaLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <YogaLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/sample_children_background"
+      app:yg_marginHorizontal="10dp"
+      app:yg_marginTop="5dp"
+      app:yg_flexDirection="row"
+      app:yg_alignItems="center"
+      >
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_launcher"
+        app:yg_flex="0"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/child_1_text"
+        android:textColor="@color/children_text"
+        app:yg_flex="1"
+        app:yg_marginStart="8dp"
+        />
+  </YogaLayout>
+  <YogaLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/sample_children_background"
+      app:yg_marginHorizontal="10dp"
+      app:yg_marginTop="5dp"
+      app:yg_flexDirection="row"
+      app:yg_alignItems="center"
+      >
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_launcher"
+        app:yg_flex="0"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/child_2_text"
+        android:textColor="@color/children_text"
+        app:yg_flex="1"
+        app:yg_marginStart="8dp"
+        />
+  </YogaLayout>
+  <YogaLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/sample_children_background"
+      app:yg_marginHorizontal="10dp"
+      app:yg_marginTop="5dp"
+      app:yg_flexDirection="row"
+      app:yg_alignItems="center"
+      >
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_launcher"
+        app:yg_flex="0"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/child_3_text"
+        android:textColor="@color/children_text"
+        app:yg_flex="1"
+        app:yg_marginStart="8dp"
+        />
+  </YogaLayout>
+  <YogaLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/sample_children_background"
+      app:yg_marginHorizontal="10dp"
+      app:yg_marginTop="5dp"
+      app:yg_flexDirection="row"
+      app:yg_alignItems="center"
+      >
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_launcher"
+        app:yg_flex="0"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/child_4_text"
+        android:textColor="@color/children_text"
+        app:yg_flex="1"
+        app:yg_marginStart="8dp"
+        />
+  </YogaLayout>
+  <YogaLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/sample_children_background"
+      app:yg_marginHorizontal="10dp"
+      app:yg_marginTop="5dp"
+      app:yg_flexDirection="row"
+      app:yg_alignItems="center"
+      >
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_launcher"
+        app:yg_flex="0"
+    />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/child_5_text"
+        android:textColor="@color/children_text"
+        app:yg_flex="1"
+        app:yg_marginStart="10dp"
+        />
+  </YogaLayout>
+</YogaLayout>

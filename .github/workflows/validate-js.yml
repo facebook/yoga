@@ -1,0 +1,74 @@
+name: JavaScript
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  FORCE_COLOR: 3
+
+jobs:
+  benchmark:
+    name: Benchmark [${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: yarn benchmark
+        run: yarn benchmark
+        working-directory: javascript
+
+  build:
+    name: Build [${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: yarn build
+        run: yarn build
+        working-directory: javascript
+
+  test:
+    name: Test [${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: yarn test
+        run: yarn test
+        working-directory: javascript
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+        working-directory: javascript
+
+      - name: yarn lint
+        run: yarn lint
+        working-directory: javascript

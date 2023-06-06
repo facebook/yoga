@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,12 +9,14 @@
 #include <stdarg.h>
 #include <yoga/Yoga.h>
 
+#if DEBUG
+
 namespace {
 char writeBuffer[4096];
 int _unmanagedLogger(
-    const YGConfigRef config,
-    const YGNodeRef node,
-    YGLogLevel level,
+    const YGConfigRef /*config*/,
+    const YGNodeRef /*node*/,
+    YGLogLevel /*level*/,
     const char* format,
     va_list args) {
   return vsnprintf(
@@ -131,3 +133,5 @@ TEST(YogaTest, logger_node_with_children_should_print_indented) {
       "style=\"\" ></div>\n</div>";
   ASSERT_STREQ(expected, writeBuffer);
 }
+
+#endif

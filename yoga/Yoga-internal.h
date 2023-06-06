@@ -1,17 +1,20 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 #pragma once
+
 #include <algorithm>
 #include <array>
 #include <cmath>
 #include <vector>
+
+#include <yoga/Yoga.h>
+
 #include "CompactValue.h"
-#include "Yoga.h"
 
 using YGVector = std::vector<YGNodeRef>;
 
@@ -23,6 +26,10 @@ void YGNodeCalculateLayoutWithContext(
     float availableHeight,
     YGDirection ownerDirection,
     void* layoutContext);
+
+// Deallocates a Yoga Node. Unlike YGNodeFree, does not remove the node from
+// its parent or children.
+void YGNodeDeallocate(YGNodeRef node);
 
 YG_EXTERN_C_END
 
@@ -37,10 +44,10 @@ inline bool isUndefined(double value) {
   return std::isnan(value);
 }
 
+void throwLogicalErrorWithMessage(const char* message);
+
 } // namespace yoga
 } // namespace facebook
-
-using namespace facebook;
 
 extern const std::array<YGEdge, 4> trailing;
 extern const std::array<YGEdge, 4> leading;
@@ -66,6 +73,8 @@ struct YGCachedMeasurement {
         computedHeight(-1) {}
 
   bool operator==(YGCachedMeasurement measurement) const {
+    using namespace facebook;
+
     bool isEqual = widthMeasureMode == measurement.widthMeasureMode &&
         heightMeasureMode == measurement.heightMeasureMode;
 
@@ -105,6 +114,8 @@ private:
 
 public:
   Values() = default;
+  Values(const Values& other) = default;
+
   explicit Values(const YGValue& defaultValue) noexcept {
     values_.fill(defaultValue);
   }
@@ -138,7 +149,6 @@ public:
 
   Values& operator=(const Values& other) = default;
 };
-
 } // namespace detail
 } // namespace yoga
 } // namespace facebook

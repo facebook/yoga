@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  Copyright 2014-present, Facebook, Inc.
+  All rights reserved.
+
+  This source code is licensed under the license found in the
+  LICENSE-examples file in the root directory of this source tree.
+-->
+
+<resources>
+  <string name="app_name">Yoga</string>
+  <string
+      name="child_1_text"
+      description="Placeholder text for the first element in the layout"
+      >Hello.  I am Yoga!</string>
+  <string
+      name="child_2_text"
+      description="Placeholder text for the second element in the layout"
+      >I am a layout engine!</string>
+  <string
+      name="child_3_text"
+      description="Placeholder text for the third element in the layout"
+      >I run natively.</string>
+  <string
+      name="child_4_text"
+      description="Placeholder text for the fourth element in the layout"
+      >So I\'m fast.</string>
+  <string
+      name="child_5_text"
+      description="Placeholder text for the fifth element in the layout"
+      >Who are you?</string>
+  <string name="home">Home</string>
+  <string name="benchmark">Benchmark</string>
+</resources>

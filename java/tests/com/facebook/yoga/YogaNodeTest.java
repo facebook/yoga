@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -32,9 +32,7 @@ public class YogaNodeTest {
 
   @Test
   public void testInit() {
-    TestUtil.startCountingNodes();
     final YogaNode node = createNode();
-    assertEquals(1, TestUtil.stopCountingNodes());
   }
 
   @Test
@@ -236,29 +234,6 @@ public class YogaNodeTest {
   }
 
   @Test
-  public void testFlagShouldDiffLayoutWithoutLegacyStretchBehaviour() throws Exception {
-    YogaConfig config = YogaConfigFactory.create();
-    config.setShouldDiffLayoutWithoutLegacyStretchBehaviour(true);
-    config.setUseLegacyStretchBehaviour(true);
-    YogaNode root = createNode(config);
-    root.setWidth(500);
-    root.setHeight(500);
-    YogaNode root_child0 = createNode(config);
-    root_child0.setAlignItems(YogaAlign.FLEX_START);
-    root.addChildAt(root_child0, 0);
-    YogaNode root_child0_child0 = createNode(config);
-    root_child0_child0.setFlexGrow(1);
-    root_child0_child0.setFlexShrink(1);
-    root_child0.addChildAt(root_child0_child0, 0);
-    YogaNode root_child0_child0_child0 = createNode(config);
-    root_child0_child0_child0.setFlexGrow(1);
-    root_child0_child0_child0.setFlexShrink(1);
-    root_child0_child0.addChildAt(root_child0_child0_child0, 0);
-    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
-    assertTrue(((YogaNodeJNIBase) root).getDoesLegacyStretchFlagAffectsLayout());
-  }
-
-  @Test
   public void initiallyHasNewLayout() {
     YogaNode root = createNode();
     assertTrue(root.hasNewLayout());
@@ -317,7 +292,6 @@ public class YogaNodeTest {
   @Test
   public void testResetApiShouldResetAllLayoutOutputs() {
     YogaConfig config = YogaConfigFactory.create();
-    config.setShouldDiffLayoutWithoutLegacyStretchBehaviour(true);
     config.setUseLegacyStretchBehaviour(true);
     YogaNode node = createNode(config);
     node.setWidth(100);
@@ -373,7 +347,6 @@ public class YogaNodeTest {
     assertTrue(node.hasNewLayout());
     assertFalse(node.isMeasureDefined());
     assertFalse(node.isBaselineDefined());
-    assertFalse(((YogaNodeJNIBase) node).getDoesLegacyStretchFlagAffectsLayout());
     assertEquals(null, node.getData());
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,7 +7,7 @@
 
 package com.facebook.yoga;
 
-import com.facebook.proguard.annotations.DoNotStrip;
+import com.facebook.yoga.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 
 @DoNotStrip
@@ -15,7 +15,7 @@ public class YogaNative {
   static {
     SoLoader.loadLibrary("yoga");
   }
-  
+
   // JNI methods that use Vanilla JNI
   // YGConfig related
   static native long jni_YGConfigNewJNI();
@@ -25,23 +25,24 @@ public class YogaNative {
   static native void jni_YGConfigSetPrintTreeFlagJNI(long nativePointer, boolean enable);
   static native void jni_YGConfigSetPointScaleFactorJNI(long nativePointer, float pixelsInPoint);
   static native void jni_YGConfigSetUseLegacyStretchBehaviourJNI(long nativePointer, boolean useLegacyStretchBehaviour);
-  static native void jni_YGConfigSetShouldDiffLayoutWithoutLegacyStretchBehaviourJNI(long nativePointer, boolean shouldDiffLayoutWithoutLegacyStretchBehaviour);
+  static native void jni_YGConfigSetErrataJNI(long nativePointer, int errata);
+  static native int jni_YGConfigGetErrataJNI(long nativePointer);
   static native void jni_YGConfigSetLoggerJNI(long nativePointer, YogaLogger logger);
 
   // YGNode related
   static native long jni_YGNodeNewJNI();
   static native long jni_YGNodeNewWithConfigJNI(long configPointer);
-  static native void jni_YGNodeFreeJNI(long nativePointer);
+  static native void jni_YGNodeDeallocateJNI(long nativePointer);
   static native void jni_YGNodeResetJNI(long nativePointer);
   static native void jni_YGNodeInsertChildJNI(long nativePointer, long childPointer, int index);
   static native void jni_YGNodeSwapChildJNI(long nativePointer, long childPointer, int index);
   static native void jni_YGNodeSetIsReferenceBaselineJNI(long nativePointer, boolean isReferenceBaseline);
   static native boolean jni_YGNodeIsReferenceBaselineJNI(long nativePointer);
-  static native void jni_YGNodeClearChildrenJNI(long nativePointer);
+  static native void jni_YGNodeRemoveAllChildrenJNI(long nativePointer);
   static native void jni_YGNodeRemoveChildJNI(long nativePointer, long childPointer);
   static native void jni_YGNodeCalculateLayoutJNI(long nativePointer, float width, float height, long[] nativePointers, YogaNodeJNIBase[] nodes);
   static native void jni_YGNodeMarkDirtyJNI(long nativePointer);
-  static native void jni_YGNodeMarkDirtyAndPropogateToDescendantsJNI(long nativePointer);
+  static native void jni_YGNodeMarkDirtyAndPropagateToDescendantsJNI(long nativePointer);
   static native boolean jni_YGNodeIsDirtyJNI(long nativePointer);
   static native void jni_YGNodeCopyStyleJNI(long dstNativePointer, long srcNativePointer);
   static native int jni_YGNodeStyleGetDirectionJNI(long nativePointer);
@@ -108,6 +109,8 @@ public class YogaNative {
   static native void jni_YGNodeStyleSetMaxHeightPercentJNI(long nativePointer, float percent);
   static native float jni_YGNodeStyleGetAspectRatioJNI(long nativePointer);
   static native void jni_YGNodeStyleSetAspectRatioJNI(long nativePointer, float aspectRatio);
+  static native float jni_YGNodeStyleGetGapJNI(long nativePointer, int gutter);
+  static native void jni_YGNodeStyleSetGapJNI(long nativePointer, int gutter, float gapLength);
   static native void jni_YGNodeSetHasMeasureFuncJNI(long nativePointer, boolean hasMeasureFunc);
   static native void jni_YGNodeSetHasBaselineFuncJNI(long nativePointer, boolean hasMeasureFunc);
   static native void jni_YGNodePrintJNI(long nativePointer);

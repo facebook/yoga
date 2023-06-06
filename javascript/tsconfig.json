@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "strict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    // TODO: moduleResolution: "nodenext" is buggy with this if the absolute
+    // path contains any capital letters
+    "forceConsistentCasingInFileNames": false,
+    "baseUrl": ".",
+    "moduleResolution": "nodenext",
+    "paths": {
+      "yoga-layout": ["src"]
+    }
+  },
+  "ts-node": {
+    "transpileOnly": true
+  }
+}

@@ -1,18 +1,17 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-#include "jni.h"
-#include <yoga/YGValue.h>
-#include <yoga/Yoga.h>
 #include <map>
-#include "common.h"
+#include <vector>
 
-using namespace facebook::yoga::vanillajni;
-using namespace std;
+#include <yoga/Yoga.h>
+
+#include "common.h"
+#include "jni.h"
 
 class PtrJNodeMapVanilla {
   std::map<YGNodeRef, size_t> ptrsToIdxs_;
@@ -22,6 +21,7 @@ public:
   PtrJNodeMapVanilla() : ptrsToIdxs_{}, javaNodes_{} {}
   PtrJNodeMapVanilla(jlongArray javaNativePointers, jobjectArray javaNodes)
       : javaNodes_{javaNodes} {
+    using namespace facebook::yoga::vanillajni;
 
     JNIEnv* env = getCurrentEnv();
     size_t nativePointersSize = env->GetArrayLength(javaNativePointers);
@@ -34,7 +34,9 @@ public:
     }
   }
 
-  ScopedLocalRef<jobject> ref(YGNodeRef node) {
+  facebook::yoga::vanillajni::ScopedLocalRef<jobject> ref(YGNodeRef node) {
+    using namespace facebook::yoga::vanillajni;
+
     JNIEnv* env = getCurrentEnv();
     auto idx = ptrsToIdxs_.find(node);
     if (idx == ptrsToIdxs_.end()) {

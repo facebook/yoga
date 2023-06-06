@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,15 +8,24 @@
 #include "YGNode.h"
 #include <algorithm>
 #include <iostream>
-#include "CompactValue.h"
 #include "Utils.h"
 
 using namespace facebook;
 using facebook::yoga::detail::CompactValue;
 
+YGNode::YGNode(const YGConfigRef config) : config_{config} {
+  YGAssert(
+      config != nullptr, "Attempting to construct YGNode with null config");
+
+  flags_.hasNewLayout = true;
+  if (config->useWebDefaults()) {
+    useWebDefaults();
+  }
+}
+
 YGNode::YGNode(YGNode&& node) {
   context_ = node.context_;
-  flags = node.flags;
+  flags_ = node.flags_;
   measure_ = node.measure_;
   baseline_ = node.baseline_;
   print_ = node.print_;
@@ -33,16 +42,9 @@ YGNode::YGNode(YGNode&& node) {
   }
 }
 
-YGNode::YGNode(const YGNode& node, YGConfigRef config) : YGNode{node} {
-  config_ = config;
-  if (config->useWebDefaults) {
-    useWebDefaults();
-  }
-}
-
 void YGNode::print(void* printContext) {
   if (print_.noContext != nullptr) {
-    if (facebook::yoga::detail::getBooleanData(flags, printUsesContext_)) {
+    if (flags_.printUsesContext) {
       print_.withContext(this, printContext);
     } else {
       print_.noContext(this);
@@ -78,6 +80,30 @@ CompactValue YGNode::computeEdgeValueForColumn(
     return edges[YGEdgeVertical];
   } else if (!edges[YGEdgeAll].isUndefined()) {
     return edges[YGEdgeAll];
+  } else {
+    return defaultValue;
+  }
+}
+
+CompactValue YGNode::computeRowGap(
+    const YGStyle::Gutters& gutters,
+    CompactValue defaultValue) {
+  if (!gutters[YGGutterRow].isUndefined()) {
+    return gutters[YGGutterRow];
+  } else if (!gutters[YGGutterAll].isUndefined()) {
+    return gutters[YGGutterAll];
+  } else {
+    return defaultValue;
+  }
+}
+
+CompactValue YGNode::computeColumnGap(
+    const YGStyle::Gutters& gutters,
+    CompactValue defaultValue) {
+  if (!gutters[YGGutterColumn].isUndefined()) {
+    return gutters[YGGutterColumn];
+  } else if (!gutters[YGGutterAll].isUndefined()) {
+    return gutters[YGGutterAll];
   } else {
     return defaultValue;
   }
@@ -163,20 +189,29 @@ YGFloatOptional YGNode::getMarginForAxis(
   return getLeadingMargin(axis, widthSize) + getTrailingMargin(axis, widthSize);
 }
 
+YGFloatOptional YGNode::getGapForAxis(
+    const YGFlexDirection axis,
+    const float widthSize) const {
+  auto gap = YGFlexDirectionIsRow(axis)
+      ? computeColumnGap(style_.gap(), CompactValue::ofZero())
+      : computeRowGap(style_.gap(), CompactValue::ofZero());
+  return YGResolveValue(gap, widthSize);
+}
+
 YGSize YGNode::measure(
     float width,
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode,
     void* layoutContext) {
-  return facebook::yoga::detail::getBooleanData(flags, measureUsesContext_)
+  return flags_.measureUsesContext
       ? measure_.withContext(
             this, width, widthMode, height, heightMode, layoutContext)
       : measure_.noContext(this, width, widthMode, height, heightMode);
 }
 
 float YGNode::baseline(float width, float height, void* layoutContext) {
-  return facebook::yoga::detail::getBooleanData(flags, baselineUsesContext_)
+  return flags_.baselineUsesContext
       ? baseline_.withContext(this, width, height, layoutContext)
       : baseline_.noContext(this, width, height);
 }
@@ -203,14 +238,14 @@ void YGNode::setMeasureFunc(decltype(YGNode::measure_) measureFunc) {
 }
 
 void YGNode::setMeasureFunc(YGMeasureFunc measureFunc) {
-  facebook::yoga::detail::setBooleanData(flags, measureUsesContext_, false);
+  flags_.measureUsesContext = false;
   decltype(YGNode::measure_) m;
   m.noContext = measureFunc;
   setMeasureFunc(m);
 }
 
 YOGA_EXPORT void YGNode::setMeasureFunc(MeasureWithContextFn measureFunc) {
-  facebook::yoga::detail::setBooleanData(flags, measureUsesContext_, true);
+  flags_.measureUsesContext = true;
   decltype(YGNode::measure_) m;
   m.withContext = measureFunc;
   setMeasureFunc(m);
@@ -228,11 +263,25 @@ void YGNode::insertChild(YGNodeRef child, uint32_t index) {
   children_.insert(children_.begin() + index, child);
 }
 
+void YGNode::setConfig(YGConfigRef config) {
+  YGAssert(config != nullptr, "Attempting to set a null config on a YGNode");
+  YGAssertWithConfig(
+      config,
+      config->useWebDefaults() == config_->useWebDefaults(),
+      "UseWebDefaults may not be changed after constructing a YGNode");
+
+  if (yoga::configUpdateInvalidatesLayout(config_, config)) {
+    markDirtyAndPropagate();
+  }
+
+  config_ = config;
+}
+
 void YGNode::setDirty(bool isDirty) {
-  if (isDirty == facebook::yoga::detail::getBooleanData(flags, isDirty_)) {
+  if (isDirty == flags_.isDirty) {
     return;
   }
-  facebook::yoga::detail::setBooleanData(flags, isDirty_, isDirty);
+  flags_.isDirty = isDirty;
   if (isDirty && dirtied_) {
     dirtied_(this);
   }
@@ -375,9 +424,7 @@ YGValue YGNode::resolveFlexBasisPtr() const {
     return flexBasis;
   }
   if (!style_.flex().isUndefined() && style_.flex().unwrap() > 0.0f) {
-    return facebook::yoga::detail::getBooleanData(flags, useWebDefaults_)
-        ? YGValueAuto
-        : YGValueZero;
+    return config_->useWebDefaults() ? YGValueAuto : YGValueZero;
   }
   return YGValueAuto;
 }
@@ -415,20 +462,20 @@ void YGNode::cloneChildrenIfNeeded(void* cloneContext) {
   iterChildrenAfterCloningIfNeeded([](YGNodeRef, void*) {}, cloneContext);
 }
 
-void YGNode::markDirtyAndPropogate() {
-  if (!facebook::yoga::detail::getBooleanData(flags, isDirty_)) {
+void YGNode::markDirtyAndPropagate() {
+  if (!flags_.isDirty) {
     setDirty(true);
     setLayoutComputedFlexBasis(YGFloatOptional());
     if (owner_) {
-      owner_->markDirtyAndPropogate();
+      owner_->markDirtyAndPropagate();
     }
   }
 }
 
-void YGNode::markDirtyAndPropogateDownwards() {
-  facebook::yoga::detail::setBooleanData(flags, isDirty_, true);
+void YGNode::markDirtyAndPropagateDownwards() {
+  flags_.isDirty = true;
   for_each(children_.begin(), children_.end(), [](YGNodeRef childNode) {
-    childNode->markDirtyAndPropogateDownwards();
+    childNode->markDirtyAndPropagateDownwards();
   });
 }
 
@@ -453,13 +500,11 @@ float YGNode::resolveFlexShrink() const {
   if (!style_.flexShrink().isUndefined()) {
     return style_.flexShrink().unwrap();
   }
-  if (!facebook::yoga::detail::getBooleanData(flags, useWebDefaults_) &&
-      !style_.flex().isUndefined() && style_.flex().unwrap() < 0.0f) {
+  if (!config_->useWebDefaults() && !style_.flex().isUndefined() &&
+      style_.flex().unwrap() < 0.0f) {
     return -style_.flex().unwrap();
   }
-  return facebook::yoga::detail::getBooleanData(flags, useWebDefaults_)
-      ? kWebDefaultFlexShrink
-      : kDefaultFlexShrink;
+  return config_->useWebDefaults() ? kWebDefaultFlexShrink : kDefaultFlexShrink;
 }
 
 bool YGNode::isNodeFlexible() {
@@ -527,53 +572,6 @@ YGFloatOptional YGNode::getTrailingPaddingAndBorder(
       YGFloatOptional(getTrailingBorder(axis));
 }
 
-bool YGNode::didUseLegacyFlag() {
-  bool didUseLegacyFlag = layout_.didUseLegacyFlag();
-  if (didUseLegacyFlag) {
-    return true;
-  }
-  for (const auto& child : children_) {
-    if (child->layout_.didUseLegacyFlag()) {
-      didUseLegacyFlag = true;
-      break;
-    }
-  }
-  return didUseLegacyFlag;
-}
-
-void YGNode::setLayoutDoesLegacyFlagAffectsLayout(
-    bool doesLegacyFlagAffectsLayout) {
-  layout_.setDoesLegacyStretchFlagAffectsLayout(doesLegacyFlagAffectsLayout);
-}
-
-void YGNode::setLayoutDidUseLegacyFlag(bool didUseLegacyFlag) {
-  layout_.setDidUseLegacyFlag(didUseLegacyFlag);
-}
-
-bool YGNode::isLayoutTreeEqualToNode(const YGNode& node) const {
-  if (children_.size() != node.children_.size()) {
-    return false;
-  }
-  if (layout_ != node.layout_) {
-    return false;
-  }
-  if (children_.size() == 0) {
-    return true;
-  }
-
-  bool isLayoutTreeEqual = true;
-  YGNodeRef otherNodeChildren = nullptr;
-  for (std::vector<YGNodeRef>::size_type i = 0; i < children_.size(); ++i) {
-    otherNodeChildren = node.children_[i];
-    isLayoutTreeEqual =
-        children_[i]->isLayoutTreeEqualToNode(*otherNodeChildren);
-    if (!isLayoutTreeEqual) {
-      return false;
-    }
-  }
-  return isLayoutTreeEqual;
-}
-
 void YGNode::reset() {
   YGAssertWithNode(
       this,
@@ -582,12 +580,5 @@ void YGNode::reset() {
   YGAssertWithNode(
       this, owner_ == nullptr, "Cannot reset a node still attached to a owner");
 
-  clearChildren();
-
-  auto webDefaults =
-      facebook::yoga::detail::getBooleanData(flags, useWebDefaults_);
   *this = YGNode{getConfig()};
-  if (webDefaults) {
-    useWebDefaults();
-  }
 }

@@ -1,67 +1,51 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("com.android.library") version "8.0.1" apply false
+    id("com.android.application") version "8.0.1" apply false
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+}
 
-buildscript {
+allprojects {
     repositories {
         google()
         mavenCentral()
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.15.1'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
 }
 
-allprojects {
-  repositories {
-    google()
-    mavenCentral()
-  }
+group = "com.facebook.yoga"
+
+if (project.hasProperty("USE_SNAPSHOT") && project.property("USE_SNAPSHOT").toBoolean()) {
+    version = getProperty("VERSION_NAME") + "-SNAPSHOT"
+} else {
+    version = getProperty("VERSION_NAME")
+}
+
+def sonatypeUsername = findProperty("SONATYPE_USERNAME")?.toString()
+def sonatypePassword = findProperty("SONATYPE_PASSWORD")?.toString()
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            username.set(sonatypeUsername)
+            password.set(sonatypePassword)
+        }
+    }
 }
 
 ext {
-    minSdkVersion = 14
-    targetSdkVersion = 29
-    compileSdkVersion = 29
-    buildToolsVersion = '30.0.2'
-    ndkVersion = '21.3.6528147'
-    sourceCompatibilityVersion = JavaVersion.VERSION_1_7
-    targetCompatibilityVersion = JavaVersion.VERSION_1_7
-}
-
-// If you have an idea on how to avoid this, please get in touch or
-// answer https://stackoverflow.com/questions/43867014/how-to-use-the-gradle-ndk-build-to-compile-for-the-host-machine.
-task copyNativeLibs(type: Copy, dependsOn: ':buckBuildNative') {
-    from "${rootDir}/buck-out/gen/java/tests#default,shared-library-symlink-tree/"
-    include '*.so'
-    include '*.dylib'
-    into "$buildDir/jniLibs"
-}
-
-task buckBuildNative(type: Exec) {
-    workingDir rootDir
-    environment BUCKVERSION: 'last'
-    commandLine 'buck', 'build', '//java/...'
-}
-
-allprojects {
-    afterEvaluate {
-        tasks.withType(Test) {
-            dependsOn copyNativeLibs
-            def libDir = "${rootDir}/build/jniLibs"
-            systemProperty 'java.library.path', libDir
-            environment 'LD_LIBRARY_PATH', libDir
-            environment 'DYLD_LIBRARY_PATH', libDir
-        }
-    }
+    buildToolsVersion = "33.0.0"
+    ndkVersion = "23.1.7779620"
+    minSdkVersion = 21
+    compileSdkVersion = 33
+    targetSdkVersion = 33
+    sourceCompatibilityVersion = JavaVersion.VERSION_1_8
+    targetCompatibilityVersion = JavaVersion.VERSION_1_8
 }
 
 task clean(type: Delete) {

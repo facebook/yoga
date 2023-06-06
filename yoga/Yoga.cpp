@@ -1,32 +1,24 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-#include "Yoga.h"
-#include "log.h"
 #include <float.h>
 #include <string.h>
 #include <algorithm>
 #include <atomic>
 #include <memory>
+
+#include <yoga/Yoga.h>
+
+#include "log.h"
 #include "Utils.h"
 #include "YGNode.h"
 #include "YGNodePrint.h"
 #include "Yoga-internal.h"
 #include "event/event.h"
-#ifdef _MSC_VER
-#include <float.h>
-
-/* define fmaxf if < VC12 */
-#if _MSC_VER < 1800
-__forceinline const float fmaxf(const float a, const float b) {
-  return (a > b) ? a : b;
-}
-#endif
-#endif
 
 using namespace facebook::yoga;
 using detail::Log;
@@ -50,8 +42,8 @@ static int YGDefaultLog(
 #ifdef ANDROID
 #include <android/log.h>
 static int YGAndroidLog(
-    const YGConfigRef config,
-    const YGNodeRef node,
+    const YGConfigRef /*config*/,
+    const YGNodeRef /*node*/,
     YGLogLevel level,
     const char* format,
     va_list args) {
@@ -122,6 +114,14 @@ YOGA_EXPORT void YGNodeSetContext(YGNodeRef node, void* context) {
   return node->setContext(context);
 }
 
+YOGA_EXPORT YGConfigRef YGNodeGetConfig(YGNodeRef node) {
+  return node->getConfig();
+}
+
+YOGA_EXPORT void YGNodeSetConfig(YGNodeRef node, YGConfigRef config) {
+  node->setConfig(config);
+}
+
 YOGA_EXPORT bool YGNodeHasMeasureFunc(YGNodeRef node) {
   return node->hasMeasureFunc();
 }
@@ -161,7 +161,7 @@ YOGA_EXPORT bool YGNodeGetHasNewLayout(YGNodeRef node) {
 }
 
 YOGA_EXPORT void YGConfigSetPrintTreeFlag(YGConfigRef config, bool enabled) {
-  config->printTree = enabled;
+  config->setShouldPrintTree(enabled);
 }
 
 YOGA_EXPORT void YGNodeSetHasNewLayout(YGNodeRef node, bool hasNewLayout) {
@@ -180,19 +180,16 @@ YOGA_EXPORT bool YGNodeIsDirty(YGNodeRef node) {
   return node->isDirty();
 }
 
-YOGA_EXPORT bool YGNodeLayoutGetDidUseLegacyFlag(const YGNodeRef node) {
-  return node->didUseLegacyFlag();
-}
-
-YOGA_EXPORT void YGNodeMarkDirtyAndPropogateToDescendants(
+YOGA_EXPORT void YGNodeMarkDirtyAndPropagateToDescendants(
     const YGNodeRef node) {
-  return node->markDirtyAndPropogateDownwards();
+  return node->markDirtyAndPropagateDownwards();
 }
 
 int32_t gConfigInstanceCount = 0;
 
 YOGA_EXPORT WIN_EXPORT YGNodeRef YGNodeNewWithConfig(const YGConfigRef config) {
   const YGNodeRef node = new YGNode{config};
+  YGAssert(config != nullptr, "Tried to construct YGNode with null config");
   YGAssertWithConfig(
       config, node != nullptr, "Could not allocate memory for node");
   Event::publish<Event::NodeAllocation>(node, {config});
@@ -220,32 +217,6 @@ YOGA_EXPORT YGNodeRef YGNodeClone(YGNodeRef oldNode) {
   return node;
 }
 
-static YGConfigRef YGConfigClone(const YGConfig& oldConfig) {
-  const YGConfigRef config = new YGConfig(oldConfig);
-  YGAssert(config != nullptr, "Could not allocate memory for config");
-  gConfigInstanceCount++;
-  return config;
-}
-
-static YGNodeRef YGNodeDeepClone(YGNodeRef oldNode) {
-  auto config = YGConfigClone(*oldNode->getConfig());
-  auto node = new YGNode{*oldNode, config};
-  node->setOwner(nullptr);
-  Event::publish<Event::NodeAllocation>(node, {node->getConfig()});
-
-  YGVector vec = YGVector();
-  vec.reserve(oldNode->getChildren().size());
-  YGNodeRef childNode = nullptr;
-  for (auto* item : oldNode->getChildren()) {
-    childNode = YGNodeDeepClone(item);
-    childNode->setOwner(node);
-    vec.push_back(childNode);
-  }
-  node->setChildren(vec);
-
-  return node;
-}
-
 YOGA_EXPORT void YGNodeFree(const YGNodeRef node) {
   if (YGNodeRef owner = node->getOwner()) {
     owner->removeChild(node);
@@ -259,19 +230,12 @@ YOGA_EXPORT void YGNodeFree(const YGNodeRef node) {
   }
 
   node->clearChildren();
-  Event::publish<Event::NodeDeallocation>(node, {node->getConfig()});
-  delete node;
+  YGNodeDeallocate(node);
 }
 
-static void YGConfigFreeRecursive(const YGNodeRef root) {
-  if (root->getConfig() != nullptr) {
-    gConfigInstanceCount--;
-    delete root->getConfig();
-  }
-  // Delete configs recursively for childrens
-  for (auto* child : root->getChildren()) {
-    YGConfigFreeRecursive(child);
-  }
+YOGA_EXPORT void YGNodeDeallocate(const YGNodeRef node) {
+  Event::publish<Event::NodeDeallocation>(node, {node->getConfig()});
+  delete node;
 }
 
 YOGA_EXPORT void YGNodeFreeRecursiveWithCleanupFunc(
@@ -302,7 +266,7 @@ YOGA_EXPORT void YGNodeReset(YGNodeRef node) {
   node->reset();
 }
 
-int32_t YGConfigGetInstanceCount(void) {
+YOGA_EXPORT int32_t YGConfigGetInstanceCount(void) {
   return gConfigInstanceCount;
 }
 
@@ -330,7 +294,7 @@ YOGA_EXPORT void YGNodeSetIsReferenceBaseline(
     bool isReferenceBaseline) {
   if (node->isReferenceBaseline() != isReferenceBaseline) {
     node->setIsReferenceBaseline(isReferenceBaseline);
-    node->markDirtyAndPropogate();
+    node->markDirtyAndPropagate();
   }
 }
 
@@ -354,7 +318,7 @@ YOGA_EXPORT void YGNodeInsertChild(
 
   owner->insertChild(child, index);
   child->setOwner(owner);
-  owner->markDirtyAndPropogate();
+  owner->markDirtyAndPropagate();
 }
 
 YOGA_EXPORT void YGNodeSwapChild(
@@ -382,7 +346,7 @@ YOGA_EXPORT void YGNodeRemoveChild(
       excludedChild->setLayout({}); // layout is no longer valid
       excludedChild->setOwner(nullptr);
     }
-    owner->markDirtyAndPropogate();
+    owner->markDirtyAndPropagate();
   }
 }
 
@@ -402,62 +366,51 @@ YOGA_EXPORT void YGNodeRemoveAllChildren(const YGNodeRef owner) {
       oldChild->setOwner(nullptr);
     }
     owner->clearChildren();
-    owner->markDirtyAndPropogate();
+    owner->markDirtyAndPropagate();
     return;
   }
   // Otherwise, we are not the owner of the child set. We don't have to do
   // anything to clear it.
   owner->setChildren(YGVector());
-  owner->markDirtyAndPropogate();
+  owner->markDirtyAndPropagate();
 }
 
-static void YGNodeSetChildrenInternal(
-    YGNodeRef const owner,
-    const std::vector<YGNodeRef>& children) {
+YOGA_EXPORT void YGNodeSetChildren(
+    const YGNodeRef owner,
+    const YGNodeRef* children,
+    const uint32_t count) {
   if (!owner) {
     return;
   }
-  if (children.size() == 0) {
+
+  const YGVector childrenVector = {children, children + count};
+  if (childrenVector.size() == 0) {
     if (YGNodeGetChildCount(owner) > 0) {
       for (YGNodeRef const child : owner->getChildren()) {
         child->setLayout(YGLayout());
         child->setOwner(nullptr);
       }
       owner->setChildren(YGVector());
-      owner->markDirtyAndPropogate();
+      owner->markDirtyAndPropagate();
     }
   } else {
     if (YGNodeGetChildCount(owner) > 0) {
       for (YGNodeRef const oldChild : owner->getChildren()) {
         // Our new children may have nodes in common with the old children. We
         // don't reset these common nodes.
-        if (std::find(children.begin(), children.end(), oldChild) ==
-            children.end()) {
+        if (std::find(childrenVector.begin(), childrenVector.end(), oldChild) ==
+            childrenVector.end()) {
           oldChild->setLayout(YGLayout());
           oldChild->setOwner(nullptr);
         }
       }
     }
-    owner->setChildren(children);
-    for (YGNodeRef child : children) {
+    owner->setChildren(childrenVector);
+    for (YGNodeRef child : childrenVector) {
       child->setOwner(owner);
     }
-    owner->markDirtyAndPropogate();
+    owner->markDirtyAndPropagate();
   }
-}
-
-YOGA_EXPORT void YGNodeSetChildren(
-    const YGNodeRef owner,
-    const YGNodeRef c[],
-    const uint32_t count) {
-  const YGVector children = {c, c + count};
-  YGNodeSetChildrenInternal(owner, children);
-}
-
-YOGA_EXPORT void YGNodeSetChildren(
-    YGNodeRef const owner,
-    const std::vector<YGNodeRef>& children) {
-  YGNodeSetChildrenInternal(owner, children);
 }
 
 YOGA_EXPORT YGNodeRef
@@ -484,10 +437,10 @@ YOGA_EXPORT void YGNodeMarkDirty(const YGNodeRef node) {
   YGAssertWithNode(
       node,
       node->hasMeasureFunc(),
-      "Only leaf nodes with custom measure functions"
+      "Only leaf nodes with custom measure functions "
       "should manually mark themselves as dirty");
 
-  node->markDirtyAndPropogate();
+  node->markDirtyAndPropagate();
 }
 
 YOGA_EXPORT void YGNodeCopyStyle(
@@ -495,7 +448,7 @@ YOGA_EXPORT void YGNodeCopyStyle(
     const YGNodeRef srcNode) {
   if (!(dstNode->getStyle() == srcNode->getStyle())) {
     dstNode->setStyle(srcNode->getStyle());
-    dstNode->markDirtyAndPropogate();
+    dstNode->markDirtyAndPropagate();
   }
 }
 
@@ -507,8 +460,8 @@ YOGA_EXPORT float YGNodeStyleGetFlexGrow(const YGNodeConstRef node) {
 
 YOGA_EXPORT float YGNodeStyleGetFlexShrink(const YGNodeConstRef node) {
   return node->getStyle().flexShrink().isUndefined()
-      ? (node->getConfig()->useWebDefaults ? kWebDefaultFlexShrink
-                                           : kDefaultFlexShrink)
+      ? (node->getConfig()->useWebDefaults() ? kWebDefaultFlexShrink
+                                             : kDefaultFlexShrink)
       : node->getStyle().flexShrink().unwrap();
 }
 
@@ -522,7 +475,7 @@ void updateStyle(
     Update&& update) {
   if (needsUpdate(node->getStyle(), value)) {
     update(node->getStyle(), value);
-    node->markDirtyAndPropogate();
+    node->markDirtyAndPropagate();
   }
 }
 
@@ -554,7 +507,7 @@ void updateIndexedStyleProp(
 // MSVC has trouble inferring the return type of pointer to member functions
 // with const and non-const overloads, instead of preferring the non-const
 // overload like clang and GCC. For the purposes of updateStyle(), we can help
-// MSVC by specifying that return type explicitely. In combination with
+// MSVC by specifying that return type explicitly. In combination with
 // decltype, MSVC will prefer the non-const version.
 #define MSVC_HINT(PROP) decltype(YGStyle{}.PROP())
 
@@ -797,6 +750,27 @@ YOGA_EXPORT float YGNodeStyleGetBorder(
   return static_cast<YGValue>(border).value;
 }
 
+YOGA_EXPORT void YGNodeStyleSetGap(
+    const YGNodeRef node,
+    const YGGutter gutter,
+    const float gapLength) {
+  auto length = detail::CompactValue::ofMaybe<YGUnitPoint>(gapLength);
+  updateIndexedStyleProp<MSVC_HINT(gap)>(node, &YGStyle::gap, gutter, length);
+}
+
+YOGA_EXPORT float YGNodeStyleGetGap(
+    const YGNodeConstRef node,
+    const YGGutter gutter) {
+  auto gapLength = node->getStyle().gap()[gutter];
+  if (gapLength.isUndefined() || gapLength.isAuto()) {
+    // TODO(T26792433): Rather than returning YGUndefined, change the api to
+    // return YGFloatOptional.
+    return YGUndefined;
+  }
+
+  return static_cast<YGValue>(gapLength).value;
+}
+
 // Yoga specific properties, not compatible with flexbox specification
 
 // TODO(T26792433): Change the API to accept YGFloatOptional.
@@ -871,7 +845,7 @@ YOGA_EXPORT void YGNodeStyleSetMinWidthPercent(
 }
 YOGA_EXPORT YGValue YGNodeStyleGetMinWidth(const YGNodeConstRef node) {
   return node->getStyle().minDimensions()[YGDimensionWidth];
-};
+}
 
 YOGA_EXPORT void YGNodeStyleSetMinHeight(
     const YGNodeRef node,
@@ -889,7 +863,7 @@ YOGA_EXPORT void YGNodeStyleSetMinHeightPercent(
 }
 YOGA_EXPORT YGValue YGNodeStyleGetMinHeight(const YGNodeConstRef node) {
   return node->getStyle().minDimensions()[YGDimensionHeight];
-};
+}
 
 YOGA_EXPORT void YGNodeStyleSetMaxWidth(
     const YGNodeRef node,
@@ -907,7 +881,7 @@ YOGA_EXPORT void YGNodeStyleSetMaxWidthPercent(
 }
 YOGA_EXPORT YGValue YGNodeStyleGetMaxWidth(const YGNodeConstRef node) {
   return node->getStyle().maxDimensions()[YGDimensionWidth];
-};
+}
 
 YOGA_EXPORT void YGNodeStyleSetMaxHeight(
     const YGNodeRef node,
@@ -925,7 +899,7 @@ YOGA_EXPORT void YGNodeStyleSetMaxHeightPercent(
 }
 YOGA_EXPORT YGValue YGNodeStyleGetMaxHeight(const YGNodeConstRef node) {
   return node->getStyle().maxDimensions()[YGDimensionHeight];
-};
+}
 
 #define YG_NODE_LAYOUT_PROPERTY_IMPL(type, name, instanceName)   \
   YOGA_EXPORT type YGNodeLayoutGet##name(const YGNodeRef node) { \
@@ -959,23 +933,18 @@ YOGA_EXPORT YGValue YGNodeStyleGetMaxHeight(const YGNodeConstRef node) {
     return node->getLayout().instanceName[edge];                        \
   }
 
-YG_NODE_LAYOUT_PROPERTY_IMPL(float, Left, position[YGEdgeLeft]);
-YG_NODE_LAYOUT_PROPERTY_IMPL(float, Top, position[YGEdgeTop]);
-YG_NODE_LAYOUT_PROPERTY_IMPL(float, Right, position[YGEdgeRight]);
-YG_NODE_LAYOUT_PROPERTY_IMPL(float, Bottom, position[YGEdgeBottom]);
-YG_NODE_LAYOUT_PROPERTY_IMPL(float, Width, dimensions[YGDimensionWidth]);
-YG_NODE_LAYOUT_PROPERTY_IMPL(float, Height, dimensions[YGDimensionHeight]);
-YG_NODE_LAYOUT_PROPERTY_IMPL(YGDirection, Direction, direction());
-YG_NODE_LAYOUT_PROPERTY_IMPL(bool, HadOverflow, hadOverflow());
+YG_NODE_LAYOUT_PROPERTY_IMPL(float, Left, position[YGEdgeLeft])
+YG_NODE_LAYOUT_PROPERTY_IMPL(float, Top, position[YGEdgeTop])
+YG_NODE_LAYOUT_PROPERTY_IMPL(float, Right, position[YGEdgeRight])
+YG_NODE_LAYOUT_PROPERTY_IMPL(float, Bottom, position[YGEdgeBottom])
+YG_NODE_LAYOUT_PROPERTY_IMPL(float, Width, dimensions[YGDimensionWidth])
+YG_NODE_LAYOUT_PROPERTY_IMPL(float, Height, dimensions[YGDimensionHeight])
+YG_NODE_LAYOUT_PROPERTY_IMPL(YGDirection, Direction, direction())
+YG_NODE_LAYOUT_PROPERTY_IMPL(bool, HadOverflow, hadOverflow())
 
-YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Margin, margin);
-YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Border, border);
-YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Padding, padding);
-
-YOGA_EXPORT bool YGNodeLayoutGetDidLegacyStretchFlagAffectLayout(
-    const YGNodeRef node) {
-  return node->getLayout().doesLegacyStretchFlagAffectsLayout();
-}
+YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Margin, margin)
+YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Border, border)
+YG_NODE_LAYOUT_RESOLVED_PROPERTY_IMPL(float, Padding, padding)
 
 std::atomic<uint32_t> gCurrentGenerationCount(0);
 
@@ -1267,8 +1236,8 @@ static void YGNodeComputeFlexBasisForChild(
 
   if (!resolvedFlexBasis.isUndefined() && !YGFloatIsUndefined(mainAxisSize)) {
     if (child->getLayout().computedFlexBasis.isUndefined() ||
-        (YGConfigIsExperimentalFeatureEnabled(
-             child->getConfig(), YGExperimentalFeatureWebFlexBasis) &&
+        (child->getConfig()->isExperimentalFeatureEnabled(
+             YGExperimentalFeatureWebFlexBasis) &&
          child->getLayout().computedFlexBasisGeneration != generationCount)) {
       const YGFloatOptional paddingAndBorder = YGFloatOptional(
           YGNodePaddingAndBorderForAxis(child, mainAxis, ownerWidth));
@@ -1574,13 +1543,20 @@ static void YGNodeAbsoluteLayoutChild(
       depth,
       generationCount);
 
+  auto trailingMarginOuterSize =
+      node->getConfig()->isExperimentalFeatureEnabled(
+          YGExperimentalFeatureFixAbsoluteTrailingColumnMargin)
+      ? isMainAxisRow ? height : width
+      : width;
+
   if (child->isTrailingPosDefined(mainAxis) &&
       !child->isLeadingPositionDefined(mainAxis)) {
     child->setLayoutPosition(
         node->getLayout().measuredDimensions[dim[mainAxis]] -
             child->getLayout().measuredDimensions[dim[mainAxis]] -
             node->getTrailingBorder(mainAxis) -
-            child->getTrailingMargin(mainAxis, width).unwrap() -
+            child->getTrailingMargin(mainAxis, trailingMarginOuterSize)
+                .unwrap() -
             child->getTrailingPosition(mainAxis, isMainAxisRow ? width : height)
                 .unwrap(),
         leading[mainAxis]);
@@ -1599,6 +1575,21 @@ static void YGNodeAbsoluteLayoutChild(
         (node->getLayout().measuredDimensions[dim[mainAxis]] -
          child->getLayout().measuredDimensions[dim[mainAxis]]),
         leading[mainAxis]);
+  } else if (
+      node->getConfig()->isExperimentalFeatureEnabled(
+          YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge) &&
+      child->isLeadingPositionDefined(mainAxis)) {
+    child->setLayoutPosition(
+        child->getLeadingPosition(
+                 mainAxis, node->getLayout().measuredDimensions[dim[mainAxis]])
+                .unwrap() +
+            node->getLeadingBorder(mainAxis) +
+            child
+                ->getLeadingMargin(
+                    mainAxis,
+                    node->getLayout().measuredDimensions[dim[mainAxis]])
+                .unwrap(),
+        leading[mainAxis]);
   }
 
   if (child->isTrailingPosDefined(crossAxis) &&
@@ -1607,7 +1598,8 @@ static void YGNodeAbsoluteLayoutChild(
         node->getLayout().measuredDimensions[dim[crossAxis]] -
             child->getLayout().measuredDimensions[dim[crossAxis]] -
             node->getTrailingBorder(crossAxis) -
-            child->getTrailingMargin(crossAxis, width).unwrap() -
+            child->getTrailingMargin(crossAxis, trailingMarginOuterSize)
+                .unwrap() -
             child
                 ->getTrailingPosition(crossAxis, isMainAxisRow ? height : width)
                 .unwrap(),
@@ -1628,6 +1620,22 @@ static void YGNodeAbsoluteLayoutChild(
     child->setLayoutPosition(
         (node->getLayout().measuredDimensions[dim[crossAxis]] -
          child->getLayout().measuredDimensions[dim[crossAxis]]),
+        leading[crossAxis]);
+  } else if (
+      node->getConfig()->isExperimentalFeatureEnabled(
+          YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge) &&
+      child->isLeadingPositionDefined(crossAxis)) {
+    child->setLayoutPosition(
+        child->getLeadingPosition(
+                 crossAxis,
+                 node->getLayout().measuredDimensions[dim[crossAxis]])
+                .unwrap() +
+            node->getLeadingBorder(crossAxis) +
+            child
+                ->getLeadingMargin(
+                    crossAxis,
+                    node->getLayout().measuredDimensions[dim[crossAxis]])
+                .unwrap(),
         leading[crossAxis]);
   }
 }
@@ -1817,7 +1825,7 @@ static bool YGNodeFixedSizeSetMeasuredDimensions(
   return false;
 }
 
-static void YGZeroOutLayoutRecursivly(
+static void YGZeroOutLayoutRecursively(
     const YGNodeRef node,
     void* layoutContext) {
   node->getLayout() = {};
@@ -1826,7 +1834,7 @@ static void YGZeroOutLayoutRecursivly(
   node->setHasNewLayout(true);
 
   node->iterChildrenAfterCloningIfNeeded(
-      YGZeroOutLayoutRecursivly, layoutContext);
+      YGZeroOutLayoutRecursively, layoutContext);
 }
 
 static float YGNodeCalculateAvailableInnerDim(
@@ -1902,7 +1910,7 @@ static float YGNodeComputeFlexBasisForChildren(
   for (auto child : children) {
     child->resolveDimension();
     if (child->getStyle().display() == YGDisplayNone) {
-      YGZeroOutLayoutRecursivly(child, layoutContext);
+      YGZeroOutLayoutRecursively(child, layoutContext);
       child->setHasNewLayout(true);
       child->setDirty(false);
       continue;
@@ -1972,6 +1980,7 @@ static YGCollectFlexItemsRowValues YGCalculateCollectFlexItemsRowValues(
   const YGFlexDirection mainAxis = YGResolveFlexDirection(
       node->getStyle().flexDirection(), node->resolveDirection(ownerDirection));
   const bool isNodeFlexWrap = node->getStyle().flexWrap() != YGWrapNoWrap;
+  const float gap = node->getGapForAxis(mainAxis, availableInnerWidth).unwrap();
 
   // Add items to the current line until it's full or we run out of items.
   uint32_t endOfLineIndex = startOfLineIndex;
@@ -1981,9 +1990,13 @@ static YGCollectFlexItemsRowValues YGCalculateCollectFlexItemsRowValues(
         child->getStyle().positionType() == YGPositionTypeAbsolute) {
       continue;
     }
+
+    const bool isFirstElementInLine = (endOfLineIndex - startOfLineIndex) == 0;
+
     child->setLineIndex(lineCount);
     const float childMarginMainAxis =
         child->getMarginForAxis(mainAxis, availableInnerWidth).unwrap();
+    const float childLeadingGapMainAxis = isFirstElementInLine ? 0.0f : gap;
     const float flexBasisWithMinAndMaxConstraints =
         YGNodeBoundAxisWithinMinAndMax(
             child,
@@ -1996,16 +2009,19 @@ static YGCollectFlexItemsRowValues YGCalculateCollectFlexItemsRowValues(
     // size, we've hit the end of the current line. Break out of the loop and
     // lay out the current line.
     if (sizeConsumedOnCurrentLineIncludingMinConstraint +
-                flexBasisWithMinAndMaxConstraints + childMarginMainAxis >
+                flexBasisWithMinAndMaxConstraints + childMarginMainAxis +
+                childLeadingGapMainAxis >
             availableInnerMainDim &&
         isNodeFlexWrap && flexAlgoRowMeasurement.itemsOnLine > 0) {
       break;
     }
 
     sizeConsumedOnCurrentLineIncludingMinConstraint +=
-        flexBasisWithMinAndMaxConstraints + childMarginMainAxis;
+        flexBasisWithMinAndMaxConstraints + childMarginMainAxis +
+        childLeadingGapMainAxis;
     flexAlgoRowMeasurement.sizeConsumedOnCurrentLine +=
-        flexBasisWithMinAndMaxConstraints + childMarginMainAxis;
+        flexBasisWithMinAndMaxConstraints + childMarginMainAxis +
+        childLeadingGapMainAxis;
     flexAlgoRowMeasurement.itemsOnLine++;
 
     if (child->isNodeFlexible()) {
@@ -2050,7 +2066,7 @@ static float YGDistributeFreeSpaceSecondPass(
     const float availableInnerCrossDim,
     const float availableInnerWidth,
     const float availableInnerHeight,
-    const bool flexBasisOverflows,
+    const bool mainAxisOverflows,
     const YGMeasureMode measureModeCrossDim,
     const bool performLayout,
     const YGConfigRef config,
@@ -2146,7 +2162,7 @@ static float YGDistributeFreeSpaceSecondPass(
         !YGNodeIsStyleDimDefined(
             currentRelativeChild, crossAxis, availableInnerCrossDim) &&
         measureModeCrossDim == YGMeasureModeExactly &&
-        !(isNodeFlexWrap && flexBasisOverflows) &&
+        !(isNodeFlexWrap && mainAxisOverflows) &&
         YGNodeAlignItem(node, currentRelativeChild) == YGAlignStretch &&
         currentRelativeChild->marginLeadingValue(crossAxis).unit !=
             YGUnitAuto &&
@@ -2229,7 +2245,7 @@ static float YGDistributeFreeSpaceSecondPass(
         depth,
         generationCount);
     node->setLayoutHadOverflow(
-        node->getLayout().hadOverflow() |
+        node->getLayout().hadOverflow() ||
         currentRelativeChild->getLayout().hadOverflow());
   }
   return deltaFreeSpace;
@@ -2354,7 +2370,7 @@ static void YGResolveFlexibleLength(
     const float availableInnerCrossDim,
     const float availableInnerWidth,
     const float availableInnerHeight,
-    const bool flexBasisOverflows,
+    const bool mainAxisOverflows,
     const YGMeasureMode measureModeCrossDim,
     const bool performLayout,
     const YGConfigRef config,
@@ -2382,7 +2398,7 @@ static void YGResolveFlexibleLength(
       availableInnerCrossDim,
       availableInnerWidth,
       availableInnerHeight,
-      flexBasisOverflows,
+      mainAxisOverflows,
       measureModeCrossDim,
       performLayout,
       config,
@@ -2415,6 +2431,7 @@ static void YGJustifyMainAxis(
       node->getLeadingPaddingAndBorder(mainAxis, ownerWidth).unwrap();
   const float trailingPaddingAndBorderMain =
       node->getTrailingPaddingAndBorder(mainAxis, ownerWidth).unwrap();
+  const float gap = node->getGapForAxis(mainAxis, ownerWidth).unwrap();
   // If we are using "at most" rules in the main axis, make sure that
   // remainingFreeSpace is 0 when min main dimension is not given
   if (measureModeMainDim == YGMeasureModeAtMost &&
@@ -2462,7 +2479,7 @@ static void YGJustifyMainAxis(
   // The space between the beginning and the first element and the space between
   // each two elements.
   float leadingMainDim = 0;
-  float betweenMainDim = 0;
+  float betweenMainDim = gap;
   const YGJustify justifyContent = node->getStyle().justifyContent();
 
   if (numberOfAutoMarginsOnCurrentLine == 0) {
@@ -2475,24 +2492,22 @@ static void YGJustifyMainAxis(
         break;
       case YGJustifySpaceBetween:
         if (collectedFlexItemsValues.itemsOnLine > 1) {
-          betweenMainDim =
+          betweenMainDim +=
               YGFloatMax(collectedFlexItemsValues.remainingFreeSpace, 0) /
               (collectedFlexItemsValues.itemsOnLine - 1);
-        } else {
-          betweenMainDim = 0;
         }
         break;
       case YGJustifySpaceEvenly:
         // Space is distributed evenly across all elements
-        betweenMainDim = collectedFlexItemsValues.remainingFreeSpace /
+        leadingMainDim = collectedFlexItemsValues.remainingFreeSpace /
             (collectedFlexItemsValues.itemsOnLine + 1);
-        leadingMainDim = betweenMainDim;
+        betweenMainDim += leadingMainDim;
         break;
       case YGJustifySpaceAround:
         // Space on the edges is half of the space between elements
-        betweenMainDim = collectedFlexItemsValues.remainingFreeSpace /
+        leadingMainDim = 0.5f * collectedFlexItemsValues.remainingFreeSpace /
             collectedFlexItemsValues.itemsOnLine;
-        leadingMainDim = betweenMainDim / 2;
+        betweenMainDim += leadingMainDim * 2;
         break;
       case YGJustifyFlexStart:
         break;
@@ -2512,6 +2527,11 @@ static void YGJustifyMainAxis(
     const YGNodeRef child = node->getChild(i);
     const YGStyle& childStyle = child->getStyle();
     const YGLayout childLayout = child->getLayout();
+    const bool isLastChild = i == collectedFlexItemsValues.endOfLineIndex - 1;
+    // remove the gap if it is the last element of the line
+    if (isLastChild) {
+      betweenMainDim -= gap;
+    }
     if (childStyle.display() == YGDisplayNone) {
       continue;
     }
@@ -2641,7 +2661,7 @@ static void YGJustifyMainAxis(
 //    but the algorithm below assumes a default of 'column'.
 //
 // Input parameters:
-//    - node: current node to be sized and layed out
+//    - node: current node to be sized and laid out
 //    - availableWidth & availableHeight: available size to be used for sizing
 //      the node or YGUndefined if the size is not available; interpretation
 //      depends on layout flags
@@ -2653,7 +2673,7 @@ static void YGJustifyMainAxis(
 //      for explanation)
 //    - performLayout: specifies whether the caller is interested in just the
 //      dimensions of the node or it requires the entire node and its subtree to
-//      be layed out (with final positions)
+//      be laid out (with final positions)
 //
 // Details:
 //    This routine is called recursively to lay out subtrees of flexbox
@@ -2856,7 +2876,9 @@ static void YGNodelayoutImpl(
 
   // STEP 3: DETERMINE FLEX BASIS FOR EACH ITEM
 
-  float totalOuterFlexBasis = YGNodeComputeFlexBasisForChildren(
+  // Computed basis + margins + gap
+  float totalMainDim = 0;
+  totalMainDim += YGNodeComputeFlexBasisForChildren(
       node,
       availableInnerWidth,
       availableInnerHeight,
@@ -2871,10 +2893,17 @@ static void YGNodelayoutImpl(
       depth,
       generationCount);
 
-  const bool flexBasisOverflows = measureModeMainDim == YGMeasureModeUndefined
-      ? false
-      : totalOuterFlexBasis > availableInnerMainDim;
-  if (isNodeFlexWrap && flexBasisOverflows &&
+  if (childCount > 1) {
+    totalMainDim +=
+        node->getGapForAxis(mainAxis, availableInnerCrossDim).unwrap() *
+        (childCount - 1);
+  }
+
+  const bool mainAxisOverflows =
+      (measureModeMainDim != YGMeasureModeUndefined) &&
+      totalMainDim > availableInnerMainDim;
+
+  if (isNodeFlexWrap && mainAxisOverflows &&
       measureModeMainDim == YGMeasureModeAtMost) {
     measureModeMainDim = YGMeasureModeExactly;
   }
@@ -2889,6 +2918,9 @@ static void YGNodelayoutImpl(
 
   // Accumulated cross dimensions of all lines so far.
   float totalLineCrossDim = 0;
+
+  const float crossAxisGap =
+      node->getGapForAxis(crossAxis, availableInnerCrossDim).unwrap();
 
   // Max main dimension of all the lines.
   float maxLineMainDim = 0;
@@ -2951,11 +2983,14 @@ static void YGNodelayoutImpl(
               maxInnerMainDim) {
         availableInnerMainDim = maxInnerMainDim;
       } else {
-        if (!node->getConfig()->useLegacyStretchBehaviour &&
-            ((YGFloatIsUndefined(
+        bool useLegacyStretchBehaviour =
+            node->hasErrata(YGErrataStretchFlexBasis);
+
+        if (!useLegacyStretchBehaviour &&
+            ((!YGFloatIsUndefined(
                   collectedFlexItemsValues.totalFlexGrowFactors) &&
               collectedFlexItemsValues.totalFlexGrowFactors == 0) ||
-             (YGFloatIsUndefined(node->resolveFlexGrow()) &&
+             (!YGFloatIsUndefined(node->resolveFlexGrow()) &&
               node->resolveFlexGrow() == 0))) {
           // If we don't have any children to flex or we can't flex the node
           // itself, space we've used is all space we need. Root node also
@@ -2964,10 +2999,7 @@ static void YGNodelayoutImpl(
               collectedFlexItemsValues.sizeConsumedOnCurrentLine;
         }
 
-        if (node->getConfig()->useLegacyStretchBehaviour) {
-          node->setLayoutDidUseLegacyFlag(true);
-        }
-        sizeBasedOnContent = !node->getConfig()->useLegacyStretchBehaviour;
+        sizeBasedOnContent = !useLegacyStretchBehaviour;
       }
     }
 
@@ -2994,7 +3026,7 @@ static void YGNodelayoutImpl(
           availableInnerCrossDim,
           availableInnerWidth,
           availableInnerHeight,
-          flexBasisOverflows,
+          mainAxisOverflows,
           measureModeCrossDim,
           performLayout,
           config,
@@ -3209,7 +3241,8 @@ static void YGNodelayoutImpl(
       }
     }
 
-    totalLineCrossDim += collectedFlexItemsValues.crossDim;
+    const float appliedCrossGap = lineCount != 0 ? crossAxisGap : 0.0f;
+    totalLineCrossDim += collectedFlexItemsValues.crossDim + appliedCrossGap;
     maxLineMainDim =
         YGFloatMax(maxLineMainDim, collectedFlexItemsValues.mainDim);
   }
@@ -3304,6 +3337,7 @@ static void YGNodelayoutImpl(
       }
       endIndex = ii;
       lineHeight += crossDimLead;
+      currentLead += i != 0 ? crossAxisGap : 0;
 
       if (performLayout) {
         for (ii = startIndex; ii < endIndex; ii++) {
@@ -3519,12 +3553,20 @@ static void YGNodelayoutImpl(
           child->getStyle().positionType() != YGPositionTypeAbsolute) {
         continue;
       }
+      const bool absolutePercentageAgainstPaddingEdge =
+          node->getConfig()->isExperimentalFeatureEnabled(
+              YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge);
+
       YGNodeAbsoluteLayoutChild(
           node,
           child,
-          availableInnerWidth,
+          absolutePercentageAgainstPaddingEdge
+              ? node->getLayout().measuredDimensions[YGDimensionWidth]
+              : availableInnerWidth,
           isMainAxisRow ? measureModeMainDim : measureModeCrossDim,
-          availableInnerHeight,
+          absolutePercentageAgainstPaddingEdge
+              ? node->getLayout().measuredDimensions[YGDimensionHeight]
+              : availableInnerHeight,
           direction,
           config,
           layoutMarkerData,
@@ -3689,20 +3731,22 @@ YOGA_EXPORT bool YGNodeCanUseCachedMeasurement(
     return false;
   }
   bool useRoundedComparison =
-      config != nullptr && config->pointScaleFactor != 0;
+      config != nullptr && config->getPointScaleFactor() != 0;
   const float effectiveWidth = useRoundedComparison
-      ? YGRoundValueToPixelGrid(width, config->pointScaleFactor, false, false)
+      ? YGRoundValueToPixelGrid(
+            width, config->getPointScaleFactor(), false, false)
       : width;
   const float effectiveHeight = useRoundedComparison
-      ? YGRoundValueToPixelGrid(height, config->pointScaleFactor, false, false)
+      ? YGRoundValueToPixelGrid(
+            height, config->getPointScaleFactor(), false, false)
       : height;
   const float effectiveLastWidth = useRoundedComparison
       ? YGRoundValueToPixelGrid(
-            lastWidth, config->pointScaleFactor, false, false)
+            lastWidth, config->getPointScaleFactor(), false, false)
       : lastWidth;
   const float effectiveLastHeight = useRoundedComparison
       ? YGRoundValueToPixelGrid(
-            lastHeight, config->pointScaleFactor, false, false)
+            lastHeight, config->getPointScaleFactor(), false, false)
       : lastHeight;
 
   const bool hasSameWidthSpec = lastWidthMode == widthMode &&
@@ -3790,7 +3834,7 @@ bool YGLayoutNodeInternal(
   // Determine whether the results are already cached. We maintain a separate
   // cache for layouts and measurements. A layout operation modifies the
   // positions and dimensions for nodes in the subtree. The algorithm assumes
-  // that each node gets layed out a maximum of one time per tree layout, but
+  // that each node gets laid out a maximum of one time per tree layout, but
   // multiple measurements may be required to resolve all of the flex
   // dimensions. We handle nodes with measure functions specially here because
   // they are the most expensive to measure, so it's worth avoiding redundant
@@ -4029,10 +4073,14 @@ YOGA_EXPORT void YGConfigSetPointScaleFactor(
   // We store points for Pixel as we will use it for rounding
   if (pixelsInPoint == 0.0f) {
     // Zero is used to skip rounding
-    config->pointScaleFactor = 0.0f;
+    config->setPointScaleFactor(0.0f);
   } else {
-    config->pointScaleFactor = pixelsInPoint;
+    config->setPointScaleFactor(pixelsInPoint);
   }
+}
+
+YOGA_EXPORT float YGConfigGetPointScaleFactor(const YGConfigRef config) {
+  return config->getPointScaleFactor();
 }
 
 static void YGRoundToPixelGrid(
@@ -4105,13 +4153,6 @@ static void YGRoundToPixelGrid(
         pointScaleFactor,
         absoluteNodeLeft,
         absoluteNodeTop);
-  }
-}
-
-static void unsetUseLegacyFlagRecursively(YGNodeRef node) {
-  node->getConfig()->useLegacyStretchBehaviour = false;
-  for (auto child : node->getChildren()) {
-    unsetUseLegacyFlagRecursively(child);
   }
 }
 
@@ -4188,10 +4229,11 @@ YOGA_EXPORT void YGNodeCalculateLayoutWithContext(
           gCurrentGenerationCount.load(std::memory_order_relaxed))) {
     node->setPosition(
         node->getLayout().direction(), ownerWidth, ownerHeight, ownerWidth);
-    YGRoundToPixelGrid(node, node->getConfig()->pointScaleFactor, 0.0f, 0.0f);
+    YGRoundToPixelGrid(
+        node, node->getConfig()->getPointScaleFactor(), 0.0f, 0.0f);
 
 #ifdef DEBUG
-    if (node->getConfig()->printTree) {
+    if (node->getConfig()->shouldPrintTree()) {
       YGNodePrint(
           node,
           (YGPrintOptions) (YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
@@ -4200,67 +4242,6 @@ YOGA_EXPORT void YGNodeCalculateLayoutWithContext(
   }
 
   Event::publish<Event::LayoutPassEnd>(node, {layoutContext, &markerData});
-
-  // We want to get rid off `useLegacyStretchBehaviour` from YGConfig. But we
-  // aren't sure whether client's of yoga have gotten rid off this flag or not.
-  // So logging this in YGLayout would help to find out the call sites depending
-  // on this flag. This check would be removed once we are sure no one is
-  // dependent on this flag anymore. The flag
-  // `shouldDiffLayoutWithoutLegacyStretchBehaviour` in YGConfig will help to
-  // run experiments.
-  if (node->getConfig()->shouldDiffLayoutWithoutLegacyStretchBehaviour &&
-      node->didUseLegacyFlag()) {
-    const YGNodeRef nodeWithoutLegacyFlag = YGNodeDeepClone(node);
-    nodeWithoutLegacyFlag->resolveDimension();
-    // Recursively mark nodes as dirty
-    nodeWithoutLegacyFlag->markDirtyAndPropogateDownwards();
-    gCurrentGenerationCount.fetch_add(1, std::memory_order_relaxed);
-    // Rerun the layout, and calculate the diff
-    unsetUseLegacyFlagRecursively(nodeWithoutLegacyFlag);
-    LayoutData layoutMarkerData = {};
-    if (YGLayoutNodeInternal(
-            nodeWithoutLegacyFlag,
-            width,
-            height,
-            ownerDirection,
-            widthMeasureMode,
-            heightMeasureMode,
-            ownerWidth,
-            ownerHeight,
-            true,
-            LayoutPassReason::kInitial,
-            nodeWithoutLegacyFlag->getConfig(),
-            layoutMarkerData,
-            layoutContext,
-            0, // tree root
-            gCurrentGenerationCount.load(std::memory_order_relaxed))) {
-      nodeWithoutLegacyFlag->setPosition(
-          nodeWithoutLegacyFlag->getLayout().direction(),
-          ownerWidth,
-          ownerHeight,
-          ownerWidth);
-      YGRoundToPixelGrid(
-          nodeWithoutLegacyFlag,
-          nodeWithoutLegacyFlag->getConfig()->pointScaleFactor,
-          0.0f,
-          0.0f);
-
-      // Set whether the two layouts are different or not.
-      auto neededLegacyStretchBehaviour =
-          !nodeWithoutLegacyFlag->isLayoutTreeEqualToNode(*node);
-      node->setLayoutDoesLegacyFlagAffectsLayout(neededLegacyStretchBehaviour);
-
-#ifdef DEBUG
-      if (nodeWithoutLegacyFlag->getConfig()->printTree) {
-        YGNodePrint(
-            nodeWithoutLegacyFlag,
-            (YGPrintOptions) (YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
-      }
-#endif
-    }
-    YGConfigFreeRecursive(nodeWithoutLegacyFlag);
-    YGNodeFreeRecursive(nodeWithoutLegacyFlag);
-  }
 }
 
 YOGA_EXPORT void YGNodeCalculateLayout(
@@ -4282,12 +4263,6 @@ YOGA_EXPORT void YGConfigSetLogger(const YGConfigRef config, YGLogger logger) {
     config->setLogger(&YGDefaultLog);
 #endif
   }
-}
-
-YOGA_EXPORT void YGConfigSetShouldDiffLayoutWithoutLegacyStretchBehaviour(
-    const YGConfigRef config,
-    const bool shouldDiffLayout) {
-  config->shouldDiffLayoutWithoutLegacyStretchBehaviour = shouldDiffLayout;
 }
 
 void YGAssert(const bool condition, const char* message) {
@@ -4321,60 +4296,58 @@ YOGA_EXPORT void YGConfigSetExperimentalFeatureEnabled(
     const YGConfigRef config,
     const YGExperimentalFeature feature,
     const bool enabled) {
-  config->experimentalFeatures[feature] = enabled;
+  config->setExperimentalFeatureEnabled(feature, enabled);
 }
 
-inline bool YGConfigIsExperimentalFeatureEnabled(
+YOGA_EXPORT bool YGConfigIsExperimentalFeatureEnabled(
     const YGConfigRef config,
     const YGExperimentalFeature feature) {
-  return config->experimentalFeatures[feature];
+  return config->isExperimentalFeatureEnabled(feature);
 }
 
 YOGA_EXPORT void YGConfigSetUseWebDefaults(
     const YGConfigRef config,
     const bool enabled) {
-  config->useWebDefaults = enabled;
+  config->setUseWebDefaults(enabled);
+}
+
+YOGA_EXPORT bool YGConfigGetUseLegacyStretchBehaviour(
+    const YGConfigRef config) {
+  return config->hasErrata(YGErrataStretchFlexBasis);
 }
 
 YOGA_EXPORT void YGConfigSetUseLegacyStretchBehaviour(
     const YGConfigRef config,
     const bool useLegacyStretchBehaviour) {
-  config->useLegacyStretchBehaviour = useLegacyStretchBehaviour;
+  if (useLegacyStretchBehaviour) {
+    config->addErrata(YGErrataStretchFlexBasis);
+  } else {
+    config->removeErrata(YGErrataStretchFlexBasis);
+  }
 }
 
 bool YGConfigGetUseWebDefaults(const YGConfigRef config) {
-  return config->useWebDefaults;
+  return config->useWebDefaults();
 }
 
 YOGA_EXPORT void YGConfigSetContext(const YGConfigRef config, void* context) {
-  config->context = context;
+  config->setContext(context);
 }
 
 YOGA_EXPORT void* YGConfigGetContext(const YGConfigRef config) {
-  return config->context;
+  return config->getContext();
+}
+
+YOGA_EXPORT void YGConfigSetErrata(YGConfigRef config, YGErrata errata) {
+  config->setErrata(errata);
+}
+
+YOGA_EXPORT YGErrata YGConfigGetErrata(YGConfigRef config) {
+  return config->getErrata();
 }
 
 YOGA_EXPORT void YGConfigSetCloneNodeFunc(
     const YGConfigRef config,
     const YGCloneNodeFunc callback) {
   config->setCloneNodeCallback(callback);
-}
-
-static void YGTraverseChildrenPreOrder(
-    const YGVector& children,
-    const std::function<void(YGNodeRef node)>& f) {
-  for (YGNodeRef node : children) {
-    f(node);
-    YGTraverseChildrenPreOrder(node->getChildren(), f);
-  }
-}
-
-void YGTraversePreOrder(
-    YGNodeRef const node,
-    std::function<void(YGNodeRef node)>&& f) {
-  if (!node) {
-    return;
-  }
-  f(node);
-  YGTraverseChildrenPreOrder(node->getChildren(), f);
 }

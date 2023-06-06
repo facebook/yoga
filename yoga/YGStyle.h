@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,17 +7,16 @@
 
 #pragma once
 
-#ifdef __cplusplus
-
 #include <algorithm>
 #include <array>
 #include <cstdint>
 #include <type_traits>
+
+#include <yoga/Yoga.h>
+
 #include "CompactValue.h"
-#include "YGEnums.h"
 #include "YGFloatOptional.h"
 #include "Yoga-internal.h"
-#include "Yoga.h"
 #include "BitUtils.h"
 
 class YOGA_EXPORT YGStyle {
@@ -29,6 +28,7 @@ class YOGA_EXPORT YGStyle {
 public:
   using Dimensions = Values<YGDimension>;
   using Edges = Values<YGEdge>;
+  using Gutters = Values<YGGutter>;
 
   template <typename T>
   struct BitfieldRef {
@@ -113,6 +113,7 @@ private:
   Edges position_ = {};
   Edges padding_ = {};
   Edges border_ = {};
+  Gutters gap_ = {};
   Dimensions dimensions_{CompactValue::ofAuto()};
   Dimensions minDimensions_ = {};
   Dimensions maxDimensions_ = {};
@@ -210,6 +211,9 @@ public:
   const Edges& border() const { return border_; }
   IdxRef<YGEdge, &YGStyle::border_> border() { return {*this}; }
 
+  const Gutters& gap() const { return gap_; }
+  IdxRef<YGGutter, &YGStyle::gap_> gap() { return {*this}; }
+
   const Dimensions& dimensions() const { return dimensions_; }
   IdxRef<YGDimension, &YGStyle::dimensions_> dimensions() { return {*this}; }
 
@@ -232,5 +236,3 @@ YOGA_EXPORT bool operator==(const YGStyle& lhs, const YGStyle& rhs);
 YOGA_EXPORT inline bool operator!=(const YGStyle& lhs, const YGStyle& rhs) {
   return !(lhs == rhs);
 }
-
-#endif

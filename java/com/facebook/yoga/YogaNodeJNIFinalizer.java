@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -29,7 +29,7 @@ public class YogaNodeJNIFinalizer extends YogaNodeJNIBase {
     if (mNativePointer != 0) {
       long nativePointer = mNativePointer;
       mNativePointer = 0;
-      YogaNative.jni_YGNodeFreeJNI(nativePointer);
+      YogaNative.jni_YGNodeDeallocateJNI(nativePointer);
     }
   }
 }
