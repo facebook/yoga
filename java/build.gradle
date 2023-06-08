@@ -50,6 +50,7 @@ android {
     publishing {
         multipleVariants {
             withSourcesJar()
+            withJavadocJar()
             includeBuildTypeValues('debug', 'release')
         }
     }

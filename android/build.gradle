@@ -30,6 +30,7 @@ android {
     publishing {
         multipleVariants {
             withSourcesJar()
+            withJavadocJar()
             includeBuildTypeValues('debug', 'release')
         }
     }
@@ -37,10 +38,4 @@ android {
 
 dependencies {
     api project(':yoga')
-}
-
-// We don't build Javadoc at this time as we can't disable "BUCK" files
-// from mistakenly getting parsed as Java.
-tasks.withType(Javadoc).all {
-  enabled = false
 }
