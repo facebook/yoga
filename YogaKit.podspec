@@ -5,7 +5,7 @@
 
 podspec = Pod::Spec.new do |spec|
   spec.name = 'YogaKit'
-  spec.version = '2.0.0-beta.1'
+  spec.version = '2.0.0'
   spec.license =  { :type => 'MIT', :file => "LICENSE" }
   spec.homepage = 'https://facebook.github.io/yoga/'
   spec.documentation_url = 'https://facebook.github.io/yoga/docs/'
@@ -31,4 +31,3 @@ end
 
 # See https://github.com/facebook/yoga/pull/366
 podspec.attributes_hash["readme"] = "YogaKit/README.md"
-podspec
