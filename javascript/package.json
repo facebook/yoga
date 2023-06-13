@@ -1,8 +1,10 @@
 {
   "name": "yoga-layout",
   "version": "2.0.0",
-  "description": "JavaScript bindings for the Yoga layout engine",
+  "description": "An embeddable and performant flexbox layout engine with bindings for multiple languages",
   "license": "MIT",
+  "author": "Meta Open Source",
+  "homepage": "https://yogalayout.com/",
   "repository": {
     "type": "git",
     "url": "git@github.com:facebook/yoga.git"

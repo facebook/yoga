@@ -26,7 +26,8 @@ publishing {
       version = project.version.toString()
       afterEvaluate { from(components["default"]) }
       pom {
-        description.set("A cross-platform layout engine which implements Flexbox.")
+        description.set(
+            "An embeddable and performant flexbox layout engine with bindings for multiple languages")
         name.set(project.name)
         url.set("https://github.com/facebook/yoga.git")
         licenses {

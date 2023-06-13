@@ -11,10 +11,9 @@ Pod::Spec.new do |spec|
   spec.homepage = 'https://yogalayout.com/'
   spec.documentation_url = 'https://yogalayout.com/docs'
 
-  spec.summary = 'Yoga is a cross-platform layout engine which implements Flexbox.'
-  spec.description = 'Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.'
+  spec.summary = 'An embeddable and performant flexbox layout engine with bindings for multiple languages'
 
-  spec.authors = 'Facebook'
+  spec.authors = {'Meta Open Source' => 'opensource@meta.com'}
   spec.source = {
     :git => 'https://github.com/facebook/yoga.git',
     :tag => "v#{spec.version.to_s}",

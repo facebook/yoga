@@ -7,14 +7,13 @@ podspec = Pod::Spec.new do |spec|
   spec.name = 'YogaKit'
   spec.version = '2.0.0'
   spec.license =  { :type => 'MIT', :file => "LICENSE" }
-  spec.homepage = 'https://facebook.github.io/yoga/'
-  spec.documentation_url = 'https://facebook.github.io/yoga/docs/'
+  spec.homepage = 'https://yogalayout.com/'
+  spec.documentation_url = 'https://yogalayout.com/docs'
   spec.deprecated = true
 
-  spec.summary = 'Yoga is a cross-platform layout engine which implements Flexbox.'
-  spec.description = 'Yoga is a cross-platform layout engine enabling maximum collaboration within your team by implementing an API many designers are familiar with, and opening it up to developers across different platforms.'
+  spec.summary = 'YogaKit allows using the Yoga layout engine in combination with UIKit'
 
-  spec.authors = 'Facebook'
+  spec.authors = {'Meta Open Source' => 'opensource@meta.com'}
   spec.source = {
     :git => 'https://github.com/facebook/yoga.git',
     :tag => "v#{spec.version.to_s}",
@@ -32,3 +31,4 @@ end
 
 # See https://github.com/facebook/yoga/pull/366
 podspec.attributes_hash["readme"] = "YogaKit/README.md"
+podspec
