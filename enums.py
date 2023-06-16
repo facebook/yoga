@@ -54,6 +54,8 @@ ENUMS = {
         "AbsolutePercentageAgainstPaddingEdge",
         # Conformance fix: https://github.com/facebook/yoga/pull/1028
         "FixAbsoluteTrailingColumnMargin",
+        # fix JNI local ref overflows
+        "FixJNILocalRefOverflows",
     ],
     "PrintOptions": [
         ("Layout", 1 << 0),

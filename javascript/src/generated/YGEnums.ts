@@ -57,6 +57,7 @@ export enum ExperimentalFeature {
   WebFlexBasis = 0,
   AbsolutePercentageAgainstPaddingEdge = 1,
   FixAbsoluteTrailingColumnMargin = 2,
+  FixJNILocalRefOverflows = 3,
 }
 
 export enum FlexDirection {
@@ -164,6 +165,7 @@ const constants = {
   EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS: ExperimentalFeature.WebFlexBasis,
   EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE: ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge,
   EXPERIMENTAL_FEATURE_FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN: ExperimentalFeature.FixAbsoluteTrailingColumnMargin,
+  EXPERIMENTAL_FEATURE_FIX_JNILOCAL_REF_OVERFLOWS: ExperimentalFeature.FixJNILocalRefOverflows,
   FLEX_DIRECTION_COLUMN: FlexDirection.Column,
   FLEX_DIRECTION_COLUMN_REVERSE: FlexDirection.ColumnReverse,
   FLEX_DIRECTION_ROW: FlexDirection.Row,
