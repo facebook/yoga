@@ -1908,6 +1908,20 @@ static float YGNodeComputeFlexBasisForChildren(
   }
 
   for (auto child : children) {
+
+    float availableWidthForChild = availableInnerWidth;
+    float availableHeightForChild = availableInnerHeight;
+
+    if (YGFlexDirectionIsRow(mainAxis)) {
+      if (!YGFloatIsUndefined(availableInnerWidth)) {
+        availableWidthForChild -= totalOuterFlexBasis;
+      }
+    } else {
+      if (!YGFloatIsUndefined(availableInnerHeight)) {
+        availableHeightForChild -= totalOuterFlexBasis;
+      }
+    }
+
     child->resolveDimension();
     if (child->getStyle().display() == YGDisplayNone) {
       YGZeroOutLayoutRecursively(child, layoutContext);
@@ -1919,11 +1933,11 @@ static float YGNodeComputeFlexBasisForChildren(
       // Set the initial position (relative to the owner).
       const YGDirection childDirection = child->resolveDirection(direction);
       const float mainDim = YGFlexDirectionIsRow(mainAxis)
-          ? availableInnerWidth
-          : availableInnerHeight;
+          ? availableWidthForChild
+          : availableHeightForChild;
       const float crossDim = YGFlexDirectionIsRow(mainAxis)
-          ? availableInnerHeight
-          : availableInnerWidth;
+          ? availableHeightForChild
+          : availableWidthForChild;
       child->setPosition(
           childDirection, mainDim, crossDim, availableInnerWidth);
     }
@@ -1938,9 +1952,9 @@ static float YGNodeComputeFlexBasisForChildren(
       YGNodeComputeFlexBasisForChild(
           node,
           child,
-          availableInnerWidth,
+          availableWidthForChild,
           widthMeasureMode,
-          availableInnerHeight,
+          availableHeightForChild,
           availableInnerWidth,
           availableInnerHeight,
           heightMeasureMode,
