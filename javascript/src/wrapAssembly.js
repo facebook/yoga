@@ -9,7 +9,7 @@
 
 import YGEnums, {Unit, Direction} from './generated/YGEnums';
 
-module.exports = lib => {
+export default function wrapAssembly(lib) {
   function patch(prototype, name, fn) {
     const original = prototype[name];
 
@@ -143,4 +143,4 @@ module.exports = lib => {
     Node: lib.Node,
     ...YGEnums,
   };
-};
+}
