@@ -1,2 +1,4 @@
-tests/generated/
+binaries/
+build/
 src/generated/
+tests/generated/
