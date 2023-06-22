@@ -17,5 +17,9 @@
   },
   "ts-node": {
     "transpileOnly": true
-  }
+  },
+  "exclude": [
+    "binaries/**/*",
+    "build/**/*"
+  ]
 }

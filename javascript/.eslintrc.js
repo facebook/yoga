@@ -11,7 +11,7 @@ const path = require('path');
 
 module.exports = {
   root: true,
-  ignorePatterns: ['dist/**', 'tests/generated/**'],
+  ignorePatterns: ['binaries/**', 'build/**', 'dist/**', 'tests/generated/**'],
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   plugins: ['prettier'],
   rules: {
