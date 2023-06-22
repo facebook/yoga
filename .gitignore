@@ -69,3 +69,6 @@ local.properties
 # NDK/CMake
 .cxx
 .externalNativeBuild
+
+# Docusarus build
+.docusaurus
