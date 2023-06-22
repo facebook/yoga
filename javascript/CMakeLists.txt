@@ -64,9 +64,11 @@ target_link_options(asmjs-async PUBLIC
 add_executable(wasm-sync $<TARGET_OBJECTS:yogaObjLib>)
 target_link_options(wasm-sync PUBLIC
     "SHELL:-s WASM=1"
+    "SHELL:-s SINGLE_FILE=1"
     "SHELL:-s WASM_ASYNC_COMPILATION=0")
 
 add_executable(wasm-async $<TARGET_OBJECTS:yogaObjLib>)
 target_link_options(wasm-async PUBLIC
     "SHELL:-s WASM=1"
+    "SHELL:-s SINGLE_FILE=1"
     "SHELL:-s WASM_ASYNC_COMPILATION=1")
