@@ -175,7 +175,7 @@ function emcmakeGenerateTask() {
     ];
     logger.info(['emcmake', ...args].join(' '));
 
-    return spawn(emcmake, args);
+    return spawn(emcmake, args, {stdio: 'inherit'});
   };
 }
 
