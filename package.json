@@ -1,0 +1,9 @@
+{
+  "name": "yoga-repo",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "javascript",
+    "website-next"
+  ]
+}
