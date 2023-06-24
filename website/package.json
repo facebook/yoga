@@ -7,7 +7,7 @@
     "antd": "^3.6.5",
     "atob": "^2.1.1",
     "btoa": "^1.2.1",
-    "gatsby": "^1.9.273",
+    "gatsby": "^4.25.7",
     "gatsby-link": "^1.6.45",
     "gatsby-plugin-antd": "^1.0.12",
     "gatsby-plugin-google-analytics": "^1.0.31",
