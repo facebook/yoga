@@ -1,0 +1,24 @@
+name: Publish NPM Release
+
+on:
+  push:
+    tags:
+      - *
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish to npmjs registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: yarn publish
+        run: yarn publish
+        working-directory: javascript
+         env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
