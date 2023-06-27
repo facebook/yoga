@@ -72,3 +72,21 @@ jobs:
       - name: yarn lint
         run: yarn lint
         working-directory: javascript
+
+  pack:
+    name: Pack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: yarn pack
+        run: yarn pack --filename yoga-layout.tar.gz
+        working-directory: javascript
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: npm-package
+          path: javascript/yoga-layout.tar.gz
