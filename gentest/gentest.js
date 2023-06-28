@@ -7,7 +7,6 @@
 
 const DEFAULT_EXPERIMENTS = [
   'AbsolutePercentageAgainstPaddingEdge',
-  'FixAbsoluteTrailingColumnMargin',
 ];
 
 window.onload = function() {
