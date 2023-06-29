@@ -18,7 +18,7 @@ jobs:
         uses: ./.github/actions/setup-js
 
       - name: Store auth token in config file
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
       - name: yarn publish
         run: yarn publish
