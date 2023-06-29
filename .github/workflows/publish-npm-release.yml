@@ -3,7 +3,7 @@ name: Publish NPM Release
 on:
   push:
     tags:
-      - *
+      - '*'
   workflow_dispatch:
 
 jobs:
@@ -17,8 +17,9 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
+      - name: Store auth token in config file
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: yarn publish
         run: yarn publish
         working-directory: javascript
-         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
