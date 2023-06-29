@@ -20,5 +20,5 @@ jobs:
       - name: yarn publish
         run: yarn publish
         working-directory: javascript
-         env:
+        env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
