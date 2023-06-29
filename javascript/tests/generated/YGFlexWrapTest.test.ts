@@ -30,7 +30,6 @@ test('wrap_column', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -122,7 +121,6 @@ test('wrap_row', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -215,7 +213,6 @@ test('wrap_row_align_items_flex_end', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -309,7 +306,6 @@ test('wrap_row_align_items_center', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -403,7 +399,6 @@ test('flex_wrap_children_with_min_main_overriding_flex_basis', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -468,7 +463,6 @@ test('flex_wrap_wrap_to_child_height', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -558,7 +552,6 @@ test('flex_wrap_align_stretch_fits_one_row', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -620,7 +613,6 @@ test('wrap_reverse_row_align_content_flex_start', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -728,7 +720,6 @@ test('wrap_reverse_row_align_content_center', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -837,7 +828,6 @@ test('wrap_reverse_row_single_line_different_size', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -945,7 +935,6 @@ test('wrap_reverse_row_align_content_stretch', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1054,7 +1043,6 @@ test('wrap_reverse_row_align_content_space_around', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1163,7 +1151,6 @@ test('wrap_reverse_column_fixed_size', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1272,7 +1259,6 @@ test('wrapped_row_within_align_items_center', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1350,7 +1336,6 @@ test('wrapped_row_within_align_items_flex_start', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1428,7 +1413,6 @@ test('wrapped_row_within_align_items_flex_end', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1506,7 +1490,6 @@ test('wrapped_column_max_height', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1592,7 +1575,6 @@ test('wrapped_column_max_height_flex', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1684,7 +1666,6 @@ test('wrap_nodes_with_content_sizing_overflowing_margin', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -1789,7 +1770,6 @@ test('wrap_nodes_with_content_sizing_margin_cross', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);

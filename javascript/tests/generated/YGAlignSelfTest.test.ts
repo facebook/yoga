@@ -30,7 +30,6 @@ test('align_self_center', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -78,7 +77,6 @@ test('align_self_flex_end', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -126,7 +124,6 @@ test('align_self_flex_start', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -174,7 +171,6 @@ test('align_self_flex_end_override_flex_start', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);
@@ -223,7 +219,6 @@ test('align_self_baseline', () => {
   let root;
 
   config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
-  config.setExperimentalFeatureEnabled(ExperimentalFeature.FixAbsoluteTrailingColumnMargin, true);
 
   try {
     root = Yoga.Node.create(config);

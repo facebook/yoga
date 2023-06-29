@@ -29,7 +29,6 @@ public class YGAndroidNewsFeed {
   public void test_android_news_feed() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
-    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.FIX_ABSOLUTE_TRAILING_COLUMN_MARGIN, true);
 
     final YogaNode root = createNode(config);
     root.setAlignContent(YogaAlign.STRETCH);
