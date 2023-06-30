@@ -6,6 +6,7 @@
 /.buckd
 /gentest/test.html
 .buck-java11
+node_modules
 
 # Jekyll
 /.sass-cache/
