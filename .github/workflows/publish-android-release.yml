@@ -20,7 +20,6 @@ jobs:
       - name: Publish to Maven Local
         run: ./gradlew publishToMavenLocal
         env:
-          ORG_GRADLE_PROJECT_USE_SNAPSHOT: true
           ORG_GRADLE_PROJECT_SIGNING_KEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_SIGNING_PWD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_PWD }}
 
@@ -30,11 +29,10 @@ jobs:
           name: 'snapshot-artifacts'
           path: '~/.m2/repository/'
 
-      - name: Publish to the Snapshot Repository
-        run: ./gradlew publishToSonatype
+      - name: Publish to the Maven Central
+        run: ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
         env:
           ORG_GRADLE_PROJECT_SONATYPE_USERNAME: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_SONATYPE_PASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_PASSWORD }}
           ORG_GRADLE_PROJECT_SIGNING_KEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_SIGNING_PWD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_PWD }}
-          ORG_GRADLE_PROJECT_USE_SNAPSHOT: true
