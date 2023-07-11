@@ -6,17 +6,68 @@
  */
 
 plugins {
+  id("com.android.library")
   id("maven-publish")
   id("signing")
 }
 
 group = "com.facebook.yoga"
 
-if ("USE_SNAPSHOT".byProperty.toBoolean()) {
-  version = "${"VERSION_NAME".byProperty}-SNAPSHOT"
-} else {
-  version = "VERSION_NAME".byProperty.toString()
+val compileSdkVersionProperty: Int by rootProject.extra
+val minSdkVersionProperty: Int by rootProject.extra
+val targetSdkVersionProperty: Int by rootProject.extra
+val buildToolsVersionProperty: String by rootProject.extra
+val ndkVersionProperty: String by rootProject.extra
+
+android {
+  namespace = "com.facebook.yoga"
+  compileSdk = 33
+  buildToolsVersion = "33.0.0"
+  ndkVersion = "23.1.7779620"
+
+  defaultConfig {
+    minSdk = 21
+    consumerProguardFiles("proguard-rules.pro")
+
+    ndk { abiFilters.addAll(setOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")) }
+  }
+
+  externalNativeBuild { cmake { path("CMakeLists.txt") } }
+
+  compileOptions {
+    targetCompatibility(JavaVersion.VERSION_1_8)
+    sourceCompatibility(JavaVersion.VERSION_1_8)
+  }
+
+  sourceSets {
+    named("main") {
+      java.srcDir("com")
+      manifest.srcFile("AndroidManifest.xml")
+      res.srcDir("res")
+    }
+  }
+
+  publishing {
+    multipleVariants {
+      withSourcesJar()
+      withJavadocJar()
+      includeBuildTypeValues("debug", "release")
+    }
+  }
 }
+
+dependencies {
+  implementation("com.google.code.findbugs:jsr305:3.0.2")
+  implementation("com.facebook.soloader:soloader:0.10.5")
+  testImplementation("junit:junit:4.12")
+}
+
+version =
+    if ("USE_SNAPSHOT".byProperty.toBoolean()) {
+      "${"VERSION_NAME".byProperty}-SNAPSHOT"
+    } else {
+      "VERSION_NAME".byProperty.toString()
+    }
 
 publishing {
   publications {

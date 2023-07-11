@@ -17,8 +17,6 @@ plugins { id("com.gradle.enterprise").version("3.7.1") }
 
 include(":yoga")
 
-includeBuild("build-logic")
-
 project(":yoga").projectDir = file("java")
 
 rootProject.name = "yoga-github"

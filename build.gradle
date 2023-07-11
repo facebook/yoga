@@ -38,16 +38,6 @@ nexusPublishing {
     }
 }
 
-ext {
-    buildToolsVersion = "33.0.0"
-    ndkVersion = "23.1.7779620"
-    minSdkVersion = 21
-    compileSdkVersion = 33
-    targetSdkVersion = 33
-    sourceCompatibilityVersion = JavaVersion.VERSION_1_8
-    targetCompatibilityVersion = JavaVersion.VERSION_1_8
-}
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
