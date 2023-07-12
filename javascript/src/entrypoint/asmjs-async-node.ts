@@ -8,6 +8,7 @@
  */
 
 import wrapAssembly from '../wrapAssembly';
+import type {Yoga} from '../wrapAssembly';
 
 export * from '../generated/YGEnums';
 export type {
@@ -18,6 +19,8 @@ export type {
   Yoga,
 } from '../wrapAssembly';
 
-const loadAssembly = require('../../binaries/asmjs-sync');
-const Yoga = wrapAssembly(loadAssembly());
-export default Yoga;
+const loadAssembly = require('../../binaries/asmjs-async-node');
+
+export async function loadYoga(): Promise<Yoga> {
+  return wrapAssembly(await loadAssembly());
+}

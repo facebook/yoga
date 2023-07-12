@@ -11,19 +11,35 @@
   },
   "exports": {
     ".": {
-      "browser": "./src/entrypoint/wasm-async.ts",
-      "node": "./src/entrypoint/wasm-async.ts",
-      "default": "./src/entrypoint/asmjs-async.ts"
+      "browser": "./src/entrypoint/wasm-async-web.ts",
+      "node": "./src/entrypoint/wasm-async-node.ts",
+      "default": "./src/entrypoint/asmjs-async-web.ts"
     },
     "./sync": {
-      "browser": "./src/entrypoint/asmjs-sync.ts",
-      "node": "./src/entrypoint/wasm-sync.ts",
-      "default": "./src/entrypoint/asmjs-sync.ts"
+      "browser": "./src/entrypoint/asmjs-sync-web.ts",
+      "node": "./src/entrypoint/wasm-sync-node.ts",
+      "default": "./src/entrypoint/asmjs-sync-web.ts"
     },
-    "./asmjs-async": "./src/entrypoint/asmjs-async.ts",
-    "./asmjs-sync": "./src/entrypoint/asmjs-sync.ts",
-    "./wasm-async": "./src/entrypoint/wasm-async.ts",
-    "./wasm-sync": "./src/entrypoint/wasm-sync.ts"
+    "./asmjs-async": {
+      "browser": "./src/entrypoint/asmjs-async-web.ts",
+      "node": "./src/entrypoint/asmjs-async-node.ts",
+      "default": "./src/entrypoint/asmjs-async-web.ts"
+    },
+    "./asmjs-sync": {
+      "browser": "./src/entrypoint/asmjs-sync-web.ts",
+      "node": "./src/entrypoint/asmjs-sync-node.ts",
+      "default": "./src/entrypoint/asmjs-sync-web.ts"
+    },
+    "./wasm-async": {
+      "browser": "./src/entrypoint/wasm-async-web.ts",
+      "node": "./src/entrypoint/wasm-async-node.ts",
+      "default": "./src/entrypoint/wasm-async-web.ts"
+    },
+    "./wasm-sync": {
+      "browser": "./src/entrypoint/wasm-sync-web.ts",
+      "node": "./src/entrypoint/wasm-sync-node.ts",
+      "default": "./src/entrypoint/wasm-async-web.ts"
+    }
   },
   "files": [
     "binaries/**",
@@ -36,11 +52,7 @@
     "lint": "just lint",
     "lint:fix": "just lint --fix",
     "prepack": "just prepack",
-    "test": "just test",
-    "test:asmjs-async": "just test:asmjs-async",
-    "test:asmjs-sync": "just test:asmjs-sync",
-    "test:wasm-async": "just test:wasm-async",
-    "test:wasm-sync": "just test:wasm-sync"
+    "test": "just test"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
