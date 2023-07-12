@@ -10,9 +10,7 @@
 #include <yoga/YGNode.h>
 #include <yoga/event/event.h>
 
-namespace facebook {
-namespace yoga {
-namespace test {
+namespace facebook::yoga::test {
 
 int nodeInstanceCount = 0;
 
@@ -61,6 +59,4 @@ ScopedEventSubscription::~ScopedEventSubscription() {
   Event::reset();
 }
 
-} // namespace test
-} // namespace yoga
-} // namespace facebook
+} // namespace facebook::yoga::test

@@ -10,8 +10,7 @@
 #include <cstdint>
 #include <yoga/BitUtils.h>
 
-namespace facebook {
-namespace yoga {
+namespace facebook::yoga {
 
 TEST(BitUtils, one_boolean_defaults_to_false) {
   constexpr uint8_t flags = 0;
@@ -202,5 +201,4 @@ TEST(BitUtils, setting_values_does_not_spill_over) {
   ASSERT_EQ(detail::getEnumData<YGEdge>(flags, edgesOffset), 0xf);
 }
 
-} // namespace yoga
-} // namespace facebook
+} // namespace facebook::yoga
