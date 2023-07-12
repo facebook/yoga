@@ -32,7 +32,7 @@ Pod::Spec.new do |spec|
       '-Wall',
       '-Werror',
       '-Wextra',
-      '-std=c++14',
+      '-std=c++17',
       '-fPIC'
   ]
   spec.source_files = 'yoga/**/*.{h,cpp}'
