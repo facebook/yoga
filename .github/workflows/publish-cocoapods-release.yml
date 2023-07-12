@@ -21,9 +21,3 @@ jobs:
         run: pod trunk push Yoga.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-
-      - name: Publish YogaKit
-        # Must run with --synchronous since YogaKit may depend on the just published version of Yoga
-        run: pod trunk push YogaKit.podspec --synchronous
-        env:
-          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}

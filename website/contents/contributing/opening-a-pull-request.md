@@ -47,8 +47,5 @@ made your change see the [testing documentation](/contributing/testing) for more
 |-- java
 |   |-- com/facebook/yoga # Java binding code
 |   |-- jni               # JNI binding code
-|-- android               # Android View bindings
-|-- YogaKit               # iOS UIView bindings
 |-- javascript            # emscripten / javascript bindings
-|-- csharp                # .NET bindings in c#
 ```
