@@ -41,12 +41,15 @@ node.free();
 
 For better performance and smaller packages, WebAssembly is preferred to asm.js where available. `yoga-layout` tries to provide the right default using [export maps](https://webpack.js.org/guides/package-exports/#conditional-syntax) so that platforms which can take advantage of WebAssembly use it by default.
 
-A specific entrypoint may be specified on platforms which do not understand export conditions.
+Different entrypoints are exposed to choose a flavor explicitly.
 
 ```ts
 import {loadYoga} from 'yoga-layout/wasm-async';
 ```
 
+## Using TypeScript
+
+This package provides out-of-the-box TypeScript typings so long as `tsc` is configured to support ESM resolution. It is recommended to set `moduleResolution: 'bundler'` or `moduleResolution: node16` in your `tsconfig.json` according to your environment.
 
 ## Contributing
 
