@@ -76,8 +76,7 @@
     INDEX_ACCESSOR_TESTS(__VA_ARGS__)(NAME, IDX, __VA_ARGS__) \
   }
 
-namespace facebook {
-namespace yoga {
+namespace facebook::yoga {
 
 using CompactValue = detail::CompactValue;
 
@@ -255,5 +254,4 @@ ACCESSOR_TEST(
 
 #endif
 
-} // namespace yoga
-} // namespace facebook
+} // namespace facebook::yoga

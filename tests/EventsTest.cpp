@@ -18,9 +18,7 @@
 
 #include "util/TestUtil.h"
 
-namespace facebook {
-namespace yoga {
-namespace test {
+namespace facebook::yoga::test {
 
 template <Event::Type E>
 struct TypedEventTestData {};
@@ -353,6 +351,4 @@ void EventTest::TearDown() {
 
 std::vector<EventArgs> EventTest::events{};
 
-} // namespace test
-} // namespace yoga
-} // namespace facebook
+} // namespace facebook::yoga::test

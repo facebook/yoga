@@ -11,9 +11,7 @@
 
 #include <functional>
 
-namespace facebook {
-namespace yoga {
-namespace test {
+namespace facebook::yoga::test {
 
 struct YOGA_EXPORT TestUtil {
   static void startCountingNodes();
@@ -26,6 +24,4 @@ struct ScopedEventSubscription {
   ~ScopedEventSubscription();
 };
 
-} // namespace test
-} // namespace yoga
-} // namespace facebook
+} // namespace facebook::yoga::test
