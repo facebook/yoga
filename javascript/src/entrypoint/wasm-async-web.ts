@@ -19,7 +19,7 @@ export type {
   Yoga,
 } from '../wrapAssembly';
 
-const loadAssembly = require('../../binaries/asmjs-async');
+const loadAssembly = require('../../binaries/wasm-async-web');
 
 export async function loadYoga(): Promise<Yoga> {
   return wrapAssembly(await loadAssembly());
