@@ -33,7 +33,11 @@ TEST(YGNode, measure_with_measure_fn) {
 
   n.setMeasureFunc(
       [](YGNode*, float w, YGMeasureMode wm, float h, YGMeasureMode hm) {
+// TODO: Correctly fix enum - float conversion warning: T158155910
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wenum-float-conversion"
         return YGSize{w * wm, h / hm};
+#pragma clang diagnostic pop
       });
 
   ASSERT_EQ(
@@ -58,11 +62,19 @@ TEST(YGNode, switching_measure_fn_types) {
   auto n = YGNode{};
   n.setMeasureFunc(
       [](YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*) {
+// TODO: Properly fix enum - float conversion warning: T158155910
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wenum-float-conversion"
         return YGSize{};
+#pragma clang diagnostic pop
       });
   n.setMeasureFunc(
       [](YGNode*, float w, YGMeasureMode wm, float h, YGMeasureMode hm) {
+// TODO: Properly fix enum - float conversion warning: T158155910
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wenum-float-conversion"
         return YGSize{w * wm, h / hm};
+#pragma clang diagnostic pop
       });
 
   ASSERT_EQ(
