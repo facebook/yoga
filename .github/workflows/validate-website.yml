@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build [Gatsby]
     runs-on: ubuntu-20.04
 
     steps:
@@ -21,3 +21,21 @@ jobs:
       - name: yarn build
         run: yarn build
         working-directory: website
+
+  build_next:
+    name: Build [Docusaurus]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: Build Yoga
+        run: yarn build
+        working-directory: javascript
+
+      - name: Build Website
+        run: yarn build
+        working-directory: website-next
