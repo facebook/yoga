@@ -8,7 +8,6 @@ runs:
       with:
         node-version: 18.x
         cache: yarn
-        cache-dependency-path: yarn.lock
 
     - name: Install emsdk
       uses: ./.github/actions/install-emsdk
