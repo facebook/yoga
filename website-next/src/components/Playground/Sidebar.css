@@ -1,0 +1,22 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+ .Sidebar {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  width: 350px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  margin: 25px;
+  max-height: calc(100% - 50px);
+  border-radius: 6px;
+  bottom: auto;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+}
