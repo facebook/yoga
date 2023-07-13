@@ -1,0 +1,74 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+ .PlaygroundContainer {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.Playground {
+  display: flex;
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(-90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(
+      transparent 4px,
+      #f5f5f5 4px,
+      #f5f5f5 97px,
+      transparent 97px
+    ),
+    linear-gradient(-90deg, #e5e5e5 1px, transparent 1px),
+    linear-gradient(
+      -90deg,
+      transparent 4px,
+      #f5f5f5 4px,
+      #f5f5f5 97px,
+      transparent 97px
+    ),
+    linear-gradient(#e5e5e5 1px, transparent 1px), #f5f5f5;
+  background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px, 100px 100px,
+    100px 100px, 100px 100px, 100px 100px;
+}
+
+.Playground > .YogaNode {
+  margin: auto;
+  position: static;
+  align-self: center;
+}
+
+.Playground.standalone > .YogaNode {
+  transform: translateX(-175px);
+}
+
+.Playground .Actions {
+  padding: 15px;
+}
+
+.Playground .Actions .ant-btn {
+  width: 100%;
+}
+
+.Playground .NoContent {
+  border-top: 1px solid #E8E8E8;
+  font-size: 18px;
+  padding: 30px 50px;
+  text-align: center;
+  color: #D9D9D9;
+  font-weight: 300;
+  line-height: 130%;
+}
+
+.ant-modal-content {
+  overflow: hidden;
+}

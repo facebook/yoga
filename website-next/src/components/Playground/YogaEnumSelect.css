@@ -1,0 +1,25 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+ .YogaEnumSelect {
+  display: flex;
+}
+
+.YogaEnumSelect.ant-radio-group .ant-radio-button-wrapper {
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: center;
+}
+
+.YogaEnumSelect .ant-btn {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.YogaEnumSelect .ant-radio-button-wrapper {
+  white-space: nowrap;
+}
