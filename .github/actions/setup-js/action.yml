@@ -3,10 +3,12 @@ name: Setup JavaScript envirionment
 runs:
   using: "composite"
   steps:
-    - name: Install Node
-      uses: actions/setup-node@v1
+    - name: Setup Node environment
+      uses: actions/setup-node@v3
       with:
         node-version: 18.x
+        cache: yarn
+        cache-dependency-path: ./yarn.lock
 
     - name: Install emsdk
       uses: ./.github/actions/install-emsdk
