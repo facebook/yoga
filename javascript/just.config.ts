@@ -10,7 +10,6 @@
 import {
   argv,
   cleanTask,
-  eslintTask,
   logger,
   jestTask,
   option,
@@ -76,13 +75,7 @@ task(
   ),
 );
 
-task(
-  'lint',
-  parallel(
-    tscTask({noEmit: true}),
-    series(eslintTask({fix: argv().fix}), clangFormatTask({fix: argv().fix})),
-  ),
-);
+task('clang-format', clangFormatTask({fix: argv().fix}));
 
 task('prepack-package-json', async () => {
   const packageJsonPath = path.join(__dirname, 'package.json');

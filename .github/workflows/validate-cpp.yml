@@ -64,5 +64,3 @@ jobs:
 
       - name: clang-format
         uses: ./.github/actions/clang-format
-        with:
-          directory: ./yoga

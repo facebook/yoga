@@ -13,8 +13,8 @@ import Link from '@docusaurus/Link';
 import './InfoText.css';
 
 type Props = {
-  children: any,
-  doclink: string,
+  children: any;
+  doclink: string;
 };
 
 export default class InfoText extends Component<Props> {

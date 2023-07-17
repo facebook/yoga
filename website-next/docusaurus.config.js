@@ -13,7 +13,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Yoga',
-  tagline: 'Build flexible layouts on any platform with a highly optimized open source layout engine designed with speed, size, and ease of use in mind.',
+  tagline:
+    'Build flexible layouts on any platform with a highly optimized open source layout engine designed with speed, size, and ease of use in mind.',
   favicon: 'img/favicon.png',
 
   url: 'https:/yogalayout.com',
@@ -37,13 +38,11 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/facebook/yoga/tree/main/website',
+          editUrl: 'https://github.com/facebook/yoga/tree/main/website',
         },
         blog: {
           showReadingTime: true,
-          editUrl:
-            'https://github.com/facebook/yoga/tree/main/website',
+          editUrl: 'https://github.com/facebook/yoga/tree/main/website',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

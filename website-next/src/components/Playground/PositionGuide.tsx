@@ -13,11 +13,11 @@ import type {PositionRecordType} from './PositionRecord';
 import './PositionGuide.css';
 
 type Props = {
-  inset?: boolean,
-  reverse?: boolean,
-  position: PositionRecordType,
-  offset: PositionRecordType,
-  color: string,
+  inset?: boolean;
+  reverse?: boolean;
+  position: PositionRecordType;
+  offset: PositionRecordType;
+  color: string;
 };
 
 export default class PositionGuide extends Component<Props> {
@@ -42,8 +42,6 @@ export default class PositionGuide extends Component<Props> {
     ) {
       return null;
     }
-
-
     if (reverse) {
       let temp1 = left;
       left = right;

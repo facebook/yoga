@@ -8,7 +8,6 @@
  * @format
  */
 
-
 import {Record, List} from 'immutable';
 import type {RecordOf} from 'immutable';
 import PositionRecord from './PositionRecord';

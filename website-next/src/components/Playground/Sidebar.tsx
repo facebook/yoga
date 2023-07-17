@@ -11,8 +11,8 @@ import React, {Component} from 'react';
 import './Sidebar.css';
 
 type Props = {
-  width?: number,
-  children: any,
+  width?: number;
+  children: any;
 };
 
 export default class Sidebar extends Component<Props> {

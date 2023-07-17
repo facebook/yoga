@@ -25,19 +25,19 @@ const PROPERTY_LOOKUP = {
   flexWrap: 'WRAP',
 };
 
-type Property = keyof(typeof PROPERTY_LOOKUP);
+type Property = keyof typeof PROPERTY_LOOKUP;
 
 type Props = {
-  property: Property,
-  disabled?: boolean,
-  value: string | number,
-  onChange: (property: Property, value: number) => void,
+  property: Property;
+  disabled?: boolean;
+  value: string | number;
+  onChange: (property: Property, value: number) => void;
 };
 
 export default class YogaEnumSelect extends Component<Props> {
   static availableProperties = Object.keys(PROPERTY_LOOKUP);
 
-  values: Array<{key: string, value: number}>;
+  values: Array<{key: string; value: number}>;
 
   constructor(props: Props) {
     super(props);
@@ -57,17 +57,12 @@ export default class YogaEnumSelect extends Component<Props> {
 
   getTitle = (property: string, key: string): string => {
     const replacer = new RegExp(`^${property}_`);
-    return key
-      .replace(replacer, '')
-      .replace('_', ' ')
-      .toLowerCase();
+    return key.replace(replacer, '').replace('_', ' ').toLowerCase();
   };
 
   render() {
     const property = PROPERTY_LOOKUP[this.props.property];
-    const selected = this.values.find(
-      ({key, value}) => value === this.props.value,
-    );
+    const selected = this.values.find(({value}) => value === this.props.value);
 
     return this.values.length > 3 ? (
       <div className="YogaEnumSelect">

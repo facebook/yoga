@@ -137,10 +137,7 @@ const AboutSectionOne = () => (
         <img src={ComponentKitLogo} />
         <h3>ComponentKit</h3>
       </a>
-      <a
-        href="https://reactnative.dev"
-        target="_blank"
-        className="logo">
+      <a href="https://reactnative.dev" target="_blank" className="logo">
         <img src={ReactNativeLogo} />
         <h3>React Native</h3>
       </a>

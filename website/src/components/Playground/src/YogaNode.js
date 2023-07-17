@@ -244,13 +244,8 @@ export default class YogaNode extends Component<Props, State> {
   }
 
   render() {
-    const {
-      layoutDefinition,
-      className,
-      path,
-      selectedNodePath,
-      label,
-    } = this.props;
+    const {layoutDefinition, className, path, selectedNodePath, label} =
+      this.props;
 
     // $FlowFixMe
     const computedLayout: ComputedLayout =
