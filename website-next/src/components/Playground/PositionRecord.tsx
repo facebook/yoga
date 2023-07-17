@@ -12,10 +12,10 @@ import {Record} from 'immutable';
 export type PositionRecordType = ReturnType<PositionRecordFactory>;
 
 export type PositionRecordFactory = Record.Factory<{
-  top: string | number,
-  right: string | number,
-  bottom: string | number,
-  left: string | number,
+  top: string | number;
+  right: string | number;
+  bottom: string | number;
+  left: string | number;
 }>;
 
 const r: PositionRecordFactory = Record({

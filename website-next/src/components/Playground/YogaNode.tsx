@@ -18,30 +18,30 @@ import {Direction, Display, Edge, Node, Wrap} from 'yoga-layout/sync';
 import './YogaNode.css';
 
 type ComputedLayout = {
-  left: number,
-  top: number,
-  width: number,
-  height: number,
-  children: Array<ComputedLayout>,
-  node: Node,
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  children: Array<ComputedLayout>;
+  node: Node;
 };
 
 type Props = {
-  layoutDefinition: LayoutRecordType,
-  className?: string,
-  computedLayout?: ComputedLayout,
-  path: Array<number>,
-  selectedNodePath?: Array<number>,
-  direction?: Direction,
-  label?: string,
-  showGuides: boolean,
-  onClick?: (path: Array<number>) => void,
-  onDoubleClick?: (path: Array<number>) => void,
+  layoutDefinition: LayoutRecordType;
+  className?: string;
+  computedLayout?: ComputedLayout;
+  path: Array<number>;
+  selectedNodePath?: Array<number>;
+  direction?: Direction;
+  label?: string;
+  showGuides: boolean;
+  onClick?: (path: Array<number>) => void;
+  onDoubleClick?: (path: Array<number>) => void;
 };
 
 type State = {
-  visible?: boolean,
-  hovered: boolean,
+  visible?: boolean;
+  hovered: boolean;
 };
 
 export default class YogaNode extends Component<Props, State> {
@@ -68,7 +68,7 @@ export default class YogaNode extends Component<Props, State> {
       this.calculateLayout(props);
       this.state = {
         hovered: false,
-        visible: !Boolean(props.computedLayout),
+        visible: !props.computedLayout,
       };
     }
   }
@@ -137,7 +137,9 @@ export default class YogaNode extends Component<Props, State> {
             ? defaultLayout[key]
             : layoutDefinition[key];
         root[`set${key[0].toUpperCase()}${key.substr(1)}`](value);
-      } catch (e) {}
+      } catch (e) {
+        // Do nothing on failure
+      }
     });
 
     ['padding', 'margin', 'position', 'border'].forEach(key => {
@@ -147,7 +149,9 @@ export default class YogaNode extends Component<Props, State> {
             Yoga[`EDGE_${direction.toUpperCase()}`],
             layoutDefinition[key][direction],
           );
-        } catch (e) {}
+        } catch (e) {
+          // Do nothing on failure
+        }
       });
     });
 
@@ -165,7 +169,7 @@ export default class YogaNode extends Component<Props, State> {
     return {
       ...node.getComputedLayout(),
       node,
-      children: Array.apply(null, Array(node.getChildCount())).map((_, i) =>
+      children: Array(node.getChildCount()).map((_, i) =>
         this.getComputedLayout(node.getChild(i)),
       ),
     };
@@ -187,7 +191,7 @@ export default class YogaNode extends Component<Props, State> {
     }
   };
 
-  onMouseLeave = (e: React.MouseEvent) => this.setState({hovered: false});
+  onMouseLeave = (_e: React.MouseEvent) => this.setState({hovered: false});
 
   showPositionGuides({node}: ComputedLayout) {
     const padding = PositionRecord({
@@ -246,13 +250,8 @@ export default class YogaNode extends Component<Props, State> {
   }
 
   render() {
-    const {
-      layoutDefinition,
-      className,
-      path,
-      selectedNodePath,
-      label,
-    } = this.props;
+    const {layoutDefinition, className, path, selectedNodePath, label} =
+      this.props;
 
     const computedLayout: ComputedLayout =
       this.props.computedLayout || this.computedLayout;

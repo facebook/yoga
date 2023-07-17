@@ -7,7 +7,6 @@
  * @format
  */
 
-
 import {Record, List} from 'immutable';
 import PositionRecord from './PositionRecord';
 import type {PositionRecordType} from './PositionRecord';
@@ -24,28 +23,28 @@ import type {
 export type LayoutRecordType = ReturnType<LayoutRecordFactory>;
 
 export type LayoutRecordFactory = Record.Factory<{
-  width?: number | 'auto',
-  height?: number | 'auto',
-  minWidth?: number,
-  minHeight?: number,
-  maxWidth?: number,
-  maxHeight?: number,
-  justifyContent?: Justify,
-  padding: PositionRecordType,
-  border: PositionRecordType,
-  margin: PositionRecordType,
-  position: PositionRecordType,
-  positionType: PositionType,
-  alignItems?: Align,
-  alignSelf?: Align,
-  alignContent?: Align,
-  flexDirection?: FlexDirection,
-  flexBasis?: number | 'auto',
-  flexGrow?: number,
-  flexShrink?: number,
-  flexWrap?: Wrap,
-  aspectRatio?: number | 'auto',
-  children?: List<LayoutRecordType>,
+  width?: number | 'auto';
+  height?: number | 'auto';
+  minWidth?: number;
+  minHeight?: number;
+  maxWidth?: number;
+  maxHeight?: number;
+  justifyContent?: Justify;
+  padding: PositionRecordType;
+  border: PositionRecordType;
+  margin: PositionRecordType;
+  position: PositionRecordType;
+  positionType: PositionType;
+  alignItems?: Align;
+  alignSelf?: Align;
+  alignContent?: Align;
+  flexDirection?: FlexDirection;
+  flexBasis?: number | 'auto';
+  flexGrow?: number;
+  flexShrink?: number;
+  flexWrap?: Wrap;
+  aspectRatio?: number | 'auto';
+  children?: List<LayoutRecordType>;
 }>;
 
 const r: LayoutRecordFactory = Record({

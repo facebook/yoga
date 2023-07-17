@@ -57,10 +57,7 @@ export default class YogaEnumSelect extends Component<Props> {
 
   getTitle = (property: string, key: string): string => {
     const replacer = new RegExp(`^${property}_`);
-    return key
-      .replace(replacer, '')
-      .replace('_', ' ')
-      .toLowerCase();
+    return key.replace(replacer, '').replace('_', ' ').toLowerCase();
   };
 
   render() {

@@ -7,17 +7,17 @@
  * @format
  */
 
-import React  from 'react';
+import React from 'react';
 import YogaEnumSelect from './YogaEnumSelect';
 import YogaPositionEditor from './YogaPositionEditor';
 import {Input} from 'antd';
 
 type Props<T> = {
-  property: string,
-  disabled?: boolean,
-  value?: T,
-  onChange: (property: string, value: T) => void,
-  placeholder?: string,
+  property: string;
+  disabled?: boolean;
+  value?: T;
+  onChange: (property: string, value: T) => void;
+  placeholder?: string;
 };
 
 export default (props: Props<any>) => {

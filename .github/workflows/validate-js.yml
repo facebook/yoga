@@ -60,7 +60,19 @@ jobs:
         working-directory: javascript
 
   lint:
-    name: Lint
+    name: ESLint (All Packages)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: yarn lint
+        run: yarn lint
+
+  typecheck:
+    name: Typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -69,8 +81,8 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: javascript
 
-      - name: yarn lint
-        run: yarn lint
+      - name: yarn tsc
+        run: yarn tsc
         working-directory: javascript
 
   pack:

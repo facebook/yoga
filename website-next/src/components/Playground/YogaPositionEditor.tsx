@@ -16,10 +16,10 @@ import './YogaPositionEditor.css';
 type Property = 'position' | 'margin' | 'padding' | 'border';
 
 type Props = {
-  value: PositionRecordType,
-  property: Property,
-  disabled?: boolean,
-  onChange: (property: Property, value: PositionRecordType) => void,
+  value: PositionRecordType;
+  property: Property;
+  disabled?: boolean;
+  onChange: (property: Property, value: PositionRecordType) => void;
 };
 
 export default class YogaPositionEditor extends Component<Props> {

@@ -7,14 +7,18 @@
  * @format
  */
 
-const path = require('path');
-
 module.exports = {
   root: true,
-  ignorePatterns: ['binaries/**', 'build/**', 'dist/**', 'tests/generated/**'],
+  ignorePatterns: [
+    '/website',
+    '**/binaries/**',
+    '**/build/**',
+    '**/generated/**',
+  ],
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   plugins: ['prettier'],
   rules: {
+    'no-unused-vars': ['error', {argsIgnorePattern: '^_'}],
     'no-var': 'error',
     'prefer-arrow-callback': 'error',
     'prefer-const': 'error',
@@ -26,25 +30,25 @@ module.exports = {
     commonjs: true,
     es2018: true,
   },
+  parserOptions: {
+    sourceType: 'module',
+    ecmaVersion: 'latest',
+  },
   overrides: [
     {
-      files: ['**/*.js'],
-      parser: '@babel/eslint-parser',
-      parserOptions: {
-        babelOptions: {
-          configFile: path.join(__dirname, '.babelrc.js'),
-        },
-      },
-    },
-    {
-      files: ['**/*.ts'],
+      files: ['**/*.ts', '**/*.tsx'],
       extends: ['plugin:@typescript-eslint/recommended'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        project: path.join(__dirname, 'tsconfig.json'),
+        project: true,
       },
       plugins: ['@typescript-eslint'],
       rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          {argsIgnorePattern: '^_'},
+        ],
         '@typescript-eslint/no-var-requires': 'off',
       },
     },
@@ -55,7 +59,7 @@ module.exports = {
       },
     },
     {
-      files: ['jest.*', 'tests/**'],
+      files: ['jest.*', '**/tests/**'],
       env: {
         node: true,
       },

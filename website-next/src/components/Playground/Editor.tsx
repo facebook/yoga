@@ -17,13 +17,13 @@ import './Editor.css';
 const TabPane = Tabs.TabPane;
 
 type Props = {
-  node: LayoutRecordType,
-  onChangeLayout: (key: string, value: any) => void,
-  onChangeSetting: (key: string, value: any) => void,
-  direction: Direction,
-  selectedNodeIsRoot: boolean,
-  onRemove?: () => void,
-  onAdd?: () => void,
+  node: LayoutRecordType;
+  onChangeLayout: (key: string, value: any) => void;
+  onChangeSetting: (key: string, value: any) => void;
+  direction: Direction;
+  selectedNodeIsRoot: boolean;
+  onRemove?: () => void;
+  onAdd?: () => void;
 };
 
 export default class Editor extends Component<Props> {
@@ -47,7 +47,7 @@ export default class Editor extends Component<Props> {
 
   render() {
     const {node, selectedNodeIsRoot} = this.props;
-    const disabled = !Boolean(node);
+    const disabled = !node;
 
     return (
       <div className="Editor">
@@ -347,7 +347,7 @@ export default class Editor extends Component<Props> {
           <Col span={12}>
             <Button
               icon="plus-circle-o"
-              disabled={!Boolean(this.props.onAdd)}
+              disabled={!this.props.onAdd}
               onClick={this.props.onAdd}
               type="primary">
               add child node
@@ -356,7 +356,7 @@ export default class Editor extends Component<Props> {
           <Col span={12}>
             <Button
               icon="close-circle-o"
-              disabled={!Boolean(this.props.onRemove)}
+              disabled={!this.props.onRemove}
               onClick={this.props.onRemove}
               type="danger">
               remove node

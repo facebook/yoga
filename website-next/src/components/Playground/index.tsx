@@ -15,28 +15,30 @@ import {List, setIn} from 'immutable';
 import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
 import Sidebar from './Sidebar';
-import {Row, Col} from 'antd';
 import type {LayoutRecordType} from './LayoutRecord';
 import './index.css';
 
 type Props = {
-  layoutDefinition: Object,
-  direction: Direction,
-  maxDepth: number,
-  maxChildren?: number,
-  minChildren?: number,
-  selectedNodePath?: Array<number>,
-  showGuides: boolean,
-  className?: string,
-  height?: string | number,
-  persist?: boolean,
-  renderSidebar?: (layoutDefinition: LayoutRecordType, onChange: Function) => any,
+  layoutDefinition: LayoutRecordType;
+  direction: Direction;
+  maxDepth: number;
+  maxChildren?: number;
+  minChildren?: number;
+  selectedNodePath?: Array<number>;
+  showGuides: boolean;
+  className?: string;
+  height?: string | number;
+  persist?: boolean;
+  renderSidebar?: (
+    layoutDefinition: LayoutRecordType,
+    onChange: () => any,
+  ) => any;
 };
 
 type State = {
-  selectedNodePath?: Array<number>,
-  layoutDefinition: LayoutRecordType,
-  direction: Direction,
+  selectedNodePath?: Array<number>;
+  layoutDefinition: LayoutRecordType;
+  direction: Direction;
 };
 
 function getPath(path: Array<number>): Array<unknown> {
@@ -62,7 +64,7 @@ export default class Playground extends Component<Props, State> {
     persist: false,
   };
 
-  rehydrate = (node: Object): LayoutRecordType => {
+  rehydrate = (node: LayoutRecordType): LayoutRecordType => {
     let record = LayoutRecord(node);
     record = record.set('padding', PositionRecord(record.padding));
     record = record.set('border', PositionRecord(record.border));
@@ -115,7 +117,7 @@ export default class Playground extends Component<Props, State> {
   };
 
   hideSidePanes() {
-    if (!Boolean(this.props.renderSidebar)) {
+    if (!this.props.renderSidebar) {
       // only unselect if we don't have an external sidebar, otherwise the
       // sidebar may rely on a certain node to be selected
       this.setState({
@@ -183,7 +185,9 @@ export default class Playground extends Component<Props, State> {
   ): string =>
     btoa(JSON.stringify(this.removeUnchangedProperties(layoutDefinition)));
 
-  removeUnchangedProperties = (node: LayoutRecordType): Object => {
+  removeUnchangedProperties = (
+    node: LayoutRecordType,
+  ): {children?: unknown} => {
     const untouchedLayout = LayoutRecord({});
     const untouchedPosition = PositionRecord({});
     const result: {children?: unknown} = {};

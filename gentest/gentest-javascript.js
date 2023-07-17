@@ -5,7 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const JavascriptEmitter = function() {
+/* global Emitter:readable */
+
+const JavascriptEmitter = function () {
   Emitter.call(this, 'js', '  ');
 };
 
@@ -17,255 +19,372 @@ function toValueJavascript(value) {
 }
 
 JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
-  constructor:{value:JavascriptEmitter},
+  constructor: {value: JavascriptEmitter},
 
-  emitPrologue:{value:function() {
-    this.push('import {Yoga} from "../tools/globals";')
-    this.push('import {')
-    this.pushIndent();
-    this.push('Align,');
-    this.push('Direction,');
-    this.push('Display,');
-    this.push('Edge,');
-    this.push('Errata,');
-    this.push('ExperimentalFeature,');
-    this.push('FlexDirection,');
-    this.push('Gutter,');
-    this.push('Justify,');
-    this.push('MeasureMode,');
-    this.push('Overflow,');
-    this.push('PositionType,');
-    this.push('Unit,');
-    this.push('Wrap,');
-    this.popIndent();
-    this.push('} from \'yoga-layout\';');
-    this.push('');
-  }},
-
-  emitTestPrologue:{value:function(name, experiments, ignore) {
-    const testFn = ignore ? `test.skip` : 'test';
-    this.push(`${testFn}('${name}', () => {`);
-    this.pushIndent();
-    this.push('const config = Yoga.Config.create();');
-    this.push('let root;');
-    this.push('');
-
-    if (experiments.length > 0) {
-      for (const experiment of experiments) {
-        this.push(`config.setExperimentalFeatureEnabled(ExperimentalFeature.${experiment}, true);`);
-      }
+  emitPrologue: {
+    value: function () {
+      this.push('import {Yoga} from "../tools/globals";');
+      this.push('import {');
+      this.pushIndent();
+      this.push('Align,');
+      this.push('Direction,');
+      this.push('Display,');
+      this.push('Edge,');
+      this.push('Errata,');
+      this.push('ExperimentalFeature,');
+      this.push('FlexDirection,');
+      this.push('Gutter,');
+      this.push('Justify,');
+      this.push('MeasureMode,');
+      this.push('Overflow,');
+      this.push('PositionType,');
+      this.push('Unit,');
+      this.push('Wrap,');
+      this.popIndent();
+      this.push("} from 'yoga-layout';");
       this.push('');
-    }
+    },
+  },
 
-    this.push('try {');
-    this.pushIndent();
-  }},
+  emitTestPrologue: {
+    value: function (name, experiments, ignore) {
+      const testFn = ignore ? `test.skip` : 'test';
+      this.push(`${testFn}('${name}', () => {`);
+      this.pushIndent();
+      this.push('const config = Yoga.Config.create();');
+      this.push('let root;');
+      this.push('');
 
-  emitTestTreePrologue:{value:function(nodeName) {
-    if (nodeName === 'root') {
-      this.push(`root = Yoga.Node.create(config);`);
-    } else {
-      this.push(`const ${nodeName} = Yoga.Node.create(config);`);
-    }
-  }},
+      if (experiments.length > 0) {
+        for (const experiment of experiments) {
+          this.push(
+            `config.setExperimentalFeatureEnabled(ExperimentalFeature.${experiment}, true);`,
+          );
+        }
+        this.push('');
+      }
 
-  emitTestEpilogue:{value:function(experiments) {
-    this.popIndent();
-    this.push('} finally {');
-    this.pushIndent();
+      this.push('try {');
+      this.pushIndent();
+    },
+  },
 
-    this.push('if (typeof root !== \'undefined\') {');
-    this.pushIndent();
-    this.push('root.freeRecursive();');
-    this.popIndent();
-    this.push('}');
-    this.push('');
-    this.push('config.free();');
+  emitTestTreePrologue: {
+    value: function (nodeName) {
+      if (nodeName === 'root') {
+        this.push(`root = Yoga.Node.create(config);`);
+      } else {
+        this.push(`const ${nodeName} = Yoga.Node.create(config);`);
+      }
+    },
+  },
 
-    this.popIndent();
-    this.push('}');
+  emitTestEpilogue: {
+    value: function (_experiments) {
+      this.popIndent();
+      this.push('} finally {');
+      this.pushIndent();
 
-    this.popIndent();
-    this.push('});');
-  }},
+      this.push("if (typeof root !== 'undefined') {");
+      this.pushIndent();
+      this.push('root.freeRecursive();');
+      this.popIndent();
+      this.push('}');
+      this.push('');
+      this.push('config.free();');
 
-  emitEpilogue:{value:function () {
-    this.push('');
-  }},
+      this.popIndent();
+      this.push('}');
 
-  AssertEQ:{value:function(v0, v1) {
-    this.push(`expect(${v1}).toBe(${v0});`);
-  }},
+      this.popIndent();
+      this.push('});');
+    },
+  },
 
-  YGAlignAuto:{value: 'Align.Auto'},
-  YGAlignCenter:{value: 'Align.Center'},
-  YGAlignFlexEnd:{value: 'Align.FlexEnd'},
-  YGAlignFlexStart:{value: 'Align.FlexStart'},
-  YGAlignStretch:{value: 'Align.Stretch'},
-  YGAlignSpaceBetween:{value: 'Align.SpaceBetween'},
-  YGAlignSpaceAround:{value: 'Align.SpaceAround'},
-  YGAlignBaseline:{value: 'Align.Baseline'},
+  emitEpilogue: {
+    value: function () {
+      this.push('');
+    },
+  },
 
-  YGDirectionInherit:{value: 'Direction.Inherit'},
-  YGDirectionLTR:{value: 'Direction.LTR'},
-  YGDirectionRTL:{value: 'Direction.RTL'},
+  AssertEQ: {
+    value: function (v0, v1) {
+      this.push(`expect(${v1}).toBe(${v0});`);
+    },
+  },
 
-  YGEdgeBottom:{value: 'Edge.Bottom'},
-  YGEdgeEnd:{value: 'Edge.End'},
-  YGEdgeLeft:{value: 'Edge.Left'},
-  YGEdgeRight:{value: 'Edge.Right'},
-  YGEdgeStart:{value: 'Edge.Start'},
-  YGEdgeTop:{value: 'Edge.Top'},
+  YGAlignAuto: {value: 'Align.Auto'},
+  YGAlignCenter: {value: 'Align.Center'},
+  YGAlignFlexEnd: {value: 'Align.FlexEnd'},
+  YGAlignFlexStart: {value: 'Align.FlexStart'},
+  YGAlignStretch: {value: 'Align.Stretch'},
+  YGAlignSpaceBetween: {value: 'Align.SpaceBetween'},
+  YGAlignSpaceAround: {value: 'Align.SpaceAround'},
+  YGAlignBaseline: {value: 'Align.Baseline'},
 
-  YGGutterAll:{value: 'Gutter.All'},
-  YGGutterColumn:{value: 'Gutter.Column'},
-  YGGutterRow:{value: 'Gutter.Row'},
+  YGDirectionInherit: {value: 'Direction.Inherit'},
+  YGDirectionLTR: {value: 'Direction.LTR'},
+  YGDirectionRTL: {value: 'Direction.RTL'},
 
-  YGFlexDirectionColumn:{value: 'FlexDirection.Column'},
-  YGFlexDirectionColumnReverse:{value: 'FlexDirection.ColumnReverse'},
-  YGFlexDirectionRow:{value: 'FlexDirection.Row'},
-  YGFlexDirectionRowReverse:{value: 'FlexDirection.RowReverse'},
+  YGEdgeBottom: {value: 'Edge.Bottom'},
+  YGEdgeEnd: {value: 'Edge.End'},
+  YGEdgeLeft: {value: 'Edge.Left'},
+  YGEdgeRight: {value: 'Edge.Right'},
+  YGEdgeStart: {value: 'Edge.Start'},
+  YGEdgeTop: {value: 'Edge.Top'},
 
-  YGJustifyCenter:{value: 'Justify.Center'},
-  YGJustifyFlexEnd:{value: 'Justify.FlexEnd'},
-  YGJustifyFlexStart:{value: 'Justify.FlexStart'},
-  YGJustifySpaceAround:{value: 'Justify.SpaceAround'},
-  YGJustifySpaceBetween:{value: 'Justify.SpaceBetween'},
-  YGJustifySpaceEvenly:{value: 'Justify.SpaceEvenly'},
+  YGGutterAll: {value: 'Gutter.All'},
+  YGGutterColumn: {value: 'Gutter.Column'},
+  YGGutterRow: {value: 'Gutter.Row'},
 
-  YGOverflowHidden:{value: 'Overflow.Hidden'},
-  YGOverflowVisible:{value: 'Overflow.Visible'},
+  YGFlexDirectionColumn: {value: 'FlexDirection.Column'},
+  YGFlexDirectionColumnReverse: {value: 'FlexDirection.ColumnReverse'},
+  YGFlexDirectionRow: {value: 'FlexDirection.Row'},
+  YGFlexDirectionRowReverse: {value: 'FlexDirection.RowReverse'},
 
-  YGPositionTypeAbsolute:{value: 'PositionType.Absolute'},
-  YGPositionTypeRelative:{value: 'PositionType.Relative'},
+  YGJustifyCenter: {value: 'Justify.Center'},
+  YGJustifyFlexEnd: {value: 'Justify.FlexEnd'},
+  YGJustifyFlexStart: {value: 'Justify.FlexStart'},
+  YGJustifySpaceAround: {value: 'Justify.SpaceAround'},
+  YGJustifySpaceBetween: {value: 'Justify.SpaceBetween'},
+  YGJustifySpaceEvenly: {value: 'Justify.SpaceEvenly'},
 
-  YGAuto:{value:'\'auto\''},
-  YGUndefined:{value:'undefined'},
+  YGOverflowHidden: {value: 'Overflow.Hidden'},
+  YGOverflowVisible: {value: 'Overflow.Visible'},
 
-  YGWrapNoWrap:{value: 'Wrap.NoWrap'},
-  YGWrapWrap:{value: 'Wrap.Wrap'},
-  YGWrapWrapReverse:{value: 'Wrap.WrapReverse'},
+  YGPositionTypeAbsolute: {value: 'PositionType.Absolute'},
+  YGPositionTypeRelative: {value: 'PositionType.Relative'},
 
-  YGDisplayFlex:{value: 'Display.Flex'},
-  YGDisplayNone:{value: 'Display.None'},
+  YGAuto: {value: "'auto'"},
+  YGUndefined: {value: 'undefined'},
 
-  YGNodeCalculateLayout:{value:function(node, dir, experiments) {
-    this.push(node + '.calculateLayout(undefined, undefined, ' + dir + ');');
-  }},
+  YGWrapNoWrap: {value: 'Wrap.NoWrap'},
+  YGWrapWrap: {value: 'Wrap.Wrap'},
+  YGWrapWrapReverse: {value: 'Wrap.WrapReverse'},
 
-  YGNodeInsertChild:{value:function(parentName, nodeName, index) {
-    this.push(parentName + '.insertChild(' + nodeName + ', ' + index + ');');
-  }},
+  YGDisplayFlex: {value: 'Display.Flex'},
+  YGDisplayNone: {value: 'Display.None'},
 
-  YGNodeLayoutGetLeft:{value:function(nodeName) {
-    return nodeName + '.getComputedLeft()';
-  }},
+  YGNodeCalculateLayout: {
+    value: function (node, dir, _experiments) {
+      this.push(node + '.calculateLayout(undefined, undefined, ' + dir + ');');
+    },
+  },
 
-  YGNodeLayoutGetTop:{value:function(nodeName) {
-    return nodeName + '.getComputedTop()';
-  }},
+  YGNodeInsertChild: {
+    value: function (parentName, nodeName, index) {
+      this.push(parentName + '.insertChild(' + nodeName + ', ' + index + ');');
+    },
+  },
 
-  YGNodeLayoutGetWidth:{value:function(nodeName) {
-    return nodeName + '.getComputedWidth()';
-  }},
+  YGNodeLayoutGetLeft: {
+    value: function (nodeName) {
+      return nodeName + '.getComputedLeft()';
+    },
+  },
 
-  YGNodeLayoutGetHeight:{value:function(nodeName) {
-    return nodeName + '.getComputedHeight()';
-  }},
+  YGNodeLayoutGetTop: {
+    value: function (nodeName) {
+      return nodeName + '.getComputedTop()';
+    },
+  },
 
-  YGNodeStyleSetAlignContent:{value:function(nodeName, value) {
-    this.push(nodeName + '.setAlignContent(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeLayoutGetWidth: {
+    value: function (nodeName) {
+      return nodeName + '.getComputedWidth()';
+    },
+  },
 
-  YGNodeStyleSetAlignItems:{value:function(nodeName, value) {
-    this.push(nodeName + '.setAlignItems(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeLayoutGetHeight: {
+    value: function (nodeName) {
+      return nodeName + '.getComputedHeight()';
+    },
+  },
 
-  YGNodeStyleSetAlignSelf:{value:function(nodeName, value) {
-    this.push(nodeName + '.setAlignSelf(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetAlignContent: {
+    value: function (nodeName, value) {
+      this.push(
+        nodeName + '.setAlignContent(' + toValueJavascript(value) + ');',
+      );
+    },
+  },
 
-  YGNodeStyleSetBorder:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setBorder(' + toValueJavascript(edge) + ', ' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetAlignItems: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setAlignItems(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetDirection:{value:function(nodeName, value) {
-    this.push(nodeName + '.setDirection(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetAlignSelf: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setAlignSelf(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetDisplay:{value:function(nodeName, value) {
-    this.push(nodeName + '.setDisplay(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetBorder: {
+    value: function (nodeName, edge, value) {
+      this.push(
+        nodeName +
+          '.setBorder(' +
+          toValueJavascript(edge) +
+          ', ' +
+          toValueJavascript(value) +
+          ');',
+      );
+    },
+  },
 
-  YGNodeStyleSetFlexBasis:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexBasis(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetDirection: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setDirection(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetFlexDirection:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexDirection(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetDisplay: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setDisplay(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetFlexGrow:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexGrow(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetFlexBasis: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setFlexBasis(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetFlexShrink:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexShrink(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetFlexDirection: {
+    value: function (nodeName, value) {
+      this.push(
+        nodeName + '.setFlexDirection(' + toValueJavascript(value) + ');',
+      );
+    },
+  },
 
-  YGNodeStyleSetFlexWrap:{value:function(nodeName, value) {
-    this.push(nodeName + '.setFlexWrap(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetFlexGrow: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setFlexGrow(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setHeight(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetFlexShrink: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setFlexShrink(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetJustifyContent:{value:function(nodeName, value) {
-    this.push(nodeName + '.setJustifyContent(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetFlexWrap: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setFlexWrap(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetMargin:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setMargin(' + toValueJavascript(edge) + ', ' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetHeight: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setHeight(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetMaxHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setMaxHeight(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetJustifyContent: {
+    value: function (nodeName, value) {
+      this.push(
+        nodeName + '.setJustifyContent(' + toValueJavascript(value) + ');',
+      );
+    },
+  },
 
-  YGNodeStyleSetMaxWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setMaxWidth(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetMargin: {
+    value: function (nodeName, edge, value) {
+      this.push(
+        nodeName +
+          '.setMargin(' +
+          toValueJavascript(edge) +
+          ', ' +
+          toValueJavascript(value) +
+          ');',
+      );
+    },
+  },
 
-  YGNodeStyleSetMinHeight:{value:function(nodeName, value) {
-    this.push(nodeName + '.setMinHeight(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetMaxHeight: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setMaxHeight(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetMinWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setMinWidth(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetMaxWidth: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setMaxWidth(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetOverflow:{value:function(nodeName, value) {
-    this.push(nodeName + '.setOverflow(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetMinHeight: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setMinHeight(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetPadding:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setPadding(' + toValueJavascript(edge) + ', ' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetMinWidth: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setMinWidth(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetPosition:{value:function(nodeName, edge, value) {
-    this.push(nodeName + '.setPosition(' + toValueJavascript(edge) + ', ' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetOverflow: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setOverflow(' + toValueJavascript(value) + ');');
+    },
+  },
 
-  YGNodeStyleSetPositionType:{value:function(nodeName, value) {
-    this.push(nodeName + '.setPositionType(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetPadding: {
+    value: function (nodeName, edge, value) {
+      this.push(
+        nodeName +
+          '.setPadding(' +
+          toValueJavascript(edge) +
+          ', ' +
+          toValueJavascript(value) +
+          ');',
+      );
+    },
+  },
 
-  YGNodeStyleSetWidth:{value:function(nodeName, value) {
-    this.push(nodeName + '.setWidth(' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetPosition: {
+    value: function (nodeName, edge, value) {
+      this.push(
+        nodeName +
+          '.setPosition(' +
+          toValueJavascript(edge) +
+          ', ' +
+          toValueJavascript(value) +
+          ');',
+      );
+    },
+  },
 
-  YGNodeStyleSetGap:{value:function(nodeName, gap, value) {
-    this.push(nodeName + '.setGap('+ toValueJavascript(gap) + ', ' + toValueJavascript(value) + ');');
-  }},
+  YGNodeStyleSetPositionType: {
+    value: function (nodeName, value) {
+      this.push(
+        nodeName + '.setPositionType(' + toValueJavascript(value) + ');',
+      );
+    },
+  },
+
+  YGNodeStyleSetWidth: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setWidth(' + toValueJavascript(value) + ');');
+    },
+  },
+
+  YGNodeStyleSetGap: {
+    value: function (nodeName, gap, value) {
+      this.push(
+        nodeName +
+          '.setGap(' +
+          toValueJavascript(gap) +
+          ', ' +
+          toValueJavascript(value) +
+          ');',
+      );
+    },
+  },
 });
