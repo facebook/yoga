@@ -1,6 +1,6 @@
 {
   "name": "yoga-layout",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0",
   "description": "An embeddable and performant flexbox layout engine with bindings for multiple languages",
   "license": "MIT",
   "author": "Meta Open Source",
@@ -79,5 +79,8 @@
     "ts-node": "^10.9.1",
     "typescript": "5.0.4",
     "which": "^3.0.0"
+  }
+}
+
   }
 }
