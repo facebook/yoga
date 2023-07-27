@@ -39,5 +39,3 @@ Pod::Spec.new do |spec|
   spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
   spec.swift_version = '5.1'
 end
-1'
-end

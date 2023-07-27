@@ -32,4 +32,3 @@ end
 # See https://github.com/facebook/yoga/pull/366
 podspec.attributes_hash["readme"] = "YogaKit/README.md"
 podspec
-odspec
