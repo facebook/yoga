@@ -38,6 +38,14 @@ bool YGConfig::shouldPrintTree() const {
   return flags_.printTree;
 }
 
+void YGConfig::setAllowNegativePadding(bool allowNegativePadding) {
+  flags_.allowNegativePadding = allowNegativePadding;
+}
+
+bool YGConfig::allowNegativePadding() const {
+  return flags_.allowNegativePadding;
+}
+
 void YGConfig::setExperimentalFeatureEnabled(
     YGExperimentalFeature feature,
     bool enabled) {

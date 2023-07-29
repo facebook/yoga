@@ -542,8 +542,10 @@ YGFloatOptional YGNode::getLeadingPadding(
             CompactValue::ofZero())
       : computeEdgeValueForColumn(
             style_.padding(), leading[axis], CompactValue::ofZero());
-  return YGFloatOptionalMax(
-      YGResolveValue(leadingPadding, widthSize), YGFloatOptional(0.0f));
+  auto leadingPaddingValue = YGResolveValue(leadingPadding, widthSize);
+  return !config_->allowNegativePadding()
+      ? YGFloatOptionalMax(leadingPaddingValue, YGFloatOptional(0.0f))
+      : leadingPaddingValue;
 }
 
 YGFloatOptional YGNode::getTrailingPadding(
@@ -554,8 +556,10 @@ YGFloatOptional YGNode::getTrailingPadding(
             style_.padding(), YGEdgeEnd, trailing[axis], CompactValue::ofZero())
       : computeEdgeValueForColumn(
             style_.padding(), trailing[axis], CompactValue::ofZero());
-  return YGFloatOptionalMax(
-      YGResolveValue(trailingPadding, widthSize), YGFloatOptional(0.0f));
+  auto trailingPaddingValue = YGResolveValue(trailingPadding, widthSize);
+  return !config_->allowNegativePadding()
+      ? YGFloatOptionalMax(trailingPaddingValue, YGFloatOptional(0.0f))
+      : trailingPaddingValue;
 }
 
 YGFloatOptional YGNode::getLeadingPaddingAndBorder(

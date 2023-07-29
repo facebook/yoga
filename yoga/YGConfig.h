@@ -44,6 +44,7 @@ struct YGConfigFlags {
   bool printTree : 1;
   bool cloneNodeUsesContext : 1;
   bool loggerUsesContext : 1;
+  bool allowNegativePadding : 1;
 };
 #pragma pack(pop)
 
@@ -57,6 +58,9 @@ struct YOGA_EXPORT YGConfig {
 
   void setShouldPrintTree(bool printTree);
   bool shouldPrintTree() const;
+
+  void setAllowNegativePadding(bool allowNegativePadding);
+  bool allowNegativePadding() const;
 
   void setExperimentalFeatureEnabled(
       YGExperimentalFeature feature,
