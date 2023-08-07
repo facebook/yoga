@@ -6,7 +6,7 @@
  */
 
 module yoga [system] {
-    module C {
+    module core {
         header "YGEnums.h"
         header "YGMacros.h"
         header "YGValue.h"

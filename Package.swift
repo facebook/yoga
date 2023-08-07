@@ -13,11 +13,11 @@ import PackageDescription
 let package = Package(
     name: "yoga",
     products: [
-        .library(name: "yoga", targets: [ "C" ])
+        .library(name: "yoga", targets: [ "core" ])
     ],
     targets: [
         .target(
-            name: "C",
+            name: "core",
             path: ".",
             sources: [
                 "yoga"
