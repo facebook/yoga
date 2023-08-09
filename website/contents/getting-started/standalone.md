@@ -20,36 +20,37 @@ dependencies {
 
 The JavaScript bindings for Yoga can be used from node.js and within the browser.
 When using Yoga from node.js the native library is used, in browsers a pure JS
-version is used (cross-compiled using [emscripten](http://kripken.github.io/emscripten-site/)).
+version is used (cross-compiled using [emscripten](https://emscripten.org/)).
 
 ```
 $> yarn add yoga-layout
 ```
 
-This is an example on how to use Yoga in JavaScript, for a full API reference,
-have a look at the [flow-type definitions](https://github.com/facebook/yoga/blob/main/javascript/sources/entry-common.js#L123).
+This is an example on how to use Yoga in JavaScript. For a full API reference,
+have a look at the [TypeScript type definitions](https://github.com/facebook/yoga/blob/main/javascript/src/wrapAssembly.d.ts).
 
 ```js
-import yoga, {Node} from 'yoga-layout';
+import {loadYoga} from 'yoga-layout';
 
-const root = Node.create();
+const Yoga = await loadYoga();
+const root = Yoga.Node.create();
 root.setWidth(500);
 root.setHeight(300);
-root.setJustifyContent(yoga.JUSTIFY_CENTER);
-root.setFlexDirection(yoga.FLEX_DIRECTION_ROW);
+root.setJustifyContent(Yoga.JUSTIFY_CENTER);
+root.setFlexDirection(Yoga.FLEX_DIRECTION_ROW);
 
-const node1 = Node.create();
+const node1 = Yoga.Node.create();
 node1.setWidth(100);
 node1.setHeight(100);
 
-const node2 = Node.create();
+const node2 = Yoga.Node.create();
 node2.setWidth(100);
 node2.setHeight(100);
 
 root.insertChild(node1, 0);
 root.insertChild(node2, 1);
 
-root.calculateLayout(500, 300, yoga.DIRECTION_LTR);
+root.calculateLayout(500, 300, Yoga.DIRECTION_LTR);
 console.log(root.getComputedLayout());
 // {left: 0, top: 0, width: 500, height: 300}
 console.log(node1.getComputedLayout());
