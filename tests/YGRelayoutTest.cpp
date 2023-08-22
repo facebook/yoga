@@ -49,3 +49,33 @@ TEST(YogaTest, recalculate_resolvedDimonsion_onchange) {
 
   YGNodeFreeRecursive(root);
 }
+
+
+YGSize _measureRecalc(YGNodeRef node, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode) {
+    return YGSize { 0, 0};
+}
+
+TEST(YogaTest, recalculate_on_layout_values_change) {
+  const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureWebFlexBasis, true);
+  YGConfigSetPointScaleFactor(config, 3.f);
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetAlignContent(root, YGAlignFlexStart);
+  const YGNodeRef child = YGNodeNewWithConfig(config);
+  YGNodeStyleSetMinHeightPercent(child, 40.f);
+  YGNodeStyleSetMaxHeightPercent(child, 60.f);
+  YGNodeStyleSetHeight(child, 10.f);
+  YGNodeStyleSetWidth(child, 50.0f);
+  YGNodeSetMeasureFunc(child, _measureRecalc);
+  YGNodeInsertChild(root, child, 0);
+
+  YGNodeCalculateLayout(root, 50.0f, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(child));
+
+  YGNodeCalculateLayout(root, 50.0f, 30.0f, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(12, YGNodeLayoutGetHeight(child));
+
+  YGNodeFreeRecursive(root);
+}
