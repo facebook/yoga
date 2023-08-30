@@ -6,7 +6,6 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
 static YGSize _measure(
@@ -15,7 +14,7 @@ static YGSize _measure(
     YGMeasureMode /*widthMode*/,
     float /*height*/,
     YGMeasureMode /*heightMode*/) {
-  int* measureCount = (int*) node->getContext();
+  int* measureCount = (int*) YGNodeGetContext(node);
   if (measureCount) {
     (*measureCount)++;
   }
@@ -56,8 +55,8 @@ TEST(YogaTest, dont_measure_single_grow_shrink_child) {
   int measureCount = 0;
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetFlexShrink(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
@@ -79,8 +78,8 @@ TEST(YogaTest, measure_absolute_child_with_no_constraints) {
 
   const YGNodeRef root_child0_child0 = YGNodeNew();
   YGNodeStyleSetPositionType(root_child0_child0, YGPositionTypeAbsolute);
-  root_child0_child0->setContext(&measureCount);
-  root_child0_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0_child0, _measure);
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -99,8 +98,8 @@ TEST(YogaTest, dont_measure_when_min_equals_max) {
   int measureCount = 0;
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeStyleSetMinWidth(root_child0, 10);
   YGNodeStyleSetMaxWidth(root_child0, 10);
   YGNodeStyleSetMinHeight(root_child0, 10);
@@ -127,8 +126,8 @@ TEST(YogaTest, dont_measure_when_min_equals_max_percentages) {
   int measureCount = 0;
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeStyleSetMinWidthPercent(root_child0, 10);
   YGNodeStyleSetMaxWidthPercent(root_child0, 10);
   YGNodeStyleSetMinHeightPercent(root_child0, 10);
@@ -152,7 +151,7 @@ TEST(YogaTest, measure_nodes_with_margin_auto_and_stretch) {
   YGNodeStyleSetHeight(root, 500);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeStyleSetMarginAuto(root_child0, YGEdgeLeft);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -175,8 +174,8 @@ TEST(YogaTest, dont_measure_when_min_equals_max_mixed_width_percent) {
   int measureCount = 0;
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeStyleSetMinWidthPercent(root_child0, 10);
   YGNodeStyleSetMaxWidthPercent(root_child0, 10);
   YGNodeStyleSetMinHeight(root_child0, 10);
@@ -203,8 +202,8 @@ TEST(YogaTest, dont_measure_when_min_equals_max_mixed_height_percent) {
   int measureCount = 0;
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeStyleSetMinWidth(root_child0, 10);
   YGNodeStyleSetMaxWidth(root_child0, 10);
   YGNodeStyleSetMinHeightPercent(root_child0, 10);
@@ -228,7 +227,7 @@ TEST(YogaTest, measure_enough_size_should_be_in_single_line) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetAlignSelf(root_child0, YGAlignFlexStart);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
 
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -247,7 +246,7 @@ TEST(YogaTest, measure_not_enough_size_should_wrap) {
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetAlignSelf(root_child0, YGAlignFlexStart);
   //  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -269,8 +268,8 @@ TEST(YogaTest, measure_zero_space_should_grow) {
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexDirection(root_child0, YGFlexDirectionColumn);
   YGNodeStyleSetPadding(root_child0, YGEdgeAll, 100);
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure);
 
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -295,8 +294,7 @@ TEST(YogaTest, measure_flex_direction_row_and_padding) {
   YGNodeStyleSetHeight(root, 50);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
-  //  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
@@ -335,7 +333,7 @@ TEST(YogaTest, measure_flex_direction_column_and_padding) {
   YGNodeStyleSetHeight(root, 50);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   //  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -376,7 +374,7 @@ TEST(YogaTest, measure_flex_direction_row_no_padding) {
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   //  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
@@ -416,7 +414,7 @@ TEST(YogaTest, measure_flex_direction_row_no_padding_align_items_flexstart) {
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
@@ -455,7 +453,7 @@ TEST(YogaTest, measure_with_fixed_size) {
   YGNodeStyleSetHeight(root, 50);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -496,7 +494,7 @@ TEST(YogaTest, measure_with_flex_shrink) {
   YGNodeStyleSetHeight(root, 50);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   YGNodeStyleSetFlexShrink(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -535,7 +533,7 @@ TEST(YogaTest, measure_no_padding) {
   YGNodeStyleSetHeight(root, 50);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_simulate_wrapping_text);
+  YGNodeSetMeasureFunc(root_child0, _simulate_wrapping_text);
   YGNodeStyleSetFlexShrink(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -568,7 +566,7 @@ TEST(YogaTest, measure_no_padding) {
 #if GTEST_HAS_DEATH_TEST
 TEST(YogaDeathTest, cannot_add_child_to_node_with_measure_func) {
   const YGNodeRef root = YGNodeNew();
-  root->setMeasureFunc(_measure);
+  YGNodeSetMeasureFunc(root, _measure);
 
   const YGNodeRef root_child0 = YGNodeNew();
 #if defined(__cpp_exceptions)
@@ -585,9 +583,10 @@ TEST(YogaDeathTest, cannot_add_nonnull_measure_func_to_non_leaf_node) {
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeInsertChild(root, root_child0, 0);
 #if defined(__cpp_exceptions)
-  ASSERT_THROW(root->setMeasureFunc(_measure), std::logic_error);
+  ASSERT_THROW(YGNodeSetMeasureFunc(root, _measure), std::logic_error);
 #else // !defined(__cpp_exceptions)
-  ASSERT_DEATH(root->setMeasureFunc(_measure), "Cannot set measure function.*");
+  ASSERT_DEATH(
+      YGNodeSetMeasureFunc(root, _measure), "Cannot set measure function.*");
 #endif // defined(__cpp_exceptions)
   YGNodeFreeRecursive(root);
 }
@@ -597,8 +596,8 @@ TEST(YogaDeathTest, cannot_add_nonnull_measure_func_to_non_leaf_node) {
 TEST(YogaTest, can_nullify_measure_func_on_any_node) {
   const YGNodeRef root = YGNodeNew();
   YGNodeInsertChild(root, YGNodeNew(), 0);
-  root->setMeasureFunc(nullptr);
-  ASSERT_TRUE(!root->hasMeasureFunc());
+  YGNodeSetMeasureFunc(root, nullptr);
+  ASSERT_TRUE(!YGNodeHasMeasureFunc(root));
   YGNodeFreeRecursive(root);
 }
 
@@ -611,7 +610,7 @@ TEST(YogaTest, cant_call_negative_measure) {
   YGNodeStyleSetHeight(root, 10);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_measure_assert_negative);
+  YGNodeSetMeasureFunc(root_child0, _measure_assert_negative);
   YGNodeStyleSetMargin(root_child0, YGEdgeTop, 20);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -630,7 +629,7 @@ TEST(YogaTest, cant_call_negative_measure_horizontal) {
   YGNodeStyleSetHeight(root, 20);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_measure_assert_negative);
+  YGNodeSetMeasureFunc(root_child0, _measure_assert_negative);
   YGNodeStyleSetMargin(root_child0, YGEdgeStart, 20);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -674,7 +673,7 @@ TEST(YogaTest, percent_with_text_node) {
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
-  root_child1->setMeasureFunc(_measure_90_10);
+  YGNodeSetMeasureFunc(root_child1, _measure_90_10);
   YGNodeStyleSetMaxWidthPercent(root_child1, 50);
   YGNodeStyleSetPaddingPercent(root_child1, YGEdgeTop, 50);
   YGNodeInsertChild(root, root_child1, 1);
@@ -713,28 +712,28 @@ TEST(YogaTest, percent_margin_with_measure_func) {
   YGNodeStyleSetWidth(root_child0, 100);
   YGNodeStyleSetHeight(root_child0, 100);
   YGNodeStyleSetMargin(root_child0, YGEdgeTop, 0);
-  root_child0->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child0, _measure_100_100);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child1, 100);
   YGNodeStyleSetHeight(root_child1, 100);
   YGNodeStyleSetMargin(root_child1, YGEdgeTop, 100);
-  root_child1->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child1, _measure_100_100);
   YGNodeInsertChild(root, root_child1, 1);
 
   const YGNodeRef root_child2 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child2, 100);
   YGNodeStyleSetHeight(root_child2, 100);
   YGNodeStyleSetMarginPercent(root_child2, YGEdgeTop, 10);
-  root_child2->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child2, _measure_100_100);
   YGNodeInsertChild(root, root_child2, 2);
 
   const YGNodeRef root_child3 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child3, 100);
   YGNodeStyleSetHeight(root_child3, 100);
   YGNodeStyleSetMarginPercent(root_child3, YGEdgeTop, 20);
-  root_child3->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child3, _measure_100_100);
   YGNodeInsertChild(root, root_child3, 3);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -783,24 +782,24 @@ TEST(YogaTest, percent_padding_with_measure_func) {
   YGNodeStyleSetWidth(root_child0, 100);
   YGNodeStyleSetHeight(root_child0, 100);
   YGNodeStyleSetPadding(root_child0, YGEdgeTop, 0);
-  root_child0->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child0, _measure_100_100);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child1, 100);
   YGNodeStyleSetHeight(root_child1, 100);
   YGNodeStyleSetPadding(root_child1, YGEdgeTop, 100);
-  root_child1->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child1, _measure_100_100);
   YGNodeInsertChild(root, root_child1, 1);
 
   const YGNodeRef root_child2 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPaddingPercent(root_child2, YGEdgeTop, 10);
-  root_child2->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child2, _measure_100_100);
   YGNodeInsertChild(root, root_child2, 2);
 
   const YGNodeRef root_child3 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPaddingPercent(root_child3, YGEdgeTop, 20);
-  root_child3->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child3, _measure_100_100);
   YGNodeInsertChild(root, root_child3, 3);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -849,26 +848,26 @@ TEST(YogaTest, percent_padding_and_percent_margin_with_measure_func) {
   YGNodeStyleSetWidth(root_child0, 100);
   YGNodeStyleSetHeight(root_child0, 100);
   YGNodeStyleSetPadding(root_child0, YGEdgeTop, 0);
-  root_child0->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child0, _measure_100_100);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child1, 100);
   YGNodeStyleSetHeight(root_child1, 100);
   YGNodeStyleSetPadding(root_child1, YGEdgeTop, 100);
-  root_child1->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child1, _measure_100_100);
   YGNodeInsertChild(root, root_child1, 1);
 
   const YGNodeRef root_child2 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPaddingPercent(root_child2, YGEdgeTop, 10);
   YGNodeStyleSetMarginPercent(root_child2, YGEdgeTop, 10);
-  root_child2->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child2, _measure_100_100);
   YGNodeInsertChild(root, root_child2, 2);
 
   const YGNodeRef root_child3 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPaddingPercent(root_child3, YGEdgeTop, 20);
   YGNodeStyleSetMarginPercent(root_child3, YGEdgeTop, 20);
-  root_child3->setMeasureFunc(_measure_100_100);
+  YGNodeSetMeasureFunc(root_child3, _measure_100_100);
   YGNodeInsertChild(root, root_child3, 3);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);

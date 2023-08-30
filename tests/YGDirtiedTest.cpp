@@ -6,10 +6,13 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/YGNode.h>
+#include <yoga/Yoga.h>
+#include <yoga/node/Node.h>
+
+using namespace facebook;
 
 static void _dirtied(YGNodeRef node) {
-  int* dirtiedCount = (int*) node->getContext();
+  int* dirtiedCount = (int*) YGNodeGetContext(node);
   (*dirtiedCount)++;
 }
 
@@ -22,17 +25,17 @@ TEST(YogaTest, dirtied) {
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   int dirtiedCount = 0;
-  root->setContext(&dirtiedCount);
-  root->setDirtiedFunc(_dirtied);
+  YGNodeSetContext(root, &dirtiedCount);
+  YGNodeSetDirtiedFunc(root, _dirtied);
 
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` MUST be called in case of explicit dirtying.
-  root->setDirty(true);
+  static_cast<yoga::Node*>(root)->setDirty(true);
   ASSERT_EQ(1, dirtiedCount);
 
   // `_dirtied` MUST be called ONCE.
-  root->setDirty(true);
+  static_cast<yoga::Node*>(root)->setDirty(true);
   ASSERT_EQ(1, dirtiedCount);
 }
 
@@ -55,17 +58,17 @@ TEST(YogaTest, dirtied_propagation) {
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   int dirtiedCount = 0;
-  root->setContext(&dirtiedCount);
-  root->setDirtiedFunc(_dirtied);
+  YGNodeSetContext(root, &dirtiedCount);
+  YGNodeSetDirtiedFunc(root, _dirtied);
 
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` MUST be called for the first time.
-  root_child0->markDirtyAndPropagate();
+  static_cast<yoga::Node*>(root_child0)->markDirtyAndPropagate();
   ASSERT_EQ(1, dirtiedCount);
 
   // `_dirtied` must NOT be called for the second time.
-  root_child0->markDirtyAndPropagate();
+  static_cast<yoga::Node*>(root_child0)->markDirtyAndPropagate();
   ASSERT_EQ(1, dirtiedCount);
 }
 
@@ -88,20 +91,20 @@ TEST(YogaTest, dirtied_hierarchy) {
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
 
   int dirtiedCount = 0;
-  root_child0->setContext(&dirtiedCount);
-  root_child0->setDirtiedFunc(_dirtied);
+  YGNodeSetContext(root_child0, &dirtiedCount);
+  YGNodeSetDirtiedFunc(root_child0, _dirtied);
 
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` must NOT be called for descendants.
-  root->markDirtyAndPropagate();
+  static_cast<yoga::Node*>(root)->markDirtyAndPropagate();
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` must NOT be called for the sibling node.
-  root_child1->markDirtyAndPropagate();
+  static_cast<yoga::Node*>(root_child1)->markDirtyAndPropagate();
   ASSERT_EQ(0, dirtiedCount);
 
   // `_dirtied` MUST be called in case of explicit dirtying.
-  root_child0->markDirtyAndPropagate();
+  static_cast<yoga::Node*>(root_child0)->markDirtyAndPropagate();
   ASSERT_EQ(1, dirtiedCount);
 }

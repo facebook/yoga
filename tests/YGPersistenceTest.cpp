@@ -7,10 +7,11 @@
 
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
-#include <yoga/YGNode.h>
+#include <yoga/node/Node.h>
 
 #include "util/TestUtil.h"
 
+using namespace facebook;
 using facebook::yoga::test::TestUtil;
 
 TEST(YogaTest, cloning_shared_root) {
@@ -273,9 +274,10 @@ TEST(YogaTest, mixed_shared_and_owned_children) {
   YGNodeInsertChild(root1, root1_child0, 0);
   YGNodeInsertChild(root1, root1_child2, 1);
 
-  auto children = root1->getChildren();
-  children.insert(children.begin() + 1, root0_child0);
-  root1->setChildren(children);
+  auto children = static_cast<yoga::Node*>(root1)->getChildren();
+  children.insert(children.begin() + 1, static_cast<yoga::Node*>(root0_child0));
+  static_cast<yoga::Node*>(root1)->setChildren(children);
+
   auto secondChild = YGNodeGetChild(root1, 1);
   ASSERT_EQ(secondChild, YGNodeGetChild(root0, 0));
   ASSERT_EQ(YGNodeGetChild(secondChild, 0), YGNodeGetChild(root0_child0, 0));
