@@ -9,14 +9,16 @@
 
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
-#include <yoga/YGConfig.h>
+#include <yoga/config/Config.h>
 #include <yoga/YGNode.h>
 
 #include <functional>
 #include <memory>
 
+using namespace facebook;
+
 struct ConfigCloningTest : public ::testing::Test {
-  std::unique_ptr<YGConfig, std::function<void(YGConfig*)>> config;
+  std::unique_ptr<yoga::Config, std::function<void(yoga::Config*)>> config;
   void SetUp() override;
   void TearDown() override;
 
@@ -56,7 +58,7 @@ TEST_F(ConfigCloningTest, can_clone_with_context) {
 }
 
 void ConfigCloningTest::SetUp() {
-  config = {YGConfigNew(), YGConfigFree};
+  config = {static_cast<yoga::Config*>(YGConfigNew()), YGConfigFree};
 }
 
 void ConfigCloningTest::TearDown() {
