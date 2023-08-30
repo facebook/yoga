@@ -6,7 +6,6 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
 struct _MeasureConstraint {
@@ -28,7 +27,7 @@ static YGSize _measure(
     float height,
     YGMeasureMode heightMode) {
   struct _MeasureConstraintList* constraintList =
-      (struct _MeasureConstraintList*) node->getContext();
+      (struct _MeasureConstraintList*) YGNodeGetContext(node);
   struct _MeasureConstraint* constraints = constraintList->constraints;
   uint32_t currentIndex = constraintList->length;
   (&constraints[currentIndex])->width = width;
@@ -55,10 +54,8 @@ TEST(YogaTest, exactly_measure_stretched_child_column) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  //  root_child0->setContext(&constraintList);
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
-  //  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -85,9 +82,8 @@ TEST(YogaTest, exactly_measure_stretched_child_row) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  //  root_child0->setContext(&constraintList);
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -113,8 +109,8 @@ TEST(YogaTest, at_most_main_axis_column) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -141,8 +137,8 @@ TEST(YogaTest, at_most_cross_axis_column) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -169,8 +165,8 @@ TEST(YogaTest, at_most_main_axis_row) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -198,8 +194,8 @@ TEST(YogaTest, at_most_cross_axis_row) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -225,8 +221,8 @@ TEST(YogaTest, flex_child) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -256,8 +252,8 @@ TEST(YogaTest, flex_child_with_flex_basis) {
   const YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetFlexBasis(root_child0, 0);
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -285,8 +281,8 @@ TEST(YogaTest, overflow_scroll_column) {
   YGNodeStyleSetWidth(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -318,8 +314,8 @@ TEST(YogaTest, overflow_scroll_row) {
   YGNodeStyleSetWidth(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNew();
-  root_child0->setContext(&constraintList);
-  root_child0->setMeasureFunc(_measure);
+  YGNodeSetContext(root_child0, &constraintList);
+  YGNodeSetMeasureFunc(root_child0, _measure);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);

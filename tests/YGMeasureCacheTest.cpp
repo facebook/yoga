@@ -6,7 +6,6 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
 static YGSize _measureMax(
@@ -15,7 +14,7 @@ static YGSize _measureMax(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  int* measureCount = (int*) node->getContext();
+  int* measureCount = (int*) YGNodeGetContext(node);
   (*measureCount)++;
 
   return YGSize{
@@ -30,7 +29,7 @@ static YGSize _measureMin(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  int* measureCount = (int*) node->getContext();
+  int* measureCount = (int*) YGNodeGetContext(node);
   *measureCount = *measureCount + 1;
   return YGSize{
       widthMode == YGMeasureModeUndefined ||
@@ -50,7 +49,7 @@ static YGSize _measure_84_49(
     YGMeasureMode /*widthMode*/,
     float /*height*/,
     YGMeasureMode /*heightMode*/) {
-  int* measureCount = (int*) node->getContext();
+  int* measureCount = (int*) YGNodeGetContext(node);
   if (measureCount) {
     (*measureCount)++;
   }
@@ -67,8 +66,8 @@ TEST(YogaTest, measure_once_single_flexible_child) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measureMax);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measureMax);
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -84,8 +83,8 @@ TEST(YogaTest, remeasure_with_same_exact_width_larger_than_needed_height) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measureMin);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measureMin);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
@@ -102,8 +101,8 @@ TEST(YogaTest, remeasure_with_same_atmost_width_larger_than_needed_height) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measureMin);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measureMin);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
@@ -120,8 +119,8 @@ TEST(YogaTest, remeasure_with_computed_width_larger_than_needed_height) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measureMin);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measureMin);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, 100, 100, YGDirectionLTR);
@@ -139,8 +138,8 @@ TEST(YogaTest, remeasure_with_atmost_computed_width_undefined_height) {
 
   const YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
-  root_child0->setContext(&measureCount);
-  root_child0->setMeasureFunc(_measureMin);
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measureMin);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGNodeCalculateLayout(root, 100, YGUndefined, YGDirectionLTR);
@@ -167,8 +166,8 @@ TEST(
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child0_child0 = YGNodeNew();
-  root_child0_child0->setContext(&measureCount);
-  root_child0_child0->setMeasureFunc(_measure_84_49);
+  YGNodeSetContext(root_child0_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0_child0, _measure_84_49);
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
