@@ -7,11 +7,11 @@
 
 #define YOGA_COMPACT_VALUE_TEST
 
-#include <yoga/style/CompactValue.h>
+#include <yoga/CompactValue.h>
 #include <gtest/gtest.h>
 #include <cmath>
 
-using facebook::yoga::CompactValue;
+using facebook::yoga::detail::CompactValue;
 
 const auto tooSmall = nextafterf(CompactValue::LOWER_BOUND, -INFINITY);
 const auto tooLargePoints =
