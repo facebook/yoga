@@ -154,24 +154,24 @@ ACCESSOR_TEST(display, YGDisplayFlex, YGDisplayNone, YGDisplayFlex)
 
 ACCESSOR_TEST(
     flex,
-    FloatOptional{},
-    FloatOptional{123.45f},
-    FloatOptional{-9.87f},
-    FloatOptional{})
+    YGFloatOptional{},
+    YGFloatOptional{123.45f},
+    YGFloatOptional{-9.87f},
+    YGFloatOptional{})
 
 ACCESSOR_TEST(
     flexGrow,
-    FloatOptional{},
-    FloatOptional{123.45f},
-    FloatOptional{-9.87f},
-    FloatOptional{})
+    YGFloatOptional{},
+    YGFloatOptional{123.45f},
+    YGFloatOptional{-9.87f},
+    YGFloatOptional{})
 
 ACCESSOR_TEST(
     flexShrink,
-    FloatOptional{},
-    FloatOptional{123.45f},
-    FloatOptional{-9.87f},
-    FloatOptional{})
+    YGFloatOptional{},
+    YGFloatOptional{123.45f},
+    YGFloatOptional{-9.87f},
+    YGFloatOptional{})
 
 ACCESSOR_TEST(
     flexBasis,
@@ -243,11 +243,11 @@ INDEX_ACCESSOR_TEST(
 
 ACCESSOR_TEST(
     aspectRatio,
-    FloatOptional{},
-    FloatOptional{-123.45f},
-    FloatOptional{9876.5f},
-    FloatOptional{0.0f},
-    FloatOptional{});
+    YGFloatOptional{},
+    YGFloatOptional{-123.45f},
+    YGFloatOptional{9876.5f},
+    YGFloatOptional{0.0f},
+    YGFloatOptional{});
 
 #endif
 
