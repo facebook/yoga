@@ -6,33 +6,33 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/node/Node.h>
+#include <yoga/YGNode.h>
 #include <ostream>
-
-using namespace facebook::yoga;
 
 inline bool operator==(const YGSize& lhs, const YGSize& rhs) {
   return lhs.width == rhs.width && lhs.height == rhs.height;
 }
 
-TEST(Node, hasMeasureFunc_initial) {
-  auto n = Node{};
+void PrintTo(const YGSize&, std::ostream*);
+
+TEST(YGNode, hasMeasureFunc_initial) {
+  auto n = YGNode{};
   ASSERT_FALSE(n.hasMeasureFunc());
 }
 
-TEST(Node, hasMeasureFunc_with_measure_fn) {
-  auto n = Node{};
-  n.setMeasureFunc([](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode) {
+TEST(YGNode, hasMeasureFunc_with_measure_fn) {
+  auto n = YGNode{};
+  n.setMeasureFunc([](YGNode*, float, YGMeasureMode, float, YGMeasureMode) {
     return YGSize{};
   });
   ASSERT_TRUE(n.hasMeasureFunc());
 }
 
-TEST(Node, measure_with_measure_fn) {
-  auto n = Node{};
+TEST(YGNode, measure_with_measure_fn) {
+  auto n = YGNode{};
 
   n.setMeasureFunc(
-      [](YGNodeRef, float w, YGMeasureMode wm, float h, YGMeasureMode hm) {
+      [](YGNode*, float w, YGMeasureMode wm, float h, YGMeasureMode hm) {
         return YGSize{w * static_cast<int>(wm), h / static_cast<int>(hm)};
       });
 
@@ -41,10 +41,10 @@ TEST(Node, measure_with_measure_fn) {
       (YGSize{23, 12}));
 }
 
-TEST(Node, measure_with_context_measure_fn) {
-  auto n = Node{};
+TEST(YGNode, measure_with_context_measure_fn) {
+  auto n = YGNode{};
   n.setMeasureFunc(
-      [](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode, void* ctx) {
+      [](YGNode*, float, YGMeasureMode, float, YGMeasureMode, void* ctx) {
         return *(YGSize*) ctx;
       });
 
@@ -54,14 +54,14 @@ TEST(Node, measure_with_context_measure_fn) {
       result);
 }
 
-TEST(Node, switching_measure_fn_types) {
-  auto n = Node{};
+TEST(YGNode, switching_measure_fn_types) {
+  auto n = YGNode{};
   n.setMeasureFunc(
-      [](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode, void*) {
+      [](YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*) {
         return YGSize{};
       });
   n.setMeasureFunc(
-      [](YGNodeRef, float w, YGMeasureMode wm, float h, YGMeasureMode hm) {
+      [](YGNode*, float w, YGMeasureMode wm, float h, YGMeasureMode hm) {
         return YGSize{w * static_cast<int>(wm), h / static_cast<int>(hm)};
       });
 
@@ -70,9 +70,9 @@ TEST(Node, switching_measure_fn_types) {
       (YGSize{23, 12}));
 }
 
-TEST(Node, hasMeasureFunc_after_unset) {
-  auto n = Node{};
-  n.setMeasureFunc([](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode) {
+TEST(YGNode, hasMeasureFunc_after_unset) {
+  auto n = YGNode{};
+  n.setMeasureFunc([](YGNode*, float, YGMeasureMode, float, YGMeasureMode) {
     return YGSize{};
   });
 
@@ -80,10 +80,10 @@ TEST(Node, hasMeasureFunc_after_unset) {
   ASSERT_FALSE(n.hasMeasureFunc());
 }
 
-TEST(Node, hasMeasureFunc_after_unset_context) {
-  auto n = Node{};
+TEST(YGNode, hasMeasureFunc_after_unset_context) {
+  auto n = YGNode{};
   n.setMeasureFunc(
-      [](YGNodeRef, float, YGMeasureMode, float, YGMeasureMode, void*) {
+      [](YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*) {
         return YGSize{};
       });
 
@@ -91,27 +91,27 @@ TEST(Node, hasMeasureFunc_after_unset_context) {
   ASSERT_FALSE(n.hasMeasureFunc());
 }
 
-TEST(Node, hasBaselineFunc_initial) {
-  auto n = Node{};
+TEST(YGNode, hasBaselineFunc_initial) {
+  auto n = YGNode{};
   ASSERT_FALSE(n.hasBaselineFunc());
 }
 
-TEST(Node, hasBaselineFunc_with_baseline_fn) {
-  auto n = Node{};
-  n.setBaselineFunc([](YGNodeRef, float, float) { return 0.0f; });
+TEST(YGNode, hasBaselineFunc_with_baseline_fn) {
+  auto n = YGNode{};
+  n.setBaselineFunc([](YGNode*, float, float) { return 0.0f; });
   ASSERT_TRUE(n.hasBaselineFunc());
 }
 
-TEST(Node, baseline_with_baseline_fn) {
-  auto n = Node{};
-  n.setBaselineFunc([](YGNodeRef, float w, float h) { return w + h; });
+TEST(YGNode, baseline_with_baseline_fn) {
+  auto n = YGNode{};
+  n.setBaselineFunc([](YGNode*, float w, float h) { return w + h; });
 
   ASSERT_EQ(n.baseline(1.25f, 2.5f, nullptr), 3.75f);
 }
 
-TEST(Node, baseline_with_context_baseline_fn) {
-  auto n = Node{};
-  n.setBaselineFunc([](YGNodeRef, float w, float h, void* ctx) {
+TEST(YGNode, baseline_with_context_baseline_fn) {
+  auto n = YGNode{};
+  n.setBaselineFunc([](YGNode*, float w, float h, void* ctx) {
     return w + h + *(float*) ctx;
   });
 
@@ -119,25 +119,29 @@ TEST(Node, baseline_with_context_baseline_fn) {
   ASSERT_EQ(n.baseline(1.25f, 2.5f, &ctx), -6.25f);
 }
 
-TEST(Node, hasBaselineFunc_after_unset) {
-  auto n = Node{};
-  n.setBaselineFunc([](YGNodeRef, float, float) { return 0.0f; });
+TEST(YGNode, hasBaselineFunc_after_unset) {
+  auto n = YGNode{};
+  n.setBaselineFunc([](YGNode*, float, float) { return 0.0f; });
 
   n.setBaselineFunc(nullptr);
   ASSERT_FALSE(n.hasBaselineFunc());
 }
 
-TEST(Node, hasBaselineFunc_after_unset_context) {
-  auto n = Node{};
-  n.setBaselineFunc([](YGNodeRef, float, float, void*) { return 0.0f; });
+TEST(YGNode, hasBaselineFunc_after_unset_context) {
+  auto n = YGNode{};
+  n.setBaselineFunc([](YGNode*, float, float, void*) { return 0.0f; });
 
   n.setMeasureFunc(nullptr);
   ASSERT_FALSE(n.hasMeasureFunc());
 }
 
-TEST(Node, switching_baseline_fn_types) {
-  auto n = Node{};
-  n.setBaselineFunc([](YGNodeRef, float, float, void*) { return 0.0f; });
-  n.setBaselineFunc([](YGNodeRef, float, float) { return 1.0f; });
+TEST(YGNode, switching_baseline_fn_types) {
+  auto n = YGNode{};
+  n.setBaselineFunc([](YGNode*, float, float, void*) { return 0.0f; });
+  n.setBaselineFunc([](YGNode*, float, float) { return 1.0f; });
   ASSERT_EQ(n.baseline(1, 2, nullptr), 1.0f);
+}
+
+void PrintTo(const YGSize& size, std::ostream* os) {
+  *os << "YGSize{" << size.width << ", " << size.height << "}";
 }

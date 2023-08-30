@@ -9,6 +9,7 @@
 #include <yoga/event/event.h>
 #include <yoga/Yoga.h>
 #include <yoga/YGEnums.h>
+#include <yoga/YGNode.h>
 
 #include <algorithm>
 #include <functional>
@@ -29,7 +30,7 @@ struct TypedEventTestData<Event::LayoutPassEnd> {
 };
 
 struct EventArgs {
-  const YGNodeConstRef node;
+  const YGNode* node;
   Event::Type type;
   std::unique_ptr<void, std::function<void(void*)>> dataPtr;
   std::unique_ptr<void, std::function<void(void*)>> eventTestDataPtr;
@@ -47,7 +48,7 @@ struct EventArgs {
 
 class EventTest : public ::testing::Test {
   ScopedEventSubscription subscription = {&EventTest::listen};
-  static void listen(YGNodeConstRef, Event::Type, Event::Data);
+  static void listen(const YGNode&, Event::Type, Event::Data);
 
 public:
   static std::vector<EventArgs> events;
@@ -283,16 +284,16 @@ TEST_F(EventTest, baseline_functions_get_wrapped) {
 namespace {
 
 template <Event::Type E>
-EventArgs createArgs(YGNodeConstRef node, const Event::Data data) {
+EventArgs createArgs(const YGNode& node, const Event::Data data) {
   using Data = Event::TypedData<E>;
   auto deleteData = [](void* x) { delete static_cast<Data*>(x); };
 
-  return {node, E, {new Data{(data.get<E>())}, deleteData}, nullptr};
+  return {&node, E, {new Data{(data.get<E>())}, deleteData}, nullptr};
 }
 
 template <Event::Type E>
 EventArgs createArgs(
-    YGNodeConstRef node,
+    const YGNode& node,
     const Event::Data data,
     TypedEventTestData<E> eventTestData) {
   using EventTestData = TypedEventTestData<E>;
@@ -308,10 +309,7 @@ EventArgs createArgs(
 
 } // namespace
 
-void EventTest::listen(
-    YGNodeConstRef node,
-    Event::Type type,
-    Event::Data data) {
+void EventTest::listen(const YGNode& node, Event::Type type, Event::Data data) {
   switch (type) {
     case Event::NodeAllocation:
       events.push_back(createArgs<Event::NodeAllocation>(node, data));
