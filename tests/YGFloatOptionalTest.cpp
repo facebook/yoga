@@ -7,9 +7,11 @@
 
 #include <gtest/gtest.h>
 
-#include <yoga/Utils.h>
+#include <yoga/numeric/Comparison.h>
 #include <yoga/YGFloatOptional.h>
 #include <yoga/YGValue.h>
+
+using namespace facebook;
 
 constexpr auto empty = YGFloatOptional{};
 constexpr auto zero = YGFloatOptional{0.0f};
@@ -192,13 +194,13 @@ TEST(YGFloatOptional, addition) {
   ASSERT_EQ(negative + empty, empty);
 }
 
-TEST(YGFloatOptionalTest, YGFloatOptionalMax) {
-  ASSERT_EQ(YGFloatOptionalMax(empty, empty), empty);
-  ASSERT_EQ(YGFloatOptionalMax(empty, positive), positive);
-  ASSERT_EQ(YGFloatOptionalMax(negative, empty), negative);
-  ASSERT_EQ(YGFloatOptionalMax(negative, YGFloatOptional{-INFINITY}), negative);
+TEST(YGFloatOptionalTest, maxOrDefined) {
+  ASSERT_EQ(yoga::maxOrDefined(empty, empty), empty);
+  ASSERT_EQ(yoga::maxOrDefined(empty, positive), positive);
+  ASSERT_EQ(yoga::maxOrDefined(negative, empty), negative);
+  ASSERT_EQ(yoga::maxOrDefined(negative, YGFloatOptional{-INFINITY}), negative);
   ASSERT_EQ(
-      YGFloatOptionalMax(YGFloatOptional{1.0f}, YGFloatOptional{1.125f}),
+      yoga::maxOrDefined(YGFloatOptional{1.0f}, YGFloatOptional{1.125f}),
       YGFloatOptional{1.125f});
 }
 
