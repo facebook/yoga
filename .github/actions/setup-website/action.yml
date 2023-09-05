@@ -19,5 +19,5 @@ runs:
     # current version of gatsby is incompatible with hoisting.
     - name: yarn install
       shell: bash
-      run: yarn install --frozen-lockfile
+      run: yarn install --frozen-lockfile --network-timeout 1000000
       working-directory: website
