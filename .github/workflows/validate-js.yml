@@ -84,6 +84,9 @@ jobs:
         run: yarn tsc
         working-directory: javascript
 
+      - name: ls
+        run: ls -l /home/runner/.cache/yarn/v6
+
   pack:
     name: Pack
     runs-on: ubuntu-latest
