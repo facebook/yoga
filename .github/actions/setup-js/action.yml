@@ -10,8 +10,15 @@ runs:
       uses: ./.github/actions/install-ninja
 
     - name: Setup Node environment
-      uses: actions/setup-node@v3.6.0
+      uses: actions/setup-node
       with:
         node-version: 18.x
         cache: yarn
         cache-dependency-path: yarn.lock
+      env:
+        # https://github.com/actions/setup-node/issues/317
+        FORCE_COLOR: 0
+
+    - name: yarn install
+      shell: bash
+      run: yarn install --frozen-lockfile

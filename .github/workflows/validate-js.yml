@@ -23,9 +23,6 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
-      - name: yarn install
-        run: yarn install --frozen-lockfile
-
       - name: yarn benchmark
         run: yarn benchmark
         working-directory: javascript
@@ -41,9 +38,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup-js
-
-      - name: yarn install
-        run: yarn install --frozen-lockfile
 
       - name: yarn build
         run: yarn build
@@ -61,9 +55,6 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
-      - name: yarn install
-        run: yarn install --frozen-lockfile
-
       - name: yarn test
         run: yarn test
         working-directory: javascript
@@ -77,9 +68,6 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
-      - name: yarn install
-        run: yarn install --frozen-lockfile
-
       - name: yarn lint
         run: yarn lint
 
@@ -92,15 +80,9 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
-      - name: yarn install
-        run: yarn install --frozen-lockfile
-
       - name: yarn tsc
         run: yarn tsc
         working-directory: javascript
-
-      - name: ls
-        run: ls -l /home/runner/.cache/yarn/v6
 
   pack:
     name: Pack
@@ -110,9 +92,6 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup-js
-
-      - name: yarn install
-        run: yarn install --frozen-lockfile
 
       - name: yarn pack
         run: yarn pack --filename yoga-layout.tar.gz
