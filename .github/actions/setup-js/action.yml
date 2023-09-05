@@ -20,9 +20,9 @@ runs:
       shell: bash
       run: yarn install --frozen-lockfile
 
-    - name: yarn cache get
+    - name: yarn cache dir
       shell: bash
-      run: yarn cache get
+      run: yarn cache dir
 
     - name: wut
       shell: bash
