@@ -10,7 +10,7 @@ runs:
       uses: ./.github/actions/install-ninja
 
     - name: Setup Node environment
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3.6.0
       with:
         node-version: 18.x
         cache: yarn
