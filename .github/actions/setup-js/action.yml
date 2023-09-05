@@ -19,3 +19,15 @@ runs:
     - name: yarn install
       shell: bash
       run: yarn install --frozen-lockfile
+
+    - name: yarn cache get
+      shell: bash
+      run: yarn cache get
+
+    - name: wut
+      shell: bash
+      run: which yarn
+
+    - name: ls
+      shell: bash
+      run: ls -l /home/runner/.cache/yarn/v6
