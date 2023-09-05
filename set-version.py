@@ -19,13 +19,13 @@ version = sys.argv[1]
 with open("gradle.properties", "r+") as f:
     new_contents = re.sub(r"VERSION_NAME=.*", f"VERSION_NAME={version}", f.read())
     f.seek(0)
+    f.truncate()
     f.write(new_contents)
-
 
 with open("javascript/package.json", "r+") as f:
     new_contents = re.sub(r'"version": ".*",', f'"version": "{version}",', f.read())
-    print(new_contents)
     f.seek(0)
+    f.truncate()
     f.write(new_contents)
 
 with open("Yoga.podspec", "r+") as f:
@@ -33,4 +33,5 @@ with open("Yoga.podspec", "r+") as f:
         r"spec\.version = '.*'", f"spec.version = '{version}'", f.read()
     )
     f.seek(0)
+    f.truncate()
     f.write(new_contents)

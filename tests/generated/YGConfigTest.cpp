@@ -9,18 +9,20 @@
 
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
-#include <yoga/YGConfig.h>
-#include <yoga/YGNode.h>
+#include <yoga/config/Config.h>
+#include <yoga/node/Node.h>
 
 #include <functional>
 #include <memory>
 
+using namespace facebook;
+
 struct ConfigCloningTest : public ::testing::Test {
-  std::unique_ptr<YGConfig, std::function<void(YGConfig*)>> config;
+  std::unique_ptr<yoga::Config, std::function<void(yoga::Config*)>> config;
   void SetUp() override;
   void TearDown() override;
 
-  static YGNode clonedNode;
+  static yoga::Node clonedNode;
   static YGNodeRef cloneNode(YGNodeRef, YGNodeRef, int) { return &clonedNode; }
   static YGNodeRef doNotClone(YGNodeRef, YGNodeRef, int) { return nullptr; }
 };
@@ -28,7 +30,7 @@ struct ConfigCloningTest : public ::testing::Test {
 TEST_F(ConfigCloningTest, uses_values_provided_by_cloning_callback) {
   config->setCloneNodeCallback(cloneNode);
 
-  YGNode node{}, owner{};
+  yoga::Node node{}, owner{};
   auto clone = config->cloneNode(&node, &owner, 0, nullptr);
 
   ASSERT_EQ(clone, &clonedNode);
@@ -39,7 +41,7 @@ TEST_F(
     falls_back_to_regular_cloning_if_callback_returns_null) {
   config->setCloneNodeCallback(doNotClone);
 
-  YGNode node{}, owner{};
+  yoga::Node node{}, owner{};
   auto clone = config->cloneNode(&node, &owner, 0, nullptr);
 
   ASSERT_NE(clone, nullptr);
@@ -51,16 +53,16 @@ TEST_F(ConfigCloningTest, can_clone_with_context) {
     return (YGNodeRef) context;
   });
 
-  YGNode node{}, owner{}, clone{};
+  yoga::Node node{}, owner{}, clone{};
   ASSERT_EQ(config->cloneNode(&node, &owner, 0, &clone), &clone);
 }
 
 void ConfigCloningTest::SetUp() {
-  config = {YGConfigNew(), YGConfigFree};
+  config = {static_cast<yoga::Config*>(YGConfigNew()), YGConfigFree};
 }
 
 void ConfigCloningTest::TearDown() {
   config.reset();
 }
 
-YGNode ConfigCloningTest::clonedNode = {};
+yoga::Node ConfigCloningTest::clonedNode = {};

@@ -12,34 +12,38 @@ env:
 
 jobs:
   test:
-    name: Build and Test [${{ matrix.os }}][${{ matrix.mode }}]
-    runs-on: ${{ matrix.os }}
+    name: Build and Test [${{ matrix.toolchain }}][${{ matrix.mode }}]
+    runs-on: ${{ (matrix.toolchain == 'MSVC') && 'windows-latest' || 'ubuntu-latest'  }}
     strategy:
       matrix:
         mode: [Debug, Release]
-        os: [ubuntu-latest] # TODO: fix issues building GTest Binary with MSVC in GitHub Actions
+        toolchain: [Clang, GCC] # TODO: fix issues building GTest Binary with MSVC in GitHub Actions
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup
         uses: ./.github/actions/setup-cpp
+        with:
+          toolchain: ${{ matrix.toolchain }}
 
       - name: Unit tests
         run: ./unit_tests ${{ matrix.mode }}
 
   benchmark:
-    name: Benchmark [${{ matrix.os }}]
-    runs-on: ${{ matrix.os }}
+    name: Benchmark [${{ matrix.toolchain }}]
+    runs-on: ${{ (matrix.toolchain == 'MSVC') && 'windows-latest' || 'ubuntu-latest'  }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        toolchain: [Clang, GCC, MSVC]
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup
         uses: ./.github/actions/setup-cpp
+        with:
+          toolchain: ${{ matrix.toolchain }}
 
       - name: Build benchmark
         run: |
@@ -60,5 +64,3 @@ jobs:
 
       - name: clang-format
         uses: ./.github/actions/clang-format
-        with:
-          directory: ./yoga

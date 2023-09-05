@@ -2,8 +2,22 @@
   "name": "yoga-repo",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
   "workspaces": [
     "javascript",
     "website-next"
-  ]
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^27.1.7",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "2.8.8",
+    "typescript": "5.0.4"
+  }
 }

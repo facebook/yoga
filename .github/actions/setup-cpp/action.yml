@@ -1,4 +1,9 @@
 name: Setup C++ envirionment
+inputs:
+  toolchain:
+    description: Compiler toolchain to use (Clang, GCC, or MSVC)
+    required: false
+    default: 'Clang'
 
 runs:
   using: "composite"
@@ -6,6 +11,20 @@ runs:
     - name: Install Ninja
       if: ${{ runner.os != 'Windows' }}
       uses: ./.github/actions/install-ninja
+
+    - name: Set Clang as compiler
+      if: ${{ inputs.toolchain == 'Clang' }}
+      shell: bash
+      run: |
+        echo "CC=/usr/bin/clang" >> $GITHUB_ENV
+        echo "CXX=/usr/bin/clang++" >> $GITHUB_ENV
+
+    - name: Set GCC as compiler
+      if: ${{ inputs.toolchain == 'GCC' }}
+      shell: bash
+      run: |
+        echo "CC=/usr/bin/gcc" >> $GITHUB_ENV
+        echo "CXX=/usr/bin/g++" >> $GITHUB_ENV
 
     - name: Setup VS Developer Command Prompt
       if: ${{ runner.os == 'Windows' }}

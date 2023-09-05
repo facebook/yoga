@@ -27,9 +27,11 @@ export const JSEnumLookup = {
 };
 
 function getEnum(yogaEnum: string, value: string | number): string {
-  return `yoga.${Object.keys(yoga)
-    .filter(key => key.toLowerCase().startsWith(yogaEnum.toLowerCase()))
-    .find(key => yoga[key] === value) || value}`;
+  return `yoga.${
+    Object.keys(yoga)
+      .filter(key => key.toLowerCase().startsWith(yogaEnum.toLowerCase()))
+      .find(key => yoga[key] === value) || value
+  }`;
 }
 
 function setProperty(

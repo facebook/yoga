@@ -81,7 +81,11 @@ export type MeasureFunction = (
 ) => Size;
 
 export type Node = {
-  calculateLayout(width?: number, height?: number, direction?: Direction): void;
+  calculateLayout(
+    width?: number | 'auto',
+    height?: number | 'auto',
+    direction?: Direction,
+  ): void;
   copyStyle(node: Node): void;
   free(): void;
   freeRecursive(): void;

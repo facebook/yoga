@@ -96,7 +96,9 @@ function getLayoutCode(
       }`,
   );
   lines.push(indent + ` newWithView:{}`);
-  lines.push(indent + ` size:{${getValue(node.width)},${getValue(node.height)}}`);
+  lines.push(
+    indent + ` size:{${getValue(node.width)},${getValue(node.height)}}`,
+  );
 
   const CKFlexboxComponentStyle = [
     'direction',

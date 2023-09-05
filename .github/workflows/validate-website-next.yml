@@ -1,0 +1,41 @@
+name: Website (Next)
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: Build Yoga
+        run: yarn build
+        working-directory: javascript
+
+      - name: Build Website
+        run: yarn build
+        working-directory: website-next
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+        working-directory: javascript
+
+      - name: yarn tsc
+        run: yarn tsc
+        working-directory: website-next
