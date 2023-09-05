@@ -15,19 +15,3 @@ runs:
         node-version: 18.x
         cache: yarn
         cache-dependency-path: yarn.lock
-
-    - name: yarn install
-      shell: bash
-      run: yarn install --frozen-lockfile
-
-    - name: yarn cache dir
-      shell: bash
-      run: yarn cache dir
-
-    - name: wut
-      shell: bash
-      run: which yarn
-
-    - name: ls
-      shell: bash
-      run: ls -l /home/runner/.cache/yarn/v6

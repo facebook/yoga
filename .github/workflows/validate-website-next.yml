@@ -17,6 +17,9 @@ on:
       - name: Setup
         uses: ./.github/actions/setup-js
 
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+
       - name: Build Yoga
         run: yarn build
         working-directory: javascript
