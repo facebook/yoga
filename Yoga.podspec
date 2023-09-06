@@ -32,6 +32,7 @@ Pod::Spec.new do |spec|
       '-Wall',
       '-Werror',
       '-Wextra',
+      '-Wconversion',
       '-std=c++17',
       '-fPIC'
   ]
