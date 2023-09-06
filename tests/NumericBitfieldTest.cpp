@@ -13,7 +13,7 @@
 namespace facebook::yoga {
 
 TEST(NumericBitfield, one_boolean_defaults_to_false) {
-  constexpr uint8_t flags = 0;
+  constexpr uint32_t flags = 0;
 
   ASSERT_EQ(getBooleanData(flags, 0), false);
   static_assert(
@@ -22,7 +22,7 @@ TEST(NumericBitfield, one_boolean_defaults_to_false) {
 }
 
 TEST(NumericBitfield, one_boolean_can_be_initialized_to_true) {
-  constexpr uint8_t flags = 1;
+  constexpr uint32_t flags = 1;
 
   ASSERT_EQ(getBooleanData(flags, 0), true);
   static_assert(
@@ -31,14 +31,14 @@ TEST(NumericBitfield, one_boolean_can_be_initialized_to_true) {
 }
 
 TEST(NumericBitfield, one_boolean_can_be_set_to_true) {
-  uint8_t flags = 0;
+  uint32_t flags = 0;
 
   setBooleanData(flags, 0, true);
   ASSERT_EQ(getBooleanData(flags, 0), true);
 }
 
 TEST(NumericBitfield, second_boolean_defaults_to_false) {
-  constexpr uint8_t flags = 0;
+  constexpr uint32_t flags = 0;
 
   ASSERT_EQ(getBooleanData(flags, 1), false);
   static_assert(
@@ -47,7 +47,7 @@ TEST(NumericBitfield, second_boolean_defaults_to_false) {
 }
 
 TEST(NumericBitfield, second_boolean_can_be_initialized_to_true) {
-  constexpr uint8_t flags = 2;
+  constexpr uint32_t flags = 2;
 
   ASSERT_EQ(getBooleanData(flags, 0), false);
   ASSERT_EQ(getBooleanData(flags, 1), true);
@@ -60,7 +60,7 @@ TEST(NumericBitfield, second_boolean_can_be_initialized_to_true) {
 }
 
 TEST(NumericBitfield, second_boolean_can_be_set_to_true) {
-  uint8_t flags = 0;
+  uint32_t flags = 0;
 
   setBooleanData(flags, 1, true);
   ASSERT_EQ(getBooleanData(flags, 0), false);
@@ -68,7 +68,7 @@ TEST(NumericBitfield, second_boolean_can_be_set_to_true) {
 }
 
 TEST(NumericBitfield, third_boolean_defaults_to_false) {
-  constexpr uint8_t flags = 0;
+  constexpr uint32_t flags = 0;
 
   ASSERT_EQ(getBooleanData(flags, 2), false);
   static_assert(
@@ -77,7 +77,7 @@ TEST(NumericBitfield, third_boolean_defaults_to_false) {
 }
 
 TEST(NumericBitfield, third_boolean_can_be_initialized_to_true) {
-  constexpr uint8_t flags = 4;
+  constexpr uint32_t flags = 4;
 
   ASSERT_EQ(getBooleanData(flags, 0), false);
   ASSERT_EQ(getBooleanData(flags, 1), false);
@@ -94,7 +94,7 @@ TEST(NumericBitfield, third_boolean_can_be_initialized_to_true) {
 }
 
 TEST(NumericBitfield, third_boolean_can_be_set_to_true) {
-  uint8_t flags = 0;
+  uint32_t flags = 0;
 
   setBooleanData(flags, 2, true);
   ASSERT_EQ(getBooleanData(flags, 0), false);
@@ -103,7 +103,7 @@ TEST(NumericBitfield, third_boolean_can_be_set_to_true) {
 }
 
 TEST(NumericBitfield, setting_boolean_values_does_not_spill_over) {
-  uint8_t flags = 0;
+  uint32_t flags = 0;
 
   setBooleanData(flags, 1, (bool) 7);
 
@@ -113,7 +113,7 @@ TEST(NumericBitfield, setting_boolean_values_does_not_spill_over) {
 }
 
 TEST(NumericBitfield, first_enum_defaults_to_0) {
-  constexpr uint8_t flags = 0;
+  constexpr uint32_t flags = 0;
 
   ASSERT_EQ(getEnumData<YGAlign>(flags, 0), YGAlignAuto);
   static_assert(
@@ -122,7 +122,7 @@ TEST(NumericBitfield, first_enum_defaults_to_0) {
 }
 
 TEST(NumericBitfield, first_enum_can_be_set) {
-  uint8_t flags = 0;
+  uint32_t flags = 0;
 
   setEnumData<YGAlign>(flags, 0, YGAlignSpaceBetween);
 
@@ -130,7 +130,7 @@ TEST(NumericBitfield, first_enum_can_be_set) {
 }
 
 TEST(NumericBitfield, second_enum_defaults_to_0) {
-  constexpr uint8_t flags = 0;
+  constexpr uint32_t flags = 0;
   static constexpr size_t alignOffset = 0;
   static constexpr size_t edgeOffset = 3;
 
@@ -145,7 +145,7 @@ TEST(NumericBitfield, second_enum_defaults_to_0) {
 }
 
 TEST(NumericBitfield, second_enum_can_be_set) {
-  uint8_t flags = 0;
+  uint32_t flags = 0;
   static constexpr size_t alignOffset = 0;
   static constexpr size_t edgeOffset = 3;
 
@@ -156,7 +156,7 @@ TEST(NumericBitfield, second_enum_can_be_set) {
 }
 
 TEST(NumericBitfield, third_enum_defaults_to_0) {
-  constexpr uint8_t flags = 0;
+  constexpr uint32_t flags = 0;
   static constexpr size_t alignOffset = 0;
   static constexpr size_t boolOffset = 3;
   static constexpr size_t edgesOffset = 4;
@@ -176,7 +176,7 @@ TEST(NumericBitfield, third_enum_defaults_to_0) {
 }
 
 TEST(NumericBitfield, third_enum_can_be_set) {
-  uint8_t flags = 0;
+  uint32_t flags = 0;
   static constexpr size_t alignOffset = 0;
   static constexpr size_t boolOffset = 3;
   static constexpr size_t edgesOffset = 4;
@@ -189,12 +189,13 @@ TEST(NumericBitfield, third_enum_can_be_set) {
 }
 
 TEST(NumericBitfield, setting_values_does_not_spill_over) {
-  uint8_t flags = 0;
+  uint32_t flags = 0;
   static constexpr size_t alignOffset = 0;
   static constexpr size_t edgesOffset = 3;
   static constexpr size_t boolOffset = 7;
 
-  setEnumData<YGEdge>(flags, edgesOffset, (YGEdge) 0xffffff);
+  uint32_t edge = 0xffffff;
+  setEnumData<YGEdge>(flags, edgesOffset, (YGEdge) edge);
 
   ASSERT_EQ(getEnumData<YGAlign>(flags, alignOffset), 0);
   ASSERT_EQ(getBooleanData(flags, boolOffset), false);
