@@ -7,17 +7,20 @@
 
 #include <gtest/gtest.h>
 
-#include <yoga/Utils.h>
-#include <yoga/YGFloatOptional.h>
+#include <yoga/numeric/Comparison.h>
+#include <yoga/numeric/FloatOptional.h>
 #include <yoga/YGValue.h>
 
-constexpr auto empty = YGFloatOptional{};
-constexpr auto zero = YGFloatOptional{0.0f};
-constexpr auto one = YGFloatOptional{1.0f};
-constexpr auto positive = YGFloatOptional{1234.5f};
-constexpr auto negative = YGFloatOptional{-9876.5f};
+using namespace facebook;
+using namespace facebook::yoga;
 
-TEST(YGFloatOptional, value) {
+constexpr auto empty = FloatOptional{};
+constexpr auto zero = FloatOptional{0.0f};
+constexpr auto one = FloatOptional{1.0f};
+constexpr auto positive = FloatOptional{1234.5f};
+constexpr auto negative = FloatOptional{-9876.5f};
+
+TEST(FloatOptional, value) {
   ASSERT_TRUE(YGFloatIsUndefined(empty.unwrap()));
   ASSERT_EQ(zero.unwrap(), 0.0f);
   ASSERT_EQ(one.unwrap(), 1.0f);
@@ -31,7 +34,7 @@ TEST(YGFloatOptional, value) {
   ASSERT_FALSE(negative.isUndefined());
 }
 
-TEST(YGFloatOptional, equality) {
+TEST(FloatOptional, equality) {
   ASSERT_TRUE(empty == empty);
   ASSERT_TRUE(empty == YGUndefined);
   ASSERT_FALSE(empty == zero);
@@ -56,7 +59,7 @@ TEST(YGFloatOptional, equality) {
   ASSERT_FALSE(negative == zero);
 }
 
-TEST(YGFloatOptional, inequality) {
+TEST(FloatOptional, inequality) {
   ASSERT_FALSE(empty != empty);
   ASSERT_FALSE(empty != YGUndefined);
   ASSERT_TRUE(empty != zero);
@@ -81,7 +84,7 @@ TEST(YGFloatOptional, inequality) {
   ASSERT_TRUE(negative != zero);
 }
 
-TEST(YGFloatOptional, greater_than_with_undefined) {
+TEST(FloatOptional, greater_than_with_undefined) {
   ASSERT_FALSE(empty > empty);
   ASSERT_FALSE(empty > zero);
   ASSERT_FALSE(empty > one);
@@ -93,7 +96,7 @@ TEST(YGFloatOptional, greater_than_with_undefined) {
   ASSERT_FALSE(negative > empty);
 }
 
-TEST(YGFloatOptional, greater_than) {
+TEST(FloatOptional, greater_than) {
   ASSERT_TRUE(zero > negative);
   ASSERT_FALSE(zero > zero);
   ASSERT_FALSE(zero > positive);
@@ -103,10 +106,10 @@ TEST(YGFloatOptional, greater_than) {
   ASSERT_TRUE(one > zero);
   ASSERT_FALSE(one > positive);
 
-  ASSERT_TRUE(negative > YGFloatOptional{-INFINITY});
+  ASSERT_TRUE(negative > FloatOptional{-INFINITY});
 }
 
-TEST(YGFloatOptional, less_than_with_undefined) {
+TEST(FloatOptional, less_than_with_undefined) {
   ASSERT_FALSE(empty < empty);
   ASSERT_FALSE(zero < empty);
   ASSERT_FALSE(one < empty);
@@ -118,7 +121,7 @@ TEST(YGFloatOptional, less_than_with_undefined) {
   ASSERT_FALSE(empty < negative);
 }
 
-TEST(YGFloatOptional, less_than) {
+TEST(FloatOptional, less_than) {
   ASSERT_TRUE(negative < zero);
   ASSERT_FALSE(zero < zero);
   ASSERT_FALSE(positive < zero);
@@ -128,10 +131,10 @@ TEST(YGFloatOptional, less_than) {
   ASSERT_TRUE(zero < one);
   ASSERT_FALSE(positive < one);
 
-  ASSERT_TRUE(YGFloatOptional{-INFINITY} < negative);
+  ASSERT_TRUE(FloatOptional{-INFINITY} < negative);
 }
 
-TEST(YGFloatOptional, greater_than_equals_with_undefined) {
+TEST(FloatOptional, greater_than_equals_with_undefined) {
   ASSERT_TRUE(empty >= empty);
   ASSERT_FALSE(empty >= zero);
   ASSERT_FALSE(empty >= one);
@@ -143,7 +146,7 @@ TEST(YGFloatOptional, greater_than_equals_with_undefined) {
   ASSERT_FALSE(negative >= empty);
 }
 
-TEST(YGFloatOptional, greater_than_equals) {
+TEST(FloatOptional, greater_than_equals) {
   ASSERT_TRUE(zero >= negative);
   ASSERT_TRUE(zero >= zero);
   ASSERT_FALSE(zero >= positive);
@@ -153,10 +156,10 @@ TEST(YGFloatOptional, greater_than_equals) {
   ASSERT_TRUE(one >= zero);
   ASSERT_FALSE(one >= positive);
 
-  ASSERT_TRUE(negative >= YGFloatOptional{-INFINITY});
+  ASSERT_TRUE(negative >= FloatOptional{-INFINITY});
 }
 
-TEST(YGFloatOptional, less_than_equals_with_undefined) {
+TEST(FloatOptional, less_than_equals_with_undefined) {
   ASSERT_TRUE(empty <= empty);
   ASSERT_FALSE(zero <= empty);
   ASSERT_FALSE(one <= empty);
@@ -168,7 +171,7 @@ TEST(YGFloatOptional, less_than_equals_with_undefined) {
   ASSERT_FALSE(empty <= negative);
 }
 
-TEST(YGFloatOptional, less_than_equals) {
+TEST(FloatOptional, less_than_equals) {
   ASSERT_TRUE(negative <= zero);
   ASSERT_TRUE(zero <= zero);
   ASSERT_FALSE(positive <= zero);
@@ -178,32 +181,32 @@ TEST(YGFloatOptional, less_than_equals) {
   ASSERT_TRUE(zero <= one);
   ASSERT_FALSE(positive <= one);
 
-  ASSERT_TRUE(YGFloatOptional{-INFINITY} <= negative);
+  ASSERT_TRUE(FloatOptional{-INFINITY} <= negative);
 }
 
-TEST(YGFloatOptional, addition) {
+TEST(FloatOptional, addition) {
   auto n = negative.unwrap();
   auto p = positive.unwrap();
 
   ASSERT_EQ(zero + one, one);
-  ASSERT_EQ(negative + positive, YGFloatOptional{n + p});
+  ASSERT_EQ(negative + positive, FloatOptional{n + p});
   ASSERT_EQ(empty + zero, empty);
   ASSERT_EQ(empty + empty, empty);
   ASSERT_EQ(negative + empty, empty);
 }
 
-TEST(YGFloatOptionalTest, YGFloatOptionalMax) {
-  ASSERT_EQ(YGFloatOptionalMax(empty, empty), empty);
-  ASSERT_EQ(YGFloatOptionalMax(empty, positive), positive);
-  ASSERT_EQ(YGFloatOptionalMax(negative, empty), negative);
-  ASSERT_EQ(YGFloatOptionalMax(negative, YGFloatOptional{-INFINITY}), negative);
+TEST(YGFloatOptiona, maxOrDefined) {
+  ASSERT_EQ(yoga::maxOrDefined(empty, empty), empty);
+  ASSERT_EQ(yoga::maxOrDefined(empty, positive), positive);
+  ASSERT_EQ(yoga::maxOrDefined(negative, empty), negative);
+  ASSERT_EQ(yoga::maxOrDefined(negative, FloatOptional{-INFINITY}), negative);
   ASSERT_EQ(
-      YGFloatOptionalMax(YGFloatOptional{1.0f}, YGFloatOptional{1.125f}),
-      YGFloatOptional{1.125f});
+      yoga::maxOrDefined(FloatOptional{1.0f}, FloatOptional{1.125f}),
+      FloatOptional{1.125f});
 }
 
-TEST(YGFloatOptionalTest, unwrap) {
+TEST(FloatOptional, unwrap) {
   ASSERT_TRUE(YGFloatIsUndefined(empty.unwrap()));
   ASSERT_EQ(zero.unwrap(), 0.0f);
-  ASSERT_EQ(YGFloatOptional{123456.78f}.unwrap(), 123456.78f);
+  ASSERT_EQ(FloatOptional{123456.78f}.unwrap(), 123456.78f);
 }

@@ -8,9 +8,8 @@
 #include <cstdint>
 #include <type_traits>
 #include <gtest/gtest.h>
-#include <yoga/YGEnums.h>
-#include <yoga/YGStyle.h>
-#include <yoga/YGValue.h>
+#include <yoga/Yoga.h>
+#include <yoga/style/Style.h>
 
 #define ACCESSOR_TESTS_1(NAME, X) \
   style.NAME() = X;               \
@@ -31,14 +30,14 @@
 #define ACCESSOR_TESTS_N(a, b, c, d, e, COUNT, ...) ACCESSOR_TESTS_##COUNT
 #define ACCESSOR_TESTS(...) ACCESSOR_TESTS_N(__VA_ARGS__, 5, 4, 3, 2, 1)
 
-#define INDEX_ACCESSOR_TESTS_1(NAME, IDX, X)                           \
-  {                                                                    \
-    auto style = YGStyle{};                                            \
-    style.NAME()[IDX] = X;                                             \
-    ASSERT_EQ(style.NAME()[IDX], X);                                   \
-    auto asArray = decltype(std::declval<const YGStyle&>().NAME()){X}; \
-    style.NAME() = asArray;                                            \
-    ASSERT_EQ(static_cast<decltype(asArray)>(style.NAME()), asArray);  \
+#define INDEX_ACCESSOR_TESTS_1(NAME, IDX, X)                          \
+  {                                                                   \
+    auto style = Style{};                                             \
+    style.NAME()[IDX] = X;                                            \
+    ASSERT_EQ(style.NAME()[IDX], X);                                  \
+    auto asArray = decltype(std::declval<const Style&>().NAME()){X};  \
+    style.NAME() = asArray;                                           \
+    ASSERT_EQ(static_cast<decltype(asArray)>(style.NAME()), asArray); \
   }
 
 #define INDEX_ACCESSOR_TESTS_2(NAME, IDX, X, Y) \
@@ -64,21 +63,19 @@
 
 // test macro for up to 5 values. If more are needed, extend the macros above.
 #define ACCESSOR_TEST(NAME, DEFAULT_VAL, ...)      \
-  TEST(YGStyle, style_##NAME##_access) {           \
-    auto style = YGStyle{};                        \
+  TEST(Style, style_##NAME##_access) {             \
+    auto style = Style{};                          \
     ASSERT_EQ(style.NAME(), DEFAULT_VAL);          \
     ACCESSOR_TESTS(__VA_ARGS__)(NAME, __VA_ARGS__) \
   }
 
 #define INDEX_ACCESSOR_TEST(NAME, DEFAULT_VAL, IDX, ...)      \
-  TEST(YGStyle, style_##NAME##_access) {                      \
-    ASSERT_EQ(YGStyle{}.NAME()[IDX], DEFAULT_VAL);            \
+  TEST(Style, style_##NAME##_access) {                        \
+    ASSERT_EQ(Style{}.NAME()[IDX], DEFAULT_VAL);              \
     INDEX_ACCESSOR_TESTS(__VA_ARGS__)(NAME, IDX, __VA_ARGS__) \
   }
 
 namespace facebook::yoga {
-
-using CompactValue = detail::CompactValue;
 
 // TODO: MSVC doesn't like the macros
 #ifndef _MSC_VER
@@ -157,24 +154,24 @@ ACCESSOR_TEST(display, YGDisplayFlex, YGDisplayNone, YGDisplayFlex)
 
 ACCESSOR_TEST(
     flex,
-    YGFloatOptional{},
-    YGFloatOptional{123.45f},
-    YGFloatOptional{-9.87f},
-    YGFloatOptional{})
+    FloatOptional{},
+    FloatOptional{123.45f},
+    FloatOptional{-9.87f},
+    FloatOptional{})
 
 ACCESSOR_TEST(
     flexGrow,
-    YGFloatOptional{},
-    YGFloatOptional{123.45f},
-    YGFloatOptional{-9.87f},
-    YGFloatOptional{})
+    FloatOptional{},
+    FloatOptional{123.45f},
+    FloatOptional{-9.87f},
+    FloatOptional{})
 
 ACCESSOR_TEST(
     flexShrink,
-    YGFloatOptional{},
-    YGFloatOptional{123.45f},
-    YGFloatOptional{-9.87f},
-    YGFloatOptional{})
+    FloatOptional{},
+    FloatOptional{123.45f},
+    FloatOptional{-9.87f},
+    FloatOptional{})
 
 ACCESSOR_TEST(
     flexBasis,
@@ -246,11 +243,11 @@ INDEX_ACCESSOR_TEST(
 
 ACCESSOR_TEST(
     aspectRatio,
-    YGFloatOptional{},
-    YGFloatOptional{-123.45f},
-    YGFloatOptional{9876.5f},
-    YGFloatOptional{0.0f},
-    YGFloatOptional{});
+    FloatOptional{},
+    FloatOptional{-123.45f},
+    FloatOptional{9876.5f},
+    FloatOptional{0.0f},
+    FloatOptional{});
 
 #endif
 

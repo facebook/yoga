@@ -5,17 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include "YGLayout.h"
-#include "Utils.h"
+#include <cmath>
 
-using namespace facebook;
+#include <yoga/node/LayoutResults.h>
+#include <yoga/numeric/Comparison.h>
 
-bool YGLayout::operator==(YGLayout layout) const {
-  bool isEqual = YGFloatArrayEqual(position, layout.position) &&
-      YGFloatArrayEqual(dimensions, layout.dimensions) &&
-      YGFloatArrayEqual(margin, layout.margin) &&
-      YGFloatArrayEqual(border, layout.border) &&
-      YGFloatArrayEqual(padding, layout.padding) &&
+namespace facebook::yoga {
+
+bool LayoutResults::operator==(LayoutResults layout) const {
+  bool isEqual = yoga::inexactEquals(position, layout.position) &&
+      yoga::inexactEquals(dimensions, layout.dimensions) &&
+      yoga::inexactEquals(margin, layout.margin) &&
+      yoga::inexactEquals(border, layout.border) &&
+      yoga::inexactEquals(padding, layout.padding) &&
       direction() == layout.direction() &&
       hadOverflow() == layout.hadOverflow() &&
       lastOwnerDirection == layout.lastOwnerDirection &&
@@ -23,7 +25,8 @@ bool YGLayout::operator==(YGLayout layout) const {
       cachedLayout == layout.cachedLayout &&
       computedFlexBasis == layout.computedFlexBasis;
 
-  for (uint32_t i = 0; i < YG_MAX_CACHED_RESULT_COUNT && isEqual; ++i) {
+  for (uint32_t i = 0; i < LayoutResults::MaxCachedMeasurements && isEqual;
+       ++i) {
     isEqual = isEqual && cachedMeasurements[i] == layout.cachedMeasurements[i];
   }
 
@@ -40,3 +43,5 @@ bool YGLayout::operator==(YGLayout layout) const {
 
   return isEqual;
 }
+
+} // namespace facebook::yoga

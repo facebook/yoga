@@ -5,30 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include <yoga/Yoga.h>
+#include <yoga/debug/Log.h>
 
-#include "log.h"
-#include "YGConfig.h"
-#include "YGNode.h"
-
-namespace facebook::yoga::detail {
+namespace facebook::yoga {
 
 namespace {
 
 void vlog(
-    YGConfig* config,
-    YGNode* node,
+    yoga::Config* config,
+    yoga::Node* node,
     YGLogLevel level,
     void* context,
     const char* format,
     va_list args) {
-  YGConfig* logConfig = config != nullptr ? config : YGConfigGetDefault();
-  logConfig->log(logConfig, node, level, context, format, args);
+  yoga::Config* logConfig = config != nullptr
+      ? config
+      : static_cast<yoga::Config*>(YGConfigGetDefault());
+  logConfig->log(node, level, context, format, args);
 }
 } // namespace
 
-YOGA_EXPORT void Log::log(
-    YGNode* node,
+void log(
+    yoga::Node* node,
     YGLogLevel level,
     void* context,
     const char* format,
@@ -45,8 +43,8 @@ YOGA_EXPORT void Log::log(
   va_end(args);
 }
 
-void Log::log(
-    YGConfig* config,
+void log(
+    yoga::Config* config,
     YGLogLevel level,
     void* context,
     const char* format,
@@ -57,4 +55,4 @@ void Log::log(
   va_end(args);
 }
 
-} // namespace facebook::yoga::detail
+} // namespace facebook::yoga

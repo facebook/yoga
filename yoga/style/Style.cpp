@@ -5,11 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include "YGStyle.h"
-#include "Utils.h"
+#include <yoga/style/Style.h>
+#include <yoga/numeric/Comparison.h>
+
+namespace facebook::yoga {
 
 // Yoga specific properties, not compatible with flexbox specification
-bool operator==(const YGStyle& lhs, const YGStyle& rhs) {
+bool operator==(const Style& lhs, const Style& rhs) {
   bool areNonFloatValuesEqual = lhs.direction() == rhs.direction() &&
       lhs.flexDirection() == rhs.flexDirection() &&
       lhs.justifyContent() == rhs.justifyContent() &&
@@ -19,7 +21,7 @@ bool operator==(const YGStyle& lhs, const YGStyle& rhs) {
       lhs.positionType() == rhs.positionType() &&
       lhs.flexWrap() == rhs.flexWrap() && lhs.overflow() == rhs.overflow() &&
       lhs.display() == rhs.display() &&
-      YGValueEqual(lhs.flexBasis(), rhs.flexBasis()) &&
+      yoga::inexactEquals(lhs.flexBasis(), rhs.flexBasis()) &&
       lhs.margin() == rhs.margin() && lhs.position() == rhs.position() &&
       lhs.padding() == rhs.padding() && lhs.border() == rhs.border() &&
       lhs.gap() == rhs.gap() && lhs.dimensions() == rhs.dimensions() &&
@@ -54,3 +56,5 @@ bool operator==(const YGStyle& lhs, const YGStyle& rhs) {
 
   return areNonFloatValuesEqual;
 }
+
+} // namespace facebook::yoga

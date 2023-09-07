@@ -56,7 +56,6 @@ export enum Errata {
 export enum ExperimentalFeature {
   WebFlexBasis = 0,
   AbsolutePercentageAgainstPaddingEdge = 1,
-  FixJNILocalRefOverflows = 2,
 }
 
 export enum FlexDirection {
@@ -163,7 +162,6 @@ const constants = {
   ERRATA_CLASSIC: Errata.Classic,
   EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS: ExperimentalFeature.WebFlexBasis,
   EXPERIMENTAL_FEATURE_ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE: ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge,
-  EXPERIMENTAL_FEATURE_FIX_JNILOCAL_REF_OVERFLOWS: ExperimentalFeature.FixJNILocalRefOverflows,
   FLEX_DIRECTION_COLUMN: FlexDirection.Column,
   FLEX_DIRECTION_COLUMN_REVERSE: FlexDirection.ColumnReverse,
   FLEX_DIRECTION_ROW: FlexDirection.Row,

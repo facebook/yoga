@@ -5,14 +5,19 @@ runs:
   steps:
     # TODO: Update to latest when website is moved to the workspace version of
     # yoga-layout
-    - name: Install Node
-      uses: actions/setup-node@v1
+    - name: Setup Node environment
+      uses: actions/setup-node@v3
       with:
         node-version: 12.x
+        cache: yarn
+        cache-dependency-path: website/yarn.lock
+      env:
+        # https://github.com/actions/setup-node/issues/317
+        FORCE_COLOR: 0
 
     # TODO: the website should be in a yarn workspace with the library, but the
     # current version of gatsby is incompatible with hoisting.
     - name: yarn install
       shell: bash
-      run: yarn install --frozen-lockfile
+      run: yarn install --frozen-lockfile --network-timeout 1000000
       working-directory: website

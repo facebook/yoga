@@ -6,7 +6,6 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/YGNode.h>
 #include <yoga/Yoga.h>
 
 static YGSize _measureFloor(
@@ -50,7 +49,7 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_measureFloor);
+  YGNodeSetMeasureFunc(root_child0, _measureFloor);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGConfigSetPointScaleFactor(config, 0.0f);
@@ -98,7 +97,7 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  root_child0->setMeasureFunc(_measureCeil);
+  YGNodeSetMeasureFunc(root_child0, _measureCeil);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGConfigSetPointScaleFactor(config, 1.0f);
@@ -121,7 +120,7 @@ TEST(
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPosition(root_child0, YGEdgeLeft, 73.625);
-  root_child0->setMeasureFunc(_measureFractial);
+  YGNodeSetMeasureFunc(root_child0, _measureFractial);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGConfigSetPointScaleFactor(config, 2.0f);

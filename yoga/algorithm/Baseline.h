@@ -5,22 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#ifdef DEBUG
-
 #pragma once
 
-#include <string>
-
 #include <yoga/Yoga.h>
+#include <yoga/node/Node.h>
 
 namespace facebook::yoga {
 
-void YGNodeToString(
-    std::string& str,
-    YGNodeRef node,
-    YGPrintOptions options,
-    uint32_t level);
+// Calculate baseline represented as an offset from the top edge of the node.
+float calculateBaseline(const yoga::Node* node, void* layoutContext);
 
 } // namespace facebook::yoga
-
-#endif

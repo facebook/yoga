@@ -32,10 +32,18 @@ Pod::Spec.new do |spec|
       '-Wall',
       '-Werror',
       '-Wextra',
+      '-Wconversion',
       '-std=c++17',
       '-fPIC'
   ]
-  spec.source_files = 'yoga/**/*.{h,cpp}'
-  spec.public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
+
   spec.swift_version = '5.1'
+  spec.source_files = 'yoga/**/*.{h,cpp}'
+  spec.header_mappings_dir = 'yoga'
+
+  public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
+  spec.public_header_files = public_header_files
+
+  all_header_files = 'yoga/**/*.h'
+  spec.private_header_files = Dir.glob(all_header_files) - Dir.glob(public_header_files)
 end
