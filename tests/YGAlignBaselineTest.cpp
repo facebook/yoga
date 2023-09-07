@@ -427,7 +427,7 @@ TEST(YogaTest, align_baseline_parent_using_child_in_row_as_reference) {
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 =
-      createYGNode(config, YGFlexDirectionRow, 500, 800, true);
+      createYGNode(config, YGFlexDirectionColumn, 500, 800, true);
   YGNodeInsertChild(root, root_child1, 1);
 
   const YGNodeRef root_child1_child0 =
@@ -845,4 +845,26 @@ TEST(
   YGNodeFreeRecursive(root);
 
   YGConfigFree(config);
+}
+
+TEST(
+    YGAlignBaselineTest,
+    align_baseline_parent_using_child_in_row_as_reference) {
+  YGNodeRef node = YGNodeNew();
+
+  YGNodeStyleSetFlexDirection(node, YGFlexDirectionRow);
+
+  YGNodeRef child1 = YGNodeNew();
+  YGNodeRef child2 = YGNodeNew();
+
+  YGNodeStyleSetFlexGrow(child1, 1.0f);
+  YGNodeStyleSetFlexGrow(child2, 1.0f);
+
+  YGNodeInsertChild(node, child1, 0);
+  YGNodeInsertChild(node, child2, 1);
+
+  YGNodeCalculateLayout(node, 500, 800);
+
+  ASSERT_FLOAT_EQ(
+      child1->layout.top, CalculateLayout(node)->children[0]->layout.top);
 }
