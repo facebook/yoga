@@ -426,7 +426,7 @@ TEST(YogaTest, align_baseline_parent_using_child_in_row_as_reference) {
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child1 =
-      createYGNode(config, YGFlexDirectionColumn, 500, 800, true);
+      createYGNode(config, YGFlexDirectionRow, 500, 800, true);
   YGNodeInsertChild(root, root_child1, 1);
 
   const YGNodeRef root_child1_child0 =
