@@ -450,7 +450,7 @@ TEST(YogaTest, align_baseline_parent_using_child_in_row_as_reference) {
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child0));
 
-  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1_child1));
+  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetLeft(root_child1_child1));
   ASSERT_FLOAT_EQ(300, YGNodeLayoutGetTop(root_child1_child1));
 
   YGNodeFreeRecursive(root);

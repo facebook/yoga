@@ -2965,6 +2965,7 @@ void calculateLayout(
     heightMeasureMode = yoga::isUndefined(height) ? YGMeasureModeUndefined
                                                   : YGMeasureModeExactly;
   }
+
   if (calculateLayoutInternal(
           node,
           width,
@@ -2981,6 +2982,19 @@ void calculateLayout(
           layoutContext,
           0, // tree root
           gCurrentGenerationCount.load(std::memory_order_relaxed))) {
+
+    if (node->getLayout().direction() == YGFlexDirectionRow &&
+        node->getStyle().alignItems() == YGAlignBaseline) {
+      for (const auto& child : node->getChildren()) {
+        const YGLayout& childLayout = child->getLayout();
+        const float childBaseline = childLayout.getLayoutBaseline();
+        if (childBaseline != YGUndefined) {
+          node->setLayout(childBaseline);
+          break;
+        }
+      }
+    }
+
     node->setPosition(
         node->getLayout().direction(), ownerWidth, ownerHeight, ownerWidth);
     roundLayoutResultsToPixelGrid(
@@ -2990,7 +3004,8 @@ void calculateLayout(
     if (node->getConfig()->shouldPrintTree()) {
       YGNodePrint(
           node,
-          (YGPrintOptions) (YGPrintOptionsLayout | YGPrintOptionsChildren | YGPrintOptionsStyle));
+          (YGPrintOptions) (YGPrintOptionsLayout | YGPrintOptionsChildren |
+                            YGPrintOptionsStyle));
     }
 #endif
   }
