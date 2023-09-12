@@ -147,7 +147,7 @@ TEST(YogaTest, dirty_propagation_changing_benign_config) {
   YGConfigRef newConfig = YGConfigNew();
   YGConfigSetLogger(
       newConfig,
-      [](const YGConfigRef, const YGNodeRef, YGLogLevel, const char*, va_list) {
+      [](YGConfigConstRef, YGNodeConstRef, YGLogLevel, const char*, va_list) {
         return 0;
       });
   YGNodeSetConfig(root_child0, newConfig);

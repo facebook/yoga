@@ -11,7 +11,7 @@
 
 using namespace facebook;
 
-static void _dirtied(YGNodeRef node) {
+static void _dirtied(YGNodeConstRef node) {
   int* dirtiedCount = (int*) YGNodeGetContext(node);
   (*dirtiedCount)++;
 }
