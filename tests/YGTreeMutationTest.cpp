@@ -9,10 +9,10 @@
 #include <yoga/Yoga.h>
 
 static std::vector<YGNodeRef> getChildren(YGNodeRef const node) {
-  const uint32_t count = YGNodeGetChildCount(node);
+  const auto count = YGNodeGetChildCount(node);
   std::vector<YGNodeRef> children;
   children.reserve(count);
-  for (uint32_t i = 0; i < count; i++) {
+  for (size_t i = 0; i < count; i++) {
     children.push_back(YGNodeGetChild(node, i));
   }
   return children;
