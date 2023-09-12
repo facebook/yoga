@@ -9,7 +9,7 @@
 #include <yoga/Yoga.h>
 
 static float _baseline(
-    YGNodeRef node,
+    YGNodeConstRef node,
     const float /*width*/,
     const float /*height*/) {
   float* baseline = (float*) YGNodeGetContext(node);
