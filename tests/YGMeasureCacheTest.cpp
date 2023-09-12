@@ -9,7 +9,7 @@
 #include <yoga/Yoga.h>
 
 static YGSize _measureMax(
-    YGNodeRef node,
+    YGNodeConstRef node,
     float width,
     YGMeasureMode widthMode,
     float height,
@@ -24,7 +24,7 @@ static YGSize _measureMax(
 }
 
 static YGSize _measureMin(
-    YGNodeRef node,
+    YGNodeConstRef node,
     float width,
     YGMeasureMode widthMode,
     float height,
@@ -44,7 +44,7 @@ static YGSize _measureMin(
 }
 
 static YGSize _measure_84_49(
-    YGNodeRef node,
+    YGNodeConstRef node,
     float /*width*/,
     YGMeasureMode /*widthMode*/,
     float /*height*/,
