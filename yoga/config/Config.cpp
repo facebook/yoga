@@ -6,14 +6,18 @@
  */
 
 #include <yoga/config/Config.h>
+#include <yoga/debug/Log.h>
+#include <yoga/node/Node.h>
 
 namespace facebook::yoga {
 
-bool configUpdateInvalidatesLayout(Config* a, Config* b) {
-  return a->getErrata() != b->getErrata() ||
-      a->getEnabledExperiments() != b->getEnabledExperiments() ||
-      a->getPointScaleFactor() != b->getPointScaleFactor() ||
-      a->useWebDefaults() != b->useWebDefaults();
+bool configUpdateInvalidatesLayout(
+    const Config& oldConfig,
+    const Config& newConfig) {
+  return oldConfig.getErrata() != newConfig.getErrata() ||
+      oldConfig.getEnabledExperiments() != newConfig.getEnabledExperiments() ||
+      oldConfig.getPointScaleFactor() != newConfig.getPointScaleFactor() ||
+      oldConfig.useWebDefaults() != newConfig.useWebDefaults();
 }
 
 Config::Config(YGLogger logger) : cloneNodeCallback_{nullptr} {
@@ -101,11 +105,11 @@ void Config::setLogger(std::nullptr_t) {
 }
 
 void Config::log(
-    YGNodeRef node,
+    const yoga::Node* node,
     YGLogLevel logLevel,
     void* logContext,
     const char* format,
-    va_list args) {
+    va_list args) const {
   if (flags_.loggerUsesContext) {
     logger_.withContext(this, node, logLevel, logContext, format, args);
   } else {
@@ -128,9 +132,9 @@ void Config::setCloneNodeCallback(std::nullptr_t) {
 }
 
 YGNodeRef Config::cloneNode(
-    YGNodeRef node,
-    YGNodeRef owner,
-    int childIndex,
+    YGNodeConstRef node,
+    YGNodeConstRef owner,
+    size_t childIndex,
     void* cloneContext) const {
   YGNodeRef clone = nullptr;
   if (cloneNodeCallback_.noContext != nullptr) {
@@ -142,6 +146,11 @@ YGNodeRef Config::cloneNode(
     clone = YGNodeClone(node);
   }
   return clone;
+}
+
+/*static*/ const Config& Config::getDefault() {
+  static Config config{getDefaultLogger()};
+  return config;
 }
 
 } // namespace facebook::yoga

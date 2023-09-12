@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <vector>
 
+#include <yoga/Yoga.h>
+
 #include <yoga/config/Config.h>
 #include <yoga/node/LayoutResults.h>
 #include <yoga/style/CompactValue.h>
@@ -34,12 +36,19 @@ struct NodeFlags {
 };
 #pragma pack(pop)
 
-class YOGA_EXPORT Node : public ::YGNode {
+class YG_EXPORT Node : public ::YGNode {
 public:
-  using MeasureWithContextFn =
-      YGSize (*)(YGNode*, float, YGMeasureMode, float, YGMeasureMode, void*);
-  using BaselineWithContextFn = float (*)(YGNode*, float, float, void*);
-  using PrintWithContextFn = void (*)(YGNode*, void*);
+  // Internal variants of callbacks, currently used only by JNI bindings.
+  // TODO: Reconcile this with the public API
+  using MeasureWithContextFn = YGSize (*)(
+      YGNodeConstRef,
+      float,
+      YGMeasureMode,
+      float,
+      YGMeasureMode,
+      void*);
+  using BaselineWithContextFn = float (*)(YGNodeConstRef, float, float, void*);
+  using PrintWithContextFn = void (*)(YGNodeConstRef, void*);
 
 private:
   void* context_ = nullptr;
@@ -59,10 +68,10 @@ private:
   YGDirtiedFunc dirtied_ = nullptr;
   Style style_ = {};
   LayoutResults layout_ = {};
-  uint32_t lineIndex_ = 0;
+  size_t lineIndex_ = 0;
   Node* owner_ = nullptr;
   std::vector<Node*> children_ = {};
-  Config* config_;
+  const Config* config_;
   std::array<YGValue, 2> resolvedDimensions_ = {
       {YGValueUndefined, YGValueUndefined}};
 
@@ -86,10 +95,8 @@ private:
   Node& operator=(Node&&) = default;
 
 public:
-  Node() : Node{static_cast<Config*>(YGConfigGetDefault())} {
-    flags_.hasNewLayout = true;
-  }
-  explicit Node(Config* config);
+  Node();
+  explicit Node(const Config* config);
   ~Node() = default; // cleanup of owner/children relationships in YGNodeFree
 
   Node(Node&&);
@@ -137,9 +144,9 @@ public:
 
   const LayoutResults& getLayout() const { return layout_; }
 
-  uint32_t getLineIndex() const { return lineIndex_; }
+  size_t getLineIndex() const { return lineIndex_; }
 
-  bool isReferenceBaseline() { return flags_.isReferenceBaseline; }
+  bool isReferenceBaseline() const { return flags_.isReferenceBaseline; }
 
   // returns the Node that owns this Node. An owner is used to identify
   // the YogaTree that a Node belongs to. This method will return the parent
@@ -152,28 +159,11 @@ public:
 
   const std::vector<Node*>& getChildren() const { return children_; }
 
-  // Applies a callback to all children, after cloning them if they are not
-  // owned.
-  template <typename T>
-  void iterChildrenAfterCloningIfNeeded(T callback, void* cloneContext) {
-    int i = 0;
-    for (Node*& child : children_) {
-      if (child->getOwner() != this) {
-        child = static_cast<Node*>(
-            config_->cloneNode(child, this, i, cloneContext));
-        child->setOwner(this);
-      }
-      i += 1;
-
-      callback(child, cloneContext);
-    }
-  }
-
   Node* getChild(size_t index) const { return children_.at(index); }
 
   size_t getChildCount() const { return children_.size(); }
 
-  Config* getConfig() const { return config_; }
+  const Config* getConfig() const { return config_; }
 
   bool isDirty() const { return flags_.isDirty; }
 
@@ -284,7 +274,7 @@ public:
 
   void setLayout(const LayoutResults& layout) { layout_ = layout; }
 
-  void setLineIndex(uint32_t lineIndex) { lineIndex_ = lineIndex; }
+  void setLineIndex(size_t lineIndex) { lineIndex_ = lineIndex; }
 
   void setIsReferenceBaseline(bool isReferenceBaseline) {
     flags_.isReferenceBaseline = isReferenceBaseline;
@@ -342,5 +332,13 @@ public:
   bool isNodeFlexible();
   void reset();
 };
+
+inline Node* resolveRef(const YGNodeRef ref) {
+  return static_cast<Node*>(ref);
+}
+
+inline const Node* resolveRef(const YGNodeConstRef ref) {
+  return static_cast<const Node*>(ref);
+}
 
 } // namespace facebook::yoga

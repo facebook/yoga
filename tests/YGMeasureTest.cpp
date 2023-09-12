@@ -9,7 +9,7 @@
 #include <yoga/Yoga.h>
 
 static YGSize _measure(
-    YGNodeRef node,
+    YGNodeConstRef node,
     float /*width*/,
     YGMeasureMode /*widthMode*/,
     float /*height*/,
@@ -23,7 +23,7 @@ static YGSize _measure(
 }
 
 static YGSize _simulate_wrapping_text(
-    YGNodeRef /*node*/,
+    YGNodeConstRef /*node*/,
     float width,
     YGMeasureMode widthMode,
     float /*height*/,
@@ -36,7 +36,7 @@ static YGSize _simulate_wrapping_text(
 }
 
 static YGSize _measure_assert_negative(
-    YGNodeRef /*node*/,
+    YGNodeConstRef /*node*/,
     float width,
     YGMeasureMode /*widthMode*/,
     float height,
@@ -640,7 +640,7 @@ TEST(YogaTest, cant_call_negative_measure_horizontal) {
 }
 
 static YGSize _measure_90_10(
-    YGNodeRef /*node*/,
+    YGNodeConstRef /*node*/,
     float /*width*/,
     YGMeasureMode /*widthMode*/,
     float /*height*/,
@@ -650,7 +650,7 @@ static YGSize _measure_90_10(
 }
 
 static YGSize _measure_100_100(
-    YGNodeRef /*node*/,
+    YGNodeConstRef /*node*/,
     float /*width*/,
     YGMeasureMode /*widthMode*/,
     float /*height*/,

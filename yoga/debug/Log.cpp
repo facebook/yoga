@@ -7,26 +7,38 @@
 
 #include <yoga/debug/Log.h>
 
+#ifdef ANDROID
+#include <android/log.h>
+#endif
+
 namespace facebook::yoga {
 
 namespace {
 
 void vlog(
-    yoga::Config* config,
-    yoga::Node* node,
+    const yoga::Config* config,
+    const yoga::Node* node,
     YGLogLevel level,
     void* context,
     const char* format,
     va_list args) {
-  yoga::Config* logConfig = config != nullptr
-      ? config
-      : static_cast<yoga::Config*>(YGConfigGetDefault());
-  logConfig->log(node, level, context, format, args);
+  if (config == nullptr) {
+    getDefaultLogger()(nullptr, node, level, format, args);
+  } else {
+    config->log(node, level, context, format, args);
+  }
 }
 } // namespace
 
+void log(YGLogLevel level, void* context, const char* format, ...) noexcept {
+  va_list args;
+  va_start(args, format);
+  vlog(nullptr, nullptr, level, context, format, args);
+  va_end(args);
+}
+
 void log(
-    yoga::Node* node,
+    const yoga::Node* node,
     YGLogLevel level,
     void* context,
     const char* format,
@@ -44,7 +56,7 @@ void log(
 }
 
 void log(
-    yoga::Config* config,
+    const yoga::Config* config,
     YGLogLevel level,
     void* context,
     const char* format,
@@ -53,6 +65,51 @@ void log(
   va_start(args, format);
   vlog(config, nullptr, level, context, format, args);
   va_end(args);
+}
+
+YGLogger getDefaultLogger() {
+  return [](const YGConfigConstRef /*config*/,
+            const YGNodeConstRef /*node*/,
+            YGLogLevel level,
+            const char* format,
+            va_list args) -> int {
+#ifdef ANDROID
+    int androidLevel = YGLogLevelDebug;
+    switch (level) {
+      case YGLogLevelFatal:
+        androidLevel = ANDROID_LOG_FATAL;
+        break;
+      case YGLogLevelError:
+        androidLevel = ANDROID_LOG_ERROR;
+        break;
+      case YGLogLevelWarn:
+        androidLevel = ANDROID_LOG_WARN;
+        break;
+      case YGLogLevelInfo:
+        androidLevel = ANDROID_LOG_INFO;
+        break;
+      case YGLogLevelDebug:
+        androidLevel = ANDROID_LOG_DEBUG;
+        break;
+      case YGLogLevelVerbose:
+        androidLevel = ANDROID_LOG_VERBOSE;
+        break;
+    }
+    return __android_log_vprint(androidLevel, "yoga", format, args);
+#else
+    switch (level) {
+      case YGLogLevelError:
+      case YGLogLevelFatal:
+        return vfprintf(stderr, format, args);
+      case YGLogLevelWarn:
+      case YGLogLevelInfo:
+      case YGLogLevelDebug:
+      case YGLogLevelVerbose:
+      default:
+        return vprintf(format, args);
+    }
+#endif
+  };
 }
 
 } // namespace facebook::yoga

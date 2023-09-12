@@ -17,7 +17,9 @@
 
 namespace facebook::yoga {
 
-Node::Node(yoga::Config* config) : config_{config} {
+Node::Node() : Node{&Config::getDefault()} {}
+
+Node::Node(const yoga::Config* config) : config_{config} {
   yoga::assertFatal(
       config != nullptr, "Attempting to construct Node with null config");
 
@@ -258,7 +260,7 @@ void Node::setMeasureFunc(YGMeasureFunc measureFunc) {
   setMeasureFunc(m);
 }
 
-YOGA_EXPORT void Node::setMeasureFunc(MeasureWithContextFn measureFunc) {
+void Node::setMeasureFunc(MeasureWithContextFn measureFunc) {
   flags_.measureUsesContext = true;
   decltype(Node::measure_) m;
   m.withContext = measureFunc;
@@ -285,7 +287,7 @@ void Node::setConfig(yoga::Config* config) {
       config->useWebDefaults() == config_->useWebDefaults(),
       "UseWebDefaults may not be changed after constructing a Node");
 
-  if (yoga::configUpdateInvalidatesLayout(config_, config)) {
+  if (yoga::configUpdateInvalidatesLayout(*config_, *config)) {
     markDirtyAndPropagate();
   }
 
@@ -476,7 +478,7 @@ YGDirection Node::resolveDirection(const YGDirection ownerDirection) {
   }
 }
 
-YOGA_EXPORT void Node::clearChildren() {
+void Node::clearChildren() {
   children_.clear();
   children_.shrink_to_fit();
 }
@@ -484,7 +486,14 @@ YOGA_EXPORT void Node::clearChildren() {
 // Other Methods
 
 void Node::cloneChildrenIfNeeded(void* cloneContext) {
-  iterChildrenAfterCloningIfNeeded([](Node*, void*) {}, cloneContext);
+  size_t i = 0;
+  for (Node*& child : children_) {
+    if (child->getOwner() != this) {
+      child = resolveRef(config_->cloneNode(child, this, i, cloneContext));
+      child->setOwner(this);
+    }
+    i += 1;
+  }
 }
 
 void Node::markDirtyAndPropagate() {

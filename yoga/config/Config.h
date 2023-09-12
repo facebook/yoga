@@ -16,24 +16,27 @@ struct YGConfig {};
 namespace facebook::yoga {
 
 class Config;
+class Node;
 
-// Whether moving a node from config "a" to config "b" should dirty previously
+// Whether moving a node from an old to new config should dirty previously
 // calculated layout results.
-bool configUpdateInvalidatesLayout(Config* a, Config* b);
+bool configUpdateInvalidatesLayout(
+    const Config& oldConfig,
+    const Config& newConfig);
 
 // Internal variants of log functions, currently used only by JNI bindings.
 // TODO: Reconcile this with the public API
 using LogWithContextFn = int (*)(
-    YGConfigRef config,
-    YGNodeRef node,
+    YGConfigConstRef config,
+    YGNodeConstRef node,
     YGLogLevel level,
     void* context,
     const char* format,
     va_list args);
 using CloneWithContextFn = YGNodeRef (*)(
-    YGNodeRef node,
-    YGNodeRef owner,
-    int childIndex,
+    YGNodeConstRef node,
+    YGNodeConstRef owner,
+    size_t childIndex,
     void* cloneContext);
 
 #pragma pack(push)
@@ -47,7 +50,7 @@ struct ConfigFlags {
 };
 #pragma pack(pop)
 
-class YOGA_EXPORT Config : public ::YGConfig {
+class YG_EXPORT Config : public ::YGConfig {
 public:
   Config(YGLogger logger);
 
@@ -78,16 +81,23 @@ public:
   void setLogger(YGLogger logger);
   void setLogger(LogWithContextFn logger);
   void setLogger(std::nullptr_t);
-  void log(YGNodeRef, YGLogLevel, void*, const char*, va_list);
+  void log(
+      const yoga::Node* node,
+      YGLogLevel logLevel,
+      void* logContext,
+      const char* format,
+      va_list args) const;
 
   void setCloneNodeCallback(YGCloneNodeFunc cloneNode);
   void setCloneNodeCallback(CloneWithContextFn cloneNode);
   void setCloneNodeCallback(std::nullptr_t);
   YGNodeRef cloneNode(
-      YGNodeRef node,
-      YGNodeRef owner,
-      int childIndex,
+      YGNodeConstRef node,
+      YGNodeConstRef owner,
+      size_t childIndex,
       void* cloneContext) const;
+
+  static const Config& getDefault();
 
 private:
   union {
@@ -105,5 +115,13 @@ private:
   float pointScaleFactor_ = 1.0f;
   void* context_ = nullptr;
 };
+
+inline Config* resolveRef(const YGConfigRef ref) {
+  return static_cast<Config*>(ref);
+}
+
+inline const Config* resolveRef(const YGConfigConstRef ref) {
+  return static_cast<const Config*>(ref);
+}
 
 } // namespace facebook::yoga
