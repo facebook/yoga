@@ -32,13 +32,6 @@ void Config::setPointScaleFactor(float pixelsInPoint) {
   YGConfigSetPointScaleFactor(m_config, pixelsInPoint);
 }
 
-void Config::setUseLegacyStretchBehaviour(bool useLegacyStretchBehaviour) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated"
-  YGConfigSetUseLegacyStretchBehaviour(m_config, useLegacyStretchBehaviour);
-#pragma clang diagnostic pop
-}
-
 void Config::setErrata(int errata) {
   YGConfigSetErrata(m_config, static_cast<YGErrata>(errata));
 }
@@ -50,13 +43,6 @@ void Config::setUseWebDefaults(bool useWebDefaults) {
 bool Config::isExperimentalFeatureEnabled(int feature) const {
   return YGConfigIsExperimentalFeatureEnabled(
       m_config, static_cast<YGExperimentalFeature>(feature));
-}
-
-bool Config::useLegacyStretchBehaviour() const {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated"
-  return YGConfigGetUseLegacyStretchBehaviour(m_config);
-#pragma clang diagnostic pop
 }
 
 int Config::getErrata() const {
