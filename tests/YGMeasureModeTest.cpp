@@ -21,7 +21,7 @@ struct _MeasureConstraintList {
 };
 
 static YGSize _measure(
-    YGNodeRef node,
+    YGNodeConstRef node,
     float width,
     YGMeasureMode widthMode,
     float height,
