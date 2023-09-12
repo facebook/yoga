@@ -9,7 +9,7 @@
 #include <yoga/Yoga.h>
 
 static YGSize _measureFloor(
-    YGNodeRef /*node*/,
+    YGNodeConstRef /*node*/,
     float width,
     YGMeasureMode /*widthMode*/,
     float height,
@@ -21,7 +21,7 @@ static YGSize _measureFloor(
 }
 
 static YGSize _measureCeil(
-    YGNodeRef /*node*/,
+    YGNodeConstRef /*node*/,
     float width,
     YGMeasureMode /*widthMode*/,
     float height,
@@ -33,7 +33,7 @@ static YGSize _measureCeil(
 }
 
 static YGSize _measureFractial(
-    YGNodeRef /*node*/,
+    YGNodeConstRef /*node*/,
     float width,
     YGMeasureMode /*widthMode*/,
     float height,

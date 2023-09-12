@@ -14,8 +14,8 @@
 namespace {
 char writeBuffer[4096];
 int _unmanagedLogger(
-    const YGConfigRef /*config*/,
-    const YGNodeRef /*node*/,
+    const YGConfigConstRef /*config*/,
+    const YGNodeConstRef /*node*/,
     YGLogLevel /*level*/,
     const char* format,
     va_list args) {

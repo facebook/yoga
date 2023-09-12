@@ -23,8 +23,12 @@ struct ConfigCloningTest : public ::testing::Test {
   void TearDown() override;
 
   static yoga::Node clonedNode;
-  static YGNodeRef cloneNode(YGNodeRef, YGNodeRef, int) { return &clonedNode; }
-  static YGNodeRef doNotClone(YGNodeRef, YGNodeRef, int) { return nullptr; }
+  static YGNodeRef cloneNode(YGNodeConstRef, YGNodeConstRef, int) {
+    return &clonedNode;
+  }
+  static YGNodeRef doNotClone(YGNodeConstRef, YGNodeConstRef, int) {
+    return nullptr;
+  }
 };
 
 TEST_F(ConfigCloningTest, uses_values_provided_by_cloning_callback) {
@@ -49,9 +53,10 @@ TEST_F(
 }
 
 TEST_F(ConfigCloningTest, can_clone_with_context) {
-  config->setCloneNodeCallback([](YGNodeRef, YGNodeRef, int, void* context) {
-    return (YGNodeRef) context;
-  });
+  config->setCloneNodeCallback(
+      [](YGNodeConstRef, YGNodeConstRef, int, void* context) {
+        return (YGNodeRef) context;
+      });
 
   yoga::Node node{}, owner{}, clone{};
   ASSERT_EQ(config->cloneNode(&node, &owner, 0, &clone), &clone);
