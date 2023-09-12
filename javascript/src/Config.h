@@ -32,13 +32,11 @@ public: // Prevent accidental copy
 public: // Setters
   void setExperimentalFeatureEnabled(int feature, bool enabled);
   void setPointScaleFactor(float pixelsInPoint);
-  void setUseLegacyStretchBehaviour(bool useLegacyStretchBehaviour);
   void setErrata(int errata);
   void setUseWebDefaults(bool useWebDefaults);
 
 public: // Getters
   bool isExperimentalFeatureEnabled(int feature) const;
-  bool useLegacyStretchBehaviour() const;
   int getErrata() const;
   bool useWebDefaults() const;
 
