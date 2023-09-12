@@ -292,7 +292,7 @@ public class YogaNodeTest {
   @Test
   public void testResetApiShouldResetAllLayoutOutputs() {
     YogaConfig config = YogaConfigFactory.create();
-    config.setUseLegacyStretchBehaviour(true);
+    config.setErrata(YogaErrata.STRETCH_FLEX_BASIS);
     YogaNode node = createNode(config);
     node.setWidth(100);
     node.setHeight(100);
