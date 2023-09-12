@@ -43,7 +43,7 @@ TEST(YogaTest, rounding_value) {
 }
 
 static YGSize measureText(
-    YGNodeRef /*node*/,
+    YGNodeConstRef /*node*/,
     float /*width*/,
     YGMeasureMode /*widthMode*/,
     float /*height*/,
