@@ -33,7 +33,7 @@ TEST_F(ConfigCloningTest, uses_values_provided_by_cloning_callback) {
   config->setCloneNodeCallback(cloneNode);
 
   yoga::Node node{}, owner{};
-  auto clone = config->cloneNode(&node, &owner, 0, nullptr);
+  auto clone = config->cloneNode(&node, &owner, 0);
 
   ASSERT_EQ(clone, &clonedNode);
 }
@@ -44,20 +44,10 @@ TEST_F(
   config->setCloneNodeCallback(doNotClone);
 
   yoga::Node node{}, owner{};
-  auto clone = config->cloneNode(&node, &owner, 0, nullptr);
+  auto clone = config->cloneNode(&node, &owner, 0);
 
   ASSERT_NE(clone, nullptr);
   YGNodeFree(clone);
-}
-
-TEST_F(ConfigCloningTest, can_clone_with_context) {
-  config->setCloneNodeCallback(
-      [](YGNodeConstRef, YGNodeConstRef, size_t, void* context) {
-        return (YGNodeRef) context;
-      });
-
-  yoga::Node node{}, owner{}, clone{};
-  ASSERT_EQ(config->cloneNode(&node, &owner, 0, &clone), &clone);
 }
 
 void ConfigCloningTest::SetUp() {
