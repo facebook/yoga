@@ -24,7 +24,6 @@ struct TypedEventTestData {};
 
 template <>
 struct TypedEventTestData<Event::LayoutPassEnd> {
-  void* layoutContext;
   LayoutData layoutData;
 };
 
@@ -329,7 +328,7 @@ void EventTest::listen(
     case Event::LayoutPassEnd: {
       auto& eventData = data.get<Event::LayoutPassEnd>();
       events.push_back(createArgs<Event::LayoutPassEnd>(
-          node, data, {eventData.layoutContext, *eventData.layoutData}));
+          node, data, {*eventData.layoutData}));
       break;
     }
 
