@@ -7,9 +7,9 @@
 
 #include <gtest/gtest.h>
 
+#include <yoga/YGValue.h>
 #include <yoga/numeric/Comparison.h>
 #include <yoga/numeric/FloatOptional.h>
-#include <yoga/YGValue.h>
 
 using namespace facebook;
 using namespace facebook::yoga;

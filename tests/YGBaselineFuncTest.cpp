@@ -8,11 +8,9 @@
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
 
-static float _baseline(
-    YGNodeConstRef node,
-    const float /*width*/,
-    const float /*height*/) {
-  float* baseline = (float*) YGNodeGetContext(node);
+static float
+_baseline(YGNodeConstRef node, const float /*width*/, const float /*height*/) {
+  float* baseline = (float*)YGNodeGetContext(node);
   return *baseline;
 }
 

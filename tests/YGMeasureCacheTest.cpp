@@ -14,7 +14,7 @@ static YGSize _measureMax(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  int* measureCount = (int*) YGNodeGetContext(node);
+  int* measureCount = (int*)YGNodeGetContext(node);
   (*measureCount)++;
 
   return YGSize{
@@ -29,7 +29,7 @@ static YGSize _measureMin(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  int* measureCount = (int*) YGNodeGetContext(node);
+  int* measureCount = (int*)YGNodeGetContext(node);
   *measureCount = *measureCount + 1;
   return YGSize{
       widthMode == YGMeasureModeUndefined ||
@@ -49,7 +49,7 @@ static YGSize _measure_84_49(
     YGMeasureMode /*widthMode*/,
     float /*height*/,
     YGMeasureMode /*heightMode*/) {
-  int* measureCount = (int*) YGNodeGetContext(node);
+  int* measureCount = (int*)YGNodeGetContext(node);
   if (measureCount) {
     (*measureCount)++;
   }

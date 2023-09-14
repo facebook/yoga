@@ -10,36 +10,35 @@
 #include <yoga/Yoga.h>
 
 class Config {
-
   friend class Node;
 
-public:
+ public:
   static Config* create(void);
 
   static void destroy(Config* config);
 
-private:
+ private:
   Config(void);
 
-public:
+ public:
   ~Config(void);
 
-public: // Prevent accidental copy
+ public: // Prevent accidental copy
   Config(Config const&) = delete;
 
   Config const& operator=(Config const&) = delete;
 
-public: // Setters
+ public: // Setters
   void setExperimentalFeatureEnabled(int feature, bool enabled);
   void setPointScaleFactor(float pixelsInPoint);
   void setErrata(int errata);
   void setUseWebDefaults(bool useWebDefaults);
 
-public: // Getters
+ public: // Getters
   bool isExperimentalFeatureEnabled(int feature) const;
   int getErrata() const;
   bool useWebDefaults() const;
 
-private:
+ private:
   YGConfigRef m_config;
 };

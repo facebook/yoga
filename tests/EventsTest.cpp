@@ -6,9 +6,9 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/event/event.h>
-#include <yoga/Yoga.h>
 #include <yoga/YGEnums.h>
+#include <yoga/Yoga.h>
+#include <yoga/event/event.h>
 
 #include <algorithm>
 #include <functional>
@@ -48,9 +48,11 @@ class EventTest : public ::testing::Test {
   ScopedEventSubscription subscription = {&EventTest::listen};
   static void listen(YGNodeConstRef, Event::Type, Event::Data);
 
-public:
+ public:
   static std::vector<EventArgs> events;
-  static EventArgs& lastEvent() { return events.back(); }
+  static EventArgs& lastEvent() {
+    return events.back();
+  }
   void TearDown() override;
 };
 
