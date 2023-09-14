@@ -27,6 +27,8 @@ let package = Package(
                 .headerSearchPath(".")
             ],
             linkerSettings: [
+                // Binaries using symbols with a weak definition crash at runtime on iOS 14/macOS 12 or older
+                // when using the Xcode 15 toolchain (FB13097713)
                 .unsafeFlags(["-Wl", "-ld_classic"])
             ]
         )
