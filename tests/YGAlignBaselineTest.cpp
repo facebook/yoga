@@ -44,8 +44,8 @@ static YGNodeRef createYGNode(
   if (alignBaseline) {
     YGNodeStyleSetAlignItems(node, YGAlignBaseline);
   }
-  YGNodeStyleSetWidth(node, (float) width);
-  YGNodeStyleSetHeight(node, (float) height);
+  YGNodeStyleSetWidth(node, (float)width);
+  YGNodeStyleSetHeight(node, (float)height);
   return node;
 }
 

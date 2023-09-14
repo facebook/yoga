@@ -7,8 +7,8 @@
 
 #include "TestUtil.h"
 
-#include <yoga/node/Node.h>
 #include <yoga/event/event.h>
+#include <yoga/node/Node.h>
 
 namespace facebook::yoga::test {
 
@@ -20,7 +20,6 @@ void yogaEventSubscriber(
     YGNodeConstRef /*node*/,
     Event::Type eventType,
     const Event::Data& /*eventData*/) {
-
   switch (eventType) {
     case Event::NodeAllocation:
       nodeInstanceCount++;

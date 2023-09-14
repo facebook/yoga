@@ -7,8 +7,8 @@
 
 #include <gtest/gtest.h>
 
-#include <cstdint>
 #include <yoga/bits/NumericBitfield.h>
+#include <cstdint>
 
 namespace facebook::yoga {
 
@@ -105,7 +105,7 @@ TEST(NumericBitfield, third_boolean_can_be_set_to_true) {
 TEST(NumericBitfield, setting_boolean_values_does_not_spill_over) {
   uint32_t flags = 0;
 
-  setBooleanData(flags, 1, (bool) 7);
+  setBooleanData(flags, 1, (bool)7);
 
   ASSERT_EQ(getBooleanData(flags, 0), false);
   ASSERT_EQ(getBooleanData(flags, 1), true);
@@ -195,7 +195,7 @@ TEST(NumericBitfield, setting_values_does_not_spill_over) {
   static constexpr size_t boolOffset = 7;
 
   uint32_t edge = 0xffffff;
-  setEnumData<YGEdge>(flags, edgesOffset, (YGEdge) edge);
+  setEnumData<YGEdge>(flags, edgesOffset, (YGEdge)edge);
 
   ASSERT_EQ(getEnumData<YGAlign>(flags, alignOffset), 0);
   ASSERT_EQ(getBooleanData(flags, boolOffset), false);

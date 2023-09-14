@@ -11,7 +11,7 @@
 using namespace ::testing;
 
 class YogaTest_HadOverflowTests : public Test {
-protected:
+ protected:
   YogaTest_HadOverflowTests() {
     config = YGConfigNew();
     root = YGNodeNewWithConfig(config);

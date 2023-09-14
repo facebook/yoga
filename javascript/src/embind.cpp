@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include "./Node.h"
+#include "./Config.h"
 #include "./Layout.h"
+#include "./Node.h"
 #include "./Size.h"
 #include "./Value.h"
-#include "./Config.h"
 
-#include <yoga/Yoga.h>
 #include <emscripten/bind.h>
+#include <yoga/Yoga.h>
 
 using namespace emscripten;
 

@@ -17,8 +17,8 @@
 
 #define YGBENCHMARKS(BLOCK)                \
   int main(int argc, char const* argv[]) { \
-    (void) argc;                           \
-    (void) argv;                           \
+    (void)argc;                            \
+    (void)argv;                            \
     clock_t __start;                       \
     clock_t __endTimes[NUM_REPETITIONS];   \
     { BLOCK }                              \
@@ -33,8 +33,8 @@
   __printBenchmarkResult(NAME, __start, __endTimes);
 
 static int __compareDoubles(const void* a, const void* b) {
-  double arg1 = *(const double*) a;
-  double arg2 = *(const double*) b;
+  double arg1 = *(const double*)a;
+  double arg2 = *(const double*)b;
 
   if (arg1 < arg2) {
     return -1;
@@ -47,16 +47,14 @@ static int __compareDoubles(const void* a, const void* b) {
   return 0;
 }
 
-static void __printBenchmarkResult(
-    char* name,
-    clock_t start,
-    clock_t* endTimes) {
+static void
+__printBenchmarkResult(char* name, clock_t start, clock_t* endTimes) {
   double timesInMs[NUM_REPETITIONS];
   double mean = 0;
   clock_t lastEnd = start;
   for (uint32_t i = 0; i < NUM_REPETITIONS; i++) {
     timesInMs[i] =
-        ((double) (endTimes[i] - lastEnd)) / (double) CLOCKS_PER_SEC * 1000;
+        ((double)(endTimes[i] - lastEnd)) / (double)CLOCKS_PER_SEC * 1000;
     lastEnd = endTimes[i];
     mean += timesInMs[i];
   }
@@ -81,7 +79,7 @@ static YGSize _measure(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  (void) node;
+  (void)node;
   return (YGSize){
       .width = widthMode == YGMeasureModeUndefined ? 10 : width,
       .height = heightMode == YGMeasureModeUndefined ? 10 : height,

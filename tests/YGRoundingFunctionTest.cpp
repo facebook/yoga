@@ -6,8 +6,8 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/Yoga.h>
 #include <yoga/Yoga-internal.h>
+#include <yoga/Yoga.h>
 
 TEST(YogaTest, rounding_value) {
   // Test that whole numbers are rounded to whole despite ceil/floor flags
@@ -70,7 +70,7 @@ TEST(YogaTest, consistent_rounding_during_repeated_layouts) {
 
   for (int i = 0; i < 5; i++) {
     // Dirty the tree so YGRoundToPixelGrid runs again
-    YGNodeStyleSetMargin(root, YGEdgeLeft, (float) (i + 1));
+    YGNodeStyleSetMargin(root, YGEdgeLeft, (float)(i + 1));
 
     YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
     ASSERT_FLOAT_EQ(10, YGNodeLayoutGetHeight(node1));

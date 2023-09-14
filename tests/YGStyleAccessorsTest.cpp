@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include <cstdint>
-#include <type_traits>
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
 #include <yoga/style/Style.h>
+#include <cstdint>
+#include <type_traits>
 
 #define ACCESSOR_TESTS_1(NAME, X) \
   style.NAME() = X;               \

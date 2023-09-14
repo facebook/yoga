@@ -14,7 +14,7 @@ static YGSize _measure(
     YGMeasureMode /*widthMode*/,
     float /*height*/,
     YGMeasureMode /*heightMode*/) {
-  int* measureCount = (int*) YGNodeGetContext(node);
+  int* measureCount = (int*)YGNodeGetContext(node);
   if (measureCount) {
     (*measureCount)++;
   }
@@ -645,7 +645,6 @@ static YGSize _measure_90_10(
     YGMeasureMode /*widthMode*/,
     float /*height*/,
     YGMeasureMode /*heightMode*/) {
-
   return YGSize{90, 10};
 }
 
@@ -655,7 +654,6 @@ static YGSize _measure_100_100(
     YGMeasureMode /*widthMode*/,
     float /*height*/,
     YGMeasureMode /*heightMode*/) {
-
   return YGSize{100, 100};
 }
 
