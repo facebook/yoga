@@ -25,6 +25,9 @@ let package = Package(
             publicHeadersPath: ".",
             cxxSettings: [
                 .headerSearchPath(".")
+            ],
+            linkerSettings: [
+                .unsafeFlags(["-Wl", "-ld_classic"])
             ]
         )
     ],
