@@ -38,7 +38,7 @@ TEST(Node, measure_with_measure_fn) {
       });
 
   ASSERT_EQ(
-      n.measure(23, YGMeasureModeExactly, 24, YGMeasureModeAtMost),
+      n.measure(23, MeasureMode::Exactly, 24, MeasureMode::AtMost),
       (YGSize{23, 12}));
 }
 
