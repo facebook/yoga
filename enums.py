@@ -4,6 +4,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import math
 import os
 
 ENUMS = {
@@ -88,7 +89,7 @@ def get_license(ext):
  */
 
 // @{"generated"} by enums.py
-
+{"// clang-format off" if ext == "cpp" else ""}
 """
 
 
@@ -121,7 +122,6 @@ with open(root + "/yoga/YGEnums.h", "w") as f:
     f.write(get_license("cpp"))
     f.write("#pragma once\n")
     f.write("#include <yoga/YGMacros.h>\n\n")
-    f.write("// clang-format off\n\n\n")
 
     f.write("YG_EXTERN_C_BEGIN\n\n")
     items = sorted(ENUMS.items())
@@ -145,6 +145,49 @@ with open(root + "/yoga/YGEnums.h", "w") as f:
             f.write("YG_DEFINE_ENUM_FLAG_OPERATORS(YG%s)\n" % name)
         f.write("\n")
     f.write("YG_EXTERN_C_END\n")
+
+# Write out C++ scoped enums
+for name, values in sorted(ENUMS.items()):
+    with open(f"{root}/yoga/enums/{name}.h", "w") as f:
+        f.write(get_license("cpp"))
+        f.write("#pragma once\n\n")
+
+        f.write("#include <cstdint>\n")
+        f.write("#include <yoga/YGEnums.h>\n")
+        f.write("#include <yoga/enums/YogaEnums.h>\n\n")
+
+        f.write("namespace facebook::yoga {\n\n")
+
+        width = "uint32_t" if name in BITSET_ENUMS else "uint8_t"
+        f.write(f"enum class {name} : {width} {{\n")
+        for value in values:
+            ordinal = value[0] if isinstance(value, tuple) else value
+            f.write(f"  {ordinal} = YG{name}{ordinal},\n")
+        f.write("};\n\n")
+
+        f.write("template <>\n")
+        f.write(f"constexpr inline int32_t ordinalCount<{name}>() {{\n")
+        f.write(f"  return {len(values)};\n")
+        f.write("} \n\n")
+
+        f.write("template <>\n")
+        f.write(f"constexpr inline int32_t bitCount<{name}>() {{\n")
+        f.write(f"  return {math.ceil(math.log(len(values), 2))};\n")
+        f.write("} \n\n")
+
+        f.write(f"constexpr inline {name} scopedEnum(YG{name} unscoped) {{\n")
+        f.write(f"  return static_cast<{name}>(unscoped);\n")
+        f.write("}\n\n")
+
+        f.write(f"constexpr inline YG{name} unscopedEnum({name} scoped) {{\n")
+        f.write(f"  return static_cast<YG{name}>(scoped);\n")
+        f.write("}\n\n")
+
+        f.write(f"inline const char* toString({name} e) {{\n")
+        f.write(f"  return YG{name}ToString(unscopedEnum(e));\n")
+        f.write("}\n\n")
+
+        f.write("} // namespace facebook::yoga\n")
 
 # write out C body for printing
 with open(root + "/yoga/YGEnums.cpp", "w") as f:
