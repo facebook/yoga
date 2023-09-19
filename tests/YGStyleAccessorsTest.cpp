@@ -96,11 +96,11 @@ ACCESSOR_TEST(
 
 ACCESSOR_TEST(
     justifyContent,
-    YGJustifyFlexStart,
-    YGJustifyFlexEnd,
-    YGJustifySpaceAround,
-    YGJustifyFlexStart,
-    YGJustifySpaceEvenly)
+    Justify::FlexStart,
+    Justify::FlexEnd,
+    Justify::SpaceAround,
+    Justify::FlexStart,
+    Justify::SpaceEvenly)
 
 ACCESSOR_TEST(
     alignContent,
