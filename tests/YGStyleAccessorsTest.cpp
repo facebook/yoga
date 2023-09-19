@@ -82,10 +82,10 @@ namespace facebook::yoga {
 
 ACCESSOR_TEST(
     direction,
-    YGDirectionInherit,
-    YGDirectionLTR,
-    YGDirectionRTL,
-    YGDirectionInherit);
+    Direction::Inherit,
+    Direction::LTR,
+    Direction::RTL,
+    Direction::Inherit);
 
 ACCESSOR_TEST(
     flexDirection,
