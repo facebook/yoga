@@ -137,12 +137,7 @@ ACCESSOR_TEST(
 
 ACCESSOR_TEST(flexWrap, Wrap::NoWrap, Wrap::Wrap, Wrap::WrapReverse)
 
-ACCESSOR_TEST(
-    overflow,
-    YGOverflowVisible,
-    YGOverflowHidden,
-    YGOverflowScroll,
-    YGOverflowVisible)
+ACCESSOR_TEST(overflow, Overflow::Visible, Overflow::Hidden, Overflow::Scroll)
 
 ACCESSOR_TEST(display, YGDisplayFlex, YGDisplayNone, YGDisplayFlex)
 
