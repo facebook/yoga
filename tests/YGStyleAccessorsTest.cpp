@@ -135,12 +135,7 @@ ACCESSOR_TEST(
     PositionType::Absolute,
     PositionType::Relative)
 
-ACCESSOR_TEST(
-    flexWrap,
-    YGWrapNoWrap,
-    YGWrapWrap,
-    YGWrapWrapReverse,
-    YGWrapNoWrap)
+ACCESSOR_TEST(flexWrap, Wrap::NoWrap, Wrap::Wrap, Wrap::WrapReverse)
 
 ACCESSOR_TEST(
     overflow,
