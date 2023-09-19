@@ -14,7 +14,7 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
 
 include_directories(..)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 add_compile_definitions(
     EMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0)
