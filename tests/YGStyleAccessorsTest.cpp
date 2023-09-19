@@ -131,10 +131,9 @@ ACCESSOR_TEST(
 
 ACCESSOR_TEST(
     positionType,
-    YGPositionTypeStatic,
-    YGPositionTypeAbsolute,
-    YGPositionTypeRelative,
-    YGPositionTypeStatic)
+    PositionType::Static,
+    PositionType::Absolute,
+    PositionType::Relative)
 
 ACCESSOR_TEST(
     flexWrap,
