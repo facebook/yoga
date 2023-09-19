@@ -28,5 +28,5 @@ let package = Package(
             ]
         )
     ],
-    cxxLanguageStandard: CXXLanguageStandard(rawValue: "c++17")
+    cxxLanguageStandard: CXXLanguageStandard(rawValue: "c++20")
 )
