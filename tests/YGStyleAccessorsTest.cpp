@@ -104,30 +104,30 @@ ACCESSOR_TEST(
 
 ACCESSOR_TEST(
     alignContent,
-    YGAlignFlexStart,
-    YGAlignAuto,
-    YGAlignFlexStart,
-    YGAlignCenter,
-    YGAlignFlexEnd,
-    YGAlignStretch)
+    Align::FlexStart,
+    Align::Auto,
+    Align::FlexStart,
+    Align::Center,
+    Align::FlexEnd,
+    Align::Stretch)
 
 ACCESSOR_TEST(
     alignItems,
-    YGAlignStretch,
-    YGAlignFlexStart,
-    YGAlignFlexEnd,
-    YGAlignBaseline,
-    YGAlignSpaceBetween,
-    YGAlignSpaceAround)
+    Align::Stretch,
+    Align::FlexStart,
+    Align::FlexEnd,
+    Align::Baseline,
+    Align::SpaceBetween,
+    Align::SpaceAround)
 
 ACCESSOR_TEST(
     alignSelf,
-    YGAlignAuto,
-    YGAlignFlexStart,
-    YGAlignCenter,
-    YGAlignAuto,
-    YGAlignFlexEnd,
-    YGAlignStretch)
+    Align::Auto,
+    Align::FlexStart,
+    Align::Center,
+    Align::Auto,
+    Align::FlexEnd,
+    Align::Stretch)
 
 ACCESSOR_TEST(
     positionType,
