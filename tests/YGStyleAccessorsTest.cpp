@@ -139,7 +139,7 @@ ACCESSOR_TEST(flexWrap, Wrap::NoWrap, Wrap::Wrap, Wrap::WrapReverse)
 
 ACCESSOR_TEST(overflow, Overflow::Visible, Overflow::Hidden, Overflow::Scroll)
 
-ACCESSOR_TEST(display, YGDisplayFlex, YGDisplayNone, YGDisplayFlex)
+ACCESSOR_TEST(display, Display::Flex, Display::None, Display::Flex)
 
 ACCESSOR_TEST(
     flex,
