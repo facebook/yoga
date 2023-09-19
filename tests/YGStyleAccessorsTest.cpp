@@ -89,10 +89,10 @@ ACCESSOR_TEST(
 
 ACCESSOR_TEST(
     flexDirection,
-    YGFlexDirectionColumn,
-    YGFlexDirectionColumnReverse,
-    YGFlexDirectionRowReverse,
-    YGFlexDirectionRow)
+    FlexDirection::Column,
+    FlexDirection::ColumnReverse,
+    FlexDirection::RowReverse,
+    FlexDirection::Row)
 
 ACCESSOR_TEST(
     justifyContent,
