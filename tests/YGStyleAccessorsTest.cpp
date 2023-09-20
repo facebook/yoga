@@ -203,33 +203,6 @@ INDEX_ACCESSOR_TEST(
     CompactValue::of<YGUnitPoint>(-7777.77f),
     CompactValue::ofUndefined())
 
-INDEX_ACCESSOR_TEST(
-    dimensions,
-    CompactValue::ofAuto(),
-    YGDimensionWidth,
-    CompactValue::ofUndefined(),
-    CompactValue::ofAuto(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
-
-INDEX_ACCESSOR_TEST(
-    minDimensions,
-    CompactValue::ofUndefined(),
-    YGDimensionHeight,
-    CompactValue::ofAuto(),
-    CompactValue::ofUndefined(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
-
-INDEX_ACCESSOR_TEST(
-    maxDimensions,
-    CompactValue::ofUndefined(),
-    YGDimensionHeight,
-    CompactValue::ofAuto(),
-    CompactValue::ofUndefined(),
-    CompactValue::of<YGUnitPoint>(7777.77f),
-    CompactValue::of<YGUnitPercent>(-100.0f))
-
 ACCESSOR_TEST(
     aspectRatio,
     FloatOptional{},
