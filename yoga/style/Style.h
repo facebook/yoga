@@ -274,11 +274,11 @@ class YG_EXPORT Style {
     return {*this};
   }
 
-  const Gutters& gap() const {
-    return gap_;
+  CompactValue gap(YGGutter gutter) const {
+    return gap_[to_underlying(gutter)];
   }
-  IdxRef<YGGutter, &Style::gap_> gap() {
-    return {*this};
+  void setGap(YGGutter gutter, CompactValue value) {
+    gap_[to_underlying(gutter)] = value;
   }
 
   CompactValue dimension(Dimension axis) const {
@@ -308,6 +308,22 @@ class YG_EXPORT Style {
   }
   Ref<FloatOptional, &Style::aspectRatio_> aspectRatio() {
     return {*this};
+  }
+
+  CompactValue resolveColumnGap() const {
+    if (!gap_[to_underlying(YGGutterColumn)].isUndefined()) {
+      return gap_[to_underlying(YGGutterColumn)];
+    } else {
+      return gap_[to_underlying(YGGutterAll)];
+    }
+  }
+
+  CompactValue resolveRowGap() const {
+    if (!gap_[to_underlying(YGGutterRow)].isUndefined()) {
+      return gap_[to_underlying(YGGutterRow)];
+    } else {
+      return gap_[to_underlying(YGGutterAll)];
+    }
   }
 
   bool operator==(const Style& other) const {
