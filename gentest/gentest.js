@@ -701,7 +701,7 @@ function calculateTree(root, roundToPixelGrid) {
 
 function getYogaStyle(node) {
   // TODO: Relying on computed style means we cannot test shorthand props like
-  // "padding", "margin", "gap".
+  // "padding", "margin", "gap", or negative values.
   return [
     'direction',
     'flex-direction',
