@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <yoga/numeric/Comparison.h>
 #include <limits>
+#include <yoga/numeric/Comparison.h>
 
 namespace facebook::yoga {
 
