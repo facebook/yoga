@@ -476,6 +476,96 @@ TEST(YogaTest, column_row_gap_wrapping) {
   YGConfigFree(config);
 }
 
+TEST(YogaTest, column_gap_start_index) {
+  const YGConfigRef config = YGConfigNew();
+  YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetFlexWrap(root, YGWrapWrap);
+  YGNodeStyleSetWidth(root, 80);
+  YGNodeStyleSetGap(root, YGGutterColumn, 10);
+  YGNodeStyleSetGap(root, YGGutterRow, 20);
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeAbsolute);
+  YGNodeStyleSetWidth(root_child0, 20);
+  YGNodeStyleSetHeight(root_child0, 20);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child1, 20);
+  YGNodeStyleSetHeight(root_child1, 20);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  const YGNodeRef root_child2 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child2, 20);
+  YGNodeStyleSetHeight(root_child2, 20);
+  YGNodeInsertChild(root, root_child2, 2);
+
+  const YGNodeRef root_child3 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child3, 20);
+  YGNodeStyleSetHeight(root_child3, 20);
+  YGNodeInsertChild(root, root_child3, 3);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(80, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(30, YGNodeLayoutGetLeft(root_child2));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child2));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child2));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child2));
+
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetLeft(root_child3));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child3));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child3));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child3));
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionRTL);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(80, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child1));
+
+  ASSERT_FLOAT_EQ(30, YGNodeLayoutGetLeft(root_child2));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child2));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child2));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child2));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child3));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child3));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetWidth(root_child3));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child3));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
 TEST(YogaTest, column_gap_justify_flex_start) {
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
