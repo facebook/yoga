@@ -30,7 +30,7 @@ struct FloatOptional {
   }
 
   constexpr bool isUndefined() const {
-    return yoga::isUndefined(value);
+    return yoga::isUndefined(value_);
   }
 };
 
