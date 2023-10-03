@@ -7,6 +7,7 @@
 require 'watir'
 require 'webdrivers'
 require 'fileutils'
+require 'optparse'
 
 browser = Watir::Browser.new(:chrome, options: {
   "goog:loggingPrefs" => {
@@ -18,7 +19,23 @@ browser = Watir::Browser.new(:chrome, options: {
 
 Dir.chdir(File.dirname($0))
 
-Dir['fixtures/*.html'].each do |file|
+options = OpenStruct.new
+OptionParser.new do |opts|
+  opts.on("-s", "--suspend", "Pauses the script after each fixture to allow for debugging on Chrome. Press enter to go to the next fixure.") do
+    options.suspend = true
+  end
+  opts.on("-f", "--fixture [FIXTURE]", String, "Only runs the script on the specific fixture.") do |f|
+    fixture = "fixtures/" + f + ".html"
+    if !File.file?(fixture)
+      puts fixture + " does not exist."
+    else
+      options.fixture = fixture
+    end
+  end
+end.parse!
+
+files = options.fixture ? options.fixture : "fixtures/*.html"
+Dir[files].each do |file|
   fixture = File.read(file)
   name = File.basename(file, '.*')
   puts "Generate #{name}"
@@ -55,6 +72,10 @@ Dir['fixtures/*.html'].each do |file|
   f = File.open("../javascript/tests/generated/#{name}.test.ts", 'w')
   f.write eval(logs[2].message.sub(/^[^"]*/, '')).sub('YogaTest', name)
   f.close
+
+  if options.suspend
+    gets
+  end
 end
 File.delete('test.html')
 browser.close
