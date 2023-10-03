@@ -7,7 +7,7 @@ hasPlayground: true
 ## Aspect Ratio
 
 AspectRatio is a property introduced by Yoga and is not present as a settable
-property in the css flexbox specification. Flexbox does has the notion of
+property in the css flexbox specification. Flexbox does have the notion of
 aspect ratio though for things with intrinsic aspect ratio such as images.
 
 The `aspect ratio` property in Yoga has the following properties:
