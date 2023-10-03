@@ -29,7 +29,7 @@ struct FloatOptional {
     return isUndefined() ? defaultValue : value_;
   }
 
-  bool isUndefined() const {
+  constexpr bool isUndefined() const {
     return std::isnan(value_);
   }
 };
