@@ -12,7 +12,6 @@
 #include <concepts>
 
 #include <yoga/Yoga.h>
-#include <yoga/numeric/FloatOptional.h>
 
 namespace facebook::yoga {
 
