@@ -16,7 +16,7 @@
 namespace facebook::yoga {
 
 constexpr bool isUndefined(std::floating_point auto value) {
-  // Can be replaced by constexpr std::isnan in C++ 23
+  // is NaN
   return value != value;
 }
 
