@@ -8,15 +8,16 @@
 #pragma once
 
 #include <array>
+#include <concepts>
 
 #include <yoga/Yoga.h>
 #include <yoga/numeric/FloatOptional.h>
 
 namespace facebook::yoga {
 
-template <typename FloatT>
-inline bool isUndefined(FloatT value) {
-  return std::isnan(value);
+constexpr bool isUndefined(std::floating_point auto value) {
+  // Can be replaced by constexpr std::isnan in C++ 23
+  return value != value;
 }
 
 inline float maxOrDefined(const float a, const float b) {
