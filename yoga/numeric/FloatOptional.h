@@ -78,4 +78,12 @@ inline bool operator<=(FloatOptional lhs, FloatOptional rhs) {
   return lhs < rhs || lhs == rhs;
 }
 
+inline FloatOptional maxOrDefined(FloatOptional op1, FloatOptional op2) {
+  return maxOrDefined(op1.unwrap(), op2.unwrap());
+}
+
+inline bool inexactEquals(const FloatOptional a, const FloatOptional b) {
+  return inexactEquals(a.unwrap(), b.unwrap());
+}
+
 } // namespace facebook::yoga
