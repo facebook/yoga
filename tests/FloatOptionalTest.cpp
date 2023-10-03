@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#include <cmath>
+
 #include <gtest/gtest.h>
 
 #include <yoga/YGValue.h>
