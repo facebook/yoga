@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <cmath>
+#include <yoga/numeric/Comparison.h>
 #include <limits>
 
 namespace facebook::yoga {
@@ -30,7 +30,7 @@ struct FloatOptional {
   }
 
   constexpr bool isUndefined() const {
-    return std::isnan(value_);
+    return yoga::isUndefined(value);
   }
 };
 
