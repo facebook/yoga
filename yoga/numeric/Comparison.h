@@ -8,6 +8,7 @@
 #pragma once
 
 #include <array>
+#include <cmath>
 #include <concepts>
 
 #include <yoga/Yoga.h>
