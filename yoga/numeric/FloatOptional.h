@@ -79,11 +79,11 @@ constexpr bool operator<=(FloatOptional lhs, FloatOptional rhs) {
 }
 
 constexpr FloatOptional maxOrDefined(FloatOptional op1, FloatOptional op2) {
-  return maxOrDefined(op1.unwrap(), op2.unwrap());
+  return yoga::maxOrDefined(op1.unwrap(), op2.unwrap());
 }
 
 constexpr bool inexactEquals(const FloatOptional a, const FloatOptional b) {
-  return inexactEquals(a.unwrap(), b.unwrap());
+  return yoga::inexactEquals(a.unwrap(), b.unwrap());
 }
 
 } // namespace facebook::yoga
