@@ -79,7 +79,7 @@ constexpr bool operator<=(FloatOptional lhs, FloatOptional rhs) {
 }
 
 constexpr FloatOptional maxOrDefined(FloatOptional op1, FloatOptional op2) {
-  return yoga::maxOrDefined(op1.unwrap(), op2.unwrap());
+  return FloatOptional{yoga::maxOrDefined(op1.unwrap(), op2.unwrap())};
 }
 
 constexpr bool inexactEquals(const FloatOptional a, const FloatOptional b) {
