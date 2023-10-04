@@ -1260,7 +1260,7 @@ static void justifyMainAxis(
       case Justify::SpaceBetween:
         if (flexLine.itemsInFlow.size() > 1) {
           betweenMainDim +=
-              yoga::maxOrDefined(flexLine.layout.remainingFreeSpace, 0) /
+              yoga::maxOrDefined(flexLine.layout.remainingFreeSpace, 0.0f) /
               static_cast<float>(flexLine.itemsInFlow.size() - 1);
         }
         break;
