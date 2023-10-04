@@ -36,53 +36,53 @@ struct FloatOptional {
 
 // operators take FloatOptional by value, as it is a 32bit value
 
-inline bool operator==(FloatOptional lhs, FloatOptional rhs) {
+constexpr bool operator==(FloatOptional lhs, FloatOptional rhs) {
   return lhs.unwrap() == rhs.unwrap() ||
       (lhs.isUndefined() && rhs.isUndefined());
 }
-inline bool operator!=(FloatOptional lhs, FloatOptional rhs) {
+constexpr bool operator!=(FloatOptional lhs, FloatOptional rhs) {
   return !(lhs == rhs);
 }
 
-inline bool operator==(FloatOptional lhs, float rhs) {
+constexpr bool operator==(FloatOptional lhs, float rhs) {
   return lhs == FloatOptional{rhs};
 }
-inline bool operator!=(FloatOptional lhs, float rhs) {
+constexpr bool operator!=(FloatOptional lhs, float rhs) {
   return !(lhs == rhs);
 }
 
-inline bool operator==(float lhs, FloatOptional rhs) {
+constexpr bool operator==(float lhs, FloatOptional rhs) {
   return rhs == lhs;
 }
-inline bool operator!=(float lhs, FloatOptional rhs) {
+constexpr bool operator!=(float lhs, FloatOptional rhs) {
   return !(lhs == rhs);
 }
 
-inline FloatOptional operator+(FloatOptional lhs, FloatOptional rhs) {
+constexpr FloatOptional operator+(FloatOptional lhs, FloatOptional rhs) {
   return FloatOptional{lhs.unwrap() + rhs.unwrap()};
 }
 
-inline bool operator>(FloatOptional lhs, FloatOptional rhs) {
+constexpr bool operator>(FloatOptional lhs, FloatOptional rhs) {
   return lhs.unwrap() > rhs.unwrap();
 }
 
-inline bool operator<(FloatOptional lhs, FloatOptional rhs) {
+constexpr bool operator<(FloatOptional lhs, FloatOptional rhs) {
   return lhs.unwrap() < rhs.unwrap();
 }
 
-inline bool operator>=(FloatOptional lhs, FloatOptional rhs) {
+constexpr bool operator>=(FloatOptional lhs, FloatOptional rhs) {
   return lhs > rhs || lhs == rhs;
 }
 
-inline bool operator<=(FloatOptional lhs, FloatOptional rhs) {
+constexpr bool operator<=(FloatOptional lhs, FloatOptional rhs) {
   return lhs < rhs || lhs == rhs;
 }
 
-inline FloatOptional maxOrDefined(FloatOptional op1, FloatOptional op2) {
+constexpr FloatOptional maxOrDefined(FloatOptional op1, FloatOptional op2) {
   return maxOrDefined(op1.unwrap(), op2.unwrap());
 }
 
-inline bool inexactEquals(const FloatOptional a, const FloatOptional b) {
+constexpr bool inexactEquals(const FloatOptional a, const FloatOptional b) {
   return inexactEquals(a.unwrap(), b.unwrap());
 }
 
