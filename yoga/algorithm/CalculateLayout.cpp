@@ -563,10 +563,10 @@ static void measureNodeWithMeasureFunc(
   // We want to make sure we don't call measure with negative size
   const float innerWidth = yoga::isUndefined(availableWidth)
       ? availableWidth
-      : yoga::maxOrDefined(0, availableWidth - paddingAndBorderAxisRow);
+      : yoga::maxOrDefined(0.0f, availableWidth - paddingAndBorderAxisRow);
   const float innerHeight = yoga::isUndefined(availableHeight)
       ? availableHeight
-      : yoga::maxOrDefined(0, availableHeight - paddingAndBorderAxisColumn);
+      : yoga::maxOrDefined(0.0f, availableHeight - paddingAndBorderAxisColumn);
 
   if (widthMeasureMode == MeasureMode::Exactly &&
       heightMeasureMode == MeasureMode::Exactly) {
