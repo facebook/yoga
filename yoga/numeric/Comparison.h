@@ -10,28 +10,23 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
-#include <concepts>
 
 #include <yoga/Yoga.h>
 
 namespace facebook::yoga {
 
-constexpr bool isUndefined(std::floating_point auto value) {
+constexpr bool isUndefined(auto value) {
   return value != value;
 }
 
-constexpr float maxOrDefined(
-    std::floating_point auto a,
-    std::floating_point auto b) {
+constexpr float maxOrDefined(auto a, auto b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
     return std::max(a, b);
   }
   return yoga::isUndefined(a) ? b : a;
 }
 
-constexpr float minOrDefined(
-    std::floating_point auto a,
-    std::floating_point auto b) {
+constexpr float minOrDefined(auto a, auto b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
     return std::min(a, b);
   }
