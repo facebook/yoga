@@ -82,7 +82,7 @@ constexpr FloatOptional maxOrDefined(FloatOptional lhs, FloatOptional rhs) {
   return FloatOptional{yoga::maxOrDefined(lhs.unwrap(), rhs.unwrap())};
 }
 
-constexpr bool inexactEquals(FloatOptional lhs, FloatOptional rhs) {
+inline bool inexactEquals(FloatOptional lhs, FloatOptional rhs) {
   return yoga::inexactEquals(lhs.unwrap(), rhs.unwrap());
 }
 
