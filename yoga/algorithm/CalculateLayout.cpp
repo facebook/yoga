@@ -1223,7 +1223,7 @@ static void justifyMainAxis(
       const float occupiedSpaceByChildNodes =
           availableInnerMainDim - flexLine.layout.remainingFreeSpace;
       flexLine.layout.remainingFreeSpace = yoga::maxOrDefined(
-          0, minAvailableMainDim - occupiedSpaceByChildNodes);
+          0.0f, minAvailableMainDim - occupiedSpaceByChildNodes);
     } else {
       flexLine.layout.remainingFreeSpace = 0;
     }
