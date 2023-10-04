@@ -78,12 +78,12 @@ constexpr bool operator<=(FloatOptional lhs, FloatOptional rhs) {
   return lhs < rhs || lhs == rhs;
 }
 
-constexpr FloatOptional maxOrDefined(FloatOptional a, FloatOptional b) {
-  return FloatOptional{yoga::maxOrDefined(a.unwrap(), b.unwrap())};
+constexpr FloatOptional maxOrDefined(FloatOptional lhs, FloatOptional rhs) {
+  return FloatOptional{yoga::maxOrDefined(lhs.unwrap(), rhs.unwrap())};
 }
 
-constexpr bool inexactEquals(FloatOptional a, FloatOptional b) {
-  return yoga::inexactEquals(a.unwrap(), b.unwrap());
+constexpr bool inexactEquals(FloatOptional lhs, FloatOptional rhs) {
+  return yoga::inexactEquals(lhs.unwrap(), rhs.unwrap());
 }
 
 } // namespace facebook::yoga
