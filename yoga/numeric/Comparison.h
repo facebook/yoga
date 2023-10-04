@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <concepts>
@@ -16,20 +17,23 @@
 namespace facebook::yoga {
 
 constexpr bool isUndefined(std::floating_point auto value) {
-  // is NaN
   return value != value;
 }
 
-inline float maxOrDefined(const float a, const float b) {
+constexpr float maxOrDefined(
+    std::floating_point auto a,
+    std::floating_point auto b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
-    return fmaxf(a, b);
+    return std::max(a, b);
   }
   return yoga::isUndefined(a) ? b : a;
 }
 
-inline float minOrDefined(const float a, const float b) {
+constexpr float minOrDefined(
+    std::floating_point auto a,
+    std::floating_point auto b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
-    return fminf(a, b);
+    return std::min(a, b);
   }
 
   return yoga::isUndefined(a) ? b : a;
@@ -37,16 +41,16 @@ inline float minOrDefined(const float a, const float b) {
 
 // Custom equality functions using a hardcoded epsilon of 0.0001f, or returning
 // true if both floats are NaN.
-inline bool inexactEquals(const float a, const float b) {
+inline bool inexactEquals(float a, float b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
-    return fabs(a - b) < 0.0001f;
+    return std::abs(a - b) < 0.0001f;
   }
   return yoga::isUndefined(a) && yoga::isUndefined(b);
 }
 
-inline bool inexactEquals(const double a, const double b) {
+inline bool inexactEquals(double a, double b) {
   if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
-    return fabs(a - b) < 0.0001;
+    return std::abs(a - b) < 0.0001;
   }
   return yoga::isUndefined(a) && yoga::isUndefined(b);
 }
