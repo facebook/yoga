@@ -10,7 +10,7 @@ on:
 jobs:
   lint-pods:
     name: Lint pod
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
       - uses: actions/checkout@v3
