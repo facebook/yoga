@@ -122,6 +122,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGOverflowHidden: {value: 'YGOverflowHidden'},
   YGOverflowVisible: {value: 'YGOverflowVisible'},
+  YGOverflowScroll: {value: 'YGOverflowScroll'},
 
   YGPositionTypeAbsolute: {value: 'YGPositionTypeAbsolute'},
   YGPositionTypeRelative: {value: 'YGPositionTypeRelative'},
