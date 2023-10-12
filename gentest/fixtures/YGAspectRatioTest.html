@@ -1,0 +1,15 @@
+<!-- TODO: aspect-ratio behavior is inconsistent with Web -->
+<div id="aspect_ratio_does_not_stretch_cross_axis_dim" data-disabled="true" style="width: 300px; height: 300px;">
+  <div style="flex: 1; overflow: scroll;">
+    <div style="flex-direction: row;">
+        <div style="flex: 2; aspect-ratio: 1;"></div>
+        <div style="width: 5px"></div>
+        <div style="flex: 1">
+          <div style="flex: 1; aspect-ratio: 1;">
+          <div style="width: 5px"></div>
+          <div style="flex: 1; aspect-ratio: 1;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
