@@ -151,6 +151,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGOverflowHidden: {value: 'Overflow.Hidden'},
   YGOverflowVisible: {value: 'Overflow.Visible'},
+  YGOverflowScroll: {value: 'Overflow.Scroll'},
 
   YGPositionTypeAbsolute: {value: 'PositionType.Absolute'},
   YGPositionTypeRelative: {value: 'PositionType.Relative'},

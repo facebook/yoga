@@ -520,6 +520,8 @@ function overflowValue(e, value) {
       return e.YGOverflowVisible;
     case 'hidden':
       return e.YGOverflowHidden;
+    case 'scroll':
+      return e.YGOverflowScroll;
   }
 }
 
