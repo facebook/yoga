@@ -2359,3 +2359,193 @@ test('row_gap_determines_parent_height', () => {
     config.free();
   }
 });
+test.skip('gap_in_overflow_scroll', () => {
+  const config = Yoga.Config.create();
+  let root;
+
+  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
+
+  try {
+    root = Yoga.Node.create(config);
+    root.setOverflow(Overflow.Scroll);
+    root.setFlexGrow(1);
+    root.setFlexShrink(1);
+    root.setWidth(300);
+
+    const root_child0 = Yoga.Node.create(config);
+    root.insertChild(root_child0, 0);
+
+    const root_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0.setFlexGrow(1);
+    root_child0_child0.setFlexShrink(1);
+    root_child0_child0.setFlexBasis("0%");
+    root_child0.insertChild(root_child0_child0, 0);
+
+    const root_child0_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0_child0.setFlexDirection(FlexDirection.Row);
+    root_child0_child0_child0.setGap(Gutter.Column, 5);
+    root_child0_child0.insertChild(root_child0_child0_child0, 0);
+
+    const root_child0_child0_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0_child0_child0.setFlexGrow(2);
+    root_child0_child0_child0_child0.setFlexShrink(1);
+    root_child0_child0_child0_child0.setFlexBasis("0%");
+    root_child0_child0_child0_child0.setAspectRatio(1 / 1);
+    root_child0_child0_child0.insertChild(root_child0_child0_child0_child0, 0);
+
+    const root_child0_child0_child0_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0_child0_child0_child0.setWidth("100%");
+    root_child0_child0_child0_child0_child0.setHeight("100%");
+    root_child0_child0_child0_child0.insertChild(root_child0_child0_child0_child0_child0, 0);
+
+    const root_child0_child0_child0_child1 = Yoga.Node.create(config);
+    root_child0_child0_child0_child1.setFlexGrow(1);
+    root_child0_child0_child0_child1.setFlexShrink(1);
+    root_child0_child0_child0_child1.setFlexBasis("0%");
+    root_child0_child0_child0_child1.setGap(Gutter.Row, 5);
+    root_child0_child0_child0.insertChild(root_child0_child0_child0_child1, 1);
+
+    const root_child0_child0_child0_child1_child0 = Yoga.Node.create(config);
+    root_child0_child0_child0_child1_child0.setFlexGrow(1);
+    root_child0_child0_child0_child1_child0.setFlexShrink(1);
+    root_child0_child0_child0_child1_child0.setFlexBasis("0%");
+    root_child0_child0_child0_child1_child0.setAspectRatio(1 / 1);
+    root_child0_child0_child0_child1.insertChild(root_child0_child0_child0_child1_child0, 0);
+
+    const root_child0_child0_child0_child1_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0_child0_child1_child0_child0.setWidth("100%");
+    root_child0_child0_child0_child1_child0_child0.setHeight("100%");
+    root_child0_child0_child0_child1_child0.insertChild(root_child0_child0_child0_child1_child0_child0, 0);
+
+    const root_child0_child0_child0_child1_child1 = Yoga.Node.create(config);
+    root_child0_child0_child0_child1_child1.setFlexGrow(1);
+    root_child0_child0_child0_child1_child1.setFlexShrink(1);
+    root_child0_child0_child0_child1_child1.setFlexBasis("0%");
+    root_child0_child0_child0_child1_child1.setAspectRatio(1 / 1);
+    root_child0_child0_child0_child1.insertChild(root_child0_child0_child0_child1_child1, 1);
+
+    const root_child0_child0_child0_child1_child1_child0 = Yoga.Node.create(config);
+    root_child0_child0_child0_child1_child1_child0.setWidth("100%");
+    root_child0_child0_child0_child1_child1_child0.setHeight("100%");
+    root_child0_child0_child0_child1_child1.insertChild(root_child0_child0_child0_child1_child1_child0, 0);
+    root.calculateLayout(undefined, undefined, Direction.LTR);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(300);
+    expect(root.getComputedHeight()).toBe(202);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(0);
+    expect(root_child0.getComputedWidth()).toBe(300);
+    expect(root_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0.getComputedWidth()).toBe(300);
+    expect(root_child0_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0.getComputedWidth()).toBe(300);
+    expect(root_child0_child0_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child0.getComputedWidth()).toBe(197);
+    expect(root_child0_child0_child0_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child0_child0.getComputedWidth()).toBe(197);
+    expect(root_child0_child0_child0_child0_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0_child1.getComputedLeft()).toBe(202);
+    expect(root_child0_child0_child0_child1.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child1.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0_child1_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child1_child0.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1_child0.getComputedHeight()).toBe(98);
+
+    expect(root_child0_child0_child0_child1_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child1_child0_child0.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1_child0_child0.getComputedHeight()).toBe(98);
+
+    expect(root_child0_child0_child0_child1_child1.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1_child1.getComputedTop()).toBe(103);
+    expect(root_child0_child0_child0_child1_child1.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1_child1.getComputedHeight()).toBe(99);
+
+    expect(root_child0_child0_child0_child1_child1_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1_child1_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child1_child1_child0.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1_child1_child0.getComputedHeight()).toBe(99);
+
+    root.calculateLayout(undefined, undefined, Direction.RTL);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(300);
+    expect(root.getComputedHeight()).toBe(202);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(0);
+    expect(root_child0.getComputedWidth()).toBe(300);
+    expect(root_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0.getComputedWidth()).toBe(300);
+    expect(root_child0_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0.getComputedWidth()).toBe(300);
+    expect(root_child0_child0_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0_child0.getComputedLeft()).toBe(103);
+    expect(root_child0_child0_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child0.getComputedWidth()).toBe(197);
+    expect(root_child0_child0_child0_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child0_child0.getComputedWidth()).toBe(197);
+    expect(root_child0_child0_child0_child0_child0.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0_child1.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child1.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1.getComputedHeight()).toBe(202);
+
+    expect(root_child0_child0_child0_child1_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child1_child0.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1_child0.getComputedHeight()).toBe(98);
+
+    expect(root_child0_child0_child0_child1_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child1_child0_child0.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1_child0_child0.getComputedHeight()).toBe(98);
+
+    expect(root_child0_child0_child0_child1_child1.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1_child1.getComputedTop()).toBe(103);
+    expect(root_child0_child0_child0_child1_child1.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1_child1.getComputedHeight()).toBe(99);
+
+    expect(root_child0_child0_child0_child1_child1_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0_child1_child1_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0_child1_child1_child0.getComputedWidth()).toBe(98);
+    expect(root_child0_child0_child0_child1_child1_child0.getComputedHeight()).toBe(99);
+  } finally {
+    if (typeof root !== 'undefined') {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});

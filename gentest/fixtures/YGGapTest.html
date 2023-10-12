@@ -171,3 +171,24 @@
   <div style="height: 20px"></div>
   <div style="height: 30px"></div>
 </div>
+
+<!-- TODO: Yoga's flex gap behavior is inconsistent with Web -->
+<div id="gap_in_overflow_scroll" data-disabled="true" style="width: 300px; flex-grow: 1; flex-shrink: 1; overflow: scroll;">
+  <div>
+    <div style="flex: 1">
+      <div style="flex-direction: row; column-gap: 5px;">
+        <div style="flex: 2; aspect-ratio: 1;">
+          <div style="width: 100%; height: 100%;"></div>
+        </div>
+        <div style="flex-direction: column; flex: 1; row-gap: 5px;">
+          <div style="flex: 1; aspect-ratio: 1;">
+            <div style="width: 100%; height: 100%;"></div>
+          </div>
+          <div style="flex: 1; aspect-ratio: 1;">
+            <div style="width: 100%; height: 100%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
