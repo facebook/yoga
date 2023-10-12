@@ -211,6 +211,12 @@ function setupTestTree(
 
     if (!isDefaultStyleValue(style, node.style[style])) {
       switch (style) {
+        case 'aspect-ratio':
+          e.YGNodeStyleSetAspectRatio(
+            nodeName,
+            pointValue(e, node.style[style]),
+          );
+          break;
         case 'gap':
           e.YGNodeStyleSetGap(
             nodeName,
@@ -742,6 +748,7 @@ function getYogaStyle(node) {
     'column-gap',
     'row-gap',
     'display',
+    'aspect-ratio',
   ].reduce((map, key) => {
     map[key] =
       node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
