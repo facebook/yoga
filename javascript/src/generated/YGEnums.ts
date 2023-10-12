@@ -49,6 +49,7 @@ export enum Edge {
 export enum Errata {
   None = 0,
   StretchFlexBasis = 1,
+  StartingEndingEdgeFromFlexDirection = 2,
   All = 2147483647,
   Classic = 2147483646,
 }
@@ -158,6 +159,7 @@ const constants = {
   EDGE_ALL: Edge.All,
   ERRATA_NONE: Errata.None,
   ERRATA_STRETCH_FLEX_BASIS: Errata.StretchFlexBasis,
+  ERRATA_STARTING_ENDING_EDGE_FROM_FLEX_DIRECTION: Errata.StartingEndingEdgeFromFlexDirection,
   ERRATA_ALL: Errata.All,
   ERRATA_CLASSIC: Errata.Classic,
   EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS: ExperimentalFeature.WebFlexBasis,

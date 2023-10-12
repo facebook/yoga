@@ -67,6 +67,8 @@ ENUMS = {
         # Allows main-axis flex basis to be stretched without flexGrow being
         # set (previously referred to as "UseLegacyStretchBehaviour")
         ("StretchFlexBasis", 1 << 0),
+        # Solely uses the flex-direction to determine starting and ending edges
+        ("StartingEndingEdgeFromFlexDirection", 1 << 1),
         # Enable all incorrect behavior (preserve compatibility)
         ("All", 0x7FFFFFFF),
         # Enable all errata except for "StretchFlexBasis" (Defaults behavior
