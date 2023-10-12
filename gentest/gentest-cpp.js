@@ -219,6 +219,20 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     },
   },
 
+  YGNodeStyleSetAspectRatio: {
+    value: function (nodeName, value) {
+      this.push(
+        'YGNodeStyleSetAspectRatio' +
+          toFunctionName(value) +
+          '(' +
+          nodeName +
+          ', ' +
+          toValueCpp(value) +
+          ');',
+      );
+    },
+  },
+
   YGNodeStyleSetBorder: {
     value: function (nodeName, edge, value) {
       this.push(

@@ -222,6 +222,14 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     },
   },
 
+  YGNodeStyleSetAspectRatio: {
+    value: function (nodeName, value) {
+      this.push(
+        nodeName + '.setAspectRatio(' + toValueJavascript(value) + ');',
+      );
+    },
+  },
+
   YGNodeStyleSetBorder: {
     value: function (nodeName, edge, value) {
       this.push(
