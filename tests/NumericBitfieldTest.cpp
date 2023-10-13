@@ -191,8 +191,8 @@ TEST(NumericBitfield, third_enum_can_be_set) {
 TEST(NumericBitfield, setting_values_does_not_spill_over) {
   uint32_t flags = 0;
   static constexpr size_t alignOffset = 0;
-  static constexpr size_t edgesOffset = 3;
-  static constexpr size_t boolOffset = 7;
+  static constexpr size_t edgesOffset = 4;
+  static constexpr size_t boolOffset = 8;
 
   uint32_t edge = 0xffffff;
   setEnumData<YGEdge>(flags, edgesOffset, (YGEdge)edge);
