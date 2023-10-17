@@ -14,7 +14,7 @@ browser = Watir::Browser.new(:chrome, options: {
     "browser" => "ALL",
     "performance" => "ALL"
   },
-  args: ['--force-device-scale-factor=1', '--window-position=0,0']
+  args: ['--force-device-scale-factor=1', '--hide-scrollbars', '--window-position=0,0']
 })
 
 Dir.chdir(File.dirname($0))
