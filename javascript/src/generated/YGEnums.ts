@@ -16,6 +16,7 @@ export enum Align {
   Baseline = 5,
   SpaceBetween = 6,
   SpaceAround = 7,
+  SpaceEvenly = 8,
 }
 
 export enum Dimension {
@@ -141,6 +142,7 @@ const constants = {
   ALIGN_BASELINE: Align.Baseline,
   ALIGN_SPACE_BETWEEN: Align.SpaceBetween,
   ALIGN_SPACE_AROUND: Align.SpaceAround,
+  ALIGN_SPACE_EVENLY: Align.SpaceEvenly,
   DIMENSION_WIDTH: Dimension.Width,
   DIMENSION_HEIGHT: Dimension.Height,
   DIRECTION_INHERIT: Direction.Inherit,

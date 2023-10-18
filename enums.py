@@ -29,6 +29,7 @@ ENUMS = {
         "Baseline",
         "SpaceBetween",
         "SpaceAround",
+        "SpaceEvenly",
     ],
     "PositionType": ["Static", "Relative", "Absolute"],
     "Display": ["Flex", "None"],

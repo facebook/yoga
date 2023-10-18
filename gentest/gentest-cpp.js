@@ -91,6 +91,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignStretch: {value: 'YGAlignStretch'},
   YGAlignSpaceBetween: {value: 'YGAlignSpaceBetween'},
   YGAlignSpaceAround: {value: 'YGAlignSpaceAround'},
+  YGAlignSpaceEvenly: {value: 'YGAlignSpaceEvenly'},
   YGAlignBaseline: {value: 'YGAlignBaseline'},
 
   YGDirectionInherit: {value: 'YGDirectionInherit'},

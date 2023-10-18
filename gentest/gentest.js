@@ -608,6 +608,8 @@ function alignValue(e, value) {
       return e.YGAlignSpaceBetween;
     case 'space-around':
       return e.YGAlignSpaceAround;
+    case 'space-evenly':
+      return e.YGAlignSpaceEvenly;
     case 'baseline':
       return e.YGAlignBaseline;
   }
