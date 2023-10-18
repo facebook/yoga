@@ -1329,7 +1329,6 @@ public class YGFlexDirectionTest {
   }
 
   @Test
-  @Ignore
   public void test_flex_direction_row_reverse_border_start() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1468,7 +1467,6 @@ public class YGFlexDirectionTest {
   }
 
   @Test
-  @Ignore
   public void test_flex_direction_row_reverse_border_end() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);

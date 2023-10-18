@@ -1440,7 +1440,7 @@ test('flex_direction_row_reverse_border_left', () => {
     config.free();
   }
 });
-test.skip('flex_direction_row_reverse_border_start', () => {
+test('flex_direction_row_reverse_border_start', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1590,7 +1590,7 @@ test('flex_direction_row_reverse_border_right', () => {
     config.free();
   }
 });
-test.skip('flex_direction_row_reverse_border_end', () => {
+test('flex_direction_row_reverse_border_end', () => {
   const config = Yoga.Config.create();
   let root;
 
