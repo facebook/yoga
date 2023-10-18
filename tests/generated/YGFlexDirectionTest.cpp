@@ -1336,8 +1336,6 @@ TEST(YogaTest, flex_direction_row_reverse_border_left) {
 }
 
 TEST(YogaTest, flex_direction_row_reverse_border_start) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1478,8 +1476,6 @@ TEST(YogaTest, flex_direction_row_reverse_border_right) {
 }
 
 TEST(YogaTest, flex_direction_row_reverse_border_end) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 

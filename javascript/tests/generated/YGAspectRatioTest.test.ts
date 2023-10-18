@@ -95,28 +95,28 @@ test.skip('aspect_ratio_does_not_stretch_cross_axis_dim', () => {
 
     expect(root_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0.getComputedTop()).toBe(0);
-    expect(root_child0_child0.getComputedWidth()).toBe(300);
-    expect(root_child0_child0.getComputedHeight()).toBe(197);
+    expect(root_child0_child0.getComputedWidth()).toBe(285);
+    expect(root_child0_child0.getComputedHeight()).toBe(187);
 
     expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
-    expect(root_child0_child0_child0.getComputedWidth()).toBe(197);
-    expect(root_child0_child0_child0.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child0.getComputedWidth()).toBe(187);
+    expect(root_child0_child0_child0.getComputedHeight()).toBe(187);
 
-    expect(root_child0_child0_child1.getComputedLeft()).toBe(197);
+    expect(root_child0_child0_child1.getComputedLeft()).toBe(187);
     expect(root_child0_child0_child1.getComputedTop()).toBe(0);
     expect(root_child0_child0_child1.getComputedWidth()).toBe(5);
-    expect(root_child0_child0_child1.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child1.getComputedHeight()).toBe(187);
 
-    expect(root_child0_child0_child2.getComputedLeft()).toBe(202);
+    expect(root_child0_child0_child2.getComputedLeft()).toBe(192);
     expect(root_child0_child0_child2.getComputedTop()).toBe(0);
-    expect(root_child0_child0_child2.getComputedWidth()).toBe(98);
-    expect(root_child0_child0_child2.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child2.getComputedWidth()).toBe(93);
+    expect(root_child0_child0_child2.getComputedHeight()).toBe(187);
 
     expect(root_child0_child0_child2_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child2_child0.getComputedTop()).toBe(0);
-    expect(root_child0_child0_child2_child0.getComputedWidth()).toBe(98);
-    expect(root_child0_child0_child2_child0.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child2_child0.getComputedWidth()).toBe(93);
+    expect(root_child0_child0_child2_child0.getComputedHeight()).toBe(187);
 
     expect(root_child0_child0_child2_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child2_child0_child0.getComputedTop()).toBe(0);
@@ -125,8 +125,8 @@ test.skip('aspect_ratio_does_not_stretch_cross_axis_dim', () => {
 
     expect(root_child0_child0_child2_child0_child1.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child2_child0_child1.getComputedTop()).toBe(0);
-    expect(root_child0_child0_child2_child0_child1.getComputedWidth()).toBe(98);
-    expect(root_child0_child0_child2_child0_child1.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child2_child0_child1.getComputedWidth()).toBe(93);
+    expect(root_child0_child0_child2_child0_child1.getComputedHeight()).toBe(187);
 
     root.calculateLayout(undefined, undefined, Direction.RTL);
 
@@ -140,40 +140,40 @@ test.skip('aspect_ratio_does_not_stretch_cross_axis_dim', () => {
     expect(root_child0.getComputedWidth()).toBe(300);
     expect(root_child0.getComputedHeight()).toBe(300);
 
-    expect(root_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0.getComputedLeft()).toBe(30);
     expect(root_child0_child0.getComputedTop()).toBe(0);
-    expect(root_child0_child0.getComputedWidth()).toBe(300);
-    expect(root_child0_child0.getComputedHeight()).toBe(197);
+    expect(root_child0_child0.getComputedWidth()).toBe(285);
+    expect(root_child0_child0.getComputedHeight()).toBe(187);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(103);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(98);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
-    expect(root_child0_child0_child0.getComputedWidth()).toBe(197);
-    expect(root_child0_child0_child0.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child0.getComputedWidth()).toBe(187);
+    expect(root_child0_child0_child0.getComputedHeight()).toBe(187);
 
-    expect(root_child0_child0_child1.getComputedLeft()).toBe(98);
+    expect(root_child0_child0_child1.getComputedLeft()).toBe(93);
     expect(root_child0_child0_child1.getComputedTop()).toBe(0);
     expect(root_child0_child0_child1.getComputedWidth()).toBe(5);
-    expect(root_child0_child0_child1.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child1.getComputedHeight()).toBe(187);
 
     expect(root_child0_child0_child2.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child2.getComputedTop()).toBe(0);
-    expect(root_child0_child0_child2.getComputedWidth()).toBe(98);
-    expect(root_child0_child0_child2.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child2.getComputedWidth()).toBe(93);
+    expect(root_child0_child0_child2.getComputedHeight()).toBe(187);
 
     expect(root_child0_child0_child2_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child2_child0.getComputedTop()).toBe(0);
-    expect(root_child0_child0_child2_child0.getComputedWidth()).toBe(98);
-    expect(root_child0_child0_child2_child0.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child2_child0.getComputedWidth()).toBe(93);
+    expect(root_child0_child0_child2_child0.getComputedHeight()).toBe(187);
 
-    expect(root_child0_child0_child2_child0_child0.getComputedLeft()).toBe(93);
+    expect(root_child0_child0_child2_child0_child0.getComputedLeft()).toBe(88);
     expect(root_child0_child0_child2_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child2_child0_child0.getComputedWidth()).toBe(5);
     expect(root_child0_child0_child2_child0_child0.getComputedHeight()).toBe(0);
 
     expect(root_child0_child0_child2_child0_child1.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child2_child0_child1.getComputedTop()).toBe(0);
-    expect(root_child0_child0_child2_child0_child1.getComputedWidth()).toBe(98);
-    expect(root_child0_child0_child2_child0_child1.getComputedHeight()).toBe(197);
+    expect(root_child0_child0_child2_child0_child1.getComputedWidth()).toBe(93);
+    expect(root_child0_child0_child2_child0_child1.getComputedHeight()).toBe(187);
   } finally {
     if (typeof root !== 'undefined') {
       root.freeRecursive();
