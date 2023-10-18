@@ -990,7 +990,7 @@ test('flex_direction_row_reverse_padding_left', () => {
     config.free();
   }
 });
-test.skip('flex_direction_row_reverse_padding_start', () => {
+test('flex_direction_row_reverse_padding_start', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1140,7 +1140,7 @@ test('flex_direction_row_reverse_padding_right', () => {
     config.free();
   }
 });
-test.skip('flex_direction_row_reverse_padding_end', () => {
+test('flex_direction_row_reverse_padding_end', () => {
   const config = Yoga.Config.create();
   let root;
 
