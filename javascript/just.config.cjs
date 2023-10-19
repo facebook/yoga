@@ -65,7 +65,7 @@ task(
   'benchmark',
   series(
     emcmakeGenerateTask(),
-    cmakeBuildTask({targets: ['node']}),
+    cmakeBuildTask({targets: ['web']}),
     runBenchTask(),
   ),
 );
