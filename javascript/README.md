@@ -1,24 +1,11 @@
 # yoga-layout
 
-This package provides prebuilt JavaScript bindings for the Yoga layout engine. Both WebAssembly and asm.js variants are packaged, with the optimal loaded based on platform.
+This package provides prebuilt WebAssembly bindings for the Yoga layout engine.
 
 ## Usage
 
-The default entrypoint provides an asynchronous loader function to return a Yoga instance.
-
 ```ts
-import {loadYoga, Align} from 'yoga-layout';
-
-const Yoga = await loadYoga();
-
-const node = Yoga.Node.create();
-node.setAlignContent(Align.Center);
-```
-
-An alternative synchronous API is provided for compatibility, but requires using asm.js in browsers instead of WebAssembly, leading to worse performance and larger assets.
-
-```ts
-import Yoga, {Align} from 'yoga-layout/sync';
+import {Yoga, Align} from 'yoga-layout';
 
 const node = Yoga.Node.create();
 node.setAlignContent(Align.Center);
@@ -37,19 +24,13 @@ node.freeRecursive();
 node.free();
 ```
 
-## Selecting WebAssembly or asm.js
-
-For better performance and smaller packages, WebAssembly is preferred to asm.js where available. `yoga-layout` tries to provide the right default using [export maps](https://webpack.js.org/guides/package-exports/#conditional-syntax) so that platforms which can take advantage of WebAssembly use it by default.
-
-Different entrypoints are exposed to choose a flavor explicitly.
-
-```ts
-import {loadYoga} from 'yoga-layout/wasm-async';
-```
-
 ## Using TypeScript
 
 This package provides out-of-the-box TypeScript typings so long as `tsc` is configured to support ESM resolution. It is recommended to set `moduleResolution: 'bundler'` or `moduleResolution: node16` in your `tsconfig.json` according to your environment.
+
+## ES Modules
+
+`yoga-layout` is only provided as an ES Module, relying on top-level await. This allows providing a synchronous API, while still allowing async WebAssembly compilation in browsers, and will allow eventual usage of ESM/WASM interop.
 
 ## Contributing
 

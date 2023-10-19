@@ -27,8 +27,7 @@ module.exports = {
     'require-await': 'error',
   },
   env: {
-    commonjs: true,
-    es2018: true,
+    es2020: true,
   },
   parserOptions: {
     sourceType: 'module',
@@ -36,7 +35,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.ts', '**/*.tsx'],
+      files: ['**/*.ts', '**/*.cts', '**/*.mts'],
       extends: ['plugin:@typescript-eslint/recommended'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
@@ -59,18 +58,8 @@ module.exports = {
       },
     },
     {
-      files: ['jest.*', '**/tests/**'],
-      env: {
-        node: true,
-      },
+      files: ['**/tests/**'],
       extends: ['plugin:jest/recommended'],
-      globals: {
-        getMeasureCounter: 'writable',
-        getMeasureCounterMax: 'writable',
-        getMeasureCounterMin: 'writable',
-        Yoga: 'writable',
-        YGBENCHMARK: 'writable',
-      },
     },
   ],
 };

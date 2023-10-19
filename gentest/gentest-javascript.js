@@ -23,7 +23,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue: {
     value: function () {
-      this.push('import {Yoga} from "../tools/globals";');
+      this.push("import Yoga from 'yoga-layout';");
       this.push('import {');
       this.pushIndent();
       this.push('Align,');

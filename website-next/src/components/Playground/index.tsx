@@ -8,7 +8,7 @@
  */
 
 import React, {Component} from 'react';
-import {Direction} from 'yoga-layout/sync';
+import {Direction} from 'yoga-layout';
 import YogaNode from './YogaNode';
 import Editor from './Editor';
 import {List, setIn} from 'immutable';

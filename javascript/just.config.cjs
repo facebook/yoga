@@ -7,7 +7,7 @@
  * @format
  */
 
-import {
+const {
   argv,
   cleanTask,
   logger,
@@ -18,13 +18,13 @@ import {
   spawn,
   task,
   tscTask,
-} from 'just-scripts';
+} = require('just-scripts');
 
-import {readFile, writeFile} from 'fs/promises';
+const {readFile, writeFile} = require('fs/promises');
 
-import glob from 'glob';
-import path from 'path';
-import which from 'which';
+const glob = require('glob');
+const path = require('path');
+const which = require('which');
 
 const node = process.execPath;
 
@@ -32,11 +32,15 @@ option('fix');
 
 task('clean', cleanTask({paths: ['build', 'dist']}));
 
-function defineFlavor(flavor: string, env: NodeJS.ProcessEnv) {
+function defineFlavor(flavor, env) {
   task(`cmake-build:${flavor}`, cmakeBuildTask({targets: [flavor]}));
   task(
     `jest:${flavor}`,
-    jestTask({config: path.join(__dirname, 'jest.config.ts'), env}),
+    jestTask({
+      config: path.join(__dirname, 'jest.config.js'),
+      nodeArgs: ['--experimental-vm-modules'],
+      env
+    }),
   );
   task(
     `test:${flavor}`,
@@ -44,14 +48,7 @@ function defineFlavor(flavor: string, env: NodeJS.ProcessEnv) {
   );
 }
 
-defineFlavor('asmjs-async-node', {WASM: '0', SYNC: '0'});
-defineFlavor('asmjs-sync-node', {WASM: '0', SYNC: '1'});
-defineFlavor('asmjs-async-web', {WASM: '0', SYNC: '0'});
-defineFlavor('asmjs-sync-web', {WASM: '0', SYNC: '1'});
-defineFlavor('wasm-async-node', {WASM: '1', SYNC: '0'});
-defineFlavor('wasm-sync-node', {WASM: '1', SYNC: '1'});
-defineFlavor('wasm-async-web', {WASM: '1', SYNC: '0'});
-defineFlavor('wasm-sync-web', {WASM: '1', SYNC: '1'});
+defineFlavor('web');
 
 task('build', series(emcmakeGenerateTask(), cmakeBuildTask()));
 
@@ -59,10 +56,8 @@ task(
   'test',
   series(
     emcmakeGenerateTask(),
-    series('cmake-build:asmjs-async-node', 'jest:asmjs-async-node'),
-    series('cmake-build:asmjs-sync-node', 'jest:asmjs-sync-node'),
-    series('cmake-build:wasm-async-node', 'jest:wasm-async-node'),
-    series('cmake-build:wasm-sync-node', 'jest:wasm-sync-node'),
+    'cmake-build:web',
+    'jest:web',
   ),
 );
 
@@ -70,7 +65,7 @@ task(
   'benchmark',
   series(
     emcmakeGenerateTask(),
-    cmakeBuildTask({targets: ['asmjs-sync-node', 'wasm-sync-node']}),
+    cmakeBuildTask({targets: ['node']}),
     runBenchTask(),
   ),
 );
@@ -96,20 +91,20 @@ task(
 );
 
 function recursiveReplace(
-  obj: Record<string, unknown>,
-  pattern: RegExp,
-  replacement: string,
+  obj,
+  pattern,
+  replacement,
 ) {
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === 'string') {
       obj[key] = value.replace(pattern, replacement);
     } else if (typeof value === 'object' && value != null) {
-      recursiveReplace(value as Record<string, unknown>, pattern, replacement);
+      recursiveReplace(value, pattern, replacement);
     }
   }
 }
 
-function babelTransformTask(opts: {dir: string}) {
+function babelTransformTask(opts) {
   return () => {
     const args = [
       opts.dir,
@@ -117,7 +112,7 @@ function babelTransformTask(opts: {dir: string}) {
       '--out-dir',
       opts.dir,
       '--extensions',
-      '.js,.ts',
+      '.js,.cjs,.mjs,.ts,.cts,.mts',
     ];
     logger.info(`Transforming "${path.resolve(opts.dir)}"`);
 
@@ -132,19 +127,15 @@ function runBenchTask() {
     const files = glob.sync('./tests/Benchmarks/**/*');
 
     const args = [
-      '--extensions',
-      '.js,.ts',
-      '--config-file',
-      path.join(__dirname, '.babelrc.js'),
-      '--',
+      '--loader=babel-register-esm',
       './tests/bin/run-bench.ts',
       ...files,
     ];
-    logger.info(['babel-node', ...args].join(' '));
+    logger.info(['node', ...args].join(' '));
 
     return spawn(
       node,
-      [require.resolve('@babel/node/bin/babel-node'), ...args],
+      args,
       {
         stdio: 'inherit',
       },
@@ -170,7 +161,7 @@ function emcmakeGenerateTask() {
   };
 }
 
-function cmakeBuildTask(opts?: {targets?: ReadonlyArray<string>}) {
+function cmakeBuildTask(opts) {
   return () => {
     const cmake = which.sync('cmake');
     const args = [
@@ -184,7 +175,7 @@ function cmakeBuildTask(opts?: {targets?: ReadonlyArray<string>}) {
   };
 }
 
-function clangFormatTask(opts?: {fix?: boolean}) {
+function clangFormatTask(opts) {
   return () => {
     const args = [
       ...(opts?.fix ? ['-i'] : ['--dry-run', '--Werror']),

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Yoga} from './tools/globals';
+import Yoga from 'yoga-layout';
 
 test('align_baseline_parent_using_child_in_column_as_reference', () => {
   const config = Yoga.Config.create();

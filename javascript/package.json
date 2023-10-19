@@ -9,69 +9,38 @@
     "type": "git",
     "url": "git@github.com:facebook/yoga.git"
   },
-  "exports": {
-    ".": {
-      "browser": "./src/entrypoint/wasm-async-web.ts",
-      "node": "./src/entrypoint/wasm-async-node.ts",
-      "default": "./src/entrypoint/asmjs-async-web.ts"
-    },
-    "./sync": {
-      "browser": "./src/entrypoint/asmjs-sync-web.ts",
-      "node": "./src/entrypoint/wasm-sync-node.ts",
-      "default": "./src/entrypoint/asmjs-sync-web.ts"
-    },
-    "./asmjs-async": {
-      "browser": "./src/entrypoint/asmjs-async-web.ts",
-      "node": "./src/entrypoint/asmjs-async-node.ts",
-      "default": "./src/entrypoint/asmjs-async-web.ts"
-    },
-    "./asmjs-sync": {
-      "browser": "./src/entrypoint/asmjs-sync-web.ts",
-      "node": "./src/entrypoint/asmjs-sync-node.ts",
-      "default": "./src/entrypoint/asmjs-sync-web.ts"
-    },
-    "./wasm-async": {
-      "browser": "./src/entrypoint/wasm-async-web.ts",
-      "node": "./src/entrypoint/wasm-async-node.ts",
-      "default": "./src/entrypoint/wasm-async-web.ts"
-    },
-    "./wasm-sync": {
-      "browser": "./src/entrypoint/wasm-sync-web.ts",
-      "node": "./src/entrypoint/wasm-sync-node.ts",
-      "default": "./src/entrypoint/wasm-async-web.ts"
-    }
-  },
+  "type": "module",
+  "main": "./src/index.ts",
   "files": [
     "binaries/**",
     "src/**"
   ],
   "scripts": {
-    "benchmark": "just benchmark",
-    "build": "just build",
-    "clang-format": "just clang-format",
-    "clang-format:fix": "just clang-format --fix",
-    "clean": "just clean",
+    "benchmark": "just benchmark --config just.config.cjs",
+    "build": "just build --config just.config.cjs",
+    "clang-format": "just clang-format --config just.config.cjs",
+    "clang-format:fix": "just clang-format --fix --config just.config.cjs",
+    "clean": "just clean --config just.config.cjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepack": "just prepack",
-    "test": "just test",
+    "prepack": "just prepack --config just.config.cjs",
+    "test": "just test --config just.config.cjs",
     "tsc": "tsc --noEmit"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.4",
     "@babel/core": "^7.21.4",
-    "@babel/node": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-typescript": "^7.21.4",
     "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.1",
     "@types/node": "^16.18.25",
     "@types/which": "^3.0.0",
+    "babel-register-esm": "^1.2.5",
     "clang-format": "^1.8.0",
     "glob": "^8.0.3",
     "jest": "^29.3.1",
     "just-scripts": "^2.1.0",
-    "ts-node": "^10.9.1",
     "which": "^3.0.0"
   }
 }

@@ -8,12 +8,12 @@
  */
 
 import React, {Component} from 'react';
-import Yoga from 'yoga-layout/sync';
+import Yoga from 'yoga-layout';
 import PositionGuide from './PositionGuide';
 import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
 import type {LayoutRecordType} from './LayoutRecord';
-import {Direction, Display, Edge, Node, Wrap} from 'yoga-layout/sync';
+import {Direction, Display, Edge, Node, Wrap} from 'yoga-layout';
 
 import './YogaNode.css';
 

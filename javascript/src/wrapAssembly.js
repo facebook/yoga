@@ -7,7 +7,8 @@
  * @format
  */
 
-import YGEnums, {Unit, Direction} from './generated/YGEnums';
+import {Unit, Direction} from './generated/YGEnums.ts';
+import YGEnums from './generated/YGEnums.ts';
 
 export default function wrapAssembly(lib) {
   function patch(prototype, name, fn) {

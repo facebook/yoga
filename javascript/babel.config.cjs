@@ -9,7 +9,14 @@
 
 module.exports = {
   presets: [
-    ['@babel/preset-env', {targets: 'defaults'}],
-    '@babel/preset-typescript',
+    ['@babel/preset-env', {
+      targets: "> 5%, maintained node versions",
+
+      // Preserve ES Modules
+      modules: false,
+    }],
+    ['@babel/preset-typescript', {
+      "rewriteImportExtensions": true
+    }],
   ],
 };
