@@ -1682,8 +1682,6 @@ TEST(YogaTest, flex_direction_column_reverse_border_bottom) {
 }
 
 TEST(YogaTest, flex_direction_row_reverse_pos_left) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1854,8 +1852,6 @@ TEST(YogaTest, flex_direction_row_reverse_pos_start) {
 }
 
 TEST(YogaTest, flex_direction_row_reverse_pos_right) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2026,8 +2022,6 @@ TEST(YogaTest, flex_direction_row_reverse_pos_end) {
 }
 
 TEST(YogaTest, flex_direction_column_reverse_pos_top) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2113,8 +2107,6 @@ TEST(YogaTest, flex_direction_column_reverse_pos_top) {
 }
 
 TEST(YogaTest, flex_direction_column_reverse_pos_bottom) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 

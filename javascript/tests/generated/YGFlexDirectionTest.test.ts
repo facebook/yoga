@@ -1815,7 +1815,7 @@ test('flex_direction_column_reverse_border_bottom', () => {
     config.free();
   }
 });
-test.skip('flex_direction_row_reverse_pos_left', () => {
+test('flex_direction_row_reverse_pos_left', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1995,7 +1995,7 @@ test('flex_direction_row_reverse_pos_start', () => {
     config.free();
   }
 });
-test.skip('flex_direction_row_reverse_pos_right', () => {
+test('flex_direction_row_reverse_pos_right', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2175,7 +2175,7 @@ test('flex_direction_row_reverse_pos_end', () => {
     config.free();
   }
 });
-test.skip('flex_direction_column_reverse_pos_top', () => {
+test('flex_direction_column_reverse_pos_top', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2265,7 +2265,7 @@ test.skip('flex_direction_column_reverse_pos_top', () => {
     config.free();
   }
 });
-test.skip('flex_direction_column_reverse_pos_bottom', () => {
+test('flex_direction_column_reverse_pos_bottom', () => {
   const config = Yoga.Config.create();
   let root;
 
