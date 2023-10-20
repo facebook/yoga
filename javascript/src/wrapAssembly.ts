@@ -24,7 +24,7 @@ import type {
   Overflow,
   PositionType,
   Wrap,
-} from './generated/YGEnums';
+} from './generated/YGEnums.ts';
 
 type Layout = {
   left: number;
@@ -179,7 +179,7 @@ export type Yoga = {
   };
 } & typeof YGEnums;
 
-export default function wrapAssembly(lib: unknown): Yoga {
+export default function wrapAssembly(lib: any): Yoga {
   function patch(prototype, name, fn) {
     const original = prototype[name];
 
