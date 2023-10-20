@@ -9,14 +9,22 @@
 
 module.exports = {
   presets: [
-    ['@babel/preset-env', {
-      targets: "> 5%, maintained node versions",
-
-      // Preserve ES Modules
-      modules: false,
-    }],
-    ['@babel/preset-typescript', {
-      "rewriteImportExtensions": true
-    }],
+    [
+      '@babel/preset-env',
+      {
+        targets: [
+          'maintained node versions',
+          '> 0.5%, last 2 versions, Firefox ESR, not dead',
+        ],
+        // Do not transform to another module system
+        modules: false,
+      },
+    ],
+    [
+      '@babel/preset-typescript',
+      {
+        rewriteImportExtensions: true,
+      },
+    ],
   ],
 };
