@@ -235,52 +235,58 @@ export default class Playground extends Component<Props, State> {
       : null;
 
     const playground = (
-      <div
-        className={`Playground ${this.props.renderSidebar ? '' : 'standalone'}`}
-        onMouseDown={this.onMouseDown}
-        style={{height, maxHeight: height}}
-        ref={ref => {
-          this._containerRef = ref;
-        }}>
-        <YogaNode
-          layoutDefinition={layoutDefinition}
-          selectedNodePath={selectedNodePath}
-          onClick={selectedNodePath => this.setState({selectedNodePath})}
-          onDoubleClick={this.onAdd}
-          direction={direction}
-          showGuides={this.props.showGuides}
-        />
-        {!this.props.renderSidebar && (
-          <Sidebar>
-            {this.state.selectedNodePath ? (
-              <Editor
-                node={selectedNode}
-                selectedNodeIsRoot={
-                  selectedNodePath ? selectedNodePath.length === 0 : false
-                }
-                onChangeLayout={this.onChangeLayout}
-                // @ts-ignore
-                onChangeSetting={(key, value) => this.setState({[key]: value})}
-                direction={direction}
-                onRemove={
-                  selectedNodePath && selectedNodePath.length > 0
-                    ? this.onRemove
-                    : undefined
-                }
-                onAdd={
-                  selectedNodePath &&
-                  selectedNodePath.length < this.props.maxDepth
-                    ? this.onAdd
-                    : undefined
-                }
-              />
-            ) : (
-              <div className="NoContent">
-                Select a node to edit its properties
-              </div>
-            )}
-          </Sidebar>
-        )}
+      <div className="playground-background">
+        <div
+          className={`Playground ${
+            this.props.renderSidebar ? '' : 'standalone'
+          }`}
+          onMouseDown={this.onMouseDown}
+          style={{height, maxHeight: height}}
+          ref={ref => {
+            this._containerRef = ref;
+          }}>
+          <YogaNode
+            layoutDefinition={layoutDefinition}
+            selectedNodePath={selectedNodePath}
+            onClick={selectedNodePath => this.setState({selectedNodePath})}
+            onDoubleClick={this.onAdd}
+            direction={direction}
+            showGuides={this.props.showGuides}
+          />
+          {!this.props.renderSidebar && (
+            <Sidebar>
+              {this.state.selectedNodePath ? (
+                <Editor
+                  node={selectedNode}
+                  selectedNodeIsRoot={
+                    selectedNodePath ? selectedNodePath.length === 0 : false
+                  }
+                  onChangeLayout={this.onChangeLayout}
+                  // @ts-ignore
+                  onChangeSetting={(key, value) =>
+                    this.setState({[key]: value})
+                  }
+                  direction={direction}
+                  onRemove={
+                    selectedNodePath && selectedNodePath.length > 0
+                      ? this.onRemove
+                      : undefined
+                  }
+                  onAdd={
+                    selectedNodePath &&
+                    selectedNodePath.length < this.props.maxDepth
+                      ? this.onAdd
+                      : undefined
+                  }
+                />
+              ) : (
+                <div className="NoContent">
+                  Select a node to edit its properties
+                </div>
+              )}
+            </Sidebar>
+          )}
+        </div>
       </div>
     );
 
