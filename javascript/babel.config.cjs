@@ -23,7 +23,7 @@ module.exports = api => ({
     [
       '@babel/preset-typescript',
       {
-        rewriteImportExtensions: !api.env('test'),
+        rewriteImportExtensions: api.env('dist'),
       },
     ],
   ],

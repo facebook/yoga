@@ -107,6 +107,10 @@ function babelTransformTask(opts) {
 
     return spawn(node, [require.resolve('@babel/cli/bin/babel'), ...args], {
       cwd: __dirname,
+      env: {
+        // Trigger distribution-specific Babel transforms
+        NODE_ENV: 'dist',
+      }
     });
   };
 }
