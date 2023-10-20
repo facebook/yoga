@@ -39,7 +39,7 @@ function defineFlavor(flavor, env) {
     jestTask({
       config: path.join(__dirname, 'jest.config.js'),
       nodeArgs: ['--experimental-vm-modules'],
-      env
+      env,
     }),
   );
   task(
@@ -52,14 +52,7 @@ defineFlavor('web');
 
 task('build', series(emcmakeGenerateTask(), cmakeBuildTask()));
 
-task(
-  'test',
-  series(
-    emcmakeGenerateTask(),
-    'cmake-build:web',
-    'jest:web',
-  ),
-);
+task('test', series(emcmakeGenerateTask(), 'cmake-build:web', 'jest:web'));
 
 task(
   'benchmark',
@@ -90,11 +83,7 @@ task(
   ),
 );
 
-function recursiveReplace(
-  obj,
-  pattern,
-  replacement,
-) {
+function recursiveReplace(obj, pattern, replacement) {
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === 'string') {
       obj[key] = value.replace(pattern, replacement);
@@ -133,13 +122,9 @@ function runBenchTask() {
     ];
     logger.info(['node', ...args].join(' '));
 
-    return spawn(
-      node,
-      args,
-      {
-        stdio: 'inherit',
-      },
-    );
+    return spawn(node, args, {
+      stdio: 'inherit',
+    });
   };
 }
 
