@@ -110,7 +110,7 @@ function babelTransformTask(opts) {
       env: {
         // Trigger distribution-specific Babel transforms
         NODE_ENV: 'dist',
-      }
+      },
     });
   };
 }

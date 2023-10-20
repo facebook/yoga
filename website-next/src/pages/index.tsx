@@ -36,6 +36,18 @@ function HomepageHeader() {
 
 const LazyPlayground = React.lazy(() => import('../components/Playground'));
 
+function ClientPlayground() {
+  const fallback = <div className={styles.playgroundFallback} />;
+  return <BrowserOnly fallback={fallback}>
+  {() => (
+    <Suspense fallback={fallback}>
+      <LazyPlayground />
+    </Suspense>
+  )}
+</BrowserOnly>;
+}
+
+
 export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
@@ -45,13 +57,7 @@ export default function Home(): JSX.Element {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-        <BrowserOnly fallback={null}>
-          {() => (
-            <Suspense fallback={null}>
-              <LazyPlayground />
-            </Suspense>
-          )}
-        </BrowserOnly>
+        <ClientPlayground />
       </main>
     </Layout>
   );
