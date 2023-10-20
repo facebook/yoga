@@ -16,12 +16,7 @@
       "yoga-layout": ["src"]
     }
   },
-  "ts-node": {
-    "transpileOnly": true,
-    "esm": true
-  },
-  "exclude": [
-    "binaries/**/*",
-    "build/**/*"
+  "include": [
+    "src/**/*"
   ]
 }
