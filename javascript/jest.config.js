@@ -7,10 +7,8 @@
  * @format
  */
 
-const config = {
+export default {
   setupFiles: ['./jest.setup.js'],
   testRegex: '/tests/.*\\.test\\.ts$',
   extensionsToTreatAsEsm: ['.ts'],
 };
-
-export default config;

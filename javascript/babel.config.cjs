@@ -7,7 +7,7 @@
  * @format
  */
 
-module.exports = {
+module.exports = api => ({
   presets: [
     [
       '@babel/preset-env',
@@ -23,8 +23,8 @@ module.exports = {
     [
       '@babel/preset-typescript',
       {
-        rewriteImportExtensions: true,
+        rewriteImportExtensions: !api.env('test'),
       },
     ],
   ],
-};
+});
