@@ -19,7 +19,9 @@ type Props = {
 export default class Sidebar extends Component<Props> {
   render() {
     return (
-      <div className={clsx('card', styles.sidebar)} style={{width: this.props.width}}>
+      <div
+        className={clsx('card', styles.sidebar)}
+        style={{width: this.props.width}}>
         {this.props.children}
       </div>
     );

@@ -18,22 +18,29 @@ function HomepageHeader() {
     <header className={clsx('hero', styles.heroBanner)}>
       <div className={clsx(['row', styles.heroRow])}>
         <div className="col col--6">
-          <h1 className='hero__title'>Flexible Layouts with Yoga</h1>
-          <p className='hero__subtitle'>
-          Yoga is an embeddable and performant flexbox layout engine with bindings for multiple languages.
+          <h1 className="hero__title">Flexible Layouts with Yoga</h1>
+          <p className="hero__subtitle">
+            Yoga is an embeddable and performant flexbox layout engine with
+            bindings for multiple languages.
           </p>
 
-          <Link className="button button--secondary button--lg" to="/docs/intro">
+          <Link
+            className="button button--secondary button--lg"
+            to="/docs/intro">
             Learn more
           </Link>
         </div>
         <div className={clsx(['col col--6', styles.blueprintColumn])}>
-        <div className={clsx([styles.blueprint, styles.blueprintContainer])}>
-          <div className={clsx([styles.blueprint, styles.blueprintAvatar])} />
-          <div className={clsx([styles.blueprint, styles.blueprintTitle])} />
-          <div className={clsx([styles.blueprint, styles.blueprintSubtitle])} />
-          <div className={clsx([styles.blueprint, styles.blueprintContent])} />
-        </div>
+          <div className={clsx([styles.blueprint, styles.blueprintContainer])}>
+            <div className={clsx([styles.blueprint, styles.blueprintAvatar])} />
+            <div className={clsx([styles.blueprint, styles.blueprintTitle])} />
+            <div
+              className={clsx([styles.blueprint, styles.blueprintSubtitle])}
+            />
+            <div
+              className={clsx([styles.blueprint, styles.blueprintContent])}
+            />
+          </div>
         </div>
       </div>
     </header>
