@@ -8,26 +8,32 @@
 import React, {Suspense} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import styles from './index.module.css';
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
+    <header className={clsx('hero', styles.heroBanner)}>
+      <div className={clsx(['row', styles.heroRow])}>
+        <div className="col col--6">
+          <h1 className='hero__title'>Flexible Layouts with Yoga</h1>
+          <p className='hero__subtitle'>
+          Yoga is an embeddable and performant flexbox layout engine with bindings for multiple languages.
+          </p>
+
+          <Link className="button button--secondary button--lg" to="/docs/intro">
+            Learn more
           </Link>
+        </div>
+        <div className={clsx(['col col--6', styles.blueprintColumn])}>
+        <div className={clsx([styles.blueprint, styles.blueprintContainer])}>
+          <div className={clsx([styles.blueprint, styles.blueprintAvatar])} />
+          <div className={clsx([styles.blueprint, styles.blueprintTitle])} />
+          <div className={clsx([styles.blueprint, styles.blueprintSubtitle])} />
+          <div className={clsx([styles.blueprint, styles.blueprintContent])} />
+        </div>
         </div>
       </div>
     </header>
@@ -51,14 +57,10 @@ function ClientPlayground() {
 }
 
 export default function Home(): JSX.Element {
-  const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+    <Layout title="Yoga Layout | A cross-platform layout engine">
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
         <ClientPlayground />
       </main>
     </Layout>

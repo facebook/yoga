@@ -13,27 +13,10 @@
 }
 
 .playground-background {
-  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(-90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(
-      transparent 4px,
-      #f5f5f5 4px,
-      #f5f5f5 97px,
-      transparent 97px
-    ),
-    linear-gradient(-90deg, #e5e5e5 1px, transparent 1px),
-    linear-gradient(
-      -90deg,
-      transparent 4px,
-      #f5f5f5 4px,
-      #f5f5f5 97px,
-      transparent 97px
-    ),
-    linear-gradient(#e5e5e5 1px, transparent 1px), #f5f5f5;
-  background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px, 100px 100px,
-    100px 100px, 100px 100px, 100px 100px;
+  background: linear-gradient(-90deg, var(--ifm-color-emphasis-200) 1px, transparent 1px),
+    linear-gradient(var(--ifm-color-emphasis-200) 1px, transparent 1px),
+    var(--ifm-color-emphasis-100);
+  background-size: 50px 50px, 50px 50px;
 }
 
 .Playground {
@@ -42,7 +25,8 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  animation: playground-content-fade-in-frames 50ms ease-in;
+  padding: 20px;
+  animation: playground-content-fade-in-frames 100ms ease-in;
 }
 
 .Playground > .YogaNode {
@@ -64,7 +48,6 @@
 }
 
 .Playground .NoContent {
-  border-top: 1px solid #E8E8E8;
   font-size: 18px;
   padding: 30px 50px;
   text-align: center;

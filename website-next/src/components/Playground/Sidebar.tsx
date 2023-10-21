@@ -8,7 +8,8 @@
  */
 
 import React, {Component} from 'react';
-import './Sidebar.css';
+import styles from './Sidebar.module.css';
+import clsx from 'clsx';
 
 type Props = {
   width?: number;
@@ -18,7 +19,7 @@ type Props = {
 export default class Sidebar extends Component<Props> {
   render() {
     return (
-      <div className="Sidebar" style={{width: this.props.width}}>
+      <div className={clsx('card', styles.sidebar)} style={{width: this.props.width}}>
         {this.props.children}
       </div>
     );
