@@ -16,6 +16,7 @@ TEST(YogaTest, border_no_size) {
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
   YGNodeStyleSetBorder(root, YGEdgeTop, 10);
   YGNodeStyleSetBorder(root, YGEdgeRight, 10);
@@ -44,12 +45,14 @@ TEST(YogaTest, border_container_match_child) {
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
   YGNodeStyleSetBorder(root, YGEdgeTop, 10);
   YGNodeStyleSetBorder(root, YGEdgeRight, 10);
   YGNodeStyleSetBorder(root, YGEdgeBottom, 10);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -87,6 +90,7 @@ TEST(YogaTest, border_flex_child) {
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
   YGNodeStyleSetBorder(root, YGEdgeTop, 10);
   YGNodeStyleSetBorder(root, YGEdgeRight, 10);
@@ -95,6 +99,7 @@ TEST(YogaTest, border_flex_child) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -132,6 +137,7 @@ TEST(YogaTest, border_stretch_child) {
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetBorder(root, YGEdgeLeft, 10);
   YGNodeStyleSetBorder(root, YGEdgeTop, 10);
   YGNodeStyleSetBorder(root, YGEdgeRight, 10);
@@ -140,6 +146,7 @@ TEST(YogaTest, border_stretch_child) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -178,6 +185,7 @@ TEST(YogaTest, border_center_child) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetBorder(root, YGEdgeStart, 10);
   YGNodeStyleSetBorder(root, YGEdgeEnd, 20);
   YGNodeStyleSetBorder(root, YGEdgeBottom, 20);
@@ -185,6 +193,7 @@ TEST(YogaTest, border_center_child) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);

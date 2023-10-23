@@ -117,9 +117,11 @@ TEST(
     rounding_feature_with_custom_measure_and_fractial_matching_scale) {
   const YGConfigRef config = YGConfigNew();
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPosition(root_child0, YGEdgeLeft, 73.625);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeSetMeasureFunc(root_child0, _measureFractial);
   YGNodeInsertChild(root, root_child0, 0);
 

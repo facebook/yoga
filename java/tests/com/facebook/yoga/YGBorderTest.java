@@ -31,6 +31,7 @@ public class YGBorderTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setBorder(YogaEdge.LEFT, 10f);
     root.setBorder(YogaEdge.TOP, 10f);
     root.setBorder(YogaEdge.RIGHT, 10f);
@@ -58,12 +59,14 @@ public class YGBorderTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setBorder(YogaEdge.LEFT, 10f);
     root.setBorder(YogaEdge.TOP, 10f);
     root.setBorder(YogaEdge.RIGHT, 10f);
     root.setBorder(YogaEdge.BOTTOM, 10f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -100,6 +103,7 @@ public class YGBorderTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setBorder(YogaEdge.LEFT, 10f);
     root.setBorder(YogaEdge.TOP, 10f);
     root.setBorder(YogaEdge.RIGHT, 10f);
@@ -108,6 +112,7 @@ public class YGBorderTest {
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
@@ -144,6 +149,7 @@ public class YGBorderTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setBorder(YogaEdge.LEFT, 10f);
     root.setBorder(YogaEdge.TOP, 10f);
     root.setBorder(YogaEdge.RIGHT, 10f);
@@ -152,6 +158,7 @@ public class YGBorderTest {
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
@@ -189,6 +196,7 @@ public class YGBorderTest {
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setBorder(YogaEdge.START, 10f);
     root.setBorder(YogaEdge.END, 20f);
     root.setBorder(YogaEdge.BOTTOM, 20f);
@@ -196,6 +204,7 @@ public class YGBorderTest {
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);

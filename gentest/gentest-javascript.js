@@ -156,6 +156,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGPositionTypeAbsolute: {value: 'PositionType.Absolute'},
   YGPositionTypeRelative: {value: 'PositionType.Relative'},
+  YGPositionTypeStatic: {value: 'PositionType.Static'},
 
   YGAuto: {value: "'auto'"},
   YGUndefined: {value: 'undefined'},

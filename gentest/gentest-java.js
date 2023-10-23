@@ -171,6 +171,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGPositionTypeAbsolute: {value: 'YogaPositionType.ABSOLUTE'},
   YGPositionTypeRelative: {value: 'YogaPositionType.RELATIVE'},
+  YGPositionTypeStatic: {value: 'YogaPositionType.STATIC'},
 
   YGUndefined: {value: 'YogaConstants.UNDEFINED'},
 

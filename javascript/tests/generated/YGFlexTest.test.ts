@@ -33,15 +33,18 @@ test('flex_basis_flex_grow_column', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -94,16 +97,19 @@ test('flex_shrink_flex_grow_row', () => {
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(500);
     root.setHeight(500);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexShrink(1);
     root_child0.setWidth(500);
     root_child0.setHeight(100);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexShrink(1);
     root_child1.setWidth(500);
     root_child1.setHeight(100);
@@ -158,16 +164,19 @@ test('flex_shrink_flex_grow_child_flex_shrink_other_child', () => {
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(500);
     root.setHeight(500);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexShrink(1);
     root_child0.setWidth(500);
     root_child0.setHeight(100);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root_child1.setFlexShrink(1);
     root_child1.setWidth(500);
@@ -223,15 +232,18 @@ test('flex_basis_flex_grow_row', () => {
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root.insertChild(root_child1, 1);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -283,15 +295,18 @@ test('flex_basis_flex_shrink_column', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexShrink(1);
     root_child0.setFlexBasis(100);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexBasis(50);
     root.insertChild(root_child1, 1);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -344,15 +359,18 @@ test('flex_basis_flex_shrink_row', () => {
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexShrink(1);
     root_child0.setFlexBasis(100);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexBasis(50);
     root.insertChild(root_child1, 1);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -404,20 +422,24 @@ test('flex_shrink_to_zero', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setHeight(75);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexShrink(1);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
+    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(50);
     root_child2.setHeight(50);
     root.insertChild(root_child2, 2);
@@ -480,21 +502,25 @@ test('flex_basis_overrides_main_size', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(1);
     root_child0.setFlexBasis(50);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root_child1.setHeight(10);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
+    root_child2.setPositionType(PositionType.Relative);
     root_child2.setFlexGrow(1);
     root_child2.setHeight(10);
     root.insertChild(root_child2, 2);
@@ -557,13 +583,16 @@ test('flex_grow_shrink_at_most', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setFlexGrow(1);
     root_child0_child0.setFlexShrink(1);
     root_child0.insertChild(root_child0_child0, 0);
@@ -616,19 +645,23 @@ test('flex_grow_less_than_factor_one', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(200);
     root.setHeight(500);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(0.2);
     root_child0.setFlexBasis(40);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
+    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(0.2);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
+    root_child2.setPositionType(PositionType.Relative);
     root_child2.setFlexGrow(0.4);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);

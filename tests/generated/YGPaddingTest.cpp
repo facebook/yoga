@@ -16,6 +16,7 @@ TEST(YogaTest, padding_no_size) {
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
   YGNodeStyleSetPadding(root, YGEdgeTop, 10);
   YGNodeStyleSetPadding(root, YGEdgeRight, 10);
@@ -44,12 +45,14 @@ TEST(YogaTest, padding_container_match_child) {
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
   YGNodeStyleSetPadding(root, YGEdgeTop, 10);
   YGNodeStyleSetPadding(root, YGEdgeRight, 10);
   YGNodeStyleSetPadding(root, YGEdgeBottom, 10);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -87,6 +90,7 @@ TEST(YogaTest, padding_flex_child) {
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
   YGNodeStyleSetPadding(root, YGEdgeTop, 10);
   YGNodeStyleSetPadding(root, YGEdgeRight, 10);
@@ -95,6 +99,7 @@ TEST(YogaTest, padding_flex_child) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -132,6 +137,7 @@ TEST(YogaTest, padding_stretch_child) {
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetPadding(root, YGEdgeLeft, 10);
   YGNodeStyleSetPadding(root, YGEdgeTop, 10);
   YGNodeStyleSetPadding(root, YGEdgeRight, 10);
@@ -140,6 +146,7 @@ TEST(YogaTest, padding_stretch_child) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
@@ -178,6 +185,7 @@ TEST(YogaTest, padding_center_child) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetPadding(root, YGEdgeStart, 10);
   YGNodeStyleSetPadding(root, YGEdgeEnd, 20);
   YGNodeStyleSetPadding(root, YGEdgeBottom, 20);
@@ -185,6 +193,7 @@ TEST(YogaTest, padding_center_child) {
   YGNodeStyleSetHeight(root, 100);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0, 10);
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
@@ -224,10 +233,12 @@ TEST(YogaTest, child_with_padding_align_end) {
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyFlexEnd);
   YGNodeStyleSetAlignItems(root, YGAlignFlexEnd);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
   YGNodeStyleSetWidth(root, 200);
   YGNodeStyleSetHeight(root, 200);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetPadding(root_child0, YGEdgeLeft, 20);
   YGNodeStyleSetPadding(root_child0, YGEdgeTop, 20);
   YGNodeStyleSetPadding(root_child0, YGEdgeRight, 20);

@@ -127,6 +127,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGPositionTypeAbsolute: {value: 'YGPositionTypeAbsolute'},
   YGPositionTypeRelative: {value: 'YGPositionTypeRelative'},
+  YGPositionTypeStatic: {value: 'YGPositionTypeStatic'},
 
   YGWrapNoWrap: {value: 'YGWrapNoWrap'},
   YGWrapWrap: {value: 'YGWrapWrap'},
