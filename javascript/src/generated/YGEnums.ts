@@ -51,6 +51,7 @@ export enum Errata {
   None = 0,
   StretchFlexBasis = 1,
   StartingEndingEdgeFromFlexDirection = 2,
+  PositionStaticBehavesLikeRelative = 4,
   All = 2147483647,
   Classic = 2147483646,
 }
@@ -162,6 +163,7 @@ const constants = {
   ERRATA_NONE: Errata.None,
   ERRATA_STRETCH_FLEX_BASIS: Errata.StretchFlexBasis,
   ERRATA_STARTING_ENDING_EDGE_FROM_FLEX_DIRECTION: Errata.StartingEndingEdgeFromFlexDirection,
+  ERRATA_POSITION_STATIC_BEHAVES_LIKE_RELATIVE: Errata.PositionStaticBehavesLikeRelative,
   ERRATA_ALL: Errata.All,
   ERRATA_CLASSIC: Errata.Classic,
   EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS: ExperimentalFeature.WebFlexBasis,
