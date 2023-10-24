@@ -32,18 +32,22 @@ public class YGRoundingTest {
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(100f);
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -100,26 +104,32 @@ public class YGRoundingTest {
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(113f);
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root.addChildAt(root_child2, 2);
 
     final YogaNode root_child3 = createNode(config);
+    root_child3.setPositionType(YogaPositionType.RELATIVE);
     root_child3.setFlexGrow(1f);
     root.addChildAt(root_child3, 3);
 
     final YogaNode root_child4 = createNode(config);
+    root_child4.setPositionType(YogaPositionType.RELATIVE);
     root_child4.setFlexGrow(1f);
     root.addChildAt(root_child4, 4);
     root.setDirection(YogaDirection.LTR);
@@ -196,19 +206,23 @@ public class YGRoundingTest {
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(101f);
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexShrink(1f);
     root_child0.setFlexBasis(100f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexBasis(25f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexBasis(25f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -264,21 +278,25 @@ public class YGRoundingTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(100f);
     root.setHeight(113f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasis(50f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
@@ -335,21 +353,25 @@ public class YGRoundingTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(87.4f);
     root.setHeight(113.4f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(0.7f);
     root_child0.setFlexBasis(50.3f);
     root_child0.setHeight(20.3f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1.6f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1.1f);
     root_child2.setHeight(10.7f);
     root.addChildAt(root_child2, 2);
@@ -406,16 +428,19 @@ public class YGRoundingTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(87.4f);
     root.setHeight(113.4f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(0.7f);
     root_child0.setFlexBasis(50.3f);
     root_child0.setHeight(20.3f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child0_child0 = createNode(config);
+    root_child0_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child0.setFlexGrow(1f);
     root_child0_child0.setFlexBasis(0.3f);
     root_child0_child0.setPosition(YogaEdge.BOTTOM, 13.3f);
@@ -423,6 +448,7 @@ public class YGRoundingTest {
     root_child0.addChildAt(root_child0_child0, 0);
 
     final YogaNode root_child0_child1 = createNode(config);
+    root_child0_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child1.setFlexGrow(4f);
     root_child0_child1.setFlexBasis(0.3f);
     root_child0_child1.setPosition(YogaEdge.TOP, 13.3f);
@@ -430,11 +456,13 @@ public class YGRoundingTest {
     root_child0.addChildAt(root_child0_child1, 1);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1.6f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1.1f);
     root_child2.setHeight(10.7f);
     root.addChildAt(root_child2, 2);
@@ -511,21 +539,25 @@ public class YGRoundingTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(100f);
     root.setHeight(113.4f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasis(50f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
@@ -582,21 +614,25 @@ public class YGRoundingTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(100f);
     root.setHeight(113.6f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasis(50f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
@@ -653,22 +689,26 @@ public class YGRoundingTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setPosition(YogaEdge.TOP, 0.3f);
     root.setWidth(100f);
     root.setHeight(113.4f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasis(50f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
@@ -725,22 +765,26 @@ public class YGRoundingTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setPosition(YogaEdge.TOP, 0.7f);
     root.setWidth(100f);
     root.setHeight(113.4f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setFlexBasis(50f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
@@ -798,24 +842,29 @@ public class YGRoundingTest {
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(320f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child1_child0 = createNode(config);
+    root_child1_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child1_child0.setFlexGrow(1f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
@@ -882,24 +931,29 @@ public class YGRoundingTest {
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
 
     final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setHeight(320f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child1_child0 = createNode(config);
+    root_child1_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child1_child0.setFlexGrow(1f);
     root_child1_child0.setWidth(10f);
     root_child1.addChildAt(root_child1_child0, 0);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
@@ -967,40 +1021,48 @@ public class YGRoundingTest {
 
     final YogaNode root = createNode(config);
     root.setFlexDirection(YogaFlexDirection.ROW);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
     root.setWidth(640f);
     root.setHeight(320f);
 
     final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setHeightPercent(100f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
+    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setFlexGrow(1f);
     root_child1.setHeightPercent(100f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child1_child0 = createNode(config);
+    root_child1_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child1_child0.setFlexGrow(1f);
     root_child1_child0.setWidthPercent(100f);
     root_child1.addChildAt(root_child1_child0, 0);
 
     final YogaNode root_child1_child1 = createNode(config);
+    root_child1_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1_child1.setFlexGrow(1f);
     root_child1_child1.setWidthPercent(100f);
     root_child1.addChildAt(root_child1_child1, 1);
 
     final YogaNode root_child1_child1_child0 = createNode(config);
+    root_child1_child1_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child1_child1_child0.setFlexGrow(1f);
     root_child1_child1_child0.setWidthPercent(100f);
     root_child1_child1.addChildAt(root_child1_child1_child0, 0);
 
     final YogaNode root_child1_child2 = createNode(config);
+    root_child1_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child1_child2.setFlexGrow(1f);
     root_child1_child2.setWidthPercent(100f);
     root_child1.addChildAt(root_child1_child2, 2);
 
     final YogaNode root_child2 = createNode(config);
+    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setFlexGrow(1f);
     root_child2.setHeightPercent(100f);
     root.addChildAt(root_child2, 2);

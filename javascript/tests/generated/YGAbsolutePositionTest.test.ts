@@ -33,6 +33,7 @@ test('absolute_layout_width_height_start_top', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
@@ -82,6 +83,7 @@ test('absolute_layout_width_height_end_bottom', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
@@ -131,6 +133,7 @@ test('absolute_layout_start_top_end_bottom', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
@@ -180,6 +183,7 @@ test('absolute_layout_width_height_start_top_end_bottom', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(100);
 
@@ -232,6 +236,7 @@ test('do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_pare
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
+    root.setPositionType(PositionType.Absolute);
     root.setOverflow(Overflow.Hidden);
     root.setWidth(50);
     root.setHeight(50);
@@ -243,6 +248,7 @@ test('do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_pare
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setWidth(100);
     root_child0_child0.setHeight(100);
     root_child0.insertChild(root_child0_child0, 0);
@@ -295,6 +301,7 @@ test('absolute_layout_within_border', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setMargin(Edge.Left, 10);
     root.setMargin(Edge.Top, 10);
     root.setMargin(Edge.Right, 10);
@@ -420,6 +427,7 @@ test('absolute_layout_align_items_and_justify_content_center', () => {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
     root.setAlignItems(Align.Center);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -470,6 +478,7 @@ test('absolute_layout_align_items_and_justify_content_flex_end', () => {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.FlexEnd);
     root.setAlignItems(Align.FlexEnd);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -519,6 +528,7 @@ test('absolute_layout_justify_content_center', () => {
   try {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -568,6 +578,7 @@ test('absolute_layout_align_items_center', () => {
   try {
     root = Yoga.Node.create(config);
     root.setAlignItems(Align.Center);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -616,6 +627,7 @@ test('absolute_layout_align_items_center_on_child_only', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -667,6 +679,7 @@ test('absolute_layout_align_items_and_justify_content_center_and_top_position', 
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
     root.setAlignItems(Align.Center);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -718,6 +731,7 @@ test('absolute_layout_align_items_and_justify_content_center_and_bottom_position
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
     root.setAlignItems(Align.Center);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -769,6 +783,7 @@ test('absolute_layout_align_items_and_justify_content_center_and_left_position',
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
     root.setAlignItems(Align.Center);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -820,6 +835,7 @@ test('absolute_layout_align_items_and_justify_content_center_and_right_position'
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
     root.setAlignItems(Align.Center);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexGrow(1);
     root.setWidth(110);
     root.setHeight(100);
@@ -869,6 +885,7 @@ test('position_root_with_rtl_should_position_withoutdirection', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setPosition(Edge.Left, 72);
     root.setWidth(52);
     root.setHeight(52);
@@ -901,6 +918,7 @@ test('absolute_layout_percentage_bottom_based_on_parent_height', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(100);
     root.setHeight(200);
 
@@ -983,6 +1001,7 @@ test('absolute_layout_in_wrap_reverse_column_container', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexWrap(Wrap.WrapReverse);
     root.setWidth(100);
     root.setHeight(100);
@@ -1032,6 +1051,7 @@ test('absolute_layout_in_wrap_reverse_row_container', () => {
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexWrap(Wrap.WrapReverse);
     root.setWidth(100);
     root.setHeight(100);
@@ -1080,6 +1100,7 @@ test('absolute_layout_in_wrap_reverse_column_container_flex_end', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexWrap(Wrap.WrapReverse);
     root.setWidth(100);
     root.setHeight(100);
@@ -1130,6 +1151,7 @@ test('absolute_layout_in_wrap_reverse_row_container_flex_end', () => {
   try {
     root = Yoga.Node.create(config);
     root.setFlexDirection(FlexDirection.Row);
+    root.setPositionType(PositionType.Absolute);
     root.setFlexWrap(Wrap.WrapReverse);
     root.setWidth(100);
     root.setHeight(100);
@@ -1179,9 +1201,11 @@ test('percent_absolute_position_infinite_height', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setWidth(300);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(300);
     root.insertChild(root_child0, 0);
 
@@ -1241,6 +1265,7 @@ test('absolute_layout_percentage_height_based_on_padded_parent', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setPadding(Edge.Top, 10);
     root.setBorder(Edge.Top, 10);
     root.setWidth(100);
@@ -1292,6 +1317,7 @@ test('absolute_layout_percentage_height_based_on_padded_parent_and_align_items_c
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
     root.setAlignItems(Align.Center);
+    root.setPositionType(PositionType.Relative);
     root.setPadding(Edge.Top, 20);
     root.setPadding(Edge.Bottom, 20);
     root.setWidth(100);

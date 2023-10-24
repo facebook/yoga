@@ -165,7 +165,7 @@ function checkDefaultValues() {
     {style: 'justify-content', value: 'flex-start'},
     {style: 'align-content', value: 'flex-start'},
     {style: 'align-items', value: 'stretch'},
-    {style: 'position', value: 'relative'},
+    {style: 'position', value: 'static'},
     {style: 'flex-wrap', value: 'nowrap'},
     {style: 'overflow', value: 'visible'},
     {style: 'flex-grow', value: '0'},
@@ -198,8 +198,7 @@ function setupTestTree(
     // Skip position info for root as it messes up tests
     if (
       node.declaredStyle[style] === '' &&
-      (style == 'position' ||
-        style == 'left' ||
+      (style == 'left' ||
         style == 'top' ||
         style == 'right' ||
         style == 'bottom' ||
@@ -576,6 +575,8 @@ function positionValue(e, value) {
   switch (value) {
     case 'absolute':
       return e.YGPositionTypeAbsolute;
+    case 'static':
+      return e.YGPositionTypeStatic;
     default:
       return e.YGPositionTypeRelative;
   }
@@ -642,7 +643,7 @@ function isDefaultStyleValue(style, value) {
   if (defaultStyle == null) {
     switch (style) {
       case 'position':
-        defaultStyle = new Set(['relative']);
+        defaultStyle = new Set(['static']);
         break;
 
       case 'left':

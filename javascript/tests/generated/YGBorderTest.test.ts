@@ -33,6 +33,7 @@ test('border_no_size', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setBorder(Edge.Left, 10);
     root.setBorder(Edge.Top, 10);
     root.setBorder(Edge.Right, 10);
@@ -66,12 +67,14 @@ test('border_container_match_child', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setBorder(Edge.Left, 10);
     root.setBorder(Edge.Top, 10);
     root.setBorder(Edge.Right, 10);
     root.setBorder(Edge.Bottom, 10);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -114,6 +117,7 @@ test('border_flex_child', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setBorder(Edge.Left, 10);
     root.setBorder(Edge.Top, 10);
     root.setBorder(Edge.Right, 10);
@@ -122,6 +126,7 @@ test('border_flex_child', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(1);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
@@ -164,6 +169,7 @@ test('border_stretch_child', () => {
 
   try {
     root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
     root.setBorder(Edge.Left, 10);
     root.setBorder(Edge.Top, 10);
     root.setBorder(Edge.Right, 10);
@@ -172,6 +178,7 @@ test('border_stretch_child', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -215,6 +222,7 @@ test('border_center_child', () => {
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
     root.setAlignItems(Align.Center);
+    root.setPositionType(PositionType.Absolute);
     root.setBorder(Edge.Start, 10);
     root.setBorder(Edge.End, 20);
     root.setBorder(Edge.Bottom, 20);
@@ -222,6 +230,7 @@ test('border_center_child', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
