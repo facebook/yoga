@@ -44,7 +44,7 @@ add_compile_options(
     $<$<CONFIG:RELEASE>:-ffunction-sections>
     $<$<CONFIG:RELEASE>:-fdata-sections>
     # Use libc++ when building with Clang on Linux
-    $<$<CXX_COMPILER_ID:Clang,GNU>:-stdlib=libc++>)
+    $<$<CXX_COMPILER_ID:Clang>:-stdlib=libc++>)
 
 add_link_options(
     # Discard unused sections
