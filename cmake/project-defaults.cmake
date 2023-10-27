@@ -42,7 +42,9 @@ add_compile_options(
     $<$<CONFIG:RELEASE>:-O2>
     # Enable separate sections per function/data item
     $<$<CONFIG:RELEASE>:-ffunction-sections>
-    $<$<CONFIG:RELEASE>:-fdata-sections>)
+    $<$<CONFIG:RELEASE>:-fdata-sections>
+    # Use libc++ when building with Clang on Linux
+    $<$<CXX_COMPILER_ID:Clang,GNU>:-stdlib=libc++>)
 
 add_link_options(
     # Discard unused sections
