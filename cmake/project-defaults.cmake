@@ -44,13 +44,13 @@ add_compile_options(
     $<$<CONFIG:RELEASE>:-ffunction-sections>
     $<$<CONFIG:RELEASE>:-fdata-sections>
     # Use libc++ when building with Clang on Linux
-    $<$<CXX_COMPILER_ID:Clang>:-stdlib=libc++>)
+    $<$<COMPILE_LANGUAGE:CXX>:$<$<CXX_COMPILER_ID:Clang>:-stdlib=libc++>>)
 
 add_link_options(
     # Discard unused sections
     $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:Clang,GNU>:-Wl,--gc-sections>>
     $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:AppleClang>:-Wl,-dead_strip>>
     # Use libc++ when building with Clang on Linux
-    $<$<CXX_COMPILER_ID:Clang>:-stdlib=libc++>)
+    $<$<COMPILE_LANGUAGE:CXX>$<$<CXX_COMPILER_ID:Clang>>:-stdlib=libc++>)
 
 endif()
