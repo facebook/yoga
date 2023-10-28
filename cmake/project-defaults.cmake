@@ -51,6 +51,6 @@ add_link_options(
     $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:Clang,GNU>:-Wl,--gc-sections>>
     $<$<CONFIG:RELEASE>:$<$<CXX_COMPILER_ID:AppleClang>:-Wl,-dead_strip>>
     # Use libc++ when building with Clang on Linux
-    $<$<COMPILE_LANGUAGE:CXX>$<$<CXX_COMPILER_ID:Clang>>:-stdlib=libc++>)
+    $<$<COMPILE_LANGUAGE:CXX>:$<$<CXX_COMPILER_ID:Clang>>:-stdlib=libc++>>)
 
 endif()
