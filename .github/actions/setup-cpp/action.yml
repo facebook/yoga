@@ -18,6 +18,8 @@ runs:
       run: |
         echo "CC=/usr/bin/clang" >> $GITHUB_ENV
         echo "CXX=/usr/bin/clang++" >> $GITHUB_ENV
+        echo "CXXFLAGS=-stdlib=libc++" >> $GITHUB_ENV
+        echo "LDFLAGS=-stdlib=libc++" >> $GITHUB_ENV
 
     - name: Set GCC as compiler
       if: ${{ inputs.toolchain == 'GCC' }}
