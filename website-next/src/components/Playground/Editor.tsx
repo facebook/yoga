@@ -34,7 +34,11 @@ export default function Editor(props: Props) {
   return (
     <div className={styles.editor}>
       <Tabs block={true}>
-        <TabItem value="flex" label="Flex" className={styles.tabItem} default={true}>
+        <TabItem
+          value="flex"
+          label="Flex"
+          className={styles.tabItem}
+          default={true}>
           <h2>Direction</h2>
           <EditValue
             property="direction"
@@ -49,8 +53,8 @@ export default function Editor(props: Props) {
             onChange={props.onChangeLayout}
           />
 
-          <div className='row margin--none'>
-            <div className='col col--4'>
+          <div className="row margin--none">
+            <div className="col col--4">
               <h2>Basis</h2>
               <EditValue
                 // @ts-ignore
@@ -62,7 +66,7 @@ export default function Editor(props: Props) {
                 onChange={props.onChangeLayout}
               />
             </div>
-            <div className='col col--4'>
+            <div className="col col--4">
               <h2>Grow</h2>
               <EditValue
                 // @ts-ignore
@@ -74,7 +78,7 @@ export default function Editor(props: Props) {
                 onChange={props.onChangeLayout}
               />
             </div>
-            <div className='col col--4'>
+            <div className="col col--4">
               <h2>Shrink</h2>
               <EditValue
                 // @ts-ignore
@@ -244,8 +248,18 @@ export default function Editor(props: Props) {
       </Tabs>
 
       <div className={styles.editorButtons}>
-        <button className="button button--block button--primary button--sm" disabled={!props.onRemove} onClick={props.onAdd}>add child</button>
-        <button className="button button--block button--danger button--sm" disabled={!props.onRemove} onClick={props.onAdd}>remove</button>
+        <button
+          className="button button--block button--primary button--sm"
+          disabled={!props.onRemove}
+          onClick={props.onAdd}>
+          add child
+        </button>
+        <button
+          className="button button--block button--danger button--sm"
+          disabled={!props.onRemove}
+          onClick={props.onAdd}>
+          remove
+        </button>
       </div>
     </div>
   );

@@ -59,37 +59,18 @@ export default class YogaEnumSelect extends Component<Props> {
     return key.replace(replacer, '').replace('_', ' ').toLowerCase();
   };
 
- /* <Dropdown
-          trigger={['click']}
-          disabled={this.props.disabled}
-          overlay={
-            // @ts-ignore
-            <Menu onClick={this.handleMenuClick}>
-              {this.values.map(({key, value}) => (
-                // @ts-ignore
-                <Menu.Item key={key} value={value}>
-                  {this.getTitle(property, key)}
-                </Menu.Item>
-              ))}
-            </Menu>
-          }>
-          <Button>
-            {selected ? this.getTitle(property, selected.key) : ''}
-            <Icon type="down" />
-          </Button>
-        </Dropdown> */
-
   render() {
     const property = PROPERTY_LOOKUP[this.props.property];
     const selected = this.values.find(({value}) => value === this.props.value);
 
     return this.values.length > 3 ? (
-        <select className={styles.select} name={this.props.property}>
-          {this.values.map(({key, value}) => (
-           <option key={key} value={value}> {this.getTitle(property, key)}</option>
-          ))}
-        </select>
-
+      <select className={styles.select} name={this.props.property}>
+        {this.values.map(({key, value}) => (
+          <option key={key} value={value}>
+            {selected ? this.getTitle(property, key) : ''}
+          </option>
+        ))}
+      </select>
     ) : (
       <div className={clsx('button-group', styles.buttonGroup)}>
         {this.values.map(({key, value}) => (
@@ -102,8 +83,7 @@ export default class YogaEnumSelect extends Component<Props> {
               value === this.props.value && 'button--active',
               styles.button,
             )}
-            onClick={() => this.props.onChange(this.props.property, value)}
-            >
+            onClick={() => this.props.onChange(this.props.property, value)}>
             {this.getTitle(property, key)}
           </button>
         ))}

@@ -57,14 +57,14 @@ const LazyPlayground = React.lazy(
 function PlaygroundSection() {
   return (
     <main className={styles.playgroundSection}>
-      <div className='container'>
-      <BrowserOnly fallback={null}>
-        {() => (
-          <Suspense fallback={null}>
-            <LazyPlayground className={styles.playground} />
-          </Suspense>
-        )}
-      </BrowserOnly>
+      <div className="container">
+        <BrowserOnly fallback={null}>
+          {() => (
+            <Suspense fallback={null}>
+              <LazyPlayground className={styles.playground} />
+            </Suspense>
+          )}
+        </BrowserOnly>
       </div>
     </main>
   );
