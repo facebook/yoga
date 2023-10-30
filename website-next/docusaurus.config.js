@@ -7,11 +7,10 @@
 
 // @ts-check
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
-const config = {
+export default {
   title: 'Yoga',
   tagline:
     'Build flexible layouts on any platform with a highly optimized open source layout engine designed with speed, size, and ease of use in mind.',
@@ -77,6 +76,13 @@ const config = {
       },
       footer: {
         style: 'dark',
+        logo: {
+          alt: 'Meta Open Source',
+          src: 'img/meta_oss.svg',
+          href: 'https://opensource.fb.com',
+          width: 300,
+          height: 64,
+        },
         links: [
           {
             title: 'Docs',
@@ -117,10 +123,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Meta Platforms, Inc.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: prismThemes.github,
+        darkTheme: prismThemes.dracula,
       },
     }),
 };
-
-module.exports = config;

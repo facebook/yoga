@@ -1,0 +1,27 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.buttonGroup {
+  display: flex;
+}
+
+.button {
+  flex: 1;
+}
+
+.select {
+  appearance: none;
+  width: 100%;
+  padding: calc(var(--ifm-button-padding-vertical) * 0.8) calc(var(--ifm-button-padding-horizontal) * 0.8);
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  border: var(--ifm-button-border-width) solid var(--ifm-color-secondary);
+  border-radius: var(--ifm-button-border-radius);
+  font-size: calc(0.875rem * 0.8);
+  font-weight: var(--ifm-button-font-weight);
+  line-height: 1.5;
+}

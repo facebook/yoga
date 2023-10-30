@@ -14,6 +14,7 @@ import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
 import type {LayoutRecordType} from './LayoutRecord';
 import {Direction, Display, Edge, Node, Wrap} from 'yoga-layout';
+import clsx from 'clsx';
 
 import './YogaNode.css';
 
@@ -261,9 +262,14 @@ export default class YogaNode extends Component<Props, State> {
 
     return (
       <div
-        className={`YogaNode ${isFocused ? 'focused' : ''} ${className || ''} ${
-          this.state.visible ? '' : 'invisible'
-        } ${this.state.hovered ? 'hover' : ''}`}
+        className={clsx(
+          'card',
+          'YogaNode',
+          className,
+          isFocused && 'focused',
+          this.state.hovered && 'hover',
+          this.state.visible === false && 'invisible',
+        )}
         style={path.length == 0 ? {width, height} : {left, top, width, height}}
         onDoubleClick={this.onDoubleClick}
         onMouseMove={this.onMouseMove}

@@ -13,30 +13,33 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import styles from './index.module.css';
 
-function HomepageHeader() {
+function HeroSection() {
   return (
     <header className={clsx('hero', styles.heroBanner)}>
-      <div className={clsx(['row', styles.heroRow])}>
+      <div className={clsx('row', 'container', styles.heroRow)}>
         <div className="col col--6">
-          <h1 className="hero__title">Flexible Layouts with Yoga</h1>
+          <h1 className="hero__title">Yoga Layout</h1>
           <p className="hero__subtitle">
-            Yoga is an embeddable and performant flexbox layout engine with
-            bindings for multiple languages.
+            A portable and perfomant layout engine targetting web standards
           </p>
 
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
+          <Link className="button button--primary button--lg" to="/docs/intro">
             Learn more
           </Link>
         </div>
         <div className={clsx(['col col--6', styles.blueprintColumn])}>
           <div className={clsx([styles.blueprint, styles.blueprintContainer])}>
-            <div className={clsx([styles.blueprint, styles.blueprintAvatar])} />
-            <div className={clsx([styles.blueprint, styles.blueprintTitle])} />
-            <div
-              className={clsx([styles.blueprint, styles.blueprintSubtitle])}
-            />
+            <div className={styles.blueprintHeader}>
+              <div
+                className={clsx([styles.blueprint, styles.blueprintAvatar])}
+              />
+              <div
+                className={clsx([styles.blueprint, styles.blueprintTitle])}
+              />
+              <div
+                className={clsx([styles.blueprint, styles.blueprintSubtitle])}
+              />
+            </div>
             <div
               className={clsx([styles.blueprint, styles.blueprintContent])}
             />
@@ -47,29 +50,31 @@ function HomepageHeader() {
   );
 }
 
-const LazyPlayground = React.lazy(() => import('../components/Playground'));
+const LazyPlayground = React.lazy(
+  () => import('../components/Playground/Playground'),
+);
 
-function ClientPlayground() {
-  const fallback = <div className={styles.playgroundFallback} />;
-
+function PlaygroundSection() {
   return (
-    <BrowserOnly fallback={fallback}>
-      {() => (
-        <Suspense fallback={fallback}>
-          <LazyPlayground />
-        </Suspense>
-      )}
-    </BrowserOnly>
+    <main className={styles.playgroundSection}>
+      <div className='container'>
+      <BrowserOnly fallback={null}>
+        {() => (
+          <Suspense fallback={null}>
+            <LazyPlayground className={styles.playground} />
+          </Suspense>
+        )}
+      </BrowserOnly>
+      </div>
+    </main>
   );
 }
 
 export default function Home(): JSX.Element {
   return (
     <Layout title="Yoga Layout | A cross-platform layout engine">
-      <HomepageHeader />
-      <main>
-        <ClientPlayground />
-      </main>
+      <HeroSection />
+      <PlaygroundSection />
     </Layout>
   );
 }

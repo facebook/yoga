@@ -10,7 +10,8 @@
 import React from 'react';
 import YogaEnumSelect from './YogaEnumSelect';
 import YogaPositionEditor from './YogaPositionEditor';
-import {Input} from 'antd';
+
+import styles from './EditValue.module.css';
 
 type Props<T> = {
   property: string;
@@ -31,7 +32,8 @@ export default (props: Props<any>) => {
     return <YogaPositionEditor {...props} />;
   } else {
     return (
-      <Input
+      <input
+        className={styles.input}
         type="text"
         {...props}
         onChange={e => props.onChange(props.property, e.target.value)}

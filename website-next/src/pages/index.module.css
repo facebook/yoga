@@ -10,92 +10,151 @@
  * and scoped locally.
  */
 
+ html[data-theme='light'] {
+  --yg-color-playound-background: var(--ifm-color-gray-200);
+ }
+
+ html[data-theme='dark'] {
+  --yg-color-playound-background: var(--ifm-color-background);
+ }
+
 .heroBanner {
+  flex: 1;
   display: flex;
   flex-direction: row;
-  padding: 4rem 0;
-  position: relative;
-  overflow: hidden;
-  padding-inline: 5%;
   justify-content: center;
 }
 
 .heroRow {
-  max-width: 1000px;
+  align-items: center;
 }
 
-/* .heroButton {
-  color: var(--ifm-button-border-color) !important;
-} */
-
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
-}
-
-@media screen and (max-width: 996px) {
-  .blueprintColumn {
-   display: none;
-  }
-}
-
-.blueprint {
-  border-style: dashed;
-  border-color: var(--ifm-heading-color);
-  border-width: 1px;
-}
-
-.blueprintContainer {
-  position: relative;
-  margin: auto;
-  height: 300px;
-  width: 300px;
-}
-
-.blueprintAvatar {
-  position: absolute;
-  left: 15px;
-  top: 15px;
-  height: 50px;
-  width: 50px;
-}
-
-.blueprintTitle {
-  position: absolute;
-  left: 80px;
-  top: 20px;
-  height: 15px;
-  width: 150px;
-}
-
-.blueprintSubtitle {
-  position: absolute;
-  left: 80px;
-  top: 40px;
-  height: 15px;
-  width: 80px;
-}
-
-.blueprintContent {
-  position: absolute;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-  top: 80px;
-}
-
-.buttons {
+.blueprintColumn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.playgroundFallback {
-  height: 500px;
+@media (max-width: 996px) {
+  .blueprintColumn {
+    display: none;
+  }
+}
+
+.blueprint {
+  --blueprint-gap: 5%;
+  --fadein-duration: 500ms;
+  box-shadow: var(--ifm-global-shadow-tl);
+  background-color: var(--ifm-background-surface-color);
+  border-radius: 0.5rem;
+}
+
+
+.blueprintContainer {
+  position: relative;
+  width: var(--ifm-col-width);
+  aspect-ratio: 1.0;
+  background-color: var(--ifm-color-primary-lighter);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.blueprintAvatar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: var(--blueprint-gap) 0 0 var(--blueprint-gap);
+  width: calc(25% - (var(--blueprint-gap)));
+  height: calc(25% - (var(--blueprint-gap)));
+  animation: avatar-fadein var(--fadein-duration) ease;
+}
+
+@keyframes avatar-fadein {
+  0% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  50% {
+    transform: scale(1.0);
+    opacity: 100%;
+  }
+}
+
+.blueprintTitle {
+  position: absolute;
+  left: 25%;
+  top: 0;
+  right: 10%;
+  margin: var(--blueprint-gap) var(--blueprint-gap) 0 var(--blueprint-gap);
+  height: calc(10% - (var(--blueprint-gap)));
+  animation: title-fadein var(--fadein-duration) ease;
+}
+
+.blueprintSubtitle {
+  position: absolute;
+  left: 25%;
+  top: 10%;
+  right: 30%;
+  margin: var(--blueprint-gap);
+  height: calc(10% - (var(--blueprint-gap)));
+  animation: title-fadein var(--fadein-duration) ease;
+}
+
+@keyframes title-fadein {
+  0% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  25% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  75% {
+    transform: scale(1.0);
+    opacity: 100%;
+  }
+}
+
+.blueprintContent {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  margin: var(--blueprint-gap);
+  width: calc(100% - (var(--blueprint-gap) * 2));
+  height: calc(75% - (var(--blueprint-gap) * 2));
+  animation: content-fadein var(--fadein-duration) ease;
+}
+
+@keyframes content-fadein {
+  0% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  100% {
+    transform: scale(1.0);
+    opacity: 100%;
+  }
+}
+
+.playgroundSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 600px;
   width: 100%;
-  background: linear-gradient(-90deg, var(--ifm-color-emphasis-200) 1px, transparent 1px),
-    linear-gradient(var(--ifm-color-emphasis-200) 1px, transparent 1px),
-    var(--ifm-color-emphasis-100);
-  background-size: 50px 50px, 50px 50px;
+  background-color: var(--yg-color-playound-background);
+}
+
+@media (max-width: 996px) {
+  .playgroundSection {
+    display: none;
+  }
 }

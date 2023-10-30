@@ -5,18 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- .InfoText {
-  max-width: 230px;
-  line-height: 130%;
-}
-
-.InfoText .docs-link {
-  margin-top: 0px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.InfoTextIcon {
-  margin-left: 5px;
-  opacity: 0.5;
+.input {
+  width: 100%;
 }

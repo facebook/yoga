@@ -6,16 +6,28 @@
  */
 
 .YogaNode {
-  background: var(--ifm-color-emphasis-0);
+  box-sizing: border-box;
+  background: var(--ifm-background-surface-color);
   position: absolute;
   transform: scale(1);
-  box-shadow: var(--ifm-global-shadow-md);
-  transition: 100ms background-color;
+  box-shadow: var(--ifm-global-shadow-lw);
   cursor: pointer;
-  border: var(--ifm-color-emphasis-300) 1px solid;
+  animation: yoga-node-fadein 200ms ease;
 }
 
-.YogaNode.hover {
+@keyframes yoga-node-fadein {
+  0% {
+    transform: scale(1.05);
+    opacity: 0%;
+  }
+
+  100% {
+    transform: scale(1.0);
+    opacity: 100%;
+  }
+}
+
+.YogaNode.hover:not(.focused) {
   background-color: var(--ifm-color-emphasis-100);
 }
 
@@ -27,13 +39,8 @@
   background: rgba(240, 255, 249, 0.7);
 }
 
-.YogaNode:focus {
-  outline: 0;
-}
-
 .YogaNode.focused {
-  background: var(--ifm-color-emphasis-0) !important;
-  border: var(--ifm-color-primary-lighter) 2px solid;
+  outline: 2px solid var(--ifm-color-primary);
   z-index: 2;
 }
 
