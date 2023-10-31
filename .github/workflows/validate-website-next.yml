@@ -17,10 +17,6 @@ on:
       - name: Setup
         uses: ./.github/actions/setup-js
 
-      - name: Build Yoga
-        run: yarn build
-        working-directory: javascript
-
       - name: Build Website
         run: yarn build
         working-directory: website-next
