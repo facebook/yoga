@@ -134,7 +134,7 @@ function runBenchTask() {
 }
 
 function findExecutable(name, failureMessage) {
-  const exec = tryFindExecutable(name);
+  const exec = which.sync(name, {nothrow: true});
   if (exec) {
     return exec;
   }
@@ -143,14 +143,21 @@ function findExecutable(name, failureMessage) {
   process.exit(1);
 }
 
-function tryFindExecutable(name) {
-  return which.sync(name, {nothrow: true});
+function tryFindExecutable(name, failureMessage) {
+  const exec = which.sync(name, {nothrow: true});
+  if (exec) {
+    return exec;
+  }
+
+  logger.warn(chalk.bold.yellow(failureMessage));
+  return exec;
 }
 
 function emcmakeGenerateTask() {
   return () => {
-    const emcmake = findExecutable('emcmake', 'Please install the emscripten SDK: https://emscripten.org/docs/getting_started/');
-    const ninja = tryFindExecutable('ninja');
+    const ninja = tryFindExecutable('ninja', 'Warning: Install Ninja (e.g. "brew install ninja") for faster builds');
+    const emcmake = findExecutable('emcmake', 'Error: Please install the emscripten SDK: https://emscripten.org/docs/getting_started/');
+
     const args = [
       'cmake',
       '-S',
@@ -167,7 +174,7 @@ function emcmakeGenerateTask() {
 
 function cmakeBuildTask(opts) {
   return () => {
-    const cmake = findExecutable('cmake', 'Please install CMake (e.g. "brew install cmake")');
+    const cmake = findExecutable('cmake', 'Error: Please install CMake (e.g. "brew install cmake")');
     const args = [
       '--build',
       'build',
