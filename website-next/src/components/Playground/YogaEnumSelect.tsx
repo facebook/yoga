@@ -8,7 +8,7 @@
  */
 
 import React, {Component} from 'react';
-import Yoga from 'yoga-layout/sync';
+import Yoga from 'yoga-layout';
 import {Radio, Menu, Dropdown, Button, Icon} from 'antd';
 import './YogaEnumSelect.css';
 const RadioButton = Radio.Button;

@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {getMeasureCounter} from '../tools/MeasureCounter';
-import {Yoga, YGBENCHMARK} from '../tools/globals';
+import {getMeasureCounter} from '../tools/MeasureCounter.ts';
+import {YGBENCHMARK} from '../tools/globals.ts';
+
+import Yoga from 'yoga-layout';
 
 const ITERATIONS = 2000;
 

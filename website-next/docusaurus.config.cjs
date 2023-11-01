@@ -37,7 +37,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve('./sidebars.cjs'),
           editUrl: 'https://github.com/facebook/yoga/tree/main/website',
         },
         blog: {

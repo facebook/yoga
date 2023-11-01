@@ -11,7 +11,7 @@ import React, {Component} from 'react';
 import {Row, Col, Button, Tabs} from 'antd';
 import EditValue from './EditValue';
 import type {LayoutRecordType} from './LayoutRecord';
-import type {Direction} from 'yoga-layout/sync';
+import type {Direction} from 'yoga-layout';
 import InfoText from './InfoText';
 import './Editor.css';
 const TabPane = Tabs.TabPane;

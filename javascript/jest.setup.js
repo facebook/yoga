@@ -7,11 +7,6 @@
  * @format
  */
 
-module.exports = async () => {
-  const {loadYoga, default: Yoga} = require('yoga-layout');
-  globalThis.Yoga = Yoga ?? (await loadYoga());
-};
-
 Object.defineProperty(globalThis, 'YGBENCHMARK', {
   get: () => globalThis.test,
 });

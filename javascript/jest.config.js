@@ -7,9 +7,8 @@
  * @format
  */
 
-module.exports = {
-  presets: [
-    ['@babel/preset-env', {targets: 'defaults'}],
-    '@babel/preset-typescript',
-  ],
+export default {
+  setupFiles: ['./jest.setup.js'],
+  testRegex: '/tests/.*\\.test\\.ts$',
+  extensionsToTreatAsEsm: ['.ts'],
 };

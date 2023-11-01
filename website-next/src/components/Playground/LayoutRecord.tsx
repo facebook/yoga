@@ -10,15 +10,8 @@
 import {Record, List} from 'immutable';
 import PositionRecord from './PositionRecord';
 import type {PositionRecordType} from './PositionRecord';
-import yoga from 'yoga-layout/sync';
 
-import type {
-  Align,
-  Justify,
-  FlexDirection,
-  Wrap,
-  PositionType,
-} from 'yoga-layout/sync';
+import {Align, Justify, FlexDirection, Wrap, PositionType} from 'yoga-layout';
 
 export type LayoutRecordType = ReturnType<LayoutRecordFactory>;
 
@@ -50,11 +43,11 @@ export type LayoutRecordFactory = Record.Factory<{
 const r: LayoutRecordFactory = Record({
   width: 'auto',
   height: 'auto',
-  justifyContent: yoga.JUSTIFY_FLEX_START,
-  alignItems: yoga.ALIGN_STRETCH,
-  alignSelf: yoga.ALIGN_AUTO,
-  alignContent: yoga.ALIGN_STRETCH,
-  flexDirection: yoga.FLEX_DIRECTION_ROW,
+  justifyContent: Justify.FlexStart,
+  alignItems: Align.Stretch,
+  alignSelf: Align.Auto,
+  alignContent: Align.Stretch,
+  flexDirection: FlexDirection.Row,
   padding: PositionRecord(),
   margin: PositionRecord(),
   border: PositionRecord(),
@@ -64,8 +57,8 @@ const r: LayoutRecordFactory = Record({
     right: NaN,
     bottom: NaN,
   }),
-  positionType: yoga.POSITION_TYPE_RELATIVE,
-  flexWrap: yoga.WRAP_NO_WRAP,
+  positionType: PositionType.Relative,
+  flexWrap: Wrap.NoWrap,
   flexBasis: 'auto',
   flexGrow: 0,
   flexShrink: 1,

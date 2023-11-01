@@ -8,7 +8,7 @@
  */
 
 import type {MeasureFunction} from 'yoga-layout';
-import {Yoga} from './globals';
+import Yoga from 'yoga-layout';
 
 export type MeasureCounter = {
   inc: MeasureFunction;

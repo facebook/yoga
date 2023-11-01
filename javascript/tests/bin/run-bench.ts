@@ -10,9 +10,6 @@
 
 import path from 'path';
 
-import YogaAsmjs from 'yoga-layout/asmjs-sync';
-import YogaWasm from 'yoga-layout/wasm-sync';
-
 const WARMUP_ITERATIONS = 3;
 const BENCHMARK_ITERATIONS = 10;
 
@@ -20,9 +17,7 @@ const testFiles = process.argv.slice(2);
 
 const testResults = new Map<string, Map<string, number>>();
 
-for (const type of ['asmjs', 'wasm']) {
-  globalThis.Yoga = type === 'asmjs' ? YogaAsmjs : YogaWasm;
-
+for (const type of ['wasm']) {
   for (const file of testFiles) {
     globalThis.YGBENCHMARK = (name: string, fn: () => void) => {
       let testEntry = testResults.get(name);
@@ -42,10 +37,7 @@ for (const type of ['asmjs', 'wasm']) {
     };
 
     const modulePath = path.resolve(file);
-
-    delete require.cache[require.resolve('../tools/globals')];
-    delete require.cache[modulePath];
-    require(modulePath);
+    await import(modulePath);
   }
 }
 

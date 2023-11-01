@@ -7,17 +7,17 @@
  * @format
  */
 
-import wrapAssembly from '../wrapAssembly';
+// @ts-ignore untyped from Emscripten
+import loadYoga from '../binaries/web.js';
+import wrapAssembly from './wrapAssembly.ts';
 
-export * from '../generated/YGEnums';
 export type {
   Config,
   DirtiedFunction,
   MeasureFunction,
   Node,
-  Yoga,
-} from '../wrapAssembly';
+} from './wrapAssembly.ts';
 
-const loadAssembly = require('../../binaries/asmjs-sync-web');
-const Yoga = wrapAssembly(loadAssembly());
+const Yoga = wrapAssembly(await loadYoga());
 export default Yoga;
+export * from './generated/YGEnums.ts';

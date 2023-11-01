@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "module": "commonjs",
+    "target": "es2020",
+    "module": "esnext",
     "strict": true,
     "declaration": true,
     "esModuleInterop": true,
@@ -11,15 +11,13 @@
     "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
     "moduleResolution": "nodenext",
+    "allowImportingTsExtensions": true,
     "paths": {
       "yoga-layout": ["src"]
     }
   },
-  "ts-node": {
-    "transpileOnly": true
-  },
-  "exclude": [
-    "binaries/**/*",
-    "build/**/*"
+  "include": [
+    "src/**/*",
+    "tests/**/*"
   ]
 }

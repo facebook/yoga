@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, {Suspense} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -34,6 +34,22 @@ function HomepageHeader() {
   );
 }
 
+const LazyPlayground = React.lazy(() => import('../components/Playground'));
+
+function ClientPlayground() {
+  const fallback = <div className={styles.playgroundFallback} />;
+
+  return (
+    <BrowserOnly fallback={fallback}>
+      {() => (
+        <Suspense fallback={fallback}>
+          <LazyPlayground />
+        </Suspense>
+      )}
+    </BrowserOnly>
+  );
+}
+
 export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
@@ -43,12 +59,7 @@ export default function Home(): JSX.Element {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-        <BrowserOnly fallback={null}>
-          {() => {
-            const Playground = require('../components/Playground');
-            return <Playground />;
-          }}
-        </BrowserOnly>
+        <ClientPlayground />
       </main>
     </Layout>
   );
