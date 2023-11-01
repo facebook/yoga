@@ -38,7 +38,7 @@
     "./wasm-sync": {
       "browser": "./src/entrypoint/wasm-sync-web.ts",
       "node": "./src/entrypoint/wasm-sync-node.ts",
-      "default": "./src/entrypoint/wasm-async-web.ts"
+      "default": "./src/entrypoint/wasm-sync-web.ts"
     }
   },
   "files": [
