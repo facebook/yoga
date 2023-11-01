@@ -32,7 +32,9 @@ type Props = {
   persist?: boolean;
   renderSidebar?: (
     layoutDefinition: LayoutRecordType,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange: () => any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ) => any;
 };
 
@@ -127,6 +129,7 @@ export default class Playground extends Component<Props, State> {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChangeLayout = (key: string, value: any) => {
     const {selectedNodePath} = this.state;
     if (selectedNodePath) {
@@ -159,7 +162,9 @@ export default class Playground extends Component<Props, State> {
   };
 
   modifyAtPath(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     path: Array<any>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
     selectedNodePath: Array<number> = this.state.selectedNodePath,
   ) {

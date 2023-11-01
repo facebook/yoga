@@ -54,17 +54,26 @@ const LazyPlayground = React.lazy(
   () => import('../components/Playground/Playground'),
 );
 
+// Docusaurus SSR does not correctly support top-level await
+// 1. https://github.com/facebook/docusaurus/issues/7238
+// 2. https://github.com/facebook/docusaurus/issues/9468
+function BrowserOnlyPlayground() {
+  return (
+    <BrowserOnly fallback={null}>
+      {() => (
+        <Suspense fallback={null}>
+          <LazyPlayground className={styles.playground} />
+        </Suspense>
+      )}
+    </BrowserOnly>
+  );
+}
+
 function PlaygroundSection() {
   return (
     <main className={styles.playgroundSection}>
       <div className="container">
-        <BrowserOnly fallback={null}>
-          {() => (
-            <Suspense fallback={null}>
-              <LazyPlayground className={styles.playground} />
-            </Suspense>
-          )}
-        </BrowserOnly>
+        <BrowserOnlyPlayground />
       </div>
     </main>
   );

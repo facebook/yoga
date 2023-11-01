@@ -19,7 +19,9 @@ import styles from './Editor.module.css';
 
 type Props = {
   node: LayoutRecordType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChangeLayout: (key: string, value: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChangeSetting: (key: string, value: any) => void;
   direction: Direction;
   selectedNodeIsRoot: boolean;

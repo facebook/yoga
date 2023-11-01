@@ -13,6 +13,7 @@ import clsx from 'clsx';
 
 type Props = {
   width?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 };
 

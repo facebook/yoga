@@ -21,6 +21,7 @@ type Props<T> = {
   placeholder?: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default (props: Props<any>) => {
   if (YogaEnumSelect.availableProperties.indexOf(props.property) > -1) {
     // @ts-ignore
