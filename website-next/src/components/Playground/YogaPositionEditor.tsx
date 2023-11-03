@@ -8,7 +8,6 @@
  */
 
 import React, {Component} from 'react';
-import {Input} from 'antd';
 import PositionRecord from './PositionRecord';
 import type {PositionRecordType} from './PositionRecord';
 import './YogaPositionEditor.css';
@@ -33,14 +32,14 @@ export default class YogaPositionEditor extends Component<Props> {
     const {onChange, value, property, disabled} = this.props;
     return (
       <div className="YogaPositionEditor">
-        <Input
+        <input
           type="text"
           value={Number.isNaN(value.top) ? '' : value.top}
           disabled={disabled}
           onChange={e => onChange(property, value.set('top', e.target.value))}
         />
         <div className="YogaPositionEditorRow">
-          <Input
+          <input
             type="text"
             value={Number.isNaN(value.left) ? '' : value.left}
             disabled={disabled}
@@ -49,7 +48,7 @@ export default class YogaPositionEditor extends Component<Props> {
             }
           />
           {property.toUpperCase()}
-          <Input
+          <input
             type="text"
             value={Number.isNaN(value.right) ? '' : value.right}
             disabled={disabled}
@@ -58,7 +57,7 @@ export default class YogaPositionEditor extends Component<Props> {
             }
           />
         </div>
-        <Input
+        <input
           type="text"
           value={Number.isNaN(value.bottom) ? '' : value.bottom}
           disabled={disabled}

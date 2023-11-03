@@ -16,22 +16,25 @@ import PositionRecord from './PositionRecord';
 import LayoutRecord from './LayoutRecord';
 import Sidebar from './Sidebar';
 import type {LayoutRecordType} from './LayoutRecord';
-import './index.css';
+import styles from './Playground.module.css';
+import clsx from 'clsx';
 
 type Props = {
-  layoutDefinition: LayoutRecordType;
-  direction: Direction;
-  maxDepth: number;
+  layoutDefinition?: LayoutRecordType;
+  direction?: Direction;
+  maxDepth?: number;
   maxChildren?: number;
   minChildren?: number;
   selectedNodePath?: Array<number>;
-  showGuides: boolean;
+  showGuides?: boolean;
   className?: string;
   height?: string | number;
   persist?: boolean;
   renderSidebar?: (
     layoutDefinition: LayoutRecordType,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange: () => any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ) => any;
 };
 
@@ -126,6 +129,7 @@ export default class Playground extends Component<Props, State> {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChangeLayout = (key: string, value: any) => {
     const {selectedNodePath} = this.state;
     if (selectedNodePath) {
@@ -158,7 +162,9 @@ export default class Playground extends Component<Props, State> {
   };
 
   modifyAtPath(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     path: Array<any>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
     selectedNodePath: Array<number> = this.state.selectedNodePath,
   ) {
@@ -235,76 +241,60 @@ export default class Playground extends Component<Props, State> {
       : null;
 
     const playground = (
-      <div className="playground-background">
-        <div
-          className={`Playground ${
-            this.props.renderSidebar ? '' : 'standalone'
-          }`}
-          onMouseDown={this.onMouseDown}
-          style={{height, maxHeight: height}}
-          ref={ref => {
-            this._containerRef = ref;
-          }}>
-          <YogaNode
-            layoutDefinition={layoutDefinition}
-            selectedNodePath={selectedNodePath}
-            onClick={selectedNodePath => this.setState({selectedNodePath})}
-            onDoubleClick={this.onAdd}
-            direction={direction}
-            showGuides={this.props.showGuides}
-          />
-          {!this.props.renderSidebar && (
-            <Sidebar>
-              {this.state.selectedNodePath ? (
-                <Editor
-                  node={selectedNode}
-                  selectedNodeIsRoot={
-                    selectedNodePath ? selectedNodePath.length === 0 : false
-                  }
-                  onChangeLayout={this.onChangeLayout}
-                  // @ts-ignore
-                  onChangeSetting={(key, value) =>
-                    this.setState({[key]: value})
-                  }
-                  direction={direction}
-                  onRemove={
-                    selectedNodePath && selectedNodePath.length > 0
-                      ? this.onRemove
-                      : undefined
-                  }
-                  onAdd={
-                    selectedNodePath &&
-                    selectedNodePath.length < this.props.maxDepth
-                      ? this.onAdd
-                      : undefined
-                  }
-                />
-              ) : (
-                <div className="NoContent">
-                  Select a node to edit its properties
-                </div>
-              )}
-            </Sidebar>
-          )}
-        </div>
+      <div
+        className={styles.playground}
+        onMouseDown={this.onMouseDown}
+        style={{height, maxHeight: height}}
+        ref={ref => {
+          this._containerRef = ref;
+        }}>
+        <YogaNode
+          layoutDefinition={layoutDefinition}
+          selectedNodePath={selectedNodePath}
+          onClick={selectedNodePath => this.setState({selectedNodePath})}
+          onDoubleClick={this.onAdd}
+          direction={direction}
+          showGuides={this.props.showGuides}
+        />
       </div>
     );
 
-    if (this.props.renderSidebar) {
-      return (
-        <div className={`PlaygroundContainer ${this.props.className || ''}`}>
-          <div>
-            {this.props.renderSidebar(
+    const sidebarContent = this.props.renderSidebar
+      ? this.props.renderSidebar(
+          // @ts-ignore
+          layoutDefinition.getIn(getPath(selectedNodePath)),
+          this.onChangeLayout,
+        )
+      : this.state.selectedNodePath != null && (
+          <Editor
+            node={selectedNode}
+            selectedNodeIsRoot={
+              selectedNodePath ? selectedNodePath.length === 0 : false
+            }
+            onChangeLayout={this.onChangeLayout}
+            onChangeSetting={(key, value) =>
               // @ts-ignore
-              layoutDefinition.getIn(getPath(selectedNodePath)),
-              this.onChangeLayout,
-            )}
-          </div>
-          {playground}
-        </div>
-      );
-    } else {
-      return playground;
-    }
+              this.setState({[key]: value})
+            }
+            direction={direction}
+            onRemove={
+              selectedNodePath && selectedNodePath.length > 0
+                ? this.onRemove
+                : undefined
+            }
+            onAdd={
+              selectedNodePath && selectedNodePath.length < this.props.maxDepth
+                ? this.onAdd
+                : undefined
+            }
+          />
+        );
+
+    return (
+      <div className={clsx(styles.container, this.props.className)}>
+        {playground}
+        <Sidebar>{sidebarContent}</Sidebar>
+      </div>
+    );
   }
 }

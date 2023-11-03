@@ -5,17 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- .YogaNode {
-  background: white;
+.YogaNode {
+  box-sizing: border-box;
+  background: var(--ifm-background-surface-color);
   position: absolute;
   transform: scale(1);
-  box-shadow: inset 0 0 0px 1px rgba(48, 56, 69, 0.2);
-  transition: 0.2s all, 0s outline, 0s box-shadow;
+  box-shadow: var(--ifm-global-shadow-lw);
   cursor: pointer;
+  animation: yoga-node-fadein 200ms ease;
 }
 
-.YogaNode.hover {
-  background-color: #F0FFF9;
+@keyframes yoga-node-fadein {
+  0% {
+    transform: scale(1.05);
+    opacity: 0%;
+  }
+
+  100% {
+    transform: scale(1.0);
+    opacity: 100%;
+  }
+}
+
+.YogaNode.hover:not(.focused) {
+  background-color: var(--ifm-color-emphasis-100);
 }
 
 .YogaNode .YogaNode {
@@ -26,13 +39,8 @@
   background: rgba(240, 255, 249, 0.7);
 }
 
-.YogaNode:focus {
-  outline: 0;
-}
-
 .YogaNode.focused {
-  box-shadow: 0 0 0 2px #68CFBB, 0 0 15px rgba(0, 0, 0, 0.2),
-    inset 0 0 0px 1px rgba(255, 255, 255, 0.2);
+  outline: 2px solid var(--ifm-color-primary);
   z-index: 2;
 }
 

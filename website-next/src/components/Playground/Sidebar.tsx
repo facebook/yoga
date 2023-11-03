@@ -8,18 +8,30 @@
  */
 
 import React, {Component} from 'react';
-import './Sidebar.css';
+import styles from './Sidebar.module.css';
+import clsx from 'clsx';
 
 type Props = {
   width?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: any;
 };
+
+function PlaceholderContent() {
+  return (
+    <div className={styles.placeholder}>
+      <p>Select a node to edit its properties</p>
+    </div>
+  );
+}
 
 export default class Sidebar extends Component<Props> {
   render() {
     return (
-      <div className="Sidebar" style={{width: this.props.width}}>
-        {this.props.children}
+      <div
+        className={clsx('card', styles.sidebar)}
+        style={{width: this.props.width}}>
+        {this.props.children || <PlaceholderContent />}
       </div>
     );
   }

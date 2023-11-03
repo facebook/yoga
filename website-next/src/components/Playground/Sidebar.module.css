@@ -5,18 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- .Sidebar {
-  position: absolute;
+ .placeholder {
+  color: var(--ifm-color-content-secondary);
+  margin: auto;
+  text-align: center;
+ }
+
+ .sidebar {
   z-index: 3;
-  top: 0;
-  right: 0;
-  width: 350px;
-  background: white;
+  width: 320px;
+  background: var(--ifm-background-surface-color);
   display: flex;
   flex-direction: column;
-  margin: 25px;
-  max-height: calc(100% - 50px);
-  border-radius: 6px;
-  bottom: auto;
-  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  padding: 20px;
 }

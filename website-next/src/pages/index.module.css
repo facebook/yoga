@@ -10,47 +10,151 @@
  * and scoped locally.
  */
 
+ html[data-theme='light'] {
+  --yg-color-playound-background: var(--ifm-color-gray-200);
+ }
+
+ html[data-theme='dark'] {
+  --yg-color-playound-background: var(--ifm-color-background);
+ }
+
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.heroRow {
+  align-items: center;
 }
 
-.buttons {
+.blueprintColumn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.playgroundFallback {
-  height: 500px;
+@media (max-width: 996px) {
+  .blueprintColumn {
+    display: none;
+  }
+}
+
+.blueprint {
+  --blueprint-gap: 5%;
+  --fadein-duration: 500ms;
+  box-shadow: var(--ifm-global-shadow-tl);
+  background-color: var(--ifm-background-surface-color);
+  border-radius: 0.5rem;
+}
+
+
+.blueprintContainer {
+  position: relative;
+  width: var(--ifm-col-width);
+  aspect-ratio: 1.0;
+  background-color: var(--ifm-color-primary-lighter);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.blueprintAvatar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: var(--blueprint-gap) 0 0 var(--blueprint-gap);
+  width: calc(25% - (var(--blueprint-gap)));
+  height: calc(25% - (var(--blueprint-gap)));
+  animation: avatar-fadein var(--fadein-duration) ease;
+}
+
+@keyframes avatar-fadein {
+  0% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  50% {
+    transform: scale(1.0);
+    opacity: 100%;
+  }
+}
+
+.blueprintTitle {
+  position: absolute;
+  left: 25%;
+  top: 0;
+  right: 10%;
+  margin: var(--blueprint-gap) var(--blueprint-gap) 0 var(--blueprint-gap);
+  height: calc(10% - (var(--blueprint-gap)));
+  animation: title-fadein var(--fadein-duration) ease;
+}
+
+.blueprintSubtitle {
+  position: absolute;
+  left: 25%;
+  top: 10%;
+  right: 30%;
+  margin: var(--blueprint-gap);
+  height: calc(10% - (var(--blueprint-gap)));
+  animation: title-fadein var(--fadein-duration) ease;
+}
+
+@keyframes title-fadein {
+  0% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  25% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  75% {
+    transform: scale(1.0);
+    opacity: 100%;
+  }
+}
+
+.blueprintContent {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  margin: var(--blueprint-gap);
+  width: calc(100% - (var(--blueprint-gap) * 2));
+  height: calc(75% - (var(--blueprint-gap) * 2));
+  animation: content-fadein var(--fadein-duration) ease;
+}
+
+@keyframes content-fadein {
+  0% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0%;
+  }
+
+  100% {
+    transform: scale(1.0);
+    opacity: 100%;
+  }
+}
+
+.playgroundSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 600px;
   width: 100%;
-  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(-90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(
-      transparent 4px,
-      #f5f5f5 4px,
-      #f5f5f5 97px,
-      transparent 97px
-    ),
-    linear-gradient(-90deg, #e5e5e5 1px, transparent 1px),
-    linear-gradient(
-      -90deg,
-      transparent 4px,
-      #f5f5f5 4px,
-      #f5f5f5 97px,
-      transparent 97px
-    ),
-    linear-gradient(#e5e5e5 1px, transparent 1px), #f5f5f5;
-  background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px, 100px 100px,
-    100px 100px, 100px 100px, 100px 100px;
+  background-color: var(--yg-color-playound-background);
+}
+
+@media (max-width: 996px) {
+  .playgroundSection {
+    display: none;
+  }
 }

@@ -1,0 +1,32 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor h2 {
+  margin-bottom: 8px;
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ifm-color-content-secondary);
+  text-transform: uppercase;
+}
+
+.tabItem {
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.editorButtons {
+  display: flex;
+  margin-top: auto;
+  gap: 5px;
+}

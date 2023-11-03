@@ -8,11 +8,10 @@
  */
 
 import React, {Component} from 'react';
+import clsx from 'clsx';
 import Yoga from 'yoga-layout';
-import {Radio, Menu, Dropdown, Button, Icon} from 'antd';
-import './YogaEnumSelect.css';
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
+
+import styles from './YogaEnumSelect.module.css';
 
 const PROPERTY_LOOKUP = {
   flexDirection: 'FLEX_DIRECTION',
@@ -65,41 +64,30 @@ export default class YogaEnumSelect extends Component<Props> {
     const selected = this.values.find(({value}) => value === this.props.value);
 
     return this.values.length > 3 ? (
-      <div className="YogaEnumSelect">
-        {/*@ts-ignore*/}
-        <Dropdown
-          trigger={['click']}
-          disabled={this.props.disabled}
-          overlay={
-            // @ts-ignore
-            <Menu onClick={this.handleMenuClick}>
-              {this.values.map(({key, value}) => (
-                // @ts-ignore
-                <Menu.Item key={key} value={value}>
-                  {this.getTitle(property, key)}
-                </Menu.Item>
-              ))}
-            </Menu>
-          }>
-          <Button>
-            {selected ? this.getTitle(property, selected.key) : ''}
-            {/*@ts-ignore*/}
-            <Icon type="down" />
-          </Button>
-        </Dropdown>
-      </div>
-    ) : (
-      <RadioGroup
-        {...this.props}
-        onChange={e => this.props.onChange(this.props.property, e.target.value)}
-        defaultValue="a"
-        className="YogaEnumSelect">
+      <select className={styles.select} name={this.props.property}>
         {this.values.map(({key, value}) => (
-          <RadioButton key={key} value={value}>
-            {this.getTitle(property, key)}
-          </RadioButton>
+          <option key={key} value={value}>
+            {selected ? this.getTitle(property, key) : ''}
+          </option>
         ))}
-      </RadioGroup>
+      </select>
+    ) : (
+      <div className={clsx('button-group', styles.buttonGroup)}>
+        {this.values.map(({key, value}) => (
+          <button
+            className={clsx(
+              'button',
+              'button--sm',
+              'button--outline',
+              'button--secondary',
+              value === this.props.value && 'button--active',
+              styles.button,
+            )}
+            onClick={() => this.props.onChange(this.props.property, value)}>
+            {this.getTitle(property, key)}
+          </button>
+        ))}
+      </div>
     );
   }
 }
