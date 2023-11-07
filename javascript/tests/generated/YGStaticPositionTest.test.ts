@@ -165,7 +165,7 @@ test.skip('static_position_absolute_child_insets_relative_to_positioned_ancestor
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(-50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(50);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -187,7 +187,7 @@ test.skip('static_position_absolute_child_insets_relative_to_positioned_ancestor
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(-50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(50);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -263,22 +263,22 @@ test.skip('static_position_absolute_child_insets_relative_to_positioned_ancestor
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(200);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0_child0.getComputedLeft()).toBe(300);
+    expect(root_child0_child0_child0_child0.getComputedLeft()).toBe(100);
     expect(root_child0_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0_child0_child0.getComputedLeft()).toBe(400);
+    expect(root_child0_child0_child0_child0_child0.getComputedLeft()).toBe(100);
     expect(root_child0_child0_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0_child0_child0_child0.getComputedLeft()).toBe(50);
+    expect(root_child0_child0_child0_child0_child0_child0.getComputedLeft()).toBe(-350);
     expect(root_child0_child0_child0_child0_child0_child0.getComputedTop()).toBe(50);
     expect(root_child0_child0_child0_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -300,22 +300,22 @@ test.skip('static_position_absolute_child_insets_relative_to_positioned_ancestor
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0_child0_child0_child0.getComputedLeft()).toBe(50);
+    expect(root_child0_child0_child0_child0_child0_child0.getComputedLeft()).toBe(-50);
     expect(root_child0_child0_child0_child0_child0_child0.getComputedTop()).toBe(50);
     expect(root_child0_child0_child0_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -392,7 +392,7 @@ test.skip('static_position_absolute_child_width_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -469,7 +469,7 @@ test.skip('static_position_relative_child_width_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -545,7 +545,7 @@ test.skip('static_position_static_child_width_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -622,7 +622,7 @@ test.skip('static_position_absolute_child_height_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(100);
@@ -699,7 +699,7 @@ test.skip('static_position_relative_child_height_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -775,7 +775,7 @@ test.skip('static_position_static_child_height_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -853,7 +853,7 @@ test.skip('static_position_absolute_child_left_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -931,7 +931,7 @@ test.skip('static_position_relative_child_left_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(200);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1008,7 +1008,7 @@ test.skip('static_position_static_child_left_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1086,7 +1086,7 @@ test.skip('static_position_absolute_child_right_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(-50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1164,7 +1164,7 @@ test.skip('static_position_relative_child_right_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1241,7 +1241,7 @@ test.skip('static_position_static_child_right_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1319,7 +1319,7 @@ test.skip('static_position_absolute_child_top_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(100);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1397,7 +1397,7 @@ test.skip('static_position_relative_child_top_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(50);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1474,7 +1474,7 @@ test.skip('static_position_static_child_top_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1552,7 +1552,7 @@ test.skip('static_position_absolute_child_bottom_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(50);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1630,7 +1630,7 @@ test.skip('static_position_relative_child_bottom_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(-50);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1707,7 +1707,7 @@ test.skip('static_position_static_child_bottom_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1788,7 +1788,7 @@ test.skip('static_position_absolute_child_margin_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(-50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(100);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1869,7 +1869,7 @@ test.skip('static_position_relative_child_margin_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(50);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -1949,7 +1949,7 @@ test.skip('static_position_static_child_margin_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(50);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -2030,7 +2030,7 @@ test.skip('static_position_absolute_child_padding_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(-100);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(200);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(200);
@@ -2111,7 +2111,7 @@ test.skip('static_position_relative_child_padding_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(100);
@@ -2191,7 +2191,7 @@ test.skip('static_position_static_child_padding_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(100);
@@ -2268,7 +2268,7 @@ test.skip('static_position_absolute_child_border_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -2345,7 +2345,7 @@ test.skip('static_position_relative_child_border_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -2421,7 +2421,7 @@ test.skip('static_position_static_child_border_percentage', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(150);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
     expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
@@ -2480,8 +2480,8 @@ test.skip('static_position_absolute_child_containing_block_padding_box', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
-    expect(root_child0_child0_child0.getComputedTop()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(200);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
 
@@ -2502,8 +2502,8 @@ test.skip('static_position_absolute_child_containing_block_padding_box', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
-    expect(root_child0_child0_child0.getComputedTop()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(-100);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(200);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
   } finally {
@@ -2561,8 +2561,8 @@ test.skip('static_position_relative_child_containing_block_padding_box', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
-    expect(root_child0_child0_child0.getComputedTop()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
 
@@ -2583,8 +2583,8 @@ test.skip('static_position_relative_child_containing_block_padding_box', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(250);
-    expect(root_child0_child0_child0.getComputedTop()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
   } finally {
@@ -2641,8 +2641,8 @@ test.skip('static_position_static_child_containing_block_padding_box', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(100);
-    expect(root_child0_child0_child0.getComputedTop()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
 
@@ -2663,8 +2663,8 @@ test.skip('static_position_static_child_containing_block_padding_box', () => {
     expect(root_child0_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0.getComputedHeight()).toBe(100);
 
-    expect(root_child0_child0_child0.getComputedLeft()).toBe(250);
-    expect(root_child0_child0_child0.getComputedTop()).toBe(100);
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(50);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
     expect(root_child0_child0_child0.getComputedWidth()).toBe(50);
     expect(root_child0_child0_child0.getComputedHeight()).toBe(50);
   } finally {

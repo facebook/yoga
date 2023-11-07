@@ -144,7 +144,7 @@ TEST(YogaTest, static_position_absolute_child_insets_relative_to_positioned_ance
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(-50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -166,7 +166,7 @@ TEST(YogaTest, static_position_absolute_child_insets_relative_to_positioned_ance
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(-50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -239,22 +239,22 @@ TEST(YogaTest, static_position_absolute_child_insets_relative_to_positioned_ance
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0));
 
-  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetLeft(root_child0_child0_child0_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0_child0));
 
-  ASSERT_FLOAT_EQ(400, YGNodeLayoutGetLeft(root_child0_child0_child0_child0_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0_child0_child0));
 
-  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0_child0_child0_child0));
+  ASSERT_FLOAT_EQ(-350, YGNodeLayoutGetLeft(root_child0_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child0_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0_child0_child0_child0));
@@ -276,22 +276,22 @@ TEST(YogaTest, static_position_absolute_child_insets_relative_to_positioned_ance
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0_child0_child0));
 
-  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0_child0_child0_child0));
+  ASSERT_FLOAT_EQ(-50, YGNodeLayoutGetLeft(root_child0_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child0_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0_child0_child0_child0));
@@ -365,7 +365,7 @@ TEST(YogaTest, static_position_absolute_child_width_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -439,7 +439,7 @@ TEST(YogaTest, static_position_relative_child_width_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -512,7 +512,7 @@ TEST(YogaTest, static_position_static_child_width_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -586,7 +586,7 @@ TEST(YogaTest, static_position_absolute_child_height_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -660,7 +660,7 @@ TEST(YogaTest, static_position_relative_child_height_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -733,7 +733,7 @@ TEST(YogaTest, static_position_static_child_height_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -808,7 +808,7 @@ TEST(YogaTest, static_position_absolute_child_left_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -883,7 +883,7 @@ TEST(YogaTest, static_position_relative_child_left_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -957,7 +957,7 @@ TEST(YogaTest, static_position_static_child_left_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1032,7 +1032,7 @@ TEST(YogaTest, static_position_absolute_child_right_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(-50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1107,7 +1107,7 @@ TEST(YogaTest, static_position_relative_child_right_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1181,7 +1181,7 @@ TEST(YogaTest, static_position_static_child_right_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1256,7 +1256,7 @@ TEST(YogaTest, static_position_absolute_child_top_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1331,7 +1331,7 @@ TEST(YogaTest, static_position_relative_child_top_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1405,7 +1405,7 @@ TEST(YogaTest, static_position_static_child_top_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1480,7 +1480,7 @@ TEST(YogaTest, static_position_absolute_child_bottom_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1555,7 +1555,7 @@ TEST(YogaTest, static_position_relative_child_bottom_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(-50, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1629,7 +1629,7 @@ TEST(YogaTest, static_position_static_child_bottom_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1707,7 +1707,7 @@ TEST(YogaTest, static_position_absolute_child_margin_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(-50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1785,7 +1785,7 @@ TEST(YogaTest, static_position_relative_child_margin_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1862,7 +1862,7 @@ TEST(YogaTest, static_position_static_child_margin_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -1940,7 +1940,7 @@ TEST(YogaTest, static_position_absolute_child_padding_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(-100, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -2018,7 +2018,7 @@ TEST(YogaTest, static_position_relative_child_padding_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -2095,7 +2095,7 @@ TEST(YogaTest, static_position_static_child_padding_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -2169,7 +2169,7 @@ TEST(YogaTest, static_position_absolute_child_border_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -2243,7 +2243,7 @@ TEST(YogaTest, static_position_relative_child_border_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -2316,7 +2316,7 @@ TEST(YogaTest, static_position_static_child_border_percentage) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(150, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
@@ -2372,8 +2372,8 @@ TEST(YogaTest, static_position_absolute_child_containing_block_padding_box) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
 
@@ -2394,8 +2394,8 @@ TEST(YogaTest, static_position_absolute_child_containing_block_padding_box) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(-100, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
 
@@ -2450,8 +2450,8 @@ TEST(YogaTest, static_position_relative_child_containing_block_padding_box) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
 
@@ -2472,8 +2472,8 @@ TEST(YogaTest, static_position_relative_child_containing_block_padding_box) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetLeft(root_child0_child0_child0));
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
 
@@ -2527,8 +2527,8 @@ TEST(YogaTest, static_position_static_child_containing_block_padding_box) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child0_child0_child0));
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
 
@@ -2549,8 +2549,8 @@ TEST(YogaTest, static_position_static_child_containing_block_padding_box) {
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0_child0));
   ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root_child0_child0));
 
-  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetLeft(root_child0_child0_child0));
-  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetTop(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetLeft(root_child0_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetWidth(root_child0_child0_child0));
   ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0_child0_child0));
 

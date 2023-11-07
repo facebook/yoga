@@ -61,9 +61,9 @@ function printTest(e, ext, LTRContainer, RTLContainer, genericContainer) {
   ]);
   e.emitPrologue();
 
-  const LTRLayoutTree = calculateTree(LTRContainer);
-  const RTLLayoutTree = calculateTree(RTLContainer);
-  const genericLayoutTree = calculateTree(genericContainer);
+  const LTRLayoutTree = calculateTree(LTRContainer, 0, 0);
+  const RTLLayoutTree = calculateTree(RTLContainer, 0, 0);
+  const genericLayoutTree = calculateTree(genericContainer, 0, 0);
 
   for (let i = 0; i < genericLayoutTree.length; i++) {
     e.emitTestPrologue(
@@ -679,18 +679,19 @@ function getRoundedSize(node) {
   };
 }
 
-function calculateTree(root) {
+function calculateTree(root, parentOffsetLeft, parentOffsetTop) {
   const rootLayout = [];
 
   for (let i = 0; i < root.children.length; i++) {
     const child = root.children[i];
+    const boundingRect = child.getBoundingClientRect();
     const layout = {
       name: child.id !== '' ? child.id : 'INSERT_NAME_HERE',
-      left: child.offsetLeft + child.parentNode.clientLeft,
-      top: child.offsetTop + child.parentNode.clientTop,
+      left: Math.round(boundingRect.left - parentOffsetLeft),
+      top: Math.round(boundingRect.top - parentOffsetTop),
       width: child.offsetWidth,
       height: child.offsetHeight,
-      children: calculateTree(child),
+      children: calculateTree(child, boundingRect.left, boundingRect.top),
       style: getYogaStyle(child),
       declaredStyle: child.style,
       rawStyle: child.getAttribute('style'),

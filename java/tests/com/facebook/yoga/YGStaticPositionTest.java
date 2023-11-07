@@ -155,7 +155,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(-50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -178,7 +178,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(-50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -248,22 +248,22 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(200f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(300f, root_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(100f, root_child0_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(400f, root_child0_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(100f, root_child0_child0_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(50f, root_child0_child0_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(-350f, root_child0_child0_child0_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(50f, root_child0_child0_child0_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -286,22 +286,22 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(50f, root_child0_child0_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(-50f, root_child0_child0_child0_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(50f, root_child0_child0_child0_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -373,7 +373,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -445,7 +445,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -516,7 +516,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -588,7 +588,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -660,7 +660,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -731,7 +731,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -804,7 +804,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -877,7 +877,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(200f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -949,7 +949,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1022,7 +1022,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(-50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1095,7 +1095,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1167,7 +1167,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1240,7 +1240,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1313,7 +1313,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1385,7 +1385,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1458,7 +1458,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1531,7 +1531,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(-50f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1603,7 +1603,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1679,7 +1679,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(-50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1755,7 +1755,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1830,7 +1830,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1906,7 +1906,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(-100f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(200f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(200f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -1982,7 +1982,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -2057,7 +2057,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -2129,7 +2129,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -2201,7 +2201,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -2272,7 +2272,7 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(150f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
     assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
@@ -2325,8 +2325,8 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
-    assertEquals(100f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(200f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
 
@@ -2348,8 +2348,8 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
-    assertEquals(100f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(-100f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(200f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
   }
@@ -2401,8 +2401,8 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
-    assertEquals(100f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
 
@@ -2424,8 +2424,8 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(250f, root_child0_child0_child0.getLayoutX(), 0.0f);
-    assertEquals(100f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
   }
@@ -2476,8 +2476,8 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(100f, root_child0_child0_child0.getLayoutX(), 0.0f);
-    assertEquals(100f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
 
@@ -2499,8 +2499,8 @@ public class YGStaticPositionTest {
     assertEquals(100f, root_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(100f, root_child0_child0.getLayoutHeight(), 0.0f);
 
-    assertEquals(250f, root_child0_child0_child0.getLayoutX(), 0.0f);
-    assertEquals(100f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(0f, root_child0_child0_child0.getLayoutY(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
   }
