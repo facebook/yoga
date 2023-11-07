@@ -679,7 +679,7 @@ function getRoundedSize(node) {
   };
 }
 
-function calculateTree(root, roundToPixelGrid) {
+function calculateTree(root) {
   const rootLayout = [];
 
   for (let i = 0; i < root.children.length; i++) {
@@ -690,7 +690,7 @@ function calculateTree(root, roundToPixelGrid) {
       top: child.offsetTop + child.parentNode.clientTop,
       width: child.offsetWidth,
       height: child.offsetHeight,
-      children: calculateTree(child, roundToPixelGrid),
+      children: calculateTree(child),
       style: getYogaStyle(child),
       declaredStyle: child.style,
       rawStyle: child.getAttribute('style'),
