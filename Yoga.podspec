@@ -41,7 +41,7 @@ Pod::Spec.new do |spec|
   spec.source_files = 'yoga/**/*.{h,cpp}'
   spec.header_mappings_dir = 'yoga'
 
-  public_header_files = 'yoga/{Yoga,YGEnums,YGMacros,YGValue}.h'
+  public_header_files = 'yoga/*.h'
   spec.public_header_files = public_header_files
 
   all_header_files = 'yoga/**/*.h'
