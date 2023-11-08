@@ -6,7 +6,6 @@
  */
 
 #include <gtest/gtest.h>
-#include <yoga/Yoga-internal.h>
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, rounding_value) {
