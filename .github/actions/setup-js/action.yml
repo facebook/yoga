@@ -7,6 +7,7 @@ runs:
       uses: mymindstorm/setup-emsdk@v11
       with:
         version: 3.1.28
+        actions-cache-folder: emsdk-cache
 
     - name: Install Ninja
       uses: ./.github/actions/install-ninja
