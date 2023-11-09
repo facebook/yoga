@@ -4,7 +4,9 @@ runs:
   using: "composite"
   steps:
     - name: Install emsdk
-      uses: ./.github/actions/install-emsdk
+      uses: mymindstorm/setup-emsdk@v11
+      with:
+        version: 3.1.28
 
     - name: Install Ninja
       uses: ./.github/actions/install-ninja
