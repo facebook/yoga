@@ -1,15 +1,16 @@
-name: Apple
+name: Validate Apple
 
 on:
   pull_request:
   push:
     branches:
       - main
+      - 'release-*'
   workflow_dispatch:
 
 jobs:
   lint-pods:
-    name: Lint pod
+    name: Build [CocoaPods]
     runs-on: macos-latest
 
     steps:
@@ -20,3 +21,16 @@ jobs:
 
       - name: pod lib lint
         run: pod lib lint --verbose --include-podspecs=**/*.podspec
+
+  test:
+    name: Build [SwiftPM]
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Debug
+        run: swift build -c debug
+
+      - name: Build Release
+        run: swift build -c release

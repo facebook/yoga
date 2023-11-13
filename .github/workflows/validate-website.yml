@@ -1,7 +1,9 @@
-name: Website
+name: Validate Website
 
 on:
   pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -32,10 +34,20 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
-      - name: Build Yoga
-        run: yarn build
-        working-directory: javascript
-
       - name: Build Website
         run: yarn build
+        working-directory: website-next
+
+  typecheck:
+    name: Typecheck [Docusaurus]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-js
+
+      - name: yarn tsc
+        run: yarn tsc
         working-directory: website-next

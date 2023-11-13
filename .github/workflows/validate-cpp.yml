@@ -1,10 +1,11 @@
-name: C++
+name: Validate C++
 
 on:
   pull_request:
   push:
     branches:
       - main
+      - 'release-*'
   workflow_dispatch:
 
 env:
