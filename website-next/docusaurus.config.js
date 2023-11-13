@@ -16,7 +16,7 @@ export default {
     'Build flexible layouts on any platform with a highly optimized open source layout engine designed with speed, size, and ease of use in mind.',
   favicon: 'img/favicon.png',
 
-  url: 'https:/yogalayout.com',
+  url: 'https:/yogalayout.dev',
   baseUrl: '/',
 
   organizationName: 'facebook',

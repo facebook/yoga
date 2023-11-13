@@ -4,7 +4,7 @@
   "description": "An embeddable and performant flexbox layout engine with bindings for multiple languages",
   "license": "MIT",
   "author": "Meta Open Source",
-  "homepage": "https://yogalayout.com/",
+  "homepage": "https://yogalayout.dev/",
   "repository": {
     "type": "git",
     "url": "git@github.com:facebook/yoga.git"

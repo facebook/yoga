@@ -26,7 +26,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: website/public
-          cname: yogalayout.com
+          cname: yogalayout.dev
           keep_files: true
           user_name: 'Yoga-bot'
           user_email: 'yogabot@fb.com'
