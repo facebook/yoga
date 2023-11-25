@@ -304,20 +304,11 @@ TEST(YogaTest, dedicated_unit_factories) {
   ASSERT_EQ(
       CompactValue::of<YGUnitPercent>(123.456f),
       CompactValue(YGValue{123.456f, YGUnitPercent}));
-}
-
-TEST(YogaTest, dedicated_unit_maybe_factories) {
   ASSERT_EQ(
-      CompactValue::ofMaybe<YGUnitPoint>(-9876.5f),
-      CompactValue(YGValue{-9876.5f, YGUnitPoint}));
-  ASSERT_EQ(
-      CompactValue::ofMaybe<YGUnitPoint>(YGUndefined),
+      CompactValue::of<YGUnitPoint>(YGUndefined),
       CompactValue(YGValueUndefined));
   ASSERT_EQ(
-      CompactValue::ofMaybe<YGUnitPercent>(123.456f),
-      CompactValue(YGValue{123.456f, YGUnitPercent}));
-  ASSERT_EQ(
-      CompactValue::ofMaybe<YGUnitPercent>(YGUndefined),
+      CompactValue::of<YGUnitPercent>(YGUndefined),
       CompactValue(YGValueUndefined));
 }
 
