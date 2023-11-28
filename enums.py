@@ -131,10 +131,7 @@ with open(root + "/yoga/YGEnums.h", "w") as f:
     f.write("YG_EXTERN_C_BEGIN\n\n")
     items = sorted(ENUMS.items())
     for name, values in items:
-        if isinstance(values[0], tuple):
-            f.write("YG_ENUM_DECL(\n")
-        else:
-            f.write("YG_ENUM_SEQ_DECL(\n")
+        f.write("YG_ENUM_DECL(\n")
 
         f.write("    YG%s,\n" % name)
         for value in values:
