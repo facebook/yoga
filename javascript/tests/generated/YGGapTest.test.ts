@@ -41,21 +41,18 @@ test('column_gap_flexible', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(1);
     root_child0.setFlexShrink(1);
     root_child0.setFlexBasis("0%");
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root_child1.setFlexShrink(1);
     root_child1.setFlexBasis("0%");
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setFlexGrow(1);
     root_child2.setFlexShrink(1);
     root_child2.setFlexBasis("0%");
@@ -126,17 +123,14 @@ test('column_gap_inflexible', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -205,19 +199,16 @@ test('column_gap_mixed_flexible', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root_child1.setFlexShrink(1);
     root_child1.setFlexBasis("0%");
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -286,7 +277,6 @@ test('column_gap_child_margins', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(1);
     root_child0.setFlexShrink(1);
     root_child0.setFlexBasis("0%");
@@ -295,7 +285,6 @@ test('column_gap_child_margins', () => {
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root_child1.setFlexShrink(1);
     root_child1.setFlexBasis("0%");
@@ -304,7 +293,6 @@ test('column_gap_child_margins', () => {
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setFlexGrow(1);
     root_child2.setFlexShrink(1);
     root_child2.setFlexBasis("0%");
@@ -378,55 +366,46 @@ test('column_row_gap_wrapping', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setWidth(20);
     root_child4.setHeight(20);
     root.insertChild(root_child4, 4);
 
     const root_child5 = Yoga.Node.create(config);
-    root_child5.setPositionType(PositionType.Relative);
     root_child5.setWidth(20);
     root_child5.setHeight(20);
     root.insertChild(root_child5, 5);
 
     const root_child6 = Yoga.Node.create(config);
-    root_child6.setPositionType(PositionType.Relative);
     root_child6.setWidth(20);
     root_child6.setHeight(20);
     root.insertChild(root_child6, 6);
 
     const root_child7 = Yoga.Node.create(config);
-    root_child7.setPositionType(PositionType.Relative);
     root_child7.setWidth(20);
     root_child7.setHeight(20);
     root.insertChild(root_child7, 7);
 
     const root_child8 = Yoga.Node.create(config);
-    root_child8.setPositionType(PositionType.Relative);
     root_child8.setWidth(20);
     root_child8.setHeight(20);
     root.insertChild(root_child8, 8);
@@ -563,19 +542,16 @@ test('column_gap_start_index', () => {
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
@@ -655,17 +631,14 @@ test('column_gap_justify_flex_start', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -735,17 +708,14 @@ test('column_gap_justify_center', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -815,17 +785,14 @@ test('column_gap_justify_flex_end', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -895,17 +862,14 @@ test('column_gap_justify_space_between', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -975,17 +939,14 @@ test('column_gap_justify_space_around', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -1055,17 +1016,14 @@ test('column_gap_justify_space_evenly', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -1136,37 +1094,31 @@ test('column_gap_wrap_align_flex_start', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setWidth(20);
     root_child4.setHeight(20);
     root.insertChild(root_child4, 4);
 
     const root_child5 = Yoga.Node.create(config);
-    root_child5.setPositionType(PositionType.Relative);
     root_child5.setWidth(20);
     root_child5.setHeight(20);
     root.insertChild(root_child5, 5);
@@ -1269,37 +1221,31 @@ test('column_gap_wrap_align_center', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setWidth(20);
     root_child4.setHeight(20);
     root.insertChild(root_child4, 4);
 
     const root_child5 = Yoga.Node.create(config);
-    root_child5.setPositionType(PositionType.Relative);
     root_child5.setWidth(20);
     root_child5.setHeight(20);
     root.insertChild(root_child5, 5);
@@ -1402,37 +1348,31 @@ test('column_gap_wrap_align_flex_end', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setWidth(20);
     root_child4.setHeight(20);
     root.insertChild(root_child4, 4);
 
     const root_child5 = Yoga.Node.create(config);
-    root_child5.setPositionType(PositionType.Relative);
     root_child5.setWidth(20);
     root_child5.setHeight(20);
     root.insertChild(root_child5, 5);
@@ -1535,37 +1475,31 @@ test('column_gap_wrap_align_space_between', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setWidth(20);
     root_child4.setHeight(20);
     root.insertChild(root_child4, 4);
 
     const root_child5 = Yoga.Node.create(config);
-    root_child5.setPositionType(PositionType.Relative);
     root_child5.setWidth(20);
     root_child5.setHeight(20);
     root.insertChild(root_child5, 5);
@@ -1668,37 +1602,31 @@ test('column_gap_wrap_align_space_around', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root_child0.setHeight(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setWidth(20);
     root_child4.setHeight(20);
     root.insertChild(root_child4, 4);
 
     const root_child5 = Yoga.Node.create(config);
-    root_child5.setPositionType(PositionType.Relative);
     root_child5.setWidth(20);
     root_child5.setHeight(20);
     root.insertChild(root_child5, 5);
@@ -1800,31 +1728,26 @@ test('column_gap_wrap_align_stretch', () => {
     root.setGap(Gutter.Column, 5);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(1);
     root_child0.setMinWidth(60);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root_child1.setMinWidth(60);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setFlexGrow(1);
     root_child2.setMinWidth(60);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setFlexGrow(1);
     root_child3.setMinWidth(60);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setFlexGrow(1);
     root_child4.setMinWidth(60);
     root.insertChild(root_child4, 4);
@@ -1913,17 +1836,14 @@ test('column_gap_determines_parent_width', () => {
     root.setGap(Gutter.Column, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(30);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -1995,32 +1915,26 @@ test('row_gap_align_items_stretch', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setWidth(20);
     root.insertChild(root_child4, 4);
 
     const root_child5 = Yoga.Node.create(config);
-    root_child5.setPositionType(PositionType.Relative);
     root_child5.setWidth(20);
     root.insertChild(root_child5, 5);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -2122,32 +2036,26 @@ test('row_gap_align_items_end', () => {
     root.setGap(Gutter.Row, 20);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(20);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(20);
     root.insertChild(root_child2, 2);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(20);
     root.insertChild(root_child3, 3);
 
     const root_child4 = Yoga.Node.create(config);
-    root_child4.setPositionType(PositionType.Relative);
     root_child4.setWidth(20);
     root.insertChild(root_child4, 4);
 
     const root_child5 = Yoga.Node.create(config);
-    root_child5.setPositionType(PositionType.Relative);
     root_child5.setWidth(20);
     root.insertChild(root_child5, 5);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -2245,7 +2153,6 @@ test('row_gap_column_child_margins', () => {
     root.setGap(Gutter.Row, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexGrow(1);
     root_child0.setFlexShrink(1);
     root_child0.setFlexBasis("0%");
@@ -2254,7 +2161,6 @@ test('row_gap_column_child_margins', () => {
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexGrow(1);
     root_child1.setFlexShrink(1);
     root_child1.setFlexBasis("0%");
@@ -2263,7 +2169,6 @@ test('row_gap_column_child_margins', () => {
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setFlexGrow(1);
     root_child2.setFlexShrink(1);
     root_child2.setFlexBasis("0%");
@@ -2337,21 +2242,18 @@ test('row_gap_row_wrap_child_margins', () => {
     root.setGap(Gutter.Row, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setMargin(Edge.Top, 2);
     root_child0.setMargin(Edge.Bottom, 2);
     root_child0.setWidth(60);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setMargin(Edge.Top, 10);
     root_child1.setMargin(Edge.Bottom, 10);
     root_child1.setWidth(60);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setMargin(Edge.Top, 15);
     root_child2.setMargin(Edge.Bottom, 15);
     root_child2.setWidth(60);
@@ -2420,17 +2322,14 @@ test('row_gap_determines_parent_height', () => {
     root.setGap(Gutter.Row, 10);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setHeight(30);
     root.insertChild(root_child2, 2);
     root.calculateLayout(undefined, undefined, Direction.LTR);

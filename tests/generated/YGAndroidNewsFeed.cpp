@@ -21,24 +21,20 @@ TEST(YogaTest, android_news_feed) {
   YGNodeStyleSetWidth(root, 1080);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0, YGPositionTypeRelative);
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0_child0, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child0, YGPositionTypeRelative);
   YGNodeInsertChild(root_child0_child0, root_child0_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child0_child0_child0_child0, YGFlexDirectionRow);
   YGNodeStyleSetAlignContent(root_child0_child0_child0_child0, YGAlignStretch);
   YGNodeStyleSetAlignItems(root_child0_child0_child0_child0, YGAlignFlexStart);
-  YGNodeStyleSetPositionType(root_child0_child0_child0_child0, YGPositionTypeRelative);
   YGNodeStyleSetMargin(root_child0_child0_child0_child0, YGEdgeStart, 36);
   YGNodeStyleSetMargin(root_child0_child0_child0_child0, YGEdgeTop, 24);
   YGNodeInsertChild(root_child0_child0_child0, root_child0_child0_child0_child0, 0);
@@ -46,19 +42,16 @@ TEST(YogaTest, android_news_feed) {
   const YGNodeRef root_child0_child0_child0_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child0_child0_child0_child0_child0, YGFlexDirectionRow);
   YGNodeStyleSetAlignContent(root_child0_child0_child0_child0_child0, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child0_child0_child0, YGPositionTypeRelative);
   YGNodeInsertChild(root_child0_child0_child0_child0, root_child0_child0_child0_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child0_child0_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0_child0_child0_child0_child0, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child0_child0_child0_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0_child0_child0_child0_child0_child0, 120);
   YGNodeStyleSetHeight(root_child0_child0_child0_child0_child0_child0, 120);
   YGNodeInsertChild(root_child0_child0_child0_child0_child0, root_child0_child0_child0_child0_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child0_child0_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0_child0_child0_child1, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child0_child0_child1, YGPositionTypeRelative);
   YGNodeStyleSetFlexShrink(root_child0_child0_child0_child0_child1, 1);
   YGNodeStyleSetMargin(root_child0_child0_child0_child0_child1, YGEdgeRight, 36);
   YGNodeStyleSetPadding(root_child0_child0_child0_child0_child1, YGEdgeLeft, 36);
@@ -70,26 +63,22 @@ TEST(YogaTest, android_news_feed) {
   const YGNodeRef root_child0_child0_child0_child0_child1_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child0_child0_child0_child0_child1_child0, YGFlexDirectionRow);
   YGNodeStyleSetAlignContent(root_child0_child0_child0_child0_child1_child0, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child0_child0_child1_child0, YGPositionTypeRelative);
   YGNodeStyleSetFlexShrink(root_child0_child0_child0_child0_child1_child0, 1);
   YGNodeInsertChild(root_child0_child0_child0_child0_child1, root_child0_child0_child0_child0_child1_child0, 0);
 
   const YGNodeRef root_child0_child0_child0_child0_child1_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0_child0_child0_child1_child1, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child0_child0_child1_child1, YGPositionTypeRelative);
   YGNodeStyleSetFlexShrink(root_child0_child0_child0_child0_child1_child1, 1);
   YGNodeInsertChild(root_child0_child0_child0_child0_child1, root_child0_child0_child0_child0_child1_child1, 1);
 
   const YGNodeRef root_child0_child0_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0_child1, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child1, YGPositionTypeRelative);
   YGNodeInsertChild(root_child0_child0, root_child0_child0_child1, 1);
 
   const YGNodeRef root_child0_child0_child1_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child0_child0_child1_child0, YGFlexDirectionRow);
   YGNodeStyleSetAlignContent(root_child0_child0_child1_child0, YGAlignStretch);
   YGNodeStyleSetAlignItems(root_child0_child0_child1_child0, YGAlignFlexStart);
-  YGNodeStyleSetPositionType(root_child0_child0_child1_child0, YGPositionTypeRelative);
   YGNodeStyleSetMargin(root_child0_child0_child1_child0, YGEdgeStart, 174);
   YGNodeStyleSetMargin(root_child0_child0_child1_child0, YGEdgeTop, 24);
   YGNodeInsertChild(root_child0_child0_child1, root_child0_child0_child1_child0, 0);
@@ -97,19 +86,16 @@ TEST(YogaTest, android_news_feed) {
   const YGNodeRef root_child0_child0_child1_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child0_child0_child1_child0_child0, YGFlexDirectionRow);
   YGNodeStyleSetAlignContent(root_child0_child0_child1_child0_child0, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child1_child0_child0, YGPositionTypeRelative);
   YGNodeInsertChild(root_child0_child0_child1_child0, root_child0_child0_child1_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child1_child0_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0_child1_child0_child0_child0, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child1_child0_child0_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0_child0_child1_child0_child0_child0, 72);
   YGNodeStyleSetHeight(root_child0_child0_child1_child0_child0_child0, 72);
   YGNodeInsertChild(root_child0_child0_child1_child0_child0, root_child0_child0_child1_child0_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child1_child0_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0_child1_child0_child1, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child1_child0_child1, YGPositionTypeRelative);
   YGNodeStyleSetFlexShrink(root_child0_child0_child1_child0_child1, 1);
   YGNodeStyleSetMargin(root_child0_child0_child1_child0_child1, YGEdgeRight, 36);
   YGNodeStyleSetPadding(root_child0_child0_child1_child0_child1, YGEdgeLeft, 36);
@@ -121,13 +107,11 @@ TEST(YogaTest, android_news_feed) {
   const YGNodeRef root_child0_child0_child1_child0_child1_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child0_child0_child1_child0_child1_child0, YGFlexDirectionRow);
   YGNodeStyleSetAlignContent(root_child0_child0_child1_child0_child1_child0, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child1_child0_child1_child0, YGPositionTypeRelative);
   YGNodeStyleSetFlexShrink(root_child0_child0_child1_child0_child1_child0, 1);
   YGNodeInsertChild(root_child0_child0_child1_child0_child1, root_child0_child0_child1_child0_child1_child0, 0);
 
   const YGNodeRef root_child0_child0_child1_child0_child1_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignContent(root_child0_child0_child1_child0_child1_child1, YGAlignStretch);
-  YGNodeStyleSetPositionType(root_child0_child0_child1_child0_child1_child1, YGPositionTypeRelative);
   YGNodeStyleSetFlexShrink(root_child0_child0_child1_child0_child1_child1, 1);
   YGNodeInsertChild(root_child0_child0_child1_child0_child1, root_child0_child0_child1_child0_child1_child1, 1);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);

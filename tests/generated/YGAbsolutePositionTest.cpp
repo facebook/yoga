@@ -211,7 +211,6 @@ TEST(YogaTest, do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hi
   YGNodeInsertChild(root, root_child0, 0);
 
   const YGNodeRef root_child0_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0_child0, 100);
   YGNodeStyleSetHeight(root_child0_child0, 100);
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
@@ -1083,7 +1082,6 @@ TEST(YogaTest, percent_absolute_position_infinite_height) {
   YGNodeStyleSetWidth(root, 300);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0, 300);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -1185,7 +1183,6 @@ TEST(YogaTest, absolute_layout_percentage_height_based_on_padded_parent_and_alig
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetJustifyContent(root, YGJustifyCenter);
   YGNodeStyleSetAlignItems(root, YGAlignCenter);
-  YGNodeStyleSetPositionType(root, YGPositionTypeRelative);
   YGNodeStyleSetPadding(root, YGEdgeTop, 20);
   YGNodeStyleSetPadding(root, YGEdgeBottom, 20);
   YGNodeStyleSetWidth(root, 100);

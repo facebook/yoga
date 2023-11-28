@@ -38,24 +38,20 @@ test('android_news_feed', () => {
     root.setWidth(1080);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
     root_child0_child0.setAlignContent(Align.Stretch);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0.insertChild(root_child0_child0, 0);
 
     const root_child0_child0_child0 = Yoga.Node.create(config);
     root_child0_child0_child0.setAlignContent(Align.Stretch);
-    root_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.insertChild(root_child0_child0_child0, 0);
 
     const root_child0_child0_child0_child0 = Yoga.Node.create(config);
     root_child0_child0_child0_child0.setFlexDirection(FlexDirection.Row);
     root_child0_child0_child0_child0.setAlignContent(Align.Stretch);
     root_child0_child0_child0_child0.setAlignItems(Align.FlexStart);
-    root_child0_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0_child0.setMargin(Edge.Start, 36);
     root_child0_child0_child0_child0.setMargin(Edge.Top, 24);
     root_child0_child0_child0.insertChild(root_child0_child0_child0_child0, 0);
@@ -63,19 +59,16 @@ test('android_news_feed', () => {
     const root_child0_child0_child0_child0_child0 = Yoga.Node.create(config);
     root_child0_child0_child0_child0_child0.setFlexDirection(FlexDirection.Row);
     root_child0_child0_child0_child0_child0.setAlignContent(Align.Stretch);
-    root_child0_child0_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0_child0.insertChild(root_child0_child0_child0_child0_child0, 0);
 
     const root_child0_child0_child0_child0_child0_child0 = Yoga.Node.create(config);
     root_child0_child0_child0_child0_child0_child0.setAlignContent(Align.Stretch);
-    root_child0_child0_child0_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0_child0_child0_child0.setWidth(120);
     root_child0_child0_child0_child0_child0_child0.setHeight(120);
     root_child0_child0_child0_child0_child0.insertChild(root_child0_child0_child0_child0_child0_child0, 0);
 
     const root_child0_child0_child0_child0_child1 = Yoga.Node.create(config);
     root_child0_child0_child0_child0_child1.setAlignContent(Align.Stretch);
-    root_child0_child0_child0_child0_child1.setPositionType(PositionType.Relative);
     root_child0_child0_child0_child0_child1.setFlexShrink(1);
     root_child0_child0_child0_child0_child1.setMargin(Edge.Right, 36);
     root_child0_child0_child0_child0_child1.setPadding(Edge.Left, 36);
@@ -87,26 +80,22 @@ test('android_news_feed', () => {
     const root_child0_child0_child0_child0_child1_child0 = Yoga.Node.create(config);
     root_child0_child0_child0_child0_child1_child0.setFlexDirection(FlexDirection.Row);
     root_child0_child0_child0_child0_child1_child0.setAlignContent(Align.Stretch);
-    root_child0_child0_child0_child0_child1_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0_child0_child1_child0.setFlexShrink(1);
     root_child0_child0_child0_child0_child1.insertChild(root_child0_child0_child0_child0_child1_child0, 0);
 
     const root_child0_child0_child0_child0_child1_child1 = Yoga.Node.create(config);
     root_child0_child0_child0_child0_child1_child1.setAlignContent(Align.Stretch);
-    root_child0_child0_child0_child0_child1_child1.setPositionType(PositionType.Relative);
     root_child0_child0_child0_child0_child1_child1.setFlexShrink(1);
     root_child0_child0_child0_child0_child1.insertChild(root_child0_child0_child0_child0_child1_child1, 1);
 
     const root_child0_child0_child1 = Yoga.Node.create(config);
     root_child0_child0_child1.setAlignContent(Align.Stretch);
-    root_child0_child0_child1.setPositionType(PositionType.Relative);
     root_child0_child0.insertChild(root_child0_child0_child1, 1);
 
     const root_child0_child0_child1_child0 = Yoga.Node.create(config);
     root_child0_child0_child1_child0.setFlexDirection(FlexDirection.Row);
     root_child0_child0_child1_child0.setAlignContent(Align.Stretch);
     root_child0_child0_child1_child0.setAlignItems(Align.FlexStart);
-    root_child0_child0_child1_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child1_child0.setMargin(Edge.Start, 174);
     root_child0_child0_child1_child0.setMargin(Edge.Top, 24);
     root_child0_child0_child1.insertChild(root_child0_child0_child1_child0, 0);
@@ -114,19 +103,16 @@ test('android_news_feed', () => {
     const root_child0_child0_child1_child0_child0 = Yoga.Node.create(config);
     root_child0_child0_child1_child0_child0.setFlexDirection(FlexDirection.Row);
     root_child0_child0_child1_child0_child0.setAlignContent(Align.Stretch);
-    root_child0_child0_child1_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child1_child0.insertChild(root_child0_child0_child1_child0_child0, 0);
 
     const root_child0_child0_child1_child0_child0_child0 = Yoga.Node.create(config);
     root_child0_child0_child1_child0_child0_child0.setAlignContent(Align.Stretch);
-    root_child0_child0_child1_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child1_child0_child0_child0.setWidth(72);
     root_child0_child0_child1_child0_child0_child0.setHeight(72);
     root_child0_child0_child1_child0_child0.insertChild(root_child0_child0_child1_child0_child0_child0, 0);
 
     const root_child0_child0_child1_child0_child1 = Yoga.Node.create(config);
     root_child0_child0_child1_child0_child1.setAlignContent(Align.Stretch);
-    root_child0_child0_child1_child0_child1.setPositionType(PositionType.Relative);
     root_child0_child0_child1_child0_child1.setFlexShrink(1);
     root_child0_child0_child1_child0_child1.setMargin(Edge.Right, 36);
     root_child0_child0_child1_child0_child1.setPadding(Edge.Left, 36);
@@ -138,13 +124,11 @@ test('android_news_feed', () => {
     const root_child0_child0_child1_child0_child1_child0 = Yoga.Node.create(config);
     root_child0_child0_child1_child0_child1_child0.setFlexDirection(FlexDirection.Row);
     root_child0_child0_child1_child0_child1_child0.setAlignContent(Align.Stretch);
-    root_child0_child0_child1_child0_child1_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child1_child0_child1_child0.setFlexShrink(1);
     root_child0_child0_child1_child0_child1.insertChild(root_child0_child0_child1_child0_child1_child0, 0);
 
     const root_child0_child0_child1_child0_child1_child1 = Yoga.Node.create(config);
     root_child0_child0_child1_child0_child1_child1.setAlignContent(Align.Stretch);
-    root_child0_child0_child1_child0_child1_child1.setPositionType(PositionType.Relative);
     root_child0_child0_child1_child0_child1_child1.setFlexShrink(1);
     root_child0_child0_child1_child0_child1.insertChild(root_child0_child0_child1_child0_child1_child1, 1);
     root.calculateLayout(undefined, undefined, Direction.LTR);

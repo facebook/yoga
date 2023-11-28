@@ -36,7 +36,6 @@ test('wrap_child', () => {
     root.setPositionType(PositionType.Absolute);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(100);
     root_child0.setHeight(100);
     root.insertChild(root_child0, 0);
@@ -82,11 +81,9 @@ test('wrap_grandchild', () => {
     root.setPositionType(PositionType.Absolute);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setWidth(100);
     root_child0_child0.setHeight(100);
     root_child0.insertChild(root_child0_child0, 0);

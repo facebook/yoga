@@ -38,7 +38,6 @@ test.skip('aspect_ratio_does_not_stretch_cross_axis_dim', () => {
     root.setHeight(300);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setOverflow(Overflow.Scroll);
     root_child0.setFlexGrow(1);
     root_child0.setFlexShrink(1);
@@ -47,11 +46,9 @@ test.skip('aspect_ratio_does_not_stretch_cross_axis_dim', () => {
 
     const root_child0_child0 = Yoga.Node.create(config);
     root_child0_child0.setFlexDirection(FlexDirection.Row);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0.insertChild(root_child0_child0, 0);
 
     const root_child0_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0.setFlexGrow(2);
     root_child0_child0_child0.setFlexShrink(1);
     root_child0_child0_child0.setFlexBasis("0%");
@@ -59,19 +56,16 @@ test.skip('aspect_ratio_does_not_stretch_cross_axis_dim', () => {
     root_child0_child0.insertChild(root_child0_child0_child0, 0);
 
     const root_child0_child0_child1 = Yoga.Node.create(config);
-    root_child0_child0_child1.setPositionType(PositionType.Relative);
     root_child0_child0_child1.setWidth(5);
     root_child0_child0.insertChild(root_child0_child0_child1, 1);
 
     const root_child0_child0_child2 = Yoga.Node.create(config);
-    root_child0_child0_child2.setPositionType(PositionType.Relative);
     root_child0_child0_child2.setFlexGrow(1);
     root_child0_child0_child2.setFlexShrink(1);
     root_child0_child0_child2.setFlexBasis("0%");
     root_child0_child0.insertChild(root_child0_child0_child2, 2);
 
     const root_child0_child0_child2_child0 = Yoga.Node.create(config);
-    root_child0_child0_child2_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child2_child0.setFlexGrow(1);
     root_child0_child0_child2_child0.setFlexShrink(1);
     root_child0_child0_child2_child0.setFlexBasis("0%");
@@ -79,12 +73,10 @@ test.skip('aspect_ratio_does_not_stretch_cross_axis_dim', () => {
     root_child0_child0_child2.insertChild(root_child0_child0_child2_child0, 0);
 
     const root_child0_child0_child2_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0_child2_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child2_child0_child0.setWidth(5);
     root_child0_child0_child2_child0.insertChild(root_child0_child0_child2_child0_child0, 0);
 
     const root_child0_child0_child2_child0_child1 = Yoga.Node.create(config);
-    root_child0_child0_child2_child0_child1.setPositionType(PositionType.Relative);
     root_child0_child0_child2_child0_child1.setFlexGrow(1);
     root_child0_child0_child2_child0_child1.setFlexShrink(1);
     root_child0_child0_child2_child0_child1.setFlexBasis("0%");
