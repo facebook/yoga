@@ -222,7 +222,6 @@ public class YGAbsolutePositionTest {
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child0_child0 = createNode(config);
-    root_child0_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child0.setWidth(100f);
     root_child0_child0.setHeight(100f);
     root_child0.addChildAt(root_child0_child0, 0);
@@ -1077,7 +1076,6 @@ public class YGAbsolutePositionTest {
     root.setWidth(300f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(300f);
     root.addChildAt(root_child0, 0);
 
@@ -1177,7 +1175,6 @@ public class YGAbsolutePositionTest {
     final YogaNode root = createNode(config);
     root.setJustifyContent(YogaJustify.CENTER);
     root.setAlignItems(YogaAlign.CENTER);
-    root.setPositionType(YogaPositionType.RELATIVE);
     root.setPadding(YogaEdge.TOP, 20);
     root.setPadding(YogaEdge.BOTTOM, 20);
     root.setWidth(100f);

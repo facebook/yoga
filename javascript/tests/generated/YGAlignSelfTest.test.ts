@@ -39,7 +39,6 @@ test('align_self_center', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Align.Center);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -88,7 +87,6 @@ test('align_self_flex_end', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Align.FlexEnd);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -137,7 +135,6 @@ test('align_self_flex_start', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Align.FlexStart);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -187,7 +184,6 @@ test('align_self_flex_end_override_flex_start', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Align.FlexEnd);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -237,20 +233,17 @@ test('align_self_baseline', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignSelf(Align.Baseline);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
     root_child1.setAlignSelf(Align.Baseline);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(10);
     root_child1.insertChild(root_child1_child0, 0);

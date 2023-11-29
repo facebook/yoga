@@ -37,7 +37,6 @@ public class YGAlignSelfTest {
 
     final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.CENTER);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -80,7 +79,6 @@ public class YGAlignSelfTest {
 
     final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -123,7 +121,6 @@ public class YGAlignSelfTest {
 
     final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_START);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -167,7 +164,6 @@ public class YGAlignSelfTest {
 
     final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.FLEX_END);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -211,20 +207,17 @@ public class YGAlignSelfTest {
 
     final YogaNode root_child0 = createNode(config);
     root_child0.setAlignSelf(YogaAlign.BASELINE);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(50f);
     root_child0.setHeight(50f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
     root_child1.setAlignSelf(YogaAlign.BASELINE);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setWidth(50f);
     root_child1.setHeight(20f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child1_child0 = createNode(config);
-    root_child1_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child1_child0.setWidth(50f);
     root_child1_child0.setHeight(10f);
     root_child1.addChildAt(root_child1_child0, 0);

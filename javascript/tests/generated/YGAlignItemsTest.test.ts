@@ -38,7 +38,6 @@ test('align_items_stretch', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
     root.calculateLayout(undefined, undefined, Direction.LTR);
@@ -86,7 +85,6 @@ test('align_items_center', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -135,7 +133,6 @@ test('align_items_flex_start', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -184,7 +181,6 @@ test('align_items_flex_end', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(10);
     root_child0.setHeight(10);
     root.insertChild(root_child0, 0);
@@ -234,13 +230,11 @@ test('align_baseline', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
@@ -300,19 +294,16 @@ test('align_baseline_child', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(10);
     root_child1.insertChild(root_child1_child0, 0);
@@ -382,39 +373,33 @@ test('align_baseline_child_multiline', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(60);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
     root_child1.setFlexDirection(FlexDirection.Row);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexWrap(Wrap.Wrap);
     root_child1.setWidth(50);
     root_child1.setHeight(25);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(25);
     root_child1_child0.setHeight(20);
     root_child1.insertChild(root_child1_child0, 0);
 
     const root_child1_child1 = Yoga.Node.create(config);
-    root_child1_child1.setPositionType(PositionType.Relative);
     root_child1_child1.setWidth(25);
     root_child1_child1.setHeight(10);
     root_child1.insertChild(root_child1_child1, 1);
 
     const root_child1_child2 = Yoga.Node.create(config);
-    root_child1_child2.setPositionType(PositionType.Relative);
     root_child1_child2.setWidth(25);
     root_child1_child2.setHeight(20);
     root_child1.insertChild(root_child1_child2, 2);
 
     const root_child1_child3 = Yoga.Node.create(config);
-    root_child1_child3.setPositionType(PositionType.Relative);
     root_child1_child3.setWidth(25);
     root_child1_child3.setHeight(10);
     root_child1.insertChild(root_child1_child3, 3);
@@ -514,41 +499,35 @@ test('align_baseline_child_multiline_override', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(60);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
     root_child1.setFlexDirection(FlexDirection.Row);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexWrap(Wrap.Wrap);
     root_child1.setWidth(50);
     root_child1.setHeight(25);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(25);
     root_child1_child0.setHeight(20);
     root_child1.insertChild(root_child1_child0, 0);
 
     const root_child1_child1 = Yoga.Node.create(config);
     root_child1_child1.setAlignSelf(Align.Baseline);
-    root_child1_child1.setPositionType(PositionType.Relative);
     root_child1_child1.setWidth(25);
     root_child1_child1.setHeight(10);
     root_child1.insertChild(root_child1_child1, 1);
 
     const root_child1_child2 = Yoga.Node.create(config);
-    root_child1_child2.setPositionType(PositionType.Relative);
     root_child1_child2.setWidth(25);
     root_child1_child2.setHeight(20);
     root_child1.insertChild(root_child1_child2, 2);
 
     const root_child1_child3 = Yoga.Node.create(config);
     root_child1_child3.setAlignSelf(Align.Baseline);
-    root_child1_child3.setPositionType(PositionType.Relative);
     root_child1_child3.setWidth(25);
     root_child1_child3.setHeight(10);
     root_child1.insertChild(root_child1_child3, 3);
@@ -648,40 +627,34 @@ test('align_baseline_child_multiline_no_override_on_secondline', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(60);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
     root_child1.setFlexDirection(FlexDirection.Row);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setFlexWrap(Wrap.Wrap);
     root_child1.setWidth(50);
     root_child1.setHeight(25);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(25);
     root_child1_child0.setHeight(20);
     root_child1.insertChild(root_child1_child0, 0);
 
     const root_child1_child1 = Yoga.Node.create(config);
-    root_child1_child1.setPositionType(PositionType.Relative);
     root_child1_child1.setWidth(25);
     root_child1_child1.setHeight(10);
     root_child1.insertChild(root_child1_child1, 1);
 
     const root_child1_child2 = Yoga.Node.create(config);
-    root_child1_child2.setPositionType(PositionType.Relative);
     root_child1_child2.setWidth(25);
     root_child1_child2.setHeight(20);
     root_child1.insertChild(root_child1_child2, 2);
 
     const root_child1_child3 = Yoga.Node.create(config);
     root_child1_child3.setAlignSelf(Align.Baseline);
-    root_child1_child3.setPositionType(PositionType.Relative);
     root_child1_child3.setWidth(25);
     root_child1_child3.setHeight(10);
     root_child1.insertChild(root_child1_child3, 3);
@@ -781,20 +754,17 @@ test('align_baseline_child_top', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setPosition(Edge.Top, 10);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(10);
     root_child1.insertChild(root_child1_child0, 0);
@@ -864,20 +834,17 @@ test('align_baseline_child_top2', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setPosition(Edge.Top, 5);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(10);
     root_child1.insertChild(root_child1_child0, 0);
@@ -947,25 +914,21 @@ test('align_baseline_double_nested_child', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setWidth(50);
     root_child0_child0.setHeight(20);
     root_child0.insertChild(root_child0_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(15);
     root_child1.insertChild(root_child1_child0, 0);
@@ -1044,13 +1007,11 @@ test('align_baseline_column', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
@@ -1110,7 +1071,6 @@ test('align_baseline_child_margin', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setMargin(Edge.Left, 5);
     root_child0.setMargin(Edge.Top, 5);
     root_child0.setMargin(Edge.Right, 5);
@@ -1120,13 +1080,11 @@ test('align_baseline_child_margin', () => {
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setMargin(Edge.Left, 1);
     root_child1_child0.setMargin(Edge.Top, 1);
     root_child1_child0.setMargin(Edge.Right, 1);
@@ -1204,13 +1162,11 @@ test('align_baseline_child_padding', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setPadding(Edge.Left, 5);
     root_child1.setPadding(Edge.Top, 5);
     root_child1.setPadding(Edge.Right, 5);
@@ -1220,7 +1176,6 @@ test('align_baseline_child_padding', () => {
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(10);
     root_child1.insertChild(root_child1_child0, 0);
@@ -1291,37 +1246,31 @@ test('align_baseline_multiline', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(20);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(10);
     root_child1.insertChild(root_child1_child0, 0);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(50);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child2_child0 = Yoga.Node.create(config);
-    root_child2_child0.setPositionType(PositionType.Relative);
     root_child2_child0.setWidth(50);
     root_child2_child0.setHeight(10);
     root_child2.insertChild(root_child2_child0, 0);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(50);
     root_child3.setHeight(50);
     root.insertChild(root_child3, 3);
@@ -1421,37 +1370,31 @@ test.skip('align_baseline_multiline_column', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(30);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(20);
     root_child1_child0.setHeight(20);
     root_child1.insertChild(root_child1_child0, 0);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(40);
     root_child2.setHeight(70);
     root.insertChild(root_child2, 2);
 
     const root_child2_child0 = Yoga.Node.create(config);
-    root_child2_child0.setPositionType(PositionType.Relative);
     root_child2_child0.setWidth(10);
     root_child2_child0.setHeight(10);
     root_child2.insertChild(root_child2_child0, 0);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(50);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
@@ -1551,37 +1494,31 @@ test.skip('align_baseline_multiline_column2', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(30);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(20);
     root_child1_child0.setHeight(20);
     root_child1.insertChild(root_child1_child0, 0);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(40);
     root_child2.setHeight(70);
     root.insertChild(root_child2, 2);
 
     const root_child2_child0 = Yoga.Node.create(config);
-    root_child2_child0.setPositionType(PositionType.Relative);
     root_child2_child0.setWidth(10);
     root_child2_child0.setHeight(10);
     root_child2.insertChild(root_child2_child0, 0);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(50);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
@@ -1682,37 +1619,31 @@ test('align_baseline_multiline_row_and_column', () => {
     root.setHeight(100);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(50);
     root_child0.setHeight(50);
     root.insertChild(root_child0, 0);
 
     const root_child1 = Yoga.Node.create(config);
-    root_child1.setPositionType(PositionType.Relative);
     root_child1.setWidth(50);
     root_child1.setHeight(50);
     root.insertChild(root_child1, 1);
 
     const root_child1_child0 = Yoga.Node.create(config);
-    root_child1_child0.setPositionType(PositionType.Relative);
     root_child1_child0.setWidth(50);
     root_child1_child0.setHeight(10);
     root_child1.insertChild(root_child1_child0, 0);
 
     const root_child2 = Yoga.Node.create(config);
-    root_child2.setPositionType(PositionType.Relative);
     root_child2.setWidth(50);
     root_child2.setHeight(20);
     root.insertChild(root_child2, 2);
 
     const root_child2_child0 = Yoga.Node.create(config);
-    root_child2_child0.setPositionType(PositionType.Relative);
     root_child2_child0.setWidth(50);
     root_child2_child0.setHeight(10);
     root_child2.insertChild(root_child2_child0, 0);
 
     const root_child3 = Yoga.Node.create(config);
-    root_child3.setPositionType(PositionType.Relative);
     root_child3.setWidth(50);
     root_child3.setHeight(20);
     root.insertChild(root_child3, 3);
@@ -1813,11 +1744,9 @@ test('align_items_center_child_with_margin_bigger_than_parent', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignItems(Align.Center);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setMargin(Edge.Left, 10);
     root_child0_child0.setMargin(Edge.Right, 10);
     root_child0_child0.setWidth(52);
@@ -1880,11 +1809,9 @@ test('align_items_flex_end_child_with_margin_bigger_than_parent', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignItems(Align.FlexEnd);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setMargin(Edge.Left, 10);
     root_child0_child0.setMargin(Edge.Right, 10);
     root_child0_child0.setWidth(52);
@@ -1947,11 +1874,9 @@ test('align_items_center_child_without_margin_bigger_than_parent', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignItems(Align.Center);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setWidth(72);
     root_child0_child0.setHeight(72);
     root_child0.insertChild(root_child0_child0, 0);
@@ -2012,11 +1937,9 @@ test('align_items_flex_end_child_without_margin_bigger_than_parent', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignItems(Align.FlexEnd);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setWidth(72);
     root_child0_child0.setHeight(72);
     root_child0.insertChild(root_child0_child0, 0);
@@ -2077,18 +2000,15 @@ test('align_center_should_size_based_on_content', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setJustifyContent(Justify.Center);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexShrink(1);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setFlexGrow(1);
     root_child0_child0.setFlexShrink(1);
     root_child0.insertChild(root_child0_child0, 0);
 
     const root_child0_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0.setWidth(20);
     root_child0_child0_child0.setHeight(20);
     root_child0_child0.insertChild(root_child0_child0_child0, 0);
@@ -2158,18 +2078,15 @@ test('align_stretch_should_size_based_on_parent', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setJustifyContent(Justify.Center);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setFlexShrink(1);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setFlexGrow(1);
     root_child0_child0.setFlexShrink(1);
     root_child0.insertChild(root_child0_child0, 0);
 
     const root_child0_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0.setWidth(20);
     root_child0_child0_child0.setHeight(20);
     root_child0_child0.insertChild(root_child0_child0_child0, 0);
@@ -2238,17 +2155,14 @@ test('align_flex_start_with_shrinking_children', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignItems(Align.FlexStart);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setFlexGrow(1);
     root_child0_child0.setFlexShrink(1);
     root_child0.insertChild(root_child0_child0, 0);
 
     const root_child0_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0.setFlexGrow(1);
     root_child0_child0_child0.setFlexShrink(1);
     root_child0_child0.insertChild(root_child0_child0_child0, 0);
@@ -2316,17 +2230,14 @@ test('align_flex_start_with_stretching_children', () => {
     root.setHeight(500);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setFlexGrow(1);
     root_child0_child0.setFlexShrink(1);
     root_child0.insertChild(root_child0_child0, 0);
 
     const root_child0_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0.setFlexGrow(1);
     root_child0_child0_child0.setFlexShrink(1);
     root_child0_child0.insertChild(root_child0_child0_child0, 0);
@@ -2395,17 +2306,14 @@ test('align_flex_start_with_shrinking_children_with_stretch', () => {
 
     const root_child0 = Yoga.Node.create(config);
     root_child0.setAlignItems(Align.FlexStart);
-    root_child0.setPositionType(PositionType.Relative);
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setFlexGrow(1);
     root_child0_child0.setFlexShrink(1);
     root_child0.insertChild(root_child0_child0, 0);
 
     const root_child0_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0_child0.setFlexGrow(1);
     root_child0_child0_child0.setFlexShrink(1);
     root_child0_child0.insertChild(root_child0_child0_child0, 0);

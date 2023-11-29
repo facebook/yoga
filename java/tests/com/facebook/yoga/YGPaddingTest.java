@@ -66,7 +66,6 @@ public class YGPaddingTest {
     root.setPadding(YogaEdge.BOTTOM, 10);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -112,7 +111,6 @@ public class YGPaddingTest {
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setFlexGrow(1f);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
@@ -158,7 +156,6 @@ public class YGPaddingTest {
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
     root.setDirection(YogaDirection.LTR);
@@ -204,7 +201,6 @@ public class YGPaddingTest {
     root.setHeight(100f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
@@ -248,7 +244,6 @@ public class YGPaddingTest {
     root.setHeight(200f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setPadding(YogaEdge.LEFT, 20);
     root_child0.setPadding(YogaEdge.TOP, 20);
     root_child0.setPadding(YogaEdge.RIGHT, 20);

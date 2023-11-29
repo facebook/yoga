@@ -248,7 +248,6 @@ test('do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_pare
     root.insertChild(root_child0, 0);
 
     const root_child0_child0 = Yoga.Node.create(config);
-    root_child0_child0.setPositionType(PositionType.Relative);
     root_child0_child0.setWidth(100);
     root_child0_child0.setHeight(100);
     root_child0.insertChild(root_child0_child0, 0);
@@ -1205,7 +1204,6 @@ test('percent_absolute_position_infinite_height', () => {
     root.setWidth(300);
 
     const root_child0 = Yoga.Node.create(config);
-    root_child0.setPositionType(PositionType.Relative);
     root_child0.setWidth(300);
     root.insertChild(root_child0, 0);
 
@@ -1317,7 +1315,6 @@ test('absolute_layout_percentage_height_based_on_padded_parent_and_align_items_c
     root = Yoga.Node.create(config);
     root.setJustifyContent(Justify.Center);
     root.setAlignItems(Align.Center);
-    root.setPositionType(PositionType.Relative);
     root.setPadding(Edge.Top, 20);
     root.setPadding(Edge.Bottom, 20);
     root.setWidth(100);

@@ -23,7 +23,6 @@ TEST(YogaTest, aspect_ratio_does_not_stretch_cross_axis_dim) {
   YGNodeStyleSetHeight(root, 300);
 
   const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeStyleSetOverflow(root_child0, YGOverflowScroll);
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetFlexShrink(root_child0, 1);
@@ -32,11 +31,9 @@ TEST(YogaTest, aspect_ratio_does_not_stretch_cross_axis_dim) {
 
   const YGNodeRef root_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child0_child0, YGFlexDirectionRow);
-  YGNodeStyleSetPositionType(root_child0_child0, YGPositionTypeRelative);
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0_child0_child0, YGPositionTypeRelative);
   YGNodeStyleSetFlexGrow(root_child0_child0_child0, 2);
   YGNodeStyleSetFlexShrink(root_child0_child0_child0, 1);
   YGNodeStyleSetFlexBasisPercent(root_child0_child0_child0, 0);
@@ -44,19 +41,16 @@ TEST(YogaTest, aspect_ratio_does_not_stretch_cross_axis_dim) {
   YGNodeInsertChild(root_child0_child0, root_child0_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child1 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0_child0_child1, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0_child0_child1, 5);
   YGNodeInsertChild(root_child0_child0, root_child0_child0_child1, 1);
 
   const YGNodeRef root_child0_child0_child2 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0_child0_child2, YGPositionTypeRelative);
   YGNodeStyleSetFlexGrow(root_child0_child0_child2, 1);
   YGNodeStyleSetFlexShrink(root_child0_child0_child2, 1);
   YGNodeStyleSetFlexBasisPercent(root_child0_child0_child2, 0);
   YGNodeInsertChild(root_child0_child0, root_child0_child0_child2, 2);
 
   const YGNodeRef root_child0_child0_child2_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0_child0_child2_child0, YGPositionTypeRelative);
   YGNodeStyleSetFlexGrow(root_child0_child0_child2_child0, 1);
   YGNodeStyleSetFlexShrink(root_child0_child0_child2_child0, 1);
   YGNodeStyleSetFlexBasisPercent(root_child0_child0_child2_child0, 0);
@@ -64,12 +58,10 @@ TEST(YogaTest, aspect_ratio_does_not_stretch_cross_axis_dim) {
   YGNodeInsertChild(root_child0_child0_child2, root_child0_child0_child2_child0, 0);
 
   const YGNodeRef root_child0_child0_child2_child0_child0 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0_child0_child2_child0_child0, YGPositionTypeRelative);
   YGNodeStyleSetWidth(root_child0_child0_child2_child0_child0, 5);
   YGNodeInsertChild(root_child0_child0_child2_child0, root_child0_child0_child2_child0_child0, 0);
 
   const YGNodeRef root_child0_child0_child2_child0_child1 = YGNodeNewWithConfig(config);
-  YGNodeStyleSetPositionType(root_child0_child0_child2_child0_child1, YGPositionTypeRelative);
   YGNodeStyleSetFlexGrow(root_child0_child0_child2_child0_child1, 1);
   YGNodeStyleSetFlexShrink(root_child0_child0_child2_child0_child1, 1);
   YGNodeStyleSetFlexBasisPercent(root_child0_child0_child2_child0_child1, 0);

@@ -37,17 +37,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -110,17 +107,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -183,17 +177,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -256,17 +247,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -329,17 +317,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setWidth(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setWidth(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -400,17 +385,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -472,17 +454,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -544,17 +523,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -616,17 +592,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -688,17 +661,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -761,7 +731,6 @@ public class YGJustifyContentTest {
     root.setMinWidth(50f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(20f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
@@ -806,7 +775,6 @@ public class YGJustifyContentTest {
     root.setMaxWidth(80f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(20f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
@@ -849,7 +817,6 @@ public class YGJustifyContentTest {
     root.setMinHeight(50f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(20f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
@@ -893,7 +860,6 @@ public class YGJustifyContentTest {
     root.setMaxHeight(80f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setWidth(20f);
     root_child0.setHeight(20f);
     root.addChildAt(root_child0, 0);
@@ -936,17 +902,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -1009,17 +972,14 @@ public class YGJustifyContentTest {
     root.setHeight(102f);
 
     final YogaNode root_child0 = createNode(config);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setHeight(10f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child1 = createNode(config);
-    root_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child1.setHeight(10f);
     root.addChildAt(root_child1, 1);
 
     final YogaNode root_child2 = createNode(config);
-    root_child2.setPositionType(YogaPositionType.RELATIVE);
     root_child2.setHeight(10f);
     root.addChildAt(root_child2, 2);
     root.setDirection(YogaDirection.LTR);
@@ -1083,14 +1043,12 @@ public class YGJustifyContentTest {
     final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setAlignContent(YogaAlign.STRETCH);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child0_child0 = createNode(config);
     root_child0_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0_child0.setJustifyContent(YogaJustify.CENTER);
     root_child0_child0.setAlignContent(YogaAlign.STRETCH);
-    root_child0_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child0.setPadding(YogaEdge.LEFT, 100);
     root_child0_child0.setPadding(YogaEdge.RIGHT, 100);
     root_child0_child0.setMinWidth(400f);
@@ -1099,7 +1057,6 @@ public class YGJustifyContentTest {
     final YogaNode root_child0_child0_child0 = createNode(config);
     root_child0_child0_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0_child0_child0.setAlignContent(YogaAlign.STRETCH);
-    root_child0_child0_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child0_child0.setWidth(300f);
     root_child0_child0_child0.setHeight(100f);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
@@ -1164,14 +1121,12 @@ public class YGJustifyContentTest {
     final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setAlignContent(YogaAlign.STRETCH);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child0_child0 = createNode(config);
     root_child0_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0_child0.setJustifyContent(YogaJustify.CENTER);
     root_child0_child0.setAlignContent(YogaAlign.STRETCH);
-    root_child0_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child0.setPadding(YogaEdge.LEFT, 100);
     root_child0_child0.setPadding(YogaEdge.RIGHT, 100);
     root_child0_child0.setMinWidth(400f);
@@ -1180,7 +1135,6 @@ public class YGJustifyContentTest {
     final YogaNode root_child0_child0_child0 = createNode(config);
     root_child0_child0_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0_child0_child0.setAlignContent(YogaAlign.STRETCH);
-    root_child0_child0_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child0_child0.setWidth(199f);
     root_child0_child0_child0.setHeight(100f);
     root_child0_child0.addChildAt(root_child0_child0_child0, 0);
@@ -1244,18 +1198,15 @@ public class YGJustifyContentTest {
     final YogaNode root_child0 = createNode(config);
     root_child0.setFlexDirection(YogaFlexDirection.ROW);
     root_child0.setJustifyContent(YogaJustify.SPACE_BETWEEN);
-    root_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0.setMinWidth(200f);
     root.addChildAt(root_child0, 0);
 
     final YogaNode root_child0_child0 = createNode(config);
-    root_child0_child0.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child0.setWidth(50f);
     root_child0_child0.setHeight(50f);
     root_child0.addChildAt(root_child0_child0, 0);
 
     final YogaNode root_child0_child1 = createNode(config);
-    root_child0_child1.setPositionType(YogaPositionType.RELATIVE);
     root_child0_child1.setWidth(50f);
     root_child0_child1.setHeight(50f);
     root_child0.addChildAt(root_child0_child1, 1);
