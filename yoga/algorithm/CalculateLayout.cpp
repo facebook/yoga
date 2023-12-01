@@ -1995,6 +1995,7 @@ static void calculateLayoutImpl(
 
   // STEP 8: MULTI-LINE CONTENT ALIGNMENT
   // currentLead stores the size of the cross dim
+  float totalLineHeight = 0;
   if (performLayout && (isNodeFlexWrap || isBaselineLayout(node))) {
     float crossDimLead = 0;
     float currentLead = leadingPaddingAndBorderCross;
@@ -2010,8 +2011,10 @@ static void calculateLayoutImpl(
           break;
         case Align::Stretch:
           if (availableInnerCrossDim > totalLineCrossDim) {
-            crossDimLead =
-                remainingAlignContentDim / static_cast<float>(lineCount);
+            if (lineCount > 1) {
+              crossDimLead =
+                  remainingAlignContentDim / static_cast<float>(lineCount);
+            }
           }
           break;
         case Align::SpaceAround:
@@ -2203,11 +2206,20 @@ static void calculateLayoutImpl(
         }
       }
       currentLead += lineHeight;
+      totalLineHeight += lineHeight;
     }
   }
 
   // STEP 9: COMPUTING FINAL DIMENSIONS
-
+  const FloatOptional minLineHeight = yoga::resolveValue(
+      node->getStyle().minDimension(dimension(crossAxis)), crossAxisownerSize);
+  if (minLineHeight.isDefined()) {
+    if (totalLineHeight > minLineHeight.unwrap()) {
+      totalLineCrossDim = totalLineHeight;
+    } else {
+      totalLineCrossDim = minLineHeight.unwrap();
+    }
+  }
   node->setLayoutMeasuredDimension(
       boundAxis(
           node,

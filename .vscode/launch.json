@@ -11,7 +11,10 @@
       "request": "launch",
       "program": "${workspaceFolder}/tests/build/yogatests",
       "cwd": "${workspaceFolder}",
-      "preLaunchTask": "Build Unit Tests"
+      "preLaunchTask": "Build Unit Tests",
+      "args": [
+        "--gtest_filter=YogaTest.*" // Replace * with the name of your test case
+      ]
     },
     {
       "name": "Debug C++ Unit tests (vsdbg)",
@@ -19,7 +22,10 @@
       "request": "launch",
       "program": "${workspaceFolder}/tests/build/yogatests",
       "cwd": "${workspaceFolder}",
-      "preLaunchTask": "Build Unit Tests"
+      "preLaunchTask": "Build Unit Tests",
+      "args": [
+        "--gtest_filter=YogaTest.*" // Replace * with the name of your test case
+      ]
     }
   ]
 }
