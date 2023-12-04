@@ -1352,3 +1352,115 @@ TEST(YogaTest, min_max_percent_no_width_height) {
 
   YGConfigFree(config);
 }
+TEST(YogaTest, Auto_Height_Min_Height) {
+  YGNodeRef node = nullptr;
+  YGNodeRef root = nullptr;
+  YGConfigRef config = nullptr;
+  config = YGConfigNew();
+  root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetFlexWrap(root, YGWrapWrap);
+  YGNodeStyleSetWidth(root, 200);
+  YGNodeStyleSetHeightAuto(root);
+  YGNodeStyleSetMinHeight(root, 120);
+  YGNodeStyleSetMaxHeight(root, 240);
+  YGNodeStyleSetFlexBasisAuto(root);
+  YGNodeStyleSetJustifyContent(root, YGJustifyFlexStart);
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetAlignContent(root, YGAlignFlexStart);
+  for (int i = 0; i < 3; i++) {
+    node = YGNodeNewWithConfig(config);
+    YGNodeStyleSetWidth(node, 100);
+    YGNodeStyleSetHeight(node, 100);
+    YGNodeInsertChild(root, node, i);  // index start from 0
+  }
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  int nCount = YGNodeGetChildCount(root);
+  float fAllWidth = YGNodeLayoutGetWidth(root);
+  float fAllHeight = YGNodeLayoutGetHeight(root);
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetHeight(root));
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
+}
+TEST(YogaTest, Auto_Width_Min_Width) {
+  YGNodeRef node = nullptr;
+  YGNodeRef root = nullptr;
+  YGConfigRef config = nullptr;
+  config = YGConfigNew();
+  root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
+  YGNodeStyleSetFlexWrap(root, YGWrapWrap);
+  YGNodeStyleSetWidthAuto(root);
+  YGNodeStyleSetHeight(root, 200);
+  YGNodeStyleSetMinWidth(root, 120);
+  YGNodeStyleSetFlexBasisAuto(root);
+  YGNodeStyleSetJustifyContent(root, YGJustifyFlexStart);
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetAlignContent(root, YGAlignFlexStart);
+  for (int i = 0; i < 3; i++) {
+    node = YGNodeNewWithConfig(config);
+    YGNodeStyleSetWidth(node, 100);
+    YGNodeStyleSetHeight(node, 100);
+    YGNodeInsertChild(root, node, i);  // index start from 0
+  }
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  int nCount = YGNodeGetChildCount(root);
+  float fAllWidth = YGNodeLayoutGetWidth(root);
+  float fAllHeight = YGNodeLayoutGetHeight(root);
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetHeight(root));
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
+}
+TEST(YogaTest, Child_Auto_Width_Min_Width) {
+  YGNodeRef node = nullptr;
+  YGNodeRef root = nullptr;
+  YGConfigRef config = nullptr;
+  config = YGConfigNew();
+  root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetFlexWrap(root, YGWrapWrap);
+  YGNodeStyleSetWidth(root, 500);
+  YGNodeStyleSetHeight(root, 500);
+  YGNodeStyleSetFlexBasisAuto(root);
+  YGNodeStyleSetJustifyContent(root, YGJustifyFlexStart);
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetAlignContent(root, YGAlignFlexStart);
+  for (int i = 0; i < 2; i++) {
+    node = YGNodeNewWithConfig(config);
+    YGNodeStyleSetWidth(node, 100);
+    YGNodeStyleSetHeight(node, 100);
+    YGNodeInsertChild(root, node, i); // index start from 0
+  }
+  node = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidthAuto(node);
+  YGNodeStyleSetHeight(node, 200);
+  YGNodeStyleSetMinWidth(node, 120);
+  YGNodeInsertChild(root, node, 2); // index start from 0
+  YGNodeStyleSetFlexDirection(node, YGFlexDirectionColumn);
+  YGNodeStyleSetFlexWrap(node, YGWrapWrap);
+  for (int i = 0; i < 3; i++) {
+    YGNodeRef node1 = YGNodeNewWithConfig(config);
+    YGNodeStyleSetWidth(node1, 100);
+    YGNodeStyleSetHeight(node1, 100);
+    YGNodeInsertChild(node, node1, i); // index start from 0
+  }
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  int nCount = YGNodeGetChildCount(root);
+  float fValue = YGNodeLayoutGetWidth(root);
+  float fAllHeight = YGNodeLayoutGetHeight(root);
+  node = YGNodeGetChild(root, 2);
+  float fLeft = YGNodeLayoutGetLeft(node);
+  float fRight = YGNodeLayoutGetTop(node);
+  float fWidth = YGNodeLayoutGetWidth(node);
+  float fHeight = YGNodeLayoutGetHeight(node);
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(node));
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetHeight(node));
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
+}

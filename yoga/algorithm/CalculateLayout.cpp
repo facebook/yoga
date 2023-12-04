@@ -1832,12 +1832,9 @@ static void calculateLayoutImpl(
 
     // Clamp to the min/max size specified on the container.
     flexLine.layout.crossDim =
-        boundAxis(
-            node,
-            crossAxis,
+        yoga::maxOrDefined(
             flexLine.layout.crossDim + paddingAndBorderAxisCross,
-            crossAxisownerSize,
-            ownerWidth) -
+            paddingAndBorderForAxis(node, crossAxis, ownerWidth)) -
         paddingAndBorderAxisCross;
 
     // STEP 7: CROSS-AXIS ALIGNMENT
