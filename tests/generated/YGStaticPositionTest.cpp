@@ -12,8 +12,6 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, static_position_insets_have_no_effect_left_top) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -57,8 +55,6 @@ TEST(YogaTest, static_position_insets_have_no_effect_left_top) {
 }
 
 TEST(YogaTest, static_position_insets_have_no_effect_right_bottom) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
