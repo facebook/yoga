@@ -1375,9 +1375,6 @@ TEST(YogaTest, Auto_Height_Min_Height) {
     YGNodeInsertChild(root, node, i);  // index start from 0
   }
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  int nCount = YGNodeGetChildCount(root);
-  float fAllWidth = YGNodeLayoutGetWidth(root);
-  float fAllHeight = YGNodeLayoutGetHeight(root);
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root));
@@ -1407,9 +1404,6 @@ TEST(YogaTest, Auto_Width_Min_Width) {
     YGNodeInsertChild(root, node, i);  // index start from 0
   }
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  int nCount = YGNodeGetChildCount(root);
-  float fAllWidth = YGNodeLayoutGetWidth(root);
-  float fAllHeight = YGNodeLayoutGetHeight(root);
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root));
@@ -1451,14 +1445,7 @@ TEST(YogaTest, Child_Auto_Width_Min_Width) {
     YGNodeInsertChild(node, node1, i); // index start from 0
   }
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-  int nCount = YGNodeGetChildCount(root);
-  float fValue = YGNodeLayoutGetWidth(root);
-  float fAllHeight = YGNodeLayoutGetHeight(root);
   node = YGNodeGetChild(root, 2);
-  float fLeft = YGNodeLayoutGetLeft(node);
-  float fRight = YGNodeLayoutGetTop(node);
-  float fWidth = YGNodeLayoutGetWidth(node);
-  float fHeight = YGNodeLayoutGetHeight(node);
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(node));
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetHeight(node));
   YGNodeFreeRecursive(root);
