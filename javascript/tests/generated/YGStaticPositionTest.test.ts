@@ -25,7 +25,7 @@ import {
   Wrap,
 } from 'yoga-layout';
 
-test.skip('static_position_insets_have_no_effect_left_top', () => {
+test('static_position_insets_have_no_effect_left_top', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -73,7 +73,7 @@ test.skip('static_position_insets_have_no_effect_left_top', () => {
     config.free();
   }
 });
-test.skip('static_position_insets_have_no_effect_right_bottom', () => {
+test('static_position_insets_have_no_effect_right_bottom', () => {
   const config = Yoga.Config.create();
   let root;
 

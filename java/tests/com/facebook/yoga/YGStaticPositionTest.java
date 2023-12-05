@@ -26,7 +26,6 @@ public class YGStaticPositionTest {
   @Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;
 
   @Test
-  @Ignore
   public void test_static_position_insets_have_no_effect_left_top() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -69,7 +68,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_insets_have_no_effect_right_bottom() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
