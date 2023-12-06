@@ -10,6 +10,8 @@
 
 const DEFAULT_EXPERIMENTS = ['AbsolutePercentageAgainstPaddingEdge'];
 
+const INVISIBLE_BORDER_STYLES = ['none', 'initial'];
+
 window.onload = function () {
   checkDefaultValues();
 
@@ -432,48 +434,72 @@ function setupTestTree(
           );
           break;
         case 'border-left-width':
-          if (genericNode.rawStyle.indexOf('border-start-width:') >= 0) {
-            e.YGNodeStyleSetBorder(
-              nodeName,
-              e.YGEdgeStart,
-              pointValue(e, node.style[style]),
-            );
-          } else {
-            e.YGNodeStyleSetBorder(
-              nodeName,
-              e.YGEdgeLeft,
-              pointValue(e, node.style[style]),
-            );
+          if (
+            !INVISIBLE_BORDER_STYLES.includes(
+              node.declaredStyle['border-left-style'],
+            )
+          ) {
+            if (genericNode.rawStyle.indexOf('border-start-width:') >= 0) {
+              e.YGNodeStyleSetBorder(
+                nodeName,
+                e.YGEdgeStart,
+                pointValue(e, node.style[style]),
+              );
+            } else {
+              e.YGNodeStyleSetBorder(
+                nodeName,
+                e.YGEdgeLeft,
+                pointValue(e, node.style[style]),
+              );
+            }
           }
           break;
         case 'border-top-width':
-          e.YGNodeStyleSetBorder(
-            nodeName,
-            e.YGEdgeTop,
-            pointValue(e, node.style[style]),
-          );
-          break;
-        case 'border-right-width':
-          if (genericNode.rawStyle.indexOf('border-end-width:') >= 0) {
+          if (
+            !INVISIBLE_BORDER_STYLES.includes(
+              node.declaredStyle['border-top-style'],
+            )
+          ) {
             e.YGNodeStyleSetBorder(
               nodeName,
-              e.YGEdgeEnd,
-              pointValue(e, node.style[style]),
-            );
-          } else {
-            e.YGNodeStyleSetBorder(
-              nodeName,
-              e.YGEdgeRight,
+              e.YGEdgeTop,
               pointValue(e, node.style[style]),
             );
           }
           break;
+        case 'border-right-width':
+          if (
+            !INVISIBLE_BORDER_STYLES.includes(
+              node.declaredStyle['border-right-style'],
+            )
+          ) {
+            if (genericNode.rawStyle.indexOf('border-end-width:') >= 0) {
+              e.YGNodeStyleSetBorder(
+                nodeName,
+                e.YGEdgeEnd,
+                pointValue(e, node.style[style]),
+              );
+            } else {
+              e.YGNodeStyleSetBorder(
+                nodeName,
+                e.YGEdgeRight,
+                pointValue(e, node.style[style]),
+              );
+            }
+          }
+          break;
         case 'border-bottom-width':
-          e.YGNodeStyleSetBorder(
-            nodeName,
-            e.YGEdgeBottom,
-            pointValue(e, node.style[style]),
-          );
+          if (
+            !INVISIBLE_BORDER_STYLES.includes(
+              node.declaredStyle['border-bottom-style'],
+            )
+          ) {
+            e.YGNodeStyleSetBorder(
+              nodeName,
+              e.YGEdgeBottom,
+              pointValue(e, node.style[style]),
+            );
+          }
           break;
         case 'width':
           e.YGNodeStyleSetWidth(nodeName, pointValue(e, node.style[style]));
