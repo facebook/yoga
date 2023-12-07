@@ -1356,7 +1356,7 @@ test('absolute_layout_percentage_height_based_on_padded_parent_and_align_items_c
     config.free();
   }
 });
-test.skip('absolute_layout_padding_left', () => {
+test('absolute_layout_padding_left', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1405,7 +1405,7 @@ test.skip('absolute_layout_padding_left', () => {
     config.free();
   }
 });
-test.skip('absolute_layout_padding_right', () => {
+test('absolute_layout_padding_right', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1454,7 +1454,7 @@ test.skip('absolute_layout_padding_right', () => {
     config.free();
   }
 });
-test.skip('absolute_layout_padding_top', () => {
+test('absolute_layout_padding_top', () => {
   const config = Yoga.Config.create();
   let root;
 

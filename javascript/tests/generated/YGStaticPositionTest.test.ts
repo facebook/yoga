@@ -2680,7 +2680,7 @@ test('static_position_static_child_containing_block_padding_box', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_containing_block_content_box', () => {
+test('static_position_absolute_child_containing_block_content_box', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -5757,6 +5757,70 @@ test('static_position_align_flex_end_amalgamation', () => {
     expect(root_child0_child0_child2_child0.getComputedTop()).toBe(16);
     expect(root_child0_child0_child2_child0.getComputedWidth()).toBe(100);
     expect(root_child0_child0_child2_child0.getComputedHeight()).toBe(50);
+  } finally {
+    if (typeof root !== 'undefined') {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});
+test('static_position_static_root', () => {
+  const config = Yoga.Config.create();
+  let root;
+
+  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
+
+  try {
+    root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Static);
+    root.setPadding(Edge.Left, 6);
+    root.setPadding(Edge.Top, 1);
+    root.setPadding(Edge.Right, 11);
+    root.setPadding(Edge.Bottom, 4);
+    root.setWidth(100);
+    root.setHeight(200);
+
+    const root_child0 = Yoga.Node.create(config);
+    root_child0.setPositionType(PositionType.Absolute);
+    root_child0.setMargin(Edge.Left, 12);
+    root_child0.setMargin(Edge.Top, 11);
+    root_child0.setMargin(Edge.Right, 15);
+    root_child0.setMargin(Edge.Bottom, 1);
+    root_child0.setPadding(Edge.Left, 3);
+    root_child0.setPadding(Edge.Top, 7);
+    root_child0.setPadding(Edge.Right, 5);
+    root_child0.setPadding(Edge.Bottom, 4);
+    root_child0.setBorder(Edge.Left, 4);
+    root_child0.setBorder(Edge.Top, 3);
+    root_child0.setBorder(Edge.Right, 2);
+    root_child0.setBorder(Edge.Bottom, 1);
+    root_child0.setWidth("50%");
+    root_child0.setHeight("50%");
+    root.insertChild(root_child0, 0);
+    root.calculateLayout(undefined, undefined, Direction.LTR);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(100);
+    expect(root.getComputedHeight()).toBe(200);
+
+    expect(root_child0.getComputedLeft()).toBe(18);
+    expect(root_child0.getComputedTop()).toBe(12);
+    expect(root_child0.getComputedWidth()).toBe(50);
+    expect(root_child0.getComputedHeight()).toBe(100);
+
+    root.calculateLayout(undefined, undefined, Direction.RTL);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(100);
+    expect(root.getComputedHeight()).toBe(200);
+
+    expect(root_child0.getComputedLeft()).toBe(24);
+    expect(root_child0.getComputedTop()).toBe(12);
+    expect(root_child0.getComputedWidth()).toBe(50);
+    expect(root_child0.getComputedHeight()).toBe(100);
   } finally {
     if (typeof root !== 'undefined') {
       root.freeRecursive();
