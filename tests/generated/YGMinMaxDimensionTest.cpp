@@ -1368,7 +1368,7 @@ TEST(YogaTest, Auto_Height_Min_Height) {
   YGNodeStyleSetJustifyContent(root, YGJustifyFlexStart);
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetAlignContent(root, YGAlignFlexStart);
-  for (int i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     node = YGNodeNewWithConfig(config);
     YGNodeStyleSetWidth(node, 100);
     YGNodeStyleSetHeight(node, 100);
@@ -1397,7 +1397,7 @@ TEST(YogaTest, Auto_Width_Min_Width) {
   YGNodeStyleSetJustifyContent(root, YGJustifyFlexStart);
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetAlignContent(root, YGAlignFlexStart);
-  for (int i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     node = YGNodeNewWithConfig(config);
     YGNodeStyleSetWidth(node, 100);
     YGNodeStyleSetHeight(node, 100);
@@ -1425,7 +1425,7 @@ TEST(YogaTest, Child_Auto_Width_Min_Width) {
   YGNodeStyleSetJustifyContent(root, YGJustifyFlexStart);
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetAlignContent(root, YGAlignFlexStart);
-  for (int i = 0; i < 2; i++) {
+  for (size_t i = 0; i < 2; i++) {
     node = YGNodeNewWithConfig(config);
     YGNodeStyleSetWidth(node, 100);
     YGNodeStyleSetHeight(node, 100);
@@ -1438,7 +1438,7 @@ TEST(YogaTest, Child_Auto_Width_Min_Width) {
   YGNodeInsertChild(root, node, 2); // index start from 0
   YGNodeStyleSetFlexDirection(node, YGFlexDirectionColumn);
   YGNodeStyleSetFlexWrap(node, YGWrapWrap);
-  for (int i = 0; i < 3; i++) {
+  for (size_t i = 0; i < 3; i++) {
     YGNodeRef node1 = YGNodeNewWithConfig(config);
     YGNodeStyleSetWidth(node1, 100);
     YGNodeStyleSetHeight(node1, 100);
