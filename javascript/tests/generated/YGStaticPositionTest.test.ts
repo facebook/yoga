@@ -2874,3 +2874,88 @@ test('static_position_static_child_containing_block_content_box', () => {
     config.free();
   }
 });
+test('static_position_containing_block_padding_and_border', () => {
+  const config = Yoga.Config.create();
+  let root;
+
+  config.setExperimentalFeatureEnabled(ExperimentalFeature.AbsolutePercentageAgainstPaddingEdge, true);
+
+  try {
+    root = Yoga.Node.create(config);
+    root.setPositionType(PositionType.Absolute);
+
+    const root_child0 = Yoga.Node.create(config);
+    root_child0.setPadding(Edge.Left, 9);
+    root_child0.setPadding(Edge.Top, 8);
+    root_child0.setPadding(Edge.Right, 1);
+    root_child0.setPadding(Edge.Bottom, 4);
+    root_child0.setBorder(Edge.Left, 2);
+    root_child0.setBorder(Edge.Top, 5);
+    root_child0.setBorder(Edge.Right, 7);
+    root_child0.setBorder(Edge.Bottom, 4);
+    root_child0.setWidth(400);
+    root_child0.setHeight(400);
+    root.insertChild(root_child0, 0);
+
+    const root_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0.setPositionType(PositionType.Static);
+    root_child0_child0.setWidth(100);
+    root_child0_child0.setHeight(100);
+    root_child0.insertChild(root_child0_child0, 0);
+
+    const root_child0_child0_child0 = Yoga.Node.create(config);
+    root_child0_child0_child0.setPositionType(PositionType.Absolute);
+    root_child0_child0_child0.setWidth("41%");
+    root_child0_child0_child0.setHeight("61%");
+    root_child0_child0.insertChild(root_child0_child0_child0, 0);
+    root.calculateLayout(undefined, undefined, Direction.LTR);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(400);
+    expect(root.getComputedHeight()).toBe(400);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(0);
+    expect(root_child0.getComputedWidth()).toBe(400);
+    expect(root_child0.getComputedHeight()).toBe(400);
+
+    expect(root_child0_child0.getComputedLeft()).toBe(11);
+    expect(root_child0_child0.getComputedTop()).toBe(13);
+    expect(root_child0_child0.getComputedWidth()).toBe(100);
+    expect(root_child0_child0.getComputedHeight()).toBe(100);
+
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(0);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0.getComputedWidth()).toBe(160);
+    expect(root_child0_child0_child0.getComputedHeight()).toBe(239);
+
+    root.calculateLayout(undefined, undefined, Direction.RTL);
+
+    expect(root.getComputedLeft()).toBe(0);
+    expect(root.getComputedTop()).toBe(0);
+    expect(root.getComputedWidth()).toBe(400);
+    expect(root.getComputedHeight()).toBe(400);
+
+    expect(root_child0.getComputedLeft()).toBe(0);
+    expect(root_child0.getComputedTop()).toBe(0);
+    expect(root_child0.getComputedWidth()).toBe(400);
+    expect(root_child0.getComputedHeight()).toBe(400);
+
+    expect(root_child0_child0.getComputedLeft()).toBe(292);
+    expect(root_child0_child0.getComputedTop()).toBe(13);
+    expect(root_child0_child0.getComputedWidth()).toBe(100);
+    expect(root_child0_child0.getComputedHeight()).toBe(100);
+
+    expect(root_child0_child0_child0.getComputedLeft()).toBe(-60);
+    expect(root_child0_child0_child0.getComputedTop()).toBe(0);
+    expect(root_child0_child0_child0.getComputedWidth()).toBe(160);
+    expect(root_child0_child0_child0.getComputedHeight()).toBe(239);
+  } finally {
+    if (typeof root !== 'undefined') {
+      root.freeRecursive();
+    }
+
+    config.free();
+  }
+});
