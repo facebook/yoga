@@ -72,6 +72,9 @@ ENUMS = {
         ("StartingEndingEdgeFromFlexDirection", 1 << 1),
         # Position: static behaves like position: relative within Yoga
         ("PositionStaticBehavesLikeRelative", 1 << 2),
+        # Positioning of absolute nodes will have various bugs related to
+        # justification, alignment, and insets
+        ("AbsolutePositioning", 1 << 3),
         # Enable all incorrect behavior (preserve compatibility)
         ("All", 0x7FFFFFFF),
         # Enable all errata except for "StretchFlexBasis" (Defaults behavior
