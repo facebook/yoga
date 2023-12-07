@@ -121,7 +121,7 @@ test('static_position_insets_have_no_effect_right_bottom', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_insets_relative_to_positioned_ancestor', () => {
+test('static_position_absolute_child_insets_relative_to_positioned_ancestor', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -201,7 +201,7 @@ test.skip('static_position_absolute_child_insets_relative_to_positioned_ancestor
     config.free();
   }
 });
-test.skip('static_position_absolute_child_insets_relative_to_positioned_ancestor_deep', () => {
+test('static_position_absolute_child_insets_relative_to_positioned_ancestor_deep', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -332,7 +332,7 @@ test.skip('static_position_absolute_child_insets_relative_to_positioned_ancestor
     config.free();
   }
 });
-test.skip('static_position_absolute_child_width_percentage', () => {
+test('static_position_absolute_child_width_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -409,7 +409,7 @@ test.skip('static_position_absolute_child_width_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_width_percentage', () => {
+test('static_position_relative_child_width_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -485,7 +485,7 @@ test.skip('static_position_relative_child_width_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_width_percentage', () => {
+test('static_position_static_child_width_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -562,7 +562,7 @@ test.skip('static_position_static_child_width_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_height_percentage', () => {
+test('static_position_absolute_child_height_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -639,7 +639,7 @@ test.skip('static_position_absolute_child_height_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_height_percentage', () => {
+test('static_position_relative_child_height_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -715,7 +715,7 @@ test.skip('static_position_relative_child_height_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_height_percentage', () => {
+test('static_position_static_child_height_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -792,7 +792,7 @@ test.skip('static_position_static_child_height_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_left_percentage', () => {
+test('static_position_absolute_child_left_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -870,7 +870,7 @@ test.skip('static_position_absolute_child_left_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_left_percentage', () => {
+test('static_position_relative_child_left_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -947,7 +947,7 @@ test.skip('static_position_relative_child_left_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_left_percentage', () => {
+test('static_position_static_child_left_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1025,7 +1025,7 @@ test.skip('static_position_static_child_left_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_right_percentage', () => {
+test('static_position_absolute_child_right_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1103,7 +1103,7 @@ test.skip('static_position_absolute_child_right_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_right_percentage', () => {
+test('static_position_relative_child_right_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1180,7 +1180,7 @@ test.skip('static_position_relative_child_right_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_right_percentage', () => {
+test('static_position_static_child_right_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1258,7 +1258,7 @@ test.skip('static_position_static_child_right_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_top_percentage', () => {
+test('static_position_absolute_child_top_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1336,7 +1336,7 @@ test.skip('static_position_absolute_child_top_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_top_percentage', () => {
+test('static_position_relative_child_top_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1413,7 +1413,7 @@ test.skip('static_position_relative_child_top_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_top_percentage', () => {
+test('static_position_static_child_top_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1491,7 +1491,7 @@ test.skip('static_position_static_child_top_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_bottom_percentage', () => {
+test('static_position_absolute_child_bottom_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1569,7 +1569,7 @@ test.skip('static_position_absolute_child_bottom_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_bottom_percentage', () => {
+test('static_position_relative_child_bottom_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1646,7 +1646,7 @@ test.skip('static_position_relative_child_bottom_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_bottom_percentage', () => {
+test('static_position_static_child_bottom_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1724,7 +1724,7 @@ test.skip('static_position_static_child_bottom_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_margin_percentage', () => {
+test('static_position_absolute_child_margin_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1805,7 +1805,7 @@ test.skip('static_position_absolute_child_margin_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_margin_percentage', () => {
+test('static_position_relative_child_margin_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1885,7 +1885,7 @@ test.skip('static_position_relative_child_margin_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_margin_percentage', () => {
+test('static_position_static_child_margin_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -1966,7 +1966,7 @@ test.skip('static_position_static_child_margin_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_padding_percentage', () => {
+test('static_position_absolute_child_padding_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2047,7 +2047,7 @@ test.skip('static_position_absolute_child_padding_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_padding_percentage', () => {
+test('static_position_relative_child_padding_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2127,7 +2127,7 @@ test.skip('static_position_relative_child_padding_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_padding_percentage', () => {
+test('static_position_static_child_padding_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2208,7 +2208,7 @@ test.skip('static_position_static_child_padding_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_border_percentage', () => {
+test('static_position_absolute_child_border_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2285,7 +2285,7 @@ test.skip('static_position_absolute_child_border_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_border_percentage', () => {
+test('static_position_relative_child_border_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2361,7 +2361,7 @@ test.skip('static_position_relative_child_border_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_border_percentage', () => {
+test('static_position_static_child_border_percentage', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2438,7 +2438,7 @@ test.skip('static_position_static_child_border_percentage', () => {
     config.free();
   }
 });
-test.skip('static_position_absolute_child_containing_block_padding_box', () => {
+test('static_position_absolute_child_containing_block_padding_box', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2519,7 +2519,7 @@ test.skip('static_position_absolute_child_containing_block_padding_box', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_containing_block_padding_box', () => {
+test('static_position_relative_child_containing_block_padding_box', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2599,7 +2599,7 @@ test.skip('static_position_relative_child_containing_block_padding_box', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_containing_block_padding_box', () => {
+test('static_position_static_child_containing_block_padding_box', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2745,7 +2745,7 @@ test.skip('static_position_absolute_child_containing_block_content_box', () => {
     config.free();
   }
 });
-test.skip('static_position_relative_child_containing_block_content_box', () => {
+test('static_position_relative_child_containing_block_content_box', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -2809,7 +2809,7 @@ test.skip('static_position_relative_child_containing_block_content_box', () => {
     config.free();
   }
 });
-test.skip('static_position_static_child_containing_block_content_box', () => {
+test('static_position_static_child_containing_block_content_box', () => {
   const config = Yoga.Config.create();
   let root;
 
