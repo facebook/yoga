@@ -4003,6 +4003,265 @@ public class YGStaticPositionTest {
     assertEquals(50f, root_child0_child0_child2_child0.getLayoutHeight(), 0.0f);
   }
 
+  @Test
+  public void test_static_position_no_definite_size_amalgamation() {
+    YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
+    final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
+
+    final YogaNode root_child0 = createNode(config);
+    root_child0.setMargin(YogaEdge.LEFT, 4f);
+    root_child0.setMargin(YogaEdge.TOP, 5f);
+    root_child0.setMargin(YogaEdge.RIGHT, 9f);
+    root_child0.setMargin(YogaEdge.BOTTOM, 1f);
+    root_child0.setPadding(YogaEdge.LEFT, 2);
+    root_child0.setPadding(YogaEdge.TOP, 9);
+    root_child0.setPadding(YogaEdge.RIGHT, 11);
+    root_child0.setPadding(YogaEdge.BOTTOM, 13);
+    root_child0.setBorder(YogaEdge.LEFT, 5f);
+    root_child0.setBorder(YogaEdge.TOP, 6f);
+    root_child0.setBorder(YogaEdge.RIGHT, 7f);
+    root_child0.setBorder(YogaEdge.BOTTOM, 8f);
+    root.addChildAt(root_child0, 0);
+
+    final YogaNode root_child0_child0 = createNode(config);
+    root_child0_child0.setPositionType(YogaPositionType.STATIC);
+    root_child0_child0.setMargin(YogaEdge.LEFT, 8f);
+    root_child0_child0.setMargin(YogaEdge.TOP, 6f);
+    root_child0_child0.setMargin(YogaEdge.RIGHT, 3f);
+    root_child0_child0.setMargin(YogaEdge.BOTTOM, 9f);
+    root_child0_child0.setPadding(YogaEdge.LEFT, 1);
+    root_child0_child0.setPadding(YogaEdge.TOP, 7);
+    root_child0_child0.setPadding(YogaEdge.RIGHT, 9);
+    root_child0_child0.setPadding(YogaEdge.BOTTOM, 4);
+    root_child0_child0.setBorder(YogaEdge.LEFT, 8f);
+    root_child0_child0.setBorder(YogaEdge.TOP, 10f);
+    root_child0_child0.setBorder(YogaEdge.RIGHT, 2f);
+    root_child0_child0.setBorder(YogaEdge.BOTTOM, 1f);
+    root_child0.addChildAt(root_child0_child0, 0);
+
+    final YogaNode root_child0_child0_child0 = createNode(config);
+    root_child0_child0_child0.setPositionType(YogaPositionType.ABSOLUTE);
+    root_child0_child0_child0.setPositionPercent(YogaEdge.LEFT, 23f);
+    root_child0_child0_child0.setMargin(YogaEdge.LEFT, 9f);
+    root_child0_child0_child0.setMargin(YogaEdge.TOP, 12f);
+    root_child0_child0_child0.setMargin(YogaEdge.RIGHT, 4f);
+    root_child0_child0_child0.setMargin(YogaEdge.BOTTOM, 7f);
+    root_child0_child0_child0.setPadding(YogaEdge.LEFT, 5);
+    root_child0_child0_child0.setPadding(YogaEdge.TOP, 3);
+    root_child0_child0_child0.setPadding(YogaEdge.RIGHT, 8);
+    root_child0_child0_child0.setPadding(YogaEdge.BOTTOM, 10);
+    root_child0_child0_child0.setBorder(YogaEdge.LEFT, 2f);
+    root_child0_child0_child0.setBorder(YogaEdge.TOP, 1f);
+    root_child0_child0_child0.setBorder(YogaEdge.RIGHT, 5f);
+    root_child0_child0_child0.setBorder(YogaEdge.BOTTOM, 9f);
+    root_child0_child0.addChildAt(root_child0_child0_child0, 0);
+
+    final YogaNode root_child0_child0_child0_child0 = createNode(config);
+    root_child0_child0_child0_child0.setMargin(YogaEdge.LEFT, 9f);
+    root_child0_child0_child0_child0.setMargin(YogaEdge.TOP, 12f);
+    root_child0_child0_child0_child0.setMargin(YogaEdge.RIGHT, 4f);
+    root_child0_child0_child0_child0.setMargin(YogaEdge.BOTTOM, 7f);
+    root_child0_child0_child0_child0.setPadding(YogaEdge.LEFT, 5);
+    root_child0_child0_child0_child0.setPadding(YogaEdge.TOP, 3);
+    root_child0_child0_child0_child0.setPadding(YogaEdge.RIGHT, 8);
+    root_child0_child0_child0_child0.setPadding(YogaEdge.BOTTOM, 10);
+    root_child0_child0_child0_child0.setBorder(YogaEdge.LEFT, 2f);
+    root_child0_child0_child0_child0.setBorder(YogaEdge.TOP, 1f);
+    root_child0_child0_child0_child0.setBorder(YogaEdge.RIGHT, 5f);
+    root_child0_child0_child0_child0.setBorder(YogaEdge.BOTTOM, 9f);
+    root_child0_child0_child0_child0.setWidth(100f);
+    root_child0_child0_child0_child0.setHeight(50f);
+    root_child0_child0_child0.addChildAt(root_child0_child0_child0_child0, 0);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(69f, root.getLayoutWidth(), 0.0f);
+    assertEquals(79f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(4f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(5f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(56f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(73f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(15f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(21f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(20f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(22f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(9f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(29f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(133f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(92f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(16f, root_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(16f, root_child0_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(69f, root.getLayoutWidth(), 0.0f);
+    assertEquals(79f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(4f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(5f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(56f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(73f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(15f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(21f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(20f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(22f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(9f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(29f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(133f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(92f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(16f, root_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(16f, root_child0_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
+  public void test_static_position_both_insets_set_amalgamation() {
+    YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
+    final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.ABSOLUTE);
+
+    final YogaNode root_child0 = createNode(config);
+    root_child0.setMargin(YogaEdge.LEFT, 4f);
+    root_child0.setMargin(YogaEdge.TOP, 5f);
+    root_child0.setMargin(YogaEdge.RIGHT, 9f);
+    root_child0.setMargin(YogaEdge.BOTTOM, 1f);
+    root_child0.setPadding(YogaEdge.LEFT, 2);
+    root_child0.setPadding(YogaEdge.TOP, 9);
+    root_child0.setPadding(YogaEdge.RIGHT, 11);
+    root_child0.setPadding(YogaEdge.BOTTOM, 13);
+    root_child0.setBorder(YogaEdge.LEFT, 5f);
+    root_child0.setBorder(YogaEdge.TOP, 6f);
+    root_child0.setBorder(YogaEdge.RIGHT, 7f);
+    root_child0.setBorder(YogaEdge.BOTTOM, 8f);
+    root.addChildAt(root_child0, 0);
+
+    final YogaNode root_child0_child0 = createNode(config);
+    root_child0_child0.setPositionType(YogaPositionType.STATIC);
+    root_child0_child0.setMargin(YogaEdge.LEFT, 8f);
+    root_child0_child0.setMargin(YogaEdge.TOP, 6f);
+    root_child0_child0.setMargin(YogaEdge.RIGHT, 3f);
+    root_child0_child0.setMargin(YogaEdge.BOTTOM, 9f);
+    root_child0_child0.setPadding(YogaEdge.LEFT, 1);
+    root_child0_child0.setPadding(YogaEdge.TOP, 7);
+    root_child0_child0.setPadding(YogaEdge.RIGHT, 9);
+    root_child0_child0.setPadding(YogaEdge.BOTTOM, 4);
+    root_child0_child0.setBorder(YogaEdge.LEFT, 8f);
+    root_child0_child0.setBorder(YogaEdge.TOP, 10f);
+    root_child0_child0.setBorder(YogaEdge.RIGHT, 2f);
+    root_child0_child0.setBorder(YogaEdge.BOTTOM, 1f);
+    root_child0.addChildAt(root_child0_child0, 0);
+
+    final YogaNode root_child0_child0_child0 = createNode(config);
+    root_child0_child0_child0.setPositionType(YogaPositionType.ABSOLUTE);
+    root_child0_child0_child0.setPositionPercent(YogaEdge.LEFT, 23f);
+    root_child0_child0_child0.setPosition(YogaEdge.RIGHT, 13f);
+    root_child0_child0_child0.setMargin(YogaEdge.LEFT, 9f);
+    root_child0_child0_child0.setMargin(YogaEdge.TOP, 12f);
+    root_child0_child0_child0.setMargin(YogaEdge.RIGHT, 4f);
+    root_child0_child0_child0.setMargin(YogaEdge.BOTTOM, 7f);
+    root_child0_child0_child0.setPadding(YogaEdge.LEFT, 5);
+    root_child0_child0_child0.setPadding(YogaEdge.TOP, 3);
+    root_child0_child0_child0.setPadding(YogaEdge.RIGHT, 8);
+    root_child0_child0_child0.setPadding(YogaEdge.BOTTOM, 10);
+    root_child0_child0_child0.setBorder(YogaEdge.LEFT, 2f);
+    root_child0_child0_child0.setBorder(YogaEdge.TOP, 1f);
+    root_child0_child0_child0.setBorder(YogaEdge.RIGHT, 5f);
+    root_child0_child0_child0.setBorder(YogaEdge.BOTTOM, 9f);
+    root_child0_child0.addChildAt(root_child0_child0_child0, 0);
+
+    final YogaNode root_child0_child0_child0_child0 = createNode(config);
+    root_child0_child0_child0_child0.setMargin(YogaEdge.LEFT, 9f);
+    root_child0_child0_child0_child0.setMargin(YogaEdge.TOP, 12f);
+    root_child0_child0_child0_child0.setMargin(YogaEdge.RIGHT, 4f);
+    root_child0_child0_child0_child0.setMargin(YogaEdge.BOTTOM, 7f);
+    root_child0_child0_child0_child0.setPadding(YogaEdge.LEFT, 5);
+    root_child0_child0_child0_child0.setPadding(YogaEdge.TOP, 3);
+    root_child0_child0_child0_child0.setPadding(YogaEdge.RIGHT, 8);
+    root_child0_child0_child0_child0.setPadding(YogaEdge.BOTTOM, 10);
+    root_child0_child0_child0_child0.setBorder(YogaEdge.LEFT, 2f);
+    root_child0_child0_child0_child0.setBorder(YogaEdge.TOP, 1f);
+    root_child0_child0_child0_child0.setBorder(YogaEdge.RIGHT, 5f);
+    root_child0_child0_child0_child0.setBorder(YogaEdge.BOTTOM, 9f);
+    root_child0_child0_child0_child0.setWidth(100f);
+    root_child0_child0_child0_child0.setHeight(50f);
+    root_child0_child0_child0.addChildAt(root_child0_child0_child0_child0, 0);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(69f, root.getLayoutWidth(), 0.0f);
+    assertEquals(79f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(4f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(5f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(56f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(73f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(15f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(21f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(20f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(22f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(9f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(29f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(20f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(92f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(16f, root_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(16f, root_child0_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(69f, root.getLayoutWidth(), 0.0f);
+    assertEquals(79f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(4f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(5f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(56f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(73f, root_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(15f, root_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(21f, root_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(20f, root_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(22f, root_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(-3f, root_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(29f, root_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(20f, root_child0_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(92f, root_child0_child0_child0.getLayoutHeight(), 0.0f);
+
+    assertEquals(-97f, root_child0_child0_child0_child0.getLayoutX(), 0.0f);
+    assertEquals(16f, root_child0_child0_child0_child0.getLayoutY(), 0.0f);
+    assertEquals(100f, root_child0_child0_child0_child0.getLayoutWidth(), 0.0f);
+    assertEquals(50f, root_child0_child0_child0_child0.getLayoutHeight(), 0.0f);
+  }
+
   private YogaNode createNode(YogaConfig config) {
     return mNodeFactory.create(config);
   }
