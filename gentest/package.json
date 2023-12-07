@@ -1,0 +1,14 @@
+{
+  "name": "gentest",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "dependencies": {
+    "@types/node": "^20.10.3",
+    "@types/selenium-webdriver": "^4.1.21",
+    "babel-register-esm": "^1.2.5",
+    "selenium-webdriver": "^4.16.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "nodenext",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": false,
+    "moduleResolution": "nodenext",
+    "lib": [
+      "ES2021.String"
+    ]
+  },
+  "files": ["gentest-driver.ts"]
+}
