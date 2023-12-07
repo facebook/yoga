@@ -98,8 +98,6 @@ TEST(YogaTest, static_position_insets_have_no_effect_right_bottom) {
 }
 
 TEST(YogaTest, static_position_absolute_child_insets_relative_to_positioned_ancestor) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -175,8 +173,6 @@ TEST(YogaTest, static_position_absolute_child_insets_relative_to_positioned_ance
 }
 
 TEST(YogaTest, static_position_absolute_child_insets_relative_to_positioned_ancestor_deep) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -303,8 +299,6 @@ TEST(YogaTest, static_position_absolute_child_insets_relative_to_positioned_ance
 }
 
 TEST(YogaTest, static_position_absolute_child_width_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -377,8 +371,6 @@ TEST(YogaTest, static_position_absolute_child_width_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_width_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -450,8 +442,6 @@ TEST(YogaTest, static_position_relative_child_width_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_width_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -524,8 +514,6 @@ TEST(YogaTest, static_position_static_child_width_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_height_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -598,8 +586,6 @@ TEST(YogaTest, static_position_absolute_child_height_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_height_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -671,8 +657,6 @@ TEST(YogaTest, static_position_relative_child_height_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_height_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -745,8 +729,6 @@ TEST(YogaTest, static_position_static_child_height_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_left_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -820,8 +802,6 @@ TEST(YogaTest, static_position_absolute_child_left_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_left_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -894,8 +874,6 @@ TEST(YogaTest, static_position_relative_child_left_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_left_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -969,8 +947,6 @@ TEST(YogaTest, static_position_static_child_left_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_right_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1044,8 +1020,6 @@ TEST(YogaTest, static_position_absolute_child_right_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_right_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1118,8 +1092,6 @@ TEST(YogaTest, static_position_relative_child_right_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_right_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1193,8 +1165,6 @@ TEST(YogaTest, static_position_static_child_right_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_top_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1268,8 +1238,6 @@ TEST(YogaTest, static_position_absolute_child_top_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_top_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1342,8 +1310,6 @@ TEST(YogaTest, static_position_relative_child_top_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_top_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1417,8 +1383,6 @@ TEST(YogaTest, static_position_static_child_top_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_bottom_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1492,8 +1456,6 @@ TEST(YogaTest, static_position_absolute_child_bottom_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_bottom_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1566,8 +1528,6 @@ TEST(YogaTest, static_position_relative_child_bottom_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_bottom_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1641,8 +1601,6 @@ TEST(YogaTest, static_position_static_child_bottom_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_margin_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1719,8 +1677,6 @@ TEST(YogaTest, static_position_absolute_child_margin_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_margin_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1796,8 +1752,6 @@ TEST(YogaTest, static_position_relative_child_margin_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_margin_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1874,8 +1828,6 @@ TEST(YogaTest, static_position_static_child_margin_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_padding_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1952,8 +1904,6 @@ TEST(YogaTest, static_position_absolute_child_padding_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_padding_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2029,8 +1979,6 @@ TEST(YogaTest, static_position_relative_child_padding_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_padding_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2107,8 +2055,6 @@ TEST(YogaTest, static_position_static_child_padding_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_border_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2181,8 +2127,6 @@ TEST(YogaTest, static_position_absolute_child_border_percentage) {
 }
 
 TEST(YogaTest, static_position_relative_child_border_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2254,8 +2198,6 @@ TEST(YogaTest, static_position_relative_child_border_percentage) {
 }
 
 TEST(YogaTest, static_position_static_child_border_percentage) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2328,8 +2270,6 @@ TEST(YogaTest, static_position_static_child_border_percentage) {
 }
 
 TEST(YogaTest, static_position_absolute_child_containing_block_padding_box) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2406,8 +2346,6 @@ TEST(YogaTest, static_position_absolute_child_containing_block_padding_box) {
 }
 
 TEST(YogaTest, static_position_relative_child_containing_block_padding_box) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2483,8 +2421,6 @@ TEST(YogaTest, static_position_relative_child_containing_block_padding_box) {
 }
 
 TEST(YogaTest, static_position_static_child_containing_block_padding_box) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2623,8 +2559,6 @@ TEST(YogaTest, static_position_absolute_child_containing_block_content_box) {
 }
 
 TEST(YogaTest, static_position_relative_child_containing_block_content_box) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -2684,8 +2618,6 @@ TEST(YogaTest, static_position_relative_child_containing_block_content_box) {
 }
 
 TEST(YogaTest, static_position_static_child_containing_block_content_box) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
