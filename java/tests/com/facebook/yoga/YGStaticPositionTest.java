@@ -110,7 +110,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_insets_relative_to_positioned_ancestor() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -185,7 +184,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_insets_relative_to_positioned_ancestor_deep() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -311,7 +309,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_width_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -383,7 +380,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_width_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -454,7 +450,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_width_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -526,7 +521,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_height_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -598,7 +592,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_height_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -669,7 +662,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_height_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -741,7 +733,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_left_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -814,7 +805,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_left_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -886,7 +876,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_left_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -959,7 +948,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_right_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1032,7 +1020,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_right_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1104,7 +1091,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_right_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1177,7 +1163,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_top_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1250,7 +1235,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_top_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1322,7 +1306,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_top_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1395,7 +1378,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_bottom_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1468,7 +1450,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_bottom_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1540,7 +1521,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_bottom_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1613,7 +1593,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_margin_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1689,7 +1668,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_margin_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1764,7 +1742,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_margin_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1840,7 +1817,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_padding_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1916,7 +1892,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_padding_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1991,7 +1966,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_padding_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -2067,7 +2041,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_border_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -2139,7 +2112,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_border_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -2210,7 +2182,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_border_percentage() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -2282,7 +2253,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_containing_block_padding_box() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -2358,7 +2328,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_containing_block_padding_box() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -2433,7 +2402,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_containing_block_padding_box() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -2569,7 +2537,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_relative_child_containing_block_content_box() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -2628,7 +2595,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_static_child_containing_block_content_box() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
