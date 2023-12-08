@@ -2477,7 +2477,6 @@ public class YGStaticPositionTest {
   }
 
   @Test
-  @Ignore
   public void test_static_position_absolute_child_containing_block_content_box() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -5440,6 +5439,64 @@ public class YGStaticPositionTest {
     assertEquals(16f, root_child0_child0_child2_child0.getLayoutY(), 0.0f);
     assertEquals(100f, root_child0_child0_child2_child0.getLayoutWidth(), 0.0f);
     assertEquals(50f, root_child0_child0_child2_child0.getLayoutHeight(), 0.0f);
+  }
+
+  @Test
+  public void test_static_position_static_root() {
+    YogaConfig config = YogaConfigFactory.create();
+    config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
+
+    final YogaNode root = createNode(config);
+    root.setPositionType(YogaPositionType.STATIC);
+    root.setPadding(YogaEdge.LEFT, 6);
+    root.setPadding(YogaEdge.TOP, 1);
+    root.setPadding(YogaEdge.RIGHT, 11);
+    root.setPadding(YogaEdge.BOTTOM, 4);
+    root.setWidth(100f);
+    root.setHeight(200f);
+
+    final YogaNode root_child0 = createNode(config);
+    root_child0.setPositionType(YogaPositionType.ABSOLUTE);
+    root_child0.setMargin(YogaEdge.LEFT, 12f);
+    root_child0.setMargin(YogaEdge.TOP, 11f);
+    root_child0.setMargin(YogaEdge.RIGHT, 15f);
+    root_child0.setMargin(YogaEdge.BOTTOM, 1f);
+    root_child0.setPadding(YogaEdge.LEFT, 3);
+    root_child0.setPadding(YogaEdge.TOP, 7);
+    root_child0.setPadding(YogaEdge.RIGHT, 5);
+    root_child0.setPadding(YogaEdge.BOTTOM, 4);
+    root_child0.setBorder(YogaEdge.LEFT, 4f);
+    root_child0.setBorder(YogaEdge.TOP, 3f);
+    root_child0.setBorder(YogaEdge.RIGHT, 2f);
+    root_child0.setBorder(YogaEdge.BOTTOM, 1f);
+    root_child0.setWidthPercent(50f);
+    root_child0.setHeightPercent(50f);
+    root.addChildAt(root_child0, 0);
+    root.setDirection(YogaDirection.LTR);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(200f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(18f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(12f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
+
+    root.setDirection(YogaDirection.RTL);
+    root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+
+    assertEquals(0f, root.getLayoutX(), 0.0f);
+    assertEquals(0f, root.getLayoutY(), 0.0f);
+    assertEquals(100f, root.getLayoutWidth(), 0.0f);
+    assertEquals(200f, root.getLayoutHeight(), 0.0f);
+
+    assertEquals(24f, root_child0.getLayoutX(), 0.0f);
+    assertEquals(12f, root_child0.getLayoutY(), 0.0f);
+    assertEquals(50f, root_child0.getLayoutWidth(), 0.0f);
+    assertEquals(100f, root_child0.getLayoutHeight(), 0.0f);
   }
 
   private YogaNode createNode(YogaConfig config) {

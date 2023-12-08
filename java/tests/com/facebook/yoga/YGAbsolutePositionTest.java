@@ -1214,7 +1214,6 @@ public class YGAbsolutePositionTest {
   }
 
   @Test
-  @Ignore
   public void test_absolute_layout_padding_left() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1258,7 +1257,6 @@ public class YGAbsolutePositionTest {
   }
 
   @Test
-  @Ignore
   public void test_absolute_layout_padding_right() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
@@ -1302,7 +1300,6 @@ public class YGAbsolutePositionTest {
   }
 
   @Test
-  @Ignore
   public void test_absolute_layout_padding_top() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);

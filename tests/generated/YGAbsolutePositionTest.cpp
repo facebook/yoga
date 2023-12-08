@@ -1225,8 +1225,6 @@ TEST(YogaTest, absolute_layout_percentage_height_based_on_padded_parent_and_alig
 }
 
 TEST(YogaTest, absolute_layout_padding_left) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1271,8 +1269,6 @@ TEST(YogaTest, absolute_layout_padding_left) {
 }
 
 TEST(YogaTest, absolute_layout_padding_right) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
@@ -1317,8 +1313,6 @@ TEST(YogaTest, absolute_layout_padding_right) {
 }
 
 TEST(YogaTest, absolute_layout_padding_top) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
