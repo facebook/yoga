@@ -5,27 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- html[data-theme='light'] {
+html[data-theme='light'] {
   --yg-color-playound-background: var(--ifm-color-gray-200);
- }
-
- html[data-theme='dark'] {
-  --yg-color-playound-background: var(--ifm-color-background);
- }
-
-
-.container {
-  display: flex;
-  flex-direction: row;
-  background-color: var(--yg-color-playound-background);
-  min-height: 600px;
-  padding: 10px;
 }
 
-.playground {
-  flex: 1;
+html[data-theme='dark'] {
+  --yg-color-playound-background: var(--ifm-color-background);
+}
+
+.playgroundContainer {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  flex: 1;
+}
+
+.bg {
+  background-color: var(--yg-color-playound-background);
 }

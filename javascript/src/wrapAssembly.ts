@@ -71,8 +71,8 @@ export type MeasureFunction = (
 
 export type Node = {
   calculateLayout(
-    width?: number | 'auto',
-    height?: number | 'auto',
+    width: number | 'auto' | undefined,
+    height: number | 'auto' | undefined,
     direction?: Direction,
   ): void;
   copyStyle(node: Node): void;
@@ -124,45 +124,48 @@ export type Node = {
   setAlignContent(alignContent: Align): void;
   setAlignItems(alignItems: Align): void;
   setAlignSelf(alignSelf: Align): void;
-  setAspectRatio(aspectRatio: number): void;
-  setBorder(edge: Edge, borderWidth: number): void;
+  setAspectRatio(aspectRatio: number | undefined): void;
+  setBorder(edge: Edge, borderWidth: number | undefined): void;
   setDisplay(display: Display): void;
-  setFlex(flex: number): void;
-  setFlexBasis(flexBasis: number | 'auto' | `${number}%`): void;
-  setFlexBasisPercent(flexBasis: number): void;
+  setFlex(flex: number | undefined): void;
+  setFlexBasis(flexBasis: number | 'auto' | `${number}%` | undefined): void;
+  setFlexBasisPercent(flexBasis: number | undefined): void;
   setFlexBasisAuto(): void;
   setFlexDirection(flexDirection: FlexDirection): void;
-  setFlexGrow(flexGrow: number): void;
-  setFlexShrink(flexShrink: number): void;
+  setFlexGrow(flexGrow: number | undefined): void;
+  setFlexShrink(flexShrink: number | undefined): void;
   setFlexWrap(flexWrap: Wrap): void;
-  setHeight(height: number | 'auto' | `${number}%`): void;
+  setHeight(height: number | 'auto' | `${number}%` | undefined): void;
   setIsReferenceBaseline(isReferenceBaseline: boolean): void;
   setHeightAuto(): void;
-  setHeightPercent(height: number): void;
+  setHeightPercent(height: number | undefined): void;
   setJustifyContent(justifyContent: Justify): void;
-  setGap(gutter: Gutter, gapLength: number): Value;
-  setMargin(edge: Edge, margin: number | 'auto' | `${number}%`): void;
+  setGap(gutter: Gutter, gapLength: number | undefined): Value;
+  setMargin(
+    edge: Edge,
+    margin: number | 'auto' | `${number}%` | undefined,
+  ): void;
   setMarginAuto(edge: Edge): void;
-  setMarginPercent(edge: Edge, margin: number): void;
-  setMaxHeight(maxHeight: number | `${number}%`): void;
-  setMaxHeightPercent(maxHeight: number): void;
-  setMaxWidth(maxWidth: number | `${number}%`): void;
-  setMaxWidthPercent(maxWidth: number): void;
+  setMarginPercent(edge: Edge, margin: number | undefined): void;
+  setMaxHeight(maxHeight: number | `${number}%` | undefined): void;
+  setMaxHeightPercent(maxHeight: number | undefined): void;
+  setMaxWidth(maxWidth: number | `${number}%` | undefined): void;
+  setMaxWidthPercent(maxWidth: number | undefined): void;
   setDirtiedFunc(dirtiedFunc: DirtiedFunction | null): void;
   setMeasureFunc(measureFunc: MeasureFunction | null): void;
-  setMinHeight(minHeight: number | `${number}%`): void;
-  setMinHeightPercent(minHeight: number): void;
-  setMinWidth(minWidth: number | `${number}%`): void;
-  setMinWidthPercent(minWidth: number): void;
+  setMinHeight(minHeight: number | `${number}%` | undefined): void;
+  setMinHeightPercent(minHeight: number | undefined): void;
+  setMinWidth(minWidth: number | `${number}%` | undefined): void;
+  setMinWidthPercent(minWidth: number | undefined): void;
   setOverflow(overflow: Overflow): void;
-  setPadding(edge: Edge, padding: number | `${number}%`): void;
-  setPaddingPercent(edge: Edge, padding: number): void;
-  setPosition(edge: Edge, position: number | `${number}%`): void;
-  setPositionPercent(edge: Edge, position: number): void;
+  setPadding(edge: Edge, padding: number | `${number}%` | undefined): void;
+  setPaddingPercent(edge: Edge, padding: number | undefined): void;
+  setPosition(edge: Edge, position: number | `${number}%` | undefined): void;
+  setPositionPercent(edge: Edge, position: number | undefined): void;
   setPositionType(positionType: PositionType): void;
-  setWidth(width: number | 'auto' | `${number}%`): void;
+  setWidth(width: number | 'auto' | `${number}%` | undefined): void;
   setWidthAuto(): void;
-  setWidthPercent(width: number): void;
+  setWidthPercent(width: number | undefined): void;
   unsetDirtiedFunc(): void;
   unsetMeasureFunc(): void;
 };
@@ -227,7 +230,11 @@ export default function wrapAssembly(lib: any): Yoga {
             ? Unit.Percent
             : Unit.Point;
         asNumber = parseFloat(value);
-        if (!Number.isNaN(value) && Number.isNaN(asNumber)) {
+        if (
+          value !== undefined &&
+          !Number.isNaN(value) &&
+          Number.isNaN(asNumber)
+        ) {
           throw new Error(`Invalid value ${value} for ${fnName}`);
         }
       }

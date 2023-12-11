@@ -5,83 +5,77 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, {Suspense} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import styles from './index.module.css';
+
+import YogaLogo from '../../static/img/logo.svg';
+import Playground from '../components/Playground';
 
 function HeroSection() {
   return (
     <header className={clsx('hero', styles.heroBanner)}>
       <div className={clsx('row', 'container', styles.heroRow)}>
         <div className="col col--6">
-          <h1 className="hero__title">Yoga Layout</h1>
+          <h1 className="hero__title">Yoga</h1>
           <p className="hero__subtitle">
-            A portable and perfomant layout engine targeting web standards
+            A portable layout engine targeting web standards
           </p>
 
           <Link className="button button--primary button--lg" to="/docs/intro">
             Learn more
           </Link>
         </div>
-        <div className={clsx(['col col--6', styles.blueprintColumn])}>
-          <div className={clsx([styles.blueprint, styles.blueprintContainer])}>
-            <div className={styles.blueprintHeader}>
-              <div
-                className={clsx([styles.blueprint, styles.blueprintAvatar])}
-              />
-              <div
-                className={clsx([styles.blueprint, styles.blueprintTitle])}
-              />
-              <div
-                className={clsx([styles.blueprint, styles.blueprintSubtitle])}
-              />
-            </div>
-            <div
-              className={clsx([styles.blueprint, styles.blueprintContent])}
-            />
-          </div>
+        <div className="col col--2">
+          <YogaLogo className={styles.heroLogo} />
         </div>
       </div>
     </header>
   );
 }
 
-const LazyPlayground = React.lazy(
-  () => import('../components/Playground/Playground'),
-);
-
-// Docusaurus SSR does not correctly support top-level await
-// 1. https://github.com/facebook/docusaurus/issues/7238
-// 2. https://github.com/facebook/docusaurus/issues/9468
-function BrowserOnlyPlayground() {
-  return (
-    <BrowserOnly fallback={null}>
-      {() => (
-        <Suspense fallback={null}>
-          <LazyPlayground className={styles.playground} />
-        </Suspense>
-      )}
-    </BrowserOnly>
-  );
-}
+const playgroundCode = `
+<YogaRoot useWebDefaults={false}>
+  <Node
+    style={{
+      flexDirection: "row",
+      flexWrap: "wrap",
+      width: 350,
+      height: 350,
+      padding: 10,
+      gap: 10,
+   }}
+  >
+    <Node style={{width: 140, height: 150}} />
+    <Node style={{width: 80, height: 60}} />
+    <Node style={{flex: 1}} />
+    <Node style={{width: 100, height: 150}} />
+    <Node style={{flex: 1, padding: 5}}>
+      <Node style={{width: "70%", flex: 1, justifyContent: "center"}}>
+        <Node style={{width: 60, height: 60, marginLeft: 80}}>
+          <Node style={{width: 30, height: 30}} />
+        </Node>
+        <Node style={{width: 60, height: 60, marginLeft: 10}} />
+      </Node>
+    </Node>
+  </Node>
+</YogaRoot>
+`.trim();
 
 function PlaygroundSection() {
   return (
     <main className={styles.playgroundSection}>
-      <div className="container">
-        <BrowserOnlyPlayground />
-      </div>
+      <Playground height="580px" code={playgroundCode} autoFocus={true} />
     </main>
   );
 }
 
 export default function Home(): JSX.Element {
   return (
-    <Layout title="Yoga Layout | A cross-platform layout engine">
+    <Layout>
       <HeroSection />
       <PlaygroundSection />
     </Layout>
