@@ -13,6 +13,27 @@ import * as path from 'path';
 import * as process from 'node:process';
 import {Builder, logging} from 'selenium-webdriver';
 import {Options} from 'selenium-webdriver/chrome.js';
+import {stdin, stdout} from 'node:process';
+import minimist from 'minimist';
+import readline from 'node:readline/promises';
+
+process.chdir(path.dirname(process.argv[1]));
+
+const argv = minimist(process.argv.slice(2));
+const specificFixture = argv.f || argv.fixture;
+const suspend = argv.s || argv.suspend;
+
+let fixtures = await fs.readdir('./fixtures');
+try {
+  if (specificFixture != undefined) {
+    await fs.access(`fixtures/${specificFixture}.html`, fs.constants.F_OK);
+    fixtures = [specificFixture + '.html'];
+  }
+} catch {
+  console.log(
+    `NOTE: ${specificFixture}.html does not exist. Executing against all fixtures.`,
+  );
+}
 
 const options = new Options();
 options.addArguments(
@@ -29,9 +50,6 @@ const driver = await new Builder()
   .setChromeOptions(options)
   .build();
 
-process.chdir(path.dirname(process.argv[1]));
-
-const fixtures = await fs.readdir('./fixtures');
 for (const fileName of fixtures) {
   const fixture = await fs.readFile('fixtures/' + fileName, 'utf8');
   const fileNameNoExtension = path.parse(fileName).name;
@@ -81,6 +99,12 @@ for (const fileName of fixtures) {
       fileNameNoExtension,
     ),
   );
+
+  if (suspend) {
+    const rl = readline.createInterface({input: stdin, output: stdout});
+    await rl.question('');
+    rl.close();
+  }
 }
 await fs.unlink('test.html');
 await driver.quit();
