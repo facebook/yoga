@@ -1132,8 +1132,6 @@ TEST(YogaTest, percent_absolute_position_infinite_height) {
 }
 
 TEST(YogaTest, absolute_layout_percentage_height_based_on_padded_parent) {
-  GTEST_SKIP();
-
   const YGConfigRef config = YGConfigNew();
   YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 

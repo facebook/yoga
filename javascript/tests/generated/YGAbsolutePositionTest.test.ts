@@ -1255,7 +1255,7 @@ test('percent_absolute_position_infinite_height', () => {
     config.free();
   }
 });
-test.skip('absolute_layout_percentage_height_based_on_padded_parent', () => {
+test('absolute_layout_percentage_height_based_on_padded_parent', () => {
   const config = Yoga.Config.create();
   let root;
 
