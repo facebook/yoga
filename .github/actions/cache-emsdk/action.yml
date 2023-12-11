@@ -1,0 +1,10 @@
+name: Cache the installed copy of emsdk and its build artifacts
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache emsdk
+      uses: actions/cache@v3
+      with:
+        path: javascript/.emsdk
+        key: emsdk-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('yarn.lock', 'javascript/package.json', 'javascript/just.config.cjs'}}

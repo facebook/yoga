@@ -8,7 +8,7 @@
  */
 
 // @ts-ignore untyped from Emscripten
-import loadYoga from '../binaries/web.js';
+import loadYoga from '../binaries/yoga-wasm-base64-esm.js';
 import wrapAssembly from './wrapAssembly.ts';
 
 export type {

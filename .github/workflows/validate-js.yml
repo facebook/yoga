@@ -24,6 +24,9 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
+      - name: Restore emsdk
+        uses: ./.github/actions/cache-emsdk
+
       - name: yarn benchmark
         run: yarn benchmark
         working-directory: javascript
@@ -40,8 +43,11 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
+      - name: Restore emsdk
+        uses: ./.github/actions/cache-emsdk
+
       - name: yarn build
-        run: yarn build
+        run: yarn build --verbose
         working-directory: javascript
 
   test:
@@ -55,6 +61,9 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup-js
+
+      - name: Restore emsdk
+        uses: ./.github/actions/cache-emsdk
 
       - name: yarn test
         run: yarn test
@@ -93,6 +102,9 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup-js
+
+      - name: Restore emsdk
+        uses: ./.github/actions/cache-emsdk
 
       - name: yarn pack
         run: yarn pack --filename yoga-layout.tar.gz
