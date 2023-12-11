@@ -36,11 +36,13 @@
     "@types/jest": "^29.5.1",
     "@types/node": "^16.18.25",
     "@types/which": "^3.0.0",
+    "@yogalayout/cmake-bin": "3.28.0-1",
     "babel-register-esm": "^1.2.5",
     "clang-format": "^1.8.0",
     "glob": "^8.0.3",
     "jest": "^29.3.1",
     "just-scripts": "^2.1.0",
+    "ninja-binaries": "^1.11.1",
     "which": "^3.0.0"
   }
 }

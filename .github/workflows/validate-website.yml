@@ -34,6 +34,9 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-js
 
+      - name: Restore emsdk
+        uses: ./.github/actions/cache-emsdk
+
       - name: Build Website
         run: yarn build
         working-directory: website-next

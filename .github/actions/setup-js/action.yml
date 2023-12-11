@@ -3,12 +3,6 @@ name: Setup JavaScript envirionment
 runs:
   using: "composite"
   steps:
-    - name: Install emsdk
-      uses: ./.github/actions/install-emsdk
-
-    - name: Install Ninja
-      uses: ./.github/actions/install-ninja
-
     - name: Setup Node environment
       uses: actions/setup-node@v3
       with:

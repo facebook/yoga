@@ -2901,6 +2901,30 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+"@yogalayout/cmake-bin-darwin-universal@3.28.0":
+  version "3.28.0"
+  resolved "https://registry.yarnpkg.com/@yogalayout/cmake-bin-darwin-universal/-/cmake-bin-darwin-universal-3.28.0.tgz#727e10d62ae4fca960e3502465b68f948841dd6c"
+  integrity sha512-grgtVOaJZT5fCvCaLVbYmVKqsBqtphQffG6WTjDCdyJ++giM4AvrhiRgFKnyr4rx3pj42DrWTvpIWJJl2nBc6w==
+
+"@yogalayout/cmake-bin-linux-x64@3.28.0":
+  version "3.28.0"
+  resolved "https://registry.yarnpkg.com/@yogalayout/cmake-bin-linux-x64/-/cmake-bin-linux-x64-3.28.0.tgz#9bbd414a24a1264a6b8b824c6eb582d623d4ae8e"
+  integrity sha512-RQlsWl1si7+yi87NI2tV13Ca7RYxhjw1AmoULLwhPNkNSLu9Laja2IFvjgvz6iJ3zD9fWSMUl5TwA/ugiNj7OQ==
+
+"@yogalayout/cmake-bin-windows-x64@3.28.0":
+  version "3.28.0"
+  resolved "https://registry.yarnpkg.com/@yogalayout/cmake-bin-windows-x64/-/cmake-bin-windows-x64-3.28.0.tgz#c60787a7148d54fe0d579dcb4fd80d1f7aef56ed"
+  integrity sha512-wMWwUbw/NkXynVRcrFElbFJD/p9HQHmScuv9amZAKMM/JhLjrxDQaivQ+7ZmEOlRQ1uWZjiue9QCkaJERt9Bog==
+
+"@yogalayout/cmake-bin@3.28.0-1":
+  version "3.28.0-1"
+  resolved "https://registry.yarnpkg.com/@yogalayout/cmake-bin/-/cmake-bin-3.28.0-1.tgz#af366eb6205ec07c1ede2bcec668a2be083869b9"
+  integrity sha512-2bnXhH4qt+bxjm+fgkjTHYhvB2quaS874XkYmUL1Obo6S0kWtDXEp7s0ZgtKvOfW3+y4Q5eomNMIobOeGLi9rw==
+  optionalDependencies:
+    "@yogalayout/cmake-bin-darwin-universal" "3.28.0"
+    "@yogalayout/cmake-bin-linux-x64" "3.28.0"
+    "@yogalayout/cmake-bin-windows-x64" "3.28.0"
+
 accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.8:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.8.tgz#0bf0be125b67014adcb0b0921e62db7bffe16b2e"
@@ -7822,6 +7846,11 @@ next-tick@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
   integrity sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==
+
+ninja-binaries@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/ninja-binaries/-/ninja-binaries-1.11.1.tgz#9089191512ab44f990b1ee03792b47f79aedeaaa"
+  integrity sha512-/fjozfApkgrHe2IGbSMhwiDYdz0AUpvsm1szWWu9cy4NJmwPDuhd4mvfFMlCp35CPexHim3jSWn1BjHddxFkkA==
 
 no-case@^3.0.4:
   version "3.0.4"
