@@ -66,6 +66,7 @@ export default {
             position: 'left',
             label: 'Documentation',
           },
+          {to: '/playground', label: 'Playground', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/facebook/yoga',
@@ -124,7 +125,11 @@ export default {
       },
       prism: {
         theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
+        darkTheme: prismThemes.oneDark,
+      },
+      colorMode: {
+        defaultMode: 'dark',
+        respectPrefersColorScheme: true,
       },
     }),
 };

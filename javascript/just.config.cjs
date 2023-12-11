@@ -181,7 +181,7 @@ async function isEmsdkReadyAndActivated() {
     return activatedVersion.toString().includes(versionHash);
   } catch {
     // Something is wrong. Pave and redo.
-    return true;
+    return false;
   }
 }
 

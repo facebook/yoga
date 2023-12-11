@@ -17,14 +17,14 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@docusaurus/core": "3.0.0",
-    "@docusaurus/preset-classic": "3.0.0",
+    "@docusaurus/core": "3.0.1",
+    "@docusaurus/preset-classic": "3.0.1",
     "@mdx-js/react": "^3.0.0",
-    "clsx": "^1.2.1",
-    "immutable": "^4.0.0",
-    "prism-react-renderer": "^2.1.0",
+    "clsx": "^2.0.0",
+    "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-live": "^4.1.5",
     "yoga-layout": "0.0.0"
   },
   "devDependencies": {

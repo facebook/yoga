@@ -1,0 +1,108 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+html[data-theme='light'] {
+  --yg-color-preview-background: var(--ifm-color-primary-lighter);
+  --yg-color-playground-background: var(--ifm-color-gray-200);
+  --yg-color-editor-border: var(--ifm-color-gray-400);
+}
+
+html[data-theme='dark'] {
+  --yg-color-preview-background: var(--ifm-color-primary-dark);
+  --yg-color-playground-background: var(--ifm-color-background);
+  --yg-color-editor-border: var(--ifm-color-gray-800);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  min-width: 900px;
+  width: 100%;
+  padding-block: 16px;
+  background-color: var(--yg-color-playground-background);
+}
+
+.editorColumn {
+  position: relative;
+  flex: 8;
+  min-width: 0;
+}
+
+.playgroundRow {
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+}
+
+.playgroundEditor {
+  font: var(--ifm-code-font-size) / var(--ifm-pre-line-height)
+    var(--ifm-font-family-monospace) !important;
+  direction: ltr;
+  height: calc(var(--yg-playground-height, 400px) - 32px);
+  overflow: scroll;
+}
+
+.playgroundEditor :global(.prism-code) {
+  height: 100%;
+  box-shadow: var(--ifm-global-shadow-lw);
+  border: 1px solid var(--yg-color-editor-border);
+}
+
+.previewColumn {
+  display: flex;
+  flex: 5;
+  height: calc(var(--yg-playground-height, 400px) - 32px);
+  align-items: center;
+  justify-content: center;
+  background-color: var(--yg-color-preview-background);
+  overflow: hidden;
+  border-radius: var(--ifm-pre-border-radius);
+  align-self: flex-start;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.livePreviewWrapper {
+  box-shadow: var(--ifm-global-shadow-md);
+}
+
+.liveError {
+  align-self: flex-start;
+  font-size: 12px;
+  box-shadow: var(--ifm-global-shadow-lw);
+  background-color:var(--ifm-color-danger-darker);
+  color: white;
+  width: 100%;
+  text-align: center;
+  margin: 10px;
+}
+
+@media (max-width: 996px) {
+  .wrapper {
+    min-width: 100%;
+  }
+
+  .playgroundEditor {
+    height: max-content;
+    overflow: visible;
+  }
+
+  .playgroundRow {
+    flex-direction: column;
+    padding-inline: 5px;
+  }
+
+  .editorColumn {
+    padding: 0;
+    flex: 0 !important;
+    margin-bottom: 10px;
+  }
+
+  .previewColumn {
+    padding: 10px;
+    width: 100%;
+  }
+}

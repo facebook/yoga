@@ -1,0 +1,68 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+ html[data-theme='light'] {
+  --yg-color-node-depth-0: var(--ifm-color-gray-0);
+  --yg-color-node-depth-1: var(--ifm-color-gray-200);
+  --yg-color-node-depth-2: var(--ifm-color-gray-400);
+  --yg-color-node-depth-3: var(--ifm-color-gray-600);
+  --yg-color-node-depth-4: var(--ifm-color-gray-800);
+
+  --yg-border-node-depth-0: 1px solid var(--ifm-color-gray-200);
+  --yg-border-node-depth-1: 1px solid var(--ifm-color-gray-600);
+  --yg-border-node-depth-2: 1px solid var(--ifm-color-gray-700);
+  --yg-border-node-depth-3: 1px solid var(--ifm-color-gray-800);
+  --yg-border-node-depth-4: 1px solid var(--ifm-color-gray-900);
+}
+
+html[data-theme='dark'] {
+  --yg-color-node-depth-0: var(--ifm-color-gray-900);
+  --yg-color-node-depth-1: var(--ifm-color-gray-800);
+  --yg-color-node-depth-2: var(--ifm-color-gray-700);
+  --yg-color-node-depth-3: var(--ifm-color-gray-600);
+  --yg-color-node-depth-4: var(--ifm-color-gray-500);
+
+  --yg-border-node-depth-0: 1px solid var(--ifm-color-gray-800);
+  --yg-border-node-depth-1: 1px solid var(--ifm-color-gray-700);
+  --yg-border-node-depth-2: 1px solid var(--ifm-color-gray-600);
+  --yg-border-node-depth-3: 1px solid var(--ifm-color-gray-500);
+  --yg-border-node-depth-4: 1px solid var(--ifm-color-gray-400);
+}
+
+.layoutBox {
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.zeroDim {
+  border: 0 !important;
+}
+
+.depthZero {
+  background: var(--yg-color-node-depth-0);
+  border: var(--yg-border-node-depth-0);
+}
+
+.depthOne {
+  background-color: var(--yg-color-node-depth-1);
+  border: var(--yg-border-node-depth-1);
+}
+
+.depthTwo {
+  background-color: var(--yg-color-node-depth-2);
+  border: var(--yg-border-node-depth-2);
+}
+
+.depthThree {
+  background-color: var(--yg-color-node-depth-3);
+  border: var(--yg-border-node-depth-3);
+}
+
+.depthFour {
+  background-color: var(--yg-color-node-depth-4);
+  border: var(--yg-border-node-depth-4);
+}
