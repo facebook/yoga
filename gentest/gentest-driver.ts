@@ -16,6 +16,17 @@ import {Options} from 'selenium-webdriver/chrome.js';
 import {stdin, stdout} from 'node:process';
 import minimist from 'minimist';
 import readline from 'node:readline/promises';
+import signedsource from 'signedsource';
+
+function signFile(fileData: string) {
+  let signedFile = fileData.replace(
+    'MAGIC_PLACEHOLDER',
+    signedsource.getSigningToken(),
+  );
+  signedFile = signedsource.signFile(signedFile);
+
+  return signedFile;
+}
 
 process.chdir(path.dirname(process.argv[1]));
 
@@ -79,26 +90,30 @@ for (const fileName of fixtures) {
   await driver.get('file://' + process.cwd() + '/test.html');
   const logs = await driver.manage().logs().get(logging.Type.BROWSER);
 
-  await fs.writeFile(
-    `../tests/generated/${fileNameNoExtension}.cpp`,
-    eval(logs[0].message.replace(/^[^"]*/, '')),
-  );
+    await fs.writeFile(
+      `../tests/generated/${fileNameNoExtension}.cpp`,
+      signFile(eval(logs[0].message.replace(/^[^"]*/, ''))),
+    );
 
-  await fs.writeFile(
-    `../java/tests/com/facebook/yoga/${fileNameNoExtension}.java`,
-    eval(logs[1].message.replace(/^[^"]*/, '')).replace(
-      'YogaTest',
-      fileNameNoExtension,
-    ),
-  );
+    await fs.writeFile(
+      `../java/tests/com/facebook/yoga/${fileNameNoExtension}.java`,
+      signFile(
+        eval(logs[1].message.replace(/^[^"]*/, '')).replace(
+          'YogaTest',
+          fileNameNoExtension,
+        ),
+      ),
+    );
 
-  await fs.writeFile(
-    `../javascript/tests/generated/${fileNameNoExtension}.test.ts`,
-    eval(logs[2].message.replace(/^[^"]*/, '')).replace(
-      'YogaTest',
-      fileNameNoExtension,
-    ),
-  );
+    await fs.writeFile(
+      `../javascript/tests/generated/${fileNameNoExtension}.test.ts`,
+      signFile(
+        eval(logs[2].message.replace(/^[^"]*/, '')).replace(
+          'YogaTest',
+          fileNameNoExtension,
+        ),
+      ),
+    );
 
   if (suspend) {
     const rl = readline.createInterface({input: stdin, output: stdout});
