@@ -1,0 +1,20 @@
+{
+  "name": "gentest",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "gentest": "node --loader=babel-register-esm ./gentest-driver.ts"
+  },
+  "type": "module",
+  "dependencies": {
+    "selenium-webdriver": "^4.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.3",
+    "@types/selenium-webdriver": "^4.1.21",
+    "babel-register-esm": "^1.2.5",
+    "@babel/core": "^7.23.0",
+    "@babel/preset-typescript": "^7.23.0",
+    "@tsconfig/node18": "^18.2.2"
+  }
+}
