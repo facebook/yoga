@@ -126,6 +126,7 @@ export default {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.oneDark,
+        additionalLanguages: ['gradle', 'java', 'json', 'json5', 'ruby'],
       },
       colorMode: {
         defaultMode: 'dark',
