@@ -3,9 +3,8 @@
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true
+    "target": "es2022",
+    "allowImportingTsExtensions": true,
+    "strict": true
   }
 }

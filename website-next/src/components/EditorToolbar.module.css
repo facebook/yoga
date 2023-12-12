@@ -1,0 +1,80 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.toolbar {
+  display: flex;
+  column-gap: 8px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.toolbar button {
+  display: flex;
+  align-items: center;
+  background: var(--prism-background-color);
+  color: var(--prism-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  padding: 0.4rem;
+  line-height: 0;
+  transition: opacity var(--ifm-transition-fast) ease-in-out;
+  opacity: 0.4;
+}
+
+.toolbar button:focus-visible,
+.toolbar button:hover {
+  opacity: 1 !important;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.iconSwitcher {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.actionIcon,
+.successIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: currentColor;
+  opacity: inherit;
+  width: inherit;
+  height: inherit;
+  transition: all var(--ifm-transition-fast) ease;
+}
+
+.successIcon {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.33);
+  opacity: 0;
+  color: #00d600;
+}
+
+.clicked .actionIcon {
+  transform: scale(0.33);
+  opacity: 0;
+}
+
+.clicked .successIcon {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition-delay: 0.075s;
+}
+
+@media (max-width: 996px) {
+  .toolbar {
+    display: none;
+  }
+}
