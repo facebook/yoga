@@ -7,4 +7,4 @@ runs:
       uses: actions/cache@v3
       with:
         path: javascript/.emsdk
-        key: emsdk-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('yarn.lock', 'javascript/package.json', 'javascript/just.config.cjs'}}
+        key: emsdk-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('yarn.lock', 'javascript/package.json', 'javascript/just.config.cjs')}}
