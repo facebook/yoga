@@ -174,20 +174,15 @@ for name, values in sorted(ENUMS.items()):
             f.write(f"YG_DEFINE_ENUM_FLAG_OPERATORS({name})\n\n")
         else:
             f.write("template <>\n")
-            f.write(f"constexpr inline int32_t ordinalCount<{name}>() {{\n")
+            f.write(f"constexpr int32_t ordinalCount<{name}>() {{\n")
             f.write(f"  return {len(values)};\n")
-            f.write("} \n\n")
+            f.write("}\n\n")
 
-            f.write("template <>\n")
-            f.write(f"constexpr inline int32_t bitCount<{name}>() {{\n")
-            f.write(f"  return {math.ceil(math.log(len(values), 2))};\n")
-            f.write("} \n\n")
-
-        f.write(f"constexpr inline {name} scopedEnum(YG{name} unscoped) {{\n")
+        f.write(f"constexpr {name} scopedEnum(YG{name} unscoped) {{\n")
         f.write(f"  return static_cast<{name}>(unscoped);\n")
         f.write("}\n\n")
 
-        f.write(f"constexpr inline YG{name} unscopedEnum({name} scoped) {{\n")
+        f.write(f"constexpr YG{name} unscopedEnum({name} scoped) {{\n")
         f.write(f"  return static_cast<YG{name}>(scoped);\n")
         f.write("}\n\n")
 
