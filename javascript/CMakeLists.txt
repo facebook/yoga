@@ -44,7 +44,11 @@ add_link_options(
     "SHELL:-s MODULARIZE=1"
     "SHELL:-s EXPORT_ES6=1"
     "SHELL:-s WASM=1"
-    "SHELL:-s TEXTDECODER=0")
+    "SHELL:-s TEXTDECODER=0"
+    # SINGLE_FILE=1 combined with ENVIRONMENT='web' creates code that works on
+    # both bundlders and Node.
+    "SHELL:-s SINGLE_FILE=1"
+    "SHELL:-s ENVIRONMENT='web'")
 
 link_libraries(embind)
 
@@ -52,9 +56,4 @@ add_library(yogaObjLib OBJECT ${SOURCES})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
 
-add_executable(web $<TARGET_OBJECTS:yogaObjLib>)
-target_link_options(web PRIVATE
-    # SINGLE_FILE=1 combined with ENVIRONMENT='web' creates code that works on
-    # both bundlders and Node.
-    "SHELL:-s SINGLE_FILE=1"
-    "SHELL:-s ENVIRONMENT='web'")
+add_executable(yoga-wasm-base64-esm $<TARGET_OBJECTS:yogaObjLib>)

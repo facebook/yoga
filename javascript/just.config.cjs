@@ -20,9 +20,9 @@ const {
   tscTask,
 } = require('just-scripts');
 
-const {readFile, writeFile} = require('fs/promises');
+const {existsSync} = require('fs');
+const {readFile, writeFile, rm} = require('fs/promises');
 
-const chalk = require('chalk');
 const glob = require('glob');
 const path = require('path');
 const which = require('which');
@@ -31,38 +31,25 @@ const node = process.execPath;
 
 option('fix');
 
-task('clean', cleanTask({paths: ['build', 'dist']}));
+task('clean', cleanTask({paths: ['.emsdk', 'binaries', 'build']}));
 
-function defineFlavor(flavor, env) {
-  task(`cmake-build:${flavor}`, cmakeBuildTask({targets: [flavor]}));
-  task(
-    `jest:${flavor}`,
+task(
+  'build',
+  series(installEmsdkTask(), emcmakeGenerateTask(), cmakeBuildTask()),
+);
+
+task(
+  'test',
+  series(
+    'build',
     jestTask({
       config: path.join(__dirname, 'jest.config.js'),
       nodeArgs: ['--experimental-vm-modules'],
-      env,
     }),
-  );
-  task(
-    `test:${flavor}`,
-    series(emcmakeGenerateTask(), `cmake-build:${flavor}`, `jest:${flavor}`),
-  );
-}
-
-defineFlavor('web');
-
-task('build', series(emcmakeGenerateTask(), cmakeBuildTask()));
-
-task('test', series(emcmakeGenerateTask(), 'cmake-build:web', 'jest:web'));
-
-task(
-  'benchmark',
-  series(
-    emcmakeGenerateTask(),
-    cmakeBuildTask({targets: ['web']}),
-    runBenchTask(),
   ),
 );
+
+task('benchmark', series('build', runBenchTask()));
 
 task('clang-format', clangFormatTask({fix: argv().fix}));
 
@@ -133,36 +120,74 @@ function runBenchTask() {
   };
 }
 
-function findExecutable(name, failureMessage) {
-  const exec = which.sync(name, {nothrow: true});
-  if (exec) {
-    return exec;
-  }
+const emsdkVersion = '3.1.28';
+const emsdkPath = path.join(__dirname, '.emsdk');
+const emsdkBin = path.join(
+  emsdkPath,
+  process.platform === 'win32' ? 'emsdk.bat' : 'emsdk',
+);
+const emcmakeBin = path.join(
+  emsdkPath,
+  'upstream',
+  'emscripten',
+  process.platform === 'win32' ? 'emcmake.bat' : 'emcmake',
+);
 
-  logger.error(chalk.bold.red(failureMessage));
-  process.exit(1);
+function installEmsdkTask() {
+  return async () => {
+    if (await isEmsdkReadyAndActivated()) {
+      logger.verbose(
+        `emsdk ${emsdkVersion} is already installed and activated`,
+      );
+      return false;
+    }
+
+    logger.info(`installing emsdk ${emsdkVersion} to ${emsdkPath}`);
+    await rm(emsdkPath, {recursive: true, force: true});
+
+    await spawn(
+      'git',
+      ['clone', 'https://github.com/emscripten-core/emsdk.git', emsdkPath],
+      {stdio: 'inherit'},
+    );
+
+    await spawn(emsdkBin, ['install', emsdkVersion], {stdio: 'inherit'});
+
+    await spawn(emsdkBin, ['activate', emsdkVersion], {
+      stdio: logger.enableVerbose ? 'inherit' : 'ignore',
+    });
+  };
 }
 
-function tryFindExecutable(name, failureMessage) {
-  const exec = which.sync(name, {nothrow: true});
-  if (exec) {
-    return exec;
+async function isEmsdkReadyAndActivated() {
+  if (!existsSync(emcmakeBin)) {
+    return false;
   }
 
-  logger.warn(chalk.bold.yellow(failureMessage));
-  return exec;
+  try {
+    const emsdkReleases = JSON.parse(
+      await readFile(path.join(emsdkPath, 'emscripten-releases-tags.json')),
+    ).releases;
+
+    const versionHash = emsdkReleases[emsdkVersion];
+    if (!versionHash) {
+      return false;
+    }
+
+    const activatedVersion = await readFile(
+      path.join(emsdkPath, 'upstream', '.emsdk_version'),
+    );
+
+    return activatedVersion.toString().includes(versionHash);
+  } catch {
+    // Something is wrong. Pave and redo.
+    return false;
+  }
 }
 
 function emcmakeGenerateTask() {
   return () => {
-    const ninja = tryFindExecutable(
-      'ninja',
-      'Warning: Install Ninja (e.g. "brew install ninja") for faster builds',
-    );
-    const emcmake = findExecutable(
-      'emcmake',
-      'Error: Please install the emscripten SDK: https://emscripten.org/docs/getting_started/',
-    );
+    logger.verbose(`emcmake path: ${emcmakeBin}`);
 
     const args = [
       'cmake',
@@ -170,20 +195,21 @@ function emcmakeGenerateTask() {
       '.',
       '-B',
       'build',
-      ...(ninja ? ['-G', 'Ninja'] : []),
+      ...(process.platform === 'win32' ? [] : ['-G', 'Ninja']),
     ];
     logger.info(['emcmake', ...args].join(' '));
 
-    return spawn(emcmake, args, {stdio: 'inherit'});
+    return spawn(emcmakeBin, args, {
+      stdio: logger.enableVerbose ? 'inherit' : 'ignore',
+    });
   };
 }
 
 function cmakeBuildTask(opts) {
   return () => {
-    const cmake = findExecutable(
-      'cmake',
-      'Error: Please install CMake (e.g. "brew install cmake")',
-    );
+    const cmake = which.sync('cmake');
+    logger.verbose(`cmake path: ${cmake}`);
+
     const args = [
       '--build',
       'build',
