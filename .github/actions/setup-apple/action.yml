@@ -7,3 +7,7 @@ runs:
     - name: Install Cocoapods
       shell: bash
       run: sudo gem install cocoapods
+
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: 14.3.1
