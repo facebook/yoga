@@ -2,8 +2,8 @@
 
 Yoga is an embeddable and performant flexbox layout engine with bindings for multiple languages.
 
-
 ## Building
+
 Yoga's main implementation targets C++ 20 with accompanying build logic in CMake. A wrapper is provided to build the main library and run unit tests.
 
 ```sh
@@ -13,8 +13,6 @@ Yoga's main implementation targets C++ 20 with accompanying build logic in CMake
 While not required, this script will use [ninja](https://ninja-build.org/) if it is installed for faster builds.
 
 Yoga is additionally part of the [vcpkg](https://github.com/Microsoft/vcpkg/) collection of ports maintained by Microsoft and community contributors. If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
-
-
 
 ## Adding Tests
 
@@ -27,9 +25,10 @@ Many of Yoga's tests are automatically generated, using HTML fixtures describing
 ```
 
 To generate new tests from added fixtures:
-1. Run `bundle install` in the `gentest` directory to install dependencies of the test generator.
-2. Run `ruby gentest.rb` in the `gentest` directory.
 
+1. Ensure you have [yarn](https://yarnpkg.com/) installed.
+2. Run `yarn install` to install dependencies for the test generator.
+3. Run `yarn gentest` in the `yoga` directory.
 
 ## Debugging
 
