@@ -14,6 +14,29 @@ import * as process from 'node:process';
 import {Builder, logging} from 'selenium-webdriver';
 import {Options} from 'selenium-webdriver/chrome.js';
 import {fileURLToPath} from 'url';
+import {stdin, stdout} from 'node:process';
+import minimist from 'minimist';
+import readline from 'node:readline/promises';
+
+const argv = minimist(process.argv.slice(2));
+const specificFixture = argv.f || argv.fixture;
+const suspend = argv.s || argv.suspend;
+
+const gentestDir = dirname(fileURLToPath(import.meta.url));
+const yogaDir = dirname(gentestDir);
+
+let fixtures = await fs.readdir(`${gentestDir}/fixtures`);
+try {
+  if (specificFixture != null) {
+    await fs.access(`fixtures/${specificFixture}.html`, fs.constants.F_OK);
+    fixtures = [specificFixture + '.html'];
+  }
+} catch (e) {
+  const errorMessage = e instanceof Error ? e.message : '';
+  console.log(
+    `Trying to access ${specificFixture}.html threw an exception. Executing against all fixtures. ${errorMessage}`,
+  );
+}
 
 const options = new Options();
 options.addArguments(
@@ -30,10 +53,6 @@ const driver = await new Builder()
   .setChromeOptions(options)
   .build();
 
-const gentestDir = dirname(fileURLToPath(import.meta.url));
-const yogaDir = dirname(gentestDir);
-
-const fixtures = await fs.readdir(`${gentestDir}/fixtures`);
 for (const fileName of fixtures) {
   const fixture = await fs.readFile(
     `${gentestDir}/fixtures/${fileName}`,
@@ -89,6 +108,12 @@ for (const fileName of fixtures) {
       fileNameNoExtension,
     ),
   );
+
+  if (suspend) {
+    const rl = readline.createInterface({input: stdin, output: stdout});
+    await rl.question('');
+    rl.close();
+  }
 }
 await fs.unlink(`${gentestDir}/test.html`);
 await driver.quit();
