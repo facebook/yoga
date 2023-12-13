@@ -1124,7 +1124,6 @@ public class YGAbsolutePositionTest {
   }
 
   @Test
-  @Ignore
   public void test_absolute_layout_percentage_height_based_on_padded_parent() {
     YogaConfig config = YogaConfigFactory.create();
     config.setExperimentalFeatureEnabled(YogaExperimentalFeature.ABSOLUTE_PERCENTAGE_AGAINST_PADDING_EDGE, true);
