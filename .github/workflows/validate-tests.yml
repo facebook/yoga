@@ -1,0 +1,33 @@
+name: Validate Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'release-*'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup JS
+        uses: ./.github/actions/setup-js
+
+      - name: yarn gentest-validate
+        run: yarn gentest-validate
+
+      - name: yarn gentest
+        run: yarn gentest -h
+
+      - name: Check for modified tests
+        run: |
+          if [[ -n $(git status -s) ]]; then
+            git status -s
+            echo "yarn gentest modified these tests. Please run yarn gentest to resolve."
+            exit 1
+          fi
