@@ -9,6 +9,7 @@
   },
   "workspaces": [
     "javascript",
+    "gentest",
     "website-next"
   ],
   "devDependencies": {
