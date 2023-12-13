@@ -6,7 +6,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "tsc": "yarn workspaces run tsc",
-    "gentest": "node --loader=babel-register-esm gentest/gentest-driver.ts"
+    "gentest": "yarn workspace gentest run gentest"
   },
   "workspaces": [
     "javascript",
