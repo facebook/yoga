@@ -17,29 +17,26 @@ import SuccessIcon from '@theme/Icon/Success';
 import styles from './EditorToolbar.module.css';
 
 export type Props = Readonly<{
-  getCode: () => string;
+  code: string;
   className?: string;
   style?: React.CSSProperties;
 }>;
 
 export default function EditorToolbar({
-  getCode,
+  code,
   className,
   style,
 }: Props): JSX.Element {
-  const handleCopy = useCallback(
-    () => navigator.clipboard.writeText(getCode()),
-    [],
-  );
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText(code);
+  }, [code]);
 
-  const handleShare = useCallback(
-    () =>
-      navigator.clipboard.writeText(
-        window.location.origin +
-          `/playground?code=${encodeURIComponent(btoa(getCode()))}`,
-      ),
-    [],
-  );
+  const handleShare = useCallback(() => {
+    navigator.clipboard.writeText(
+      window.location.origin +
+        `/playground?code=${encodeURIComponent(btoa(code))}`,
+    );
+  }, [code]);
 
   return (
     <div className={clsx(styles.toolbar, className)} style={style}>
@@ -71,7 +68,7 @@ function ToolbarButton({
     copyTimeout.current = window.setTimeout(() => {
       setIsSuccess(false);
     }, 1000);
-  }, []);
+  }, [onClick]);
 
   return (
     <button

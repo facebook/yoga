@@ -7,7 +7,7 @@
  * @format
  */
 
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import Yoga, {Direction, Overflow, Node as YogaNode} from 'yoga-layout';
 import {FlexStyle, applyStyle} from './FlexStyle';
 import LayoutBox from './LayoutBox';
@@ -36,7 +36,7 @@ export default function YogaViewer({
 }: Props) {
   const layout = useMemo(
     () => layoutStyleTree(rootNode, width, height, {useWebDefaults}),
-    [rootNode, width, height],
+    [rootNode, width, height, useWebDefaults],
   );
   return <LayoutBox metrics={layout} depth={0} className={className} />;
 }
