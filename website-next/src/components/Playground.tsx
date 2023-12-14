@@ -13,6 +13,7 @@ import React, {
   lazy,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -45,7 +46,11 @@ export type Props = Readonly<{
 export default function Playground({code, height, autoFocus}: Props) {
   const prismTheme = usePrismTheme();
   const playgroundRef = useRef<HTMLDivElement>(null);
+  const editorScrollRef = useRef<HTMLDivElement>(null);
+
   const [isLoaded, setIsLoaded] = useState(false);
+  const [liveCode, setLiveCode] = useState(code ?? defaultCode);
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
 
   const LivePreviewWrapper = useCallback(
     (props: React.ComponentProps<'div'>) => {
@@ -64,35 +69,52 @@ export default function Playground({code, height, autoFocus}: Props) {
     if (isLoaded && autoFocus) {
       const codeElem = playgroundRef?.current?.querySelector('.prism-code');
       const sel = window.getSelection();
-      if (codeElem != null && sel != null) {
+      if (codeElem?.clientHeight && sel != null) {
         sel.selectAllChildren(codeElem);
         sel.collapseToStart();
       }
     }
   }, [isLoaded, autoFocus]);
 
+  useLayoutEffect(() => {
+    // The toolbar is positioned relative to the outside of the scrolling
+    // container so it stays in the same place when scrolling, but this means
+    // it isn't automatically adjusted for scrollbar width
+    if (editorScrollRef.current) {
+      setScrollbarWidth(
+        editorScrollRef.current.offsetWidth -
+          editorScrollRef.current.clientWidth,
+      );
+    }
+  });
+
   const heightStyle = height
     ? ({'--yg-playground-height': height} as React.CSSProperties)
     : undefined;
 
-  const resolvedCode = code ?? defaultCode;
-
   return (
-    <LiveProvider code={resolvedCode} theme={prismTheme} scope={{Layout, Node}}>
+    <LiveProvider code={liveCode} theme={prismTheme} scope={{Layout, Node}}>
       <div className={styles.wrapper} ref={playgroundRef} style={heightStyle}>
         <div className={clsx(styles.playgroundRow, 'container')}>
-          <div className={clsx(styles.editorColumn)}>
-            <EditorToolbar
-              getCode={useCallback(
-                () =>
-                  nullthrows(
-                    playgroundRef.current?.querySelector('.prism-code')
-                      ?.textContent,
-                  ),
-                [],
-              )}
-            />
-            <LiveEditor className={clsx(styles.playgroundEditor)} />
+          <div className={clsx(styles.editorColumn, 'playground-editor')}>
+            <div className={styles.editorScroll} ref={editorScrollRef}>
+              <EditorToolbar
+                className={styles.editorToolbar}
+                style={{paddingRight: scrollbarWidth + 'px'}}
+                getCode={useCallback(
+                  () =>
+                    nullthrows(
+                      playgroundRef.current?.querySelector('.prism-code')
+                        ?.textContent,
+                    ),
+                  [],
+                )}
+              />
+              <LiveEditor
+                className={clsx(styles.playgroundEditor)}
+                onChange={setLiveCode}
+              />
+            </div>
           </div>
           <div className={clsx(styles.previewColumn)}>
             <LivePreview

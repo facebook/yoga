@@ -8,9 +8,6 @@
 .toolbar {
   display: flex;
   column-gap: 8px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }
 
 .toolbar button {

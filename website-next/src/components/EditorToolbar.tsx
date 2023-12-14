@@ -18,9 +18,15 @@ import styles from './EditorToolbar.module.css';
 
 export type Props = Readonly<{
   getCode: () => string;
+  className?: string;
+  style?: React.CSSProperties;
 }>;
 
-export default function EditorToolbar({getCode}: Props): JSX.Element {
+export default function EditorToolbar({
+  getCode,
+  className,
+  style,
+}: Props): JSX.Element {
   const handleCopy = useCallback(
     () => navigator.clipboard.writeText(getCode()),
     [],
@@ -36,7 +42,7 @@ export default function EditorToolbar({getCode}: Props): JSX.Element {
   );
 
   return (
-    <div className={clsx(styles.toolbar)}>
+    <div className={clsx(styles.toolbar, className)} style={style}>
       <ToolbarButton Icon={CopyIcon} label="Copy" onClick={handleCopy} />
       <ToolbarButton Icon={LinkIcon} label="Share" onClick={handleShare} />
     </div>

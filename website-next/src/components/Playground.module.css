@@ -26,16 +26,29 @@ html[data-theme='dark'] {
   background-color: var(--yg-color-playground-background);
 }
 
-.editorColumn {
-  position: relative;
-  flex: 8;
-  min-width: 0;
-}
-
 .playgroundRow {
   display: flex;
   flex-direction: row;
   column-gap: 16px;
+}
+
+.editorColumn {
+  flex: 8;
+  min-width: 0;
+  overflow-y: auto;
+  border: 1px solid var(--yg-color-editor-border);
+  border-radius: var(--ifm-pre-border-radius);
+  position: relative;
+}
+
+.editorScroll {
+ overflow-y: auto;
+}
+
+.editorToolbar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .playgroundEditor {
@@ -43,13 +56,12 @@ html[data-theme='dark'] {
     var(--ifm-font-family-monospace) !important;
   direction: ltr;
   height: calc(var(--yg-playground-height, 400px) - 32px);
-  overflow: scroll;
 }
 
 .playgroundEditor :global(.prism-code) {
-  height: 100%;
   box-shadow: var(--ifm-global-shadow-lw);
-  border: 1px solid var(--yg-color-editor-border);
+  min-height: 100%;
+  border-radius: 0;
 }
 
 .previewColumn {
@@ -86,8 +98,7 @@ html[data-theme='dark'] {
   }
 
   .playgroundEditor {
-    height: max-content;
-    overflow: visible;
+    height: unset;
   }
 
   .playgroundRow {
@@ -97,12 +108,13 @@ html[data-theme='dark'] {
 
   .editorColumn {
     padding: 0;
-    flex: 0 !important;
     margin-bottom: 10px;
+    flex: unset;
   }
 
   .previewColumn {
     padding: 10px;
     width: 100%;
+    flex: unset;
   }
 }
