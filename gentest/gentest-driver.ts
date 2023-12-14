@@ -17,6 +17,16 @@ import {fileURLToPath} from 'url';
 import {stdin, stdout} from 'node:process';
 import minimist from 'minimist';
 import readline from 'node:readline/promises';
+import signedsource from 'signedsource';
+
+function addSignatureToSourceCode(sourceCode: string): string {
+  const codeWithToken = sourceCode.replace(
+    'MAGIC_PLACEHOLDER',
+    signedsource.getSigningToken(),
+  );
+
+  return signedsource.signFile(codeWithToken);
+}
 
 const argv = minimist(process.argv.slice(2));
 const specificFixture = argv.f || argv.fixture;
@@ -90,22 +100,26 @@ for (const fileName of fixtures) {
 
   await fs.writeFile(
     `${yogaDir}/tests/generated/${fileNameNoExtension}.cpp`,
-    JSON.parse(logs[0].message.replace(/^[^"]*/, '')),
+    addSignatureToSourceCode(JSON.parse(logs[0].message.replace(/^[^"]*/, ''))),
   );
 
   await fs.writeFile(
     `${yogaDir}/java/tests/com/facebook/yoga/${fileNameNoExtension}.java`,
-    JSON.parse(logs[1].message.replace(/^[^"]*/, '')).replace(
-      'YogaTest',
-      fileNameNoExtension,
+    addSignatureToSourceCode(
+      JSON.parse(logs[1].message.replace(/^[^"]*/, '')).replace(
+        'YogaTest',
+        fileNameNoExtension,
+      ),
     ),
   );
 
   await fs.writeFile(
     `${yogaDir}/javascript/tests/generated/${fileNameNoExtension}.test.ts`,
-    JSON.parse(logs[2].message.replace(/^[^"]*/, '')).replace(
-      'YogaTest',
-      fileNameNoExtension,
+    addSignatureToSourceCode(
+      JSON.parse(logs[2].message.replace(/^[^"]*/, '')).replace(
+        'YogaTest',
+        fileNameNoExtension,
+      ),
     ),
   );
 
