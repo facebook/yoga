@@ -22,11 +22,11 @@
 @media (max-width: 996px) {
   .heroLogo {
     display: none;
-   }
+  }
 
-   .playgroundSection :global(.prism-code) {
+  .playgroundSection :global(.playground-editor) {
     display: none;
-   }
+  }
 }
 
 .bg {
