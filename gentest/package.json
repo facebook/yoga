@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "gentest": "node --loader=babel-register-esm ./gentest-driver.ts"
+    "gentest": "node --loader=babel-register-esm ./gentest-driver.ts",
+    "gentest-validate": "node --loader=babel-register-esm ./gentest-validate.ts"
   },
   "type": "module",
   "dependencies": {

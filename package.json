@@ -6,7 +6,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "tsc": "yarn workspaces run tsc",
-    "gentest": "yarn workspace gentest run gentest"
+    "gentest": "yarn workspace gentest run gentest",
+    "gentest-validate": "yarn workspace gentest run gentest-validate"
   },
   "workspaces": [
     "javascript",
@@ -16,7 +17,6 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
-    "babel-register-esm": "^1.2.5",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^27.1.7",
