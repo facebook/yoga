@@ -20,7 +20,6 @@ import React, {
 
 import {usePrismTheme} from '@docusaurus/theme-common';
 import clsx from 'clsx';
-import nullthrows from 'nullthrows';
 import {LiveProvider, LiveEditor, LivePreview, LiveError} from 'react-live';
 import EditorToolbar from './EditorToolbar';
 
@@ -45,82 +44,67 @@ export type Props = Readonly<{
 
 export default function Playground({code, height, autoFocus}: Props) {
   const prismTheme = usePrismTheme();
-  const playgroundRef = useRef<HTMLDivElement>(null);
   const editorScrollRef = useRef<HTMLDivElement>(null);
 
-  const [isLoaded, setIsLoaded] = useState(false);
   const [liveCode, setLiveCode] = useState(code ?? defaultCode);
+  const [hasCodeChanged, setHasCodeChanged] = useState(false);
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
 
-  const LivePreviewWrapper = useCallback(
-    (props: React.ComponentProps<'div'>) => {
-      useEffect(() => {
-        setIsLoaded(true);
-      }, []);
-
-      return <div {...props} className={styles.livePreviewWrapper} />;
-    },
-    [],
-  );
-
+  // Once react-live has hydrated the content-editable area, set focus to it
+  // if requested
   useEffect(() => {
-    // TODO: This is hacky and relies on being called after some operation
-    // "react-live" does which itself can manipulate global focus
-    if (isLoaded && autoFocus) {
-      const codeElem = playgroundRef?.current?.querySelector('.prism-code');
+    if (autoFocus && hasCodeChanged) {
+      const codeElem = editorScrollRef?.current?.querySelector('.prism-code');
       const sel = window.getSelection();
       if (codeElem?.clientHeight && sel != null) {
         sel.selectAllChildren(codeElem);
         sel.collapseToStart();
       }
     }
-  }, [isLoaded, autoFocus]);
+  }, [autoFocus, hasCodeChanged]);
 
   useLayoutEffect(() => {
     // The toolbar is positioned relative to the outside of the scrolling
     // container so it stays in the same place when scrolling, but this means
-    // it isn't automatically adjusted for scrollbar width
+    // it isn't automatically adjusted for scrollbar width. If code change
+    // causes overflow/scrollbar, adjust its position based on its width progrmatically.
     if (editorScrollRef.current) {
       setScrollbarWidth(
         editorScrollRef.current.offsetWidth -
           editorScrollRef.current.clientWidth,
       );
     }
-  });
+  }, [editorScrollRef, code]);
 
   const heightStyle = height
     ? ({'--yg-playground-height': height} as React.CSSProperties)
     : undefined;
 
   return (
-    <LiveProvider code={liveCode} theme={prismTheme} scope={{Layout, Node}}>
-      <div className={styles.wrapper} ref={playgroundRef} style={heightStyle}>
+    <LiveProvider
+      code={liveCode}
+      theme={prismTheme}
+      scope={{Node: LiveNode, Layout: RootLiveNode}}>
+      <div className={styles.wrapper} style={heightStyle}>
         <div className={clsx(styles.playgroundRow, 'container')}>
           <div className={clsx(styles.editorColumn, 'playground-editor')}>
             <div className={styles.editorScroll} ref={editorScrollRef}>
               <EditorToolbar
+                code={liveCode}
                 className={styles.editorToolbar}
                 style={{paddingRight: scrollbarWidth + 'px'}}
-                getCode={useCallback(
-                  () =>
-                    nullthrows(
-                      playgroundRef.current?.querySelector('.prism-code')
-                        ?.textContent,
-                    ),
-                  [],
-                )}
               />
               <LiveEditor
                 className={clsx(styles.playgroundEditor)}
-                onChange={setLiveCode}
+                onChange={useCallback((code: string) => {
+                  setHasCodeChanged(true);
+                  setLiveCode(code);
+                }, [])}
               />
             </div>
           </div>
           <div className={clsx(styles.previewColumn)}>
-            <LivePreview
-              className={clsx(styles.livePreview)}
-              Component={LivePreviewWrapper}
-            />
+            <LivePreview className={clsx(styles.livePreview)} />
             <LiveError className={clsx(styles.liveError)} />
           </div>
         </div>
@@ -129,22 +113,22 @@ export default function Playground({code, height, autoFocus}: Props) {
   );
 }
 
-type LayoutProps = Readonly<{
+type RootLiveNodeProps = Readonly<{
   children: React.ReactNode;
   config?: {useWebDefaults?: boolean};
 }>;
 
-function Layout({children, config}: LayoutProps) {
+function RootLiveNode({children, config}: RootLiveNodeProps) {
   if (React.Children.count(children) !== 1) {
     return null;
   }
 
   const child = React.Children.only(children);
-  if (!React.isValidElement(child) || child.type !== Node) {
+  if (!React.isValidElement(child) || child.type !== LiveNode) {
     return null;
   }
 
-  const styleNode = styleNodeFromYogaNode(child as unknown as Node);
+  const styleNode = styleNodeFromLiveNode(child as unknown as LiveNode);
 
   return (
     <Suspense fallback={null}>
@@ -156,26 +140,26 @@ function Layout({children, config}: LayoutProps) {
   );
 }
 
-type NodeProps = Readonly<{
+type LiveNodeProps = Readonly<{
   children: React.ReactNode;
   style: FlexStyle;
 }>;
 
-class Node extends React.PureComponent<NodeProps> {}
+class LiveNode extends React.PureComponent<LiveNodeProps> {}
 
-function styleNodeFromYogaNode(
-  yogaNode: React.ElementRef<typeof Node>,
+function styleNodeFromLiveNode(
+  liveNode: React.ElementRef<typeof LiveNode>,
 ): StyleNode {
   const children: StyleNode[] = [];
 
-  React.Children.forEach(yogaNode.props.children, child => {
-    if (React.isValidElement(child) && child.type === Node) {
-      children.push(styleNodeFromYogaNode(child as unknown as Node));
+  React.Children.forEach(liveNode.props.children, child => {
+    if (React.isValidElement(child) && child.type === LiveNode) {
+      children.push(styleNodeFromLiveNode(child as unknown as LiveNode));
     }
   });
 
   return {
-    style: yogaNode.props.style,
+    style: liveNode.props.style,
     children,
   };
 }
