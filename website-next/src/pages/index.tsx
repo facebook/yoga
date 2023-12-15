@@ -38,11 +38,11 @@ function HeroSection() {
 
 const playgroundCode = `
 <Layout config={{useWebDefaults: false}}>
-  <Node style={{ width: 250, height: 475, padding: 10 }}>
-    <Node style={{ flex: 1, rowGap: 10}}>
-      <Node style={{ height: 60 }} />
-      <Node style={{ flex: 1, marginInline: 10 }} />
-      <Node style={{ flex: 2, marginInline: 10 }} />
+  <Node style={{width: 250, height: 475, padding: 10}}>
+    <Node style={{flex: 1, rowGap: 10}}>
+      <Node style={{height: 60}} />
+      <Node style={{flex: 1, marginInline: 10}} />
+      <Node style={{flex: 2, marginInline: 10}} />
       <Node
         style={{
           position: "absolute",
@@ -54,10 +54,10 @@ const playgroundCode = `
           justifyContent: "space-around",
         }}
       >
-        <Node style={{ height: 40, width: 40 }} />
-        <Node style={{ height: 40, width: 40 }} />
-        <Node style={{ height: 40, width: 40 }} />
-        <Node style={{ height: 40, width: 40 }} />
+        <Node style={{height: 40, width: 40}} />
+        <Node style={{height: 40, width: 40}} />
+        <Node style={{height: 40, width: 40}} />
+        <Node style={{height: 40, width: 40}} />
       </Node>
     </Node>
   </Node>
