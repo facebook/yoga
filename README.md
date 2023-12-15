@@ -26,7 +26,7 @@ Many of Yoga's tests are automatically generated, using HTML fixtures describing
 
 To generate new tests from added fixtures:
 
-1. Ensure you have [yarn](https://yarnpkg.com/) installed.
+1. Ensure you have [yarn classic](https://classic.yarnpkg.com) installed.
 2. Run `yarn install` to install dependencies for the test generator.
 3. Run `yarn gentest` in the `yoga` directory.
 
