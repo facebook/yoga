@@ -396,3 +396,39 @@
   <div style="height: 100px; width: 120px;"></div>
   <div style="height: 50px; width: 120px;"></div>
 </div>
+
+<div id="align_content_flex_start_stretch_doesnt_influence_line_box_dim" style="width: 400px; flex-direction: row; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 20px;">
+  <div style="height: 100px; width: 100px; margin-right: 20px;"></div>
+  <div style="flex-direction: row; flex-wrap: wrap; flex-shrink: 1; flex-grow: 1; align-content: flex-start;">
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+  </div>
+  <div style="height: 50px; width: 50px; margin-left: 20px;"></div>
+</div>
+
+<div id="align_content_stretch_stretch_does_influence_line_box_dim" style="width: 400px; flex-direction: row; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 20px;">
+  <div style="height: 100px; width: 100px; margin-right: 20px;"></div>
+  <div style="flex-direction: row; flex-wrap: wrap; flex-shrink: 1; flex-grow: 1; align-content: stretch;">
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+  </div>
+  <div style="height: 50px; width: 50px; margin-left: 20px;"></div>
+</div>
+
+<div id="align_content_space_evenly_stretch_does_influence_line_box_dim" style="width: 400px; flex-direction: row; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 20px;">
+  <div style="height: 100px; width: 100px; margin-right: 20px;"></div>
+  <div style="flex-direction: row; flex-wrap: wrap; flex-shrink: 1; flex-grow: 1; align-content: stretch;">
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+    <div style="height: 30px; width: 30px; margin-right: 20px;"></div>
+  </div>
+  <div style="height: 50px; width: 50px; margin-left: 20px;"></div>
+</div>
