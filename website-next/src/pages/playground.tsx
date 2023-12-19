@@ -7,6 +7,7 @@
 
 import Layout from '@theme/Layout';
 import {useLocation} from '@docusaurus/router';
+import lzString from 'lz-string';
 
 import Playground from '../components/Playground';
 
@@ -15,7 +16,9 @@ import styles from './playground.module.css';
 export default function PlaygroundPage(): JSX.Element {
   const params = new URLSearchParams(useLocation().search);
   const codeParam = params.get('code');
-  const code = codeParam ? atob(codeParam) : undefined;
+  const code = codeParam
+    ? lzString.decompressFromEncodedURIComponent(codeParam)
+    : undefined;
 
   return (
     // @ts-ignore missing prop for `wrapperClassName`

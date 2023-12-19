@@ -21,6 +21,7 @@
     "@docusaurus/preset-classic": "3.0.1",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
+    "lz-string": "^1.5.0",
     "nullthrows": "^1.1.1",
     "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
