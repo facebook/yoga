@@ -9,6 +9,7 @@
 
 import {useCallback, useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
+import lzString from 'lz-string';
 
 import CopyIcon from '../../static/img/copy.svg';
 import LinkIcon from '../../static/img/link.svg';
@@ -34,7 +35,7 @@ export default function EditorToolbar({
   const handleShare = useCallback(() => {
     navigator.clipboard.writeText(
       window.location.origin +
-        `/playground?code=${encodeURIComponent(btoa(code))}`,
+        `/playground?code=${lzString.compressToEncodedURIComponent(code)}`,
     );
   }, [code]);
 
