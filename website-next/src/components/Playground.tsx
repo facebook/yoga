@@ -27,6 +27,7 @@ import type {FlexStyle} from './FlexStyle';
 import type {StyleNode} from './YogaViewer';
 
 import styles from './Playground.module.css';
+import useIsBrowser from '@docusaurus/useIsBrowser';
 
 export type Props = Readonly<{
   code: string;
@@ -37,6 +38,7 @@ export type Props = Readonly<{
 export default function Playground({code, height, autoFocus}: Props) {
   const prismTheme = usePrismTheme();
   const editorScrollRef = useRef<HTMLDivElement>(null);
+  const isBrowser = useIsBrowser();
 
   const [liveCode, setLiveCode] = useState(code);
   const [hasCodeChanged, setHasCodeChanged] = useState(false);
@@ -72,6 +74,11 @@ export default function Playground({code, height, autoFocus}: Props) {
     ? ({'--yg-playground-height': height} as React.CSSProperties)
     : undefined;
 
+  const handleCodeChange = useCallback((code: string) => {
+    setHasCodeChanged(true);
+    setLiveCode(code);
+  }, []);
+
   return (
     <LiveProvider
       code={liveCode}
@@ -86,13 +93,15 @@ export default function Playground({code, height, autoFocus}: Props) {
                 className={styles.editorToolbar}
                 style={{paddingRight: scrollbarWidth + 'px'}}
               />
-              <LiveEditor
-                className={clsx(styles.playgroundEditor)}
-                onChange={useCallback((code: string) => {
-                  setHasCodeChanged(true);
-                  setLiveCode(code);
-                }, [])}
-              />
+
+              {isBrowser ? (
+                <LiveEditor
+                  className={clsx(styles.playgroundEditor)}
+                  onChange={handleCodeChange}
+                />
+              ) : (
+                <LiveEditorFallback code={liveCode} />
+              )}
             </div>
           </div>
           <div className={clsx(styles.previewColumn)}>
@@ -102,6 +111,21 @@ export default function Playground({code, height, autoFocus}: Props) {
         </div>
       </div>
     </LiveProvider>
+  );
+}
+
+/**
+ * Provides a non-editable approximation of the LiveEditor result, without
+ * relying on prism rendering, for use during SSR.
+ * See https://github.com/facebook/docusaurus/issues/9629
+ */
+function LiveEditorFallback({code}: Readonly<{code: string}>) {
+  return (
+    <div className={clsx(styles.playgroundEditor)}>
+      <pre className={clsx('prism-code', styles.liveEditorFallback)}>
+        {code}
+      </pre>
+    </div>
   );
 }
 
