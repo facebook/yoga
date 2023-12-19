@@ -101,6 +101,10 @@ html[data-theme='dark'] {
     height: unset;
   }
 
+  .playgroundEditor :global(.prism-code) {
+    min-height: 10em;
+  }
+
   .playgroundRow {
     flex-direction: column;
     padding-inline: 5px;

@@ -28,16 +28,8 @@ import type {StyleNode} from './YogaViewer';
 
 import styles from './Playground.module.css';
 
-const defaultCode = `
-<Layout config={{useWebDefaults: false}}>
-  <Node style={{width: 350, height: 350, padding: 20}}>
-    <Node style={{flex: 1}} />
-  </Node>
-</Layout>
-`.trim();
-
 export type Props = Readonly<{
-  code?: string;
+  code: string;
   height?: CSSProperties['height'];
   autoFocus?: boolean;
 }>;
@@ -46,7 +38,7 @@ export default function Playground({code, height, autoFocus}: Props) {
   const prismTheme = usePrismTheme();
   const editorScrollRef = useRef<HTMLDivElement>(null);
 
-  const [liveCode, setLiveCode] = useState(code ?? defaultCode);
+  const [liveCode, setLiveCode] = useState(code);
   const [hasCodeChanged, setHasCodeChanged] = useState(false);
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
 
