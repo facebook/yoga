@@ -103,25 +103,31 @@ void roundLayoutResultsToPixelGrid(
         !yoga::inexactEquals(fmod(nodeHeight * pointScaleFactor, 1.0), 0) &&
         !yoga::inexactEquals(fmod(nodeHeight * pointScaleFactor, 1.0), 1.0);
 
-    node->setLayoutDimension(
-        roundValueToPixelGrid(
+    float width = roundValueToPixelGrid(
             absoluteNodeRight,
             pointScaleFactor,
             (textRounding && hasFractionalWidth),
             (textRounding && !hasFractionalWidth)) -
             roundValueToPixelGrid(
-                absoluteNodeLeft, pointScaleFactor, false, textRounding),
-        Dimension::Width);
+                absoluteNodeLeft, pointScaleFactor, false, textRounding);
 
-    node->setLayoutDimension(
-        roundValueToPixelGrid(
+    float height = roundValueToPixelGrid(
             absoluteNodeBottom,
             pointScaleFactor,
             (textRounding && hasFractionalHeight),
             (textRounding && !hasFractionalHeight)) -
             roundValueToPixelGrid(
-                absoluteNodeTop, pointScaleFactor, false, textRounding),
-        Dimension::Height);
+                absoluteNodeTop, pointScaleFactor, false, textRounding);
+
+    node->setLayoutDimension(width, Dimension::Width);
+    node->setLayoutDimension(height, Dimension::Height);
+    
+    // Update the cached layout to match the rounded values so that they are used
+    // for subsequent layouts. The comparison for whether to use a cached values
+    // takes this rounding into consideration.
+    yoga::CachedMeasurement &cachedLayout = node->getLayout().cachedLayout;
+    cachedLayout.computedWidth = width;
+    cachedLayout.computedHeight = height;
   }
 
   for (yoga::Node* child : node->getChildren()) {

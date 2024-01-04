@@ -22,6 +22,20 @@ static YGSize _measure(
   return YGSize{10, 10};
 }
 
+static YGSize _measureFraction(
+    YGNodeConstRef node,
+    float /*width*/,
+    YGMeasureMode /*widthMode*/,
+    float /*height*/,
+    YGMeasureMode /*heightMode*/) {
+  int* measureCount = (int*)YGNodeGetContext(node);
+  if (measureCount) {
+    (*measureCount)++;
+  }
+
+  return YGSize{10, 10.75};
+}
+
 static YGSize _simulate_wrapping_text(
     YGNodeConstRef /*node*/,
     float width,
@@ -83,6 +97,22 @@ TEST(YogaTest, measure_absolute_child_with_no_constraints) {
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
 
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+
+  YGNodeFreeRecursive(root);
+}
+
+TEST(YogaTest, measure_fractional) {
+  const YGNodeRef root = YGNodeNew();
+
+  int measureCount = 0;
+  YGNodeSetContext(root, &measureCount);
+  YGNodeSetMeasureFunc(root, _measureFraction);
+  YGNodeCalculateLayout(root, 100, YGUndefined, YGDirectionInherit);
+  ASSERT_EQ(11.f, YGNodeLayoutGetHeight(root));
+  YGNodeCalculateLayout(root, 100, YGUndefined, YGDirectionInherit);
+  ASSERT_EQ(11.f, YGNodeLayoutGetHeight(root));
 
   ASSERT_EQ(1, measureCount);
 
