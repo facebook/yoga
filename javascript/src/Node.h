@@ -223,4 +223,7 @@ class Node {
 
   std::unique_ptr<MeasureCallback> m_measureFunc;
   std::unique_ptr<DirtiedCallback> m_dirtiedFunc;
+
+ public:
+  void setAlwaysFormsContainingBlock(bool alwaysFormContainingBlock);
 };
