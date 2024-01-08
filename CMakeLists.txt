@@ -12,6 +12,12 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/project-defaults.cmake)
 add_subdirectory(yoga)
 add_subdirectory(tests)
 
+option(BUILD_FUZZ_TESTS "Build fuzz tests" OFF)
+
+if ('${CMAKE_CXX_COMPILER_ID}' MATCHES 'Clang' AND  BUILD_FUZZ_TESTS)
+    add_subdirectory(fuzz)
+endif()
+
 # cmake install config
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
