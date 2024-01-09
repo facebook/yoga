@@ -470,5 +470,6 @@ double Node::getComputedPadding(int edge) const {
 }
 
 void Node::setAlwaysFormsContainingBlock(bool alwaysFormsContainingBlock) {
-  return YGNodeSetAlwaysFormContainingBlock(m_node, alwaysFormsContainingBlock);
+  return YGNodeSetAlwaysFormsContainingBlock(
+      m_node, alwaysFormsContainingBlock);
 }
