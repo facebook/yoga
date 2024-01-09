@@ -168,6 +168,7 @@ export type Node = {
   setWidthPercent(width: number | undefined): void;
   unsetDirtiedFunc(): void;
   unsetMeasureFunc(): void;
+  setAlwaysFormsContainingBlock(alwaysFormsContainingBlock: boolean): void;
 };
 
 export type Yoga = {

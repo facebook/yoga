@@ -160,6 +160,9 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
       .function("getParent", &Node::getParent, allow_raw_pointers())
       .function("getChild", &Node::getChild, allow_raw_pointers())
 
+      .function(
+          "setAlwaysFormsContainingBlock", &Node::setAlwaysFormsContainingBlock)
+
       .function("isReferenceBaseline", &Node::isReferenceBaseline)
       .function("setIsReferenceBaseline", &Node::setIsReferenceBaseline)
 
