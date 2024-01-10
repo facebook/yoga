@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
+if [ "$#" -eq 0 ]; then
+  build_type="Debug"
+else
+  build_type="$1"
+fi
+
+export CC=clang
+export CXX=clang++
+
+# Make sure libc++ isn't used, as libfuzzer is linked against stdlibc++ which causes conflicts
+unset CXXFLAGS
+export LDFLAGS=-lstdc++
+
+if which ninja; then
+  set -e
+  cmake -B build -S . -D BUILD_FUZZ_TESTS=ON -D CMAKE_BUILD_TYPE="$build_type" -G Ninja
+else
+  set -e
+  cmake -B build -S . -D BUILD_FUZZ_TESTS=ON -D CMAKE_BUILD_TYPE="$build_type"
+fi
+
+cmake --build build --target fuzz_layout
