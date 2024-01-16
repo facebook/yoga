@@ -356,6 +356,7 @@ class YG_EXPORT Node : public ::YGNode {
   void useWebDefaults() {
     style_.setFlexDirection(FlexDirection::Row);
     style_.setAlignContent(Align::Stretch);
+    style_.setPositionType(PositionType::Static);
   }
 
   template <auto Field>
