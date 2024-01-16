@@ -52,8 +52,6 @@ TEST(YogaTest, recalculate_resolvedDimonsion_onchange) {
 
 TEST(YogaTest, relayout_containing_block_size_changes) {
   const YGConfigRef config = YGConfigNew();
-  YGConfigSetExperimentalFeatureEnabled(
-      config, YGExperimentalFeatureAbsolutePercentageAgainstPaddingEdge, true);
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);

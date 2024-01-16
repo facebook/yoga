@@ -8,8 +8,6 @@
 /* eslint-env browser */
 /* global CPPEmitter:readable, JavaEmitter:readable, JavascriptEmitter:readable */
 
-const DEFAULT_EXPERIMENTS = ['AbsolutePercentageAgainstPaddingEdge'];
-
 const INVISIBLE_BORDER_STYLES = ['none', 'initial'];
 
 window.onload = function () {
@@ -723,7 +721,7 @@ function calculateTree(root, parentOffsetLeft, parentOffsetTop) {
       rawStyle: child.getAttribute('style'),
       experiments: child.dataset.experiments
         ? child.dataset.experiments.split(' ')
-        : DEFAULT_EXPERIMENTS,
+        : [],
       disabled: child.dataset.disabled === 'true',
     };
 
