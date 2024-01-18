@@ -66,11 +66,12 @@ ENUMS = {
         # Allows main-axis flex basis to be stretched without flexGrow being
         # set (previously referred to as "UseLegacyStretchBehaviour")
         ("StretchFlexBasis", 1 << 0),
-        # Position: static behaves like position: relative within Yoga
-        ("PositionStaticBehavesLikeRelative", 1 << 1),
         # Positioning of absolute nodes will have various bugs related to
         # justification, alignment, and insets
-        ("AbsolutePositioning", 1 << 2),
+        ("AbsolutePositioning", 1 << 1),
+        # Absolute nodes will resolve percentages against the inner size of
+        # their containing node, not the padding box
+        ("AbsolutePercentAgainstInnerSize", 1 << 2),
         # Enable all incorrect behavior (preserve compatibility)
         ("All", 0x7FFFFFFF),
         # Enable all errata except for "StretchFlexBasis" (Defaults behavior
