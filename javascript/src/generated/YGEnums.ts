@@ -50,8 +50,8 @@ export enum Edge {
 export enum Errata {
   None = 0,
   StretchFlexBasis = 1,
-  PositionStaticBehavesLikeRelative = 2,
-  AbsolutePositioning = 4,
+  AbsolutePositioning = 2,
+  AbsolutePercentAgainstInnerSize = 4,
   All = 2147483647,
   Classic = 2147483646,
 }
@@ -161,8 +161,8 @@ const constants = {
   EDGE_ALL: Edge.All,
   ERRATA_NONE: Errata.None,
   ERRATA_STRETCH_FLEX_BASIS: Errata.StretchFlexBasis,
-  ERRATA_POSITION_STATIC_BEHAVES_LIKE_RELATIVE: Errata.PositionStaticBehavesLikeRelative,
   ERRATA_ABSOLUTE_POSITIONING: Errata.AbsolutePositioning,
+  ERRATA_ABSOLUTE_PERCENT_AGAINST_INNER_SIZE: Errata.AbsolutePercentAgainstInnerSize,
   ERRATA_ALL: Errata.All,
   ERRATA_CLASSIC: Errata.Classic,
   EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS: ExperimentalFeature.WebFlexBasis,
