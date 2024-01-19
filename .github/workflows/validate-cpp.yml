@@ -31,6 +31,26 @@ jobs:
       - name: Unit tests
         run: ./unit_tests ${{ matrix.mode }}
 
+
+  build_fuzzers:
+    name: Build fuzzers [${{ matrix.toolchain }}][${{ matrix.mode }}]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mode: [Debug, Release]
+        toolchain: [Clang]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+        with:
+          toolchain: ${{ matrix.toolchain }}
+
+      - name: Unit tests
+        run: ./build_fuzz_tests ${{ matrix.mode }}
+
   benchmark:
     name: Benchmark [${{ matrix.toolchain }}]
     runs-on: ${{ (matrix.toolchain == 'MSVC') && 'windows-latest' || 'ubuntu-latest'  }}
