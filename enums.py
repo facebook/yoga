@@ -68,7 +68,7 @@ ENUMS = {
         ("StretchFlexBasis", 1 << 0),
         # Positioning of absolute nodes will have various bugs related to
         # justification, alignment, and insets
-        ("AbsolutePositioning", 1 << 1),
+        ("AbsolutePositioningIncorrect", 1 << 1),
         # Absolute nodes will resolve percentages against the inner size of
         # their containing node, not the padding box
         ("AbsolutePercentAgainstInnerSize", 1 << 2),
