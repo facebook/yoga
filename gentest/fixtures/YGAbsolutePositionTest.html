@@ -14,28 +14,33 @@
   <div style="width:10px; height: 10px; position: absolute; start: 10px; top: 10px; end: 10px; bottom: 10px;"></div>
 </div>
 
-<div id="do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent" style="height: 50px; width: 50px; overflow: hidden; flex-direction: row;">
+<div id="do_not_clamp_height_of_absolute_node_to_height_of_its_overflow_hidden_parent"
+  style="height: 50px; width: 50px; overflow: hidden; flex-direction: row;">
   <div style="position: absolute; start: 0px; top: 0px;">
     <div style="width: 100px; height: 100px;"></div>
   </div>
 </div>
 
-<div id="absolute_layout_within_border" style="height:100px; width:100px; border-width: 10px; margin: 10px; padding: 10px;">
+<div id="absolute_layout_within_border"
+  style="height:100px; width:100px; border-width: 10px; margin: 10px; padding: 10px;">
   <div style="position: absolute; width: 50px; height: 50px; left: 0px; top: 0px;"></div>
   <div style="position: absolute; width: 50px; height: 50px; right: 0px; bottom: 0px;"></div>
   <div style="position: absolute; width: 50px; height: 50px; left: 0px; top: 0px; margin: 10px;"></div>
   <div style="position: absolute; width: 50px; height: 50px; right: 0px; bottom: 0px; margin: 10px;"></div>
 </div>
 
-<div id="absolute_layout_align_items_and_justify_content_center" style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
+<div id="absolute_layout_align_items_and_justify_content_center"
+  style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
   <div style="position: absolute; width: 60px; height: 40px;"></div>
 </div>
 
-<div id="absolute_layout_align_items_and_justify_content_flex_end" style="height: 100px; width: 110px; flex-grow: 1; align-items: flex-end; justify-content: flex-end;">
+<div id="absolute_layout_align_items_and_justify_content_flex_end"
+  style="height: 100px; width: 110px; flex-grow: 1; align-items: flex-end; justify-content: flex-end;">
   <div style="position: absolute; width: 60px; height: 40px;"></div>
 </div>
 
-<div id="absolute_layout_justify_content_center" style="height: 100px; width: 110px; flex-grow: 1; justify-content: center;">
+<div id="absolute_layout_justify_content_center"
+  style="height: 100px; width: 110px; flex-grow: 1; justify-content: center;">
   <div style="position: absolute; width: 60px; height: 40px;"></div>
 </div>
 
@@ -47,19 +52,23 @@
   <div style="position: absolute; width: 60px; height: 40px;align-self: center;"></div>
 </div>
 
-<div id="absolute_layout_align_items_and_justify_content_center_and_top_position" style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
+<div id="absolute_layout_align_items_and_justify_content_center_and_top_position"
+  style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
   <div style="position: absolute; width: 60px; height: 40px;top:10px;"></div>
 </div>
 
-<div id="absolute_layout_align_items_and_justify_content_center_and_bottom_position" style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
+<div id="absolute_layout_align_items_and_justify_content_center_and_bottom_position"
+  style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
   <div style="position: absolute; width: 60px; height: 40px;bottom:10px;"></div>
 </div>
 
-<div id="absolute_layout_align_items_and_justify_content_center_and_left_position" style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
+<div id="absolute_layout_align_items_and_justify_content_center_and_left_position"
+  style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
   <div style="position: absolute; width: 60px; height: 40px;left:5px;"></div>
 </div>
 
-<div id="absolute_layout_align_items_and_justify_content_center_and_right_position" style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
+<div id="absolute_layout_align_items_and_justify_content_center_and_right_position"
+  style="height: 100px; width: 110px; flex-grow: 1; align-items: center; justify-content: center;">
   <div style="position: absolute; width: 60px; height: 40px;right:5px;"></div>
 </div>
 
@@ -67,24 +76,28 @@
 </div>
 
 <div id="absolute_layout_percentage_bottom_based_on_parent_height" style="width: 100px; height: 200px;">
-    <div style="position: absolute; top: 50%; width: 10px; height: 10px;"></div>
-    <div style="position: absolute; bottom: 50%; width: 10px; height: 10px;"></div>
-    <div style="position: absolute; top: 10%; width: 10px; bottom: 10%;"></div>
+  <div style="position: absolute; top: 50%; width: 10px; height: 10px;"></div>
+  <div style="position: absolute; bottom: 50%; width: 10px; height: 10px;"></div>
+  <div style="position: absolute; top: 10%; width: 10px; bottom: 10%;"></div>
 </div>
 
-<div id="absolute_layout_in_wrap_reverse_column_container" style="flex-direction:column; width:100px; height:100px; flex-wrap: wrap-reverse;">
+<div id="absolute_layout_in_wrap_reverse_column_container"
+  style="flex-direction:column; width:100px; height:100px; flex-wrap: wrap-reverse;">
   <div style="width:20px; height:20px; position: absolute;"></div>
 </div>
 
-<div id="absolute_layout_in_wrap_reverse_row_container" style="flex-direction:row; width:100px; height:100px; flex-wrap: wrap-reverse;">
+<div id="absolute_layout_in_wrap_reverse_row_container"
+  style="flex-direction:row; width:100px; height:100px; flex-wrap: wrap-reverse;">
   <div style="width:20px; height:20px; position: absolute;"></div>
 </div>
 
-<div id="absolute_layout_in_wrap_reverse_column_container_flex_end" style="flex-direction:column; width:100px; height:100px; flex-wrap: wrap-reverse;">
+<div id="absolute_layout_in_wrap_reverse_column_container_flex_end"
+  style="flex-direction:column; width:100px; height:100px; flex-wrap: wrap-reverse;">
   <div style="width:20px; height:20px; position: absolute; align-self: flex-end;"></div>
 </div>
 
-<div id="absolute_layout_in_wrap_reverse_row_container_flex_end" style="flex-direction:row; width:100px; height:100px; flex-wrap: wrap-reverse;">
+<div id="absolute_layout_in_wrap_reverse_row_container_flex_end"
+  style="flex-direction:row; width:100px; height:100px; flex-wrap: wrap-reverse;">
   <div style="width:20px; height:20px; position: absolute; align-self: flex-end;"></div>
 </div>
 
@@ -93,12 +106,14 @@
   <div style="width:20%; height:20%; left:20%; top:20%; position: absolute;"></div>
 </div>
 
-<div id="absolute_layout_percentage_height_based_on_padded_parent" style="flex-direction:column; width:100px; height:100px; padding-top: 10px; border-top: 10px solid black;">
+<div id="absolute_layout_percentage_height_based_on_padded_parent"
+  style="flex-direction:column; width:100px; height:100px; padding-top: 10px; border-top: 10px solid black;">
   <div style="width:100px; height:50%; position: absolute;"></div>
 </div>
 
-<div id="absolute_layout_percentage_height_based_on_padded_parent_and_align_items_center" style="position: relative; flex-direction:column; align-items:center; justify-content:center; width:100px; height:100px; padding-top:20px; padding-bottom:20px; ">
-    <div style="position:absolute; width:100px; height:50%;"></div>
+<div id="absolute_layout_percentage_height_based_on_padded_parent_and_align_items_center"
+  style="position: relative; flex-direction:column; align-items:center; justify-content:center; width:100px; height:100px; padding-top:20px; padding-bottom:20px; ">
+  <div style="position:absolute; width:100px; height:50%;"></div>
 </div>
 
 <div id="absolute_layout_padding_left" style="width:200px; height:200px; padding-left:100px;">
@@ -115,4 +130,11 @@
 
 <div id="absolute_layout_padding_bottom" style="width:200px; height:200px; padding-bottom:100px;">
   <div style="position:absolute; width:50px; height:50px;"></div>
+</div>
+
+<div id="absolute_layout_column_reverse_margin_border"
+  style="width:200px; height:200px; flex-direction: column-reverse;">
+  <div
+    style="position:absolute; width:50px; height:50px; left: 5px; right: 3px; margin-right: 4px; margin-left: 3px; border-right: 7px solid black; border-left: 1px solid black">
+  </div>
 </div>
