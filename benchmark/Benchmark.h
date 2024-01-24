@@ -15,5 +15,7 @@ namespace facebook::yoga {
 
 void captureTree(const Node* node, std::string captureName);
 
+void generateBenchmark(std::string captureName);
+
 } // namespace facebook::yoga
 #endif
