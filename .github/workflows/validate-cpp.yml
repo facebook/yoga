@@ -76,6 +76,27 @@ jobs:
         run: ./build/benchmark
         working-directory: benchmark
 
+  capture:
+    name: Capture [${{ matrix.toolchain }}]
+    runs-on: ${{ (matrix.toolchain == 'MSVC') && 'windows-latest' || 'ubuntu-latest'  }}
+    strategy:
+      matrix:
+        toolchain: [Clang, GCC, MSVC]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+        with:
+          toolchain: ${{ matrix.toolchain }}
+
+      - name: Build capture
+        run: |
+          cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
+          cmake --build build
+        working-directory: capture
+
   clang-format:
     name: Format
     runs-on: ubuntu-latest
