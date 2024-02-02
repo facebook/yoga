@@ -17,3 +17,7 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
 add_library(capture STATIC ${SOURCES})
 
 target_link_libraries(capture yogacore)
+target_include_directories(capture
+    PUBLIC
+    $<BUILD_INTERFACE:${YOGA_ROOT}/lib>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include/yoga/lib>)

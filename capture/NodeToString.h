@@ -13,10 +13,6 @@
 
 namespace facebook::yoga {
 
-void nodeToString(
-    std::string& str,
-    YGNodeRef node,
-    YGPrintOptions options,
-    uint32_t level);
+void nodeToString(std::string& str, YGNodeRef node, YGPrintOptions options);
 
 } // namespace facebook::yoga
