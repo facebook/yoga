@@ -29,9 +29,9 @@ static void appendYGValueIfNotDefault(
     const YGValue& defaultValue) {
   if (value != defaultValue) {
     if (value.unit == YGUnitAuto) {
-      j["style"][key]["unit"] = "auto";
+      j["style"][key] = "auto";
     } else if (value.unit == YGUnitUndefined) {
-      j["style"][key]["unit"] = "undefined";
+      j["style"][key] = "undefined";
     } else {
       std::string unit = value.unit == YGUnitPoint ? "px" : "%%";
       j["style"][key]["value"] = value.value;

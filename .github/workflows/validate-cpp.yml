@@ -72,8 +72,8 @@ jobs:
           cmake --build build
         working-directory: benchmark
 
-      - name: Run benchmark
-        run: ./build/benchmark
+      - name: Run benchmarklegacy
+        run: ./build/benchmarklegacy
         working-directory: benchmark
 
   capture:
