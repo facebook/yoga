@@ -14,6 +14,11 @@
 namespace facebook::yoga {
 
 using namespace nlohmann;
+using namespace std::chrono;
+
+constexpr uint32_t kNumRepititions = 1000;
+using SteadyClockDurations =
+    std::array<steady_clock::duration, kNumRepititions>;
 
 std::string invalidArgumentMessage(std::string arg, std::string enumName) {
   return arg + " does not represent any " + enumName + " values";
@@ -317,15 +322,71 @@ YGNodeRef buildTreeFromJson(json& j, YGNodeRef parent, size_t index) {
   return node;
 }
 
-void generateBenchmark(const std::filesystem::path& capturePath) {
+BenchmarkResult generateBenchmark(const std::filesystem::path& capturePath) {
   std::ifstream captureFile(capturePath);
   json capture = json::parse(captureFile);
 
+  auto treeCreationBegin = steady_clock::now();
   YGNodeRef root = buildTreeFromJson(capture, nullptr, 0 /*index*/);
+  auto treeCreationEnd = steady_clock::now();
 
+  auto layoutBegin = steady_clock::now();
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  auto layoutEnd = steady_clock::now();
 
   YGNodeFreeRecursive(root);
+
+  return BenchmarkResult{
+      treeCreationEnd - treeCreationBegin, layoutEnd - layoutBegin};
+}
+
+static void printBenchmarkResult(
+    std::string name,
+    SteadyClockDurations& durations) {
+  std::array<double, kNumRepititions> timesInMs;
+  double mean = 0;
+  for (uint32_t i = 0; i < kNumRepititions; i++) {
+    auto ms = duration<double, std::milli>(durations[i]).count();
+    timesInMs[i] = ms;
+    mean += ms;
+  }
+  mean /= kNumRepititions;
+
+  std::sort(timesInMs.begin(), timesInMs.end());
+  double median = timesInMs[kNumRepititions / 2];
+
+  double variance = 0;
+  for (uint32_t i = 0; i < kNumRepititions; i++) {
+    variance += std::pow(timesInMs[i] - mean, 2);
+  }
+  variance /= kNumRepititions;
+  double stddev = std::sqrt(variance);
+
+  printf("%s: median: %lf ms, stddev: %lf ms\n", name.c_str(), median, stddev);
+}
+
+void benchmark(std::filesystem::path& capturesDir) {
+  for (auto& capture : std::filesystem::directory_iterator(capturesDir)) {
+    if (capture.is_directory() || capture.path().extension() != ".json") {
+      continue;
+    }
+
+    SteadyClockDurations treeCreationDurations;
+    SteadyClockDurations layoutDurations;
+    SteadyClockDurations totalDurations;
+
+    for (uint32_t i = 0; i < kNumRepititions; i++) {
+      BenchmarkResult result = generateBenchmark(capture.path());
+      treeCreationDurations[i] = result.treeCreationDuration;
+      layoutDurations[i] = result.layoutDuration;
+      totalDurations[i] = result.treeCreationDuration + result.layoutDuration;
+    }
+
+    std::string captureName = capture.path().stem();
+    printBenchmarkResult(captureName + " tree creation", treeCreationDurations);
+    printBenchmarkResult(captureName + " layout", layoutDurations);
+    printBenchmarkResult(captureName + " total", totalDurations);
+  }
 }
 
 } // namespace facebook::yoga
