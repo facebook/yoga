@@ -7,11 +7,14 @@
 
 #pragma once
 
-#include <filesystem>
+#include <chrono>
 #include <string>
 
 namespace facebook::yoga {
 
-void generateBenchmark(const std::filesystem::path& capturePath);
+struct BenchmarkResult {
+  std::chrono::steady_clock::duration treeCreationDuration;
+  std::chrono::steady_clock::duration layoutDuration;
+};
 
 } // namespace facebook::yoga
