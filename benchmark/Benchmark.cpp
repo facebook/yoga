@@ -391,6 +391,14 @@ void benchmark(std::filesystem::path& capturesDir) {
 
 } // namespace facebook::yoga
 
-int main() {
+int main(int argc, char* argv[]) {
+  if (argc == 2) {
+    std::filesystem::path capturesDir = argv[argc - 1];
+    facebook::yoga::benchmark(capturesDir);
+  } else {
+    throw std::invalid_argument("Expecting a path as an argument");
+    return 1;
+  }
+
   return 0;
 }
