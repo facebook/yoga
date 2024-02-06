@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#include <filesystem>
 #include <fstream>
 
 #include <benchmark/Benchmark.h>
@@ -138,7 +139,7 @@ YGUnit unitFromJson(json& j) {
   std::string unit = j["unit"];
   if (unit == "px") {
     return YGUnitPoint;
-  } else if (unit == "\%") {
+  } else if (unit == "pct") {
     return YGUnitPercent;
   } else {
     throw std::invalid_argument(invalidArgumentMessage(unit, "YGUnit"));
@@ -382,7 +383,7 @@ void benchmark(std::filesystem::path& capturesDir) {
       totalDurations[i] = result.treeCreationDuration + result.layoutDuration;
     }
 
-    std::string captureName = capture.path().stem();
+    std::string captureName = capture.path().stem().string();
     printBenchmarkResult(captureName + " tree creation", treeCreationDurations);
     printBenchmarkResult(captureName + " layout", layoutDurations);
     printBenchmarkResult(captureName + " total", totalDurations);

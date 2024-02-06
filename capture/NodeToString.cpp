@@ -33,7 +33,7 @@ static void appendYGValueIfNotDefault(
     } else if (value.unit == YGUnitUndefined) {
       j["style"][key] = "undefined";
     } else {
-      std::string unit = value.unit == YGUnitPoint ? "px" : "%%";
+      std::string unit = value.unit == YGUnitPoint ? "px" : "pct";
       j["style"][key]["value"] = value.value;
       j["style"][key]["unit"] = unit;
     }
