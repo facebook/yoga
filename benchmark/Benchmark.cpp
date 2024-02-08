@@ -7,8 +7,10 @@
 
 #include <filesystem>
 #include <fstream>
+#include <memory>
 
 #include <benchmark/Benchmark.h>
+#include <benchmark/TreeDeserialization.h>
 #include <nlohmann/json.hpp>
 #include <yoga/Yoga.h>
 
@@ -20,154 +22,37 @@ using namespace std::chrono;
 constexpr uint32_t kNumRepititions = 1000;
 using SteadyClockDurations =
     std::array<steady_clock::duration, kNumRepititions>;
+using YGConfigShared = std::shared_ptr<YGConfig>;
+using YGNodeShared = std::shared_ptr<YGNode>;
 
-std::string invalidArgumentMessage(std::string arg, std::string enumName) {
-  return arg + " does not represent any " + enumName + " values";
-}
+struct YogaNodeAndConfig {
+  YGNodeShared node_;
+  YGConfigShared config_;
+  std::shared_ptr<std::vector<YogaNodeAndConfig>> children_;
+};
 
-YGFlexDirection flexDirectionFromString(std::string str) {
-  if (str == "row") {
-    return YGFlexDirectionRow;
-  } else if (str == "row-reverse") {
-    return YGFlexDirectionRowReverse;
-  } else if (str == "column") {
-    return YGFlexDirectionColumn;
-  } else if (str == "column-reverse") {
-    return YGFlexDirectionColumnReverse;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(str, "YGFlexDirection"));
-  }
-}
-
-YGJustify justifyContentFromString(std::string str) {
-  if (str == "flex-start") {
-    return YGJustifyFlexStart;
-  } else if (str == "center") {
-    return YGJustifyCenter;
-  } else if (str == "flex-end") {
-    return YGJustifyFlexEnd;
-  } else if (str == "space-between") {
-    return YGJustifySpaceBetween;
-  } else if (str == "space-around") {
-    return YGJustifySpaceAround;
-  } else if (str == "space-evenly") {
-    return YGJustifySpaceEvenly;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(str, "YGJustify"));
-  }
-}
-
-YGAlign alignFromString(std::string str) {
-  if (str == "auto") {
-    return YGAlignAuto;
-  } else if (str == "flex-start") {
-    return YGAlignFlexStart;
-  } else if (str == "center") {
-    return YGAlignCenter;
-  } else if (str == "flex-end") {
-    return YGAlignFlexEnd;
-  } else if (str == "stretch") {
-    return YGAlignStretch;
-  } else if (str == "baseline") {
-    return YGAlignBaseline;
-  } else if (str == "space-between") {
-    return YGAlignSpaceBetween;
-  } else if (str == "space-around") {
-    return YGAlignSpaceAround;
-  } else if (str == "space-evenly") {
-    return YGAlignSpaceEvenly;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(str, "YGAlign"));
-  }
-}
-
-YGWrap wrapFromString(std::string str) {
-  if (str == "no-wrap") {
-    return YGWrapNoWrap;
-  } else if (str == "wrap") {
-    return YGWrapWrap;
-  } else if (str == "wrap-reverse") {
-    return YGWrapWrapReverse;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(str, "YGAlign"));
-  }
-}
-
-YGOverflow overflowFromString(std::string str) {
-  if (str == "visible") {
-    return YGOverflowVisible;
-  } else if (str == "hidden") {
-    return YGOverflowHidden;
-  } else if (str == "scroll") {
-    return YGOverflowScroll;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(str, "YGAlign"));
-  }
-}
-
-YGDisplay displayFromString(std::string str) {
-  if (str == "flex") {
-    return YGDisplayFlex;
-  } else if (str == "none") {
-    return YGDisplayNone;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(str, "YGAlign"));
-  }
-}
-
-YGPositionType positionTypeFromString(std::string str) {
-  if (str == "static") {
-    return YGPositionTypeStatic;
-  } else if (str == "relative") {
-    return YGPositionTypeRelative;
-  } else if (str == "absolute") {
-    return YGPositionTypeAbsolute;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(str, "YGAlign"));
-  }
-}
-
-bool isAuto(json& j) {
-  return j.is_string() && j == "auto";
-}
-
-YGUnit unitFromJson(json& j) {
-  if (isAuto(j)) {
-    return YGUnitAuto;
+YGConfigShared buildConfigFromJson(json& j) {
+  json jsonConfig = j["config"];
+  YGConfigShared config(YGConfigNew(), YGConfigFree);
+  for (json::iterator it = jsonConfig.begin(); it != jsonConfig.end(); it++) {
+    if (it.key() == "use-web-defaults") {
+      YGConfigSetUseWebDefaults(config.get(), it.value());
+    } else if (it.key() == "point-scale-factor") {
+      YGConfigSetPointScaleFactor(config.get(), it.value());
+    } else if (it.key() == "errata") {
+      YGConfigSetErrata(config.get(), errataFromString(it.value()));
+    } else if (it.key() == "experimental-features") {
+      // Experimental features is serialized into an array where the values
+      // present indicate that that feature is enabled
+      for (json::iterator efIt = it.value().begin(); efIt != it.value().end();
+           efIt++) {
+        YGConfigSetExperimentalFeatureEnabled(
+            config.get(), experimentalFeatureFromString(efIt.value()), true);
+      }
+    }
   }
 
-  std::string unit = j["unit"];
-  if (unit == "px") {
-    return YGUnitPoint;
-  } else if (unit == "pct") {
-    return YGUnitPercent;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(unit, "YGUnit"));
-  }
-}
-
-YGEdge edgeFromString(std::string str) {
-  if (str == "left") {
-    return YGEdgeLeft;
-  } else if (str == "top") {
-    return YGEdgeTop;
-  } else if (str == "right") {
-    return YGEdgeRight;
-  } else if (str == "bottom") {
-    return YGEdgeBottom;
-  } else if (str == "start") {
-    return YGEdgeStart;
-  } else if (str == "end") {
-    return YGEdgeEnd;
-  } else if (str == "horizontal") {
-    return YGEdgeHorizontal;
-  } else if (str == "vertical") {
-    return YGEdgeVertical;
-  } else if (str == "all") {
-    return YGEdgeAll;
-  } else {
-    throw std::invalid_argument(invalidArgumentMessage(str, "YGEdge"));
-  }
+  return config;
 }
 
 std::string edgeStringFromPropertyName(
@@ -176,151 +61,160 @@ std::string edgeStringFromPropertyName(
   return key.substr(propertyName.length() + 1);
 }
 
-YGNodeRef buildTreeFromJson(json& j, YGNodeRef parent, size_t index) {
-  const YGNodeRef node = YGNodeNew();
-  if (parent != nullptr) {
-    YGNodeInsertChild(parent, node, index);
-  }
-
+void setStylesFromJson(json& j, YGNodeShared node) {
   json style = j["style"];
   for (const auto& [key, value] : style.items()) {
     if (key == "flex-direction") {
-      YGNodeStyleSetFlexDirection(node, flexDirectionFromString(value));
+      YGNodeStyleSetFlexDirection(node.get(), flexDirectionFromString(value));
     } else if (key == "justify-content") {
-      YGNodeStyleSetJustifyContent(node, justifyContentFromString(value));
+      YGNodeStyleSetJustifyContent(node.get(), justifyContentFromString(value));
     } else if (key == "align-items") {
-      YGNodeStyleSetAlignItems(node, alignFromString(value));
+      YGNodeStyleSetAlignItems(node.get(), alignFromString(value));
     } else if (key == "align-content") {
-      YGNodeStyleSetAlignContent(node, alignFromString(value));
+      YGNodeStyleSetAlignContent(node.get(), alignFromString(value));
     } else if (key == "align-self") {
-      YGNodeStyleSetAlignSelf(node, alignFromString(value));
+      YGNodeStyleSetAlignSelf(node.get(), alignFromString(value));
     } else if (key == "flex-wrap") {
-      YGNodeStyleSetFlexWrap(node, wrapFromString(value));
+      YGNodeStyleSetFlexWrap(node.get(), wrapFromString(value));
     } else if (key == "overflow") {
-      YGNodeStyleSetOverflow(node, overflowFromString(value));
+      YGNodeStyleSetOverflow(node.get(), overflowFromString(value));
     } else if (key == "display") {
-      YGNodeStyleSetDisplay(node, displayFromString(value));
+      YGNodeStyleSetDisplay(node.get(), displayFromString(value));
     } else if (key == "position-type") {
-      YGNodeStyleSetPositionType(node, positionTypeFromString(value));
+      YGNodeStyleSetPositionType(node.get(), positionTypeFromString(value));
     } else if (key == "flex-grow") {
-      YGNodeStyleSetFlexGrow(node, value);
+      YGNodeStyleSetFlexGrow(node.get(), value);
     } else if (key == "flex-shrink") {
-      YGNodeStyleSetFlexShrink(node, value);
+      YGNodeStyleSetFlexShrink(node.get(), value);
     } else if (key == "flex") {
-      YGNodeStyleSetFlex(node, value);
+      YGNodeStyleSetFlex(node.get(), value);
     } else if (key == "flex-basis") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitAuto) {
-        YGNodeStyleSetFlexBasisAuto(node);
+        YGNodeStyleSetFlexBasisAuto(node.get());
       } else if (unit == YGUnitPoint) {
-        YGNodeStyleSetFlexBasis(node, value["value"]);
+        YGNodeStyleSetFlexBasis(node.get(), value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetFlexBasisPercent(node, value["value"]);
+        YGNodeStyleSetFlexBasisPercent(node.get(), value["value"]);
       }
     } else if (key.starts_with("position")) {
       YGEdge edge = edgeFromString(edgeStringFromPropertyName(key, "position"));
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetPosition(node, edge, value["value"]);
+        YGNodeStyleSetPosition(node.get(), edge, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetPositionPercent(node, edge, value["value"]);
+        YGNodeStyleSetPositionPercent(node.get(), edge, value["value"]);
       }
     } else if (key.starts_with("padding")) {
       YGEdge edge = edgeFromString(edgeStringFromPropertyName(key, "padding"));
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetPadding(node, edge, value["value"]);
+        YGNodeStyleSetPadding(node.get(), edge, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetPaddingPercent(node, edge, value["value"]);
+        YGNodeStyleSetPaddingPercent(node.get(), edge, value["value"]);
       }
     } else if (key.starts_with("border")) {
       YGEdge edge = edgeFromString(edgeStringFromPropertyName(key, "border"));
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetBorder(node, edge, value["value"]);
+        YGNodeStyleSetBorder(node.get(), edge, value["value"]);
       }
     } else if (key.starts_with("margin")) {
       YGEdge edge = edgeFromString(edgeStringFromPropertyName(key, "margin"));
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMargin(node, edge, value["value"]);
+        YGNodeStyleSetMargin(node.get(), edge, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMarginPercent(node, edge, value["value"]);
+        YGNodeStyleSetMarginPercent(node.get(), edge, value["value"]);
       } else if (unit == YGUnitAuto) {
-        YGNodeStyleSetMarginAuto(node, edge);
+        YGNodeStyleSetMarginAuto(node.get(), edge);
       }
     } else if (key == "gap") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetGap(node, YGGutterAll, value["value"]);
+        YGNodeStyleSetGap(node.get(), YGGutterAll, value["value"]);
       }
     } else if (key == "column-gap") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetGap(node, YGGutterColumn, value["value"]);
+        YGNodeStyleSetGap(node.get(), YGGutterColumn, value["value"]);
       }
     } else if (key == "row-gap") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetGap(node, YGGutterRow, value["value"]);
+        YGNodeStyleSetGap(node.get(), YGGutterRow, value["value"]);
       }
     } else if (key == "height") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitAuto) {
-        YGNodeStyleSetHeightAuto(node);
+        YGNodeStyleSetHeightAuto(node.get());
       } else if (unit == YGUnitPoint) {
-        YGNodeStyleSetHeight(node, value["value"]);
+        YGNodeStyleSetHeight(node.get(), value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetHeightPercent(node, value["value"]);
+        YGNodeStyleSetHeightPercent(node.get(), value["value"]);
       }
     } else if (key == "width") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitAuto) {
-        YGNodeStyleSetWidthAuto(node);
+        YGNodeStyleSetWidthAuto(node.get());
       } else if (unit == YGUnitPoint) {
-        YGNodeStyleSetWidth(node, value["value"]);
+        YGNodeStyleSetWidth(node.get(), value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetWidthPercent(node, value["value"]);
+        YGNodeStyleSetWidthPercent(node.get(), value["value"]);
       }
     } else if (key == "min-height") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMinHeight(node, value["value"]);
+        YGNodeStyleSetMinHeight(node.get(), value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMinHeightPercent(node, value["value"]);
+        YGNodeStyleSetMinHeightPercent(node.get(), value["value"]);
       }
     } else if (key == "min-width") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMinWidth(node, value["value"]);
+        YGNodeStyleSetMinWidth(node.get(), value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMinWidthPercent(node, value["value"]);
+        YGNodeStyleSetMinWidthPercent(node.get(), value["value"]);
       }
     } else if (key == "max-height") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMaxHeight(node, value["value"]);
+        YGNodeStyleSetMaxHeight(node.get(), value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMaxHeightPercent(node, value["value"]);
+        YGNodeStyleSetMaxHeightPercent(node.get(), value["value"]);
       }
     } else if (key == "max-width") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMaxWidth(node, value["value"]);
+        YGNodeStyleSetMaxWidth(node.get(), value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMaxWidthPercent(node, value["value"]);
+        YGNodeStyleSetMaxWidthPercent(node.get(), value["value"]);
       }
     }
   }
+}
+
+YogaNodeAndConfig
+buildTreeFromJson(json& j, YogaNodeAndConfig* parent, size_t index) {
+  YGConfigShared config = buildConfigFromJson(j);
+  YGNodeShared node(YGNodeNewWithConfig(config.get()), YGNodeFree);
+  YogaNodeAndConfig wrapper{
+      node, config, std::make_shared<std::vector<YogaNodeAndConfig>>()};
+  if (parent != nullptr) {
+    YGNodeInsertChild(parent->node_.get(), node.get(), index);
+    parent->children_->push_back(wrapper);
+  }
+
+  setStylesFromJson(j, node);
 
   json children = j["children"];
   size_t childIndex = 0;
   for (json child : children) {
-    buildTreeFromJson(child, node, childIndex);
+    buildTreeFromJson(child, &wrapper, childIndex);
     childIndex++;
   }
 
-  return node;
+  return wrapper;
 }
 
 BenchmarkResult generateBenchmark(const std::filesystem::path& capturePath) {
@@ -328,14 +222,13 @@ BenchmarkResult generateBenchmark(const std::filesystem::path& capturePath) {
   json capture = json::parse(captureFile);
 
   auto treeCreationBegin = steady_clock::now();
-  YGNodeRef root = buildTreeFromJson(capture, nullptr, 0 /*index*/);
+  YogaNodeAndConfig root = buildTreeFromJson(capture, nullptr, 0 /*index*/);
   auto treeCreationEnd = steady_clock::now();
 
   auto layoutBegin = steady_clock::now();
-  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeCalculateLayout(
+      root.node_.get(), YGUndefined, YGUndefined, YGDirectionLTR);
   auto layoutEnd = steady_clock::now();
-
-  YGNodeFreeRecursive(root);
 
   return BenchmarkResult{
       treeCreationEnd - treeCreationBegin, layoutEnd - layoutBegin};
