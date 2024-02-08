@@ -237,9 +237,14 @@ BenchmarkResult generateBenchmark(const std::filesystem::path& capturePath) {
   YogaNodeAndConfig root = buildTreeFromJson(capture, nullptr, 0 /*index*/);
   auto treeCreationEnd = steady_clock::now();
 
+  json layoutInputs = capture["layout-inputs"];
+  float availableWidth = layoutInputs["available-width"];
+  float availableHeight = layoutInputs["available-height"];
+  YGDirection direction = directionFromString(layoutInputs["owner-direction"]);
+
   auto layoutBegin = steady_clock::now();
   YGNodeCalculateLayout(
-      root.node_.get(), YGUndefined, YGUndefined, YGDirectionLTR);
+      root.node_.get(), availableWidth, availableHeight, direction);
   auto layoutEnd = steady_clock::now();
 
   return BenchmarkResult{

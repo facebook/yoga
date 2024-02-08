@@ -191,4 +191,16 @@ inline std::string edgeStringFromPropertyName(
     std::string propertyName) {
   return it.key().substr(propertyName.length() + 1);
 }
+
+inline YGDirection directionFromString(std::string str) {
+  if (str == "ltr") {
+    return YGDirectionLTR;
+  } else if (str == "rtl") {
+    return YGDirectionRTL;
+  } else if (str == "inherit") {
+    return YGDirectionInherit;
+  } else {
+    throw std::invalid_argument(invalidArgumentMessage(str, "YGDirection"));
+  }
+}
 } // namespace facebook::yoga

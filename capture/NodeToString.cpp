@@ -6,7 +6,6 @@
  */
 
 #include <capture/NodeToString.h>
-#include <nlohmann/json.hpp>
 
 namespace facebook::yoga {
 
@@ -119,7 +118,7 @@ YGValue borderFloatToYGValue(YGNodeRef node, YGEdge edge) {
   return YGValue{val, unit};
 }
 
-static void nodeToStringImpl(json& j, YGNodeRef node, PrintOptions options) {
+void serializeTree(json& j, YGNodeRef node, PrintOptions options) {
   if ((options & PrintOptions::Layout) == PrintOptions::Layout) {
     j["layout"]["width"] = YGNodeStyleGetWidth(node).value;
     j["layout"]["height"] = YGNodeStyleGetHeight(node).value;
@@ -300,15 +299,21 @@ static void nodeToStringImpl(json& j, YGNodeRef node, PrintOptions options) {
       childCount > 0) {
     for (size_t i = 0; i < childCount; i++) {
       j["children"].push_back({});
-      nodeToStringImpl(j["children"][i], YGNodeGetChild(node, i), options);
+      serializeTree(j["children"][i], YGNodeGetChild(node, i), options);
     }
   }
 }
 
-void nodeToString(std::string& str, YGNodeRef node, PrintOptions options) {
-  json j;
-  nodeToStringImpl(j, node, options);
-  str = j.dump(2);
+void serializeLayoutInputs(
+    json& j,
+    float availableWidth,
+    float availableHeight,
+    YGDirection ownerDirection) {
+  j["layout-inputs"] = {
+      {"available-width", availableWidth},
+      {"available-height", availableHeight},
+      {"owner-direction", YGDirectionToString(ownerDirection)},
+  };
 }
 
 } // namespace facebook::yoga
