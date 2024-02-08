@@ -18,6 +18,7 @@ enum class PrintOptions : uint8_t {
   Children = 1 << 1,
   Style = 1 << 2,
   Config = 1 << 3,
+  Node = 1 << 4,
 };
 YG_DEFINE_ENUM_FLAG_OPERATORS(PrintOptions);
 

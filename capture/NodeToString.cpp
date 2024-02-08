@@ -126,9 +126,9 @@ static void nodeToStringImpl(json& j, YGNodeRef node, PrintOptions options) {
     j["layout"]["top"] = YGNodeStyleGetPosition(node, YGEdgeTop).value;
     j["layout"]["left"] = YGNodeStyleGetPosition(node, YGEdgeLeft).value;
   }
+  const YGNodeRef defaultNode = YGNodeNew();
 
   if ((options & PrintOptions::Style) == PrintOptions::Style) {
-    const YGNodeRef defaultNode = YGNodeNew();
     appendEnumValueIfNotDefault(
         j["style"],
         "flex-direction",
@@ -247,10 +247,6 @@ static void nodeToStringImpl(json& j, YGNodeRef node, PrintOptions options) {
         "min-height",
         YGNodeStyleGetMinHeight(node),
         YGNodeStyleGetMinHeight(defaultNode));
-
-    if (YGNodeHasMeasureFunc(node)) {
-      j["style"]["has-custom-measure"] = true;
-    }
   }
 
   if ((options & PrintOptions::Config) == PrintOptions::Config) {
@@ -285,6 +281,19 @@ static void nodeToStringImpl(json& j, YGNodeRef node, PrintOptions options) {
           YGExperimentalFeatureToString(YGExperimentalFeatureWebFlexBasis));
     }
   }
+
+  if ((options & PrintOptions::Node) == PrintOptions::Node) {
+    appendBoolIfNotDefault(
+        j["node"],
+        "always-forms-containing-block",
+        YGNodeGetAlwaysFormsContainingBlock(node),
+        YGNodeGetAlwaysFormsContainingBlock(defaultNode));
+    if (YGNodeHasMeasureFunc(node)) {
+      j["node"]["has-custom-measure"] = true;
+    }
+  }
+
+  YGNodeFree(defaultNode);
 
   const size_t childCount = YGNodeGetChildCount(node);
   if ((options & PrintOptions::Children) == PrintOptions::Children &&

@@ -17,7 +17,8 @@ void captureTree(YGNodeRef node, const std::filesystem::path& path) {
   nodeToString(
       str,
       node,
-      PrintOptions::Style | PrintOptions::Children | PrintOptions::Config);
+      PrintOptions::Style | PrintOptions::Children | PrintOptions::Config |
+          PrintOptions::Node);
   std::ofstream file(path);
   file << str;
 }

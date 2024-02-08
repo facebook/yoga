@@ -194,6 +194,18 @@ void setStylesFromJson(json& j, YGNodeShared node) {
   }
 }
 
+YGNodeRef buildNodeFromJson(json& j, YGConfigRef config) {
+  const YGNodeRef node = YGNodeNewWithConfig(config);
+  json nodeState = j["node"];
+  for (json::iterator it = nodeState.begin(); it != nodeState.end(); it++) {
+    if (it.key() == "always-forms-containing-block") {
+      YGNodeSetAlwaysFormsContainingBlock(node, it.value());
+    }
+  }
+
+  return node;
+}
+
 YogaNodeAndConfig
 buildTreeFromJson(json& j, YogaNodeAndConfig* parent, size_t index) {
   YGConfigShared config = buildConfigFromJson(j);
