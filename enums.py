@@ -53,11 +53,6 @@ ENUMS = {
         # Mimic web flex-basis behavior (experiment may be broken)
         "WebFlexBasis",
     ],
-    "PrintOptions": [
-        ("Layout", 1 << 0),
-        ("Style", 1 << 1),
-        ("Children", 1 << 2),
-    ],
     "Gutter": ["Column", "Row", "All"],
     # Known incorrect behavior which can be enabled for compatibility
     "Errata": [
@@ -82,7 +77,7 @@ ENUMS = {
 
 DO_NOT_STRIP = ["LogLevel"]
 
-BITSET_ENUMS = ["PrintOptions", "Errata"]
+BITSET_ENUMS = ["Errata"]
 
 
 def get_license(ext):

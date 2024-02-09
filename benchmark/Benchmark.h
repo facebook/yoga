@@ -8,9 +8,19 @@
 #pragma once
 
 #include <chrono>
+#include <memory>
 #include <string>
+#include <vector>
+
+#include <yoga/Yoga.h>
 
 namespace facebook::yoga {
+
+struct YogaNodeAndConfig {
+  std::shared_ptr<YGNode> node_;
+  std::shared_ptr<YGConfig> config_;
+  std::vector<YogaNodeAndConfig> children_;
+};
 
 struct BenchmarkResult {
   std::chrono::steady_clock::duration treeCreationDuration;
