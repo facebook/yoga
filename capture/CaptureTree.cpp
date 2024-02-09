@@ -6,6 +6,7 @@
  */
 
 #include <fstream>
+#include <vector>
 
 #include <capture/CaptureTree.h>
 #include <capture/NodeToString.h>
@@ -22,6 +23,12 @@ static void captureTree(
   file << serializedTree;
 }
 
+static std::vector<SerializedMeasureFunc>& serializedMeasureFuncVec() {
+  static thread_local std::vector<SerializedMeasureFunc>
+      serializedMeasureFuncVec;
+  return serializedMeasureFuncVec;
+}
+
 void YGNodeCalculateLayoutWithCapture(
     YGNodeRef node,
     float availableWidth,
@@ -35,8 +42,29 @@ void YGNodeCalculateLayoutWithCapture(
       node,
       PrintOptions::Style | PrintOptions::Children | PrintOptions::Config |
           PrintOptions::Node);
-  captureTree(j.dump(2), path);
+
   YGNodeCalculateLayout(node, availableWidth, availableHeight, ownerDirection);
+
+  serializeMeasureFuncs(j, serializedMeasureFuncVec());
+  serializedMeasureFuncVec().clear();
+  captureTree(j.dump(2), path);
+}
+
+void captureMeasureFunc(
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode,
+    YGSize output,
+    std::chrono::steady_clock::duration durationNs) {
+  serializedMeasureFuncVec().push_back(SerializedMeasureFunc{
+      width,
+      widthMode,
+      height,
+      heightMode,
+      output.width,
+      output.height,
+      durationNs.count()});
 }
 
 } // namespace facebook::yoga

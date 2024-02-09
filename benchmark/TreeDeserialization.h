@@ -7,6 +7,10 @@
 
 #pragma once
 
+#include <memory>
+#include <vector>
+
+#include <capture/CaptureTree.h>
 #include <nlohmann/json.hpp>
 #include <yoga/Yoga.h>
 
@@ -201,6 +205,47 @@ inline YGDirection directionFromString(std::string str) {
     return YGDirectionInherit;
   } else {
     throw std::invalid_argument(invalidArgumentMessage(str, "YGDirection"));
+  }
+}
+
+inline YGMeasureMode measureModeFromString(std::string str) {
+  if (str == "at-most") {
+    return YGMeasureModeAtMost;
+  } else if (str == "exactly") {
+    return YGMeasureModeExactly;
+  } else if (str == "undefined") {
+    return YGMeasureModeUndefined;
+  } else {
+    throw std::invalid_argument(invalidArgumentMessage(str, "YGMeasureMode"));
+  }
+}
+
+inline float floatFromJson(json& j) {
+  float result = YGUndefined;
+  if (!j.is_null()) {
+    result = j;
+  }
+
+  return result;
+}
+
+struct MeasureFuncVecWithIndex {
+  std::vector<SerializedMeasureFunc> vec;
+  size_t index;
+};
+
+inline void populateMeasureFuncVec(
+    json& j,
+    std::shared_ptr<MeasureFuncVecWithIndex> fns) {
+  for (auto measureFuncJson : j) {
+    fns->vec.push_back(SerializedMeasureFunc{
+        floatFromJson(measureFuncJson["width"]),
+        measureModeFromString(measureFuncJson["width-mode"]),
+        floatFromJson(measureFuncJson["height"]),
+        measureModeFromString(measureFuncJson["height-mode"]),
+        floatFromJson(measureFuncJson["output-width"]),
+        floatFromJson(measureFuncJson["output-height"]),
+        measureFuncJson["duration-ns"]});
   }
 }
 } // namespace facebook::yoga

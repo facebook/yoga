@@ -17,9 +17,15 @@
 namespace facebook::yoga {
 
 struct YogaNodeAndConfig {
+  YogaNodeAndConfig(
+      std::shared_ptr<YGNode> node,
+      std::shared_ptr<const YGConfig> config,
+      std::vector<std::shared_ptr<YogaNodeAndConfig>> children)
+      : node_(node), config_(config), children_(children) {}
+
   std::shared_ptr<YGNode> node_;
   std::shared_ptr<const YGConfig> config_;
-  std::vector<YogaNodeAndConfig> children_;
+  std::vector<std::shared_ptr<YogaNodeAndConfig>> children_;
 };
 
 struct BenchmarkResult {
