@@ -14,7 +14,10 @@ namespace facebook::yoga {
 
 void captureTree(YGNodeRef node, const std::filesystem::path& path) {
   std::string str;
-  nodeToString(str, node, YGPrintOptionsStyle | YGPrintOptionsChildren);
+  nodeToString(
+      str,
+      node,
+      PrintOptions::Style | PrintOptions::Children | PrintOptions::Config);
   std::ofstream file(path);
   file << str;
 }
