@@ -21,7 +21,7 @@ constexpr uint32_t kNumRepititions = 1000;
 using SteadyClockDurations =
     std::array<steady_clock::duration, kNumRepititions>;
 
-std::shared_ptr<YGConfig> buildConfigFromJson(json& j) {
+std::shared_ptr<const YGConfig> buildConfigFromJson(const json& j) {
   json jsonConfig = j["config"];
   std::shared_ptr<YGConfig> config(YGConfigNew(), YGConfigFree);
   for (json::iterator it = jsonConfig.begin(); it != jsonConfig.end(); it++) {
@@ -51,150 +51,165 @@ std::string edgeStringFromPropertyName(
   return key.substr(propertyName.length() + 1);
 }
 
-void setStylesFromJson(json& j, std::shared_ptr<YGNode> node) {
+void setStylesFromJson(const json& j, YGNodeRef node) {
   json style = j["style"];
   for (const auto& [key, value] : style.items()) {
     if (key == "flex-direction") {
-      YGNodeStyleSetFlexDirection(node.get(), flexDirectionFromString(value));
+      YGNodeStyleSetFlexDirection(node, flexDirectionFromString(value));
     } else if (key == "justify-content") {
-      YGNodeStyleSetJustifyContent(node.get(), justifyContentFromString(value));
+      YGNodeStyleSetJustifyContent(node, justifyContentFromString(value));
     } else if (key == "align-items") {
-      YGNodeStyleSetAlignItems(node.get(), alignFromString(value));
+      YGNodeStyleSetAlignItems(node, alignFromString(value));
     } else if (key == "align-content") {
-      YGNodeStyleSetAlignContent(node.get(), alignFromString(value));
+      YGNodeStyleSetAlignContent(node, alignFromString(value));
     } else if (key == "align-self") {
-      YGNodeStyleSetAlignSelf(node.get(), alignFromString(value));
+      YGNodeStyleSetAlignSelf(node, alignFromString(value));
     } else if (key == "flex-wrap") {
-      YGNodeStyleSetFlexWrap(node.get(), wrapFromString(value));
+      YGNodeStyleSetFlexWrap(node, wrapFromString(value));
     } else if (key == "overflow") {
-      YGNodeStyleSetOverflow(node.get(), overflowFromString(value));
+      YGNodeStyleSetOverflow(node, overflowFromString(value));
     } else if (key == "display") {
-      YGNodeStyleSetDisplay(node.get(), displayFromString(value));
+      YGNodeStyleSetDisplay(node, displayFromString(value));
     } else if (key == "position-type") {
-      YGNodeStyleSetPositionType(node.get(), positionTypeFromString(value));
+      YGNodeStyleSetPositionType(node, positionTypeFromString(value));
     } else if (key == "flex-grow") {
-      YGNodeStyleSetFlexGrow(node.get(), value);
+      YGNodeStyleSetFlexGrow(node, value);
     } else if (key == "flex-shrink") {
-      YGNodeStyleSetFlexShrink(node.get(), value);
+      YGNodeStyleSetFlexShrink(node, value);
     } else if (key == "flex") {
-      YGNodeStyleSetFlex(node.get(), value);
+      YGNodeStyleSetFlex(node, value);
     } else if (key == "flex-basis") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitAuto) {
-        YGNodeStyleSetFlexBasisAuto(node.get());
+        YGNodeStyleSetFlexBasisAuto(node);
       } else if (unit == YGUnitPoint) {
-        YGNodeStyleSetFlexBasis(node.get(), value["value"]);
+        YGNodeStyleSetFlexBasis(node, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetFlexBasisPercent(node.get(), value["value"]);
+        YGNodeStyleSetFlexBasisPercent(node, value["value"]);
       }
     } else if (key.starts_with("position")) {
       YGEdge edge = edgeFromString(edgeStringFromPropertyName(key, "position"));
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetPosition(node.get(), edge, value["value"]);
+        YGNodeStyleSetPosition(node, edge, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetPositionPercent(node.get(), edge, value["value"]);
+        YGNodeStyleSetPositionPercent(node, edge, value["value"]);
       }
     } else if (key.starts_with("padding")) {
       YGEdge edge = edgeFromString(edgeStringFromPropertyName(key, "padding"));
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetPadding(node.get(), edge, value["value"]);
+        YGNodeStyleSetPadding(node, edge, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetPaddingPercent(node.get(), edge, value["value"]);
+        YGNodeStyleSetPaddingPercent(node, edge, value["value"]);
       }
     } else if (key.starts_with("border")) {
       YGEdge edge = edgeFromString(edgeStringFromPropertyName(key, "border"));
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetBorder(node.get(), edge, value["value"]);
+        YGNodeStyleSetBorder(node, edge, value["value"]);
       }
     } else if (key.starts_with("margin")) {
       YGEdge edge = edgeFromString(edgeStringFromPropertyName(key, "margin"));
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMargin(node.get(), edge, value["value"]);
+        YGNodeStyleSetMargin(node, edge, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMarginPercent(node.get(), edge, value["value"]);
+        YGNodeStyleSetMarginPercent(node, edge, value["value"]);
       } else if (unit == YGUnitAuto) {
-        YGNodeStyleSetMarginAuto(node.get(), edge);
+        YGNodeStyleSetMarginAuto(node, edge);
       }
     } else if (key == "gap") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetGap(node.get(), YGGutterAll, value["value"]);
+        YGNodeStyleSetGap(node, YGGutterAll, value["value"]);
       }
     } else if (key == "column-gap") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetGap(node.get(), YGGutterColumn, value["value"]);
+        YGNodeStyleSetGap(node, YGGutterColumn, value["value"]);
       }
     } else if (key == "row-gap") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetGap(node.get(), YGGutterRow, value["value"]);
+        YGNodeStyleSetGap(node, YGGutterRow, value["value"]);
       }
     } else if (key == "height") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitAuto) {
-        YGNodeStyleSetHeightAuto(node.get());
+        YGNodeStyleSetHeightAuto(node);
       } else if (unit == YGUnitPoint) {
-        YGNodeStyleSetHeight(node.get(), value["value"]);
+        YGNodeStyleSetHeight(node, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetHeightPercent(node.get(), value["value"]);
+        YGNodeStyleSetHeightPercent(node, value["value"]);
       }
     } else if (key == "width") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitAuto) {
-        YGNodeStyleSetWidthAuto(node.get());
+        YGNodeStyleSetWidthAuto(node);
       } else if (unit == YGUnitPoint) {
-        YGNodeStyleSetWidth(node.get(), value["value"]);
+        YGNodeStyleSetWidth(node, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetWidthPercent(node.get(), value["value"]);
+        YGNodeStyleSetWidthPercent(node, value["value"]);
       }
     } else if (key == "min-height") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMinHeight(node.get(), value["value"]);
+        YGNodeStyleSetMinHeight(node, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMinHeightPercent(node.get(), value["value"]);
+        YGNodeStyleSetMinHeightPercent(node, value["value"]);
       }
     } else if (key == "min-width") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMinWidth(node.get(), value["value"]);
+        YGNodeStyleSetMinWidth(node, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMinWidthPercent(node.get(), value["value"]);
+        YGNodeStyleSetMinWidthPercent(node, value["value"]);
       }
     } else if (key == "max-height") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMaxHeight(node.get(), value["value"]);
+        YGNodeStyleSetMaxHeight(node, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMaxHeightPercent(node.get(), value["value"]);
+        YGNodeStyleSetMaxHeightPercent(node, value["value"]);
       }
     } else if (key == "max-width") {
       YGUnit unit = unitFromJson(value);
       if (unit == YGUnitPoint) {
-        YGNodeStyleSetMaxWidth(node.get(), value["value"]);
+        YGNodeStyleSetMaxWidth(node, value["value"]);
       } else if (unit == YGUnitPercent) {
-        YGNodeStyleSetMaxWidthPercent(node.get(), value["value"]);
+        YGNodeStyleSetMaxWidthPercent(node, value["value"]);
       }
     }
   }
 }
 
-YogaNodeAndConfig
-buildTreeFromJson(json& j, YogaNodeAndConfig* parent, size_t index) {
-  std::shared_ptr<YGConfig> config = buildConfigFromJson(j);
+std::shared_ptr<YGNode> buildNodeFromJson(
+    const json& j,
+    std::shared_ptr<const YGConfig> config) {
   std::shared_ptr<YGNode> node(YGNodeNewWithConfig(config.get()), YGNodeFree);
+  json nodeState = j["node"];
+
+  for (json::iterator it = nodeState.begin(); it != nodeState.end(); it++) {
+    if (it.key() == "always-forms-containing-block") {
+      YGNodeSetAlwaysFormsContainingBlock(node.get(), it.value());
+    }
+  }
+
+  return node;
+}
+
+YogaNodeAndConfig
+buildTreeFromJson(const json& j, YogaNodeAndConfig* parent, size_t index) {
+  std::shared_ptr<const YGConfig> config = buildConfigFromJson(j);
+  std::shared_ptr<YGNode> node = buildNodeFromJson(j, config);
   YogaNodeAndConfig wrapper{node, config, std::vector<YogaNodeAndConfig>{}};
   if (parent != nullptr) {
     YGNodeInsertChild(parent->node_.get(), node.get(), index);
     parent->children_.push_back(wrapper);
   }
 
-  setStylesFromJson(j, node);
+  setStylesFromJson(j, node.get());
 
   json children = j["children"];
   size_t childIndex = 0;
