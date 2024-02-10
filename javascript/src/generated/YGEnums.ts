@@ -114,12 +114,6 @@ export enum PositionType {
   Absolute = 2,
 }
 
-export enum PrintOptions {
-  Layout = 1,
-  Style = 2,
-  Children = 4,
-}
-
 export enum Unit {
   Undefined = 0,
   Point = 1,
@@ -196,9 +190,6 @@ const constants = {
   POSITION_TYPE_STATIC: PositionType.Static,
   POSITION_TYPE_RELATIVE: PositionType.Relative,
   POSITION_TYPE_ABSOLUTE: PositionType.Absolute,
-  PRINT_OPTIONS_LAYOUT: PrintOptions.Layout,
-  PRINT_OPTIONS_STYLE: PrintOptions.Style,
-  PRINT_OPTIONS_CHILDREN: PrintOptions.Children,
   UNIT_UNDEFINED: Unit.Undefined,
   UNIT_POINT: Unit.Point,
   UNIT_PERCENT: Unit.Percent,
