@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#include <memory>
+
 #include <capture/NodeToString.h>
 #include <nlohmann/json.hpp>
 
@@ -126,131 +128,130 @@ static void nodeToStringImpl(json& j, YGNodeRef node, PrintOptions options) {
     j["layout"]["top"] = YGNodeStyleGetPosition(node, YGEdgeTop).value;
     j["layout"]["left"] = YGNodeStyleGetPosition(node, YGEdgeLeft).value;
   }
+  std::unique_ptr<YGNode, decltype(&YGNodeFree)> defaultNode(
+      YGNodeNew(), YGNodeFree);
 
   if ((options & PrintOptions::Style) == PrintOptions::Style) {
-    const YGNodeRef defaultNode = YGNodeNew();
     appendEnumValueIfNotDefault(
         j["style"],
         "flex-direction",
         YGFlexDirectionToString(YGNodeStyleGetFlexDirection(node)),
-        YGFlexDirectionToString(YGNodeStyleGetFlexDirection(defaultNode)));
+        YGFlexDirectionToString(
+            YGNodeStyleGetFlexDirection(defaultNode.get())));
     appendEnumValueIfNotDefault(
         j["style"],
         "justify-content",
         YGJustifyToString(YGNodeStyleGetJustifyContent(node)),
-        YGJustifyToString(YGNodeStyleGetJustifyContent(defaultNode)));
+        YGJustifyToString(YGNodeStyleGetJustifyContent(defaultNode.get())));
     appendEnumValueIfNotDefault(
         j["style"],
         "align-items",
         YGAlignToString(YGNodeStyleGetAlignItems(node)),
-        YGAlignToString(YGNodeStyleGetAlignItems(defaultNode)));
+        YGAlignToString(YGNodeStyleGetAlignItems(defaultNode.get())));
     appendEnumValueIfNotDefault(
         j["style"],
         "align-content",
         YGAlignToString(YGNodeStyleGetAlignContent(node)),
-        YGAlignToString(YGNodeStyleGetAlignContent(defaultNode)));
+        YGAlignToString(YGNodeStyleGetAlignContent(defaultNode.get())));
     appendEnumValueIfNotDefault(
         j["style"],
         "align-self",
         YGAlignToString(YGNodeStyleGetAlignSelf(node)),
-        YGAlignToString(YGNodeStyleGetAlignSelf(defaultNode)));
+        YGAlignToString(YGNodeStyleGetAlignSelf(defaultNode.get())));
     appendEnumValueIfNotDefault(
         j["style"],
         "flex-wrap",
         YGWrapToString(YGNodeStyleGetFlexWrap(node)),
-        YGWrapToString(YGNodeStyleGetFlexWrap(defaultNode)));
+        YGWrapToString(YGNodeStyleGetFlexWrap(defaultNode.get())));
     appendEnumValueIfNotDefault(
         j["style"],
         "overflow",
         YGOverflowToString(YGNodeStyleGetOverflow(node)),
-        YGOverflowToString(YGNodeStyleGetOverflow(defaultNode)));
+        YGOverflowToString(YGNodeStyleGetOverflow(defaultNode.get())));
     appendEnumValueIfNotDefault(
         j["style"],
         "display",
         YGDisplayToString(YGNodeStyleGetDisplay(node)),
-        YGDisplayToString(YGNodeStyleGetDisplay(defaultNode)));
+        YGDisplayToString(YGNodeStyleGetDisplay(defaultNode.get())));
     appendEnumValueIfNotDefault(
         j["style"],
         "position-type",
         YGPositionTypeToString(YGNodeStyleGetPositionType(node)),
-        YGPositionTypeToString(YGNodeStyleGetPositionType(defaultNode)));
+        YGPositionTypeToString(YGNodeStyleGetPositionType(defaultNode.get())));
 
     appendFloatIfNotDefault(
         j["style"],
         "flex-grow",
         YGNodeStyleGetFlexGrow(node),
-        YGNodeStyleGetFlexGrow(defaultNode));
+        YGNodeStyleGetFlexGrow(defaultNode.get()));
     appendFloatIfNotDefault(
         j["style"],
         "flex-shrink",
         YGNodeStyleGetFlexShrink(node),
-        YGNodeStyleGetFlexShrink(defaultNode));
+        YGNodeStyleGetFlexShrink(defaultNode.get()));
     appendFloatIfNotDefault(
         j["style"],
         "flex",
         YGNodeStyleGetFlex(node),
-        YGNodeStyleGetFlex(defaultNode));
+        YGNodeStyleGetFlex(defaultNode.get()));
     appendYGValueIfNotDefault(
         j["style"],
         "flex-basis",
         YGNodeStyleGetFlexBasis(node),
-        YGNodeStyleGetFlexBasis(defaultNode));
+        YGNodeStyleGetFlexBasis(defaultNode.get()));
 
-    appendEdges<&YGNodeStyleGetMargin>(j, "margin", node, defaultNode);
-    appendEdges<&YGNodeStyleGetPadding>(j, "padding", node, defaultNode);
-    appendEdges<&borderFloatToYGValue>(j, "border", node, defaultNode);
-    appendEdges<&YGNodeStyleGetPosition>(j, "position", node, defaultNode);
+    appendEdges<&YGNodeStyleGetMargin>(j, "margin", node, defaultNode.get());
+    appendEdges<&YGNodeStyleGetPadding>(j, "padding", node, defaultNode.get());
+    appendEdges<&borderFloatToYGValue>(j, "border", node, defaultNode.get());
+    appendEdges<&YGNodeStyleGetPosition>(
+        j, "position", node, defaultNode.get());
 
     appendFloatIfNotDefault(
         j["style"],
         "gap",
         YGNodeStyleGetGap(node, YGGutterAll),
-        YGNodeStyleGetGap(defaultNode, YGGutterAll));
+        YGNodeStyleGetGap(defaultNode.get(), YGGutterAll));
     appendFloatIfNotDefault(
         j["style"],
         "column-gap",
         YGNodeStyleGetGap(node, YGGutterColumn),
-        YGNodeStyleGetGap(defaultNode, YGGutterColumn));
+        YGNodeStyleGetGap(defaultNode.get(), YGGutterColumn));
     appendFloatIfNotDefault(
         j["style"],
         "row-gap",
         YGNodeStyleGetGap(node, YGGutterRow),
-        YGNodeStyleGetGap(defaultNode, YGGutterRow));
+        YGNodeStyleGetGap(defaultNode.get(), YGGutterRow));
 
     appendYGValueIfNotDefault(
         j["style"],
         "width",
         YGNodeStyleGetWidth(node),
-        YGNodeStyleGetWidth(defaultNode));
+        YGNodeStyleGetWidth(defaultNode.get()));
     appendYGValueIfNotDefault(
         j["style"],
         "height",
         YGNodeStyleGetHeight(node),
-        YGNodeStyleGetHeight(defaultNode));
+        YGNodeStyleGetHeight(defaultNode.get()));
     appendYGValueIfNotDefault(
         j["style"],
         "max-width",
         YGNodeStyleGetMaxWidth(node),
-        YGNodeStyleGetMaxWidth(defaultNode));
+        YGNodeStyleGetMaxWidth(defaultNode.get()));
     appendYGValueIfNotDefault(
         j["style"],
         "max-height",
         YGNodeStyleGetMaxHeight(node),
-        YGNodeStyleGetMaxHeight(defaultNode));
+        YGNodeStyleGetMaxHeight(defaultNode.get()));
     appendYGValueIfNotDefault(
         j["style"],
         "min-width",
         YGNodeStyleGetMinWidth(node),
-        YGNodeStyleGetMinWidth(defaultNode));
+        YGNodeStyleGetMinWidth(defaultNode.get()));
     appendYGValueIfNotDefault(
         j["style"],
         "min-height",
         YGNodeStyleGetMinHeight(node),
-        YGNodeStyleGetMinHeight(defaultNode));
-
-    if (YGNodeHasMeasureFunc(node)) {
-      j["style"]["has-custom-measure"] = true;
-    }
+        YGNodeStyleGetMinHeight(defaultNode.get()));
   }
 
   if ((options & PrintOptions::Config) == PrintOptions::Config) {
@@ -283,6 +284,17 @@ static void nodeToStringImpl(json& j, YGNodeRef node, PrintOptions options) {
             defaultConfig, YGExperimentalFeatureWebFlexBasis)) {
       j["config"]["experimental-features"].push_back(
           YGExperimentalFeatureToString(YGExperimentalFeatureWebFlexBasis));
+    }
+  }
+
+  if ((options & PrintOptions::Node) == PrintOptions::Node) {
+    appendBoolIfNotDefault(
+        j["node"],
+        "always-forms-containing-block",
+        YGNodeGetAlwaysFormsContainingBlock(node),
+        YGNodeGetAlwaysFormsContainingBlock(defaultNode.get()));
+    if (YGNodeHasMeasureFunc(node)) {
+      j["node"]["has-custom-measure"] = true;
     }
   }
 
