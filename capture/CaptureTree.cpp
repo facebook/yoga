@@ -9,18 +9,34 @@
 
 #include <capture/CaptureTree.h>
 #include <capture/NodeToString.h>
+#include <nlohmann/json.hpp>
 
 namespace facebook::yoga {
 
-void captureTree(YGNodeRef node, const std::filesystem::path& path) {
-  std::string str;
-  nodeToString(
-      str,
+using namespace nlohmann;
+
+static void captureTree(
+    std::string_view serializedTree,
+    const std::filesystem::path& path) {
+  std::ofstream file(path);
+  file << serializedTree;
+}
+
+void YGNodeCalculateLayoutWithCapture(
+    YGNodeRef node,
+    float availableWidth,
+    float availableHeight,
+    YGDirection ownerDirection,
+    const std::filesystem::path& path) {
+  json j;
+  serializeLayoutInputs(j, availableWidth, availableHeight, ownerDirection);
+  serializeTree(
+      j,
       node,
       PrintOptions::Style | PrintOptions::Children | PrintOptions::Config |
           PrintOptions::Node);
-  std::ofstream file(path);
-  file << str;
+  captureTree(j.dump(2), path);
+  YGNodeCalculateLayout(node, availableWidth, availableHeight, ownerDirection);
 }
 
 } // namespace facebook::yoga

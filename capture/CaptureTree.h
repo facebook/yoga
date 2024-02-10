@@ -13,6 +13,11 @@
 
 namespace facebook::yoga {
 
-void captureTree(YGNodeRef node, const std::filesystem::path& path);
+void YGNodeCalculateLayoutWithCapture(
+    YGNodeRef node,
+    float availableWidth,
+    float availableHeight,
+    YGDirection ownerDirection,
+    const std::filesystem::path& path);
 
 } // namespace facebook::yoga

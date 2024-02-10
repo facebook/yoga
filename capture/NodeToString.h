@@ -9,6 +9,7 @@
 
 #include <string>
 
+#include <nlohmann/json.hpp>
 #include <yoga/Yoga.h>
 
 namespace facebook::yoga {
@@ -22,6 +23,12 @@ enum class PrintOptions : uint8_t {
 };
 YG_DEFINE_ENUM_FLAG_OPERATORS(PrintOptions);
 
-void nodeToString(std::string& str, YGNodeRef node, PrintOptions options);
+void serializeTree(nlohmann::json& j, YGNodeRef root, PrintOptions options);
+
+void serializeLayoutInputs(
+    nlohmann::json& j,
+    float availableWidth,
+    float availableHeight,
+    YGDirection ownerDirection);
 
 } // namespace facebook::yoga
