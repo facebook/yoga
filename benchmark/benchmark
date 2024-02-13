@@ -1,0 +1,15 @@
+#!/bin/sh
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+cd "$(dirname "$0")" || exit
+CAPTURES_PATH="$(dirname "$(realpath "$0")")""/captures"
+
+if [ "$1" = "buck" ]; then
+  buck run @fbcode/mode/opt :benchmarkCXX "${CAPTURES_PATH}"
+else
+  cmake -B build -S . -D CMAKE_BUILD_TYPE=Release
+  cmake --build build
+  build/benchmark "${CAPTURES_PATH}"
+fi
