@@ -325,7 +325,9 @@ void benchmark(std::filesystem::path& capturesDir) {
 
     std::ifstream captureFile(capture.path());
     json j = json::parse(captureFile);
+    std::string captureName = capture.path().stem().string();
 
+    std::cout << "Starting benchmark for " << captureName << std::endl;
     for (uint32_t i = 0; i < kNumRepititions; i++) {
       BenchmarkResult result = generateBenchmark(j);
       treeCreationDurations[i] = result.treeCreationDuration;
@@ -333,10 +335,11 @@ void benchmark(std::filesystem::path& capturesDir) {
       totalDurations[i] = result.treeCreationDuration + result.layoutDuration;
     }
 
-    std::string captureName = capture.path().stem().string();
     printBenchmarkResult(captureName + " tree creation", treeCreationDurations);
     printBenchmarkResult(captureName + " layout", layoutDurations);
     printBenchmarkResult(captureName + " total", totalDurations);
+
+    std::cout << std::endl;
   }
 }
 
