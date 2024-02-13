@@ -25,6 +25,27 @@ constexpr uint32_t kNumRepititions = 100;
 using SteadyClockDurations =
     std::array<steady_clock::duration, kNumRepititions>;
 
+static bool inputsMatch(
+    float actualWidth,
+    float expectedWidth,
+    float actualHeight,
+    float expectedHeight,
+    YGMeasureMode actualWidthMode,
+    YGMeasureMode expectedWidthMode,
+    YGMeasureMode actualHeightMode,
+    YGMeasureMode expectedHeightMode) {
+  bool widthsAreUndefined =
+      YGFloatIsUndefined(actualWidth) && YGFloatIsUndefined(expectedWidth);
+  bool widthsAreEqual = widthsAreUndefined || actualWidth == expectedWidth;
+  bool heightsAreUndefined =
+      YGFloatIsUndefined(actualHeight) && YGFloatIsUndefined(expectedHeight);
+  bool heightsAreEqual = heightsAreUndefined || actualHeight == expectedHeight;
+
+  return widthsAreEqual && heightsAreEqual &&
+      actualWidthMode == expectedWidthMode &&
+      actualHeightMode == expectedHeightMode;
+}
+
 YGSize mockMeasureFunc(
     YGNodeConstRef node,
     float availableWidth,
@@ -32,17 +53,37 @@ YGSize mockMeasureFunc(
     float availableHeight,
     YGMeasureMode heightMode) {
   (void)node;
-  (void)availableHeight;
-  (void)availableWidth;
-  (void)widthMode;
-  (void)heightMode;
   MeasureFuncVecWithIndex* fns =
       static_cast<MeasureFuncVecWithIndex*>(YGNodeGetContext(node));
+
   if (fns->index >= fns->vec.size()) {
+    std::cout << "Extra measure function call made" << std::endl;
     return {10.0, 10.0};
   }
 
   auto values = fns->vec.at(fns->index);
+
+  if (!inputsMatch(
+          availableWidth,
+          values.inputWidth,
+          availableHeight,
+          values.inputHeight,
+          widthMode,
+          values.widthMode,
+          heightMode,
+          values.heightMode)) {
+    std::cout << "Measure function input mismatch." << std::endl
+              << "Expected width: " << values.inputWidth
+              << ", actual width: " << availableWidth << std::endl
+              << "Expected height: " << values.inputHeight
+              << ", actual height: " << availableHeight << std::endl
+              << "Expected width mode: " << values.widthMode
+              << ", actual width mode: " << widthMode << std::endl
+              << "Expected height mode: " << values.heightMode
+              << ", actual height mode: " << heightMode << std::endl;
+    return {10.0, 10.0};
+  }
+
   fns->index++;
 
   std::this_thread::sleep_for(std::chrono::nanoseconds(values.durationNs));
