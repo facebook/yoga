@@ -114,13 +114,13 @@ static void appendEdges(
       (*Field)(defaultNode, YGEdgeHorizontal));
 }
 
-YGValue borderFloatToYGValue(YGNodeRef node, YGEdge edge) {
+static YGValue borderFloatToYGValue(YGNodeRef node, YGEdge edge) {
   float val = YGNodeStyleGetBorder(node, edge);
   YGUnit unit = YGFloatIsUndefined(val) ? YGUnitUndefined : YGUnitPoint;
   return YGValue{val, unit};
 }
 
-void serializeTree(json& j, YGNodeRef node, PrintOptions options) {
+static void serializeTreeImpl(json& j, YGNodeRef node, PrintOptions options) {
   if ((options & PrintOptions::Layout) == PrintOptions::Layout) {
     j["layout"]["width"] = YGNodeStyleGetWidth(node).value;
     j["layout"]["height"] = YGNodeStyleGetHeight(node).value;
@@ -302,9 +302,13 @@ void serializeTree(json& j, YGNodeRef node, PrintOptions options) {
       childCount > 0) {
     for (size_t i = 0; i < childCount; i++) {
       j["children"].push_back({});
-      serializeTree(j["children"][i], YGNodeGetChild(node, i), options);
+      serializeTreeImpl(j["children"][i], YGNodeGetChild(node, i), options);
     }
   }
+}
+
+void serializeTree(json& j, YGNodeRef node, PrintOptions options) {
+  serializeTreeImpl(j["tree"], node, options);
 }
 
 void serializeLayoutInputs(
@@ -317,6 +321,21 @@ void serializeLayoutInputs(
       {"available-height", availableHeight},
       {"owner-direction", YGDirectionToString(ownerDirection)},
   };
+}
+
+void serializeMeasureFuncResults(
+    json& j,
+    std::vector<SerializedMeasureFunc>& measureFuncs) {
+  for (auto measureFunc : measureFuncs) {
+    j["measure-funcs"].push_back(
+        {{"width", measureFunc.inputWidth},
+         {"width-mode", YGMeasureModeToString(measureFunc.widthMode)},
+         {"height", measureFunc.inputHeight},
+         {"height-mode", YGMeasureModeToString(measureFunc.heightMode)},
+         {"output-width", measureFunc.outputWidth},
+         {"output-height", measureFunc.outputHeight},
+         {"duration-ns", measureFunc.durationNs}});
+  }
 }
 
 } // namespace facebook::yoga
