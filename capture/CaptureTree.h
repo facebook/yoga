@@ -13,11 +13,29 @@
 
 namespace facebook::yoga {
 
+struct SerializedMeasureFunc {
+  float inputWidth{0.0f};
+  YGMeasureMode widthMode{YGMeasureModeUndefined};
+  float inputHeight{0.0};
+  YGMeasureMode heightMode{YGMeasureModeUndefined};
+  float outputWidth{0.0f};
+  float outputHeight{0.0f};
+  std::chrono::steady_clock::duration::rep durationNs;
+};
+
 void YGNodeCalculateLayoutWithCapture(
     YGNodeRef node,
     float availableWidth,
     float availableHeight,
     YGDirection ownerDirection,
     const std::filesystem::path& path);
+
+void captureMeasureFunc(
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode,
+    YGSize output,
+    std::chrono::steady_clock::duration durationNs);
 
 } // namespace facebook::yoga

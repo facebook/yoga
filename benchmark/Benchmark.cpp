@@ -5,11 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#include <chrono>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
+#include <thread>
 
 #include <benchmark/Benchmark.h>
 #include <benchmark/TreeDeserialization.h>
+#include <capture/CaptureTree.h>
 #include <nlohmann/json.hpp>
 
 namespace facebook::yoga {
@@ -17,9 +21,34 @@ namespace facebook::yoga {
 using namespace nlohmann;
 using namespace std::chrono;
 
-constexpr uint32_t kNumRepititions = 1000;
+constexpr uint32_t kNumRepititions = 100;
 using SteadyClockDurations =
     std::array<steady_clock::duration, kNumRepititions>;
+
+YGSize mockMeasureFunc(
+    YGNodeConstRef node,
+    float availableWidth,
+    YGMeasureMode widthMode,
+    float availableHeight,
+    YGMeasureMode heightMode) {
+  (void)node;
+  (void)availableHeight;
+  (void)availableWidth;
+  (void)widthMode;
+  (void)heightMode;
+  MeasureFuncVecWithIndex* fns =
+      static_cast<MeasureFuncVecWithIndex*>(YGNodeGetContext(node));
+  if (fns->index >= fns->vec.size()) {
+    return {10.0, 10.0};
+  }
+
+  auto values = fns->vec.at(fns->index);
+  fns->index++;
+
+  std::this_thread::sleep_for(std::chrono::nanoseconds(values.durationNs));
+
+  return {values.outputWidth, values.outputHeight};
+}
 
 std::shared_ptr<const YGConfig> buildConfigFromJson(const json& j) {
   json jsonConfig = j["config"];
@@ -186,24 +215,37 @@ void setStylesFromJson(const json& j, YGNodeRef node) {
 
 std::shared_ptr<YGNode> buildNodeFromJson(
     const json& j,
-    std::shared_ptr<const YGConfig> config) {
+    std::shared_ptr<const YGConfig> config,
+    std::shared_ptr<MeasureFuncVecWithIndex> fns) {
   std::shared_ptr<YGNode> node(YGNodeNewWithConfig(config.get()), YGNodeFree);
-  json nodeState = j["node"];
 
+  if (!j.contains("node") || j["node"].is_null()) {
+    return node;
+  }
+
+  json nodeState = j["node"];
   for (json::iterator it = nodeState.begin(); it != nodeState.end(); it++) {
     if (it.key() == "always-forms-containing-block") {
       YGNodeSetAlwaysFormsContainingBlock(node.get(), it.value());
+    } else if (it.key() == "has-custom-measure" && it.value()) {
+      YGNodeSetContext(node.get(), fns.get());
+      YGNodeSetMeasureFunc(node.get(), mockMeasureFunc);
     }
   }
 
   return node;
 }
 
-YogaNodeAndConfig
-buildTreeFromJson(const json& j, YogaNodeAndConfig* parent, size_t index) {
-  std::shared_ptr<const YGConfig> config = buildConfigFromJson(j);
-  std::shared_ptr<YGNode> node = buildNodeFromJson(j, config);
-  YogaNodeAndConfig wrapper{node, config, std::vector<YogaNodeAndConfig>{}};
+std::shared_ptr<YogaNodeAndConfig> buildTreeFromJson(
+    const json& j,
+    std::shared_ptr<MeasureFuncVecWithIndex> fns,
+    std::shared_ptr<YogaNodeAndConfig> parent,
+    size_t index) {
+  auto config = buildConfigFromJson(j);
+  auto node = buildNodeFromJson(j, config, fns);
+  auto wrapper = std::make_shared<YogaNodeAndConfig>(
+      node, config, std::vector<std::shared_ptr<YogaNodeAndConfig>>{});
+
   if (parent != nullptr) {
     YGNodeInsertChild(parent->node_.get(), node.get(), index);
     parent->children_.push_back(wrapper);
@@ -211,22 +253,25 @@ buildTreeFromJson(const json& j, YogaNodeAndConfig* parent, size_t index) {
 
   setStylesFromJson(j, node.get());
 
-  json children = j["children"];
-  size_t childIndex = 0;
-  for (json child : children) {
-    buildTreeFromJson(child, &wrapper, childIndex);
-    childIndex++;
+  if (j.contains("children")) {
+    json children = j["children"];
+    size_t childIndex = 0;
+    for (json child : children) {
+      buildTreeFromJson(child, fns, wrapper, childIndex);
+      childIndex++;
+    }
   }
 
   return wrapper;
 }
 
-BenchmarkResult generateBenchmark(const std::filesystem::path& capturePath) {
-  std::ifstream captureFile(capturePath);
-  json capture = json::parse(captureFile);
+BenchmarkResult generateBenchmark(json& capture) {
+  auto fns = std::make_shared<MeasureFuncVecWithIndex>();
+  populateMeasureFuncVec(capture["measure-funcs"], fns);
 
   auto treeCreationBegin = steady_clock::now();
-  YogaNodeAndConfig root = buildTreeFromJson(capture, nullptr, 0 /*index*/);
+  std::shared_ptr<YogaNodeAndConfig> root =
+      buildTreeFromJson(capture["tree"], fns, nullptr, 0 /*index*/);
   auto treeCreationEnd = steady_clock::now();
 
   json layoutInputs = capture["layout-inputs"];
@@ -236,7 +281,7 @@ BenchmarkResult generateBenchmark(const std::filesystem::path& capturePath) {
 
   auto layoutBegin = steady_clock::now();
   YGNodeCalculateLayout(
-      root.node_.get(), availableWidth, availableHeight, direction);
+      root->node_.get(), availableWidth, availableHeight, direction);
   auto layoutEnd = steady_clock::now();
 
   return BenchmarkResult{
@@ -278,8 +323,11 @@ void benchmark(std::filesystem::path& capturesDir) {
     SteadyClockDurations layoutDurations;
     SteadyClockDurations totalDurations;
 
+    std::ifstream captureFile(capture.path());
+    json j = json::parse(captureFile);
+
     for (uint32_t i = 0; i < kNumRepititions; i++) {
-      BenchmarkResult result = generateBenchmark(capture.path());
+      BenchmarkResult result = generateBenchmark(j);
       treeCreationDurations[i] = result.treeCreationDuration;
       layoutDurations[i] = result.layoutDuration;
       totalDurations[i] = result.treeCreationDuration + result.layoutDuration;
