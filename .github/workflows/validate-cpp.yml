@@ -66,13 +66,14 @@ jobs:
         with:
           toolchain: ${{ matrix.toolchain }}
 
-      - name: Build benchmark
+      - name: Build and run benchmark
         run: |
           cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
           cmake --build build
+          ./build/benchmark ./captures
         working-directory: benchmark
 
-      - name: Run benchmarklegacy
+      - name: Build and run benchmarklegacy
         run: ./build/benchmarklegacy
         working-directory: benchmark
 
