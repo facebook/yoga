@@ -7,8 +7,10 @@
 
 #pragma once
 
+#include <chrono>
 #include <string>
 
+#include <capture/CaptureTree.h>
 #include <nlohmann/json.hpp>
 #include <yoga/Yoga.h>
 
@@ -30,5 +32,9 @@ void serializeLayoutInputs(
     float availableWidth,
     float availableHeight,
     YGDirection ownerDirection);
+
+void serializeMeasureFuncResults(
+    nlohmann::json& j,
+    std::vector<SerializedMeasureFunc>& measureFuncs);
 
 } // namespace facebook::yoga
