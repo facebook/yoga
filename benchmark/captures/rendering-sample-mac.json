@@ -1,0 +1,1906 @@
+{
+  "layout-inputs": {
+    "available-height": 720.0,
+    "available-width": 1080.0,
+    "owner-direction": "ltr"
+  },
+  "measure-funcs": [
+    {
+      "duration-ns": 23667,
+      "height": null,
+      "height-mode": "undefined",
+      "output-height": 330.0,
+      "output-width": 408.0,
+      "width": 647.3333129882813,
+      "width-mode": "at-most"
+    },
+    {
+      "duration-ns": 9083,
+      "height": null,
+      "height-mode": "undefined",
+      "output-height": 448.0,
+      "output-width": 562.5,
+      "width": 647.3333129882813,
+      "width-mode": "at-most"
+    },
+    {
+      "duration-ns": 7667,
+      "height": null,
+      "height-mode": "undefined",
+      "output-height": 100.0,
+      "output-width": 294.0,
+      "width": 647.3333129882813,
+      "width-mode": "at-most"
+    },
+    {
+      "duration-ns": 8333,
+      "height": 676.0,
+      "height-mode": "at-most",
+      "output-height": 94.0,
+      "output-width": 328.6666564941406,
+      "width": 328.6666564941406,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7791,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 8041,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 8000,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7709,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7666,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 6916,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7167,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 9333,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7125,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7125,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7209,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7083,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7333,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7375,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 8917,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 7667,
+      "height": 566.0,
+      "height-mode": "at-most",
+      "output-height": 21.0,
+      "output-width": 158.33331298828125,
+      "width": 158.33331298828125,
+      "width-mode": "exactly"
+    },
+    {
+      "duration-ns": 8583,
+      "height": null,
+      "height-mode": "undefined",
+      "output-height": 295.0,
+      "output-width": 816.0,
+      "width": null,
+      "width-mode": "undefined"
+    },
+    {
+      "duration-ns": 7667,
+      "height": null,
+      "height-mode": "undefined",
+      "output-height": 7.0,
+      "output-width": 70.5,
+      "width": 1076.0,
+      "width-mode": "at-most"
+    },
+    {
+      "duration-ns": 494291,
+      "height": 44.0,
+      "height-mode": "at-most",
+      "output-height": 18.0,
+      "output-width": 5.0,
+      "width": 1016.0,
+      "width-mode": "at-most"
+    },
+    {
+      "duration-ns": 58250,
+      "height": 44.0,
+      "height-mode": "at-most",
+      "output-height": 18.0,
+      "output-width": 10.0,
+      "width": 10.0,
+      "width-mode": "exactly"
+    }
+  ],
+  "tree": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "config": {
+                          "errata": "all"
+                        },
+                        "node": {
+                          "has-custom-measure": true
+                        },
+                        "style": {
+                          "margin-all": {
+                            "unit": "px",
+                            "value": 25.0
+                          },
+                          "min-width": {
+                            "unit": "px",
+                            "value": 2000.0
+                          },
+                          "position-left": {
+                            "unit": "px",
+                            "value": 0.0
+                          },
+                          "position-top": {
+                            "unit": "px",
+                            "value": 350.0
+                          },
+                          "position-type": "absolute"
+                        }
+                      },
+                      {
+                        "config": {
+                          "errata": "all"
+                        },
+                        "style": {
+                          "height": {
+                            "unit": "px",
+                            "value": 1052.0
+                          },
+                          "overflow": "hidden",
+                          "position-left": {
+                            "unit": "px",
+                            "value": 100.0
+                          },
+                          "position-top": {
+                            "unit": "px",
+                            "value": -35.0
+                          },
+                          "position-type": "absolute",
+                          "width": {
+                            "unit": "px",
+                            "value": 1210.0
+                          }
+                        }
+                      },
+                      {
+                        "config": {
+                          "errata": "all"
+                        },
+                        "style": {
+                          "height": {
+                            "unit": "px",
+                            "value": 495.0
+                          },
+                          "overflow": "hidden",
+                          "position-left": {
+                            "unit": "px",
+                            "value": 595.0
+                          },
+                          "position-top": {
+                            "unit": "px",
+                            "value": 250.0
+                          },
+                          "position-type": "absolute",
+                          "width": {
+                            "unit": "px",
+                            "value": 459.0
+                          }
+                        }
+                      },
+                      {
+                        "children": [
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "height": {
+                                "unit": "px",
+                                "value": 320.0
+                              },
+                              "overflow": "hidden",
+                              "width": {
+                                "unit": "px",
+                                "value": 320.0
+                              }
+                            }
+                          }
+                        ],
+                        "config": {
+                          "errata": "all"
+                        },
+                        "style": {
+                          "flex-direction": "row",
+                          "flex-wrap": "wrap",
+                          "height": {
+                            "unit": "pct",
+                            "value": 100.0
+                          },
+                          "position-type": "absolute",
+                          "width": {
+                            "unit": "pct",
+                            "value": 100.0
+                          }
+                        }
+                      },
+                      {
+                        "children": [
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "node": {
+                              "has-custom-measure": true
+                            },
+                            "style": {
+                              "margin-all": {
+                                "unit": "px",
+                                "value": 25.0
+                              },
+                              "min-width": {
+                                "unit": "px",
+                                "value": 1000.0
+                              },
+                              "position-left": {
+                                "unit": "px",
+                                "value": -30.0
+                              },
+                              "position-top": {
+                                "unit": "px",
+                                "value": 10.0
+                              },
+                              "position-type": "absolute"
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "node": {
+                              "has-custom-measure": true
+                            },
+                            "style": {
+                              "margin-all": {
+                                "unit": "px",
+                                "value": 25.0
+                              },
+                              "min-width": {
+                                "unit": "px",
+                                "value": 1000.0
+                              },
+                              "position-left": {
+                                "unit": "px",
+                                "value": 20.0
+                              },
+                              "position-top": {
+                                "unit": "px",
+                                "value": 140.0
+                              },
+                              "position-type": "absolute"
+                            }
+                          },
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "node": {
+                              "has-custom-measure": true
+                            },
+                            "style": {
+                              "margin-all": {
+                                "unit": "px",
+                                "value": 25.0
+                              },
+                              "min-width": {
+                                "unit": "px",
+                                "value": 1000.0
+                              },
+                              "position-left": {
+                                "unit": "px",
+                                "value": 520.0
+                              },
+                              "position-top": {
+                                "unit": "px",
+                                "value": 120.0
+                              },
+                              "position-type": "absolute"
+                            }
+                          }
+                        ],
+                        "config": {
+                          "errata": "all"
+                        },
+                        "style": {
+                          "flex": 2.0,
+                          "margin-all": {
+                            "unit": "px",
+                            "value": 5.0
+                          }
+                        }
+                      },
+                      {
+                        "children": [
+                          {
+                            "config": {
+                              "errata": "all"
+                            },
+                            "node": {
+                              "has-custom-measure": true
+                            },
+                            "style": {
+                              "padding-all": {
+                                "unit": "px",
+                                "value": 10.0
+                              }
+                            }
+                          },
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "config": {
+                                              "errata": "all"
+                                            },
+                                            "node": {
+                                              "has-custom-measure": true
+                                            },
+                                            "style": {
+                                              "margin-all": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": null
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "width": {
+                                    "unit": "pct",
+                                    "value": 50.0
+                                  }
+                                }
+                              }
+                            ],
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "flex": 1.0,
+                              "flex-wrap": "wrap"
+                            }
+                          }
+                        ],
+                        "config": {
+                          "errata": "all"
+                        },
+                        "style": {
+                          "border-all": {
+                            "unit": "px",
+                            "value": 2.0
+                          },
+                          "flex": 1.0,
+                          "margin-all": {
+                            "unit": "px",
+                            "value": 10.0
+                          }
+                        }
+                      }
+                    ],
+                    "config": {
+                      "errata": "all"
+                    },
+                    "style": {
+                      "flex": 1.0,
+                      "flex-direction": "row",
+                      "height": {
+                        "unit": "pct",
+                        "value": 100.0
+                      },
+                      "width": {
+                        "unit": "pct",
+                        "value": 100.0
+                      }
+                    }
+                  },
+                  {
+                    "config": {
+                      "errata": "all"
+                    },
+                    "style": {
+                      "height": {
+                        "unit": "px",
+                        "value": 50.0
+                      },
+                      "position-bottom": {
+                        "unit": "px",
+                        "value": 0.0
+                      },
+                      "position-left": {
+                        "unit": "px",
+                        "value": 0.0
+                      },
+                      "position-type": "absolute",
+                      "width": {
+                        "unit": "px",
+                        "value": 100.0
+                      }
+                    }
+                  }
+                ],
+                "config": {
+                  "errata": "all"
+                },
+                "style": {
+                  "flex": 1.0,
+                  "height": {
+                    "unit": "pct",
+                    "value": 100.0
+                  },
+                  "min-height": {
+                    "unit": "px",
+                    "value": 720.0
+                  },
+                  "min-width": {
+                    "unit": "px",
+                    "value": 800.0
+                  },
+                  "width": {
+                    "unit": "pct",
+                    "value": 100.0
+                  }
+                }
+              }
+            ],
+            "config": {
+              "errata": "all"
+            },
+            "style": {
+              "flex": 1.0
+            }
+          },
+          {
+            "children": [
+              {
+                "config": {
+                  "errata": "all"
+                },
+                "node": {
+                  "has-custom-measure": true
+                },
+                "style": null
+              }
+            ],
+            "config": {
+              "errata": "all"
+            },
+            "style": {
+              "align-items": "center",
+              "justify-content": "center",
+              "padding-all": {
+                "unit": "px",
+                "value": 2.0
+              },
+              "position-bottom": {
+                "unit": "px",
+                "value": 0.0
+              },
+              "position-right": {
+                "unit": "px",
+                "value": 0.0
+              },
+              "position-type": "absolute"
+            }
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "node": {
+                                          "has-custom-measure": true
+                                        },
+                                        "style": null
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": {
+                                      "min-width": {
+                                        "unit": "px",
+                                        "value": 18.0
+                                      },
+                                      "padding-left": {
+                                        "unit": "px",
+                                        "value": 4.0
+                                      },
+                                      "padding-right": {
+                                        "unit": "px",
+                                        "value": 4.0
+                                      }
+                                    }
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "margin-right": {
+                                    "unit": "px",
+                                    "value": 8.0
+                                  },
+                                  "padding-all": {
+                                    "unit": "px",
+                                    "value": 2.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "node": {
+                                      "has-custom-measure": true
+                                    },
+                                    "style": {
+                                      "flex": 1.0
+                                    }
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "align-self": "stretch",
+                                  "border-left": {
+                                    "unit": "px",
+                                    "value": 1.0
+                                  },
+                                  "flex-grow": 1.0,
+                                  "flex-shrink": 1.0,
+                                  "padding-left": {
+                                    "unit": "px",
+                                    "value": 8.0
+                                  }
+                                }
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "config": {
+                                          "errata": "all"
+                                        },
+                                        "style": {
+                                          "height": {
+                                            "unit": "px",
+                                            "value": 8.0
+                                          },
+                                          "overflow": "hidden",
+                                          "width": {
+                                            "unit": "px",
+                                            "value": 8.0
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all"
+                                    },
+                                    "style": {
+                                      "align-items": "center",
+                                      "align-self": "flex-end",
+                                      "height": {
+                                        "unit": "px",
+                                        "value": 20.0
+                                      },
+                                      "justify-content": "center",
+                                      "width": {
+                                        "unit": "px",
+                                        "value": 20.0
+                                      }
+                                    }
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all"
+                                },
+                                "style": {
+                                  "align-self": "center",
+                                  "flex-direction": "row",
+                                  "margin-left": {
+                                    "unit": "px",
+                                    "value": 5.0
+                                  }
+                                }
+                              }
+                            ],
+                            "config": {
+                              "errata": "all"
+                            },
+                            "style": {
+                              "align-items": "flex-start",
+                              "flex-direction": "row"
+                            }
+                          }
+                        ],
+                        "config": {
+                          "errata": "all"
+                        },
+                        "style": {
+                          "height": {
+                            "unit": "px",
+                            "value": 48.0
+                          },
+                          "justify-content": "center",
+                          "margin-top": {
+                            "unit": "px",
+                            "value": 0.5
+                          },
+                          "padding-horizontal": {
+                            "unit": "px",
+                            "value": 12.0
+                          },
+                          "position-type": "relative",
+                          "width": {
+                            "unit": "pct",
+                            "value": 100.0
+                          }
+                        }
+                      }
+                    ],
+                    "config": {
+                      "errata": "all"
+                    },
+                    "style": {
+                      "height": {
+                        "unit": "px",
+                        "value": 48.0
+                      },
+                      "justify-content": "center",
+                      "margin-top": {
+                        "unit": "px",
+                        "value": 0.5
+                      },
+                      "position-type": "relative",
+                      "width": {
+                        "unit": "pct",
+                        "value": 100.0
+                      }
+                    }
+                  }
+                ],
+                "config": {
+                  "errata": "all"
+                },
+                "style": {
+                  "margin-bottom": {
+                    "unit": "px",
+                    "value": 5.0
+                  },
+                  "overflow": "hidden"
+                }
+              }
+            ],
+            "config": {
+              "errata": "all"
+            },
+            "style": {
+              "position-bottom": {
+                "unit": "px",
+                "value": 20.0
+              },
+              "position-left": {
+                "unit": "px",
+                "value": 10.0
+              },
+              "position-right": {
+                "unit": "px",
+                "value": 10.0
+              },
+              "position-type": "absolute"
+            }
+          }
+        ],
+        "config": {
+          "errata": "all"
+        },
+        "style": {
+          "flex": 1.0
+        }
+      }
+    ],
+    "config": {
+      "errata": "all",
+      "point-scale-factor": 2.0
+    },
+    "style": {
+      "max-height": {
+        "unit": "px",
+        "value": 720.0
+      },
+      "max-width": {
+        "unit": "px",
+        "value": 1080.0
+      },
+      "min-height": {
+        "unit": "px",
+        "value": 720.0
+      },
+      "min-width": {
+        "unit": "px",
+        "value": 1080.0
+      }
+    }
+  }
+}
