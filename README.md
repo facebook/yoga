@@ -22,7 +22,7 @@ Yoga is additionally part of the [vcpkg](https://github.com/Microsoft/vcpkg/) co
 ## Example of the Project in Use
 [![Screen-Shot-2024-02-14-at-8-15-37-PM.png](https://i.postimg.cc/fTZBZtbz/Screen-Shot-2024-02-14-at-8-15-37-PM.png)](https://postimg.cc/QV4pJM5w)
 
-<img src="[![Screen-Shot-2024-02-14-at-8-19-30-PM.png](https://i.postimg.cc/htNmD60L/Screen-Shot-2024-02-14-at-8-19-30-PM.png)](https://postimg.cc/Sn7RVZ3R)" width="20">
+[![Screen-Shot-2024-02-14-at-8-19-30-PM.png](https://i.postimg.cc/htNmD60L/Screen-Shot-2024-02-14-at-8-19-30-PM.png)](https://postimg.cc/Sn7RVZ3R)
 
 ## Adding Tests
 
