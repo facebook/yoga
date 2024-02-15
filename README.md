@@ -20,7 +20,9 @@ While not required, this script will use [ninja](https://ninja-build.org/) if it
 Yoga is additionally part of the [vcpkg](https://github.com/Microsoft/vcpkg/) collection of ports maintained by Microsoft and community contributors. If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
 
 ## Example of the Project in Use
-([![Screen-Shot-2024-02-14-at-8-15-37-PM.png](https://i.postimg.cc/fTZBZtbz/Screen-Shot-2024-02-14-at-8-15-37-PM.png)](https://postimg.cc/QV4pJM5w)
+[![Screen-Shot-2024-02-14-at-8-15-37-PM.png](https://i.postimg.cc/fTZBZtbz/Screen-Shot-2024-02-14-at-8-15-37-PM.png)](https://postimg.cc/QV4pJM5w)
+
+<img src="[![Screen-Shot-2024-02-14-at-8-19-30-PM.png](https://i.postimg.cc/htNmD60L/Screen-Shot-2024-02-14-at-8-19-30-PM.png)](https://postimg.cc/Sn7RVZ3R)" width="20">
 
 ## Adding Tests
 
