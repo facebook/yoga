@@ -46,3 +46,6 @@ Yoga provides a VSCode "launch.json" configuration which allows debugging unit t
 
 Please take a look at the following link if you need further instruction for debugging.
 [in-depth debugging instructions](https://code.visualstudio.com/docs/editor/debugging)
+
+## License 
+This program is licensed by GPL License. Therefore, the general public is allowed to contribute to this code. 
