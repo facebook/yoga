@@ -1,6 +1,11 @@
 # Yoga [![Support Ukraine](https://img.shields.io/badge/Support-Ukraine-FFD500?style=flat&labelColor=005BBB)](https://opensource.fb.com/support-ukraine) [![CocoaPods](https://img.shields.io/cocoapods/v/Yoga.svg)](http://cocoapods.org/pods/Yoga) [![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout) [![Maven Central](https://img.shields.io/maven-central/v/com.facebook.yoga/yoga)](https://search.maven.org/artifact/com.facebook.yoga/yoga)
 
 Yoga is an embeddable and performant flexbox layout engine with bindings for multiple languages.
+Yoga allows users to build flexible layouts on any platform with ease of use in mind.
+
+The technologies used in this project are Litho, React Native, Component, and Standalone. Reference our documentation for step-by-step instructions to setting up these technologies on your device.
+
+In the future, we would like to add more properties that the user can implement to make their layout more complex. Please consider contributing documentation, code, or tests to help with this effort.
 
 ## Building
 
@@ -13,6 +18,9 @@ Yoga's main implementation targets C++ 20 with accompanying build logic in CMake
 While not required, this script will use [ninja](https://ninja-build.org/) if it is installed for faster builds.
 
 Yoga is additionally part of the [vcpkg](https://github.com/Microsoft/vcpkg/) collection of ports maintained by Microsoft and community contributors. If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
+
+## Example of the Project in Use
+([![Screen-Shot-2024-02-14-at-8-15-37-PM.png](https://i.postimg.cc/fTZBZtbz/Screen-Shot-2024-02-14-at-8-15-37-PM.png)](https://postimg.cc/QV4pJM5w)
 
 ## Adding Tests
 
@@ -33,3 +41,6 @@ To generate new tests from added fixtures:
 ## Debugging
 
 Yoga provides a VSCode "launch.json" configuration which allows debugging unit tests. Simply add your breakpoints, and run "Debug C++ Unit tests (lldb)" (or "Debug C++ Unit tests (vsdbg)" on Windows).
+
+Please take a look at the following link if you need further instruction for debugging.
+[in-depth debugging instructions](https://code.visualstudio.com/docs/editor/debugging)
