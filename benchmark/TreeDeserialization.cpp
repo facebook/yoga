@@ -228,18 +228,14 @@ YGMeasureMode measureModeFromString(std::string str) {
   }
 }
 
-void populateMeasureFuncVec(
-    json& j,
-    std::shared_ptr<MeasureFuncVecWithIndex> fns) {
-  for (auto measureFuncJson : j) {
-    fns->vec.push_back(SerializedMeasureFunc{
-        floatFromJson(measureFuncJson["width"]),
-        measureModeFromString(measureFuncJson["width-mode"]),
-        floatFromJson(measureFuncJson["height"]),
-        measureModeFromString(measureFuncJson["height-mode"]),
-        floatFromJson(measureFuncJson["output-width"]),
-        floatFromJson(measureFuncJson["output-height"]),
-        measureFuncJson["duration-ns"]});
-  }
+SerializedMeasureFunc serializedMeasureFuncFromJson(json& j) {
+  return SerializedMeasureFunc{
+      floatFromJson(j["width"]),
+      measureModeFromString(j["width-mode"]),
+      floatFromJson(j["height"]),
+      measureModeFromString(j["height-mode"]),
+      floatFromJson(j["output-width"]),
+      floatFromJson(j["output-height"]),
+      j["duration-ns"]};
 }
 } // namespace facebook::yoga

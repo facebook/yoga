@@ -6,6 +6,7 @@
  */
 
 #include <memory>
+#include <vector>
 
 #include <capture/NodeToString.h>
 
@@ -120,7 +121,26 @@ static YGValue borderFloatToYGValue(YGNodeRef node, YGEdge edge) {
   return YGValue{val, unit};
 }
 
-static void serializeTreeImpl(json& j, YGNodeRef node, PrintOptions options) {
+static void serializeMeasureFuncResults(
+    json& j,
+    std::vector<SerializedMeasureFunc>& measureFuncs) {
+  for (auto measureFunc : measureFuncs) {
+    j["measure-funcs"].push_back(
+        {{"width", measureFunc.inputWidth},
+         {"width-mode", YGMeasureModeToString(measureFunc.widthMode)},
+         {"height", measureFunc.inputHeight},
+         {"height-mode", YGMeasureModeToString(measureFunc.heightMode)},
+         {"output-width", measureFunc.outputWidth},
+         {"output-height", measureFunc.outputHeight},
+         {"duration-ns", measureFunc.durationNs}});
+  }
+}
+
+static void serializeTreeImpl(
+    json& j,
+    SerializedMeasureFuncMap& nodesToMeasureFuncs,
+    YGNodeRef node,
+    PrintOptions options) {
   if ((options & PrintOptions::Layout) == PrintOptions::Layout) {
     j["layout"]["width"] = YGNodeStyleGetWidth(node).value;
     j["layout"]["height"] = YGNodeStyleGetHeight(node).value;
@@ -293,7 +313,12 @@ static void serializeTreeImpl(json& j, YGNodeRef node, PrintOptions options) {
         YGNodeGetAlwaysFormsContainingBlock(node),
         YGNodeGetAlwaysFormsContainingBlock(defaultNode.get()));
     if (YGNodeHasMeasureFunc(node)) {
-      j["node"]["has-custom-measure"] = true;
+      auto measureFuncIt = nodesToMeasureFuncs.find(node);
+      if (measureFuncIt == nodesToMeasureFuncs.end()) {
+        j["node"]["measure-funcs"];
+      } else {
+        serializeMeasureFuncResults(j["node"], measureFuncIt->second);
+      }
     }
   }
 
@@ -302,13 +327,21 @@ static void serializeTreeImpl(json& j, YGNodeRef node, PrintOptions options) {
       childCount > 0) {
     for (size_t i = 0; i < childCount; i++) {
       j["children"].push_back({});
-      serializeTreeImpl(j["children"][i], YGNodeGetChild(node, i), options);
+      serializeTreeImpl(
+          j["children"][i],
+          nodesToMeasureFuncs,
+          YGNodeGetChild(node, i),
+          options);
     }
   }
 }
 
-void serializeTree(json& j, YGNodeRef node, PrintOptions options) {
-  serializeTreeImpl(j["tree"], node, options);
+void serializeTree(
+    json& j,
+    SerializedMeasureFuncMap& nodesToMeasureFuncs,
+    YGNodeRef node,
+    PrintOptions options) {
+  serializeTreeImpl(j["tree"], nodesToMeasureFuncs, node, options);
 }
 
 void serializeLayoutInputs(
@@ -321,21 +354,6 @@ void serializeLayoutInputs(
       {"available-height", availableHeight},
       {"owner-direction", YGDirectionToString(ownerDirection)},
   };
-}
-
-void serializeMeasureFuncResults(
-    json& j,
-    std::vector<SerializedMeasureFunc>& measureFuncs) {
-  for (auto measureFunc : measureFuncs) {
-    j["measure-funcs"].push_back(
-        {{"width", measureFunc.inputWidth},
-         {"width-mode", YGMeasureModeToString(measureFunc.widthMode)},
-         {"height", measureFunc.inputHeight},
-         {"height-mode", YGMeasureModeToString(measureFunc.heightMode)},
-         {"output-width", measureFunc.outputWidth},
-         {"output-height", measureFunc.outputHeight},
-         {"duration-ns", measureFunc.durationNs}});
-  }
 }
 
 } // namespace facebook::yoga

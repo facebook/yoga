@@ -46,6 +46,11 @@ static bool inputsMatch(
       actualHeightMode == expectedHeightMode;
 }
 
+YGSize defaultMeasureFunctionResult() {
+  std::cout << "Trying to measure a node that wasn't serialized" << std::endl;
+  return {10.0, 10.0};
+}
+
 YGSize mockMeasureFunc(
     YGNodeConstRef node,
     float availableWidth,
@@ -53,42 +58,34 @@ YGSize mockMeasureFunc(
     float availableHeight,
     YGMeasureMode heightMode) {
   (void)node;
-  MeasureFuncVecWithIndex* fns =
-      static_cast<MeasureFuncVecWithIndex*>(YGNodeGetContext(node));
+  auto fnsPtr = static_cast<SerializedMeasureFuncMap*>(YGNodeGetContext(node));
 
-  if (fns->index >= fns->vec.size()) {
-    std::cout << "Extra measure function call made" << std::endl;
-    return {10.0, 10.0};
+  if (fnsPtr == nullptr) {
+    return defaultMeasureFunctionResult();
   }
 
-  auto values = fns->vec.at(fns->index);
-
-  if (!inputsMatch(
-          availableWidth,
-          values.inputWidth,
-          availableHeight,
-          values.inputHeight,
-          widthMode,
-          values.widthMode,
-          heightMode,
-          values.heightMode)) {
-    std::cout << "Measure function input mismatch." << std::endl
-              << "Expected width: " << values.inputWidth
-              << ", actual width: " << availableWidth << std::endl
-              << "Expected height: " << values.inputHeight
-              << ", actual height: " << availableHeight << std::endl
-              << "Expected width mode: " << values.widthMode
-              << ", actual width mode: " << widthMode << std::endl
-              << "Expected height mode: " << values.heightMode
-              << ", actual height mode: " << heightMode << std::endl;
-    return {10.0, 10.0};
+  auto fnsIt = fnsPtr->find(node);
+  if (fnsIt == fnsPtr->end()) {
+    return defaultMeasureFunctionResult();
   }
 
-  fns->index++;
+  for (auto measureFunc : fnsIt->second) {
+    if (inputsMatch(
+            availableWidth,
+            measureFunc.inputWidth,
+            availableHeight,
+            measureFunc.inputHeight,
+            widthMode,
+            measureFunc.widthMode,
+            heightMode,
+            measureFunc.heightMode)) {
+      std::this_thread::sleep_for(
+          std::chrono::nanoseconds(measureFunc.durationNs));
+      return {measureFunc.outputWidth, measureFunc.outputHeight};
+    }
+  }
 
-  std::this_thread::sleep_for(std::chrono::nanoseconds(values.durationNs));
-
-  return {values.outputWidth, values.outputHeight};
+  return defaultMeasureFunctionResult();
 }
 
 std::shared_ptr<const YGConfig> buildConfigFromJson(const json& j) {
@@ -257,7 +254,7 @@ void setStylesFromJson(const json& j, YGNodeRef node) {
 std::shared_ptr<YGNode> buildNodeFromJson(
     const json& j,
     std::shared_ptr<const YGConfig> config,
-    std::shared_ptr<MeasureFuncVecWithIndex> fns) {
+    std::shared_ptr<SerializedMeasureFuncMap> fns) {
   std::shared_ptr<YGNode> node(YGNodeNewWithConfig(config.get()), YGNodeFree);
 
   if (!j.contains("node") || j["node"].is_null()) {
@@ -268,8 +265,13 @@ std::shared_ptr<YGNode> buildNodeFromJson(
   for (json::iterator it = nodeState.begin(); it != nodeState.end(); it++) {
     if (it.key() == "always-forms-containing-block") {
       YGNodeSetAlwaysFormsContainingBlock(node.get(), it.value());
-    } else if (it.key() == "has-custom-measure" && it.value()) {
-      YGNodeSetContext(node.get(), fns.get());
+    } else if (it.key() == "measure-funcs") {
+      std::vector<SerializedMeasureFunc> vec{};
+      for (auto measureFuncJson : it.value()) {
+        vec.push_back(serializedMeasureFuncFromJson(measureFuncJson));
+      }
+      fns->insert(std::make_pair(node.get(), vec));
+      YGNodeSetContext(node.get(), it.value().is_null() ? nullptr : fns.get());
       YGNodeSetMeasureFunc(node.get(), mockMeasureFunc);
     }
   }
@@ -279,7 +281,7 @@ std::shared_ptr<YGNode> buildNodeFromJson(
 
 std::shared_ptr<YogaNodeAndConfig> buildTreeFromJson(
     const json& j,
-    std::shared_ptr<MeasureFuncVecWithIndex> fns,
+    std::shared_ptr<SerializedMeasureFuncMap> fns,
     std::shared_ptr<YogaNodeAndConfig> parent,
     size_t index) {
   auto config = buildConfigFromJson(j);
@@ -307,8 +309,7 @@ std::shared_ptr<YogaNodeAndConfig> buildTreeFromJson(
 }
 
 BenchmarkResult generateBenchmark(json& capture) {
-  auto fns = std::make_shared<MeasureFuncVecWithIndex>();
-  populateMeasureFuncVec(capture["measure-funcs"], fns);
+  auto fns = std::make_shared<SerializedMeasureFuncMap>();
 
   auto treeCreationBegin = steady_clock::now();
   std::shared_ptr<YogaNodeAndConfig> root =

@@ -25,16 +25,16 @@ enum class PrintOptions : uint8_t {
 };
 YG_DEFINE_ENUM_FLAG_OPERATORS(PrintOptions);
 
-void serializeTree(nlohmann::json& j, YGNodeRef root, PrintOptions options);
+void serializeTree(
+    nlohmann::json& j,
+    SerializedMeasureFuncMap& nodesToMeasureFuncs,
+    YGNodeRef root,
+    PrintOptions options);
 
 void serializeLayoutInputs(
     nlohmann::json& j,
     float availableWidth,
     float availableHeight,
     YGDirection ownerDirection);
-
-void serializeMeasureFuncResults(
-    nlohmann::json& j,
-    std::vector<SerializedMeasureFunc>& measureFuncs);
 
 } // namespace facebook::yoga

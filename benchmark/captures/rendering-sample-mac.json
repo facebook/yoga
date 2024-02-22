@@ -4,224 +4,6 @@
     "available-width": 1080.0,
     "owner-direction": "ltr"
   },
-  "measure-funcs": [
-    {
-      "duration-ns": 23667,
-      "height": null,
-      "height-mode": "undefined",
-      "output-height": 330.0,
-      "output-width": 408.0,
-      "width": 647.3333129882813,
-      "width-mode": "at-most"
-    },
-    {
-      "duration-ns": 9083,
-      "height": null,
-      "height-mode": "undefined",
-      "output-height": 448.0,
-      "output-width": 562.5,
-      "width": 647.3333129882813,
-      "width-mode": "at-most"
-    },
-    {
-      "duration-ns": 7667,
-      "height": null,
-      "height-mode": "undefined",
-      "output-height": 100.0,
-      "output-width": 294.0,
-      "width": 647.3333129882813,
-      "width-mode": "at-most"
-    },
-    {
-      "duration-ns": 8333,
-      "height": 676.0,
-      "height-mode": "at-most",
-      "output-height": 94.0,
-      "output-width": 328.6666564941406,
-      "width": 328.6666564941406,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7791,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 8041,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 8000,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7709,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7666,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 6916,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7167,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 9333,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7125,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7125,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7209,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7083,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7333,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7375,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 8917,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 7667,
-      "height": 566.0,
-      "height-mode": "at-most",
-      "output-height": 21.0,
-      "output-width": 158.33331298828125,
-      "width": 158.33331298828125,
-      "width-mode": "exactly"
-    },
-    {
-      "duration-ns": 8583,
-      "height": null,
-      "height-mode": "undefined",
-      "output-height": 295.0,
-      "output-width": 816.0,
-      "width": null,
-      "width-mode": "undefined"
-    },
-    {
-      "duration-ns": 7667,
-      "height": null,
-      "height-mode": "undefined",
-      "output-height": 7.0,
-      "output-width": 70.5,
-      "width": 1076.0,
-      "width-mode": "at-most"
-    },
-    {
-      "duration-ns": 494291,
-      "height": 44.0,
-      "height-mode": "at-most",
-      "output-height": 18.0,
-      "output-width": 5.0,
-      "width": 1016.0,
-      "width-mode": "at-most"
-    },
-    {
-      "duration-ns": 58250,
-      "height": 44.0,
-      "height-mode": "at-most",
-      "output-height": 18.0,
-      "output-width": 10.0,
-      "width": 10.0,
-      "width-mode": "exactly"
-    }
-  ],
   "tree": {
     "children": [
       {
@@ -237,7 +19,17 @@
                           "errata": "all"
                         },
                         "node": {
-                          "has-custom-measure": true
+                          "measure-funcs": [
+                            {
+                              "duration-ns": 8167,
+                              "height": null,
+                              "height-mode": "undefined",
+                              "output-height": 295.0,
+                              "output-width": 816.0,
+                              "width": null,
+                              "width-mode": "undefined"
+                            }
+                          ]
                         },
                         "style": {
                           "margin-all": {
@@ -720,7 +512,17 @@
                               "errata": "all"
                             },
                             "node": {
-                              "has-custom-measure": true
+                              "measure-funcs": [
+                                {
+                                  "duration-ns": 24625,
+                                  "height": null,
+                                  "height-mode": "undefined",
+                                  "output-height": 330.0,
+                                  "output-width": 408.0,
+                                  "width": 647.3333129882813,
+                                  "width-mode": "at-most"
+                                }
+                              ]
                             },
                             "style": {
                               "margin-all": {
@@ -747,7 +549,17 @@
                               "errata": "all"
                             },
                             "node": {
-                              "has-custom-measure": true
+                              "measure-funcs": [
+                                {
+                                  "duration-ns": 9625,
+                                  "height": null,
+                                  "height-mode": "undefined",
+                                  "output-height": 448.0,
+                                  "output-width": 562.5,
+                                  "width": 647.3333129882813,
+                                  "width-mode": "at-most"
+                                }
+                              ]
                             },
                             "style": {
                               "margin-all": {
@@ -774,7 +586,17 @@
                               "errata": "all"
                             },
                             "node": {
-                              "has-custom-measure": true
+                              "measure-funcs": [
+                                {
+                                  "duration-ns": 8417,
+                                  "height": null,
+                                  "height-mode": "undefined",
+                                  "output-height": 100.0,
+                                  "output-width": 294.0,
+                                  "width": 647.3333129882813,
+                                  "width-mode": "at-most"
+                                }
+                              ]
                             },
                             "style": {
                               "margin-all": {
@@ -815,7 +637,17 @@
                               "errata": "all"
                             },
                             "node": {
-                              "has-custom-measure": true
+                              "measure-funcs": [
+                                {
+                                  "duration-ns": 9166,
+                                  "height": 676.0,
+                                  "height-mode": "at-most",
+                                  "output-height": 94.0,
+                                  "output-width": 328.6666564941406,
+                                  "width": 328.6666564941406,
+                                  "width-mode": "exactly"
+                                }
+                              ]
                             },
                             "style": {
                               "padding-all": {
@@ -837,7 +669,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 8250,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -880,7 +722,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 8625,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -923,7 +775,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 7250,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -966,7 +828,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 6833,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1009,7 +881,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 7042,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1052,7 +934,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 6208,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1095,7 +987,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 6834,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1138,7 +1040,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 8500,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1181,7 +1093,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 6750,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1224,7 +1146,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 6667,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1267,7 +1199,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 8958,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1310,7 +1252,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 8125,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1353,7 +1305,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 6541,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1396,7 +1358,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 6541,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1439,7 +1411,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 6333,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1482,7 +1464,17 @@
                                               "errata": "all"
                                             },
                                             "node": {
-                                              "has-custom-measure": true
+                                              "measure-funcs": [
+                                                {
+                                                  "duration-ns": 7875,
+                                                  "height": 566.0,
+                                                  "height-mode": "at-most",
+                                                  "output-height": 21.0,
+                                                  "output-width": 158.33331298828125,
+                                                  "width": 158.33331298828125,
+                                                  "width-mode": "exactly"
+                                                }
+                                              ]
                                             },
                                             "style": {
                                               "margin-all": {
@@ -1619,7 +1611,17 @@
                   "errata": "all"
                 },
                 "node": {
-                  "has-custom-measure": true
+                  "measure-funcs": [
+                    {
+                      "duration-ns": 7583,
+                      "height": null,
+                      "height-mode": "undefined",
+                      "output-height": 7.0,
+                      "output-width": 70.5,
+                      "width": 1076.0,
+                      "width-mode": "at-most"
+                    }
+                  ]
                 },
                 "style": null
               }
@@ -1664,7 +1666,26 @@
                                           "errata": "all"
                                         },
                                         "node": {
-                                          "has-custom-measure": true
+                                          "measure-funcs": [
+                                            {
+                                              "duration-ns": 478791,
+                                              "height": 44.0,
+                                              "height-mode": "at-most",
+                                              "output-height": 18.0,
+                                              "output-width": 5.0,
+                                              "width": 1016.0,
+                                              "width-mode": "at-most"
+                                            },
+                                            {
+                                              "duration-ns": 61250,
+                                              "height": 44.0,
+                                              "height-mode": "at-most",
+                                              "output-height": 18.0,
+                                              "output-width": 10.0,
+                                              "width": 10.0,
+                                              "width-mode": "exactly"
+                                            }
+                                          ]
                                         },
                                         "style": null
                                       }
@@ -1709,7 +1730,7 @@
                                       "errata": "all"
                                     },
                                     "node": {
-                                      "has-custom-measure": true
+                                      "measure-funcs": null
                                     },
                                     "style": {
                                       "flex": 1.0
