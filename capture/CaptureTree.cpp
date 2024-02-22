@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#include <cassert>
 #include <fstream>
-#include <vector>
 
 #include <capture/CaptureTree.h>
 #include <capture/NodeToString.h>
@@ -23,10 +23,9 @@ static void captureTree(
   file << serializedTree;
 }
 
-static std::vector<SerializedMeasureFunc>& currentSerializedMeasureFuncVec() {
-  static thread_local std::vector<SerializedMeasureFunc>
-      currentSerializedMeasureFuncVec;
-  return currentSerializedMeasureFuncVec;
+static SerializedMeasureFuncMap& currentSerializedMeasureFuncMap() {
+  static thread_local SerializedMeasureFuncMap map{};
+  return map;
 }
 
 /*
@@ -57,38 +56,45 @@ void YGNodeCalculateLayoutWithCapture(
     YGDirection ownerDirection,
     const std::filesystem::path& path) {
   dirtyTree(node);
+  YGNodeCalculateLayout(node, availableWidth, availableHeight, ownerDirection);
+
   json j;
   serializeLayoutInputs(j, availableWidth, availableHeight, ownerDirection);
   serializeTree(
       j,
+      currentSerializedMeasureFuncMap(),
       node,
       PrintOptions::Style | PrintOptions::Children | PrintOptions::Config |
           PrintOptions::Node);
-
-  YGNodeCalculateLayout(node, availableWidth, availableHeight, ownerDirection);
-
-  serializeMeasureFuncResults(j, currentSerializedMeasureFuncVec());
   // TODO: It is possible to have a measure function call layout again if, e.g.,
   // views are nested in text. Need to be able to resolve this special case.
-  currentSerializedMeasureFuncVec().clear();
+  currentSerializedMeasureFuncMap().clear();
   captureTree(j.dump(2), path);
 }
 
 void captureMeasureFunc(
+    YGNodeConstRef node,
     float width,
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode,
     YGSize output,
     std::chrono::steady_clock::duration durationNs) {
-  currentSerializedMeasureFuncVec().push_back(SerializedMeasureFunc{
-      width,
-      widthMode,
-      height,
-      heightMode,
-      output.width,
-      output.height,
-      durationNs.count()});
+  auto measureFuncIt = currentSerializedMeasureFuncMap().find(node);
+  if (measureFuncIt == currentSerializedMeasureFuncMap().end()) {
+    std::vector<SerializedMeasureFunc> vec{};
+    currentSerializedMeasureFuncMap().insert(std::make_pair(node, vec));
+  }
+  measureFuncIt = currentSerializedMeasureFuncMap().find(node);
+  assert(measureFuncIt != currentSerializedMeasureFuncMap().end());
+  measureFuncIt->second.push_back(
+      {width,
+       widthMode,
+       height,
+       heightMode,
+       output.width,
+       output.height,
+       durationNs.count()});
 }
 
 } // namespace facebook::yoga

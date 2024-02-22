@@ -18,11 +18,6 @@ namespace facebook::yoga {
 
 using namespace nlohmann;
 
-struct MeasureFuncVecWithIndex {
-  std::vector<SerializedMeasureFunc> vec;
-  size_t index;
-};
-
 YGFlexDirection flexDirectionFromString(std::string str);
 
 YGJustify justifyContentFromString(std::string str);
@@ -53,7 +48,5 @@ YGDirection directionFromString(std::string str);
 
 YGMeasureMode measureModeFromString(std::string str);
 
-void populateMeasureFuncVec(
-    json& j,
-    std::shared_ptr<MeasureFuncVecWithIndex> fns);
+SerializedMeasureFunc serializedMeasureFuncFromJson(json& j);
 } // namespace facebook::yoga
