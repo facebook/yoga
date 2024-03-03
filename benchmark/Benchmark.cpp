@@ -113,8 +113,8 @@ std::shared_ptr<const YGConfig> buildConfigFromJson(const json& j) {
 }
 
 std::string edgeStringFromPropertyName(
-    std::string key,
-    std::string propertyName) {
+    const std::string& key,
+    const std::string& propertyName) {
   return key.substr(propertyName.length() + 1);
 }
 
@@ -299,7 +299,7 @@ std::shared_ptr<YogaNodeAndConfig> buildTreeFromJson(
   if (j.contains("children")) {
     json children = j["children"];
     size_t childIndex = 0;
-    for (json child : children) {
+    for (const json& child : children) {
       buildTreeFromJson(child, fns, wrapper, childIndex);
       childIndex++;
     }
@@ -331,9 +331,9 @@ BenchmarkResult generateBenchmark(json& capture) {
 }
 
 static void printBenchmarkResult(
-    std::string name,
+    const std::string& name,
     SteadyClockDurations& durations) {
-  std::array<double, kNumRepititions> timesInMs;
+  std::array<double, kNumRepititions> timesInMs{};
   double mean = 0;
   for (uint32_t i = 0; i < kNumRepititions; i++) {
     auto ms = duration<double, std::milli>(durations[i]).count();

@@ -22,7 +22,7 @@ struct SerializedMeasureFunc {
   YGMeasureMode heightMode{YGMeasureModeUndefined};
   float outputWidth{0.0f};
   float outputHeight{0.0f};
-  std::chrono::steady_clock::duration::rep durationNs;
+  std::chrono::steady_clock::duration::rep durationNs{};
 };
 
 using SerializedMeasureFuncMap =

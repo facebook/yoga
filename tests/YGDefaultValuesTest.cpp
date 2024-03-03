@@ -12,7 +12,7 @@ TEST(YogaTest, assert_default_values) {
   const YGNodeRef root = YGNodeNew();
 
   ASSERT_EQ(0u, YGNodeGetChildCount(root));
-  ASSERT_EQ(NULL, YGNodeGetChild(root, 1));
+  ASSERT_EQ(nullptr, YGNodeGetChild(root, 1));
 
   ASSERT_EQ(YGDirectionInherit, YGNodeStyleGetDirection(root));
   ASSERT_EQ(YGFlexDirectionColumn, YGNodeStyleGetFlexDirection(root));

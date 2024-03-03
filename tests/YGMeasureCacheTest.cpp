@@ -50,7 +50,7 @@ static YGSize _measure_84_49(
     float /*height*/,
     YGMeasureMode /*heightMode*/) {
   int* measureCount = (int*)YGNodeGetContext(node);
-  if (measureCount) {
+  if (measureCount != nullptr) {
     (*measureCount)++;
   }
 

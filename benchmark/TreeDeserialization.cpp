@@ -22,8 +22,8 @@ static inline bool isAuto(json& j) {
 }
 
 static inline std::string invalidArgumentMessage(
-    std::string arg,
-    std::string enumName) {
+    const std::string& arg,
+    const std::string& enumName) {
   return arg + " does not represent any " + enumName + " values";
 }
 
@@ -36,7 +36,7 @@ static inline float floatFromJson(json& j) {
   return result;
 }
 
-YGFlexDirection flexDirectionFromString(std::string str) {
+YGFlexDirection flexDirectionFromString(const std::string& str) {
   if (str == "row") {
     return YGFlexDirectionRow;
   } else if (str == "row-reverse") {
@@ -50,7 +50,7 @@ YGFlexDirection flexDirectionFromString(std::string str) {
   }
 }
 
-YGJustify justifyContentFromString(std::string str) {
+YGJustify justifyContentFromString(const std::string& str) {
   if (str == "flex-start") {
     return YGJustifyFlexStart;
   } else if (str == "center") {
@@ -68,7 +68,7 @@ YGJustify justifyContentFromString(std::string str) {
   }
 }
 
-YGAlign alignFromString(std::string str) {
+YGAlign alignFromString(const std::string& str) {
   if (str == "auto") {
     return YGAlignAuto;
   } else if (str == "flex-start") {
@@ -92,7 +92,7 @@ YGAlign alignFromString(std::string str) {
   }
 }
 
-YGWrap wrapFromString(std::string str) {
+YGWrap wrapFromString(const std::string& str) {
   if (str == "no-wrap") {
     return YGWrapNoWrap;
   } else if (str == "wrap") {
@@ -104,7 +104,7 @@ YGWrap wrapFromString(std::string str) {
   }
 }
 
-YGOverflow overflowFromString(std::string str) {
+YGOverflow overflowFromString(const std::string& str) {
   if (str == "visible") {
     return YGOverflowVisible;
   } else if (str == "hidden") {
@@ -116,7 +116,7 @@ YGOverflow overflowFromString(std::string str) {
   }
 }
 
-YGDisplay displayFromString(std::string str) {
+YGDisplay displayFromString(const std::string& str) {
   if (str == "flex") {
     return YGDisplayFlex;
   } else if (str == "none") {
@@ -126,7 +126,7 @@ YGDisplay displayFromString(std::string str) {
   }
 }
 
-YGPositionType positionTypeFromString(std::string str) {
+YGPositionType positionTypeFromString(const std::string& str) {
   if (str == "static") {
     return YGPositionTypeStatic;
   } else if (str == "relative") {
@@ -153,7 +153,7 @@ YGUnit unitFromJson(json& j) {
   }
 }
 
-YGEdge edgeFromString(std::string str) {
+YGEdge edgeFromString(const std::string& str) {
   if (str == "left") {
     return YGEdgeLeft;
   } else if (str == "top") {
@@ -177,7 +177,7 @@ YGEdge edgeFromString(std::string str) {
   }
 }
 
-YGErrata errataFromString(std::string str) {
+YGErrata errataFromString(const std::string& str) {
   if (str == "none") {
     return YGErrataNone;
   } else if (str == "all") {
@@ -189,7 +189,7 @@ YGErrata errataFromString(std::string str) {
   }
 }
 
-YGExperimentalFeature experimentalFeatureFromString(std::string str) {
+YGExperimentalFeature experimentalFeatureFromString(const std::string& str) {
   if (str == "web-flex-basis") {
     return YGExperimentalFeatureWebFlexBasis;
   } else {
@@ -199,12 +199,12 @@ YGExperimentalFeature experimentalFeatureFromString(std::string str) {
 }
 
 std::string edgeStringFromPropertyName(
-    json::iterator it,
-    std::string propertyName) {
+    const json::iterator& it,
+    const std::string& propertyName) {
   return it.key().substr(propertyName.length() + 1);
 }
 
-YGDirection directionFromString(std::string str) {
+YGDirection directionFromString(const std::string& str) {
   if (str == "ltr") {
     return YGDirectionLTR;
   } else if (str == "rtl") {
@@ -216,7 +216,7 @@ YGDirection directionFromString(std::string str) {
   }
 }
 
-YGMeasureMode measureModeFromString(std::string str) {
+YGMeasureMode measureModeFromString(const std::string& str) {
   if (str == "at-most") {
     return YGMeasureModeAtMost;
   } else if (str == "exactly") {

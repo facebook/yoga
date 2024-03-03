@@ -10,6 +10,7 @@
 #include <chrono>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <yoga/Yoga.h>
@@ -21,7 +22,9 @@ struct YogaNodeAndConfig {
       std::shared_ptr<YGNode> node,
       std::shared_ptr<const YGConfig> config,
       std::vector<std::shared_ptr<YogaNodeAndConfig>> children)
-      : node_(node), config_(config), children_(children) {}
+      : node_(std::move(node)),
+        config_(std::move(config)),
+        children_(std::move(children)) {}
 
   std::shared_ptr<YGNode> node_;
   std::shared_ptr<const YGConfig> config_;
