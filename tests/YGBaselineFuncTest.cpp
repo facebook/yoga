@@ -10,7 +10,7 @@
 
 static float
 _baseline(YGNodeConstRef node, const float /*width*/, const float /*height*/) {
-  float* baseline = (float*)YGNodeGetContext(node);
+  auto* baseline = (float*)YGNodeGetContext(node);
   return *baseline;
 }
 

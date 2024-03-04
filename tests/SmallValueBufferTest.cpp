@@ -13,7 +13,7 @@ namespace facebook::yoga {
 constexpr size_t kBufferSize = 4;
 
 TEST(SmallValueBuffer, copy_assignment_with_overflow) {
-  std::array<uint16_t, kBufferSize + 1> handles;
+  std::array<uint16_t, kBufferSize + 1> handles{};
 
   SmallValueBuffer<kBufferSize> buffer1;
   for (size_t i = 0; i < kBufferSize + 1; ++i) {

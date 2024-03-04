@@ -21,10 +21,16 @@ struct ConfigCloningTest : public ::testing::Test {
   void TearDown() override;
 
   static yoga::Node clonedNode;
-  static YGNodeRef cloneNode(YGNodeConstRef, YGNodeConstRef, size_t) {
+  static YGNodeRef cloneNode(
+      YGNodeConstRef /*unused*/,
+      YGNodeConstRef /*unused*/,
+      size_t /*unused*/) {
     return &clonedNode;
   }
-  static YGNodeRef doNotClone(YGNodeConstRef, YGNodeConstRef, size_t) {
+  static YGNodeRef doNotClone(
+      YGNodeConstRef /*unused*/,
+      YGNodeConstRef /*unused*/,
+      size_t /*unused*/) {
     return nullptr;
   }
 };
@@ -32,7 +38,8 @@ struct ConfigCloningTest : public ::testing::Test {
 TEST_F(ConfigCloningTest, uses_values_provided_by_cloning_callback) {
   config->setCloneNodeCallback(cloneNode);
 
-  yoga::Node node{}, owner{};
+  yoga::Node node{};
+  yoga::Node owner{};
   auto clone = config->cloneNode(&node, &owner, 0);
 
   ASSERT_EQ(clone, &clonedNode);
@@ -43,7 +50,8 @@ TEST_F(
     falls_back_to_regular_cloning_if_callback_returns_null) {
   config->setCloneNodeCallback(doNotClone);
 
-  yoga::Node node{}, owner{};
+  yoga::Node node{};
+  yoga::Node owner{};
   auto clone = config->cloneNode(&node, &owner, 0);
 
   ASSERT_NE(clone, nullptr);

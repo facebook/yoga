@@ -45,8 +45,11 @@ struct EventArgs {
 };
 
 class EventTest : public ::testing::Test {
-  ScopedEventSubscription subscription = {&EventTest::listen};
-  static void listen(YGNodeConstRef, Event::Type, Event::Data);
+  ScopedEventSubscription subscription{&EventTest::listen};
+  static void listen(
+      YGNodeConstRef /*node*/,
+      Event::Type /*type*/,
+      Event::Data /*data*/);
 
  public:
   static std::vector<EventArgs> events;

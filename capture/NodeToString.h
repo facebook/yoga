@@ -28,7 +28,7 @@ YG_DEFINE_ENUM_FLAG_OPERATORS(PrintOptions);
 void serializeTree(
     nlohmann::json& j,
     SerializedMeasureFuncMap& nodesToMeasureFuncs,
-    YGNodeRef root,
+    YGNodeRef node,
     PrintOptions options);
 
 void serializeLayoutInputs(

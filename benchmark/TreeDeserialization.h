@@ -18,35 +18,35 @@ namespace facebook::yoga {
 
 using namespace nlohmann;
 
-YGFlexDirection flexDirectionFromString(std::string str);
+YGFlexDirection flexDirectionFromString(const std::string& str);
 
-YGJustify justifyContentFromString(std::string str);
+YGJustify justifyContentFromString(const std::string& str);
 
-YGAlign alignFromString(std::string str);
+YGAlign alignFromString(const std::string& str);
 
-YGWrap wrapFromString(std::string str);
+YGWrap wrapFromString(const std::string& str);
 
-YGOverflow overflowFromString(std::string str);
+YGOverflow overflowFromString(const std::string& str);
 
-YGDisplay displayFromString(std::string str);
+YGDisplay displayFromString(const std::string& str);
 
-YGPositionType positionTypeFromString(std::string str);
+YGPositionType positionTypeFromString(const std::string& str);
 
 YGUnit unitFromJson(json& j);
 
-YGEdge edgeFromString(std::string str);
+YGEdge edgeFromString(const std::string& str);
 
-YGErrata errataFromString(std::string str);
+YGErrata errataFromString(const std::string& str);
 
-YGExperimentalFeature experimentalFeatureFromString(std::string str);
+YGExperimentalFeature experimentalFeatureFromString(const std::string& str);
 
 std::string edgeStringFromPropertyName(
-    json::iterator it,
-    std::string propertyName);
+    const json::iterator& it,
+    const std::string& propertyName);
 
-YGDirection directionFromString(std::string str);
+YGDirection directionFromString(const std::string& str);
 
-YGMeasureMode measureModeFromString(std::string str);
+YGMeasureMode measureModeFromString(const std::string& str);
 
 SerializedMeasureFunc serializedMeasureFuncFromJson(json& j);
 } // namespace facebook::yoga

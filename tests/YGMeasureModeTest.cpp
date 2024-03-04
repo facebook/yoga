@@ -26,8 +26,7 @@ static YGSize _measure(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  struct _MeasureConstraintList* constraintList =
-      (struct _MeasureConstraintList*)YGNodeGetContext(node);
+  auto* constraintList = (struct _MeasureConstraintList*)YGNodeGetContext(node);
   struct _MeasureConstraint* constraints = constraintList->constraints;
   uint32_t currentIndex = constraintList->length;
   (&constraints[currentIndex])->width = width;
@@ -43,7 +42,7 @@ static YGSize _measure(
 }
 
 TEST(YogaTest, exactly_measure_stretched_child_column) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -70,7 +69,7 @@ TEST(YogaTest, exactly_measure_stretched_child_column) {
 }
 
 TEST(YogaTest, exactly_measure_stretched_child_row) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -98,7 +97,7 @@ TEST(YogaTest, exactly_measure_stretched_child_row) {
 }
 
 TEST(YogaTest, at_most_main_axis_column) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -125,7 +124,7 @@ TEST(YogaTest, at_most_main_axis_column) {
 }
 
 TEST(YogaTest, at_most_cross_axis_column) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -153,7 +152,7 @@ TEST(YogaTest, at_most_cross_axis_column) {
 }
 
 TEST(YogaTest, at_most_main_axis_row) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -181,7 +180,7 @@ TEST(YogaTest, at_most_main_axis_row) {
 }
 
 TEST(YogaTest, at_most_cross_axis_row) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -210,7 +209,7 @@ TEST(YogaTest, at_most_cross_axis_row) {
 }
 
 TEST(YogaTest, flex_child) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -240,7 +239,7 @@ TEST(YogaTest, flex_child) {
 }
 
 TEST(YogaTest, flex_child_with_flex_basis) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -268,7 +267,7 @@ TEST(YogaTest, flex_child_with_flex_basis) {
 }
 
 TEST(YogaTest, overflow_scroll_column) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
@@ -300,7 +299,7 @@ TEST(YogaTest, overflow_scroll_column) {
 }
 
 TEST(YogaTest, overflow_scroll_row) {
-  struct _MeasureConstraintList constraintList = _MeasureConstraintList{
+  auto constraintList = _MeasureConstraintList{
       0,
       (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
