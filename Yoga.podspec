@@ -24,10 +24,9 @@ Pod::Spec.new do |spec|
   spec.module_name = 'yoga'
   spec.requires_arc = false
   spec.pod_target_xcconfig = {
-    'DEFINES_MODULE' => 'YES'
-  }.merge!(ENV['USE_FRAMEWORKS'] != nil ? {
-    'HEADER_SEARCH_PATHS' => '"$(PODS_TARGET_SRCROOT)"'
-} : {})
+    'DEFINES_MODULE' => 'YES',
+    'HEADER_SEARCH_PATHS' => '"$(PODS_TARGET_SRCROOT)"',
+  }
 
   spec.compiler_flags = [
       '-fno-omit-frame-pointer',
