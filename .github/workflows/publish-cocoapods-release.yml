@@ -9,7 +9,7 @@ on:
 jobs:
   publish:
     name: Publish to CocoaPods trunk
-    runs-on: ubuntu-latest
+    runs-on: macos-13
 
     steps:
       - uses: actions/checkout@v3
