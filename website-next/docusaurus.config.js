@@ -89,8 +89,20 @@ export default {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'About Yoga',
+                to: '/docs/about-yoga',
+              },
+              {
+                label: 'Getting Started',
+                to: '/docs/getting-started/laying-out-a-tree',
+              },
+              {
+                label: 'Advanced',
+                to: '/docs/advanced/caching',
+              },
+              {
+                label: 'Examples',
+                to: '/docs/examples/align-content',
               },
             ],
           },

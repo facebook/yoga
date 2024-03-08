@@ -24,7 +24,9 @@ function HeroSection() {
             A portable layout engine targeting web standards
           </p>
 
-          <Link className="button button--primary button--lg" to="/docs/intro">
+          <Link
+            className="button button--primary button--lg"
+            to="/docs/about-yoga">
             Learn more
           </Link>
         </div>
