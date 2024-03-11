@@ -27,7 +27,7 @@ $> yarn add yoga-layout
 ```
 
 This is an example on how to use Yoga in JavaScript. For a full API reference,
-have a look at the [TypeScript type definitions](https://github.com/facebook/yoga/blob/main/javascript/src/wrapAssembly.d.ts).
+have a look at the [TypeScript type definitions](https://github.com/facebook/yoga/blob/main/javascript/src/wrapAssembly.ts).
 
 ```js
 import {loadYoga} from 'yoga-layout';
