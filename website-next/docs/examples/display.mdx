@@ -2,4 +2,24 @@
 sidebar_position: 4
 ---
 
+import Playground from '@site/src/components/Playground';
+
 # Display
+
+Display controls which layout specification to follow.
+
+**FLEX (DEFAULT)**: The CSS Flexible Box Model specification.
+
+**NONE**: The node is removed from the layout tree and will not be visible.
+
+<Playground code={`<Layout config={{useWebDefaults: false}}>
+  <Node
+    style={{
+      width: 200,
+      height: 200,
+      padding: 20,
+    }}>
+    <Node style={{margin: 5, height: 50, display: 'flex'}} />
+    <Node style={{margin: 5, height: 50, display: 'none'}} />
+  </Node>
+</Layout>`} />
