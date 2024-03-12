@@ -9,6 +9,7 @@
 
 import {
   Align,
+  Direction,
   Display,
   Edge,
   FlexDirection,
@@ -59,6 +60,7 @@ export type FlexStyle = {
   borderInlineWidth?: number;
   borderBlockWidth?: number;
   bottom?: number | `${number}%`;
+  direction?: 'ltr' | 'rtl';
   display?: 'none' | 'flex';
   end?: number | `${number}%`;
   flex?: number;
@@ -151,6 +153,9 @@ export function applyStyle(node: YogaNode, style: FlexStyle = {}): void {
           break;
         case 'bottom':
           node.setPosition(Edge.Bottom, style.bottom);
+          break;
+        case 'direction':
+          node.setDirection(direction(style.direction));
           break;
         case 'display':
           node.setDisplay(display(style.display));
@@ -328,6 +333,16 @@ function alignItems(str?: AlignItems): Align {
       return Align.Baseline;
   }
   throw new Error(`"${str}" is not a valid value for alignItems`);
+}
+
+function direction(str?: 'ltr' | 'rtl'): Direction {
+  switch (str) {
+    case 'ltr':
+      return Direction.LTR;
+    case 'rtl':
+      return Direction.RTL;
+  }
+  throw new Error(`"${str}" is not a valid value for direction`);
 }
 
 function display(str?: 'none' | 'flex'): Display {
