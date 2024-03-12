@@ -1,0 +1,178 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Laying out a Yoga tree
+
+Each box in Yoga is represented as a **Yoga Node**. These nodes form a tree which is used to store both input styles, and output layout results.
+
+## Building a Yoga tree
+
+Yoga nodes may be created, styled, and linked together. See [Styling](../styling/) for a more comprehensive reference of how to style a Yoga Node.
+
+<Tabs groupId="language">
+
+<TabItem value="cpp" label="C/C++">
+
+```cpp
+#include <yoga/Yoga.h>
+
+YGNodeRef root = YGNodeNew();
+YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+YGNodeStyleSetWidth(root, 100.0f);
+YGNodeStyleSetHeight(root, 100.0f);
+
+YGNodeRef child0 = YGNodeNew();
+YGNodeStyleSetFlexGrow(child0, 1.0f);
+YGNodeStyleSetMargin(child0, YGEdgeRight, 10.0f);
+YGNodeInsertChild(root, child0, 0.0f);
+
+YGNodeRef child1 = YGNodeNew();
+YGNodeStyleSetFlexGrow(child1, 1.0f);
+YGNodeInsertChild(root, child1, 1.0f);
+```
+
+:::warning
+
+Yoga Nodes are not freed automatically and should be discarded when no longer needed. Individual nodes may be freed by calling `YGNodeFree(node)`, or an entire Yoga tree may be freed by calling `YGNodeFreeRecursive(node)`.
+
+:::
+
+</TabItem>
+
+<TabItem value="java" label="Java">
+
+```java
+import com.facebook.yoga.YogaEdge;
+import com.facebook.yoga.YogaFlexDirection;
+import com.facebook.yoga.YogaNode;
+import com.facebook.yoga.YogaNodeFactory;
+import com.facebook.yoga.YogaPositionType;
+
+YogaNode root = YogaNodeFactory.create();
+root.setFlexDirection(YogaFlexDirection.ROW);
+root.setWidth(100.0f);
+root.setHeight(100.0f);
+
+YogaNode child0 = YogaNodeFactory.create();
+child0.setFlexGrow(1.0f);
+child0.setMargin(YogaEdge.Right, 10.0f);
+root.addChildAt(child0, 0.0f);
+
+YogaNode child1 =  YogaNodeFactory.create();
+child1.setFlexGrow(1.0f);
+root.addChildAt(child1, 1.0f);
+```
+
+:::info
+
+Java backed Yoga Nodes are garbage collected, and do not need to manually be freed.
+
+:::
+
+</TabItem>
+
+<TabItem value="js" label="JavaScript">
+
+```ts
+import Yoga, {Edge, FlexDirection, PositionType} from 'yoga-layout';
+
+const root = Yoga.Node.create();
+root.setFlexDirection(FlexDirection.Row);
+root.setWidth(100);
+root.setHeight(100);
+
+const child0 = Yoga.Node.create();
+child0.setFlexGrow(1);
+child0.setMargin(Edge.Right, 10);
+root.insertChild(child0, 0);
+
+const child1 = Yoga.Node.create();
+child1.setFlexGrow(1);
+root.insertChild(child1, 1);
+```
+
+:::warning
+
+Yoga Nodes are not freed automatically and should be discarded when no longer needed. Individual nodes may be freed by calling `node.free()`, or an entire Yoga tree may be freed by calling `node.freeRecursive()`.
+
+A future revision of JavaScript bindings for Yoga may move to garbage collection to remove this requirement.
+
+:::
+
+</TabItem>
+</Tabs>
+
+## Laying out the tree
+
+The full tree of Yoga nodes is laid out all at once. This layout may be constrained to a passed `availableWidth` and `availableHeight`, or may be allowed to expand infinitely in a given axis by passing Undefined.
+
+<Tabs groupId="language">
+
+<TabItem value="cpp" label="C/C++">
+
+```cpp
+YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+```
+
+</TabItem>
+
+<TabItem value="java" label="Java">
+
+```java
+root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);
+```
+
+:::info
+
+A tree of Java Yoga nodes may be laid out in RTL by setting the `direction` of the root node.
+
+:::
+
+</TabItem>
+
+<TabItem value="js" label="JavaScript">
+
+```ts
+root.calculateLayout(undefined, undefined, Direction.LTR);
+```
+
+</TabItem>
+</Tabs>
+
+## Reading layout results
+
+Layout results are now written to each Yoga node. This includes an offset relative to the node's parent, along with dimensions, and the resolved values for margin, border, and padding for each physical edge.
+
+<Tabs groupId="language">
+
+<TabItem value="cpp" label="C/C++">
+
+```cpp
+float left = YGNodeLayoutGetLeft(child0);
+float height = YGNodeLayoutGetHeight(child0);
+```
+
+</TabItem>
+
+<TabItem value="java" label="Java">
+
+```java
+float left = child0.getLayoutX();
+float height = child0.getLayoutHeight();
+```
+
+</TabItem>
+
+<TabItem value="js" label="JavaScript">
+
+```ts
+const left = child0.getComputedLeft();
+const height = child0.getComputedHeight();
+```
+
+</TabItem>
+</Tabs>
