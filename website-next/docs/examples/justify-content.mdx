@@ -2,4 +2,42 @@
 sidebar_position: 9
 ---
 
+import Playground from '@site/src/components/Playground';
+
 # Justify Content
+
+Justify content describes how to align children within the main axis of their container.
+For example, you can use this property to center a child horizontally within a container
+with `flex direction` set to `row` or vertically within a container with `flex direction`
+set to `column`.
+
+**Flex start (default)**: Align children of a container to the start of the container's main axis.
+
+**Flex end**: Align children of a container to the end of the container's main axis.
+
+**Center**: Align children of a container in the center of the container's main axis.
+
+**Space between**: Evenly space of children across the container's main axis, distributing
+remaining space between the children.
+
+**Space around**: Evenly space of children across the container's main axis, distributing
+remaining space around the children. Compared to `space between` using
+`space around` will result in space being distributed to the beginning of
+the first child and end of the last child.
+
+**Space evenly**: Evenly distributed within the alignment container along the main axis.
+The spacing between each pair of adjacent items, the main-start edge and the first item,
+and the main-end edge and the last item, are all exactly the same.
+
+<Playground code={`<Layout config={{useWebDefaults: false}}>
+  <Node
+    style={{
+      width: 200,
+      height: 200,
+      padding: 10,
+      justifyContent: 'flex-start'
+    }}>
+    <Node style={{margin: 5, height: 50, width: 50}} />
+    <Node style={{margin: 5, height: 50, width: 50}} />
+  </Node>
+</Layout>`} />
