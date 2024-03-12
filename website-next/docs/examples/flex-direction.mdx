@@ -2,4 +2,36 @@
 sidebar_position: 6
 ---
 
+import Playground from '@site/src/components/Playground';
+
 # Flex Direction
+
+Flex direction controls the direction in which children of a node are laid out.
+This is also referred to as the main axis. The main axis is the direction in
+which children are laid out. The cross axis is the axis perpendicular to the
+main axis, or the axis which wrapping lines are laid out in.
+
+**Column (default)**: Align children from top to bottom. If [wrapping](/docs/examples/flex-wrap) is enabled then
+the next line will start to the left first item on the top of the container.
+
+**Row**: Align children from left to right. If [wrapping](/docs/examples/flex-wrap) is enabled then
+the next line will start under the first item on the left of the container.
+
+**Row reverse**: Align children from right to left. If [wrapping](/docs/examples/flex-wrap) is enabled then
+the next line will start under the first item on the right of the container.
+
+**Column reverse**: Align children from bottom to top. If [wrapping](/docs/examples/flex-wrap) is enabled then
+the next line will start to the left first item on the bottom of the container.
+
+<Playground code={`<Layout config={{useWebDefaults: false}}>
+  <Node
+    style={{
+      width: 200,
+      height: 200,
+      padding: 20,
+      flexDirection: 'column'
+    }}>
+    <Node style={{margin: 5, height: 50, width: 50}} />
+    <Node style={{margin: 5, height: 50, width: 50}} />
+  </Node>
+</Layout>`} />
