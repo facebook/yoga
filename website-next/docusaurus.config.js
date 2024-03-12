@@ -102,7 +102,7 @@ export default {
               },
               {
                 label: 'Examples',
-                to: '/docs/examples/align-content',
+                to: '/docs/styling/align-content',
               },
             ],
           },
