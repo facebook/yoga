@@ -11,6 +11,7 @@ import lzString from 'lz-string';
 
 import Playground from '../components/Playground';
 
+import clsx from 'clsx';
 import styles from './playground.module.css';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 
@@ -27,7 +28,7 @@ export default function PlaygroundPage(): JSX.Element {
 
   return (
     // @ts-ignore missing prop for `wrapperClassName`
-    <Layout wrapperClassName={styles.bg} title="Playground">
+    <Layout wrapperClassName={clsx('container', styles.bg)} title="Playground">
       <Playground
         height="max(80vh, 600px)"
         code={code}

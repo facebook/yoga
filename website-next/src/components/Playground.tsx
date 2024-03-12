@@ -85,7 +85,7 @@ export default function Playground({code, height, autoFocus}: Props) {
       theme={prismTheme}
       scope={{Node: LiveNode, Layout: RootLiveNode}}>
       <div className={styles.wrapper} style={heightStyle}>
-        <div className={clsx(styles.playgroundRow, 'container')}>
+        <div className={clsx(styles.playgroundRow)}>
           <div className={clsx(styles.editorColumn, 'playground-editor')}>
             <div className={styles.editorScroll} ref={editorScrollRef}>
               <EditorToolbar
