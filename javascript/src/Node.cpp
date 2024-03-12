@@ -104,6 +104,10 @@ void Node::setFlexDirection(int flexDirection) {
       m_node, static_cast<YGFlexDirection>(flexDirection));
 }
 
+void Node::setDirection(int direction) {
+  YGNodeStyleSetDirection(m_node, static_cast<YGDirection>(direction));
+}
+
 void Node::setFlexWrap(int flexWrap) {
   YGNodeStyleSetFlexWrap(m_node, static_cast<YGWrap>(flexWrap));
 }
@@ -259,6 +263,10 @@ int Node::getAlignSelf(void) const {
 
 int Node::getFlexDirection(void) const {
   return YGNodeStyleGetFlexDirection(m_node);
+}
+
+int Node::getDirection(void) const {
+  return YGNodeStyleGetDirection(m_node);
 }
 
 int Node::getFlexWrap(void) const {

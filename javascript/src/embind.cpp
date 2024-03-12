@@ -117,6 +117,8 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
       .function("setPaddingPercent", &Node::setPaddingPercent)
       .function("setGap", &Node::setGap)
 
+      .function("setDirection", &Node::setDirection)
+
       .function("getPositionType", &Node::getPositionType)
       .function("getPosition", &Node::getPosition)
 
@@ -190,5 +192,7 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
 
       .function("getComputedMargin", &Node::getComputedMargin)
       .function("getComputedBorder", &Node::getComputedBorder)
-      .function("getComputedPadding", &Node::getComputedPadding);
+      .function("getComputedPadding", &Node::getComputedPadding)
+
+      .function("getDirection", &Node::getDirection);
 }
