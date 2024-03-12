@@ -2,4 +2,46 @@
 sidebar_position: 2
 ---
 
-# Align Items and Align Self
+import Playground from '@site/src/components/Playground';
+
+# Align Items
+
+Align items describes how to align children along the cross axis of their container.
+Align items is very similar to [`justify content`](/docs/examples/justify-content) but instead of
+applying to the main axis, `align items` applies to the cross axis.
+
+**Stretch (default)**: Stretch children of a container to match the `height` of the container's cross axis.
+
+**Flex start**: Align children of a container to the start of the container's cross axis.
+
+**Flex end**: Align children of a container to the end of the container's cross axis.
+
+**Center**: Align children of a container in the center of the container's cross axis.
+
+**Baseline**: Align children of a container along a common baseline. Individual children can be set to be the reference baseline for their parents.
+
+# Align Self
+
+Align self has the same options and effect as `align items` but instead of
+affecting the children within a container, you can apply this property to
+a single child to change its alignment within its parent. `align self`
+overrides any option set by the parent with `align items`.
+
+<Playground code={`<Layout config={{useWebDefaults: false}}>
+  <Node
+    style={{
+      width: 250,
+      height: 250,
+      padding: 10,
+      alignItems: 'flex-start'
+    }}>
+    <Node
+      style={{
+        margin: 5,
+        height: 50,
+        width: 50,
+        alignSelf: 'center'
+      }}/>
+    <Node style={{margin: 5, height: 50, width: 50}} />
+  </Node>
+</Layout>`} />
