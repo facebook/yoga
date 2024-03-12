@@ -59,6 +59,7 @@ task('prepack-package-json', async () => {
   const packageJson = JSON.parse(packageJsonContents.toString('utf-8'));
 
   recursiveReplace(packageJson, /(.\/src\/.*)\.ts/, '$1.js');
+  packageJson.typings = packageJson.main.replace(/(.\/src\/.*)\.js/, '$1.d.ts');
   await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 });
 

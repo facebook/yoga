@@ -2,6 +2,8 @@
 
 This package provides prebuilt WebAssembly bindings for the Yoga layout engine.
 
+See more at https://yogalayout.dev
+
 ## Usage
 
 ```ts
@@ -24,37 +26,6 @@ node.freeRecursive();
 node.free();
 ```
 
-## Using TypeScript
+## Requirements
 
-This package provides out-of-the-box TypeScript typings so long as `tsc` is configured to support ESM resolution. It is recommended to set `moduleResolution: 'bundler'` or `moduleResolution: node16` in your `tsconfig.json` according to your environment.
-
-## ES Modules
-
-`yoga-layout` is only provided as an ES Module, relying on top-level await. This allows providing a synchronous API, while still allowing async WebAssembly compilation in browsers, and will allow eventual usage of ESM/WASM interop.
-
-## Contributing
-
-### Requirements
-
-1. Emscripten SDK
-1. CMake >= 3.13
-1. (Optional) ninja, for faster builds
-
-### Building
-
-```bash
-git clone https://github.com/facebook/yoga.git
-cd yoga/javascript
-yarn install
-yarn build
-```
-
-### Testing
-
-```bash
-# Build and test all entrypoints
-yarn test
-
-# Build and test a specific entrypoint
-yarn test:asmjs-sync
-```
+`yoga-layout` requires a toolchain that supports ES Modules and top-level await.
