@@ -68,7 +68,7 @@ const playgroundCode = `
 
 function PlaygroundSection() {
   return (
-    <main className={styles.playgroundSection}>
+    <main className={clsx('container', styles.playgroundSection)}>
       <Playground height="600px" code={playgroundCode} autoFocus={true} />
     </main>
   );

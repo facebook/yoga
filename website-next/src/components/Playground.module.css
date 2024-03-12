@@ -7,7 +7,6 @@
 
 html[data-theme='light'] {
   --yg-color-preview-background: var(--ifm-color-primary-lighter);
-  --yg-color-playground-background: var(--ifm-color-gray-200);
   --yg-color-editor-border: var(--ifm-color-gray-400);
   --yg-color-editor-fallback-bg: rgb(246, 248, 250);
   --yg-color-editor-fallback-text: rgb(0, 0, 159);
@@ -15,19 +14,14 @@ html[data-theme='light'] {
 
 html[data-theme='dark'] {
   --yg-color-preview-background: var(--ifm-color-primary-dark);
-  --yg-color-playground-background: var(--ifm-color-background);
   --yg-color-editor-border: var(--ifm-color-gray-800);
   --yg-color-editor-fallback-bg: rgb(40, 44, 52);
   --yg-color-editor-fallback-text: rgb(209, 154, 102);
 }
 
 .wrapper {
-  display: flex;
-  justify-content: center;
-  min-width: 900px;
-  width: 100%;
+  min-width: 600px;
   padding-block: 16px;
-  background-color: var(--yg-color-playground-background);
 }
 
 .playgroundRow {
@@ -59,12 +53,13 @@ html[data-theme='dark'] {
   font: var(--ifm-code-font-size) / var(--ifm-pre-line-height)
     var(--ifm-font-family-monospace) !important;
   direction: ltr;
-  height: calc(var(--yg-playground-height, 400px) - 32px);
+  height: calc(var(--yg-playground-height) - 32px);
 }
 
 .playgroundEditor :global(.prism-code) {
   box-shadow: var(--ifm-global-shadow-lw);
-  min-height: 100%;
+  height: calc(var(--yg-playground-height) - 32px);
+  min-height: 300px;
   border-radius: 0;
   padding: var(--ifm-pre-padding) !important;
 }
@@ -77,13 +72,14 @@ html[data-theme='dark'] {
 .previewColumn {
   display: flex;
   flex: 5;
-  height: calc(var(--yg-playground-height, 400px) - 32px);
+  height: calc(var(--yg-playground-height) - 32px);
+  min-height: 300px;
   align-items: center;
   justify-content: center;
   background-color: var(--yg-color-preview-background);
   overflow: hidden;
   border-radius: var(--ifm-pre-border-radius);
-  align-self: flex-start;
+  align-self: stretch;
   box-shadow: var(--ifm-global-shadow-lw);
 }
 
@@ -112,12 +108,12 @@ html[data-theme='dark'] {
   }
 
   .playgroundEditor :global(.prism-code) {
+    height: unset;
     min-height: 10em;
   }
 
   .playgroundRow {
     flex-direction: column;
-    padding-inline: 5px;
   }
 
   .editorColumn {

@@ -11,7 +11,6 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import lzString from 'lz-string';
 
-import CopyIcon from '../../static/img/copy.svg';
 import LinkIcon from '../../static/img/link.svg';
 import SuccessIcon from '@theme/Icon/Success';
 
@@ -28,10 +27,6 @@ export default function EditorToolbar({
   className,
   style,
 }: Props): JSX.Element {
-  const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(code);
-  }, [code]);
-
   const handleShare = useCallback(() => {
     navigator.clipboard.writeText(
       window.location.origin +
@@ -41,7 +36,6 @@ export default function EditorToolbar({
 
   return (
     <div className={clsx(styles.toolbar, className)} style={style}>
-      <ToolbarButton Icon={CopyIcon} label="Copy" onClick={handleCopy} />
       <ToolbarButton Icon={LinkIcon} label="Share" onClick={handleShare} />
     </div>
   );
