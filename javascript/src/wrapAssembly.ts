@@ -95,6 +95,7 @@ export type Node = {
   getComputedRight(): number;
   getComputedTop(): number;
   getComputedWidth(): number;
+  getDirection(): Direction;
   getDisplay(): Display;
   getFlexBasis(): Value;
   getFlexDirection(): FlexDirection;
@@ -126,6 +127,7 @@ export type Node = {
   setAlignSelf(alignSelf: Align): void;
   setAspectRatio(aspectRatio: number | undefined): void;
   setBorder(edge: Edge, borderWidth: number | undefined): void;
+  setDirection(direction: Direction): void;
   setDisplay(display: Display): void;
   setFlex(flex: number | undefined): void;
   setFlexBasis(flexBasis: number | 'auto' | `${number}%` | undefined): void;
