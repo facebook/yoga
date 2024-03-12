@@ -2,4 +2,35 @@
 sidebar_position: 14
 ---
 
+import Playground from '@site/src/components/Playground';
+
 # Width and Height
+
+The `width` property specifies the width of the node's border box (the collective size of the node's content, padding, and border).
+Similarly `height` property specifies the height of the node's border box.
+
+Both `width` and `height` can take following values:
+
+**Auto**: The default Value, Yoga calculates the width/height for the node based
+on its content, whether that is other children, text, or an image.
+
+**Pixels**: Defines the width/height in absolute pixels. Depending on other properties set on
+the Yoga node this may or may not be the final dimension of the node.
+
+**Percentage**: Defines the width or height in percentage of its [containing block's](https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block) width or height respectively.
+
+<Playground code={`<Layout config={{useWebDefaults: false}}>
+  <Node
+    style={{
+      width: 200,
+      height: 200,
+      padding: 10
+    }}>
+    <Node
+      style={{
+        margin: 5,
+        height: 50,
+        width: 50,
+      }}/>
+  </Node>
+</Layout>`} />
