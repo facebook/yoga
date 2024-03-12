@@ -2,4 +2,47 @@
 sidebar_position: 12
 ---
 
+import Playground from '@site/src/components/Playground';
+
 # Min/Max Width and Height
+
+These properties set the maximum and minimum size constraints of an element.
+They have higher priority than all other properties and will always be respected.
+Constraints can be specified as either absolute pixel values or as percentages of their
+parent's size. By default all these constraints are `undefined`.
+
+<Playground code={`<Layout config={{useWebDefaults: false}}>
+  <Node
+    style={{
+      width: 250,
+      height: 250,
+      padding: 10
+    }}>
+    <Node style={{margin: 5, height: 25}} />
+    <Node
+      style={{
+        margin: 5,
+        height: 100,
+        maxHeight: 25
+      }}/>
+    <Node
+      style={{
+        margin: 5,
+        height: 25,
+        minHeight: 50
+      }}/>
+    <Node
+      style={{
+        margin: 5,
+        height: 25,
+        maxWidth: 25
+      }}/>
+    <Node
+      style={{
+        margin: 5,
+        height: 25,
+        width: 25,
+        minWidth: 50
+      }}/>
+  </Node>
+</Layout>`} />
