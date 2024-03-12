@@ -19,6 +19,60 @@
     </div>
 </div>
 
+<div id="static_position_absolute_child_insets_relative_to_positioned_ancestor_row_reverse">
+    <div style="width: 200px; height: 200px; position: relative; flex-direction: row-reverse">
+        <div style="height: 100px; width: 100px; position: static">
+            <div style="height: 50px; width: 50px; position: absolute; top: 50px; left: 50px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="column_reverse_static_position_absolute_child_insets_relative_to_positioned_ancestor_row_reverse">
+    <div style="width: 200px; height: 200px; position: relative; flex-direction: row-reverse">
+        <div style="height: 100px; width: 100px; position: static; flex-direction: column-reverse">
+            <div style="height: 50px; width: 50px; position: absolute; top: 50px; left: 50px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="static_position_absolute_child_insets_relative_to_positioned_ancestor_row">
+    <div style="width: 200px; height: 200px; position: relative; flex-direction: row">
+        <div style="height: 100px; width: 100px; position: static">
+            <div style="height: 50px; width: 50px; position: absolute; top: 50px; right: 50px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="column_reverse_static_position_absolute_child_insets_relative_to_positioned_ancestor_row">
+    <div style="width: 200px; height: 200px; position: relative; flex-direction: row">
+        <div style="height: 100px; width: 100px; position: static; flex-direction: column-reverse">
+            <div style="height: 50px; width: 50px; position: absolute; top: 50px; right: 50px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="static_position_absolute_child_insets_relative_to_positioned_ancestor_column_reverse">
+    <div style="width: 200px; height: 200px; position: relative; flex-direction: column-reverse">
+        <div style="height: 100px; width: 100px; position: static">
+            <div style="height: 50px; width: 50px; position: absolute; top: 50px; right: 50px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="column_reverse_static_position_absolute_child_insets_relative_to_positioned_ancestor_column_reverse">
+    <div style="width: 200px; height: 200px; position: relative; flex-direction: column-reverse">
+        <div style="height: 100px; width: 100px; position: static; flex-direction: column-reverse">
+            <div style="height: 50px; width: 50px; position: absolute; top: 50px; right: 50px;">
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="static_position_absolute_child_insets_relative_to_positioned_ancestor_deep">
     <div style="width: 200px; height: 200px; position: relative">
         <div style="height: 100px; width: 100px; margin-left: 100px; position: static">
@@ -634,8 +688,7 @@
     </div>
 </div>
 
-<div id="static_position_static_root"
-    style="height:200px; width: 100px; position: static; padding: 1px 11px 4px 6px;">
+<div id="static_position_static_root" style="height:200px; width: 100px; position: static; padding: 1px 11px 4px 6px;">
     <div
         style="height: 50%; width: 50%; position: absolute; border-width: 3px 2px 1px 4px; padding: 7px 5px 4px 3px; margin: 11px 15px 1px 12px">
     </div>
