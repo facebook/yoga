@@ -83,6 +83,7 @@ class Node {
   void setFlexDirection(int flexDirection);
   void setFlexWrap(int flexWrap);
   void setJustifyContent(int justifyContent);
+  void setDirection(int direction);
 
   void setMargin(int edge, double margin);
   void setMarginPercent(int edge, double margin);
@@ -134,6 +135,7 @@ class Node {
   int getFlexDirection(void) const;
   int getFlexWrap(void) const;
   int getJustifyContent(void) const;
+  int getDirection(void) const;
 
   Value getMargin(int edge) const;
 
