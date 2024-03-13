@@ -1,7 +1,0 @@
-# Project dependencies
-.cache/
-# Build directory
-public/
-.DS_Store
-yarn-error.log
-src/components/Playground/dist
