@@ -1,0 +1,75 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Incremental layout
+
+Most real-world UIs are not static. Yoga trees may be laid out incrementally to avoid large work when only a small portion of the UI changes. Yoga will automatically mark a node and its ancestors as "dirty" if the node's style or children are changed. During the first layout, all nodes are considered dirty, and every node is visited. On subsequent layout, any nodes that are not dirty are skipped, so long as their parent constraints have not changed.
+
+Yoga exposes whether the layout of a node or its children have changed via a `HasNewLayout` flag. This flag may be read when applying Yoga layout results to avoid traversing any subtrees where there are no updates.
+
+<Tabs groupId="language">
+
+<TabItem value="cpp" label="C/C++">
+
+```cpp
+void applyLayout(YGNodeRef node) {
+  if (!YGNodeHasNewLayout(node)) {
+    return;
+  }
+
+  // Reset the flag
+  YGNodeSetHasNewLayout(node, false);
+
+  // Do the real work
+  ...
+
+  for (size_t i = 0; i < YGNodeGetChildCount(node); i++) {
+    applyLayout(YGNodeGetChild(node, i));
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="java" label="Java">
+
+```java
+void applyLayout(YogaNode node) {
+  if (!node.hasNewLayout()) {
+    return;
+  }
+
+  // Reset the flag
+  node.markLayoutSeen();
+
+  // Do the real work
+  ...
+
+  for (int i = 0; i < node.getChildCount(); i++) {
+    applyLayout(node.getChildAt(i));
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="js" label="JavaScript">
+
+:::danger
+
+Yoga's JavaScript bindings are missing support for acessing the `HasNewLayout` flag. https://github.com/facebook/yoga/issues/681
+
+:::
+
+</TabItem>
+</Tabs>
+
+In the below example, we start with an already laid out tree. The style of `F` is then modified, dirtying the node and its ancestors. After layout, the dirtied nodes, and any effected children, are marked as having new layout.
+
+| Clean tree | Dirtied tree | Has new layout |
+| - | - | - |
+| ![Clean tree](../img/invalidation-clean-tree.svg) | ![Clean tree](../img/invalidation-dirtied-tree.svg) | ![Has new layout](../img/invalidation-new-layout-tree.svg) |
