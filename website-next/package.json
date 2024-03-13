@@ -27,7 +27,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-live": "^4.1.5",
-    "yoga-layout": "3.0.0"
+    "yoga-layout": "3.0.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.0.0",
