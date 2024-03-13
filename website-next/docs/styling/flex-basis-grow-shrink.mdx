@@ -6,10 +6,10 @@ import Playground from '@site/src/components/Playground';
 
 # Flex Basis, Grow, and Shrink
 
-**Flex basis**: is an axis-independent way of providing the default size of an item
-along the main axis. Setting the flex basis of a child is similar to setting the `width` of that
-child if its parent is a container with `flex direction: row` or setting the `height` of a child
-if its parent is a container with `flex direction: column`. The flex basis of an item is the
+**Flex basis**: Is an axis-independent way of providing the default size of an item
+along the main axis. Setting the flex basis of a child is similar to setting the [width](/docs/styling/width-height) of that
+child if its parent is a container with a row [flex direction](/docs/styling/flex-direction) or setting the [height](/docs/styling/width-height) of a child
+if its parent is a container with a column [flex direction](/docs/styling/flex-direction). The flex basis of an item is the
 default size of that item, the size of the item before any flex grow and flex shrink
 calculations are performed.
 
@@ -24,7 +24,7 @@ calculations are performed.
   </Node>
 </Layout>`} />
 
-**Flex grow**: describes how any space within a container should be distributed
+**Flex grow**: Describes how any space within a container should be distributed
 among its children along the main axis. After laying out its children, a container will
 distribute any remaining space according to the flex grow values specified by its children.
 
@@ -43,7 +43,7 @@ A container will distribute any remaining space among its children weighted by t
   </Node>
 </Layout>`} />
 
-**Flex shrink**: describes how to shrink children along the main axis in the
+**Flex shrink**: Describes how to shrink children along the main axis in the
 case that the total size of the children overflow the size of the container on the main axis.
 flex shrink is very similar to flex grow and can be thought of in the same way if
 any overflowing size is considered to be negative remaining space.
