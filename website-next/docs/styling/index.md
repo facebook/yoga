@@ -15,13 +15,17 @@ The default Yoga node style is similar to a box on web set to `display: flex`, w
 3. `flex-shrink` defaults to `0` instead of `1`
 4. `position` defaults to `relative` instead of `static`
 
-Yoga may be [configured](../getting-started/configuring-yoga.md) to align to the defaults on web for `flex-direction`, `align-content`, and `flex-shrink` by setting the `UseWebDefaults` flag.
+Yoga may be [configured](../getting-started/configuring-yoga.mdx) to align to the defaults on web for `flex-direction`, `align-content`, and `flex-shrink` by setting the `UseWebDefaults` flag.
 
 :::warning
 
 Because `UseWebDefaults` was established before the introduction of `position: 'static'`, it does not change the default `position`, in order to preserve compatibility.
 
 :::
+
+## Box Sizing
+
+Yoga acts as if [`box-sizing: 'border-box'`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) is set. This means that specified dimensions for a box will include the space taken for padding and border.
 
 ## Edges
 

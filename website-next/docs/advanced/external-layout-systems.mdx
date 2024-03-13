@@ -1,0 +1,106 @@
+---
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Integrating with external layout systems
+
+It is typical for applications to have content whose size may be dependent on factors not expressible inside of Yoga. This can often include text, or views which are rendered or laid out using a different system. Yoga allows leaf nodes to delegate to a different layout system via **Measure Functions**.
+
+## Setting a measure function
+
+A measure function (callback) is set on a node, to instruct Yoga to ask an external layout system for sizing of a given structure when it is time to measure the leaf node.
+
+<Tabs groupId="language">
+
+<TabItem value="cpp" label="C/C++">
+
+Measure functions in the C/C++ APIs are represented as C function pointers and do not carry state. A Yoga node may be associated with an external structure by setting a **context** on the node. This is a `void*` tag, which may be read during callbacks.
+
+
+```cpp
+Widget widget{};
+
+YGNodeSetContext(node, &w);
+YGNodeSetMeasureFunc(node, &measureWidget);
+```
+
+</TabItem>
+
+<TabItem value="java" label="Java">
+
+Measure functions are represented by the `YogaMeasureFunction` interface. This interface can be fulfilled by an explicit subclass, an anonymous inner class, or a lambda. Framework data may be associated with the underlying measure function, or a global measure function may be used, with data set on the underlying Yoga node.
+
+
+```java
+Widget widget = new Widget();
+
+node.setData(widget);
+node.setMeasureFunction(MEASURE_WIDGET);
+```
+
+</TabItem>
+
+<TabItem value="js" label="JavaScript">
+
+Measure functions are represented as an anonymous function, which may be bound to framework data.
+
+```ts
+const widget = new Widget();
+
+node.setMeasureFunction((width, widthMode, height, heightMode) => {
+ ...
+});
+```
+
+</TabItem>
+</Tabs>
+
+## Responding with measurements
+
+Yoga will call a node's measure function if the node does not otherwise have a definite dimension. This measure function is given the available space in each axis if constrained, with border and padding already subtracted.
+
+:::warning
+
+Yoga is not guaranteed to call a node's measure function if the node already has a definite dimension. Final content dimensions for a node should be read from the node's layout results, instead of caching measure function results.
+
+:::
+
+Each axis is passed a `MeasureMode` as a constraint:
+1. `Exactly`: The measured length of the given axis is imposed to be the available length. This corresponds to [`stretch-fit`](https://www.w3.org/TR/css-sizing-3/#stretch-fit-size) sizing.
+2. `Undefined`: The measured length in the given axis should be the maximum natural length of the content. This corresponds to [`max-content`](https://www.w3.org/TR/css-sizing-3/#max-content) sizing.
+3. `AtMost`: The measured length in the given axis should be the minimum of the available space in the axis, and the natural content size. This corresponds to [`fit-content`](https://www.w3.org/TR/css-sizing-3/#fit-content-size) sizing.
+
+## Invalidating measurements
+
+Yoga must be notified if the content associated with a node changes in a way which may effect measurement.
+
+<Tabs groupId="language">
+
+<TabItem value="cpp" label="C/C++">
+
+```cpp
+YGNodeMarkDirty(node);
+```
+
+</TabItem>
+
+<TabItem value="java" label="Java">
+
+
+```java
+node.dirty();
+```
+
+</TabItem>
+
+<TabItem value="js" label="JavaScript">
+
+```ts
+node.markDirty();
+```
+
+</TabItem>
+</Tabs>
