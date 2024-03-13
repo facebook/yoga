@@ -5,19 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-html[data-theme='light'] {
-  --yg-color-playound-background: var(--ifm-color-gray-200);
-}
-
-html[data-theme='dark'] {
-  --yg-color-playound-background: var(--ifm-color-background);
-}
-
 .playgroundContainer {
   display: flex;
   flex: 1;
-}
-
-.bg {
-  background-color: var(--yg-color-playound-background);
 }
