@@ -98,11 +98,11 @@ export default {
               },
               {
                 label: 'Advanced',
-                to: '/docs/advanced/caching',
+                to: '/docs/advanced/incremental-layout',
               },
               {
-                label: 'Examples',
-                to: '/docs/styling/align-content',
+                label: 'Styling',
+                to: '/docs/styling',
               },
             ],
           },
