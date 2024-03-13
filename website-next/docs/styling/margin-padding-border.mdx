@@ -6,12 +6,12 @@ import Playground from '@site/src/components/Playground';
 
 # Margin, Padding, and Border
 
-**Margin**: affects the spacing around the outside of a node. A node with margin
+**Margin**: Affects the spacing around the outside of a node. A node with margin
 will offset itself from the bounds of its parent but also offset the
 location of any siblings. The margin of a node contributes to the total size
 of its parent if the parent is auto sized.
 
-**Padding**: affects the size of the node it is applied to. Padding in Yoga acts as if
+**Padding**: Affects the size of the node it is applied to. Padding in Yoga acts as if
 `box-sizing: border-box;` was set. That is padding will not add to the total size
 of an element if it has an explicit size set. For auto sized nodes padding will increase
 the size of the node as well as offset the location of any children.
@@ -33,8 +33,9 @@ acts exactly like padding.
         margin: 5,
         padding: 20,
         borderWidth: 20,
-        height: 50
-      }}/>
+        height: 50,
+      }}
+    />
     <Node style={{height: 50}} />
   </Node>
 </Layout>`} />
