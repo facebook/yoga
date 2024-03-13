@@ -1,5 +1,49 @@
 ---
 sidebar_position: 8
 ---
+import Playground from '@site/src/components/Playground';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Gap
+
+Gap will add spacing between the rows and columns of a flex container. You can
+specify if you want the gaps to be between only the rows, only the columns, or
+both. You can do this by passing in the corresponding gutter value to the API,
+for example
+
+<Tabs groupId="language">
+<TabItem value="cpp" label="C/C++">
+```cpp
+YGNodeStyleSetGap(node, YGGutterRow, amount);
+```
+</TabItem>
+<TabItem value="java" label="Java">
+```java
+node.setGap(YogaGutter.ROW, amount);
+```
+</TabItem>
+<TabItem value="ts" label="Typescript">
+```typescript
+node.setGap(Gutter.Row, amount);
+```
+</TabItem>
+</Tabs>
+
+
+<Playground code={`<Layout config={{useWebDefaults: false}}>
+  <Node
+    style={{
+      width: 200,
+      height: 250,
+      padding: 10,
+      flexWrap: 'wrap',
+      gap: 10,
+    }}>
+    <Node style={{height: 50, width: 50}} />
+    <Node style={{height: 50, width: 50}} />
+    <Node style={{height: 50, width: 50}} />
+    <Node style={{height: 50, width: 50}} />
+    <Node style={{height: 50, width: 50}} />
+  </Node>
+</Layout>`} />
