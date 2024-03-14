@@ -84,55 +84,6 @@ export default {
           width: 300,
           height: 64,
         },
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'About Yoga',
-                to: '/docs/about-yoga',
-              },
-              {
-                label: 'Getting Started',
-                to: '/docs/getting-started/laying-out-a-tree',
-              },
-              {
-                label: 'Advanced',
-                to: '/docs/advanced/incremental-layout',
-              },
-              {
-                label: 'Styling',
-                to: '/docs/styling',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/yoga',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/yogalayout',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/yoga',
-              },
-            ],
-          },
-        ],
         copyright: `Copyright © ${new Date().getFullYear()} Meta Platforms, Inc.`,
       },
       prism: {
