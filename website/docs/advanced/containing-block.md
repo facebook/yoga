@@ -41,7 +41,7 @@ containing blocks is much more streamlined and it is helpful to frame it differe
     node.setAlwaysFormsContainingBlock(true /*alwaysFormsContainingBlock*/);
     ```
     </TabItem>
-    <TabItem value="ts" label="Typescript">
+    <TabItem value="js" label="JavaScript">
     ```typescript
     node.setAlwaysFormsContainingBlock(true /*alwaysFormsContainingBlock*/);
     ```
