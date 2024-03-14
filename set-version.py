@@ -28,7 +28,7 @@ with open("javascript/package.json", "r+") as f:
     f.truncate()
     f.write(new_contents)
 
-with open("website-next/package.json", "r+") as f:
+with open("website/package.json", "r+") as f:
     new_contents = re.sub(
         r'"yoga-layout": ".*"', f'"yoga-layout": "{version}"', f.read()
     )
