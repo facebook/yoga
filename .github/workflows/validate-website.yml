@@ -25,7 +25,7 @@ jobs:
 
       - name: Build Website
         run: yarn build
-        working-directory: website-next
+        working-directory: website
 
   typecheck:
     name: Typecheck [Docusaurus]
@@ -39,4 +39,4 @@ jobs:
 
       - name: yarn tsc
         run: yarn tsc
-        working-directory: website-next
+        working-directory: website
