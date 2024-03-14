@@ -9,12 +9,7 @@
 
 module.exports = {
   root: true,
-  ignorePatterns: [
-    '/website',
-    '**/binaries/**',
-    '**/build/**',
-    '**/generated/**',
-  ],
+  ignorePatterns: ['**/binaries/**', '**/build/**', '**/generated/**'],
   overrides: [
     // Catch-all
     {
