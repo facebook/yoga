@@ -6,8 +6,7 @@ authors:
   - joevilches
 ---
 
-Yoga 3.0 is a new major (breaking) release of Yoga. This version of Yoga spans [242 commits](https://github.com/facebook/yoga/compare/release-v2.0...release-v3.0) across 16 contributors and is included in React Native 0.74.
-
+Yoga 3.0 is a new major (breaking) version of Yoga, used by React Native 0.74.
 
 ## Highlights
 
@@ -15,16 +14,16 @@ Yoga 3.0 is a new major (breaking) release of Yoga. This version of Yoga spans [
 2. Support for `align-content: space-evenly`
 3. Improvements to layout correctness
 4. Yoga’s JavaScript bindings are now distributed as an ES Module
-5. Some existing Yoga APIs have been removed
-
+5. Fixes several crashes in Java bindings
+6. Some existing Yoga APIs have been removed
 
 ## position: static
 
-We added full support for the `static` position type which has existed in an incomplete state for some time now. With this release `static` is now web-compliant in the context of flexbox. Some things that were added/changed:
+We added full support for the `static` position type which has existed in an incomplete state for some time now. With this release `static` is now web-compliant in the context of Flexbox. Some things that were added/changed:
 
 * The default position type is now `relative` [again](https://github.com/facebook/yoga/commit/fc88b2f774f0ab9090d7ca15de6680f26d7285ad) and not `static`. This should not have any effect on layout as the previously introduced `YGPostitionTypeStatic` was not being used within Yoga, so it behaved just like `relative`.
 * `static` nodes ignore insets (`left`, `right`, `top`, `bottom`, etc.)
-* The idea of a[ containing block](https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block) was introduced. For `absolute` nodes this is usually the nearest non-`static` ancestor. For every other position type this is just the parent since Yoga is a flexbox implementation.
+* The idea of a[ containing block](../../docs/advanced/containing-block) was introduced. For `absolute` nodes this is usually the nearest non-`static` ancestor. For every other position type this is just the parent since Yoga is a Flexbox implementation.
 * A new public API `YGNodeSetAlwaysFormsContainingBlock` which takes a boolean indicating if the node should always form a containing block for any descendant. This is useful for properly supporting things like [transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transforms), which will force the node to form a containing block but is outside the scope of Yoga.
 
 
@@ -180,8 +179,7 @@ child: {
 
 There were other fixes not specifically mentioned above. Because this change may result in layout differences for many real-world scenarios, Yoga may be configured to prefer the legacy behavior, by setting the `AbsolutePositioningIncorrect` erratum. This means this fix is not enabled by default in frameworks like React Native, in order to preserve compatibility.
 
-
-Additionally, Yoga will now correctly account for padding when calculating the size of `absolute` nodes with percentage lengths.absolute size of percentage lengths referring to an absolutely positioned node.
+Additionally, Yoga will now correctly account for padding when calculating the size of absolutely positioned nodes with percentage lengths.
 
 <table>
 
@@ -555,18 +553,18 @@ Yoga’s previous structure made it easy to intermingle Yoga’s public APIs, an
 We have made some minor changes to this public API, which will require changes for Yoga integrators. The most significant is an increased const-correctness, which may require mechanical changes to measure functions. Yoga’s internal implementation has seen more radical changes.
 
 
-### Removal of UseLegacyStretchBehaviour
+### Removal of `UseLegacyStretchBehaviour`
 
-APIs related to “UseLegacyStretchBehaviour” were deprecated as part of Yoga 2.0, and have now been removed. Users of “UseLegacyStretchBehaviour” most often want to enable `YGErrataAll`, to opt-out of future conformance fixes.
+APIs related to `UseLegacyStretchBehaviour` were deprecated as part of Yoga 2.0, and have now been removed. Users of `UseLegacyStretchBehaviour` should most often [set their errata level](../../docs/getting-started/configuring-yoga#layout-conformance-and-yoga-errata) to `All` to opt-out of future conformance fixes.
 
 
 ### Removal of YogaKit and the YogaLayout ViewGroup
 
 Yoga previously provided direct integrations with UIKit, and the Android View System. These were deprecated as part of Yoga 2.0 and are no longer published as part of Yoga 3.0.
 
-### Per-node `pointScaleFactor`
+### Per-node `PointScaleFactor`
 
-Yoga would previously only ever read the `pointScaleFactor` associated with the root node, even if child nodes configured a different value. Yoga now respects the `pointScaleFactor` associated with a given node. This change may be breaking for code which previously set a scale factor on a config used by the root node, where a different value was provided to child nodes.
+Yoga would previously only ever read the `PointScaleFactor` associated with the root node, even if child nodes configured a different value. Yoga now respects the `PointScaleFactor` associated with a given node. This change may be breaking for code which previously set a scale factor on a config used by the root node, where a different value was provided to child nodes.
 
 ## Integrating Yoga into your project
 
