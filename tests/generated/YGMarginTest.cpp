@@ -695,7 +695,7 @@ TEST(YogaTest, margin_auto_bottom_and_top_justify_center) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, margin_auto_mutiple_children_column) {
+TEST(YogaTest, margin_auto_multiple_children_column) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);
@@ -769,7 +769,7 @@ TEST(YogaTest, margin_auto_mutiple_children_column) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, margin_auto_mutiple_children_row) {
+TEST(YogaTest, margin_auto_multiple_children_row) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);

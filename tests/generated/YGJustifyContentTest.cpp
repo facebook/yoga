@@ -834,7 +834,7 @@ TEST(YogaTest, justify_content_column_min_height_and_margin) {
   YGConfigFree(config);
 }
 
-TEST(YogaTest, justify_content_colunn_max_height_and_margin) {
+TEST(YogaTest, justify_content_column_max_height_and_margin) {
   const YGConfigRef config = YGConfigNew();
 
   const YGNodeRef root = YGNodeNewWithConfig(config);

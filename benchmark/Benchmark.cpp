@@ -21,9 +21,9 @@ namespace facebook::yoga {
 using namespace nlohmann;
 using namespace std::chrono;
 
-constexpr uint32_t kNumRepititions = 100;
+constexpr uint32_t kNumRepetitions = 100;
 using SteadyClockDurations =
-    std::array<steady_clock::duration, kNumRepititions>;
+    std::array<steady_clock::duration, kNumRepetitions>;
 
 static bool inputsMatch(
     float actualWidth,
@@ -333,23 +333,23 @@ BenchmarkResult generateBenchmark(json& capture) {
 static void printBenchmarkResult(
     const std::string& name,
     SteadyClockDurations& durations) {
-  std::array<double, kNumRepititions> timesInMs{};
+  std::array<double, kNumRepetitions> timesInMs{};
   double mean = 0;
-  for (uint32_t i = 0; i < kNumRepititions; i++) {
+  for (uint32_t i = 0; i < kNumRepetitions; i++) {
     auto ms = duration<double, std::milli>(durations[i]).count();
     timesInMs[i] = ms;
     mean += ms;
   }
-  mean /= kNumRepititions;
+  mean /= kNumRepetitions;
 
   std::sort(timesInMs.begin(), timesInMs.end());
-  double median = timesInMs[kNumRepititions / 2];
+  double median = timesInMs[kNumRepetitions / 2];
 
   double variance = 0;
-  for (uint32_t i = 0; i < kNumRepititions; i++) {
+  for (uint32_t i = 0; i < kNumRepetitions; i++) {
     variance += std::pow(timesInMs[i] - mean, 2);
   }
-  variance /= kNumRepititions;
+  variance /= kNumRepetitions;
   double stddev = std::sqrt(variance);
 
   printf("%s: median: %lf ms, stddev: %lf ms\n", name.c_str(), median, stddev);
@@ -370,7 +370,7 @@ void benchmark(std::filesystem::path& capturesDir) {
     std::string captureName = capture.path().stem().string();
 
     std::cout << "Starting benchmark for " << captureName << std::endl;
-    for (uint32_t i = 0; i < kNumRepititions; i++) {
+    for (uint32_t i = 0; i < kNumRepetitions; i++) {
       BenchmarkResult result = generateBenchmark(j);
       treeCreationDurations[i] = result.treeCreationDuration;
       layoutDurations[i] = result.layoutDuration;

@@ -765,7 +765,7 @@ test('margin_auto_bottom_and_top_justify_center', () => {
     config.free();
   }
 });
-test('margin_auto_mutiple_children_column', () => {
+test('margin_auto_multiple_children_column', () => {
   const config = Yoga.Config.create();
   let root;
 
@@ -843,7 +843,7 @@ test('margin_auto_mutiple_children_column', () => {
     config.free();
   }
 });
-test('margin_auto_mutiple_children_row', () => {
+test('margin_auto_multiple_children_row', () => {
   const config = Yoga.Config.create();
   let root;
 

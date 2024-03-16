@@ -696,7 +696,7 @@ public class YGMarginTest {
   }
 
   @Test
-  public void test_margin_auto_mutiple_children_column() {
+  public void test_margin_auto_multiple_children_column() {
     YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
@@ -769,7 +769,7 @@ public class YGMarginTest {
   }
 
   @Test
-  public void test_margin_auto_mutiple_children_row() {
+  public void test_margin_auto_multiple_children_row() {
     YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);

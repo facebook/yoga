@@ -29,7 +29,7 @@ containing blocks is much more streamlined and it is helpful to frame it differe
     is helpful for supporting things outside of Yoga which would form a containing block
     on the web, such as [filters](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
     or [transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform). This
-    is done by calling the corresponding API for the lanuage you are working in.
+    is done by calling the corresponding API for the language you are working in.
     <Tabs groupId="language">
     <TabItem value="cpp" label="C/C++">
     ```cpp

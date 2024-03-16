@@ -900,7 +900,7 @@ test('justify_content_column_min_height_and_margin', () => {
     config.free();
   }
 });
-test('justify_content_colunn_max_height_and_margin', () => {
+test('justify_content_column_max_height_and_margin', () => {
   const config = Yoga.Config.create();
   let root;
 

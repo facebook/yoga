@@ -836,7 +836,7 @@ public class YGJustifyContentTest {
   }
 
   @Test
-  public void test_justify_content_colunn_max_height_and_margin() {
+  public void test_justify_content_column_max_height_and_margin() {
     YogaConfig config = YogaConfigFactory.create();
 
     final YogaNode root = createNode(config);
