@@ -177,6 +177,9 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
       .function("markDirty", &Node::markDirty)
       .function("isDirty", &Node::isDirty)
 
+      .function("markLayoutSeen", &Node::markLayoutSeen)
+      .function("hasNewLayout", &Node::hasNewLayout)
+
       .function("calculateLayout", &Node::calculateLayout)
 
       .function("getComputedLeft", &Node::getComputedLeft)

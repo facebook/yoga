@@ -197,6 +197,8 @@ class Node {
  public: // Dirtiness accessors
   void markDirty(void);
   bool isDirty(void) const;
+  void markLayoutSeen();
+  bool hasNewLayout(void) const;
 
  public: // Layout mutators
   void calculateLayout(double width, double height, int direction);

@@ -120,6 +120,8 @@ export type Node = {
   isDirty(): boolean;
   isReferenceBaseline(): boolean;
   markDirty(): void;
+  hasNewLayout(): boolean;
+  markLayoutSeen(): void;
   removeChild(child: Node): void;
   reset(): void;
   setAlignContent(alignContent: Align): void;
