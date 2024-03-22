@@ -59,11 +59,23 @@ void applyLayout(YogaNode node) {
 
 <TabItem value="js" label="JavaScript">
 
-:::danger
+```javascript
+void applyLayout(node) {
+  if (!node.hasNewLayout()) {
+    return;
+  }
 
-Yoga's JavaScript bindings are missing support for accessing the `HasNewLayout` flag. https://github.com/facebook/yoga/issues/681
+  // Reset the flag
+  node.markLayoutSeen();
 
-:::
+  // Do the real work
+  ...
+
+  for (let i = 0; i < node.getChildCount(); i++) {
+    applyLayout(node.getChildAt(i));
+  }
+}
+```
 
 </TabItem>
 </Tabs>
