@@ -9,8 +9,8 @@
 
 // @ts-nocheck
 
-import {Unit, Direction} from './generated/YGEnums.ts';
-import YGEnums from './generated/YGEnums.ts';
+import {Unit, Direction} from './generated/YGEnums.js';
+import YGEnums from './generated/YGEnums.js';
 
 import type {
   Align,
@@ -25,7 +25,7 @@ import type {
   Overflow,
   PositionType,
   Wrap,
-} from './generated/YGEnums.ts';
+} from './generated/YGEnums.js';
 
 type Layout = {
   left: number;
