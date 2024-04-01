@@ -20,6 +20,6 @@ export type {
 } from './wrapAssembly.ts';
 
 export async function loadYoga() {
-    return wrapAssembly(await loadYogaImpl())
+  return wrapAssembly(await loadYogaImpl());
 }
 export * from './generated/YGEnums.ts';
