@@ -1,0 +1,1955 @@
+{
+  "layout-inputs": {
+    "available-height": 821.0,
+    "available-width": 430.0,
+    "owner-direction": "ltr"
+  },
+  "tree": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "config": {
+                              "errata": "all",
+                              "point-scale-factor": 3.0
+                            },
+                            "node": null,
+                            "style": null
+                          },
+                          {
+                            "children": [
+                              {
+                                "config": {
+                                  "errata": "all",
+                                  "point-scale-factor": 3.0
+                                },
+                                "node": null,
+                                "style": null
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "height": {
+                                                            "unit": "px",
+                                                            "value": 6.0
+                                                          },
+                                                          "overflow": "hidden",
+                                                          "width": {
+                                                            "unit": "px",
+                                                            "value": 6.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "align-items": "center",
+                                                      "height": {
+                                                        "unit": "px",
+                                                        "value": 9.0
+                                                      },
+                                                      "justify-content": "center",
+                                                      "position-end": {
+                                                        "unit": "px",
+                                                        "value": 1.5
+                                                      },
+                                                      "position-top": {
+                                                        "unit": "px",
+                                                        "value": 0.0
+                                                      },
+                                                      "position-type": "absolute",
+                                                      "width": {
+                                                        "unit": "px",
+                                                        "value": 9.0
+                                                      }
+                                                    }
+                                                  },
+                                                  {
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": {
+                                                      "measure-funcs": [
+                                                        {
+                                                          "duration-ns": 6958,
+                                                          "height": null,
+                                                          "height-mode": "undefined",
+                                                          "output-height": 20.0,
+                                                          "output-width": 66.0,
+                                                          "width": null,
+                                                          "width-mode": "undefined"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "style": {
+                                                      "flex-shrink": 1.0,
+                                                      "margin-bottom": {
+                                                        "unit": "px",
+                                                        "value": -3.6666667461395264
+                                                      },
+                                                      "margin-top": {
+                                                        "unit": "px",
+                                                        "value": -4.666666507720947
+                                                      },
+                                                      "padding-vertical": {
+                                                        "unit": "px",
+                                                        "value": 8.0
+                                                      }
+                                                    }
+                                                  }
+                                                ],
+                                                "config": {
+                                                  "errata": "all",
+                                                  "point-scale-factor": 3.0
+                                                },
+                                                "node": null,
+                                                "style": {
+                                                  "align-items": "center",
+                                                  "flex-direction": "row",
+                                                  "justify-content": "center",
+                                                  "margin-end": {
+                                                    "unit": "px",
+                                                    "value": 8.0
+                                                  },
+                                                  "min-height": {
+                                                    "unit": "px",
+                                                    "value": 36.0
+                                                  },
+                                                  "min-width": {
+                                                    "unit": "px",
+                                                    "value": 44.0
+                                                  },
+                                                  "padding-horizontal": {
+                                                    "unit": "px",
+                                                    "value": 12.0
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "children": [
+                                                  {
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": {
+                                                      "measure-funcs": [
+                                                        {
+                                                          "duration-ns": 6375,
+                                                          "height": null,
+                                                          "height-mode": "undefined",
+                                                          "output-height": 20.0,
+                                                          "output-width": 73.33333587646484,
+                                                          "width": null,
+                                                          "width-mode": "undefined"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "style": {
+                                                      "flex-shrink": 1.0,
+                                                      "margin-bottom": {
+                                                        "unit": "px",
+                                                        "value": -3.6666667461395264
+                                                      },
+                                                      "margin-top": {
+                                                        "unit": "px",
+                                                        "value": -4.666666507720947
+                                                      },
+                                                      "padding-vertical": {
+                                                        "unit": "px",
+                                                        "value": 8.0
+                                                      }
+                                                    }
+                                                  }
+                                                ],
+                                                "config": {
+                                                  "errata": "all",
+                                                  "point-scale-factor": 3.0
+                                                },
+                                                "node": null,
+                                                "style": {
+                                                  "align-items": "center",
+                                                  "flex-direction": "row",
+                                                  "justify-content": "center",
+                                                  "margin-end": {
+                                                    "unit": "px",
+                                                    "value": 8.0
+                                                  },
+                                                  "min-height": {
+                                                    "unit": "px",
+                                                    "value": 36.0
+                                                  },
+                                                  "min-width": {
+                                                    "unit": "px",
+                                                    "value": 44.0
+                                                  },
+                                                  "padding-horizontal": {
+                                                    "unit": "px",
+                                                    "value": 12.0
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "children": [
+                                                  {
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": {
+                                                      "measure-funcs": [
+                                                        {
+                                                          "duration-ns": 4250,
+                                                          "height": null,
+                                                          "height-mode": "undefined",
+                                                          "output-height": 20.0,
+                                                          "output-width": 59.66666793823242,
+                                                          "width": null,
+                                                          "width-mode": "undefined"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "style": {
+                                                      "flex-shrink": 1.0,
+                                                      "margin-bottom": {
+                                                        "unit": "px",
+                                                        "value": -3.6666667461395264
+                                                      },
+                                                      "margin-top": {
+                                                        "unit": "px",
+                                                        "value": -4.666666507720947
+                                                      },
+                                                      "padding-vertical": {
+                                                        "unit": "px",
+                                                        "value": 8.0
+                                                      }
+                                                    }
+                                                  }
+                                                ],
+                                                "config": {
+                                                  "errata": "all",
+                                                  "point-scale-factor": 3.0
+                                                },
+                                                "node": null,
+                                                "style": {
+                                                  "align-items": "center",
+                                                  "flex-direction": "row",
+                                                  "justify-content": "center",
+                                                  "margin-end": {
+                                                    "unit": "px",
+                                                    "value": 8.0
+                                                  },
+                                                  "min-height": {
+                                                    "unit": "px",
+                                                    "value": 36.0
+                                                  },
+                                                  "min-width": {
+                                                    "unit": "px",
+                                                    "value": 44.0
+                                                  },
+                                                  "padding-horizontal": {
+                                                    "unit": "px",
+                                                    "value": 12.0
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "config": {
+                                              "errata": "all",
+                                              "point-scale-factor": 3.0
+                                            },
+                                            "node": null,
+                                            "style": {
+                                              "flex-direction": "row",
+                                              "padding-horizontal": {
+                                                "unit": "px",
+                                                "value": 8.0
+                                              },
+                                              "padding-top": {
+                                                "unit": "px",
+                                                "value": 16.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all",
+                                          "point-scale-factor": 3.0
+                                        },
+                                        "node": null,
+                                        "style": {
+                                          "flex-direction": "row",
+                                          "flex-grow": 1.0,
+                                          "flex-shrink": 1.0,
+                                          "overflow": "scroll"
+                                        }
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all",
+                                      "point-scale-factor": 3.0
+                                    },
+                                    "node": null,
+                                    "style": {
+                                      "margin-bottom": {
+                                        "unit": "px",
+                                        "value": 16.0
+                                      },
+                                      "margin-horizontal": {
+                                        "unit": "px",
+                                        "value": 8.0
+                                      }
+                                    }
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all",
+                                  "point-scale-factor": 3.0
+                                },
+                                "node": null,
+                                "style": null
+                              },
+                              {
+                                "config": {
+                                  "errata": "all",
+                                  "point-scale-factor": 3.0
+                                },
+                                "node": null,
+                                "style": null
+                              },
+                              {
+                                "config": {
+                                  "errata": "all",
+                                  "point-scale-factor": 3.0
+                                },
+                                "node": null,
+                                "style": null
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "height": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          },
+                                                          "overflow": "hidden",
+                                                          "width": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "position-right": {
+                                                        "unit": "px",
+                                                        "value": 0.0
+                                                      },
+                                                      "position-top": {
+                                                        "unit": "px",
+                                                        "value": 0.0
+                                                      },
+                                                      "position-type": "absolute"
+                                                    }
+                                                  },
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": {
+                                                              "height": {
+                                                                "unit": "px",
+                                                                "value": 24.0
+                                                              },
+                                                              "overflow": "hidden",
+                                                              "width": {
+                                                                "unit": "px",
+                                                                "value": 24.0
+                                                              }
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "padding-right": {
+                                                            "unit": "px",
+                                                            "value": 10.0
+                                                          }
+                                                        }
+                                                      },
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": {
+                                                              "measure-funcs": [
+                                                                {
+                                                                  "duration-ns": 8000,
+                                                                  "height": null,
+                                                                  "height-mode": "undefined",
+                                                                  "output-height": 40.0,
+                                                                  "output-width": 286.3999938964844,
+                                                                  "width": 286.3999938964844,
+                                                                  "width-mode": "exactly"
+                                                                }
+                                                              ]
+                                                            },
+                                                            "style": {
+                                                              "margin-bottom": {
+                                                                "unit": "px",
+                                                                "value": 3.6666667461395264
+                                                              },
+                                                              "margin-top": {
+                                                                "unit": "px",
+                                                                "value": -4.333333492279053
+                                                              }
+                                                            }
+                                                          },
+                                                          {
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": {
+                                                              "measure-funcs": [
+                                                                {
+                                                                  "duration-ns": 11750,
+                                                                  "height": null,
+                                                                  "height-mode": "undefined",
+                                                                  "output-height": 40.0,
+                                                                  "output-width": 286.3999938964844,
+                                                                  "width": 286.3999938964844,
+                                                                  "width-mode": "exactly"
+                                                                }
+                                                              ]
+                                                            },
+                                                            "style": {
+                                                              "margin-bottom": {
+                                                                "unit": "px",
+                                                                "value": 8.333333015441895
+                                                              },
+                                                              "margin-top": {
+                                                                "unit": "px",
+                                                                "value": -4.666666507720947
+                                                              }
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "width": {
+                                                            "unit": "pct",
+                                                            "value": 80.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "flex-direction": "row"
+                                                    }
+                                                  },
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "align-items": "center",
+                                                          "flex-direction": "row",
+                                                          "height": {
+                                                            "unit": "px",
+                                                            "value": 36.0
+                                                          },
+                                                          "justify-content": "center",
+                                                          "padding-horizontal": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "align-self": "center",
+                                                      "flex-direction": "row",
+                                                      "flex-shrink": 1.0
+                                                    }
+                                                  }
+                                                ],
+                                                "config": {
+                                                  "errata": "all",
+                                                  "point-scale-factor": 3.0
+                                                },
+                                                "node": null,
+                                                "style": {
+                                                  "margin-all": {
+                                                    "unit": "px",
+                                                    "value": 16.0
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "config": {
+                                              "errata": "all",
+                                              "point-scale-factor": 3.0
+                                            },
+                                            "node": null,
+                                            "style": {
+                                              "margin-bottom": {
+                                                "unit": "px",
+                                                "value": 20.0
+                                              },
+                                              "margin-horizontal": {
+                                                "unit": "px",
+                                                "value": 20.0
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all",
+                                          "point-scale-factor": 3.0
+                                        },
+                                        "node": null,
+                                        "style": null
+                                      },
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "overflow": "hidden",
+                                                          "position-bottom": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "position-left": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "position-right": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "position-top": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "position-type": "absolute"
+                                                        }
+                                                      },
+                                                      {
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "overflow": "hidden",
+                                                          "position-bottom": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "position-left": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "position-right": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "position-top": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "position-type": "absolute"
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "flex": 1.0
+                                                    }
+                                                  }
+                                                ],
+                                                "config": {
+                                                  "errata": "all",
+                                                  "point-scale-factor": 3.0
+                                                },
+                                                "node": null,
+                                                "style": {
+                                                  "height": {
+                                                    "unit": "pct",
+                                                    "value": 100.0
+                                                  },
+                                                  "width": {
+                                                    "unit": "pct",
+                                                    "value": 100.0
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": null,
+                                                                    "style": {
+                                                                      "height": {
+                                                                        "unit": "px",
+                                                                        "value": 32.0
+                                                                      },
+                                                                      "overflow": "hidden",
+                                                                      "width": {
+                                                                        "unit": "px",
+                                                                        "value": 32.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "align-items": "center",
+                                                                  "flex": 1.0,
+                                                                  "justify-content": "center"
+                                                                }
+                                                              }
+                                                            ],
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": {
+                                                              "height": {
+                                                                "unit": "px",
+                                                                "value": 64.80000305175781
+                                                              },
+                                                              "margin-right": {
+                                                                "unit": "px",
+                                                                "value": 16.0
+                                                              },
+                                                              "width": {
+                                                                "unit": "px",
+                                                                "value": 64.80000305175781
+                                                              }
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": null
+                                                      },
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": null,
+                                                                    "style": {
+                                                                      "height": {
+                                                                        "unit": "px",
+                                                                        "value": 32.0
+                                                                      },
+                                                                      "overflow": "hidden",
+                                                                      "width": {
+                                                                        "unit": "px",
+                                                                        "value": 32.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "align-items": "center",
+                                                                  "flex": 1.0,
+                                                                  "justify-content": "center"
+                                                                }
+                                                              }
+                                                            ],
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": {
+                                                              "height": {
+                                                                "unit": "px",
+                                                                "value": 64.80000305175781
+                                                              },
+                                                              "width": {
+                                                                "unit": "px",
+                                                                "value": 64.80000305175781
+                                                              }
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": null
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "flex-direction": "row",
+                                                      "justify-content": "flex-end",
+                                                      "position-right": {
+                                                        "unit": "px",
+                                                        "value": 16.0
+                                                      },
+                                                      "position-top": {
+                                                        "unit": "px",
+                                                        "value": -32.400001525878906
+                                                      },
+                                                      "position-type": "absolute"
+                                                    }
+                                                  },
+                                                  {
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": {
+                                                      "measure-funcs": [
+                                                        {
+                                                          "duration-ns": 6083,
+                                                          "height": null,
+                                                          "height-mode": "undefined",
+                                                          "output-height": 28.0,
+                                                          "output-width": 358.0,
+                                                          "width": 358.0,
+                                                          "width-mode": "exactly"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "style": {
+                                                      "margin-bottom": {
+                                                        "unit": "px",
+                                                        "value": 6.0
+                                                      },
+                                                      "margin-top": {
+                                                        "unit": "px",
+                                                        "value": -6.0
+                                                      }
+                                                    }
+                                                  },
+                                                  {
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": {
+                                                      "measure-funcs": [
+                                                        {
+                                                          "duration-ns": 7417,
+                                                          "height": null,
+                                                          "height-mode": "undefined",
+                                                          "output-height": 20.0,
+                                                          "output-width": 358.0,
+                                                          "width": 358.0,
+                                                          "width-mode": "exactly"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "style": {
+                                                      "margin-bottom": {
+                                                        "unit": "px",
+                                                        "value": -4.333333492279053
+                                                      },
+                                                      "margin-top": {
+                                                        "unit": "px",
+                                                        "value": -4.333333492279053
+                                                      }
+                                                    }
+                                                  }
+                                                ],
+                                                "config": {
+                                                  "errata": "all",
+                                                  "point-scale-factor": 3.0
+                                                },
+                                                "node": null,
+                                                "style": {
+                                                  "padding-bottom": {
+                                                    "unit": "px",
+                                                    "value": 20.0
+                                                  },
+                                                  "padding-left": {
+                                                    "unit": "px",
+                                                    "value": 16.0
+                                                  },
+                                                  "padding-right": {
+                                                    "unit": "px",
+                                                    "value": 16.0
+                                                  },
+                                                  "padding-top": {
+                                                    "unit": "px",
+                                                    "value": 20.0
+                                                  },
+                                                  "position-bottom": {
+                                                    "unit": "px",
+                                                    "value": 0.0
+                                                  },
+                                                  "position-type": "absolute",
+                                                  "width": {
+                                                    "unit": "pct",
+                                                    "value": 100.0
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "config": {
+                                              "errata": "all",
+                                              "point-scale-factor": 3.0
+                                            },
+                                            "node": null,
+                                            "style": null
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all",
+                                          "point-scale-factor": 3.0
+                                        },
+                                        "node": null,
+                                        "style": {
+                                          "height": {
+                                            "unit": "px",
+                                            "value": 468.0
+                                          },
+                                          "margin-horizontal": {
+                                            "unit": "px",
+                                            "value": 20.0
+                                          },
+                                          "margin-vertical": {
+                                            "unit": "px",
+                                            "value": 0.0
+                                          },
+                                          "width": {
+                                            "unit": "px",
+                                            "value": 390.0
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": null
+                                                          },
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": null,
+                                                                    "style": {
+                                                                      "height": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      },
+                                                                      "overflow": "hidden",
+                                                                      "width": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "align-items": "center",
+                                                                  "flex": 1.0,
+                                                                  "justify-content": "center",
+                                                                  "max-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "min-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  }
+                                                                }
+                                                              },
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": {
+                                                                      "measure-funcs": [
+                                                                        {
+                                                                          "duration-ns": 4416,
+                                                                          "height": null,
+                                                                          "height-mode": "undefined",
+                                                                          "output-height": 16.0,
+                                                                          "output-width": 84.0,
+                                                                          "width": 84.0,
+                                                                          "width-mode": "exactly"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    "style": {
+                                                                      "margin-bottom": {
+                                                                        "unit": "px",
+                                                                        "value": -3.3333332538604736
+                                                                      },
+                                                                      "margin-top": {
+                                                                        "unit": "px",
+                                                                        "value": -4.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "margin-top": {
+                                                                    "unit": "px",
+                                                                    "value": 8.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 84.0
+                                                                  }
+                                                                }
+                                                              }
+                                                            ],
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": {
+                                                              "align-items": "center",
+                                                              "flex": 1.0
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "margin-bottom": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          },
+                                                          "margin-left": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "margin-top": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "flex-direction": "row"
+                                                    }
+                                                  },
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": null,
+                                                                    "style": {
+                                                                      "height": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      },
+                                                                      "overflow": "hidden",
+                                                                      "width": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "align-items": "center",
+                                                                  "flex": 1.0,
+                                                                  "justify-content": "center",
+                                                                  "max-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "min-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  }
+                                                                }
+                                                              },
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": {
+                                                                      "measure-funcs": [
+                                                                        {
+                                                                          "duration-ns": 2875,
+                                                                          "height": null,
+                                                                          "height-mode": "undefined",
+                                                                          "output-height": 32.0,
+                                                                          "output-width": 84.0,
+                                                                          "width": 84.0,
+                                                                          "width-mode": "exactly"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    "style": {
+                                                                      "margin-bottom": {
+                                                                        "unit": "px",
+                                                                        "value": -3.3333332538604736
+                                                                      },
+                                                                      "margin-top": {
+                                                                        "unit": "px",
+                                                                        "value": -4.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "margin-top": {
+                                                                    "unit": "px",
+                                                                    "value": 8.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 84.0
+                                                                  }
+                                                                }
+                                                              }
+                                                            ],
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": {
+                                                              "align-items": "center",
+                                                              "flex": 1.0
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "margin-bottom": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          },
+                                                          "margin-left": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "margin-top": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "flex-direction": "row"
+                                                    }
+                                                  },
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": null,
+                                                                    "style": {
+                                                                      "height": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      },
+                                                                      "overflow": "hidden",
+                                                                      "width": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "align-items": "center",
+                                                                  "flex": 1.0,
+                                                                  "justify-content": "center",
+                                                                  "max-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "min-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  }
+                                                                }
+                                                              },
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": {
+                                                                      "measure-funcs": [
+                                                                        {
+                                                                          "duration-ns": 3167,
+                                                                          "height": null,
+                                                                          "height-mode": "undefined",
+                                                                          "output-height": 16.0,
+                                                                          "output-width": 84.0,
+                                                                          "width": 84.0,
+                                                                          "width-mode": "exactly"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    "style": {
+                                                                      "margin-bottom": {
+                                                                        "unit": "px",
+                                                                        "value": -3.3333332538604736
+                                                                      },
+                                                                      "margin-top": {
+                                                                        "unit": "px",
+                                                                        "value": -4.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "margin-top": {
+                                                                    "unit": "px",
+                                                                    "value": 8.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 84.0
+                                                                  }
+                                                                }
+                                                              }
+                                                            ],
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": {
+                                                              "align-items": "center",
+                                                              "flex": 1.0
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "margin-bottom": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          },
+                                                          "margin-left": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "margin-top": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "flex-direction": "row"
+                                                    }
+                                                  },
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": null,
+                                                                    "style": {
+                                                                      "height": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      },
+                                                                      "overflow": "hidden",
+                                                                      "width": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "align-items": "center",
+                                                                  "flex": 1.0,
+                                                                  "justify-content": "center",
+                                                                  "max-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "min-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  }
+                                                                }
+                                                              },
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": {
+                                                                      "measure-funcs": [
+                                                                        {
+                                                                          "duration-ns": 6708,
+                                                                          "height": null,
+                                                                          "height-mode": "undefined",
+                                                                          "output-height": 32.0,
+                                                                          "output-width": 84.0,
+                                                                          "width": 84.0,
+                                                                          "width-mode": "exactly"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    "style": {
+                                                                      "margin-bottom": {
+                                                                        "unit": "px",
+                                                                        "value": -3.3333332538604736
+                                                                      },
+                                                                      "margin-top": {
+                                                                        "unit": "px",
+                                                                        "value": -4.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "margin-top": {
+                                                                    "unit": "px",
+                                                                    "value": 8.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 84.0
+                                                                  }
+                                                                }
+                                                              }
+                                                            ],
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": {
+                                                              "align-items": "center",
+                                                              "flex": 1.0
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "margin-bottom": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          },
+                                                          "margin-left": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "margin-top": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "flex-direction": "row"
+                                                    }
+                                                  },
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": null,
+                                                                    "style": {
+                                                                      "height": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      },
+                                                                      "overflow": "hidden",
+                                                                      "width": {
+                                                                        "unit": "px",
+                                                                        "value": 24.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "align-items": "center",
+                                                                  "flex": 1.0,
+                                                                  "justify-content": "center",
+                                                                  "max-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "min-height": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 60.0
+                                                                  }
+                                                                }
+                                                              },
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "config": {
+                                                                      "errata": "all",
+                                                                      "point-scale-factor": 3.0
+                                                                    },
+                                                                    "node": {
+                                                                      "measure-funcs": [
+                                                                        {
+                                                                          "duration-ns": 2500,
+                                                                          "height": null,
+                                                                          "height-mode": "undefined",
+                                                                          "output-height": 32.0,
+                                                                          "output-width": 84.0,
+                                                                          "width": 84.0,
+                                                                          "width-mode": "exactly"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    "style": {
+                                                                      "margin-bottom": {
+                                                                        "unit": "px",
+                                                                        "value": -3.3333332538604736
+                                                                      },
+                                                                      "margin-top": {
+                                                                        "unit": "px",
+                                                                        "value": -4.0
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                ],
+                                                                "config": {
+                                                                  "errata": "all",
+                                                                  "point-scale-factor": 3.0
+                                                                },
+                                                                "node": null,
+                                                                "style": {
+                                                                  "margin-top": {
+                                                                    "unit": "px",
+                                                                    "value": 8.0
+                                                                  },
+                                                                  "width": {
+                                                                    "unit": "px",
+                                                                    "value": 84.0
+                                                                  }
+                                                                }
+                                                              }
+                                                            ],
+                                                            "config": {
+                                                              "errata": "all",
+                                                              "point-scale-factor": 3.0
+                                                            },
+                                                            "node": null,
+                                                            "style": {
+                                                              "align-items": "center",
+                                                              "flex": 1.0
+                                                            }
+                                                          }
+                                                        ],
+                                                        "config": {
+                                                          "errata": "all",
+                                                          "point-scale-factor": 3.0
+                                                        },
+                                                        "node": null,
+                                                        "style": {
+                                                          "margin-bottom": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          },
+                                                          "margin-left": {
+                                                            "unit": "px",
+                                                            "value": 0.0
+                                                          },
+                                                          "margin-top": {
+                                                            "unit": "px",
+                                                            "value": 16.0
+                                                          }
+                                                        }
+                                                      }
+                                                    ],
+                                                    "config": {
+                                                      "errata": "all",
+                                                      "point-scale-factor": 3.0
+                                                    },
+                                                    "node": null,
+                                                    "style": {
+                                                      "flex-direction": "row"
+                                                    }
+                                                  }
+                                                ],
+                                                "config": {
+                                                  "errata": "all",
+                                                  "point-scale-factor": 3.0
+                                                },
+                                                "node": null,
+                                                "style": {
+                                                  "flex-direction": "row",
+                                                  "padding-right": {
+                                                    "unit": "px",
+                                                    "value": 20.0
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "config": {
+                                              "errata": "all",
+                                              "point-scale-factor": 3.0
+                                            },
+                                            "node": null,
+                                            "style": {
+                                              "flex-direction": "row",
+                                              "flex-grow": 1.0,
+                                              "flex-shrink": 1.0,
+                                              "margin-left": {
+                                                "unit": "px",
+                                                "value": 20.0
+                                              },
+                                              "margin-right": {
+                                                "unit": "px",
+                                                "value": 0.0
+                                              },
+                                              "margin-top": {
+                                                "unit": "px",
+                                                "value": 0.0
+                                              },
+                                              "overflow": "scroll"
+                                            }
+                                          }
+                                        ],
+                                        "config": {
+                                          "errata": "all",
+                                          "point-scale-factor": 3.0
+                                        },
+                                        "node": null,
+                                        "style": {
+                                          "margin-bottom": {
+                                            "unit": "px",
+                                            "value": 0.0
+                                          },
+                                          "margin-vertical": {
+                                            "unit": "px",
+                                            "value": 12.0
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "config": {
+                                      "errata": "all",
+                                      "point-scale-factor": 3.0
+                                    },
+                                    "node": null,
+                                    "style": {
+                                      "height": {
+                                        "unit": "pct",
+                                        "value": 100.0
+                                      },
+                                      "padding-bottom": {
+                                        "unit": "px",
+                                        "value": 12.0
+                                      },
+                                      "width": {
+                                        "unit": "pct",
+                                        "value": 100.0
+                                      }
+                                    }
+                                  }
+                                ],
+                                "config": {
+                                  "errata": "all",
+                                  "point-scale-factor": 3.0
+                                },
+                                "node": null,
+                                "style": null
+                              },
+                              {
+                                "config": {
+                                  "errata": "all",
+                                  "point-scale-factor": 3.0
+                                },
+                                "node": null,
+                                "style": null
+                              },
+                              {
+                                "config": {
+                                  "errata": "all",
+                                  "point-scale-factor": 3.0
+                                },
+                                "node": null,
+                                "style": null
+                              }
+                            ],
+                            "config": {
+                              "errata": "all",
+                              "point-scale-factor": 3.0
+                            },
+                            "node": null,
+                            "style": null
+                          }
+                        ],
+                        "config": {
+                          "errata": "all",
+                          "point-scale-factor": 3.0
+                        },
+                        "node": null,
+                        "style": {
+                          "flex-grow": 1.0,
+                          "flex-shrink": 1.0,
+                          "overflow": "scroll"
+                        }
+                      }
+                    ],
+                    "config": {
+                      "errata": "all",
+                      "point-scale-factor": 3.0
+                    },
+                    "node": null,
+                    "style": {
+                      "flex": 1.0,
+                      "padding-bottom": {
+                        "unit": "px",
+                        "value": 34.0
+                      },
+                      "padding-left": {
+                        "unit": "px",
+                        "value": 0.0
+                      },
+                      "padding-right": {
+                        "unit": "px",
+                        "value": 0.0
+                      },
+                      "padding-top": {
+                        "unit": "px",
+                        "value": 0.0
+                      }
+                    }
+                  },
+                  {
+                    "config": {
+                      "errata": "all",
+                      "point-scale-factor": 3.0
+                    },
+                    "node": null,
+                    "style": {
+                      "height": {
+                        "unit": "px",
+                        "value": 10.0
+                      },
+                      "position-left": {
+                        "unit": "px",
+                        "value": -5.0
+                      },
+                      "position-type": "absolute",
+                      "width": {
+                        "unit": "px",
+                        "value": 10.0
+                      }
+                    }
+                  }
+                ],
+                "config": {
+                  "errata": "all",
+                  "point-scale-factor": 3.0
+                },
+                "node": null,
+                "style": {
+                  "flex-grow": 1.0,
+                  "height": "undefined",
+                  "width": "undefined"
+                }
+              }
+            ],
+            "config": {
+              "errata": "all",
+              "point-scale-factor": 3.0
+            },
+            "node": null,
+            "style": {
+              "flex-grow": 1.0
+            }
+          },
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "config": {
+                      "errata": "all",
+                      "point-scale-factor": 3.0
+                    },
+                    "node": {
+                      "measure-funcs": [
+                        {
+                          "duration-ns": 3292,
+                          "height": null,
+                          "height-mode": "undefined",
+                          "output-height": 7.333333492279053,
+                          "output-width": 67.66666412353516,
+                          "width": 426.0,
+                          "width-mode": "at-most"
+                        }
+                      ]
+                    },
+                    "style": null
+                  }
+                ],
+                "config": {
+                  "errata": "all",
+                  "point-scale-factor": 3.0
+                },
+                "node": null,
+                "style": null
+              }
+            ],
+            "config": {
+              "errata": "all",
+              "point-scale-factor": 3.0
+            },
+            "node": null,
+            "style": {
+              "align-items": "center",
+              "justify-content": "center",
+              "padding-all": {
+                "unit": "px",
+                "value": 2.0
+              },
+              "position-right": {
+                "unit": "px",
+                "value": 0.0
+              },
+              "position-top": {
+                "unit": "px",
+                "value": 0.0
+              },
+              "position-type": "absolute"
+            }
+          }
+        ],
+        "config": {
+          "errata": "all",
+          "point-scale-factor": 3.0
+        },
+        "node": null,
+        "style": {
+          "flex": 1.0
+        }
+      }
+    ],
+    "config": {
+      "errata": "all",
+      "point-scale-factor": 3.0
+    },
+    "node": null,
+    "style": {
+      "max-height": {
+        "unit": "px",
+        "value": 821.0
+      },
+      "max-width": {
+        "unit": "px",
+        "value": 430.0
+      },
+      "min-height": {
+        "unit": "px",
+        "value": 821.0
+      },
+      "min-width": {
+        "unit": "px",
+        "value": 430.0
+      }
+    }
+  }
+}
