@@ -1,4 +1,4 @@
-# Yoga documentation and playground
+# Yoga legacy documentation and playground
 
 This site uses [gatsby.js](https://www.gatsbyjs.org/) as static site generator. Which transforms all markdown and react code to static HTML and JS files.
 
