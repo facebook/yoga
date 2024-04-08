@@ -21,6 +21,10 @@ static inline bool isAuto(json& j) {
   return j.is_string() && j == "auto";
 }
 
+static inline bool isUndefined(json& j) {
+  return j.is_string() && j == "undefined";
+}
+
 static inline std::string invalidArgumentMessage(
     const std::string& arg,
     const std::string& enumName) {
@@ -141,6 +145,9 @@ YGPositionType positionTypeFromString(const std::string& str) {
 YGUnit unitFromJson(json& j) {
   if (isAuto(j)) {
     return YGUnitAuto;
+  }
+  if (isUndefined(j)) {
+    return YGUnitUndefined;
   }
 
   std::string unit = j["unit"];
