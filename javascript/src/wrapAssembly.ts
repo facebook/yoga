@@ -144,7 +144,8 @@ export type Node = {
   setHeightAuto(): void;
   setHeightPercent(height: number | undefined): void;
   setJustifyContent(justifyContent: Justify): void;
-  setGap(gutter: Gutter, gapLength: number | undefined): Value;
+  setGap(gutter: Gutter, gapLength: number | `${number}%` | undefined): Value;
+  setGapPercent(gutter: Gutter, gapLength: number | undefined): Value;
   setMargin(
     edge: Edge,
     margin: number | 'auto' | `${number}%` | undefined,
@@ -209,6 +210,7 @@ export default function wrapAssembly(lib: any): Yoga {
     'setMaxWidth',
     'setMaxHeight',
     'setPadding',
+    'setGap',
   ]) {
     const methods = {
       [Unit.Point]: lib.Node.prototype[fnName],

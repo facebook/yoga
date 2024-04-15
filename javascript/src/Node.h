@@ -124,6 +124,7 @@ class Node {
   void setPaddingPercent(int edge, double padding);
 
   void setGap(int gutter, double gapLength);
+  void setGapPercent(int gutter, double gapLength);
 
  public: // Style getters
   int getPositionType(void) const;

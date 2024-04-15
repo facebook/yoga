@@ -240,6 +240,10 @@ void Node::setGap(int gutter, double gapLength) {
   YGNodeStyleSetGap(m_node, static_cast<YGGutter>(gutter), gapLength);
 }
 
+void Node::setGapPercent(int gutter, double gapLength) {
+  YGNodeStyleSetGapPercent(m_node, static_cast<YGGutter>(gutter), gapLength);
+}
+
 int Node::getPositionType(void) const {
   return YGNodeStyleGetPositionType(m_node);
 }

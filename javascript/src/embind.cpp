@@ -116,6 +116,7 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
       .function("setPadding", &Node::setPadding)
       .function("setPaddingPercent", &Node::setPaddingPercent)
       .function("setGap", &Node::setGap)
+      .function("setGapPercent", &Node::setGapPercent)
 
       .function("setDirection", &Node::setDirection)
 
