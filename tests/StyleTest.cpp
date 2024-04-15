@@ -29,7 +29,7 @@ TEST(Style, computed_border_is_floored) {
 TEST(Style, computed_gap_is_floored) {
   yoga::Style style;
   style.setGap(Gutter::Column, value::points(-1.0f));
-  auto gapBetweenColumns = style.computeGapForAxis(FlexDirection::Row);
+  auto gapBetweenColumns = style.computeGapForAxis(FlexDirection::Row, 0.0);
   ASSERT_EQ(gapBetweenColumns, 0.0f);
 }
 
