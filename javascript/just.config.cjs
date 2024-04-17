@@ -168,9 +168,9 @@ function installEmsdkTask() {
       {stdio: 'inherit'},
     );
 
-    await spawn(emsdkBin, ['install', emsdkVersion], {stdio: 'inherit'});
+    await spawnShell(emsdkBin, ['install', emsdkVersion], {stdio: 'inherit'});
 
-    await spawn(emsdkBin, ['activate', emsdkVersion], {
+    await spawnShell(emsdkBin, ['activate', emsdkVersion], {
       stdio: logger.enableVerbose ? 'inherit' : 'ignore',
     });
   };
@@ -216,7 +216,7 @@ function emcmakeGenerateTask() {
     ];
     logger.info(['emcmake', ...args].join(' '));
 
-    return spawn(emcmakeBin, args, {
+    return spawnShell(emcmakeBin, args, {
       stdio: logger.enableVerbose ? 'inherit' : 'ignore',
     });
   };
@@ -234,7 +234,7 @@ function cmakeBuildTask(opts) {
     ];
     logger.info(['cmake', ...args].join(' '));
 
-    return spawn(cmake, args, {stdio: 'inherit'});
+    return spawnShell(cmake, args, {stdio: 'inherit'});
   };
 }
 
@@ -246,8 +246,13 @@ function clangFormatTask(opts) {
     ];
     logger.info(['clang-format', ...args].join(' '));
 
-    return spawn(node, [require.resolve('clang-format'), ...args], {
+    return spawnShell(node, [require.resolve('clang-format'), ...args], {
       stdio: 'inherit',
     });
   };
+}
+
+function spawnShell(cmd, args, opts) {
+  // https://github.com/nodejs/node/issues/52554
+  return spawn(cmd, args, {...opts, shell: true});
 }
