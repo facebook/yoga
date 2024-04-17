@@ -726,4 +726,9 @@ public abstract class YogaNodeJNIBase extends YogaNode implements Cloneable {
   public void setGapPercent(YogaGutter gutter, float gapLength) {
     YogaNative.jni_YGNodeStyleSetGapPercentJNI(mNativePointer, gutter.intValue(), gapLength);
   }
+
+  @Override
+  public void setGapAuto(YogaGutter gutter) {
+    YogaNative.jni_YGNodeStyleSetGapAutoJNI(mNativePointer, gutter.intValue());
+  }
 }

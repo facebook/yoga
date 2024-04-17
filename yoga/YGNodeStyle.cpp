@@ -267,6 +267,11 @@ void YGNodeStyleSetGap(
       node, scopedEnum(gutter), value::points(gapLength));
 }
 
+void YGNodeStyleSetGapAuto(YGNodeRef node, YGGutter gutter) {
+  updateStyle<&Style::gap, &Style::setGap>(
+      node, scopedEnum(gutter), value::ofAuto());
+}
+
 void YGNodeStyleSetGapPercent(YGNodeRef node, YGGutter gutter, float percent) {
   updateStyle<&Style::gap, &Style::setGap>(
       node, scopedEnum(gutter), value::percent(percent));
