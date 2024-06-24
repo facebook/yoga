@@ -14,7 +14,7 @@ export default {
   title: 'Yoga',
   tagline:
     'Build flexible layouts on any platform with a highly optimized open source layout engine designed with speed, size, and ease of use in mind.',
-  favicon: 'img/favicon.png',
+  favicon: 'img/favicon.svg',
 
   url: 'https:/yogalayout.dev',
   baseUrl: '/',
@@ -95,5 +95,19 @@ export default {
         defaultMode: 'dark',
         respectPrefersColorScheme: true,
       },
+      metadata: [
+        {
+          property: 'og:image',
+          content: 'https://yogalayout.dev/img/opengraph.png',
+        },
+        {
+          property: 'og:image:width',
+          content: '1200',
+        },
+        {
+          property: 'og:image:height',
+          content: '630',
+        },
+      ],
     }),
 };
