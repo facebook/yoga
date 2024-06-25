@@ -23,5 +23,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "2.8.8",
     "typescript": "5.0.4"
+  },
+  "resolutions": {
+    "cliui/wrap-ansi": "7.0.0"
   }
 }
