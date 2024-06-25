@@ -106,7 +106,7 @@ for (const fileName of fixtures) {
   );
 
   await fs.writeFile(
-    `${yogaDir}/java/tests/com/facebook/yoga/${fileNameNoExtension}.java`,
+    `${yogaDir}/java/tests/generated/com/facebook/yoga/${fileNameNoExtension}.java`,
     addSignatureToSourceCode(
       JSON.parse(logs[1].message.replace(/^[^"]*/, '')).replace(
         'YogaTest',
