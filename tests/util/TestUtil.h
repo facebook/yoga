@@ -7,9 +7,10 @@
 
 #pragma once
 
+#include <yoga/YGNode.h>
 #include <yoga/event/event.h>
-
 #include <functional>
+#include <string_view>
 
 namespace facebook::yoga::test {
 
@@ -23,5 +24,20 @@ struct ScopedEventSubscription {
   explicit ScopedEventSubscription(std::function<Event::Subscriber>&&);
   ~ScopedEventSubscription();
 };
+
+YGSize IntrinsicSizeMeasure(
+    YGNodeConstRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode);
+
+float longestWordWidth(std::string_view text, float widthPerChar);
+
+float calculateHeight(
+    std::string_view text,
+    float measuredWidth,
+    float widthPerChar,
+    float heightPerChar);
 
 } // namespace facebook::yoga::test
