@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "gentest": "node --loader=babel-register-esm ./gentest-driver.ts",
-    "gentest-validate": "node --loader=babel-register-esm ./gentest-validate.ts"
+    "gentest": "node --disable-warning=ExperimentalWarning --loader=babel-register-esm ./gentest-driver.ts",
+    "gentest-validate": "node --disable-warning=ExperimentalWarning --loader=babel-register-esm ./gentest-validate.ts"
   },
   "type": "module",
   "dependencies": {
@@ -19,6 +19,7 @@
     "@types/minimist": "^1.2.5",
     "@types/node": "^20.10.3",
     "@types/selenium-webdriver": "^4.1.21",
-    "babel-register-esm": "^1.2.5"
+    "babel-register-esm": "^1.2.5",
+    "glob": "^10.4.2"
   }
 }

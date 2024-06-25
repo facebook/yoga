@@ -23,7 +23,7 @@ const {
 const {existsSync} = require('fs');
 const {readFile, writeFile, rm} = require('fs/promises');
 
-const glob = require('glob');
+const {glob} = require('glob');
 const path = require('path');
 const which = require('which');
 
