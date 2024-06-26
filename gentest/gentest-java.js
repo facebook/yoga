@@ -55,6 +55,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
         'import org.junit.Test;',
         'import org.junit.runner.RunWith;',
         'import org.junit.runners.Parameterized;',
+        'import com.facebook.yoga.utils.TestUtils;',
         '',
         '@RunWith(Parameterized.class)',
         'public class YogaTest {',
@@ -462,6 +463,15 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
           ', ' +
           toValueJava(value) +
           'f);',
+      );
+    },
+  },
+
+  YGNodeSetMeasureFunc: {
+    value: function (nodeName, innerText) {
+      this.push(`${nodeName}.setData("${innerText}");`);
+      this.push(
+        `${nodeName}.setMeasureFunction(new TestUtils.intrinsicMeasureFunction());`,
       );
     },
   },

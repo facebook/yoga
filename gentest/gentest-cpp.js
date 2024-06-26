@@ -30,7 +30,12 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue: {
     value: function () {
-      this.push(['#include <gtest/gtest.h>', '#include <yoga/Yoga.h>', '']);
+      this.push([
+        '#include <gtest/gtest.h>',
+        '#include <yoga/Yoga.h>',
+        '#include "../util/TestUtil.h"',
+        '',
+      ]);
     },
   },
 
@@ -500,6 +505,15 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
           ', ' +
           toValueCpp(value) +
           ');',
+      );
+    },
+  },
+
+  YGNodeSetMeasureFunc: {
+    value: function (nodeName, innerText) {
+      this.push(`YGNodeSetContext(${nodeName}, (void*)"${innerText}");`);
+      this.push(
+        `YGNodeSetMeasureFunc(${nodeName}, &facebook::yoga::test::IntrinsicSizeMeasure);`,
       );
     },
   },
