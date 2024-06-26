@@ -528,6 +528,10 @@ function setupTestTree(
     e.YGNodeInsertChild(parentName, nodeName, index);
   }
 
+  if (node.innerText && node.children.length === 0) {
+    e.YGNodeSetMeasureFunc(nodeName, node.innerText);
+  }
+
   for (let i = 0; i < node.children.length; i++) {
     e.push('');
     const childName = nodeName + '_child' + i;
@@ -723,6 +727,7 @@ function calculateTree(root, parentOffsetLeft, parentOffsetTop) {
         ? child.dataset.experiments.split(' ')
         : [],
       disabled: child.dataset.disabled === 'true',
+      innerText: child.innerText,
     };
 
     const size = getRoundedSize(child);

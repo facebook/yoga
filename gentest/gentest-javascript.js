@@ -23,6 +23,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitPrologue: {
     value: function () {
+      this.push(
+        "import { instrinsicSizeMeasureFunc } from '../tools/utils.ts'",
+      );
       this.push("import Yoga from 'yoga-layout';");
       this.push('import {');
       this.pushIndent();
@@ -395,6 +398,14 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
           ', ' +
           toValueJavascript(value) +
           ');',
+      );
+    },
+  },
+
+  YGNodeSetMeasureFunc: {
+    value: function (nodeName, innerText) {
+      this.push(
+        `${nodeName}.setMeasureFunc(instrinsicSizeMeasureFunc.bind("${innerText}"));`,
       );
     },
   },
