@@ -19,7 +19,7 @@ const filesToValidate = await glob(
   [
     'tests/generated/**/*.{h,cpp}',
     'javascript/tests/generated/**/*.test.ts',
-    'java/tests/com/facebook/yoga/**/*.java',
+    'java/tests/generated/com/facebook/yoga/**/*.java',
   ],
   {
     cwd: yogaRootDir,
