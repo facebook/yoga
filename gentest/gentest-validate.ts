@@ -11,30 +11,33 @@ import * as fs from 'node:fs/promises';
 import {dirname} from 'path';
 import {fileURLToPath} from 'url';
 import signedsource from 'signedsource';
+import {glob} from 'glob';
 
-const yogaDir = dirname(dirname(fileURLToPath(import.meta.url)));
-const cppTestDir = `${yogaDir}/tests/generated`;
-const jsTestDir = `${yogaDir}/javascript/tests/generated`;
-const javaTestDir = `${yogaDir}/java/tests/com/facebook/yoga`;
-const testDirs = [cppTestDir, jsTestDir, javaTestDir];
+const yogaRootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 
-for (const testDir of testDirs) {
-  const tests = await fs.readdir(testDir);
+const filesToValidate = await glob(
+  [
+    'tests/generated/**/*.{h,cpp}',
+    'javascript/tests/generated/**/*.test.ts',
+    'java/tests/com/facebook/yoga/**/*.java',
+  ],
+  {
+    cwd: yogaRootDir,
+  },
+);
 
-  for (const test of tests) {
-    const testData = await fs.readFile(`${testDir}/${test}`, 'utf8');
-    try {
-      const validSignature = signedsource.verifySignature(testData);
-      if (!validSignature) {
-        console.error(`Invalid signature for ${test}`);
-        process.exitCode = 1;
-      }
-    } catch (e) {
-      // Java test dir does not separate generated tests from non-generated ones
-      if (testDir != javaTestDir) {
-        console.error(`${test}: ${e}`);
-        process.exitCode = 1;
-      }
+console.log(`Found ${filesToValidate.length} files to validate`);
+
+for (const file of filesToValidate) {
+  const content = await fs.readFile(`${yogaRootDir}/${file}`, 'utf8');
+  if (signedsource.isSigned(content)) {
+    console.log(`Checking ${file}`);
+    const validSignature = signedsource.verifySignature(content);
+    if (!validSignature) {
+      console.error(`Invalid signature "${file}"`);
+      process.exitCode = 1;
     }
+  } else {
+    console.log(`Skipped ${file}`);
   }
 }
