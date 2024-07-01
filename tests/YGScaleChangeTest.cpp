@@ -108,7 +108,6 @@ TEST(YogaTest, errata_config_change_relayout) {
   // This should be modified by the lack of the errata
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetHeight(root_child0_child0_child0));
 
-
   YGNodeFreeRecursive(root);
 
   YGConfigFree(config);
