@@ -112,3 +112,66 @@ TEST(YogaTest, errata_config_change_relayout) {
 
   YGConfigFree(config);
 }
+
+static uint32_t _measureCallCount = 0;
+static YGSize _measureCustom(
+    YGNodeConstRef /*node*/,
+    float width,
+    YGMeasureMode /*widthMode*/,
+    float height,
+    YGMeasureMode /*heightMode*/) {
+  _measureCallCount++;
+  return YGSize{
+      width = 25.0f,
+      height = 25.0f,
+  };
+}
+
+TEST(YogaTest, setting_compatible_config_maintains_layout_cache) {
+  const YGConfigRef config = YGConfigNew();
+
+  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGConfigSetPointScaleFactor(config, 1.0f);
+
+  YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+  YGNodeStyleSetWidth(root, 50);
+  YGNodeStyleSetHeight(root, 50);
+
+  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  EXPECT_EQ(0, _measureCallCount);
+
+  YGNodeSetMeasureFunc(root_child0, _measureCustom);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetFlexGrow(root_child1, 1);
+  YGNodeInsertChild(root, root_child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  EXPECT_EQ(1, _measureCallCount);
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(25, YGNodeLayoutGetLeft(root_child1));
+
+  const YGConfigRef config2 = YGConfigNew();
+  // Calling YGConfigSetPointScaleFactor multiple times, ensures that config2
+  // gets a different config version that config1
+  YGConfigSetPointScaleFactor(config2, 1.0f);
+  YGConfigSetPointScaleFactor(config2, 1.5f);
+  YGConfigSetPointScaleFactor(config2, 1.0f);
+
+  YGNodeSetConfig(root, config2);
+  YGNodeSetConfig(root_child0, config2);
+  YGNodeSetConfig(root_child1, config2);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  // Measure should not be called again, as layout should have been cached since
+  // config is functionally the same as before
+  EXPECT_EQ(1, _measureCallCount);
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(25, YGNodeLayoutGetLeft(root_child1));
+
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
+  YGConfigFree(config2);
+}
