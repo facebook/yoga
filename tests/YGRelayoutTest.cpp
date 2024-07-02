@@ -207,3 +207,43 @@ TEST(YogaTest, relayout_containing_block_size_changes) {
 
   YGConfigFree(config);
 }
+
+TEST(YogaTest, has_new_layout_flag_set_static) {
+  YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  YGNodeRef root_child0 = YGNodeNew();
+  YGNodeStyleSetPositionType(root_child0, YGPositionTypeStatic);
+  YGNodeStyleSetWidth(root_child0, 10);
+  YGNodeStyleSetHeight(root_child0, 10);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeRef root_child0_child0 = YGNodeNew();
+  YGNodeStyleSetPositionType(root_child0_child0, YGPositionTypeStatic);
+  YGNodeStyleSetWidth(root_child0_child0, 5);
+  YGNodeStyleSetHeight(root_child0_child0, 5);
+  YGNodeInsertChild(root_child0, root_child0_child0, 0);
+
+  YGNodeRef root_child0_child0_child0 = YGNodeNew();
+  YGNodeStyleSetPositionType(root_child0_child0_child0, YGPositionTypeAbsolute);
+  YGNodeStyleSetWidthPercent(root_child0_child0_child0, 1);
+  YGNodeStyleSetHeight(root_child0_child0_child0, 1);
+  YGNodeInsertChild(root_child0_child0, root_child0_child0_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  YGNodeSetHasNewLayout(root, false);
+  YGNodeSetHasNewLayout(root_child0, false);
+  YGNodeSetHasNewLayout(root_child0_child0, false);
+  YGNodeSetHasNewLayout(root_child0_child0_child0, false);
+
+  YGNodeStyleSetWidth(root, 110);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_TRUE(YGNodeGetHasNewLayout(root));
+  ASSERT_TRUE(YGNodeGetHasNewLayout(root_child0));
+  ASSERT_TRUE(YGNodeGetHasNewLayout(root_child0_child0));
+  ASSERT_TRUE(YGNodeGetHasNewLayout(root_child0_child0_child0));
+
+  YGNodeFreeRecursive(root);
+}
