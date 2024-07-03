@@ -45,10 +45,10 @@ static YGSize _measureFractial(
 }
 
 TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
-  const YGConfigRef config = YGConfigNew();
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGConfigRef config = YGConfigNew();
+  YGNodeRef root = YGNodeNewWithConfig(config);
 
-  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeSetMeasureFunc(root_child0, _measureFloor);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -93,10 +93,10 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_floor) {
 }
 
 TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
-  const YGConfigRef config = YGConfigNew();
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGConfigRef config = YGConfigNew();
+  YGNodeRef root = YGNodeNewWithConfig(config);
 
-  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeSetMeasureFunc(root_child0, _measureCeil);
   YGNodeInsertChild(root, root_child0, 0);
 
@@ -115,11 +115,11 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
 TEST(
     YogaTest,
     rounding_feature_with_custom_measure_and_fractial_matching_scale) {
-  const YGConfigRef config = YGConfigNew();
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGConfigRef config = YGConfigNew();
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
 
-  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPosition(root_child0, YGEdgeLeft, 73.625);
   YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
   YGNodeSetMeasureFunc(root_child0, _measureFractial);

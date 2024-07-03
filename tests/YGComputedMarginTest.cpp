@@ -10,7 +10,7 @@
 #include <array>
 
 TEST(YogaTest, computed_layout_margin) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
   YGNodeStyleSetMarginPercent(root, YGEdgeStart, 10);
@@ -43,7 +43,7 @@ TEST(YogaTest, margin_side_overrides_horizontal_and_vertical) {
           ? YGEdgeVertical
           : YGEdgeHorizontal;
 
-      const YGNodeRef root = YGNodeNew();
+      YGNodeRef root = YGNodeNew();
       YGNodeStyleSetWidth(root, 100);
       YGNodeStyleSetHeight(root, 100);
       YGNodeStyleSetMargin(root, horizontalOrVertical, 10);
@@ -69,7 +69,7 @@ TEST(YogaTest, margin_side_overrides_all) {
 
   for (float edgeValue = 0; edgeValue < 2; ++edgeValue) {
     for (const auto& edge : edges) {
-      const YGNodeRef root = YGNodeNew();
+      YGNodeRef root = YGNodeNew();
       YGNodeStyleSetWidth(root, 100);
       YGNodeStyleSetHeight(root, 100);
       YGNodeStyleSetMargin(root, YGEdgeAll, 10);
@@ -89,7 +89,7 @@ TEST(YogaTest, margin_horizontal_and_vertical_overrides_all) {
 
   for (float directionValue = 0; directionValue < 2; ++directionValue) {
     for (const auto& direction : directions) {
-      const YGNodeRef root = YGNodeNew();
+      YGNodeRef root = YGNodeNew();
       YGNodeStyleSetWidth(root, 100);
       YGNodeStyleSetHeight(root, 100);
       YGNodeStyleSetMargin(root, YGEdgeAll, 10);

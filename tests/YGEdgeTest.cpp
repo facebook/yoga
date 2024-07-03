@@ -9,12 +9,12 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, start_overrides) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetMargin(root_child0, YGEdgeStart, 10);
   YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
@@ -33,12 +33,12 @@ TEST(YogaTest, start_overrides) {
 }
 
 TEST(YogaTest, end_overrides) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetMargin(root_child0, YGEdgeEnd, 10);
   YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
@@ -57,12 +57,12 @@ TEST(YogaTest, end_overrides) {
 }
 
 TEST(YogaTest, horizontal_overridden) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetMargin(root_child0, YGEdgeHorizontal, 10);
   YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 20);
@@ -76,12 +76,12 @@ TEST(YogaTest, horizontal_overridden) {
 }
 
 TEST(YogaTest, vertical_overridden) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetMargin(root_child0, YGEdgeVertical, 10);
   YGNodeStyleSetMargin(root_child0, YGEdgeTop, 20);
@@ -95,12 +95,12 @@ TEST(YogaTest, vertical_overridden) {
 }
 
 TEST(YogaTest, horizontal_overrides_all) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetMargin(root_child0, YGEdgeHorizontal, 10);
   YGNodeStyleSetMargin(root_child0, YGEdgeAll, 20);
@@ -116,12 +116,12 @@ TEST(YogaTest, horizontal_overrides_all) {
 }
 
 TEST(YogaTest, vertical_overrides_all) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetMargin(root_child0, YGEdgeVertical, 10);
   YGNodeStyleSetMargin(root_child0, YGEdgeAll, 20);
@@ -137,12 +137,12 @@ TEST(YogaTest, vertical_overrides_all) {
 }
 
 TEST(YogaTest, all_overridden) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetFlexGrow(root_child0, 1);
   YGNodeStyleSetMargin(root_child0, YGEdgeLeft, 10);
   YGNodeStyleSetMargin(root_child0, YGEdgeTop, 10);

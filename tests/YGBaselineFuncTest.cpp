@@ -15,24 +15,24 @@ _baseline(YGNodeConstRef node, const float /*width*/, const float /*height*/) {
 }
 
 TEST(YogaTest, align_baseline_customer_func) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetWidth(root_child0, 50);
   YGNodeStyleSetHeight(root_child0, 50);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNew();
+  YGNodeRef root_child1 = YGNodeNew();
   YGNodeStyleSetWidth(root_child1, 50);
   YGNodeStyleSetHeight(root_child1, 20);
   YGNodeInsertChild(root, root_child1, 1);
 
   float baselineValue = 10;
-  const YGNodeRef root_child1_child0 = YGNodeNew();
+  YGNodeRef root_child1_child0 = YGNodeNew();
   YGNodeSetContext(root_child1_child0, &baselineValue);
   YGNodeStyleSetWidth(root_child1_child0, 50);
   YGNodeSetBaselineFunc(root_child1_child0, _baseline);
