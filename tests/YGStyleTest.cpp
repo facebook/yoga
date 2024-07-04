@@ -9,8 +9,8 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, copy_style_same) {
-  const YGNodeRef node0 = YGNodeNew();
-  const YGNodeRef node1 = YGNodeNew();
+  YGNodeRef node0 = YGNodeNew();
+  YGNodeRef node1 = YGNodeNew();
 
   YGNodeCopyStyle(node0, node1);
 
@@ -19,11 +19,11 @@ TEST(YogaTest, copy_style_same) {
 }
 
 TEST(YogaTest, copy_style_modified) {
-  const YGNodeRef node0 = YGNodeNew();
+  YGNodeRef node0 = YGNodeNew();
   ASSERT_EQ(YGFlexDirectionColumn, YGNodeStyleGetFlexDirection(node0));
   ASSERT_FALSE(YGNodeStyleGetMaxHeight(node0).unit != YGUnitUndefined);
 
-  const YGNodeRef node1 = YGNodeNew();
+  YGNodeRef node1 = YGNodeNew();
   YGNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
   YGNodeStyleSetMaxHeight(node1, 10);
 
@@ -36,12 +36,12 @@ TEST(YogaTest, copy_style_modified) {
 }
 
 TEST(YogaTest, copy_style_modified_same) {
-  const YGNodeRef node0 = YGNodeNew();
+  YGNodeRef node0 = YGNodeNew();
   YGNodeStyleSetFlexDirection(node0, YGFlexDirectionRow);
   YGNodeStyleSetMaxHeight(node0, 10);
   YGNodeCalculateLayout(node0, YGUndefined, YGUndefined, YGDirectionLTR);
 
-  const YGNodeRef node1 = YGNodeNew();
+  YGNodeRef node1 = YGNodeNew();
   YGNodeStyleSetFlexDirection(node1, YGFlexDirectionRow);
   YGNodeStyleSetMaxHeight(node1, 10);
 
@@ -52,7 +52,7 @@ TEST(YogaTest, copy_style_modified_same) {
 }
 
 TEST(YogaTest, initialise_flexShrink_flexGrow) {
-  const YGNodeRef node0 = YGNodeNew();
+  YGNodeRef node0 = YGNodeNew();
   YGNodeStyleSetFlexShrink(node0, 1);
   ASSERT_EQ(1, YGNodeStyleGetFlexShrink(node0));
 

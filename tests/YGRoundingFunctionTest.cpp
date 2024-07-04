@@ -52,18 +52,18 @@ static YGSize measureText(
 
 // Regression test for https://github.com/facebook/yoga/issues/824
 TEST(YogaTest, consistent_rounding_during_repeated_layouts) {
-  const YGConfigRef config = YGConfigNew();
+  YGConfigRef config = YGConfigNew();
   YGConfigSetPointScaleFactor(config, 2);
 
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetMargin(root, YGEdgeTop, -1.49f);
   YGNodeStyleSetWidth(root, 500);
   YGNodeStyleSetHeight(root, 500);
 
-  const YGNodeRef node0 = YGNodeNewWithConfig(config);
+  YGNodeRef node0 = YGNodeNewWithConfig(config);
   YGNodeInsertChild(root, node0, 0);
 
-  const YGNodeRef node1 = YGNodeNewWithConfig(config);
+  YGNodeRef node1 = YGNodeNewWithConfig(config);
   YGNodeSetMeasureFunc(node1, measureText);
   YGNodeInsertChild(node0, node1, 0);
 
@@ -81,25 +81,25 @@ TEST(YogaTest, consistent_rounding_during_repeated_layouts) {
 }
 
 TEST(YogaTest, per_node_point_scale_factor) {
-  const YGConfigRef config1 = YGConfigNew();
+  YGConfigRef config1 = YGConfigNew();
   YGConfigSetPointScaleFactor(config1, 2);
 
-  const YGConfigRef config2 = YGConfigNew();
+  YGConfigRef config2 = YGConfigNew();
   YGConfigSetPointScaleFactor(config2, 1);
 
-  const YGConfigRef config3 = YGConfigNew();
+  YGConfigRef config3 = YGConfigNew();
   YGConfigSetPointScaleFactor(config3, 0.5f);
 
-  const YGNodeRef root = YGNodeNewWithConfig(config1);
+  YGNodeRef root = YGNodeNewWithConfig(config1);
   YGNodeStyleSetWidth(root, 11.5);
   YGNodeStyleSetHeight(root, 11.5);
 
-  const YGNodeRef node0 = YGNodeNewWithConfig(config2);
+  YGNodeRef node0 = YGNodeNewWithConfig(config2);
   YGNodeStyleSetWidth(node0, 9.5);
   YGNodeStyleSetHeight(node0, 9.5);
   YGNodeInsertChild(root, node0, 0);
 
-  const YGNodeRef node1 = YGNodeNewWithConfig(config3);
+  YGNodeRef node1 = YGNodeNewWithConfig(config3);
   YGNodeStyleSetWidth(node1, 7);
   YGNodeStyleSetHeight(node1, 7);
   YGNodeInsertChild(node0, node1, 0);

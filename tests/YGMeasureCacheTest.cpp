@@ -58,13 +58,13 @@ static YGSize _measure_84_49(
 }
 
 TEST(YogaTest, measure_once_single_flexible_child) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
   YGNodeStyleSetWidth(root, 100);
   YGNodeStyleSetHeight(root, 100);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
   YGNodeSetContext(root_child0, &measureCount);
   YGNodeSetMeasureFunc(root_child0, _measureMax);
@@ -79,9 +79,9 @@ TEST(YogaTest, measure_once_single_flexible_child) {
 }
 
 TEST(YogaTest, remeasure_with_same_exact_width_larger_than_needed_height) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
   YGNodeSetContext(root_child0, &measureCount);
   YGNodeSetMeasureFunc(root_child0, _measureMin);
@@ -96,10 +96,10 @@ TEST(YogaTest, remeasure_with_same_exact_width_larger_than_needed_height) {
 }
 
 TEST(YogaTest, remeasure_with_same_atmost_width_larger_than_needed_height) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
   YGNodeSetContext(root_child0, &measureCount);
   YGNodeSetMeasureFunc(root_child0, _measureMin);
@@ -114,10 +114,10 @@ TEST(YogaTest, remeasure_with_same_atmost_width_larger_than_needed_height) {
 }
 
 TEST(YogaTest, remeasure_with_computed_width_larger_than_needed_height) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
   YGNodeSetContext(root_child0, &measureCount);
   YGNodeSetMeasureFunc(root_child0, _measureMin);
@@ -133,10 +133,10 @@ TEST(YogaTest, remeasure_with_computed_width_larger_than_needed_height) {
 }
 
 TEST(YogaTest, remeasure_with_atmost_computed_width_undefined_height) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   int measureCount = 0;
   YGNodeSetContext(root_child0, &measureCount);
   YGNodeSetMeasureFunc(root_child0, _measureMin);
@@ -155,17 +155,17 @@ TEST(
     remeasure_with_already_measured_value_smaller_but_still_float_equal) {
   int measureCount = 0;
 
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetWidth(root, 288.f);
   YGNodeStyleSetHeight(root, 288.f);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
 
-  const YGNodeRef root_child0 = YGNodeNew();
+  YGNodeRef root_child0 = YGNodeNew();
   YGNodeStyleSetPadding(root_child0, YGEdgeAll, 2.88f);
   YGNodeStyleSetFlexDirection(root_child0, YGFlexDirectionRow);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child0_child0 = YGNodeNew();
+  YGNodeRef root_child0_child0 = YGNodeNew();
   YGNodeSetContext(root_child0_child0, &measureCount);
   YGNodeSetMeasureFunc(root_child0_child0, _measure_84_49);
   YGNodeInsertChild(root_child0, root_child0_child0, 0);

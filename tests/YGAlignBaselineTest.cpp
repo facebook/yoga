@@ -39,7 +39,7 @@ static YGNodeRef createYGNode(
     int width,
     int height,
     bool alignBaseline) {
-  const YGNodeRef node = YGNodeNewWithConfig(config);
+  YGNodeRef node = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(node, direction);
   if (alignBaseline) {
     YGNodeStyleSetAlignItems(node, YGAlignBaseline);
@@ -53,7 +53,7 @@ static YGNodeRef createYGNode(
 TEST(YogaTest, align_baseline_parent_ht_not_specified) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignContent(root, YGAlignStretch);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
@@ -61,13 +61,13 @@ TEST(YogaTest, align_baseline_parent_ht_not_specified) {
   YGNodeStyleSetMaxHeight(root, 170);
   YGNodeStyleSetMinHeight(root, 0);
 
-  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexGrow(root_child0, 0);
   YGNodeStyleSetFlexShrink(root_child0, 1);
   YGNodeSetMeasureFunc(root_child0, _measure1);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexGrow(root_child1, 0);
   YGNodeStyleSetFlexShrink(root_child1, 1);
   YGNodeSetMeasureFunc(root_child1, _measure2);
@@ -98,17 +98,17 @@ TEST(YogaTest, align_baseline_parent_ht_not_specified) {
 TEST(YogaTest, align_baseline_with_no_parent_ht) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
   YGNodeStyleSetWidth(root, 150);
 
-  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child0, 50);
   YGNodeStyleSetHeight(root_child0, 50);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child1, 50);
   YGNodeStyleSetHeight(root_child1, 40);
   YGNodeSetBaselineFunc(root_child1, _baselineFunc);
@@ -139,17 +139,17 @@ TEST(YogaTest, align_baseline_with_no_parent_ht) {
 TEST(YogaTest, align_baseline_with_no_baseline_func_and_no_parent_ht) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
   YGNodeStyleSetWidth(root, 150);
 
-  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child0, 50);
   YGNodeStyleSetHeight(root_child0, 80);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root_child1, 50);
   YGNodeStyleSetHeight(root_child1, 50);
   YGNodeInsertChild(root, root_child1, 1);
@@ -179,22 +179,21 @@ TEST(YogaTest, align_baseline_with_no_baseline_func_and_no_parent_ht) {
 TEST(YogaTest, align_baseline_parent_using_child_in_column_as_reference) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -224,22 +223,21 @@ TEST(
     align_baseline_parent_using_child_with_padding_in_column_as_reference) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -273,14 +271,13 @@ TEST(
     align_baseline_parent_with_padding_using_child_in_column_as_reference) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
   YGNodeStyleSetPadding(root_child1, YGEdgeLeft, 100);
   YGNodeStyleSetPadding(root_child1, YGEdgeRight, 100);
@@ -288,11 +285,11 @@ TEST(
   YGNodeStyleSetPadding(root_child1, YGEdgeBottom, 100);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -322,14 +319,13 @@ TEST(
     align_baseline_parent_with_margin_using_child_in_column_as_reference) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
   YGNodeStyleSetMargin(root_child1, YGEdgeLeft, 100);
   YGNodeStyleSetMargin(root_child1, YGEdgeRight, 100);
@@ -337,11 +333,11 @@ TEST(
   YGNodeStyleSetMargin(root_child1, YGEdgeBottom, 100);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -371,22 +367,21 @@ TEST(
     align_baseline_parent_using_child_with_margin_in_column_as_reference) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -418,22 +413,21 @@ TEST(
 TEST(YogaTest, align_baseline_parent_using_child_in_row_as_reference) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionRow, 500, 800, true);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -463,22 +457,21 @@ TEST(
     align_baseline_parent_using_child_with_padding_in_row_as_reference) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionRow, 500, 800, true);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -512,22 +505,21 @@ TEST(
     align_baseline_parent_using_child_with_margin_in_row_as_reference) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionRow, 500, 800, true);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -561,22 +553,21 @@ TEST(
     align_baseline_parent_using_child_in_column_as_reference_with_no_baseline_func) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 800, false);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
@@ -605,22 +596,21 @@ TEST(
     align_baseline_parent_using_child_in_row_as_reference_with_no_baseline_func) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root =
-      createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
+  YGNodeRef root = createYGNode(config, YGFlexDirectionRow, 1000, 1000, true);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 =
+  YGNodeRef root_child1 =
       createYGNode(config, YGFlexDirectionRow, 500, 800, true);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
@@ -649,25 +639,25 @@ TEST(
     align_baseline_parent_using_child_in_column_as_reference_with_height_not_specified) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
   YGNodeStyleSetWidth(root, 1000);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child1, YGFlexDirectionColumn);
   YGNodeStyleSetWidth(root_child1, 500);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -700,25 +690,25 @@ TEST(
     align_baseline_parent_using_child_in_row_as_reference_with_height_not_specified) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
   YGNodeStyleSetWidth(root, 1000);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child1, YGFlexDirectionRow);
   YGNodeStyleSetWidth(root_child1, 500);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetBaselineFunc(root_child1_child1, _baselineFunc);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
@@ -751,25 +741,25 @@ TEST(
     align_baseline_parent_using_child_in_column_as_reference_with_no_baseline_func_and_height_not_specified) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
   YGNodeStyleSetWidth(root, 1000);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child1, YGFlexDirectionColumn);
   YGNodeStyleSetWidth(root_child1, 500);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 300, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);
@@ -801,25 +791,25 @@ TEST(
     align_baseline_parent_using_child_in_row_as_reference_with_no_baseline_func_and_height_not_specified) {
   YGConfigRef config = YGConfigNew();
 
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetAlignItems(root, YGAlignBaseline);
   YGNodeStyleSetWidth(root, 1000);
 
-  const YGNodeRef root_child0 =
+  YGNodeRef root_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 600, false);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexDirection(root_child1, YGFlexDirectionRow);
   YGNodeStyleSetWidth(root_child1, 500);
   YGNodeInsertChild(root, root_child1, 1);
 
-  const YGNodeRef root_child1_child0 =
+  YGNodeRef root_child1_child0 =
       createYGNode(config, YGFlexDirectionColumn, 500, 500, false);
   YGNodeInsertChild(root_child1, root_child1_child0, 0);
 
-  const YGNodeRef root_child1_child1 =
+  YGNodeRef root_child1_child1 =
       createYGNode(config, YGFlexDirectionColumn, 500, 400, false);
   YGNodeSetIsReferenceBaseline(root_child1_child1, true);
   YGNodeInsertChild(root_child1, root_child1_child1, 1);

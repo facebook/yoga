@@ -9,7 +9,7 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, assert_default_values) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
 
   ASSERT_EQ(0u, YGNodeGetChildCount(root));
   ASSERT_EQ(nullptr, YGNodeGetChild(root, 1));
@@ -92,7 +92,7 @@ TEST(YogaTest, assert_default_values) {
 TEST(YogaTest, assert_webdefault_values) {
   YGConfig* config = YGConfigNew();
   YGConfigSetUseWebDefaults(config, true);
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
 
   ASSERT_EQ(YGFlexDirectionRow, YGNodeStyleGetFlexDirection(root));
   ASSERT_EQ(YGAlignStretch, YGNodeStyleGetAlignContent(root));
@@ -105,7 +105,7 @@ TEST(YogaTest, assert_webdefault_values) {
 TEST(YogaTest, assert_webdefault_values_reset) {
   YGConfig* config = YGConfigNew();
   YGConfigSetUseWebDefaults(config, true);
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeReset(root);
 
   ASSERT_EQ(YGFlexDirectionRow, YGNodeStyleGetFlexDirection(root));
@@ -119,20 +119,20 @@ TEST(YogaTest, assert_webdefault_values_reset) {
 TEST(YogaTest, assert_legacy_stretch_behaviour) {
   YGConfig* config = YGConfigNew();
   YGConfigSetErrata(config, YGErrataStretchFlexBasis);
-  const YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 500);
   YGNodeStyleSetHeight(root, 500);
 
-  const YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetAlignItems(root_child0, YGAlignFlexStart);
   YGNodeInsertChild(root, root_child0, 0);
 
-  const YGNodeRef root_child0_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexGrow(root_child0_child0, 1);
   YGNodeStyleSetFlexShrink(root_child0_child0, 1);
   YGNodeInsertChild(root_child0, root_child0_child0, 0);
 
-  const YGNodeRef root_child0_child0_child0 = YGNodeNewWithConfig(config);
+  YGNodeRef root_child0_child0_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetFlexGrow(root_child0_child0_child0, 1);
   YGNodeStyleSetFlexShrink(root_child0_child0_child0, 1);
   YGNodeInsertChild(root_child0_child0, root_child0_child0_child0, 0);

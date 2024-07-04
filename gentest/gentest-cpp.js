@@ -49,7 +49,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
         this.push('');
       }
 
-      this.push('const YGConfigRef config = YGConfigNew();');
+      this.push('YGConfigRef config = YGConfigNew();');
       for (const i in experiments) {
         this.push(
           'YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeature' +
@@ -63,9 +63,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   emitTestTreePrologue: {
     value: function (nodeName) {
-      this.push(
-        'const YGNodeRef ' + nodeName + ' = YGNodeNewWithConfig(config);',
-      );
+      this.push('YGNodeRef ' + nodeName + ' = YGNodeNewWithConfig(config);');
     },
   },
 

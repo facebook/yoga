@@ -9,12 +9,12 @@
 #include <yoga/Yoga.h>
 
 TEST(YogaTest, zero_out_layout) {
-  const YGNodeRef root = YGNodeNew();
+  YGNodeRef root = YGNodeNew();
   YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
   YGNodeStyleSetWidth(root, 200);
   YGNodeStyleSetHeight(root, 200);
 
-  const YGNodeRef child = YGNodeNew();
+  YGNodeRef child = YGNodeNew();
   YGNodeInsertChild(root, child, 0);
   YGNodeStyleSetWidth(child, 100);
   YGNodeStyleSetHeight(child, 100);
