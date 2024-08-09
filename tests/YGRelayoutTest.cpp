@@ -219,11 +219,17 @@ TEST(YogaTest, has_new_layout_flag_set_static) {
   YGNodeStyleSetHeight(root_child0, 10);
   YGNodeInsertChild(root, root_child0, 0);
 
+  YGNodeRef root_child0_child1 = YGNodeNew();
+  YGNodeStyleSetPositionType(root_child0_child1, YGPositionTypeAbsolute);
+  YGNodeStyleSetWidth(root_child0_child1, 5);
+  YGNodeStyleSetHeight(root_child0_child1, 5);
+  YGNodeInsertChild(root_child0, root_child0_child1, 0);
+
   YGNodeRef root_child0_child0 = YGNodeNew();
   YGNodeStyleSetPositionType(root_child0_child0, YGPositionTypeStatic);
   YGNodeStyleSetWidth(root_child0_child0, 5);
   YGNodeStyleSetHeight(root_child0_child0, 5);
-  YGNodeInsertChild(root_child0, root_child0_child0, 0);
+  YGNodeInsertChild(root_child0, root_child0_child0, 1);
 
   YGNodeRef root_child0_child0_child0 = YGNodeNew();
   YGNodeStyleSetPositionType(root_child0_child0_child0, YGPositionTypeAbsolute);
