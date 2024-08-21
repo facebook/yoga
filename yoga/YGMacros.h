@@ -49,7 +49,7 @@
 #define YG_ENUM_END(name)
 #else
 #define YG_ENUM_BEGIN(name) enum name
-#define YG_ENUM_END(name) name
+#define YG_ENUM_END(name) __attribute__((enum_extensibility(closed))) name
 #endif
 
 #ifdef __cplusplus
