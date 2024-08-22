@@ -364,14 +364,22 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetPosition: {
     value: function (nodeName, edge, value) {
-      this.push(
-        nodeName +
-          '.setPosition(' +
-          toValueJavascript(edge) +
-          ', ' +
-          toValueJavascript(value) +
-          ');',
-      );
+      const valueStr = toValueJavascript(value);
+
+      if (valueStr == "'auto'") {
+        this.push(
+          nodeName + '.setPositionAuto(' + toValueJavascript(edge) + ');',
+        );
+      } else {
+        this.push(
+          nodeName +
+            '.setPosition(' +
+            toValueJavascript(edge) +
+            ', ' +
+            valueStr +
+            ');',
+        );
+      }
     },
   },
 

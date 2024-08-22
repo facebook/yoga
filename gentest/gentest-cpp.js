@@ -451,6 +451,12 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetPosition: {
     value: function (nodeName, edge, value) {
+      let valueStr = toValueCpp(value);
+      if (valueStr != 'YGAuto') {
+        valueStr = ', ' + valueStr;
+      } else {
+        valueStr = '';
+      }
       this.push(
         'YGNodeStyleSetPosition' +
           toFunctionName(value) +
@@ -458,8 +464,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
           nodeName +
           ', ' +
           edge +
-          ', ' +
-          toValueCpp(value) +
+          valueStr +
           ');',
       );
     },
