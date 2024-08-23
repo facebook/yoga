@@ -899,7 +899,7 @@ static JNINativeMethod methods[] = {
      "(JIF)V",
      (void*)jni_YGNodeStyleSetPositionPercentJNI},
     {"jni_YGNodeStyleSetPositionAutoJNI",
-     "(JIF)V",
+     "(JI)V",
      (void*)jni_YGNodeStyleSetPositionAutoJNI},
     {"jni_YGNodeStyleGetWidthJNI", "(J)J", (void*)jni_YGNodeStyleGetWidthJNI},
     {"jni_YGNodeStyleSetWidthJNI", "(JF)V", (void*)jni_YGNodeStyleSetWidthJNI},
