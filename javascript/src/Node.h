@@ -76,7 +76,7 @@ class Node {
   void setPositionType(int positionType);
   void setPosition(int edge, double position);
   void setPositionPercent(int edge, double position);
-  void Node::setPositionAuto(int edge);
+  void setPositionAuto(int edge);
 
   void setAlignContent(int alignContent);
   void setAlignItems(int alignItems);
