@@ -460,6 +460,13 @@ static void jni_YGNodeCopyStyleJNI(
         static_cast<float>(value));                                       \
   }
 
+#define YG_NODE_JNI_STYLE_EDGE_UNIT_PROP_AUTO(name)              \
+  YG_NODE_JNI_STYLE_EDGE_UNIT_PROP(name)                         \
+  static void jni_YGNodeStyleSet##name##AutoJNI(                 \
+      JNIEnv* /*env*/, jobject /*obj*/, jlong nativePointer) {   \
+    YGNodeStyleSet##name##Auto(_jlong2YGNodeRef(nativePointer)); \
+  }
+
 YG_NODE_JNI_STYLE_PROP(jint, YGDirection, Direction);
 YG_NODE_JNI_STYLE_PROP(jint, YGFlexDirection, FlexDirection);
 YG_NODE_JNI_STYLE_PROP(jint, YGJustify, JustifyContent);
@@ -482,7 +489,7 @@ YG_NODE_JNI_STYLE_UNIT_PROP_AUTO(Height);
 YG_NODE_JNI_STYLE_UNIT_PROP(MinHeight);
 YG_NODE_JNI_STYLE_UNIT_PROP(MaxHeight);
 
-YG_NODE_JNI_STYLE_EDGE_UNIT_PROP(Position);
+YG_NODE_JNI_STYLE_EDGE_UNIT_PROP_AUTO(Position);
 
 static jlong jni_YGNodeStyleGetMarginJNI(
     JNIEnv* /*env*/,
@@ -891,6 +898,9 @@ static JNINativeMethod methods[] = {
     {"jni_YGNodeStyleSetPositionPercentJNI",
      "(JIF)V",
      (void*)jni_YGNodeStyleSetPositionPercentJNI},
+    {"jni_YGNodeStyleSetPositionAutoJNI",
+     "(JIF)V",
+     (void*)jni_YGNodeStyleSetPositionAutoJNI},
     {"jni_YGNodeStyleGetWidthJNI", "(J)J", (void*)jni_YGNodeStyleGetWidthJNI},
     {"jni_YGNodeStyleSetWidthJNI", "(JF)V", (void*)jni_YGNodeStyleSetWidthJNI},
     {"jni_YGNodeStyleSetWidthPercentJNI",

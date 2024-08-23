@@ -420,15 +420,21 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetPosition: {
     value: function (nodeName, edge, value) {
+      let valueStr = toValueJava(value);
+
+      if (valueStr == 'YogaConstants.AUTO') {
+        valueStr = '';
+      } else {
+        valueStr = ', ' + valueStr + 'f';
+      }
       this.push(
         nodeName +
           '.setPosition' +
           toMethodName(value) +
           '(' +
           edge +
-          ', ' +
-          toValueJava(value) +
-          'f);',
+          valueStr +
+          ');',
       );
     },
   },
