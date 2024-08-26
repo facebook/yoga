@@ -464,7 +464,7 @@ static void jni_YGNodeCopyStyleJNI(
   YG_NODE_JNI_STYLE_EDGE_UNIT_PROP(name)                         \
   static void jni_YGNodeStyleSet##name##AutoJNI(                 \
       JNIEnv* /*env*/, jobject /*obj*/, jlong nativePointer) {   \
-    YGNodeStyleSet##name##Auto(_jlong2YGNodeRef(nativePointer)); \
+    YGNodeStyleSet##name##Auto(_jlong2YGNodeRef(nativePointer), static_cast<YGEdge>(edge)); \
   }
 
 YG_NODE_JNI_STYLE_PROP(jint, YGDirection, Direction);
