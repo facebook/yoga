@@ -70,6 +70,7 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
       .function("setPositionType", &Node::setPositionType)
       .function("setPosition", &Node::setPosition)
       .function("setPositionPercent", &Node::setPositionPercent)
+      .function("setPositionAuto", &Node::setPositionAuto)
 
       .function("setAlignContent", &Node::setAlignContent)
       .function("setAlignItems", &Node::setAlignItems)

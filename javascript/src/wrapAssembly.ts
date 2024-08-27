@@ -168,6 +168,7 @@ export type Node = {
   setPosition(edge: Edge, position: number | `${number}%` | undefined): void;
   setPositionPercent(edge: Edge, position: number | undefined): void;
   setPositionType(positionType: PositionType): void;
+  setPositionAuto(edge: Edge): void;
   setWidth(width: number | 'auto' | `${number}%` | undefined): void;
   setWidthAuto(): void;
   setWidthPercent(width: number | undefined): void;

@@ -87,6 +87,10 @@ void Node::setPositionPercent(int edge, double position) {
   YGNodeStyleSetPositionPercent(m_node, static_cast<YGEdge>(edge), position);
 }
 
+void Node::setPositionAuto(int edge) {
+  YGNodeStyleSetPositionAuto(m_node, static_cast<YGEdge>(edge));
+}
+
 void Node::setAlignContent(int alignContent) {
   YGNodeStyleSetAlignContent(m_node, static_cast<YGAlign>(alignContent));
 }
