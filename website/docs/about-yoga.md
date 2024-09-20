@@ -10,4 +10,4 @@ Yoga is an embeddable layout system used in popular UI frameworks like React Nat
 
 Yoga supports a familiar subset of CSS, mostly focused on Flexbox. This gives users a familiar model, and enables sharing code between native platforms and the browser.
 
-Yoga is written in C++, with a public C API. This allows Yoga to be used by a wide variety of languages, via both offficial and unofficial bindings.
+Yoga is written in C++, with a public C API. This allows Yoga to be used by a wide variety of languages, via both official and unofficial bindings.
