@@ -19,6 +19,11 @@ export enum Align {
   SpaceEvenly = 8,
 }
 
+export enum BoxSizing {
+  ContentBox = 0,
+  BorderBox = 1,
+}
+
 export enum Dimension {
   Width = 0,
   Height = 1,
@@ -137,6 +142,8 @@ const constants = {
   ALIGN_SPACE_BETWEEN: Align.SpaceBetween,
   ALIGN_SPACE_AROUND: Align.SpaceAround,
   ALIGN_SPACE_EVENLY: Align.SpaceEvenly,
+  BOX_SIZING_CONTENT_BOX: BoxSizing.ContentBox,
+  BOX_SIZING_BORDER_BOX: BoxSizing.BorderBox,
   DIMENSION_WIDTH: Dimension.Width,
   DIMENSION_HEIGHT: Dimension.Height,
   DIRECTION_INHERIT: Direction.Inherit,

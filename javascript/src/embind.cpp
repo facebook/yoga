@@ -110,6 +110,8 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
       .function("setMaxHeight", &Node::setMaxHeight)
       .function("setMaxHeightPercent", &Node::setMaxHeightPercent)
 
+      .function("setBoxSizing", &Node::setBoxSizing)
+
       .function("setAspectRatio", &Node::setAspectRatio)
 
       .function("setBorder", &Node::setBorder)
@@ -145,6 +147,8 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
 
       .function("getMaxWidth", &Node::getMaxWidth)
       .function("getMaxHeight", &Node::getMaxHeight)
+
+      .function("getBoxSizing", &Node::getBoxSizing)
 
       .function("getAspectRatio", &Node::getAspectRatio)
 

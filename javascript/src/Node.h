@@ -127,6 +127,8 @@ class Node {
   void setGap(int gutter, double gapLength);
   void setGapPercent(int gutter, double gapLength);
 
+  void setBoxSizing(int boxSizing);
+
  public: // Style getters
   int getPositionType(void) const;
   Value getPosition(int edge) const;
@@ -164,6 +166,8 @@ class Node {
   Value getPadding(int edge) const;
 
   float getGap(int gutter);
+
+  int getBoxSizing(void) const;
 
  public: // Tree hierarchy mutators
   void insertChild(Node* child, unsigned index);
