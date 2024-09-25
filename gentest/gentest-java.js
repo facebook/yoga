@@ -184,6 +184,9 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGWrapWrap: {value: 'YogaWrap.WRAP'},
   YGWrapWrapReverse: {value: 'YogaWrap.WRAP_REVERSE'},
 
+  YGBoxSizingBorderBox: {value: 'YogaBoxSizing.BORDER_BOX'},
+  YGBoxSizingContentBox: {value: 'YogaBoxSizing.CONTENT_BOX'},
+
   YGNodeCalculateLayout: {
     value: function (node, dir, _experiments) {
       this.push(node + '.setDirection(' + dir + ');');
@@ -470,6 +473,12 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
           toValueJava(value) +
           'f);',
       );
+    },
+  },
+
+  YGNodeStyleSetBoxSizing: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setBoxSizing(' + toValueJava(value) + ');');
     },
   },
 

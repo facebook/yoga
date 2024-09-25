@@ -30,6 +30,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
       this.push('import {');
       this.pushIndent();
       this.push('Align,');
+      this.push('BoxSizing,');
       this.push('Direction,');
       this.push('Display,');
       this.push('Edge,');
@@ -170,6 +171,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGDisplayFlex: {value: 'Display.Flex'},
   YGDisplayNone: {value: 'Display.None'},
+
+  YGBoxSizingBorderBox: {value: 'BoxSizing.BorderBox'},
+  YGBoxSizingContentBox: {value: 'BoxSizing.ContentBox'},
 
   YGNodeCalculateLayout: {
     value: function (node, dir, _experiments) {
@@ -407,6 +411,12 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
           toValueJavascript(value) +
           ');',
       );
+    },
+  },
+
+  YGNodeStyleSetBoxSizing: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setBoxSizing(' + toValueJavascript(value) + ');');
     },
   },
 

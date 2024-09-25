@@ -136,6 +136,9 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGWrapWrap: {value: 'YGWrapWrap'},
   YGWrapWrapReverse: {value: 'YGWrapWrapReverse'},
 
+  YGBoxSizingBorderBox: {value: 'YGBoxSizingBorderBox'},
+  YGBoxSizingContentBox: {value: 'YGBoxSizingContentBox'},
+
   YGUndefined: {value: 'YGUndefined'},
 
   YGDisplayFlex: {value: 'YGDisplayFlex'},
@@ -508,6 +511,14 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
           ', ' +
           toValueCpp(value) +
           ');',
+      );
+    },
+  },
+
+  YGNodeStyleSetBoxSizing: {
+    value: function (nodeName, value) {
+      this.push(
+        'YGNodeStyleSetBoxSizing(' + nodeName + ', ' + toValueCpp(value) + ');',
       );
     },
   },

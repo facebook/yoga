@@ -175,6 +175,7 @@ function checkDefaultValues() {
     {style: 'right', value: 'undefined'},
     {style: 'bottom', value: 'undefined'},
     {style: 'display', value: 'flex'},
+    {style: 'box-sizing', value: 'border-box'},
   ].forEach(item => {
     assert(
       isDefaultStyleValue(item.style, item.value),
@@ -193,7 +194,6 @@ function setupTestTree(
   index,
 ) {
   e.emitTestTreePrologue(nodeName);
-
   for (const style in node.style) {
     // Skip position info for root as it messes up tests
     if (
@@ -207,7 +207,6 @@ function setupTestTree(
     ) {
       continue;
     }
-
     if (!isDefaultStyleValue(style, node.style[style])) {
       switch (style) {
         case 'aspect-ratio':
@@ -520,6 +519,11 @@ function setupTestTree(
         case 'display':
           e.YGNodeStyleSetDisplay(nodeName, displayValue(e, node.style[style]));
           break;
+        case 'box-sizing':
+          e.YGNodeStyleSetBoxSizing(
+            nodeName,
+            boxSizingValue(e, node.style[style]),
+          );
       }
     }
   }
@@ -664,6 +668,15 @@ function displayValue(e, value) {
   }
 }
 
+function boxSizingValue(e, value) {
+  switch (value) {
+    case 'border-box':
+      return e.YGBoxSizingBorderBox;
+    case 'content-box':
+      return e.YGBoxSizingContentBox;
+  }
+}
+
 const DEFAULT_STYLES = new Map();
 
 function isDefaultStyleValue(style, value) {
@@ -782,6 +795,7 @@ function getYogaStyle(node) {
     'row-gap',
     'display',
     'aspect-ratio',
+    'box-sizing',
   ].reduce((map, key) => {
     map[key] =
       node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
