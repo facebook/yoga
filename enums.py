@@ -4,7 +4,6 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-import math
 import os
 
 ENUMS = {
@@ -34,6 +33,7 @@ ENUMS = {
     "PositionType": ["Static", "Relative", "Absolute"],
     "Display": ["Flex", "None"],
     "Wrap": ["NoWrap", "Wrap", "WrapReverse"],
+    "BoxSizing": ["ContentBox", "BorderBox"],
     "MeasureMode": ["Undefined", "Exactly", "AtMost"],
     "Dimension": ["Width", "Height"],
     "Edge": [

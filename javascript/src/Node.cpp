@@ -75,6 +75,10 @@ void Node::copyStyle(Node const& other) {
   YGNodeCopyStyle(m_node, other.m_node);
 }
 
+void Node::setBoxSizing(int boxSizing) {
+  YGNodeStyleSetBoxSizing(m_node, static_cast<YGBoxSizing>(boxSizing));
+}
+
 void Node::setPositionType(int positionType) {
   YGNodeStyleSetPositionType(m_node, static_cast<YGPositionType>(positionType));
 }
@@ -246,6 +250,10 @@ void Node::setGap(int gutter, double gapLength) {
 
 void Node::setGapPercent(int gutter, double gapLength) {
   YGNodeStyleSetGapPercent(m_node, static_cast<YGGutter>(gutter), gapLength);
+}
+
+int Node::getBoxSizing(void) const {
+  return YGNodeStyleGetBoxSizing(m_node);
 }
 
 int Node::getPositionType(void) const {

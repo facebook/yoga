@@ -14,6 +14,7 @@ import YGEnums from './generated/YGEnums.ts';
 
 import type {
   Align,
+  BoxSizing,
   Display,
   Edge,
   Errata,
@@ -115,6 +116,7 @@ export type Node = {
   getParent(): Node | null;
   getPosition(edge: Edge): Value;
   getPositionType(): PositionType;
+  getBoxSizing(): BoxSizing;
   getWidth(): Value;
   insertChild(child: Node, index: number): void;
   isDirty(): boolean;
@@ -169,6 +171,7 @@ export type Node = {
   setPositionPercent(edge: Edge, position: number | undefined): void;
   setPositionType(positionType: PositionType): void;
   setPositionAuto(edge: Edge): void;
+  setBoxSizing(boxSizing: BoxSizing): void;
   setWidth(width: number | 'auto' | `${number}%` | undefined): void;
   setWidthAuto(): void;
   setWidthPercent(width: number | undefined): void;
