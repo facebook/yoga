@@ -46,5 +46,6 @@ Pod::Spec.new do |spec|
 
   all_header_files = 'yoga/**/*.h'
   spec.private_header_files = Dir.glob(all_header_files) - Dir.glob(public_header_files)
+  spec.private_header_files = Dir.glob(all_header_files).sort_by(&:upcase) - Dir.glob(public_header_files).sort_by(&:upcase)
   spec.preserve_paths = [all_header_files]
 end
