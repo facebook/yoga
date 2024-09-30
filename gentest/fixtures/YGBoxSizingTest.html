@@ -2,32 +2,85 @@
   style="width: 100px; height: 100px; padding: 5px; border-width: 10px; box-sizing: content-box">
 </div>
 
-<div id="box_sizing_border_box"
+<div id="box_sizing_border_box_simple"
   style="width: 100px; height: 100px; padding: 5px; border-width: 10px; box-sizing: border-box">
+</div>
+
+<div id="box_sizing_content_box_percent" style="width: 100px; height: 100px;">
+  <div style="width: 50%; height: 25%; padding: 4px; border-width: 16px; box-sizing: content-box">
+  </div>
+</div>
+
+<div id="box_sizing_border_box_percent" style="width: 100px; height: 100px;">
+  <div style="width: 50%; height: 25%; padding: 4px; border-width: 16px; box-sizing: border-box">
+  </div>
+</div>
+
+<div id="box_sizing_content_box_absolute" style="width: 100px; height: 100px;">
+  <div style="width: 50; height: 25%; padding: 12px; border-width: 8px; box-sizing: content-box; position: absolute;">
+  </div>
+</div>
+
+<div id="box_sizing_border_box_absolute" style="width: 100px; height: 100px;">
+  <div style="width: 50; height: 25%; padding: 12px; border-width: 8px; box-sizing: border-box; position: absolute;">
+  </div>
+</div>
+
+<div id="box_sizing_content_box_comtaining_block"
+  style="width: 100px; height: 100px; padding: 12px; border-width: 8px; box-sizing: content-box; ">
+  <div style="width: 75; height: 75; position: static;">
+    <div style="width: 50px; height: 25%; position: absolute;">
+    </div>
+  </div>
+</div>
+
+<div id="box_sizing_border_box_comtaining_block"
+  style="width: 100px; height: 100px;  padding: 12px; border-width: 8px; box-sizing: border-box; ">
+  <div style="width: 75; height: 75; position: static;">
+    <div style="width: 50px; height: 25%; position: absolute;">
+    </div>
+  </div>
 </div>
 
 <div id="box_sizing_content_box_padding_only"
   style="width: 100px; height: 100px; padding: 5px; box-sizing: content-box">
 </div>
 
-<div id="box_sizing_border_box_padding_only"
-  style="width: 100px; height: 100px; padding: 5px; box-sizing: border-box">
+<div id="box_sizing_content_box_padding_only_percent" style="width: 100px; height: 100px;">
+  <div style="width: 50%; height: 75; padding: 10%; box-sizing: content-box">
+  </div>
+</div>
+
+<div id="box_sizing_border_box_padding_only" style="width: 100px; height: 100px; padding: 5px; box-sizing: border-box">
+</div>
+
+<div id="box_sizing_border_box_padding_only_percent" style="width: 100px; height: 100px;">
+  <div style="width: 50%; height: 75; padding: 10%; box-sizing: border-box">
+  </div>
 </div>
 
 <div id="box_sizing_content_box_border_only"
   style="width: 100px; height: 100px; border-width: 10px; box-sizing: content-box">
 </div>
 
+<div id="box_sizing_content_box_border_only_percent" style="width: 100px; height: 100px;">
+  <div style="width: 50%; height: 75; border-width: 10%; box-sizing: content-box">
+  </div>
+</div>
+
 <div id="box_sizing_border_box_border_only"
   style="width: 100px; height: 100px; border-width: 10px; box-sizing: border-box">
 </div>
 
-<div id="box_sizing_content_box_no_padding_no_border"
-  style="width: 100px; height: 100px; box-sizing: content-box">
+<div id="box_sizing_border_box_border_only_percent" style="width: 100px; height: 100px;">
+  <div style="width: 50%; height: 75; border-width: 10%; box-sizing: border-box">
+  </div>
 </div>
 
-<div id="box_sizing_border_box_no_padding_no_border"
-  style="width: 100px; height: 100px; box-sizing: border-box">
+<div id="box_sizing_content_box_no_padding_no_border" style="width: 100px; height: 100px; box-sizing: content-box">
+</div>
+
+<div id="box_sizing_border_box_no_padding_no_border" style="width: 100px; height: 100px; box-sizing: border-box">
 </div>
 
 <div id="box_sizing_content_box_children"
@@ -142,4 +195,56 @@
       </div>
     </div>
   </div>
+</div>
+
+<div data-disabled="true" id="box_sizing_content_box_flex_basis_row" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="flex-basis: 50px; height: 25px; padding: 5px; border-width: 10px; box-sizing: content-box">
+  </div>
+</div>
+
+<div id="box_sizing_border_box_flex_basis_row" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="flex-basis: 50px; height: 25px; padding: 5px; border-width: 10px; box-sizing: border-box">
+  </div>
+</div>
+
+<div data-disabled="true" id="box_sizing_content_box_flex_basis_column" style="width: 100px; height: 100px; flex-direction: column;">
+  <div style="flex-basis: 50px; height: 25px; padding: 5px; border-width: 10px; box-sizing: content-box">
+  </div>
+</div>
+
+<div id="box_sizing_border_box_flex_basis_column" style="width: 100px; height: 100px; flex-direction: column;">
+  <div style="flex-basis: 50px; height: 25px; padding: 5px; border-width: 10px; box-sizing: border-box">
+  </div>
+</div>
+
+<div id="box_sizing_content_box_padding_start"
+  style="width: 100px; height: 100px; padding-start: 5px; box-sizing: content-box">
+</div>
+
+<div id="box_sizing_border_box_padding_start"
+  style="width: 100px; height: 100px; padding-start: 5px; box-sizing: border-box">
+</div>
+
+<div id="box_sizing_content_box_padding_end"
+  style="width: 100px; height: 100px; padding-end: 5px; box-sizing: content-box">
+</div>
+
+<div id="box_sizing_border_box_padding_end"
+  style="width: 100px; height: 100px; padding-end: 5px; box-sizing: border-box">
+</div>
+
+<div id="box_sizing_content_box_border_start"
+  style="width: 100px; height: 100px; border-start-width: 5px; box-sizing: content-box">
+</div>
+
+<div id="box_sizing_border_box_border_start"
+  style="width: 100px; height: 100px; border-start-width: 5px; box-sizing: border-box">
+</div>
+
+<div id="box_sizing_content_box_border_end"
+  style="width: 100px; height: 100px; border-end-width: 5px; box-sizing: content-box">
+</div>
+
+<div id="box_sizing_border_box_border_end"
+  style="width: 100px; height: 100px; border-end-width: 5px; box-sizing: border-box">
 </div>
