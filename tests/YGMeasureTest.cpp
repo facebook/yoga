@@ -899,3 +899,81 @@ TEST(YogaTest, percent_padding_and_percent_margin_with_measure_func) {
 
   YGConfigFree(config);
 }
+
+static YGSize _measure_half_width_height(
+    YGNodeConstRef node,
+    float width,
+    YGMeasureMode /*widthMode*/,
+    float height,
+    YGMeasureMode /*heightMode*/) {
+  int* measureCount = (int*)YGNodeGetContext(node);
+  if (measureCount != nullptr) {
+    (*measureCount)++;
+  }
+
+  return YGSize{0.5f * width, 0.5f * height};
+}
+
+TEST(YogaTest, measure_content_box) {
+  YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 200);
+  YGNodeStyleSetBoxSizing(root, YGBoxSizingContentBox);
+  YGNodeStyleSetPadding(root, YGEdgeAll, 5);
+  YGNodeStyleSetBorder(root, YGEdgeAll, 10);
+
+  int measureCount = 0;
+
+  YGNodeRef root_child0 = YGNodeNew();
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure_half_width_height);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_EQ(130, YGNodeLayoutGetWidth(root));
+  ASSERT_EQ(230, YGNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(15, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(15, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+}
+
+TEST(YogaTest, measure_border_box) {
+  YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 200);
+  YGNodeStyleSetBoxSizing(root, YGBoxSizingBorderBox);
+  YGNodeStyleSetPadding(root, YGEdgeAll, 5);
+  YGNodeStyleSetBorder(root, YGEdgeAll, 10);
+
+  int measureCount = 0;
+
+  YGNodeRef root_child0 = YGNodeNew();
+  YGNodeSetContext(root_child0, &measureCount);
+  YGNodeSetMeasureFunc(root_child0, _measure_half_width_height);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(1, measureCount);
+
+  ASSERT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(root));
+  ASSERT_EQ(200, YGNodeLayoutGetHeight(root));
+
+  ASSERT_EQ(15, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_EQ(15, YGNodeLayoutGetTop(root_child0));
+  ASSERT_EQ(70, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_EQ(85, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+}
