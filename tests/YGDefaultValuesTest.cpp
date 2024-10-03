@@ -162,3 +162,14 @@ TEST(YogaTest, assert_legacy_stretch_behaviour) {
 
   YGConfigFree(config);
 }
+
+TEST(YogaTest, assert_box_sizing_border_box) {
+  YGConfig* config = YGConfigNew();
+  YGNodeRef root = YGNodeNewWithConfig(config);
+
+  ASSERT_EQ(YGBoxSizingBorderBox, YGNodeStyleGetBoxSizing(root));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
