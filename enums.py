@@ -33,7 +33,7 @@ ENUMS = {
     "PositionType": ["Static", "Relative", "Absolute"],
     "Display": ["Flex", "None"],
     "Wrap": ["NoWrap", "Wrap", "WrapReverse"],
-    "BoxSizing": ["ContentBox", "BorderBox"],
+    "BoxSizing": ["BorderBox", "ContentBox"],
     "MeasureMode": ["Undefined", "Exactly", "AtMost"],
     "Dimension": ["Width", "Height"],
     "Edge": [
