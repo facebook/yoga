@@ -1,4 +1,4 @@
-# Yoga [![Support Ukraine](https://img.shields.io/badge/Support-Ukraine-FFD500?style=flat&labelColor=005BBB)](https://opensource.fb.com/support-ukraine) [![CocoaPods](https://img.shields.io/cocoapods/v/Yoga.svg)](http://cocoapods.org/pods/Yoga) [![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout) [![Maven Central](https://img.shields.io/maven-central/v/com.facebook.yoga/yoga)](https://search.maven.org/artifact/com.facebook.yoga/yoga)
+# Yoga [![CocoaPods](https://img.shields.io/cocoapods/v/Yoga.svg)](http://cocoapods.org/pods/Yoga) [![npm](https://img.shields.io/npm/v/yoga-layout.svg)](https://www.npmjs.com/package/yoga-layout) [![Maven Central](https://img.shields.io/maven-central/v/com.facebook.yoga/yoga)](https://search.maven.org/artifact/com.facebook.yoga/yoga) ![SPM](https://img.shields.io/badge/SPM-Supported-blue.svg)
 
 Yoga is an embeddable and performant flexbox layout engine with bindings for multiple languages.
 
