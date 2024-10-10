@@ -16,7 +16,7 @@ TEST(StyleValuePool, undefined_at_init) {
 
   EXPECT_TRUE(handle.isUndefined());
   EXPECT_FALSE(handle.isDefined());
-  EXPECT_EQ(pool.getLength(handle), value::undefined());
+  EXPECT_EQ(pool.getLength(handle), StyleLength::undefined());
   EXPECT_EQ(pool.getNumber(handle), FloatOptional{});
 }
 
@@ -25,63 +25,63 @@ TEST(StyleValuePool, auto_at_init) {
   auto handle = StyleValueHandle::ofAuto();
 
   EXPECT_TRUE(handle.isAuto());
-  EXPECT_EQ(pool.getLength(handle), value::ofAuto());
+  EXPECT_EQ(pool.getLength(handle), StyleLength::ofAuto());
 }
 
 TEST(StyleValuePool, store_small_int_points) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::points(10));
+  pool.store(handle, StyleLength::points(10));
 
-  EXPECT_EQ(pool.getLength(handle), value::points(10));
+  EXPECT_EQ(pool.getLength(handle), StyleLength::points(10));
 }
 
 TEST(StyleValuePool, store_small_negative_int_points) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::points(-10));
+  pool.store(handle, StyleLength::points(-10));
 
-  EXPECT_EQ(pool.getLength(handle), value::points(-10));
+  EXPECT_EQ(pool.getLength(handle), StyleLength::points(-10));
 }
 
 TEST(StyleValuePool, store_small_int_percent) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::percent(10));
+  pool.store(handle, StyleLength::percent(10));
 
-  EXPECT_EQ(pool.getLength(handle), value::percent(10));
+  EXPECT_EQ(pool.getLength(handle), StyleLength::percent(10));
 }
 
 TEST(StyleValuePool, store_large_int_percent) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::percent(262144));
+  pool.store(handle, StyleLength::percent(262144));
 
-  EXPECT_EQ(pool.getLength(handle), value::percent(262144));
+  EXPECT_EQ(pool.getLength(handle), StyleLength::percent(262144));
 }
 
 TEST(StyleValuePool, store_large_int_after_small_int) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::percent(10));
-  pool.store(handle, value::percent(262144));
+  pool.store(handle, StyleLength::percent(10));
+  pool.store(handle, StyleLength::percent(262144));
 
-  EXPECT_EQ(pool.getLength(handle), value::percent(262144));
+  EXPECT_EQ(pool.getLength(handle), StyleLength::percent(262144));
 }
 
 TEST(StyleValuePool, store_small_int_after_large_int) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::percent(262144));
-  pool.store(handle, value::percent(10));
+  pool.store(handle, StyleLength::percent(262144));
+  pool.store(handle, StyleLength::percent(10));
 
-  EXPECT_EQ(pool.getLength(handle), value::percent(10));
+  EXPECT_EQ(pool.getLength(handle), StyleLength::percent(10));
 }
 
 TEST(StyleValuePool, store_small_int_number) {
@@ -97,35 +97,35 @@ TEST(StyleValuePool, store_undefined) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::undefined());
+  pool.store(handle, StyleLength::undefined());
 
   EXPECT_TRUE(handle.isUndefined());
   EXPECT_FALSE(handle.isDefined());
-  EXPECT_EQ(pool.getLength(handle), value::undefined());
+  EXPECT_EQ(pool.getLength(handle), StyleLength::undefined());
 }
 
 TEST(StyleValuePool, store_undefined_after_small_int) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::points(10));
-  pool.store(handle, value::undefined());
+  pool.store(handle, StyleLength::points(10));
+  pool.store(handle, StyleLength::undefined());
 
   EXPECT_TRUE(handle.isUndefined());
   EXPECT_FALSE(handle.isDefined());
-  EXPECT_EQ(pool.getLength(handle), value::undefined());
+  EXPECT_EQ(pool.getLength(handle), StyleLength::undefined());
 }
 
 TEST(StyleValuePool, store_undefined_after_large_int) {
   StyleValuePool pool;
   StyleValueHandle handle;
 
-  pool.store(handle, value::points(262144));
-  pool.store(handle, value::undefined());
+  pool.store(handle, StyleLength::points(262144));
+  pool.store(handle, StyleLength::undefined());
 
   EXPECT_TRUE(handle.isUndefined());
   EXPECT_FALSE(handle.isDefined());
-  EXPECT_EQ(pool.getLength(handle), value::undefined());
+  EXPECT_EQ(pool.getLength(handle), StyleLength::undefined());
 }
 
 } // namespace facebook::yoga
