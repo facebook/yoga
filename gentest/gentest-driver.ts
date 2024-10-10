@@ -100,15 +100,21 @@ for (const fileName of fixtures) {
   await driver.get('file://' + process.cwd() + '/test.html');
   const logs = await driver.manage().logs().get(logging.Type.BROWSER);
 
+  const testLogs = logs.filter(
+    log => !log.message.replace(/^[^"]*/, '').startsWith('"gentest-log:'),
+  );
+
   await fs.writeFile(
     `${yogaDir}/tests/generated/${fileNameNoExtension}.cpp`,
-    addSignatureToSourceCode(JSON.parse(logs[0].message.replace(/^[^"]*/, ''))),
+    addSignatureToSourceCode(
+      JSON.parse(testLogs[0].message.replace(/^[^"]*/, '')),
+    ),
   );
 
   await fs.writeFile(
     `${yogaDir}/java/tests/generated/com/facebook/yoga/${fileNameNoExtension}.java`,
     addSignatureToSourceCode(
-      JSON.parse(logs[1].message.replace(/^[^"]*/, '')).replace(
+      JSON.parse(testLogs[1].message.replace(/^[^"]*/, '')).replace(
         'YogaTest',
         fileNameNoExtension,
       ),
@@ -118,7 +124,7 @@ for (const fileName of fixtures) {
   await fs.writeFile(
     `${yogaDir}/javascript/tests/generated/${fileNameNoExtension}.test.ts`,
     addSignatureToSourceCode(
-      JSON.parse(logs[2].message.replace(/^[^"]*/, '')).replace(
+      JSON.parse(testLogs[2].message.replace(/^[^"]*/, '')).replace(
         'YogaTest',
         fileNameNoExtension,
       ),

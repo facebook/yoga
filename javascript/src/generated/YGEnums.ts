@@ -124,6 +124,9 @@ export enum Unit {
   Point = 1,
   Percent = 2,
   Auto = 3,
+  MaxContent = 4,
+  FitContent = 5,
+  Stretch = 6,
 }
 
 export enum Wrap {
@@ -201,6 +204,9 @@ const constants = {
   UNIT_POINT: Unit.Point,
   UNIT_PERCENT: Unit.Percent,
   UNIT_AUTO: Unit.Auto,
+  UNIT_MAX_CONTENT: Unit.MaxContent,
+  UNIT_FIT_CONTENT: Unit.FitContent,
+  UNIT_STRETCH: Unit.Stretch,
   WRAP_NO_WRAP: Wrap.NoWrap,
   WRAP_WRAP: Wrap.Wrap,
   WRAP_WRAP_REVERSE: Wrap.WrapReverse,

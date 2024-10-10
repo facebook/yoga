@@ -21,6 +21,23 @@ function toMethodName(value) {
   return '';
 }
 
+function keywordMethod(methodPrefix, nodeName, value) {
+  const methodSuffix = toMethodName(value);
+  if (methodSuffix == 'Auto') {
+    return nodeName + '.' + methodPrefix + methodSuffix + '();';
+  } else {
+    return (
+      nodeName +
+      '.' +
+      methodPrefix +
+      methodSuffix +
+      '(' +
+      toValueJava(value) +
+      'f);'
+    );
+  }
+}
+
 const JavaEmitter = function () {
   Emitter.call(this, 'java', '  ');
 };
@@ -273,14 +290,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetFlexBasis: {
     value: function (nodeName, value) {
-      this.push(
-        nodeName +
-          '.setFlexBasis' +
-          toMethodName(value) +
-          '(' +
-          toValueJava(value) +
-          'f);',
-      );
+      this.push(keywordMethod('setFlexBasis', nodeName, value));
     },
   },
 
@@ -308,19 +318,6 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
     },
   },
 
-  YGNodeStyleSetHeight: {
-    value: function (nodeName, value) {
-      this.push(
-        nodeName +
-          '.setHeight' +
-          toMethodName(value) +
-          '(' +
-          toValueJava(value) +
-          'f);',
-      );
-    },
-  },
-
   YGNodeStyleSetJustifyContent: {
     value: function (nodeName, value) {
       this.push(nodeName + '.setJustifyContent(' + toValueJava(value) + ');');
@@ -345,6 +342,18 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
           valueStr +
           ');',
       );
+    },
+  },
+
+  YGNodeStyleSetHeight: {
+    value: function (nodeName, value) {
+      this.push(keywordMethod('setHeight', nodeName, value));
+    },
+  },
+
+  YGNodeStyleSetWidth: {
+    value: function (nodeName, value) {
+      this.push(keywordMethod('setWidth', nodeName, value));
     },
   },
 
@@ -445,19 +454,6 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGNodeStyleSetPositionType: {
     value: function (nodeName, value) {
       this.push(nodeName + '.setPositionType(' + toValueJava(value) + ');');
-    },
-  },
-
-  YGNodeStyleSetWidth: {
-    value: function (nodeName, value) {
-      this.push(
-        nodeName +
-          '.setWidth' +
-          toMethodName(value) +
-          '(' +
-          toValueJava(value) +
-          'f);',
-      );
     },
   },
 

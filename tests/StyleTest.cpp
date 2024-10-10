@@ -12,7 +12,7 @@ namespace facebook::yoga {
 
 TEST(Style, computed_padding_is_floored) {
   yoga::Style style;
-  style.setPadding(Edge::All, value::points(-1.0f));
+  style.setPadding(Edge::All, StyleLength::points(-1.0f));
   auto paddingStart = style.computeInlineStartPadding(
       FlexDirection::Row, Direction::LTR, 0.0f /*widthSize*/);
   ASSERT_EQ(paddingStart, 0.0f);
@@ -20,7 +20,7 @@ TEST(Style, computed_padding_is_floored) {
 
 TEST(Style, computed_border_is_floored) {
   yoga::Style style;
-  style.setBorder(Edge::All, value::points(-1.0f));
+  style.setBorder(Edge::All, StyleLength::points(-1.0f));
   auto borderStart =
       style.computeInlineStartBorder(FlexDirection::Row, Direction::LTR);
   ASSERT_EQ(borderStart, 0.0f);
@@ -28,14 +28,14 @@ TEST(Style, computed_border_is_floored) {
 
 TEST(Style, computed_gap_is_floored) {
   yoga::Style style;
-  style.setGap(Gutter::Column, value::points(-1.0f));
+  style.setGap(Gutter::Column, StyleLength::points(-1.0f));
   auto gapBetweenColumns = style.computeGapForAxis(FlexDirection::Row, 0.0);
   ASSERT_EQ(gapBetweenColumns, 0.0f);
 }
 
 TEST(Style, computed_margin_is_not_floored) {
   yoga::Style style;
-  style.setMargin(Edge::All, value::points(-1.0f));
+  style.setMargin(Edge::All, StyleLength::points(-1.0f));
   auto marginStart = style.computeInlineStartMargin(
       FlexDirection::Row, Direction::LTR, 0.0f /*widthSize*/);
   ASSERT_EQ(marginStart, -1.0f);

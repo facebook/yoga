@@ -13,9 +13,10 @@
 namespace facebook::yoga {
 
 /**
- * Style::Length represents a CSS Value which may be one of:
+ * This class represents a CSS Value for sizes (e.g. width, height, min-width,
+ * etc.). It may be one of:
  * 1. Undefined
- * 2. A keyword (e.g. auto)
+ * 2. A keyword (e.g. auto, max-content, stretch, etc.)
  * 3. A CSS <length-percentage> value:
  *    a. <length> value (e.g. 10px)
  *    b. <percentage> value of a reference <length>
@@ -27,32 +28,56 @@ namespace facebook::yoga {
  * 3. https://www.w3.org/TR/css-values-4/#mixed-percentages
  * 4. https://www.w3.org/TR/css-values-4/#math
  */
-class StyleLength {
+class StyleSizeValue {
  public:
-  constexpr StyleLength() = default;
+  constexpr StyleSizeValue() = default;
 
-  constexpr static StyleLength points(float value) {
+  constexpr static StyleSizeValue points(float value) {
     return yoga::isUndefined(value) || yoga::isinf(value)
         ? undefined()
-        : StyleLength{FloatOptional{value}, Unit::Point};
+        : StyleSizeValue{FloatOptional{value}, Unit::Point};
   }
 
-  constexpr static StyleLength percent(float value) {
+  constexpr static StyleSizeValue percent(float value) {
     return yoga::isUndefined(value) || yoga::isinf(value)
         ? undefined()
-        : StyleLength{FloatOptional{value}, Unit::Percent};
+        : StyleSizeValue{FloatOptional{value}, Unit::Percent};
   }
 
-  constexpr static StyleLength ofAuto() {
-    return StyleLength{{}, Unit::Auto};
+  constexpr static StyleSizeValue ofAuto() {
+    return StyleSizeValue{{}, Unit::Auto};
   }
 
-  constexpr static StyleLength undefined() {
-    return StyleLength{{}, Unit::Undefined};
+  constexpr static StyleSizeValue ofMaxContent() {
+    return StyleSizeValue{{}, Unit::MaxContent};
+  }
+
+  constexpr static StyleSizeValue ofFitContent() {
+    return StyleSizeValue{{}, Unit::FitContent};
+  }
+
+  constexpr static StyleSizeValue ofStretch() {
+    return StyleSizeValue{{}, Unit::Stretch};
+  }
+
+  constexpr static StyleSizeValue undefined() {
+    return StyleSizeValue{{}, Unit::Undefined};
   }
 
   constexpr bool isAuto() const {
     return unit_ == Unit::Auto;
+  }
+
+  constexpr bool isMaxContent() const {
+    return unit_ == Unit::MaxContent;
+  }
+
+  constexpr bool isFitContent() const {
+    return unit_ == Unit::FitContent;
+  }
+
+  constexpr bool isStretch() const {
+    return unit_ == Unit::Stretch;
   }
 
   constexpr bool isUndefined() const {
@@ -86,21 +111,21 @@ class StyleLength {
     return YGValue{value_.unwrap(), unscopedEnum(unit_)};
   }
 
-  constexpr bool operator==(const StyleLength& rhs) const {
+  constexpr bool operator==(const StyleSizeValue& rhs) const {
     return value_ == rhs.value_ && unit_ == rhs.unit_;
   }
 
  private:
   // We intentionally do not allow direct construction using value and unit, to
   // avoid invalid, or redundant combinations.
-  constexpr StyleLength(FloatOptional value, Unit unit)
+  constexpr StyleSizeValue(FloatOptional value, Unit unit)
       : value_(value), unit_(unit) {}
 
   FloatOptional value_{};
   Unit unit_{Unit::Undefined};
 };
 
-inline bool inexactEquals(const StyleLength& a, const StyleLength& b) {
+inline bool inexactEquals(const StyleSizeValue& a, const StyleSizeValue& b) {
   return a.unit() == b.unit() && inexactEquals(a.value(), b.value());
 }
 
