@@ -665,6 +665,8 @@ function displayValue(e, value) {
       return e.YGDisplayFlex;
     case 'none':
       return e.YGDisplayNone;
+    case 'contents':
+      return e.YGDisplayContents;
   }
 }
 
