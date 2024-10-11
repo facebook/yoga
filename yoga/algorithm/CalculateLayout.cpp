@@ -476,6 +476,20 @@ static void zeroOutLayoutRecursively(yoga::Node* const node) {
   }
 }
 
+static void cleanupContentsNodesRecursively(yoga::Node* const node) {
+  for (auto child : node->getChildren()) {
+    if (child->style().display() == Display::Contents) {
+      child->getLayout() = {};
+      child->setLayoutDimension(0, Dimension::Width);
+      child->setLayoutDimension(0, Dimension::Height);
+      child->setHasNewLayout(true);
+      child->setDirty(false);
+
+      cleanupContentsNodesRecursively(child);
+    }
+  }
+}
+
 static float calculateAvailableInnerDimension(
     const yoga::Node* const node,
     const Direction direction,
@@ -525,7 +539,7 @@ static float computeFlexBasisForChildren(
     const uint32_t generationCount) {
   float totalOuterFlexBasis = 0.0f;
   YGNodeRef singleFlexChild = nullptr;
-  const auto& children = node->getChildren();
+  const auto& children = node->getLayoutChildren();
   SizingMode sizingModeMainDim =
       isRow(mainAxis) ? widthSizingMode : heightSizingMode;
   // If there is only one child with flexGrow + flexShrink it means we can set
@@ -1316,7 +1330,7 @@ static void calculateLayoutImpl(
     return;
   }
 
-  const auto childCount = node->getChildCount();
+  const auto childCount = node->getLayoutChildCount();
   if (childCount == 0) {
     measureNodeWithoutChildren(
         node,
@@ -1826,7 +1840,7 @@ static void calculateLayoutImpl(
       float maxAscentForCurrentLine = 0;
       float maxDescentForCurrentLine = 0;
       for (; ii < childCount; ii++) {
-        const auto child = node->getChild(ii);
+        const auto child = node->getLayoutChild(ii);
         if (child->style().display() == Display::None) {
           continue;
         }
@@ -1863,7 +1877,7 @@ static void calculateLayoutImpl(
       currentLead += i != 0 ? crossAxisGap : 0;
 
       for (ii = startIndex; ii < endIndex; ii++) {
-        const auto child = node->getChild(ii);
+        const auto child = node->getLayoutChild(ii);
         if (child->style().display() == Display::None) {
           continue;
         }
@@ -2067,7 +2081,7 @@ static void calculateLayoutImpl(
   // positions on wrap-reverse.
   if (performLayout && node->style().flexWrap() == Wrap::WrapReverse) {
     for (size_t i = 0; i < childCount; i++) {
-      const auto child = node->getChild(i);
+      const auto child = node->getLayoutChild(i);
       if (child->style().positionType() != PositionType::Absolute) {
         child->setLayoutPosition(
             node->getLayout().measuredDimension(dimension(crossAxis)) -
@@ -2085,7 +2099,7 @@ static void calculateLayoutImpl(
 
     if (needsMainTrailingPos || needsCrossTrailingPos) {
       for (size_t i = 0; i < childCount; i++) {
-        const auto child = node->getChild(i);
+        const auto child = node->getLayoutChild(i);
         // Absolute children will be handled by their containing block since we
         // cannot guarantee that their positions are set when their parents are
         // done with layout.
@@ -2311,6 +2325,7 @@ bool calculateLayoutInternal(
 
     node->setHasNewLayout(true);
     node->setDirty(false);
+    cleanupContentsNodesRecursively(node);
   }
 
   layout->generationCount = generationCount;

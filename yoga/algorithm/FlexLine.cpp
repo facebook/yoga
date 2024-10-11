@@ -23,7 +23,7 @@ FlexLine calculateFlexLine(
     const size_t startOfLineIndex,
     const size_t lineCount) {
   std::vector<yoga::Node*> itemsInFlow;
-  itemsInFlow.reserve(node->getChildren().size());
+  itemsInFlow.reserve(node->getLayoutChildren().size());
 
   float sizeConsumed = 0.0f;
   float totalFlexGrowFactors = 0.0f;
@@ -41,8 +41,8 @@ FlexLine calculateFlexLine(
       node->style().computeGapForAxis(mainAxis, availableInnerMainDim);
 
   // Add items to the current line until it's full or we run out of items.
-  for (; endOfLineIndex < node->getChildren().size(); endOfLineIndex++) {
-    auto child = node->getChild(endOfLineIndex);
+  for (; endOfLineIndex < node->getLayoutChildren().size(); endOfLineIndex++) {
+    auto child = node->getLayoutChild(endOfLineIndex);
     if (child->style().display() == Display::None ||
         child->style().positionType() == PositionType::Absolute) {
       if (firstElementInLineIndex == endOfLineIndex) {

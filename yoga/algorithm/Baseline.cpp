@@ -32,9 +32,9 @@ float calculateBaseline(const yoga::Node* node) {
   }
 
   yoga::Node* baselineChild = nullptr;
-  const size_t childCount = node->getChildCount();
+  const size_t childCount = node->getLayoutChildCount();
   for (size_t i = 0; i < childCount; i++) {
-    auto child = node->getChild(i);
+    auto child = node->getLayoutChild(i);
     if (child->getLineIndex() > 0) {
       break;
     }
@@ -67,9 +67,9 @@ bool isBaselineLayout(const yoga::Node* node) {
   if (node->style().alignItems() == Align::Baseline) {
     return true;
   }
-  const auto childCount = node->getChildCount();
+  const auto childCount = node->getLayoutChildCount();
   for (size_t i = 0; i < childCount; i++) {
-    auto child = node->getChild(i);
+    auto child = node->getLayoutChild(i);
     if (child->style().positionType() != PositionType::Absolute &&
         child->style().alignSelf() == Align::Baseline) {
       return true;

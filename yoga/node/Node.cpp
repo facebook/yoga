@@ -348,6 +348,9 @@ void Node::cloneChildrenIfNeeded() {
       child = resolveRef(config_->cloneNode(child, this, i));
       child->setOwner(this);
     }
+    if (child->style().display() == Display::Contents) {
+      child->cloneChildrenIfNeeded();
+    }
     i += 1;
   }
 }
