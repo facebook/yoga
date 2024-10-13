@@ -17,13 +17,25 @@ function toFunctionNameCpp(value) {
     return 'Percent';
   } else if (value.indexOf('Auto') >= 0) {
     return 'Auto';
+  } else if (value.indexOf('MaxContent') >= 0) {
+    return 'MaxContent';
+  } else if (value.indexOf('FitContent') >= 0) {
+    return 'FitContent';
+  } else if (value.indexOf('Stretch') >= 0) {
+    return 'Stretch';
   }
+
   return '';
 }
 
 function keywordFunctionCpp(functionPrefix, nodeName, value) {
   const functionSuffix = toFunctionNameCpp(value);
-  if (functionSuffix == 'Auto') {
+  if (
+    functionSuffix == 'Auto' ||
+    functionSuffix == 'MaxContent' ||
+    functionSuffix == 'FitContent' ||
+    functionSuffix == 'Stretch'
+  ) {
     return functionPrefix + functionSuffix + '(' + nodeName + ');';
   } else {
     return (
@@ -161,6 +173,10 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGDisplayFlex: {value: 'YGDisplayFlex'},
   YGDisplayNone: {value: 'YGDisplayNone'},
   YGAuto: {value: 'YGAuto'},
+
+  YGMaxContent: {value: 'MaxContent'},
+  YGFitContent: {value: 'FitContent'},
+  YGStretch: {value: 'Stretch'},
 
   YGNodeCalculateLayout: {
     value: function (node, dir, _experiments) {
@@ -381,57 +397,25 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetMaxHeight: {
     value: function (nodeName, value) {
-      this.push(
-        'YGNodeStyleSetMaxHeight' +
-          toFunctionNameCpp(value) +
-          '(' +
-          nodeName +
-          ', ' +
-          toValueCpp(value) +
-          ');',
-      );
+      this.push(keywordFunctionCpp('YGNodeStyleSetMaxHeight', nodeName, value));
     },
   },
 
   YGNodeStyleSetMaxWidth: {
     value: function (nodeName, value) {
-      this.push(
-        'YGNodeStyleSetMaxWidth' +
-          toFunctionNameCpp(value) +
-          '(' +
-          nodeName +
-          ', ' +
-          toValueCpp(value) +
-          ');',
-      );
+      this.push(keywordFunctionCpp('YGNodeStyleSetMaxWidth', nodeName, value));
     },
   },
 
   YGNodeStyleSetMinHeight: {
     value: function (nodeName, value) {
-      this.push(
-        'YGNodeStyleSetMinHeight' +
-          toFunctionNameCpp(value) +
-          '(' +
-          nodeName +
-          ', ' +
-          toValueCpp(value) +
-          ');',
-      );
+      this.push(keywordFunctionCpp('YGNodeStyleSetMinHeight', nodeName, value));
     },
   },
 
   YGNodeStyleSetMinWidth: {
     value: function (nodeName, value) {
-      this.push(
-        'YGNodeStyleSetMinWidth' +
-          toFunctionNameCpp(value) +
-          '(' +
-          nodeName +
-          ', ' +
-          toValueCpp(value) +
-          ');',
-      );
+      this.push(keywordFunctionCpp('YGNodeStyleSetMinWidth', nodeName, value));
     },
   },
 
