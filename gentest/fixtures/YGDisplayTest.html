@@ -29,3 +29,61 @@
 <div id="display_none_with_position_absolute" style="width: 100px; height: 100px;">
   <div style="display:none; position: absolute; width: 100px; height: 100px"></div>
 </div>
+
+<div id="display_contents" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="display: contents;">
+    <div style="flex: 1; height: 10px;"></div>
+    <div style="flex: 1; height: 20px;"></div>
+  </div>
+</div>
+
+<div id="display_contents_fixed_size" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="display: contents; width: 50px; height: 50px;">
+    <div style="flex: 1; height: 10px;"></div>
+    <div style="flex: 1; height: 20px;"></div>
+  </div>
+</div>
+
+<div id="display_contents_with_margin" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="width: 20px; height: 20px; display: contents; margin: 10px;"></div>
+  <div style="flex-grow: 1;"></div>
+</div>
+
+<div id="display_contents_with_padding" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="display: contents; padding: 10px;">
+    <div style="flex: 1; height: 10px;"></div>
+    <div style="flex: 1; height: 20px;"></div>
+  </div>
+</div>
+
+<div id="display_contents_with_position" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="display: contents; top: 10px;">
+    <div style="flex: 1; height: 10px;"></div>
+    <div style="flex: 1; height: 20px;"></div>
+  </div>
+</div>
+
+<div id="display_contents_with_position_absolute" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="display: contents; position: absolute; width: 50px; height: 50px;">
+    <div style="flex: 1; height: 10px;"></div>
+    <div style="flex: 1; height: 20px;"></div>
+  </div>
+</div>
+
+<div id="display_contents_nested" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="display: contents;">
+    <div style="display: contents;">
+      <div style="flex: 1; height: 10px;"></div>
+      <div style="flex: 1; height: 20px;"></div>
+    </div>
+  </div>
+</div>
+
+<div id="display_contents_with_siblings" style="width: 100px; height: 100px; flex-direction: row;">
+  <div style="flex: 1; height: 30px;"></div>
+  <div style="display: contents;">
+    <div style="flex: 1; height: 10px;"></div>
+    <div style="flex: 1; height: 20px;"></div>
+  </div>
+  <div style="flex: 1; height: 30px;"></div>
+</div>
