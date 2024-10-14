@@ -266,21 +266,22 @@ class YG_EXPORT Node : public ::YGNode {
     return children_.size();
   }
 
-  // This needs to be optimized, not to create a new vector every time
-  const std::vector<Node*> getLayoutChildren() const {
-    std::vector<Node*> result;
-    for (auto child : LayoutableChildren(this)) {
-      result.push_back(child);
-    }
-    return result;
-  }
-
-  Node* getLayoutChild(size_t index) const {
-    return getLayoutChildren()[index];
+  const LayoutableChildren getLayoutChildren() const {
+    return LayoutableChildren(this);
   }
 
   size_t getLayoutChildCount() const {
-    return getLayoutChildren().size();
+    if (contentsChildren_ == 0) {
+      return children_.size();
+    } else {
+      size_t count = 0;
+      for (auto iter = getLayoutChildren().begin();
+           iter != getLayoutChildren().end();
+           iter++) {
+        count++;
+      }
+      return count;
+    }
   }
 
   const Config* getConfig() const {
@@ -437,6 +438,7 @@ class YG_EXPORT Node : public ::YGNode {
   Style style_;
   LayoutResults layout_;
   size_t lineIndex_ = 0;
+  size_t contentsChildren_ = 0;
   Node* owner_ = nullptr;
   std::vector<Node*> children_;
   const Config* config_;

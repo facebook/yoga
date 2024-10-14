@@ -1454,9 +1454,9 @@ static void calculateLayoutImpl(
   }
   // STEP 4: COLLECT FLEX ITEMS INTO FLEX LINES
 
-  // Indexes of children that represent the first and last items in the line.
-  size_t startOfLineIndex = 0;
-  size_t endOfLineIndex = 0;
+  // Iterator representing the beginning of the current line
+  Node::LayoutableChildren::Iterator startOfLineIterator =
+      node->getLayoutChildren().begin();
 
   // Number of lines.
   size_t lineCount = 0;
@@ -1469,8 +1469,7 @@ static void calculateLayoutImpl(
 
   // Max main dimension of all the lines.
   float maxLineMainDim = 0;
-  for (; endOfLineIndex < childCount;
-       lineCount++, startOfLineIndex = endOfLineIndex) {
+  for (; startOfLineIterator != node->getLayoutChildren().end(); lineCount++) {
     auto flexLine = calculateFlexLine(
         node,
         ownerDirection,
@@ -1478,10 +1477,8 @@ static void calculateLayoutImpl(
         mainAxisOwnerSize,
         availableInnerWidth,
         availableInnerMainDim,
-        startOfLineIndex,
+        startOfLineIterator,
         lineCount);
-
-    endOfLineIndex = flexLine.endOfLineIndex;
 
     // If we don't need to measure the cross axis, we can skip the entire flex
     // step.
@@ -1834,17 +1831,18 @@ static void calculateLayoutImpl(
       case Align::Baseline:
         break;
     }
-    size_t endIndex = 0;
+    Node::LayoutableChildren::Iterator endIterator =
+        node->getLayoutChildren().begin();
     for (size_t i = 0; i < lineCount; i++) {
-      const size_t startIndex = endIndex;
-      size_t ii = startIndex;
+      const Node::LayoutableChildren::Iterator startIterator = endIterator;
+      auto iterator = startIterator;
 
       // compute the line's height and find the endIndex
       float lineHeight = 0;
       float maxAscentForCurrentLine = 0;
       float maxDescentForCurrentLine = 0;
-      for (; ii < childCount; ii++) {
-        const auto child = node->getLayoutChild(ii);
+      for (; iterator != node->getLayoutChildren().end(); iterator++) {
+        const auto child = *iterator;
         if (child->style().display() == Display::None) {
           continue;
         }
@@ -1877,11 +1875,11 @@ static void calculateLayoutImpl(
           }
         }
       }
-      endIndex = ii;
+      endIterator = iterator;
       currentLead += i != 0 ? crossAxisGap : 0;
 
-      for (ii = startIndex; ii < endIndex; ii++) {
-        const auto child = node->getLayoutChild(ii);
+      for (iterator = startIterator; iterator != endIterator; iterator++) {
+        const auto child = *iterator;
         if (child->style().display() == Display::None) {
           continue;
         }
@@ -2084,8 +2082,7 @@ static void calculateLayoutImpl(
   // As we only wrapped in normal direction yet, we need to reverse the
   // positions on wrap-reverse.
   if (performLayout && node->style().flexWrap() == Wrap::WrapReverse) {
-    for (size_t i = 0; i < childCount; i++) {
-      const auto child = node->getLayoutChild(i);
+    for (auto child : node->getLayoutChildren()) {
       if (child->style().positionType() != PositionType::Absolute) {
         child->setLayoutPosition(
             node->getLayout().measuredDimension(dimension(crossAxis)) -
@@ -2102,8 +2099,7 @@ static void calculateLayoutImpl(
     const bool needsCrossTrailingPos = needsTrailingPosition(crossAxis);
 
     if (needsMainTrailingPos || needsCrossTrailingPos) {
-      for (size_t i = 0; i < childCount; i++) {
-        const auto child = node->getLayoutChild(i);
+      for (auto child : node->getLayoutChildren()) {
         // Absolute children will be handled by their containing block since we
         // cannot guarantee that their positions are set when their parents are
         // done with layout.
