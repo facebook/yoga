@@ -171,6 +171,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGDisplayFlex: {value: 'Display.Flex'},
   YGDisplayNone: {value: 'Display.None'},
+  YGDisplayContents: {value: 'Display.Contents'},
 
   YGBoxSizingBorderBox: {value: 'BoxSizing.BorderBox'},
   YGBoxSizingContentBox: {value: 'BoxSizing.ContentBox'},

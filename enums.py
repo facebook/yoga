@@ -31,7 +31,7 @@ ENUMS = {
         "SpaceEvenly",
     ],
     "PositionType": ["Static", "Relative", "Absolute"],
-    "Display": ["Flex", "None"],
+    "Display": ["Flex", "None", "Contents"],
     "Wrap": ["NoWrap", "Wrap", "WrapReverse"],
     "BoxSizing": ["BorderBox", "ContentBox"],
     "MeasureMode": ["Undefined", "Exactly", "AtMost"],
