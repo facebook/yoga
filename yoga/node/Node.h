@@ -35,7 +35,11 @@ class YG_EXPORT Node : public ::YGNode {
    public:
     using Backtrack = std::vector<std::pair<const Node*, size_t>>;
     struct Iterator {
-      using iterator_category = std::forward_iterator_tag;
+      using iterator_category = std::input_iterator_tag;
+      using difference_type = std::ptrdiff_t;
+      using value_type = Node*;
+      using pointer = Node*;
+      using reference = Node*;
 
       Iterator(const Node* node, size_t childIndex)
           : node_(node), childIndex_(childIndex) {}
@@ -133,7 +137,9 @@ class YG_EXPORT Node : public ::YGNode {
       friend LayoutableChildren;
     };
 
-    LayoutableChildren(const Node* node) : node_(node) {}
+    LayoutableChildren(const Node* node) : node_(node) {
+      static_assert(std::input_iterator<LayoutableChildren::Iterator>);
+    }
 
     Iterator begin() const {
       if (node_->getChildCount() > 0) {
@@ -267,6 +273,7 @@ class YG_EXPORT Node : public ::YGNode {
   }
 
   const LayoutableChildren getLayoutChildren() const {
+    static_assert(std::input_iterator<LayoutableChildren::Iterator>);
     return LayoutableChildren(this);
   }
 
