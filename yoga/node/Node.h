@@ -81,7 +81,7 @@ class YG_EXPORT Node : public ::YGNode {
             // if there are no nodes to backtrack to, the last node has been
             // visited
             node_ = nullptr;
-            childIndex_ = -1;
+            childIndex_ = SIZE_MAX;
           } else {
             // pop and restore the latest backtrack entry
             const auto back = backtrack_.back();
@@ -141,12 +141,12 @@ class YG_EXPORT Node : public ::YGNode {
         result.skipContentsNodes();
         return result;
       } else {
-        return Iterator(nullptr, -1);
+        return Iterator(nullptr, SIZE_MAX);
       }
     }
 
     Iterator end() const {
-      return Iterator(nullptr, -1);
+      return Iterator(nullptr, SIZE_MAX);
     }
 
    private:
