@@ -278,7 +278,7 @@ class YG_EXPORT Node : public ::YGNode {
   }
 
   size_t getLayoutChildCount() const {
-    if (contentsChildren_ == 0) {
+    if (contentsChildrenCount_ == 0) {
       return children_.size();
     } else {
       size_t count = 0;
@@ -445,7 +445,7 @@ class YG_EXPORT Node : public ::YGNode {
   Style style_;
   LayoutResults layout_;
   size_t lineIndex_ = 0;
-  size_t contentsChildren_ = 0;
+  size_t contentsChildrenCount_ = 0;
   Node* owner_ = nullptr;
   std::vector<Node*> children_;
   const Config* config_;
