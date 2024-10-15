@@ -147,7 +147,6 @@ class YG_EXPORT Node : public ::YGNode {
   }
 
   const LayoutableChildren getLayoutChildren() const {
-    static_assert(std::input_iterator<LayoutableChildren::Iterator>);
     return LayoutableChildren(this);
   }
 
