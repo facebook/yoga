@@ -23,7 +23,7 @@ android {
   namespace = "com.facebook.yoga"
   compileSdk = 35
   buildToolsVersion = "35.0.0"
-  ndkVersion = "26.0.10792818"
+  ndkVersion = "27.1.12297006"
 
   defaultConfig {
     minSdk = 21
