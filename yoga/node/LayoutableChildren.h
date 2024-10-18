@@ -1,3 +1,4 @@
+#include <__config>
 #include <cstdint>
 #include <vector>
 
@@ -18,6 +19,7 @@ class LayoutableChildren {
     using pointer = T*;
     using reference = T*;
 
+    Iterator() : node_(nullptr), childIndex_(SIZE_MAX) {}
     Iterator(const T* node, size_t childIndex)
         : node_(node), childIndex_(childIndex) {}
     Iterator(const T* node, size_t childIndex, Backtrack&& backtrack)
