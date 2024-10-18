@@ -1,4 +1,3 @@
-#include <__config>
 #include <cstdint>
 #include <vector>
 
@@ -19,7 +18,8 @@ class LayoutableChildren {
     using pointer = T*;
     using reference = T*;
 
-    Iterator() : node_(nullptr), childIndex_(SIZE_MAX) {}
+    Iterator() = default;
+
     Iterator(const T* node, size_t childIndex)
         : node_(node), childIndex_(childIndex) {}
     Iterator(const T* node, size_t childIndex, Backtrack&& backtrack)
@@ -49,11 +49,11 @@ class LayoutableChildren {
 
     friend bool operator==(const Iterator& a, const Iterator& b) {
       return a.node_ == b.node_ && a.childIndex_ == b.childIndex_;
-    };
+    }
 
     friend bool operator!=(const Iterator& a, const Iterator& b) {
       return a.node_ != b.node_ || a.childIndex_ != b.childIndex_;
-    };
+    }
 
    private:
     void next() {
@@ -63,8 +63,7 @@ class LayoutableChildren {
         if (backtrack_.empty()) {
           // if there are no nodes to backtrack to, the last node has been
           // visited
-          node_ = nullptr;
-          childIndex_ = SIZE_MAX;
+          *this = Iterator{};
         } else {
           // pop and restore the latest backtrack entry
           const auto back = backtrack_.back();
@@ -108,15 +107,15 @@ class LayoutableChildren {
       }
     }
 
-    const T* node_;
-    size_t childIndex_;
+    const T* node_{nullptr};
+    size_t childIndex_{0};
     size_t currentNodeIndex_{0};
     Backtrack backtrack_;
 
     friend LayoutableChildren;
   };
 
-  LayoutableChildren(const T* node) : node_(node) {
+  explicit LayoutableChildren(const T* node) : node_(node) {
     static_assert(std::input_iterator<LayoutableChildren<T>::Iterator>);
     static_assert(
         std::is_base_of<Node, T>::value,
@@ -129,12 +128,12 @@ class LayoutableChildren {
       result.skipContentsNodes();
       return result;
     } else {
-      return Iterator(nullptr, SIZE_MAX);
+      return Iterator{};
     }
   }
 
   Iterator end() const {
-    return Iterator(nullptr, SIZE_MAX);
+    return Iterator{};
   }
 
  private:
