@@ -38,6 +38,7 @@ export enum Direction {
 export enum Display {
   Flex = 0,
   None = 1,
+  Contents = 2,
 }
 
 export enum Edge {
@@ -151,6 +152,7 @@ const constants = {
   DIRECTION_RTL: Direction.RTL,
   DISPLAY_FLEX: Display.Flex,
   DISPLAY_NONE: Display.None,
+  DISPLAY_CONTENTS: Display.Contents,
   EDGE_LEFT: Edge.Left,
   EDGE_TOP: Edge.Top,
   EDGE_RIGHT: Edge.Right,

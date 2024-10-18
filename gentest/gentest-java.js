@@ -195,6 +195,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGDisplayFlex: {value: 'YogaDisplay.FLEX'},
   YGDisplayNone: {value: 'YogaDisplay.NONE'},
+  YGDisplayContents: {value: 'YogaDisplay.CONTENTS'},
   YGAuto: {value: 'YogaConstants.AUTO'},
 
   YGWrapNoWrap: {value: 'YogaWrap.NO_WRAP'},

@@ -160,6 +160,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGDisplayFlex: {value: 'YGDisplayFlex'},
   YGDisplayNone: {value: 'YGDisplayNone'},
+  YGDisplayContents: {value: 'YGDisplayContents'},
   YGAuto: {value: 'YGAuto'},
 
   YGNodeCalculateLayout: {
