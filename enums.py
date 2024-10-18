@@ -61,9 +61,10 @@ ENUMS = {
         # Allows main-axis flex basis to be stretched without flexGrow being
         # set (previously referred to as "UseLegacyStretchBehaviour")
         ("StretchFlexBasis", 1 << 0),
-        # Positioning of absolute nodes will have various bugs related to
-        # justification, alignment, and insets
-        ("AbsolutePositioningIncorrect", 1 << 1),
+        # Absolute position in a given axis will be relative to the padding
+        # edge of the parent container instead of the content edge when a
+        # specific inset (top/bottom/left/right) is not set.
+        ("AbsolutePositionWithoutInsetsExcludesPadding", 1 << 1),
         # Absolute nodes will resolve percentages against the inner size of
         # their containing node, not the padding box
         ("AbsolutePercentAgainstInnerSize", 1 << 2),
