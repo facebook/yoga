@@ -160,6 +160,18 @@ void Node::setFlexBasisAuto() {
   YGNodeStyleSetFlexBasisAuto(m_node);
 }
 
+void Node::setFlexBasisMaxContent() {
+  YGNodeStyleSetFlexBasisMaxContent(m_node);
+}
+
+void Node::setFlexBasisFitContent() {
+  YGNodeStyleSetFlexBasisFitContent(m_node);
+}
+
+void Node::setFlexBasisStretch() {
+  YGNodeStyleSetFlexBasisStretch(m_node);
+}
+
 void Node::setFlexGrow(double flexGrow) {
   YGNodeStyleSetFlexGrow(m_node, flexGrow);
 }
@@ -180,6 +192,18 @@ void Node::setWidthAuto() {
   YGNodeStyleSetWidthAuto(m_node);
 }
 
+void Node::setWidthMaxContent() {
+  YGNodeStyleSetWidthMaxContent(m_node);
+}
+
+void Node::setWidthFitContent() {
+  YGNodeStyleSetWidthFitContent(m_node);
+}
+
+void Node::setWidthStretch() {
+  YGNodeStyleSetWidthStretch(m_node);
+}
+
 void Node::setHeight(double height) {
   YGNodeStyleSetHeight(m_node, height);
 }
@@ -192,12 +216,36 @@ void Node::setHeightAuto() {
   YGNodeStyleSetHeightAuto(m_node);
 }
 
+void Node::setHeightMaxContent() {
+  YGNodeStyleSetHeightMaxContent(m_node);
+}
+
+void Node::setHeightFitContent() {
+  YGNodeStyleSetHeightFitContent(m_node);
+}
+
+void Node::setHeightStretch() {
+  YGNodeStyleSetHeightStretch(m_node);
+}
+
 void Node::setMinWidth(double minWidth) {
   YGNodeStyleSetMinWidth(m_node, minWidth);
 }
 
 void Node::setMinWidthPercent(double minWidth) {
   YGNodeStyleSetMinWidthPercent(m_node, minWidth);
+}
+
+void Node::setMinWidthMaxContent() {
+  YGNodeStyleSetMinWidthMaxContent(m_node);
+}
+
+void Node::setMinWidthFitContent() {
+  YGNodeStyleSetMinWidthFitContent(m_node);
+}
+
+void Node::setMinWidthStretch() {
+  YGNodeStyleSetMinWidthStretch(m_node);
 }
 
 void Node::setMinHeight(double minHeight) {
@@ -208,6 +256,18 @@ void Node::setMinHeightPercent(double minHeight) {
   YGNodeStyleSetMinHeightPercent(m_node, minHeight);
 }
 
+void Node::setMinHeightMaxContent() {
+  YGNodeStyleSetMinHeightMaxContent(m_node);
+}
+
+void Node::setMinHeightFitContent() {
+  YGNodeStyleSetMinHeightFitContent(m_node);
+}
+
+void Node::setMinHeightStretch() {
+  YGNodeStyleSetMinHeightStretch(m_node);
+}
+
 void Node::setMaxWidth(double maxWidth) {
   YGNodeStyleSetMaxWidth(m_node, maxWidth);
 }
@@ -216,12 +276,36 @@ void Node::setMaxWidthPercent(double maxWidth) {
   YGNodeStyleSetMaxWidthPercent(m_node, maxWidth);
 }
 
+void Node::setMaxWidthMaxContent() {
+  YGNodeStyleSetMaxWidthMaxContent(m_node);
+}
+
+void Node::setMaxWidthFitContent() {
+  YGNodeStyleSetMaxWidthFitContent(m_node);
+}
+
+void Node::setMaxWidthStretch() {
+  YGNodeStyleSetMaxWidthStretch(m_node);
+}
+
 void Node::setMaxHeight(double maxHeight) {
   YGNodeStyleSetMaxHeight(m_node, maxHeight);
 }
 
 void Node::setMaxHeightPercent(double maxHeight) {
   YGNodeStyleSetMaxHeightPercent(m_node, maxHeight);
+}
+
+void Node::setMaxHeightMaxContent() {
+  YGNodeStyleSetMaxHeightMaxContent(m_node);
+}
+
+void Node::setMaxHeightFitContent() {
+  YGNodeStyleSetMaxHeightFitContent(m_node);
+}
+
+void Node::setMaxHeightStretch() {
+  YGNodeStyleSetMaxHeightStretch(m_node);
 }
 
 void Node::setAspectRatio(double aspectRatio) {

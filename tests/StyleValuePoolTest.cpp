@@ -128,4 +128,19 @@ TEST(StyleValuePool, store_undefined_after_large_int) {
   EXPECT_EQ(pool.getLength(handle), StyleLength::undefined());
 }
 
+TEST(StyleValuePool, store_keywords) {
+  StyleValuePool pool;
+  StyleValueHandle handleMaxContent;
+  StyleValueHandle handleFitContent;
+  StyleValueHandle handleStretch;
+
+  pool.store(handleMaxContent, StyleSizeValue::ofMaxContent());
+  pool.store(handleFitContent, StyleSizeValue::ofFitContent());
+  pool.store(handleStretch, StyleSizeValue::ofStretch());
+
+  EXPECT_EQ(pool.getSize(handleMaxContent), StyleSizeValue::ofMaxContent());
+  EXPECT_EQ(pool.getSize(handleFitContent), StyleSizeValue::ofFitContent());
+  EXPECT_EQ(pool.getSize(handleStretch), StyleSizeValue::ofStretch());
+}
+
 } // namespace facebook::yoga
