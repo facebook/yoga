@@ -97,25 +97,46 @@ class Node {
   void setFlexBasis(double flexBasis);
   void setFlexBasisPercent(double flexBasis);
   void setFlexBasisAuto();
+  void setFlexBasisMaxContent();
+  void setFlexBasisFitContent();
+  void setFlexBasisStretch();
   void setFlexGrow(double flexGrow);
   void setFlexShrink(double flexShrink);
 
   void setWidth(double width);
   void setWidthPercent(double width);
   void setWidthAuto();
+  void setWidthMaxContent();
+  void setWidthFitContent();
+  void setWidthStretch();
   void setHeight(double height);
   void setHeightPercent(double height);
   void setHeightAuto();
+  void setHeightMaxContent();
+  void setHeightFitContent();
+  void setHeightStretch();
 
   void setMinWidth(double minWidth);
   void setMinWidthPercent(double minWidth);
+  void setMinWidthMaxContent();
+  void setMinWidthFitContent();
+  void setMinWidthStretch();
   void setMinHeight(double minHeight);
   void setMinHeightPercent(double minHeight);
+  void setMinHeightMaxContent();
+  void setMinHeightFitContent();
+  void setMinHeightStretch();
 
   void setMaxWidth(double maxWidth);
   void setMaxWidthPercent(double maxWidth);
+  void setMaxWidthMaxContent();
+  void setMaxWidthFitContent();
+  void setMaxWidthStretch();
   void setMaxHeight(double maxHeight);
   void setMaxHeightPercent(double maxHeight);
+  void setMaxHeightMaxContent();
+  void setMaxHeightFitContent();
+  void setMaxHeightStretch();
 
   void setAspectRatio(double aspectRatio);
 
