@@ -17,8 +17,8 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@docusaurus/core": "3.4.0",
-    "@docusaurus/preset-classic": "3.4.0",
+    "@docusaurus/core": "3.6.0",
+    "@docusaurus/preset-classic": "3.6.0",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "lz-string": "^1.5.0",
@@ -30,9 +30,9 @@
     "yoga-layout": "0.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.4.0",
-    "@docusaurus/tsconfig": "3.4.0",
-    "@docusaurus/types": "3.4.0",
+    "@docusaurus/module-type-aliases": "3.6.0",
+    "@docusaurus/tsconfig": "3.6.0",
+    "@docusaurus/types": "3.6.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0"
   },
