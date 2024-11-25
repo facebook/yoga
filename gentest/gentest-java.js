@@ -17,24 +17,13 @@ function toMethodName(value) {
     return 'Percent';
   } else if (value.indexOf('AUTO') >= 0) {
     return 'Auto';
-  } else if (value.indexOf('MAX_CONTENT') >= 0) {
-    return 'MaxContent';
-  } else if (value.indexOf('FIT_CONTENT') >= 0) {
-    return 'FitContent';
-  } else if (value.indexOf('STRETCH') >= 0) {
-    return 'Stretch';
   }
   return '';
 }
 
 function keywordMethod(methodPrefix, nodeName, value) {
   const methodSuffix = toMethodName(value);
-  if (
-    methodSuffix == 'Auto' ||
-    methodSuffix == 'MaxContent' ||
-    methodSuffix == 'FitContent' ||
-    methodSuffix == 'Stretch'
-  ) {
+  if (methodSuffix == 'Auto') {
     return nodeName + '.' + methodPrefix + methodSuffix + '();';
   } else {
     return (
@@ -216,10 +205,6 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGBoxSizingBorderBox: {value: 'YogaBoxSizing.BORDER_BOX'},
   YGBoxSizingContentBox: {value: 'YogaBoxSizing.CONTENT_BOX'},
 
-  YGMaxContent: {value: 'MAX_CONTENT'},
-  YGFitContent: {value: 'FIT_CONTENT'},
-  YGStretch: {value: 'STRETCH'},
-
   YGNodeCalculateLayout: {
     value: function (node, dir, _experiments) {
       this.push(node + '.setDirection(' + dir + ');');
@@ -375,25 +360,53 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGNodeStyleSetMaxHeight: {
     value: function (nodeName, value) {
-      this.push(keywordMethod('setMaxHeight', nodeName, value));
+      this.push(
+        nodeName +
+          '.setMaxHeight' +
+          toMethodName(value) +
+          '(' +
+          toValueJava(value) +
+          'f);',
+      );
     },
   },
 
   YGNodeStyleSetMaxWidth: {
     value: function (nodeName, value) {
-      this.push(keywordMethod('setMaxWidth', nodeName, value));
+      this.push(
+        nodeName +
+          '.setMaxWidth' +
+          toMethodName(value) +
+          '(' +
+          toValueJava(value) +
+          'f);',
+      );
     },
   },
 
   YGNodeStyleSetMinHeight: {
     value: function (nodeName, value) {
-      this.push(keywordMethod('setMinHeight', nodeName, value));
+      this.push(
+        nodeName +
+          '.setMinHeight' +
+          toMethodName(value) +
+          '(' +
+          toValueJava(value) +
+          'f);',
+      );
     },
   },
 
   YGNodeStyleSetMinWidth: {
     value: function (nodeName, value) {
-      this.push(keywordMethod('setMinWidth', nodeName, value));
+      this.push(
+        nodeName +
+          '.setMinWidth' +
+          toMethodName(value) +
+          '(' +
+          toValueJava(value) +
+          'f);',
+      );
     },
   },
 
