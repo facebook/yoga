@@ -15,9 +15,6 @@ function toValueJavascript(value) {
   if (value.match(/^[0-9.e+-]+px$/i)) return parseFloat(value);
   if (value.match(/^[0-9.e+-]+%/i)) return JSON.stringify(value);
   if (value == 'Yoga.AUTO') return '"auto"';
-  if (value == 'max-content') return '"max-content"';
-  if (value == 'fit-content') return '"fit-content"';
-  if (value == 'stretch') return '"stretch"';
   return value;
 }
 
@@ -178,10 +175,6 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
 
   YGBoxSizingBorderBox: {value: 'BoxSizing.BorderBox'},
   YGBoxSizingContentBox: {value: 'BoxSizing.ContentBox'},
-
-  YGMaxContent: {value: 'max-content'},
-  YGFitContent: {value: 'fit-content'},
-  YGStretch: {value: 'stretch'},
 
   YGNodeCalculateLayout: {
     value: function (node, dir, _experiments) {
