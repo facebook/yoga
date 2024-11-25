@@ -8,15 +8,7 @@ import os
 
 ENUMS = {
     "Direction": ["Inherit", "LTR", "RTL"],
-    "Unit": [
-        "Undefined",
-        "Point",
-        "Percent",
-        "Auto",
-        "MaxContent",
-        "FitContent",
-        "Stretch",
-    ],
+    "Unit": ["Undefined", "Point", "Percent", "Auto"],
     "FlexDirection": ["Column", "ColumnReverse", "Row", "RowReverse"],
     "Justify": [
         "FlexStart",
