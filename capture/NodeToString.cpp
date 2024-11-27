@@ -225,17 +225,17 @@ static void serializeTreeImpl(
     appendEdges<&YGNodeStyleGetPosition>(
         j, "position", node, defaultNode.get());
 
-    appendFloatIfNotDefault(
+    appendYGValueIfNotDefault(
         j["style"],
         "gap",
         YGNodeStyleGetGap(node, YGGutterAll),
         YGNodeStyleGetGap(defaultNode.get(), YGGutterAll));
-    appendFloatIfNotDefault(
+    appendYGValueIfNotDefault(
         j["style"],
         "column-gap",
         YGNodeStyleGetGap(node, YGGutterColumn),
         YGNodeStyleGetGap(defaultNode.get(), YGGutterColumn));
-    appendFloatIfNotDefault(
+    appendYGValueIfNotDefault(
         j["style"],
         "row-gap",
         YGNodeStyleGetGap(node, YGGutterRow),

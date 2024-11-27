@@ -703,13 +703,13 @@ jni_YGNodeCloneJNI(JNIEnv* /*env*/, jobject /*obj*/, jlong nativePointer) {
   return reinterpret_cast<jlong>(clonedYogaNode);
 }
 
-static jfloat jni_YGNodeStyleGetGapJNI(
+static jlong jni_YGNodeStyleGetGapJNI(
     JNIEnv* /*env*/,
     jobject /*obj*/,
     jlong nativePointer,
     jint gutter) {
-  return (jfloat)YGNodeStyleGetGap(
-      _jlong2YGNodeRef(nativePointer), static_cast<YGGutter>(gutter));
+  return YogaValue::asJavaLong(YGNodeStyleGetGap(
+      _jlong2YGNodeRef(nativePointer), static_cast<YGGutter>(gutter)));
 }
 
 static void jni_YGNodeStyleSetGapJNI(
