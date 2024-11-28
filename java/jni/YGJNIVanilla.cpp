@@ -1057,7 +1057,7 @@ static JNINativeMethod methods[] = {
     {"jni_YGNodeSetHasMeasureFuncJNI",
      "(JZ)V",
      (void*)jni_YGNodeSetHasMeasureFuncJNI},
-    {"jni_YGNodeStyleGetGapJNI", "(JI)F", (void*)jni_YGNodeStyleGetGapJNI},
+    {"jni_YGNodeStyleGetGapJNI", "(JI)J", (void*)jni_YGNodeStyleGetGapJNI},
     {"jni_YGNodeStyleSetGapJNI", "(JIF)V", (void*)jni_YGNodeStyleSetGapJNI},
     {"jni_YGNodeStyleSetGapPercentJNI",
      "(JIF)V",
