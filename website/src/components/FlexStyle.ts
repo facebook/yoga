@@ -63,7 +63,7 @@ export type FlexStyle = {
   bottom?: number | `${number}%`;
   boxSizing?: 'border-box' | 'content-box';
   direction?: 'ltr' | 'rtl';
-  display?: 'none' | 'flex';
+  display?: 'none' | 'flex' | 'contents';
   end?: number | `${number}%`;
   flex?: number;
   flexBasis?: number | 'auto' | `${number}%`;
@@ -360,12 +360,14 @@ function direction(str?: 'ltr' | 'rtl'): Direction {
   throw new Error(`"${str}" is not a valid value for direction`);
 }
 
-function display(str?: 'none' | 'flex'): Display {
+function display(str?: 'none' | 'flex' | 'contents'): Display {
   switch (str) {
     case 'none':
       return Display.None;
     case 'flex':
       return Display.Flex;
+    case 'contents':
+      return Display.Contents;
   }
   throw new Error(`"${str}" is not a valid value for display`);
 }

@@ -8,7 +8,12 @@
  */
 
 import {useMemo} from 'react';
-import Yoga, {Direction, Overflow, Node as YogaNode} from 'yoga-layout';
+import Yoga, {
+  Direction,
+  Display,
+  Overflow,
+  Node as YogaNode,
+} from 'yoga-layout';
 import {FlexStyle, applyStyle} from './FlexStyle';
 import LayoutBox from './LayoutBox';
 
@@ -107,6 +112,16 @@ function metricsFromYogaNode(node: YogaNode): LayoutMetrics {
           return 'scroll';
         case Overflow.Visible:
           return 'visible';
+      }
+    })(),
+    display: (() => {
+      switch (node.getDisplay()) {
+        case Display.Flex:
+          return 'flex';
+        case Display.None:
+          return 'none';
+        case Display.Contents:
+          return 'contents';
       }
     })(),
     children,

@@ -16,6 +16,7 @@ export type LayoutMetrics = {
   width: number;
   height: number;
   overflow?: 'visible' | 'hidden' | 'scroll';
+  display?: 'flex' | 'none' | 'contents';
   children?: LayoutMetrics[];
 };
 
@@ -49,7 +50,11 @@ export default function LayoutBox({metrics, depth, className}: Props) {
         position: depth === 0 ? 'relative' : 'absolute',
       }}>
       {children?.map((child, i) => (
-        <LayoutBox key={i} metrics={child} depth={depth + 1} />
+        <LayoutBox
+          key={i}
+          metrics={child}
+          depth={style.display === 'contents' ? depth : depth + 1}
+        />
       ))}
     </div>
   );
