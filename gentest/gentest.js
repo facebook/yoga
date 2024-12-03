@@ -654,6 +654,13 @@ function pointValue(e, value) {
       return e.YGAuto;
     case 'undefined':
       return e.YGUndefined;
+    case 'max-content':
+      return e.YGMaxContent;
+    case 'fit-content':
+      return e.YGFitContent;
+    case 'stretch':
+    case '-webkit-fill-available':
+      return e.YGStretch;
     default:
       return value;
   }
