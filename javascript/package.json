@@ -21,7 +21,8 @@
     "dist/src/**",
     "src/**",
     "load.js",
-    "load.js.map"
+    "load.js.map",
+    "load.d.ts"
   ],
   "scripts": {
     "benchmark": "just benchmark --config just.config.cjs",
