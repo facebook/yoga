@@ -113,7 +113,7 @@ function transformLoadTask() {
       names: [],
       sources: ['./src/load.ts'],
       sourcesContent: [js.content],
-      mappings: 'AAAA,cAAc,eAAe',
+      mappings: 'AAAA,cAAc,YAAY',
     };
     await writeFile('load.js.map', JSON.stringify(sourceMap));
 
