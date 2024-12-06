@@ -9,15 +9,15 @@
 
 // @ts-ignore untyped from Emscripten
 import loadYoga from '../binaries/yoga-wasm-base64-esm.js';
-import wrapAssembly from './wrapAssembly.ts';
+import wrapAssembly from './wrapAssembly.js';
 
 export type {
   Config,
   DirtiedFunction,
   MeasureFunction,
   Node,
-} from './wrapAssembly.ts';
+} from './wrapAssembly.js';
 
 const Yoga = wrapAssembly(await loadYoga());
 export default Yoga;
-export * from './generated/YGEnums.ts';
+export * from './generated/YGEnums.js';

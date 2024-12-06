@@ -84,6 +84,7 @@ task(
       declarationDir: 'dist',
     }),
     babelTransformTask({src: 'src', dst: 'dist/src'}),
+    transformLoadTask(),
     'prepack-package-json',
   ),
 );
@@ -96,6 +97,31 @@ function recursiveReplace(obj, pattern, replacement) {
       recursiveReplace(value, pattern, replacement);
     }
   }
+}
+
+function transformLoadTask() {
+  return async () => {
+    const js = {
+      content:
+        'export * from "./dist/src/load.js";\n//# sourceMappingURL=load.js.map\n',
+    };
+    await writeFile('load.js', js.content);
+
+    const sourceMap = {
+      version: 3,
+      file: 'load.js',
+      names: [],
+      sources: ['./src/load.ts'],
+      sourcesContent: [js.content],
+      mappings: 'AAAA,cAAc,eAAe',
+    };
+    await writeFile('load.js.map', JSON.stringify(sourceMap));
+
+    const dts = {
+      content: 'export * from "./dist/src/load.js";\n',
+    };
+    await writeFile('load.d.ts', dts.content);
+  };
 }
 
 function babelTransformTask(opts) {

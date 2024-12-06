@@ -2,3 +2,6 @@
 /binaries
 /build
 /dist
+load.js
+load.js.map
+load.d.ts
