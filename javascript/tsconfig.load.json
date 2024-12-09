@@ -4,5 +4,6 @@
     "outDir": ".",
     "emitDeclarationOnly": true
   },
-  "files": ["load.ts"]
+  "files": ["load.ts"],
+  "exclude": ["tests/**/*", "src/**/*"]
 }

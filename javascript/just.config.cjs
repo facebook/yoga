@@ -98,16 +98,29 @@ function recursiveReplace(obj, pattern, replacement) {
     }
   }
 }
+
 function transformLoadEntryPointTask() {
   return async () => {
+    const loadPath = path.join(__dirname, 'load.ts');
+    const loadContent = await readFile(loadPath, 'utf-8');
+    const transformedContent = loadContent.replace(
+      /\.\/src\/(.*)\.js/,
+      './dist/src/$1.js',
+    );
+    await writeFile(loadPath, transformedContent);
+
     await tscTask({
       project: 'tsconfig.load.json',
+      rootDir: '.',
+      outDir: '.',
     })();
 
     await babelTransformTask({
       src: 'load.ts',
       dst: '.',
     })();
+
+    await writeFile(loadPath, loadContent);
   };
 }
 
