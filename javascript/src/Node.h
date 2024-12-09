@@ -186,7 +186,7 @@ class Node {
 
   Value getPadding(int edge) const;
 
-  float getGap(int gutter);
+  Value getGap(int gutter) const;
 
   int getBoxSizing(void) const;
 
