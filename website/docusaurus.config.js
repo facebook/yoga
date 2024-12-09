@@ -110,4 +110,5 @@ export default {
         },
       ],
     }),
+  plugins: [require.resolve('./plugins/webpack-config.js')],
 };
