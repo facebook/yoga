@@ -3,13 +3,16 @@
 export default function webpackPlugin(context, options) {
   return {
     name: 'webpack-config-plugin',
-    // eslint-disable-next-line no-unused-vars
     configureWebpack(config) {
+      const resolve = config?.resolve ?? {};
+      const extensionAlias = resolve?.extensionAlias ?? {};
+
       return {
         resolve: {
+          ...resolve,
           extensionAlias: {
+            ...extensionAlias,
             '.js': ['.ts', '.js'],
-            '.mjs': ['.mts', '.mjs'],
           },
         },
       };
