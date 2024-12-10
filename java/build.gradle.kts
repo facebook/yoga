@@ -30,6 +30,7 @@ android {
     consumerProguardFiles("proguard-rules.pro")
 
     ndk { abiFilters.addAll(setOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")) }
+    externalNativeBuild { cmake { arguments("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON") } }
   }
 
   externalNativeBuild { cmake { path("CMakeLists.txt") } }
