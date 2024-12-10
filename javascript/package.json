@@ -19,7 +19,8 @@
   "files": [
     "dist/binaries/**",
     "dist/src/**",
-    "src/**"
+    "src/**",
+    "load.*"
   ],
   "scripts": {
     "benchmark": "just benchmark --config just.config.cjs",
