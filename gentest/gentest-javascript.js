@@ -429,9 +429,11 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   },
 
   YGNodeSetMeasureFunc: {
-    value: function (nodeName, innerText) {
+    value: function (nodeName, innerText, flexDirection) {
       this.push(
-        `${nodeName}.setMeasureFunc(instrinsicSizeMeasureFunc.bind("${innerText}"));`,
+        `${nodeName}.setMeasureFunc(instrinsicSizeMeasureFunc.bind({text: "${innerText}", flexDirection: ${toValueJavascript(
+          flexDirection,
+        )}}));`,
       );
     },
   },

@@ -467,7 +467,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   },
 
   YGNodeSetMeasureFunc: {
-    value: function (nodeName, innerText) {
+    value: function (nodeName, innerText, _) {
       this.push(`${nodeName}.setData("${innerText}");`);
       this.push(
         `${nodeName}.setMeasureFunction(new TestUtils.intrinsicMeasureFunction());`,

@@ -5,17 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MeasureMode} from 'yoga-layout';
+import {FlexDirection, MeasureMode} from 'yoga-layout';
+
+type MeasureContext = {
+  text: string;
+  flexDirection: FlexDirection;
+};
 
 export function instrinsicSizeMeasureFunc(
-  this: string,
+  this: MeasureContext,
   width: number,
   widthMode: MeasureMode,
   height: number,
   heightMode: MeasureMode,
 ): {width: number; height: number} {
-  const textLength = this.length;
-  const words = this.split(' ');
+  const textLength = this.text.length;
+  const words = this.text.split(' ');
+  const flexDirection = this.flexDirection;
   const widthPerChar = 10;
   const heightPerChar = 10;
 
@@ -53,7 +59,10 @@ export function instrinsicSizeMeasureFunc(
       return heightPerChar;
     }
 
-    const maxLineWidth = Math.max(longestWordWidth(), measuredWidth);
+    const maxLineWidth =
+      flexDirection == FlexDirection.Column
+        ? measuredWidth
+        : Math.max(longestWordWidth(), measuredWidth);
 
     //if fixed width < width of widest word, take width of widest word
 
