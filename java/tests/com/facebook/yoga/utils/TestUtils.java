@@ -11,6 +11,7 @@ import com.facebook.yoga.YogaMeasureMode;
 import com.facebook.yoga.YogaMeasureOutput;
 import com.facebook.yoga.YogaMeasureFunction;
 import com.facebook.yoga.YogaNode;
+import com.facebook.yoga.YogaFlexDirection;
 
 public class TestUtils {
 
@@ -43,9 +44,13 @@ public class TestUtils {
       } else if (heightMode == YogaMeasureMode.AT_MOST) {
         measuredHeight =
             Math.min(
-                caclulateHeight(text, Math.max(measuredWidth, getWidestWordWidth(text))), height);
+                caclulateHeight(text, node.getFlexDirection() == YogaFlexDirection.COLUMN 
+                  ? measuredWidth 
+                  : Math.max(measuredWidth, getWidestWordWidth(text))), height);
       } else {
-        measuredHeight = caclulateHeight(text, Math.max(measuredWidth, getWidestWordWidth(text)));
+        measuredHeight = caclulateHeight(text, node.getFlexDirection() == YogaFlexDirection.COLUMN 
+          ? measuredWidth 
+          : Math.max(measuredWidth, getWidestWordWidth(text)));
       }
 
       return YogaMeasureOutput.make(measuredWidth, measuredHeight);

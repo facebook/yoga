@@ -90,14 +90,20 @@ YGSize IntrinsicSizeMeasure(
     measuredHeight = std::min(
         calculateHeight(
             innerText,
-            std::max(longestWordWidth(innerText, widthPerChar), measuredWidth),
+            YGNodeStyleGetFlexDirection(node) == YGFlexDirectionColumn
+                ? measuredWidth
+                : std::max(
+                      longestWordWidth(innerText, widthPerChar), measuredWidth),
             widthPerChar,
             heightPerChar),
         height);
   } else {
     measuredHeight = calculateHeight(
         innerText,
-        std::max(longestWordWidth(innerText, widthPerChar), measuredWidth),
+        YGNodeStyleGetFlexDirection(node) == YGFlexDirectionColumn
+            ? measuredWidth
+            : std::max(
+                  longestWordWidth(innerText, widthPerChar), measuredWidth),
         widthPerChar,
         heightPerChar);
   }

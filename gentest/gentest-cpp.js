@@ -502,7 +502,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   },
 
   YGNodeSetMeasureFunc: {
-    value: function (nodeName, innerText) {
+    value: function (nodeName, innerText, _) {
       this.push(`YGNodeSetContext(${nodeName}, (void*)"${innerText}");`);
       this.push(
         `YGNodeSetMeasureFunc(${nodeName}, &facebook::yoga::test::IntrinsicSizeMeasure);`,

@@ -533,7 +533,11 @@ function setupTestTree(
   }
 
   if (node.innerText && node.children.length === 0) {
-    e.YGNodeSetMeasureFunc(nodeName, node.innerText);
+    e.YGNodeSetMeasureFunc(
+      nodeName,
+      node.innerText,
+      flexDirectionValue(e, node.style['flex-direction']),
+    );
   }
 
   for (let i = 0; i < node.children.length; i++) {
