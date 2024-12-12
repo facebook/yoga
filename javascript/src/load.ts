@@ -9,7 +9,7 @@
 
 // @ts-ignore untyped from Emscripten
 import loadYogaImpl from '../binaries/yoga-wasm-base64-esm.js';
-import wrapAssembly from './wrapAssembly.ts';
+import wrapAssembly from './wrapAssembly.js';
 
 export type {
   Config,
@@ -17,9 +17,9 @@ export type {
   MeasureFunction,
   Node,
   Yoga,
-} from './wrapAssembly.ts';
+} from './wrapAssembly.js';
 
 export async function loadYoga() {
   return wrapAssembly(await loadYogaImpl());
 }
-export * from './generated/YGEnums.ts';
+export * from './generated/YGEnums.js';
