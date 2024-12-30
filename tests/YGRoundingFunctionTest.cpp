@@ -8,6 +8,8 @@
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
 
+#include <cmath>
+
 TEST(YogaTest, rounding_value) {
   // Test that whole numbers are rounded to whole despite ceil/floor flags
   ASSERT_FLOAT_EQ(6.0, YGRoundValueToPixelGrid(6.000001, 2.0, false, false));
@@ -39,6 +41,44 @@ TEST(YogaTest, rounding_value) {
   ASSERT_FLOAT_EQ(-6.0, YGRoundValueToPixelGrid(-5.99, 2.0, false, false));
   ASSERT_FLOAT_EQ(-5.5, YGRoundValueToPixelGrid(-5.99, 2.0, true, false));
   ASSERT_FLOAT_EQ(-6.0, YGRoundValueToPixelGrid(-5.99, 2.0, false, true));
+
+  // Rounding up/down halfway values is as expected for both positive and
+  // negative numbers
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.5, 1.0, false, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.4, 1.0, false, false));
+  ASSERT_FLOAT_EQ(-4, YGRoundValueToPixelGrid(-3.6, 1.0, false, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.499999, 1.0, false, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.500001, 1.0, false, false));
+  ASSERT_FLOAT_EQ(-4, YGRoundValueToPixelGrid(-3.5001, 1.0, false, false));
+
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.5, 1.0, true, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.4, 1.0, true, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.6, 1.0, true, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.499999, 1.0, true, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.500001, 1.0, true, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.5001, 1.0, true, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.00001, 1.0, true, false));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3, 1.0, true, false));
+
+  ASSERT_FLOAT_EQ(-4, YGRoundValueToPixelGrid(-3.5, 1.0, false, true));
+  ASSERT_FLOAT_EQ(-4, YGRoundValueToPixelGrid(-3.4, 1.0, false, true));
+  ASSERT_FLOAT_EQ(-4, YGRoundValueToPixelGrid(-3.6, 1.0, false, true));
+  ASSERT_FLOAT_EQ(-4, YGRoundValueToPixelGrid(-3.499999, 1.0, false, true));
+  ASSERT_FLOAT_EQ(-4, YGRoundValueToPixelGrid(-3.500001, 1.0, false, true));
+  ASSERT_FLOAT_EQ(-4, YGRoundValueToPixelGrid(-3.5001, 1.0, false, true));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3.00001, 1.0, false, true));
+  ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3, 1.0, false, true));
+
+  // NAN is treated as expected:
+  ASSERT_TRUE(std::isnan(YGRoundValueToPixelGrid(
+      std::numeric_limits<double>::quiet_NaN(), 1.5, false, false)));
+  ASSERT_TRUE(std::isnan(YGRoundValueToPixelGrid(
+      1.5, std::numeric_limits<double>::quiet_NaN(), false, false)));
+  ASSERT_TRUE(std::isnan(YGRoundValueToPixelGrid(
+      std::numeric_limits<double>::quiet_NaN(),
+      std::numeric_limits<double>::quiet_NaN(),
+      false,
+      false)));
 }
 
 static YGSize measureText(
