@@ -19,6 +19,13 @@ let package = Package(
         .target(
             name: "core",
             path: ".",
+            exclude: [
+              "capture",
+              "benchmark",
+              "javascript",
+              "java",
+              "tests",
+            ],
             sources: [
                 "yoga"
             ],
