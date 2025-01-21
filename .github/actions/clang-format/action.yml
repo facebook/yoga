@@ -6,7 +6,7 @@ inputs:
   version:
     description: LLVM version to use # Should be kept roughly in sync with arcanist
     required: false
-    default: 12
+    default: 18
 
 runs:
   using: "composite"
