@@ -1,4 +1,19 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.facebook.yoga"
+          android:versionCode="1"
+          android:versionName="1.0"
+    >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="31"
+        />
 
     <application/>
 
