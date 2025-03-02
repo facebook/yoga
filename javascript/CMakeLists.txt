@@ -29,6 +29,12 @@ set(COMPILE_OPTIONS
 
 add_compile_options(${COMPILE_OPTIONS})
 
+link_libraries(embind)
+
+add_library(yogaObjLib OBJECT ${SOURCES})
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
+
 add_link_options(
     ${COMPILE_OPTIONS}
     "SHELL:--closure 1"
@@ -45,15 +51,27 @@ add_link_options(
     "SHELL:-s EXPORT_ES6=1"
     "SHELL:-s WASM=1"
     "SHELL:-s TEXTDECODER=0"
-    # SINGLE_FILE=1 combined with ENVIRONMENT='web' creates code that works on
-    # both bundlders and Node.
-    "SHELL:-s SINGLE_FILE=1"
     "SHELL:-s ENVIRONMENT='web'")
 
-link_libraries(embind)
+add_executable(yoga-wasm-separate-esm $<TARGET_OBJECTS:yogaObjLib>)
 
-add_library(yogaObjLib OBJECT ${SOURCES})
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
+add_link_options(
+    ${COMPILE_OPTIONS}
+    "SHELL:--closure 1"
+    "SHELL:--memory-init-file 0"
+    "SHELL:--no-entry"
+    "SHELL:-s ALLOW_MEMORY_GROWTH=1"
+    "SHELL:-s ASSERTIONS=0"
+    "SHELL:-s DYNAMIC_EXECUTION=0"
+    "SHELL:-s EXPORT_NAME='loadYoga'"
+    "SHELL:-s FETCH_SUPPORT_INDEXEDDB=0"
+    "SHELL:-s FILESYSTEM=0"
+    "SHELL:-s MALLOC='emmalloc'"
+    "SHELL:-s MODULARIZE=1"
+    "SHELL:-s EXPORT_ES6=1"
+    "SHELL:-s WASM=1"
+    "SHELL:-s TEXTDECODER=0"
+    "SHELL:-s SINGLE_FILE=1"
+    "SHELL:-s ENVIRONMENT='web'")
 
 add_executable(yoga-wasm-base64-esm $<TARGET_OBJECTS:yogaObjLib>)
