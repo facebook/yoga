@@ -14,7 +14,8 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./load": "./src/load.ts"
+    "./load": "./src/load.ts",
+    "./loadSeparate": "./src/loadSeparate.ts"
   },
   "files": [
     "dist/binaries/**",
