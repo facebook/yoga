@@ -29,8 +29,6 @@ else()
 add_compile_options(
     # Don't omit frame pointers (e.g. for crash dumps)
     -fno-omit-frame-pointer
-    # Enable exception handling
-    -fexceptions
     # Enable warnings and warnings as errors
     -Wall
     -Werror
