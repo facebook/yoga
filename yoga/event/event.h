@@ -43,7 +43,7 @@ struct LayoutData {
   int cachedMeasures = 0;
   int measureCallbacks = 0;
   std::array<int, static_cast<uint8_t>(LayoutPassReason::COUNT)>
-      measureCallbackReasonsCount = {{0}};
+      measureCallbackReasonsCount;
 };
 
 const char* LayoutPassReasonToString(LayoutPassReason value);
