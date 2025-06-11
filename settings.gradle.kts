@@ -19,10 +19,11 @@ include(":yoga")
 
 project(":yoga").projectDir = file("java")
 
-rootProject.name = "yoga-github"
-
-// If you specify a file inside gradle/gradle-enterprise.gradle.kts
-// you can configure your custom Gradle Enterprise instance
-if (file("./gradle/gradle-enterprise.gradle.kts").exists()) {
-  apply(from = "./gradle/gradle-enterprise.gradle.kts")
+gradleEnterprise {
+  buildScan {
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
+  }
 }
+
+rootProject.name = "yoga-github"
