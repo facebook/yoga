@@ -181,4 +181,34 @@ TEST_F(
   EXPECT_EQ(nodesCloned[0], a.get());
 }
 
+TEST_F(YGPersistentNodeCloningTest, clone_leaf_display_contents_node) {
+  // <View id="A">
+  //   <View id="B" style={{ display: 'contents' }} />
+  // </View>
+
+  auto b = std::make_shared<NodeWrapper>(config);
+  auto a = std::make_shared<NodeWrapper>(config, std::vector{b});
+  YGNodeStyleSetDisplay(b->node, YGDisplayContents);
+
+  // We don't expect any cloning during the first layout
+  onClone = [](...) { FAIL(); };
+
+  YGNodeCalculateLayout(a->node, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  auto aPrime = std::make_shared<NodeWrapper>(config, std::vector{b});
+
+  std::vector<NodeWrapper*> nodesCloned;
+  // We should clone "C"
+  onClone = [&](YGNodeConstRef oldNode,
+                YGNodeConstRef /*owner*/,
+                size_t /*childIndex*/) {
+    nodesCloned.push_back(static_cast<NodeWrapper*>(YGNodeGetContext(oldNode)));
+  };
+
+  YGNodeCalculateLayout(aPrime->node, 100, 100, YGDirectionLTR);
+
+  EXPECT_EQ(nodesCloned.size(), 1);
+  EXPECT_EQ(nodesCloned[0], b.get());
+}
+
 } // namespace facebook::yoga
