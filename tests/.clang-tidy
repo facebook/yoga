@@ -1,0 +1,7 @@
+---
+InheritParentConfig: true
+Checks: '
+-facebook-hte-CArray,
+-modernize-avoid-c-arrays,
+'
+...
