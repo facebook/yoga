@@ -73,3 +73,6 @@ local.properties
 
 # Docusarus build
 .docusaurus
+
+# Android Studio
+.idea
