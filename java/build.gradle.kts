@@ -9,6 +9,7 @@ plugins {
   id("com.android.library")
   id("maven-publish")
   id("signing")
+  id("org.jetbrains.kotlin.android")
 }
 
 group = "com.facebook.yoga"
@@ -48,6 +49,8 @@ android {
     }
   }
 
+  kotlinOptions { jvmTarget = "1.8" }
+
   publishing {
     multipleVariants {
       withSourcesJar()
@@ -60,6 +63,7 @@ android {
 dependencies {
   implementation("com.google.code.findbugs:jsr305:3.0.2")
   implementation("com.facebook.soloader:soloader:0.10.5")
+  implementation("androidx.core:core-ktx:1.16.0")
   testImplementation("junit:junit:4.12")
 }
 
