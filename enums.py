@@ -84,6 +84,12 @@ ENUMS = {
     ],
 }
 
+# Temporary filter enums to not upgrade all enums at once
+KOTLIN_ENUM_NAMES = {"Direction"}
+
+ENUMS_KOTLIN = {name: ENUMS[name] for name in KOTLIN_ENUM_NAMES}
+ENUMS_JAVA = {name: values for name, values in ENUMS.items() if name not in KOTLIN_ENUM_NAMES}
+
 DO_NOT_STRIP = ["LogLevel"]
 
 BITSET_ENUMS = ["Errata"]
@@ -119,6 +125,9 @@ def _format_name(symbol, delimiter=None, transform=None):
 def to_java_upper(symbol):
     return _format_name(symbol, "_", "upper")
 
+
+def to_kotlin_upper(symbol):
+    return _format_name(symbol, "_", "upper")
 
 def to_hyphenated_lower(symbol):
     return _format_name(symbol, "-", "lower")
@@ -215,7 +224,7 @@ with open(root + "/yoga/YGEnums.cpp", "w") as f:
             f.write("\n")
 
 # write out java files
-for name, values in sorted(ENUMS.items()):
+for name, values in sorted(ENUMS_JAVA.items()):
     with open(root + "/java/com/facebook/yoga/Yoga%s.java" % name, "w") as f:
         f.write(get_license("java"))
         f.write("package com.facebook.yoga;\n\n")
@@ -264,6 +273,48 @@ for name, values in sorted(ENUMS.items()):
             '      default: throw new IllegalArgumentException("Unknown enum value: " + value);\n'
         )
         f.write("    }\n")
+        f.write("  }\n")
+        f.write("}\n")
+
+# write out Kotlin files
+for name, values in sorted(ENUMS_KOTLIN.items()):
+    with open(root + "/java/com/facebook/yoga/Yoga%s.kt" % name, "w") as f:
+        f.write(get_license("kotlin"))
+        f.write("package com.facebook.yoga\n\n")
+        f.write("public enum class Yoga%s(public val intValue: Int) {\n" % name)
+        if len(values) > 0:
+            for value in values:
+                if isinstance(value, tuple):
+                    f.write("  %s(%d)" % (to_kotlin_upper(value[0]), value[1]))
+                else:
+                    f.write("  %s(%d)" % (to_kotlin_upper(value), values.index(value)))
+                if values.index(value) is len(values) - 1:
+                    f.write(";\n")
+                else:
+                    f.write(",\n")
+        else:
+            f.write("__EMPTY(-1);")
+        f.write("\n")
+        f.write("  public fun intValue(): Int = intValue\n")
+        f.write("\n")
+        f.write("  public companion object {\n")
+        f.write("    @JvmStatic\n")
+        f.write("    public fun fromInt(value: Int): Yoga%s =\n" % name)
+        f.write("        when (value) {\n")
+        for value in values:
+            if isinstance(value, tuple):
+                f.write(
+                    "          %d -> %s\n" % (value[1], to_kotlin_upper(value[0]))
+                )
+            else:
+                f.write(
+                    "          %d -> %s\n"
+                    % (values.index(value), to_kotlin_upper(value))
+                )
+        f.write(
+            '          else -> throw IllegalArgumentException("Unknown enum value: $value")\n'
+        )
+        f.write("        }\n")
         f.write("  }\n")
         f.write("}\n")
 
