@@ -151,39 +151,39 @@ public interface YogaProps {
 
   /* Getters */
 
-  public fun getWidth(): YogaValue
+  public val width: YogaValue
 
-  public fun getMinWidth(): YogaValue
+  public val minWidth: YogaValue
 
-  public fun getMaxWidth(): YogaValue
+  public val maxWidth: YogaValue
 
-  public fun getHeight(): YogaValue
+  public val height: YogaValue
 
-  public fun getMinHeight(): YogaValue
+  public val minHeight: YogaValue
 
-  public fun getMaxHeight(): YogaValue
+  public val maxHeight: YogaValue
 
-  public fun getStyleDirection(): YogaDirection
+  public val styleDirection: YogaDirection
 
-  public fun getFlexDirection(): YogaFlexDirection
+  public val flexDirection: YogaFlexDirection
 
-  public fun getJustifyContent(): YogaJustify
+  public val justifyContent: YogaJustify
 
-  public fun getAlignItems(): YogaAlign
+  public val alignItems: YogaAlign
 
-  public fun getAlignSelf(): YogaAlign
+  public val alignSelf: YogaAlign
 
-  public fun getAlignContent(): YogaAlign
+  public val alignContent: YogaAlign
 
-  public fun getPositionType(): YogaPositionType
+  public val positionType: YogaPositionType
 
-  public fun getFlexGrow(): Float
+  public val flexGrow: Float
 
-  public fun getFlexShrink(): Float
+  public val flexShrink: Float
 
-  public fun getFlexBasis(): YogaValue
+  public val flexBasis: YogaValue
 
-  public fun getAspectRatio(): Float
+  public val aspectRatio: Float
 
   public fun getMargin(edge: YogaEdge): YogaValue
 
@@ -193,5 +193,5 @@ public interface YogaProps {
 
   public fun getBorder(edge: YogaEdge): Float
 
-  public fun getBoxSizing(): YogaBoxSizing
+  public val boxSizing: YogaBoxSizing
 }
