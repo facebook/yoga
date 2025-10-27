@@ -21,7 +21,9 @@
     (void)argv;                            \
     clock_t __start;                       \
     clock_t __endTimes[NUM_REPETITIONS];   \
-    { BLOCK }                              \
+    {                                      \
+      BLOCK                                \
+    }                                      \
     return 0;                              \
   }
 

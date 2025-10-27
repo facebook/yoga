@@ -70,15 +70,18 @@ TEST(YogaTest, rounding_value) {
   ASSERT_FLOAT_EQ(-3, YGRoundValueToPixelGrid(-3, 1.0, false, true));
 
   // NAN is treated as expected:
-  ASSERT_TRUE(std::isnan(YGRoundValueToPixelGrid(
-      std::numeric_limits<double>::quiet_NaN(), 1.5, false, false)));
-  ASSERT_TRUE(std::isnan(YGRoundValueToPixelGrid(
-      1.5, std::numeric_limits<double>::quiet_NaN(), false, false)));
-  ASSERT_TRUE(std::isnan(YGRoundValueToPixelGrid(
-      std::numeric_limits<double>::quiet_NaN(),
-      std::numeric_limits<double>::quiet_NaN(),
-      false,
-      false)));
+  ASSERT_TRUE(
+      std::isnan(YGRoundValueToPixelGrid(
+          std::numeric_limits<double>::quiet_NaN(), 1.5, false, false)));
+  ASSERT_TRUE(
+      std::isnan(YGRoundValueToPixelGrid(
+          1.5, std::numeric_limits<double>::quiet_NaN(), false, false)));
+  ASSERT_TRUE(
+      std::isnan(YGRoundValueToPixelGrid(
+          std::numeric_limits<double>::quiet_NaN(),
+          std::numeric_limits<double>::quiet_NaN(),
+          false,
+          false)));
 }
 
 static YGSize measureText(

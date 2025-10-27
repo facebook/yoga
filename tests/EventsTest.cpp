@@ -332,8 +332,9 @@ void EventTest::listen(
       break;
     case Event::LayoutPassEnd: {
       auto& eventData = data.get<Event::LayoutPassEnd>();
-      events.push_back(createArgs<Event::LayoutPassEnd>(
-          node, data, {*eventData.layoutData}));
+      events.push_back(
+          createArgs<Event::LayoutPassEnd>(
+              node, data, {*eventData.layoutData}));
       break;
     }
 
