@@ -8,7 +8,7 @@
 #pragma once
 
 #include <stddef.h>
-
+#include <cstdint>
 #include <yoga/YGNode.h>
 #include <yoga/YGValue.h>
 
@@ -28,6 +28,16 @@ YG_EXPORT void YGNodeStyleSetJustifyContent(
     YGNodeRef node,
     YGJustify justifyContent);
 YG_EXPORT YGJustify YGNodeStyleGetJustifyContent(YGNodeConstRef node);
+
+YG_EXPORT void YGNodeStyleSetJustifyItems(
+    YGNodeRef node,
+    YGJustify justifyItems);
+YG_EXPORT YGJustify YGNodeStyleGetJustifyItems(YGNodeConstRef node);
+
+YG_EXPORT void YGNodeStyleSetJustifySelf(
+    YGNodeRef node,
+    YGJustify justifySelf);
+YG_EXPORT YGJustify YGNodeStyleGetJustifySelf(YGNodeConstRef node);
 
 YG_EXPORT void YGNodeStyleSetAlignContent(YGNodeRef node, YGAlign alignContent);
 YG_EXPORT YGAlign YGNodeStyleGetAlignContent(YGNodeConstRef node);
@@ -147,5 +157,22 @@ YG_EXPORT YGValue YGNodeStyleGetMaxHeight(YGNodeConstRef node);
 
 YG_EXPORT void YGNodeStyleSetAspectRatio(YGNodeRef node, float aspectRatio);
 YG_EXPORT float YGNodeStyleGetAspectRatio(YGNodeConstRef node);
+
+// Grid Item Properties  
+YG_EXPORT void YGNodeStyleSetGridColumnStart(YGNodeRef node, int32_t gridColumnStart);
+YG_EXPORT void YGNodeStyleSetGridColumnStartAuto(YGNodeRef node);
+YG_EXPORT int32_t YGNodeStyleGetGridColumnStart(YGNodeConstRef node);
+
+YG_EXPORT void YGNodeStyleSetGridColumnEnd(YGNodeRef node, int32_t gridColumnEnd);
+YG_EXPORT void YGNodeStyleSetGridColumnEndAuto(YGNodeRef node);
+YG_EXPORT int32_t YGNodeStyleGetGridColumnEnd(YGNodeConstRef node);
+
+YG_EXPORT void YGNodeStyleSetGridRowStart(YGNodeRef node, int32_t gridRowStart);
+YG_EXPORT void YGNodeStyleSetGridRowStartAuto(YGNodeRef node);
+YG_EXPORT int32_t YGNodeStyleGetGridRowStart(YGNodeConstRef node);
+
+YG_EXPORT void YGNodeStyleSetGridRowEnd(YGNodeRef node, int32_t gridRowEnd);
+YG_EXPORT void YGNodeStyleSetGridRowEndAuto(YGNodeRef node);
+YG_EXPORT int32_t YGNodeStyleGetGridRowEnd(YGNodeConstRef node);
 
 YG_EXTERN_C_END
