@@ -37,6 +37,10 @@ namespace facebook::yoga {
       return GridTrackSize{StyleSizeLength::ofAuto(), StyleSizeLength::stretch(fraction)};
     }
 
+    static GridTrackSize percent(float percentage) {
+      return GridTrackSize{StyleSizeLength::ofAuto(), StyleSizeLength::percent(percentage)};
+    }
+
     static GridTrackSize minmax(StyleSizeLength min, StyleSizeLength max) {
       return GridTrackSize{min, max};
     }

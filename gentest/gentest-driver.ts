@@ -76,14 +76,16 @@ for (const fileName of fixtures) {
   // TODO: replace this with something more robust than just blindly replacing
   // start/end in the entire fixture
   const ltrFixture = fixture
-    .replaceAll('start', 'left')
-    .replaceAll('end', 'right')
+    // prevent replacing grid-column-start and grid-row-start
+    .replaceAll(/(?<!grid-column-)(?<!grid-row-)start/g, 'left')
+    .replaceAll(/(?<!grid-column-)(?<!grid-row-)end/g, 'right')
     .replaceAll('flex-left', 'flex-start')
     .replaceAll('flex-right', 'flex-end');
 
   const rtlFixture = fixture
-    .replaceAll('start', 'right')
-    .replaceAll('end', 'left')
+    // prevent replacing grid-column-start and grid-row-start
+    .replaceAll(/(?<!grid-column-)(?<!grid-row-)start/g, 'right')
+    .replaceAll(/(?<!grid-column-)(?<!grid-row-)end/g, 'left')
     .replaceAll('flex-right', 'flex-start')
     .replaceAll('flex-left', 'flex-end');
 

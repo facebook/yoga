@@ -11,7 +11,7 @@
 #include <yoga/node/Node.h>
 #include <vector>
 #include <yoga/style/GridLine.h>
-#include <map>
+#include <unordered_map>
 #include <unordered_set>
 
 namespace facebook::yoga {
@@ -133,7 +133,8 @@ struct AutoPlacement {
   static AutoPlacement performAutoPlacement(yoga::Node* node) {
     std::vector<GridItemArea> gridItemAreas;
     gridItemAreas.reserve(node->getChildren().size());
-    std::unordered_set<yoga::Node*> placedNodes;
+    std::unordered_set<yoga::Node*> placedItems;
+    placedItems.reserve(node->getChildren().size());
     int32_t minColumnStart = 0;
     int32_t minRowStart = 0;
     int32_t maxColumnEnd = static_cast<int32_t>(node->style().gridTemplateColumns().size());
@@ -141,7 +142,7 @@ struct AutoPlacement {
     // function to push back a grid item placement and record the min/max column/row start/end
     auto recordGridArea = [&](GridItemArea& gridItemArea) {
       gridItemAreas.push_back(gridItemArea);
-      placedNodes.insert(gridItemArea.node);
+      placedItems.insert(gridItemArea.node);
       minColumnStart = std::min(minColumnStart, gridItemArea.columnStart);
       minRowStart = std::min(minRowStart, gridItemArea.rowStart);
       maxColumnEnd = std::max(maxColumnEnd, gridItemArea.columnEnd);
@@ -154,7 +155,7 @@ struct AutoPlacement {
     // Step 1: Position anything that's not auto-positioned.
     // In spec level 1, span is always definite. Default is 1.
     // So for grid position to be definite, we need either start or end to be definite.
-    for (auto child: node->getChildren()) {
+    for (const auto& child: node->getChildren()) {
       if (child->style().positionType() == PositionType::Absolute) {
         continue;
       }
@@ -193,8 +194,8 @@ struct AutoPlacement {
     
     // Step 2: Process the items locked to a given row.
     // Definite row positions only, exclude items with definite column positions.
-    std::map<int32_t, int32_t> rowStartToColumnStartCache;
-    for (auto child: node->getChildren()) {
+    std::unordered_map<int32_t, int32_t> rowStartToColumnStartCache;
+    for (const auto& child: node->getChildren()) {
       if (child->style().positionType() == PositionType::Absolute) {
         continue;
       }
@@ -214,9 +215,8 @@ struct AutoPlacement {
         auto rowStart = rowPlacement.start;
         auto rowEnd = rowPlacement.end;
     
-        auto columnStart = rowStartToColumnStartCache.find(rowStart) == 
-          rowStartToColumnStartCache.end() ? 
-          minColumnStart : rowStartToColumnStartCache[rowStart];
+        auto columnStart = rowStartToColumnStartCache.contains(rowStart) ? 
+          rowStartToColumnStartCache[rowStart] : minColumnStart;
     
         auto columnPlacement = GridItemTrackPlacement::resolveLinePlacement(gridItemColumnStart, gridItemColumnEnd, explicitColumnLineCount);
         auto columnSpan = columnPlacement.span;
@@ -232,8 +232,8 @@ struct AutoPlacement {
             rowEnd,
             child
           };
-    
-          for (auto placedItem: gridItemAreas) {
+          // TODO: Optimise overlap check with a hash based alternative if necessary
+          for (const auto& placedItem: gridItemAreas) {
             if (gridItemArea.overlaps(placedItem)) {
               columnStart++;
               columnEnd = columnStart + columnSpan;
@@ -254,7 +254,7 @@ struct AutoPlacement {
     // Step 3: Determine the columns in the implicit grid.
     // TODO: we dont need this loop. we can do it in above steps. But keeping it for now, to match the spec.
     auto largestColumnSpan = 1;
-    for (auto child: node->getChildren()) {
+    for (const auto& child: node->getChildren()) {
       if (child->style().positionType() == PositionType::Absolute) {
         continue;
       }
@@ -290,12 +290,12 @@ struct AutoPlacement {
       minColumnStart,
       minRowStart
     };
-    for (auto child: node->getChildren()) {
+    for (const auto& child: node->getChildren()) {
       if (child->style().positionType() == PositionType::Absolute) {
         continue;
       }
     
-      if (!placedNodes.contains(child)) {
+      if (!placedItems.contains(child)) {
         // If the item has a definite column position:
         auto gridItemColumnStart = child->style().gridColumnStart();
         auto gridItemColumnEnd = child->style().gridColumnEnd();
@@ -341,7 +341,7 @@ struct AutoPlacement {
             };
             bool hasOverlap = false;
     
-            for (auto placedItem: gridItemAreas) {
+            for (const auto& placedItem: gridItemAreas) {
               if (proposedPlacement.overlaps(placedItem)) {
                 hasOverlap = true;
                 break;
@@ -383,7 +383,7 @@ struct AutoPlacement {
               };
               bool hasOverlap = false;
     
-              for (auto placedItem: gridItemAreas) {
+              for (const auto& placedItem: gridItemAreas) {
                 if (proposedPlacement.overlaps(placedItem)) {
                   hasOverlap = true;
                   break;

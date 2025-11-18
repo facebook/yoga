@@ -344,8 +344,7 @@ TEST_F(TrackSizingTest, distributeSpaceToTracksBaseSize_basic_distribution) {
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        200.0f,
-        SpaceDistributionPhase::AccommodateMinimumContribution
+        200.0f
     );
 
     // Each track should get 100px
@@ -389,8 +388,7 @@ TEST_F(TrackSizingTest, distributeSpaceToTracksBaseSize_with_growth_limits) {
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        200.0f,
-        SpaceDistributionPhase::AccommodateMinimumContribution
+        200.0f
     );
 
     // First track should be limited to its growth limit (80px)
@@ -435,8 +433,7 @@ TEST_F(TrackSizingTest, distributeSpaceToTracksBaseSize_no_space_to_distribute) 
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        200.0f,
-        SpaceDistributionPhase::AccommodateMinimumContribution
+        200.0f
     );
 
     // Tracks should remain unchanged
@@ -478,8 +475,7 @@ TEST_F(TrackSizingTest, distributeSpaceToTracksBaseSize_single_track) {
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        150.0f,
-        SpaceDistributionPhase::AccommodateMinimumContribution
+        150.0f
     );
 
     EXPECT_EQ(columnTracks[0].baseSize, 150.0f);
@@ -532,7 +528,8 @@ TEST_F(TrackSizingTest, distributeSpaceToTracksGrowthLimit_basic_distribution) {
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        300.0f  // Total contribution: 300px, currently have 100px base size
+        300.0f,
+        true
     );
 
     // Each track's growth limit should be set (was INFINITY)
@@ -583,7 +580,8 @@ TEST_F(TrackSizingTest, distributeSpaceToTracksGrowthLimit_not_infinitely_growab
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        300.0f
+        300.0f,
+        true
     );
 
     // First track shouldn't grow (not infinitely growable)
@@ -635,8 +633,7 @@ TEST_F(TrackSizingTest, distributeSpaceToFlexibleTracks_sum_gte_1) {
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        300.0f,
-        SpaceDistributionPhase::AccommodateMinimumContribution
+        300.0f
     );
 
     // First track: 300 * (1/3) = 100px
@@ -681,8 +678,7 @@ TEST_F(TrackSizingTest, distributeSpaceToFlexibleTracks_sum_lt_1) {
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        300.0f,
-        SpaceDistributionPhase::AccommodateMinimumContribution
+        300.0f
     );
 
     // Proportional space = 300 * 0.5 = 150px
@@ -733,8 +729,7 @@ TEST_F(TrackSizingTest, distributeSpaceToFlexibleTracks_with_existing_base) {
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        300.0f,
-        SpaceDistributionPhase::AccommodateMinimumContribution
+        300.0f
     );
 
     // Space to distribute = 300 - 100 = 200px
@@ -777,8 +772,7 @@ TEST_F(TrackSizingTest, distributeSpaceToFlexibleTracks_single_track) {
         Dimension::Width,
         affectedTracks,
         spannedTracks,
-        250.0f,
-        SpaceDistributionPhase::AccommodateMinimumContribution
+        250.0f
     );
 
     EXPECT_FLOAT_EQ(columnTracks[0].baseSize, 250.0f);
