@@ -254,7 +254,7 @@ void calculateGridLayoutInternal(Node* node,
     for (auto& item : itemAreas) {
       auto [containingBlockWidth, containingBlockHeight] = trackSizing.getContainingBlockSizeForItem(item);
       float gridAreaLeft = 0.0f;
-      for (size_t i = 0; i < item.columnStart && i < columnTracks.size(); i++) {
+      for (size_t i = 0; i < static_cast<size_t>(item.columnStart) && i < columnTracks.size(); i++) {
         gridAreaLeft += columnTracks[i].baseSize;
         if (i < columnTracks.size() - 1) {
           // Add both explicit gap and content-distribution spacing
@@ -263,7 +263,7 @@ void calculateGridLayoutInternal(Node* node,
       }
 
       float gridAreaTop = 0.0f;
-      for (size_t i = 0; i < item.rowStart && i < rowTracks.size(); i++) {
+      for (size_t i = 0; i < static_cast<size_t>(item.rowStart) && i < rowTracks.size(); i++) {
         gridAreaTop += rowTracks[i].baseSize;
         if (i < rowTracks.size() - 1) {
           // Add both explicit gap and content-distribution spacing
@@ -362,29 +362,29 @@ void calculateGridLayoutInternal(Node* node,
       // alignment of grid items happen in the grid area
       // measured dimension includes padding and border
       float actualItemWidth = item.node->getLayout().measuredDimension(Dimension::Width);
-      auto freeSpaceInlineAxis = containingBlockWidth - actualItemWidth - marginInlineStart - marginInlineEnd;
+      auto freeSpaceInlineAxisItem = containingBlockWidth - actualItemWidth - marginInlineStart - marginInlineEnd;
       float leftAutoMarginOffset = 0.0f;
       float rightAutoMarginOffset = 0.0f;
       // https://www.w3.org/TR/css-grid-1/#auto-margins
       // auto margins in either axis absorb positive free space prior to alignment via the box alignment properties, thereby disabling the effects of any self-alignment properties in that axis.
       if (item.node->style().flexStartMarginIsAuto(FlexDirection::Row, direction) 
           && item.node->style().flexEndMarginIsAuto(FlexDirection::Row, direction)) {
-        leftAutoMarginOffset = freeSpaceInlineAxis / 2;
-        rightAutoMarginOffset = freeSpaceInlineAxis / 2;
-        freeSpaceInlineAxis = 0.0f;
+        leftAutoMarginOffset = freeSpaceInlineAxisItem / 2;
+        rightAutoMarginOffset = freeSpaceInlineAxisItem / 2;
+        freeSpaceInlineAxisItem = 0.0f;
       } else if (item.node->style().flexStartMarginIsAuto(FlexDirection::Row, direction)) {
-        leftAutoMarginOffset = freeSpaceInlineAxis;
-        freeSpaceInlineAxis = 0.0f;
+        leftAutoMarginOffset = freeSpaceInlineAxisItem;
+        freeSpaceInlineAxisItem = 0.0f;
       } else if (item.node->style().flexEndMarginIsAuto(FlexDirection::Row, direction)) {
-        rightAutoMarginOffset = freeSpaceInlineAxis;
-        freeSpaceInlineAxis = 0.0f;
+        rightAutoMarginOffset = freeSpaceInlineAxisItem;
+        freeSpaceInlineAxisItem = 0.0f;
       }
       
       float justifySelfOffset = 0.0f;
       if (justifySelf == Justify::End) {
-        justifySelfOffset = freeSpaceInlineAxis;
+        justifySelfOffset = freeSpaceInlineAxisItem;
       } else if (justifySelf == Justify::Center) {
-        justifySelfOffset = freeSpaceInlineAxis / 2;
+        justifySelfOffset = freeSpaceInlineAxisItem / 2;
       }
       
       float finalLeft;
@@ -397,24 +397,24 @@ void calculateGridLayoutInternal(Node* node,
       item.node->setLayoutPosition(finalLeft, PhysicalEdge::Left);
 
       float actualItemHeight = item.node->getLayout().measuredDimension(Dimension::Height);
-      auto freeSpaceBlockAxis = containingBlockHeight - actualItemHeight - marginBlockStart - marginBlockEnd;
+      auto freeSpaceBlockAxisItem = containingBlockHeight - actualItemHeight - marginBlockStart - marginBlockEnd;
       float topAutoMarginOffset = 0.0f;
       if (item.node->style().flexStartMarginIsAuto(FlexDirection::Column, direction) 
             && item.node->style().flexEndMarginIsAuto(FlexDirection::Column, direction)) {
-        topAutoMarginOffset = freeSpaceBlockAxis / 2;
-        freeSpaceBlockAxis = 0.0f;
+        topAutoMarginOffset = freeSpaceBlockAxisItem / 2;
+        freeSpaceBlockAxisItem = 0.0f;
       } else if (item.node->style().flexStartMarginIsAuto(FlexDirection::Column, direction)) {
-        topAutoMarginOffset = freeSpaceBlockAxis;
-        freeSpaceBlockAxis = 0.0f;
+        topAutoMarginOffset = freeSpaceBlockAxisItem;
+        freeSpaceBlockAxisItem = 0.0f;
       } else if (item.node->style().flexEndMarginIsAuto(FlexDirection::Column, direction)) {
-        freeSpaceBlockAxis = 0.0f;
+        freeSpaceBlockAxisItem = 0.0f;
       }
 
       float alignSelfOffset = 0.0f;
       if (alignSelf == Align::End) {
-        alignSelfOffset = freeSpaceBlockAxis;
+        alignSelfOffset = freeSpaceBlockAxisItem;
       } else if (alignSelf == Align::Center) {
-        alignSelfOffset = freeSpaceBlockAxis / 2;
+        alignSelfOffset = freeSpaceBlockAxisItem / 2;
       }
 
       float finalTop = gridAreaTop + marginBlockStart + topAutoMarginOffset + alignSelfOffset + gridBlockOffset + leadingPaddingAndBorderBlock;
@@ -451,13 +451,13 @@ GridTracks createGridTracks(yoga::Node* node, const AutoPlacement& autoPlacement
     columnTracks.push_back(autoColumnTrack);
   }
 
-  for (auto i = 0; i < gridExplicitColumns.size(); i++) {
+  for (size_t i = 0; i < gridExplicitColumns.size(); i++) {
     columnTracks.push_back(gridExplicitColumns[i]);
   }
 
   // The first track after the last explicitly-sized track receives the first specified size
   // i.e. the pattern repeats forwards
-  for (auto i = 0; i < autoPlacement.maxColumnEnd - gridExplicitColumns.size(); i++) {
+  for (size_t i = 0; i < static_cast<size_t>(autoPlacement.maxColumnEnd) - gridExplicitColumns.size(); i++) {
     auto autoColumnTrack = autoColumnTracks[i % autoColumnTracksSize];
     columnTracks.push_back(autoColumnTrack);
   }
@@ -469,10 +469,10 @@ GridTracks createGridTracks(yoga::Node* node, const AutoPlacement& autoPlacement
     auto autoRowTrack = autoRowTracks[autoRowTracksSize - currentRowTrackIndex - 1];
     rowTracks.push_back(autoRowTrack);
   }
-  for (auto i = 0; i < gridExplicitRows.size(); i++) {
+  for (size_t i = 0; i < gridExplicitRows.size(); i++) {
     rowTracks.push_back(gridExplicitRows[i]);
   }
-  for (auto i = 0; i < autoPlacement.maxRowEnd - gridExplicitRows.size(); i++) {
+  for (size_t i = 0; i < static_cast<size_t>(autoPlacement.maxRowEnd) - gridExplicitRows.size(); i++) {
     auto autoRowTrack = autoRowTracks[i % autoRowTracksSize];
     rowTracks.push_back(autoRowTrack);
   }

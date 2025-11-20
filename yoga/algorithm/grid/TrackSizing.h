@@ -514,7 +514,11 @@ struct TrackSizing {
   void distributeFreeSpaceToTracks(Dimension dimension, float targetAvailableSize) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
-    auto freeSpace = calculateFreeSpace(dimension);
+    float freeSpace = 0.0f;
+    if (yoga::isDefined(targetAvailableSize)) {
+      auto totalBaseSize = getTotalBaseSize(dimension);
+      freeSpace = std::max(0.0f, targetAvailableSize - totalBaseSize);
+    }
     
     // For the purpose of this step: if sizing the grid container under a max-content constraint, the free space is infinite; 
     // if sizing under a min-content constraint, the free space is zero.
@@ -864,18 +868,18 @@ struct TrackSizing {
   };
 
   float getMaxContentContribution(const GridItemArea& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    auto widthSizingMode = dimension == Dimension::Width ? SizingMode::MaxContent : itemConstraints.widthSizingMode;
-    auto heightSizingMode = dimension == Dimension::Height ? SizingMode::MaxContent : itemConstraints.heightSizingMode;
-    auto availableWidth = dimension == Dimension::Width ? YGUndefined : itemConstraints.width;
-    auto availableHeight = dimension == Dimension::Height ? YGUndefined : itemConstraints.height;
+    auto itemWidthSizingMode = dimension == Dimension::Width ? SizingMode::MaxContent : itemConstraints.widthSizingMode;
+    auto itemHeightSizingMode = dimension == Dimension::Height ? SizingMode::MaxContent : itemConstraints.heightSizingMode;
+    auto itemAvailableWidth = dimension == Dimension::Width ? YGUndefined : itemConstraints.width;
+    auto itemAvailableHeight = dimension == Dimension::Height ? YGUndefined : itemConstraints.height;
 
     calculateLayoutInternal(
         item.node,
-        availableWidth,
-        availableHeight,
+        itemAvailableWidth,
+        itemAvailableHeight,
         node->getLayout().direction(),
-        widthSizingMode,
-        heightSizingMode,
+        itemWidthSizingMode,
+        itemHeightSizingMode,
         itemConstraints.containingBlockWidth,
         itemConstraints.containingBlockHeight,
         false,
@@ -1276,19 +1280,19 @@ struct TrackSizing {
     auto rowGap = node->style().computeGapForDimension(Dimension::Height, containerInnerHeight);
     
     // Calculate width: sum of spanned column tracks + gaps
-    for (int i = item.columnStart; i < item.columnEnd && i < (int)columnTracks.size(); i++) {
+    for (size_t i = item.columnStart; i < static_cast<size_t>(item.columnEnd) && i < columnTracks.size(); i++) {
       containingBlockWidth += columnTracks[i].baseSize;
       // Add column gap if not the last spanned track
-      if (i < item.columnEnd - 1) {
+      if (i < static_cast<size_t>(item.columnEnd - 1)) {
         containingBlockWidth += columnGap;
       }
     }
     
     // Calculate height: sum of spanned row tracks + gaps
-    for (int i = item.rowStart; i < item.rowEnd && i < (int)rowTracks.size(); i++) {
+    for (size_t i = item.rowStart; i < static_cast<size_t>(item.rowEnd) && i < rowTracks.size(); i++) {
       containingBlockHeight += rowTracks[i].baseSize;
       // Add row gap if not the last spanned track
-      if (i < item.rowEnd - 1) {
+      if (i < static_cast<size_t>(item.rowEnd - 1)) {
         containingBlockHeight += rowGap;
       }
     }
@@ -1306,10 +1310,10 @@ struct TrackSizing {
     auto rowGap = node->style().computeGapForDimension(Dimension::Height, containerInnerHeight);
     auto columnGap = node->style().computeGapForDimension(Dimension::Width, containerInnerWidth);
 
-    for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
+    for (size_t i = item.rowStart; i < static_cast<size_t>(item.rowEnd) && i < rowTracks.size(); i++) {
       if (isFixedSizingFunction(rowTracks[i].maxSizingFunction, containerInnerHeight)) {
         containingBlockHeight += rowTracks[i].maxSizingFunction.resolve(containerInnerHeight).unwrap();
-        if (i < item.rowEnd - 1) {
+        if (i < static_cast<size_t>(item.rowEnd - 1)) {
           containingBlockHeight += rowGap;
         }
       } else {
@@ -1321,10 +1325,10 @@ struct TrackSizing {
     // In trackSizing columnTracks
     // If calculating the layout of a grid item in this step depends on the available space in the block axis, assume the available space that it would have if any row with a definite max track sizing function had that size and all other rows were infinite.
     if (dimension == Dimension::Width) {
-      for (size_t i = item.columnStart; i < item.columnEnd && i < columnTracks.size(); i++) {
+      for (size_t i = item.columnStart; i < static_cast<size_t>(item.columnEnd) && i < columnTracks.size(); i++) {
         if (isFixedSizingFunction(columnTracks[i].maxSizingFunction, containerInnerWidth)) {
           containingBlockWidth += columnTracks[i].maxSizingFunction.resolve(containerInnerWidth).unwrap();
-          if (i < item.columnEnd - 1) {
+          if (i < static_cast<size_t>(item.columnEnd - 1)) {
             containingBlockWidth += columnGap;
           }
         } else {
@@ -1336,9 +1340,9 @@ struct TrackSizing {
     // In trackSizing rowTracks
     // To find the inline-axis available space for any items whose block-axis size contributions require it, use the grid column sizes calculated in the previous step. If the grid container’s inline size is definite, also apply justify-content to account for the effective column gap sizes.
     else if (dimension == Dimension::Height) {
-      for (size_t i = item.columnStart; i < item.columnEnd && i < columnTracks.size(); i++) {
+      for (size_t i = item.columnStart; i < static_cast<size_t>(item.columnEnd) && i < columnTracks.size(); i++) {
         containingBlockWidth += columnTracks[i].baseSize;
-        if (i < item.columnEnd - 1) {
+        if (i < static_cast<size_t>(item.columnEnd - 1)) {
           containingBlockWidth += columnGap;
         }
       }

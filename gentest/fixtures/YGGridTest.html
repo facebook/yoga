@@ -1,5 +1,5 @@
 <div
-  id="grid_template_all_properties"
+  id="grid_all_properties"
   style="
     display: grid;
     grid-template-rows: 100px 100px 100px;
@@ -27,7 +27,7 @@
 </div>
 
 <div
-  id="grid_template_auto_tracks"
+  id="grid_auto_tracks"
   style="
     display: grid;
     width: 220px;
@@ -42,7 +42,7 @@
 </div>
 
 <div
-  id="grid_template_auto_tracks_with_gap"
+  id="grid_auto_tracks_with_gap"
   style="
     display: grid;
     grid-template-columns: auto auto;
@@ -53,4 +53,475 @@
   <div style="width: 120px; height: 40px"></div>
   <div style="width: 120px; height: 40px"></div>
   <div style="padding: 40px"></div>
+</div>
+
+<div
+  id="grid_auto_tracks_with_margins"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 200px 200px;
+    column-gap: 10px;
+    row-gap: 15px;
+  ">
+  <div style="width: 120px; height: 40px; margin-top: 10px"></div>
+  <div style="width: 120px; height: 40px; margin-top: 10px"></div>
+  <div style="padding: 40px"></div>
+</div>
+
+<div
+  id="grid_spanning_items"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 100px 100px 100px;
+    gap: 10px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 6;
+      grid-row-start: 1;
+      grid-row-end: 3;
+    "></div>
+  <div style="padding: 40px; grid-column-start: 1; grid-column-end: 3"></div>
+  <div style="width: 100px; height: 100px"></div>
+</div>
+
+<div
+  id="grid_holy_grail"
+  style="
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: 80px 1fr 60px;
+    width: 500px;
+    height: 400px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 100%;
+      height: 80px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 200px;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 100%;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 200px;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 4;
+      grid-row-start: 3;
+      grid-row-end: 4;
+      width: 100%;
+      height: 60px;
+    "></div>
+</div>
+
+<div
+  id="grid_sidebar_layout"
+  style="
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 1fr;
+    width: 400px;
+    height: 500px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 250px;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 100%;
+      height: 100%;
+    "></div>
+</div>
+
+<div
+  id="grid_header_content_footer"
+  style="
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px 1fr 80px;
+    width: 400px;
+    height: 600px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 100%;
+      height: 100px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 100%;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 3;
+      grid-row-end: 4;
+      width: 100%;
+      height: 80px;
+    "></div>
+</div>
+
+<div
+  id="grid_card_layout"
+  style="
+    display: grid;
+    grid-template-columns: 200px 200px 200px;
+    grid-template-rows: 250px 250px;
+    width: 600px;
+    height: 500px;
+    gap: 20px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 200px;
+      height: 250px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 200px;
+      height: 250px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 200px;
+      height: 250px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 200px;
+      height: 250px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 200px;
+      height: 250px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 200px;
+      height: 250px;
+    "></div>
+</div>
+
+<div
+  id="grid_dashboard_layout"
+  style="
+    display: grid;
+    grid-template-columns: 220px 1fr 1fr;
+    grid-template-rows: 70px 1fr 1fr;
+    width: 500px;
+    height: 600px;
+    gap: 10px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 100%;
+      height: 70px;
+    "></div>
+  <div
+    id="sidebar"
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 4;
+      width: 220px;
+      height: 100%;
+    "></div>
+  <div
+    id="widget1"
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 100%;
+      height: 100%;
+    "></div>
+  <div
+    id="widget2"
+    style="
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 100%;
+      height: 100%;
+    "></div>
+  <div
+    id="main"
+    style="
+      grid-column-start: 2;
+      grid-column-end: 4;
+      grid-row-start: 3;
+      grid-row-end: 4;
+      width: 100%;
+      height: 100%;
+    "></div>
+</div>
+
+<div
+  id="grid_magazine_layout"
+  style="
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 300px 200px 200px;
+    width: 900px;
+    height: 700px;
+    gap: 15px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 3;
+      width: 100%;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 100%;
+      height: 300px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 100%;
+      height: 200px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 3;
+      grid-row-end: 4;
+      width: 100%;
+      height: 200px;
+    "></div>
+</div>
+
+<div
+  id="grid_app_layout"
+  style="
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 60px 1fr 50px;
+    width: 400px;
+    height: 600px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 60px;
+      height: 60px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 100%;
+      height: 60px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 60px;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 100%;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 3;
+      grid-row-end: 4;
+      width: 100%;
+      height: 50px;
+    "></div>
+</div>
+
+<div
+  id="grid_asymmetric_layout"
+  style="
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 200px 200px 200px;
+    width: 600px;
+    height: 600px;
+    gap: 10px;
+  ">
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      width: 100%;
+      height: 200px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 3;
+      width: 100%;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 4;
+      width: 100%;
+      height: 100%;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;
+      width: 100%;
+      height: 200px;
+    "></div>
+  <div
+    style="
+      grid-column-start: 2;
+      grid-column-end: 4;
+      grid-row-start: 3;
+      grid-row-end: 4;
+      width: 100%;
+      height: 200px;
+    "></div>
+</div>
+
+<div
+  id="grid_with_percentage_tracks"
+  style="
+    display: grid;
+    grid-template-columns: 100px 20%;
+    grid-template-rows: 50px 40%;
+  ">
+  <div></div>
+  <div></div>
+</div>
+
+<div
+  id="grid_percentage_tracks_with_definite_size"
+  style="
+    display: grid;
+    grid-template-columns: auto 20%;
+    grid-template-rows: 50px 40%;
+    width: 300px;
+    height: 300px;
+    gap: 10%;
+  ">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
 </div>
