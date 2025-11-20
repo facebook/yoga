@@ -193,6 +193,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifySpaceAround: {value: 'YogaJustify.SPACE_AROUND'},
   YGJustifySpaceBetween: {value: 'YogaJustify.SPACE_BETWEEN'},
   YGJustifySpaceEvenly: {value: 'YogaJustify.SPACE_EVENLY'},
+  YGJustifyStretch: {value: 'YogaJustify.STRETCH'},
 
   YGOverflowHidden: {value: 'YogaOverflow.HIDDEN'},
   YGOverflowVisible: {value: 'YogaOverflow.VISIBLE'},
@@ -598,9 +599,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
         }
       }
 
-      this.push(
-        `${nodeName}.setGridAutoColumns(${nodeName}GridAutoColumns);`,
-      );
+      this.push(`${nodeName}.setGridAutoColumns(${nodeName}GridAutoColumns);`);
     },
   },
 
@@ -627,9 +626,7 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
         }
       }
 
-      this.push(
-        `${nodeName}.setGridAutoRows(${nodeName}GridAutoRows);`,
-      );
+      this.push(`${nodeName}.setGridAutoRows(${nodeName}GridAutoRows);`);
     },
   },
 

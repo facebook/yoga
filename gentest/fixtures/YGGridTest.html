@@ -1,5 +1,5 @@
 <div
-  id="grid_template_all_properties_2"
+  id="grid_template_all_properties"
   style="
     display: grid;
     grid-template-rows: 100px 100px 100px;
@@ -24,4 +24,33 @@
       grid-row-end: 4;
     "></div>
   <div></div>
+</div>
+
+<div
+  id="grid_template_auto_tracks"
+  style="
+    display: grid;
+    width: 220px;
+    height: 160px;
+    grid-template-columns: auto 100px;
+    grid-template-rows: 50px auto;
+    justify-content: stretch;
+  ">
+  <div style="height: 50px; padding: 10px"></div>
+  <div></div>
+  <div></div>
+</div>
+
+<div
+  id="grid_template_auto_tracks_with_gap"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    row-gap: 15px;
+  ">
+  <div style="width: 120px; height: 40px"></div>
+  <div style="width: 120px; height: 40px"></div>
+  <div style="padding: 40px"></div>
 </div>

@@ -156,6 +156,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifySpaceAround: {value: 'Justify.SpaceAround'},
   YGJustifySpaceBetween: {value: 'Justify.SpaceBetween'},
   YGJustifySpaceEvenly: {value: 'Justify.SpaceEvenly'},
+  YGJustifyStretch: {value: 'Justify.Stretch'},
 
   YGOverflowHidden: {value: 'Overflow.Hidden'},
   YGOverflowVisible: {value: 'Overflow.Visible'},
@@ -555,9 +556,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
         }
       }
 
-      this.push(
-        `${nodeName}.setGridAutoColumns(${nodeName}GridAutoColumns);`,
-      );
+      this.push(`${nodeName}.setGridAutoColumns(${nodeName}GridAutoColumns);`);
     },
   },
 
@@ -582,9 +581,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
         }
       }
 
-      this.push(
-        `${nodeName}.setGridAutoRows(${nodeName}GridAutoRows);`,
-      );
+      this.push(`${nodeName}.setGridAutoRows(${nodeName}GridAutoRows);`);
     },
   },
 

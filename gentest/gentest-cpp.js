@@ -152,6 +152,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifySpaceAround: {value: 'YGJustifySpaceAround'},
   YGJustifySpaceBetween: {value: 'YGJustifySpaceBetween'},
   YGJustifySpaceEvenly: {value: 'YGJustifySpaceEvenly'},
+  YGJustifyStretch: {value: 'YGJustifyStretch'},
 
   YGOverflowHidden: {value: 'YGOverflowHidden'},
   YGOverflowVisible: {value: 'YGOverflowVisible'},
@@ -543,9 +544,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
       this.push(
         `YGNodeStyleSetGridTemplateRows(${nodeName}, ${nodeName}_gridTemplateRows);`,
       );
-      this.push(
-        `YGGridTrackListFree(${nodeName}_gridTemplateRows);`,
-      );
+      this.push(`YGGridTrackListFree(${nodeName}_gridTemplateRows);`);
     },
   },
 
@@ -560,7 +559,9 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
         return;
       }
 
-      this.push(`auto ${nodeName}_gridTemplateColumns = YGGridTrackListCreate();`);
+      this.push(
+        `auto ${nodeName}_gridTemplateColumns = YGGridTrackListCreate();`,
+      );
 
       for (const track of tracks) {
         if (track.type === 'minmax') {
@@ -580,9 +581,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
       this.push(
         `YGNodeStyleSetGridTemplateColumns(${nodeName}, ${nodeName}_gridTemplateColumns);`,
       );
-      this.push(
-        `YGGridTrackListFree(${nodeName}_gridTemplateColumns);`,
-      );
+      this.push(`YGGridTrackListFree(${nodeName}_gridTemplateColumns);`);
     },
   },
 
@@ -641,9 +640,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
       this.push(
         `YGNodeStyleSetGridAutoColumns(${nodeName}, ${nodeName}_gridAutoColumns);`,
       );
-      this.push(
-        `YGGridTrackListFree(${nodeName}_gridAutoColumns);`,
-      );
+      this.push(`YGGridTrackListFree(${nodeName}_gridAutoColumns);`);
     },
   },
 
@@ -678,9 +675,7 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
       this.push(
         `YGNodeStyleSetGridAutoRows(${nodeName}, ${nodeName}_gridAutoRows);`,
       );
-      this.push(
-        `YGGridTrackListFree(${nodeName}_gridAutoRows);`,
-      );
+      this.push(`YGGridTrackListFree(${nodeName}_gridAutoRows);`);
     },
   },
 

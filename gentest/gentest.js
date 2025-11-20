@@ -541,12 +541,18 @@ function setupTestTree(
           break;
         case 'grid-column-start':
           if (node.style[style] && node.style[style] !== 'auto') {
-            e.YGNodeStyleSetGridColumnStart(nodeName, parseInt(node.style[style]));
+            e.YGNodeStyleSetGridColumnStart(
+              nodeName,
+              parseInt(node.style[style]),
+            );
           }
           break;
         case 'grid-column-end':
           if (node.style[style] && node.style[style] !== 'auto') {
-            e.YGNodeStyleSetGridColumnEnd(nodeName, parseInt(node.style[style]));
+            e.YGNodeStyleSetGridColumnEnd(
+              nodeName,
+              parseInt(node.style[style]),
+            );
           }
           break;
         case 'grid-row-start':
@@ -649,6 +655,8 @@ function justifyValue(e, value) {
       return e.YGJustifyFlexStart;
     case 'flex-end':
       return e.YGJustifyFlexEnd;
+    case 'stretch':
+      return e.YGJustifyStretch;
   }
 }
 
