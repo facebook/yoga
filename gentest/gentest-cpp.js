@@ -591,9 +591,21 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     },
   },
 
+  YGNodeStyleSetGridColumnStartSpan: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridColumnStartSpan(${nodeName}, ${value});`);
+    },
+  },
+
   YGNodeStyleSetGridColumnEnd: {
     value: function (nodeName, value) {
       this.push(`YGNodeStyleSetGridColumnEnd(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnEndSpan: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridColumnEndSpan(${nodeName}, ${value});`);
     },
   },
 
@@ -603,9 +615,21 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     },
   },
 
+  YGNodeStyleSetGridRowStartSpan: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridRowStartSpan(${nodeName}, ${value});`);
+    },
+  },
+
   YGNodeStyleSetGridRowEnd: {
     value: function (nodeName, value) {
       this.push(`YGNodeStyleSetGridRowEnd(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowEndSpan: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridRowEndSpan(${nodeName}, ${value});`);
     },
   },
 

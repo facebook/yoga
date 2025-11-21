@@ -541,28 +541,60 @@ function setupTestTree(
           break;
         case 'grid-column-start':
           if (node.style[style] && node.style[style] !== 'auto') {
-            e.YGNodeStyleSetGridColumnStart(
-              nodeName,
-              parseInt(node.style[style]),
-            );
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridColumnStartSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridColumnStart(
+                nodeName,
+                parseInt(value),
+              );
+            }
           }
           break;
         case 'grid-column-end':
           if (node.style[style] && node.style[style] !== 'auto') {
-            e.YGNodeStyleSetGridColumnEnd(
-              nodeName,
-              parseInt(node.style[style]),
-            );
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridColumnEndSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridColumnEnd(
+                nodeName,
+                parseInt(value),
+              );
+            }
           }
           break;
         case 'grid-row-start':
           if (node.style[style] && node.style[style] !== 'auto') {
-            e.YGNodeStyleSetGridRowStart(nodeName, parseInt(node.style[style]));
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridRowStartSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridRowStart(nodeName, parseInt(value));
+            }
           }
           break;
         case 'grid-row-end':
           if (node.style[style] && node.style[style] !== 'auto') {
-            e.YGNodeStyleSetGridRowEnd(nodeName, parseInt(node.style[style]));
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridRowEndSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridRowEnd(nodeName, parseInt(value));
+            }
           }
           break;
         case 'grid-auto-columns':

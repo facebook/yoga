@@ -496,42 +496,50 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   },
 
   YGNodeStyleSetGridColumnStart: {
-    value: function (nodeName, gridLine) {
-      if (gridLine.type === 'auto') {
-        this.push(`${nodeName}.setGridColumnStartAuto();`);
-      } else if (gridLine.type === 'integer') {
-        this.push(`${nodeName}.setGridColumnStart(${gridLine.value});`);
-      }
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridColumnStart(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnStartSpan: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridColumnStartSpan(${value});`);
     },
   },
 
   YGNodeStyleSetGridColumnEnd: {
-    value: function (nodeName, gridLine) {
-      if (gridLine.type === 'auto') {
-        this.push(`${nodeName}.setGridColumnEndAuto();`);
-      } else if (gridLine.type === 'integer') {
-        this.push(`${nodeName}.setGridColumnEnd(${gridLine.value});`);
-      }
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridColumnEnd(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnEndSpan: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridColumnEndSpan(${value});`);
     },
   },
 
   YGNodeStyleSetGridRowStart: {
-    value: function (nodeName, gridLine) {
-      if (gridLine.type === 'auto') {
-        this.push(`${nodeName}.setGridRowStartAuto();`);
-      } else if (gridLine.type === 'integer') {
-        this.push(`${nodeName}.setGridRowStart(${gridLine.value});`);
-      }
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridRowStart(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowStartSpan: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridRowStartSpan(${value});`);
     },
   },
 
   YGNodeStyleSetGridRowEnd: {
-    value: function (nodeName, gridLine) {
-      if (gridLine.type === 'auto') {
-        this.push(`${nodeName}.setGridRowEndAuto();`);
-      } else if (gridLine.type === 'integer') {
-        this.push(`${nodeName}.setGridRowEnd(${gridLine.value});`);
-      }
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridRowEnd(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowEndSpan: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridRowEndSpan(${value});`);
     },
   },
 
