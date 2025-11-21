@@ -60,7 +60,7 @@ TEST_F(GridCreateTracksTest, only_explicit_tracks) {
     createGridItem(GridLine::fromInteger(2), GridLine::fromInteger(3),
                   GridLine::fromInteger(2), GridLine::fromInteger(3));
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
 
     EXPECT_EQ(tracks.columnTracks.size(), 2);
@@ -83,7 +83,7 @@ TEST_F(GridCreateTracksTest, implicit_tracks_after_explicit_grid) {
     createGridItem(GridLine::fromInteger(1), GridLine::fromInteger(5),
                   GridLine::fromInteger(1), GridLine::fromInteger(2));
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
 
     EXPECT_EQ(tracks.columnTracks.size(), 4);
@@ -106,7 +106,7 @@ TEST_F(GridCreateTracksTest, implicit_tracks_before_explicit_grid_negative_indic
     
     createGridItem(GridLine::fromInteger(-5), GridLine::fromInteger(-4));
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
 
     EXPECT_EQ(tracks.columnTracks.size(), 4); 
@@ -125,7 +125,7 @@ TEST_F(GridCreateTracksTest, implicit_tracks_before_and_after) {
     // -4 index = 0 index. 1 new track before. and 5 index = 1 new track after. total 5 tracks
     createGridItem(GridLine::fromInteger(-4), GridLine::fromInteger(5));
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
 
     EXPECT_EQ(tracks.columnTracks.size(), 5);
@@ -141,7 +141,7 @@ TEST_F(GridCreateTracksTest, no_explicit_tracks_only_implicit) {
     createGridItem();
     createGridItem();
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
 
     for (const auto& track : tracks.columnTracks) {
@@ -161,7 +161,7 @@ TEST_F(GridCreateTracksTest, empty_grid_no_items) {
 
     gridContainer->style().setGridTemplateColumns(std::move(columns));
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
     EXPECT_EQ(tracks.columnTracks.size(), 2);
 }
@@ -169,7 +169,7 @@ TEST_F(GridCreateTracksTest, empty_grid_no_items) {
 TEST_F(GridCreateTracksTest, large_span_creating_many_implicit_tracks) {
     createGridItem(GridLine::auto_(), GridLine::span(10));
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
 
     EXPECT_EQ(tracks.columnTracks.size(), 10);
@@ -196,7 +196,7 @@ TEST_F(GridCreateTracksTest, grid_auto_columns_pattern_repeats_backward) {
     createGridItem(GridLine::fromInteger(-8), GridLine::fromInteger(-7));
     createGridItem(GridLine::fromInteger(3), GridLine::fromInteger(6));
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
 
     // 5 negative implicit + 2 explicit + 3 positive implicit = 10 tracks
@@ -244,7 +244,7 @@ TEST_F(GridCreateTracksTest, grid_auto_rows_pattern_repeats_both_directions) {
     createGridItem(GridLine::auto_(), GridLine::auto_(),
                   GridLine::fromInteger(3), GridLine::fromInteger(5));
 
-    auto autoPlacementResult = resolveGridItemPlacements(gridContainer);
+    auto autoPlacementResult = ResolvedAutoPlacement::resolveGridItemPlacements(gridContainer);
     GridTracks tracks = createGridTracks(gridContainer, autoPlacementResult);
 
     // 2 implicit before + 1 explicit + 3 implicit after = 7 tracks

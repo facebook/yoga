@@ -16,19 +16,6 @@
 
 namespace facebook::yoga {
 
-struct GridItemArea {
-  int32_t columnStart;
-  int32_t columnEnd;
-  int32_t rowStart;
-  int32_t rowEnd;
-
-  yoga::Node* node;
-
-  bool overlaps(const GridItemArea& other) const {
-    return columnStart < other.columnEnd && columnEnd > other.columnStart && rowStart < other.rowEnd && rowEnd > other.rowStart;
-  }
-};
-
 struct GridItemTrackPlacement {
   int32_t start = 0;
   int32_t end = 0;
@@ -37,22 +24,30 @@ struct GridItemTrackPlacement {
   static GridItemTrackPlacement resolveLinePlacement(const GridLine& startLine, const GridLine& endLine, int32_t explicitLineCount) {
     GridItemTrackPlacement placement;
 
-    // If the placement for a grid item contains two lines, and the start line is further end-ward than the end line, swap the two lines.
+    auto resolveNegativeLineValue = [](int32_t lineValue, int32_t explicitLineCount) -> int32_t {
+      return lineValue < 0 ? explicitLineCount + lineValue + 1 : lineValue;
+    };
+
+    // If the placement for a grid item contains two lines
     if (startLine.type == GridLineType::Integer && endLine.type == GridLineType::Integer) {
-      if (startLine.integer > endLine.integer) {
-          placement.start = endLine.integer;
-          placement.end = startLine.integer;
+      // if lines are negative, we count it from the last line. e.g. -1 is the last line
+      auto normalizedStartLine = resolveNegativeLineValue(startLine.integer, explicitLineCount);
+      auto normalizedEndLine = resolveNegativeLineValue(endLine.integer, explicitLineCount);
+      // and the start line is further end-ward than the end line, swap the two lines.
+      if (normalizedStartLine > normalizedEndLine) {
+          placement.start = normalizedEndLine;
+          placement.end = normalizedStartLine;
           placement.span = placement.end - placement.start;
       }
       // If the start line is equal to the end line, remove the end line.
-      else if (startLine.integer == endLine.integer) {
-          placement.start = startLine.integer;
+      else if (normalizedStartLine == normalizedEndLine) {
+          placement.start = normalizedStartLine;
           placement.end = 0;
           placement.span = 1;
       }
       else {
-          placement.start = startLine.integer;
-          placement.end = endLine.integer;
+          placement.start = normalizedStartLine;
+          placement.end = normalizedEndLine;
           placement.span = placement.end - placement.start;
       }
     }
@@ -64,22 +59,25 @@ struct GridItemTrackPlacement {
     }
 
     else if (startLine.type == GridLineType::Integer && endLine.type == GridLineType::Span) {
-      placement.start = startLine.integer;
+      auto normalizedStartLine = resolveNegativeLineValue(startLine.integer, explicitLineCount);
+      placement.start = normalizedStartLine;
       placement.span = endLine.integer;
       placement.end = placement.start + placement.span;
     }
 
     else if (startLine.type == GridLineType::Span && endLine.type == GridLineType::Integer) {
-      placement.end = endLine.integer;
+      auto normalizedEndLine = resolveNegativeLineValue(endLine.integer, explicitLineCount);
+      placement.end = normalizedEndLine;
       placement.span = startLine.integer;
       placement.start = placement.end - placement.span;
     }
 
     else if (startLine.type == GridLineType::Integer) {
-      placement.start = startLine.integer;
+      auto normalizedStartLine = resolveNegativeLineValue(startLine.integer, explicitLineCount);
+      placement.start = normalizedStartLine;
       placement.span = 1;
       placement.end = placement.start + placement.span;
-    } 
+    }
 
     else if (startLine.type == GridLineType::Span) {
       placement.span = startLine.integer;
@@ -88,7 +86,8 @@ struct GridItemTrackPlacement {
     }
 
     else if (endLine.type == GridLineType::Integer) {
-      placement.end = endLine.integer;
+      auto normalizedEndLine = resolveNegativeLineValue(endLine.integer, explicitLineCount);
+      placement.end = normalizedEndLine;
       placement.span = 1;
       placement.start = placement.end - placement.span;
     }
@@ -105,16 +104,6 @@ struct GridItemTrackPlacement {
       placement.span = 1;
     }
 
-
-    // negative values are relative to the end of the grid
-    if (placement.start < 0) {
-      placement.start = explicitLineCount + placement.start + 1;
-    }
-
-    if (placement.end < 0) {
-      placement.end = explicitLineCount + placement.end + 1;
-    }
-
     // we want 0 based indexing, so we subtract 1. Negative values will imply auto implicit grid lines
     placement.start = placement.start - 1;
     placement.end = placement.end - 1;
@@ -124,14 +113,28 @@ struct GridItemTrackPlacement {
 };
 
 struct AutoPlacement {
-  std::vector<GridItemArea> gridItemAreas;
+  struct AutoPlacementItemArea {
+    int32_t columnStart;
+    int32_t columnEnd;
+    int32_t rowStart;
+    int32_t rowEnd;
+  
+    yoga::Node* node;
+  
+    bool overlaps(const AutoPlacementItemArea& other) const {
+      return columnStart < other.columnEnd && columnEnd > other.columnStart && rowStart < other.rowEnd && rowEnd > other.rowStart;
+    }
+  };
+
+
+  std::vector<AutoPlacementItemArea> gridItemAreas;
   int32_t minColumnStart;
   int32_t minRowStart;
   int32_t maxColumnEnd;
   int32_t maxRowEnd;
 
   static AutoPlacement performAutoPlacement(yoga::Node* node) {
-    std::vector<GridItemArea> gridItemAreas;
+    std::vector<AutoPlacementItemArea> gridItemAreas;
     gridItemAreas.reserve(node->getChildren().size());
     std::unordered_set<yoga::Node*> placedItems;
     placedItems.reserve(node->getChildren().size());
@@ -140,7 +143,13 @@ struct AutoPlacement {
     int32_t maxColumnEnd = static_cast<int32_t>(node->style().gridTemplateColumns().size());
     int32_t maxRowEnd = static_cast<int32_t>(node->style().gridTemplateRows().size());
     // function to push back a grid item placement and record the min/max column/row start/end
-    auto recordGridArea = [&](GridItemArea& gridItemArea) {
+    auto recordGridArea = [&](AutoPlacementItemArea& gridItemArea) {
+      yoga::assertFatal(
+          gridItemArea.columnEnd > gridItemArea.columnStart,
+          "Grid item column end must be greater than column start");
+      yoga::assertFatal(
+          gridItemArea.rowEnd > gridItemArea.rowStart,
+          "Grid item row end must be greater than row start");
       gridItemAreas.push_back(gridItemArea);
       placedItems.insert(gridItemArea.node);
       minColumnStart = std::min(minColumnStart, gridItemArea.columnStart);
@@ -181,7 +190,7 @@ struct AutoPlacement {
         auto rowStart = rowPlacement.start;
         auto rowEnd = rowPlacement.end;
     
-        auto gridItemArea = GridItemArea{
+        auto gridItemArea = AutoPlacementItemArea{
           columnStart,
           columnEnd,
           rowStart,
@@ -225,7 +234,7 @@ struct AutoPlacement {
         bool placed = false;
         while (!placed) {
           bool hasOverlap = false;
-          auto gridItemArea = GridItemArea{
+          auto gridItemArea = AutoPlacementItemArea{
             columnStart,
             columnEnd,
             rowStart,
@@ -332,7 +341,7 @@ struct AutoPlacement {
             auto proposedRowEnd = proposedRowStart + rowSpan;
     
             // Check for overlaps with already placed items
-            GridItemArea proposedPlacement {
+            AutoPlacementItemArea proposedPlacement {
               columnStart,
               columnEnd,
               proposedRowStart,
@@ -374,7 +383,7 @@ struct AutoPlacement {
               auto rowEnd = rowStart + itemRowSpan;
     
               // Check if this position overlaps with any placed items
-              GridItemArea proposedPlacement {
+              AutoPlacementItemArea proposedPlacement {
                 columnStart,
                 columnEnd,
                 rowStart,
@@ -417,6 +426,55 @@ struct AutoPlacement {
       maxColumnEnd,
       maxRowEnd
     };    
+  }
+};
+
+struct GridItemArea {
+  size_t columnStart;
+  size_t columnEnd;
+  size_t rowStart;
+  size_t rowEnd;
+  yoga::Node* node;
+};
+
+struct ResolvedAutoPlacement {
+  std::vector<GridItemArea> gridItemAreas;
+  int32_t minColumnStart;
+  int32_t minRowStart;
+  int32_t maxColumnEnd;
+  int32_t maxRowEnd;
+
+  // Offset column and row so they starts at 0 index
+  static ResolvedAutoPlacement resolveGridItemPlacements(Node* node) {
+    auto autoPlacement = AutoPlacement::performAutoPlacement(node);
+
+    auto minColumnStart = autoPlacement.minColumnStart;
+    auto minRowStart = autoPlacement.minRowStart;
+    auto maxColumnEnd = autoPlacement.maxColumnEnd;
+    auto maxRowEnd = autoPlacement.maxRowEnd;
+
+    std::vector<GridItemArea> resolvedAreas;
+    resolvedAreas.reserve(autoPlacement.gridItemAreas.size());
+
+    for (auto& placement : autoPlacement.gridItemAreas) {
+      resolvedAreas.push_back(GridItemArea{
+          static_cast<size_t>(placement.columnStart - minColumnStart),
+          static_cast<size_t>(placement.columnEnd - minColumnStart),
+          static_cast<size_t>(placement.rowStart - minRowStart),
+          static_cast<size_t>(placement.rowEnd - minRowStart),
+          placement.node});
+      // TODO: find a better place to call this
+      placement.node->processDimensions();
+
+    }
+
+    return ResolvedAutoPlacement{
+        std::move(resolvedAreas),
+        minColumnStart,
+        minRowStart,
+        maxColumnEnd,
+        maxRowEnd
+      };
   }
 };
 

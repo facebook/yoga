@@ -28,7 +28,7 @@ void calculateGridLayoutInternal(Node* node,
                                 uint32_t generationCount) {
 
   // Step 1: Run the Grid Item Placement Algorithm to resolve the placement of all grid items in the grid.
-  auto autoPlacement = resolveGridItemPlacements(node);
+  auto autoPlacement = ResolvedAutoPlacement::resolveGridItemPlacements(node);
   // Create the grid tracks (auto and explicit = implicit grid)
   auto gridTracks = createGridTracks(node, autoPlacement);
 
@@ -254,7 +254,7 @@ void calculateGridLayoutInternal(Node* node,
     for (auto& item : itemAreas) {
       auto [containingBlockWidth, containingBlockHeight] = trackSizing.getContainingBlockSizeForItem(item);
       float gridAreaLeft = 0.0f;
-      for (size_t i = 0; i < static_cast<size_t>(item.columnStart) && i < columnTracks.size(); i++) {
+      for (size_t i = 0; i < item.columnStart && i < columnTracks.size(); i++) {
         gridAreaLeft += columnTracks[i].baseSize;
         if (i < columnTracks.size() - 1) {
           // Add both explicit gap and content-distribution spacing
@@ -263,7 +263,7 @@ void calculateGridLayoutInternal(Node* node,
       }
 
       float gridAreaTop = 0.0f;
-      for (size_t i = 0; i < static_cast<size_t>(item.rowStart) && i < rowTracks.size(); i++) {
+      for (size_t i = 0; i < item.rowStart && i < rowTracks.size(); i++) {
         gridAreaTop += rowTracks[i].baseSize;
         if (i < rowTracks.size() - 1) {
           // Add both explicit gap and content-distribution spacing
@@ -424,7 +424,7 @@ void calculateGridLayoutInternal(Node* node,
   }
 }
 
-GridTracks createGridTracks(yoga::Node* node, const AutoPlacement& autoPlacement) {
+GridTracks createGridTracks(yoga::Node* node, const ResolvedAutoPlacement& autoPlacement) {
   auto gridExplicitColumns = node->style().gridTemplateColumns();
   auto gridExplicitRows = node->style().gridTemplateRows();
 
@@ -481,25 +481,6 @@ GridTracks createGridTracks(yoga::Node* node, const AutoPlacement& autoPlacement
     columnTracks,
     rowTracks
   };
-}
-
-AutoPlacement resolveGridItemPlacements(Node* node) {
-  auto autoPlacement = AutoPlacement::performAutoPlacement(node);
-
-  auto minColumnStart = autoPlacement.minColumnStart;
-  auto minRowStart = autoPlacement.minRowStart;
-
-  // offset placements to start from 0 to avoid negative indices
-  for (auto& placement: autoPlacement.gridItemAreas) {
-    placement.columnStart -= minColumnStart;
-    placement.columnEnd -= minColumnStart;
-    placement.rowStart -= minRowStart;
-    placement.rowEnd -= minRowStart;
-    // TODO: find a better place to call this
-    placement.node->processDimensions();
-  }
-
-  return autoPlacement;
 }
 
 } // namespace facebook::yoga
