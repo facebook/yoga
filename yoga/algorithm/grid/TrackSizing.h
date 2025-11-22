@@ -163,6 +163,35 @@ struct TrackSizing {
     std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>> itemsForIntrinsicMax;
     std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>> itemsForMaxContentMax;
 
+    auto distributeSpaceToCurrentSpan = [&]() {
+      // Step 1: For intrinsic minimums
+      if (!itemsForIntrinsicMin.empty()) {
+        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMin, true);
+        itemsForIntrinsicMin.clear();
+      }
+
+      // Step 2 and Step 3 are skipped since we're not supporting min-content and max-content yet
+
+      // Step 4: If at this point any track's growth limit is now less than its base size, increase its growth limit to match its base size
+      for (auto& track : tracks) {
+        if (track.growthLimit < track.baseSize) {
+          track.growthLimit = track.baseSize;
+        }
+      }
+
+      // Step 5: For intrinsic maximums
+      if (!itemsForIntrinsicMax.empty()) {
+        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMax, false);
+        itemsForIntrinsicMax.clear();
+      }
+
+      // Step 6: For max-content maximums
+      if (!itemsForMaxContentMax.empty()) {
+        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForMaxContentMax, false);
+        itemsForMaxContentMax.clear();
+      }
+    };
+
     for (auto& item: sortedItems) {
       auto startIndex = dimension == Dimension::Width ? item.columnStart : item.rowStart;
       auto endIndex = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
@@ -170,31 +199,7 @@ struct TrackSizing {
 
       // span changed, start distributing space to intrinsic sizing tracks
       if (span > previousSpan) {
-        // Step 1: For intrinsic minimums
-        if (!itemsForIntrinsicMin.empty()) {
-          distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMin, true);
-          itemsForIntrinsicMin.clear();
-        }
-
-        // Step 4: If at this point any track's growth limit is now less than its base size, increase its growth limit to match its base size
-        for (auto& track : tracks) {
-          if (track.growthLimit < track.baseSize) {
-            track.growthLimit = track.baseSize;
-          }
-        }
-
-        // Step 5: For intrinsic maximums
-        if (!itemsForIntrinsicMax.empty()) {
-          distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMax, false);
-          itemsForIntrinsicMax.clear();
-        }
-
-        // Step 6: For max-content maximums
-        if (!itemsForMaxContentMax.empty()) {
-          distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForMaxContentMax, false);
-          itemsForMaxContentMax.clear();
-        }
-
+        distributeSpaceToCurrentSpan();
         previousSpan = span;
       }
 
@@ -228,50 +233,26 @@ struct TrackSizing {
 
       if (hasFlexibleTrack) continue;
 
+      auto itemConstraints = calculateItemConstraints(item, dimension);
       if (!intrinsicMinimumSizingFunctionTracks.empty()) {
-        auto itemConstraints = calculateItemConstraints(item, dimension);
         auto minimumContribution = sizingMode == SizingMode::MaxContent ? getLimitedMinimumContentContribution(item, dimension, itemConstraints) : getMinimumContribution(item, dimension, itemConstraints);
         itemsForIntrinsicMin.emplace_back(item, std::move(intrinsicMinimumSizingFunctionTracks), spannedTracks, minimumContribution);
       }
 
       if (!intrinsicMaximumSizingFunctionTracks.empty()) {
-        auto itemConstraints = calculateItemConstraints(item, dimension);
         auto minimumContentContribution = getMinimumContentContribution(item, dimension, itemConstraints);
         itemsForIntrinsicMax.emplace_back(item, std::move(intrinsicMaximumSizingFunctionTracks), spannedTracks, minimumContentContribution);
       }
 
       if (!maxContentMaximumSizingFunctionTracks.empty()) {
-        auto itemConstraints = calculateItemConstraints(item, dimension);
         auto maxContentContribution = getMaxContentContribution(item, dimension, itemConstraints);
         itemsForMaxContentMax.emplace_back(item, std::move(maxContentMaximumSizingFunctionTracks), std::move(spannedTracks), maxContentContribution);
       }
     }
 
     // Process last span
-    // Step 1: For intrinsic minimums
-    if (!itemsForIntrinsicMin.empty()) {
-      distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMin, true);
-      itemsForIntrinsicMin.clear();
-    }
-
-    // Step 4: Adjust growth limits
-    for (auto& track : tracks) {
-      if (track.growthLimit < track.baseSize) {
-        track.growthLimit = track.baseSize;
-      }
-    }
-
-    // Step 5: For intrinsic maximums
-    if (!itemsForIntrinsicMax.empty()) {
-      distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMax, false);
-      itemsForIntrinsicMax.clear();
-    }
-
-    // Step 6: For max-content maximums
-    if (!itemsForMaxContentMax.empty()) {
-      distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForMaxContentMax, false);
-      itemsForMaxContentMax.clear();
-    }
+    distributeSpaceToCurrentSpan();
+    
   };
 
   void accomodateSpanningItemsCrossingFlexibleTracks(Dimension dimension) {
@@ -473,41 +454,35 @@ struct TrackSizing {
 
     // Step 2: For each item
     for (const auto& [item, affectedTracks, spannedTracks, sizeContribution] : items) {
-      if (affectedTracks.empty()) continue;
-
-      // Calculate item-incurred increase for THIS item
       std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
       for (auto& track : affectedTracks) {
         itemIncurredIncrease[track] = 0.0f;
       }
 
-      // Find space to distribute
+      // 2.1 Find space to distribute
       float totalSpannedTracksSize = 0.0f;
       for (auto& track : spannedTracks) {
         totalSpannedTracksSize += track->baseSize;
         if (track != spannedTracks.back()) {
+          // gaps are treated as tracks of fixed size. Item can span over gaps.
           totalSpannedTracksSize += gap;
         }
       }
 
       float spaceToDistribute = std::max(0.0f, sizeContribution - totalSpannedTracksSize);
 
-      // Calculate sum of flex factors for affected tracks
       float sumOfFlexFactors = 0.0f;
       for (auto& track : affectedTracks) {
         sumOfFlexFactors += track->maxSizingFunction.value().unwrap();
       }
 
-      // Distribute according to flex factor rules
       if (sumOfFlexFactors >= 1.0f) {
-        // Distribute proportionally by flex factors
         for (auto& track : affectedTracks) {
           auto flexFactor = track->maxSizingFunction.value().unwrap();
           auto increase = spaceToDistribute * flexFactor / sumOfFlexFactors;
           itemIncurredIncrease[track] += increase;
         }
       } else if (sumOfFlexFactors > 0.0f && !yoga::inexactEquals(sumOfFlexFactors, 0.0f)) {
-        // Distribute sum*space proportionally, rest equally
         auto proportionalSpace = spaceToDistribute * sumOfFlexFactors;
         for (auto& track : affectedTracks) {
           auto flexFactor = track->maxSizingFunction.value().unwrap();
@@ -522,7 +497,6 @@ struct TrackSizing {
         }
       }
 
-      // Update planned increase = MAX(itemIncurred, planned)
       for (auto& track : affectedTracks) {
         if (itemIncurredIncrease[track] > plannedIncrease[track]) {
           plannedIncrease[track] = itemIncurredIncrease[track];
@@ -530,7 +504,7 @@ struct TrackSizing {
       }
     }
 
-    // Step 3: Apply planned increase to all tracks
+    // Step 3: Update the tracks' affected sizes by adding in the planned increase
     for (const auto& [track, increase] : plannedIncrease) {
       track->baseSize += increase;
     }
