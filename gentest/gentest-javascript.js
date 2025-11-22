@@ -156,6 +156,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifySpaceAround: {value: 'Justify.SpaceAround'},
   YGJustifySpaceBetween: {value: 'Justify.SpaceBetween'},
   YGJustifySpaceEvenly: {value: 'Justify.SpaceEvenly'},
+  YGJustifyStretch: {value: 'Justify.Stretch'},
 
   YGOverflowHidden: {value: 'Overflow.Hidden'},
   YGOverflowVisible: {value: 'Overflow.Visible'},
@@ -182,6 +183,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGMaxContent: {value: 'max-content'},
   YGFitContent: {value: 'fit-content'},
   YGStretch: {value: 'stretch'},
+
+  YGDisplayGrid: {value: 'Display.Grid'},
 
   YGNodeCalculateLayout: {
     value: function (node, dir, _experiments) {
@@ -435,6 +438,179 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
           flexDirection,
         )}}));`,
       );
+    },
+  },
+
+  YGNodeStyleSetGridTemplateRows: {
+    value: function (nodeName, tracks) {
+      if (!tracks || tracks.length === 0) {
+        return;
+      }
+
+      this.push(`const ${nodeName}GridTemplateRows = [];`);
+
+      for (const track of tracks) {
+        if (track.type === 'minmax') {
+          const minVal = this.formatGridTrackValueJS(track.min);
+          const maxVal = this.formatGridTrackValueJS(track.max);
+          this.push(
+            `${nodeName}GridTemplateRows.push({type: 'minmax', min: ${minVal}, max: ${maxVal}});`,
+          );
+        } else {
+          const val = this.formatGridTrackValueJS(track);
+          this.push(`${nodeName}GridTemplateRows.push(${val});`);
+        }
+      }
+
+      this.push(
+        `${nodeName}.setGridTemplateRows(${nodeName}GridTemplateRows);`,
+      );
+    },
+  },
+
+  YGNodeStyleSetGridTemplateColumns: {
+    value: function (nodeName, tracks) {
+      if (!tracks || tracks.length === 0) {
+        return;
+      }
+
+      this.push(`const ${nodeName}GridTemplateColumns = [];`);
+
+      for (const track of tracks) {
+        if (track.type === 'minmax') {
+          const minVal = this.formatGridTrackValueJS(track.min);
+          const maxVal = this.formatGridTrackValueJS(track.max);
+          this.push(
+            `${nodeName}GridTemplateColumns.push({type: 'minmax', min: ${minVal}, max: ${maxVal}});`,
+          );
+        } else {
+          const val = this.formatGridTrackValueJS(track);
+          this.push(`${nodeName}GridTemplateColumns.push(${val});`);
+        }
+      }
+
+      this.push(
+        `${nodeName}.setGridTemplateColumns(${nodeName}GridTemplateColumns);`,
+      );
+    },
+  },
+
+  YGNodeStyleSetGridColumnStart: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridColumnStart(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnStartSpan: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridColumnStartSpan(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnEnd: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridColumnEnd(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnEndSpan: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridColumnEndSpan(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowStart: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridRowStart(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowStartSpan: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridRowStartSpan(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowEnd: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridRowEnd(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowEndSpan: {
+    value: function (nodeName, value) {
+      this.push(`${nodeName}.setGridRowEndSpan(${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridAutoColumns: {
+    value: function (nodeName, tracks) {
+      if (!tracks || tracks.length === 0) {
+        return;
+      }
+
+      this.push(`const ${nodeName}GridAutoColumns = [];`);
+
+      for (const track of tracks) {
+        if (track.type === 'minmax') {
+          const minVal = this.formatGridTrackValueJS(track.min);
+          const maxVal = this.formatGridTrackValueJS(track.max);
+          this.push(
+            `${nodeName}GridAutoColumns.push({type: 'minmax', min: ${minVal}, max: ${maxVal}});`,
+          );
+        } else {
+          const val = this.formatGridTrackValueJS(track);
+          this.push(`${nodeName}GridAutoColumns.push(${val});`);
+        }
+      }
+
+      this.push(`${nodeName}.setGridAutoColumns(${nodeName}GridAutoColumns);`);
+    },
+  },
+
+  YGNodeStyleSetGridAutoRows: {
+    value: function (nodeName, tracks) {
+      if (!tracks || tracks.length === 0) {
+        return;
+      }
+
+      this.push(`const ${nodeName}GridAutoRows = [];`);
+
+      for (const track of tracks) {
+        if (track.type === 'minmax') {
+          const minVal = this.formatGridTrackValueJS(track.min);
+          const maxVal = this.formatGridTrackValueJS(track.max);
+          this.push(
+            `${nodeName}GridAutoRows.push({type: 'minmax', min: ${minVal}, max: ${maxVal}});`,
+          );
+        } else {
+          const val = this.formatGridTrackValueJS(track);
+          this.push(`${nodeName}GridAutoRows.push(${val});`);
+        }
+      }
+
+      this.push(`${nodeName}.setGridAutoRows(${nodeName}GridAutoRows);`);
+    },
+  },
+
+  formatGridTrackValueJS: {
+    value: function (track) {
+      switch (track.type) {
+        case 'auto':
+          return `{type: 'auto'}`;
+        case 'points':
+          return `{type: 'points', value: ${toValueJavascript(
+            track.value + 'px',
+          )}}`;
+        case 'percent':
+          return `{type: 'percent', value: ${toValueJavascript(
+            track.value + '%',
+          )}}`;
+        case 'fr':
+          return `{type: 'fr', value: ${toValueJavascript(track.value)}}`;
+        default:
+          return `{type: 'auto'}`;
+      }
     },
   },
 });

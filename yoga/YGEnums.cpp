@@ -29,6 +29,10 @@ const char* YGAlignToString(const YGAlign value) {
       return "space-around";
     case YGAlignSpaceEvenly:
       return "space-evenly";
+    case YGAlignStart:
+      return "start";
+    case YGAlignEnd:
+      return "end";
   }
   return "unknown";
 }
@@ -73,6 +77,8 @@ const char* YGDisplayToString(const YGDisplay value) {
       return "none";
     case YGDisplayContents:
       return "contents";
+    case YGDisplayGrid:
+      return "grid";
   }
   return "unknown";
 }
@@ -155,6 +161,8 @@ const char* YGGutterToString(const YGGutter value) {
 
 const char* YGJustifyToString(const YGJustify value) {
   switch (value) {
+    case YGJustifyAuto:
+      return "auto";
     case YGJustifyFlexStart:
       return "flex-start";
     case YGJustifyCenter:
@@ -167,6 +175,12 @@ const char* YGJustifyToString(const YGJustify value) {
       return "space-around";
     case YGJustifySpaceEvenly:
       return "space-evenly";
+    case YGJustifyStretch:
+      return "stretch";
+    case YGJustifyStart:
+      return "start";
+    case YGJustifyEnd:
+      return "end";
   }
   return "unknown";
 }

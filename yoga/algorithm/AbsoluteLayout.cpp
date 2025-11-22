@@ -89,6 +89,13 @@ static void justifyAbsoluteChild(
     const float containingBlockWidth) {
   const Justify parentJustifyContent = parent->style().justifyContent();
   switch (parentJustifyContent) {
+    case Justify::Start:
+    case Justify::End:
+    case Justify::Auto:
+    break;
+    case Justify::Stretch:
+    // No-Op
+    break;
     case Justify::FlexStart:
     case Justify::SpaceBetween:
       setFlexStartLayoutPosition(
@@ -124,6 +131,8 @@ static void alignAbsoluteChild(
   }
 
   switch (itemAlign) {
+    case Align::Start:
+    case Align::End:
     case Align::Auto:
     case Align::FlexStart:
     case Align::Baseline:

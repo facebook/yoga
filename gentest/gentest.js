@@ -176,6 +176,8 @@ function checkDefaultValues() {
     {style: 'bottom', value: 'undefined'},
     {style: 'display', value: 'flex'},
     {style: 'box-sizing', value: 'border-box'},
+    {style: 'grid-template-rows', value: 'none'},
+    {style: 'grid-template-columns', value: 'none'},
   ].forEach(item => {
     assert(
       isDefaultStyleValue(item.style, item.value),
@@ -207,7 +209,9 @@ function setupTestTree(
     ) {
       continue;
     }
-    if (!isDefaultStyleValue(style, node.style[style])) {
+    const styleValue = node.style[style];
+    const isDefault = isDefaultStyleValue(style, styleValue);
+    if (!isDefault) {
       switch (style) {
         case 'aspect-ratio':
           e.YGNodeStyleSetAspectRatio(
@@ -524,6 +528,85 @@ function setupTestTree(
             nodeName,
             boxSizingValue(e, node.style[style]),
           );
+          break;
+        case 'grid-template-columns':
+          if (node.style[style] && node.style[style] !== 'none') {
+            e.YGNodeStyleSetGridTemplateColumns(nodeName, node.style[style]);
+          }
+          break;
+        case 'grid-template-rows':
+          if (node.style[style] && node.style[style] !== 'none') {
+            e.YGNodeStyleSetGridTemplateRows(nodeName, node.style[style]);
+          }
+          break;
+        case 'grid-column-start':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridColumnStartSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridColumnStart(
+                nodeName,
+                parseInt(value),
+              );
+            }
+          }
+          break;
+        case 'grid-column-end':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridColumnEndSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridColumnEnd(
+                nodeName,
+                parseInt(value),
+              );
+            }
+          }
+          break;
+        case 'grid-row-start':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridRowStartSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridRowStart(nodeName, parseInt(value));
+            }
+          }
+          break;
+        case 'grid-row-end':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridRowEndSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridRowEnd(nodeName, parseInt(value));
+            }
+          }
+          break;
+        case 'grid-auto-columns':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            e.YGNodeStyleSetGridAutoColumns(nodeName, node.style[style]);
+          }
+          break;
+        case 'grid-auto-rows':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            e.YGNodeStyleSetGridAutoRows(nodeName, node.style[style]);
+          }
+          break;
       }
     }
   }
@@ -604,6 +687,8 @@ function justifyValue(e, value) {
       return e.YGJustifyFlexStart;
     case 'flex-end':
       return e.YGJustifyFlexEnd;
+    case 'stretch':
+      return e.YGJustifyStretch;
   }
 }
 
@@ -678,7 +763,76 @@ function displayValue(e, value) {
       return e.YGDisplayNone;
     case 'contents':
       return e.YGDisplayContents;
+    case 'grid':
+      return e.YGDisplayGrid;
   }
+}
+
+function parseGridTrackList(e, value) {
+  if (!value || value === 'none') {
+    return null;
+  }
+
+  // Parse space-separated track values
+  // Examples: "100px 100px 100px", "100px 100% minmax(100px, 200px) auto"
+  const tracks = [];
+  const parts = value.trim().split(/\s+/);
+
+  let i = 0;
+  while (i < parts.length) {
+    const part = parts[i];
+
+    if (part.startsWith('minmax(')) {
+      // Handle minmax function - may span multiple parts if there are spaces
+      let minmaxStr = part;
+      while (!minmaxStr.includes(')') && i < parts.length - 1) {
+        i++;
+        minmaxStr += ' ' + parts[i];
+      }
+
+      // Extract min and max values from minmax(min, max)
+      const match = minmaxStr.match(/minmax\(([^,]+),\s*([^)]+)\)/);
+      if (match) {
+        const min = match[1].trim();
+        const max = match[2].trim();
+        tracks.push({
+          type: 'minmax',
+          min: parseGridTrackValue(e, min),
+          max: parseGridTrackValue(e, max),
+        });
+      }
+    } else {
+      // Simple track value
+      tracks.push(parseGridTrackValue(e, part));
+    }
+    i++;
+  }
+
+  return tracks;
+}
+
+function parseGridTrackValue(e, value) {
+  if (value === 'auto') {
+    return {type: 'auto'};
+  } else if (value.endsWith('px')) {
+    return {type: 'points', value: parseFloat(value)};
+  } else if (value.endsWith('%')) {
+    return {type: 'percent', value: parseFloat(value)};
+  } else if (value.endsWith('fr')) {
+    return {type: 'fr', value: parseFloat(value)};
+  }
+  return {type: 'auto'};
+}
+
+function gridLineValue(e, value) {
+  if (value === 'auto') {
+    return {type: 'auto'};
+  }
+  const intValue = parseInt(value);
+  if (!isNaN(intValue)) {
+    return {type: 'integer', value: intValue};
+  }
+  return {type: 'auto'};
 }
 
 function boxSizingValue(e, value) {
@@ -769,6 +923,13 @@ function calculateTree(root, parentOffsetLeft, parentOffsetTop) {
 function getYogaStyle(node) {
   // TODO: Relying on computed style means we cannot test shorthand props like
   // "padding", "margin", "gap", or negative values.
+  const gridTemplateProperties = new Set([
+    'grid-template-columns',
+    'grid-template-rows',
+    'grid-auto-columns',
+    'grid-auto-rows',
+  ]);
+
   return [
     'direction',
     'flex-direction',
@@ -809,9 +970,23 @@ function getYogaStyle(node) {
     'display',
     'aspect-ratio',
     'box-sizing',
+    'grid-template-columns',
+    'grid-template-rows',
+    'grid-auto-columns',
+    'grid-auto-rows',
+    'grid-column-start',
+    'grid-column-end',
+    'grid-row-start',
+    'grid-row-end',
   ].reduce((map, key) => {
-    map[key] =
-      node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
+    // For grid template properties, only use inline styles to avoid capturing
+    // computed implicit grid tracks
+    if (gridTemplateProperties.has(key)) {
+      map[key] = node.style[key] || '';
+    } else {
+      map[key] =
+        node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
+    }
     return map;
   }, {});
 }

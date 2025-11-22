@@ -19,3 +19,4 @@
 #include <yoga/YGNodeStyle.h> // IWYU pragma: export
 #include <yoga/YGPixelGrid.h> // IWYU pragma: export
 #include <yoga/YGValue.h> // IWYU pragma: export
+#include <yoga/YGGridTrackList.h> // IWYU pragma: export
