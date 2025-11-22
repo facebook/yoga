@@ -1461,3 +1461,30 @@
       height: 100px;
     "></div>
 </div>
+
+<div
+  id="grid_gap_percentage_definite_size_2"
+  style="
+    display: grid;
+    grid-template-columns: auto 10% 10% 10%;
+    grid-template-rows: auto auto;
+    column-gap: 70%;
+    row-gap: 40%;
+    border: 1px solid red;
+  ">
+  <div
+    style="
+      padding: 20px;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      background-color: green;
+    "></div>
+  <div style="padding: 20px; background-color: green"></div>
+  <div
+    style="
+      padding: 20px;
+      grid-column-start: 2;
+      grid-column-end: 5;
+      background-color: green;
+    "></div>
+</div>

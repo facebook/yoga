@@ -145,80 +145,132 @@ struct TrackSizing {
   // https://www.w3.org/TR/css-grid-1/#algo-spanning-items
   void accomodateSpanningItemsCrossingContentSizedTracks(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
-    // https://en.cppreference.com/w/cpp/container/map.html
-    // we use map here because we want to store span in increasing order, map keys are sorted automatically in ascending order
-    std::map<size_t, std::vector<std::pair<GridItemArea, std::vector<GridTrackSize*>>>> itemsGroupedByIncreasingSpan;
-    for (auto& item: gridItemAreas) {
-      auto spannedTracks = getTracksSpannedByItem(item, tracks, dimension);
-      if (includesFlexibleTrack(spannedTracks)) {
-        continue;
-      }
-      size_t span = dimension == Dimension::Width ? (item.columnEnd - item.columnStart) : (item.rowEnd - item.rowStart);
-      itemsGroupedByIncreasingSpan[span].push_back({item, spannedTracks});
-    }
-
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
-    
-    for (const auto& [span, itemsWithTracks] : itemsGroupedByIncreasingSpan) {
-      for (const auto& [item, spannedTracks] : itemsWithTracks) {
-        std::vector<GridTrackSize*> intrinsicMinimumSizingFunctionTracks;
-        std::vector<GridTrackSize*> minContentMinimumSizingFunctionTracks;
-        std::vector<GridTrackSize*> intrinsicMaximumSizingFunctionTracks;
-        std::vector<GridTrackSize*> maxContentMaximumSizingFunctionTracks;
+    std::vector<GridItemArea> sortedItems = gridItemAreas;
+    std::sort(sortedItems.begin(), sortedItems.end(), [dimension](const GridItemArea& a, const GridItemArea& b) {
+      size_t spanA = dimension == Dimension::Width
+        ? (a.columnEnd - a.columnStart)
+        : (a.rowEnd - a.rowStart);
+      size_t spanB = dimension == Dimension::Width
+        ? (b.columnEnd - b.columnStart)
+        : (b.rowEnd - b.rowStart);
+      return spanA < spanB;
+    });
 
-        for (auto& track: spannedTracks) {
-          // auto sizing function behaves as minmax(min-content, max-content) https://www.w3.org/TR/css-grid-1/#track-sizing
+    size_t previousSpan = 1;
+    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>> itemsForIntrinsicMin;
+    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>> itemsForIntrinsicMax;
+    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>> itemsForMaxContentMax;
 
-          if (isIntrinsicSizingFunction(track->minSizingFunction, containerSize)) {
-            intrinsicMinimumSizingFunctionTracks.push_back(track);
-            minContentMinimumSizingFunctionTracks.push_back(track);
-          }
-          
-          if (isIntrinsicSizingFunction(track->maxSizingFunction, containerSize)) {
-            intrinsicMaximumSizingFunctionTracks.push_back(track);
-            maxContentMaximumSizingFunctionTracks.push_back(track);
-          }
+    for (auto& item: sortedItems) {
+      auto startIndex = dimension == Dimension::Width ? item.columnStart : item.rowStart;
+      auto endIndex = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
+      size_t span = endIndex - startIndex;
+
+      // span changed, start distributing space to intrinsic sizing tracks
+      if (span > previousSpan) {
+        // Step 1: For intrinsic minimums
+        if (itemsForIntrinsicMin.size() > 0) {
+          distributeSpaceToTracksBaseSize(dimension, itemsForIntrinsicMin);
+          itemsForIntrinsicMin.clear();
         }
 
-        // 1. For intrinsic minimums
-        if (intrinsicMinimumSizingFunctionTracks.size() > 0) {
-          auto itemConstraints = calculateItemConstraints(item, dimension);
-          auto minimumContribution = sizingMode == SizingMode::MaxContent ? getLimitedMinimumContentContribution(item, dimension, itemConstraints) : getMinimumContribution(item, dimension, itemConstraints);
-          distributeSpaceToTracksBaseSize(dimension, intrinsicMinimumSizingFunctionTracks, spannedTracks, minimumContribution);
-        }
-
-        // 2. For content-based minimums
-        if (minContentMinimumSizingFunctionTracks.size() > 0) {
-          auto itemConstraints = calculateItemConstraints(item, dimension);
-          auto minimumContentContribution = getMinimumContentContribution(item, dimension, itemConstraints);
-          distributeSpaceToTracksBaseSize(dimension, minContentMinimumSizingFunctionTracks, spannedTracks, minimumContentContribution);
-        }
-
-        // 3. For max-content minimums        
-        // TODO: Implement when we support max-content in min-sizing function
-        
-        // 4. If at this point any track’s growth limit is now less than its base size, increase its growth limit to match its base size.
-        for (auto& track: spannedTracks) {
-          if (track->growthLimit < track->baseSize) {
-            track->growthLimit = track->baseSize;
+        // Step 4: If at this point any track's growth limit is now less than its base size, increase its growth limit to match its base size
+        for (auto& track : tracks) {
+          if (track.growthLimit < track.baseSize) {
+            track.growthLimit = track.baseSize;
           }
         }
 
-        // 5. For intrinsic maximums
-        if (intrinsicMaximumSizingFunctionTracks.size() > 0) {
-          auto itemConstraints = calculateItemConstraints(item, dimension);
-          auto minimumContentContribution = getMinimumContentContribution(item, dimension, itemConstraints);
-          distributeSpaceToTracksGrowthLimit(dimension, intrinsicMaximumSizingFunctionTracks, spannedTracks, minimumContentContribution, true);
+        // Step 5: For intrinsic maximums
+        if (itemsForIntrinsicMax.size() > 0) {
+          distributeSpaceToTracksGrowthLimit(dimension, itemsForIntrinsicMax);
+          itemsForIntrinsicMax.clear();
         }
 
-        // 6. For max-content maximums
-        if (maxContentMaximumSizingFunctionTracks.size() > 0) {
-          auto itemConstraints = calculateItemConstraints(item, dimension);
-          auto maxContentContribution = getMaxContentContribution(item, dimension, itemConstraints);
-          distributeSpaceToTracksGrowthLimit(dimension, maxContentMaximumSizingFunctionTracks, spannedTracks, maxContentContribution, false); 
+        // Step 6: For max-content maximums
+        if (itemsForMaxContentMax.size() > 0) {
+          distributeSpaceToTracksGrowthLimit(dimension, itemsForMaxContentMax);
+          itemsForMaxContentMax.clear();
         }
+
+        previousSpan = span;
       }
+
+      std::vector<GridTrackSize*> intrinsicMinimumSizingFunctionTracks;
+      std::vector<GridTrackSize*> intrinsicMaximumSizingFunctionTracks;
+      std::vector<GridTrackSize*> maxContentMaximumSizingFunctionTracks;
+      std::vector<GridTrackSize*> spannedTracks;
+
+      bool hasFlexibleTrack = false;
+      for (size_t i = startIndex; i < endIndex; i++) {
+        if (isFlexibleSizingFunction(tracks[i].maxSizingFunction)) {
+          hasFlexibleTrack = true;
+          break;
+        }
+
+        if (isIntrinsicSizingFunction(tracks[i].minSizingFunction, containerSize)) {
+          intrinsicMinimumSizingFunctionTracks.push_back(&tracks[i]);
+        }
+
+        if (isIntrinsicSizingFunction(tracks[i].maxSizingFunction, containerSize)) {
+          intrinsicMaximumSizingFunctionTracks.push_back(&tracks[i]);
+        }
+
+        // auto as max sizing function is treated as max-content sizing function
+        if (isAutoSizingFunction(tracks[i].maxSizingFunction, containerSize)) {
+          maxContentMaximumSizingFunctionTracks.push_back(&tracks[i]);
+        }
+
+        spannedTracks.push_back(&tracks[i]);
+      }
+
+      if (hasFlexibleTrack) continue;
+
+      if (intrinsicMinimumSizingFunctionTracks.size() > 0) {
+        auto itemConstraints = calculateItemConstraints(item, dimension);
+        auto minimumContribution = sizingMode == SizingMode::MaxContent ? getLimitedMinimumContentContribution(item, dimension, itemConstraints) : getMinimumContribution(item, dimension, itemConstraints);
+        itemsForIntrinsicMin.emplace_back(item, std::move(intrinsicMinimumSizingFunctionTracks), spannedTracks, minimumContribution);
+      }
+
+      if (intrinsicMaximumSizingFunctionTracks.size() > 0) {
+        auto itemConstraints = calculateItemConstraints(item, dimension);
+        auto minimumContentContribution = getMinimumContentContribution(item, dimension, itemConstraints);
+        itemsForIntrinsicMax.emplace_back(item, std::move(intrinsicMaximumSizingFunctionTracks), spannedTracks, minimumContentContribution);
+      }
+
+      if (maxContentMaximumSizingFunctionTracks.size() > 0) {
+        auto itemConstraints = calculateItemConstraints(item, dimension);
+        auto maxContentContribution = getMaxContentContribution(item, dimension, itemConstraints);
+        itemsForMaxContentMax.emplace_back(item, std::move(maxContentMaximumSizingFunctionTracks), std::move(spannedTracks), maxContentContribution);
+      }
+    }
+
+    // Process last span
+    // Step 1: For intrinsic minimums
+    if (itemsForIntrinsicMin.size() > 0) {
+      distributeSpaceToTracksBaseSize(dimension, itemsForIntrinsicMin);
+      itemsForIntrinsicMin.clear();
+    }
+
+    // Step 4: Adjust growth limits
+    for (auto& track : tracks) {
+      if (track.growthLimit < track.baseSize) {
+        track.growthLimit = track.baseSize;
+      }
+    }
+
+    // Step 5: For intrinsic maximums
+    if (itemsForIntrinsicMax.size() > 0) {
+      distributeSpaceToTracksGrowthLimit(dimension, itemsForIntrinsicMax);
+      itemsForIntrinsicMax.clear();
+    }
+
+    // Step 6: For max-content maximums
+    if (itemsForMaxContentMax.size() > 0) {
+      distributeSpaceToTracksGrowthLimit(dimension, itemsForMaxContentMax);
+      itemsForMaxContentMax.clear();
     }
   };
 
@@ -227,28 +279,41 @@ struct TrackSizing {
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
 
-    std::vector<GridTrackSize*> flexibleTracks;
-    for (auto& item: gridItemAreas) {
+    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>> itemsSpanningFlexible;
+
+    for (auto& item : gridItemAreas) {
       auto spannedTracks = getTracksSpannedByItem(item, tracks, dimension);
-      for (auto& track: spannedTracks) {
+
+      bool hasFlexibleTrack = false;
+      std::vector<GridTrackSize*> intrinsicMinFlexibleTracks;
+
+      for (auto& track : spannedTracks) {
         if (isFlexibleSizingFunction(track->maxSizingFunction)) {
-          flexibleTracks.push_back(track);
+          hasFlexibleTrack = true;
+
+          if (isIntrinsicSizingFunction(track->minSizingFunction, containerSize)) {
+            intrinsicMinFlexibleTracks.push_back(track);
+          }
         }
       }
 
-      std::vector<GridTrackSize*> intrinsicMinimumSizingFunctionTracks;
-      for (auto& track : flexibleTracks) {
-        if (isIntrinsicSizingFunction(track->minSizingFunction, containerSize)) {
-          intrinsicMinimumSizingFunctionTracks.push_back(track);
-        }
-      }
-      // 1. For intrinsic minimums
-      if (intrinsicMinimumSizingFunctionTracks.size() > 0) {
+      if (hasFlexibleTrack && !intrinsicMinFlexibleTracks.empty()) {
         auto itemConstraints = calculateItemConstraints(item, dimension);
-        auto minimumContribution = sizingMode == SizingMode::MaxContent ? getLimitedMinimumContentContribution(item, dimension, itemConstraints) : getMinimumContribution(item, dimension, itemConstraints);
-        distributeSpaceToFlexibleTracks(dimension, intrinsicMinimumSizingFunctionTracks, spannedTracks, minimumContribution);
+        auto minimumContribution = sizingMode == SizingMode::MaxContent
+            ? getLimitedMinimumContentContribution(item, dimension, itemConstraints)
+            : getMinimumContribution(item, dimension, itemConstraints);
+
+        itemsSpanningFlexible.emplace_back(
+            item,
+            std::move(intrinsicMinFlexibleTracks),
+            spannedTracks,
+            minimumContribution
+        );
       }
-      // 2, 3, 4, 5, 6 does not seem to be needed since max-sizing function is flexible kind and we do not support min-content, max-content yet
+    }
+
+    if (!itemsSpanningFlexible.empty()) {
+      distributeSpaceToFlexibleTracksForItems(dimension, itemsSpanningFlexible);
     }
   };
 
@@ -256,183 +321,84 @@ struct TrackSizing {
   // Distribute space to tracks' where affected size is base size
   void distributeSpaceToTracksBaseSize(
     Dimension dimension, 
-    std::vector<GridTrackSize*>& affectedTracks, 
-    const std::vector<GridTrackSize*>& spannedTracks, 
-    float sizeContribution) {
+    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>>& items) {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
-  
-    // 1. Set planned increase to 0 for all affected tracks
     std::unordered_map<GridTrackSize*, float> plannedIncrease;
-    std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
-    plannedIncrease.reserve(affectedTracks.size());
-    itemIncurredIncrease.reserve(affectedTracks.size());
-    for (auto& track: affectedTracks) {
-      plannedIncrease[track] = 0.0f;
-      itemIncurredIncrease[track] = 0.0f;
-    }
+    plannedIncrease.reserve(items.size());
 
-    // 2.1 Find the space to distribute
-    float totalSpannedTracksSize = 0.0f;
-    auto gap = node->style().computeGapForDimension(dimension, containerSize);
-    for (size_t i = 0; i < spannedTracks.size(); i++) {
-      totalSpannedTracksSize += spannedTracks[i]->baseSize;
-      // gaps are treated as tracks of fixed size. Item can span over gaps.
-      if (i < spannedTracks.size() - 1) {
-        totalSpannedTracksSize += gap;
+    // 1. Maintain separately for each affected track a planned increase, initially set to 0. (This prevents the size increases from becoming order-dependent.)
+    for (const auto& [item, affectedTracks, spannedTracks, sizeContribution] : items) {
+      for (auto& track : affectedTracks) {
+        plannedIncrease[track] = 0.0f;
       }
     }
-    float spaceToDistribute = std::max(0.0f, sizeContribution - totalSpannedTracksSize);
-    std::unordered_set<GridTrackSize*> frozenTracks;
-    frozenTracks.reserve(affectedTracks.size());
-
-    // 2.2. Distribute space up to limits
-    while (frozenTracks.size() < affectedTracks.size() && spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
-      auto unfrozenTrackCount = affectedTracks.size() - frozenTracks.size();
-      auto distributionPerTrack = spaceToDistribute / unfrozenTrackCount;
-
-      for (auto& track: affectedTracks) {
-        if (frozenTracks.contains(track)) {
-          continue;
-        }
-        auto limit = track->growthLimit;
-        if (track->maxSizingFunction.resolve(containerSize).isDefined()) {
-          limit = std::min(limit, track->maxSizingFunction.resolve(containerSize).unwrap());
-        }
-        if (track->baseSize + distributionPerTrack + itemIncurredIncrease[track] > limit) {
-          frozenTracks.insert(track);
-          auto increase = limit - track->baseSize - itemIncurredIncrease[track];
-          itemIncurredIncrease[track] += increase;
-          spaceToDistribute -= increase;
-        } else {
-          itemIncurredIncrease[track] += distributionPerTrack;
-          spaceToDistribute -= distributionPerTrack;
-        }
-      }
-    }
-
-    // 2.3. Distribute space to non-affected tracks:
-    // Currently, browsers do not implement this step. So we avoid it to match with browsers
-    // https://github.com/w3c/csswg-drafts/issues/3648
-  
-    // 2.4. Distribute space beyond limits
-    if (spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
-      std::vector<GridTrackSize*> tracksToGrowBeyondLimits;
-      for (auto& track: affectedTracks) {
-        if (isIntrinsicSizingFunction(track->maxSizingFunction, containerSize)) {
-          tracksToGrowBeyondLimits.push_back(track);
-        }
-      }
-
-      if (tracksToGrowBeyondLimits.size() == 0) {
-        tracksToGrowBeyondLimits = affectedTracks;
-      }
-      auto unfrozenTrackCount = tracksToGrowBeyondLimits.size();
-      while (spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f) && unfrozenTrackCount > 0) {
-        auto distributionPerTrack = spaceToDistribute / unfrozenTrackCount;
-        for (auto& track: tracksToGrowBeyondLimits) {
-          itemIncurredIncrease[track] += distributionPerTrack;
-          spaceToDistribute -= distributionPerTrack;
-        }
-      }
-    }
-
-    // 2.5. For each affected track, if the track’s item-incurred increase is larger than the track’s planned increase set the track’s planned increase to that value.
-    for (auto& track: affectedTracks) {
-      if (itemIncurredIncrease[track] > plannedIncrease[track]) {
-        plannedIncrease[track] = itemIncurredIncrease[track];
-      }
-    }
-
-    // 3. Update the tracks' affected sizes
-    for (auto& track: affectedTracks) {
-      track->baseSize += plannedIncrease[track];
-    }
-  }
-
-  // https://www.w3.org/TR/css-grid-1/#extra-space
-  // Distribute space to tracks' where affected size is growth limit
-  void distributeSpaceToTracksGrowthLimit(
-    Dimension dimension, 
-    std::vector<GridTrackSize*>& affectedTracks, 
-    const std::vector<GridTrackSize*>& spannedTracks, 
-    float sizeContribution,
-    bool infinitelyGrowable
-  ) {
-    auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     
-    // 1. Set planned increase to 0 for all affected tracks
-    std::unordered_map<GridTrackSize*, float> plannedIncrease;
-    std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
-    plannedIncrease.reserve(affectedTracks.size());
-    itemIncurredIncrease.reserve(affectedTracks.size());
-    for (auto& track: affectedTracks) {
-      plannedIncrease[track] = 0.0f;
-      itemIncurredIncrease[track] = 0.0f;
-    }
-
-    // 2.1 Find the space to distribute
-    float totalSpannedTracksSize = 0.0f;
-    auto gap = node->style().computeGapForDimension(dimension, containerSize);
-    for (size_t i = 0; i < spannedTracks.size(); i++) {
-      totalSpannedTracksSize += spannedTracks[i]->growthLimit == INFINITY ? spannedTracks[i]->baseSize : spannedTracks[i]->growthLimit;
-      if (i < spannedTracks.size() - 1) {
-        // gaps are treated as tracks of fixed size. Item can span over gaps.
-        totalSpannedTracksSize += gap;
-      }
-    }
-    float spaceToDistribute = std::max(0.0f, sizeContribution - totalSpannedTracksSize);
-    std::unordered_set<GridTrackSize*> frozenTracks;
-    frozenTracks.reserve(affectedTracks.size());
-
-    // 2.2. Distribute space up to limits
-    while (frozenTracks.size() < affectedTracks.size() && spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
-      auto unfrozenTrackCount = affectedTracks.size() - frozenTracks.size();
-      auto distributionPerTrack = spaceToDistribute / unfrozenTrackCount;
-
+    // 2. For each accommodated item, considering only tracks the item spans:
+    for (auto& [item, affectedTracks, spannedTracks, sizeContribution]: items) {
+      std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
+      itemIncurredIncrease.reserve(affectedTracks.size());
       for (auto& track: affectedTracks) {
-        if (frozenTracks.contains(track)) {
-          continue;
-        }
-        auto limit = INFINITY;
-        if (track->growthLimit != INFINITY && !track->infinitelyGrowable) {
-          limit = track->growthLimit;
-        } else if (track->maxSizingFunction.isFitContent() && track->maxSizingFunction.resolve(containerSize).isDefined()) {
-          limit = track->maxSizingFunction.resolve(containerSize).unwrap();
-        }
-
-        // If the affected size was a growth limit and the track is not marked infinitely growable, then each item-incurred increase will be zero.
-        if (!track->infinitelyGrowable) {
-          frozenTracks.insert(track);
-          continue;
-        }
-
-        if (track->growthLimit + distributionPerTrack + itemIncurredIncrease[track] > limit) {
-          frozenTracks.insert(track);
-          auto increase = limit - track->growthLimit - itemIncurredIncrease[track];
-          itemIncurredIncrease[track] += increase;
-          spaceToDistribute -= increase;
-        } else {
-          itemIncurredIncrease[track] += distributionPerTrack;
-          spaceToDistribute -= distributionPerTrack;
+        itemIncurredIncrease[track] = 0.0f;
+      }
+      
+      // 2.1 Find the space to distribute
+      float totalSpannedTracksSize = 0.0f;
+      auto gap = node->style().computeGapForDimension(dimension, containerSize);
+      for (auto& track: spannedTracks) {
+        totalSpannedTracksSize += track->baseSize;
+        if (track != spannedTracks.back()) {
+          // gaps are treated as tracks of fixed size. Item can span over gaps.
+          totalSpannedTracksSize += gap;
         }
       }
-    }
 
-    // 2.3. Distribute space to non-affected tracks:
-    // Currently, browsers do not implement this step.
-    // https://github.com/w3c/csswg-drafts/issues/3648
-  
-    // 2.4. Distribute space beyond limits
-    if (spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
-      std::vector<GridTrackSize*> tracksToGrowBeyondLimits;
+      float spaceToDistribute = std::max(0.0f, sizeContribution - totalSpannedTracksSize);
+      std::unordered_set<GridTrackSize*> frozenTracks;
+      frozenTracks.reserve(affectedTracks.size());
+
+      // 2.2. Distribute space up to limits
+      while (frozenTracks.size() < affectedTracks.size() && spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
+        auto unfrozenTrackCount = affectedTracks.size() - frozenTracks.size();
+        auto distributionPerTrack = spaceToDistribute / unfrozenTrackCount;
+
+        for (auto& track: affectedTracks) {
+          if (frozenTracks.contains(track)) {
+            continue;
+          }
+          auto limit = track->growthLimit;
+          if (track->maxSizingFunction.resolve(containerSize).isDefined()) {
+            limit = std::min(limit, track->maxSizingFunction.resolve(containerSize).unwrap());
+          }
+          if (track->baseSize + distributionPerTrack + itemIncurredIncrease[track] > limit) {
+            frozenTracks.insert(track);
+            auto increase = limit - track->baseSize - itemIncurredIncrease[track];
+            itemIncurredIncrease[track] += increase;
+            spaceToDistribute -= increase;
+          } else {
+            itemIncurredIncrease[track] += distributionPerTrack;
+            spaceToDistribute -= distributionPerTrack;
+          }
+        }
+      }
+
+      // 2.3. Distribute space to non-affected tracks:
+      // Currently, browsers do not implement this step. So we avoid it to match with browsers
+      // https://github.com/w3c/csswg-drafts/issues/3648
+    
+      // 2.4. Distribute space beyond limits
+      if (spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
+        std::vector<GridTrackSize*> tracksToGrowBeyondLimits;
         for (auto& track: affectedTracks) {
           if (isIntrinsicSizingFunction(track->maxSizingFunction, containerSize)) {
             tracksToGrowBeyondLimits.push_back(track);
           }
         }
 
-        while (spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f) && tracksToGrowBeyondLimits.size() > 0) {
-          auto unfrozenTrackCount = tracksToGrowBeyondLimits.size();
+        if (tracksToGrowBeyondLimits.size() == 0) {
+          tracksToGrowBeyondLimits = affectedTracks;
+        }
+        auto unfrozenTrackCount = tracksToGrowBeyondLimits.size();
+        while (spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f) && unfrozenTrackCount > 0) {
           auto distributionPerTrack = spaceToDistribute / unfrozenTrackCount;
           for (auto& track: tracksToGrowBeyondLimits) {
             itemIncurredIncrease[track] += distributionPerTrack;
@@ -441,71 +407,212 @@ struct TrackSizing {
         }
       }
 
-    // 2.5. For each affected track, if the track’s item-incurred increase is larger than the track’s planned increase set the track’s planned increase to that value.
-    for (auto& track: affectedTracks) {
-      if (itemIncurredIncrease[track] > plannedIncrease[track]) {
-        plannedIncrease[track] = itemIncurredIncrease[track];
+      // 2.5. For each affected track, if the track’s item-incurred increase is larger than the track’s planned increase set the track’s planned increase to that value.
+      for (auto& track: affectedTracks) {
+        if (itemIncurredIncrease[track] > plannedIncrease[track]) {
+          plannedIncrease[track] = itemIncurredIncrease[track];
+        }
       }
     }
 
     // 3. Update the tracks' affected sizes
-    for (auto& track: affectedTracks) {
+    for (const auto& [track, increase] : plannedIncrease) {
+      track->baseSize += increase;
+    }
+  }
+
+  // https://www.w3.org/TR/css-grid-1/#extra-space
+  // Distribute space to tracks' where affected size is growth limit
+  void distributeSpaceToTracksGrowthLimit(
+    Dimension dimension, 
+    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>>& items) {
+    auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
+    std::unordered_map<GridTrackSize*, float> plannedIncrease;
+    plannedIncrease.reserve(items.size());
+
+    // 1. Maintain separately for each affected track a planned increase, initially set to 0. (This prevents the size increases from becoming order-dependent.)
+    for (const auto& [item, affectedTracks, spannedTracks, sizeContribution] : items) {
+      for (auto& track : affectedTracks) {
+        plannedIncrease[track] = 0.0f;
+      }
+    }
+
+    // 2. For each accommodated item, considering only tracks the item spans:
+    for (const auto& [item, affectedTracks, spannedTracks, sizeContribution] : items) {
+      std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
+      itemIncurredIncrease.reserve(affectedTracks.size());
+      for (auto& track: affectedTracks) {
+        itemIncurredIncrease[track] = 0.0f;
+      }
+      // 2.1 Find the space to distribute
+      float totalSpannedTracksSize = 0.0f;
+      auto gap = node->style().computeGapForDimension(dimension, containerSize);
+      for (auto& track: spannedTracks) {
+        // For infinite growth limits, substitute the track’s base size.) This remaining size contribution is the space to distribute
+        totalSpannedTracksSize += track->growthLimit == INFINITY ? track->baseSize : track->growthLimit;
+        if (track != spannedTracks.back()) {
+          // gaps are treated as tracks of fixed size. Item can span over gaps.
+          totalSpannedTracksSize += gap;
+        }
+      }
+
+      float spaceToDistribute = std::max(0.0f, sizeContribution - totalSpannedTracksSize);
+      std::unordered_set<GridTrackSize*> frozenTracks;
+      frozenTracks.reserve(affectedTracks.size());
+      // 2.2. Distribute space up to limits
+      while (frozenTracks.size() < affectedTracks.size() && spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
+        auto unfrozenTrackCount = affectedTracks.size() - frozenTracks.size();
+        auto distributionPerTrack = spaceToDistribute / unfrozenTrackCount;
+  
+        for (auto& track: affectedTracks) {
+          if (frozenTracks.contains(track)) {
+            continue;
+          }
+          auto limit = INFINITY;
+          if (track->growthLimit != INFINITY && !track->infinitelyGrowable) {
+            limit = track->growthLimit;
+          } else if (track->maxSizingFunction.isFitContent() && track->maxSizingFunction.resolve(containerSize).isDefined()) {
+            limit = track->maxSizingFunction.resolve(containerSize).unwrap();
+          }
+  
+          // If the affected size was a growth limit and the track is not marked infinitely growable, then each item-incurred increase will be zero.
+          if (!track->infinitelyGrowable) {
+            frozenTracks.insert(track);
+            continue;
+          }
+  
+          if (track->growthLimit + distributionPerTrack + itemIncurredIncrease[track] > limit) {
+            frozenTracks.insert(track);
+            auto increase = limit - track->growthLimit - itemIncurredIncrease[track];
+            itemIncurredIncrease[track] += increase;
+            spaceToDistribute -= increase;
+          } else {
+            itemIncurredIncrease[track] += distributionPerTrack;
+            spaceToDistribute -= distributionPerTrack;
+          }
+        }
+      }
+  
+      // 2.3. Distribute space to non-affected tracks:
+      // Currently, browsers do not implement this step.
+      // https://github.com/w3c/csswg-drafts/issues/3648
+    
+      // 2.4. Distribute space beyond limits
+      if (spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
+        std::vector<GridTrackSize*> tracksToGrowBeyondLimits;
+          for (auto& track: affectedTracks) {
+            if (isIntrinsicSizingFunction(track->maxSizingFunction, containerSize)) {
+              tracksToGrowBeyondLimits.push_back(track);
+            }
+          }
+  
+          while (spaceToDistribute > 0.0f && !yoga::inexactEquals(spaceToDistribute, 0.0f) && tracksToGrowBeyondLimits.size() > 0) {
+            auto unfrozenTrackCount = tracksToGrowBeyondLimits.size();
+            auto distributionPerTrack = spaceToDistribute / unfrozenTrackCount;
+            for (auto& track: tracksToGrowBeyondLimits) {
+              itemIncurredIncrease[track] += distributionPerTrack;
+              spaceToDistribute -= distributionPerTrack;
+            }
+          }
+        }
+  
+      // 2.5. For each affected track, if the track’s item-incurred increase is larger than the track’s planned increase set the track’s planned increase to that value.
+      for (auto& track: affectedTracks) {
+        if (itemIncurredIncrease[track] > plannedIncrease[track]) {
+          plannedIncrease[track] = itemIncurredIncrease[track];
+        }
+      }
+    }
+
+    // 3. Update the tracks' affected sizes
+    for (const auto& [track, increase] : plannedIncrease) {
       if (track->growthLimit == INFINITY) {
-        track->growthLimit = track->baseSize + plannedIncrease[track];
-        // we set it true in step 5 of https://www.w3.org/TR/css-grid-1/#algo-spanning-items 
-        // and reset it to false in step 6
-        track->infinitelyGrowable = infinitelyGrowable;
+        track->growthLimit = track->baseSize + increase;
+        track->infinitelyGrowable = true;
       } else {
-        track->growthLimit += plannedIncrease[track];
+        track->growthLimit += increase;
       }
     }
   }
   // https://www.w3.org/TR/css-grid-1/#extra-space
-  // We keep affected size as base size because growth limit distribution step does not apply to flexible max sizing functions.
-  // Also there is no use of limit here since growth limit is INFINITY for flexible tracks
-  void distributeSpaceToFlexibleTracks(
-    Dimension dimension, 
-    std::vector<GridTrackSize*>& affectedTracks, 
-    const std::vector<GridTrackSize*>& spannedTracks, 
-    float sizeContribution
-  ) {
+  // Distribute space to flexible tracks for multiple items using planned increase pattern
+  void distributeSpaceToFlexibleTracksForItems(
+    Dimension dimension,
+    const std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>>& items) {
+
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
-    float totalSpannedTracksSize = 0.0f;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
-    for (size_t i = 0; i < spannedTracks.size(); i++) {
-      totalSpannedTracksSize += spannedTracks[i]->baseSize;
-      if (i < spannedTracks.size() - 1) {
-        // gaps are treated as tracks of fixed size. Item can span over gaps.
-        totalSpannedTracksSize += gap;
+
+    // Step 1: Maintain planned increase for each affected track
+    std::unordered_map<GridTrackSize*, float> plannedIncrease;
+    for (const auto& [item, affectedTracks, spannedTracks, contribution] : items) {
+      for (auto& track : affectedTracks) {
+        plannedIncrease[track] = 0.0f;
       }
     }
 
-    float sumOfFlexFactors = 0.0f;
-    for (auto& track: affectedTracks) {
-      sumOfFlexFactors += track->maxSizingFunction.value().unwrap();
+    // Step 2: For each item
+    for (const auto& [item, affectedTracks, spannedTracks, sizeContribution] : items) {
+      if (affectedTracks.empty()) continue;
+
+      // Calculate item-incurred increase for THIS item
+      std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
+      for (auto& track : affectedTracks) {
+        itemIncurredIncrease[track] = 0.0f;
+      }
+
+      // Find space to distribute
+      float totalSpannedTracksSize = 0.0f;
+      for (auto& track : spannedTracks) {
+        totalSpannedTracksSize += track->baseSize;
+        if (track != spannedTracks.back()) {
+          totalSpannedTracksSize += gap;
+        }
+      }
+
+      float spaceToDistribute = std::max(0.0f, sizeContribution - totalSpannedTracksSize);
+
+      // Calculate sum of flex factors for affected tracks
+      float sumOfFlexFactors = 0.0f;
+      for (auto& track : affectedTracks) {
+        sumOfFlexFactors += track->maxSizingFunction.value().unwrap();
+      }
+
+      // Distribute according to flex factor rules
+      if (sumOfFlexFactors >= 1.0f) {
+        // Distribute proportionally by flex factors
+        for (auto& track : affectedTracks) {
+          auto flexFactor = track->maxSizingFunction.value().unwrap();
+          auto increase = spaceToDistribute * flexFactor / sumOfFlexFactors;
+          itemIncurredIncrease[track] += increase;
+        }
+      } else if (sumOfFlexFactors > 0.0f && !yoga::inexactEquals(sumOfFlexFactors, 0.0f)) {
+        // Distribute sum*space proportionally, rest equally
+        auto proportionalSpace = spaceToDistribute * sumOfFlexFactors;
+        for (auto& track : affectedTracks) {
+          auto flexFactor = track->maxSizingFunction.value().unwrap();
+          auto increase = proportionalSpace * flexFactor / sumOfFlexFactors;
+          itemIncurredIncrease[track] += increase;
+        }
+
+        auto remainingSpace = spaceToDistribute - proportionalSpace;
+        auto equalShare = remainingSpace / affectedTracks.size();
+        for (auto& track : affectedTracks) {
+          itemIncurredIncrease[track] += equalShare;
+        }
+      }
+
+      // Update planned increase = MAX(itemIncurred, planned)
+      for (auto& track : affectedTracks) {
+        if (itemIncurredIncrease[track] > plannedIncrease[track]) {
+          plannedIncrease[track] = itemIncurredIncrease[track];
+        }
+      }
     }
-    float spaceToDistribute = std::max(0.0f, sizeContribution - totalSpannedTracksSize);
 
-    if (sumOfFlexFactors >= 1.0f) {
-      for (auto& track: affectedTracks) {
-        auto flexFactor = track->maxSizingFunction.value().unwrap();
-        auto spaceForTrack = spaceToDistribute * flexFactor / sumOfFlexFactors;
-        track->baseSize += spaceForTrack;
-      }
-    } 
-    else if (sumOfFlexFactors > 0.0f && !yoga::inexactEquals(sumOfFlexFactors, 0.0f)) {
-      auto proportionalSpace = spaceToDistribute * sumOfFlexFactors;
-      for (auto& track: affectedTracks) {
-        auto flexFactor = track->maxSizingFunction.value().unwrap();
-        auto spaceForTrack = proportionalSpace * flexFactor / sumOfFlexFactors;
-        track->baseSize += spaceForTrack;
-      }
-
-      auto remainingSpace = spaceToDistribute - proportionalSpace;
-      auto spaceForTrack = remainingSpace / affectedTracks.size();
-      for (auto& track: affectedTracks) {
-        track->baseSize += spaceForTrack;
-      }
+    // Step 3: Apply planned increase to all tracks
+    for (const auto& [track, increase] : plannedIncrease) {
+      track->baseSize += increase;
     }
   };
 
@@ -1243,7 +1350,7 @@ struct TrackSizing {
     auto start = dimension == Dimension::Width ? item.columnStart : item.rowStart;
     auto end = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
     spannedTracks.reserve(end - start);
-    for (int i = start; i < end; ++i) {
+    for (size_t i = start; i < end; ++i) {
       spannedTracks.push_back(&tracks[i]);
     }
     return spannedTracks;
@@ -1359,6 +1466,8 @@ struct TrackSizing {
     } else if (yoga::isDefined(containingBlockWidth)) {
       itemWidthSizingMode = SizingMode::FitContent;
       availableWidth = containingBlockWidth;
+    } else {
+      availableWidth = YGUndefined;
     }
 
     if (item.node->hasDefiniteLength(dimension, containingBlockHeight)) {
@@ -1372,7 +1481,9 @@ struct TrackSizing {
     } else if (yoga::isDefined(containingBlockHeight)) {
       itemHeightSizingMode = SizingMode::FitContent;
       availableHeight = containingBlockHeight;
-    }
+    } else {
+      availableHeight = YGUndefined;
+    } 
 
     return ItemConstraint{
       availableWidth,
