@@ -9,8 +9,40 @@
 #include <yoga/algorithm/grid/CalculateAvailableInnerDimension.h>
 #include <yoga/algorithm/BoundAxis.h>
 #include <yoga/algorithm/grid/TrackSizing.h>
+#include <yoga/algorithm/AbsoluteLayout.h>
 
 namespace facebook::yoga {
+
+  
+static void zeroOutLayoutRecursively(yoga::Node* const node) {
+  node->getLayout() = {};
+  node->setLayoutDimension(0, Dimension::Width);
+  node->setLayoutDimension(0, Dimension::Height);
+  node->setHasNewLayout(true);
+
+  node->cloneChildrenIfNeeded();
+  for (const auto child : node->getChildren()) {
+    zeroOutLayoutRecursively(child);
+  }
+}
+
+static void cleanupContentsNodesRecursively(yoga::Node* const node) {
+  if (node->hasContentsChildren()) [[unlikely]] {
+    node->cloneContentsChildrenIfNeeded();
+    for (auto child : node->getChildren()) {
+      if (child->style().display() == Display::Contents) {
+        child->getLayout() = {};
+        child->setLayoutDimension(0, Dimension::Width);
+        child->setLayoutDimension(0, Dimension::Height);
+        child->setHasNewLayout(true);
+        child->setDirty(false);
+        child->cloneChildrenIfNeeded();
+
+        cleanupContentsNodesRecursively(child);
+      }
+    }
+  }
+}
 
 // Follows - https://www.w3.org/TR/css-grid-1/#layout-algorithm
 void calculateGridLayoutInternal(Node* node,
@@ -424,7 +456,43 @@ void calculateGridLayoutInternal(Node* node,
 
       item.node->setLayoutPosition(finalTop, PhysicalEdge::Top);
     }
+    
+    // Perform layout of absolute children
+    // https://www.w3.org/TR/css-grid-1/#abspos
+    // TODO: support grid-[row|column]-[start|end] as containing blocks
+    if (node->style().positionType() != PositionType::Static ||
+        node->alwaysFormsContainingBlock() || depth == 1) {
+      for (auto child : node->getLayoutChildren()) {
+        if (child->style().display() == Display::None) {
+          zeroOutLayoutRecursively(child);
+          child->setHasNewLayout(true);
+          child->setDirty(false);
+          continue;
+        }
+
+        if (child->style().positionType() == PositionType::Absolute) {
+          child->processDimensions();
+        }
+      }
+
+      layoutAbsoluteDescendants(
+          node,
+          node,
+          widthSizingMode,
+          direction,
+          layoutMarkerData,
+          depth,
+          generationCount,
+          0.0f,
+          0.0f,
+          availableInnerWidth,
+          availableInnerHeight);
+    }
   }
+
+  // Clean and update all display: contents nodes with a direct path to the
+  // current node as they will not be traversed
+  cleanupContentsNodesRecursively(node);
 }
 
 GridTracks createGridTracks(yoga::Node* node, const ResolvedAutoPlacement& autoPlacement) {

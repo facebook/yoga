@@ -135,9 +135,9 @@ struct AutoPlacement {
 
   static AutoPlacement performAutoPlacement(yoga::Node* node) {
     std::vector<AutoPlacementItemArea> gridItemAreas;
-    gridItemAreas.reserve(node->getChildren().size());
+    gridItemAreas.reserve(node->getChildCount());
     std::unordered_set<yoga::Node*> placedItems;
-    placedItems.reserve(node->getChildren().size());
+    placedItems.reserve(node->getChildCount());
     int32_t minColumnStart = 0;
     int32_t minRowStart = 0;
     int32_t maxColumnEnd = static_cast<int32_t>(node->style().gridTemplateColumns().size());
@@ -164,8 +164,8 @@ struct AutoPlacement {
     // Step 1: Position anything that's not auto-positioned.
     // In spec level 1, span is always definite. Default is 1.
     // So for grid position to be definite, we need either start or end to be definite.
-    for (const auto& child: node->getChildren()) {
-      if (child->style().positionType() == PositionType::Absolute) {
+    for (const auto& child: node->getLayoutChildren()) {
+      if (child->style().positionType() == PositionType::Absolute || child->style().display() == Display::None) {
         continue;
       }
     
@@ -204,8 +204,8 @@ struct AutoPlacement {
     // Step 2: Process the items locked to a given row.
     // Definite row positions only, exclude items with definite column positions.
     std::unordered_map<int32_t, int32_t> rowStartToColumnStartCache;
-    for (const auto& child: node->getChildren()) {
-      if (child->style().positionType() == PositionType::Absolute) {
+    for (const auto& child: node->getLayoutChildren()) {
+      if (child->style().positionType() == PositionType::Absolute || child->style().display() == Display::None) {
         continue;
       }
     
@@ -263,8 +263,8 @@ struct AutoPlacement {
     // Step 3: Determine the columns in the implicit grid.
     // TODO: we dont need this loop. we can do it in above steps. But keeping it for now, to match the spec.
     auto largestColumnSpan = 1;
-    for (const auto& child: node->getChildren()) {
-      if (child->style().positionType() == PositionType::Absolute) {
+    for (const auto& child: node->getLayoutChildren()) {
+      if (child->style().positionType() == PositionType::Absolute || child->style().display() == Display::None) {
         continue;
       }
     
@@ -299,8 +299,8 @@ struct AutoPlacement {
       minColumnStart,
       minRowStart
     };
-    for (const auto& child: node->getChildren()) {
-      if (child->style().positionType() == PositionType::Absolute) {
+    for (const auto& child: node->getLayoutChildren()) {
+      if (child->style().positionType() == PositionType::Absolute || child->style().display() == Display::None) {
         continue;
       }
     
