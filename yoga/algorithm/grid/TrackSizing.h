@@ -163,7 +163,7 @@ struct TrackSizing {
     std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>> itemsForIntrinsicMax;
     std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, std::vector<GridTrackSize*>, float>> itemsForMaxContentMax;
 
-    auto distributeSpaceToCurrentSpan = [&]() {
+    auto distributeSpaceToTracksForItemsWithTheSameSpan = [&]() {
       // Step 1: For intrinsic minimums
       if (!itemsForIntrinsicMin.empty()) {
         distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMin, true);
@@ -199,7 +199,7 @@ struct TrackSizing {
 
       // span changed, start distributing space to intrinsic sizing tracks
       if (span > previousSpan) {
-        distributeSpaceToCurrentSpan();
+        distributeSpaceToTracksForItemsWithTheSameSpan();
         previousSpan = span;
       }
 
@@ -251,7 +251,7 @@ struct TrackSizing {
     }
 
     // Process last span
-    distributeSpaceToCurrentSpan();
+    distributeSpaceToTracksForItemsWithTheSameSpan();
     
   };
 
@@ -264,7 +264,6 @@ struct TrackSizing {
 
     for (auto& item : gridItemAreas) {
       auto spannedTracks = getTracksSpannedByItem(item, tracks, dimension);
-
       bool hasFlexibleTrack = false;
       std::vector<GridTrackSize*> intrinsicMinFlexibleTracks;
 
@@ -287,7 +286,7 @@ struct TrackSizing {
         itemsSpanningFlexible.emplace_back(
             item,
             std::move(intrinsicMinFlexibleTracks),
-            spannedTracks,
+            std::move(spannedTracks),
             minimumContribution
         );
       }
@@ -492,8 +491,10 @@ struct TrackSizing {
 
         auto remainingSpace = spaceToDistribute - proportionalSpace;
         auto equalShare = remainingSpace / affectedTracks.size();
-        for (auto& track : affectedTracks) {
-          itemIncurredIncrease[track] += equalShare;
+        if (equalShare > 0.0f && !yoga::inexactEquals(equalShare, 0.0f)) {
+          for (auto& track : affectedTracks) {
+            itemIncurredIncrease[track] += equalShare;
+          }
         }
       }
 
@@ -583,7 +584,7 @@ struct TrackSizing {
     
     // Check if this would cause the grid to be larger than the grid container's inner size as limited by its max-width/height
     auto totalGridSize = getTotalBaseSize(dimension);
-    
+
     // Get the max constraint for this dimension
     const float paddingAndBorder = dimension == Dimension::Width
         ? paddingAndBorderForAxis(node, FlexDirection::Row, direction, ownerWidth)
@@ -598,6 +599,7 @@ struct TrackSizing {
     auto maxContainerInnerSize = maxContainerBorderBoxSize.isDefined()
         ? maxContainerBorderBoxSize.unwrap() - paddingAndBorder
         : YGUndefined;
+
     if (yoga::isDefined(maxContainerInnerSize)) {
       if (totalGridSize > maxContainerInnerSize) {
         // Redo this step, treating the available grid space as equal to the grid container's inner size when it's sized to its max-width/height
@@ -609,6 +611,7 @@ struct TrackSizing {
         distributeFreeSpaceToTracks(dimension, maxContainerInnerSize);
       }
     }
+
   }
 
   // https://www.w3.org/TR/css-grid-1/#algo-find-fr-size
@@ -702,6 +705,7 @@ struct TrackSizing {
           }
         }
       }
+
       for (auto& item : gridItemAreas) {
           auto spannedTracks = getTracksSpannedByItem(item, gridTracks, dimension);
           if (!includesFlexibleTrack(spannedTracks)) {
@@ -718,13 +722,13 @@ struct TrackSizing {
         }
       }
 
-    // If using this flex fraction would cause the grid to be smaller than the grid container's min-width/height 
-    // (or larger than the grid container's max-width/height), then redo this step, treating the free space as definite 
-    // and the available grid space as equal to the grid container's inner size when it's sized to its min-width/height (max-width/height).
+      // If using this flex fraction would cause the grid to be smaller than the grid container's min-width/height 
+      // (or larger than the grid container's max-width/height), then redo this step, treating the free space as definite 
+      // and the available grid space as equal to the grid container's inner size when it's sized to its min-width/height (max-width/height).
     
-    // Calculate what the grid size would be with this flex fraction
-    float newTotalSize = 0.0f;
-    for (size_t i = 0; i < gridTracks.size(); i++) {
+      // Calculate what the grid size would be with this flex fraction
+      float newTotalSize = 0.0f;
+      for (size_t i = 0; i < gridTracks.size(); i++) {
       auto& track = gridTracks[i];
       if (isFlexibleSizingFunction(track.maxSizingFunction) && track.maxSizingFunction.value().isDefined()) {
         float flexFactor = track.maxSizingFunction.value().unwrap();
@@ -749,7 +753,6 @@ struct TrackSizing {
     auto minContainerSize = minContainerOuter.isDefined()
         ? minContainerOuter.unwrap() - paddingAndBorder
         : YGUndefined;
-
         
     if (yoga::isDefined(minContainerSize)) {
       if (newTotalSize < minContainerSize) {
@@ -869,18 +872,13 @@ struct TrackSizing {
   };
 
   float getMaxContentContribution(const GridItemArea& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    auto itemWidthSizingMode = dimension == Dimension::Width ? SizingMode::MaxContent : itemConstraints.widthSizingMode;
-    auto itemHeightSizingMode = dimension == Dimension::Height ? SizingMode::MaxContent : itemConstraints.heightSizingMode;
-    auto itemAvailableWidth = dimension == Dimension::Width ? YGUndefined : itemConstraints.width;
-    auto itemAvailableHeight = dimension == Dimension::Height ? YGUndefined : itemConstraints.height;
-
     calculateLayoutInternal(
         item.node,
-        itemAvailableWidth,
-        itemAvailableHeight,
+        itemConstraints.width,
+        itemConstraints.height,
         node->getLayout().direction(),
-        itemWidthSizingMode,
-        itemHeightSizingMode,
+        itemConstraints.widthSizingMode,
+        itemConstraints.heightSizingMode,
         itemConstraints.containingBlockWidth,
         itemConstraints.containingBlockHeight,
         false,
@@ -1240,9 +1238,9 @@ struct TrackSizing {
     const GridItemArea& item,
     std::vector<GridTrackSize>& tracks,
     Dimension dimension) {
-    std::vector<GridTrackSize*> spannedTracks;
     auto start = dimension == Dimension::Width ? item.columnStart : item.rowStart;
     auto end = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
+    std::vector<GridTrackSize*> spannedTracks;
     spannedTracks.reserve(end - start);
     for (size_t i = start; i < end; ++i) {
       spannedTracks.push_back(&tracks[i]);
@@ -1304,10 +1302,6 @@ struct TrackSizing {
   ItemConstraint calculateItemConstraints(const GridItemArea& item, Dimension dimension) {
     float containingBlockWidth = 0.0f;
     float containingBlockHeight = 0.0f;
-    float availableWidth = 0.0f;
-    float availableHeight = 0.0f;
-    SizingMode itemWidthSizingMode = SizingMode::MaxContent;
-    SizingMode itemHeightSizingMode = SizingMode::MaxContent;
     auto rowGap = node->style().computeGapForDimension(Dimension::Height, containerInnerHeight);
     auto columnGap = node->style().computeGapForDimension(Dimension::Width, containerInnerWidth);
 
@@ -1349,35 +1343,76 @@ struct TrackSizing {
       }
     }
 
-    if (item.node->hasDefiniteLength(dimension, containingBlockWidth)) {
+    float availableWidth = YGUndefined;
+    float availableHeight = YGUndefined;
+    SizingMode itemWidthSizingMode = SizingMode::MaxContent;
+    SizingMode itemHeightSizingMode = SizingMode::MaxContent;
+
+    const auto marginInline = item.node->style().computeMarginForAxis(FlexDirection::Row, containingBlockWidth);
+    const auto marginBlock = item.node->style().computeMarginForAxis(FlexDirection::Column, containingBlockHeight);
+
+    if (item.node->hasDefiniteLength(Dimension::Width, containingBlockWidth)) {
       itemWidthSizingMode = SizingMode::StretchFit;
-      auto marginInline = item.node->style().computeMarginForAxis(FlexDirection::Row, containingBlockWidth);
       availableWidth = item.node->getResolvedDimension(
         direction,
-        dimension,
+        Dimension::Width,
         containingBlockWidth,
         containingBlockWidth).unwrap() + marginInline;
-    } else if (yoga::isDefined(containingBlockWidth)) {
-      itemWidthSizingMode = SizingMode::FitContent;
-      availableWidth = containingBlockWidth;
-    } else {
-      availableWidth = YGUndefined;
     }
 
-    if (item.node->hasDefiniteLength(dimension, containingBlockHeight)) {
+    if (item.node->hasDefiniteLength(Dimension::Height, containingBlockHeight)) {
       itemHeightSizingMode = SizingMode::StretchFit;
-      auto marginBlock = item.node->style().computeMarginForAxis(FlexDirection::Column, containingBlockHeight);
       availableHeight = item.node->getResolvedDimension(
         direction,
-        dimension,
+        Dimension::Height,
         containingBlockHeight,
         containingBlockHeight).unwrap() + marginBlock;
-    } else if (yoga::isDefined(containingBlockHeight)) {
-      itemHeightSizingMode = SizingMode::FitContent;
-      availableHeight = containingBlockHeight;
-    } else {
-      availableHeight = YGUndefined;
-    } 
+    }
+
+    if (yoga::isDefined(containingBlockWidth) && itemWidthSizingMode != SizingMode::StretchFit) {
+      itemWidthSizingMode = SizingMode::FitContent;
+      availableWidth = containingBlockWidth;
+    }
+
+    if (yoga::isDefined(containingBlockHeight) && itemHeightSizingMode != SizingMode::StretchFit) {
+        itemHeightSizingMode = SizingMode::FitContent;
+        availableHeight = containingBlockHeight;
+    }
+
+    auto justifySelf = item.node->style().justifySelf();
+    if (justifySelf == Justify::Auto) {
+      justifySelf = node->style().justifyItems();
+    }
+
+    auto alignSelf = item.node->style().alignSelf();
+    if (alignSelf == Align::Auto) {
+      alignSelf = node->style().alignItems();
+    }
+
+    bool hasMarginInlineAuto = item.node->style().flexStartMarginIsAuto(FlexDirection::Row, direction)
+      || item.node->style().flexEndMarginIsAuto(FlexDirection::Row, direction);
+    bool hasMarginBlockAuto = item.node->style().flexStartMarginIsAuto(FlexDirection::Column, direction)
+      || item.node->style().flexEndMarginIsAuto(FlexDirection::Column, direction);
+    
+    const auto& itemStyle = item.node->style();
+    if (itemStyle.aspectRatio().isDefined()) {
+      // https://drafts.csswg.org/css-sizing-4/#aspect-ratio
+      // a non-replaced absolutely-positioned box treats justify-self: normal as stretch, not as start (CSS Box Alignment 3 § 6.1.2 Absolutely-Positioned Boxes), even if it has a preferred aspect ratio
+      // i.e. aspect ratio is only applied when item is not stretch aligned or margin is auto (auto margin items are not stretched) 
+      if (itemWidthSizingMode == SizingMode::StretchFit &&
+          itemHeightSizingMode != SizingMode::StretchFit && (alignSelf != Align::Stretch || hasMarginBlockAuto)) {
+        if (!yoga::inexactEquals(itemStyle.aspectRatio().unwrap(), 0.0f)) {
+          availableHeight = marginBlock +
+          (availableWidth - marginInline) / itemStyle.aspectRatio().unwrap();
+          itemHeightSizingMode = SizingMode::StretchFit;
+        }
+      } else if (itemHeightSizingMode == SizingMode::StretchFit &&
+                  itemWidthSizingMode != SizingMode::StretchFit && (justifySelf != Justify::Stretch || hasMarginInlineAuto)) {
+        availableWidth = marginInline +
+            (availableHeight - marginBlock) * itemStyle.aspectRatio().unwrap();
+        itemWidthSizingMode = SizingMode::StretchFit;
+      }
+    }
 
     return ItemConstraint{
       availableWidth,

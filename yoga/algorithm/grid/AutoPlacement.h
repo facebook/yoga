@@ -445,6 +445,7 @@ struct ResolvedAutoPlacement {
   int32_t maxRowEnd;
 
   // Offset column and row so they starts at 0 index
+  // also casts start and end values from int32_t to size_t
   static ResolvedAutoPlacement resolveGridItemPlacements(Node* node) {
     auto autoPlacement = AutoPlacement::performAutoPlacement(node);
 

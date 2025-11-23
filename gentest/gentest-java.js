@@ -166,6 +166,9 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignSpaceAround: {value: 'YogaAlign.SPACE_AROUND'},
   YGAlignSpaceEvenly: {value: 'YogaAlign.SPACE_EVENLY'},
   YGAlignBaseline: {value: 'YogaAlign.BASELINE'},
+  YGAlignStart: {value: 'YogaAlign.START'},
+  YGAlignEnd: {value: 'YogaAlign.END'},
+  YGAlignAuto: {value: 'YogaAlign.AUTO'},
 
   YGDirectionInherit: {value: 'YogaDirection.INHERIT'},
   YGDirectionLTR: {value: 'YogaDirection.LTR'},
@@ -194,6 +197,9 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifySpaceBetween: {value: 'YogaJustify.SPACE_BETWEEN'},
   YGJustifySpaceEvenly: {value: 'YogaJustify.SPACE_EVENLY'},
   YGJustifyStretch: {value: 'YogaJustify.STRETCH'},
+  YGJustifyStart: {value: 'YogaJustify.START'},
+  YGJustifyEnd: {value: 'YogaJustify.END'},
+  YGJustifyAuto: {value: 'YogaJustify.AUTO'},
 
   YGOverflowHidden: {value: 'YogaOverflow.HIDDEN'},
   YGOverflowVisible: {value: 'YogaOverflow.VISIBLE'},
@@ -340,6 +346,18 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGNodeStyleSetJustifyContent: {
     value: function (nodeName, value) {
       this.push(nodeName + '.setJustifyContent(' + toValueJava(value) + ');');
+    },
+  },
+
+  YGNodeStyleSetJustifyItems: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setJustifyItems(' + toValueJava(value) + ');');
+    },
+  },
+
+  YGNodeStyleSetJustifySelf: {
+    value: function (nodeName, value) {
+      this.push(nodeName + '.setJustifySelf(' + toValueJava(value) + ');');
     },
   },
 

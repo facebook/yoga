@@ -129,6 +129,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignSpaceAround: {value: 'Align.SpaceAround'},
   YGAlignSpaceEvenly: {value: 'Align.SpaceEvenly'},
   YGAlignBaseline: {value: 'Align.Baseline'},
+  YGAlignStart: {value: 'Align.Start'},
+  YGAlignEnd: {value: 'Align.End'},
+  YGAlignAuto: {value: 'Align.Auto'},
 
   YGDirectionInherit: {value: 'Direction.Inherit'},
   YGDirectionLTR: {value: 'Direction.LTR'},
@@ -157,6 +160,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifySpaceBetween: {value: 'Justify.SpaceBetween'},
   YGJustifySpaceEvenly: {value: 'Justify.SpaceEvenly'},
   YGJustifyStretch: {value: 'Justify.Stretch'},
+  YGJustifyStart: {value: 'Justify.Start'},
+  YGJustifyEnd: {value: 'Justify.End'},
+  YGJustifyAuto: {value: 'Justify.Auto'},
 
   YGOverflowHidden: {value: 'Overflow.Hidden'},
   YGOverflowVisible: {value: 'Overflow.Visible'},
@@ -317,6 +323,22 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     value: function (nodeName, value) {
       this.push(
         nodeName + '.setJustifyContent(' + toValueJavascript(value) + ');',
+      );
+    },
+  },
+
+  YGNodeStyleSetJustifyItems: {
+    value: function (nodeName, value) {
+      this.push(
+        nodeName + '.setJustifyItems(' + toValueJavascript(value) + ');',
+      );
+    },
+  },
+
+  YGNodeStyleSetJustifySelf: {
+    value: function (nodeName, value) {
+      this.push(
+        nodeName + '.setJustifySelf(' + toValueJavascript(value) + ');',
       );
     },
   },

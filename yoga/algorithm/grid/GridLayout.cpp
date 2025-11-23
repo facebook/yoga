@@ -71,10 +71,10 @@ void calculateGridLayoutInternal(Node* node,
   if (!widthIsDefinite || !heightIsDefinite) {
     auto trackSizing = TrackSizing(
       node,
-      columnTracks, 
-      rowTracks, 
-      containerInnerWidth, 
-      containerInnerHeight, 
+      columnTracks,
+      rowTracks,
+      containerInnerWidth,
+      containerInnerHeight,
       itemAreas,
       widthSizingMode,
       heightSizingMode,
@@ -98,6 +98,8 @@ void calculateGridLayoutInternal(Node* node,
     }
 
     if (!heightIsDefinite) {
+      // run the track sizing with width first because row track sizing depends on column track base sizes
+      trackSizing.runTrackSizing(Dimension::Width);
       trackSizing.runTrackSizing(Dimension::Height);
       auto totalTrackHeight = trackSizing.getTotalBaseSize(Dimension::Height);
       containerInnerHeight = boundAxis(
@@ -323,25 +325,27 @@ void calculateGridLayoutInternal(Node* node,
             containingBlockWidth).unwrap() + marginBlockStart + marginBlockEnd;
         childHeightSizingMode = SizingMode::StretchFit;
       }
-      
-      childWidth = boundAxisWithinMinAndMax(
-          item.node,
-          direction,
-          FlexDirection::Row,
-          FloatOptional{childWidth},
-          containingBlockWidth,
-          containingBlockWidth
-      ).unwrap();
-      
-      childHeight = boundAxisWithinMinAndMax(
-          item.node,
-          direction,
-          FlexDirection::Column,
-          FloatOptional{childHeight},
-          containingBlockHeight,
-          containingBlockWidth
-      ).unwrap();
-      
+
+      const auto& childStyle = item.node->style();
+      if (childStyle.aspectRatio().isDefined()) {
+        // https://drafts.csswg.org/css-sizing-4/#aspect-ratio
+        // a non-replaced absolutely-positioned box treats justify-self: normal as stretch, not as start (CSS Box Alignment 3 § 6.1.2 Absolutely-Positioned Boxes), even if it has a preferred aspect ratio
+        // i.e. aspect ratio is only applied when item is not stretch aligned or margin is auto (auto margin items are not stretched) 
+        if (childWidthSizingMode == SizingMode::StretchFit &&
+            childHeightSizingMode != SizingMode::StretchFit && (alignSelf != Align::Stretch || hasMarginBlockAuto)) {
+          if (!yoga::inexactEquals(childStyle.aspectRatio().unwrap(), 0.0f)) {
+            childHeight = marginBlockStart + marginBlockEnd +
+            (childWidth - marginInlineStart - marginInlineEnd) / childStyle.aspectRatio().unwrap();
+            childHeightSizingMode = SizingMode::StretchFit;
+          }
+        } else if (childHeightSizingMode == SizingMode::StretchFit &&
+                   childWidthSizingMode != SizingMode::StretchFit && (justifySelf != Justify::Stretch || hasMarginInlineAuto)) {
+          childWidth = marginInlineStart + marginInlineEnd +
+              (childHeight - marginBlockStart - marginBlockEnd) * childStyle.aspectRatio().unwrap();
+          childWidthSizingMode = SizingMode::StretchFit;
+        }
+      }
+
       calculateLayoutInternal(
           item.node,
           childWidth,
@@ -356,7 +360,6 @@ void calculateGridLayoutInternal(Node* node,
           layoutMarkerData,
           depth,
           generationCount);
-
 
       // since we know the item width and grid width, we can do the alignment here.
       // alignment of grid items happen in the grid area

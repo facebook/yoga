@@ -278,6 +278,22 @@ function setupTestTree(
             );
           }
           break;
+        case 'justify-items': {
+          const justifyItemsValue = justifyValue(e, node.style[style]);
+          if (justifyItemsValue !== undefined) {
+            e.YGNodeStyleSetJustifyItems(nodeName, justifyItemsValue);
+          }
+          break;
+        }
+        case 'justify-self': {
+          if (!parent || node.style[style] !== parent.style['justify-items']) {
+            const justifySelfValue = justifyValue(e, node.style[style]);
+            if (justifySelfValue !== undefined) {
+              e.YGNodeStyleSetJustifySelf(nodeName, justifySelfValue);
+            }
+          }
+          break;
+        }
         case 'position':
           e.YGNodeStyleSetPositionType(
             nodeName,
@@ -548,10 +564,7 @@ function setupTestTree(
                 parseInt(value.substring(5)),
               );
             } else {
-              e.YGNodeStyleSetGridColumnStart(
-                nodeName,
-                parseInt(value),
-              );
+              e.YGNodeStyleSetGridColumnStart(nodeName, parseInt(value));
             }
           }
           break;
@@ -564,10 +577,7 @@ function setupTestTree(
                 parseInt(value.substring(5)),
               );
             } else {
-              e.YGNodeStyleSetGridColumnEnd(
-                nodeName,
-                parseInt(value),
-              );
+              e.YGNodeStyleSetGridColumnEnd(nodeName, parseInt(value));
             }
           }
           break;
@@ -689,6 +699,12 @@ function justifyValue(e, value) {
       return e.YGJustifyFlexEnd;
     case 'stretch':
       return e.YGJustifyStretch;
+    case 'start':
+      return e.YGJustifyStart;
+    case 'end':
+      return e.YGJustifyEnd;
+    case 'auto':
+      return e.YGJustifyAuto;
   }
 }
 
@@ -734,6 +750,10 @@ function alignValue(e, value) {
       return e.YGAlignSpaceEvenly;
     case 'baseline':
       return e.YGAlignBaseline;
+    case 'start':
+      return e.YGAlignStart;
+    case 'end':
+      return e.YGAlignEnd;
   }
 }
 
@@ -934,6 +954,8 @@ function getYogaStyle(node) {
     'direction',
     'flex-direction',
     'justify-content',
+    'justify-items',
+    'justify-self',
     'align-content',
     'align-items',
     'align-self',

@@ -125,6 +125,9 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignSpaceAround: {value: 'YGAlignSpaceAround'},
   YGAlignSpaceEvenly: {value: 'YGAlignSpaceEvenly'},
   YGAlignBaseline: {value: 'YGAlignBaseline'},
+  YGAlignStart: {value: 'YGAlignStart'},
+  YGAlignEnd: {value: 'YGAlignEnd'},
+  YGAlignAuto: {value: 'YGAlignAuto'},
 
   YGDirectionInherit: {value: 'YGDirectionInherit'},
   YGDirectionLTR: {value: 'YGDirectionLTR'},
@@ -153,6 +156,9 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifySpaceBetween: {value: 'YGJustifySpaceBetween'},
   YGJustifySpaceEvenly: {value: 'YGJustifySpaceEvenly'},
   YGJustifyStretch: {value: 'YGJustifyStretch'},
+  YGJustifyStart: {value: 'YGJustifyStart'},
+  YGJustifyEnd: {value: 'YGJustifyEnd'},
+  YGJustifyAuto: {value: 'YGJustifyAuto'},
 
   YGOverflowHidden: {value: 'YGOverflowHidden'},
   YGOverflowVisible: {value: 'YGOverflowVisible'},
@@ -358,6 +364,30 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     value: function (nodeName, value) {
       this.push(
         'YGNodeStyleSetJustifyContent(' +
+          nodeName +
+          ', ' +
+          toValueCpp(value) +
+          ');',
+      );
+    },
+  },
+
+  YGNodeStyleSetJustifyItems: {
+    value: function (nodeName, value) {
+      this.push(
+        'YGNodeStyleSetJustifyItems(' +
+          nodeName +
+          ', ' +
+          toValueCpp(value) +
+          ');',
+      );
+    },
+  },
+
+  YGNodeStyleSetJustifySelf: {
+    value: function (nodeName, value) {
+      this.push(
+        'YGNodeStyleSetJustifySelf(' +
           nodeName +
           ', ' +
           toValueCpp(value) +
