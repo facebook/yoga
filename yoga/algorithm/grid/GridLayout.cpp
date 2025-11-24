@@ -199,6 +199,7 @@ void calculateGridLayoutInternal(Node* node,
 
     float leadingPaddingAndBorderInline = node->style().computeInlineStartPadding(FlexDirection::Row, direction, ownerWidth) +
       node->style().computeInlineStartBorder(FlexDirection::Row, direction);
+    float trailingPaddingAndBorderInline = node->style().computeInlineEndPaddingAndBorder(FlexDirection::Row, direction, ownerWidth);
     float leadingPaddingAndBorderBlock = node->style().computeInlineStartPadding(FlexDirection::Column, direction, ownerWidth) +
       node->style().computeInlineStartBorder(FlexDirection::Column, direction);
 
@@ -424,7 +425,7 @@ void calculateGridLayoutInternal(Node* node,
       
       float finalLeft;
       if (direction == Direction::RTL) {
-        finalLeft = containerInnerWidth - gridAreaLeft - actualItemWidth - marginInlineStart - rightAutoMarginOffset - justifySelfOffset - gridInlineOffset + leadingPaddingAndBorderInline;
+        finalLeft = containerInnerWidth + trailingPaddingAndBorderInline - gridAreaLeft - actualItemWidth - marginInlineStart - rightAutoMarginOffset - justifySelfOffset - gridInlineOffset;
       } else {
         finalLeft = gridAreaLeft + marginInlineStart + leftAutoMarginOffset + justifySelfOffset + gridInlineOffset + leadingPaddingAndBorderInline;
       }
