@@ -205,7 +205,7 @@ void calculateGridLayoutInternal(Node* node,
     float gridInlineOffset = 0.0f;
     float betweenInlineOffset = 0.0f;
     float freeSpaceInlineAxis = containerInnerWidth - gridWidth;
-    if (freeSpaceInlineAxis > 0.0f && !yoga::inexactEquals(freeSpaceInlineAxis, 0.0f)) {
+    if (!yoga::inexactEquals(freeSpaceInlineAxis, 0.0f)) {
       auto justifyContent = node->style().justifyContent();
       size_t numColumnTracks = columnTracks.size();
   
@@ -246,7 +246,7 @@ void calculateGridLayoutInternal(Node* node,
     float gridBlockOffset = 0.0f;
     float betweenBlockOffset = 0.0f;
     float freeSpaceBlockAxis = containerInnerHeight - gridHeight;
-    if (freeSpaceBlockAxis > 0.0f && !yoga::inexactEquals(freeSpaceBlockAxis, 0.0f)) {
+    if (!yoga::inexactEquals(freeSpaceBlockAxis, 0.0f)) {
       auto alignContent = node->style().alignContent();
       size_t numRowTracks = rowTracks.size();
   

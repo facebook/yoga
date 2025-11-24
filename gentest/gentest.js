@@ -176,8 +176,6 @@ function checkDefaultValues() {
     {style: 'bottom', value: 'undefined'},
     {style: 'display', value: 'flex'},
     {style: 'box-sizing', value: 'border-box'},
-    {style: 'grid-template-rows', value: 'none'},
-    {style: 'grid-template-columns', value: 'none'},
   ].forEach(item => {
     assert(
       isDefaultStyleValue(item.style, item.value),
