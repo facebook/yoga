@@ -220,18 +220,21 @@ void calculateGridLayoutInternal(Node* node,
           break;
         case Justify::SpaceBetween:
           if (numColumnTracks > 1) {
-            betweenInlineOffset = freeSpaceInlineAxis / (numColumnTracks - 1);
+            // negative free space is not distributed with space between, checkout grid_justify_content_space_between_negative_space_gap fixture
+            betweenInlineOffset = std::max(0.0f, freeSpaceInlineAxis / (numColumnTracks - 1));
           }
           break;
         case Justify::SpaceAround:
           if (numColumnTracks > 0) {
-            betweenInlineOffset = freeSpaceInlineAxis / numColumnTracks;
-            gridInlineOffset = betweenInlineOffset / 2.0f;
+            // negative free space is not distributed with space around, checkout grid_justify_content_space_around_negative_space_gap fixture
+            betweenInlineOffset = std::max(0.0f, freeSpaceInlineAxis / numColumnTracks);
+            gridInlineOffset = std::max(0.0f, betweenInlineOffset / 2.0f);
           }
           break;
         case Justify::SpaceEvenly:
           if (numColumnTracks > 0) {
-            betweenInlineOffset = freeSpaceInlineAxis / (numColumnTracks + 1);
+            // negative free space is not distributed with space evenly, checkout grid_justify_content_space_evenly_negative_space_gap fixture
+            betweenInlineOffset = std::max(0.0f, freeSpaceInlineAxis / (numColumnTracks + 1));
             gridInlineOffset = betweenInlineOffset;
           }
           break;
@@ -248,7 +251,6 @@ void calculateGridLayoutInternal(Node* node,
     float gridBlockOffset = 0.0f;
     float betweenBlockOffset = 0.0f;
     float freeSpaceBlockAxis = containerInnerHeight - gridHeight;
-    printf("freeSpaceBlockAxis: %f\n", freeSpaceBlockAxis);
     if (!yoga::inexactEquals(freeSpaceBlockAxis, 0.0f)) {
       auto alignContent = node->style().alignContent();
       size_t numRowTracks = rowTracks.size();

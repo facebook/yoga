@@ -475,26 +475,16 @@ struct TrackSizing {
         sumOfFlexFactors += track->maxSizingFunction.value().unwrap();
       }
 
-      if (sumOfFlexFactors >= 1.0f) {
+      if (sumOfFlexFactors > 0.0f && !yoga::inexactEquals(sumOfFlexFactors, 0.0f)) {
         for (auto& track : affectedTracks) {
           auto flexFactor = track->maxSizingFunction.value().unwrap();
           auto increase = spaceToDistribute * flexFactor / sumOfFlexFactors;
           itemIncurredIncrease[track] += increase;
         }
-      } else if (sumOfFlexFactors > 0.0f && !yoga::inexactEquals(sumOfFlexFactors, 0.0f)) {
-        auto proportionalSpace = spaceToDistribute * sumOfFlexFactors;
+      } else {
+        auto equalShare = spaceToDistribute / affectedTracks.size();
         for (auto& track : affectedTracks) {
-          auto flexFactor = track->maxSizingFunction.value().unwrap();
-          auto increase = proportionalSpace * flexFactor / sumOfFlexFactors;
-          itemIncurredIncrease[track] += increase;
-        }
-
-        auto remainingSpace = spaceToDistribute - proportionalSpace;
-        auto equalShare = remainingSpace / affectedTracks.size();
-        if (equalShare > 0.0f && !yoga::inexactEquals(equalShare, 0.0f)) {
-          for (auto& track : affectedTracks) {
-            itemIncurredIncrease[track] += equalShare;
-          }
+          itemIncurredIncrease[track] += equalShare;
         }
       }
 
