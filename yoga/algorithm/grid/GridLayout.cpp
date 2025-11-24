@@ -276,6 +276,7 @@ void calculateGridLayoutInternal(Node* node,
           break;
         case Align::SpaceEvenly:
           if (numRowTracks > 0) {
+            // negative free space is not distributed with space evenly, checkout grid_align_content_space_evenly_negative_space_gap fixture
             betweenBlockOffset = std::max(0.0f, freeSpaceBlockAxis / (numRowTracks + 1));
             gridBlockOffset = betweenBlockOffset;
           }
