@@ -127,11 +127,12 @@ void calculateGridLayoutInternal(Node* node,
         totalTrackWidth,
         ownerWidth,
         ownerWidth);
+    } else if (!heightIsDefinite) {
+      // run the track sizing with width first because row track sizing depends on column track base sizes
+      trackSizing.runTrackSizing(Dimension::Width);
     }
 
     if (!heightIsDefinite) {
-      // run the track sizing with width first because row track sizing depends on column track base sizes
-      trackSizing.runTrackSizing(Dimension::Width);
       trackSizing.runTrackSizing(Dimension::Height);
       auto totalTrackHeight = trackSizing.getTotalBaseSize(Dimension::Height);
       containerInnerHeight = boundAxis(
