@@ -247,12 +247,15 @@ void calculateGridLayoutInternal(Node* node,
     float gridBlockOffset = 0.0f;
     float betweenBlockOffset = 0.0f;
     float freeSpaceBlockAxis = containerInnerHeight - gridHeight;
+    printf("freeSpaceBlockAxis: %f\n", freeSpaceBlockAxis);
     if (!yoga::inexactEquals(freeSpaceBlockAxis, 0.0f)) {
       auto alignContent = node->style().alignContent();
       size_t numRowTracks = rowTracks.size();
   
       switch (alignContent) {
         case Align::Center:
+          // content center works with negative free space too
+          // refer grid_align_content_center_negative_space_gap fixture
           gridBlockOffset = freeSpaceBlockAxis / 2.0f;
           break;
         case Align::End:
@@ -260,18 +263,20 @@ void calculateGridLayoutInternal(Node* node,
           break;
         case Align::SpaceBetween:
           if (numRowTracks > 1) {
-            betweenBlockOffset = freeSpaceBlockAxis / (numRowTracks - 1);
+            // negative free space is not distributed with space between, checkout grid_align_content_space_between_negative_space_gap fixture
+            betweenBlockOffset = std::max(0.0f, freeSpaceBlockAxis / (numRowTracks - 1));
           }
           break;
         case Align::SpaceAround:
           if (numRowTracks > 0) {
-            betweenBlockOffset = freeSpaceBlockAxis / numRowTracks;
-            gridBlockOffset = betweenBlockOffset / 2.0f;
+            // negative free space is not distributed with space around, checkout grid_align_content_space_around_negative_space_gap fixture
+            betweenBlockOffset = std::max(0.0f, freeSpaceBlockAxis / numRowTracks);
+            gridBlockOffset = std::max(0.0f, betweenBlockOffset / 2.0f);
           }
           break;
         case Align::SpaceEvenly:
           if (numRowTracks > 0) {
-            betweenBlockOffset = freeSpaceBlockAxis / (numRowTracks + 1);
+            betweenBlockOffset = std::max(0.0f, freeSpaceBlockAxis / (numRowTracks + 1));
             gridBlockOffset = betweenBlockOffset;
           }
           break;
