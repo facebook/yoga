@@ -1341,6 +1341,17 @@ struct TrackSizing {
     const auto marginInline = item.node->style().computeMarginForAxis(FlexDirection::Row, containingBlockWidth);
     const auto marginBlock = item.node->style().computeMarginForAxis(FlexDirection::Column, containingBlockHeight);
 
+    if (yoga::isDefined(containingBlockWidth) && itemWidthSizingMode != SizingMode::StretchFit) {
+      itemWidthSizingMode = SizingMode::FitContent;
+      availableWidth = containingBlockWidth;
+    }
+
+    if (yoga::isDefined(containingBlockHeight) && itemHeightSizingMode != SizingMode::StretchFit) {
+        itemHeightSizingMode = SizingMode::FitContent;
+        availableHeight = containingBlockHeight;
+    }
+
+
     if (item.node->hasDefiniteLength(Dimension::Width, containingBlockWidth)) {
       itemWidthSizingMode = SizingMode::StretchFit;
       availableWidth = item.node->getResolvedDimension(
@@ -1357,16 +1368,6 @@ struct TrackSizing {
         Dimension::Height,
         containingBlockHeight,
         containingBlockHeight).unwrap() + marginBlock;
-    }
-
-    if (yoga::isDefined(containingBlockWidth) && itemWidthSizingMode != SizingMode::StretchFit) {
-      itemWidthSizingMode = SizingMode::FitContent;
-      availableWidth = containingBlockWidth;
-    }
-
-    if (yoga::isDefined(containingBlockHeight) && itemHeightSizingMode != SizingMode::StretchFit) {
-        itemHeightSizingMode = SizingMode::FitContent;
-        availableHeight = containingBlockHeight;
     }
 
     auto justifySelf = item.node->style().justifySelf();
