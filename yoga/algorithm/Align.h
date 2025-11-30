@@ -26,6 +26,14 @@ inline Align resolveChildAlignment(
   return align;
 }
 
+inline Justify resolveChildJustification(
+    const yoga::Node* node,
+    const yoga::Node* child) {
+  return child->style().justifySelf() == Justify::Auto
+      ? node->style().justifyItems()
+      : child->style().justifySelf();
+}
+
 /**
  * Fallback alignment to use on overflow
  * https://www.w3.org/TR/css-align-3/#distribution-values

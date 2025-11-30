@@ -23,7 +23,8 @@ static inline void setFlexStartLayoutPosition(
                        axis, direction, containingBlockWidth) +
       parent->getLayout().border(flexStartEdge(axis));
 
-  if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding)) {
+  if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding) &&
+      parent->style().display() != Display::Grid) {
     position += parent->getLayout().padding(flexStartEdge(axis));
   }
 
@@ -40,7 +41,8 @@ static inline void setFlexEndLayoutPosition(
       child->style().computeFlexEndMargin(
           axis, direction, containingBlockWidth);
 
-  if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding)) {
+  if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding) &&
+      parent->style().display() != Display::Grid) {
     flexEndPosition += parent->getLayout().padding(flexEndEdge(axis));
   }
 
@@ -60,7 +62,8 @@ static inline void setCenterLayoutPosition(
       parent->getLayout().border(flexStartEdge(axis)) -
       parent->getLayout().border(flexEndEdge(axis));
 
-  if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding)) {
+  if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding) &&
+      parent->style().display() != Display::Grid) {
     parentContentBoxSize -= parent->getLayout().padding(flexStartEdge(axis));
     parentContentBoxSize -= parent->getLayout().padding(flexEndEdge(axis));
   }
@@ -74,7 +77,8 @@ static inline void setCenterLayoutPosition(
       child->style().computeFlexStartMargin(
           axis, direction, containingBlockWidth);
 
-  if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding)) {
+  if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding) &&
+      parent->style().display() != Display::Grid) {
     position += parent->getLayout().padding(flexStartEdge(axis));
   }
 
@@ -87,20 +91,19 @@ static void justifyAbsoluteChild(
     const Direction direction,
     const FlexDirection mainAxis,
     const float containingBlockWidth) {
-  const Justify parentJustifyContent = parent->style().justifyContent();
-  switch (parentJustifyContent) {
+  const Justify justify = parent->style().display() == Display::Grid
+      ? resolveChildJustification(parent, child)
+      : parent->style().justifyContent();
+  switch (justify) {
     case Justify::Start:
-    case Justify::End:
     case Justify::Auto:
-    break;
     case Justify::Stretch:
-    // No-Op
-    break;
     case Justify::FlexStart:
     case Justify::SpaceBetween:
       setFlexStartLayoutPosition(
           parent, child, direction, mainAxis, containingBlockWidth);
       break;
+    case Justify::End:
     case Justify::FlexEnd:
       setFlexEndLayoutPosition(
           parent, child, direction, mainAxis, containingBlockWidth);
@@ -132,7 +135,6 @@ static void alignAbsoluteChild(
 
   switch (itemAlign) {
     case Align::Start:
-    case Align::End:
     case Align::Auto:
     case Align::FlexStart:
     case Align::Baseline:
@@ -143,6 +145,7 @@ static void alignAbsoluteChild(
       setFlexStartLayoutPosition(
           parent, child, direction, crossAxis, containingBlockWidth);
       break;
+    case Align::End:
     case Align::FlexEnd:
       setFlexEndLayoutPosition(
           parent, child, direction, crossAxis, containingBlockWidth);
@@ -243,9 +246,15 @@ void layoutAbsoluteChild(
     LayoutData& layoutMarkerData,
     const uint32_t depth,
     const uint32_t generationCount) {
-  const FlexDirection mainAxis =
-      resolveDirection(node->style().flexDirection(), direction);
-  const FlexDirection crossAxis = resolveCrossDirection(mainAxis, direction);
+  // For grid containers, use inline (Row) and block (Column) axes for
+  // positioning, since grid alignment properties (justify-self, align-self)
+  // operate on inline/block axes, not main/cross axes based on flex-direction.
+  const FlexDirection mainAxis = node->style().display() == Display::Grid
+      ? resolveDirection(FlexDirection::Row, direction)
+      : resolveDirection(node->style().flexDirection(), direction);
+  const FlexDirection crossAxis = node->style().display() == Display::Grid
+      ? FlexDirection::Column
+      : resolveCrossDirection(mainAxis, direction);
   const bool isMainAxisRow = isRow(mainAxis);
 
   float childWidth = YGUndefined;
