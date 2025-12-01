@@ -603,6 +603,14 @@ class YG_EXPORT Style {
     return computeMargin(flexEndEdge(axis), direction).isAuto();
   }
 
+  bool inlineStartMarginIsAuto(FlexDirection axis, Direction direction) const {
+    return computeMargin(inlineStartEdge(axis, direction), direction).isAuto();
+  }
+
+  bool inlineEndMarginIsAuto(FlexDirection axis, Direction direction) const {
+    return computeMargin(inlineEndEdge(axis, direction), direction).isAuto();
+  }
+
   bool operator==(const Style& other) const {
     return direction_ == other.direction_ &&
         flexDirection_ == other.flexDirection_ &&

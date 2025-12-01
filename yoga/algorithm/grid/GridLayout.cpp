@@ -10,6 +10,7 @@
 #include <yoga/algorithm/BoundAxis.h>
 #include <yoga/algorithm/grid/TrackSizing.h>
 #include <yoga/algorithm/AbsoluteLayout.h>
+#include <yoga/algorithm/TrailingPosition.h>
 
 namespace facebook::yoga {
 
@@ -198,7 +199,6 @@ void calculateGridLayoutInternal(Node* node,
 
   float leadingPaddingAndBorderInline = node->style().computeInlineStartPadding(FlexDirection::Row, direction, ownerWidth) +
     node->style().computeInlineStartBorder(FlexDirection::Row, direction);
-  float trailingPaddingAndBorderInline = node->style().computeInlineEndPaddingAndBorder(FlexDirection::Row, direction, ownerWidth);
   float leadingPaddingAndBorderBlock = node->style().computeInlineStartPadding(FlexDirection::Column, direction, ownerWidth) +
     node->style().computeInlineStartBorder(FlexDirection::Column, direction);
 
@@ -213,11 +213,11 @@ void calculateGridLayoutInternal(Node* node,
   auto finalEffectiveRowGap = blockDistribution.effectiveGap;
   for (auto& item : itemAreas) {
     auto [containingBlockWidth, containingBlockHeight] = trackSizing.getContainingBlockSizeForItem(item, finalEffectiveColumnGap, finalEffectiveRowGap);
-    float gridAreaLeft = 0.0f;
+    float gridAreaStart = 0.0f;
     for (size_t i = 0; i < item.columnStart && i < columnTracks.size(); i++) {
-      gridAreaLeft += columnTracks[i].baseSize;
+      gridAreaStart += columnTracks[i].baseSize;
       if (i < columnTracks.size() - 1) {
-        gridAreaLeft += finalEffectiveColumnGap;
+        gridAreaStart += finalEffectiveColumnGap;
       }
     }
 
@@ -266,20 +266,18 @@ void calculateGridLayoutInternal(Node* node,
     // measured dimension includes padding and border
     float actualItemWidth = item.node->getLayout().measuredDimension(Dimension::Width);
     auto freeSpaceInlineAxisItem = containingBlockWidth - actualItemWidth - marginInlineStart - marginInlineEnd;
-    float leftAutoMarginOffset = 0.0f;
-    float rightAutoMarginOffset = 0.0f;
+    float startAutoMarginOffset = 0.0f;
     // https://www.w3.org/TR/css-grid-1/#auto-margins
     // auto margins in either axis absorb positive free space prior to alignment via the box alignment properties, thereby disabling the effects of any self-alignment properties in that axis.
-    if (item.node->style().flexStartMarginIsAuto(FlexDirection::Row, direction) 
-        && item.node->style().flexEndMarginIsAuto(FlexDirection::Row, direction)) {
-      leftAutoMarginOffset = freeSpaceInlineAxisItem / 2;
-      rightAutoMarginOffset = freeSpaceInlineAxisItem / 2;
+    if (item.node->style().inlineStartMarginIsAuto(FlexDirection::Row, direction) 
+        && item.node->style().inlineEndMarginIsAuto(FlexDirection::Row, direction)) {
+      startAutoMarginOffset = freeSpaceInlineAxisItem / 2;
       freeSpaceInlineAxisItem = 0.0f;
-    } else if (item.node->style().flexStartMarginIsAuto(FlexDirection::Row, direction)) {
-      leftAutoMarginOffset = freeSpaceInlineAxisItem;
+    } else if (item.node->style().inlineStartMarginIsAuto(FlexDirection::Row, direction)) {
+      startAutoMarginOffset = freeSpaceInlineAxisItem;
       freeSpaceInlineAxisItem = 0.0f;
-    } else if (item.node->style().flexEndMarginIsAuto(FlexDirection::Row, direction)) {
-      rightAutoMarginOffset = freeSpaceInlineAxisItem;
+    } else if (item.node->style().inlineEndMarginIsAuto(FlexDirection::Row, direction)) {
+      startAutoMarginOffset = 0.0f;
       freeSpaceInlineAxisItem = 0.0f;
     }
     
@@ -290,26 +288,34 @@ void calculateGridLayoutInternal(Node* node,
       justifySelfOffset = freeSpaceInlineAxisItem / 2;
     }
     
-    float finalLeft;
+    float finalLeft = leadingPaddingAndBorderInline + gridAreaStart + marginInlineStart + startAutoMarginOffset + justifySelfOffset + gridInlineStartOffset;
+
     if (direction == Direction::RTL) {
-      finalLeft = containerInnerWidth + trailingPaddingAndBorderInline - gridAreaLeft - actualItemWidth - marginInlineStart - rightAutoMarginOffset - justifySelfOffset - gridInlineStartOffset;
+      finalLeft = getPositionOfOppositeEdge(finalLeft, FlexDirection::Row, node, item.node);
     } else {
-      finalLeft = gridAreaLeft + marginInlineStart + leftAutoMarginOffset + justifySelfOffset + gridInlineStartOffset + leadingPaddingAndBorderInline;
+      finalLeft = leadingPaddingAndBorderInline + gridAreaStart + marginInlineStart + startAutoMarginOffset + justifySelfOffset + gridInlineStartOffset;
     }
 
-    item.node->setLayoutPosition(finalLeft, PhysicalEdge::Left);
+    // Add relative position offset for relatively positioned items.
+    // For RTL, the relative position is in logical coordinates so we subtract it from the physical left.
+    float relativePositionInline = item.node->relativePosition(FlexDirection::Row, direction, containingBlockWidth);
+    if (direction == Direction::RTL) {
+      item.node->setLayoutPosition(finalLeft - relativePositionInline, PhysicalEdge::Left);
+    } else {
+      item.node->setLayoutPosition(finalLeft + relativePositionInline, PhysicalEdge::Left);
+    }
 
     float actualItemHeight = item.node->getLayout().measuredDimension(Dimension::Height);
     auto freeSpaceBlockAxisItem = containingBlockHeight - actualItemHeight - marginBlockStart - marginBlockEnd;
     float topAutoMarginOffset = 0.0f;
-    if (item.node->style().flexStartMarginIsAuto(FlexDirection::Column, direction) 
-          && item.node->style().flexEndMarginIsAuto(FlexDirection::Column, direction)) {
+    if (item.node->style().inlineStartMarginIsAuto(FlexDirection::Column, direction) 
+          && item.node->style().inlineEndMarginIsAuto(FlexDirection::Column, direction)) {
       topAutoMarginOffset = freeSpaceBlockAxisItem / 2;
       freeSpaceBlockAxisItem = 0.0f;
-    } else if (item.node->style().flexStartMarginIsAuto(FlexDirection::Column, direction)) {
+    } else if (item.node->style().inlineStartMarginIsAuto(FlexDirection::Column, direction)) {
       topAutoMarginOffset = freeSpaceBlockAxisItem;
       freeSpaceBlockAxisItem = 0.0f;
-    } else if (item.node->style().flexEndMarginIsAuto(FlexDirection::Column, direction)) {
+    } else if (item.node->style().inlineEndMarginIsAuto(FlexDirection::Column, direction)) {
       freeSpaceBlockAxisItem = 0.0f;
     }
 
@@ -322,7 +328,9 @@ void calculateGridLayoutInternal(Node* node,
 
     float finalTop = gridAreaTop + marginBlockStart + topAutoMarginOffset + alignSelfOffset + gridBlockStartOffset + leadingPaddingAndBorderBlock;
 
-    item.node->setLayoutPosition(finalTop, PhysicalEdge::Top);
+    // Add relative position offset for relatively positioned items
+    float relativePositionBlock = item.node->relativePosition(FlexDirection::Column, direction, containingBlockHeight);
+    item.node->setLayoutPosition(finalTop + relativePositionBlock, PhysicalEdge::Top);
   }
   
   // Perform layout of absolute children
