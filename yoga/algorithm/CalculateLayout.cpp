@@ -36,7 +36,7 @@ namespace facebook::yoga {
 
 std::atomic<uint32_t> gCurrentGenerationCount(0);
 
-static void constrainMaxSizeForMode(
+void constrainMaxSizeForMode(
     const yoga::Node* node,
     Direction direction,
     FlexDirection axis,
@@ -469,7 +469,7 @@ static bool measureNodeWithFixedSize(
   return false;
 }
 
-static void zeroOutLayoutRecursively(yoga::Node* const node) {
+void zeroOutLayoutRecursively(yoga::Node* const node) {
   node->getLayout() = {};
   node->setLayoutDimension(0, Dimension::Width);
   node->setLayoutDimension(0, Dimension::Height);
@@ -481,7 +481,7 @@ static void zeroOutLayoutRecursively(yoga::Node* const node) {
   }
 }
 
-static void cleanupContentsNodesRecursively(yoga::Node* const node) {
+void cleanupContentsNodesRecursively(yoga::Node* const node) {
   if (node->hasContentsChildren()) [[unlikely]] {
     node->cloneContentsChildrenIfNeeded();
     for (auto child : node->getChildren()) {
@@ -499,7 +499,7 @@ static void cleanupContentsNodesRecursively(yoga::Node* const node) {
   }
 }
 
-static float calculateAvailableInnerDimension(
+float calculateAvailableInnerDimension(
     const yoga::Node* const node,
     const Direction direction,
     const Dimension dimension,

@@ -1584,21 +1584,37 @@ struct TrackSizing {
     const auto marginInline = item.node->style().computeMarginForAxis(FlexDirection::Row, containingBlockWidth);
     if (item.node->hasDefiniteLength(Dimension::Width, containingBlockWidth)) {
       widthSizingMode = SizingMode::StretchFit;
-      availableWidth = item.node->getResolvedDimension(
+      auto resolvedWidth = item.node->getResolvedDimension(
         direction,
         Dimension::Width,
         containingBlockWidth,
-        containingBlockWidth).unwrap() + marginInline;
+        containingBlockWidth).unwrap();
+      resolvedWidth = boundAxis(
+        item.node,
+        FlexDirection::Row,
+        direction,
+        resolvedWidth,
+        containingBlockWidth,
+        containingBlockWidth);
+      availableWidth = resolvedWidth + marginInline;
     }
 
     const auto marginBlock = item.node->style().computeMarginForAxis(FlexDirection::Column, containingBlockWidth);
     if (item.node->hasDefiniteLength(Dimension::Height, containingBlockHeight)) {
       heightSizingMode = SizingMode::StretchFit;
-      availableHeight = item.node->getResolvedDimension(
+      auto resolvedHeight = item.node->getResolvedDimension(
         direction,
         Dimension::Height,
         containingBlockHeight,
-        containingBlockWidth).unwrap() + marginBlock;
+        containingBlockWidth).unwrap();
+      resolvedHeight = boundAxis(
+        item.node,
+        FlexDirection::Column,
+        direction,
+        resolvedHeight,
+        containingBlockHeight,
+        containingBlockWidth);
+      availableHeight = resolvedHeight + marginBlock;
     }
 
     auto justifySelf = item.node->style().justifySelf();
@@ -1611,10 +1627,10 @@ struct TrackSizing {
       alignSelf = node->style().alignItems();
     }
 
-    bool hasMarginInlineAuto = item.node->style().flexStartMarginIsAuto(FlexDirection::Row, direction)
-      || item.node->style().flexEndMarginIsAuto(FlexDirection::Row, direction);
-    bool hasMarginBlockAuto = item.node->style().flexStartMarginIsAuto(FlexDirection::Column, direction)
-      || item.node->style().flexEndMarginIsAuto(FlexDirection::Column, direction);
+    bool hasMarginInlineAuto = item.node->style().inlineStartMarginIsAuto(FlexDirection::Row, direction)
+      || item.node->style().inlineEndMarginIsAuto(FlexDirection::Row, direction);
+    bool hasMarginBlockAuto = item.node->style().inlineStartMarginIsAuto(FlexDirection::Column, direction)
+      || item.node->style().inlineEndMarginIsAuto(FlexDirection::Column, direction);
 
     // For stretch-aligned items with a definite containing block size and no auto margins,
     // treat the item as having a definite size in that axis (it will stretch to fill).
@@ -1674,6 +1690,21 @@ struct TrackSizing {
         widthSizingMode = SizingMode::StretchFit;
       }
     }
+
+    constrainMaxSizeForMode(item.node, 
+      direction, 
+      FlexDirection::Row, 
+      containingBlockWidth, 
+      containingBlockWidth, 
+      &widthSizingMode, 
+      &availableWidth);
+    constrainMaxSizeForMode(item.node, 
+      direction, 
+      FlexDirection::Column, 
+      containingBlockHeight, 
+      containingBlockWidth, 
+      &heightSizingMode, 
+      &availableHeight);
 
     return ItemConstraint{
       availableWidth,

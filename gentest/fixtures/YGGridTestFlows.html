@@ -1577,3 +1577,26 @@
   </div>
   <div style="width: 100px; height: 100px"></div>
 </div>
+
+<div
+  id="text_wraps_in_fixed_sized_column_tracks"
+  style="display: grid; grid-template-columns: 100px auto 100px">
+  <div>Lorem ipsum dolor sit amet, consectetur</div>
+  <div></div>
+</div>
+
+<div
+  id="text_wraps_in_fixed_sized_column_tracks_max_width"
+  style="display: grid; grid-template-columns: 100px auto 100px">
+  <div style="max-width: 50px">Lorem ipsum dolor sit amet, consectetur</div>
+  <div></div>
+</div>
+
+<div
+  id="text_wraps_in_fixed_sized_column_tracks_min_width"
+  style="display: grid; grid-template-columns: 100px auto 100px">
+  <div style="min-width: 180px; width: 100px">
+    Lorem ipsum dolor sit amet, consectetur
+  </div>
+  <div></div>
+</div>

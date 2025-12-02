@@ -6,43 +6,12 @@
 */
 
 #include <yoga/algorithm/grid/GridLayout.h>
-#include <yoga/algorithm/grid/CalculateAvailableInnerDimension.h>
 #include <yoga/algorithm/BoundAxis.h>
 #include <yoga/algorithm/grid/TrackSizing.h>
 #include <yoga/algorithm/AbsoluteLayout.h>
 #include <yoga/algorithm/TrailingPosition.h>
 
 namespace facebook::yoga {
-
-static void zeroOutLayoutRecursively(yoga::Node* const node) {
-  node->getLayout() = {};
-  node->setLayoutDimension(0, Dimension::Width);
-  node->setLayoutDimension(0, Dimension::Height);
-  node->setHasNewLayout(true);
-
-  node->cloneChildrenIfNeeded();
-  for (const auto child : node->getChildren()) {
-    zeroOutLayoutRecursively(child);
-  }
-}
-
-static void cleanupContentsNodesRecursively(yoga::Node* const node) {
-  if (node->hasContentsChildren()) [[unlikely]] {
-    node->cloneContentsChildrenIfNeeded();
-    for (auto child : node->getChildren()) {
-      if (child->style().display() == Display::Contents) {
-        child->getLayout() = {};
-        child->setLayoutDimension(0, Dimension::Width);
-        child->setLayoutDimension(0, Dimension::Height);
-        child->setHasNewLayout(true);
-        child->setDirty(false);
-        child->cloneChildrenIfNeeded();
-
-        cleanupContentsNodesRecursively(child);
-      }
-    }
-  }
-}
 
 // Follows - https://www.w3.org/TR/css-grid-1/#layout-algorithm
 void calculateGridLayoutInternal(Node* node,
