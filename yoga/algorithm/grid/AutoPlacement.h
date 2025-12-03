@@ -244,11 +244,11 @@ struct AutoPlacement {
           // TODO: Optimise overlap check with a hash based alternative if necessary
           for (const auto& placedItem: gridItemAreas) {
             if (gridItemArea.overlaps(placedItem)) {
-              columnStart++;
+              columnStart = placedItem.columnEnd;
               columnEnd = columnStart + columnSpan;
               hasOverlap = true;
               // Restart checking from the beginning with new position
-              break; 
+              break;
             }
           }
           if (!hasOverlap) {
@@ -305,7 +305,6 @@ struct AutoPlacement {
       }
     
       if (!placedItems.contains(child)) {
-        // If the item has a definite column position:
         auto gridItemColumnStart = child->style().gridColumnStart();
         auto gridItemColumnEnd = child->style().gridColumnEnd();
         auto hasDefiniteColumn = gridItemColumnStart.type == GridLineType::Integer ||
@@ -352,18 +351,17 @@ struct AutoPlacement {
     
             for (const auto& placedItem: gridItemAreas) {
               if (proposedPlacement.overlaps(placedItem)) {
+                // Increment cursor row to the end and try again
+                autoPlacementCursor[1] = placedItem.rowEnd;
                 hasOverlap = true;
                 break;
               }
             }
-    
+
             if (!hasOverlap) {
               // Set item's row-start and row-end lines
               recordGridArea(proposedPlacement);
               foundPosition = true;
-            } else {
-              // Increment cursor row and try again
-              autoPlacementCursor[1]++;
             }
           }
         }
@@ -394,18 +392,16 @@ struct AutoPlacement {
     
               for (const auto& placedItem: gridItemAreas) {
                 if (proposedPlacement.overlaps(placedItem)) {
+                  autoPlacementCursor[0] = placedItem.columnEnd;
                   hasOverlap = true;
                   break;
                 }
               }
-    
+
               if (!hasOverlap) {
                 recordGridArea(proposedPlacement);
                 foundPosition = true;
                 break;
-              } else {
-                // Try next column position
-                autoPlacementCursor[0]++;
               }
             }
     
@@ -420,7 +416,7 @@ struct AutoPlacement {
     }
     
     return AutoPlacement {
-      gridItemAreas,
+      std::move(gridItemAreas),
       minColumnStart,
       minRowStart,
       maxColumnEnd,

@@ -13,7 +13,6 @@
 
 namespace facebook::yoga {
 
-// Follows - https://www.w3.org/TR/css-grid-1/#layout-algorithm
 void calculateGridLayoutInternal(Node* node,
                                 float availableWidth,
                                 float availableHeight,
@@ -33,7 +32,6 @@ void calculateGridLayoutInternal(Node* node,
   const float marginBlock = node->style().computeMarginForAxis(FlexDirection::Column, ownerWidth);
   const float paddingAndBorderInline = paddingAndBorderForAxis(node, FlexDirection::Row, direction, ownerWidth);
   const float paddingAndBorderBlock = paddingAndBorderForAxis(node, FlexDirection::Column, direction, ownerWidth);
-  
   const float availableInnerWidth = calculateAvailableInnerDimension(
                                                               node,
                                                               direction,
@@ -50,11 +48,11 @@ void calculateGridLayoutInternal(Node* node,
                                                                 paddingAndBorderBlock,
                                                                 ownerHeight,
                                                                 ownerWidth);
-
   auto widthIsDefinite = (widthSizingMode == SizingMode::StretchFit &&
     yoga::isDefined(availableWidth));
   auto heightIsDefinite = (heightSizingMode == SizingMode::StretchFit &&
      yoga::isDefined(availableHeight));
+
   // 11. Grid Layout Algorithm
   // Step 1: Run the Grid Item Placement Algorithm to resolve the placement of all grid items in the grid.
   auto autoPlacement = ResolvedAutoPlacement::resolveGridItemPlacements(node);
@@ -67,9 +65,10 @@ void calculateGridLayoutInternal(Node* node,
   // Note: During this phase, cyclic <percentage>s in track sizes are treated as auto.
   float containerInnerWidth = widthIsDefinite ? availableInnerWidth : YGUndefined;
   float containerInnerHeight = heightIsDefinite ? availableInnerHeight : YGUndefined;
-  auto rowTracks = gridTracks.rowTracks;
-  auto columnTracks = gridTracks.columnTracks;
-  auto itemAreas = autoPlacement.gridItemAreas;
+  auto& rowTracks = gridTracks.rowTracks;
+  auto& columnTracks = gridTracks.columnTracks;
+  auto& itemAreas = autoPlacement.gridItemAreas;
+  bool needsSecondTrackSizingPass = true;
 
   if (!widthIsDefinite || !heightIsDefinite) {
     auto trackSizing = TrackSizing(
@@ -87,9 +86,10 @@ void calculateGridLayoutInternal(Node* node,
       layoutMarkerData,
       depth,
       generationCount);
-      
-      // Run the Grid Sizing Algorithm (11.1.1 through 11.1.4)
+
       trackSizing.runGridSizingAlgorithm();
+
+      bool containerSizeChanged = false;
 
       if (!widthIsDefinite) {
         auto totalTrackWidth = trackSizing.getTotalBaseSize(Dimension::Width);
@@ -100,6 +100,9 @@ void calculateGridLayoutInternal(Node* node,
           totalTrackWidth,
           ownerWidth,
           ownerWidth);
+        if (containerInnerWidth != totalTrackWidth) {
+          containerSizeChanged = true;
+        }
       }
 
       if (!heightIsDefinite) {
@@ -111,7 +114,18 @@ void calculateGridLayoutInternal(Node* node,
           totalTrackHeight,
           ownerHeight,
           ownerWidth);
+        if (containerInnerHeight != totalTrackHeight) {
+          containerSizeChanged = true;
+        }
       }
+
+      // We need to run track sizing again if:
+      // 1. The container size changed due to min/max bounds or
+      // 2. There are percentage tracks in indefinite dimensions that need resolution
+      bool hasPercentageTracksNeedingResolution =
+          (!widthIsDefinite && trackSizing.hasPercentageTracks(Dimension::Width)) ||
+          (!heightIsDefinite && trackSizing.hasPercentageTracks(Dimension::Height));
+      needsSecondTrackSizingPass = containerSizeChanged || hasPercentageTracksNeedingResolution;
   }
 
   node->setLayoutMeasuredDimension(
@@ -144,8 +158,8 @@ void calculateGridLayoutInternal(Node* node,
   // Note: During this phase, <percentage>s in track sizes are resolved against the grid container size.
   auto trackSizing = TrackSizing(
     node,
-    columnTracks, 
-    rowTracks, 
+    columnTracks,
+    rowTracks,
     containerInnerWidth,
     containerInnerHeight,
     itemAreas,
@@ -158,8 +172,16 @@ void calculateGridLayoutInternal(Node* node,
     depth,
     generationCount);
 
-  // Run the Grid Sizing Algorithm (11.1.1 through 11.1.4)
-  trackSizing.runGridSizingAlgorithm();
+  // Step 3: Given the resulting grid container size, run the Grid Sizing Algorithm to size the grid.
+  // Note: During this phase, <percentage>s in track sizes are resolved against the grid container size.
+
+  // We only need to run track sizing again if:
+  // 1. Both dimensions were definite or
+  // 2. The container size changed due to min/max constraints in Step 2, or
+  // 3. There are percentage tracks in indefinite dimensions that need resolution
+  if (needsSecondTrackSizingPass) {
+    trackSizing.runGridSizingAlgorithm();
+  }
 
   // Layout grid items
   // Step 4: Lay out the grid items into their respective containing blocks. Each grid area’s width and height are considered definite for this purpose.
@@ -261,8 +283,6 @@ void calculateGridLayoutInternal(Node* node,
 
     if (direction == Direction::RTL) {
       finalLeft = getPositionOfOppositeEdge(finalLeft, FlexDirection::Row, node, item.node);
-    } else {
-      finalLeft = leadingPaddingAndBorderInline + gridAreaStart + marginInlineStart + startAutoMarginOffset + justifySelfOffset + gridInlineStartOffset;
     }
 
     // Add relative position offset for relatively positioned items.
@@ -393,8 +413,8 @@ GridTracks createGridTracks(yoga::Node* node, const ResolvedAutoPlacement& autoP
   }
 
   return {
-    columnTracks,
-    rowTracks
+    std::move(columnTracks),
+    std::move(rowTracks)
   };
 }
 

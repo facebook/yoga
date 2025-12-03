@@ -50,6 +50,8 @@ struct TrackSizing {
   uint32_t depth;
   uint32_t generationCount;
   CrossDimensionEstimator crossDimensionEstimator;
+  bool hasColumnPercentageTracks = false;
+  bool hasRowPercentageTracks = false;
 
   TrackSizing(
     yoga::Node* node,
@@ -227,9 +229,17 @@ struct TrackSizing {
   void initializeTrackSizes(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
+    bool& hasPercentageTracks = dimension == Dimension::Width ? hasColumnPercentageTracks : hasRowPercentageTracks;
 
     for (size_t i = 0; i < tracks.size(); i++) {
       auto& track = tracks[i];
+
+      // detect percentage tracks for optimization purposes
+      if (isPercentageSizingFunction(track.minSizingFunction) ||
+          isPercentageSizingFunction(track.maxSizingFunction)) {
+        hasPercentageTracks = true;
+      }
+
       if (isFixedSizingFunction(track.minSizingFunction, containerSize)) {
         auto resolved = track.minSizingFunction.resolve(containerSize);
         track.baseSize = resolved.unwrap();
@@ -241,7 +251,7 @@ struct TrackSizing {
         // THIS SHOULD NEVER HAPPEN
         track.baseSize = 0;
       }
-  
+
       if (isFixedSizingFunction(track.maxSizingFunction, containerSize)) {
         auto resolved = track.maxSizingFunction.resolve(containerSize);
         track.growthLimit = resolved.unwrap();
@@ -256,7 +266,7 @@ struct TrackSizing {
         // THIS SHOULD NEVER HAPPEN
         track.growthLimit = INFINITY;
       }
-  
+
       // In all cases, if the growth limit is less than the base size, increase the growth limit to match the base size.
       if (track.growthLimit < track.baseSize) {
         track.growthLimit = track.baseSize;
@@ -744,7 +754,7 @@ struct TrackSizing {
   }
 
   // https://www.w3.org/TR/css-grid-1/#algo-find-fr-size
-  float findFrSize(Dimension dimension, const std::vector<GridTrackSize*>& tracks, float spaceToFill, std::unordered_set<GridTrackSize*> nonFlexibleTracks) {
+  float findFrSize(Dimension dimension, const std::vector<GridTrackSize*>& tracks, float spaceToFill, const std::unordered_set<GridTrackSize*>& nonFlexibleTracks) {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
     auto leftoverSpace = spaceToFill;
@@ -789,6 +799,7 @@ struct TrackSizing {
     
     // restart this algorithm treating all such tracks as inflexible.
     if (!inflexibleTracks.empty()) {
+      inflexibleTracks.insert(nonFlexibleTracks.begin(), nonFlexibleTracks.end());
       return findFrSize(dimension, tracks, spaceToFill, inflexibleTracks);
     }
 
@@ -840,14 +851,9 @@ struct TrackSizing {
           if (!includesFlexibleTrack(spannedTracks)) {
             continue;
           }
-          std::vector<GridTrackSize*> spannedTrackPointers;
-          spannedTrackPointers.reserve(spannedTracks.size());
-          for (auto& track : spannedTracks) {
-            spannedTrackPointers.push_back(track);
-          }
           auto itemConstraints = calculateItemConstraints(item, dimension);
           auto itemMaxContentContribution = getMaxContentContribution(item, dimension, itemConstraints);
-          flexFraction = std::max(flexFraction, findFrSize(dimension, spannedTrackPointers, itemMaxContentContribution, std::unordered_set<GridTrackSize*>()));
+          flexFraction = std::max(flexFraction, findFrSize(dimension, spannedTracks, itemMaxContentContribution, std::unordered_set<GridTrackSize*>()));
         }
       }
 
@@ -1386,6 +1392,10 @@ struct TrackSizing {
     return sizingFunction.isStretch();
   }
 
+  bool isPercentageSizingFunction(const StyleSizeLength& sizingFunction) {
+    return sizingFunction.isPercent();
+  }
+
   std::vector<GridTrackSize*> getTracksSpannedByItem(
     const GridItemArea& item,
     std::vector<GridTrackSize>& tracks,
@@ -1411,7 +1421,7 @@ struct TrackSizing {
 
   float getTotalBaseSize(Dimension dimension) {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
-    auto tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
+    const auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
 
     float totalBaseSize = 0.0f;
@@ -1422,6 +1432,10 @@ struct TrackSizing {
       }
     }
     return totalBaseSize;
+  }
+
+  bool hasPercentageTracks(Dimension dimension) const {
+    return dimension == Dimension::Width ? hasColumnPercentageTracks : hasRowPercentageTracks;
   }
 
   std::pair<float, float> getContainingBlockSizeForItem(const GridItemArea& item, float effectiveColumnGap, float effectiveRowGap) {

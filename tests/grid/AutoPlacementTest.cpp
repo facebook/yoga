@@ -347,6 +347,95 @@ TEST_F(GridAutoplacementTest, handles_negative_grid_lines_with_row_positioning) 
     }
 }
 
+TEST_F(GridAutoplacementTest, skips_past_large_blocking_items) {
+    auto largeItem = createGridItem(
+        GridLine::fromInteger(1), GridLine::fromInteger(6),
+        GridLine::fromInteger(1), GridLine::fromInteger(2));
+
+    auto autoItem1 = createGridItem(
+        GridLine::auto_(), GridLine::auto_(),
+        GridLine::fromInteger(1), GridLine::fromInteger(2));
+    auto autoItem2 = createGridItem(
+        GridLine::auto_(), GridLine::auto_(),
+        GridLine::fromInteger(1), GridLine::fromInteger(2));
+
+    auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
+    auto& placements = autoPlacementResult.gridItemAreas;
+
+    ASSERT_EQ(placements.size(), 3);
+
+    for (auto placement : placements) {
+        if (placement.node == largeItem) {
+            EXPECT_EQ(placement.columnStart, 0);
+            EXPECT_EQ(placement.columnEnd, 5);
+            EXPECT_EQ(placement.rowStart, 0);
+            EXPECT_EQ(placement.rowEnd, 1);
+        } else if (placement.node == autoItem1) {
+            EXPECT_EQ(placement.columnStart, 5);
+            EXPECT_EQ(placement.columnEnd, 6);
+            EXPECT_EQ(placement.rowStart, 0);
+            EXPECT_EQ(placement.rowEnd, 1);
+        } else if (placement.node == autoItem2) {
+            EXPECT_EQ(placement.columnStart, 6);
+            EXPECT_EQ(placement.columnEnd, 7);
+            EXPECT_EQ(placement.rowStart, 0);
+            EXPECT_EQ(placement.rowEnd, 1);
+        }
+    }
+}
+
+TEST_F(GridAutoplacementTest, skips_past_large_blocking_rows) {
+    createGridItem(
+        GridLine::fromInteger(1), GridLine::fromInteger(2),
+        GridLine::fromInteger(1), GridLine::fromInteger(6));
+
+    auto autoItem = createGridItem(
+        GridLine::fromInteger(1), GridLine::fromInteger(2),
+        GridLine::auto_(), GridLine::auto_());
+
+    auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
+    auto& placements = autoPlacementResult.gridItemAreas;
+
+    ASSERT_EQ(placements.size(), 2);
+
+    for (auto placement : placements) {
+        if (placement.node == autoItem) {
+            EXPECT_EQ(placement.columnStart, 0);
+            EXPECT_EQ(placement.columnEnd, 1);
+            EXPECT_EQ(placement.rowStart, 5);
+            EXPECT_EQ(placement.rowEnd, 6);
+        }
+    }
+}
+
+TEST_F(GridAutoplacementTest, handles_nested_overlapping_items) {
+    createGridItem(
+        GridLine::fromInteger(1), GridLine::fromInteger(8),
+        GridLine::fromInteger(1), GridLine::fromInteger(2));
+
+    createGridItem(
+        GridLine::fromInteger(3), GridLine::fromInteger(5),
+        GridLine::fromInteger(2), GridLine::fromInteger(3));
+
+    auto autoItem = createGridItem(
+        GridLine::auto_(), GridLine::auto_(),
+        GridLine::fromInteger(1), GridLine::fromInteger(2));
+
+    auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
+    auto& placements = autoPlacementResult.gridItemAreas;
+
+    ASSERT_EQ(placements.size(), 3);
+
+    for (auto placement : placements) {
+        if (placement.node == autoItem) {
+            EXPECT_EQ(placement.columnStart, 7);
+            EXPECT_EQ(placement.columnEnd, 8);
+            EXPECT_EQ(placement.rowStart, 0);
+            EXPECT_EQ(placement.rowEnd, 1);
+        }
+    }
+}
+
 TEST_F(GridAutoplacementTest, handles_negative_and_positive_grid_lines_auto_row) {
     std::vector<GridTrackSize> columns = {
         GridTrackSize::length(20.0f),
