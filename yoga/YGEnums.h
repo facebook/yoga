@@ -83,6 +83,14 @@ YG_ENUM_DECL(
     YGFlexDirectionRowReverse)
 
 YG_ENUM_DECL(
+    YGGridTrackType,
+    YGGridTrackTypeAuto,
+    YGGridTrackTypePoints,
+    YGGridTrackTypePercent,
+    YGGridTrackTypeFr,
+    YGGridTrackTypeMinmax)
+
+YG_ENUM_DECL(
     YGGutter,
     YGGutterColumn,
     YGGutterRow,

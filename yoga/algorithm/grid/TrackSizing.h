@@ -1594,22 +1594,22 @@ struct TrackSizing {
       float containingBlockHeight) {
     auto availableWidth = YGUndefined;
     auto availableHeight = YGUndefined;
-    auto widthSizingMode = SizingMode::MaxContent;
-    auto heightSizingMode = SizingMode::MaxContent;
+    auto itemWidthSizingMode = SizingMode::MaxContent;
+    auto itemHeightSizingMode = SizingMode::MaxContent;
 
     if (yoga::isDefined(containingBlockWidth)) {
-      widthSizingMode = SizingMode::FitContent;
+      itemWidthSizingMode = SizingMode::FitContent;
       availableWidth = containingBlockWidth;
     }
 
     if (yoga::isDefined(containingBlockHeight)) {
-      heightSizingMode = SizingMode::FitContent;
+      itemHeightSizingMode = SizingMode::FitContent;
       availableHeight = containingBlockHeight;
     }
 
     const auto marginInline = item.node->style().computeMarginForAxis(FlexDirection::Row, containingBlockWidth);
     if (item.node->hasDefiniteLength(Dimension::Width, containingBlockWidth)) {
-      widthSizingMode = SizingMode::StretchFit;
+      itemWidthSizingMode = SizingMode::StretchFit;
       auto resolvedWidth = item.node->getResolvedDimension(
         direction,
         Dimension::Width,
@@ -1627,7 +1627,7 @@ struct TrackSizing {
 
     const auto marginBlock = item.node->style().computeMarginForAxis(FlexDirection::Column, containingBlockWidth);
     if (item.node->hasDefiniteLength(Dimension::Height, containingBlockHeight)) {
-      heightSizingMode = SizingMode::StretchFit;
+      itemHeightSizingMode = SizingMode::StretchFit;
       auto resolvedHeight = item.node->getResolvedDimension(
         direction,
         Dimension::Height,
@@ -1666,7 +1666,7 @@ struct TrackSizing {
         !item.node->hasDefiniteLength(Dimension::Width, containingBlockWidth) &&
         justifySelf == Justify::Stretch &&
         !hasMarginInlineAuto) {
-      widthSizingMode = SizingMode::StretchFit;
+      itemWidthSizingMode = SizingMode::StretchFit;
       availableWidth = containingBlockWidth;
     }
 
@@ -1674,7 +1674,7 @@ struct TrackSizing {
         !item.node->hasDefiniteLength(Dimension::Height, containingBlockHeight) &&
         alignSelf == Align::Stretch &&
         !hasMarginBlockAuto) {
-      heightSizingMode = SizingMode::StretchFit;
+      itemHeightSizingMode = SizingMode::StretchFit;
       availableHeight = containingBlockHeight;
     }
 
@@ -1687,8 +1687,8 @@ struct TrackSizing {
       auto maxWidth = itemStyle.maxDimension(Dimension::Width).resolve(containingBlockWidth);
 
       // grid_aspect_ratio_fill_child_max_width fixture
-      if (widthSizingMode == SizingMode::StretchFit &&
-          heightSizingMode == SizingMode::StretchFit) {
+      if (itemWidthSizingMode == SizingMode::StretchFit &&
+          itemHeightSizingMode == SizingMode::StretchFit) {
         if (maxHeight.isDefined()) {
           float constrainedHeight = std::min(availableHeight - marginBlock, maxHeight.unwrap());
           availableHeight = marginBlock + constrainedHeight;
@@ -1698,45 +1698,45 @@ struct TrackSizing {
           availableWidth = marginInline + constrainedWidth;
           availableHeight = marginBlock + constrainedWidth / aspectRatio;
         }
-      } else if (widthSizingMode == SizingMode::StretchFit &&
-                 heightSizingMode != SizingMode::StretchFit) {
+      } else if (itemWidthSizingMode == SizingMode::StretchFit &&
+                 itemHeightSizingMode != SizingMode::StretchFit) {
         availableHeight = marginBlock + (availableWidth - marginInline) / aspectRatio;
         if (maxHeight.isDefined() && availableHeight - marginBlock > maxHeight.unwrap()) {
           availableHeight = marginBlock + maxHeight.unwrap();
           availableWidth = marginInline + maxHeight.unwrap() * aspectRatio;
         }
-        heightSizingMode = SizingMode::StretchFit;
-      } else if (heightSizingMode == SizingMode::StretchFit &&
-                 widthSizingMode != SizingMode::StretchFit) {
+        itemHeightSizingMode = SizingMode::StretchFit;
+      } else if (itemHeightSizingMode == SizingMode::StretchFit &&
+                 itemWidthSizingMode != SizingMode::StretchFit) {
         availableWidth = marginInline + (availableHeight - marginBlock) * aspectRatio;
         if (maxWidth.isDefined() && availableWidth - marginInline > maxWidth.unwrap()) {
           availableWidth = marginInline + maxWidth.unwrap();
           availableHeight = marginBlock + maxWidth.unwrap() / aspectRatio;
         }
-        widthSizingMode = SizingMode::StretchFit;
+        itemWidthSizingMode = SizingMode::StretchFit;
       }
     }
 
-    constrainMaxSizeForMode(item.node, 
-      direction, 
-      FlexDirection::Row, 
-      containingBlockWidth, 
-      containingBlockWidth, 
-      &widthSizingMode, 
+    constrainMaxSizeForMode(item.node,
+      direction,
+      FlexDirection::Row,
+      containingBlockWidth,
+      containingBlockWidth,
+      &itemWidthSizingMode,
       &availableWidth);
-    constrainMaxSizeForMode(item.node, 
-      direction, 
-      FlexDirection::Column, 
-      containingBlockHeight, 
-      containingBlockWidth, 
-      &heightSizingMode, 
+    constrainMaxSizeForMode(item.node,
+      direction,
+      FlexDirection::Column,
+      containingBlockHeight,
+      containingBlockWidth,
+      &itemHeightSizingMode,
       &availableHeight);
 
     return ItemConstraint{
       availableWidth,
       availableHeight,
-      widthSizingMode,
-      heightSizingMode,
+      itemWidthSizingMode,
+      itemHeightSizingMode,
       containingBlockWidth,
       containingBlockHeight
     };

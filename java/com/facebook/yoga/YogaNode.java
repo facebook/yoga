@@ -242,6 +242,30 @@ public abstract class YogaNode implements YogaProps {
 
   public abstract void setGapPercent(YogaGutter gutter, float gapLength);
 
+  public abstract void setGridTemplateColumns(YogaGridTrackList trackList);
+
+  public abstract void setGridTemplateRows(YogaGridTrackList trackList);
+
+  public abstract void setGridAutoColumns(YogaGridTrackList trackList);
+
+  public abstract void setGridAutoRows(YogaGridTrackList trackList);
+
+  public abstract void setGridColumnStart(int value);
+
+  public abstract void setGridColumnStartSpan(int span);
+
+  public abstract void setGridColumnEnd(int value);
+
+  public abstract void setGridColumnEndSpan(int span);
+
+  public abstract void setGridRowStart(int value);
+
+  public abstract void setGridRowStartSpan(int span);
+
+  public abstract void setGridRowEnd(int value);
+
+  public abstract void setGridRowEndSpan(int span);
+
   public abstract float getLayoutX();
 
   public abstract float getLayoutY();

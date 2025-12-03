@@ -198,11 +198,11 @@ struct AutoPlacement {
     // Step 1: Position anything that's not auto-positioned.
     // In spec level 1, span is always definite. Default is 1.
     // So for grid position to be definite, we need either start or end to be definite.
-    for (const auto& child: node->getLayoutChildren()) {
+    for (auto child : node->getLayoutChildren()) {
       if (child->style().positionType() == PositionType::Absolute || child->style().display() == Display::None) {
         continue;
       }
-    
+
       auto gridItemColumnStart = child->style().gridColumnStart();
       auto gridItemColumnEnd = child->style().gridColumnEnd();
       auto gridItemRowStart = child->style().gridRowStart();
@@ -238,7 +238,7 @@ struct AutoPlacement {
     // Step 2: Process the items locked to a given row.
     // Definite row positions only, exclude items with definite column positions.
     std::unordered_map<int32_t, int32_t> rowStartToColumnStartCache;
-    for (const auto& child: node->getLayoutChildren()) {
+    for (auto child : node->getLayoutChildren()) {
       if (child->style().positionType() == PositionType::Absolute || child->style().display() == Display::None) {
         continue;
       }
@@ -289,7 +289,7 @@ struct AutoPlacement {
     // Step 3: Determine the columns in the implicit grid.
     // TODO: we dont need this loop. we can do it in above steps. But keeping it for now, to match the spec.
     auto largestColumnSpan = 1;
-    for (const auto& child: node->getLayoutChildren()) {
+    for (auto child : node->getLayoutChildren()) {
       if (child->style().positionType() == PositionType::Absolute || child->style().display() == Display::None) {
         continue;
       }
@@ -325,7 +325,7 @@ struct AutoPlacement {
       minColumnStart,
       minRowStart
     };
-    for (const auto& child: node->getLayoutChildren()) {
+    for (auto child : node->getLayoutChildren()) {
       if (child->style().positionType() == PositionType::Absolute || child->style().display() == Display::None) {
         continue;
       }

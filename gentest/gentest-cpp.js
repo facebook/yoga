@@ -127,7 +127,6 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignBaseline: {value: 'YGAlignBaseline'},
   YGAlignStart: {value: 'YGAlignStart'},
   YGAlignEnd: {value: 'YGAlignEnd'},
-  YGAlignAuto: {value: 'YGAlignAuto'},
 
   YGDirectionInherit: {value: 'YGDirectionInherit'},
   YGDirectionLTR: {value: 'YGDirectionLTR'},
@@ -750,3 +749,59 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     },
   },
 });
+
+function parseGridTrackList(e, value) {
+  if (!value || value === 'none') {
+    return null;
+  }
+
+  // Parse space-separated track values
+  // Examples: "100px 100px 100px", "100px 100% minmax(100px, 200px) auto"
+  const tracks = [];
+  const parts = value.trim().split(/\s+/);
+
+  let i = 0;
+  while (i < parts.length) {
+    const part = parts[i];
+
+    if (part.startsWith('minmax(')) {
+      // Handle minmax function - may span multiple parts if there are spaces
+      let minmaxStr = part;
+      while (!minmaxStr.includes(')') && i < parts.length - 1) {
+        i++;
+        minmaxStr += ' ' + parts[i];
+      }
+
+      // Extract min and max values from minmax(min, max)
+      const match = minmaxStr.match(/minmax\(([^,]+),\s*([^)]+)\)/);
+      if (match) {
+        const min = match[1].trim();
+        const max = match[2].trim();
+        tracks.push({
+          type: 'minmax',
+          min: parseGridTrackValue(e, min),
+          max: parseGridTrackValue(e, max),
+        });
+      }
+    } else {
+      // Simple track value
+      tracks.push(parseGridTrackValue(e, part));
+    }
+    i++;
+  }
+
+  return tracks;
+}
+
+function parseGridTrackValue(e, value) {
+  if (value === 'auto') {
+    return {type: 'auto'};
+  } else if (value.endsWith('px')) {
+    return {type: 'points', value: parseFloat(value)};
+  } else if (value.endsWith('%')) {
+    return {type: 'percent', value: parseFloat(value)};
+  } else if (value.endsWith('fr')) {
+    return {type: 'fr', value: parseFloat(value)};
+  }
+  return {type: 'auto'};
+}

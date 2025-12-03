@@ -26,6 +26,7 @@ void calculateGridLayoutInternal(Node* node,
                                 LayoutData& layoutMarkerData,
                                 uint32_t depth,
                                 uint32_t generationCount) {
+  (void)reason; // Unused parameter
 
   const Direction direction = node->resolveDirection(ownerDirection);
   const float marginInline = node->style().computeMarginForAxis(FlexDirection::Row, ownerWidth);

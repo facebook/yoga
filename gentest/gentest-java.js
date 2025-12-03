@@ -168,7 +168,6 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignBaseline: {value: 'YogaAlign.BASELINE'},
   YGAlignStart: {value: 'YogaAlign.START'},
   YGAlignEnd: {value: 'YogaAlign.END'},
-  YGAlignAuto: {value: 'YogaAlign.AUTO'},
 
   YGDirectionInherit: {value: 'YogaDirection.INHERIT'},
   YGDirectionLTR: {value: 'YogaDirection.LTR'},

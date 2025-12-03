@@ -7,6 +7,61 @@
 
 /* global Emitter:readable */
 
+function parseGridTrackListJS(value) {
+  if (!value || value === 'none') {
+    return null;
+  }
+
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const tracks = [];
+  const parts = value.trim().split(/\s+/);
+
+  let i = 0;
+  while (i < parts.length) {
+    const part = parts[i];
+
+    if (part.startsWith('minmax(')) {
+      let minmaxStr = part;
+      while (!minmaxStr.includes(')') && i < parts.length - 1) {
+        i++;
+        minmaxStr += ' ' + parts[i];
+      }
+
+      const match = minmaxStr.match(/minmax\(([^,]+),\s*([^)]+)\)/);
+      if (match) {
+        const min = match[1].trim();
+        const max = match[2].trim();
+        tracks.push({
+          type: 'minmax',
+          min: parseGridTrackValueJS(min),
+          max: parseGridTrackValueJS(max),
+        });
+      }
+    } else {
+      tracks.push(parseGridTrackValueJS(part));
+    }
+    i++;
+  }
+
+  return tracks;
+}
+
+function parseGridTrackValueJS(value) {
+  if (value === 'auto') {
+    return {type: 'auto'};
+  } else if (value.endsWith('px')) {
+    return {type: 'points', value: parseFloat(value)};
+  } else if (value.endsWith('%')) {
+    return {type: 'percent', value: parseFloat(value)};
+  } else if (value.endsWith('fr')) {
+    return {type: 'fr', value: parseFloat(value)};
+  }
+  return {type: 'auto'};
+}
+
 const JavascriptEmitter = function () {
   Emitter.call(this, 'js', '  ');
 };
@@ -40,6 +95,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
       this.push('Errata,');
       this.push('ExperimentalFeature,');
       this.push('FlexDirection,');
+      this.push('GridTrackType,');
       this.push('Gutter,');
       this.push('Justify,');
       this.push('MeasureMode,');
@@ -131,7 +187,6 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignBaseline: {value: 'Align.Baseline'},
   YGAlignStart: {value: 'Align.Start'},
   YGAlignEnd: {value: 'Align.End'},
-  YGAlignAuto: {value: 'Align.Auto'},
 
   YGDirectionInherit: {value: 'Direction.Inherit'},
   YGDirectionLTR: {value: 'Direction.LTR'},
@@ -464,7 +519,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   },
 
   YGNodeStyleSetGridTemplateRows: {
-    value: function (nodeName, tracks) {
+    value: function (nodeName, value) {
+      const tracks = parseGridTrackListJS(value);
       if (!tracks || tracks.length === 0) {
         return;
       }
@@ -476,7 +532,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
           const minVal = this.formatGridTrackValueJS(track.min);
           const maxVal = this.formatGridTrackValueJS(track.max);
           this.push(
-            `${nodeName}GridTemplateRows.push({type: 'minmax', min: ${minVal}, max: ${maxVal}});`,
+            `${nodeName}GridTemplateRows.push({type: GridTrackType.Minmax, min: ${minVal}, max: ${maxVal}});`,
           );
         } else {
           const val = this.formatGridTrackValueJS(track);
@@ -491,7 +547,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   },
 
   YGNodeStyleSetGridTemplateColumns: {
-    value: function (nodeName, tracks) {
+    value: function (nodeName, value) {
+      const tracks = parseGridTrackListJS(value);
       if (!tracks || tracks.length === 0) {
         return;
       }
@@ -503,7 +560,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
           const minVal = this.formatGridTrackValueJS(track.min);
           const maxVal = this.formatGridTrackValueJS(track.max);
           this.push(
-            `${nodeName}GridTemplateColumns.push({type: 'minmax', min: ${minVal}, max: ${maxVal}});`,
+            `${nodeName}GridTemplateColumns.push({type: GridTrackType.Minmax, min: ${minVal}, max: ${maxVal}});`,
           );
         } else {
           const val = this.formatGridTrackValueJS(track);
@@ -566,7 +623,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   },
 
   YGNodeStyleSetGridAutoColumns: {
-    value: function (nodeName, tracks) {
+    value: function (nodeName, value) {
+      const tracks = parseGridTrackListJS(value);
       if (!tracks || tracks.length === 0) {
         return;
       }
@@ -578,7 +636,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
           const minVal = this.formatGridTrackValueJS(track.min);
           const maxVal = this.formatGridTrackValueJS(track.max);
           this.push(
-            `${nodeName}GridAutoColumns.push({type: 'minmax', min: ${minVal}, max: ${maxVal}});`,
+            `${nodeName}GridAutoColumns.push({type: GridTrackType.Minmax, min: ${minVal}, max: ${maxVal}});`,
           );
         } else {
           const val = this.formatGridTrackValueJS(track);
@@ -591,7 +649,8 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   },
 
   YGNodeStyleSetGridAutoRows: {
-    value: function (nodeName, tracks) {
+    value: function (nodeName, value) {
+      const tracks = parseGridTrackListJS(value);
       if (!tracks || tracks.length === 0) {
         return;
       }
@@ -603,7 +662,7 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
           const minVal = this.formatGridTrackValueJS(track.min);
           const maxVal = this.formatGridTrackValueJS(track.max);
           this.push(
-            `${nodeName}GridAutoRows.push({type: 'minmax', min: ${minVal}, max: ${maxVal}});`,
+            `${nodeName}GridAutoRows.push({type: GridTrackType.Minmax, min: ${minVal}, max: ${maxVal}});`,
           );
         } else {
           const val = this.formatGridTrackValueJS(track);
@@ -619,19 +678,17 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
     value: function (track) {
       switch (track.type) {
         case 'auto':
-          return `{type: 'auto'}`;
+          return `{type: GridTrackType.Auto}`;
         case 'points':
-          return `{type: 'points', value: ${toValueJavascript(
+          return `{type: GridTrackType.Points, value: ${toValueJavascript(
             track.value + 'px',
           )}}`;
         case 'percent':
-          return `{type: 'percent', value: ${toValueJavascript(
-            track.value + '%',
-          )}}`;
+          return `{type: GridTrackType.Percent, value: ${track.value}}`;
         case 'fr':
-          return `{type: 'fr', value: ${toValueJavascript(track.value)}}`;
+          return `{type: GridTrackType.Fr, value: ${track.value}}`;
         default:
-          return `{type: 'auto'}`;
+          return `{type: GridTrackType.Auto}`;
       }
     },
   },

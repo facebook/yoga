@@ -147,6 +147,22 @@ const char* YGFlexDirectionToString(const YGFlexDirection value) {
   return "unknown";
 }
 
+const char* YGGridTrackTypeToString(const YGGridTrackType value) {
+  switch (value) {
+    case YGGridTrackTypeAuto:
+      return "auto";
+    case YGGridTrackTypePoints:
+      return "points";
+    case YGGridTrackTypePercent:
+      return "percent";
+    case YGGridTrackTypeFr:
+      return "fr";
+    case YGGridTrackTypeMinmax:
+      return "minmax";
+  }
+  return "unknown";
+}
+
 const char* YGGutterToString(const YGGutter value) {
   switch (value) {
     case YGGutterColumn:

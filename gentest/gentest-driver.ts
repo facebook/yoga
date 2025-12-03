@@ -22,7 +22,7 @@ import signedsource from 'signedsource';
 async function findHtmlFixtures(dir: string): Promise<string[]> {
   const entries = await fs.readdir(dir, {withFileTypes: true});
   const files = await Promise.all(
-    entries.map(async entry => {
+    entries.map(entry => {
       const fullPath = join(dir, entry.name);
       if (entry.isDirectory()) {
         return findHtmlFixtures(fullPath);
@@ -96,15 +96,27 @@ for (const fixturePath of fixtures) {
   // start/end in the entire fixture
   const ltrFixture = fixture
     // prevent replacing in grid properties and alignment properties (justify/align-*)
-    .replaceAll(/(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )start/g, 'left')
-    .replaceAll(/(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )end/g, 'right')
+    .replaceAll(
+      /(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )start/g,
+      'left',
+    )
+    .replaceAll(
+      /(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )end/g,
+      'right',
+    )
     .replaceAll('flex-left', 'flex-start')
     .replaceAll('flex-right', 'flex-end');
 
   const rtlFixture = fixture
     // prevent replacing in grid properties and alignment properties (justify/align-*)
-    .replaceAll(/(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )start/g, 'right')
-    .replaceAll(/(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )end/g, 'left')
+    .replaceAll(
+      /(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )start/g,
+      'right',
+    )
+    .replaceAll(
+      /(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )end/g,
+      'left',
+    )
     .replaceAll('flex-right', 'flex-start')
     .replaceAll('flex-left', 'flex-end');
 

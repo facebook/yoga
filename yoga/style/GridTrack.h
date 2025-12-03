@@ -59,4 +59,3 @@ namespace facebook::yoga {
 using GridTrackList = std::vector<GridTrackSize>;
 
 } // namespace facebook::yoga
-
