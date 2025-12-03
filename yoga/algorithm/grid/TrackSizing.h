@@ -4,6 +4,9 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
 */
+
+#pragma once
+
 #include <yoga/algorithm/BoundAxis.h>
 #include <yoga/algorithm/CalculateLayout.h>
 #include <yoga/algorithm/grid/GridLayout.h>
@@ -35,8 +38,6 @@ struct ItemConstraint {
   float containingBlockHeight;
 };
 
-// Function type for estimating cross-dimension containing block size
-// Takes an item and returns the estimated containing block size in the cross dimension
 using CrossDimensionEstimator = std::function<float(const GridItemArea&)>;
 
 struct TrackSizing {
@@ -101,7 +102,6 @@ struct TrackSizing {
     initializeTrackSizes(dimension);
 
     // Fast path: if all tracks are fixed-sized, skip steps 2-5
-    // (no intrinsic, maximization, or flex expansion needed)
     bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
     if (!hasNonFixedTracks) {
       return;
@@ -117,46 +117,10 @@ struct TrackSizing {
     stretchAutoTracks(dimension);
   }
 
-  // Calculate min-content contributions for all items in a dimension
-  std::vector<float> getItemMinContentContributions(
-      Dimension dimension,
-      CrossDimensionEstimator estimator) {
-    std::vector<float> contributions;
-    contributions.reserve(gridItemAreas.size());
-
-    for (const auto& item : gridItemAreas) {
-      float crossDimSize = estimator ? estimator(item) : YGUndefined;
-      float containingBlockWidth = dimension == Dimension::Width ? YGUndefined : crossDimSize;
-      float containingBlockHeight = dimension == Dimension::Width ? crossDimSize : YGUndefined;
-      auto itemConstraints = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
-      float contribution = getMinimumContentContribution(item, dimension, itemConstraints);
-      contributions.push_back(contribution);
-    }
-    return contributions;
-  }
-
-  // Check if any item's min-content contribution changed
-  bool contributionsChanged(
-      const std::vector<float>& before,
-      const std::vector<float>& after) {
-    if (before.size() != after.size()) {
-      return true;
-    }
-    for (size_t i = 0; i < before.size(); i++) {
-      if (before[i] != after[i]) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   // https://www.w3.org/TR/css-grid-1/#algo-grid-sizing
-  // Runs all 4 steps of the Grid Sizing Algorithm (11.1.1 through 11.1.4)
+  // 11.1. Grid Sizing Algorithm
   void runGridSizingAlgorithm() {
-    // 11.1.1 First, the track sizing algorithm is used to resolve the sizes of the grid columns.
-    // For items needing block-axis size: use definite row sizes if available, else undefined.
     auto effectiveRowGap = calculateEffectiveRowGapForEstimation();
-
     auto estimateRowHeightStep1 = [&](const GridItemArea& item) -> float {
       float itemAreaHeight = 0.0f;
       for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
@@ -172,13 +136,12 @@ struct TrackSizing {
       return itemAreaHeight;
     };
 
+    // 1. First, the track sizing algorithm is used to resolve the sizes of the grid columns.
     runTrackSizing(Dimension::Width, estimateRowHeightStep1);
 
-    // Save column contributions after step 11.1.1
+    // Save content contributions after step 11.1.1 for Step 11.1.3
     auto columnContributionsAfterStep1 = getItemMinContentContributions(Dimension::Width, estimateRowHeightStep1);
 
-    // 11.1.2 Next, the track sizing algorithm resolves the sizes of the grid rows.
-    // Uses actual column sizes from step 11.1.1.
     auto effectiveColumnGap = calculateEffectiveColumnGapFromBaseSizes();
 
     auto estimateColumnWidthStep2 = [&](const GridItemArea& item) -> float {
@@ -192,13 +155,13 @@ struct TrackSizing {
       return itemAreaWidth;
     };
 
+    // 2. Next, the track sizing algorithm resolves the sizes of the grid rows.
+    // Uses actual column sizes from step 11.1.1.
     runTrackSizing(Dimension::Height, estimateColumnWidthStep2);
 
-    // Save row contributions after step 11.1.2
+    // Save content contributions after step 11.1.2 for Step 11.1.3
     auto rowContributionsAfterStep2 = getItemMinContentContributions(Dimension::Height, estimateColumnWidthStep2);
 
-    // 11.1.3 Then, if the min-content contribution of any grid item has changed
-    // based on the row sizes calculated in step 2, re-resolve column sizes (once only).
     effectiveRowGap = calculateEffectiveRowGapFromBaseSizes();
 
     auto estimateRowHeightStep3 = [&](const GridItemArea& item) -> float {
@@ -215,11 +178,10 @@ struct TrackSizing {
     // Check if any item's column contribution changed with actual row heights
     auto columnContributionsStep3 = getItemMinContentContributions(Dimension::Width, estimateRowHeightStep3);
 
+    // 3. Then, if the min-content contribution of any grid item has changed
+    // based on the row sizes calculated in step 11.1.2, re-resolve column sizes (once only).
     if (contributionsChanged(columnContributionsAfterStep1, columnContributionsStep3)) {
       runTrackSizing(Dimension::Width, estimateRowHeightStep3);
-
-      // 11.1.4 Next, if the min-content contribution of any grid item has changed
-      // based on the column sizes calculated in step 3, re-resolve row sizes (once only).
       effectiveColumnGap = calculateEffectiveColumnGapFromBaseSizes();
 
       auto estimateColumnWidthStep4 = [&](const GridItemArea& item) -> float {
@@ -236,13 +198,17 @@ struct TrackSizing {
       // Check if any item's row contribution changed with new column widths
       auto rowContributionsStep4 = getItemMinContentContributions(Dimension::Height, estimateColumnWidthStep4);
 
+      // 4. Next, if the min-content contribution of any grid item has changed
+      // based on the column sizes calculated in step 3, re-resolve row sizes (once only).
       if (contributionsChanged(rowContributionsAfterStep2, rowContributionsStep4)) {
         runTrackSizing(Dimension::Height, estimateColumnWidthStep4);
       }
     }
+
+    // 5. Align/Justify content is handled in GridLayout.cpp
   }
 
-  // https://www.w3.org/TR/css-grid-1/#algo-init
+  // 11.4 https://www.w3.org/TR/css-grid-1/#algo-init
   void initializeTrackSizes(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
@@ -439,12 +405,13 @@ struct TrackSizing {
     
   };
 
+  // https://www.w3.org/TR/css-grid-1/#algo-spanning-flex-items
   void accomodateSpanningItemsCrossingFlexibleTracks(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
 
-    // Tuple - (item, affectedTracks, contribution)
+    // (item, affectedTracks, contribution)
     std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>> itemsSpanningFlexible;
 
     for (auto& item : gridItemAreas) {
@@ -624,7 +591,7 @@ struct TrackSizing {
   }
 
   // https://www.w3.org/TR/css-grid-1/#extra-space
-  // Distribute space to flexible tracks for multiple items using planned increase pattern
+  // Similar to distribute extra space for content sized trcks, but distributes space considering flex factors.
   void distributeSpaceToFlexibleTracksForItems(
     Dimension dimension,
     const std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>>& items) {
@@ -984,6 +951,7 @@ struct TrackSizing {
     return freeSpace;
   }
 
+  // https://www.w3.org/TR/css-grid-1/#algo-stretch
   void stretchAutoTracks(Dimension dimension) {
     auto& gridTracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
@@ -1420,7 +1388,6 @@ struct TrackSizing {
     return fixedTracksLimit;
   }
 
-
   bool isFixedSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) {
     return sizingFunction.isDefined() && sizingFunction.resolve(referenceLength).isDefined();
   }
@@ -1843,6 +1810,35 @@ struct TrackSizing {
     auto distribution = calculateContentDistribution(Dimension::Width, freeSpace);
 
     return distribution.effectiveGap;
+  }
+
+  std::vector<float> getItemMinContentContributions(Dimension dimension,
+    CrossDimensionEstimator estimator) {
+    std::vector<float> contributions;
+    contributions.reserve(gridItemAreas.size());
+
+    for (const auto& item : gridItemAreas) {
+      float crossDimSize = estimator ? estimator(item) : YGUndefined;
+      float containingBlockWidth = dimension == Dimension::Width ? YGUndefined : crossDimSize;
+      float containingBlockHeight = dimension == Dimension::Width ? crossDimSize : YGUndefined;
+      auto itemConstraints = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
+      float contribution = getMinimumContentContribution(item, dimension, itemConstraints);
+      contributions.push_back(contribution);
+    }
+    return contributions;
+  }
+
+  bool contributionsChanged(const std::vector<float>& before, const std::vector<float>& after) {
+    if (before.size() != after.size()) {
+      return true;
+    }
+
+    for (size_t i = 0; i < before.size(); i++) {
+      if (before[i] != after[i]) {
+        return true;
+      }
+    }
+    return false;
   }
 };
 

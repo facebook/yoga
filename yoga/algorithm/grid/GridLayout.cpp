@@ -183,7 +183,6 @@ void calculateGridLayoutInternal(Node* node,
     trackSizing.runGridSizingAlgorithm();
   }
 
-  // Layout grid items
   // Step 4: Lay out the grid items into their respective containing blocks. Each grid area’s width and height are considered definite for this purpose.
   auto gridWidth = trackSizing.getTotalBaseSize(Dimension::Width);
   auto gridHeight = trackSizing.getTotalBaseSize(Dimension::Height);
@@ -193,6 +192,7 @@ void calculateGridLayoutInternal(Node* node,
   float leadingPaddingAndBorderBlock = node->style().computeInlineStartPadding(FlexDirection::Column, direction, ownerWidth) +
     node->style().computeInlineStartBorder(FlexDirection::Column, direction);
 
+    // Align content/Justify content
   float freeSpaceInlineAxis = containerInnerWidth - gridWidth;
   auto inlineDistribution = trackSizing.calculateContentDistribution(Dimension::Width, freeSpaceInlineAxis);
   float freeSpaceBlockAxis = containerInnerHeight - gridHeight;
@@ -353,10 +353,6 @@ void calculateGridLayoutInternal(Node* node,
         availableInnerWidth,
         availableInnerHeight);
   }
-
-  // Clean and update all display: contents nodes with a direct path to the
-  // current node as they will not be traversed
-  cleanupContentsNodesRecursively(node);
 }
 
 GridTracks createGridTracks(yoga::Node* node, const ResolvedAutoPlacement& autoPlacement) {
