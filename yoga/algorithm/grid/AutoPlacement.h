@@ -16,6 +16,37 @@
 
 namespace facebook::yoga {
 
+struct OccupancyGrid {
+  std::unordered_set<int64_t> cells;
+
+  static int64_t cellKey(int32_t row, int32_t col) {
+    return (static_cast<int64_t>(row) << 32) | static_cast<uint32_t>(col);
+  }
+
+  void markOccupied(int32_t rowStart, int32_t rowEnd, int32_t colStart, int32_t colEnd) {
+    for (int32_t row = rowStart; row < rowEnd; row++) {
+      for (int32_t col = colStart; col < colEnd; col++) {
+        cells.insert(cellKey(row, col));
+      }
+    }
+  }
+
+  bool isOccupied(int32_t row, int32_t col) const {
+    return cells.contains(cellKey(row, col));
+  }
+
+  bool hasOverlap(int32_t rowStart, int32_t rowEnd, int32_t colStart, int32_t colEnd) const {
+    for (int32_t row = rowStart; row < rowEnd; row++) {
+      for (int32_t col = colStart; col < colEnd; col++) {
+        if (isOccupied(row, col)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+};
+
 struct GridItemTrackPlacement {
   int32_t start = 0;
   int32_t end = 0;
@@ -142,6 +173,8 @@ struct AutoPlacement {
     int32_t minRowStart = 0;
     int32_t maxColumnEnd = static_cast<int32_t>(node->style().gridTemplateColumns().size());
     int32_t maxRowEnd = static_cast<int32_t>(node->style().gridTemplateRows().size());
+    OccupancyGrid occupancy;
+
     // function to push back a grid item placement and record the min/max column/row start/end
     auto recordGridArea = [&](AutoPlacementItemArea& gridItemArea) {
       yoga::assertFatal(
@@ -152,6 +185,7 @@ struct AutoPlacement {
           "Grid item row end must be greater than row start");
       gridItemAreas.push_back(gridItemArea);
       placedItems.insert(gridItemArea.node);
+      occupancy.markOccupied(gridItemArea.rowStart, gridItemArea.rowEnd, gridItemArea.columnStart, gridItemArea.columnEnd);
       minColumnStart = std::min(minColumnStart, gridItemArea.columnStart);
       minRowStart = std::min(minRowStart, gridItemArea.rowStart);
       maxColumnEnd = std::max(maxColumnEnd, gridItemArea.columnEnd);
@@ -233,7 +267,6 @@ struct AutoPlacement {
     
         bool placed = false;
         while (!placed) {
-          bool hasOverlap = false;
           auto gridItemArea = AutoPlacementItemArea{
             columnStart,
             columnEnd,
@@ -241,17 +274,10 @@ struct AutoPlacement {
             rowEnd,
             child
           };
-          // TODO: Optimise overlap check with a hash based alternative if necessary
-          for (const auto& placedItem: gridItemAreas) {
-            if (gridItemArea.overlaps(placedItem)) {
-              columnStart = placedItem.columnEnd;
-              columnEnd = columnStart + columnSpan;
-              hasOverlap = true;
-              // Restart checking from the beginning with new position
-              break;
-            }
-          }
-          if (!hasOverlap) {
+          if (occupancy.hasOverlap(rowStart, rowEnd, columnStart, columnEnd)) {
+            columnStart++;
+            columnEnd = columnStart + columnSpan;
+          } else {
             recordGridArea(gridItemArea);
             rowStartToColumnStartCache[rowStart] = columnEnd;
             placed = true;
@@ -338,7 +364,7 @@ struct AutoPlacement {
           while (!foundPosition) {
             auto proposedRowStart = autoPlacementCursor[1];
             auto proposedRowEnd = proposedRowStart + rowSpan;
-    
+
             // Check for overlaps with already placed items
             AutoPlacementItemArea proposedPlacement {
               columnStart,
@@ -347,19 +373,10 @@ struct AutoPlacement {
               proposedRowEnd,
               child
             };
-            bool hasOverlap = false;
-    
-            for (const auto& placedItem: gridItemAreas) {
-              if (proposedPlacement.overlaps(placedItem)) {
-                // Increment cursor row to the end and try again
-                autoPlacementCursor[1] = placedItem.rowEnd;
-                hasOverlap = true;
-                break;
-              }
-            }
 
-            if (!hasOverlap) {
-              // Set item's row-start and row-end lines
+            if (occupancy.hasOverlap(proposedRowStart, proposedRowEnd, columnStart, columnEnd)) {
+              autoPlacementCursor[1]++;
+            } else {
               recordGridArea(proposedPlacement);
               foundPosition = true;
             }
@@ -370,7 +387,7 @@ struct AutoPlacement {
         else if (!hasDefiniteRow && !hasDefiniteColumn) {
           auto itemColumnSpan = columnPlacement.span;
           auto itemRowSpan = rowPlacement.span;
-    
+
           bool foundPosition = false;
           while (!foundPosition) {
             // Try to find a position starting from current cursor position
@@ -379,8 +396,7 @@ struct AutoPlacement {
               auto columnEnd = columnStart + itemColumnSpan;
               auto rowStart = autoPlacementCursor[1];
               auto rowEnd = rowStart + itemRowSpan;
-    
-              // Check if this position overlaps with any placed items
+
               AutoPlacementItemArea proposedPlacement {
                 columnStart,
                 columnEnd,
@@ -388,23 +404,16 @@ struct AutoPlacement {
                 rowEnd,
                 child
               };
-              bool hasOverlap = false;
-    
-              for (const auto& placedItem: gridItemAreas) {
-                if (proposedPlacement.overlaps(placedItem)) {
-                  autoPlacementCursor[0] = placedItem.columnEnd;
-                  hasOverlap = true;
-                  break;
-                }
-              }
 
-              if (!hasOverlap) {
+              if (occupancy.hasOverlap(rowStart, rowEnd, columnStart, columnEnd)) {
+                autoPlacementCursor[0]++;
+              } else {
                 recordGridArea(proposedPlacement);
                 foundPosition = true;
                 break;
               }
             }
-    
+
             if (!foundPosition) {
               // Cursor column position + span would overflow, move to next row
               autoPlacementCursor[1]++;

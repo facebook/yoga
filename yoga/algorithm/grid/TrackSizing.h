@@ -50,8 +50,12 @@ struct TrackSizing {
   uint32_t depth;
   uint32_t generationCount;
   CrossDimensionEstimator crossDimensionEstimator;
-  bool hasColumnPercentageTracks = false;
-  bool hasRowPercentageTracks = false;
+
+  // below flags are used for optimization purposes
+  bool hasPercentageColumnTracks = false;
+  bool hasPercentageRowTracks = false;
+  bool hasNonFixedColumnTracks = false;
+  bool hasNonFixedRowTracks = false;
 
   TrackSizing(
     yoga::Node* node,
@@ -88,8 +92,16 @@ struct TrackSizing {
     // Store the estimator for use in calculateItemConstraints
     crossDimensionEstimator = estimator;
 
-    // Step 1: Initialize Track Sizes
+    // Step 1: Initialize Track Sizes (also sets hasNonFixedTracks flag)
     initializeTrackSizes(dimension);
+
+    // Fast path: if all tracks are fixed-sized, skip steps 2-5
+    // (no intrinsic, maximization, or flex expansion needed)
+    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
+    if (!hasNonFixedTracks) {
+      return;
+    }
+
     // Step 2: Resolve Intrinsic Track Sizes
     resolveIntrinsicTrackSizes(dimension);
     // Step 3: Maximize Track Sizes
@@ -229,7 +241,9 @@ struct TrackSizing {
   void initializeTrackSizes(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
-    bool& hasPercentageTracks = dimension == Dimension::Width ? hasColumnPercentageTracks : hasRowPercentageTracks;
+    bool& hasPercentageTracks = dimension == Dimension::Width ? hasPercentageColumnTracks : hasPercentageRowTracks;
+    bool& hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
+    hasNonFixedTracks = false;
 
     for (size_t i = 0; i < tracks.size(); i++) {
       auto& track = tracks[i];
@@ -246,6 +260,7 @@ struct TrackSizing {
       }
       else if (isIntrinsicSizingFunction(track.minSizingFunction, containerSize)) {
         track.baseSize = 0;
+        hasNonFixedTracks = true;
       }
       else {
         // THIS SHOULD NEVER HAPPEN
@@ -258,9 +273,11 @@ struct TrackSizing {
       }
       else if (isIntrinsicSizingFunction(track.maxSizingFunction, containerSize)) {
         track.growthLimit = INFINITY;
+        hasNonFixedTracks = true;
       }
       else if (isFlexibleSizingFunction(track.maxSizingFunction)) {
         track.growthLimit = INFINITY;
+        hasNonFixedTracks = true;
       }
       else {
         // THIS SHOULD NEVER HAPPEN
@@ -270,6 +287,12 @@ struct TrackSizing {
       // In all cases, if the growth limit is less than the base size, increase the growth limit to match the base size.
       if (track.growthLimit < track.baseSize) {
         track.growthLimit = track.baseSize;
+      }
+
+      // Track needs further processing if it can grow (baseSize < growthLimit)
+      // e.g., minmax(20px, 40px) needs step 3 to grow from 20 to 40
+      if (track.baseSize < track.growthLimit) {
+        hasNonFixedTracks = true;
       }
     }
   }
@@ -1435,7 +1458,7 @@ struct TrackSizing {
   }
 
   bool hasPercentageTracks(Dimension dimension) const {
-    return dimension == Dimension::Width ? hasColumnPercentageTracks : hasRowPercentageTracks;
+    return dimension == Dimension::Width ? hasPercentageColumnTracks : hasPercentageRowTracks;
   }
 
   std::pair<float, float> getContainingBlockSizeForItem(const GridItemArea& item, float effectiveColumnGap, float effectiveRowGap) {
