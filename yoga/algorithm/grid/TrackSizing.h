@@ -15,6 +15,11 @@
 
 namespace facebook::yoga {
 
+enum class AffectedSize {
+  BaseSize,
+  GrowthLimit
+};
+
 struct ContentDistribution {
   float startOffset = 0.0f;
   float betweenTracksOffset = 0.0f;
@@ -320,6 +325,7 @@ struct TrackSizing {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
     std::vector<GridItemArea> sortedItems = gridItemAreas;
+    // TODO: optimise this
     std::sort(sortedItems.begin(), sortedItems.end(), [dimension](const GridItemArea& a, const GridItemArea& b) {
       size_t spanA = dimension == Dimension::Width
         ? (a.columnEnd - a.columnStart)
@@ -339,7 +345,7 @@ struct TrackSizing {
     auto distributeSpaceToTracksForItemsWithTheSameSpan = [&]() {
       // Step 1: For intrinsic minimums
       if (!itemsForIntrinsicMin.empty()) {
-        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMin, true);
+        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMin, AffectedSize::BaseSize);
         itemsForIntrinsicMin.clear();
       }
 
@@ -350,17 +356,22 @@ struct TrackSizing {
         if (track.growthLimit < track.baseSize) {
           track.growthLimit = track.baseSize;
         }
+
+        // https://www.w3.org/TR/css-grid-1/#infinitely-growable
+        // reset infinitely growable flag for each track
+        // This flag gets set in Step 5 and used in Step 6, so we need to reset it before running Step 5.
+        track.infinitelyGrowable = false;
       }
 
       // Step 5: For intrinsic maximums
       if (!itemsForIntrinsicMax.empty()) {
-        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMax, false);
+        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForIntrinsicMax, AffectedSize::GrowthLimit);
         itemsForIntrinsicMax.clear();
       }
 
       // Step 6: For max-content maximums
       if (!itemsForMaxContentMax.empty()) {
-        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForMaxContentMax, false);
+        distributeExtraSpaceAcrossSpannedTracks(dimension, itemsForMaxContentMax, AffectedSize::GrowthLimit);
         itemsForMaxContentMax.clear();
       }
     };
@@ -388,15 +399,18 @@ struct TrackSizing {
         }
 
         if (isIntrinsicSizingFunction(tracks[i].minSizingFunction, containerSize)) {
+          // TODO: Optimisation: use index here instead of pointers
           intrinsicMinimumSizingFunctionTracks.push_back(&tracks[i]);
         }
 
         if (isIntrinsicSizingFunction(tracks[i].maxSizingFunction, containerSize)) {
+          // TODO: Optimisation: use index here instead of pointers
           intrinsicMaximumSizingFunctionTracks.push_back(&tracks[i]);
         }
 
         // auto as max sizing function is treated as max-content sizing function
         if (isAutoSizingFunction(tracks[i].maxSizingFunction, containerSize)) {
+          // TODO: Optimisation: use index here instead of pointers
           maxContentMaximumSizingFunctionTracks.push_back(&tracks[i]);
         }
       }
@@ -472,7 +486,7 @@ struct TrackSizing {
   void distributeExtraSpaceAcrossSpannedTracks(
     Dimension dimension,
     std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>>& items,
-    bool isAffectedSizeBaseSize) {
+    AffectedSize affectedSizeType) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     std::unordered_map<GridTrackSize*, float> plannedIncrease;
@@ -500,7 +514,7 @@ struct TrackSizing {
       auto gap = node->style().computeGapForDimension(dimension, containerSize);
       for (size_t i = start; i < end && i < tracks.size(); i++) {
         auto& track = tracks[i];
-        if (isAffectedSizeBaseSize) {
+        if (affectedSizeType == AffectedSize::BaseSize) {
           totalSpannedTracksSize += track.baseSize;
         } else {
           // For infinite growth limits, substitute the track's base size
@@ -529,7 +543,7 @@ struct TrackSizing {
           float limit;
           float affectedSize;
 
-          if (isAffectedSizeBaseSize) {
+          if (affectedSizeType == AffectedSize::BaseSize) {
             affectedSize = track->baseSize;
             limit = track->growthLimit;
           } else {
@@ -572,7 +586,7 @@ struct TrackSizing {
         }
 
         // if there are no such tracks, then all affected tracks.
-        if (isAffectedSizeBaseSize && tracksToGrowBeyondLimits.empty()) {
+        if (affectedSizeType == AffectedSize::BaseSize && tracksToGrowBeyondLimits.empty()) {
           tracksToGrowBeyondLimits = affectedTracks;
         }
 
@@ -596,7 +610,7 @@ struct TrackSizing {
 
     // 3. Update the tracks affected sizes
     for (const auto& [track, increase] : plannedIncrease) {
-      if (isAffectedSizeBaseSize) {
+      if (affectedSizeType == AffectedSize::BaseSize) {
         track->baseSize += increase;
       } else {
         if (track->growthLimit == INFINITY) {

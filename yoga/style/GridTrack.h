@@ -17,7 +17,7 @@ namespace facebook::yoga {
     StyleSizeLength maxSizingFunction;
  
     // These are used in the grid layout algorithm when distributing spaces among tracks
-    // TODO: maybe initialise these to YGUndefined or make it a part of GridLayout?
+    // TODO: maybe move them to TrackSizing since these are track states
     float baseSize = 0.0f;
     float growthLimit = 0.0f;
     bool infinitelyGrowable = false;
