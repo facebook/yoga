@@ -198,7 +198,11 @@ void calculateGridLayoutInternal(Node* node,
   auto inlineDistribution = trackSizing.calculateContentDistribution(Dimension::Width, freeSpaceInlineAxis);
   float freeSpaceBlockAxis = containerInnerHeight - gridHeight;
   auto blockDistribution = trackSizing.calculateContentDistribution(Dimension::Height, freeSpaceBlockAxis);
-  
+
+  if (freeSpaceInlineAxis < 0.0f || freeSpaceBlockAxis < 0.0f) {
+    node->setLayoutHadOverflow(true);
+  }
+
   auto gridInlineStartOffset = inlineDistribution.startOffset;
   auto gridBlockStartOffset = blockDistribution.startOffset;
   auto finalEffectiveColumnGap = inlineDistribution.effectiveGap;
