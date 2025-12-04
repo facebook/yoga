@@ -109,12 +109,11 @@ export type FlexStyle = {
   insetBlock?: number | `${number}%`;
   inset?: number | `${number}%`;
   width?: number | 'auto' | `${number}%`;
-  // Grid container properties
+  // Grid properties
   gridTemplateColumns?: string;
   gridTemplateRows?: string;
   gridAutoColumns?: string;
   gridAutoRows?: string;
-  // Grid item properties
   gridColumnStart?: number | `span ${number}`;
   gridColumnEnd?: number | `span ${number}`;
   gridRowStart?: number | `span ${number}`;
