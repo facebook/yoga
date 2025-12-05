@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <yoga/algorithm/Baseline.h>
 #include <yoga/algorithm/BoundAxis.h>
 #include <yoga/algorithm/CalculateLayout.h>
 #include <yoga/algorithm/grid/GridLayout.h>
@@ -63,11 +64,14 @@ struct TrackSizing {
   bool hasNonFixedColumnTracks = false;
   bool hasNonFixedRowTracks = false;
 
+  // Pre-computed baseline sharing groups
+  BaselineItemGroups& baselineItemGroups;
+
   TrackSizing(
     yoga::Node* node,
     std::vector<GridTrackSize>& columnTracks,
-    std::vector<GridTrackSize>& rowTracks, 
-    float containerInnerWidth, 
+    std::vector<GridTrackSize>& rowTracks,
+    float containerInnerWidth,
     float containerInnerHeight,
     std::vector<GridItemArea>& gridItemAreas,
     SizingMode widthSizingMode,
@@ -77,12 +81,13 @@ struct TrackSizing {
     float ownerHeight,
     LayoutData& layoutMarkerData,
     uint32_t depth,
-    uint32_t generationCount) : 
+    uint32_t generationCount,
+    BaselineItemGroups& baselineItemGroups) :
     node(node),
-    columnTracks(columnTracks), 
-    rowTracks(rowTracks), 
-    containerInnerWidth(containerInnerWidth), 
-    containerInnerHeight(containerInnerHeight), 
+    columnTracks(columnTracks),
+    rowTracks(rowTracks),
+    containerInnerWidth(containerInnerWidth),
+    containerInnerHeight(containerInnerHeight),
     gridItemAreas(gridItemAreas),
     widthSizingMode(widthSizingMode),
     heightSizingMode(heightSizingMode),
@@ -91,7 +96,8 @@ struct TrackSizing {
     ownerHeight(ownerHeight),
     layoutMarkerData(layoutMarkerData),
     depth(depth),
-    generationCount(generationCount) {}
+    generationCount(generationCount),
+    baselineItemGroups(baselineItemGroups) {}
 
   // https://www.w3.org/TR/css-grid-1/#algo-track-sizing
   void runTrackSizing(Dimension dimension, CrossDimensionEstimator estimator = nullptr) {
@@ -268,10 +274,77 @@ struct TrackSizing {
     }
   }
 
+  bool itemSizeDependsOnIntrinsicTracks(const GridItemArea& item) const {
+    auto heightStyle = item.node->style().dimension(Dimension::Height);
+    if (heightStyle.isPercent()) {
+      for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
+        if (isIntrinsicSizingFunction(rowTracks[i].minSizingFunction, containerInnerHeight) ||
+            isIntrinsicSizingFunction(rowTracks[i].maxSizingFunction, containerInnerHeight)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  // Step 1: Shim baseline-aligned items
+  // https://www.w3.org/TR/css-grid-1/#algo-baseline-shims
+  void shimBaselineAlignedItems() {
+    for (auto& [rowIndex, items] : baselineItemGroups) {
+      float maxBaselineWithMargin = 0.0f;
+      std::vector<std::pair<GridItemArea*, float>> itemBaselines;
+      itemBaselines.reserve(items.size());
+
+      for (auto* itemPtr : items) {
+        const auto& item = *itemPtr;
+
+        if (itemSizeDependsOnIntrinsicTracks(item)) {
+          continue;
+        }
+
+        float containingBlockWidth = crossDimensionEstimator ? crossDimensionEstimator(item) : YGUndefined;
+        float containingBlockHeight = YGUndefined;
+
+        auto itemConstraints = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
+
+        calculateLayoutInternal(
+            item.node,
+            itemConstraints.width,
+            itemConstraints.height,
+            node->getLayout().direction(),
+            SizingMode::MaxContent,
+            itemConstraints.heightSizingMode,
+            itemConstraints.containingBlockWidth,
+            itemConstraints.containingBlockHeight,
+            true,
+            LayoutPassReason::kGridLayout,
+            layoutMarkerData,
+            depth + 1,
+            generationCount);
+
+        const float baseline = calculateBaseline(item.node);
+        const float marginTop = item.node->style().computeInlineStartMargin(
+            FlexDirection::Column, direction, itemConstraints.containingBlockWidth);
+        const float baselineWithMargin = baseline + marginTop;
+
+        itemBaselines.push_back({itemPtr, baselineWithMargin});
+        maxBaselineWithMargin = std::max(maxBaselineWithMargin, baselineWithMargin);
+      }
+
+      for (auto& [itemPtr, baselineWithMargin] : itemBaselines) {
+        itemPtr->baselineShim = maxBaselineWithMargin - baselineWithMargin;
+      }
+    }
+  }
+
   // 11.5 https://www.w3.org/TR/css-grid-1/#algo-content
   void resolveIntrinsicTrackSizes(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
-    // TODO: 1. Shim baseline-aligned items
+
+    // Step 1: Shim baseline-aligned items (only for height dimension. align-items/align-self)
+    if (dimension == Dimension::Height) {
+      shimBaselineAlignedItems();
+    }
 
     // Step. 2 and Step. 3 Increase sizes to accommodate spanning items
     accomodateSpanningItemsCrossingContentSizedTracks(dimension);
@@ -1035,14 +1108,24 @@ struct TrackSizing {
     auto marginForAxis = item.node->style().computeMarginForAxis(
       dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
       itemConstraints.containingBlockWidth);
-    return contentSizeSuggestion(item, dimension, itemConstraints) + marginForAxis;
+    float contribution = contentSizeSuggestion(item, dimension, itemConstraints) + marginForAxis;
+
+    if (dimension == Dimension::Height) {
+      contribution += item.baselineShim;
+    }
+    return contribution;
   }
 
   float getMaxContentContribution(const GridItemArea& item, Dimension dimension, const ItemConstraint& itemConstraints) {
     auto marginForAxis = item.node->style().computeMarginForAxis(
       dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
       itemConstraints.containingBlockWidth);
-    return measureItem(item, dimension, itemConstraints) + marginForAxis;
+    float contribution = measureItem(item, dimension, itemConstraints) + marginForAxis;
+
+    if (dimension == Dimension::Height) {
+      contribution += item.baselineShim;
+    }
+    return contribution;
   }
 
   // https://www.w3.org/TR/css-grid-1/#min-size-auto
@@ -1244,6 +1327,7 @@ struct TrackSizing {
     auto preferredSize = item.node->style().dimension(dimension);
     auto containingBlockSize = dimension == Dimension::Width ? itemConstraints.containingBlockWidth : itemConstraints.containingBlockHeight;
 
+    float contribution = 0.0f;
     if (preferredSize.isAuto() || preferredSize.isPercent()) {
       auto minSize = item.node->style().minDimension(dimension);
       // CSS spec has initial min-width size to auto, but yoga keeps it undefined.
@@ -1252,17 +1336,22 @@ struct TrackSizing {
         auto marginForAxis = item.node->style().computeMarginForAxis(
           dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
           itemConstraints.containingBlockWidth);
-        return newMinimumSize + marginForAxis;
+        contribution = newMinimumSize + marginForAxis;
       } else {
         auto resolvedMinSize = minSize.resolve(containingBlockSize);
         auto marginForAxis = item.node->style().computeMarginForAxis(
           dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
           itemConstraints.containingBlockWidth);
-        return resolvedMinSize.unwrap() + marginForAxis;
+        contribution = resolvedMinSize.unwrap() + marginForAxis;
       }
     } else {
       return getMinimumContentContribution(item, dimension, itemConstraints);
     }
+
+    if (dimension == Dimension::Height) {
+      contribution += item.baselineShim;
+    }
+    return contribution;
   }
 
   FloatOptional transferredSizeSuggestion(const GridItemArea& item, Dimension dimension, const ItemConstraint& itemConstraints) {
@@ -1388,23 +1477,23 @@ struct TrackSizing {
     return fixedTracksLimit;
   }
 
-  bool isFixedSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) {
+  bool isFixedSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) const {
     return sizingFunction.isDefined() && sizingFunction.resolve(referenceLength).isDefined();
   }
-  
-  bool isIntrinsicSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) {
+
+  bool isIntrinsicSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) const {
     return isAutoSizingFunction(sizingFunction, referenceLength);
   }
-  
-  bool isAutoSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) {
+
+  bool isAutoSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) const {
     return sizingFunction.isAuto() || (sizingFunction.isPercent() && !yoga::isDefined(referenceLength));
   }
-  
-  bool isFlexibleSizingFunction(const StyleSizeLength& sizingFunction) {
+
+  bool isFlexibleSizingFunction(const StyleSizeLength& sizingFunction) const {
     return sizingFunction.isStretch();
   }
 
-  bool isPercentageSizingFunction(const StyleSizeLength& sizingFunction) {
+  bool isPercentageSizingFunction(const StyleSizeLength& sizingFunction) const {
     return sizingFunction.isPercent();
   }
 

@@ -69,6 +69,7 @@ void calculateGridLayoutInternal(Node* node,
   auto& rowTracks = gridTracks.rowTracks;
   auto& columnTracks = gridTracks.columnTracks;
   auto& itemAreas = autoPlacement.gridItemAreas;
+  auto& baselineItemGroups = autoPlacement.baselineItemGroups;
   bool needsSecondTrackSizingPass = true;
 
   if (!widthIsDefinite || !heightIsDefinite) {
@@ -86,7 +87,8 @@ void calculateGridLayoutInternal(Node* node,
       ownerHeight,
       layoutMarkerData,
       depth,
-      generationCount);
+      generationCount,
+      baselineItemGroups);
 
       trackSizing.runGridSizingAlgorithm();
 
@@ -171,7 +173,8 @@ void calculateGridLayoutInternal(Node* node,
     ownerHeight,
     layoutMarkerData,
     depth,
-    generationCount);
+    generationCount,
+    baselineItemGroups);
 
   // Step 3: Given the resulting grid container size, run the Grid Sizing Algorithm to size the grid.
   // Note: During this phase, <percentage>s in track sizes are resolved against the grid container size.
@@ -318,6 +321,8 @@ void calculateGridLayoutInternal(Node* node,
       alignSelfOffset = freeSpaceBlockAxisItem;
     } else if (alignSelf == Align::Center) {
       alignSelfOffset = freeSpaceBlockAxisItem / 2;
+    } else if (alignSelf == Align::Baseline) {
+      alignSelfOffset = item.baselineShim;
     }
 
     float finalTop = gridAreaTop + marginBlockStart + topAutoMarginOffset + alignSelfOffset + gridBlockStartOffset + leadingPaddingAndBorderBlock;

@@ -8,11 +8,12 @@
 #pragma once
 
 #include <cstdint>
-#include <yoga/node/Node.h>
+#include <map>
 #include <vector>
-#include <yoga/style/GridLine.h>
 #include <unordered_map>
 #include <unordered_set>
+#include <yoga/node/Node.h>
+#include <yoga/style/GridLine.h>
 
 namespace facebook::yoga {
 
@@ -440,10 +441,18 @@ struct GridItemArea {
   size_t rowStart;
   size_t rowEnd;
   yoga::Node* node;
+  // additional space added to align baselines
+  // https://www.w3.org/TR/css-grid-1/#algo-baseline-shims
+  float baselineShim = 0.0f;
 };
+
+// Baseline sharing groups - items grouped by their starting row for resolve intrinsic size step in TrackSizing
+// https://www.w3.org/TR/css-grid-1/#algo-baseline-shims
+using BaselineItemGroups = std::map<size_t, std::vector<GridItemArea*>>;
 
 struct ResolvedAutoPlacement {
   std::vector<GridItemArea> gridItemAreas;
+  BaselineItemGroups baselineItemGroups;
   int32_t minColumnStart;
   int32_t minRowStart;
   int32_t maxColumnEnd;
@@ -462,20 +471,34 @@ struct ResolvedAutoPlacement {
     std::vector<GridItemArea> resolvedAreas;
     resolvedAreas.reserve(autoPlacement.gridItemAreas.size());
 
+    BaselineItemGroups baselineGroups;
+    auto alignItems = node->style().alignItems();
+
     for (auto& placement : autoPlacement.gridItemAreas) {
-      resolvedAreas.push_back(GridItemArea{
+      resolvedAreas.push_back({
           static_cast<size_t>(placement.columnStart - minColumnStart),
           static_cast<size_t>(placement.columnEnd - minColumnStart),
           static_cast<size_t>(placement.rowStart - minRowStart),
           static_cast<size_t>(placement.rowEnd - minRowStart),
           placement.node});
+
+      auto& item = resolvedAreas.back();
+      auto alignSelf = item.node->style().alignSelf();
+      if (alignSelf == Align::Auto) {
+        alignSelf = alignItems;
+      }
+      bool spansOneRow = (item.rowEnd - item.rowStart) == 1;
+      if (alignSelf == Align::Baseline && spansOneRow) {
+        baselineGroups[item.rowStart].push_back(&item);
+      }
+
       // TODO: find a better place to call this
       placement.node->processDimensions();
-
     }
 
     return ResolvedAutoPlacement{
         std::move(resolvedAreas),
+        std::move(baselineGroups),
         minColumnStart,
         minRowStart,
         maxColumnEnd,
