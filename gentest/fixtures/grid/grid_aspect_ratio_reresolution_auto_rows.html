@@ -1,18 +1,3 @@
-<!-- Test case for CSS Grid re-resolution (steps 11.1.3 & 11.1.4)
-     This tests that column sizes are re-resolved after row sizing
-     when an aspect-ratio item's contribution changes.
-
-     Scenario:
-     - Grid with 2 auto columns and 1 auto row
-     - Item 1: Fixed size 50x100px (determines row height to 100px)
-     - Item 2: aspect-ratio 2/1, no explicit size, stretches to row height
-     - After row sizing: row = 100px (from item 1)
-     - Item 2 stretches to 100px height, with aspect-ratio 2/1 -> 200px width
-     - Re-resolution should size column 2 to 200px
-
-     Without re-resolution, column 2 would be 0 or incorrect since
-     during initial column sizing, the row height is unknown (auto).
--->
 <div id="grid_aspect_ratio_reresolution_auto_rows" style="display: grid; grid-template-columns: auto auto; grid-template-rows: auto; position: absolute;">
   <div style="width: 50px; height: 100px;"></div>
   <div style="aspect-ratio: 2.0;"></div>

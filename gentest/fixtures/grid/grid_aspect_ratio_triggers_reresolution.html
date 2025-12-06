@@ -1,14 +1,3 @@
-<!-- Test case for CSS Grid re-resolution (steps 11.1.3 & 11.1.4)
-     This tests that when an item's contribution changes after row sizing,
-     the columns are re-resolved.
-
-     Scenario:
-     - Grid with auto columns and definite row (100px)
-     - Item with aspect-ratio 2/1 that stretches in block axis
-     - After step 2 (row sizing), item gets 100px height
-     - With aspect-ratio 2/1, item now contributes 200px width
-     - Step 3 should re-resolve columns to accommodate 200px width
--->
 <div id="grid_aspect_ratio_triggers_reresolution" style="display: grid; grid-template-columns: auto; grid-template-rows: 100px; width: 500px;">
   <div style="aspect-ratio: 2.0; align-self: stretch;"></div>
 </div>
