@@ -444,6 +444,20 @@ struct GridItemArea {
   // additional space added to align baselines
   // https://www.w3.org/TR/css-grid-1/#algo-baseline-shims
   float baselineShim = 0.0f;
+
+  GridItemArea(
+      size_t columnStart,
+      size_t columnEnd,
+      size_t rowStart,
+      size_t rowEnd,
+      yoga::Node* node,
+      float baselineShim = 0.0f)
+      : columnStart(columnStart),
+        columnEnd(columnEnd),
+        rowStart(rowStart),
+        rowEnd(rowEnd),
+        node(node),
+        baselineShim(baselineShim) {}
 };
 
 // Baseline sharing groups - items grouped by their starting row for resolve intrinsic size step in TrackSizing
