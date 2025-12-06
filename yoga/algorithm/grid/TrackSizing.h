@@ -107,6 +107,11 @@ struct TrackSizing {
     // Step 1: Initialize Track Sizes (also sets hasNonFixedTracks flag)
     initializeTrackSizes(dimension);
 
+    // Baseline alignment needs to be calculated even when all tracks are fixed
+    if (dimension == Dimension::Height && !baselineItemGroups.empty()) {
+      shimBaselineAlignedItems();
+    }
+
     // Fast path: if all tracks are fixed-sized, skip steps 2-5
     bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
     if (!hasNonFixedTracks) {
@@ -341,10 +346,8 @@ struct TrackSizing {
   void resolveIntrinsicTrackSizes(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
 
-    // Step 1: Shim baseline-aligned items (only for height dimension. align-items/align-self)
-    if (dimension == Dimension::Height) {
-      shimBaselineAlignedItems();
-    }
+    // Note: Step 1 (Shim baseline-aligned items) is handled in runTrackSizing()
+    // before the fast-path check, so it runs even when all tracks are fixed.
 
     // Step. 2 and Step. 3 Increase sizes to accommodate spanning items
     accomodateSpanningItemsCrossingContentSizedTracks(dimension);
