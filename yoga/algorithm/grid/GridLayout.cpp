@@ -156,9 +156,7 @@ void calculateGridLayoutInternal(Node* node,
     return;
   }
 
-  // Step 3: Given the resulting grid container size, run the Grid Sizing Algorithm to size the grid.
-  // Run track sizing with the new container dimensions
-  // Note: During this phase, <percentage>s in track sizes are resolved against the grid container size.
+  // Inititialize track sizing with the final container size
   auto trackSizing = TrackSizing(
     node,
     columnTracks,
@@ -177,6 +175,7 @@ void calculateGridLayoutInternal(Node* node,
     baselineItemGroups);
 
   // Step 3: Given the resulting grid container size, run the Grid Sizing Algorithm to size the grid.
+  // Run track sizing with the new container dimensions
   // Note: During this phase, <percentage>s in track sizes are resolved against the grid container size.
 
   // We only need to run track sizing again if:
@@ -210,23 +209,33 @@ void calculateGridLayoutInternal(Node* node,
   auto gridBlockStartOffset = blockDistribution.startOffset;
   auto finalEffectiveColumnGap = inlineDistribution.effectiveGap;
   auto finalEffectiveRowGap = blockDistribution.effectiveGap;
+
+  std::vector<float> columnGridLineOffsets;
+  columnGridLineOffsets.reserve(columnTracks.size() + 1);
+  columnGridLineOffsets.push_back(0.0f);
+  for (size_t i = 0; i < columnTracks.size(); i++) {
+    float offset = columnGridLineOffsets[i] + columnTracks[i].baseSize;
+    if (i < columnTracks.size() - 1) {
+      offset += finalEffectiveColumnGap;
+    }
+    columnGridLineOffsets.push_back(offset);
+  }
+
+  std::vector<float> rowGridLineOffsets;
+  rowGridLineOffsets.reserve(rowTracks.size() + 1);
+  rowGridLineOffsets.push_back(0.0f);
+  for (size_t i = 0; i < rowTracks.size(); i++) {
+    float offset = rowGridLineOffsets[i] + rowTracks[i].baseSize;
+    if (i < rowTracks.size() - 1) {
+      offset += finalEffectiveRowGap;
+    }
+    rowGridLineOffsets.push_back(offset);
+  }
+
   for (auto& item : itemAreas) {
     auto [containingBlockWidth, containingBlockHeight] = trackSizing.getContainingBlockSizeForItem(item, finalEffectiveColumnGap, finalEffectiveRowGap);
-    float gridAreaStart = 0.0f;
-    for (size_t i = 0; i < item.columnStart && i < columnTracks.size(); i++) {
-      gridAreaStart += columnTracks[i].baseSize;
-      if (i < columnTracks.size() - 1) {
-        gridAreaStart += finalEffectiveColumnGap;
-      }
-    }
-
-    float gridAreaTop = 0.0f;
-    for (size_t i = 0; i < item.rowStart && i < rowTracks.size(); i++) {
-      gridAreaTop += rowTracks[i].baseSize;
-      if (i < rowTracks.size() - 1) {
-        gridAreaTop += finalEffectiveRowGap;
-      }
-    }
+    float gridItemInlineStart = columnGridLineOffsets[std::min(item.columnStart, columnTracks.size())];
+    float gridItemBlockStart = rowGridLineOffsets[std::min(item.rowStart, rowTracks.size())];
 
     const auto marginInlineStart = item.node->style().computeInlineStartMargin(FlexDirection::Row, direction, containingBlockWidth);
     const auto marginInlineEnd = item.node->style().computeInlineEndMargin(FlexDirection::Row, direction, containingBlockWidth);
@@ -287,7 +296,7 @@ void calculateGridLayoutInternal(Node* node,
       justifySelfOffset = freeSpaceInlineAxisItem / 2;
     }
     
-    float finalLeft = leadingPaddingAndBorderInline + gridAreaStart + marginInlineStart + startAutoMarginOffset + justifySelfOffset + gridInlineStartOffset;
+    float finalLeft = leadingPaddingAndBorderInline + gridItemInlineStart + marginInlineStart + startAutoMarginOffset + justifySelfOffset + gridInlineStartOffset;
 
     if (direction == Direction::RTL) {
       finalLeft = getPositionOfOppositeEdge(finalLeft, FlexDirection::Row, node, item.node);
@@ -325,7 +334,7 @@ void calculateGridLayoutInternal(Node* node,
       alignSelfOffset = item.baselineShim;
     }
 
-    float finalTop = gridAreaTop + marginBlockStart + topAutoMarginOffset + alignSelfOffset + gridBlockStartOffset + leadingPaddingAndBorderBlock;
+    float finalTop = gridItemBlockStart + marginBlockStart + topAutoMarginOffset + alignSelfOffset + gridBlockStartOffset + leadingPaddingAndBorderBlock;
 
     // Add relative position offset for relatively positioned items
     float relativePositionBlock = item.node->relativePosition(FlexDirection::Column, direction, containingBlockHeight);
