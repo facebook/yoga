@@ -475,12 +475,12 @@ struct ResolvedAutoPlacement {
     auto alignItems = node->style().alignItems();
 
     for (auto& placement : autoPlacement.gridItemAreas) {
-      resolvedAreas.push_back({
+      resolvedAreas.emplace_back(
           static_cast<size_t>(placement.columnStart - minColumnStart),
           static_cast<size_t>(placement.columnEnd - minColumnStart),
           static_cast<size_t>(placement.rowStart - minRowStart),
           static_cast<size_t>(placement.rowEnd - minRowStart),
-          placement.node});
+          placement.node);
 
       auto& item = resolvedAreas.back();
       auto alignSelf = item.node->style().alignSelf();

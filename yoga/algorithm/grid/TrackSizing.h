@@ -16,6 +16,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <map>
+#include <numeric>
 
 namespace facebook::yoga {
 
@@ -99,25 +100,8 @@ struct TrackSizing {
     generationCount(generationCount),
     baselineItemGroups(baselineItemGroups) {}
 
-  // https://www.w3.org/TR/css-grid-1/#algo-track-sizing
-  void runTrackSizing(Dimension dimension, CrossDimensionEstimator estimator = nullptr) {
-    // Store the estimator for use in calculateItemConstraints
-    crossDimensionEstimator = estimator;
-
-    // Step 1: Initialize Track Sizes (also sets hasNonFixedTracks flag)
-    initializeTrackSizes(dimension);
-    // Step 2: Resolve Intrinsic Track Sizes
-    resolveIntrinsicTrackSizes(dimension);
-    // Step 3: Maximize Track Sizes
-    maximizeTrackSizes(dimension);
-    // Step 4: Expand Flexible Tracks
-    expandFlexibleTracks(dimension);
-    // Step 5: Stretch Auto Tracks
-    stretchAutoTracks(dimension);
-  }
-
-  // https://www.w3.org/TR/css-grid-1/#algo-grid-sizing
   // 11.1. Grid Sizing Algorithm
+  // https://www.w3.org/TR/css-grid-1/#algo-grid-sizing
   void runGridSizingAlgorithm() {
     auto effectiveRowGap = calculateEffectiveRowGapForEstimation();
     auto estimateRowHeightStep1 = [&](const GridItemArea& item) -> float {
@@ -174,7 +158,6 @@ struct TrackSizing {
       return containingBlockHeight;
     };
 
-    // Check if any item's column contribution changed with actual row heights
     auto columnContributionsStep3 = getItemMinContentContributions(Dimension::Width, estimateRowHeightStep3);
 
     // 3. Then, if the min-content contribution of any grid item has changed
@@ -206,8 +189,27 @@ struct TrackSizing {
 
     // 5. Align/Justify content is handled in GridLayout.cpp
   }
+  
+  // 11.3. Track Sizing Algorithm
+  // https://www.w3.org/TR/css-grid-1/#algo-track-sizing
+  void runTrackSizing(Dimension dimension, CrossDimensionEstimator estimator = nullptr) {
+    // Store the estimator for use in calculateItemConstraints
+    crossDimensionEstimator = estimator;
 
-  // 11.4 https://www.w3.org/TR/css-grid-1/#algo-init
+    // Step 1: Initialize Track Sizes (also sets hasNonFixedTracks flag)
+    initializeTrackSizes(dimension);
+    // Step 2: Resolve Intrinsic Track Sizes
+    resolveIntrinsicTrackSizes(dimension);
+    // Step 3: Maximize Track Sizes
+    maximizeTrackSizes(dimension);
+    // Step 4: Expand Flexible Tracks
+    expandFlexibleTracks(dimension);
+    // Step 5: Stretch Auto Tracks
+    stretchAutoTracks(dimension);
+  }
+
+  // 11.4 Initialize Track Sizes
+  // https://www.w3.org/TR/css-grid-1/#algo-init
   void initializeTrackSizes(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
@@ -259,31 +261,44 @@ struct TrackSizing {
         track.growthLimit = track.baseSize;
       }
 
-      // Track needs further processing if it can grow (baseSize < growthLimit)
-      // e.g., minmax(20px, 40px) needs step 3 to grow from 20 to 40
+      // minmax(20px, 40px) type of tracks are non-fixed tracks
       if (track.baseSize < track.growthLimit) {
         hasNonFixedTracks = true;
       }
     }
   }
 
-  bool itemSizeDependsOnIntrinsicTracks(const GridItemArea& item) const {
-    auto heightStyle = item.node->style().dimension(Dimension::Height);
-    if (heightStyle.isPercent()) {
-      for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
-        if (isIntrinsicSizingFunction(rowTracks[i].minSizingFunction, containerInnerHeight) ||
-            isIntrinsicSizingFunction(rowTracks[i].maxSizingFunction, containerInnerHeight)) {
-          return true;
-        }
+  // 11.5 Resolve Intrinsic Track Sizes
+  // https://www.w3.org/TR/css-grid-1/#algo-content
+  void resolveIntrinsicTrackSizes(Dimension dimension) {
+    auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
+
+    // Step 1: Shim baseline-aligned items (only for height dimension i.e. align-items/align-self)
+    if (dimension == Dimension::Height) {
+      shimBaselineAlignedItems();
+    }
+
+    // Fast path - if tracks are fixed-sized, skip below steps
+    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
+    if (!hasNonFixedTracks) {
+      return;
+    }
+
+    // Step 2. and Step 3 Increase sizes to accommodate spanning items
+    accomodateSpanningItemsCrossingContentSizedTracks(dimension);
+    // Step 4. Increase sizes to accommodate spanning items crossing flexible tracks
+    accomodateSpanningItemsCrossingFlexibleTracks(dimension);
+    // Step 5. If any track still has an infinite growth limit (because, for example, it had no items placed in it or it is a flexible track), set its growth limit to its base size.
+    for (auto& track: tracks) {
+      if (track.growthLimit == INFINITY) {
+        track.growthLimit = track.baseSize;
       }
     }
-    return false;
   }
 
-  // Step 1: Shim baseline-aligned items
   // https://www.w3.org/TR/css-grid-1/#algo-baseline-shims
   void shimBaselineAlignedItems() {
-    for (auto& [rowIndex, items] : baselineItemGroups) {
+    for (const auto& [rowIndex, items] : baselineItemGroups) {
       float maxBaselineWithMargin = 0.0f;
       std::vector<std::pair<GridItemArea*, float>> itemBaselines;
       itemBaselines.reserve(items.size());
@@ -320,7 +335,7 @@ struct TrackSizing {
             FlexDirection::Column, direction, itemConstraints.containingBlockWidth);
         const float baselineWithMargin = baseline + marginTop;
 
-        itemBaselines.push_back({itemPtr, baselineWithMargin});
+        itemBaselines.emplace_back(itemPtr, baselineWithMargin);
         maxBaselineWithMargin = std::max(maxBaselineWithMargin, baselineWithMargin);
       }
 
@@ -330,55 +345,28 @@ struct TrackSizing {
     }
   }
 
-  // 11.5 https://www.w3.org/TR/css-grid-1/#algo-content
-  void resolveIntrinsicTrackSizes(Dimension dimension) {
-    auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
-
-    // Step 1: Shim baseline-aligned items (only for height dimension i.e. align-items/align-self)
-    if (dimension == Dimension::Height) {
-      shimBaselineAlignedItems();
-    }
-
-    // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
-    if (!hasNonFixedTracks) {
-      return;
-    }
-
-    // Step. 2 and Step. 3 Increase sizes to accommodate spanning items
-    accomodateSpanningItemsCrossingContentSizedTracks(dimension);
-    // Step 4. Increase sizes to accommodate spanning items crossing flexible tracks
-    accomodateSpanningItemsCrossingFlexibleTracks(dimension);
-    // Step 5. If any track still has an infinite growth limit (because, for example, it had no items placed in it or it is a flexible track), set its growth limit to its base size.
-    for (auto& track: tracks) {
-      if (track.growthLimit == INFINITY) {
-        track.growthLimit = track.baseSize;
-      }
-    }
-  }
-
   // https://www.w3.org/TR/css-grid-1/#algo-spanning-items
   void accomodateSpanningItemsCrossingContentSizedTracks(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
-    std::vector<GridItemArea> sortedItems = gridItemAreas;
-    // TODO: optimise this
-    std::sort(sortedItems.begin(), sortedItems.end(), [dimension](const GridItemArea& a, const GridItemArea& b) {
-      size_t spanA = dimension == Dimension::Width
-        ? (a.columnEnd - a.columnStart)
-        : (a.rowEnd - a.rowStart);
-      size_t spanB = dimension == Dimension::Width
-        ? (b.columnEnd - b.columnStart)
-        : (b.rowEnd - b.rowStart);
-      return spanA < spanB;
+
+    auto startMember = dimension == Dimension::Width ? &GridItemArea::columnStart : &GridItemArea::rowStart;
+    auto endMember = dimension == Dimension::Width ? &GridItemArea::columnEnd : &GridItemArea::rowEnd;
+    // Sort item indices by span
+    std::vector<size_t> sortedIndices(gridItemAreas.size());
+    std::iota(sortedIndices.begin(), sortedIndices.end(), 0);
+    std::sort(sortedIndices.begin(), sortedIndices.end(), [&](size_t i, size_t j) {
+        const auto& a = gridItemAreas[i];
+        const auto& b = gridItemAreas[j];
+        return (a.*endMember - a.*startMember) < (b.*endMember - b.*startMember);
     });
 
     size_t previousSpan = 1;
     // (item, affectedTracks, contribution)
-    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>> itemsForIntrinsicMin;
-    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>> itemsForIntrinsicMax;
-    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>> itemsForMaxContentMax;
+    std::vector<std::tuple<const GridItemArea*, std::vector<GridTrackSize*>, float>> itemsForIntrinsicMin;
+    std::vector<std::tuple<const GridItemArea*, std::vector<GridTrackSize*>, float>> itemsForIntrinsicMax;
+    std::vector<std::tuple<const GridItemArea*, std::vector<GridTrackSize*>, float>> itemsForMaxContentMax;
 
     auto distributeSpaceToTracksForItemsWithTheSameSpan = [&]() {
       // Step 1: For intrinsic minimums
@@ -414,7 +402,8 @@ struct TrackSizing {
       }
     };
 
-    for (auto& item: sortedItems) {
+    for (auto& index: sortedIndices) {
+      const auto& item = gridItemAreas[index];
       auto startIndex = dimension == Dimension::Width ? item.columnStart : item.rowStart;
       auto endIndex = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
       size_t span = endIndex - startIndex;
@@ -437,18 +426,15 @@ struct TrackSizing {
         }
 
         if (isIntrinsicSizingFunction(tracks[i].minSizingFunction, containerSize)) {
-          // TODO: Optimisation: use index here instead of pointers
           intrinsicMinimumSizingFunctionTracks.push_back(&tracks[i]);
         }
 
         if (isIntrinsicSizingFunction(tracks[i].maxSizingFunction, containerSize)) {
-          // TODO: Optimisation: use index here instead of pointers
           intrinsicMaximumSizingFunctionTracks.push_back(&tracks[i]);
         }
 
         // auto as max sizing function is treated as max-content sizing function
         if (isAutoSizingFunction(tracks[i].maxSizingFunction, containerSize)) {
-          // TODO: Optimisation: use index here instead of pointers
           maxContentMaximumSizingFunctionTracks.push_back(&tracks[i]);
         }
       }
@@ -458,17 +444,17 @@ struct TrackSizing {
       auto itemConstraints = calculateItemConstraints(item, dimension);
       if (!intrinsicMinimumSizingFunctionTracks.empty()) {
         auto minimumContribution = sizingMode == SizingMode::MaxContent ? getLimitedMinimumContentContribution(item, dimension, itemConstraints) : getMinimumContribution(item, dimension, itemConstraints);
-        itemsForIntrinsicMin.emplace_back(item, std::move(intrinsicMinimumSizingFunctionTracks), minimumContribution);
+        itemsForIntrinsicMin.emplace_back(&item, std::move(intrinsicMinimumSizingFunctionTracks), minimumContribution);
       }
 
       if (!intrinsicMaximumSizingFunctionTracks.empty()) {
         auto minimumContentContribution = getMinimumContentContribution(item, dimension, itemConstraints);
-        itemsForIntrinsicMax.emplace_back(item, std::move(intrinsicMaximumSizingFunctionTracks), minimumContentContribution);
+        itemsForIntrinsicMax.emplace_back(&item, std::move(intrinsicMaximumSizingFunctionTracks), minimumContentContribution);
       }
 
       if (!maxContentMaximumSizingFunctionTracks.empty()) {
         auto maxContentContribution = getMaxContentContribution(item, dimension, itemConstraints);
-        itemsForMaxContentMax.emplace_back(item, std::move(maxContentMaximumSizingFunctionTracks), maxContentContribution);
+        itemsForMaxContentMax.emplace_back(&item, std::move(maxContentMaximumSizingFunctionTracks), maxContentContribution);
       }
     }
 
@@ -484,9 +470,9 @@ struct TrackSizing {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
 
     // (item, affectedTracks, contribution)
-    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>> itemsSpanningFlexible;
+    std::vector<std::tuple<const GridItemArea*, std::vector<GridTrackSize*>, float>> itemsSpanningFlexible;
 
-    for (auto& item : gridItemAreas) {
+    for (const auto& item : gridItemAreas) {
       auto start = dimension == Dimension::Width ? item.columnStart : item.rowStart;
       auto end = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
       bool hasFlexibleTrack = false;
@@ -509,7 +495,7 @@ struct TrackSizing {
             : getMinimumContribution(item, dimension, itemConstraints);
 
         itemsSpanningFlexible.emplace_back(
-            item,
+            &item,
             std::move(intrinsicMinFlexibleTracks),
             minimumContribution
         );
@@ -524,7 +510,7 @@ struct TrackSizing {
   // https://www.w3.org/TR/css-grid-1/#extra-space
   void distributeExtraSpaceAcrossSpannedTracks(
     Dimension dimension,
-    std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>>& items,
+    std::vector<std::tuple<const GridItemArea*, std::vector<GridTrackSize*>, float>>& items,
     AffectedSize affectedSizeType) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
@@ -547,8 +533,8 @@ struct TrackSizing {
       }
 
       // 2.1 Find the space to distribute
-      auto start = dimension == Dimension::Width ? item.columnStart : item.rowStart;
-      auto end = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
+      auto start = dimension == Dimension::Width ? item->columnStart : item->rowStart;
+      auto end = dimension == Dimension::Width ? item->columnEnd : item->rowEnd;
       float totalSpannedTracksSize = 0.0f;
       auto gap = node->style().computeGapForDimension(dimension, containerSize);
       for (size_t i = start; i < end && i < tracks.size(); i++) {
@@ -666,7 +652,7 @@ struct TrackSizing {
   // Similar to distribute extra space for content sized trcks, but distributes space considering flex factors.
   void distributeSpaceToFlexibleTracksForItems(
     Dimension dimension,
-    const std::vector<std::tuple<GridItemArea, std::vector<GridTrackSize*>, float>>& items) {
+    const std::vector<std::tuple<const GridItemArea*, std::vector<GridTrackSize*>, float>>& items) {
 
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
@@ -674,22 +660,22 @@ struct TrackSizing {
 
     // Step 1: Maintain planned increase for each affected track
     std::unordered_map<GridTrackSize*, float> plannedIncrease;
-    for (const auto& [item, affectedTracks, contribution] : items) {
+    for (const auto& [itemPtr, affectedTracks, contribution] : items) {
       for (auto& track : affectedTracks) {
         plannedIncrease[track] = 0.0f;
       }
     }
 
     // Step 2: For each item
-    for (const auto& [item, affectedTracks, sizeContribution] : items) {
+    for (const auto& [itemPtr, affectedTracks, sizeContribution] : items) {
       std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
       for (auto& track : affectedTracks) {
         itemIncurredIncrease[track] = 0.0f;
       }
 
       // 2.1 Find space to distribute
-      auto start = dimension == Dimension::Width ? item.columnStart : item.rowStart;
-      auto end = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
+      auto start = dimension == Dimension::Width ? itemPtr->columnStart : itemPtr->rowStart;
+      auto end = dimension == Dimension::Width ? itemPtr->columnEnd : itemPtr->rowEnd;
       float totalSpannedTracksSize = 0.0f;
       for (size_t i = start; i < end && i < tracks.size(); i++) {
         totalSpannedTracksSize += tracks[i].baseSize;
@@ -1942,6 +1928,19 @@ struct TrackSizing {
     for (size_t i = 0; i < before.size(); i++) {
       if (before[i] != after[i]) {
         return true;
+      }
+    }
+    return false;
+  }
+
+  bool itemSizeDependsOnIntrinsicTracks(const GridItemArea& item) const {
+    auto heightStyle = item.node->style().dimension(Dimension::Height);
+    if (heightStyle.isPercent()) {
+      for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
+        if (isIntrinsicSizingFunction(rowTracks[i].minSizingFunction, containerInnerHeight) ||
+            isIntrinsicSizingFunction(rowTracks[i].maxSizingFunction, containerInnerHeight)) {
+          return true;
+        }
       }
     }
     return false;
