@@ -106,18 +106,6 @@ struct TrackSizing {
 
     // Step 1: Initialize Track Sizes (also sets hasNonFixedTracks flag)
     initializeTrackSizes(dimension);
-
-    // Baseline alignment needs to be calculated even when all tracks are fixed
-    if (dimension == Dimension::Height && !baselineItemGroups.empty()) {
-      shimBaselineAlignedItems();
-    }
-
-    // Fast path: if all tracks are fixed-sized, skip steps 2-5
-    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
-    if (!hasNonFixedTracks) {
-      return;
-    }
-
     // Step 2: Resolve Intrinsic Track Sizes
     resolveIntrinsicTrackSizes(dimension);
     // Step 3: Maximize Track Sizes
@@ -346,8 +334,16 @@ struct TrackSizing {
   void resolveIntrinsicTrackSizes(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
 
-    // Note: Step 1 (Shim baseline-aligned items) is handled in runTrackSizing()
-    // before the fast-path check, so it runs even when all tracks are fixed.
+    // Step 1: Shim baseline-aligned items (only for height dimension i.e. align-items/align-self)
+    if (dimension == Dimension::Height) {
+      shimBaselineAlignedItems();
+    }
+
+    // Fast path - if tracks are fixed-sized, skip below steps
+    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
+    if (!hasNonFixedTracks) {
+      return;
+    }
 
     // Step. 2 and Step. 3 Increase sizes to accommodate spanning items
     accomodateSpanningItemsCrossingContentSizedTracks(dimension);
@@ -794,6 +790,12 @@ struct TrackSizing {
 
   // https://www.w3.org/TR/css-grid-1/#algo-grow-tracks
   void maximizeTrackSizes(Dimension dimension) {
+    // Fast path - if tracks are fixed-sized, skip below steps
+    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
+    if (!hasNonFixedTracks) {
+      return;
+    }
+
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     
@@ -894,6 +896,12 @@ struct TrackSizing {
 
   // https://www.w3.org/TR/css-grid-1/#algo-flex-tracks
   void expandFlexibleTracks(Dimension dimension) {
+    // Fast path - if tracks are fixed-sized, skip below steps
+    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
+    if (!hasNonFixedTracks) {
+      return;
+    }
+
     auto& gridTracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
@@ -1029,6 +1037,12 @@ struct TrackSizing {
 
   // https://www.w3.org/TR/css-grid-1/#algo-stretch
   void stretchAutoTracks(Dimension dimension) {
+    // Fast path - if tracks are fixed-sized, skip below steps
+    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
+    if (!hasNonFixedTracks) {
+      return;
+    }
+
     auto& gridTracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
 
