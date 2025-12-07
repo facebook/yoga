@@ -1177,15 +1177,11 @@ struct TrackSizing {
       ).unwrap();
     }
     else if (aspectRatio.isDefined() && orthogonalDimensionIsDefinite) {
-      // Use transferred size suggestion when aspect-ratio is defined and
-      // the orthogonal dimension is effectively definite (either by styled size
-      // or by stretch alignment with a known containing block size)
       auto suggestedSize = transferredSizeSuggestion(item, dimension, itemConstraints);
       if (suggestedSize.isDefined()) {
         result = suggestedSize.unwrap();
       }
     } else {
-      // Content size suggestion: min-content clamped by opposite-axis min/max through aspect ratio
       result = contentSizeSuggestion(item, dimension, itemConstraints);
     }
 
@@ -1215,7 +1211,6 @@ struct TrackSizing {
         stretchFitMax += resolved.unwrap();
       }
 
-      // Add gap (except after last track)
       if (trackIndex < endIndex - 1) {
         stretchFitMax += gap;
       }
@@ -1241,7 +1236,6 @@ struct TrackSizing {
   float contentSizeSuggestion(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
     float minContentSize = measureItem(item, dimension, itemConstraints);
 
-    // Clamp by opposite-axis min/max sizes converted through aspect ratio
     auto aspectRatio = item.node->style().aspectRatio();
     if (aspectRatio.isDefined()) {
       minContentSize = clampByOrthogonalMinMax(item, dimension, itemConstraints, minContentSize);
@@ -1250,7 +1244,6 @@ struct TrackSizing {
     return minContentSize;
   }
 
-  // Helper to clamp a size by orthogonal min/max converted through aspect ratio
   float clampByOrthogonalMinMax(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints, float size) {
     auto aspectRatio = item.node->style().aspectRatio();
     if (!aspectRatio.isDefined()) {
@@ -1262,7 +1255,6 @@ struct TrackSizing {
         ? itemConstraints.containingBlockWidth
         : itemConstraints.containingBlockHeight;
 
-    // Clamp by opposite-axis minimum size (converted through aspect ratio)
     auto orthogonalMinSize = item.node->style().minDimension(orthogonalDimension);
     if (orthogonalMinSize.isDefined()) {
       auto resolvedOrthogonalMinSize = orthogonalMinSize.resolve(orthogonalContainingBlockSize);
@@ -1273,7 +1265,6 @@ struct TrackSizing {
       }
     }
 
-    // Clamp by opposite-axis maximum size (converted through aspect ratio)
     auto orthogonalMaxSize = item.node->style().maxDimension(orthogonalDimension);
     if (orthogonalMaxSize.isDefined()) {
       auto resolvedOrthogonalMaxSize = orthogonalMaxSize.resolve(orthogonalContainingBlockSize);
@@ -1289,10 +1280,8 @@ struct TrackSizing {
 
   float convertThroughAspectRatio(float orthogonalSize, float aspectRatio, Dimension targetDimension) {
     if (targetDimension == Dimension::Width) {
-      // width = height * aspectRatio
       return orthogonalSize * aspectRatio;
     } else {
-      // height = width / aspectRatio
       return orthogonalSize / aspectRatio;
     }
   }
@@ -1350,20 +1339,17 @@ struct TrackSizing {
         : itemConstraints.height;
 
     if (orthogonalSizingMode == SizingMode::StretchFit && yoga::isDefined(orthogonalAvailableSize)) {
-      // For stretch-fit items, use the available size (minus margins which are already factored in)
       auto orthogonalMargin = item.node->style().computeMarginForAxis(
           orthogonalDimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
           containingBlockWidth);
       resolvedOrthogonalSize = orthogonalAvailableSize - orthogonalMargin;
     } else if (item.node->hasDefiniteLength(orthogonalDimension, orthogonalContainingBlockSize)) {
-      // Fall back to styled size if available
       auto orthogonalSize = item.node->style().dimension(orthogonalDimension);
       resolvedOrthogonalSize = orthogonalSize.resolve(orthogonalContainingBlockSize).unwrap();
     } else {
       return yoga::FloatOptional();
     }
 
-    // Clamp by opposite-axis min size if definite
     auto orthogonalMinSize = item.node->style().minDimension(orthogonalDimension);
     if (orthogonalMinSize.isDefined()) {
       auto resolvedOrthogonalMinSize = orthogonalMinSize.resolve(orthogonalContainingBlockSize);
@@ -1372,7 +1358,6 @@ struct TrackSizing {
       }
     }
 
-    // Clamp by opposite-axis max size if definite
     auto orthogonalMaxSize = item.node->style().maxDimension(orthogonalDimension);
     if (orthogonalMaxSize.isDefined()) {
       auto resolvedOrthogonalMaxSize = orthogonalMaxSize.resolve(orthogonalContainingBlockSize);
@@ -1381,7 +1366,6 @@ struct TrackSizing {
       }
     }
 
-    // Convert through aspect ratio
     float result;
     if (dimension == Dimension::Width) {
       result = resolvedOrthogonalSize * aspectRatio.unwrap();
@@ -1389,7 +1373,6 @@ struct TrackSizing {
       result = resolvedOrthogonalSize / aspectRatio.unwrap();
     }
 
-    // Cap by definite preferred size in the relevant axis
     auto preferredSize = item.node->style().dimension(dimension);
     if (preferredSize.isDefined()) {
       auto resolvedPreferredSize = preferredSize.resolve(containingBlockSize);
@@ -1398,7 +1381,6 @@ struct TrackSizing {
       }
     }
 
-    // Cap by definite maximum size in the relevant axis
     auto maxSize = item.node->style().maxDimension(dimension);
     if (maxSize.isDefined()) {
       auto resolvedMaxSize = maxSize.resolve(containingBlockSize);
@@ -1495,19 +1477,15 @@ struct TrackSizing {
     float containingBlockWidth = 0.0f;
     float containingBlockHeight = 0.0f;
     
-    // Calculate width: sum of spanned column tracks + gaps
     for (size_t i = item.columnStart; i < item.columnEnd && i < columnTracks.size(); i++) {
       containingBlockWidth += columnTracks[i].baseSize;
-      // Add column gap if not the last spanned track
       if (i < item.columnEnd - 1) {
         containingBlockWidth += effectiveColumnGap;
       }
     }
     
-    // Calculate height: sum of spanned row tracks + gaps
     for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
       containingBlockHeight += rowTracks[i].baseSize;
-      // Add row gap if not the last spanned track
       if (i < item.rowEnd - 1) {
         containingBlockHeight += effectiveRowGap;
       }
