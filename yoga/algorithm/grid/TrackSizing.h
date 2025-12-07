@@ -421,7 +421,39 @@ struct TrackSizing {
       auto endIndex = item.*endIndexKey;
       size_t span = endIndex - startIndex;
 
-      // span changed, start distributing space to intrinsic sizing tracks
+      // 2. Size tracks to fit non-spanning items
+      // https://www.w3.org/TR/css-grid-1/#algo-single-span-items
+      if (span == 1) {
+        auto& track = tracks[startIndex];
+        auto itemConstraints = calculateItemConstraints(item, dimension);
+        // For auto minimums:
+        if (isAutoSizingFunction(track.minSizingFunction, containerSize)) {
+          float contribution = sizingMode == SizingMode::MaxContent
+              ? getLimitedMinimumContentContribution(item, dimension, itemConstraints)
+              : getMinimumContribution(item, dimension, itemConstraints);
+          track.baseSize = std::max(track.baseSize, contribution);
+        }
+        
+        // For max-content maximums:
+        if (isAutoSizingFunction(track.maxSizingFunction, containerSize)) {
+          float contribution = getMaxContentContribution(item, dimension, itemConstraints);
+          if (track.growthLimit == INFINITY) {
+            track.growthLimit = contribution;
+          } else {
+            track.growthLimit = std::max(track.growthLimit, contribution);
+          }
+        }
+        // In all cases, if a track’s growth limit is now less than its base size, increase the growth limit to match the base size.
+        if (track.growthLimit < track.baseSize) {
+          track.growthLimit = track.baseSize;
+        }
+        previousSpan = span;
+
+        continue;
+      }
+
+      // 3. Increase sizes to accommodate spanning items crossing content-sized tracks:
+      // https://www.w3.org/TR/css-grid-1/#algo-spanning-items
       if (span > previousSpan) {
         distributeSpaceToTracksForItemsWithTheSameSpan();
         previousSpan = span;
