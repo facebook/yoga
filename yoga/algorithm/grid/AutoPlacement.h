@@ -444,6 +444,11 @@ struct GridItem {
   // additional space added to align baselines
   // https://www.w3.org/TR/css-grid-1/#algo-baseline-shims
   float baselineShim = 0.0f;
+  // Flags used for optimisations in TrackSizing
+  bool crossesIntrinsicRow = false;
+  bool crossesIntrinsicColumn = false;
+  bool crossesFlexibleRow = false;
+  bool crossesFlexibleColumn = false;
 
   GridItem(
       size_t columnStart,
@@ -458,6 +463,13 @@ struct GridItem {
         rowEnd(rowEnd),
         node(node),
         baselineShim(baselineShim) {}
+    
+    bool crossesIntrinsicTrack(Dimension dimension) const {
+      return dimension == Dimension::Width ? crossesIntrinsicColumn : crossesIntrinsicRow;
+    }
+    bool crossesFlexibleTrack(Dimension dimension) const {
+      return dimension == Dimension::Width ? crossesFlexibleColumn : crossesFlexibleRow;
+    }
 };
 
 // Baseline sharing groups - items grouped by their starting row for resolve intrinsic size step in TrackSizing

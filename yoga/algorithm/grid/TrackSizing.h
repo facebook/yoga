@@ -117,91 +117,26 @@ struct TrackSizing {
   // 11.1. Grid Sizing Algorithm
   // https://www.w3.org/TR/css-grid-1/#algo-grid-sizing
   void runGridSizingAlgorithm() {
-    auto effectiveRowGap = calculateEffectiveRowGapForEstimation();
-    auto estimateRowHeightStep1 = [&](const GridItem& item) -> float {
-      float itemAreaHeight = 0.0f;
-      for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
-        if (isFixedSizingFunction(rowTracks[i].maxSizingFunction, containerInnerHeight)) {
-          itemAreaHeight += rowTracks[i].maxSizingFunction.resolve(containerInnerHeight).unwrap();
-          if (i < item.rowEnd - 1) {
-            itemAreaHeight += effectiveRowGap;
-          }
-        } else {
-          return YGUndefined;
-        }
-      }
-      return itemAreaHeight;
-    };
+    computeItemTrackCrossingFlags();
 
     // 1. First, the track sizing algorithm is used to resolve the sizes of the grid columns.
-    runTrackSizing(Dimension::Width, estimateRowHeightStep1);
-
-    // Save content contributions after step 11.1.1 for Step 11.1.3
-    auto columnContributionsAfterStep1 = getItemMinContentContributions(Dimension::Width, estimateRowHeightStep1);
-
-    auto effectiveColumnGap = calculateEffectiveColumnGapFromBaseSizes();
-
-    auto estimateColumnWidthStep2 = [&](const GridItem& item) -> float {
-      float itemAreaWidth = 0.0f;
-      for (size_t i = item.columnStart; i < item.columnEnd && i < columnTracks.size(); i++) {
-        itemAreaWidth += columnTracks[i].baseSize;
-        if (i < item.columnEnd - 1) {
-          itemAreaWidth += effectiveColumnGap;
-        }
-      }
-      return itemAreaWidth;
-    };
+    auto rowHeightFromFixedTracks = makeRowHeightEstimatorUsingFixedTracks(calculateEffectiveRowGapForEstimation());
+    runTrackSizing(Dimension::Width, rowHeightFromFixedTracks);
 
     // 2. Next, the track sizing algorithm resolves the sizes of the grid rows.
-    // Uses actual column sizes from step 11.1.1.
-    runTrackSizing(Dimension::Height, estimateColumnWidthStep2);
-
-    // Save content contributions after step 11.1.2 for Step 11.1.3
-    auto rowContributionsAfterStep2 = getItemMinContentContributions(Dimension::Height, estimateColumnWidthStep2);
-
-    effectiveRowGap = calculateEffectiveRowGapFromBaseSizes();
-
-    auto estimateRowHeightStep3 = [&](const GridItem& item) -> float {
-      float containingBlockHeight = 0.0f;
-      for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
-        containingBlockHeight += rowTracks[i].baseSize;
-        if (i < item.rowEnd - 1) {
-          containingBlockHeight += effectiveRowGap;
-        }
-      }
-      return containingBlockHeight;
-    };
-
-    auto columnContributionsStep3 = getItemMinContentContributions(Dimension::Width, estimateRowHeightStep3);
+    auto columnWidthFromBaseSizes = makeCrossDimensionEstimatorUsingBaseSize(Dimension::Width, calculateEffectiveGapFromBaseSizes(Dimension::Width));
+    runTrackSizing(Dimension::Height, columnWidthFromBaseSizes);
 
     // 3. Then, if the min-content contribution of any grid item has changed
-    // based on the row sizes calculated in step 11.1.2, re-resolve column sizes (once only).
-    if (contributionsChanged(columnContributionsAfterStep1, columnContributionsStep3)) {
-      runTrackSizing(Dimension::Width, estimateRowHeightStep3);
-      effectiveColumnGap = calculateEffectiveColumnGapFromBaseSizes();
-
-      auto estimateColumnWidthStep4 = [&](const GridItem& item) -> float {
-        float containingBlockWidth = 0.0f;
-        for (size_t i = item.columnStart; i < item.columnEnd && i < columnTracks.size(); i++) {
-          containingBlockWidth += columnTracks[i].baseSize;
-          if (i < item.columnEnd - 1) {
-            containingBlockWidth += effectiveColumnGap;
-          }
-        }
-        return containingBlockWidth;
-      };
-
-      // Check if any item's row contribution changed with new column widths
-      auto rowContributionsStep4 = getItemMinContentContributions(Dimension::Height, estimateColumnWidthStep4);
-
+    auto rowHeightFromBaseSizes = makeCrossDimensionEstimatorUsingBaseSize(Dimension::Height, calculateEffectiveGapFromBaseSizes(Dimension::Height));
+    if (contributionsChanged(Dimension::Width, rowHeightFromFixedTracks, rowHeightFromBaseSizes)) {
+      runTrackSizing(Dimension::Width, rowHeightFromBaseSizes);
       // 4. Next, if the min-content contribution of any grid item has changed
-      // based on the column sizes calculated in step 3, re-resolve row sizes (once only).
-      if (contributionsChanged(rowContributionsAfterStep2, rowContributionsStep4)) {
-        runTrackSizing(Dimension::Height, estimateColumnWidthStep4);
+      auto newColumnWidthFromBaseSizes = makeCrossDimensionEstimatorUsingBaseSize(Dimension::Width, calculateEffectiveGapFromBaseSizes(Dimension::Width));
+      if (contributionsChanged(Dimension::Height, columnWidthFromBaseSizes, newColumnWidthFromBaseSizes)) {
+        runTrackSizing(Dimension::Height, newColumnWidthFromBaseSizes);
       }
     }
-
-    // 5. Align/Justify content is handled in GridLayout.cpp
   }
   
   // 11.3. Track Sizing Algorithm
@@ -417,6 +352,11 @@ struct TrackSizing {
 
     for (auto& index: sortedIndices) {
       const auto& item = gridItems[index];
+
+      if (item.crossesFlexibleTrack(dimension)) {
+        continue;
+      }
+
       auto startIndex = item.*startIndexKey;
       auto endIndex = item.*endIndexKey;
       size_t span = endIndex - startIndex;
@@ -463,13 +403,7 @@ struct TrackSizing {
       std::vector<GridTrackSize*> intrinsicMaximumSizingFunctionTracks;
       std::vector<GridTrackSize*> maxContentMaximumSizingFunctionTracks;
 
-      bool hasFlexibleTrack = false;
       for (size_t i = startIndex; i < endIndex; i++) {
-        if (isFlexibleSizingFunction(tracks[i].maxSizingFunction)) {
-          hasFlexibleTrack = true;
-          break;
-        }
-
         if (isIntrinsicSizingFunction(tracks[i].minSizingFunction, containerSize)) {
           intrinsicMinimumSizingFunctionTracks.push_back(&tracks[i]);
         }
@@ -483,8 +417,6 @@ struct TrackSizing {
           maxContentMaximumSizingFunctionTracks.push_back(&tracks[i]);
         }
       }
-
-      if (hasFlexibleTrack) continue;
 
       auto itemConstraints = calculateItemConstraints(item, dimension);
       if (!intrinsicMinimumSizingFunctionTracks.empty()) {
@@ -520,20 +452,16 @@ struct TrackSizing {
     for (const auto& item : gridItems) {
       auto start = item.*startIndexkey;
       auto end = item.*endIndexKey;
-      bool hasFlexibleTrack = false;
       std::vector<GridTrackSize*> intrinsicMinFlexibleTracks;
 
       for (size_t i = start; i < end && i < tracks.size(); i++) {
         auto& track = tracks[i];
-        if (isFlexibleSizingFunction(track.maxSizingFunction)) {
-          hasFlexibleTrack = true;
-          if (isIntrinsicSizingFunction(track.minSizingFunction, containerSize)) {
-            intrinsicMinFlexibleTracks.push_back(&track);
-          }
+        if (isIntrinsicSizingFunction(track.minSizingFunction, containerSize)) {
+          intrinsicMinFlexibleTracks.push_back(&track);
         }
       }
 
-      if (hasFlexibleTrack && !intrinsicMinFlexibleTracks.empty()) {
+      if (item.crossesFlexibleTrack(dimension) && !intrinsicMinFlexibleTracks.empty()) {
         auto itemConstraints = calculateItemConstraints(item, dimension);
         auto minimumContribution = sizingMode == SizingMode::MaxContent
             ? getLimitedMinimumContentContribution(item, dimension, itemConstraints)
@@ -890,12 +818,6 @@ struct TrackSizing {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
 
-    std::vector<GridTrackSize*> allGridTracks;
-    allGridTracks.reserve(gridTracks.size());
-    for (auto& track : gridTracks) {
-      allGridTracks.push_back(&track);
-    }
-
     float freeSpace = calculateFreeSpace(dimension);
 
     float flexFraction = 0.0f;
@@ -924,15 +846,16 @@ struct TrackSizing {
         }
       }
 
+      auto startIndexKey = dimension == Dimension::Width ? &GridItem::columnStart : &GridItem::rowStart;
+      auto endIndexKey = dimension == Dimension::Width ? &GridItem::columnEnd : &GridItem::rowEnd;
+
       for (auto& item : gridItems) {
-          auto start = dimension == Dimension::Width ? item.columnStart : item.rowStart;
-          auto end = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
-          if (!hasFlexibleTrackInRange(gridTracks, start, end)) {
+          if (!item.crossesFlexibleTrack(dimension)) {
             continue;
           }
           auto itemConstraints = calculateItemConstraints(item, dimension);
           auto itemMaxContentContribution = getMaxContentContribution(item, dimension, itemConstraints);
-          flexFraction = std::max(flexFraction, findFrSize(dimension, start, end, itemMaxContentContribution, std::unordered_set<GridTrackSize*>()));
+          flexFraction = std::max(flexFraction, findFrSize(dimension, item.*startIndexKey, item.*endIndexKey, itemMaxContentContribution, std::unordered_set<GridTrackSize*>()));
         }
       }
 
@@ -1194,16 +1117,12 @@ struct TrackSizing {
     bool isScrollableOverflowValue = overflow == Overflow::Scroll || overflow == Overflow::Hidden;
     bool spansAutoMinTrack = false;
     bool spansMoreThanOneTrack = (endIndex - startIndex) > 1;
-    bool spansFlexibleTrack = false;
+    bool spansFlexibleTrack = item.crossesFlexibleTrack(dimension);
     
     for (size_t trackIndex = startIndex; trackIndex < endIndex; trackIndex++) {
       auto& track = tracks[trackIndex];
       if (track.minSizingFunction.isAuto()) {
         spansAutoMinTrack = true;
-      }
-      
-      if (isFlexibleSizingFunction(track.maxSizingFunction)) {
-        spansFlexibleTrack = true;
       }
     }
     
@@ -1533,34 +1452,24 @@ struct TrackSizing {
     return fixedTracksLimit;
   }
 
-  bool isFixedSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) const {
+  static bool isFixedSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) {
     return sizingFunction.isDefined() && sizingFunction.resolve(referenceLength).isDefined();
   }
 
-  bool isIntrinsicSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) const {
+  static bool isIntrinsicSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) {
     return isAutoSizingFunction(sizingFunction, referenceLength);
   }
 
-  bool isAutoSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) const {
+  static bool isAutoSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) {
     return sizingFunction.isAuto() || (sizingFunction.isPercent() && !yoga::isDefined(referenceLength));
   }
 
-  bool isFlexibleSizingFunction(const StyleSizeLength& sizingFunction) const {
+  static bool isFlexibleSizingFunction(const StyleSizeLength& sizingFunction) {
     return sizingFunction.isStretch();
   }
 
-  bool isPercentageSizingFunction(const StyleSizeLength& sizingFunction) const {
+  static bool isPercentageSizingFunction(const StyleSizeLength& sizingFunction) {
     return sizingFunction.isPercent();
-  }
-
-
-  bool hasFlexibleTrackInRange(const std::vector<GridTrackSize>& tracks, size_t start, size_t end) {
-    for (size_t i = start; i < end && i < tracks.size(); i++) {
-      if (isFlexibleSizingFunction(tracks[i].maxSizingFunction)) {
-        return true;
-      }
-    }
-    return false;
   }
 
   float getTotalBaseSize(Dimension dimension) {
@@ -1881,21 +1790,15 @@ struct TrackSizing {
       return rowGap;
     }
 
-    bool allTracksDefinite = true;
     float totalTrackSize = 0.0f;
     for (auto& track : rowTracks) {
       if (isFixedSizingFunction(track.maxSizingFunction, containerInnerHeight)) {
         totalTrackSize += track.maxSizingFunction.resolve(containerInnerHeight).unwrap();
       } else {
-        allTracksDefinite = false;
-        break;
+        return rowGap;
       }
     }
 
-    if (!allTracksDefinite) {
-      return rowGap;
-    }
-
     float totalGapSize = rowTracks.size() > 1 ? rowGap * (rowTracks.size() - 1) : 0.0f;
     float freeSpace = containerInnerHeight - totalTrackSize - totalGapSize;
 
@@ -1904,69 +1807,55 @@ struct TrackSizing {
     return distribution.effectiveGap;
   }
 
-  float calculateEffectiveRowGapFromBaseSizes() {
-    auto rowGap = node->style().computeGapForDimension(Dimension::Height, containerInnerHeight);
+  float calculateEffectiveGapFromBaseSizes(Dimension dimension) {
+    auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
+    auto gap = node->style().computeGapForDimension(dimension, containerSize);
+    auto tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
 
-    if (!yoga::isDefined(containerInnerHeight)) {
-      return rowGap;
+    if (!yoga::isDefined(containerSize)) {
+      return gap;
     }
 
     float totalTrackSize = 0.0f;
-    for (auto& track : rowTracks) {
+    for (auto& track : tracks) {
       totalTrackSize += track.baseSize;
     }
 
-    float totalGapSize = rowTracks.size() > 1 ? rowGap * (rowTracks.size() - 1) : 0.0f;
-    float freeSpace = containerInnerHeight - totalTrackSize - totalGapSize;
+    float totalGapSize = tracks.size() > 1 ? gap * (tracks.size() - 1) : 0.0f;
+    float freeSpace = containerSize - totalTrackSize - totalGapSize;
 
-    auto distribution = calculateContentDistribution(Dimension::Height, freeSpace);
+    auto distribution = calculateContentDistribution(dimension, freeSpace);
 
     return distribution.effectiveGap;
   }
 
-  float calculateEffectiveColumnGapFromBaseSizes() {
-    auto columnGap = node->style().computeGapForDimension(Dimension::Width, containerInnerWidth);
-
-    if (!yoga::isDefined(containerInnerWidth)) {
-      return columnGap;
+  bool contributionsChanged(
+      Dimension dimension,
+      CrossDimensionEstimator estimatorBefore,
+      CrossDimensionEstimator estimatorAfter) {
+    auto hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
+    if (!hasNonFixedTracks) {
+      return false;
     }
-
-    float totalTrackSize = 0.0f;
-    for (auto& track : columnTracks) {
-      totalTrackSize += track.baseSize;
-    }
-
-    float totalGapSize = columnTracks.size() > 1 ? columnGap * (columnTracks.size() - 1) : 0.0f;
-    float freeSpace = containerInnerWidth - totalTrackSize - totalGapSize;
-
-    auto distribution = calculateContentDistribution(Dimension::Width, freeSpace);
-
-    return distribution.effectiveGap;
-  }
-
-  std::vector<float> getItemMinContentContributions(Dimension dimension,
-    CrossDimensionEstimator estimator) {
-    std::vector<float> contributions;
-    contributions.reserve(gridItems.size());
-
     for (const auto& item : gridItems) {
-      float crossDimSize = estimator ? estimator(item) : YGUndefined;
-      float containingBlockWidth = dimension == Dimension::Width ? YGUndefined : crossDimSize;
-      float containingBlockHeight = dimension == Dimension::Width ? crossDimSize : YGUndefined;
-      auto itemConstraints = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
-      float contribution = getMinimumContentContribution(item, dimension, itemConstraints);
-      contributions.push_back(contribution);
-    }
-    return contributions;
-  }
+      if (!item.crossesIntrinsicTrack(dimension)) {
+        continue;
+      }
 
-  bool contributionsChanged(const std::vector<float>& before, const std::vector<float>& after) {
-    if (before.size() != after.size()) {
-      return true;
-    }
+      float crossDimBefore = estimatorBefore ? estimatorBefore(item) : YGUndefined;
+      float crossDimAfter = estimatorAfter ? estimatorAfter(item) : YGUndefined;
 
-    for (size_t i = 0; i < before.size(); i++) {
-      if (before[i] != after[i]) {
+      float containingBlockWidth = dimension == Dimension::Width ? YGUndefined : crossDimBefore;
+      float containingBlockHeight = dimension == Dimension::Width ? crossDimBefore : YGUndefined;
+      auto constraintsBefore = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
+      float contributionBefore = getMinimumContentContribution(item, dimension, constraintsBefore);
+
+      containingBlockWidth = dimension == Dimension::Width ? YGUndefined : crossDimAfter;
+      containingBlockHeight = dimension == Dimension::Width ? crossDimAfter : YGUndefined;
+      auto constraintsAfter = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
+      float contributionAfter = getMinimumContentContribution(item, dimension, constraintsAfter);
+
+      if (contributionBefore != contributionAfter) {
         return true;
       }
     }
@@ -1984,6 +1873,77 @@ struct TrackSizing {
       }
     }
     return false;
+  }
+
+  void computeItemTrackCrossingFlags() {
+    for (auto& item : gridItems) {
+      item.crossesFlexibleColumn = false;
+      item.crossesIntrinsicColumn = false;
+      item.crossesFlexibleRow = false;
+      item.crossesIntrinsicRow = false;
+
+      for (size_t i = item.columnStart; i < item.columnEnd; i++) {
+        if (isFlexibleSizingFunction(columnTracks[i].maxSizingFunction)) {
+          item.crossesFlexibleColumn = true;
+        } else if (isIntrinsicSizingFunction(columnTracks[i].maxSizingFunction, containerInnerWidth)) {
+          item.crossesIntrinsicColumn = true;
+        }
+        if (isIntrinsicSizingFunction(columnTracks[i].minSizingFunction, containerInnerWidth)) {
+          item.crossesIntrinsicColumn = true;
+        }
+      }
+
+      for (size_t i = item.rowStart; i < item.rowEnd; i++) {
+        if (isFlexibleSizingFunction(rowTracks[i].maxSizingFunction)) {
+          item.crossesFlexibleRow = true;
+        } else if (isIntrinsicSizingFunction(rowTracks[i].maxSizingFunction, containerInnerHeight)) {
+          item.crossesIntrinsicRow = true;
+        }
+        if (isIntrinsicSizingFunction(rowTracks[i].minSizingFunction, containerInnerHeight)) {
+          item.crossesIntrinsicRow = true;
+        }
+      }
+    }
+  }
+
+  CrossDimensionEstimator makeRowHeightEstimatorUsingFixedTracks(float gap) {
+    auto& tracks = rowTracks;
+    auto containerHeight = containerInnerHeight;
+    return [&tracks, containerHeight, gap](const GridItem& item) -> float {
+      float height = 0.0f;
+      for (size_t i = item.rowStart; i < item.rowEnd && i < tracks.size(); i++) {
+        if (isFixedSizingFunction(tracks[i].maxSizingFunction, containerHeight)) {
+          height += tracks[i].maxSizingFunction.resolve(containerHeight).unwrap();
+          if (i < item.rowEnd - 1) {
+            height += gap;
+          }
+        } else {
+          return YGUndefined;
+        }
+      }
+      return height;
+    };
+  }
+  
+  CrossDimensionEstimator makeCrossDimensionEstimatorUsingBaseSize(Dimension dimension, float gap) {
+    std::vector<float> baseSizes;
+    auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
+    baseSizes.reserve(tracks.size());
+    for (const auto& track : tracks) {
+      baseSizes.push_back(track.baseSize);
+    }
+    auto startIndexKey = dimension == Dimension::Width ? &GridItem::columnStart : &GridItem::rowStart;
+    auto endIndexKey = dimension == Dimension::Width ? &GridItem::columnEnd : &GridItem::rowEnd;
+    return [baseSizes = std::move(baseSizes), gap, startIndexKey, endIndexKey](const GridItem& item) -> float {
+      float width = 0.0f;
+      for (size_t i = item.*startIndexKey; i < item.*endIndexKey && i < baseSizes.size(); i++) {
+        width += baseSizes[i];
+        if (i < item.*endIndexKey - 1) {
+          width += gap;
+        }
+      }
+      return width;
+    };
   }
 };
 
