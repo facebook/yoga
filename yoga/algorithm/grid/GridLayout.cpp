@@ -68,7 +68,7 @@ void calculateGridLayoutInternal(Node* node,
   float containerInnerHeight = heightIsDefinite ? availableInnerHeight : YGUndefined;
   auto& rowTracks = gridTracks.rowTracks;
   auto& columnTracks = gridTracks.columnTracks;
-  auto& itemAreas = autoPlacement.gridItemAreas;
+  auto& gridItems = autoPlacement.gridItems;
   auto& baselineItemGroups = autoPlacement.baselineItemGroups;
   bool needsSecondTrackSizingPass = true;
 
@@ -79,7 +79,7 @@ void calculateGridLayoutInternal(Node* node,
       rowTracks,
       containerInnerWidth,
       containerInnerHeight,
-      itemAreas,
+      gridItems,
       widthSizingMode,
       heightSizingMode,
       direction,
@@ -163,7 +163,7 @@ void calculateGridLayoutInternal(Node* node,
     rowTracks,
     containerInnerWidth,
     containerInnerHeight,
-    itemAreas,
+    gridItems,
     widthSizingMode,
     heightSizingMode,
     direction,
@@ -232,7 +232,7 @@ void calculateGridLayoutInternal(Node* node,
     rowGridLineOffsets.push_back(offset);
   }
 
-  for (auto& item : itemAreas) {
+  for (auto& item : gridItems) {
     auto [containingBlockWidth, containingBlockHeight] = trackSizing.getContainingBlockSizeForItem(item, finalEffectiveColumnGap, finalEffectiveRowGap);
     float gridItemInlineStart = columnGridLineOffsets[std::min(item.columnStart, columnTracks.size())];
     float gridItemBlockStart = rowGridLineOffsets[std::min(item.rowStart, rowTracks.size())];

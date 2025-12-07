@@ -49,7 +49,7 @@ TEST_F(GridAutoplacementTest, places_items_with_definite_positions) {
                 GridLine::fromInteger(2), GridLine::fromInteger(3));
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
     ASSERT_EQ(placements.size(), 2);
     
     EXPECT_EQ(placements[0].columnStart, 0);
@@ -71,7 +71,7 @@ TEST_F(GridAutoplacementTest, places_items_with_definite_row_auto_column) {
                 GridLine::fromInteger(1), GridLine::fromInteger(2));
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
     ASSERT_EQ(placements.size(), 2);
     
     EXPECT_EQ(placements[0].columnStart, 0);
@@ -91,7 +91,7 @@ TEST_F(GridAutoplacementTest, handles_overlapping_definite_row_items) {
                 GridLine::fromInteger(1), GridLine::fromInteger(2));
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
 
     ASSERT_EQ(placements.size(), 2);
     
@@ -111,7 +111,7 @@ TEST_F(GridAutoplacementTest, places_auto_positioned_items) {
     createGridItem();
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
     
     ASSERT_EQ(placements.size(), 2);
     
@@ -130,7 +130,7 @@ TEST_F(GridAutoplacementTest, handles_large_spans) {
     createGridItem(GridLine::auto_(), GridLine::span(5));
     
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
     
     ASSERT_EQ(placements.size(), 1);
     
@@ -148,7 +148,7 @@ TEST_F(GridAutoplacementTest, places_items_with_definite_column_auto_row) {
                 GridLine::auto_(), GridLine::auto_());
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
                 
     ASSERT_EQ(placements.size(), 2);
     
@@ -171,7 +171,7 @@ TEST_F(GridAutoplacementTest, avoids_overlaps_with_definite_column_items) {
                 GridLine::auto_(), GridLine::auto_());
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
                 
     ASSERT_EQ(placements.size(), 2);
 
@@ -196,7 +196,7 @@ TEST_F(GridAutoplacementTest, handles_mixed_positioning_strategies) {
     createGridItem();
     
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
     
     ASSERT_EQ(placements.size(), 3);
     
@@ -226,7 +226,7 @@ TEST_F(GridAutoplacementTest, handles_negative_grid_line_references_simple) {
     createGridItem(GridLine::fromInteger(-1), GridLine::fromInteger(-2));
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
     
     ASSERT_EQ(placements.size(), 1);
     EXPECT_EQ(placements[0].columnStart, 2);
@@ -255,7 +255,7 @@ TEST_F(GridAutoplacementTest, handles_negative_grid_line_references) {
     auto node5 = createGridItem();
     
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
     
     ASSERT_EQ(placements.size(), 5);
     
@@ -313,7 +313,7 @@ TEST_F(GridAutoplacementTest, handles_negative_grid_lines_with_row_positioning) 
     auto node5 = createGridItem();
     
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;;
+    auto& placements = autoPlacementResult.gridItems;;
     
     ASSERT_EQ(placements.size(), 5);
     
@@ -360,7 +360,7 @@ TEST_F(GridAutoplacementTest, skips_past_large_blocking_items) {
         GridLine::fromInteger(1), GridLine::fromInteger(2));
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
 
     ASSERT_EQ(placements.size(), 3);
 
@@ -394,7 +394,7 @@ TEST_F(GridAutoplacementTest, skips_past_large_blocking_rows) {
         GridLine::auto_(), GridLine::auto_());
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
 
     ASSERT_EQ(placements.size(), 2);
 
@@ -422,7 +422,7 @@ TEST_F(GridAutoplacementTest, handles_nested_overlapping_items) {
         GridLine::fromInteger(1), GridLine::fromInteger(2));
 
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;
+    auto& placements = autoPlacementResult.gridItems;
 
     ASSERT_EQ(placements.size(), 3);
 
@@ -457,7 +457,7 @@ TEST_F(GridAutoplacementTest, handles_negative_and_positive_grid_lines_auto_row)
     auto node5 = createGridItem();
     
     auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
-    auto& placements = autoPlacementResult.gridItemAreas;    
+    auto& placements = autoPlacementResult.gridItems;    
     ASSERT_EQ(placements.size(), 5);
     
     for (auto placement : placements) {

@@ -145,7 +145,7 @@ struct GridItemTrackPlacement {
 };
 
 struct AutoPlacement {
-  struct AutoPlacementItemArea {
+  struct AutoPlacementItem {
     int32_t columnStart;
     int32_t columnEnd;
     int32_t rowStart;
@@ -153,21 +153,21 @@ struct AutoPlacement {
   
     yoga::Node* node;
   
-    bool overlaps(const AutoPlacementItemArea& other) const {
+    bool overlaps(const AutoPlacementItem& other) const {
       return columnStart < other.columnEnd && columnEnd > other.columnStart && rowStart < other.rowEnd && rowEnd > other.rowStart;
     }
   };
 
 
-  std::vector<AutoPlacementItemArea> gridItemAreas;
+  std::vector<AutoPlacementItem> gridItems;
   int32_t minColumnStart;
   int32_t minRowStart;
   int32_t maxColumnEnd;
   int32_t maxRowEnd;
 
   static AutoPlacement performAutoPlacement(yoga::Node* node) {
-    std::vector<AutoPlacementItemArea> gridItemAreas;
-    gridItemAreas.reserve(node->getChildCount());
+    std::vector<AutoPlacementItem> gridItems;
+    gridItems.reserve(node->getChildCount());
     std::unordered_set<yoga::Node*> placedItems;
     placedItems.reserve(node->getChildCount());
     int32_t minColumnStart = 0;
@@ -177,14 +177,14 @@ struct AutoPlacement {
     OccupancyGrid occupancy;
 
     // function to push back a grid item placement and record the min/max column/row start/end
-    auto recordGridArea = [&](AutoPlacementItemArea& gridItemArea) {
+    auto recordGridArea = [&](AutoPlacementItem& gridItemArea) {
       yoga::assertFatal(
           gridItemArea.columnEnd > gridItemArea.columnStart,
           "Grid item column end must be greater than column start");
       yoga::assertFatal(
           gridItemArea.rowEnd > gridItemArea.rowStart,
           "Grid item row end must be greater than row start");
-      gridItemAreas.push_back(gridItemArea);
+      gridItems.push_back(gridItemArea);
       placedItems.insert(gridItemArea.node);
       occupancy.markOccupied(gridItemArea.rowStart, gridItemArea.rowEnd, gridItemArea.columnStart, gridItemArea.columnEnd);
       minColumnStart = std::min(minColumnStart, gridItemArea.columnStart);
@@ -225,7 +225,7 @@ struct AutoPlacement {
         auto rowStart = rowPlacement.start;
         auto rowEnd = rowPlacement.end;
     
-        auto gridItemArea = AutoPlacementItemArea{
+        auto gridItemArea = AutoPlacementItem{
           columnStart,
           columnEnd,
           rowStart,
@@ -268,7 +268,7 @@ struct AutoPlacement {
     
         bool placed = false;
         while (!placed) {
-          auto gridItemArea = AutoPlacementItemArea{
+          auto gridItemArea = AutoPlacementItem{
             columnStart,
             columnEnd,
             rowStart,
@@ -367,7 +367,7 @@ struct AutoPlacement {
             auto proposedRowEnd = proposedRowStart + rowSpan;
 
             // Check for overlaps with already placed items
-            AutoPlacementItemArea proposedPlacement {
+            AutoPlacementItem proposedPlacement {
               columnStart,
               columnEnd,
               proposedRowStart,
@@ -398,7 +398,7 @@ struct AutoPlacement {
               auto rowStart = autoPlacementCursor[1];
               auto rowEnd = rowStart + itemRowSpan;
 
-              AutoPlacementItemArea proposedPlacement {
+              AutoPlacementItem proposedPlacement {
                 columnStart,
                 columnEnd,
                 rowStart,
@@ -426,7 +426,7 @@ struct AutoPlacement {
     }
     
     return AutoPlacement {
-      std::move(gridItemAreas),
+      std::move(gridItems),
       minColumnStart,
       minRowStart,
       maxColumnEnd,
@@ -435,7 +435,7 @@ struct AutoPlacement {
   }
 };
 
-struct GridItemArea {
+struct GridItem {
   size_t columnStart;
   size_t columnEnd;
   size_t rowStart;
@@ -445,7 +445,7 @@ struct GridItemArea {
   // https://www.w3.org/TR/css-grid-1/#algo-baseline-shims
   float baselineShim = 0.0f;
 
-  GridItemArea(
+  GridItem(
       size_t columnStart,
       size_t columnEnd,
       size_t rowStart,
@@ -462,10 +462,10 @@ struct GridItemArea {
 
 // Baseline sharing groups - items grouped by their starting row for resolve intrinsic size step in TrackSizing
 // https://www.w3.org/TR/css-grid-1/#algo-baseline-shims
-using BaselineItemGroups = std::map<size_t, std::vector<GridItemArea*>>;
+using BaselineItemGroups = std::map<size_t, std::vector<GridItem*>>;
 
 struct ResolvedAutoPlacement {
-  std::vector<GridItemArea> gridItemAreas;
+  std::vector<GridItem> gridItems;
   BaselineItemGroups baselineItemGroups;
   int32_t minColumnStart;
   int32_t minRowStart;
@@ -482,13 +482,13 @@ struct ResolvedAutoPlacement {
     auto maxColumnEnd = autoPlacement.maxColumnEnd;
     auto maxRowEnd = autoPlacement.maxRowEnd;
 
-    std::vector<GridItemArea> resolvedAreas;
-    resolvedAreas.reserve(autoPlacement.gridItemAreas.size());
+    std::vector<GridItem> resolvedAreas;
+    resolvedAreas.reserve(autoPlacement.gridItems.size());
 
     BaselineItemGroups baselineGroups;
     auto alignItems = node->style().alignItems();
 
-    for (auto& placement : autoPlacement.gridItemAreas) {
+    for (auto& placement : autoPlacement.gridItems) {
       resolvedAreas.emplace_back(
           static_cast<size_t>(placement.columnStart - minColumnStart),
           static_cast<size_t>(placement.columnEnd - minColumnStart),
