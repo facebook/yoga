@@ -242,20 +242,6 @@
   <div style="width: 100%; height: 100%"></div>
 </div>
 
-<!-- Flow 4.2: Expand Flexible Tracks - Indefinite Free Space -->
-<!-- This case generates wrong assertions in yoga. So commenting it for now. Debug why yoga tests generate wrong assertions -->
-<!-- <div
-  id="expand_flexible_indefinite_free_space"
-  style="
-    display: grid;
-    grid-template-columns: 1f r 2fr 1fr;
-    grid-template-rows: 1fr 2fr;
-  ">
-  <div style="width: 100px; height: 80px"></div>
-  <div style="width: 150px; height: 120px"></div>
-  <div style="width: 120px; height: 100px"></div>
-</div> -->
-
 <!-- Flow 4.3: Expand Flexible Tracks - With Min Constraint -->
 <div
   id="expand_flexible_min_constraint"
@@ -372,24 +358,6 @@
   <div style="width: 120px; height: 90px"></div>
   <div style="width: 110px; height: 85px"></div>
 </div>
-
-<!-- Flow 5.4: Stretch Auto Tracks - No Stretch (normal) -->
-<!-- TODO: Add normal alignment support in yoga -->
-<!-- <div
-  id="stretch_auto_no_stretch"
-  style="
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto;
-    width: 600px;
-    height: 400px;
-    justify-content: normal;
-    align-content: normal;
-  ">
-  <div style="width: 100px; height: 80px"></div>
-  <div style="width: 120px; height: 90px"></div>
-  <div style="width: 110px; height: 85px"></div>
-</div> -->
 
 <!-- Flow 6.3: justify-content: center -->
 <div
@@ -833,17 +801,16 @@
 </div>
 
 <!-- Flow 11.2: Content-based Minimum - Aspect Ratio Transfer -->
-<!-- Test fails because 2/1 gets converted to 2/1 in cpp, which is invalid in int -->
-<!-- <div
+<div
   id="content_based_min_aspect_ratio"
   style="
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto;
   ">
-  <div style="width: 150px; aspect-ratio: 2 / 1"></div>
-  <div style="height: 100px; aspect-ratio: 1 / 2"></div>
-</div> -->
+  <div style="width: 150px; aspect-ratio: 2"></div>
+  <div style="height: 100px; aspect-ratio: 0.5"></div>
+</div>
 
 <!-- Flow 11.3: Content-based Minimum - Content Size Suggestion -->
 <div
@@ -1356,37 +1323,6 @@
 </div>
 
 <!-- COMPLEX INTEGRATION TESTS -->
-
-<!-- Complex 1: Mixed Tracks with Spanning and Alignment -->
-<!-- <div
-  id="complex_mixed_spanning_alignment"
-  style="
-    display: grid;
-    grid-template-columns: 100px auto 1fr 2fr;
-    grid-template-rows: 80px auto 1fr;
-    width: 600px;
-    height: 400px;
-    gap: 10px;
-    justify-content: space-between;
-    align-content: center;
-  ">
-  <div
-    style="
-      width: 250px;
-      height: 100%;
-      grid-column-start: 1;
-      grid-column-end: 3;
-      justify-self: end;
-    "></div>
-  <div style="width: 100%; height: 80px; align-self: center"></div>
-  <div
-    style="
-      width: 100%;
-      height: 200px;
-      grid-row-start: 2;
-      grid-row-end: 4;
-    "></div>
-</div> -->
 
 
 <!-- Complex 3: Flexible Tracks with Min/Max and Content Distribution -->
