@@ -76,8 +76,8 @@ struct TrackSizing {
   // below flags are used for optimization purposes
   bool hasPercentageColumnTracks = false;
   bool hasPercentageRowTracks = false;
-  bool hasNonFixedColumnTracks = false;
-  bool hasNonFixedRowTracks = false;
+  bool hasOnlyFixedColumnTracks = false;
+  bool hasOnlyFixedRowTracks = false;
 
   // Pre-computed baseline sharing groups
   BaselineItemGroups& baselineItemGroups;
@@ -145,7 +145,7 @@ struct TrackSizing {
     // Store the estimator for use in calculateItemConstraints
     crossDimensionEstimator = estimator;
 
-    // Step 1: Initialize Track Sizes (also sets hasNonFixedTracks flag)
+    // Step 1: Initialize Track Sizes
     initializeTrackSizes(dimension);
     // Step 2: Resolve Intrinsic Track Sizes
     resolveIntrinsicTrackSizes(dimension);
@@ -159,12 +159,13 @@ struct TrackSizing {
 
   // 11.4 Initialize Track Sizes
   // https://www.w3.org/TR/css-grid-1/#algo-init
+  // Also sets some flags (hasPercentageTracks, hasOnlyFixedTracks) for optimization purposes
   void initializeTrackSizes(Dimension dimension) {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     bool& hasPercentageTracks = dimension == Dimension::Width ? hasPercentageColumnTracks : hasPercentageRowTracks;
-    bool& hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
-    hasNonFixedTracks = false;
+    bool& hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
+    hasOnlyFixedTracks = true;
 
     for (size_t i = 0; i < tracks.size(); i++) {
       auto& track = tracks[i];
@@ -181,7 +182,7 @@ struct TrackSizing {
       }
       else if (isIntrinsicSizingFunction(track.minSizingFunction, containerSize)) {
         track.baseSize = 0;
-        hasNonFixedTracks = true;
+        hasOnlyFixedTracks = false;
       }
       else {
         // THIS SHOULD NEVER HAPPEN
@@ -194,11 +195,11 @@ struct TrackSizing {
       }
       else if (isIntrinsicSizingFunction(track.maxSizingFunction, containerSize)) {
         track.growthLimit = INFINITY;
-        hasNonFixedTracks = true;
+        hasOnlyFixedTracks = false;
       }
       else if (isFlexibleSizingFunction(track.maxSizingFunction)) {
         track.growthLimit = INFINITY;
-        hasNonFixedTracks = true;
+        hasOnlyFixedTracks = false;
       }
       else {
         // THIS SHOULD NEVER HAPPEN
@@ -210,9 +211,9 @@ struct TrackSizing {
         track.growthLimit = track.baseSize;
       }
 
-      // minmax(20px, 40px) type of tracks are non-fixed tracks
+      // minmax(20px, 40px) type of tracks are not fixed tracks
       if (track.baseSize < track.growthLimit) {
-        hasNonFixedTracks = true;
+        hasOnlyFixedTracks = false;
       }
     }
   }
@@ -228,8 +229,8 @@ struct TrackSizing {
     }
 
     // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
-    if (!hasNonFixedTracks) {
+    bool hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
+    if (hasOnlyFixedTracks) {
       return;
     }
 
@@ -452,6 +453,10 @@ struct TrackSizing {
     std::vector<ItemSizeContribution> itemsSpanningFlexible;
 
     for (const auto& item : gridItems) {
+      if (!item.crossesFlexibleTrack(dimension)) {
+        continue;
+      }
+
       auto start = item.*startIndexkey;
       auto end = item.*endIndexKey;
       std::vector<GridTrackSize*> intrinsicMinFlexibleTracks;
@@ -463,7 +468,7 @@ struct TrackSizing {
         }
       }
 
-      if (item.crossesFlexibleTrack(dimension) && !intrinsicMinFlexibleTracks.empty()) {
+      if (!intrinsicMinFlexibleTracks.empty()) {
         auto itemConstraints = calculateItemConstraints(item, dimension);
         auto minContribution = sizingMode == SizingMode::MaxContent
             ? limitedMinContentContribution(item, dimension, itemConstraints)
@@ -702,8 +707,8 @@ struct TrackSizing {
   // https://www.w3.org/TR/css-grid-1/#algo-grow-tracks
   void maximizeTrackSizes(Dimension dimension) {
     // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
-    if (!hasNonFixedTracks) {
+    bool hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
+    if (hasOnlyFixedTracks) {
       return;
     }
 
@@ -811,8 +816,8 @@ struct TrackSizing {
   // https://www.w3.org/TR/css-grid-1/#algo-flex-tracks
   void expandFlexibleTracks(Dimension dimension) {
     // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
-    if (!hasNonFixedTracks) {
+    bool hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
+    if (hasOnlyFixedTracks) {
       return;
     }
 
@@ -990,8 +995,8 @@ struct TrackSizing {
   // https://www.w3.org/TR/css-grid-1/#algo-stretch
   void stretchAutoTracks(Dimension dimension) {
     // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
-    if (!hasNonFixedTracks) {
+    bool hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
+    if (hasOnlyFixedTracks) {
       return;
     }
 
@@ -1644,8 +1649,8 @@ struct TrackSizing {
       Dimension dimension,
       CrossDimensionEstimator estimatorBefore,
       CrossDimensionEstimator estimatorAfter) {
-    auto hasNonFixedTracks = dimension == Dimension::Width ? hasNonFixedColumnTracks : hasNonFixedRowTracks;
-    if (!hasNonFixedTracks) {
+    auto hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
+    if (hasOnlyFixedTracks) {
       return false;
     }
     for (const auto& item : gridItems) {
