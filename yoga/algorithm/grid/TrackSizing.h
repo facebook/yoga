@@ -76,8 +76,9 @@ struct TrackSizing {
   // below flags are used for optimization purposes
   bool hasPercentageColumnTracks = false;
   bool hasPercentageRowTracks = false;
-  bool hasOnlyFixedColumnTracks = false;
-  bool hasOnlyFixedRowTracks = false;
+  bool hasOnlyFixedTracks = false;
+  bool hasIntrinsicTracks = false;
+  bool hasFlexibleTracks = false;
 
   // Pre-computed baseline sharing groups
   BaselineItemGroups& baselineItemGroups;
@@ -128,13 +129,16 @@ struct TrackSizing {
     runTrackSizing(Dimension::Height, columnWidthFromBaseSizes);
 
     // 3. Then, if the min-content contribution of any grid item has changed
-    auto rowHeightFromBaseSizes = makeCrossDimensionEstimatorUsingBaseSize(Dimension::Height, calculateEffectiveGapFromBaseSizes(Dimension::Height));
-    if (contributionsChanged(Dimension::Width, rowHeightFromFixedTracks, rowHeightFromBaseSizes)) {
-      runTrackSizing(Dimension::Width, rowHeightFromBaseSizes);
-      // 4. Next, if the min-content contribution of any grid item has changed
-      auto newColumnWidthFromBaseSizes = makeCrossDimensionEstimatorUsingBaseSize(Dimension::Width, calculateEffectiveGapFromBaseSizes(Dimension::Width));
-      if (contributionsChanged(Dimension::Height, columnWidthFromBaseSizes, newColumnWidthFromBaseSizes)) {
-        runTrackSizing(Dimension::Height, newColumnWidthFromBaseSizes);
+    // Only intrinsic tracks can affect the cross track size in above steps, so this step is only needed if there are intrinsic tracks
+    if (hasIntrinsicTracks) {
+      auto rowHeightFromBaseSizes = makeCrossDimensionEstimatorUsingBaseSize(Dimension::Height, calculateEffectiveGapFromBaseSizes(Dimension::Height));
+      if (contributionsChanged(Dimension::Width, rowHeightFromFixedTracks, rowHeightFromBaseSizes)) {
+        runTrackSizing(Dimension::Width, rowHeightFromBaseSizes);
+        // 4. Next, if the min-content contribution of any grid item has changed
+        auto newColumnWidthFromBaseSizes = makeCrossDimensionEstimatorUsingBaseSize(Dimension::Width, calculateEffectiveGapFromBaseSizes(Dimension::Width));
+        if (contributionsChanged(Dimension::Height, columnWidthFromBaseSizes, newColumnWidthFromBaseSizes)) {
+          runTrackSizing(Dimension::Height, newColumnWidthFromBaseSizes);
+        }
       }
     }
   }
@@ -164,8 +168,9 @@ struct TrackSizing {
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     bool& hasPercentageTracks = dimension == Dimension::Width ? hasPercentageColumnTracks : hasPercentageRowTracks;
-    bool& hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
     hasOnlyFixedTracks = true;
+    hasIntrinsicTracks = false;
+    hasFlexibleTracks = false;
 
     for (size_t i = 0; i < tracks.size(); i++) {
       auto& track = tracks[i];
@@ -183,6 +188,7 @@ struct TrackSizing {
       else if (isIntrinsicSizingFunction(track.minSizingFunction, containerSize)) {
         track.baseSize = 0;
         hasOnlyFixedTracks = false;
+        hasIntrinsicTracks = true;
       }
       else {
         // THIS SHOULD NEVER HAPPEN
@@ -196,10 +202,12 @@ struct TrackSizing {
       else if (isIntrinsicSizingFunction(track.maxSizingFunction, containerSize)) {
         track.growthLimit = INFINITY;
         hasOnlyFixedTracks = false;
+        hasIntrinsicTracks = true;
       }
       else if (isFlexibleSizingFunction(track.maxSizingFunction)) {
         track.growthLimit = INFINITY;
         hasOnlyFixedTracks = false;
+        hasFlexibleTracks = true;
       }
       else {
         // THIS SHOULD NEVER HAPPEN
@@ -229,7 +237,6 @@ struct TrackSizing {
     }
 
     // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
     if (hasOnlyFixedTracks) {
       return;
     }
@@ -297,6 +304,9 @@ struct TrackSizing {
 
   // https://www.w3.org/TR/css-grid-1/#algo-spanning-items
   void accomodateSpanningItemsCrossingContentSizedTracks(Dimension dimension) {
+    if (!hasIntrinsicTracks) {
+      return;
+    }
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
@@ -444,6 +454,9 @@ struct TrackSizing {
 
   // https://www.w3.org/TR/css-grid-1/#algo-spanning-flex-items
   void accomodateSpanningItemsCrossingFlexibleTracks(Dimension dimension) {
+    if (!hasFlexibleTracks) {
+      return;
+    }
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
@@ -707,7 +720,6 @@ struct TrackSizing {
   // https://www.w3.org/TR/css-grid-1/#algo-grow-tracks
   void maximizeTrackSizes(Dimension dimension) {
     // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
     if (hasOnlyFixedTracks) {
       return;
     }
@@ -815,9 +827,7 @@ struct TrackSizing {
   // 11.7. Expand Flexible Tracks
   // https://www.w3.org/TR/css-grid-1/#algo-flex-tracks
   void expandFlexibleTracks(Dimension dimension) {
-    // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
-    if (hasOnlyFixedTracks) {
+    if (!hasFlexibleTracks) {
       return;
     }
 
@@ -995,7 +1005,6 @@ struct TrackSizing {
   // https://www.w3.org/TR/css-grid-1/#algo-stretch
   void stretchAutoTracks(Dimension dimension) {
     // Fast path - if tracks are fixed-sized, skip below steps
-    bool hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
     if (hasOnlyFixedTracks) {
       return;
     }
@@ -1649,10 +1658,6 @@ struct TrackSizing {
       Dimension dimension,
       CrossDimensionEstimator estimatorBefore,
       CrossDimensionEstimator estimatorAfter) {
-    auto hasOnlyFixedTracks = dimension == Dimension::Width ? hasOnlyFixedColumnTracks : hasOnlyFixedRowTracks;
-    if (hasOnlyFixedTracks) {
-      return false;
-    }
     for (const auto& item : gridItems) {
       if (!item.crossesIntrinsicTrack(dimension)) {
         continue;
