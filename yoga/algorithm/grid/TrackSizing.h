@@ -369,14 +369,14 @@ struct TrackSizing {
         // For auto minimums:
         if (isAutoSizingFunction(track.minSizingFunction, containerSize)) {
           float contribution = sizingMode == SizingMode::MaxContent
-              ? getLimitedMinimumContentContribution(item, dimension, itemConstraints)
-              : getMinimumContribution(item, dimension, itemConstraints);
+              ? limitedMinContentContribution(item, dimension, itemConstraints)
+              : minimumContribution(item, dimension, itemConstraints);
           track.baseSize = std::max(track.baseSize, contribution);
         }
         
         // For max-content maximums:
         if (isAutoSizingFunction(track.maxSizingFunction, containerSize)) {
-          float contribution = getMaxContentContribution(item, dimension, itemConstraints);
+          float contribution = maxContentContribution(item, dimension, itemConstraints);
           if (track.growthLimit == INFINITY) {
             track.growthLimit = contribution;
           } else {
@@ -420,18 +420,20 @@ struct TrackSizing {
 
       auto itemConstraints = calculateItemConstraints(item, dimension);
       if (!intrinsicMinimumSizingFunctionTracks.empty()) {
-        auto minimumContribution = sizingMode == SizingMode::MaxContent ? getLimitedMinimumContentContribution(item, dimension, itemConstraints) : getMinimumContribution(item, dimension, itemConstraints);
-        itemsForIntrinsicMin.emplace_back(&item, std::move(intrinsicMinimumSizingFunctionTracks), minimumContribution);
+        auto minContribution = sizingMode == SizingMode::MaxContent
+            ? limitedMinContentContribution(item, dimension, itemConstraints)
+            : minimumContribution(item, dimension, itemConstraints);
+        itemsForIntrinsicMin.emplace_back(&item, std::move(intrinsicMinimumSizingFunctionTracks), minContribution);
       }
 
       if (!intrinsicMaximumSizingFunctionTracks.empty()) {
-        auto minimumContentContribution = getMinimumContentContribution(item, dimension, itemConstraints);
-        itemsForIntrinsicMax.emplace_back(&item, std::move(intrinsicMaximumSizingFunctionTracks), minimumContentContribution);
+        auto minContentContrib = minContentContribution(item, dimension, itemConstraints);
+        itemsForIntrinsicMax.emplace_back(&item, std::move(intrinsicMaximumSizingFunctionTracks), minContentContrib);
       }
 
       if (!maxContentMaximumSizingFunctionTracks.empty()) {
-        auto maxContentContribution = getMaxContentContribution(item, dimension, itemConstraints);
-        itemsForMaxContentMax.emplace_back(&item, std::move(maxContentMaximumSizingFunctionTracks), maxContentContribution);
+        auto maxContentContrib = maxContentContribution(item, dimension, itemConstraints);
+        itemsForMaxContentMax.emplace_back(&item, std::move(maxContentMaximumSizingFunctionTracks), maxContentContrib);
       }
     }
 
@@ -463,14 +465,14 @@ struct TrackSizing {
 
       if (item.crossesFlexibleTrack(dimension) && !intrinsicMinFlexibleTracks.empty()) {
         auto itemConstraints = calculateItemConstraints(item, dimension);
-        auto minimumContribution = sizingMode == SizingMode::MaxContent
-            ? getLimitedMinimumContentContribution(item, dimension, itemConstraints)
-            : getMinimumContribution(item, dimension, itemConstraints);
+        auto minContribution = sizingMode == SizingMode::MaxContent
+            ? limitedMinContentContribution(item, dimension, itemConstraints)
+            : minimumContribution(item, dimension, itemConstraints);
 
         itemsSpanningFlexible.emplace_back(
             &item,
             std::move(intrinsicMinFlexibleTracks),
-            minimumContribution
+            minContribution
         );
       }
     }
@@ -854,7 +856,7 @@ struct TrackSizing {
             continue;
           }
           auto itemConstraints = calculateItemConstraints(item, dimension);
-          auto itemMaxContentContribution = getMaxContentContribution(item, dimension, itemConstraints);
+          auto itemMaxContentContribution = maxContentContribution(item, dimension, itemConstraints);
           flexFraction = std::max(flexFraction, findFrSize(dimension, item.*startIndexKey, item.*endIndexKey, itemMaxContentContribution, std::unordered_set<GridTrackSize*>()));
         }
       }
@@ -1081,24 +1083,18 @@ struct TrackSizing {
     return item.node->getLayout().measuredDimension(dimension);
   }
 
-  float getMinimumContentContribution(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    // Yoga does not support min-content yet, so we use content size suggestion
-    // TODO: review approach
+  // There are 4 size contribution types used for intrinsic track sizing
+  // 1. minContentContribution - item's min-content size + margins
+  // 2. maxContentContribution - item's max-content size + margins
+  // 3. minimumContribution - smallest outer size
+  // 4. limitedMinContentContribution - min-content clamped by fixed track limits
+
+  // TODO: Yoga does not support min-content constraint yet so we use the max-content size contributions here
+  float minContentContribution(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
     auto marginForAxis = item.node->style().computeMarginForAxis(
       dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
       itemConstraints.containingBlockWidth);
-    float contribution = contentSizeSuggestion(item, dimension, itemConstraints) + marginForAxis;
 
-    if (dimension == Dimension::Height) {
-      contribution += item.baselineShim;
-    }
-    return contribution;
-  }
-
-  float getMaxContentContribution(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    auto marginForAxis = item.node->style().computeMarginForAxis(
-      dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
-      itemConstraints.containingBlockWidth);
     float contribution = measureItem(item, dimension, itemConstraints) + marginForAxis;
 
     if (dimension == Dimension::Height) {
@@ -1107,120 +1103,117 @@ struct TrackSizing {
     return contribution;
   }
 
-  // https://www.w3.org/TR/css-grid-1/#min-size-auto
-  float autoMinimumSize(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    auto overflow = item.node->style().overflow();
-    auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
-    size_t startIndex = dimension == Dimension::Width ? item.columnStart : item.rowStart;
-    size_t endIndex = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
-    
-    bool isScrollableOverflowValue = overflow == Overflow::Scroll || overflow == Overflow::Hidden;
-    bool spansAutoMinTrack = false;
-    bool spansMoreThanOneTrack = (endIndex - startIndex) > 1;
-    bool spansFlexibleTrack = item.crossesFlexibleTrack(dimension);
-    
-    for (size_t trackIndex = startIndex; trackIndex < endIndex; trackIndex++) {
-      auto& track = tracks[trackIndex];
-      if (track.minSizingFunction.isAuto()) {
-        spansAutoMinTrack = true;
-      }
+  float maxContentContribution(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
+    auto marginForAxis = item.node->style().computeMarginForAxis(
+      dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
+      itemConstraints.containingBlockWidth);
+
+    float contribution = measureItem(item, dimension, itemConstraints) + marginForAxis;
+
+    if (dimension == Dimension::Height) {
+      contribution += item.baselineShim;
     }
-    
-    // automatic minimum size in a given axis is the
-    // content-based minimum size if all of the following are true:
-    // 1. its computed overflow is not a scrollable overflow value
-    // 2. it spans at least one track in that axis whose min track sizing function is auto
-    // 3. if it spans more than one track in that axis, none of those tracks are flexible
-    // Otherwise, the automatic minimum size is zero.
-    if (
-        !isScrollableOverflowValue &&
-        spansAutoMinTrack &&
-        // If it spans only one track, skip flexible check (allowed).
-        // If it spans more than one track, then none may be flexible.
-        (!spansMoreThanOneTrack || !spansFlexibleTrack)
-    ) {
-      return contentBasedMinimumSize(item, dimension, itemConstraints);
+    return contribution;
+  }
+
+  // Minimum contribution: the smallest outer size the item can have
+  // https://www.w3.org/TR/css-grid-1/#minimum-contribution
+  float minimumContribution(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
+    auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
+    float containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
+    auto containingBlockSize = dimension == Dimension::Width
+        ? itemConstraints.containingBlockWidth
+        : itemConstraints.containingBlockHeight;
+
+    auto marginForAxis = item.node->style().computeMarginForAxis(
+      dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
+      itemConstraints.containingBlockWidth);
+
+    auto preferredSize = item.node->style().dimension(dimension);
+    auto minSize = item.node->style().minDimension(dimension);
+
+    float contribution = 0.0f;
+
+    // If preferred size is definite (not auto/percent), use min-content contribution
+    if (!preferredSize.isAuto() && !preferredSize.isPercent()) {
+      return minContentContribution(item, dimension, itemConstraints);
     }
 
-    return 0.0f;
+    // If explicit min-size is set, use it
+    if (minSize.isDefined() && !minSize.isAuto()) {
+      auto resolvedMinSize = minSize.resolve(containingBlockSize);
+      contribution = resolvedMinSize.unwrap() + marginForAxis;
+    }
+    // Otherwise compute automatic minimum size
+    else {
+      contribution = automaticMinimumSize(item, dimension, itemConstraints, tracks, containerSize) + marginForAxis;
+    }
+
+    if (dimension == Dimension::Height) {
+      contribution += item.baselineShim;
+    }
+    return contribution;
+  }
+
+  // https://www.w3.org/TR/css-grid-1/#min-size-auto
+  float automaticMinimumSize(
+      const GridItem& item,
+      Dimension dimension,
+      const ItemConstraint& itemConstraints,
+      const std::vector<GridTrackSize>& tracks,
+      float containerSize) {
+
+    auto overflow = item.node->style().overflow();
+    size_t startIndex = dimension == Dimension::Width ? item.columnStart : item.rowStart;
+    size_t endIndex = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
+
+    // Check its computed overflow is not a scrollable overflow value
+    bool isScrollContainer = overflow == Overflow::Scroll || overflow == Overflow::Hidden;
+    if (isScrollContainer) {
+      return 0.0f;
+    }
+
+    // Check if it spans at least one track in that axis whose min track sizing function is auto
+    bool spansAutoMinTrack = false;
+    for (size_t i = startIndex; i < endIndex; i++) {
+      // TODO: check if this should also consider percentage auto behaving tracks
+      if (tracks[i].minSizingFunction.isAuto()) {
+        spansAutoMinTrack = true;
+        break;
+      }
+    }
+    if (!spansAutoMinTrack) {
+      return 0.0f;
+    }
+
+    // Check if it spans more than one track in that axis, none of those tracks are flexible
+    bool spansMultipleTracks = (endIndex - startIndex) > 1;
+    if (spansMultipleTracks && item.crossesFlexibleTrack(dimension)) {
+      return 0.0f;
+    }
+
+    return contentBasedMinimum(item, dimension, itemConstraints, tracks, containerSize);
   }
 
   // https://www.w3.org/TR/css-grid-1/#content-based-minimum-size
-  float contentBasedMinimumSize(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    float result = 0.0f;
-    auto containingBlockWidth = itemConstraints.containingBlockWidth;
-    auto containingBlockHeight = itemConstraints.containingBlockHeight;
-    auto containingBlockSize = dimension == Dimension::Width ? containingBlockWidth : containingBlockHeight;
-    auto aspectRatio = item.node->style().aspectRatio();
-    Dimension orthogonalDimension = dimension == Dimension::Width ? Dimension::Height : Dimension::Width;
-    auto orthogonalContainingBlockSize = orthogonalDimension == Dimension::Width ? containingBlockWidth : containingBlockHeight;
+  float contentBasedMinimum(
+      const GridItem& item,
+      Dimension dimension,
+      const ItemConstraint& itemConstraints,
+      const std::vector<GridTrackSize>& tracks,
+      float containerSize) {
 
-    // Check if the orthogonal dimension is effectively definite.
-    // This is true if:
-    // 1. The item has a definite styled length in the orthogonal dimension, OR
-    // 2. The item is stretch-aligned with a definite containing block in that dimension
-    //    (the item constraints will have StretchFit mode in this case)
-    auto orthogonalSizingMode = orthogonalDimension == Dimension::Width
-        ? itemConstraints.widthSizingMode
-        : itemConstraints.heightSizingMode;
-    bool orthogonalDimensionIsDefinite =
-        item.node->hasDefiniteLength(orthogonalDimension, orthogonalContainingBlockSize) ||
-            (orthogonalSizingMode == SizingMode::StretchFit && yoga::isDefined(orthogonalContainingBlockSize));
-
-    // For border-box model, definite sizes already include padding and border
-    if (item.node->hasDefiniteLength(dimension, containingBlockSize)) {
-      result = item.node->getResolvedDimension(
-          direction,
-          dimension,
-          containingBlockSize,
-          containingBlockSize
-      ).unwrap();
-    }
-    else if (aspectRatio.isDefined() && orthogonalDimensionIsDefinite) {
-      auto suggestedSize = transferredSizeSuggestion(item, dimension, itemConstraints);
-      if (suggestedSize.isDefined()) {
-        result = suggestedSize.unwrap();
-      }
-    } else {
-      result = contentSizeSuggestion(item, dimension, itemConstraints);
+    float result = measureItem(item, dimension, itemConstraints);
+    // Clamp by fixed track limit if all spanned tracks have fixed max sizing function
+    auto fixedLimit = computeFixedTracksLimit(item, dimension, tracks, containerSize);
+    if (yoga::isDefined(fixedLimit)) {
+      result = std::min(result, fixedLimit);
     }
 
-    // However, if in a given dimension the grid item spans only grid tracks 
-    // that have a fixed max track sizing function, then its specified size suggestion 
-    // and content size suggestion in that dimension (and its input from this dimension 
-    // to the transferred size suggestion in the opposite dimension) are further clamped 
-    // to less than or equal to the stretch fit into the grid area’s maximum size in that dimension, 
-    // as represented by the sum of those grid tracks’ max track sizing functions plus any intervening fixed gutters.)
-    auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
-    float containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
-    auto gap = node->style().computeGapForDimension(dimension, containerSize);
-    size_t startIndex = dimension == Dimension::Width ? item.columnStart : item.rowStart;
-    size_t endIndex = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
-
-    bool allTracksHaveFixedMax = true;
-    float stretchFitMax = 0.0f;
-    for (size_t trackIndex = startIndex; trackIndex < endIndex; trackIndex++) {
-      auto& track = tracks[trackIndex];
-      if (!isFixedSizingFunction(track.maxSizingFunction, containerSize)) {
-        allTracksHaveFixedMax = false;
-        break;
-      }
-
-      auto resolved = track.maxSizingFunction.resolve(containerSize);
-      if (resolved.isDefined()) {
-        stretchFitMax += resolved.unwrap();
-      }
-
-      if (trackIndex < endIndex - 1) {
-        stretchFitMax += gap;
-      }
-    }
-
-    if (allTracksHaveFixedMax) {
-      result = std::min(result, stretchFitMax);
-    }
-
-    // In all cases, the size suggestion is additionally clamped by the maximum size in the affected axis, if it's definite.
+    // Clamp by max-size if definite
+    auto containingBlockSize = dimension == Dimension::Width
+        ? itemConstraints.containingBlockWidth
+        : itemConstraints.containingBlockHeight;
     auto maxSize = item.node->style().maxDimension(dimension);
     if (maxSize.isDefined()) {
       auto resolvedMaxSize = maxSize.resolve(containingBlockSize);
@@ -1232,206 +1225,46 @@ struct TrackSizing {
     return result;
   }
 
-  // https://www.w3.org/TR/css-grid-1/#content-size-suggestion
-  float contentSizeSuggestion(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    float minContentSize = measureItem(item, dimension, itemConstraints);
-
-    auto aspectRatio = item.node->style().aspectRatio();
-    if (aspectRatio.isDefined()) {
-      minContentSize = clampByOrthogonalMinMax(item, dimension, itemConstraints, minContentSize);
-    }
-
-    return minContentSize;
-  }
-
-  float clampByOrthogonalMinMax(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints, float size) {
-    auto aspectRatio = item.node->style().aspectRatio();
-    if (!aspectRatio.isDefined()) {
-      return size;
-    }
-
-    Dimension orthogonalDimension = dimension == Dimension::Width ? Dimension::Height : Dimension::Width;
-    auto orthogonalContainingBlockSize = orthogonalDimension == Dimension::Width
-        ? itemConstraints.containingBlockWidth
-        : itemConstraints.containingBlockHeight;
-
-    auto orthogonalMinSize = item.node->style().minDimension(orthogonalDimension);
-    if (orthogonalMinSize.isDefined()) {
-      auto resolvedOrthogonalMinSize = orthogonalMinSize.resolve(orthogonalContainingBlockSize);
-      if (resolvedOrthogonalMinSize.isDefined()) {
-        float convertedMinSize = convertThroughAspectRatio(
-            resolvedOrthogonalMinSize.unwrap(), aspectRatio.unwrap(), dimension);
-        size = std::max(size, convertedMinSize);
-      }
-    }
-
-    auto orthogonalMaxSize = item.node->style().maxDimension(orthogonalDimension);
-    if (orthogonalMaxSize.isDefined()) {
-      auto resolvedOrthogonalMaxSize = orthogonalMaxSize.resolve(orthogonalContainingBlockSize);
-      if (resolvedOrthogonalMaxSize.isDefined()) {
-        float convertedMaxSize = convertThroughAspectRatio(
-            resolvedOrthogonalMaxSize.unwrap(), aspectRatio.unwrap(), dimension);
-        size = std::min(size, convertedMaxSize);
-      }
-    }
-
-    return size;
-  }
-
-  float convertThroughAspectRatio(float orthogonalSize, float aspectRatio, Dimension targetDimension) {
-    if (targetDimension == Dimension::Width) {
-      return orthogonalSize * aspectRatio;
-    } else {
-      return orthogonalSize / aspectRatio;
-    }
-  }
-  
-  // https://www.w3.org/TR/css-grid-1/#minimum-contribution
-  float getMinimumContribution(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    auto preferredSize = item.node->style().dimension(dimension);
-    auto containingBlockSize = dimension == Dimension::Width ? itemConstraints.containingBlockWidth : itemConstraints.containingBlockHeight;
-
-    float contribution = 0.0f;
-    if (preferredSize.isAuto() || preferredSize.isPercent()) {
-      auto minSize = item.node->style().minDimension(dimension);
-      // CSS spec has initial min-width size to auto, but yoga keeps it undefined.
-      if (minSize.isAuto() || !minSize.isDefined()) {
-        auto newMinimumSize = autoMinimumSize(item, dimension, itemConstraints);
-        auto marginForAxis = item.node->style().computeMarginForAxis(
-          dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
-          itemConstraints.containingBlockWidth);
-        contribution = newMinimumSize + marginForAxis;
-      } else {
-        auto resolvedMinSize = minSize.resolve(containingBlockSize);
-        auto marginForAxis = item.node->style().computeMarginForAxis(
-          dimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
-          itemConstraints.containingBlockWidth);
-        contribution = resolvedMinSize.unwrap() + marginForAxis;
-      }
-    } else {
-      return getMinimumContentContribution(item, dimension, itemConstraints);
-    }
-
-    if (dimension == Dimension::Height) {
-      contribution += item.baselineShim;
-    }
-    return contribution;
-  }
-
-  FloatOptional transferredSizeSuggestion(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    auto aspectRatio = item.node->style().aspectRatio();
-    if (!aspectRatio.isDefined()) {
-      return yoga::FloatOptional();
-    }
-
-    Dimension orthogonalDimension = dimension == Dimension::Width ? Dimension::Height : Dimension::Width;
-    auto containingBlockWidth = itemConstraints.containingBlockWidth;
-    auto containingBlockHeight = itemConstraints.containingBlockHeight;
-    auto orthogonalContainingBlockSize = orthogonalDimension == Dimension::Width ? containingBlockWidth : containingBlockHeight;
-    auto containingBlockSize = dimension == Dimension::Width ? containingBlockWidth : containingBlockHeight;
-
-    float resolvedOrthogonalSize;
-    auto orthogonalSizingMode = orthogonalDimension == Dimension::Width
-        ? itemConstraints.widthSizingMode
-        : itemConstraints.heightSizingMode;
-    auto orthogonalAvailableSize = orthogonalDimension == Dimension::Width
-        ? itemConstraints.width
-        : itemConstraints.height;
-
-    if (orthogonalSizingMode == SizingMode::StretchFit && yoga::isDefined(orthogonalAvailableSize)) {
-      auto orthogonalMargin = item.node->style().computeMarginForAxis(
-          orthogonalDimension == Dimension::Width ? FlexDirection::Row : FlexDirection::Column,
-          containingBlockWidth);
-      resolvedOrthogonalSize = orthogonalAvailableSize - orthogonalMargin;
-    } else if (item.node->hasDefiniteLength(orthogonalDimension, orthogonalContainingBlockSize)) {
-      auto orthogonalSize = item.node->style().dimension(orthogonalDimension);
-      resolvedOrthogonalSize = orthogonalSize.resolve(orthogonalContainingBlockSize).unwrap();
-    } else {
-      return yoga::FloatOptional();
-    }
-
-    auto orthogonalMinSize = item.node->style().minDimension(orthogonalDimension);
-    if (orthogonalMinSize.isDefined()) {
-      auto resolvedOrthogonalMinSize = orthogonalMinSize.resolve(orthogonalContainingBlockSize);
-      if (resolvedOrthogonalMinSize.isDefined()) {
-        resolvedOrthogonalSize = std::max(resolvedOrthogonalSize, resolvedOrthogonalMinSize.unwrap());
-      }
-    }
-
-    auto orthogonalMaxSize = item.node->style().maxDimension(orthogonalDimension);
-    if (orthogonalMaxSize.isDefined()) {
-      auto resolvedOrthogonalMaxSize = orthogonalMaxSize.resolve(orthogonalContainingBlockSize);
-      if (resolvedOrthogonalMaxSize.isDefined()) {
-        resolvedOrthogonalSize = std::min(resolvedOrthogonalSize, resolvedOrthogonalMaxSize.unwrap());
-      }
-    }
-
-    float result;
-    if (dimension == Dimension::Width) {
-      result = resolvedOrthogonalSize * aspectRatio.unwrap();
-    } else {
-      result = resolvedOrthogonalSize / aspectRatio.unwrap();
-    }
-
-    auto preferredSize = item.node->style().dimension(dimension);
-    if (preferredSize.isDefined()) {
-      auto resolvedPreferredSize = preferredSize.resolve(containingBlockSize);
-      if (resolvedPreferredSize.isDefined()) {
-        result = std::min(result, resolvedPreferredSize.unwrap());
-      }
-    }
-
-    auto maxSize = item.node->style().maxDimension(dimension);
-    if (maxSize.isDefined()) {
-      auto resolvedMaxSize = maxSize.resolve(containingBlockSize);
-      if (resolvedMaxSize.isDefined()) {
-        result = std::min(result, resolvedMaxSize.unwrap());
-      }
-    }
-
-    return yoga::FloatOptional(result);
-  }
-
   // https://www.w3.org/TR/css-grid-1/#limited-contribution
-  float getLimitedMinimumContentContribution(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
-    auto fixedTracksLimit = getFixedTracksLimit(item, dimension);
-    auto minContentContribution = getMinimumContentContribution(item, dimension, itemConstraints);
-    auto minimumContribution = getMinimumContribution(item, dimension, itemConstraints);
-    
-    if (yoga::isDefined(fixedTracksLimit)) {
-      auto limitedContribution = std::min(minContentContribution, fixedTracksLimit);
-      return std::max(limitedContribution, minimumContribution);
+  float limitedMinContentContribution(const GridItem& item, Dimension dimension, const ItemConstraint& itemConstraints) {
+    auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
+    float containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
+
+    auto fixedLimit = computeFixedTracksLimit(item, dimension, tracks, containerSize);
+    auto minContent = minContentContribution(item, dimension, itemConstraints);
+    auto minimum = minimumContribution(item, dimension, itemConstraints);
+
+    if (yoga::isDefined(fixedLimit)) {
+      return std::max(std::min(minContent, fixedLimit), minimum);
     }
-    
-    return std::max(minContentContribution, minimumContribution);
+
+    return std::max(minContent, minimum);
   }
 
-  float getFixedTracksLimit(const GridItem& item, Dimension dimension) {
-    float fixedTracksLimit = 0.0f;
-    auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
-    auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
-    
+  float computeFixedTracksLimit(
+      const GridItem& item,
+      Dimension dimension,
+      const std::vector<GridTrackSize>& tracks,
+      float containerSize) {
+
     size_t startIndex = dimension == Dimension::Width ? item.columnStart : item.rowStart;
     size_t endIndex = dimension == Dimension::Width ? item.columnEnd : item.rowEnd;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
-    
-    for (size_t trackIndex = startIndex; trackIndex < endIndex; trackIndex++) {
-      auto& track = tracks[trackIndex];
-      if (isFixedSizingFunction(track.maxSizingFunction, containerSize)) {
-        auto resolved = track.maxSizingFunction.resolve(containerSize);
-        if (resolved.isDefined()) {
-          fixedTracksLimit += resolved.unwrap();
-        }
-        if (trackIndex < endIndex - 1) {
-          fixedTracksLimit += gap;
-        }
-      } else {
-        fixedTracksLimit = YGUndefined;
-        break;
+
+    float limit = 0.0f;
+    for (size_t i = startIndex; i < endIndex; i++) {
+      if (!isFixedSizingFunction(tracks[i].maxSizingFunction, containerSize)) {
+        return YGUndefined;
+      }
+      auto resolved = tracks[i].maxSizingFunction.resolve(containerSize);
+      if (resolved.isDefined()) {
+        limit += resolved.unwrap();
+      }
+      if (i < endIndex - 1) {
+        limit += gap;
       }
     }
-    
-    return fixedTracksLimit;
+    return limit;
   }
 
   static bool isFixedSizingFunction(const StyleSizeLength& sizingFunction, float referenceLength) {
@@ -1826,12 +1659,12 @@ struct TrackSizing {
       float containingBlockWidth = dimension == Dimension::Width ? YGUndefined : crossDimBefore;
       float containingBlockHeight = dimension == Dimension::Width ? crossDimBefore : YGUndefined;
       auto constraintsBefore = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
-      float contributionBefore = getMinimumContentContribution(item, dimension, constraintsBefore);
+      float contributionBefore = minContentContribution(item, dimension, constraintsBefore);
 
       containingBlockWidth = dimension == Dimension::Width ? YGUndefined : crossDimAfter;
       containingBlockHeight = dimension == Dimension::Width ? crossDimAfter : YGUndefined;
       auto constraintsAfter = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
-      float contributionAfter = getMinimumContentContribution(item, dimension, constraintsAfter);
+      float contributionAfter = minContentContribution(item, dimension, constraintsAfter);
 
       if (contributionBefore != contributionAfter) {
         return true;
