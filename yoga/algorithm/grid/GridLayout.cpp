@@ -259,15 +259,8 @@ void calculateGridLayoutInternal(Node* node,
         depth,
         generationCount);
 
-    auto justifySelf = item.node->style().justifySelf();
-    if (justifySelf == Justify::Auto) {
-      justifySelf = node->style().justifyItems();
-    }
-
-    auto alignSelf = item.node->style().alignSelf();
-    if (alignSelf == Align::Auto) {
-      alignSelf = node->style().alignItems();
-    }
+    auto justifySelf = resolveChildJustification(node, item.node);
+    auto alignSelf = resolveChildAlignment(node, item.node);
 
     // since we know the item width and grid width, we can do the alignment here.
     // alignment of grid items happen in the grid area

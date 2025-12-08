@@ -20,9 +20,13 @@ inline Align resolveChildAlignment(
   const Align align = child->style().alignSelf() == Align::Auto
       ? node->style().alignItems()
       : child->style().alignSelf();
-  if (align == Align::Baseline && isColumn(node->style().flexDirection())) {
+
+  if (node->style().display() == Display::Flex 
+      && align == Align::Baseline 
+      && isColumn(node->style().flexDirection())) {
     return Align::FlexStart;
   }
+
   return align;
 }
 

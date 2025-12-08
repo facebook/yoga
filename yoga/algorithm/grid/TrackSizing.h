@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <yoga/algorithm/Align.h>
 #include <yoga/algorithm/Baseline.h>
 #include <yoga/algorithm/BoundAxis.h>
 #include <yoga/algorithm/CalculateLayout.h>
@@ -1356,7 +1357,10 @@ struct TrackSizing {
     }
 
     if (dimension == Dimension::Width) {
-      auto justifyContent = node->style().justifyContent();
+      const Justify justifyContent = freeSpace > 0.0f ? 
+        node->style().justifyContent() : 
+        fallbackAlignment(node->style().justifyContent());
+
       switch (justifyContent) {
         case Justify::Center:
           result.startOffset = freeSpace / 2.0f;
@@ -1368,22 +1372,19 @@ struct TrackSizing {
 
         case Justify::SpaceBetween:
           if (numTracks > 1) {
-            // negative free space is not distributed with space between, checkout grid_justify_content_space_between_negative_space_gap fixture
-            result.betweenTracksOffset = std::max(0.0f, freeSpace / (numTracks - 1));
+            result.betweenTracksOffset = freeSpace / (numTracks - 1);
           }
           break;
 
         case Justify::SpaceAround:
           if (numTracks > 0) {
-            // negative free space is not distributed with space around, checkout grid_justify_content_space_around_negative_space_gap fixture
-            result.betweenTracksOffset = std::max(0.0f, freeSpace / numTracks);
-            result.startOffset = std::max(0.0f, result.betweenTracksOffset / 2.0f);
+            result.betweenTracksOffset = freeSpace / numTracks;
+            result.startOffset = result.betweenTracksOffset / 2.0f;
           }
           break;
 
         case Justify::SpaceEvenly:
-          // negative free space is not distributed with space evenly, checkout grid_justify_content_space_evenly_negative_space_gap fixture
-          result.betweenTracksOffset = std::max(0.0f, freeSpace / (numTracks + 1));
+          result.betweenTracksOffset = freeSpace / (numTracks + 1);
           result.startOffset = result.betweenTracksOffset;
           break;
 
@@ -1396,7 +1397,9 @@ struct TrackSizing {
           break;
       }
     } else {
-      auto alignContent = node->style().alignContent();
+      const auto alignContent = freeSpace > 0.0f
+        ? node->style().alignContent()
+        : fallbackAlignment(node->style().alignContent());
       switch (alignContent) {
         case Align::Center:
           // content center works with negative free space too
@@ -1415,15 +1418,13 @@ struct TrackSizing {
 
         case Align::SpaceAround:
           if (numTracks > 0) {
-            // negative free space is not distributed with space around, checkout grid_align_content_space_around_negative_space_gap fixture
-            result.betweenTracksOffset = std::max(0.0f, freeSpace / numTracks);
-            result.startOffset = std::max(0.0f, result.betweenTracksOffset / 2.0f);
+            result.betweenTracksOffset = freeSpace / numTracks;
+            result.startOffset = result.betweenTracksOffset / 2.0f;
           }
           break;
 
         case Align::SpaceEvenly:
-          // negative free space is not distributed with space evenly, checkout grid_align_content_space_evenly_negative_space_gap fixture
-          result.betweenTracksOffset = std::max(0.0f, freeSpace / (numTracks + 1));
+          result.betweenTracksOffset = freeSpace / (numTracks + 1);
           result.startOffset = result.betweenTracksOffset;
           break;
 
@@ -1455,13 +1456,15 @@ struct TrackSizing {
   }
 
   ItemConstraint calculateItemConstraints(
-      const GridItem& item,
-      float containingBlockWidth,
-      float containingBlockHeight) {
+    const GridItem& item,
+    float containingBlockWidth,
+    float containingBlockHeight) {
     auto availableWidth = YGUndefined;
     auto availableHeight = YGUndefined;
     auto itemWidthSizingMode = SizingMode::MaxContent;
     auto itemHeightSizingMode = SizingMode::MaxContent;
+    auto hasDefiniteWidth = item.node->hasDefiniteLength(Dimension::Width, containingBlockWidth);
+    auto hasDefiniteHeight = item.node->hasDefiniteLength(Dimension::Height, containingBlockHeight);
 
     if (yoga::isDefined(containingBlockWidth)) {
       itemWidthSizingMode = SizingMode::FitContent;
@@ -1474,7 +1477,7 @@ struct TrackSizing {
     }
 
     const auto marginInline = item.node->style().computeMarginForAxis(FlexDirection::Row, containingBlockWidth);
-    if (item.node->hasDefiniteLength(Dimension::Width, containingBlockWidth)) {
+    if (hasDefiniteWidth) {
       itemWidthSizingMode = SizingMode::StretchFit;
       auto resolvedWidth = item.node->getResolvedDimension(
         direction,
@@ -1492,7 +1495,7 @@ struct TrackSizing {
     }
 
     const auto marginBlock = item.node->style().computeMarginForAxis(FlexDirection::Column, containingBlockWidth);
-    if (item.node->hasDefiniteLength(Dimension::Height, containingBlockHeight)) {
+    if (hasDefiniteHeight) {
       itemHeightSizingMode = SizingMode::StretchFit;
       auto resolvedHeight = item.node->getResolvedDimension(
         direction,
@@ -1509,15 +1512,8 @@ struct TrackSizing {
       availableHeight = resolvedHeight + marginBlock;
     }
 
-    auto justifySelf = item.node->style().justifySelf();
-    if (justifySelf == Justify::Auto) {
-      justifySelf = node->style().justifyItems();
-    }
-
-    auto alignSelf = item.node->style().alignSelf();
-    if (alignSelf == Align::Auto) {
-      alignSelf = node->style().alignItems();
-    }
+    auto justifySelf = resolveChildJustification(node, item.node);
+    auto alignSelf = resolveChildAlignment(node, item.node);
 
     bool hasMarginInlineAuto = item.node->style().inlineStartMarginIsAuto(FlexDirection::Row, direction)
       || item.node->style().inlineEndMarginIsAuto(FlexDirection::Row, direction);
@@ -1529,7 +1525,7 @@ struct TrackSizing {
     const auto& itemStyle = item.node->style();
 
     if (yoga::isDefined(containingBlockWidth) &&
-        !item.node->hasDefiniteLength(Dimension::Width, containingBlockWidth) &&
+        !hasDefiniteWidth &&
         justifySelf == Justify::Stretch &&
         !hasMarginInlineAuto) {
       itemWidthSizingMode = SizingMode::StretchFit;
@@ -1544,41 +1540,45 @@ struct TrackSizing {
       availableHeight = containingBlockHeight;
     }
 
-    // Handle aspect-ratio per CSS Sizing Level 4
-    // https://drafts.csswg.org/css-sizing-4/#aspect-ratio
     if (itemStyle.aspectRatio().isDefined() &&
         !yoga::inexactEquals(itemStyle.aspectRatio().unwrap(), 0.0f)) {
       const float aspectRatio = itemStyle.aspectRatio().unwrap();
-      auto maxHeight = itemStyle.maxDimension(Dimension::Height).resolve(containingBlockHeight);
-      auto maxWidth = itemStyle.maxDimension(Dimension::Width).resolve(containingBlockWidth);
-
-      // grid_aspect_ratio_fill_child_max_width fixture
       if (itemWidthSizingMode == SizingMode::StretchFit &&
           itemHeightSizingMode == SizingMode::StretchFit) {
-        if (maxHeight.isDefined()) {
-          float constrainedHeight = std::min(availableHeight - marginBlock, maxHeight.unwrap());
-          availableHeight = marginBlock + constrainedHeight;
-          availableWidth = marginInline + constrainedHeight * aspectRatio;
-        } else if (maxWidth.isDefined()) {
-          float constrainedWidth = std::min(availableWidth - marginInline, maxWidth.unwrap());
-          availableWidth = marginInline + constrainedWidth;
-          availableHeight = marginBlock + constrainedWidth / aspectRatio;
+        if (!hasDefiniteWidth && !hasDefiniteHeight) {
+          auto resolvedWidth = (availableHeight - marginBlock) * aspectRatio;
+          resolvedWidth = boundAxis(
+            item.node,
+            FlexDirection::Row,
+            direction,
+            resolvedWidth,
+            containingBlockWidth,
+            containingBlockWidth);
+          availableWidth = resolvedWidth + marginInline;
         }
       } else if (itemWidthSizingMode == SizingMode::StretchFit &&
                  itemHeightSizingMode != SizingMode::StretchFit) {
-        availableHeight = marginBlock + (availableWidth - marginInline) / aspectRatio;
-        if (maxHeight.isDefined() && availableHeight - marginBlock > maxHeight.unwrap()) {
-          availableHeight = marginBlock + maxHeight.unwrap();
-          availableWidth = marginInline + maxHeight.unwrap() * aspectRatio;
-        }
+        auto resolvedHeight = (availableWidth - marginInline) / aspectRatio;
+        resolvedHeight = boundAxis(
+          item.node,
+          FlexDirection::Column,
+          direction,
+          resolvedHeight,
+          containingBlockHeight,
+          containingBlockWidth);
+        availableHeight = resolvedHeight + marginBlock;
         itemHeightSizingMode = SizingMode::StretchFit;
       } else if (itemHeightSizingMode == SizingMode::StretchFit &&
                  itemWidthSizingMode != SizingMode::StretchFit) {
-        availableWidth = marginInline + (availableHeight - marginBlock) * aspectRatio;
-        if (maxWidth.isDefined() && availableWidth - marginInline > maxWidth.unwrap()) {
-          availableWidth = marginInline + maxWidth.unwrap();
-          availableHeight = marginBlock + maxWidth.unwrap() / aspectRatio;
-        }
+        auto resolvedWidth = (availableHeight - marginBlock) * aspectRatio;
+        resolvedWidth = boundAxis(
+          item.node,
+          FlexDirection::Row,
+          direction,
+          resolvedWidth,
+          containingBlockWidth,
+          containingBlockWidth);
+        availableWidth = resolvedWidth + marginInline;
         itemWidthSizingMode = SizingMode::StretchFit;
       }
     }
