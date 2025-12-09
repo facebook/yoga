@@ -17,7 +17,6 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <map>
-#include <numeric>
 
 namespace facebook::yoga {
 
@@ -314,10 +313,55 @@ struct TrackSizing {
 
     auto startIndexKey = dimension == Dimension::Width ? &GridItem::columnStart : &GridItem::rowStart;
     auto endIndexKey = dimension == Dimension::Width ? &GridItem::columnEnd : &GridItem::rowEnd;
-    // Sort item indices by span
-    std::vector<size_t> sortedIndices(gridItems.size());
-    std::iota(sortedIndices.begin(), sortedIndices.end(), 0);
-    std::sort(sortedIndices.begin(), sortedIndices.end(), [&](size_t i, size_t j) {
+
+    // 2. Size tracks to fit non-spanning items (span = 1 items)
+    // https://www.w3.org/TR/css-grid-1/#algo-single-span-items
+    std::vector<size_t> spanningItemIndices;
+    spanningItemIndices.reserve(gridItems.size());
+    for (size_t index = 0; index < gridItems.size(); index++) {
+      const auto& item = gridItems[index];
+      if (item.crossesFlexibleTrack(dimension)) {
+        continue;
+      }
+      auto startIndex = item.*startIndexKey;
+      auto endIndex = item.*endIndexKey;
+      size_t span = endIndex - startIndex;
+      if (span == 1) {
+        auto& track = tracks[startIndex];
+        auto itemConstraints = calculateItemConstraints(item, dimension);
+        // For auto minimums:
+        if (isAutoSizingFunction(track.minSizingFunction, containerSize)) {
+          float contribution = sizingMode == SizingMode::MaxContent
+              ? limitedMinContentContribution(item, dimension, itemConstraints)
+              : minimumContribution(item, dimension, itemConstraints);
+          track.baseSize = std::max(track.baseSize, contribution);
+        }
+
+        // For max-content maximums:
+        if (isAutoSizingFunction(track.maxSizingFunction, containerSize)) {
+          float contribution = maxContentContribution(item, dimension, itemConstraints);
+          if (track.growthLimit == INFINITY) {
+            track.growthLimit = contribution;
+          } else {
+            track.growthLimit = std::max(track.growthLimit, contribution);
+          }
+        }
+        // In all cases, if a track's growth limit is now less than its base size, increase the growth limit to match the base size.
+        if (track.growthLimit < track.baseSize) {
+          track.growthLimit = track.baseSize;
+        }
+      } else {
+        spanningItemIndices.push_back(index);
+      }
+    }
+
+    // 3. Increase sizes to accommodate spanning items crossing content-sized tracks:
+    // https://www.w3.org/TR/css-grid-1/#algo-spanning-items
+    if (spanningItemIndices.empty()) {
+      return;
+    }
+
+    std::sort(spanningItemIndices.begin(), spanningItemIndices.end(), [&](size_t i, size_t j) {
         const auto& a = gridItems[i];
         const auto& b = gridItems[j];
         return (a.*endIndexKey - a.*startIndexKey) < (b.*endIndexKey - b.*startIndexKey);
@@ -362,7 +406,7 @@ struct TrackSizing {
       }
     };
 
-    for (auto& index: sortedIndices) {
+    for (auto& index: spanningItemIndices) {
       const auto& item = gridItems[index];
 
       if (item.crossesFlexibleTrack(dimension)) {
@@ -373,39 +417,6 @@ struct TrackSizing {
       auto endIndex = item.*endIndexKey;
       size_t span = endIndex - startIndex;
 
-      // 2. Size tracks to fit non-spanning items
-      // https://www.w3.org/TR/css-grid-1/#algo-single-span-items
-      if (span == 1) {
-        auto& track = tracks[startIndex];
-        auto itemConstraints = calculateItemConstraints(item, dimension);
-        // For auto minimums:
-        if (isAutoSizingFunction(track.minSizingFunction, containerSize)) {
-          float contribution = sizingMode == SizingMode::MaxContent
-              ? limitedMinContentContribution(item, dimension, itemConstraints)
-              : minimumContribution(item, dimension, itemConstraints);
-          track.baseSize = std::max(track.baseSize, contribution);
-        }
-        
-        // For max-content maximums:
-        if (isAutoSizingFunction(track.maxSizingFunction, containerSize)) {
-          float contribution = maxContentContribution(item, dimension, itemConstraints);
-          if (track.growthLimit == INFINITY) {
-            track.growthLimit = contribution;
-          } else {
-            track.growthLimit = std::max(track.growthLimit, contribution);
-          }
-        }
-        // In all cases, if a track’s growth limit is now less than its base size, increase the growth limit to match the base size.
-        if (track.growthLimit < track.baseSize) {
-          track.growthLimit = track.baseSize;
-        }
-        previousSpan = span;
-
-        continue;
-      }
-
-      // 3. Increase sizes to accommodate spanning items crossing content-sized tracks:
-      // https://www.w3.org/TR/css-grid-1/#algo-spanning-items
       if (span > previousSpan) {
         distributeSpaceToTracksForItemsWithTheSameSpan();
         previousSpan = span;
