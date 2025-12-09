@@ -1646,7 +1646,7 @@ struct TrackSizing {
   float calculateEffectiveGapFromBaseSizes(Dimension dimension) {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
-    auto tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
+    const auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
 
     if (!yoga::isDefined(containerSize)) {
       return gap;
@@ -1676,6 +1676,11 @@ struct TrackSizing {
 
       float crossDimBefore = estimatorBefore ? estimatorBefore(item) : YGUndefined;
       float crossDimAfter = estimatorAfter ? estimatorAfter(item) : YGUndefined;
+
+      // If cross dimension hasn't changed, contribution depending on it won't change
+      if (crossDimBefore == crossDimAfter) {
+        continue;
+      }
 
       float containingBlockWidth = dimension == Dimension::Width ? YGUndefined : crossDimBefore;
       float containingBlockHeight = dimension == Dimension::Width ? crossDimBefore : YGUndefined;
