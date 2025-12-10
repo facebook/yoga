@@ -301,7 +301,8 @@ struct TrackSizing {
       }
     }
   }
-
+  
+  // https://www.w3.org/TR/css-grid-1/#algo-single-span-items
   // https://www.w3.org/TR/css-grid-1/#algo-spanning-items
   void accomodateSpanningItemsCrossingContentSizedTracks(Dimension dimension) {
     if (!hasIntrinsicTracks) {

@@ -23,6 +23,8 @@ static inline void setFlexStartLayoutPosition(
                        axis, direction, containingBlockWidth) +
       parent->getLayout().border(flexStartEdge(axis));
 
+  // https://www.w3.org/TR/css-grid-1/#abspos
+  // absolute positioned grid items are positioned relative to the padding edge of the grid container
   if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding) &&
       parent->style().display() != Display::Grid) {
     position += parent->getLayout().padding(flexStartEdge(axis));
@@ -41,6 +43,8 @@ static inline void setFlexEndLayoutPosition(
       child->style().computeFlexEndMargin(
           axis, direction, containingBlockWidth);
 
+  // https://www.w3.org/TR/css-grid-1/#abspos
+  // absolute positioned grid items are positioned relative to the padding edge of the grid container
   if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding) &&
       parent->style().display() != Display::Grid) {
     flexEndPosition += parent->getLayout().padding(flexEndEdge(axis));
@@ -62,6 +66,8 @@ static inline void setCenterLayoutPosition(
       parent->getLayout().border(flexStartEdge(axis)) -
       parent->getLayout().border(flexEndEdge(axis));
 
+  // https://www.w3.org/TR/css-grid-1/#abspos
+  // absolute positioned grid items are positioned relative to the padding edge of the grid container
   if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding) &&
       parent->style().display() != Display::Grid) {
     parentContentBoxSize -= parent->getLayout().padding(flexStartEdge(axis));
@@ -77,6 +83,8 @@ static inline void setCenterLayoutPosition(
       child->style().computeFlexStartMargin(
           axis, direction, containingBlockWidth);
 
+  // https://www.w3.org/TR/css-grid-1/#abspos
+  // absolute positioned grid items are positioned relative to the padding edge of the grid container
   if (!child->hasErrata(Errata::AbsolutePositionWithoutInsetsExcludesPadding) &&
       parent->style().display() != Display::Grid) {
     position += parent->getLayout().padding(flexStartEdge(axis));
